@@ -25,6 +25,10 @@ EPM::Application.routes.draw do
   #     end
   #   end
 
+  controller :apitest do
+    get 'api' => :api
+    get 'apitest/test' => :test
+  end
   # Sample resource route with sub-resources:
   #   resources :products do
   #     resources :comments, :sales
