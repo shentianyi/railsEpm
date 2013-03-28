@@ -7,6 +7,7 @@ class ApitestController < ActionController::Base
       session[:id]="epm"
       render :json => {:flag=>true}
     else
+      reset_session
       render :json => {:flag=>false}
     end
   end
