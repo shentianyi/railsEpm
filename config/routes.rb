@@ -26,6 +26,7 @@ EPM::Application.routes.draw do
   #   end
 
   controller :apitest do
+    get "login" => :new_session
     get 'api' => :api
     get 'apitest/test' => :test
   end
