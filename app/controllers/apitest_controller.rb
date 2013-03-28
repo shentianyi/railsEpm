@@ -5,7 +5,7 @@ class ApitestController < ActionController::Base
   def api
     id = params[:id] || "空值"
     name = params[:name] || "空值"
-    render :text => "epm: #{id}, #{name}. "
+    render :json => "epm: #{id}, #{name}. "
   end
   
   def test
