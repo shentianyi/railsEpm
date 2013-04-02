@@ -4,7 +4,7 @@ class ApitestController < ActionController::Base
   
   def new_session
     if params[:user]=="epm" and params[:pwd]=="123"
-      session[:id]="epm"
+      session[:userId]="epm"
       render :json => {:flag=>true}
     else
       reset_session
@@ -13,7 +13,7 @@ class ApitestController < ActionController::Base
   end
   
   def api
-    if session[:id]=="epm"
+    if session[:userId]=="epm"
       id = params[:id] || "空值"
       name = params[:name] || "空值"
       render :json => { :flag=>true, :sys=>"epm", :id=>id, :name=>name }
