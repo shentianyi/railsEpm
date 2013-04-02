@@ -24,12 +24,8 @@ class ApitestController < ApplicationController
       id = params[:id] || "空值"
       name = params[:name] || "空值"
       render :json => [
-        { :loginStatusCode=>0, :authStatusCode=>0 },
+        { :loginStatusCode=>1, :authStatusCode=>1 },
         { :flag=>true, :sys=>"epm", :id=>id, :name=>name }
-      ]
-    else
-      render :json => [
-        { :loginStatusCode=>0, :authStatusCode=>0 }
       ]
     end
     
