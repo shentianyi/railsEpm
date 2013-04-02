@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   def authenticate
     unless session[:userId]=="epm"
       render :json => [
-        { :loginStatusCode=>0, :authStatusCode=>0 }
+        { :loginStatusCode=>$loginFail, :authStatusCode=>$authFail }
       ]
     end
   end

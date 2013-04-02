@@ -10,7 +10,7 @@ class EntityController < ApplicationController
     sons = entity.son_nodes.map {|k| { :orgId=>k, :orgName=>Entity.find_by_key(k).name } }
     
     render :json => [
-      { :loginStatusCode=>1, :authStatusCode=>1 },
+      { :loginStatusCode=>$loginOK, :authStatusCode=>$authOK },
       sons
     ]
   end
@@ -21,7 +21,7 @@ class EntityController < ApplicationController
     parent = entity.parent_node.map {|k| { :orgId=>k, :orgName=>Entity.find_by_key(k).name } }
 
     render :json => [
-      { :loginStatusCode=>1, :authStatusCode=>1 },
+      { :loginStatusCode=>$loginOK, :authStatusCode=>$authOK },
       parent
     ]
   end
@@ -33,7 +33,7 @@ class EntityController < ApplicationController
     arr = [{ :orgId=>rot.key, :orgName=>rot.name }]
     
     render :json => [
-      { :loginStatusCode=>1, :authStatusCode=>1 },
+      { :loginStatusCode=>$loginOK, :authStatusCode=>$authOK },
       arr
     ]
   end

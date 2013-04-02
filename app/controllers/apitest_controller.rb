@@ -9,12 +9,12 @@ class ApitestController < ApplicationController
       session[:userId]="epm"
 
       render :json => [
-        { :loginStatusCode=>1, :authStatusCode=>1 }
+        { :loginStatusCode=>$loginOK, :authStatusCode=>$authOK }
       ]
     else
       reset_session
       render :json => [
-        { :loginStatusCode=>0, :authStatusCode=>0 }
+        { :loginStatusCode=>$loginFail, :authStatusCode=>$authFail }
       ]
     end
   end
@@ -24,7 +24,7 @@ class ApitestController < ApplicationController
       id = params[:id] || "空值"
       name = params[:name] || "空值"
       render :json => [
-        { :loginStatusCode=>1, :authStatusCode=>1 },
+        { :loginStatusCode=>$loginOK, :authStatusCode=>$authOK },
         { :flag=>true, :sys=>"epm", :id=>id, :name=>name }
       ]
     end
@@ -33,7 +33,7 @@ class ApitestController < ApplicationController
   
   def test
       render :json => [
-        { :loginStatusCode=>0, :authStatusCode=>0 },
+        { :loginStatusCode=>$loginOK, :authStatusCode=>$authFail },
         { :flag=>1, :msg=>"first api" }
       ]
   end
