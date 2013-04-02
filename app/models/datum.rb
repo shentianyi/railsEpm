@@ -1,36 +1,34 @@
 #encoding: utf-8
+require "c_z/redis_object"
 class Datum < CZ::RedisObject
-  attr_accessor :type, :current
+  attr_accessor :kEntity, :hFormula, :type, :time
+  attr_accessor :current
   
   TIME_TREE = ["century", "year", "month", "day", "hour"]
   
   def initialize args={}
-    self.gen_key()
+    self.kEntity = args[:kEntity] || ""
+    self.hFormula = args[:hFormula] || ""
+    self.type = args[:type] || "hour"
+    self.time = self.time_to_str( self.type, Time.now )
     
+    self.key = self.gen_key( self.kEntity, self.hFormula, self.type, self.time )
     
-    if self.respond_to?(:default)
-      self.default.each do |k,v|
-        instance_variable_set "@#{k}",v
-      end
-    end
-    
-    args.each do |k,v|
-      instance_variable_set "@#{k}",v
-    end
+    self.current = 0
     
   end
   
   def self.fetch_raw( kEntity, hFormula )
-    sFile = File.join(Rails.root,"/tmp/test")
-    hFile = File.open( sFile,"rw")
-    while line = hFile.gets
-      puts line
-    end
+    # sFile = File.join(Rails.root,"/tmp/test")
+    # hFile = File.open( sFile,"r")
+    # while line = hFile.gets
+      # puts line
+    # end
     
     # CSV.foreach(hFile,:headers=>true,:col_sep=>$CSVSP) do |row|
-    # nature = 
-    # time
-    # self.new(:nature=>:h)
+    nature = 
+    time
+    self.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>"hour" )
   end
   
   def trace_average

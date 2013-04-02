@@ -1,9 +1,20 @@
 #encoding: utf-8
+require "c_z/base_class"
 module CZ
   class RedisObject < CZ::BaseClass
     attr_accessor :nature
 
-    def parent_nodes
+    def root
+      rot = self
+      parent = rot.parent_node.first
+      while parent
+        rot = self.class.find( parent )
+        parent = rot.parent_node.first
+      end
+      rot
+    end
+    
+    def parent_node
       ks = self.gen_parent_set_key
       $redis.smembers( ks )
     end
@@ -27,7 +38,7 @@ module CZ
 
 
 
-  private
+  # private
     
     def gen_parent_set_key
       "#{self.key}:parent_set"
