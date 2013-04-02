@@ -1,14 +1,21 @@
 # encoding : utf-8
-class ApitestController < ActionController::Base
+class ApitestController < ApplicationController
   # protect_from_forgery
+  
+  before_filter  :authenticate, :except=>:new_session
   
   def new_session
     if params[:user]=="epm" and params[:pwd]=="123"
       session[:userId]="epm"
-      render :json => {:flag=>true}
+
+      render :json => [
+        { :loginStatusCode=>1, :authStatusCode=>1 }
+      ]
     else
       reset_session
-      render :json => {:flag=>false}
+      render :json => [
+        { :loginStatusCode=>0, :authStatusCode=>0 }
+      ]
     end
   end
   
@@ -16,14 +23,22 @@ class ApitestController < ActionController::Base
     if session[:userId]=="epm"
       id = params[:id] || "空值"
       name = params[:name] || "空值"
-      render :json => { :flag=>true, :sys=>"epm", :id=>id, :name=>name }
+      render :json => [
+        { :loginStatusCode=>0, :authStatusCode=>0 },
+        { :flag=>true, :sys=>"epm", :id=>id, :name=>name }
+      ]
     else
-      render :json => { :flag=>false }
+      render :json => [
+        { :loginStatusCode=>0, :authStatusCode=>0 }
+      ]
     end
     
   end
   
   def test
-    render :json => { :flag=>1, :msg=>"first api" }
+      render :json => [
+        { :loginStatusCode=>0, :authStatusCode=>0 },
+        { :flag=>1, :msg=>"first api" }
+      ]
   end
 end
