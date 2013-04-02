@@ -9,10 +9,8 @@ class EntityController < ApplicationController
     entity = Entity.find_by_key(kParent)
     sons = entity.son_nodes.map {|k| { :orgId=>k, :orgName=>Entity.find_by_key(k).name } }
     
-    render :json => [
-      { :loginStatusCode=>$loginOK, :authStatusCode=>$authOK },
-      sons
-    ]
+    
+    render :json => @auth_head + sons
   end
   
   def getParentWithChildOrgId
@@ -20,10 +18,7 @@ class EntityController < ApplicationController
     entity = Entity.find_by_key(kSon)
     parent = entity.parent_node.map {|k| { :orgId=>k, :orgName=>Entity.find_by_key(k).name } }
 
-    render :json => [
-      { :loginStatusCode=>$loginOK, :authStatusCode=>$authOK },
-      parent
-    ]
+    render :json => @auth_head + parent
   end
   
   def rootOrganization
@@ -32,15 +27,15 @@ class EntityController < ApplicationController
     
     arr = [{ :orgId=>rot.key, :orgName=>rot.name }]
     
-    render :json => [
-      { :loginStatusCode=>$loginOK, :authStatusCode=>$authOK },
-      arr
-    ]
+    render :json => @auth_head + arr
   end
   
   def getContactWithOrganizationId
-    params[:orgId]
+    kEntity = params[:orgId]
+    entity = Entity.find_by_key( kEntity )
+    arr = [ entity.contact_detail ]
     
+    render :json => @auth_head + arr
   end
   
   

@@ -2,10 +2,10 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery
   
   def authenticate
-    unless session[:userId]=="epm"
-      render :json => [
-        { :loginStatusCode=>$loginFail, :authStatusCode=>$authFail }
-      ]
+    if session[:userId]=="epm"
+      @auth_head = [{ :loginStatusCode=>$loginOK, :authStatusCode=>$authOK }]
+    else
+      render :json => [{ :loginStatusCode=>$loginFail, :authStatusCode=>$authFail }]
     end
   end
 end
