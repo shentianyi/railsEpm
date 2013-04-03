@@ -5,6 +5,7 @@ class Datum < Cz::RedisObject
   
   TIME_TREE = ["century", "year", "month", "day", "hour"]
   
+  
   def initialize args={}
     super
     self.type = args[:type] || args["type"] || "hour"

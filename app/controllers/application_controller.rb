@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   
   def authenticate
     if session[:userId]=="epm"
-      @auth_head = [{ :loginStatusCode=>$loginOK, :authStatusCode=>$authOK }]
+      @auth_head = [{ :loginStatusCode=>$dteOK, :authStatusCode=>$dteOK }]
     else
-      render :json => [{ :loginStatusCode=>$loginFail, :authStatusCode=>$authFail }]
+      render :json => [{ :loginStatusCode=>$dteFail, :authStatusCode=>$dteFail }]
     end
   end
 end

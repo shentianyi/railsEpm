@@ -7,7 +7,8 @@ class UserController < ApplicationController
   def getObservedKpiStatusWithOrgId
     user = User.find(session[:userId])
     kEntity = params[:orgId]
-    type = params[:type]
+    iType = params[:dateTimeType]
+    type = $timeTypeInvert[iType]
     hash = {}
     user.subscription.each do |hFma|
       data = Datum.find_current( kEntity, hFma, type )

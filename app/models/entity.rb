@@ -21,4 +21,8 @@ class Entity < Cz::RedisObject
   def self.gen_key
     "ENTITY:#{$redis.incr 'epm_entity_incr_index'}"
   end
+  
+  def id
+    self.key.sub("ENTITY:",'').to_i
+  end
 end
