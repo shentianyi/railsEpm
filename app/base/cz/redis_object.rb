@@ -32,7 +32,7 @@ module Cz
     def add_son( son )
       ksSon = gen_son_set_key
       $redis.sadd( ksSon, son )
-      update( :nature=>"node" )
+      # update( :nature=>"node" )
     end
 
 

@@ -52,6 +52,16 @@ EPM::Application.routes.draw do
         get 'getChildOrgnizationsWithParentOrgId' => :getChildOrgnizationsWithParentOrgId
         get 'getParentWithChildOrgId' => :getParentWithChildOrgId
         get 'rootOrganization' => :rootOrganization
+        get 'getContactWithOrganizationId' => :getContactWithOrganizationId
+        get 'getKpiDetails' => :getKpiDetails
+        get 'getKpi' => :getKpi
+        get 'getKpiNodeSequenceWithKpiId' => :getKpiNodeSequenceWithKpiId
+      end
+      
+      controller :user do
+        get 'getObservedKpiStatusWithOrgId' => :getObservedKpiStatusWithOrgId
+        get 'getObservedKpiWithOrgId' => :getObservedKpiWithOrgId
+        get 'getKpiList' => :getKpiList
       end
     end
 

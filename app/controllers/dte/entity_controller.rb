@@ -22,7 +22,7 @@ class EntityController < ApplicationController
   end
   
   def rootOrganization
-    user = User.find(session[:userId])
+    user = User.find_by_account(session[:userId])
     rot = user.entity.root
     
     arr = [{ :orgId=>rot.key, :orgName=>rot.name }]
@@ -33,7 +33,7 @@ class EntityController < ApplicationController
   def getContactWithOrganizationId
     kEntity = params[:orgId]
     entity = Entity.find( kEntity )
-    arr = [ entity.contact_detail ]
+    arr = [ entity.contact ]
     
     render :json => @auth_head + arr
   end
@@ -41,7 +41,8 @@ class EntityController < ApplicationController
   def getKpiDetails
     hFormula = params[:kpiId]
     kEntity = params[:orgId]
-    Entity.find_custom( kEntity, hFormula )
+    spec = Specific.find_current( kEntity, hFormula )
+    arr = [ spec ]
     
     render :json => @auth_head + arr
   end
@@ -49,16 +50,30 @@ class EntityController < ApplicationController
   def getKpi
     hFormula = params[:kpiId]
     kEntity = params[:orgId]
-    type = params[:type]
+    iType = params[:dateTimeType].to_i
+    type = $timeTypeInvert[iType]
+    data = Datum.find_current( kEntity, hFormula, type )
+    arr = [ data ]
     
+    render :json => @auth_head + arr
   end
   
   def getKpiNodeSequenceWithKpiId
     hFormula = params[:kpiId]
     kEntity = params[:orgId]
-    type = params[:type]
     sTime = params[:fromTime]
     eTime = params[:toTime]
+    iType = params[:dateTimeType].to_i
+    type = $timeTypeInvert[iType]
+    
+    arr = []
+    (sTime..eTime).each do |t|
+      data = Datum.find_point( kEntity, hFormula, type, t )
+      hash = { :value=> data.current, :dateTime=>t.iso8601 }
+      arr << hash
+    end
+    
+    render :json => @auth_head + arr
   end
   
   

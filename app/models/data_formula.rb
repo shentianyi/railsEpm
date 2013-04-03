@@ -11,12 +11,30 @@ class DataFormula < Cz::BaseClass
     @@list[fma.key] = Proc.new { |obj| obj.instance_eval  fma.formula  }
   end
   
-  def self.selection_list
-    $redis.zrange(FORMULA_ZSET_KEY, 0, -1).map{|d| [d.formula, d.id] }
+  def initialize args={}
+    super
+    self.key = self.class.gen_key unless args.key?("key")
+  end
+  
+  def save
+    if super
+      $redis.zadd( DataFormula::FORMULA_ZSET_KEY, 0, self.key )
+      true
+    else
+      false
+    end
+  end
+  
+  def self.selection_list( sIndex=0, eIndex=-1 )
+    $redis.zrange(FORMULA_ZSET_KEY, sIndex, eIndex).map do |kFma|
+      if d=DataFormula.find(kFma)
+        {:kpiId=>d.key, :kpiName=>d.name, :kpiDesc=>d.desc }
+      end
+    end
   end
   
   def output
-    @@list[self.id].call self
+    @@list[self.key].call self
   end
 
   def total

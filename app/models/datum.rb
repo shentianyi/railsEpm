@@ -3,29 +3,43 @@ class Datum < Cz::RedisObject
   attr_accessor :kEntity, :hFormula, :type, :time
   attr_accessor :current, :state
   
-  TIME_TREE = ["century", "year", "month", "day", "hour"]
+  TIME_TREE = ["century", "year", "month", "day", "hour", "minute", "second"]
   
   
   def initialize args={}
     super
     self.type = args[:type] || args["type"] || "hour"
+    self.current = args[:current] || args["current"] || 0
+    self.state = args[:state] || args["state"] || $kpiState[:normal]
     self.time = self.class.time_to_str( self.type, Time.now ) unless args.key?("time")
     self.key = self.class.gen_key( self.kEntity, self.hFormula, self.type, self.time ) unless args.key?("key")
-    self.current = 0 unless args.key?("current") 
   end
   
-  def self.fetch_raw( kEntity, hFormula )
-    # sFile = File.join(Rails.root,"/tmp/test")
-    # hFile = File.open( sFile,"r")
-    # while line = hFile.gets
-      # puts line
-    # end
-    
-    # CSV.foreach(hFile,:headers=>true,:col_sep=>$CSVSP) do |row|
-    nature = 
-    time
-    self.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>"hour" )
+  def self.thrift_get( kEntity, hFormula )
+      (0..4).each do |i|
+        sleep 10
+        result = $thrift.getOnJobPeopleNum(i,Time.now.to_i,Time.now.to_i)
+        fma = DataFormula.find(hFormula)
+        fma.people = result.value
+        
+        obj = self.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>"second", :current=>fma.output )
+        obj.save
+        obj.trace_average( kEntity, hFormula )
+      end
   end
+  
+  # def self.fetch_raw( kEntity, hFormula )
+    # # sFile = File.join(Rails.root,"/tmp/test")
+    # # hFile = File.open( sFile,"r")
+    # # while line = hFile.gets
+      # # puts line
+    # # end
+#     
+    # # CSV.foreach(hFile,:headers=>true,:col_sep=>$CSVSP) do |row|
+    # obj = self.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>"hour" )
+    # obj.save
+    # obj.trace_average( kEntity, hFormula )
+  # end
   
   def self.find_current( kEntity, hFormula, type )
     time = time_to_str( type, Time.now )
@@ -33,15 +47,21 @@ class Datum < Cz::RedisObject
     find( k )
   end
   
-  def trace_average
+  def self.find_point( kEntity, hFormula, type, t )
+    time = time_to_str( type, Time.now )
+    k = gen_key( kEntity, hFormula, type, time )
+    find( k )
+  end
+  
+  def trace_average( kEntity, hFormula )
     
     if self.son_nodes.size>0
       total = 0
       self.son_nodes.each do |kSon|
         node = Datum.find( kSon )
-        total+=node.current
+        total+=node.current.to_f
       end
-      self.current = total
+      self.current = total/self.son_nodes.size
     end
     
     idx = Datum::TIME_TREE.index(self.type)
@@ -49,13 +69,15 @@ class Datum < Cz::RedisObject
       if self.parent_nodes.size>0
         self.parent_nodes.each do |kParent|
           node = Datum.find( kParent )
-          node.send(:trace_average)
+          node.send(:trace_average, kEntity, hFormula )
         end
       else
         sType = Datum::TIME_TREE[idx-1]
-        sTime = self.class.time_to_str( sType, Time.now )
-        kParent = self.class.gen_key( kEntity, hFormula, sType, sTime )
-        self.add_parent( kParent )
+        parent = self.class.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>sType )
+        parent.save
+        self.add_parent( parent.key )
+        parent.add_son( self.key )
+        parent.send(:trace_average, kEntity, hFormula )
       end
     end
     
@@ -67,12 +89,14 @@ class Datum < Cz::RedisObject
     end
     
     def self.time_to_str( type, time )
-      case type
-      when "century"  then  time.strftime('%y')
+      case type.to_s
+      when "century"  then  time.strftime('%Y')
       when "year" then time.strftime('%y')
-      when "month" then time.strftime('%y%m')
-      when "day"  then  time.strftime('%y%m%d')
-      when "hour"  then  time.strftime('%y%m%d')
+      when "month" then time.strftime('%y/%m')
+      when "day"  then  time.strftime('%y/%j')
+      when "hour"  then  time.strftime('%y/%jT%H')
+      when "minute"  then  time.strftime('%y/%jT%H:%M')
+      when "second"  then  time.strftime('%y/%jT%X')
       end
     end
     

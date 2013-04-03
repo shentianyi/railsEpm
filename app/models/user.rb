@@ -4,29 +4,26 @@ class User < Cz::BaseClass
   attr_accessor :kEntity, :subscription
   
   
-  def self.find( key )
-    if key == "epm"
-      user = User.new( :key=>"test", :name=>"administrator", :kEntity=>"Entity:MB" )
-      user.save
-    else
-      user = nil
-    end
-    user
+  def self.find_by_account( nr )
+    k = gen_key_with_account( nr )
+    self.find( k )
   end
   
   def entity
     Entity.find( self.kEntity )
   end
   
-  def subscription=( arr )
-    @subscription = arr.to_json
+  def subscription_update( arr )
+    self.update(subscription: arr.to_json)
   end
   
   def subscription
     JSON.parse( @subscription )
   end
   
-  
+  def self.gen_key_with_account( nr )
+    "USER:#{nr}"
+  end
   
 
 end

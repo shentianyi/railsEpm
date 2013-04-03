@@ -8,7 +8,8 @@ class Entity < Cz::RedisObject
   end
   
   def add_contact( contact )
-    self.kContact = contact.key
+    self.update(kContact: contact.key)
+    contact.update(kEntity: self.key)
   end
   
   def contact
