@@ -6,8 +6,8 @@ class EntityController < ApplicationController
   
   def getChildOrgnizationsWithParentOrgId
     kParent = params[:parentId]
-    entity = Entity.find_by_key(kParent)
-    sons = entity.son_nodes.map {|k| { :orgId=>k, :orgName=>Entity.find_by_key(k).name } }
+    entity = Entity.find(kParent)
+    sons = entity.son_nodes.map {|k| { :orgId=>k, :orgName=>Entity.find(k).name } }
     
     
     render :json => @auth_head + sons
@@ -15,8 +15,8 @@ class EntityController < ApplicationController
   
   def getParentWithChildOrgId
     kSon = params[:childOrgId]
-    entity = Entity.find_by_key(kSon)
-    parent = entity.parent_node.map {|k| { :orgId=>k, :orgName=>Entity.find_by_key(k).name } }
+    entity = Entity.find(kSon)
+    parent = entity.parent_nodes.map {|k| { :orgId=>k, :orgName=>Entity.find(k).name } }
 
     render :json => @auth_head + parent
   end
@@ -32,15 +32,34 @@ class EntityController < ApplicationController
   
   def getContactWithOrganizationId
     kEntity = params[:orgId]
-    entity = Entity.find_by_key( kEntity )
+    entity = Entity.find( kEntity )
     arr = [ entity.contact_detail ]
     
     render :json => @auth_head + arr
   end
   
+  def getKpiDetails
+    hFormula = params[:kpiId]
+    kEntity = params[:orgId]
+    Entity.find_custom( kEntity, hFormula )
+    
+    render :json => @auth_head + arr
+  end
   
+  def getKpi
+    hFormula = params[:kpiId]
+    kEntity = params[:orgId]
+    type = params[:type]
+    
+  end
   
-  
+  def getKpiNodeSequenceWithKpiId
+    hFormula = params[:kpiId]
+    kEntity = params[:orgId]
+    type = params[:type]
+    sTime = params[:fromTime]
+    eTime = params[:toTime]
+  end
   
   
 end

@@ -1,6 +1,7 @@
 #encoding: utf-8
-class User < CZ::RedisObject
-  attr_accessor :name, :kEntity
+class User < Cz::BaseClass
+  attr_accessor :name
+  attr_accessor :kEntity, :subscription
   
   
   def self.find( key )
@@ -14,14 +15,18 @@ class User < CZ::RedisObject
   end
   
   def entity
-    Entity.find_by_key( self.kEntity )
+    Entity.find( self.kEntity )
+  end
+  
+  def subscription=( arr )
+    @subscription = arr.to_json
+  end
+  
+  def subscription
+    JSON.parse( @subscription )
   end
   
   
   
-private
 
-  def parent
-    
-  end
 end

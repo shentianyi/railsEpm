@@ -1,21 +1,16 @@
 #encoding: utf-8
-require "c_z/redis_object"
-class Datum < CZ::RedisObject
+class Datum < Cz::RedisObject
   attr_accessor :kEntity, :hFormula, :type, :time
-  attr_accessor :current
+  attr_accessor :current, :state
   
   TIME_TREE = ["century", "year", "month", "day", "hour"]
   
   def initialize args={}
-    self.kEntity = args[:kEntity] || ""
-    self.hFormula = args[:hFormula] || ""
-    self.type = args[:type] || "hour"
-    self.time = self.time_to_str( self.type, Time.now )
-    
-    self.key = self.gen_key( self.kEntity, self.hFormula, self.type, self.time )
-    
-    self.current = 0
-    
+    super
+    self.type = args[:type] || args["type"] || "hour"
+    self.time = self.class.time_to_str( self.type, Time.now ) unless args.key?("time")
+    self.key = self.class.gen_key( self.kEntity, self.hFormula, self.type, self.time ) unless args.key?("key")
+    self.current = 0 unless args.key?("current") 
   end
   
   def self.fetch_raw( kEntity, hFormula )
@@ -29,6 +24,12 @@ class Datum < CZ::RedisObject
     nature = 
     time
     self.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>"hour" )
+  end
+  
+  def self.find_current( kEntity, hFormula, type )
+    time = time_to_str( type, Time.now )
+    k = gen_key( kEntity, hFormula, type, time )
+    find( k )
   end
   
   def trace_average
@@ -51,20 +52,20 @@ class Datum < CZ::RedisObject
         end
       else
         sType = Datum::TIME_TREE[idx-1]
-        sTime = self.time_to_str( sType, Time.now )
-        kParent = self.gen_key( kEntity, hFormula, sType, sTime )
+        sTime = self.class.time_to_str( sType, Time.now )
+        kParent = self.class.gen_key( kEntity, hFormula, sType, sTime )
         self.add_parent( kParent )
       end
     end
     
   end
   
-private
-    def gen_key( kEntity, hFormula, type, time )
+# private
+    def self.gen_key( kEntity, hFormula, type, time )
       "DATA:entity:#{kEntity}:formula:#{hFormula}:TYPE:#{type}:#{time}"
     end
     
-    def time_to_str( type, time )
+    def self.time_to_str( type, time )
       case type
       when "century"  then  time.strftime('%y')
       when "year" then time.strftime('%y')
