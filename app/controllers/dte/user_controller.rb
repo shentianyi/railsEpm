@@ -31,7 +31,7 @@ class UserController < ApplicationController
     user.subscription.each do |hFma|
       data = Datum.find_current( kEntity, hFma, type )
       spec = Specific.find_current( kEntity, hFma )
-      hash = { :current=> data.current, :target=>spec.targetKPI }
+      hash = { :currentValue=> data.current, :targetValue=>spec.targetKPI, :initValue=>spec.leastKPI }
       arr << hash
     end
     

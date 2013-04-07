@@ -1,7 +1,7 @@
 #encoding: utf-8
 class Specific < Cz::RedisObject
   attr_accessor :kEntity, :hFormula
-  attr_accessor :leastKPI, :targetKPI, :currentKPI
+  attr_accessor :leastKPI, :targetKPI
   
   
   def initialize args={}
