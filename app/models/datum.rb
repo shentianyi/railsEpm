@@ -40,7 +40,7 @@ class Datum < Cz::RedisObject
     fma = DataFormula.find(hFormula)
     CSV.foreach( sFile,:headers=>true,:col_sep=>";") do |row|
         sleep 10
-        
+        fma.people = row["People"]
         obj = self.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>"hour" )
         obj.save
         entity = Entity.find( kEntity )

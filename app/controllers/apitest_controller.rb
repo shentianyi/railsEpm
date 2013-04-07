@@ -2,7 +2,8 @@
 class ApitestController < ApplicationController
   # protect_from_forgery
   
-  before_filter  :authenticate, :except=>:new_session
+  # before_filter  :authenticate
+  before_filter  :authenticate, :only=>:api 
   
   def new_session
     if params[:user]=="epm" and params[:pwd]=="123"
