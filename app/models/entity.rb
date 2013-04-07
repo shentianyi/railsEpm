@@ -25,7 +25,7 @@ class Entity < Cz::RedisObject
       end
       self.update(:current=> total/self.son_nodes.size)
       kDatum = Datum.gen_key( self.key, hFormula, type, time )
-      entity = Datum.find( kDatum )
+      datum = Datum.find( kDatum )
       entity.send( :up_traversal, hFormula, type, time )
     end
     
