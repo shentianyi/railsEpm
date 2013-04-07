@@ -63,9 +63,10 @@ class EntityController < ApplicationController
     iType = params[:dateTimeType].to_i
     type = $timeTypeInvert[iType]
     data = Datum.find_current( kEntity, hFormula, type )
-    arr = [ data ]
+    spec = Specific.find_current( kEntity, hFma )
+    hash = { :currentValue=>data.current, :targetValue=>spec.targetKPI, :initValue=>spec.leastKPI }
     
-    render :json => @auth_head + arr
+    render :json => @auth_head + [hash]
   end
   
   # [功能：] 获取指定组织机构节点上的指定 kpi 在某个时间区间的变化对象,每一个EPMKpiNode 代表在时间图表上的一个点。
