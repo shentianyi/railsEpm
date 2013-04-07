@@ -1,4 +1,5 @@
 #encoding: utf-8
+require 'digest/sha2'
 class User < Cz::BaseClass
   attr_accessor :name
   attr_accessor :kEntity, :subscription

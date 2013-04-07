@@ -4,6 +4,7 @@ class EntityController < ApplicationController
   
   before_filter  :authenticate
   
+  # [功能：] 根据父节点的 organizationId 获取下一级子元素。
   def getChildOrgnizationsWithParentOrgId
     kParent = params[:parentId]
     entity = Entity.find(kParent)
@@ -13,6 +14,7 @@ class EntityController < ApplicationController
     render :json => @auth_head + sons
   end
   
+  # [功能：] 获取指定子节点的上级父节点。
   def getParentWithChildOrgId
     kSon = params[:childOrgId]
     entity = Entity.find(kSon)
@@ -21,6 +23,11 @@ class EntityController < ApplicationController
     render :json => @auth_head + parent
   end
   
+  # [功能：] 获取组织架构树的根节点。
+  # 参数：
+  # - 无
+  # 返回值：
+  # - 代表根节点的 EPMOrganization 对象
   def rootOrganization
     user = User.find_by_account(session[:userId])
     rot = user.entity.root
@@ -30,6 +37,7 @@ class EntityController < ApplicationController
     render :json => @auth_head + arr
   end
   
+  # [功能：] 获取指定组织架构节点的联系人信息。
   def getContactWithOrganizationId
     kEntity = params[:orgId]
     entity = Entity.find( kEntity )
@@ -38,6 +46,7 @@ class EntityController < ApplicationController
     render :json => @auth_head + arr
   end
   
+  # [功能：] 获取一个组织机构节点上某个 kpi 的定制的详细情况。
   def getKpiDetails
     hFormula = params[:kpiId]
     kEntity = params[:orgId]
@@ -47,6 +56,7 @@ class EntityController < ApplicationController
     render :json => @auth_head + arr
   end
   
+  # [功能：] 获取一个组织机构节点上某个 kpi 的概况。
   def getKpi
     hFormula = params[:kpiId]
     kEntity = params[:orgId]
@@ -58,6 +68,7 @@ class EntityController < ApplicationController
     render :json => @auth_head + arr
   end
   
+  # [功能：] 获取指定组织机构节点上的指定 kpi 在某个时间区间的变化对象,每一个EPMKpiNode 代表在时间图表上的一个点。
   def getKpiNodeSequenceWithKpiId
     hFormula = params[:kpiId]
     kEntity = params[:orgId]

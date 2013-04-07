@@ -22,14 +22,20 @@ class Entity < Cz::RedisObject
         self.parent_nodes.each do |kParent|
           node = Entity.find( kParent )
           total = 0
+          denominator = 0
           node.son_nodes.each do |kSon|
             kDatum = Datum.gen_key( kSon, hFormula, type, time )
-            return false  unless datum = Datum.find( kDatum )
+            next  unless datum = Datum.find( kDatum )
+            # return false  unless datum = Datum.find( kDatum )
             total+=datum.current.to_f
+            denominator += 1
           end
+          cur = (denominator.zero?) ? 0 : (total/denominator)
           kDatum = Datum.gen_key( kParent, hFormula, type, time )
-          datum = Datum.find( kDatum )
-          cur = (node.son_nodes.size.zero?) ? 0 : (total/self.son_nodes.size)
+          unless datum = Datum.find( kDatum )
+            datum = Datum.new( :kEntity=>kParent, :hFormula=>hFormula, :type=>type, "time"=>time )
+            datum.save
+          end
           datum.update(:current=> cur)
           node.send(:up_traversal, hFormula, type, time )
         end

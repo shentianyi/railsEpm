@@ -9,9 +9,9 @@ class Datum < Cz::RedisObject
   def initialize args={}
     super
     self.type = args[:type] || args["type"] || "hour"
+    self.time = self.class.time_to_str( self.type, Time.now ) unless args.key?("time")
     self.current = args[:current] || args["current"] || 0
     self.state = args[:state] || args["state"] || $kpiState[:normal]
-    self.time = self.class.time_to_str( self.type, Time.now ) unless args.key?("time")
     self.key = self.class.gen_key( self.kEntity, self.hFormula, self.type, self.time ) unless args.key?("key")
   end
   
@@ -40,8 +40,8 @@ class Datum < Cz::RedisObject
     fma = DataFormula.find(hFormula)
     CSV.foreach( sFile,:headers=>true,:col_sep=>";") do |row|
         sleep 10
-        fma.people = row["People"]
-        obj = self.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>"hour" )
+        fma.people = row["People"].to_i
+        obj = self.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>"second", :current=>fma.output )
         obj.save
         entity = Entity.find( kEntity )
         entity.send( :up_traversal, obj.hFormula, obj.type, obj.time )
