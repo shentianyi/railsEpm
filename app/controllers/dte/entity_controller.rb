@@ -72,15 +72,16 @@ class EntityController < ApplicationController
   def getKpiNodeSequenceWithKpiId
     hFormula = params[:kpiId]
     kEntity = params[:orgId]
-    sTime = params[:fromTime]
-    eTime = params[:toTime]
+    sTime = Time.parse(params[:fromTime])
+    eTime = Time.parse(params[:toTime])
     iType = params[:dateTimeType].to_i
     type = $timeTypeInvert[iType]
+    zk = Datum.gen_key_zset( kEntity, hFormula, type )
     
     arr = []
-    (sTime..eTime).each do |t|
-      data = Datum.find_point( kEntity, hFormula, type, t )
-      hash = { :value=> data.current, :dateTime=>t.iso8601 }
+    $redis.zrangebyscore(zk, sTime, eTime, :withscore=>true).each do |k, s|
+      data = Datum.find( k )
+      hash = { :value=> data.current, :dateTime=>Time.at(s).iso8601 }
       arr << hash
     end
     

@@ -48,12 +48,14 @@ c2.save
 son2.add_contact c2
 
 ###########################################################   实体__公式__定制
-spec0 = Specific.new( :kEntity=>p.key, :hFormula=>fma.key, :leastKPI=>0, :targetKPI=>100 )
-spec0.save
-spec1 = Specific.new( :kEntity=>son1.key, :hFormula=>fma.key, :leastKPI=>0, :targetKPI=>200 )
-spec1.save
-spec2 = Specific.new( :kEntity=>son2.key, :hFormula=>fma.key, :leastKPI=>0, :targetKPI=>100 )
-spec2.save
+[fma.key, fmaRFT.key, fmaPPM.key, fmaE1.key].each do |k|
+  spec0 = Specific.new( :kEntity=>p.key, :hFormula=>k, :leastKPI=>0, :targetKPI=>100 )
+  spec0.save
+  spec1 = Specific.new( :kEntity=>son1.key, :hFormula=>k, :leastKPI=>0, :targetKPI=>200 )
+  spec1.save
+  spec2 = Specific.new( :kEntity=>son2.key, :hFormula=>k, :leastKPI=>0, :targetKPI=>100 )
+  spec2.save
+end
 ###########################################################   用户
 user = User.new( :nr=>"epm", :name=>"administrator", :password=>"123", :kEntity=>"ENTITY:MB" )
 user.save

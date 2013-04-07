@@ -15,6 +15,16 @@ class Datum < Cz::RedisObject
     self.key = self.class.gen_key( self.kEntity, self.hFormula, self.type, self.time ) unless args.key?("key")
   end
   
+  def save
+    if super
+      zk = self.class.gen_key_zset( self.kEntity, self.hFormula, self.type )
+      $redis.zadd( zk, Time.now.to_i, self.key )
+      true
+    else
+      false
+    end
+  end
+  
   def self.thrift_get( kEntity, hFormula )
       (0..4).each do |i|
         sleep 10
@@ -96,6 +106,10 @@ class Datum < Cz::RedisObject
 # private
     def self.gen_key( kEntity, hFormula, type, time )
       "DATA:entity:#{kEntity}:formula:#{hFormula}:TYPE:#{type}:#{time}"
+    end
+    
+    def self.gen_key_zset( kEntity, hFormula, type )
+      "DATA_zset:entity:#{kEntity}:formula:#{hFormula}:TYPE:#{type}"
     end
     
     def self.time_to_str( type, time )
