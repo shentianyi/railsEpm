@@ -26,22 +26,22 @@ class ApitestController < ApplicationController
   
   def testAPI1
     sleep 5
-    render :json => {:imgUrl=>"http://localhost:3000/1.jpg"}
+    render :json => {:imgUrl=>"http://192.168.0.21:8080/1.jpg"}
   end
   
   def testAPI2
     sleep 10
-    render :json => {:imgUrl=>"http://localhost:3000/2.jpg"}
+    render :json => {:imgUrl=>"http://192.168.0.21:8080/2.jpg"}
   end
   
   def testAPI3
     sleep 15
-    render :json => {:imgUrl=>"http://localhost:3000/3.jpg"}
+    render :json => {:imgUrl=>"http://192.168.0.21:8080/3.jpg"}
   end
   
   def testAPI4
     sleep 20
-    render :json => {:imgUrl=>"http://localhost:3000/4.jpg"}
+    render :json => {:imgUrl=>"http://192.168.0.21:8080/4.jpg"}
   end
   
   def test
