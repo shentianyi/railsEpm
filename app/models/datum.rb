@@ -25,23 +25,29 @@ class Datum < Cz::RedisObject
         obj = self.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>"second", :current=>fma.output )
         obj.save
         entity = Entity.find( kEntity )
-        entity.send( :up_traversal)
+        entity.send( :up_traversal, obj.hFormula, obj.type, obj.time )
         obj.upstream_average
       end
   end
   
-  # def self.fetch_raw( kEntity, hFormula )
-    # # sFile = File.join(Rails.root,"/tmp/test")
-    # # hFile = File.open( sFile,"r")
-    # # while line = hFile.gets
-      # # puts line
-    # # end
-#     
-    # # CSV.foreach(hFile,:headers=>true,:col_sep=>$CSVSP) do |row|
-    # obj = self.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>"hour" )
-    # obj.save
-    # obj.trace_average( kEntity, hFormula )
-  # end
+  def self.fetch_raw( kEntity, hFormula )
+    sFile = File.join(Rails.root,"/tmp/test")
+    # hFile = File.open( sFile,"r")
+    # while line = hFile.gets
+      # puts line
+    # end
+    
+    fma = DataFormula.find(hFormula)
+    CSV.foreach( sFile,:headers=>true,:col_sep=>";") do |row|
+        sleep 10
+        
+        obj = self.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>"hour" )
+        obj.save
+        entity = Entity.find( kEntity )
+        entity.send( :up_traversal, obj.hFormula, obj.type, obj.time )
+        obj.upstream_average
+    end
+  end
   
   def self.find_current( kEntity, hFormula, type )
     time = time_to_str( type, Time.now )

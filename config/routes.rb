@@ -28,6 +28,10 @@ EPM::Application.routes.draw do
   controller :apitest do
     get "login" => :new_session
     get 'api' => :api
+    get 'testAPI1' => :testAPI1
+    get 'testAPI2' => :testAPI2
+    get 'testAPI3' => :testAPI3
+    get 'testAPI4' => :testAPI4
     get 'apitest/test' => :test
   end
   # Sample resource route with sub-resources:

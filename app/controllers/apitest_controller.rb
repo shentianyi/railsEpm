@@ -24,6 +24,26 @@ class ApitestController < ApplicationController
     
   end
   
+  def testAPI1
+    sleep 5
+    render :json => {:imgUrl=>"http://localhost:3000/1.jpg"}
+  end
+  
+  def testAPI2
+    sleep 10
+    render :json => {:imgUrl=>"http://localhost:3000/2.jpg"}
+  end
+  
+  def testAPI3
+    sleep 15
+    render :json => {:imgUrl=>"http://localhost:3000/3.jpg"}
+  end
+  
+  def testAPI4
+    sleep 20
+    render :json => {:imgUrl=>"http://localhost:3000/4.jpg"}
+  end
+  
   def test
       render :json => [
         { :loginStatusCode=>$logOK, :authStatusCode=>$authFail },
