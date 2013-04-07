@@ -24,7 +24,9 @@ class Datum < Cz::RedisObject
         
         obj = self.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>"second", :current=>fma.output )
         obj.save
-        obj.trace_average( kEntity, hFormula )
+        entity = Entity.find( kEntity )
+        entity.send( :up_traversal)
+        obj.upstream_average
       end
   end
   
@@ -53,7 +55,7 @@ class Datum < Cz::RedisObject
     find( k )
   end
   
-  def trace_average( kEntity, hFormula )
+  def upstream_average
     
     if self.son_nodes.size>0
       total = 0
@@ -61,7 +63,9 @@ class Datum < Cz::RedisObject
         node = Datum.find( kSon )
         total+=node.current.to_f
       end
-      self.current = total/self.son_nodes.size
+      self.update(:current=> total/self.son_nodes.size)
+      entity = Entity.find( self.kEntity )
+      entity.send( :up_traversal, self.hFormula, self.type, self.time )
     end
     
     idx = Datum::TIME_TREE.index(self.type)
@@ -69,15 +73,15 @@ class Datum < Cz::RedisObject
       if self.parent_nodes.size>0
         self.parent_nodes.each do |kParent|
           node = Datum.find( kParent )
-          node.send(:trace_average, kEntity, hFormula )
+          node.send(:upstream_average )
         end
       else
         sType = Datum::TIME_TREE[idx-1]
-        parent = self.class.new( :kEntity=>kEntity, :hFormula=>hFormula, :type=>sType )
+        parent = self.class.new( :kEntity=>self.kEntity, :hFormula=>self.hFormula, :type=>sType )
         parent.save
         self.add_parent( parent.key )
         parent.add_son( self.key )
-        parent.send(:trace_average, kEntity, hFormula )
+        parent.send(:upstream_average )
       end
     end
     

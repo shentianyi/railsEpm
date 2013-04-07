@@ -16,6 +16,9 @@ class Entity < Cz::RedisObject
     Contact.find( self.kContact )
   end
   
+  def up_traversal
+    
+  end
   
 # private
 
