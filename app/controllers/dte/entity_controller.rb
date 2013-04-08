@@ -80,7 +80,7 @@ class EntityController < ApplicationController
     zk = Datum.gen_key_zset( kEntity, hFormula, type )
     
     arr = []
-    $redis.zrangebyscore(zk, sTime, eTime, :withscore=>true).each do |k, s|
+    $redis.zrangebyscore(zk, sTime.to_i, eTime.to_i, :withscores=>true ).each do |k, s|
       data = Datum.find( k )
       hash = { :value=> data.current, :dateTime=>Time.at(s).iso8601 }
       arr << hash
