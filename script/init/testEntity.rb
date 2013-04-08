@@ -16,7 +16,7 @@ fmaPPM = DataFormula.new( "key"=>"FORMULA:2", :formula=>"defeat/out",
 fmaPPM.save
 
 fmaE1 = DataFormula.new( "key"=>"FORMULA:3", :formula=>"people*8/out/0.1",
-                                                     :name=>"E1", :desc=>"The ratio of first approved to the out.")
+                                                     :name=>"E1", :desc=>"The ratio of pay to earn.")
 fmaE1.save
 
 ###########################################################   实体

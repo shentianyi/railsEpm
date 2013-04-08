@@ -1,7 +1,7 @@
 #encoding: utf-8
 class DataFormula < Cz::BaseClass
   attr_accessor :formula, :name, :desc
-  attr_accessor :people, :total, :production, :time
+  attr_accessor :people, :out, :rft, :defeat
   
   FORMULA_ZSET_KEY="EPM_FORMULA_ZSET"
   @@list = {}
@@ -37,8 +37,8 @@ class DataFormula < Cz::BaseClass
     @@list[self.key].call self
   end
 
-  def total
-    @total.to_f
+  def out
+    @out.to_f
   end
   
   
