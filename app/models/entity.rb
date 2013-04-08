@@ -16,6 +16,14 @@ class Entity < Cz::RedisObject
     Contact.find( self.kContact )
   end
   
+  def contact_hash
+    hash = $redis.hgetall( self.kContact )
+    hash.delete( "kEntity" )
+    hash[:personId] = hash["key"]
+    hash.delete( "key" )
+    hash
+  end
+  
   def up_traversal( hFormula, type, time )
 
       if self.parent_nodes.size>0

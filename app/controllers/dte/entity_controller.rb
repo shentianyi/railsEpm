@@ -41,7 +41,8 @@ class EntityController < ApplicationController
   def getContactWithOrganizationId
     kEntity = params[:orgId]
     entity = Entity.find( kEntity )
-    arr = [ entity.contact ]
+    hash = entity.contact_hash
+    arr = [ hash ]
     
     render :json => @auth_head + arr
   end

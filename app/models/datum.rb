@@ -40,7 +40,7 @@ class Datum < Cz::RedisObject
       end
   end
   
-  def self.fetch_raw( kEntity, hFormula )
+  def self.fetch_raw( kEntity )
     sFile = File.join(Rails.root,"/tmp/test")
     # hFile = File.open( sFile,"r")
     # while line = hFile.gets
