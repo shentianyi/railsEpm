@@ -14,7 +14,7 @@ class UserController < ApplicationController
     hash = {}
     user.subscription.each do |hFma|
       data = Datum.find_current( kEntity, hFma, type )
-      hash[hFma] = data.state
+      hash[hFma] = data.state if data
     end
     
     render :json => @auth_head + [hash]
@@ -30,7 +30,8 @@ class UserController < ApplicationController
     arr = []
     user.subscription.each do |hFma|
       data = Datum.find_current( kEntity, hFma, type )
-      spec = Specific.find_current( kEntity, hFma )
+      next unless data
+      spec = Specific.find_by_kE_hF( kEntity, hFma )
       hash = { :currentValue=> data.current, :targetValue=>spec.targetKPI, :initValue=>spec.leastKPI }
       arr << hash
     end

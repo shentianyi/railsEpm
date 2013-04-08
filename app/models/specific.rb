@@ -9,7 +9,7 @@ class Specific < Cz::RedisObject
     self.key = self.class.gen_key( self.kEntity, self.hFormula ) unless args.key?("key")
   end
   
-  def self.find_current( kEntity, hFormula )
+  def self.find_by_kE_hF( kEntity, hFormula )
     k = gen_key( kEntity, hFormula )
     find( k )
   end

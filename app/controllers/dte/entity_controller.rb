@@ -50,7 +50,7 @@ class EntityController < ApplicationController
   def getKpiDetails
     hFormula = params[:kpiId]
     kEntity = params[:orgId]
-    spec = Specific.find_current( kEntity, hFormula )
+    spec = Specific.find_by_kE_hF( kEntity, hFormula )
     arr = [ spec ]
     
     render :json => @auth_head + arr
@@ -63,7 +63,7 @@ class EntityController < ApplicationController
     iType = params[:dateTimeType].to_i
     type = $timeTypeInvert[iType]
     data = Datum.find_current( kEntity, hFormula, type )
-    spec = Specific.find_current( kEntity, hFma )
+    spec = Specific.find_by_kE_hF( kEntity, hFma )
     hash = { :currentValue=>data.current, :targetValue=>spec.targetKPI, :initValue=>spec.leastKPI }
     
     render :json => @auth_head + [hash]
