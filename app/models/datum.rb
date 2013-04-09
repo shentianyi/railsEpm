@@ -42,33 +42,33 @@ class Datum < Cz::RedisObject
   
   def self.fetch_raw
     sFile = File.join(Rails.root,"/tmp/test")
-    # hFile = File.open( sFile,"r")
-    # while line = hFile.gets
-      # puts line
-    # end
+    rr=2+rand(5)
     
     fma = DataFormula.find("FORMULA:0")
     fmaRFT = DataFormula.find("FORMULA:1")
     fmaPPM = DataFormula.find("FORMULA:2")
     fmaE1 = DataFormula.find("FORMULA:3")
     CSV.foreach( sFile,:headers=>true,:col_sep=>";") do |row|
-        sleep 10
-        fma.people = row["People"].to_i
-        fmaRFT.rft = row["Rft"].to_i
-        fmaRFT.out = row["Out"].to_f
-        fmaPPM.defeat = row["Defeat"].to_i
-        fmaPPM.out = row["Out"].to_f
-        fmaE1.people = row["People"].to_i
-        fmaE1.out = row["Out"].to_f
-        ["ENTITY:MB", "ENTITY:COC"].each do |kEntity|
-            [fma, fmaRFT, fmaPPM, fmaE1].each do |hF|
-                obj = self.new( :kEntity=>kEntity, :hFormula=>hF.key, :type=>"second", :current=>hF.output )
-                obj.save
-                entity = Entity.find( kEntity )
-                entity.send( :up_traversal, obj.hFormula, obj.type, obj.time )
-                obj.upstream_average
-            end
-        end
+      if $.==rr
+        # system "cd /home/ding && echo EPM__cron: $(date) >> /home/ding/EPM_cron"
+        system "cd #{Rails.root}/tmp && echo EPM__cron: $(date) >> EPM_cron"
+          fma.people = row["People"].to_i
+          fmaRFT.rft = row["Rft"].to_i
+          fmaRFT.out = row["Out"].to_f
+          fmaPPM.defeat = row["Defeat"].to_i
+          fmaPPM.out = row["Out"].to_f
+          fmaE1.people = row["People"].to_i
+          fmaE1.out = row["Out"].to_f
+          ["ENTITY:MB", "ENTITY:COC"].each do |kEntity|
+              [fma, fmaRFT, fmaPPM, fmaE1].each do |hF|
+                  obj = self.new( :kEntity=>kEntity, :hFormula=>hF.key, :type=>"minute", :current=>hF.output )
+                  obj.save
+                  entity = Entity.find( kEntity )
+                  entity.send( :up_traversal, obj.hFormula, obj.type, obj.time )
+                  obj.upstream_average
+              end
+          end
+      end
     end
   end
   
