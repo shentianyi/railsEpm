@@ -65,7 +65,9 @@ class EntityController < ApplicationController
     type = $timeTypeInvert[iType]
     data = Datum.find_current( kEntity, hFormula, type )
     spec = Specific.find_by_kE_hF( kEntity, hFormula )
-    hash = { :currentValue=>data.current, :targetValue=>spec.targetKPI, :initValue=>spec.leastKPI }
+    formula = DataFormula.find( hFormula )
+    hash = { :kpiId=>formula.key, :kpiName=>formula.name, :kpiDesc=>formula.desc,
+                     :currentValue=>data.current, :targetValue=>spec.targetKPI, :initValue=>spec.leastKPI }
     
     render :json => @auth_head + [hash]
   end
