@@ -28,6 +28,10 @@ EPM::Application.routes.draw do
   controller :apitest do
     get "login" => :new_session
     get 'api' => :api
+    get 'testAPI1' => :testAPI1
+    get 'testAPI2' => :testAPI2
+    get 'testAPI3' => :testAPI3
+    get 'testAPI4' => :testAPI4
     get 'apitest/test' => :test
   end
   # Sample resource route with sub-resources:
@@ -52,6 +56,16 @@ EPM::Application.routes.draw do
         get 'getChildOrgnizationsWithParentOrgId' => :getChildOrgnizationsWithParentOrgId
         get 'getParentWithChildOrgId' => :getParentWithChildOrgId
         get 'rootOrganization' => :rootOrganization
+        get 'getContactWithOrganizationId' => :getContactWithOrganizationId
+        get 'getKpiDetails' => :getKpiDetails
+        get 'getKpi' => :getKpi
+        get 'getKpiNodeSequenceWithKpiId' => :getKpiNodeSequenceWithKpiId
+      end
+      
+      controller :user do
+        get 'getObservedKpiStatusWithOrgId' => :getObservedKpiStatusWithOrgId
+        get 'getObservedKpiWithOrgId' => :getObservedKpiWithOrgId
+        get 'getKpiList' => :getKpiList
       end
     end
 
