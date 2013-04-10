@@ -65,7 +65,7 @@ class EntityController < ApplicationController
     spec = Specific.find_by_kE_hF( kEntity, hFormula )
     formula = DataFormula.find( hFormula )
     hash = { :kpiId=>formula.key, :kpiName=>formula.name, :kpiDesc=>formula.desc,
-                     :currentValue=>data.current, :targetValue=>spec.targetKPI, :initValue=>spec.leastKPI }
+                     :currentValue=>data.current, :warningLevel=>data.state, :targetValue=>spec.targetKPI, :initValue=>spec.leastKPI }
     
     render :json => @auth_head + [hash]
   end

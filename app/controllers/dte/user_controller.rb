@@ -33,7 +33,7 @@ class UserController < ApplicationController
       spec = Specific.find_by_kE_hF( kEntity, hFma )
       formula = DataFormula.find( hFma )
       hash = { :kpiId=>formula.key, :kpiName=>formula.name, :kpiDesc=>formula.desc,
-                      :currentValue=> data.current, :targetValue=>spec.targetKPI, :initValue=>spec.leastKPI }
+                      :currentValue=> data.current, :warningLevel=>data.state, :targetValue=>spec.targetKPI, :initValue=>spec.leastKPI }
       arr << hash
     end
     

@@ -8,14 +8,14 @@ class Datum < Cz::RedisObject
   
   def initialize args={}
     super
-    self.type = args[:type] || args["type"] || "hour"
     self.time = self.class.time_to_str( self.type, Time.now ) unless args.key?("time")
-    self.current = args[:current] || args["current"] || 0
-    self.state = args[:state] || args["state"] || $kpiState[:normal]
     self.key = self.class.gen_key( self.kEntity, self.hFormula, self.type, self.time ) unless args.key?("key")
   end
   
   def save
+    self.type ||= "hour"
+    self.current ||= 0
+    self.state ||= $kpiState[:normal]
     if super
       zk = self.class.gen_key_zset( self.kEntity, self.hFormula, self.type )
       $redis.zadd( zk, Time.now.to_i, self.key )
@@ -23,6 +23,11 @@ class Datum < Cz::RedisObject
     else
       false
     end
+  end
+  
+  def update attrs={}
+    attrs[:state] = set_state_by_current(attrs[:current])  if attrs.key?( :current )
+    super attrs
   end
   
   def self.thrift_get( kEntity, hFormula )
@@ -61,8 +66,9 @@ class Datum < Cz::RedisObject
           fmaE1.out = col["Out"].to_i
           ["ENTITY:MB", "ENTITY:COC"].each do |kEntity|
               [fma, fmaRFT, fmaPPM, fmaE1].each do |hF|
-                  obj = self.new( :kEntity=>kEntity, :hFormula=>hF.key, :type=>"minute", :current=>hF.output )
+                  obj = self.new( :kEntity=>kEntity, :hFormula=>hF.key, :type=>"minute" )
                   obj.save
+                  obj.update( :current=>hF.output )
                   entity = Entity.find( kEntity )
                   entity.send( :up_traversal, obj.hFormula, obj.type, obj.time )
                   obj.upstream_average
@@ -135,5 +141,13 @@ class Datum < Cz::RedisObject
       when "second"  then  time.strftime('%y/%jT%X')
       end
     end
+    
+private
+  def set_state_by_current( cur )
+    if spec = Specific.find_by_kE_hF( self.kEntity, self.hFormula )
+      
+    end
+    $kpiState[:normal]
+  end
     
 end
