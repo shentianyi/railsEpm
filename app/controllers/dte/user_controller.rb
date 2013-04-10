@@ -56,7 +56,7 @@ class UserController < ApplicationController
     kEntity = params[:orgId]
     sFormula = params[:kpiIds]
     
-    user.subscription_update( kEntity, sFormula.split(';') )
+    user.subscription_update( kEntity, sFormula.split('~') )
     
     render :json => @auth_head
   end
