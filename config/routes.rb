@@ -26,13 +26,19 @@ EPM::Application.routes.draw do
   #   end
 
   controller :apitest do
-    get "login" => :new_session
-    get 'api' => :api
     get 'testAPI1' => :testAPI1
     get 'testAPI2' => :testAPI2
     get 'testAPI3' => :testAPI3
     get 'testAPI4' => :testAPI4
     get 'apitest/test' => :test
+  end
+  
+  controller :session do
+    get "login" => :create
+  end
+  
+  controller :background do
+    get 'background/set_time' => :set_cron_time
   end
   # Sample resource route with sub-resources:
   #   resources :products do

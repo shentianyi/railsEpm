@@ -1,7 +1,7 @@
 # encoding : utf-8
 class SessionController < ApplicationController
   
-  # before_filter  :authenticate
+  skip_before_filter  :authenticate
   
   def create
     if user = User.authenticate( params[:user], params[:pwd] )

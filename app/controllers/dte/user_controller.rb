@@ -2,7 +2,6 @@
 module Dte
 class UserController < ApplicationController
   
-  before_filter  :authenticate
   
   # [功能：] 获取当前用户所订阅的 kpi 的状态代码。
   def getObservedKpiStatusWithOrgId

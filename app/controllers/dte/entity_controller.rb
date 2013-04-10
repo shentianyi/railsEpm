@@ -2,14 +2,12 @@
 module Dte
 class EntityController < ApplicationController
   
-  before_filter  :authenticate
   
   # [功能：] 根据父节点的 organizationId 获取下一级子元素。
   def getChildOrgnizationsWithParentOrgId
     kParent = params[:parentId]
     entity = Entity.find(kParent)
     sons = entity.son_nodes.map {|k| { :orgId=>k, :orgName=>Entity.find(k).name } }
-    
     
     render :json => @auth_head + sons
   end
