@@ -44,7 +44,7 @@ class Entity < Cz::RedisObject
             datum = Datum.new( :kEntity=>kParent, :hFormula=>hFormula, :type=>type, "time"=>time )
             datum.save
           end
-          datum.update(:current=> cur)
+          datum.update(:current=> cur.round(2))
           node.send(:up_traversal, hFormula, type, time )
         end
       end

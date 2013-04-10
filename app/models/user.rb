@@ -10,6 +10,7 @@ class User < Cz::BaseClass
     self.password = args[:password] if args.key?(:password)
     args.delete(:password)
     super args
+    self.subscription = args[:subscription]||"{}"  unless args.key?("subscription")
     self.key = self.class.gen_key_with_account(self.nr) unless args.key?("key")
   end
   
@@ -29,12 +30,22 @@ class User < Cz::BaseClass
     end
   end
   
-  def subscription_update( arr )
-    self.update(subscription: arr.to_json)
+  def subscription_update( kEntity, arr )
+    hash = JSON.parse( @subscription )
+    hash[kEntity] = arr
+    self.update(subscription: hash.to_json)
   end
   
-  def subscription
-    JSON.parse( @subscription )
+  def subscription( kEntity )
+    hash = JSON.parse( @subscription )
+    return hash[kEntity]  if hash.key?(kEntity)
+    entity = Entity.find( kEntity )
+    return [] if entity.parent_nodes.blank?
+    kParent = entity.parent_nodes.first
+    return [] unless hash.key?(kParent)
+    hash[kEntity] = hash[kParent]
+    self.update(subscription: hash.to_json)
+    return hash[kEntity]
   end
   
   def self.gen_key_with_account( nr )

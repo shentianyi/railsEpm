@@ -34,11 +34,12 @@ class DataFormula < Cz::BaseClass
   end
   
   def output
-    @@list[self.key].call self
+    re = @@list[self.key].call( self )
+    re.to_f.round(2)
   end
 
   def out
-    @out.to_f
+    BigDecimal(@out)
   end
   
   

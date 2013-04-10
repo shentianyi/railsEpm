@@ -66,6 +66,7 @@ EPM::Application.routes.draw do
         get 'getObservedKpiStatusWithOrgId' => :getObservedKpiStatusWithOrgId
         get 'getObservedKpiWithOrgId' => :getObservedKpiWithOrgId
         get 'getKpiList' => :getKpiList
+        get 'setObservedKpiList' => :setObservedKpiList
       end
     end
 

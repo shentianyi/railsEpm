@@ -12,7 +12,7 @@ class UserController < ApplicationController
     type = $timeTypeInvert[iType]
 
     hash = {}
-    user.subscription.each do |hFma|
+    user.subscription(kEntity).each do |hFma|
       data = Datum.find_current( kEntity, hFma, type )
       hash[hFma] = data.state if data
     end
@@ -28,11 +28,13 @@ class UserController < ApplicationController
     type = $timeTypeInvert[iType]
     
     arr = []
-    user.subscription.each do |hFma|
+    user.subscription(kEntity).each do |hFma|
       data = Datum.find_current( kEntity, hFma, type )
       next unless data
       spec = Specific.find_by_kE_hF( kEntity, hFma )
-      hash = { :currentValue=> data.current, :targetValue=>spec.targetKPI, :initValue=>spec.leastKPI }
+      formula = DataFormula.find( hFma )
+      hash = { :kpiId=>formula.key, :kpiName=>formula.name, :kpiDesc=>formula.desc,
+                      :currentValue=> data.current, :targetValue=>spec.targetKPI, :initValue=>spec.leastKPI }
       arr << hash
     end
     
@@ -49,6 +51,16 @@ class UserController < ApplicationController
     render :json => @auth_head + arr
   end
   
+  def setObservedKpiList
+    user = User.find_by_account(session[:userId])
+    kEntity = params[:orgId]
+    sFormula = params[:kpiIds]
+    
+    user.subscription_update( kEntity, sFormula.split('~') )
+    
+    render :json => @auth_head
+  end
+
   
 end
 end
