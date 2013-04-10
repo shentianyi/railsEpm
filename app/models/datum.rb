@@ -48,17 +48,17 @@ class Datum < Cz::RedisObject
     fmaRFT = DataFormula.find("FORMULA:1")
     fmaPPM = DataFormula.find("FORMULA:2")
     fmaE1 = DataFormula.find("FORMULA:3")
-    CSV.foreach( sFile,:headers=>true,:col_sep=>";") do |row|
-      if $.==rr
+    CSV.foreach( sFile,:headers=>true,:col_sep=>";") do |col|
+        next if $.!=rr
         # system "cd /home/ding && echo EPM__cron: $(date) >> /home/ding/EPM_cron"
         system "cd #{Rails.root}/tmp && echo EPM__cron: $(date) >> EPM_cron"
-          fma.people = row["People"].to_i
-          fmaRFT.rft = row["Rft"].to_i
-          fmaRFT.out = row["Out"].to_f
-          fmaPPM.defeat = row["Defeat"].to_i
-          fmaPPM.out = row["Out"].to_f
-          fmaE1.people = row["People"].to_i
-          fmaE1.out = row["Out"].to_f
+          fma.people = col["People"].to_i
+          fmaRFT.rft = col["Rft"].to_i
+          fmaRFT.out = col["Out"].to_f
+          fmaPPM.defeat = col["Defeat"].to_i
+          fmaPPM.out = col["Out"].to_f
+          fmaE1.people = col["People"].to_i
+          fmaE1.out = col["Out"].to_f
           ["ENTITY:MB", "ENTITY:COC"].each do |kEntity|
               [fma, fmaRFT, fmaPPM, fmaE1].each do |hF|
                   obj = self.new( :kEntity=>kEntity, :hFormula=>hF.key, :type=>"minute", :current=>hF.output )
@@ -68,7 +68,6 @@ class Datum < Cz::RedisObject
                   obj.upstream_average
               end
           end
-      end
     end
   end
   
