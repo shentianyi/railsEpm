@@ -54,11 +54,11 @@ class Datum < Cz::RedisObject
         system "cd #{Rails.root}/tmp && echo EPM__cron: $(date) >> EPM_cron"
           fma.people = col["People"].to_i
           fmaRFT.rft = col["Rft"].to_i
-          fmaRFT.out = col["Out"].to_f
+          fmaRFT.out = col["Out"].to_i
           fmaPPM.defeat = col["Defeat"].to_i
-          fmaPPM.out = col["Out"].to_f
+          fmaPPM.out = col["Out"].to_i
           fmaE1.people = col["People"].to_i
-          fmaE1.out = col["Out"].to_f
+          fmaE1.out = col["Out"].to_i
           ["ENTITY:MB", "ENTITY:COC"].each do |kEntity|
               [fma, fmaRFT, fmaPPM, fmaE1].each do |hF|
                   obj = self.new( :kEntity=>kEntity, :hFormula=>hF.key, :type=>"minute", :current=>hF.output )
@@ -91,7 +91,7 @@ class Datum < Cz::RedisObject
         node = Datum.find( kSon )
         total+=node.current.to_f
       end
-      self.update(:current=> total/self.son_nodes.size)
+      self.update(:current=> (total/self.son_nodes.size).round(2) )
       entity = Entity.find( self.kEntity )
       entity.send( :up_traversal, self.hFormula, self.type, self.time )
     end
