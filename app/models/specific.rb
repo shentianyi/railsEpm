@@ -1,12 +1,14 @@
 #encoding: utf-8
 class Specific < Cz::RedisObject
   attr_accessor :kEntity, :hFormula
-  attr_accessor :leastKPI, :targetKPI
+  attr_accessor :leastKPI, :targetKPI, :warningKPI, :fatalKPI
   
   
-  def initialize args={}
+  def save
+    self.key ||= self.class.gen_key( self.kEntity, self.hFormula )
+    self.warningKPI ||= (self.targetKPI*0.8).round(2)
+    self.fatalKPI ||= (self.targetKPI*0.6).round(2)
     super
-    self.key = self.class.gen_key( self.kEntity, self.hFormula ) unless args.key?("key")
   end
   
   def self.find_by_kE_hF( kEntity, hFormula )

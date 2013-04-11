@@ -5,14 +5,9 @@ class Datum < Cz::RedisObject
   
   TIME_TREE = ["century", "year", "month", "day", "hour", "minute", "second"]
   
-  
-  def initialize args={}
-    super
-    self.time = self.class.time_to_str( self.type, Time.now ) unless args.key?("time")
-    self.key = self.class.gen_key( self.kEntity, self.hFormula, self.type, self.time ) unless args.key?("key")
-  end
-  
   def save
+    self.key ||= self.class.gen_key( self.kEntity, self.hFormula, self.type, self.time )
+    self.time ||= self.class.time_to_str( self.type, Time.now )
     self.type ||= "hour"
     self.current ||= 0
     self.state ||= $kpiState[:normal]
@@ -144,10 +139,20 @@ class Datum < Cz::RedisObject
     
 private
   def set_state_by_current( cur )
+    level = $kpiState[:normal]
     if spec = Specific.find_by_kE_hF( self.kEntity, self.hFormula )
-      
+      case cur
+      when spec.warningKPI..spec.targetKPI
+        level = $kpiState[:normal]
+      when spec.fatalKPI...spec.warningKPI
+        level = $kpiState[:warning]
+      when spec.leastKPI...spec.fatalKPI
+        level = $kpiState[:fatal]
+      else
+        level = $kpiState[:unmarked]
+      end
     end
-    $kpiState[:normal]
+    return level
   end
     
 end

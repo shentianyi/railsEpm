@@ -11,12 +11,8 @@ class DataFormula < Cz::BaseClass
     @@list[fma.key] = Proc.new { |obj| obj.instance_eval  fma.formula  }
   end
   
-  def initialize args={}
-    super
-    self.key = self.class.gen_key unless args.key?("key")
-  end
-  
   def save
+    self.key ||= self.class.gen_key
     if super
       $redis.zadd( DataFormula::FORMULA_ZSET_KEY, 0, self.key )
       true
