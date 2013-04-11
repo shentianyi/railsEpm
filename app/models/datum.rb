@@ -50,8 +50,7 @@ class Datum < Cz::RedisObject
     fmaE1 = DataFormula.find("FORMULA:3")
     CSV.foreach( sFile,:headers=>true,:col_sep=>";") do |col|
         next if $.!=rr
-        # system "cd /home/ding && echo EPM__cron: $(date) >> /home/ding/EPM_cron"
-        system "cd #{Rails.root}/tmp && echo EPM__cron: $(date) >> EPM_cron"
+        # system "cd #{Rails.root}/tmp && echo EPM__cron: $(date) >> EPM_cron"
           fma.people = col["People"].to_i
           fmaRFT.rft = col["Rft"].to_i
           fmaRFT.out = col["Out"].to_i
@@ -141,12 +140,16 @@ private
   def set_state_by_current( cur )
     level = $kpiState[:normal]
     if spec = Specific.find_by_kE_hF( self.kEntity, self.hFormula )
+      target = spec.targetKPI.to_f
+      warning = spec.warningKPI.to_f
+      fatal = spec.fatalKPI.to_f
+      least = spec.leastKPI.to_f
       case cur
-      when spec.warningKPI..spec.targetKPI
+      when warning..target
         level = $kpiState[:normal]
-      when spec.fatalKPI...spec.warningKPI
+      when fatal...warning
         level = $kpiState[:warning]
-      when spec.leastKPI...spec.fatalKPI
+      when least...fatal
         level = $kpiState[:fatal]
       else
         level = $kpiState[:unmarked]

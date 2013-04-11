@@ -7,7 +7,7 @@ class Specific < Cz::RedisObject
   def save
     self.key ||= self.class.gen_key( self.kEntity, self.hFormula )
     self.warningKPI ||= (self.targetKPI*0.8).round(2)
-    self.fatalKPI ||= (self.targetKPI*0.6).round(2)
+    self.fatalKPI ||= (self.targetKPI*0.4).round(2)
     super
   end
   
