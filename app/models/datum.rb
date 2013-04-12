@@ -6,11 +6,11 @@ class Datum < Cz::RedisObject
   TIME_TREE = ["century", "year", "month", "day", "hour", "minute", "second"]
   
   def save
-    self.key ||= self.class.gen_key( self.kEntity, self.hFormula, self.type, self.time )
-    self.time ||= self.class.time_to_str( self.type, Time.now )
-    self.type ||= "hour"
     self.current ||= 0
     self.state ||= $kpiState[:normal]
+    self.type ||= "hour"
+    self.time ||= self.class.time_to_str( self.type, Time.now )
+    self.key ||= self.class.gen_key( self.kEntity, self.hFormula, self.type, self.time )
     if super
       zk = self.class.gen_key_zset( self.kEntity, self.hFormula, self.type )
       $redis.zadd( zk, Time.now.to_i, self.key )

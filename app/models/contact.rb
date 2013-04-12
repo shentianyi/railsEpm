@@ -3,9 +3,9 @@ class Contact < Cz::BaseClass
   attr_accessor :key, :title, :name, :email, :tel, :photoUrl
   attr_accessor :kEntity
   
-  def initialize args={}
+  def save
+    self.key ||= self.class.gen_key
     super
-    self.key = self.class.gen_key unless args.key?("key")
   end
   
   def entity

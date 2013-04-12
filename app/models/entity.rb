@@ -2,9 +2,9 @@
 class Entity < Cz::RedisObject
   attr_accessor :name, :kContact
   
-  def initialize args={}
+  def save
+    self.key ||= self.class.gen_key
     super
-    self.key = self.class.gen_key unless args.key?("key")
   end
   
   def add_contact( contact )
