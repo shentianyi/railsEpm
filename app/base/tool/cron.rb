@@ -17,7 +17,7 @@ class Cron
     hFile = File.new( sFile, "w" )
     hFile.puts lines
     hFile.close
-    system "cd #{Rails.root} && whenever --update-crontab epm  --set environment=development"
+    system "cd #{Rails.root} && whenever --update-crontab epm  --set environment=development  2>>EPM_errorlog"
     return true
   end
 
