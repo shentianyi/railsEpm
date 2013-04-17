@@ -59,4 +59,4 @@ end
 ###########################################################   用户
 user = User.new( :nr=>"epm", :name=>"administrator", :password=>"123", :kEntity=>"ENTITY:MB" )
 user.save
-# user.subscription_update([fma.key, fmaRFT.key, fmaPPM.key, fmaE1.key])
+user.subscription_update( son2.key, [fma.key, fmaRFT.key] )
