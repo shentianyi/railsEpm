@@ -144,9 +144,8 @@ private
       warning = spec.warningKPI.to_f
       fatal = spec.fatalKPI.to_f
       least = spec.leastKPI.to_f
+      return level if cur>=warning
       case cur
-      when warning..target
-        level = $kpiState[:normal]
       when fatal...warning
         level = $kpiState[:warning]
       when least...fatal
