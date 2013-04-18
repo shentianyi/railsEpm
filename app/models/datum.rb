@@ -42,7 +42,7 @@ class Datum < Cz::RedisObject
   
   def self.fetch_raw
     sFile = File.join(Rails.root,"/tmp/test")
-    rr=2+rand(5)
+    rr=2+rand(10)
     
     fma = DataFormula.find("FORMULA:0")
     fmaRFT = DataFormula.find("FORMULA:1")
