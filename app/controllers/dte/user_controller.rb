@@ -50,6 +50,7 @@ class UserController < ApplicationController
     render :json => @auth_head + arr
   end
   
+  # [功能：] 更新用户订阅的指标列表。
   def setObservedKpiList
     user = User.find_by_account(session[:userId])
     kEntity = params[:orgId]

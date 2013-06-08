@@ -1,4 +1,6 @@
 #encoding: utf-8
+
+# [功能：] 基于 Redis 的树结构。
 module Cz
   class RedisObject < Cz::BaseClass
     attr_accessor :nature

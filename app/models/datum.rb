@@ -5,6 +5,7 @@ class Datum < Cz::RedisObject
   
   TIME_TREE = ["century", "year", "month", "day", "hour", "minute", "second"]
   
+  # [功能：] 存储到 Redis ，自动生成 key 。
   def save
     self.current ||= 0
     self.state ||= $kpiState[:normal]
@@ -20,11 +21,13 @@ class Datum < Cz::RedisObject
     end
   end
   
+  # [功能：] （重定义）更新属性，需要根据当前值设置状态。
   def update attrs={}
     attrs[:state] = set_state_by_current(attrs[:current])  if attrs.key?( :current )
     super attrs
   end
   
+  # [功能：] 从数据中心获取数据，并更新各项指标的值。
   def self.thrift_get( kEntity, hFormula )
       (0..4).each do |i|
         sleep 10
@@ -40,6 +43,7 @@ class Datum < Cz::RedisObject
       end
   end
   
+  # [功能：] 测试函数，从测试文件中读取数据，并更新各项指标的值。
   def self.fetch_raw
     sFile = File.join(Rails.root,"/tmp/test")
     rr=2+rand(10)
@@ -71,18 +75,21 @@ class Datum < Cz::RedisObject
     end
   end
   
+  # [功能：] 获取某工作单元对某项指标，在当前时间的值。
   def self.find_current( kEntity, hFormula, type )
     time = time_to_str( type, Time.now )
     k = gen_key( kEntity, hFormula, type, time )
     find( k )
   end
   
+  # [功能：] 获取某工作单元对某项指标，在某时间点的值。
   def self.find_point( kEntity, hFormula, type, t )
-    time = time_to_str( type, Time.now )
+    time = time_to_str( type, t )
     k = gen_key( kEntity, hFormula, type, time )
     find( k )
   end
   
+  # [功能：] 在以时间分类数据的树结构中回溯。
   def upstream_average
     
     if self.son_nodes.size>0
@@ -116,14 +123,17 @@ class Datum < Cz::RedisObject
   end
   
 # private
+    # [功能：] 生成 key 。
     def self.gen_key( kEntity, hFormula, type, time )
       "DATA:entity:#{kEntity}:formula:#{hFormula}:TYPE:#{type}:#{time}"
     end
     
+    # [功能：] 生成附属zset类型数据的 key 。
     def self.gen_key_zset( kEntity, hFormula, type )
       "DATA_zset:entity:#{kEntity}:formula:#{hFormula}:TYPE:#{type}"
     end
     
+    # [功能：] 根据类型，将时间转换为字符串。
     def self.time_to_str( type, time )
       case type.to_s
       when "century"  then  time.strftime('%Y')
@@ -137,6 +147,7 @@ class Datum < Cz::RedisObject
     end
     
 private
+  # [功能：] 根据指标的计算值，设置此项指标的状态。
   def set_state_by_current( cur )
     level = $kpiState[:normal]
     if spec = Specific.find_by_kE_hF( self.kEntity, self.hFormula )

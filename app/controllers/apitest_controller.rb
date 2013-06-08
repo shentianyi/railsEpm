@@ -5,6 +5,7 @@ class ApitestController < ApplicationController
   # before_filter  :authenticate
   skip_before_filter  :authenticate
   
+  # [功能：] 图片测试，现已无用。
   def testAPI1
     sleep 5
     render :json => {:imgUrl=>"http://192.168.0.21:8080/1.jpg"}

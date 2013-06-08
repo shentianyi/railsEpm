@@ -6,6 +6,7 @@ class User < Cz::BaseClass
   attr_accessor :kEntity, :subscription
   
   
+  # [功能：] 存储到 Redis ，自动生成 key 。（需要妥善处理密码）
   def initialize args={}
     self.password = args[:password] if args.key?(:password)
     args.delete(:password)
@@ -14,11 +15,13 @@ class User < Cz::BaseClass
     self.key = self.class.gen_key_with_account(self.nr) unless args.key?("key")
   end
   
+  # [功能：] （find）根据 nr 找用户对象。
   def self.find_by_account( nr )
     k = gen_key_with_account( nr )
     find( k )
   end
   
+  # [功能：] 获取工作台对象。
   def entity
     Entity.find( self.kEntity )
   end
@@ -30,12 +33,14 @@ class User < Cz::BaseClass
     end
   end
   
+  # [功能：] 更新订阅指标。
   def subscription_update( kEntity, arr )
     hash = JSON.parse( @subscription )
     hash[kEntity] = arr
     self.update(subscription: hash.to_json)
   end
   
+  # [功能：] 获取订阅的指标。
   def subscription( kEntity )
     hash = JSON.parse( @subscription )
     return hash[kEntity]  if hash.key?(kEntity)
@@ -48,6 +53,7 @@ class User < Cz::BaseClass
     return hash[kEntity]
   end
   
+  # [功能：] 生成 key 。
   def self.gen_key_with_account( nr )
     "USER:#{nr}"
   end

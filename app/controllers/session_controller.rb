@@ -3,6 +3,7 @@ class SessionController < ApplicationController
   
   skip_before_filter  :authenticate
   
+  # [功能：] 用户登录。
   def create
     if user = User.authenticate( params[:user], params[:pwd] )
       session[:userId] = user.nr
@@ -13,6 +14,7 @@ class SessionController < ApplicationController
     end
   end
 
+  # [功能：] 注销。
   def destroy
     reset_session
     redirect_to login_url, :notice => "已注销"

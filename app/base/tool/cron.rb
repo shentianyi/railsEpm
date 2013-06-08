@@ -2,6 +2,8 @@
 module Tool
 class Cron
   
+  # [功能：] 更新 cron 定时器的设置。
+  #（Caution：这里是在程序中更改 Linux 系统的 cron ，所以在服务器上需要已 nobody 用户的身份执行 crontab -l 才能看到。）
   def self.set_time( type, num )
     return false  if type!=:min
     return false  unless num.is_a?(Fixnum) and 60%num==0
