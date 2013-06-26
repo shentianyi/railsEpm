@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-EPM::Application.load_tasks
+IFEpm::Application.load_tasks

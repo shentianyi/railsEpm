@@ -12,10 +12,10 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: epm
+  database: IFEpm_development
   pool: 5
-  username: epmer
-  password: epmer
+  username: root
+  password:
   socket: /var/run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -25,18 +25,18 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: EPM_test
+  database: IFEpm_test
   pool: 5
-  username: epmer
-  password: epmer
+  username: root
+  password:
   socket: /var/run/mysqld/mysqld.sock
 
 production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: epm
+  database: IFEpm_production
   pool: 5
-  username: epmer
-  password: epmer
+  username: root
+  password:
   socket: /var/run/mysqld/mysqld.sock

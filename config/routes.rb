@@ -1,4 +1,4 @@
-EPM::Application.routes.draw do
+IFEpm::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -25,21 +25,6 @@ EPM::Application.routes.draw do
   #     end
   #   end
 
-  controller :apitest do
-    get 'testAPI1' => :testAPI1
-    get 'testAPI2' => :testAPI2
-    get 'testAPI3' => :testAPI3
-    get 'testAPI4' => :testAPI4
-    get 'apitest/test' => :test
-  end
-  
-  controller :session do
-    get "login" => :create
-  end
-  
-  controller :background do
-    get 'background/set_time' => :set_cron_time
-  end
   # Sample resource route with sub-resources:
   #   resources :products do
   #     resources :comments, :sales
@@ -55,26 +40,11 @@ EPM::Application.routes.draw do
   #   end
 
   # Sample resource route within a namespace:
-    namespace :dte do
-      # Directs /admin/products/* to Admin::ProductsController
-      # (app/controllers/admin/products_controller.rb)
-      controller :entity do
-        get 'getChildOrgnizationsWithParentOrgId' => :getChildOrgnizationsWithParentOrgId
-        get 'getParentWithChildOrgId' => :getParentWithChildOrgId
-        get 'rootOrganization' => :rootOrganization
-        get 'getContactWithOrganizationId' => :getContactWithOrganizationId
-        get 'getKpiDetails' => :getKpiDetails
-        get 'getKpi' => :getKpi
-        get 'getKpiNodeSequenceWithKpiId' => :getKpiNodeSequenceWithKpiId
-      end
-      
-      controller :user do
-        get 'getObservedKpiStatusWithOrgId' => :getObservedKpiStatusWithOrgId
-        get 'getObservedKpiWithOrgId' => :getObservedKpiWithOrgId
-        get 'getKpiList' => :getKpiList
-        get 'setObservedKpiList' => :setObservedKpiList
-      end
-    end
+  #   namespace :admin do
+  #     # Directs /admin/products/* to Admin::ProductsController
+  #     # (app/controllers/admin/products_controller.rb)
+  #     resources :products
+  #   end
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
