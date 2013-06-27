@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  edition_id: 1
+  user_id: 1
+  status: 1
+  company: Shanghai Caizhuo
+  user_quantity: 1
+  expires_at: 2013-06-27 14:35:18
+  domain: cz
+  phone_number: 13131311111
+
+two:
+  edition_id: 1
+  user_id: 2
+  status: 1
+  company: Apple
+  user_quantity: 1
+  expires_at: 2013-06-27 14:35:18
+  domain: apple
+  phone_number: 1212112121
