@@ -12,9 +12,11 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :status
       t.boolean :is_tenant,:default=>false
       t.references :tenant
+      t.references :entity
 
       t.timestamps
     end
     add_index :users, :tenant_id
+    add_index :users, :entity_id
   end
 end
