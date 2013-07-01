@@ -10,7 +10,7 @@ class CreateKpis < ActiveRecord::Migration
       t.boolean :is_calculated
       t.integer :desired_direction
       t.integer :kpi_period
-
+      t.string :formula
       t.timestamps
     end
     add_index :kpis, :kpi_category_id
