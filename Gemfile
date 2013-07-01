@@ -9,8 +9,9 @@ gem 'rails', '3.2.8'
 gem 'mysql2'
  
 gem 'acts_as_tenant'
-gem 'ancestry'
 
+# gem for backgroud jobs based on redis
+gem 'resque'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  entry_at: 2013-07-01 16:54:53
+  entry_frequency: 1
+  user_kpi: 
+
+two:
+  entry_at: 2013-07-01 16:54:53
+  entry_frequency: 1
+  user_kpi: 
