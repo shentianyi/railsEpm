@@ -1,0 +1,157 @@
+/***************************************************** top **************************************************************/
+.page-top{
+    height:80px;
+    background-color:#272727;
+    border-bottom:1px solid #ddd;
+}
+.page-top>img{
+    margin-top:15px;
+    margin-left:15px;
+}
+.company-name{
+    display:inline;
+    color:white;
+    font-size:18px;
+    position:relative;
+    top:30px;
+}
+.top-tool{
+    margin-right:25px;
+}
+.top-tool>div{
+    width:26px;
+    height:26px;
+    border:1px solid #ddd;
+    margin-right:15px;
+    display:inline-block;
+    cursor:pointer;
+    border-radius:13px;
+    -moz-border-radius:13px;
+    -webkit-border-radius:13px;
+    margin-top:5px;
+    background-image:url("../images/top-tool.png");
+    background-repeat:no-repeat;
+}
+.tool-setting{
+    background-position:-3px -24px;
+}
+.tool-setting:hover{
+    background-position:-29px -24px;
+}
+.tool-help{
+    background-position:-1px -47px;
+}
+.tool-help:hover{
+    background-position:-28px -47px;
+}
+.tool-user{
+    background-position:-3px -1px;
+}
+.tool-user:hover{
+    background-position:-29px -1px;
+}
+ul.setting-navi{
+    list-style-type: none;
+    display:block;
+    position:relative;
+    right:-155px;
+    top:50px;
+}
+ul.setting-navi>li{
+    display:inline;
+    margin-right:30px;
+}
+ul.setting-navi>li>a{
+    color:white;
+    font-size:21px;
+    font-weight:lighter;
+    letter-spacing:4px;
+}
+ul.setting-navi>li>a:hover{
+    color:#1abc9c
+}
+/***************************************************** middle **************************************************************/
+.page-middle{
+    font-family:"Arial";
+    color:#5496c2;
+    /*background:radial-gradient(#FFFFFF, #F1F8F9) repeat scroll 0 0 #F1F8F9;*/
+}
+.middle-title{
+    font-size:35px;
+    word-spacing:8px;
+    font-weight:bold;
+    text-align:center;
+    margin:0;
+    padding:55px ;
+}
+.middle-title:before{
+    content: "-";
+    padding: 0 46px 0 0;
+}
+.middle-title:after{
+    content: "-";
+    padding: 0 0 0 46px;
+}
+/***************************************************** bottom **************************************************************/
+.page-bottom{
+    position:fixed;
+    bottom:0;
+    z-index:10;
+    height:50px;
+    box-shadow:0 1px 2px rgba(131, 162, 185, 0.4) inset;
+    background-color:#F1F8F9;
+}
+.brand-id{
+    font-family:"Trajan Pro";
+    position:relative;
+    top:11px;
+    left:21px;
+    color:#5496c2;
+    text-shadow:0 -1px 0 rgba(0, 0, 0, 0.4);
+    font-size:26px;
+}
+.task-setting{
+    position:relative;
+    right:24px;
+    top:9px;
+    border-radius:15px;
+    -webkit-border-radius:15px;
+    -moz-border-radius:15px;
+    border:1px solid #ddd;
+    background:url("../images/setting.png") no-repeat 3px 3px;
+    padding:15px;
+    cursor:pointer
+}
+.task-setting:hover{
+    border:1px solid #9d9d9d;
+    background:url("../images/settinghover.png") no-repeat 3px 3px;
+}
+.user-message{
+    cursor:pointer;
+    width:30px;
+    height:30px;
+    border-radius:15px;
+    -webkit-border-radius:15px;
+    -moz-border-radius:15px;
+    border:1px solid #ddd;
+    background:url("../images/messageCenter.png") no-repeat 1px 3px;
+    position:relative;
+    right:39px;
+    top:9px;
+}
+.user-message:hover{
+    border:1px solid #9d9d9d;
+    background:url("../images/messageCenterHover.png") no-repeat 1px 3px;
+}
+/***************************************************** setting right **************************************************************/
+.setting-right{
+    border-left:1px solid #E3E3E3;
+    box-shadow:-2px 0px 13px rgba(0,0,0,0.5);
+    width:300px;
+    position:fixed;
+    top:0;
+    right:0;
+    z-index:20;
+    height:100%;
+    background-color:white;
+}

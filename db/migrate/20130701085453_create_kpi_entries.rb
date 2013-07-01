@@ -1,0 +1,14 @@
+class CreateKpiEntries < ActiveRecord::Migration
+  def change
+    create_table :kpi_entries do |t|
+      t.datetime :entry_at
+      t.integer :entry_frequency
+      t.references :user_kpi
+
+      t.timestamps
+    end
+    add_index :kpi_entries, :user_kpi_id
+    add_index :kpi_entries, :entry_at
+    
+  end
+end

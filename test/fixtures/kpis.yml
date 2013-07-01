@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  description: MyString
+  kpi_category: 
+  unit: 1
+  entry_frequency: 1
+  target: 1.5
+  is_calculated: false
+  desired_direction: 1
+  kpi_period: 1
+
+two:
+  name: MyString
+  description: MyString
+  kpi_category: 
+  unit: 1
+  entry_frequency: 1
+  target: 1.5
+  is_calculated: false
+  desired_direction: 1
+  kpi_period: 1

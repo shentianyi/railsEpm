@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: AttendanceDayKpi
+  kpi_quantity: 0
+  tenant: cz
+
+two:
+  name: MealDayKpi
+  kpi_quantity: 0
+  tenant: cz
