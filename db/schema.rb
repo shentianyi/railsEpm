@@ -82,12 +82,12 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
     t.integer  "unit"
     t.integer  "entry_frequency"
     t.float    "target"
-    t.boolean  "is_calculated"
+    t.boolean  "is_calculated",     :default => false
     t.integer  "desired_direction"
     t.integer  "kpi_period"
     t.string   "formula"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
   end
 
   add_index "kpis", ["kpi_category_id"], :name => "index_kpis_on_kpi_category_id"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
     t.integer  "entity_id"
     t.integer  "user_id"
     t.integer  "kpi_id"
+    t.float    "target"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

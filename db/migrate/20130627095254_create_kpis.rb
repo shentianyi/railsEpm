@@ -5,11 +5,11 @@ class CreateKpis < ActiveRecord::Migration
       t.string :description
       t.references :kpi_category
       t.integer :unit
-      t.integer :entry_frequency
+      t.integer :frequency
       t.float :target
-      t.boolean :is_calculated
-      t.integer :desired_direction
-      t.integer :kpi_period
+      t.boolean :is_calculated,:default=>false
+      t.integer :direction
+      t.integer :period
       t.string :formula
       t.timestamps
     end

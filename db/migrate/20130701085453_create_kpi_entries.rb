@@ -3,6 +3,8 @@ class CreateKpiEntries < ActiveRecord::Migration
     create_table :kpi_entries do |t|
       t.datetime :entry_at
       t.integer :entry_frequency
+      t.float :value
+      t.float :original_value
       t.references :user_kpi
 
       t.timestamps

@@ -1,9 +1,7 @@
 IFEpm::Application.routes.draw do
 
-  get "users/login"
-
-  get "users/logout"
-
+resources :kpis
+resources :kpi_categories
 #	constraints(Subdomain) do
 	#
 #	  resourses :users
