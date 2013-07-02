@@ -1,28 +1,30 @@
 /***************************************************** top **************************************************************/
 .page-top{
-    height:80px;
+    height:55px;
     background-color:#272727;
     border-bottom:1px solid #ddd;
 }
 .page-top>img{
-    margin-top:15px;
-    margin-left:15px;
+    margin-top:9px;
+    margin-left:14px;
 }
 .company-name{
     display:inline;
     color:white;
     font-size:18px;
     position:relative;
-    top:30px;
+    top:12px;
+    left:2px;
 }
 .top-tool{
-    margin-right:25px;
-}
-.top-tool>div{
-    width:26px;
-    height:26px;
-    border:1px solid #ddd;
     margin-right:15px;
+    margin-top:8px;
+}
+.top-tool>a{
+    padding:13px;
+    padding:13px;
+    border:1px solid #ddd;
+    margin-right:6px;
     display:inline-block;
     cursor:pointer;
     border-radius:13px;
@@ -37,29 +39,33 @@
 }
 .tool-setting:hover{
     background-position:-29px -24px;
+    border:1px solid #1abc9c;
 }
 .tool-help{
     background-position:-1px -47px;
 }
 .tool-help:hover{
     background-position:-28px -47px;
+    border:1px solid #1abc9c;
 }
 .tool-user{
     background-position:-3px -1px;
+    margin-left:20px;
 }
 .tool-user:hover{
     background-position:-29px -1px;
+    border:1px solid #1abc9c;
 }
 ul.setting-navi{
     list-style-type: none;
     display:block;
     position:relative;
-    right:-155px;
+    right:-120px;
     top:50px;
 }
 ul.setting-navi>li{
     display:inline;
-    margin-right:30px;
+    margin-left:35px;
 }
 ul.setting-navi>li>a{
     color:white;
@@ -67,30 +73,89 @@ ul.setting-navi>li>a{
     font-weight:lighter;
     letter-spacing:4px;
 }
-ul.setting-navi>li>a:hover{
-    color:#1abc9c
+/***************************************************** navi **************************************************************/
+.page-navi{
+    background-color:white;
+}
+.main-navi{
+    list-style: none;
+    display:block;
+    margin:0;
+    padding:20px 0 16px;
+
+}
+.main-navi>li{
+    display:inline;
+}
+.main-navi>li>a{
+    color:#333;
+    font-size:21px;
+    font-weight:lighter;
+    letter-spacing:2px;
+    padding:19px 14px 21px;
+    border-left:1px solid white;
+    border-right:1px solid white;
+}
+.main-navi>li>a.main-navi-active{
+    color:#1abc9c;
+    background-color:#f4f4f4;
+    border-left:1px solid #ddd;
+    border-right:1px solid #ddd;
+}
+.main-navi>li>a:hover{
+    color:#1abc9c;
+}
+.dropdown-menu > li > a.main-navi-dropitem{
+    color:#556D7C;
+    font-size:15px;
+    font-weight:200;
+    letter-spacing:1px;
+    padding-left:13px;
+}
+.dropdown-menu > li > a.main-navi-dropitem:hover{
+    color:#1abc9c;
+    background-color:#f0f0f0 ;
+    background-image:none;
+}
+.btn.btn-navi{
+    font-size:17px;
+    padding:10px 42px 11px;
+    margin-right:20px;
+    margin-top:9px;
+}
+/***************************************************** sub-middle **************************************************************/
+.sub-middle{
+    height:35px;
+    background-color:#f4f4f4;
+    border-top:1px solid #ddd;
+    box-shadow:0 1px 2px rgba(0,0,0,0.45);
+}
+.sub-middle-tool{
+    margin-right:21px;
+    margin-top:5px;
+}
+.sub-middle-tool>a{
+    color:black;
+    font-size:14px;
+    margin-left:15px;
+    cursor:pointer
+}
+.sub-middle-tool>a:hover{
+    color:#3498db
 }
 /***************************************************** middle **************************************************************/
-.page-middle{
-    font-family:"Arial";
-    color:#5496c2;
-    /*background:radial-gradient(#FFFFFF, #F1F8F9) repeat scroll 0 0 #F1F8F9;*/
+.left-category{
+    width:150px;
+    height:600px;
 }
-.middle-title{
-    font-size:35px;
-    word-spacing:8px;
-    font-weight:bold;
-    text-align:center;
-    margin:0;
-    padding:55px ;
+.right-content{
+    height:600px;
 }
-.middle-title:before{
-    content: "-";
-    padding: 0 46px 0 0;
-}
-.middle-title:after{
-    content: "-";
-    padding: 0 0 0 46px;
+/***************************************************** chart **************************************************************/
+.analyze-chart{
+   width:100%;
+   height:500px;
+
 }
 /***************************************************** bottom **************************************************************/
 .page-bottom{

@@ -174,39 +174,27 @@ $(function() {
             $("#setting-right").hide();
         }
     });
-    $("#task-setting").hover(function(){
+    $("#tool-setting,#tool-help,#tool-user,#tool-print,#tool-excel,#tool-pdf").hover(function(){
        $(this).tooltip('show');
     },function(){
         $(this).tooltip('hide');
     });
-    $("#message-center").hover(function(){
-        $(this).tooltip('show');
-    },function(){
-        $(this).tooltip('hide');
-    });
-    init_pagebottom();
-
+    init_rightContent();
      if (document.attachEvent) {
-         window.attachEvent('onresize', init_pagebottom);
-//       window.attachEvent('onresize', init_taskPart);
+         window.attachEvent('onresize', init_rightContent);
      }
      else {
-    	 window.addEventListener('resize', init_pagebottom, false);
-//       window.addEventListener('resize', init_taskPart, false);
+    	 window.addEventListener('resize', init_rightContent, false);
 	 }
-
 })
-function init_pagebottom(){
-    document.getElementById("page-bottom").style.width=document.body.scrollWidth+"px";
-}
-function funcRight_show(event){
-    var e = event ? event : (window.event ? window.event : null);
-    e.stopPropagation();
-}
-function show_settingRight(event){
-    var e = event ? event : (window.event ? window.event : null);
-    e.stopPropagation();
-    $("#setting-right").show();
+function init_rightContent(){
+    var fwidth=parseInt(document.body.scrollWidth);
+    if(fwidth>990){
+        document.getElementById("right-content").style.width=document.body.scrollWidth-150+"px";
+    }
+    else{
+        document.getElementById("right-content").style.width=990-150+"px";
+    }
 }
 Date.prototype.format = function(format) {
      var o = {
