@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627111543) do
+ActiveRecord::Schema.define(:version => 20130701085453) do
 
   create_table "entities", :force => true do |t|
     t.string   "name"
@@ -20,21 +20,60 @@ ActiveRecord::Schema.define(:version => 20130627111543) do
     t.integer  "tenant_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.string   "ancestry"
   end
 
-  add_index "entities", ["ancestry"], :name => "index_entities_on_ancestry"
   add_index "entities", ["tenant_id"], :name => "index_entities_on_tenant_id"
 
-  create_table "kpi_categories", :force => true do |t|
+  create_table "entity_group_items", :force => true do |t|
+    t.integer  "entity_id"
+    t.integer  "entity_group_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "entity_group_items", ["entity_group_id"], :name => "index_entity_group_items_on_entity_group_id"
+  add_index "entity_group_items", ["entity_id"], :name => "index_entity_group_items_on_entity_id"
+
+  create_table "entity_groups", :force => true do |t|
     t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "entity_groups", ["user_id"], :name => "index_entity_groups_on_user_id"
+
+  create_table "kpi_categories", :force => true do |t|
+    t.string   "name",         :default => "Default"
     t.integer  "kpi_quantity", :default => 0
+    t.string   "description"
     t.integer  "tenant_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
   end
 
   add_index "kpi_categories", ["tenant_id"], :name => "index_kpi_categories_on_tenant_id"
+
+  create_table "kpi_entries", :force => true do |t|
+    t.datetime "entry_at"
+    t.integer  "entry_frequency"
+    t.integer  "user_kpi_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "kpi_entries", ["entry_at"], :name => "index_kpi_entries_on_entry_at"
+  add_index "kpi_entries", ["user_kpi_id"], :name => "index_kpi_entries_on_user_kpi_id"
+
+  create_table "kpi_items", :force => true do |t|
+    t.integer  "item_id"
+    t.integer  "kpi_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "kpi_items", ["item_id"], :name => "index_kpi_items_on_item_id"
+  add_index "kpi_items", ["kpi_id"], :name => "index_kpi_items_on_kpi_id"
 
   create_table "kpis", :force => true do |t|
     t.string   "name"
@@ -46,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20130627111543) do
     t.boolean  "is_calculated"
     t.integer  "desired_direction"
     t.integer  "kpi_period"
+    t.string   "formula"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
   end
@@ -54,26 +94,30 @@ ActiveRecord::Schema.define(:version => 20130627111543) do
 
   create_table "tenants", :force => true do |t|
     t.integer  "edition_id"
-    t.integer  "user_id"
     t.integer  "status"
     t.string   "company"
-    t.integer  "user_quantity"
+    t.integer  "user_quantity", :default => 0
     t.datetime "expires_at"
     t.string   "domain"
     t.string   "phone_number"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.integer  "user_id"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
-  create_table "user_entities", :force => true do |t|
-    t.integer  "user_id"
+  add_index "tenants", ["user_id"], :name => "index_tenants_on_user_id"
+
+  create_table "user_kpis", :force => true do |t|
     t.integer  "entity_id"
+    t.integer  "user_id"
+    t.integer  "kpi_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "user_entities", ["entity_id"], :name => "index_user_entities_on_entity_id"
-  add_index "user_entities", ["user_id"], :name => "index_user_entities_on_user_id"
+  add_index "user_kpis", ["entity_id"], :name => "index_user_kpis_on_entity_id"
+  add_index "user_kpis", ["kpi_id"], :name => "index_user_kpis_on_kpi_id"
+  add_index "user_kpis", ["user_id"], :name => "index_user_kpis_on_user_id"
 
   create_table "users", :force => true do |t|
     t.integer  "role_id"
@@ -87,10 +131,12 @@ ActiveRecord::Schema.define(:version => 20130627111543) do
     t.integer  "status"
     t.boolean  "is_tenant",                 :default => false
     t.integer  "tenant_id"
+    t.integer  "entity_id"
     t.datetime "created_at",                                   :null => false
     t.datetime "updated_at",                                   :null => false
   end
 
+  add_index "users", ["entity_id"], :name => "index_users_on_entity_id"
   add_index "users", ["tenant_id"], :name => "index_users_on_tenant_id"
 
 end
