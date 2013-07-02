@@ -2,10 +2,11 @@
 <html>
 <head>
       <meta charset="utf-8" >
-      <link href="stylesheets/brilliantech.base.css" rel="stylesheet" >
-      <link href="stylesheets/brilliantech.railsepm.css" rel="stylesheet" >
       <link href="stylesheets/wzx-jquery-ui.css" rel="stylesheet" >
       <link href="stylesheets/wzx-bootstrap.css" rel="stylesheet" >
+      <link href="stylesheets/brilliantech.base.css" rel="stylesheet" >
+      <link href="stylesheets/brilliantech.railsepm.css" rel="stylesheet" >
+      <title>if kpi</title>
 </head>
 <body>
       <div class="wrap-page">
@@ -13,15 +14,39 @@
               <img src="images/headicon.png"/>
               <label class="company-name">BrillianTech</label>
               <div class="top-tool pull-right">
-                  <div class="tool-setting"> </div>
-                  <div class="tool-help"> </div>
-                  <div class="tool-user"> </div>
+                  <a class="tool-setting" data-placement="bottom" data-animation=false id="tool-setting" title="setting" > </a>
+                  <a class="tool-help" data-placement="bottom" data-animation=false id="tool-help" title="help"> </a>
+                  <a class="tool-user" data-placement="bottom" data-animation=false id="tool-user" title="user"> </a>
               </div>
-              <ul class="setting-navi pull-right">
-                  <li><a href="">KPIs</a></li>
-                  <li><a href="">Users</a></li>
-                  <li><a href="">Billing</a></li>
+              <!--<ul class="setting-navi pull-right">-->
+                  <!--<li><a >Hello Wayne</a></li>-->
+              <!--</ul>-->
+          </div>
+          <div class="page-navi clearfix">
+              <ul class="main-navi pull-left">
+                  <li><a href="">Get Started</a></li>
+                  <li><a href="">Dashboards</a></li>
+                  <li><a href="">Analytics</a></li>
+                  <li><a href="">Reports</a></li>
+                  <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                          Manage<b class="caret"></b>
+                      </a>
+                      <ul class="dropdown-menu">
+                          <li><a class="main-navi-dropitem" href="">KPIs</a></li>
+                          <li><a class="main-navi-dropitem" href="">Users</a></li>
+                          <li><a class="main-navi-dropitem" href="">Billing</a></li>
+                      </ul>
+                  </li>
               </ul>
+              <a class="btn btn-success btn-navi pull-right" href="">KPI Entry</a>
+          </div>
+          <div class="sub-middle">
+              <div class="sub-middle-tool pull-right">
+                  <a><i class="icon-print"></i> </a>
+                  <a><i class="icon-share-alt"></i> Excel</a>
+                  <a><i class="icon-share-alt"></i> PDF</a>
+              </div>
           </div>
 
       </div>
@@ -29,6 +54,6 @@
       <script src="javascripts/jquery-ui-1.10.3.custom.min.js"></script>
       <script src="javascripts/bootstrap.min.js"></script>
       <script src="javascripts/brilliantech.base.js"></script>
-      <script src="javascripts/brilliantexh.railsepm.js"></script>
+      <script src="javascripts/brilliantech.railsepm.js"></script>
 </body>
 </html>
