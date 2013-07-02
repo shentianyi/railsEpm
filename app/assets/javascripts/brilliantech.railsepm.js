@@ -19,11 +19,6 @@ function init_analytics() {
                     text: 'Fruit eaten'
                 }
             },
-            plotOptions: {
-                areaspline: {
-                    fillOpacity: 0.5
-                }
-            },
             series: [
                 {
                     name: 'wayne',
