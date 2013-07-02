@@ -39,10 +39,13 @@ class KpisController < ApplicationController
 
   # delete kpi
   def destroy
-    if @kpi=Kpi.find_by_id(params[:id])
-      @kpi.destroy
-      render :json=>true
-    end
+	  if @kpi=Kpi.find_by_id(params[:id])
+		  if @kpi.kpi_parents.count==0
+			  @kpi.destroy
+		  else
+			  render :json=>'can not destroy, as basci kpi'
+		  end
+	  end
   end
 
   def assign
