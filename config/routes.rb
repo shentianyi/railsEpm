@@ -1,5 +1,13 @@
 IFEpm::Application.routes.draw do
 
+  get "kpi_entries/create"
+
+  get "entities/list"
+
+  get "entities/create"
+
+  get "entities/destroy"
+
   get "user_kpi_items/update"
 
   get "user_kpi_items/updates"

@@ -45,7 +45,7 @@ module KpisHelper
     
     # get user kpis by user
     def self.get_kpis_by_user user
-      user.kpis.select("*,user_kpi_items.target as 'target'")
+      user.kpis.select("*,user_kpi_items.target as 'user_kpi_item_target',user_kpi_items.id as 'user_kpi_item_id'")
     end
 
     # get user unassigned kpi
@@ -55,7 +55,7 @@ module KpisHelper
       end
      return nil 
     end
-
+ 
     # get user unassign kpi categories
     ### this method is not completed
     def self.get_user_unassigned_kpi_categories user_id
