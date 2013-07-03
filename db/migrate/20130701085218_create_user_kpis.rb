@@ -4,7 +4,7 @@ class CreateUserKpis < ActiveRecord::Migration
       t.references :entity
       t.references :user
       t.references :kpi
-
+      t.float :target
       t.timestamps
     end
     add_index :user_kpis, :entity_id
