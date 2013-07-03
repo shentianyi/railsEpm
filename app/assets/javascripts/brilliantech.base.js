@@ -190,10 +190,10 @@ $(function() {
 function init_rightContent(){
     var fwidth=parseInt(document.body.scrollWidth);
     if(fwidth>990){
-        document.getElementById("right-content").style.width=document.body.scrollWidth-150+"px";
+        document.getElementById("right-content").style.width=document.body.scrollWidth-211+"px";
     }
     else{
-        document.getElementById("right-content").style.width=990-150+"px";
+        document.getElementById("right-content").style.width=990-211+"px";
     }
 }
 Date.prototype.format = function(format) {
