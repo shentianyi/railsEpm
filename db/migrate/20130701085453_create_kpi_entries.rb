@@ -5,11 +5,11 @@ class CreateKpiEntries < ActiveRecord::Migration
       t.integer :entry_frequency
       t.float :value
       t.float :original_value
-      t.references :user_kpi
+      t.references :user_kpi_item
 
       t.timestamps
     end
-    add_index :kpi_entries, :user_kpi_id
+    add_index :kpi_entries, :user_kpi_item_id
     add_index :kpi_entries, :entry_at
     
   end

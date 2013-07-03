@@ -1,5 +1,9 @@
 IFEpm::Application.routes.draw do
 
+  get "user_kpi_items/update"
+
+  get "user_kpi_items/updates"
+
 resources :kpis
 resources :kpi_categories
 #	constraints(Subdomain) do

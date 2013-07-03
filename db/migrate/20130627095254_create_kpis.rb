@@ -11,8 +11,10 @@ class CreateKpis < ActiveRecord::Migration
       t.integer :direction
       t.integer :period
       t.string :formula
+      t.references :user
       t.timestamps
     end
     add_index :kpis, :kpi_category_id
+    add_index :kpis,:user_id
   end
 end

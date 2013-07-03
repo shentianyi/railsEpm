@@ -16,10 +16,10 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
   create_table "entities", :force => true do |t|
     t.string   "name"
     t.integer  "status"
-    t.integer  "user_quantity"
+    t.integer  "user_quantity", :default => 0
     t.integer  "tenant_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   add_index "entities", ["tenant_id"], :name => "index_entities_on_tenant_id"
@@ -59,13 +59,13 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
     t.integer  "entry_frequency"
     t.float    "value"
     t.float    "original_value"
-    t.integer  "user_kpi_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer  "user_kpi_item_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   add_index "kpi_entries", ["entry_at"], :name => "index_kpi_entries_on_entry_at"
-  add_index "kpi_entries", ["user_kpi_id"], :name => "index_kpi_entries_on_user_kpi_id"
+  add_index "kpi_entries", ["user_kpi_item_id"], :name => "index_kpi_entries_on_user_kpi_item_id"
 
   create_table "kpi_items", :force => true do |t|
     t.integer  "item_id"
@@ -88,11 +88,13 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
     t.integer  "direction"
     t.integer  "period"
     t.string   "formula"
+    t.integer  "user_id"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
   end
 
   add_index "kpis", ["kpi_category_id"], :name => "index_kpis_on_kpi_category_id"
+  add_index "kpis", ["user_id"], :name => "index_kpis_on_user_id"
 
   create_table "tenants", :force => true do |t|
     t.integer  "edition_id"
@@ -109,7 +111,7 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
 
   add_index "tenants", ["user_id"], :name => "index_tenants_on_user_id"
 
-  create_table "user_kpis", :force => true do |t|
+  create_table "user_kpi_items", :force => true do |t|
     t.integer  "entity_id"
     t.integer  "user_id"
     t.integer  "kpi_id"
@@ -118,9 +120,9 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
     t.datetime "updated_at", :null => false
   end
 
-  add_index "user_kpis", ["entity_id"], :name => "index_user_kpis_on_entity_id"
-  add_index "user_kpis", ["kpi_id"], :name => "index_user_kpis_on_kpi_id"
-  add_index "user_kpis", ["user_id"], :name => "index_user_kpis_on_user_id"
+  add_index "user_kpi_items", ["entity_id"], :name => "index_user_kpi_items_on_entity_id"
+  add_index "user_kpi_items", ["kpi_id"], :name => "index_user_kpi_items_on_kpi_id"
+  add_index "user_kpi_items", ["user_id"], :name => "index_user_kpi_items_on_user_id"
 
   create_table "users", :force => true do |t|
     t.integer  "role_id"

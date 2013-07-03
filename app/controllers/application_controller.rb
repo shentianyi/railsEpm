@@ -1,7 +1,7 @@
 #encoding: utf-8
 class ApplicationController < ActionController::Base
   #  include UrlHelper
-  set_current_tenant_through_filter
+ # set_current_tenant_through_filter
 #  before_filter :authorize
  # before_filter :find_current_user_tenant
   protect_from_forgery

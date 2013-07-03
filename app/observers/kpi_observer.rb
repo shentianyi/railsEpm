@@ -13,6 +13,8 @@ class KpiObserver<ActiveRecord::Observer
   def after_create kpi
     # incr kpi category count
     kpi.kpi_category.update_attributes(:kpi_quantity=>kpi.kpi_category.kpi_quantity+1)
+    # default assgin kpi to creator
+    UserKpiItem.new(:user_id=>kpi.creator.id,:target=>kpi.target,:entity_id=>kpi.creator.entity_id,:kpi_id=>kpi.id).save
   end
 
   def before_update kpi
