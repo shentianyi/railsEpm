@@ -3,42 +3,135 @@ function init_analytics() {
     $("#container").highcharts(
         {
             chart: {
-                type: 'line'
+                type: 'line',
+                events: {
+                    addSeries: function() {
+                        alert ('A series was added, about to redraw chart');
+                    }
+                }
             },
             credits:{
-                text:"this is mine！"
+                enabled:false
             },
             title: {
-                text: 'Fruit Consumption'
+                text:""
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y;
+                }
             },
             xAxis: {
                 type: 'datetime',
                 dateTimeLabelFormats: {
-                    day: '%e  %b'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'amount'
-                }
-            },
-            series: [
-                {
-                    type:"line",
-                    name: 'target',
-                    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-                    pointStart: Date.UTC(1970, 0, 1),
-                    pointInterval: 24 * 3600 * 1000//one day
-
+                    day:'%e/%b'
                 },
+                labels:{
+                    style:{
+                        fontWeight:800
+                    }
+                },
+                tickInterval: 24 * 3600 * 1000 // one day
+            },
+            yAxis: [{
+                title: {
+                    enabled:false
+                },
+                tickWidth:1,
+                offset:10,
+                labels:{
+                    format:'{value}$'
+                },
+                lineWidth:1
+            },{
+                opposite:true,
+                title:{
+                    enabled:false
+                },
+                tickWidth:1,
+                offset:10,
+                label:{
+                    format:'{value}days'
+                },
+                lineWidth:1
+            }],
+            series: [
                 {
                     type:"area",
                     name: 'actual',
-                    data: [21, 14,15,43,23.4,34,2,67,3],
-                    pointStart: Date.UTC(1970, 0, 1),
+                    data: [100,100,100,150,150,150,200],
+                    pointStart: Date.UTC(2013,6,1),
+                    pointInterval: 24 * 3600 * 1000//one day
+                },
+                {
+                    type:"line",
+                    name: 'target',
+                    data: [80,110,120,140,150,150,300],
+                    pointStart: Date.UTC(2013,6,1),
+                    yAxis:1,
                     pointInterval: 24 * 3600 * 1000 // one day
                 }
             ]
         }
     );
+    $("#from,#to,#compare-from,#compare-to").datepicker({
+
+    })
 }
+//  function init_analytics(){
+//      var options = {
+//          chart: {
+//              renderTo: 'container',
+//              defaultSeriesType: 'column'
+//          },
+//          title: {
+//              text: 'Fruit Consumption'
+//          },
+//          xAxis: {
+//              categories: []
+//          },
+//          yAxis: {
+//              title: {
+//                  text: 'Units'
+//              }
+//          },
+//          series: []
+//      };
+//      $.get('data.csv', function(data) {
+//          // Split the lines
+//          var lines = data.split('\n');
+//          // Iterate over the lines and add categories or series
+//          $.each(lines, function(lineNo, line) {
+//              var items = line.split(',');
+//
+//              // header line containes categories
+//              if (lineNo == 0) {
+//                  $.each(items, function(itemNo, item) {
+//                      if (itemNo > 0) options.xAxis.categories.push(item);
+//                  });
+//              }
+//
+//              // the rest of the lines contain data with their name in the first position
+//              else {
+//                  var series = {
+//                      data: []
+//                  };
+//                  $.each(items, function(itemNo, item) {
+//                      if (itemNo == 0) {
+//                          series.name = item;
+//                      } else {
+//                          series.data.push(parseFloat(item));
+//                      }
+//                  });
+//
+//                  options.series.push(series);
+//
+//              }
+//
+//          });
+//
+//          // Create the chart
+//          var chart = new Highcharts.Chart(options);
+//      });
+//  }

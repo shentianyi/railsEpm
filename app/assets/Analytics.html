@@ -53,8 +53,32 @@
 
         </div>
         <div class="right-content pull-left" id="right-content">
-           <div id="container" class="analyze-chart">
+            <div class="content-condition clearfix">
+                <div class="content-condition-part pull-left">
+                    <p class="text-center">KPI name</p>
+                    <select>
+                        <option>KPI 1</option>
+                        <option >KPI 2</option>
+                        <option>KPI 3</option>
+                    </select>
+                    <label>compare to</label>
+                    <select>
+                        <option>KPI 1</option>
+                        <option>KPI 2</option>
+                        <option>KPI 3</option>
+                        <option selected = "selected" >none</option>
+                    </select>
+                </div>
+                <div class="content-condition-part pull-right content-condition-rightpart">
+                    <p class="text-center">Time range</p>
+                    <input type="text" readonly="true" id="from" value="2013-7-1"/><span>to</span><input type="text" readonly="true" id="to" value="2013-7-7"/>
+                    <label>compare to</label>
+                    <input type="text" readonly="true" id="compare-from"/><span>to</span><input type="text" readonly="true" id="compare-to"/>
+                </div>
 
+
+            </div>
+           <div id="container" class="analyze-chart">
            </div>
         </div>
     </div>
