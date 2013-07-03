@@ -24,60 +24,65 @@
     </div>
     <div class="page-navi clearfix">
         <ul class="main-navi pull-left">
-            <li><a href="">Get Started</a></li>
-            <li><a href="">Dashboards</a></li>
-            <li><a class="main-navi-active" href="">Analytics</a></li>
-            <li><a href="">Reports</a></li>
+            <li><a href="">开始</a></li>
+            <li><a href="">仪表盘</a></li>
+            <li><a class="main-navi-active" href="">分析</a></li>
+            <li><a href="">报告</a></li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    Manage<b class="caret"></b>
+                   管理<b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="main-navi-dropitem" href="">KPIs</a></li>
-                    <li><a class="main-navi-dropitem" href="">Users</a></li>
-                    <li><a class="main-navi-dropitem" href="">Billing</a></li>
+                    <li><a class="main-navi-dropitem" href="">KPI</a></li>
+                    <li><a class="main-navi-dropitem" href="">用户</a></li>
+                    <li><a class="main-navi-dropitem" href="">付费</a></li>
                 </ul>
             </li>
         </ul>
-        <a class="btn btn-success btn-navi pull-right" href="">KPI Entry</a>
+        <a class="btn btn-success btn-navi pull-right" href="">输入 KPI</a>
     </div>
     <div class="sub-middle">
         <div class="sub-middle-tool pull-right">
-            <a data-placement="bottom" data-animation=false id="tool-print" title="print this page"><i class="icon-print"></i> Print</a>
+            <a data-placement="bottom" data-animation=false id="tool-print" title="print this page"><i class="icon-print"></i> 打印</a>
             <a data-placement="bottom" data-animation=false id="tool-excel" title="export to Excel"><i class="icon-share-alt"></i>Excel</a>
             <a data-placement="bottom" data-animation=false id="tool-pdf" title="export to PDF"><i class="icon-share-alt"></i>PDF</a>
         </div>
     </div>
     <div class="middle clearfix">
         <div class="left-category pull-left">
-
         </div>
+
         <div class="right-content pull-left" id="right-content">
             <div class="content-condition clearfix">
                 <div class="content-condition-part pull-left">
                     <p class="text-center">KPI name</p>
                     <select>
                         <option>KPI 1</option>
-                        <option >KPI 2</option>
-                        <option>KPI 3</option>
-                    </select>
-                    <label>compare to</label>
-                    <select>
-                        <option>KPI 1</option>
                         <option>KPI 2</option>
                         <option>KPI 3</option>
-                        <option selected = "selected" >none</option>
                     </select>
+                    <!--<label>compare to</label>-->
+                    <!--<select>-->
+                        <!--<option>KPI 1</option>-->
+                        <!--<option>KPI 2</option>-->
+                        <!--<option>KPI 3</option>-->
+                        <!--<option selected = "selected" >none</option>-->
+                    <!--</select>-->
                 </div>
                 <div class="content-condition-part pull-right content-condition-rightpart">
                     <p class="text-center">Time range</p>
                     <input type="text" readonly="true" id="from" value="2013-7-1"/><span>to</span><input type="text" readonly="true" id="to" value="2013-7-7"/>
-                    <label>compare to</label>
-                    <input type="text" readonly="true" id="compare-from"/><span>to</span><input type="text" readonly="true" id="compare-to"/>
+                    <!--<label>compare to</label>-->
+                    <!--<input type="text" readonly="true" id="compare-from"/><span>to</span><input type="text" readonly="true" id="compare-to"/>-->
                 </div>
-
-
             </div>
+           <div class="control-chart">
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn control-chart-btn-last" data-animation=false title="year">Y</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false title="quarter">Q</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false title="month">M</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false title="week">W</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn control-btn-active" data-animation=false title="day">D</a>
+           </div>
            <div id="container" class="analyze-chart">
            </div>
         </div>

@@ -174,7 +174,7 @@ $(function() {
             $("#setting-right").hide();
         }
     });
-    $("#tool-setting,#tool-help,#tool-user,#tool-print,#tool-excel,#tool-pdf").hover(function(){
+    $("#tool-setting,#tool-help,#tool-user,#tool-print,#tool-excel,#tool-pdf,.control-chart-btn ").hover(function(){
        $(this).tooltip('show');
     },function(){
         $(this).tooltip('hide');
