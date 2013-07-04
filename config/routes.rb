@@ -1,19 +1,10 @@
 IFEpm::Application.routes.draw do
 
-  get "kpi_entries/create"
-
-  get "entities/list"
-
-  get "entities/create"
-
-  get "entities/destroy"
-
-  get "user_kpi_items/update"
-
-  get "user_kpi_items/updates"
-
 resources :kpis
 resources :kpi_categories
+
+mount Resque::Server.new, :at=>"/admin/resque"
+
 #	constraints(Subdomain) do
 	#
 #	  resourses :users

@@ -1,6 +1,6 @@
 #encoding: utf-8
-module EnumBase
-  def initialize(key, value,desc)
+module Enum
+ def initialize(key, value,desc)
     @key = key
     @value = value
     @desc= desc
@@ -29,7 +29,7 @@ module EnumBase
     end
 
     def const_missing(key)
-      @hash[key].value
+      @hash[key].value if @hash[key]
     end
 
     def get_by_value value

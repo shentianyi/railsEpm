@@ -19,10 +19,11 @@ class KpisController < ApplicationController
 
   # create api
   def create
-      if request.post?
-	  @kpi=Kpi.new(:name=>params[:kpi])
-	  render :json=>@kpi.save
-      end
+    if request.post?
+      @kpi=Kpi.new(:name=>params[:kpi])
+      @kpi.creator=@current_user
+      render :json=>@kpi.save
+    end
   end
 
   # edit kpi
@@ -33,25 +34,25 @@ class KpisController < ApplicationController
   # update kpi
   def update
     if @kpi=Kpi.find_by_id(params[:kpi][:id])
-     render :json=>@kpi.update_attributes(params[:kpi])
+      render :json=>@kpi.update_attributes(params[:kpi])
     end
   end
 
   # delete kpi
   def destroy
-      if @kpi=Kpi.find_by_id(params[:id])
-	  if @kpi.kpi_parents.count==0
-	      @kpi.destroy
-	  else
-	      render :json=>'can not destroy, as basci kpi'
-	  end
+    if @kpi=Kpi.find_by_id(params[:id])
+      if @kpi.kpi_parents.count==0
+      @kpi.destroy
+      else
+        render :json=>'can not destroy, as basci kpi'
       end
+    end
   end
 
   def assign
-   if request.post?
-     KpisHelper.assign_kpi_to_user_by_id params[:kpi],params[:user]
-   end
+    if request.post?
+      KpisHelper.assign_kpi_to_user_by_id params[:kpi],params[:user]
+    end
   end
 
   def user_kpis
