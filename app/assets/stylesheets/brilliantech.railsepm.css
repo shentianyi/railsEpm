@@ -1,8 +1,8 @@
 /***************************************************** top **************************************************************/
 .page-top{
     height:55px;
-    background-color:#272727;
-    border-bottom:1px solid #ddd;
+    background-color:#202020;
+    border-bottom:2px solid #ddd;
 }
 .page-top>img{
     margin-top:9px;
@@ -91,18 +91,18 @@ ul.setting-navi>li>a{
     font-size:16px;
     font-weight:500;
     letter-spacing:2px;
-    padding:17px 14px 13px;
+    padding:17px 14px 15px;
     border-left:1px solid white;
     border-right:1px solid white;
 }
 .main-navi>li>a.main-navi-active{
-    color:#1abc9c;
+    color:#2980b9;
     background-color:#f4f4f4;
     border-left:1px solid #ddd;
     border-right:1px solid #ddd;
 }
 .main-navi>li>a:hover{
-    color:#1abc9c;
+    color:#2980b9;
 }
 .dropdown-menu > li > a.main-navi-dropitem{
     color:#556D7C;
@@ -112,7 +112,7 @@ ul.setting-navi>li>a{
     padding-left:13px;
 }
 .dropdown-menu > li > a.main-navi-dropitem:hover{
-    color:#1abc9c;
+    color:#2980b9;
     background-color:#f0f0f0 ;
     background-image:none;
 }
@@ -133,6 +133,8 @@ b.caret{
     background-color:#f4f4f4;
     border-top:1px solid #ddd;
     box-shadow:0 1px 2px rgba(0,0,0,0.45);
+    -moz-box-shadow:0 1px 2px rgba(0,0,0,0.45);
+    -webkit-box-shadow:0 1px 2px rgba(0,0,0,0.45);
 }
 .sub-middle-tool{
     margin-right:21px;
@@ -157,14 +159,26 @@ b.caret{
     padding-top:2px;
 }
 .left-category{
-    width:200px;
+    width:150px;
     height:600px;
     border-right:1px solid #ddd;
 }
 .right-content{
     height:600px;
+    transition:padding 0.5s ease 0s;
 }
-/***************************************************** content condition **************************************************************/
+/***************************************************** 功用的功能区 **************************************************************/
+.addBlock{
+    width:100%;
+    background-color:white;
+    box-shadow:0 1px 2px rgba(0,0,0,0.3);
+    -moz-box-shadow:0 1px 2px rgba(0,0,0,0.3);
+    -webkit-box-shadow:0 1px 2px rgba(0,0,0,0.3);
+    position:absolute;
+    padding:5px 15px 20px;
+}
+/*****************************************************     Anaytics      **************************************************************/
+/*content control*/
 .content-condition{
     width:700px;
     margin:30px auto ;
@@ -205,7 +219,7 @@ b.caret{
     cursor:default;
     background-color:white !important;
 }
-/***************************************************** chart **************************************************************/
+/*chart*/
 .control-chart{
     width:70%;
     margin:0px auto;
@@ -215,11 +229,11 @@ b.caret{
 .btn.control-chart-btn{
     margin-left:10px;
     margin-top:9px;
-    padding:2px 10px;
+    padding:3px 7px 0px;
 }
 .control-chart-btn.control-chart-btn-last{
     margin-right:38px;
-    padding:2px 12px;
+    padding:3px 9px 0;
 }
 .btn.control-chart-btn.control-btn-active{
     background-color:#5DADE2;
@@ -229,56 +243,149 @@ b.caret{
    margin:0px auto;
    height:350px;
 }
-/***************************************************** bottom **************************************************************/
-.page-bottom{
-    position:fixed;
-    bottom:0;
-    z-index:10;
-    height:50px;
-    box-shadow:0 1px 2px rgba(131, 162, 185, 0.4) inset;
-    background-color:#F1F8F9;
+/***************************************************** dashboard **************************************************************/
+/*sub middle*/
+.sub-middle.db-sub-middle{
+    height:45px;
+    margin-bottom:2px;
 }
-.brand-id{
-    font-family:"Trajan Pro";
-    position:relative;
-    top:11px;
-    left:21px;
-    color:#5496c2;
-    text-shadow:0 -1px 0 rgba(0, 0, 0, 0.4);
-    font-size:26px;
+.sub-middle-tool{
+    margin-top:8px;
+    margin-left:-6px;
 }
-.task-setting{
-    position:relative;
-    right:24px;
-    top:9px;
-    border-radius:15px;
-    -webkit-border-radius:15px;
-    -moz-border-radius:15px;
-    border:1px solid #ddd;
-    background:url("../images/setting.png") no-repeat 3px 3px;
-    padding:15px;
-    cursor:pointer
+.db-add{
+    padding:3px 3px 3px 25px;
+    background:url("../images/add-db.png")no-repeat -6px 3px;
 }
-.task-setting:hover{
-    border:1px solid #9d9d9d;
-    background:url("../images/settinghover.png") no-repeat 3px 3px;
+.db-add:hover{
+    background:url("../images/add-db.png")no-repeat -6px -19px;
+    color:#1ABC9C !important;
 }
-.user-message{
+.sub-middle-tool>a.db-add{
+    font-size:16px;
+    color:#9d9d9d
+}
+/*choose db*/
+.chooseChart-wrap{
+    width:864px;
+    margin:0 auto;
+}
+.choose-db-item{
+    width:250px;
+    height:200px;
+    margin-right:50px;
+    border:2px solid #ddd;
+    border-radius:3px;
     cursor:pointer;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    background-image:url("../images/db-chart.png");
+    background-repeat:no-repeat;
+    position:relative;
+}
+.choose-db-item:hover{
+    border:2px solid #f39c12;
+    color:#f39c12;
+}
+.choose-db-item>label{
+    position:absolute;
+    right:7px;
+    bottom:-2px;
+    display:inline;
+}
+.choose-db-item.db-chart-line{
+    background-position:53px 31px;
+}
+.choose-db-item.db-chart-column{
+    background-position:53px -175px
+}
+.choose-db-item.db-chart-pie{
+    background-position:-155px 31px;
+    margin-right:0
+}
+/*****************************************************     manage      **************************************************************/
+ul.manage-group{
+    list-style: none;
+    font-size:15px;
+    margin-left:14px;
+    margin-top:13px;
+    position:relative;
+    right:-1px;
+}
+ul.manage-group>li{
+    text-align:center;
+    padding:9px 10px;
+    border-bottom:1px solid #ddd;
+}
+ul.manage-group>li>a:hover {
+    padding-left:20px;
+    color:#3498db;
+}
+ul.manage-group>li>a{
+    font-size:17px;
+    color:#9d9d9d;
+    transition:padding 0.15s ease 0s;
+}
+ul.manage-group>li.active{
+    border-right:1px solid #f4f4f4;
+}
+ul.manage-group>li.active>a{
+    color:#3498db;
+    padding-left:20px;
+}
+.sub-middle.sub-middle-manage{
+    height:60px;
+}
+.btn.manage-add-btn{
+    padding:15px 45px 14px;
+    margin-right:8%;
+    margin-top:15px;
+}
+.manage-operate{
     width:30px;
     height:30px;
-    border-radius:15px;
-    -webkit-border-radius:15px;
-    -moz-border-radius:15px;
-    border:1px solid #ddd;
-    background:url("../images/messageCenter.png") no-repeat 1px 3px;
-    position:relative;
-    right:39px;
-    top:9px;
+    background-repeat:no-repeat;
+    background-image:url("../images/manage-operate.png");
+    cursor:pointer;
 }
-.user-message:hover{
-    border:1px solid #9d9d9d;
-    background:url("../images/messageCenterHover.png") no-repeat 1px 3px;
+.manage-operate-edit{
+    background-position:1px 2px;
+}
+.manage-operate-del{
+    background-position:1px -39px;
+}
+.wrap-add-manage{
+
+}
+.add-manage-item{
+    float:left;
+    margin-right:25px;
+    width:210px;
+}
+.add-manage-item>p{
+    text-align:center;
+    margin-bottom:0px;
+    font-size:15px
+}
+/*************************    KPI     ******************************/
+.manage-kpi{
+    background-color:white;
+    width:84%;
+    margin:34px auto 5px;
+    border-collapse:collapse;
+}
+.manage-kpi th{
+    background-color:#f4f4f4;
+    padding-bottom:5px;
+
+}
+.manage-kpi td{
+    border-top:1px solid #ddd;
+    border-bottom:1px solid #ddd;
+    padding:10px 5px;
+    font-size:16px;
+    word-break:break-all;
+    word-wrap:break-word;
 }
 /***************************************************** setting right **************************************************************/
 .setting-right{
