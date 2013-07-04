@@ -1,3 +1,18 @@
+/////////////////////////////////////////////////////////////////////////  共用的function  //////////////////////////////////
+function show_addBlock(event){
+    var e = event ? event : (window.event ? window.event : null);
+    e.stopPropagation();
+    var height=parseInt($("#addBlock").height())+20+"px";
+    if($("#addBlock").data("state")=="off"){
+        $("#addBlock").slideDown("2000").data("state","on");
+        $("#right-content").css("padding-top",height);
+    }
+    else{
+        $("#addBlock").slideUp("2000").data("state","off");
+        $("#right-content").css("padding-top","0px");
+    }
+
+}
 /////////////////////////////////////////////////////////////////////////  Analytics   //////////////////////////////////
 function init_analytics() {
     $("#container").highcharts(
@@ -135,3 +150,9 @@ function init_analytics() {
 //          var chart = new Highcharts.Chart(options);
 //      });
 //  }
+
+
+
+////////////////////////////////////////////////     dashBoard  ///////////////////////////////////////
+function init_dashBoard(){
+}

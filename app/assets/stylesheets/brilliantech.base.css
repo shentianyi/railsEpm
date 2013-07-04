@@ -9,7 +9,7 @@
     url('OpenSans-Regular.svg#OpenSans-Regular') format('svg');
 }
 body{
-    background-color:#F4F4F4;
+    background-color:#f4f4f4;
     height:100%;
     /*font-family:'Open Sans','Calibri','Arial',sans-serif;*/
     font-family:"微软雅黑",'Arial';
@@ -19,23 +19,47 @@ body{
     font-weight:500;
     transition: all 0.3s ease-in 0s;
 }
-.weight-light{
-    font-weight:500;
-}
+
 label{
 	cursor:default;
 }
+
+/********************************  格式调整   *****************************/
+.no-margin{
+    margin:0;
+}
+/******************************** 字相关的   ***************************/
 text-center{
     align:center;
+}
+.weight-light{
+    font-weight:500;
+}
+/*}font的颜色*/
+.normal-black{
+    color:black;
+}
+.normal-blue{
+    color:#5496c2
+}
+.light-black{
+    color:#555 !important;
+}
+.normal-gray{
+    color:#9d9d9d;
+}
+.light-gray{
+    color:#bdc3c7;
+}
+.light-orange{
+    color:#F39C12 !important;
 }
 /********************************  控件   *****************************/
 .tooltip{
     font-size:14px !important;
     opacity:1 !important;
 }
-/*.tooltip-inner{*/
-    /*color:#1abc9c !important;*/
-/*}*/
+
 .badge{
     padding-left:5px;
     padding-right:5px;
@@ -76,6 +100,9 @@ a:hover,a:focus{
 }
 .btn.btn-mini{
     padding:3px 6px 0px
+}
+.btn.btn-super-large{
+    padding:25px;
 }
 .btn.btn-primary{
     background-color:#3498db;
@@ -123,22 +150,7 @@ a:hover,a:focus{
 .inline-block{
     display:inline-block
 }
-/*}font的颜色*/
-.normal-black{
-	color:black;
-}
-.light-black{
-    color:#555 !important;
-}
-.normal-gray{
-    color:#9d9d9d;
-}
-.light-gray{
-    color:#bdc3c7;
-}
-.light-orange{
-    color:#F39C12 !important;
-}
+
 /***************************************************** wrap **************************************************************/
 .wrap-page{
     min-width:990px;

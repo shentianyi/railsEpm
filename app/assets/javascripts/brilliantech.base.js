@@ -142,18 +142,6 @@ function flash_hidden_message(obj, times) {
      }, 300);
 }
 
-//隐藏下面的装饰
-function hide_bottom(event) {
-     var e = event ? event : (window.event ? window.event : null )
-     e.stopPropagation();
-     if($("#bottom-decoration").attr('state') == "show") {
-          $("#bottom-decoration").slideUp().attr('state', 'hide');
-          $("#hide-bottom-icon").removeClass('icon-chevron-down').addClass('icon-chevron-up');
-     } else {
-          $("#bottom-decoration").slideDown().attr('state', 'show');
-          $("#hide-bottom-icon").removeClass('icon-chevron-up').addClass('icon-chevron-down');
-     }
-}
 
 function MessageBoxClear() {
      $('#MessageBox > p').html("");
@@ -190,10 +178,10 @@ $(function() {
 function init_rightContent(){
     var fwidth=parseInt(document.body.scrollWidth);
     if(fwidth>990){
-        document.getElementById("right-content").style.width=document.body.scrollWidth-211+"px";
+        document.getElementById("right-content").style.width=document.body.scrollWidth-171+"px";
     }
     else{
-        document.getElementById("right-content").style.width=990-211+"px";
+        document.getElementById("right-content").style.width=990-171+"px";
     }
 }
 Date.prototype.format = function(format) {

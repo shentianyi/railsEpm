@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" >
+    <link href="stylesheets/wzx-jquery-ui.css" rel="stylesheet" >
+    <link href="stylesheets/wzx-bootstrap.css" rel="stylesheet" >
+    <link href="stylesheets/brilliantech.base.css" rel="stylesheet" >
+    <link href="stylesheets/brilliantech.railsepm.css" rel="stylesheet" >
+    <title>if kpi</title>
+</head>
+<body>
+<div class="wrap-page">
+    <div class="page-top">
+        <img src="images/headicon.png"/>
+        <label class="company-name">BrillianTech</label>
+        <div class="top-tool pull-right">
+            <a class="tool-setting" data-placement="bottom" data-animation=false id="tool-setting" title="设置" > </a>
+            <a class="tool-help" data-placement="bottom" data-animation=false id="tool-help" title="帮助"> </a>
+            <a class="tool-user" data-placement="bottom" data-animation=false id="tool-user" title="账户"> </a>
+        </div>
+        <!--<ul class="setting-navi pull-right">-->
+        <!--<li><a >Hello Wayne</a></li>-->
+        <!--</ul>-->
+    </div>
+    <div class="page-navi clearfix">
+        <ul class="main-navi pull-left">
+            <li><a href="">开始</a></li>
+            <li><a href="">仪表盘</a></li>
+            <li><a  href="">分析</a></li>
+            <li><a href="">报告</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    管理<b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="main-navi-dropitem" href="">KPI</a></li>
+                    <li><a class="main-navi-dropitem" href="">用户</a></li>
+                    <li><a class="main-navi-dropitem" href="">付费</a></li>
+                </ul>
+            </li>
+        </ul>
+        <a class="btn btn-success btn-navi pull-right" href="">输入 KPI</a>
+    </div>
+    <div class="sub-middle sub-middle-manage">
+        <h3 class="text-center">Manage my KPIs </h3>
+
+    </div>
+    <div class="middle clearfix">
+        <div class="left-category pull-left">
+            <ul class="manage-group">
+                <li><h3 class="no-margin">类别</h3></li>
+                <li class="active"><a href="">default</a></li>
+                <li><a href="">entity1</a></li>
+                <li><a href="">entity2</a></li>
+                <li><a href="">entity3</a></li>
+                <li><button class="btn btn-primary">创建新类别</button></li>
+            </ul>
+        </div>
+        <div class="addBlock" id="addBlock" data-state="off" style="display:none">
+            <h4 class="text-center normal-blue">添加新的KPI</h4>
+            <div class="wrap-add-manage" class=" clearfix">
+                <div class="add-manage-item">
+                    <p>名称</p>
+                    <input type="text" />
+                </div>
+                <div class="add-manage-item">
+                    <p>类别</p>
+                    <input type="text" />
+                </div>
+                <div class="add-manage-item">
+                    <p>周期</p>
+                    <input type="text" />
+                </div>
+                <div class="add-manage-item">
+                    <p>目标</p>
+                    <input type="text" />
+                </div>
+            </div>
+        </div>
+        <div class="right-content pull-left" id="right-content">
+            <table class="manage-kpi">
+                <tr>
+                    <th>ID</th>
+                    <th>名称</th>
+                    <th>类别</th>
+                    <th>周期</th>
+                    <th>目标值</th>
+                    <th>编辑</th>
+                    <th>删除</th>
+                </tr>
+                <tr id="kpiId">
+                    <td align="center">1</td>
+                    <td align="center">kpi1</td>
+                    <td align="center">entity1</td>
+                    <td align="center">日</td>
+                    <td align="center">2000</td>
+                    <td align="center"><div class="manage-operate manage-operate-edit"></div></td>
+                    <td align="center"><div class="manage-operate manage-operate-del"></div></td>
+                </tr>
+            </table>
+            <a class="btn manage-add-btn btn-primary pull-right" onclick="show_addBlock(event)">添加KPI</a>
+        </div>
+    </div>
+
+</div>
+<script src="javascripts/jquery-1.8.2.min.js"></script>
+<script src="javascripts/highcharts.js"></script>
+<script src="javascripts/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="javascripts/bootstrap.min.js"></script>
+<script src="javascripts/brilliantech.base.js"></script>
+<script src="javascripts/brilliantech.railsepm.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        init_analytics();
+    })
+</script>
+</body>
+</html>
