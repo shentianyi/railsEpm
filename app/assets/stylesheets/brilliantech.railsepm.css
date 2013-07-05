@@ -167,15 +167,15 @@ b.caret{
     height:600px;
     transition:padding 0.5s ease 0s;
 }
-/***************************************************** 功用的功能区 **************************************************************/
+/***************************************************** 公用的功能区 **************************************************************/
 .addBlock{
     width:100%;
     background-color:white;
-    box-shadow:0 1px 2px rgba(0,0,0,0.3);
-    -moz-box-shadow:0 1px 2px rgba(0,0,0,0.3);
-    -webkit-box-shadow:0 1px 2px rgba(0,0,0,0.3);
+    box-shadow:0px 8px 8px rgba(0, 0, 0, 0.45);
+    -moz-box-shadow:0px 8px 8px rgba(0, 0, 0, 0.45);
+    -webkit-box-shadow:0px 8px 8px rgba(0, 0, 0, 0.45);
     position:absolute;
-    padding:5px 15px 20px;
+    padding:5px 0px 20px;
 }
 /*****************************************************     Anaytics      **************************************************************/
 /*content control*/
@@ -316,12 +316,17 @@ ul.manage-group>li{
     text-align:center;
     padding:9px 10px;
     border-bottom:1px solid #ddd;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+    width:115px;
 }
 ul.manage-group>li>a:hover {
-    padding-left:20px;
+    padding-left:25px;
     color:#3498db;
 }
 ul.manage-group>li>a{
+    padding:9px 10px;
     font-size:17px;
     color:#9d9d9d;
     transition:padding 0.15s ease 0s;
@@ -331,7 +336,7 @@ ul.manage-group>li.active{
 }
 ul.manage-group>li.active>a{
     color:#3498db;
-    padding-left:20px;
+    padding-left:25px;
 }
 .sub-middle.sub-middle-manage{
     height:60px;
@@ -355,17 +360,49 @@ ul.manage-group>li.active>a{
     background-position:1px -39px;
 }
 .wrap-add-manage{
+    width:600px;
+    margin:0 auto;
+}
+.wrap-add-manage-left{
+    width:400px;
+}
+.wrap-add-manage-right{
+    width:200px;
+}
+.is-calcu-check{
+    position:relative;
+    top:-5px;
+}
+.is-calcu-type{
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border:1px solid #ddd;
+    padding:10px;
+}
+a.calcuType-method-btn{
+    font-size:21px;
+    color:#ddd;
+    margin-right:5px;
+    border:1px solid #ddd;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    cursor:pointer;
+    padding:3px 6px;
+}
+a.calcuType-method-btn.active{
+    color:#5496c2;
+    border:1px solid #5496c2;
+}
+.wrap-add-manage td{
+    padding:2px 12px;
+}
+.wrap-add-manage-right>input,.wrap-add-manage-right>select{
+    margin-bottom:18px;
+}
+.wrap-add-manage>button{
 
-}
-.add-manage-item{
-    float:left;
-    margin-right:25px;
-    width:210px;
-}
-.add-manage-item>p{
-    text-align:center;
-    margin-bottom:0px;
-    font-size:15px
 }
 /*************************    KPI     ******************************/
 .manage-kpi{

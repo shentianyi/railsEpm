@@ -2,14 +2,19 @@
 function show_addBlock(event){
     var e = event ? event : (window.event ? window.event : null);
     e.stopPropagation();
+    var obj = e.srcElement || e.target;
     var height=parseInt($("#addBlock").height())+20+"px";
     if($("#addBlock").data("state")=="off"){
         $("#addBlock").slideDown("2000").data("state","on");
         $("#right-content").css("padding-top",height);
+        if($(obj).data("manage")=="kpi"){
+            $("#add-block-mark").text("添加KPI");
+            $("#add-manage-kpi").text("添加");
+        }
     }
     else{
-        $("#addBlock").slideUp("2000").data("state","off");
-        $("#right-content").css("padding-top","0px");
+//        $("#addBlock").slideUp("2000").data("state","off");
+//        $("#right-content").css("padding-top","0px");
     }
 
 }
@@ -155,4 +160,84 @@ function init_analytics() {
 
 ////////////////////////////////////////////////     dashBoard  ///////////////////////////////////////
 function init_dashBoard(){
+}
+////////////////////////////////////////////////     manage  ///////////////////////////////////////
+function init_manage(){
+    $(".calcuType-method-btn").bind("click",function(){
+        $(".calcuType-method-btn").removeClass("active");
+        $(this).addClass("active");
+    });
+    cancel_add_kpi();
+}
+///////////////KPI
+function is_calcu(){
+    if($("#is-calcu-check").attr("checked")=="checked"){
+        $("#is-calcu-type").slideDown("2000");
+    }
+    else{
+        $("#is-calcu-type").slideUp("2000");
+    }
+}
+function cancel_add_kpi(){
+    $("#addBlock").slideUp("2000").data("state","off").find("input").val("");
+    $("#right-content").css("padding-top","0px");
+    $("#add-entity").find("option[data-order='1']").attr("selected","true");
+    $("#add-interval").find("option[data-order='1']").attr("selected","true");
+    $("#add-trend").find("option[data-order='1']").attr("selected","true");
+    $("#add-unit").find("option[data-order='1']").attr("selected","true");
+    $("#is-calcu-check").attr("checked",false);
+    $("#is-calcu-relate").find("option[data-order='1']").attr("selected","true");
+}
+function add_kpi(){
+    var entity=$("#add-entity").find(":selected").val();
+    var name=$("#new-kpi-name").val();
+    var desc=$("#new-kpi-desc").val();
+    var interval=$("#add-interval").find(":selected").val();
+    var trend=$("#add-trend").find(":selected").val();
+    var target=$("#new-kpi-target").val();
+    var unit=$("#add-unit").find(":selected").val();
+    var id=parseInt($("#kpi-table").length)+1;
+    if($("#is-calcu-check").attr("checked")=="checked"){
+        var relateEntity=$("#is-calcu-relate").find(":selected").val();
+        $(".calcuType-method-btn").each(function(){
+            if($(this).hasClass("active")){
+                var calcuType=$(this).data("calcutype");
+            }
+        })
+    }
+    else{
+        if(name.length!=0 && target.length!=0){
+            if($("#is-calcu-check").attr("checked")=="checked"){
+
+            }
+            else{
+                $("#kpi-table").append($("<tr />").attr("id",id).append($("<td align='center' />").text(id))
+                    .append($("<td align='center' />").text(entity))
+                    .append($("<td align='center' />").text(name))
+                    .append($("<td align='center' />").text(desc))
+                    .append($("<td align='center' />").text(interval))
+                    .append($("<td align='center' />").text(target))
+                    .append($("<td align='center' />").text(unit))
+                    .append($("<td align='center' />").text(trend))
+                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong",id)).click(edit_kpiItem))
+                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong",id)))
+                );
+                cancel_add_kpi();
+            }
+        }
+        else{
+            $("#add-warn").removeClass("hide");
+            while_hide("add-warn");
+        }
+    }
+
+}
+function edit_kpiItem(){
+    var height=parseInt($("#addBlock").height())+20+"px";
+    if($("#addBlock").data("state")=="off"){
+        $("#addBlock").slideDown("2000").data("state","on");
+        $("#right-content").css("padding-top",height);
+        $("#add-block-mark").text("修改KPI");
+        $("#add-manage-kpi").text("修改");
+    }
 }
