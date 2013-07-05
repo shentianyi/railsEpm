@@ -42,7 +42,7 @@
         <a class="btn btn-success btn-navi pull-right" href="">输入 KPI</a>
     </div>
     <div class="sub-middle sub-middle-manage">
-        <h3 class="text-center">Manage my KPIs </h3>
+        <h3 class="text-center">管理我的KPI </h3>
 
     </div>
     <div class="middle clearfix">
@@ -57,48 +57,124 @@
             </ul>
         </div>
         <div class="addBlock" id="addBlock" data-state="off" style="display:none">
-            <h4 class="text-center normal-blue">添加新的KPI</h4>
-            <div class="wrap-add-manage" class=" clearfix">
-                <div class="add-manage-item">
-                    <p>名称</p>
-                    <input type="text" />
-                </div>
-                <div class="add-manage-item">
-                    <p>类别</p>
-                    <input type="text" />
-                </div>
-                <div class="add-manage-item">
-                    <p>周期</p>
-                    <input type="text" />
-                </div>
-                <div class="add-manage-item">
-                    <p>目标</p>
-                    <input type="text" />
-                </div>
+           <h4 class="text-center normal-blue" id="add-block-mark">添加新的KPI</h4>
+           <div class="wrap-add-manage clearfix">
+            <table class="wrap-add-manage-left pull-left" >
+                <tr>
+                    <td align="right" valign="top">*类别</td>
+                    <td>
+                        <select id="add-entity">
+                            <option data-order="1" selected="selected">默认</option>
+                            <option data-order="2">KPI 1</option>
+                            <option data-order="3">KPI 2</option>
+                            <option data-order="4">KPI 3</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">*名称</td>
+                    <td>
+                        <input type="text" id="new-kpi-name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">描述</td>
+                    <td>
+                        <input type="text" id="new-kpi-desc"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">*周期</td>
+                    <td>
+                        <select id="add-interval">
+                            <option data-order="1" selected="selected">日</option>
+                            <option data-order="2">周</option>
+                            <option data-order="3">月</option>
+                            <option data-order="4">季度</option>
+                            <option data-order="5">年</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">趋势</td>
+                    <td>
+                        <select id="add-trend">
+                            <option data-order="1" selected="selected">无</option>
+                            <option data-order="2">下降</option>
+                            <option data-order="3">上升</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">*目标</td>
+                    <td>
+                        <input type="text"  onkeyup="clearNoNum(this)" id="new-kpi-target"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">*单位</td>
+                    <td>
+                        <select id="add-unit">
+                            <option data-order="1" selected="selected">m</option>
+                            <option data-order="2">kg</option>
+                            <option data-order="3">$</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="top">是否为计算型</td>
+                    <td valign="top">
+                        <input type="checkbox" class="is-calcu-check" id="is-calcu-check" onclick="is_calcu()"/>
+                        <div class="is-calcu-type clearfix" id="is-calcu-type" style="display:none">
+                            <select id="is-calcu-relate">
+                                <option data-order="1" selected="selected">默认</option>
+                                <option data-order="2">KPI 1</option>
+                                <option data-order="3">KPI 2</option>
+                            </select>
+                            <br />
+                            <a class="pull-left calcuType-method-btn active" data-calcuType="1">+</a>
+                            <a class="pull-left calcuType-method-btn" data-calcuType="2">-</a>
+                            <a class="pull-left calcuType-method-btn" data-calcuType="3">*</a>
+                            <a class="pull-left calcuType-method-btn" data-calcuType="4">/</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="wrap-add-manage-right pull-right">
+                <button class="add-manage-kpi btn  btn-success" id="add-manage-kpi" onclick="add_kpi()">添加</button>
+                <button class="cancel-manage-kpi btn " onclick="cancel_add_kpi()">取消</button>
             </div>
+           </div>
+           <p class="text-center light-orange hide" id="add-warn">请填写所有带*的选项</p>
         </div>
         <div class="right-content pull-left" id="right-content">
-            <table class="manage-kpi">
+            <table class="manage-kpi" id="kpi-table">
                 <tr>
                     <th>ID</th>
-                    <th>名称</th>
                     <th>类别</th>
+                    <th>名称</th>
+                    <th width="221px">描述</th>
                     <th>周期</th>
                     <th>目标值</th>
+                    <th>单位</th>
+                    <th>方向</th>
                     <th>编辑</th>
                     <th>删除</th>
                 </tr>
-                <tr id="kpiId">
+                <tr id="1">
                     <td align="center">1</td>
-                    <td align="center">kpi1</td>
                     <td align="center">entity1</td>
+                    <td align="center">KPI 1</td>
+                    <td align="center" >desc</td>
                     <td align="center">日</td>
                     <td align="center">2000</td>
-                    <td align="center"><div class="manage-operate manage-operate-edit"></div></td>
-                    <td align="center"><div class="manage-operate manage-operate-del"></div></td>
+                    <td align="center">$</td>
+                    <td align="center">上升</td>
+                    <td align="center"><div class="manage-operate manage-operate-edit" date-belong="1" onclick="edit_kpiItem(event)"></div></td>
+                    <td align="center"><div class="manage-operate manage-operate-del" date-belong="1" onclick="remove_kpiItem()"></div></td>
                 </tr>
             </table>
-            <a class="btn manage-add-btn btn-primary pull-right" onclick="show_addBlock(event)">添加KPI</a>
+            <a class="btn manage-add-btn btn-primary pull-right" onclick="show_addBlock(event)" data-manage="kpi">添加KPI</a>
         </div>
     </div>
 
@@ -111,7 +187,7 @@
 <script src="javascripts/brilliantech.railsepm.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        init_analytics();
+        init_manage();
     })
 </script>
 </body>

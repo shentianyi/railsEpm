@@ -1,17 +1,3 @@
-(function(i, s, o, g, r, a, m) {
-     i['GoogleAnalyticsObject'] = r;
-     i[r] = i[r] ||
-     function() {
-          (i[r].q = i[r].q || []).push(arguments)
-     }, i[r].l = 1 * new Date();
-     a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-     a.async = 1;
-     a.src = g;
-     m.parentNode.insertBefore(a, m)
-})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-ga('create', 'UA-41513970-1', '121.199.48.53');
-ga('send', 'pageview');
 
 // ws: 判断数字是否是非负数
 function isNotNegaNum(v) {
@@ -150,7 +136,25 @@ function MessageBoxClear() {
 function MessageBoxAdd(str) {
      $('#MessageBox > p').html($('#MessageBox > p').html() + str).parent().show();
 }
-
+//只能输入数字和小数点
+function clearNoNum(obj)
+{
+    //先把非数字的都替换掉，除了数字和.
+    obj.value = obj.value.replace(/[^\d.]/g,"");
+    //必须保证第一个为数字而不是.
+    obj.value = obj.value.replace(/^\./g,"");
+    obj.value = obj.value.replace(/^0/g,"");
+    //保证只有出现一个.而没有多个.
+    obj.value = obj.value.replace(/\.{2,}/g,".");
+    //保证.只出现一次，而不能出现两次以上
+    obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+}
+//过段时间消失
+function while_hide(a){
+    setTimeout(function(){
+          $("#"+a).addClass("hide");
+    },"2000");
+}
 $(function() {
      $('#MessageBox > button').click(function() {
           $(this).parent().hide();
