@@ -9,7 +9,7 @@ class Kpi < ActiveRecord::Base
   belongs_to :creator,:class_name=>'User',:foreign_key=>'user_id'
   
   has_many :kpi_entries,:through=>:user_kpi_items
-
+  belongs_to :tenant
   attr_accessible :description, :direction, :frequency, :is_calculated, :period, :name, :target, :unit,:formula,:parsed_formula
-  attr_accessible :kpi_category_id
+  attr_accessible :kpi_category_id,:tenant_id
 end

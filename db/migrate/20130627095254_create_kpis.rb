@@ -13,9 +13,11 @@ class CreateKpis < ActiveRecord::Migration
       t.string :formula
       t.string :parsed_formula
       t.references :user
+      t.references :tenant
       t.timestamps
     end
     add_index :kpis, :kpi_category_id
     add_index :kpis,:user_id
+    add_index :kpis,:tenant_id
   end
 end

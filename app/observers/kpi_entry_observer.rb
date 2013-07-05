@@ -4,7 +4,10 @@ class KpiEntryObserver<ActiveRecord::Observer
   # parse entry date and value
   def before_save kpi_entry
     kpi=Kpi.find_by_id(kpi_entry.kpi_id)
-    kpi_entry.parsed_entry_at=KpiEntriesHelper.parse_entry_date(kpi.frequency,kpi_entry.entry_at) if kpi_entry.new_record?
+if kpi_entry.new_record?
+    kpi_entry.parsed_entry_at=KpiEntriesHelper.parse_entry_date(kpi.frequency,kpi_entry.entry_at)
+ kpi_entry.frequency=kpi.frequency
+end
     kpi_entry.value=KpiUnit.parse_entry_value(kpi.unit,kpi_entry.original_value)
   end
 

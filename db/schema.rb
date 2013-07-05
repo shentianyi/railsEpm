@@ -55,16 +55,19 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
   add_index "kpi_categories", ["tenant_id"], :name => "index_kpi_categories_on_tenant_id"
 
   create_table "kpi_entries", :force => true do |t|
-    t.datetime "entry_at"
-    t.integer  "entry_frequency"
+    t.string   "entry_at"
+    t.integer  "frequency"
     t.float    "value"
     t.float    "original_value"
+    t.datetime "parsed_entry_at"
     t.integer  "user_kpi_item_id"
+    t.integer  "kpi_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
 
   add_index "kpi_entries", ["entry_at"], :name => "index_kpi_entries_on_entry_at"
+  add_index "kpi_entries", ["parsed_entry_at"], :name => "index_kpi_entries_on_parsed_entry_at"
   add_index "kpi_entries", ["user_kpi_item_id"], :name => "index_kpi_entries_on_user_kpi_item_id"
 
   create_table "kpi_items", :force => true do |t|
@@ -88,12 +91,15 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
     t.integer  "direction"
     t.integer  "period"
     t.string   "formula"
+    t.string   "parsed_formula"
     t.integer  "user_id"
+    t.integer  "tenant_id"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
   end
 
   add_index "kpis", ["kpi_category_id"], :name => "index_kpis_on_kpi_category_id"
+  add_index "kpis", ["tenant_id"], :name => "index_kpis_on_tenant_id"
   add_index "kpis", ["user_id"], :name => "index_kpis_on_user_id"
 
   create_table "tenants", :force => true do |t|
