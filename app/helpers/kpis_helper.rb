@@ -6,9 +6,9 @@ module KpisHelper
   end
 
   # parse formula to calculate format
-  def self.parse_formula_to_calculate_fromat formula
-    formula.gsub(/\[/,"f[:'").gsub(/\]/,"']")
-  end
+  # def self.parse_formula_to_calculate_fromat formula
+    # formula.gsub(/\[/,"f[:'").gsub(/\]/,"']")
+  # end
  
   # assign kpi to user by id
   def self.assign_kpi_to_user_by_id kpi_id,user_id

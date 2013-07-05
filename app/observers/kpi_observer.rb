@@ -2,14 +2,12 @@
 class KpiObserver<ActiveRecord::Observer
   observe :kpi
   def before_create kpi
-      # add kpi items
-      if kpi.is_calculated
-	  # parse formula_string to formula
-	  kpi.parsed_formula=KpisHelper.parse_formula_to_calculate_fromat(kpi.formula)
-	  KpisHelper.parse_formula_items(kpi.formula).each do |item|
-	      kpi.kpi_items<<KpiItem.new(:item_id=>item)
-	  end
+    # add kpi items
+    if kpi.is_calculated
+      KpisHelper.parse_formula_items(kpi.formula).each do |item|
+        kpi.kpi_items<<KpiItem.new(:item_id=>item)
       end
+    end
   end
 
   def after_create kpi

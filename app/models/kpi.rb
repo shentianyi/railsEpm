@@ -10,6 +10,6 @@ class Kpi < ActiveRecord::Base
   
   has_many :kpi_entries,:through=>:user_kpi_items
   belongs_to :tenant
-  attr_accessible :description, :direction, :frequency, :is_calculated, :period, :name, :target, :unit,:formula,:parsed_formula
+  attr_accessible :description, :direction, :frequency, :is_calculated, :period, :name, :target, :unit,:formula
   attr_accessible :kpi_category_id,:tenant_id
 end
