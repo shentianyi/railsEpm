@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" >
+    <link href="stylesheets/wzx-jquery-ui.css" rel="stylesheet" >
+    <link href="stylesheets/wzx-bootstrap.css" rel="stylesheet" >
+    <link href="stylesheets/brilliantech.base.css" rel="stylesheet" >
+    <link href="stylesheets/brilliantech.railsepm.css" rel="stylesheet" >
+    <title>if kpi</title>
+</head>
+<body>
+<div class="wrap-page">
+    <div class="page-top">
+        <img src="images/headicon.png"/>
+        <label class="company-name">BrillianTech</label>
+        <div class="top-tool pull-right">
+            <a class="tool-setting" data-placement="bottom" data-animation=false id="tool-setting" title="设置" > </a>
+            <a class="tool-help" data-placement="bottom" data-animation=false id="tool-help" title="帮助"> </a>
+            <a class="tool-user" data-placement="bottom" data-animation=false id="tool-user" title="账户"> </a>
+        </div>
+        <!--<ul class="setting-navi pull-right">-->
+        <!--<li><a >Hello Wayne</a></li>-->
+        <!--</ul>-->
+    </div>
+    <div class="page-navi clearfix">
+        <ul class="main-navi pull-left">
+            <li><a href="">开始</a></li>
+            <li><a href="">仪表盘</a></li>
+            <li><a href="">分析</a></li>
+            <li><a href="">报告</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    管理<b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="main-navi-dropitem" href="">KPI</a></li>
+                    <li><a class="main-navi-dropitem" href="">用户</a></li>
+                    <li><a class="main-navi-dropitem" href="">付费</a></li>
+                </ul>
+            </li>
+        </ul>
+        <a class="btn btn-success btn-navi pull-right" href="">输入 KPI</a>
+    </div>
+    <div class="sub-middle sub-middle-manage">
+        <h3 class="text-center">输入KPI </h3>
+    </div>
+    <div class="middle clearfix">
+        <label class="inline pull-left entryKPI-intervalMark" >KPI周期</label>
+        <ul class="nav nav-tabs entry-nav-tabs" id="entry-date-type">
+            <li  data-type="day"><a href="#">日</a></li>
+            <li  class="active" data-type="week"><a href="#" >周</a></li>
+            <li data-type="month"><a href="#" >月</a></li>
+            <li data-type="quarter"><a href="#">季度</a></li>
+            <li data-type="year"><a href="#">年</a></li>
+        </ul>
+        <div class="entry-kpi-part">
+            <img src="images/calendar.png" style="margin:16px 0 0 18px;"/>
+            <a class="entry-prev-btn entry-btn"></a>
+            <input type="text" id="entry-kpi" class="entry-kpi-date" readonly="true" />
+            <div class="week-picker hide"> </div>
+            <a class="entry-next-btn entry-btn"></a>
+            <table class="entry-table">
+                <tr>
+                    <th>类别</th>
+                    <th>名称</th>
+                    <th width="450px;">描述</th>
+                    <th>目标</th>
+                    <th>现在</th>
+                    <th>完成度</th>
+                </tr>
+                <tr>
+                    <td align="center">entity1</td>
+                    <td align="center">kpi1</td>
+                    <td align="center">asddssada</td>
+                    <td align="center" width="150px">2000</td>
+                    <td align="center" width="150px"><input class="entry-kpi" type="text"/></td>
+                    <td align="center"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+<script src="javascripts/jquery-1.8.2.min.js"></script>
+<script src="javascripts/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="javascripts/bootstrap.min.js"></script>
+<script src="javascripts/brilliantech.base.js"></script>
+<script src="javascripts/brilliantech.railsepm.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        init_entryKpi();
+    })
+</script>
+</body>
+</html>

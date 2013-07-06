@@ -54,11 +54,6 @@ function MessageBox(str, type) {
      	  $(".message-header").addClass('message-normal');
      }
 }
-
-$(function() {
-     $('.message-box').draggable();
-});
-
 function message_close() {
      $("#MessageBox").addClass('hide');
 }
@@ -148,45 +143,6 @@ function clearNoNum(obj)
     obj.value = obj.value.replace(/\.{2,}/g,".");
     //保证.只出现一次，而不能出现两次以上
     obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
-}
-//过段时间消失
-function while_hide(a){
-    setTimeout(function(){
-          $("#"+a).addClass("hide");
-    },"2000");
-}
-$(function() {
-     $('#MessageBox > button').click(function() {
-          $(this).parent().hide();
-     });
-    $('body').bind("click", function(event) {
-        var e = event ? event : (window.event ? window.event : null);
-        var obj = e.srcElement || e.target;
-        if($(obj) != $("#setting-right") || $(obj) ==$("html")) {
-            $("#setting-right").hide();
-        }
-    });
-    $("#tool-setting,#tool-help,#tool-user,#tool-print,#tool-excel,#tool-pdf,.control-chart-btn ").hover(function(){
-       $(this).tooltip('show');
-    },function(){
-        $(this).tooltip('hide');
-    });
-    init_rightContent();
-     if (document.attachEvent) {
-         window.attachEvent('onresize', init_rightContent);
-     }
-     else {
-    	 window.addEventListener('resize', init_rightContent, false);
-	 }
-})
-function init_rightContent(){
-    var fwidth=parseInt(document.body.scrollWidth);
-    if(fwidth>990){
-        document.getElementById("right-content").style.width=document.body.scrollWidth-171+"px";
-    }
-    else{
-        document.getElementById("right-content").style.width=990-171+"px";
-    }
 }
 Date.prototype.format = function(format) {
      var o = {

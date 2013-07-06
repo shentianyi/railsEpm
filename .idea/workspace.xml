@@ -3,19 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="524ddef3-5e9f-40ed-ae9e-278abe057882" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/app/assets/javascripts/experiment.csv" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/assets/manage-kpi.html" afterPath="$PROJECT_DIR$/app/assets/Manage-kpi.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/Analytics.html" afterPath="$PROJECT_DIR$/app/assets/Analytics.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.base.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.base.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css" afterPath="$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/manage-kpi.html" afterPath="$PROJECT_DIR$/app/assets/manage-kpi.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="railsEpm.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1372994371377" ignored="false" />
+    <file path="/Dummy.txt" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1373077564036" ignored="false" />
     <file path="/template.html" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1372737574413" ignored="false" />
     <file path="/brilliantech.base.css" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1372927819850" ignored="false" />
-    <file path="/brilliantech.railsepm.css" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1373013467919" ignored="false" />
-    <file path="/brilliantech.railsepm.js" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1373015816753" ignored="false" />
+    <file path="/brilliantech.railsepm.css" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1373107025298" ignored="false" />
+    <file path="/brilliantech.railsepm.js" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1373109186366" ignored="false" />
     <file path="/brilliantech.base.js" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1373010097519" ignored="false" />
     <file path="/Analytics.html" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1372857717275" ignored="false" />
     <file path="$USER_HOME$/Downloads/js.js" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1372747419617" ignored="false" />
@@ -24,7 +24,8 @@
     <file path="$USER_HOME$/Downloads/js3.js" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1372747834066" ignored="false" />
     <file path="$USER_HOME$/Downloads/js4.js" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1372748112013" ignored="false" />
     <file path="/dashboard.html" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1372926692305" ignored="false" />
-    <file path="/manage-kpi.html" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1373015783478" ignored="false" />
+    <file path="/manage-kpi.html" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1373084006130" ignored="false" />
+    <file path="/EntryId.html" changelist="524ddef3-5e9f-40ed-ae9e-278abe057882" time="1373110376520" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,22 +45,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="manage-kpi.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/assets/manage-kpi.html">
+      <file leaf-file-name="EntryId.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/assets/EntryId.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="173" column="111" selection-start="8128" selection-end="8142" vertical-scroll-proportion="-30.625">
+            <state line="50" column="31" selection-start="2231" selection-end="2231" vertical-scroll-proportion="0.35646388">
               <folding>
-                <element signature="n#style#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#td#1;n#tr#7;n#table#0;n#div#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#div#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="brilliantech.railsepm.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="brilliantech.railsepm.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="222" column="138" selection-start="7938" selection-end="7938" vertical-scroll-proportion="0.669145">
+            <state line="402" column="61" selection-start="14694" selection-end="14694" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -68,7 +68,7 @@
       <file leaf-file-name="brilliantech.railsepm.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="425" column="1" selection-start="9215" selection-end="9215" vertical-scroll-proportion="0.0">
+            <state line="520" column="10" selection-start="11095" selection-end="11095" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -77,7 +77,7 @@
       <file leaf-file-name="brilliantech.base.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.base.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="175" column="16" selection-start="4430" selection-end="4441" vertical-scroll-proportion="0.0">
+            <state line="145" column="1" selection-start="3583" selection-end="3583" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -116,13 +116,15 @@
         <option value="$USER_HOME$/Downloads/js3.js" />
         <option value="$USER_HOME$/Downloads/js4.js" />
         <option value="$USER_HOME$/Downloads/js2.js" />
-        <option value="$PROJECT_DIR$/app/assets/Analytics.html" />
         <option value="$PROJECT_DIR$/app/assets/dashboard.html" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/brilliantech.base.css" />
-        <option value="$PROJECT_DIR$/app/assets/javascripts/brilliantech.base.js" />
-        <option value="$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css" />
         <option value="$PROJECT_DIR$/app/assets/manage-kpi.html" />
+        <option value="$PROJECT_DIR$/app/assets/javascripts/brilliantech.base.js" />
+        <option value="$PROJECT_DIR$/app/assets/Analytics.html" />
+        <option value="$PROJECT_DIR$/app/assets/Manage-kpi.html" />
+        <option value="$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" />
+        <option value="$PROJECT_DIR$/app/assets/EntryId.html" />
       </list>
     </option>
   </component>
@@ -311,9 +313,9 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16296767" sideWeight="0.91757244" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -384,13 +386,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="30" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.base.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="195" column="74" selection-start="5336" selection-end="5336" vertical-scroll-proportion="0.0">
@@ -436,22 +431,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/template.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="34" selection-start="0" selection-end="2778" vertical-scroll-proportion="0.39923954" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/Analytics.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="46" selection-start="2448" selection-end="4668" vertical-scroll-proportion="0.7119772">
+        <state line="24" column="71" selection-start="0" selection-end="2778" vertical-scroll-proportion="0.34220532">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/dashboard.html">
+    <entry file="file://$PROJECT_DIR$/app/assets/Dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="47" selection-start="1985" selection-end="2015" vertical-scroll-proportion="0.52376425">
-          <folding>
-            <element signature="n#style#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.12642586">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -464,32 +452,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.base.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="175" column="16" selection-start="4430" selection-end="4441" vertical-scroll-proportion="0.0">
+        <state line="145" column="1" selection-start="3583" selection-end="3583" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/Analytics.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="60" selection-start="4981" selection-end="4981" vertical-scroll-proportion="0.85171103">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/Manage-kpi.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="185" column="6" selection-start="8844" selection-end="8844" vertical-scroll-proportion="0.74334604">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="425" column="1" selection-start="9215" selection-end="9215" vertical-scroll-proportion="0.0">
+        <state line="520" column="10" selection-start="11095" selection-end="11095" vertical-scroll-proportion="0.0">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/manage-kpi.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="173" column="111" selection-start="8128" selection-end="8142" vertical-scroll-proportion="-30.625">
-          <folding>
-            <element signature="n#style#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#td#1;n#tr#7;n#table#0;n#div#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="222" column="138" selection-start="7938" selection-end="7938" vertical-scroll-proportion="0.669145">
+        <state line="402" column="61" selection-start="14694" selection-end="14694" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/EntryId.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="31" selection-start="2231" selection-end="2231" vertical-scroll-proportion="0.35646388">
+          <folding>
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

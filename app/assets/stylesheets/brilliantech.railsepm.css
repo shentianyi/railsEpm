@@ -414,7 +414,7 @@ a.calcuType-method-btn.active{
 .manage-kpi th{
     background-color:#f4f4f4;
     padding-bottom:5px;
-
+    border-bottom:1px solid #ddd;
 }
 .manage-kpi td{
     border-top:1px solid #ddd;
@@ -423,6 +423,102 @@ a.calcuType-method-btn.active{
     font-size:16px;
     word-break:break-all;
     word-wrap:break-word;
+}
+select.edit-kpiEntity-input{
+    width:100px;
+    position:relative;
+    top:4px;
+}
+input.edit-kpiTarget-input{
+    width:100px;
+    position:relative;
+    top:4px;
+}
+/***************************************************** kpi entry **************************************************************/
+.entryKPI-intervalMark{
+    font-size:19px;
+    margin-left:18px;
+    margin-top:20px;
+}
+.nav.nav-tabs.entry-nav-tabs{
+    margin-bottom:0px;
+    margin-top:10px;
+    margin-left:130px;
+}
+.nav.nav-tabs.entry-nav-tabs>li>a{
+    padding:10px 25px;
+    font-size:16px;
+    color:#9d9d9d;
+}
+.nav.nav-tabs.entry-nav-tabs>li.active>a{
+    color:#5496c2;
+}
+.nav.nav-tabs.entry-nav-tabs>li>a:hover{
+    color:#5496c2;
+}
+.entry-kpi-part{
+    background-color:white;
+    height:400px;
+    display:block;
+    border-bottom:1px solid #ddd;
+}
+.entry-btn{
+    padding:15px;
+    cursor:pointer;
+    background-image:url("../images/arrow.png");
+    background-repeat:no-repeat;
+    position:relative;
+    top:10px;
+}
+.entry-prev-btn{
+    background-position:0px 5px;
+    left:15px;
+}
+.entry-prev-btn:hover{
+    background-position:-32px 5px;
+}
+.entry-next-btn{
+    background-position:5px -35px;
+    left:10px;
+}
+.entry-next-btn:hover{
+    background-position:-25px -35px;
+}
+input.entry-kpi-date{
+    position:relative;
+    top:14px;
+    left:14px;
+    width:200px;
+    cursor:pointer !important;
+    background-color:white !important;
+    font-size:16px;
+}
+/*kpi list*/
+.entry-table{
+    width:90%;
+    margin:35px auto;
+    border-collapse:collapse;
+}
+.entry-table tr{
+    border-bottom:1px solid #ddd;
+}
+.entry-table tr th{
+    color:#556d7c;
+    padding:6px 3px;
+    font-size:15px;
+}
+.entry-table tr td{
+    padding:3px 5px;
+    font-size:15px;
+}
+.entry-kpi{
+    position:relative;
+    top:4px;
+    width:100px;
+}
+.week-picker{
+    position:absolute;
+    left:50px;
 }
 /***************************************************** setting right **************************************************************/
 .setting-right{
