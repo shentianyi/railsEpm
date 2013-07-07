@@ -53,7 +53,12 @@
                 <li><a href="">entity1</a></li>
                 <li><a href="">entity2</a></li>
                 <li><a href="">entity3</a></li>
-                <li><button class="btn btn-primary">创建新类别</button></li>
+                <li><button class="btn btn-primary" onclick="creat_entityBlock()">创建新类别</button></li>
+                <div class="absolute creat-entity-block hide" id="creatEntity-block">
+                    <p>创建新类别</p>
+                    <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
+                    <input type="text" id="creat-newEntity" onkeyup="create_entity(event)"/>
+                </div>
             </ul>
         </div>
         <div class="addBlock" id="addBlock" data-state="off" style="display:none">

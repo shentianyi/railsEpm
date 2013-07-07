@@ -434,6 +434,24 @@ input.edit-kpiTarget-input{
     position:relative;
     top:4px;
 }
+.creat-entity-block{
+    padding:5px 8px;
+    border:1px solid #ddd;
+    background-color:white;
+    width:150px;
+    box-shadow:2px 2px 2px rgba(0,0,0,0.4);
+    -webkit-box-shadow:2px 2px 2px rgba(0,0,0,0.4);
+    -moz-box-shadow:2px 2px 2px rgba(0,0,0,0.4);
+}
+.creat-entity-block>p{
+    margin:0px;
+    display:inline;
+    padding-left:33px;
+}
+.creat-entity-block>input{
+    width:136px;
+}
+
 /***************************************************** kpi entry **************************************************************/
 .entryKPI-intervalMark{
     font-size:19px;
@@ -458,7 +476,7 @@ input.edit-kpiTarget-input{
 }
 .entry-kpi-part{
     background-color:white;
-    height:400px;
+    padding-bottom:180px;
     display:block;
     border-bottom:1px solid #ddd;
 }
@@ -471,18 +489,18 @@ input.edit-kpiTarget-input{
     top:10px;
 }
 .entry-prev-btn{
-    background-position:0px 5px;
+    background-position:0px 8px;
     left:15px;
 }
 .entry-prev-btn:hover{
-    background-position:-32px 5px;
+    background-position:-32px 8px;
 }
 .entry-next-btn{
-    background-position:5px -35px;
+    background-position:5px -33px;
     left:10px;
 }
 .entry-next-btn:hover{
-    background-position:-25px -35px;
+    background-position:-25px -33px;
 }
 input.entry-kpi-date{
     position:relative;
@@ -492,6 +510,12 @@ input.entry-kpi-date{
     cursor:pointer !important;
     background-color:white !important;
     font-size:16px;
+}
+.entry-selectQuarter{
+    width:100px;
+    position:relative;
+    left:35px;
+    top:14px;
 }
 /*kpi list*/
 .entry-table{
@@ -511,7 +535,7 @@ input.entry-kpi-date{
     padding:3px 5px;
     font-size:15px;
 }
-.entry-kpi{
+.entry-kpi-current{
     position:relative;
     top:4px;
     width:100px;

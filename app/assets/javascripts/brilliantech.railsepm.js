@@ -54,6 +54,13 @@ function show_addBlock(event){
 /////////////////////////////////////////////////////////////////////////  Analytics   //////////////////////////////////
 function init_analytics() {
     init();
+    init_rightContent();
+    if (document.attachEvent) {
+        window.attachEvent('onresize', init_rightContent);
+    }
+    else {
+        window.addEventListener('resize', init_rightContent, false);
+    }
     $("#tool-print,#tool-excel,#tool-pdf,.control-chart-btn").hover(function(){
         $(this).tooltip('show');
     },function(){
@@ -335,6 +342,43 @@ function find_id(event){
     var id=$(obj).data("belong");
     return id;
 }
+function creat_entityBlock(){
+    $("#creatEntity-block").removeClass("hide");
+    $("#creat-newEntity").val("").focus();
+}
+function close_createEntity(){
+    $("#creatEntity-block").addClass("hide");
+    $("#creat-newEntity").val("");
+}
+function insert_entity(){
+    var test = test_sameEntity();
+    if($("#creat-newEntity").val() && test == -1) {
+        var length=$("#manage-group-kpi").find("li").length-1;
+        var val=$("#creat-newEntity").val();
+        $("#manage-group-kpi li:eq("+length+")").before($("<li />").append($("<a href=''/>").text(val)));
+        $("#creat-newEntity").val("");
+        $(obj).val("");
+    }
+}
+function test_sameEntity() {
+    var a = $("#creat-newEntity").val()
+    var b = [];
+    $("#manage-group-kpi").find("a").each(function() {
+        b.push($(this).text())
+    });
+    return b.indexOf(a);
+}
+function create_entity(event) {
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    if(e.keyCode == 13) {
+        insert_entity();
+
+    } else if(e.keyCode == 27) {
+        close_createEntity();
+    }
+}
+
 ////////////////////////////////////////////////     entry kpi  ///////////////////////////////////////
 function init_entryKpi(){
     init();
@@ -343,7 +387,6 @@ function init_entryKpi(){
     WeekFirstDay=new Date(date-(date.getDay()-1)*86400000).getDate();
     WeekLastDay=new Date((WeekFirstDay/1000+6*86400)*1000).getDate();
     QuarterFirstMonth=showquarterFirstMonth();
-    QuarterLastMonth=showquarterLastMonth();
     m= date.getMonth()+1;
     y=date.getFullYear();
     var type=$("#entry-date-type").find(".active").data("type");
@@ -384,12 +427,19 @@ function init_entryKpi(){
                 });
             break;
         case "quarter":
-            $("#entry-kpi").val(QuarterFirstMonth+" ~ "+QuarterLastMonth);
+            $("#entry-kpi").css("width","100px");
+            $("#entry-kpi").val(y);
+            $("#entry-prev-btn,#entry-next-btn").removeClass("hide");
+            $("#select-quarter").removeClass("hide").find("option").each(function(){
+                  if($(this).val()==QuarterFirstMonth){
+                      $(this).attr("selected",true);
+                  }
+            });
             break;
         case "year":
+            $("#entry-kpi").css("width","100px");
             $("#entry-kpi").val(y);
-
-            break;
+            $("#entry-prev-btn,#entry-next-btn").removeClass("hide");
             break;
     };
 }
@@ -398,26 +448,13 @@ function showquarterFirstMonth()
 {
     var Nowdate=new Date();
     if(Nowdate.getMonth()<3)
-        return Nowdate.getFullYear()+'-1';
+        return "第一季度";
     else if(Nowdate.getMonth()>2 && Nowdate.getMonth()<6)
-        return Nowdate.getFullYear()+'-4';
+        return "第二季度";
     else if(Nowdate.getMonth()>5 && Nowdate.getMonth()<9)
-        return Nowdate.getFullYear()+'-7';
+        return "第三季度";
     else if(Nowdate.getMonth()>8)
-        return Nowdate.getFullYear()+'-10';
-}
-//本季最后年月
-function showquarterLastMonth()
-{
-    var Nowdate=new Date();
-    if(Nowdate.getMonth()<3)
-        return Nowdate.getFullYear()+'-3';
-    else if(Nowdate.getMonth()>2 && Nowdate.getMonth()<6)
-        return Nowdate.getFullYear()+'-6';
-    else if(Nowdate.getMonth()>5 && Nowdate.getMonth()<9)
-        return Nowdate.getFullYear()+'-9';
-    else if(Nowdate.getMonth()>8)
-        return Nowdate.getFullYear()+'-12';
+        return "第四季度";
 }
 //只选择周
 function select_week(){
@@ -453,4 +490,42 @@ function select_week(){
     });
     $('.week-picker .ui-datepicker-calendar tr').live('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
     $('.week-picker .ui-datepicker-calendar tr').live('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
+}
+function minus_unit(event){
+    $("#entry-kpi").val(parseInt( $("#entry-kpi").val())-1);
+}
+function plus_unit(event){
+    $("#entry-kpi").val(parseInt( $("#entry-kpi").val())+1);
+}
+function entry_kpiCurrent(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    clearNoNum(obj);
+    if(e.keyCode==13){
+         fill_kpiCurrent(obj);
+    }
+}
+function fill_kpiCurrent(obj){
+    var date=$("#entry-kpi").val();
+    if(!$("#select-quarte").hasClass("hide")){
+        var quarter=$("#select-quarter").find(":selected").val();
+    }
+    var id=$(obj).data("belong");
+    var val=$(obj).val();
+    var target=$(obj).data("target");
+    var percent=(parseFloat(val)/parseFloat(target)*100).toFixed(0);
+    kpi_percent(percent,id)
+}
+function kpi_percent(a,b){
+    var goal=$("#"+b).find(".entry-kpiPercent");
+    goal.text(a+"%");
+    switch(a-100>=0){
+        case true:
+            goal.addClass("text-success");
+            break;
+        case false:
+            goal.addClass("text-error");
+            break;
+    }
+
 }
