@@ -53,7 +53,7 @@
                 <li><a href="">entity1</a></li>
                 <li><a href="">entity2</a></li>
                 <li><a href="">entity3</a></li>
-                <li><button class="btn btn-primary" onclick="creat_entityBlock()">创建新类别</button></li>
+                <li><button class="btn btn-primary" onclick="create_entityBlock()">创建新类别</button></li>
                 <div class="absolute creat-entity-block hide" id="creatEntity-block">
                     <p>创建新类别</p>
                     <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
@@ -131,16 +131,17 @@
                     <td valign="top">
                         <input type="checkbox" class="is-calcu-check" id="is-calcu-check" onclick="is_calcu()"/>
                         <div class="is-calcu-type clearfix" id="is-calcu-type" style="display:none">
-                            <select id="is-calcu-relate">
-                                <option data-order="1" selected="selected">默认</option>
+                            <select id="is-calcu-relate" class="calcuRelate-kpi" >
+                                <option data-order="1" selected="selected" > </option>
                                 <option data-order="2">KPI 1</option>
                                 <option data-order="3">KPI 2</option>
                             </select>
-                            <br />
-                            <a class="pull-left calcuType-method-btn active" data-calcuType="1">+</a>
-                            <a class="pull-left calcuType-method-btn" data-calcuType="2">-</a>
-                            <a class="pull-left calcuType-method-btn" data-calcuType="3">*</a>
-                            <a class="pull-left calcuType-method-btn" data-calcuType="4">/</a>
+                            <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="1" disabled>+</a>
+                            <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="2">-</a>
+                            <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="3">x</a>
+                            <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="4">%</a>
+                            <input type="text" class="calcuType-input" id="calcuType=input" readonly="true"/>
+                            <a class="btn calcuType-clear" id="calcuType-clear">清空</a>
                         </div>
                     </td>
                 </tr>

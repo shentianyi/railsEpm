@@ -373,36 +373,12 @@ ul.manage-group>li.active>a{
     position:relative;
     top:-5px;
 }
-.is-calcu-type{
-    border-radius:3px;
-    -moz-border-radius:3px;
-    -webkit-border-radius:3px;
-    border:1px solid #ddd;
-    padding:10px;
-}
-a.calcuType-method-btn{
-    font-size:21px;
-    color:#ddd;
-    margin-right:5px;
-    border:1px solid #ddd;
-    border-radius:3px;
-    -moz-border-radius:3px;
-    -webkit-border-radius:3px;
-    cursor:pointer;
-    padding:3px 6px;
-}
-a.calcuType-method-btn.active{
-    color:#5496c2;
-    border:1px solid #5496c2;
-}
+
 .wrap-add-manage td{
     padding:2px 12px;
 }
 .wrap-add-manage-right>input,.wrap-add-manage-right>select{
     margin-bottom:18px;
-}
-.wrap-add-manage>button{
-
 }
 /*************************    KPI     ******************************/
 .manage-kpi{
@@ -451,7 +427,34 @@ input.edit-kpiTarget-input{
 .creat-entity-block>input{
     width:136px;
 }
+.is-calcu-type{
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border:1px solid #ddd;
+    padding:4px;
+    width:246px;
+}
+select.calcuRelate-kpi{
+    width:100px;
+    float:left;
+    margin-right:10px;
+    margin-bottom:0px;
+}
+.calcuType-method-btn{
+    margin-right:5px;
+    padding:2px 8px;
+}
+.calcuType-input{
+    width:150px;
+    float:left;
+    margin-top:19px;
 
+}
+.calcuType-clear{
+    margin-top:24px;
+    margin-left:9px;
+}
 /***************************************************** kpi entry **************************************************************/
 .entryKPI-intervalMark{
     font-size:19px;
