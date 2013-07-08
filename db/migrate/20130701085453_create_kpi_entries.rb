@@ -8,7 +8,7 @@ class CreateKpiEntries < ActiveRecord::Migration
       t.datetime :parsed_entry_at
       t.references :user_kpi_item
       t.integer :kpi_id
-      t.boolean :normal,:default=>true
+      t.boolean :abnormal,:default=>false
       t.timestamps
     end
     add_index :kpi_entries, :user_kpi_item_id

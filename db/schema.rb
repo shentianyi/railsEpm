@@ -62,9 +62,9 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
     t.datetime "parsed_entry_at"
     t.integer  "user_kpi_item_id"
     t.integer  "kpi_id"
-    t.boolean  "normal",           :default => true
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.boolean  "abnormal",         :default => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
   end
 
   add_index "kpi_entries", ["entry_at"], :name => "index_kpi_entries_on_entry_at"
