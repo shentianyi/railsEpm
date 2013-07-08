@@ -475,7 +475,12 @@ select.calcuRelate-kpi{
     margin-top:24px;
     margin-left:9px;
 }
-
+/*************************    user     ******************************/
+.edit-userTarget-input{
+    width:170px;
+    position:relative;
+    top:4px;
+}
 /***************************************************** kpi entry **************************************************************/
 .entryKPI-intervalMark{
     font-size:19px;

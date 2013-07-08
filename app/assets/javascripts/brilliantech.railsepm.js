@@ -41,14 +41,17 @@ function show_addBlock(event){
         e.cancelBubble = true;
     }
     var obj = e.srcElement || e.target;
-    clear_add_kpi();
     var height=parseInt($("#addBlock").height())+20+"px";
     if($("#addBlock").data("state")=="off"){
         $("#addBlock").slideDown("2000").data("state","on");
         $("#right-content").css("padding-top",height);
         if($(obj).data("manage")=="kpi"){
+            clear_add_kpi();
             $("#add-block-mark").text("添加KPI");
-            $("#add-manage-kpi").text("添加");
+        }
+        else if($(obj).data("manage")=="user"){
+            clear_add_user();
+            $("#add-block-mark").text("添加用户");
         }
     }
     else{
@@ -349,7 +352,6 @@ function init_manage(){
     }
 }
 ///////////////  KPI  ///////////////////////////////////////
-
 function cancel_add_kpi(){
     $("#addBlock").slideUp("2000").data("state","off").find("input").val("");
     $("#right-content").css("padding-top","0px");
@@ -480,13 +482,11 @@ function close_createEntity(){
 }
 function insert_entity(){
     var test = test_sameEntity();
-
     if($("#creat-newEntity").val() && test == -1) {
         var length=$("#manage-group-kpi").find("li").length-1;
         var val=$("#creat-newEntity").val();
         $("#manage-group-kpi li:eq("+length+")").before($("<li />").append($("<a href=''/>").text(val)));
         $("#creat-newEntity").val("");
-        $(obj).val("");
     }
 }
 function test_sameEntity() {
@@ -544,6 +544,157 @@ function select_calcuMethod(event){
 function calcuRelate_clear(){
     $("#calcuType-input").val("");
     $("#is-calcu-relate").find("option[data-order='1']").attr("selected","true");
+}
+///////////////  user  ///////////////////////////////////////
+function create_Userentity(event){
+    var e = event ? event : (window.event ? window.event : null);
+    if(e.keyCode == 13) {
+        insert_entityUser();
+    } else if(e.keyCode == 27) {
+        close_createEntity();
+    }
+}
+function insert_entityUser(){
+    var test = test_sameEntityUser();
+    if($("#creat-newEntity").val() && test == -1) {
+        var length=$("#manage-group-user").find("li").length-1;
+        var val=$("#creat-newEntity").val();
+        $("#manage-group-user li:eq("+length+")").before($("<li />").append($("<a href=''/>").text(val)));
+        $("#creat-newEntity").val("");
+    }
+}
+function test_sameEntityUser() {
+    var a = $("#creat-newEntity").val();
+    var b = [];
+    $("#manage-group-user").find("a").each(function() {
+        b.push($(this).text());
+    });
+    if(!Array.indexOf){
+        Array.prototype.indexOf = function(obj){
+            for(var i=0; i<this.length; i++){
+                if(this[i]==obj){
+                    return i;
+                }
+            }
+            return -1;
+        }
+    }
+    return b.indexOf(a);
+}
+function close_createEntity(){
+    $("#creatEntity-block").addClass("hide");
+    $("#creat-newEntity").val("");
+}
+function edit_userItem(event){
+    var id=find_id(event);
+    $("#"+id).find('.manage-operate').each(function(){
+        $(this).addClass("hide").next().removeClass("hide");
+    });
+    var userName=$("#"+id).find(".manage-userName").text();
+    var userMail=$("#"+id).find(".manage-userMail").text();
+    var userEntity=$("#"+id).find(".manage-userEntity").text();
+    var userRole=$("#"+id).find(".manage-userRole").text();
+    $("#cancel-edit-user").attr("name",userName).attr("mail",userMail).attr("entity",userEntity).attr("role",userRole);
+    $("#"+id).find(".manage-userEntity").text("").append($("<select />").addClass("edit-kpiEntity-input").append($("<option />").text("entity1"))
+        .append($("<option />").text("entity2"))
+        .append($("<option />").text("entity3")));
+    $("#"+id).find(".manage-userRole").text("").append($("<select />").addClass("edit-kpiEntity-input").append($("<option />").text("管理员"))
+        .append($("<option />").text("用户"))
+        .append($("<option />").text("一般用户")));
+    $("#"+id).find(".manage-userName").text("").append($("<input type='text' />").val(userName).addClass("edit-userTarget-input"));
+    $("#"+id).find(".manage-userMail").text("").append($("<input type='text' />").val(userMail).addClass("edit-userTarget-input"));
+}
+function remove_userItem(event){
+    if(confirm("确认删除？")){
+        var id=find_id(event);
+        $("#user-table").find("#"+id).nextAll("tr").each(function(){
+            var order=parseInt($(this).find(".kpi-order-id").text())-1;
+            $(this).find(".kpi-order-id").text(order);
+        });
+        $("#user-table").find("#"+id).remove();
+    }
+}
+function finish_editUser(event){
+    var id=find_id(event);
+    var entity=$("#"+id).find(".manage-userEntity").find(":selected").text();
+    var role=$("#"+id).find(".manage-userRole").find(":selected").text();
+    var name=$("#"+id).find(".manage-userName").find("input").val();
+    var mail=$("#"+id).find(".manage-userMail").find("input").val();
+    if(isEmail(mail)){
+        same_editUser(id);
+        $("#"+id).find(".manage-userEntity").text(entity);
+        $("#"+id).find(".manage-userRole").text(role);
+        $("#"+id).find(".manage-userName").text(name);
+        $("#"+id).find(".manage-userMail").text(mail);
+    }
+}
+function cancel_editUser(event){
+    var id=find_id(event);
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    var entity=$(obj).attr("entity");
+    var name=$(obj).attr("name");
+    var mail=$(obj).attr("mail");
+    var role=$(obj).attr("role");
+    same_editUser(id);
+    $("#"+id).find(".manage-userEntity").text(entity);
+    $("#"+id).find(".manage-userName").text(name);
+    $("#"+id).find(".manage-userMail").text(mail);
+    $("#"+id).find(".manage-userRole").text(role);
+}
+function same_editUser(a){
+    $("#"+a).find(".manage-operate-reverse").each(function(){
+        $(this).addClass("hide").prev().removeClass("hide");
+    });
+    $("#"+a).find(".manage-userEntity").find("select").remove();
+    $("#"+a).find(".manage-userRole").find("select").remove();
+    $("#"+a).find(".manage-userName").find("input").remove();
+    $("#"+a).find(".manage-userMail").find("input").remove();
+}
+function cancel_add_user(){
+    $("#addBlock").slideUp("2000").data("state","off").find("input").val("");
+    $("#right-content").css("padding-top","0px");
+    clear_add_user();
+}
+function clear_add_user(){
+    $("#new-user-name").val("");
+    $("#new-user-mail").val("");
+    $("#new-user-entity").find("option[data-order='1']").attr("selected","true");
+    $("#new-user-role").find("option[data-order='1']").attr("selected","true");
+}
+function add_user(){
+    var name=$("#new-user-name").val();
+    var mail=$("#new-user-mail").val();
+    var entityP=$("#new-user-entity").find(":selected").data("order");
+    var entity=$("#new-user-entity").find(":selected").val();
+    var roleP=$("#new-user-role").find(":selected").data("order");
+    var role=$("#new-user-role").find(":selected").val();
+    var id=$("#user-table").find("tr").length;
+    if(name.length!=0 && mail.length!=0){
+        if(isEmail(mail)){
+            if($("#manage-group-kpi li.active a").text()!=entity){
+                $("#user-table").append($("<tr />").attr("id",id).append($("<td align='center' />").text(id).addClass("kpi-order-id"))
+                    .append($("<td align='center' />").text(name))
+                    .append($("<td align='center' />").text(mail))
+                    .append($("<td align='center' />").text(entity))
+                    .append($("<td align='center' />").text(role))
+                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong",id).click(edit_userItem))
+                        .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong",id).click(finish_editUser).text("完成")))
+                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong",id).click(remove_userItem))
+                        .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id","cancel-edit-user").data("belong",id).click(cancel_editUser).text("取消")))
+                );
+                cancel_add_kpi();
+            }
+        }
+        else{
+            $("#add-warn").text("请填写正确的邮箱").removeClass("hide");
+            while_hide("add-warn");
+        }
+    }
+    else{
+        $("#add-warn").removeClass("hide").text("请填写所有带*的选项");
+        while_hide("add-warn");
+    }
 }
 ////////////////////////////////////////////////     entry kpi  ///////////////////////////////////////
 function init_entryKpi(){
