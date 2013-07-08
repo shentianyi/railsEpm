@@ -105,7 +105,7 @@ ul.setting-navi>li>a{
     color:#2980b9;
 }
 .dropdown-menu > li > a.main-navi-dropitem{
-    color:#556D7C;
+    color:#333;
     font-size:15px;
     font-weight:200;
     letter-spacing:1px;
@@ -180,11 +180,11 @@ b.caret{
 /*****************************************************     Anaytics      **************************************************************/
 /*content control*/
 .content-condition{
-    width:700px;
+    width:750px;
     margin:30px auto ;
 }
 .content-condition-part{
-    width:250px;
+    width:310px;
 }
 .content-condition-part>p{
     margin-bottom:10px;
@@ -207,6 +207,15 @@ b.caret{
 }
 .content-condition-part.content-condition-rightpart{
     width:390px;
+}
+.content-condition-leftpart>select.conditionPart-entity{
+    width:170px;
+}
+.content-condition-leftpart>select{
+    width:110px;
+}
+.content-condition-leftpart>span{
+    margin:5px 7px;
 }
 .content-condition-rightpart>input{
     width:150px;
@@ -235,8 +244,18 @@ b.caret{
     margin-right:38px;
     padding:3px 9px 0;
 }
-.btn.control-chart-btn.control-btn-active{
-    background-color:#5DADE2;
+.btn.control-chart-btn.active{
+    background-color:#F39C12 ;
+    color:white;
+    box-shadow:0 2px 0px #e67e22;
+    -moz-box-shadow:0 2px 0px #e67e22;
+    -webkit-box-shadow:0 2px 0px #e67e22;
+}
+.btn.control-chart-btn.active:hover{
+background-color:#f8c169 !important;
+box-shadow:0 2px 0px #F39C12;
+-moz-box-shadow:0 2px 0px #F39C12;
+-webkit-box-shadow:0 2px 0px #F39C12;
 }
 .analyze-chart{
    width:70%;
@@ -369,6 +388,7 @@ ul.manage-group>li.active>a{
 .wrap-add-manage-right{
     width:200px;
 }
+
 .is-calcu-check{
     position:relative;
     top:-5px;
@@ -455,6 +475,7 @@ select.calcuRelate-kpi{
     margin-top:24px;
     margin-left:9px;
 }
+
 /***************************************************** kpi entry **************************************************************/
 .entryKPI-intervalMark{
     font-size:19px;
