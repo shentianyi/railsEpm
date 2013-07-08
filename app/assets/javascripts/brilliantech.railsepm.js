@@ -34,8 +34,14 @@ function init_rightContent(){
 }
 function show_addBlock(event){
     var e = event ? event : (window.event ? window.event : null);
-    e.stopPropagation();
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    }
+    else {
+        e.cancelBubble = true;
+    }
     var obj = e.srcElement || e.target;
+    clear_add_kpi();
     var height=parseInt($("#addBlock").height())+20+"px";
     if($("#addBlock").data("state")=="off"){
         $("#addBlock").slideDown("2000").data("state","on");
@@ -51,38 +57,163 @@ function show_addBlock(event){
     }
 
 }
+function formatDate(date) {
+    var myyear = date.getFullYear();
+    var mymonth = date.getMonth();
+    var myweekday = date.getDate();
+    return (myyear+"-"+mymonth + "-" + myweekday);
+}
 /////////////////////////////////////////////////////////////////////////  Analytics   //////////////////////////////////
 function init_analytics() {
     init();
+    init_rightContent();
+    if (document.attachEvent) {
+        window.attachEvent('onresize', init_rightContent);
+    }
+    else {
+        window.addEventListener('resize', init_rightContent, false);
+    }
     $("#tool-print,#tool-excel,#tool-pdf,.control-chart-btn").hover(function(){
         $(this).tooltip('show');
     },function(){
         $(this).tooltip('hide');
     });
-    $("#container").highcharts(
-        {
-            chart: {
-                type: 'line',
-                events: {
-                    addSeries: function() {
-                        alert ('A series was added, about to redraw chart');
-                    }
-                }
-            },
-            credits:{
+    $("#from,#to").datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        dateFormat: 'yy-m-d'
+    });
+    var date=new Date();
+    var nowDate=date.getDate();
+    var day=date.getDay();
+    var m= date.getMonth()+1;
+    var y=date.getFullYear();
+    var WeekFirstDay=new Date(y, m, nowDate - day+1);
+    var WeekLastDay=new Date(y, m, nowDate - day+7);
+    $("#from").val(formatDate(WeekFirstDay));
+    $("#to").val(formatDate(WeekLastDay));
+    init_chart();
+//    var dateBegin,dateEnd;
+//    var date1=($("#from").val()).split("-");
+//    var date2=($("#to").val()).split("-");
+//    for(i=0;i<3;i++){
+//        if(parseInt(date1[i])<parseInt(date2[i])){
+//            dateBegin=date1;
+//            dateEnd=date2;
+//            break;
+//        }
+//        else if(parseInt(date1[i])>parseInt(date2[i])){
+//            dateBegin=date2;
+//            dateEnd=date1;
+//            break;
+//        }
+//        else{
+//            dateBegin=date1;
+//            dateEnd=date2;
+//        }
+//    }
+//    var chart={
+//        y:dateBegin[0],
+//        m:parseInt(dateBegin[1])-1==0 ? 12: dateBegin[1]-1,
+//        d:dateBegin[2]
+//    }
+//    $("#container").highcharts(
+//        {
+//            chart: {
+//                type: 'line',
+//                events: {
+//                    addSeries: function() {
+//                        alert ('A series was added, about to redraw chart');
+//                    }
+//                }
+//            },
+//            credits:{
+//                enabled:false
+//            },
+//            title: {
+//                text:""
+//            },
+//            tooltip: {
+//                formatter: function() {
+//                    return '<b>'+ this.series.name +'</b><br/>'+
+//                        this.x +': '+ this.y;
+//                }
+//            },
+//            xAxis: {
+//                type: 'datetime',
+//                dateTimeLabelFormats: {
+//                    day:'%e/%b'
+//                },
+//                labels:{
+//                    style:{
+//                        fontWeight:800
+//                    }
+//                },
+//                tickInterval: 24 * 3600 * 1000*7 // one day
+//            },
+//            yAxis: [{
+//                title: {
+//                    enabled:false
+//                },
+//                tickWidth:1,
+//                offset:10,
+//                labels:{
+//                    format:'{value}$'
+//                },
+//                lineWidth:1
+//            },{
+//                opposite:true,
+//                title:{
+//                    enabled:false
+//                },
+//                tickWidth:1,
+//                offset:10,
+//                label:{
+//                    format:'{value}days'
+//                },
+//                lineWidth:1
+//            }],
+//            series: [
+//                {
+//                    type:"area",
+//                    name: 'actual',
+//                    data: [100,100,100,150,150,150,200],
+//                    pointStart: Date.UTC(chart.y,chart.m,chart.d),
+//                    pointInterval: 24 * 3600 * 1000*7//one day
+//                },
+//                {
+//                    type:"line",
+//                    name: 'target',
+//                    data: [80,110,120,140,150,150,300],
+//                    pointStart: Date.UTC(chart.y,chart.m,chart.d),
+//                    yAxis:1,
+//                    pointInterval: 24 * 3600 * 1000*7 // one day
+//                }
+//            ]
+//        }
+//    );
+
+}
+function init_chart(){
+      var options = {
+          chart: {
+              renderTo: 'container',
+              type: 'line'
+          },
+          credits:{
                 enabled:false
             },
-            title: {
+          title: {
                 text:""
             },
-            tooltip: {
+          tooltip: {
                 formatter: function() {
                     return '<b>'+ this.series.name +'</b><br/>'+
                         this.x +': '+ this.y;
                 }
             },
-            xAxis: {
-                type: 'datetime',
+          xAxis: {
+              type: 'datetime',
                 dateTimeLabelFormats: {
                     day:'%e/%b'
                 },
@@ -92,108 +223,113 @@ function init_analytics() {
                     }
                 },
                 tickInterval: 24 * 3600 * 1000 // one day
-            },
-            yAxis: [{
-                title: {
+          },
+          yAxis: {
+              title: {
                     enabled:false
                 },
-                tickWidth:1,
-                offset:10,
-                labels:{
+              tickWidth:1,
+              offset:10,
+              labels:{
                     format:'{value}$'
-                },
-                lineWidth:1
-            },{
-                opposite:true,
-                title:{
-                    enabled:false
-                },
-                tickWidth:1,
-                offset:10,
-                label:{
-                    format:'{value}days'
-                },
-                lineWidth:1
-            }],
-            series: [
-                {
-                    type:"area",
-                    name: 'actual',
-                    data: [100,100,100,150,150,150,200],
-                    pointStart: Date.UTC(2013,6,1),
-                    pointInterval: 24 * 3600 * 1000//one day
-                },
-                {
+              },
+              lineWidth:1
+          },
+          series: []
+      };
+      var entity=$("#chart-entity :selected").attr("id");
+      var kpi=$("#none-kpi :selected").attr("id");
+      var date1=($("#from").val()).split("-");
+      var date2=($("#to").val()).split("-");
+      var dateBegin,dateEnd;
+      for(i=0;i<3;i++){
+          if(parseInt(date1[i])<parseInt(date2[i])){
+              dateBegin=date1;
+              dateEnd=date2;
+              break;
+          }
+          else if(parseInt(date1[i])>parseInt(date2[i])){
+              dateBegin=date2;
+              dateEnd=date1;
+              break;
+          }
+          else{
+              dateBegin=date1;
+              dateEnd=date2;
+          }
+      };
+      var interval=$(".control-chart-btn.active").attr("title");
+      var startTime=dateBegin.join("-");
+      var endTime=dateEnd.join("-");
+      var chartScale={
+        y:dateBegin[0],
+        m:parseInt(dateBegin[1])-1==0 ? 12: dateBegin[1]-1,
+        d:dateBegin[2]
+      }
+      $.post('../tasks/calendar', {
+          entity : entity,
+          kpi : kpi,
+          startTime:startTime,
+          endTime:endTime
+      }, function(data) {
+          var lines = data.split('\n');
+          $.each(lines, function(lineNo, line) {
+              var items = line.split(',');
+              if (lineNo == 0) {
+                  var series = {
                     type:"line",
                     name: 'target',
-                    data: [80,110,120,140,150,150,300],
-                    pointStart: Date.UTC(2013,6,1),
-                    yAxis:1,
-                    pointInterval: 24 * 3600 * 1000 // one day
-                }
-            ]
-        }
-    );
-    $("#from,#to,#compare-from,#compare-to").datepicker({
+                    data: [],
+                    pointStart: Date.UTC(chartScale.y,chartScale.m,chartScale.d),
+                    pointInterval: 24 * 3600 * 1000
+                  };
+              }
+              else {
+                  var series = {
+                      type:"area",
+                      name:'actual',
+                      data: [],
+                      pointStart: Date.UTC(chartScale.y,chartScale.m,chartScale.d),
+                      pointInterval: 24 * 3600 * 1000
+                  };
+                  $.each(items, function(itemNo, item) {
+                      if (itemNo == 0) {
+                          series.name = item;
+                      } else {
+                          series.data.push(parseFloat(item));
+                      }
+                  });
 
-    })
-}
-//  function init_analytics(){
-//      var options = {
-//          chart: {
-//              renderTo: 'container',
-//              defaultSeriesType: 'column'
-//          },
-//          title: {
-//              text: 'Fruit Consumption'
-//          },
-//          xAxis: {
-//              categories: []
-//          },
-//          yAxis: {
-//              title: {
-//                  text: 'Units'
-//              }
-//          },
-//          series: []
-//      };
-//      $.get('data.csv', function(data) {
-//          // Split the lines
-//          var lines = data.split('\n');
-//          // Iterate over the lines and add categories or series
-//          $.each(lines, function(lineNo, line) {
-//              var items = line.split(',');
-//
-//              // header line containes categories
-//              if (lineNo == 0) {
-//                  $.each(items, function(itemNo, item) {
-//                      if (itemNo > 0) options.xAxis.categories.push(item);
-//                  });
-//              }
-//
-//              // the rest of the lines contain data with their name in the first position
-//              else {
-//                  var series = {
-//                      data: []
-//                  };
-//                  $.each(items, function(itemNo, item) {
-//                      if (itemNo == 0) {
-//                          series.name = item;
-//                      } else {
-//                          series.data.push(parseFloat(item));
-//                      }
-//                  });
-//
-//                  options.series.push(series);
-//
-//              }
-//
-//          });
-//
-//          // Create the chart
-//          var chart = new Highcharts.Chart(options);
-//      });
-//  }
+                  options.series.push(series);
+
+              }
+
+          });
+
+          // Create the chart
+          var chart = new Highcharts.Chart(options);
+      });
+  }
+
+//            series: [
+//                {
+//                    type:"area",
+//                    name: 'actual',
+//                    data: [100,100,100,150,150,150,200],
+//                    pointStart: Date.UTC(2013,6,1),
+//                    pointInterval: 24 * 3600 * 1000//one day
+//                },
+//                {
+//                    type:"line",
+//                    name: 'target',
+//                    data: [80,110,120,140,150,150,300],
+//                    pointStart: Date.UTC(2013,6,1),
+//                    yAxis:1,
+//                    pointInterval: 24 * 3600 * 1000 // one day
+//                }
+//            ]
+
+
 
 
 
@@ -211,30 +347,26 @@ function init_manage(){
     else {
         window.addEventListener('resize', init_rightContent, false);
     }
-    $(".calcuType-method-btn").bind("click",function(){
-        $(".calcuType-method-btn").removeClass("active");
-        $(this).addClass("active");
-    });
-    cancel_add_kpi();
 }
-///////////////KPI
-function is_calcu(){
-    if($("#is-calcu-check").attr("checked")=="checked"){
-        $("#is-calcu-type").slideDown("2000");
-    }
-    else{
-        $("#is-calcu-type").slideUp("2000");
-    }
-}
+///////////////  KPI  ///////////////////////////////////////
+
 function cancel_add_kpi(){
     $("#addBlock").slideUp("2000").data("state","off").find("input").val("");
     $("#right-content").css("padding-top","0px");
+    clear_add_kpi();
+}
+function clear_add_kpi(){
     $("#add-entity").find("option[data-order='1']").attr("selected","true");
+    $("#new-kpi-name").val("");
+    $("#new-kpi-desc").val("");
     $("#add-interval").find("option[data-order='1']").attr("selected","true");
     $("#add-trend").find("option[data-order='1']").attr("selected","true");
     $("#add-unit").find("option[data-order='1']").attr("selected","true");
+    $("#new-kpi-target").val("");
     $("#is-calcu-check").attr("checked",false);
-    $("#is-calcu-relate").find("option[data-order='1']").attr("selected","true");
+    $("#is-calcu-type").css("display","none");
+    calcuRelate_clear();
+
 }
 function add_kpi(){
     var entity=$("#add-entity").find(":selected").val();
@@ -257,20 +389,23 @@ function add_kpi(){
 
             }
             else{
-                $("#kpi-table").append($("<tr />").attr("id",id).append($("<td align='center' />").text(id).addClass("kpi-order-id"))
-                    .append($("<td align='center' />").text(entity))
-                    .append($("<td align='center' />").text(name))
-                    .append($("<td align='center' />").text(desc))
-                    .append($("<td align='center' />").text(interval))
-                    .append($("<td align='center' />").text(target))
-                    .append($("<td align='center' />").text(unit))
-                    .append($("<td align='center' />").text(trend))
-                    .append($("<td align='center' />").text("否"))
-                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong",id).click(edit_kpiItem))
-                        .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong",id).click(finish_editKPI).text("完成")))
-                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong",id).click(remove_kpiItem))
-                        .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id","cancel-edit-kpi").data("belong",id).click(cancel_editKPI).text("取消")))
-                );
+                if($("#manage-group-kpi li.active a").text()==entity){
+                    $("#kpi-table").append($("<tr />").attr("id",id).append($("<td align='center' />").text(id).addClass("kpi-order-id"))
+                        .append($("<td align='center' />").text(entity))
+                        .append($("<td align='center' />").text(name))
+                        .append($("<td align='center' />").text(desc))
+                        .append($("<td align='center' />").text(interval))
+                        .append($("<td align='center' />").text(target))
+                        .append($("<td align='center' />").text(unit))
+                        .append($("<td align='center' />").text(trend))
+                        .append($("<td align='center' />").text("否"))
+                        .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong",id).click(edit_kpiItem))
+                            .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong",id).click(finish_editKPI).text("完成")))
+                        .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong",id).click(remove_kpiItem))
+                            .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id","cancel-edit-kpi").data("belong",id).click(cancel_editKPI).text("取消")))
+                    );
+                }
+
                 cancel_add_kpi();
             }
         }
@@ -335,17 +470,93 @@ function find_id(event){
     var id=$(obj).data("belong");
     return id;
 }
+function create_entityBlock(){
+    $("#creatEntity-block").removeClass("hide");
+    $("#creat-newEntity").val("").focus();
+}
+function close_createEntity(){
+    $("#creatEntity-block").addClass("hide");
+    $("#creat-newEntity").val("");
+}
+function insert_entity(){
+    var test = test_sameEntity();
+
+    if($("#creat-newEntity").val() && test == -1) {
+        var length=$("#manage-group-kpi").find("li").length-1;
+        var val=$("#creat-newEntity").val();
+        $("#manage-group-kpi li:eq("+length+")").before($("<li />").append($("<a href=''/>").text(val)));
+        $("#creat-newEntity").val("");
+        $(obj).val("");
+    }
+}
+function test_sameEntity() {
+    var a = $("#creat-newEntity").val();
+    var b = [];
+    $("#manage-group-kpi").find("a").each(function() {
+        b.push($(this).text());
+    });
+    if(!Array.indexOf){
+        Array.prototype.indexOf = function(obj){
+            for(var i=0; i<this.length; i++){
+                if(this[i]==obj){
+                    return i;
+                }
+            }
+            return -1;
+        }
+    }
+    return b.indexOf(a);
+}
+function create_entity(event) {
+    var e = event ? event : (window.event ? window.event : null);
+    if(e.keyCode == 13) {
+        insert_entity();
+    } else if(e.keyCode == 27) {
+        close_createEntity();
+    }
+}
+function is_calcu(){
+    if($("#is-calcu-check").attr("checked")=="checked"){
+        $("#is-calcu-type").slideDown("2000");
+    }
+    else{
+        $("#is-calcu-type").slideUp("2000");
+    }
+}
+function select_calcuRelate(){
+    var val="["+$("#is-calcu-relate :selected").val()+"]";
+    var oldVal=$("#calcuType-input").val()
+    if(/\]$/.test(oldVal)==false){
+        var newVal=oldVal+val;
+        $("#calcuType-input").val(newVal);
+    }
+}
+function select_calcuMethod(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    var val=$(obj).text();
+    var oldVal=$("#calcuType-input").val()
+    if(/\]$/.test(oldVal)==true){
+        var newVal=oldVal+val;
+        $("#calcuType-input").val(newVal);
+    }
+}
+function calcuRelate_clear(){
+    $("#calcuType-input").val("");
+    $("#is-calcu-relate").find("option[data-order='1']").attr("selected","true");
+}
 ////////////////////////////////////////////////     entry kpi  ///////////////////////////////////////
 function init_entryKpi(){
     init();
     date=new Date();
     d=date.getDate();
-    WeekFirstDay=new Date(date-(date.getDay()-1)*86400000).getDate();
-    WeekLastDay=new Date((WeekFirstDay/1000+6*86400)*1000).getDate();
+    day=date.getDay();
     QuarterFirstMonth=showquarterFirstMonth();
-    QuarterLastMonth=showquarterLastMonth();
     m= date.getMonth()+1;
     y=date.getFullYear();
+    WeekFirstDay=new Date(y, m, d - day+1);
+    WeekLastDay=new Date(y, m, d - day+7);
+
     var type=$("#entry-date-type").find(".active").data("type");
     switch(type){
         case "day":
@@ -353,11 +564,13 @@ function init_entryKpi(){
             $("#entry-kpi").datepicker({
                 dateFormat:"yy-m-d",
                 showOtherMonths: true,
+                firstDay:1,
+                showWeek: true,
                 selectOtherMonths: true
             });
             break;
         case "week":
-            $("#entry-kpi").val(y+"-"+m+"-"+WeekFirstDay+" ~ "+y+"-"+m+"-"+WeekLastDay);
+            $("#entry-kpi").val(formatDate(WeekFirstDay)+" ~ "+formatDate(WeekLastDay));
             $("#entry-kpi").bind("click",select_week);
             break;
         case "month":
@@ -384,12 +597,19 @@ function init_entryKpi(){
                 });
             break;
         case "quarter":
-            $("#entry-kpi").val(QuarterFirstMonth+" ~ "+QuarterLastMonth);
+            $("#entry-kpi").css("width","100px");
+            $("#entry-kpi").val(y);
+            $("#entry-prev-btn,#entry-next-btn").removeClass("hide");
+            $("#select-quarter").removeClass("hide").find("option").each(function(){
+                  if($(this).val()==QuarterFirstMonth){
+                      $(this).attr("selected",true);
+                  }
+            });
             break;
         case "year":
+            $("#entry-kpi").css("width","100px");
             $("#entry-kpi").val(y);
-
-            break;
+            $("#entry-prev-btn,#entry-next-btn").removeClass("hide");
             break;
     };
 }
@@ -398,26 +618,13 @@ function showquarterFirstMonth()
 {
     var Nowdate=new Date();
     if(Nowdate.getMonth()<3)
-        return Nowdate.getFullYear()+'-1';
+        return "第一季度";
     else if(Nowdate.getMonth()>2 && Nowdate.getMonth()<6)
-        return Nowdate.getFullYear()+'-4';
+        return "第二季度";
     else if(Nowdate.getMonth()>5 && Nowdate.getMonth()<9)
-        return Nowdate.getFullYear()+'-7';
+        return "第三季度";
     else if(Nowdate.getMonth()>8)
-        return Nowdate.getFullYear()+'-10';
-}
-//本季最后年月
-function showquarterLastMonth()
-{
-    var Nowdate=new Date();
-    if(Nowdate.getMonth()<3)
-        return Nowdate.getFullYear()+'-3';
-    else if(Nowdate.getMonth()>2 && Nowdate.getMonth()<6)
-        return Nowdate.getFullYear()+'-6';
-    else if(Nowdate.getMonth()>5 && Nowdate.getMonth()<9)
-        return Nowdate.getFullYear()+'-9';
-    else if(Nowdate.getMonth()>8)
-        return Nowdate.getFullYear()+'-12';
+        return "第四季度";
 }
 //只选择周
 function select_week(){
@@ -431,11 +638,13 @@ function select_week(){
     $('.week-picker').removeClass("hide").datepicker( {
         showOtherMonths: true,
         selectOtherMonths: true,
+        firstDay:1,
+        showWeek: true,
         dateFormat: 'yy-m-d',
         onSelect: function(dateText, inst) {
             var date = $(this).datepicker('getDate');
-            startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
-            endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
+            startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay()+1);
+            endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
             var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
             $("#entry-kpi").val($.datepicker.formatDate( dateFormat, startDate, inst.settings )+" ~ "+$.datepicker.formatDate( dateFormat, endDate, inst.settings ));
             selectCurrentWeek();
@@ -453,4 +662,42 @@ function select_week(){
     });
     $('.week-picker .ui-datepicker-calendar tr').live('mousemove', function() { $(this).find('td a').addClass('ui-state-hover'); });
     $('.week-picker .ui-datepicker-calendar tr').live('mouseleave', function() { $(this).find('td a').removeClass('ui-state-hover'); });
+}
+function minus_unit(event){
+    $("#entry-kpi").val(parseInt( $("#entry-kpi").val())-1);
+}
+function plus_unit(event){
+    $("#entry-kpi").val(parseInt( $("#entry-kpi").val())+1);
+}
+function entry_kpiCurrent(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    clearNoNum(obj);
+    if(e.keyCode==13){
+         fill_kpiCurrent(obj);
+    }
+}
+function fill_kpiCurrent(obj){
+    var date=$("#entry-kpi").val();
+    if(!$("#select-quarte").hasClass("hide")){
+        var quarter=$("#select-quarter").find(":selected").val();
+    }
+    var id=$(obj).data("belong");
+    var val=$(obj).val();
+    var target=$(obj).data("target");
+    var percent=(parseFloat(val)/parseFloat(target)*100).toFixed(0);
+    kpi_percent(percent,id)
+}
+function kpi_percent(a,b){
+    var goal=$("#"+b).find(".entry-kpiPercent");
+    goal.text(a+"%");
+    switch(a-100>=0){
+        case true:
+            goal.addClass("text-success");
+            break;
+        case false:
+            goal.addClass("text-error");
+            break;
+    }
+
 }

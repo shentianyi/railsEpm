@@ -47,18 +47,24 @@
     <div class="middle clearfix">
         <label class="inline pull-left entryKPI-intervalMark" >KPI周期</label>
         <ul class="nav nav-tabs entry-nav-tabs" id="entry-date-type">
-            <li  data-type="day"><a href="#">日</a></li>
-            <li  class="active" data-type="week"><a href="#" >周</a></li>
+            <li data-type="day"><a href="#">日</a></li>
+            <li class="active" data-type="week"><a href="#" >周</a></li>
             <li data-type="month"><a href="#" >月</a></li>
             <li data-type="quarter"><a href="#">季度</a></li>
             <li data-type="year"><a href="#">年</a></li>
         </ul>
         <div class="entry-kpi-part">
             <img src="images/calendar.png" style="margin:16px 0 0 18px;"/>
-            <a class="entry-prev-btn entry-btn"></a>
+            <a class="entry-prev-btn entry-btn hide" id="entry-prev-btn" onclick="minus_unit(event)"></a>
             <input type="text" id="entry-kpi" class="entry-kpi-date" readonly="true" />
             <div class="week-picker hide"> </div>
-            <a class="entry-next-btn entry-btn"></a>
+            <a class="entry-next-btn entry-btn hide" id="entry-next-btn" onclick="plus_unit(event)"></a>
+            <select id="select-quarter" class="entry-selectQuarter hide">
+                <option>第一季度</option>
+                <option>第二季度</option>
+                <option>第三季度</option>
+                <option>第四季度</option>
+            </select>
             <table class="entry-table">
                 <tr>
                     <th>类别</th>
@@ -68,13 +74,13 @@
                     <th>现在</th>
                     <th>完成度</th>
                 </tr>
-                <tr>
+                <tr id="kpi1">
                     <td align="center">entity1</td>
                     <td align="center">kpi1</td>
                     <td align="center">asddssada</td>
                     <td align="center" width="150px">2000</td>
-                    <td align="center" width="150px"><input class="entry-kpi" type="text"/></td>
-                    <td align="center"></td>
+                    <td align="center" width="150px"><input data-target="2000" class="entry-kpi-current" data-belong="kpi1" type="text" onkeyup="entry_kpiCurrent(event)" onblur="fill_kpiCurrent(this)"/></td>
+                    <td align="center" class="entry-kpiPercent "></td>
                 </tr>
             </table>
         </div>
