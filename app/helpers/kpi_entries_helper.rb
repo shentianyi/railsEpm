@@ -2,12 +2,17 @@
 module KpiEntriesHelper
   # create or update kpi entry
   def self.create_update_kpi_entry params
+    begin
     if kpi_entry=KpiEntry.where(:user_kpi_item_id=>params[:id],:entry_at=>params[:entry_at]).first
       kpi_entry.update_attributes(:original_value=>params[:value])
     else
-      kpi_entry=KpiEntry.new(:original_value=>params[:value],:user_kpi_item_id=>params[:id],:entry_at=>params[:entry_at],:kpi_id=>params[:kpi]).save
+      kpi_entry=KpiEntry.new(:original_value=>params[:value],:user_kpi_item_id=>params[:id],:entry_at=>params[:entry_at],:kpi_id=>params[:kpi])
+    kpi_entry.save
     end
     return kpi_entry
+    rescue Exception=>e
+     puts e.message
+    end
   end
 
   # calculate kpi parent value
@@ -23,19 +28,23 @@ module KpiEntriesHelper
             f[sym]=base_entry.value
             else
             f[sym]=0
-            end 
+            end
           end
           KpisHelper.parse_formula_items(kpi.formula).each do |item|
             kpi.formula.sub!("[#{item}]",f[item.to_sym].to_s)
           end
-	  puts "-----------------#{kpi.formula}"
+          puts "-----------------#{kpi.formula}"
           value=kpi.formula.calculate
-          if calcualted_entry=get_kpi_entry_for_calculate(entry.user_id,entry.entity_id,kpi.id,entry.parsed_entry_at)
-      #    calcualted_entry.update_attributes(:original_value=>value)
-	      calcualted_entry.original_value=value
-	      calcualted_entry.save
+          
+	  kpi_entry_at=reparse_entry_date(kpi.frequency,entry.parsed_entry_at)
+          kpi_parsed_entry_at=parse_entry_date(kpi.frequency,kpi_entry_at)
+
+          if calcualted_entry=get_kpi_entry_for_calculate(entry.user_id,entry.entity_id,kpi.id,kpi_parsed_entry_at)
+             calcualted_entry.update_attributes(:original_value=>value)
+          # calcualted_entry.original_value=value
+          # calcualted_entry.save
           else
-            KpiEntry.new(:original_value=>value,:user_kpi_item_id=>kpi.user_kpi_items.where(:entity_id=>entry.entity_id,:user_id=>entry.user_id).first.id,:kpi_id=>kpi.id,:entry_at=>reparse_entry_date(kpi.frequency,entry.parsed_entry_at),:parsed_entry_at=>entry.parsed_entry_at).save
+            KpiEntry.new(:original_value=>value,:user_kpi_item_id=>kpi.user_kpi_items.where(:entity_id=>entry.entity_id,:user_id=>entry.user_id).first.id,:kpi_id=>kpi.id,:entry_at=>kpi_entry_at,:parsed_entry_at=>kpi_parsed_entry_at).save
           end
         end
       end

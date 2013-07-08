@@ -6,21 +6,16 @@ class KpiEntryObserver<ActiveRecord::Observer
     kpi=kpi_entry.kpi=Kpi.find_by_id(kpi_entry.kpi_id)
     if kpi_entry.new_record?
       kpi_entry.parsed_entry_at=KpiEntriesHelper.parse_entry_date(kpi.frequency,kpi_entry.entry_at) if kpi_entry.parsed_entry_at.nil?
-      kpi_entry.frequency=kpi.frequency
+    kpi_entry.frequency=kpi.frequency
     end
-    puts '************************'
-    
-    puts kpi_entry.id
-     puts kpi_entry.original_value
-     puts kpi_entry.original_value.finite?
-     puts '************************'
-       if  kpi_entry.original_value.finite?
-        kpi_entry.value=KpiUnit.parse_entry_value(kpi.unit,kpi_entry.original_value)
-      else
-       kpi_entry.value=kpi_entry.original_value=0
-  
-      end     
-       kpi_entry.normal=false
+    if  kpi_entry.original_value.finite?
+      kpi_entry.value=KpiUnit.parse_entry_value(kpi.unit,kpi_entry.original_value)
+    kpi_entry.abnormal=false
+    else
+    kpi_entry.value=kpi_entry.original_value=0
+    kpi_entry.abnormal=true
+    end
+    true     
   end
 
   # calculate parent kpi entry value

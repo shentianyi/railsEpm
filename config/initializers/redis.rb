@@ -1,12 +1,12 @@
 require "resque/server"
  
-$redis=Redis.new(:host => "127.0.0.1",:port => "6379",:db=>1)
+$redis=Redis.new(:host => "127.0.0.1",:port => "6379",:db=>6)
 
 if defined?(PhusionPassenger)
   PhusionPassenger.on_event(:starting_worker_process) do |forked|
     if forked
       $redis.client.disconnect
-      $redis=Redis.new(:host => "127.0.0.1",:port => "6379",:db=>1)
+      $redis=Redis.new(:host => "127.0.0.1",:port => "6379",:db=>6)
     end
   end
 end
