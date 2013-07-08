@@ -1,5 +1,9 @@
 IFEpm::Application.routes.draw do
 
+  get "entity_groups/create"
+
+  get "entity_groups/list"
+
 resources :kpis
 resources :kpi_categories
 
