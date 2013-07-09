@@ -688,31 +688,74 @@ function init_addUser(){
     }else{
         $("#add-user-mark").text("修改我的用户");
     }
-    init_userRight();
-    if (document.attachEvent) {
-        window.attachEvent('onresize', init_userRight);
-    }
-    else {
-        window.addEventListener('resize', init_userRight, false);
-    }
-    function init_userRight(){
-        var fwidth=parseInt(document.body.scrollWidth);
-        if(fwidth>990){
-            document.getElementById("add-user-right").style.width=document.body.scrollWidth-400+"px";
-        }
-        else{
-            document.getElementById("add-user-right").style.width=990-400+"px";
-        }
-    }
-
 }
-function to_userPage(type){
+function to_userPage(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    var type=$("obj").attr("type");
     if(type=="add"){
         $("#add-user-mark").text("添加我的用户");
     }
     else if(type=="edit"){
         $("#add-user-mark").text("修改我的用户");
     }
+}
+///////////////  delivery kpi  ///////////////////////////////////////
+function choose_kpi(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    var id=$(obj).parent().attr("id");
+    var entity=$("#"+id).find(".deliveryKpi-entity").text();
+    var name=$("#"+id).find(".deliveryKpi-name").text();
+    var desc=$("#"+id).find(".deliveryKpi-desc").text();
+    var target=$("#"+id).find(".deliveryKpi-target").text();
+    var unit=$("#"+id).find(".deliveryKpi-unit").text();
+    var interval=$("#"+id).find(".deliveryKpi-interval").text();
+    if(test_sameDeliveryKpi(id)== -1){
+        $("#my-kpi").append($("<tr />").attr("id",id).click(remove_userkpi).append($("<td />").text(entity))
+            .append($("<td />").text(name))
+            .append($("<td />").text(desc))
+            .append($("<td />").append($("<input type='text'/>").click(myKpi_input).val(target).addClass("my-kpi-target")))
+            .append($("<td />").text(unit))
+            .append($("<td />").text(interval))
+        );
+    }
+}
+function myKpi_input(event){
+    var e = event ? event : (window.event ? window.event : null);
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    }
+    else {
+        e.cancelBubble = true;
+    }
+    $("#my-kpi").find("input").bind("keyup",function(){
+           clearNoNum(this);
+    })
+}
+function test_sameDeliveryKpi(id) {
+    var a = id;
+    var b = [];
+    $("#my-kpi").find("tr").each(function() {
+        b.push($(this).attr('id'));
+    });
+    if(!Array.indexOf){
+        Array.prototype.indexOf = function(obj){
+            for(var i=0; i<this.length; i++){
+                if(this[i]==obj){
+                    return i;
+                }
+            }
+            return -1;
+        }
+    }
+    return b.indexOf(a);
+}
+function remove_userkpi(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    var id=$(obj).parent().attr("id");
+    $(obj).parent().remove();
 }
 ///////////////  view  ///////////////////////////////////////
 function create_Viewentity(event){
@@ -782,38 +825,6 @@ function del_view(event){
     var obj = e.srcElement || e.target;
     $(obj).remove();
 }
-function show_allKpi(event){
-    var e = event ? event : (window.event ? window.event : null);
-    if (e.stopPropagation) {
-        e.stopPropagation();
-    }
-    else {
-        e.cancelBubble = true;
-    }
-    if($("#show-allKpi").attr("state")=="off"){
-        $("#show-allKpi").attr("state","on").find("i").attr("class","icon-chevron-up icon-white");
-        $("#all-kpi").slideDown("500");
-    }
-    else{
-        $("#show-allKpi").attr("state","off").find("i").attr("class","icon-chevron-down icon-white");
-        $("#all-kpi").slideUp("500");
-    }
-}
-function choose_kpi(event){
-    var e = event ? event : (window.event ? window.event : null);
-    var obj = e.srcElement || e.target;
-    var id=$(obj).parent().attr("id");
-    var name=$("#"+id).find(".kpi-name").text();
-    if(text_view("#"+id+" .kpi-name","user-kpi")== -1){
-        $("#user-kpi").append($("<p />").attr("id",id).text(name).click(remove_userkpi));
-    }
-}
-function remove_userkpi(event){
-    var e = event ? event : (window.event ? window.event : null);
-    var obj = e.srcElement || e.target;
-    var id=$(obj).attr("id");
-    $(obj).remove();
-}
 function post_newUser(){
     var name=$("#new-user-name").val();
     var mail=$("#new-user-mail").val();
@@ -829,8 +840,9 @@ function post_newUser(){
                     .append($("<td align='center' />").text(mail))
                     .append($("<td align='center' />").text(entity))
                     .append($("<td align='center' />").text(role))
-                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong",id).click(edit_userItem)))
-                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong",id).click(remove_userItem)))
+                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").attr("type","edit").attr("title","编辑").data("belong",id).click(to_userPage)))
+                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-delivery").attr("title","分配KPI").data("belong",id).click(edit_userItem)))
+                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").attr("title","删除").data("belong",id).click(remove_userItem)))
                 );
         }
         else{

@@ -374,8 +374,8 @@ ul.manage-group>li.active>a{
     width:30px;
     height:30px;
     background-repeat:no-repeat;
-    /*background-image:url("../images/manage-operate.png");*/
-    background-image:url("/assets/manage-operate.png");
+    background-image:url("../images/manage-operate.png");
+    /*background-image:url("/assets/manage-operate.png");*/
     cursor:pointer;
 }
 .manage-operate-edit{
@@ -383,6 +383,9 @@ ul.manage-group>li.active>a{
 }
 .manage-operate-del{
     background-position:1px -39px;
+}
+.manage-operate-delivery{
+    background-position:-31px 2px;
 }
 .wrap-add-manage{
     width:600px;
@@ -490,11 +493,8 @@ select.calcuRelate-kpi{
 /*************************    add user     ******************************/
 .add-user-left{
     width:300px;
-    padding:10px 25px 20px 40px;
-    float:left;
-    border-right:1px solid #ddd;
-    word-wrap:break-word;
-    word-break:break-all;
+    padding:10px 25px;
+    margin:55px auto;
 }
 .add-user-left>p{
     margin-bottom:1px;
@@ -506,46 +506,6 @@ select.calcuRelate-kpi{
 .add-user-left>select{
     width:265px;
     margin-bottom:20px;
-}
-.add-user-right{
-    float:left;
-    width:600px;
-    padding-top:10px;
-}
-.all-kpi{
-    width:70%;
-    margin:0 auto;
-}
-.all-kpi td{
-    word-wrap:break-word;
-    word-break:break-all;
-    padding:5px 10px;
-    cursor:pointer;
-
-}
-.user-kpi{
-    width:70%;
-    margin:0 auto 20px;
-    border-radius:3px;
-    -moz-border-radius:3px;
-    -webkit-border-radius:3px;
-    border:1px solid #ddd;
-    background-color:white;
-}
-.user-kpi>p{
-    text-align:center;
-
-    padding:5px 3px;
-    word-wrap:break-word;
-    word-break:break-all;
-    cursor:pointer;
-}
-.user-kpi>p:nth-child(even){
-    background-color:#faf6e0
-}
-.show-allKpi{
-    margin-left:15%;
-    margin-bottom:45px;
 }
 .add-user-mark{
    position:absolute;
@@ -576,6 +536,49 @@ select.calcuRelate-kpi{
 .view-block p:hover{
     background-color:#F39C12;
     color:white;
+}
+/*************************    delivery kpi     ******************************/
+.my-kpi{
+    width:40%;
+    margin-left:6%;
+    margin-top:20px;
+}
+.my-kpi>table{
+    width:100%;
+    background-color:white;
+}
+.my-kpi td{
+    cursor:pointer;
+    text-align:center;
+    word-wrap:break-word;
+    word-break:break-all;
+}
+.all-kpi{
+    width:40%;
+    margin-right:6%;
+    margin-top:20px;
+
+}
+.all-kpi>table{
+    width:100%;
+}
+.all-kpi td{
+    text-align:center;
+    word-wrap:break-word;
+    word-break:break-all;
+    padding:5px 10px;
+    cursor:pointer;
+}
+.my-kpi-target{
+    width:120px;
+    position:relative;
+    top:5px;
+}
+.deliverKpi-introMark{
+    font-size:12px;
+    margin-top:1px;
+    margin-right:4px;
+    color:#9d9d9d;
 }
 /***************************************************** kpi entry **************************************************************/
 .entryKPI-intervalMark{
