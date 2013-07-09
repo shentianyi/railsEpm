@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" >
+    <link href="stylesheets/wzx-jquery-ui.css" rel="stylesheet" >
+    <link href="stylesheets/wzx-bootstrap.css" rel="stylesheet" >
+    <link href="stylesheets/brilliantech.base.css" rel="stylesheet" >
+    <link href="stylesheets/brilliantech.railsepm.css" rel="stylesheet" >
+    <title>if kpi</title>
+</head>
+<body>
+<div class="wrap-page">
+    <div class="page-top">
+        <img src="images/headicon.png"/>
+        <label class="company-name">BrillianTech</label>
+        <div class="top-tool pull-right">
+            <a class="tool-setting" data-placement="bottom" data-animation=false id="tool-setting" title="设置" > </a>
+            <a class="tool-help" data-placement="bottom" data-animation=false id="tool-help" title="帮助"> </a>
+            <a class="tool-user" data-placement="bottom" data-animation=false id="tool-user" title="账户"> </a>
+        </div>
+        <!--<ul class="setting-navi pull-right">-->
+        <!--<li><a >Hello Wayne</a></li>-->
+        <!--</ul>-->
+    </div>
+    <div class="page-navi clearfix">
+        <ul class="main-navi pull-left">
+            <li><a href="">开始</a></li>
+            <li><a href="">仪表盘</a></li>
+            <li><a  href="">分析</a></li>
+            <li><a href="">报告</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    管理<b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="main-navi-dropitem" href="">KPI</a></li>
+                    <li><a class="main-navi-dropitem" href="">用户</a></li>
+                    <li><a class="main-navi-dropitem" href="">付费</a></li>
+                </ul>
+            </li>
+        </ul>
+        <a class="btn btn-success btn-navi pull-right" href="">输入 KPI</a>
+    </div>
+    <div class="sub-middle sub-middle-manage">
+        <a class="btn btn-addUser" onclick="window.history.go(-1)">返回</a>
+        <a class="btn btn-primary btn-addUser" onclick="post_newUser()">完成</a>
+        <h3 class="text-center inline-block add-user-mark" data-type="add" id="add-user-mark"></h3>
+    </div>
+    <div class="middle clearfix">
+        <div class="add-user-left" id="add-user-left">
+            <h4 class="text-center normal-blue">基本信息</h4>
+            <p>*姓名</p>
+            <input type="text" id="new-user-name"/>
+            <p>*邮箱</p>
+            <input type="text" id="new-user-mail"/>
+            <p>*密码</p>
+            <input type="password" id="new-user-password"/>
+            <p>*组</p>
+            <select id="new-user-entity">
+            <option data-order="1" selected="selected">entity1</option>
+            <option data-order="2">entity2</option>
+            <option data-order="3">entity3</option>
+            </select>
+            <p>*权限</p>
+            <label class="radio">
+                <input type="radio" name="optionsRadios" data-role="1" checked>
+                role,dasdsadasdasasaSAsaSAsaSASASAsASas
+            </label>
+            <label class="radio">
+                <input type="radio" name="optionsRadios" data-role="2">
+                role,dasdsadasdasasaSAsaSAsaSASASAsASas
+            </label>
+            <label class="radio">
+                <input type="radio" name="optionsRadios" data-role="3">
+                role,dasdsadasdasasaSAsaSAsaSASASAsASas
+            </label>
+            <p class="hide text-center text-warning" id="add-warn"></p>
+        </div>
+        <div class="add-user-right" id="add-user-right">
+            <h4 class="text-center normal-blue">用户的KPI</h4>
+            <div class="user-kpi " id="user-kpi">
+                <p onclick="remove_userkpi(event)">das</p>
+            </div>
+            <a class="btn btn-primary show-allKpi" id="show-allKpi" onclick="show_allKpi(event)" state="off">
+                挑选KPI <i class=" icon-chevron-down icon-white" onclick="show_allKpi(event)"></i>
+            </a>
+            <div id="all-kpi" style="display:none">
+            <h4 class="text-center">所有的KPI</h4>
+            <table class="all-kpi  table-bordered table-striped">
+               <tr>
+                   <th width="200px">名称</th>
+                   <th>描述</th>
+               </tr>
+               <tr id="kpi1" onclick="choose_kpi(event)">
+                   <td class="kpi-name">kpi11</td>
+                   <td>asdsadsa</td>
+               </tr>
+                <tr id="kpi2" onclick="choose_kpi(event)">
+                    <td class="kpi-name">kpi2</td>
+                    <td>asdsadsa</td>
+                </tr>
+                <tr id="kpi3" onclick="choose_kpi(event)">
+                    <td class="kpi-name">kpi3</td>
+                    <td>asdsadsa</td>
+                </tr>
+                <tr id="kpi4" onclick="choose_kpi(event)">
+                    <td class="kpi-name">kpi45</td>
+                    <td>asdsadsa</td>
+                </tr>
+            </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script src="javascripts/jquery-1.8.2.min.js"></script>
+<script src="javascripts/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="javascripts/highcharts.js"></script>
+<script src="javascripts/bootstrap.min.js"></script>
+<script src="javascripts/brilliantech.base.js"></script>
+<script src="javascripts/brilliantech.railsepm.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        init_addUser();
+    })
+</script>
+</body>
+</html>

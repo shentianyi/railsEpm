@@ -35,6 +35,7 @@
                 <ul class="dropdown-menu">
                     <li><a class="main-navi-dropitem" href="">KPI</a></li>
                     <li><a class="main-navi-dropitem" href="">用户</a></li>
+                    <li><a class="main-navi-dropitem" href="">观察点</a></li>
                     <li><a class="main-navi-dropitem" href="">付费</a></li>
                 </ul>
             </li>
@@ -42,97 +43,43 @@
         <a class="btn btn-success btn-navi pull-right" href="">输入 KPI</a>
     </div>
     <div class="sub-middle sub-middle-manage">
-        <h3 class="text-center">管理我的用户 </h3>
+        <h3 class="text-center">管理我的观察点 </h3>
 
     </div>
     <div class="middle clearfix">
         <div class="left-category pull-left">
-            <ul class="manage-group" id="manage-group-user">
-                <li><h3 class="no-margin">类别</h3></li>
+            <ul class="manage-group" id="manage-group-view">
+                <li><h3 class="no-margin">观察点</h3></li>
                 <li class="active"><a href="">默认</a></li>
-                <li><a href="">用户组1</a></li>
-                <li><a href="">用户组2</a></li>
-                <li><a href="">用户组3</a></li>
-                <li><button class="btn btn-primary" onclick="create_entityBlock()">创建新用户组</button></li>
+                <li><a href="">组1</a></li>
+                <li><a href="">组2</a></li>
+                <li><a href="">组3</a></li>
+                <li><button class="btn btn-primary" onclick="create_entityBlock()">创建新观察点</button></li>
                 <div class="absolute creat-entity-block hide" id="creatEntity-block">
-                    <p>创建新用户组</p>
+                    <p>创建新观察点</p>
                     <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
-                    <input type="text" id="creat-newEntity" onkeyup="create_Userentity(event)"/>
+                    <input type="text" id="creat-newEntity" onkeyup="create_Viewentity(event)"/>
                 </div>
             </ul>
         </div>
 
 
-        <div class="addBlock" id="addBlock" data-state="off" style="display:none">
-            <h4 class="text-center normal-blue" id="add-block-mark">添加新的KPI</h4>
-            <div class="wrap-add-manage clearfix">
-                <table class="wrap-add-manage-left pull-left" >
-                    <tr>
-                        <td align="right" valign="top">*姓名</td>
-                        <td>
-                            <input type="text" id="new-user-name"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right" valign="top">*邮箱</td>
-                        <td>
-                            <input type="text" id="new-user-mail"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right" valign="top">*组</td>
-                        <td>
-                            <select id="new-user-entity">
-                                <option data-order="1" selected="selected">entity1</option>
-                                <option data-order="2">entity2</option>
-                                <option data-order="3">entity3</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right" valign="top">*角色</td>
-                        <td>
-                            <select id="new-user-role">
-                                <option data-order="1" selected="selected">管理员</option>
-                                <option data-order="2">用户</option>
-                                <option data-order="3">观察者</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                <div class="wrap-add-manage-right pull-right">
-                    <button class="add-manage-kpi btn  btn-success" id="add-manage-user" onclick="add_user()">添加</button>
-                    <button class="cancel-manage-kpi btn " onclick="cancel_add_user()">取消</button>
-                </div>
-            </div>
-            <p class="text-center light-orange hide" id="add-warn">请填写所有带*的选项</p>
-        </div>
 
-        <div class="right-content pull-left" id="right-content">
-            <table class="manage-kpi" id="user-table">
-                <tr>
-                    <th>ID</th>
-                    <th>姓名</th>
-                    <th min-width="221px">邮箱</th>
-                    <th>组</th>
-                    <th>角色</th>
-                    <th width="100px" colspan="2">操作</th>
-                </tr>
-                <tr id="1">
-                    <td align="center" class="kpi-order-id">1</td>
-                    <td align="center" class="manage-userName">wayne</td>
-                    <td align="center" class="manage-userMail">zixiao.wang@cz-tek.com</td>
-                    <td align="center" class="manage-userEntity">entity1</td>
-                    <td align="center" class="manage-userRole">user</td>
-                    <td align="center"><div class="manage-operate manage-operate-edit" data-belong="1" onclick="edit_userItem(event)"></div>
-                        <a class="btn btn-success manage-operate-reverse  hide" data-belong="1" onclick="finish_editUser(event)">完成</a>
-                    </td>
-                    <td align="center"><div class="manage-operate manage-operate-del" data-belong="1" onclick="remove_userItem(event)"></div>
-                        <a class="btn manage-operate-reverse  hide" id="cancel-edit-user" data-belong="1" onclick="cancel_editUser(event)">取消</a>
-                    </td>
-                </tr>
-            </table>
-            <a class="btn manage-add-btn btn-primary pull-right" onclick="show_addBlock(event)" data-manage="user">添加用户</a>
+        <div class="right-content pull-left clearfix" id="right-content">
+            <div class="all-view  view-block" id="allView">
+                <h4 class="text-center">所有的entity</h4>
+                <p id="entity1" onclick="choose_view(event)">entity1</p>
+                <p id="entity2" onclick="choose_view(event)">entity2</p>
+                <p id="entity3" onclick="choose_view(event)">entity3</p>
+                <p id="entity4" onclick="choose_view(event)">entity4</p>
+                <p id="entity5" onclick="choose_view(event)">entity5</p>
+            </div>
+            <div class="view-arrow"> </div>
+            <div class="my-view view-block" id="myView" >
+                <h4 class="text-center">该观察点的entity</h4>
+                <p data-belong="entity1" onclick="del_view(event)">entity1</p>
+                <p data-belong="entity2" onclick="del_view(event)">entity2</p>
+            </div>
         </div>
     </div>
 
