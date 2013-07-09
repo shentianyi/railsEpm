@@ -31,7 +31,9 @@
     -moz-border-radius:13px;
     -webkit-border-radius:13px;
     margin-top:5px;
-    background-image:url("../images/top-tool.png");
+    /*background-image:url("../images/top-tool.png");*/
+    background-image:url("/assets/top-tool.png");
+
     background-repeat:no-repeat;
 }
 .tool-setting{
@@ -274,10 +276,12 @@ box-shadow:0 2px 0px #F39C12;
 }
 .db-add{
     padding:3px 3px 3px 25px;
-    background:url("../images/add-db.png")no-repeat -6px 3px;
+    /*background:url("../images/add-db.png")no-repeat -6px 3px;*/
+    background:url("/assets/add-db.png")no-repeat -6px 3px;
 }
 .db-add:hover{
-    background:url("../images/add-db.png")no-repeat -6px -19px;
+    /*background:url("../images/add-db.png")no-repeat -6px -19px;*/
+    background:url("/assets/add-db.png")no-repeat -6px -19px;
     color:#1ABC9C !important;
 }
 .sub-middle-tool>a.db-add{
@@ -298,7 +302,8 @@ box-shadow:0 2px 0px #F39C12;
     cursor:pointer;
     -moz-border-radius:3px;
     -webkit-border-radius:3px;
-    background-image:url("../images/db-chart.png");
+    /*background-image:url("../images/db-chart.png");*/
+    background-image:url("/assets/db-chart.png");
     background-repeat:no-repeat;
     position:relative;
 }
@@ -369,7 +374,8 @@ ul.manage-group>li.active>a{
     width:30px;
     height:30px;
     background-repeat:no-repeat;
-    background-image:url("../images/manage-operate.png");
+    /*background-image:url("../images/manage-operate.png");*/
+    background-image:url("/assets/manage-operate.png");
     cursor:pointer;
 }
 .manage-operate-edit{
@@ -512,7 +518,8 @@ select.calcuRelate-kpi{
 .entry-btn{
     padding:15px;
     cursor:pointer;
-    background-image:url("../images/arrow.png");
+    /*background-image:url("../images/arrow.png");*/
+    background-image:url("/assets/arrow.png");
     background-repeat:no-repeat;
     position:relative;
     top:10px;
