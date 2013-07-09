@@ -487,6 +487,96 @@ select.calcuRelate-kpi{
     position:relative;
     top:4px;
 }
+/*************************    add user     ******************************/
+.add-user-left{
+    width:300px;
+    padding:10px 25px 20px 40px;
+    float:left;
+    border-right:1px solid #ddd;
+    word-wrap:break-word;
+    word-break:break-all;
+}
+.add-user-left>p{
+    margin-bottom:1px;
+}
+.add-user-left>input{
+    width:250px;
+    margin-bottom:20px;
+}
+.add-user-left>select{
+    width:265px;
+    margin-bottom:20px;
+}
+.add-user-right{
+    float:left;
+    width:600px;
+    padding-top:10px;
+}
+.all-kpi{
+    width:70%;
+    margin:0 auto;
+}
+.all-kpi td{
+    word-wrap:break-word;
+    word-break:break-all;
+    padding:5px 10px;
+    cursor:pointer;
+
+}
+.user-kpi{
+    width:70%;
+    margin:0 auto 20px;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border:1px solid #ddd;
+    background-color:white;
+}
+.user-kpi>p{
+    text-align:center;
+
+    padding:5px 3px;
+    word-wrap:break-word;
+    word-break:break-all;
+    cursor:pointer;
+}
+.user-kpi>p:nth-child(even){
+    background-color:#faf6e0
+}
+.show-allKpi{
+    margin-left:15%;
+    margin-bottom:45px;
+}
+.add-user-mark{
+   position:absolute;
+   right:50%;
+    margin-right:-100px;
+    width:200px;
+}
+.btn.btn-addUser{
+    padding:7px 19px 6px;
+    position:relative;
+    top:12px;
+    margin-left:14px;
+}
+/*************************    view     ******************************/
+.view-block{
+    width:300px;
+    margin:69px 0px 0px 150px;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border:2px solid #ddd;
+    float:left;
+}
+.view-block>p{
+    text-align:center;
+    cursor:pointer;
+}
+.view-block p:hover{
+    background-color:#F39C12;
+    color:white;
+}
 /***************************************************** kpi entry **************************************************************/
 .entryKPI-intervalMark{
     font-size:19px;

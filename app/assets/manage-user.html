@@ -63,50 +63,50 @@
         </div>
 
 
-        <div class="addBlock" id="addBlock" data-state="off" style="display:none">
-            <h4 class="text-center normal-blue" id="add-block-mark">添加新的KPI</h4>
-            <div class="wrap-add-manage clearfix">
-                <table class="wrap-add-manage-left pull-left" >
-                    <tr>
-                        <td align="right" valign="top">*姓名</td>
-                        <td>
-                            <input type="text" id="new-user-name"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right" valign="top">*邮箱</td>
-                        <td>
-                            <input type="text" id="new-user-mail"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right" valign="top">*组</td>
-                        <td>
-                            <select id="new-user-entity">
-                                <option data-order="1" selected="selected">entity1</option>
-                                <option data-order="2">entity2</option>
-                                <option data-order="3">entity3</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right" valign="top">*角色</td>
-                        <td>
-                            <select id="new-user-role">
-                                <option data-order="1" selected="selected">管理员</option>
-                                <option data-order="2">用户</option>
-                                <option data-order="3">观察者</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                <div class="wrap-add-manage-right pull-right">
-                    <button class="add-manage-kpi btn  btn-success" id="add-manage-user" onclick="add_user()">添加</button>
-                    <button class="cancel-manage-kpi btn " onclick="cancel_add_user()">取消</button>
-                </div>
-            </div>
-            <p class="text-center light-orange hide" id="add-warn">请填写所有带*的选项</p>
-        </div>
+        <!--<div class="addBlock" id="addBlock" data-state="off" style="display:none">-->
+            <!--<h4 class="text-center normal-blue" id="add-block-mark">添加新的KPI</h4>-->
+            <!--<div class="wrap-add-manage clearfix">-->
+                <!--<table class="wrap-add-manage-left pull-left" >-->
+                    <!--<tr>-->
+                        <!--<td align="right" valign="top">*姓名</td>-->
+                        <!--<td>-->
+                            <!--<input type="text" id="new-user-name"/>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td align="right" valign="top">*邮箱</td>-->
+                        <!--<td>-->
+                            <!--<input type="text" id="new-user-mail"/>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td align="right" valign="top">*组</td>-->
+                        <!--<td>-->
+                            <!--<select id="new-user-entity">-->
+                                <!--<option data-order="1" selected="selected">entity1</option>-->
+                                <!--<option data-order="2">entity2</option>-->
+                                <!--<option data-order="3">entity3</option>-->
+                            <!--</select>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td align="right" valign="top">*角色</td>-->
+                        <!--<td>-->
+                            <!--<select id="new-user-role">-->
+                                <!--<option data-order="1" selected="selected">管理员</option>-->
+                                <!--<option data-order="2">用户</option>-->
+                                <!--<option data-order="3">观察者</option>-->
+                            <!--</select>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+                <!--<div class="wrap-add-manage-right pull-right">-->
+                    <!--<button class="add-manage-kpi btn  btn-success" id="add-manage-user" onclick="add_user()">添加</button>-->
+                    <!--<button class="cancel-manage-kpi btn " onclick="cancel_add_user()">取消</button>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<p class="text-center light-orange hide" id="add-warn">请填写所有带*的选项</p>-->
+        <!--</div>-->
 
         <div class="right-content pull-left" id="right-content">
             <table class="manage-kpi" id="user-table">
@@ -124,15 +124,15 @@
                     <td align="center" class="manage-userMail">zixiao.wang@cz-tek.com</td>
                     <td align="center" class="manage-userEntity">entity1</td>
                     <td align="center" class="manage-userRole">user</td>
-                    <td align="center"><div class="manage-operate manage-operate-edit" data-belong="1" onclick="edit_userItem(event)"></div>
-                        <a class="btn btn-success manage-operate-reverse  hide" data-belong="1" onclick="finish_editUser(event)">完成</a>
+                    <td align="center"><div class="manage-operate manage-operate-edit" data-belong="1" onclick="to_userPage('edit')"></div>
+                        <!--<a class="btn btn-success manage-operate-reverse  hide" data-belong="1" onclick="finish_editUser(event)">完成</a>-->
                     </td>
                     <td align="center"><div class="manage-operate manage-operate-del" data-belong="1" onclick="remove_userItem(event)"></div>
-                        <a class="btn manage-operate-reverse  hide" id="cancel-edit-user" data-belong="1" onclick="cancel_editUser(event)">取消</a>
+                        <!--<a class="btn manage-operate-reverse  hide" id="cancel-edit-user" data-belong="1" onclick="cancel_editUser(event)">取消</a>-->
                     </td>
                 </tr>
             </table>
-            <a class="btn manage-add-btn btn-primary pull-right" onclick="show_addBlock(event)" data-manage="user">添加用户</a>
+            <a class="btn manage-add-btn btn-primary pull-right" onclick="to_userPage('add')" data-manage="user">添加用户</a>
         </div>
     </div>
 
