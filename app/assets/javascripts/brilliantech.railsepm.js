@@ -634,29 +634,6 @@ function close_createEntity() {
     }
     return b.indexOf(a);
 }
-// function close_createEntity(){
-    // $("#creatEntity-block").addClass("hide");
-    // $("#creat-newEntity").val("");
-// }
-//function edit_userItem(event){
-//    var id=find_id(event);
-//    $("#"+id).find('.manage-operate').each(function(){
-//        $(this).addClass("hide").next().removeClass("hide");
-//    });
-//    var userName=$("#"+id).find(".manage-userName").text();
-//    var userMail=$("#"+id).find(".manage-userMail").text();
-//    var userEntity=$("#"+id).find(".manage-userEntity").text();
-//    var userRole=$("#"+id).find(".manage-userRole").text();
-//    $("#cancel-edit-user").attr("name",userName).attr("mail",userMail).attr("entity",userEntity).attr("role",userRole);
-//    $("#"+id).find(".manage-userEntity").text("").append($("<select />").addClass("edit-kpiEntity-input").append($("<option />").text("entity1"))
-//        .append($("<option />").text("entity2"))
-//        .append($("<option />").text("entity3")));
-//    $("#"+id).find(".manage-userRole").text("").append($("<select />").addClass("edit-kpiEntity-input").append($("<option />").text("管理员"))
-//        .append($("<option />").text("用户"))
-//        .append($("<option />").text("一般用户")));
-//    $("#"+id).find(".manage-userName").text("").append($("<input type='text' />").val(userName).addClass("edit-userTarget-input"));
-//    $("#"+id).find(".manage-userMail").text("").append($("<input type='text' />").val(userMail).addClass("edit-userTarget-input"));
-//}
 function remove_userItem(event){
     if(confirm("确认删除？")){
         var id=find_id(event);
@@ -667,43 +644,7 @@ function remove_userItem(event){
         $("#user-table").find("#"+id).remove();
     }
 }
-//function finish_editUser(event){
-//    var id=find_id(event);
-//    var entity=$("#"+id).find(".manage-userEntity").find(":selected").text();
-//    var role=$("#"+id).find(".manage-userRole").find(":selected").text();
-//    var name=$("#"+id).find(".manage-userName").find("input").val();
-//    var mail=$("#"+id).find(".manage-userMail").find("input").val();
-//    if(isEmail(mail)){
-//        same_editUser(id);
-//        $("#"+id).find(".manage-userEntity").text(entity);
-//        $("#"+id).find(".manage-userRole").text(role);
-//        $("#"+id).find(".manage-userName").text(name);
-//        $("#"+id).find(".manage-userMail").text(mail);
-//    }
-//}
-//function cancel_editUser(event){
-//    var id=find_id(event);
-//    var e = event ? event : (window.event ? window.event : null);
-//    var obj = e.srcElement || e.target;
-//    var entity=$(obj).attr("entity");
-//    var name=$(obj).attr("name");
-//    var mail=$(obj).attr("mail");
-//    var role=$(obj).attr("role");
-//    same_editUser(id);
-//    $("#"+id).find(".manage-userEntity").text(entity);
-//    $("#"+id).find(".manage-userName").text(name);
-//    $("#"+id).find(".manage-userMail").text(mail);
-//    $("#"+id).find(".manage-userRole").text(role);
-//}
-//function same_editUser(a){
-//    $("#"+a).find(".manage-operate-reverse").each(function(){
-//        $(this).addClass("hide").prev().removeClass("hide");
-//    });
-//    $("#"+a).find(".manage-userEntity").find("select").remove();
-//    $("#"+a).find(".manage-userRole").find("select").remove();
-//    $("#"+a).find(".manage-userName").find("input").remove();
-//    $("#"+a).find(".manage-userMail").find("input").remove();
-//}
+
 function cancel_add_user(){
     $("#addBlock").slideUp("2000").data("state","off").find("input").val("");
     $("#right-content").css("padding-top","0px");
@@ -1006,7 +947,6 @@ function init_entryKpi() {
      y = date.getFullYear();
      WeekFirstDay = new Date(y, m, d - day + 1);
      WeekLastDay = new Date(y, m, d - day + 7);
-
      var type = $("#entry-date-type").find(".active").data("type");
      switch(type) {
           case "day":
@@ -1015,12 +955,12 @@ function init_entryKpi() {
                     dateFormat : "yy-m-d",
                     showOtherMonths : true,
                     firstDay : 1,
-                    showWeek : true,
                     selectOtherMonths : true
                });
                break;
           case "week":
                $("#entry-kpi").val(formatDate(WeekFirstDay) + " ~ " + formatDate(WeekLastDay));
+               $("#show-weekOfYear").css("display","inline-block").find("span").text($.datepicker.iso8601Week(new Date(y, m-1, d - day + 1)));
                $("#entry-kpi").bind("click", select_week);
                break;
           case "month":
@@ -1094,10 +1034,17 @@ function select_week() {
           dateFormat : 'yy-m-d',
           onSelect : function(dateText, inst) {
                var date = $(this).datepicker('getDate');
-               startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
-               endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+              if( date.getDay()==0){
+                  startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-6);
+                  endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+              }
+              else{
+                  startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+                  endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+              }
                var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
                $("#entry-kpi").val($.datepicker.formatDate(dateFormat, startDate, inst.settings) + " ~ " + $.datepicker.formatDate(dateFormat, endDate, inst.settings));
+               $("#show-weekOfYear>span").text($.datepicker.iso8601Week(startDate));
                selectCurrentWeek();
                $('.week-picker').addClass("hide");
           },
@@ -1130,22 +1077,53 @@ function plus_unit(event) {
 function entry_kpiCurrent(event) {
      var e = event ? event : (window.event ? window.event : null);
      var obj = e.srcElement || e.target;
+    var id = $(obj).data("belong");
      clearNoNum(obj);
-     if(e.keyCode == 13) {
+     if(e.keyCode == 13 && $(obj).val()) {
           fill_kpiCurrent(obj);
+     }
+    else if( !$(obj).val()){
+         $("#" + id).find(".entry-kpiPercent").text("");
+         $(obj).attr("source",0);
      }
 }
 
 function fill_kpiCurrent(obj) {
-     var date = $("#entry-kpi").val();
-     if(!$("#select-quarte").hasClass("hide")) {
-          var quarter = $("#select-quarter").find(":selected").val();
-     }
-     var id = $(obj).data("belong");
-     var val = $(obj).val();
-     var target = $(obj).data("target");
-     var percent = (parseFloat(val) / parseFloat(target) * 100).toFixed(0);
-     kpi_percent(percent, id)
+    var val = $(obj).val();
+    var source=$(obj).attr("source");
+    var id = $(obj).data("belong");
+    if(val){
+        if(val!=source){
+            $(obj).attr("source",val);
+            var type = $("#entry-date-type").find(".active").data("type");
+            var date;
+            switch(type) {
+                case "day":
+                    date=$("#entry-kpi").val();
+                    break;
+                case "week":
+                    date=$("#entry-kpi").val().split("-")[0]+"-"+$("#show-weekOfYear>span").text();
+                    break;
+                case "month":
+                    date=$("#entry-kpi").val();
+                    break;
+                case "quarter":
+                    date=$("#entry-kpi").val()+"-"+$("#select-quarter :selected").data("order");
+                    break;
+                case "year":
+                    date=$("#entry-kpi").val();
+                    break;
+            }
+
+            var target = $(obj).data("target");
+            var percent = (parseFloat(val) / parseFloat(target) * 100).toFixed(0);
+            kpi_percent(percent, id);
+        }
+    }
+    else{
+        $("#" + id).find(".entry-kpiPercent").text("");
+        $(obj).attr("source",0);
+    }
 }
 
 function kpi_percent(a, b) {

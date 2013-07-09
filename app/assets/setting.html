@@ -42,50 +42,49 @@
         <a class="btn btn-success btn-navi pull-right" href="">输入 KPI</a>
     </div>
     <div class="sub-middle sub-middle-manage">
-        <h3 class="text-center">输入KPI </h3>
+        <h3 class="text-center">设置</h3>
     </div>
     <div class="middle clearfix">
-        <label class="inline pull-left entryKPI-intervalMark" >KPI周期</label>
-        <ul class="nav nav-tabs entry-nav-tabs" id="entry-date-type">
-            <li data-type="day"><a href="#">日</a></li>
-            <li data-type="week"><a href="#" >周</a></li>
-            <li data-type="month"><a href="#" >月</a></li>
-            <li class="active" data-type="quarter"><a href="#">季度</a></li>
-            <li data-type="year"><a href="#">年</a></li>
+        <ul class="nav nav-tabs entry-nav-tabs setting-nav-tabs" id="entry-date-type">
+            <li data-type="day"><a href="#">KPI类别</a></li>
+            <li class="active" data-type="week"><a href="#" >用户组</a></li>
+            <li data-type="month"><a href="#" >观察点</a></li>
         </ul>
-        <div class="entry-kpi-part">
-            <img src="images/calendar.png" style="margin:16px 0 0 18px;"/>
-            <a class="entry-prev-btn entry-btn hide" id="entry-prev-btn" onclick="minus_unit(event)"></a>
-            <input type="text" id="entry-kpi" class="entry-kpi-date" readonly="true" />
-            <label class="show-weekOfYear inline-block" id="show-weekOfYear" style="display:none">第<span></span>周</label>
-            <div class="week-picker hide"> </div>
-            <a class="entry-next-btn entry-btn hide" id="entry-next-btn" onclick="plus_unit(event)"></a>
-            <select id="select-quarter" class="entry-selectQuarter hide">
-                <option data-order="1">第一季度</option>
-                <option data-order="2">第二季度</option>
-                <option data-order="3">第三季度</option>
-                <option data-order="4">第四季度</option>
-            </select>
-            <table class="entry-table">
+        <div class="entry-kpi-part setting-part">
+            <table class="table table-bordered table-striped setting-classify">
                 <tr>
-                    <th>类别</th>
                     <th>名称</th>
-                    <th width="450px;">描述</th>
-                    <th>目标</th>
-                    <th>现在</th>
-                    <th>完成度</th>
+                    <th width="100px">操作</th>
                 </tr>
-                <tr id="kpi1">
-                    <td align="center">entity1</td>
-                    <td align="center">kpi1</td>
-                    <td align="center">asddssada</td>
-                    <td align="center" width="150px">2000</td>
-                    <td align="center" width="150px">
-                        <input data-target="2000" class="entry-kpi-current" data-belong="kpi1" source="0" type="text" onkeyup="entry_kpiCurrent(event)" onblur="fill_kpiCurrent(this)"/>
+                <tr id="1">
+                    <td>
+                        <input type="text" value="sadsad" />
                     </td>
-                    <td align="center" class="entry-kpiPercent "></td>
+                    <td>
+                        <div class="manage-operate manage-operate-del setting-operateDel" title="删除" data-belong="1" ></div>
+                    </td>
+                </tr>
+                <tr id="2">
+                    <td>
+                        <input type="text" value="asdsadsa" />
+                    </td>
+                    <td>
+                        <div class="manage-operate manage-operate-del setting-operateDel" title="删除" data-belong="1" ></div>
+                    </td>
+                </tr>
+                <tr id="3">
+                    <td>
+                        <input type="text" value="adssadas" />
+                    </td>
+                    <td>
+                        <div class="manage-operate manage-operate-del setting-operateDel" title="删除" data-belong="1" ></div>
+                    </td>
                 </tr>
             </table>
+            <div class="settingSave-btn">
+                <a class="btn btn-primary btn-wzx pull-right" >保存修改</a>
+          </div>
+
         </div>
     </div>
 

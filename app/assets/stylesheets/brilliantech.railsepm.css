@@ -608,6 +608,12 @@ select.calcuRelate-kpi{
     display:block;
     border-bottom:1px solid #ddd;
 }
+.show-weekOfYear{
+    font-size:18px;
+    position:relative;
+    left:21px;
+    top:12px;
+}
 .entry-btn{
     padding:15px;
     cursor:pointer;
@@ -672,6 +678,27 @@ input.entry-kpi-date{
 .week-picker{
     position:absolute;
     left:50px;
+}
+/***************************************************** setting **************************************************************/
+.nav.nav-tabs.entry-nav-tabs.setting-nav-tabs{
+    margin-left:2px;
+}
+.entry-kpi-part.setting-part{
+    padding-top:30px;
+}
+.setting-classify{
+    width:700px;
+    margin:0px auto;
+}
+.setting-classify th{
+   text-align:center
+}
+.setting-operateDel{
+    margin:auto
+}
+.settingSave-btn{
+   width:700px;
+    margin:20px auto;
 }
 /***************************************************** setting right **************************************************************/
 .setting-right{
