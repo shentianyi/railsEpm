@@ -86,6 +86,12 @@ function init_analytics() {
         selectOtherMonths: true,
         dateFormat: 'yy-m-d'
     });
+    $(".control-chart-btn").bind("click",function(event){
+        $(".control-chart-btn").removeClass("active");
+        $(this).addClass("active");
+        var type=$(this).data("type");
+        init_chart();
+    });
     var date=new Date();
     var nowDate=date.getDate();
     var day=date.getDay();
@@ -198,7 +204,37 @@ function init_analytics() {
 
 }
 function init_chart(){
-      var options = {
+    var entity=$("#chart-entity :selected").attr("id");
+    var kpi=$("#none-kpi :selected").attr("id");
+    var date1=($("#from").val()).split("-");
+    var date2=($("#to").val()).split("-");
+    var dateBegin,dateEnd;
+    for(i=0;i<3;i++){
+        if(parseInt(date1[i])<parseInt(date2[i])){
+            dateBegin=date1;
+            dateEnd=date2;
+            break;
+        }
+        else if(parseInt(date1[i])>parseInt(date2[i])){
+            dateBegin=date2;
+            dateEnd=date1;
+            break;
+        }
+        else{
+            dateBegin=date1;
+            dateEnd=date2;
+        }
+    };
+    var interval=$(".control-chart-btn.active").data("type");
+    var ticket=parseInt($(".control-chart-btn.active").data("interval"));
+    var startTime=dateBegin.join("-");
+    var endTime=dateEnd.join("-");
+    var chartScale={
+        y:dateBegin[0],
+        m:parseInt(dateBegin[1])-1==0 ? 12: dateBegin[1]-1,
+        d:dateBegin[2]
+    }
+    var options = {
           chart: {
               renderTo: 'container',
               type: 'line'
@@ -216,16 +252,17 @@ function init_chart(){
                 }
             },
           xAxis: {
-              type: 'datetime',
+//                categories:[],
+                type: 'datetime',
                 dateTimeLabelFormats: {
                     day:'%e/%b'
                 },
+              tickInterval: 24 * 3600 * 1000 * ticket,// one day
                 labels:{
                     style:{
                         fontWeight:800
                     }
-                },
-                tickInterval: 24 * 3600 * 1000 // one day
+                }
           },
           yAxis: {
               title: {
@@ -233,48 +270,21 @@ function init_chart(){
                 },
               tickWidth:1,
               offset:10,
-              labels:{
-                    format:'{value}$'
-              },
+//              labels:{
+//                    format:'{value}'
+//              },
               lineWidth:1
           },
           series: []
-      };
-      var entity=$("#chart-entity :selected").attr("id");
-      var kpi=$("#none-kpi :selected").attr("id");
-      var date1=($("#from").val()).split("-");
-      var date2=($("#to").val()).split("-");
-      var dateBegin,dateEnd;
-      for(i=0;i<3;i++){
-          if(parseInt(date1[i])<parseInt(date2[i])){
-              dateBegin=date1;
-              dateEnd=date2;
-              break;
-          }
-          else if(parseInt(date1[i])>parseInt(date2[i])){
-              dateBegin=date2;
-              dateEnd=date1;
-              break;
-          }
-          else{
-              dateBegin=date1;
-              dateEnd=date2;
-          }
-      };
-      var interval=$(".control-chart-btn.active").attr("title");
-      var startTime=dateBegin.join("-");
-      var endTime=dateEnd.join("-");
-      var chartScale={
-        y:dateBegin[0],
-        m:parseInt(dateBegin[1])-1==0 ? 12: dateBegin[1]-1,
-        d:dateBegin[2]
-      }
-      $.post('../tasks/calendar', {
+    };
+    $.post('../tasks/calendar', {
           entity : entity,
           kpi : kpi,
           startTime:startTime,
-          endTime:endTime
+          endTime:endTime,
+          interval:interval
       }, function(data) {
+          options.yAxis.label={format:'{value}'+data.unit};
           var lines = data.split('\n');
           $.each(lines, function(lineNo, line) {
               var items = line.split(',');
@@ -284,23 +294,31 @@ function init_chart(){
                     name: 'target',
                     data: [],
                     pointStart: Date.UTC(chartScale.y,chartScale.m,chartScale.d),
-                    pointInterval: 24 * 3600 * 1000
+                    pointInterval: 24 * 3600 * 1000 * ticket
                   };
+                  $.each(items, function(itemNo, item) {
+//                      if (itemNo == 0) {
+//                          series.name = item;
+//                      } else {
+                      series.data.push(parseFloat(item));
+//                      }
+                  });
+                  options.series.push(series);
               }
-              else {
+              else if(lineNo == 1){
                   var series = {
                       type:"area",
                       name:'actual',
                       data: [],
                       pointStart: Date.UTC(chartScale.y,chartScale.m,chartScale.d),
-                      pointInterval: 24 * 3600 * 1000
+                      pointInterval: 24 * 3600 * 1000 * ticket
                   };
                   $.each(items, function(itemNo, item) {
-                      if (itemNo == 0) {
-                          series.name = item;
-                      } else {
+//                      if (itemNo == 0) {
+//                          series.name = item;
+//                      } else {
                           series.data.push(parseFloat(item));
-                      }
+//                      }
                   });
 
                   options.series.push(series);
@@ -311,7 +329,7 @@ function init_chart(){
 
           // Create the chart
           var chart = new Highcharts.Chart(options);
-      });
+    });
   }
 
 //            series: [
