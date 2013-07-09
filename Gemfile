@@ -9,7 +9,7 @@ gem 'rails', '3.2.8'
 gem 'mysql2'
  
 gem 'acts_as_tenant'
-
+gem 'cancan'
 # gem for backgroud jobs based on redis
 gem 'redis'
 gem 'resque'

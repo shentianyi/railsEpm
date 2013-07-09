@@ -1,0 +1,33 @@
+<div class="left-category pull-left">
+     <ul class="manage-group" id="manage-group-user">
+          <li>
+               <h3 class="no-margin">组织</h3>
+          </li>
+          
+          
+          <li class="active">
+               <a href="">默认</a>
+          </li>
+          <li>
+               <a href="">用户组1</a>
+          </li>
+          <li>
+               <a href="">用户组2</a>
+          </li>
+          <li>
+               <a href="">用户组3</a>
+          </li>
+          <li>
+               <button class="btn btn-primary" onclick="create_entityBlock()">
+                    创建新用户组
+               </button>
+          </li>
+          <div class="absolute creat-entity-block hide" id="creatEntity-block">
+               <p>
+                    创建新用户组
+               </p>
+               <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
+               <input type="text" id="creat-newEntity" onkeyup="create_Userentity(event)"/>
+          </div>
+     </ul>
+</div>

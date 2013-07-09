@@ -8,4 +8,12 @@ class Entity < ActiveRecord::Base
   has_many :kpi_entries, :through=>:user_kpi_items
 
   attr_accessible :name, :status, :user_quantity
+
+  acts_as_tenant(:tenant)
+
+  validate :validate_save,:on=>:save
+  private
+  def validate_save
+    errors.add(:name,'组织名不可重复') if Entity.where(:name=>self.name,:entity_id=>self.entity_id)
+  end
 end
