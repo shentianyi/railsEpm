@@ -576,13 +576,19 @@ function edit_kpiItem(event) {
 }
 
 function remove_kpiItem(event) {
-     if(confirm("确认删除？")) {
-          var id = find_id(event);
-          $("#kpi-table").find("#" + id).nextAll("tr").each(function() {
-               var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
-               $(this).find(".kpi-order-id").text(order);
+     if(confirm("确认删除？")) {   
+           var id = find_id(event);
+          $.post('../kpis/'+id,{_method:'delete'},function(data){
+               if(data.result){
+                $("#kpi-table").find("#" + id).nextAll("tr").each(function() {
+                var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
+                $(this).find(".kpi-order-id").text(order);
+             });
+             $("#kpi-table").find("#" + id).remove();
+            }else{
+                 alert(data.content);
+            }
           });
-          $("#kpi-table").find("#" + id).remove();
      }
 }
 
@@ -705,7 +711,7 @@ function select_calcuRelate() {
      var val = "[" + $("#is-calcu-relate :selected").text() + "]";
      var valId= "[" + $("#is-calcu-relate :selected").attr("value") + "]";
      var oldVal = $("#calcuType-input").val();
-     var oldValId=$("#takeCal").attr("cal");
+     var oldValId=$("#takeCal").attr("cal"); 
      if(/\]$/.test(oldVal) == false) {
           var newVal = oldVal + val;
           var newValId= oldValId+valId;

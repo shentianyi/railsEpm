@@ -10,13 +10,6 @@ class KpisController < ApplicationController
     @directions=KpiDirection.all
     @base_kpis=Kpi.accessible_by(current_ability).where(:is_calculated=>false).all
   end
-# 
-  # def new
-    # @units=KpiUnit.all
-    # @frequencies=KpiFrequency.all
-    # @directions=KpiDirection.all
-    # render :partial=>'new'
-  # end
 
   # create api
   def create
@@ -29,25 +22,28 @@ class KpisController < ApplicationController
 
   # edit kpi
   def edit
-    @kpi=Kpi.find_by_id(params[:id])
+    @kpi=Kpi.accessible_by(current_ability).find_by_id(params[:id])
   end
 
   # update kpi
   def update
-    if @kpi=Kpi.find_by_id(params[:kpi][:id])
+    if @kpi=Kpi.accessible_by(current_ability).find_by_id(params[:kpi][:id])
       render :json=>@kpi.update_attributes(params[:kpi])
     end
   end
 
   # delete kpi
   def destroy
-    if @kpi=Kpi.find_by_id(params[:id])
-      if @kpi.kpi_parents.count==0
+    msg=Message.new
+    if @kpi=Kpi.accessible_by(current_ability).find_by_id(params[:id])
+      if @kpi.kpi_parent_items.count==0
       @kpi.destroy
+      msg.result=true
       else
-        render :json=>'can not destroy, as basci kpi'
+        msg.content='can not destroy, as basci kpi'
       end
     end
+    render :json=>msg
   end
 
   def assign

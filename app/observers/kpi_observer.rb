@@ -7,7 +7,10 @@ class KpiObserver<ActiveRecord::Observer
       KpisHelper.parse_formula_items(kpi.formula).each do |item|
         kpi.kpi_items<<KpiItem.new(:item_id=>item)
       end
+    else
+      kpi.formula=false
     end
+    
   end
 
   def after_create kpi
