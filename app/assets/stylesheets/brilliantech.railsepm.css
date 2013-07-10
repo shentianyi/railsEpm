@@ -474,6 +474,9 @@ select.calcuRelate-kpi{
     margin-right:10px;
     margin-bottom:0px;
 }
+select.calcuRelate-kpi:first-child{
+
+}
 .calcuType-method-btn{
     margin-right:5px;
     padding:2px 8px;
