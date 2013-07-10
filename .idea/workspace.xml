@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" line="1310" />
+    <bookmark url="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" line="1321" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="524ddef3-5e9f-40ed-ae9e-278abe057882" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/manage-kpi.html" afterPath="$PROJECT_DIR$/app/assets/manage-kpi.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="railsEpm.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -75,7 +76,7 @@
       <file leaf-file-name="manage-kpi.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/manage-kpi.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="57" selection-start="3729" selection-end="3729" vertical-scroll-proportion="-19.375">
+            <state line="57" column="76" selection-start="2530" selection-end="2530" vertical-scroll-proportion="-11.875">
               <folding>
                 <element signature="n#style#0;n#div#0;n#td#1;n#tr#7;n#table#0;n#div#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#td#1;n#tr#7;n#table#0;n#div#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -87,16 +88,7 @@
       <file leaf-file-name="brilliantech.railsepm.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="588" column="69" selection-start="21680" selection-end="21680" vertical-scroll-proportion="0.39054966">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_new.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/kpis/_new.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="36" selection-start="2139" selection-end="2139" vertical-scroll-proportion="0.0">
+            <state line="614" column="57" selection-start="22801" selection-end="22801" vertical-scroll-proportion="0.7810993">
               <folding />
             </state>
           </provider>
@@ -106,6 +98,24 @@
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css">
           <provider selected="true" editor-type-id="text-editor">
             <state line="352" column="18" selection-start="8044" selection-end="8044" vertical-scroll-proportion="-23.846153">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_new.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/kpis/_new.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="30" column="92" selection-start="1505" selection-end="1505" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="new.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/users/new.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -457,13 +467,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/assets/delivery-kpi.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="168" selection-start="29" selection-end="29" vertical-scroll-proportion="0.05248619">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/brilliantech.base.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="435" column="29" selection-start="8718" selection-end="8718" vertical-scroll-proportion="0.41127923">
@@ -471,23 +474,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/users/login.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/manage-user.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="137" column="92" selection-start="6898" selection-end="6898" vertical-scroll-proportion="-31.416666">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/users/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -527,11 +516,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/EntryId.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="76" selection-start="3168" selection-end="3168" vertical-scroll-proportion="-24.375">
+          <folding>
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/Analytics.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="49" column="160" selection-start="2405" selection-end="2405" vertical-scroll-proportion="-8.208333">
           <folding>
             <element signature="n#style#0;n#option#0;n#select#1;n#div#0;n#div#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/manage-kpi.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="76" selection-start="2530" selection-end="2530" vertical-scroll-proportion="-11.875">
+          <folding>
+            <element signature="n#style#0;n#div#0;n#td#1;n#tr#7;n#table#0;n#div#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#td#1;n#tr#7;n#table#0;n#div#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -543,35 +551,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/kpis/_new.html.erb">
+    <entry file="file://$PROJECT_DIR$/app/views/users/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="36" selection-start="2139" selection-end="2139" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/EntryId.html">
+    <entry file="file://$PROJECT_DIR$/app/views/users/login.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="76" selection-start="3168" selection-end="3168" vertical-scroll-proportion="-24.375">
-          <folding>
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/manage-kpi.html">
+    <entry file="file://$PROJECT_DIR$/app/views/users/new.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="57" selection-start="3729" selection-end="3729" vertical-scroll-proportion="-19.375">
-          <folding>
-            <element signature="n#style#0;n#div#0;n#td#1;n#tr#7;n#table#0;n#div#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#td#1;n#tr#7;n#table#0;n#div#0;n#div#1;n#div#3;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/kpis/_new.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="92" selection-start="1505" selection-end="1505" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="588" column="69" selection-start="21680" selection-end="21680" vertical-scroll-proportion="0.39054966">
+        <state line="614" column="57" selection-start="22801" selection-end="22801" vertical-scroll-proportion="0.7810993">
           <folding />
         </state>
       </provider>

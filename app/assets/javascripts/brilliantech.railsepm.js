@@ -580,12 +580,12 @@ function remove_kpiItem(event) {
            var id = find_id(event);
           $.post('../kpis/'+id,{_method:'delete'},function(data){
                if(data.result){
-                $("#kpi-table").find("#" + id).nextAll("tr").each(function() {
-                var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
-                $(this).find(".kpi-order-id").text(order);
-             });
-             $("#kpi-table").find("#" + id).remove();
-            }else{
+                 $("#kpi-table").find("#" + id).nextAll("tr").each(function() {
+                 var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
+                 $(this).find(".kpi-order-id").text(order);
+                 });
+                 $("#kpi-table").find("#" + id).remove();
+               }else{
                  alert(data.content);
             }
           });
@@ -607,6 +607,11 @@ function finish_editKPI(event) {
                  $("#" + id).find(".kpi-target").text(target);
              }
              else{
+                 $("#kpi-table").find("#" + id).remove();
+                 $("#kpi-table").find("#" + id).nextAll("tr").each(function() {
+                     var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
+                     $(this).find(".kpi-order-id").text(order);
+                 });
                  $("#kpi-table").find("#" + id).remove();
              }
         }
