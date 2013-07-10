@@ -8,6 +8,7 @@ class TenantObserver<ActiveRecord::Observer
     # set super user's entity be default entity
     entity=Entity.new(:name=>tenant.company)
     tenant.super_user.entity=entity
+    tenant.super_user.role_id=400
     tenant.entities<<entity
   #
   end

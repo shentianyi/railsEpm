@@ -18,16 +18,21 @@
                <%@kpis.each_with_index do |kpi,i|%>
                <tr id="<%= kpi.id%>">
                     <td align="center" class="kpi-order-id"><%= i+1%></td>
-                    <td align="center" class="kpi-entity">entity1</td>
+                    <td align="center" class="kpi-entity"><%=kpi.category_name%></td>
                     <td align="center"><%= kpi.name%></td>
                     <td align="center"><%= kpi.description%></td>
                     <td align="center"><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
                     <td align="center" class="kpi-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target)%></td>
                     <td align="center"><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></td>
                     <td align="center"><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
-                    <td align="center"><%= kpi.is_calculated ? '是':'否'%></td>
+<!--                     <td align="center"><%= kpi.is_calculated ? '是':'否'%></td> -->
+                    <%if kpi.is_calculated%>
+                       <td align="center" title="<%=kpi.formula_string%>">是</td>
+                       <%else%>
+                       <td align="center" >否</td>
+                    <%end%>
                     <td align="center"><div class="manage-operate manage-operate-edit" data-belong="<%= kpi.id%>" onclick="edit_kpiItem(event)"></div><a class="btn btn-success manage-operate-reverse  hide" data-belong="<%= kpi.id%>" onclick="finish_editKPI(event)">完成</a></td>
-                    <td align="center"><div class="manage-operate manage-operate-del" data-belong="<%= kpi.id%>" onclick="remove_kpiItem(event)"></div><a class="btn manage-operate-reverse  hide" id="cancel-edit-kpi" data-belong="<%= kpi.id%>" onclick="cancel_editKPI(event)">取消</a></td>
+                    <td align="center"><div class="manage-operate manage-operate-del" data-belong="<%= kpi.id%>" onclick="remove_kpiItem(event)"></div><a class="btn manage-operate-reverse  hide" id="cancel-edit-kpi-<%=kpi.id%>" data-belong="<%= kpi.id%>" onclick="cancel_editKPI(event)">取消</a></td>
                </tr>
                <%end%>
           </table>

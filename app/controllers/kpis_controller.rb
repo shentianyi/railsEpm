@@ -3,7 +3,7 @@ class KpisController < ApplicationController
   before_filter :get_ability_category,:only=>[:index]
   def index
     @active_category_id=params[:p].nil? ? @categories[0].id : params[:p].to_i
-    @kpis=Kpi.accessible_by(current_ability).where(:kpi_category_id=>@active_category_id).all
+    @kpis=Kpi.accessible_by(current_ability).joins(:kpi_category).where(:kpi_category_id=>@active_category_id).select("kpis.*,kpi_categories.name as 'category_name'").all
 
     @units=KpiUnit.all
     @frequencies=KpiFrequency.all
@@ -12,12 +12,17 @@ class KpisController < ApplicationController
   end
 
   # create api
-  def create
-    if request.post?
-      @kpi=Kpi.new(:name=>params[:kpi])
+  def create 
+    msg=Message.new
+      @kpi=Kpi.new(params[:kpi])
       @kpi.creator=@current_user
-      render :json=>@kpi.save
-    end
+      if @kpi.save
+        msg.result=true
+        msg.object=@kpi.id
+      else
+         msg.content=@kpi.errors.messages.values.join('; ')
+      end
+      render :json=>msg
   end
 
   # edit kpi
@@ -26,8 +31,8 @@ class KpisController < ApplicationController
   end
 
   # update kpi
-  def update
-    if @kpi=Kpi.accessible_by(current_ability).find_by_id(params[:kpi][:id])
+  def update 
+    if @kpi=Kpi.accessible_by(current_ability).find_by_id(params[:kpi].delete(:id))
       render :json=>@kpi.update_attributes(params[:kpi])
     end
   end

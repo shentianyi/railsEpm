@@ -8,7 +8,7 @@ class KpiObserver<ActiveRecord::Observer
         kpi.kpi_items<<KpiItem.new(:item_id=>item)
       end
     else
-      kpi.formula=false
+      kpi.formula=kpi.formula_string=nil
     end
     
   end

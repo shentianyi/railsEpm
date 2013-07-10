@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
     t.integer  "direction"
     t.integer  "period"
     t.string   "formula"
+    t.string   "formula_string"
     t.integer  "user_id"
     t.integer  "tenant_id"
     t.datetime "created_at",                         :null => false

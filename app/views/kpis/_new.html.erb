@@ -34,19 +34,25 @@
                </tr>
                <tr>
                     <td align="right" valign="top">*单位</td>
-                    <td> <%= select_tag :unit,options_from_collection_for_select(@units,'value','desc'),{:id=>'add-unit'}%> </td>
+                    <td>
+                    <select id="add-unit">
+                         <%@units.each do |unit|%>
+                         <option value="<%= unit.value%>" sym="<%= KpiUnit.get_entry_unit_sym(unit.value)%>"><%= unit.desc%></option>
+                         <%end%>
+                    </select></td>
                </tr>
                <tr>
                     <td align="right" valign="top">是否为计算型</td>
                     <td valign="top">
                     <input type="checkbox" class="is-calcu-check" id="is-calcu-check" onclick="is_calcu()"/>
                     <div class="is-calcu-type clearfix" id="is-calcu-type" style="display:none">
-                          <%= select_tag :frequency,options_from_collection_for_select(@base_kpis,'id','name'),{:id=>'is-calcu-relate',:onchange=>'select_calcuRelate()',:prompt=>''}%>
+                         <%= select_tag :frequency,options_from_collection_for_select(@base_kpis,'id','name'),{:id=>'is-calcu-relate',:onchange=>'select_calcuRelate()',:prompt=>''}%>
                          <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="1" onclick="select_calcuMethod(event)">+</a>
                          <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="2" onclick="select_calcuMethod(event)">-</a>
                          <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="3" onclick="select_calcuMethod(event)">x</a>
                          <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="4" onclick="select_calcuMethod(event)">%</a>
-                         <span class="calcuInput-mark">*</span><input type="text" class="calcuType-input" id="calcuType-input" readonly="true"/>
+                         <span class="calcuInput-mark">*</span>
+                         <input type="text" class="calcuType-input" id="calcuType-input" readonly="true"/>
                          <a class="btn calcuType-clear" id="calcuType-clear" onclick="calcuRelate_clear()">清空</a>
                          <div style="display:none" id="takeCal" cal></div>
                     </div></td>
