@@ -492,37 +492,17 @@ function add_kpi() {
      var unit = $("#add-unit").find(":selected").val();
      var unitP = $("#add-unit").find(":selected").attr("value");
      var id = $("#kpi-table").find("tr").length;
+     var checkedP=Boolean;
+     var check="";
+     var formula="";
+     var formulaShow=""
      if($("#is-calcu-check").attr("checked") == "checked") {
            if(name.length != 0 && target.length != 0 && $("#calcuType-input").val() && /\]$/.test($("#calcuType-input").val()) == true){
-               var formula=$("#takeCal").attr("cal");
-               $.post('', {
-                   entity : entity,
-                   name:name,
-                   desc:desc,
-                   interval:intervalP,
-                   trend:trendP,
-                   target:target,
-                   unit:unitP,
-                   formula:formula
-               }, function(data) {
-                   if($("#manage-group-kpi li.active a").text() == entity) {
-                       $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(id).addClass("kpi-order-id"))
-                           .append($("<td align='center' />").text(entity))
-                           .append($("<td align='center' />").text(name))
-                           .append($("<td align='center' />").text(desc))
-                           .append($("<td align='center' />").text(interval))
-                           .append($("<td align='center' />").text(target))
-                           .append($("<td align='center' />").text(unit))
-                           .append($("<td align='center' />").text(trend))
-                           .append($("<td align='center' />").attr("data-placement","bottom").attr("data-animation",false).text("是").attr("title",formula))
-                           .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong", id).click(edit_kpiItem))
-                               .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", id).click(finish_editKPI).text("完成")))
-                           .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", id).click(remove_kpiItem))
-                               .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi").data("belong", id).click(cancel_editKPI).text("取消")))
-                       );
-                   }
-                   cancel_add_kpi();
-               });
+               formula=$("#takeCal").attr("cal");
+               formulaShow=$("#calcuType-input").val();
+               checkedP=true;
+               check="是";
+               post_kpi(entity,name,desc,interval,intervalP,trend,trendP,target,unit,check,checkedP,formula,formulaShow,id);
            }
            else{
                $("#add-warn").removeClass("hide").text("请填写所有带*的选项");
@@ -531,39 +511,50 @@ function add_kpi() {
      }
     else{
          if(name.length != 0 && target.length != 0){
-             $.post('', {
-                 entity : entity,
-                 name:name,
-                 desc:desc,
-                 interval:intervalP,
-                 trend:trendP,
-                 target:target,
-                 unit:unitP
-             }, function(data) {
-                 if($("#manage-group-kpi li.active a").text() == entity) {
-                         $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(id).addClass("kpi-order-id"))
-                             .append($("<td align='center' />").text(entity))
-                             .append($("<td align='center' />").text(name))
-                             .append($("<td align='center' />").text(desc))
-                             .append($("<td align='center' />").text(interval))
-                             .append($("<td align='center' />").text(target))
-                             .append($("<td align='center' />").text(unit))
-                             .append($("<td align='center' />").text(trend))
-                             .append($("<td align='center' />").text("否"))
-                             .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong", id).click(edit_kpiItem))
-                                 .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", id).click(finish_editKPI).text("完成")))
-                             .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", id).click(remove_kpiItem))
-                                 .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi").data("belong", id).click(cancel_editKPI).text("取消"))));
-                 }
-                 cancel_add_kpi();
-             });
+             checkedP=false;
+             check="否";
+             post_kpi(entity,name,desc,interval,intervalP,trend,trendP,target,unit,check,checkedP,formula,formulaShow,id);
          }
          else{
              $("#add-warn").removeClass("hide").text("请填写所有带*的选项");
              while_hide("add-warn");
          }
      }
-
+}
+function post_kpi(entity,name,desc,interval,intervalP,trend,trendP,target,unit,check,checkedP,formula,formulaShow,id){
+    $.post('', {
+        entity : entity,
+        name:name,
+        desc:desc,
+        interval:intervalP,
+        trend:trendP,
+        target:target,
+        unit:unitP,
+        checked:checkedP,
+        formula:formula,
+        formulaShow:formulaShow
+    }, function(data) {
+        if($("#manage-group-kpi li.active a").text() == entity) {
+            $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(id).addClass("kpi-order-id"))
+                .append($("<td align='center' />").text(entity))
+                .append($("<td align='center' />").text(name))
+                .append($("<td align='center' />").text(desc))
+                .append($("<td align='center' />").text(interval))
+                .append($("<td align='center' />").text(target))
+                .append($("<td align='center' />").text(unit))
+                .append($("<td align='center' />").text(trend))
+                .append($("<td align='center' />").addClass("kpi-checked").text(check))
+                .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong", id).click(edit_kpiItem))
+                    .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", id).click(finish_editKPI).text("完成")))
+                .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", id).click(remove_kpiItem))
+                    .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi").data("belong", id).click(cancel_editKPI).text("取消")))
+            );
+            if(formula){
+                $("#"+id).find(".kpi-checked").attr("title",formulaShow);
+            }
+        }
+        cancel_add_kpi();
+    });
 }
 function edit_kpiItem(event) {
      var id = find_id(event);
@@ -573,7 +564,9 @@ function edit_kpiItem(event) {
      var entity = $("#" + id).find(".kpi-entity").text();
      var target = $("#" + id).find(".kpi-target").text();
      $("#cancel-edit-kpi").attr("entity", entity).attr("target", target);
-     $("#" + id).find(".kpi-entity").text("").append($("<select />").addClass("edit-kpiEntity-input").append($("<option />").text("1")).append($("<option />").text("2")).append($("<option />").text("3")));
+     $("#" + id).find(".kpi-entity").text("").append(
+         $("#add-entity").clone().addClass("edit-kpiEntity-input")
+     );
      $("#" + id).find(".kpi-target").text("").append($("<input type='text' onkeyup='clearNoNum(this)'/>").val(target).addClass("edit-kpiTarget-input"));
 }
 
@@ -693,6 +686,7 @@ function create_entity(event) {
 function is_calcu() {
      if($("#is-calcu-check").attr("checked") == "checked") {
           $("#is-calcu-type").slideDown("2000");
+          $("#is-calcu-relate option").eq(0).css("display","none");
      } else {
           $("#is-calcu-type").slideUp("2000");
      }
@@ -700,7 +694,7 @@ function is_calcu() {
 
 function select_calcuRelate() {
      var val = "[" + $("#is-calcu-relate :selected").text() + "]";
-     var valId= "[" + $("#is-calcu-relate :selected").attr("id") + "]";
+     var valId= "[" + $("#is-calcu-relate :selected").attr("value") + "]";
      var oldVal = $("#calcuType-input").val();
      var oldValId=$("#takeCal").attr("cal"); 
      if(/\]$/.test(oldVal) == false) {

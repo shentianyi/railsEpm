@@ -49,10 +49,10 @@
         <div class="left-category pull-left">
             <ul class="manage-group" id="manage-group-kpi">
                 <li><h3 class="no-margin">类别</h3></li>
-                <li class="active"><a href="">默认</a></li>
-                <li><a href="">entity1</a></li>
-                <li><a href="">entity2</a></li>
-                <li><a href="">entity3</a></li>
+                <li class="active"><i class="icon-remove hide pull-left" onclick="remove_leftNav(event)"></i><a href="">默认</a></li>
+                <li><a href=""><i class="icon-remove hide pull-left"></i>entity1</a></li>
+                <li><a href=""><i class="icon-remove hide pull-left"></i>entity2</a></li>
+                <li><a href=""><i class="icon-remove hide pull-left"></i>entity3</a></li>
                 <li><button class="btn btn-primary" onclick="create_entityBlock()">创建新类别</button></li>
                 <div class="absolute creat-entity-block hide" id="creatEntity-block">
                     <p>创建新类别</p>
@@ -132,7 +132,7 @@
                         <input type="checkbox" class="is-calcu-check" id="is-calcu-check" onclick="is_calcu()"/>
                         <div class="is-calcu-type clearfix" id="is-calcu-type" style="display:none">
                             <select id="is-calcu-relate" class="calcuRelate-kpi" onchange="select_calcuRelate()">
-                                <option data-order="1" class="empty-option" selected="selected" style="display:none"> </option>
+                                <option data-order="1" class="empty-option" selected="selected"> </option>
                                 <option data-order="2" id="k1">KPI 1</option>
                                 <option data-order="3" id="k2">KPI 2</option>
                             </select>

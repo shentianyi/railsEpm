@@ -349,6 +349,9 @@ ul.manage-group>li{
     overflow:hidden;
     width:115px;
 }
+ul.manage-group>li:hover i{
+    display:block;
+}
 ul.manage-group>li>a:hover {
     padding-left:25px;
     color:#3498db;
