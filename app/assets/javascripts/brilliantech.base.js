@@ -45,7 +45,7 @@ function hide_handle_dialog() {
 }
 
 function MessageBox(str, type) {
-     $('#message-content').html(str);
+     $('#MessageBox .message-body').find("p").text(str);
      $('#MessageBox').removeClass('hide');
      if(type != null) {
           $(".message-header").addClass(type);
@@ -124,13 +124,13 @@ function flash_hidden_message(obj, times) {
 }
 
 
-function MessageBoxClear() {
-     $('#MessageBox > p').html("");
-}
-
-function MessageBoxAdd(str) {
-     $('#MessageBox > p').html($('#MessageBox > p').html() + str).parent().show();
-}
+//function MessageBoxClear() {
+//     $('#MessageBox > p').html("");
+//}
+//
+//function MessageBoxAdd(str) {
+//     $('#MessageBox > p').html($('#MessageBox > p').html() + str).parent().show();
+//}
 //只能输入数字和小数点
 function clearNoNum(obj)
 {

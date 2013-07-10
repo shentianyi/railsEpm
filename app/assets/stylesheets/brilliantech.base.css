@@ -184,21 +184,24 @@ a:hover,a:focus{
 	position:relative;
 	top:0px;
 	left:-3px;
-	background-position:-5px 2px;
+	background-position:-5px 6px;
 	background-repeat:no-repeat;
 }
 .message-correct{
-	background-image:url("../images/message-correct.png");
-	color:#468847;
+    /*background-image:url("../images/message-correct.png");*/
+    background-image:url("/assets/message-correct.png");
+    color:#468847;
 }
 .message-error{
-	background-image:url("../images/message-wrong.png");
-	color:#B94A48;
-	background-position:-5px -2px;
+    /*background-image:url("../images/message-wrong.png");*/
+    background-image:url("/assets/message-wrong.png");
+    color:#B94A48;
+    background-position:-5px -2px;
 }
 .message-warning{
-	background-image:url("../images/message-warning.png");
-	color:#C09853;
+    /*background-image:url("../images/message-warning.png");*/
+    background-image:url("/assets/message-warning.png");
+    color:#C09853;
 }
 .message-normal{
 	padding:3px !important;
@@ -212,18 +215,15 @@ a:hover,a:focus{
 	border-bottom:2px solid #eaedec;
 }
 .message-body{
-	padding:7px;
+	padding:11px 8px;
+    font-size:18px;
 	word-break:break-all;
 	word-wrap:break-word;
 }
 .message-body p{
 	color:#9d9d9d;
+    margin-bottom:0px;
 }
-.read-input{
-	background-color:white !important;
-	cursor:default !important;
-}
-
 /********************************************************* 底部的装饰 ***************************************************/
 .bottom-decoration{
 	position:fixed;

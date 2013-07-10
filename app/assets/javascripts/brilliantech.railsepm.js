@@ -29,9 +29,9 @@ function while_hide(a) {
 function init_rightContent() {
      var fwidth = parseInt(document.body.scrollWidth);
      if(fwidth > 990) {
-          document.getElementById("right-content").style.width = document.body.scrollWidth - 171 + "px";
+          document.getElementById("right-content").style.width = document.body.scrollWidth - 191 + "px";
      } else {
-          document.getElementById("right-content").style.width = 990 - 171 + "px";
+          document.getElementById("right-content").style.width = 990 - 191 + "px";
      }
 }
 
@@ -744,8 +744,126 @@ function calcuRelate_clear() {
      $("#takeCal").attr("cal","");
      $("#is-calcu-relate").find("option[data-order='1']").attr("selected", "true");
 }
+function remove_leftNav(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    var number=$(obj).attr("number");
+    var belong=$(obj).attr("belong");
+    switch(belong){
+        case "kpi":
+            post('',{
+                number:number
+            },function(data){
+                if(data.result){
+                    window.location.href="../Kpis";
+                }
+                else{
+                    MessageBox("只能删除空的类别","message-warning");
+                }
+            })
+            break;
+        case "user":
+            post('',{
+                number:number
+            },function(data){
+                if(data.result){
+                    window.location.href="../";
+                }
+                else{
+                    MessageBox("只能删除空的用户组","message-warning");
+                }
+            })
+            break;
+        case "view":
+            post('',{
+                number:number
+            },function(data){
+                if(data.result){
+                    window.location.href="../";
+                }
+                else{
+                    MessageBox("只能删除空的观察点","message-warning");
+                }
+            })
+            break;
+    }
 
+}
+function edit_leftNav(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    var number=$(obj).attr("number");
+    var belong=$(obj).attr("belong");
+    var text=$("a[number='"+number+"']").text();
+    var left = e.pageX;
+    var top = e.pageY;
+    $("#edit-block").removeClass("hide").addClass("absolute").offset({
+        left : left - 20,
+        top : top +10
+    });
+    $("#change-leftNavi").val(text).attr("origin",text);
+    $("#change-leftNavi").attr("belong",belong)
+}
+function insert_entity() {
+    var test = test_sameLeftNavi();
+    var val = $("#change-leftNavi").val();
+    var belong=$("#change-leftNavi").attr("belong");
+    if(val&& test == -1) {
+        if($('#change-leftNavi').val().length > 0) {
+            $.post('../kpi_categories', {
+                category : {
+                    name : val
+                }
+            }, function(data) {
+                if(data.result) {
+                    var length = $("a[belong='"+belong+"']").length;
+                    $("#manage-group-kpi li:eq(" + length + ")").after($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number",data.number).attr("belong",belong))
+                        .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number",data.number).attr("belong",belong))
+                        .append($("<a href='../kpis?p=" + data.object + "'/>").text(val)));
+                    $("#creat-newEntity").val("");
+                } else {
+                    alert(data.content);
+                }
+            });
+        }
+    }
+}
+
+function test_sameLeftNavi() {
+    var a = $("#change-leftNavi").val();
+    var b = [];
+    var belong= $("#change-leftNavi").attr("belong");
+    $("a[belong='"+belong+"']").each(function() {
+        b.push($(this).text());
+    });
+    if(!Array.indexOf) {
+        Array.prototype.indexOf = function(obj) {
+            for(var i = 0; i < this.length; i++) {
+                if(this[i] == obj) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+    }
+    return b.indexOf(a);
+}
+
+function change_leftNavi(event) {
+    var e = event ? event : (window.event ? window.event : null);
+    var origin= $("#change-leftNavi").attr("origin");
+    if(e.keyCode == 13 && $("#change-leftNavi").val()!=origin) {
+        insert_entity();
+    } else if(e.keyCode == 27) {
+        close_editBlock();
+    }
+}
+
+function close_editBlock(){
+    $("#edit-block").addClass("hide").find("input").val("");
+}
 ///////////////  user  ///////////////////////////////////////
+
 function create_Userentity(event) {
      var e = event ? event : (window.event ? window.event : null);
      if(e.keyCode == 13) {

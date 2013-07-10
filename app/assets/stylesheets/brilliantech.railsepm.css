@@ -161,7 +161,7 @@ b.caret{
     padding-top:2px;
 }
 .left-category{
-    width:150px;
+    width:170px;
     height:600px;
     border-right:1px solid #ddd;
 }
@@ -342,25 +342,30 @@ ul.manage-group{
 }
 ul.manage-group>li{
     text-align:center;
-    padding:9px 10px;
+    padding:9px 20px;
     border-bottom:1px solid #ddd;
     text-overflow:ellipsis;
     white-space:nowrap;
     overflow:hidden;
     width:115px;
+    transition:all 0.15s ease 0s;
+}
+ul.manage-group>li i{
+    position:relative;
+    left:-10px;
+    margin-left:5px;
+    cursor:pointer;
 }
 ul.manage-group>li:hover i{
     display:block;
 }
 ul.manage-group>li>a:hover {
-    padding-left:25px;
     color:#3498db;
 }
 ul.manage-group>li>a{
-    padding:9px 10px;
+    padding:9px 0px;
     font-size:17px;
     color:#9d9d9d;
-    transition:padding 0.15s ease 0s;
 }
 ul.manage-group>li.active{
     border-right:1px solid #f4f4f4;
@@ -724,3 +729,4 @@ input.entry-kpi-date{
     height:100%;
     background-color:white;
 }
+
