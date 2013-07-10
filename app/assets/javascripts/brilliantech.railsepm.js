@@ -677,6 +677,7 @@ function create_entity(event) {
 function is_calcu() {
      if($("#is-calcu-check").attr("checked") == "checked") {
           $("#is-calcu-type").slideDown("2000");
+          $("#is-calcu-relate option").eq(0).css("display","none");
      } else {
           $("#is-calcu-type").slideUp("2000");
      }
