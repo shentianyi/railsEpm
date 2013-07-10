@@ -63,10 +63,10 @@ function show_addBlock(event){
 }
 
 function formatDate(date) {
-     var myyear = date.getFullYear();
-     var mymonth = date.getMonth();
-     var myweekday = date.getDate();
-     return (myyear + "-" + mymonth + "-" + myweekday);
+     var myYear = date.getFullYear();
+     var myMonth = parseInt(date.getMonth()+1);
+     var myWeekday = date.getDate();
+     return (myYear + "-" + myMonth + "-" + myWeekday);
 }
 
 /////////////////////////////////////////////////////////////////////////  Analytics   //////////////////////////////////
@@ -83,10 +83,40 @@ function init_analytics() {
      }, function() {
           $(this).tooltip('hide');
      });
-     $("#from,#to").datepicker({
+     $("#from").datepicker({
+          showOtherMonths : true,
+          firstDay:1,
+          selectOtherMonths : true,
+          dateFormat : 'yy-m-d',
+          showWeek:true,
+          onSelect : function(dateText, inst) {
+            var date = $(this).datepicker('getDate');
+                if( date.getDay()==0){
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-6);
+                }
+                else{
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+                }
+            var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+            $("#from").attr("week",($.datepicker.iso8601Week(startDate)));
+          }
+     });
+     $("#to").datepicker({
           showOtherMonths : true,
           selectOtherMonths : true,
-          dateFormat : 'yy-m-d'
+          firstDay:1,
+          dateFormat : 'yy-m-d',
+          onSelect : function(dateText, inst) {
+            var date = $(this).datepicker('getDate');
+            if( date.getDay()==0){
+                startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-6);
+            }
+            else{
+                startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+            }
+            var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+            $("#to").attr("week",($.datepicker.iso8601Week(startDate)));
+          }
      });
      $(".control-chart-btn").bind("click", function(event) {
           $(".control-chart-btn").removeClass("active");
@@ -97,260 +127,323 @@ function init_analytics() {
      var date = new Date();
      var nowDate = date.getDate();
      var day = date.getDay();
-     var m = date.getMonth() + 1;
+     var m = date.getMonth();
      var y = date.getFullYear();
-     var WeekFirstDay = new Date(y, m, nowDate - day + 1);
-     var WeekLastDay = new Date(y, m, nowDate - day + 7);
-     $("#from").val(formatDate(WeekFirstDay));
-     $("#to").val(formatDate(WeekLastDay));
-     init_chart();
-     //    var dateBegin,dateEnd;
-     //    var date1=($("#from").val()).split("-");
-     //    var date2=($("#to").val()).split("-");
-     //    for(i=0;i<3;i++){
-     //        if(parseInt(date1[i])<parseInt(date2[i])){
-     //            dateBegin=date1;
-     //            dateEnd=date2;
-     //            break;
-     //        }
-     //        else if(parseInt(date1[i])>parseInt(date2[i])){
-     //            dateBegin=date2;
-     //            dateEnd=date1;
-     //            break;
-     //        }
-     //        else{
-     //            dateBegin=date1;
-     //            dateEnd=date2;
-     //        }
-     //    }
-     //    var chart={
-     //        y:dateBegin[0],
-     //        m:parseInt(dateBegin[1])-1==0 ? 12: dateBegin[1]-1,
-     //        d:dateBegin[2]
-     //    }
-     //    $("#container").highcharts(
-     //        {
-     //            chart: {
-     //                type: 'line',
-     //                events: {
-     //                    addSeries: function() {
-     //                        alert ('A series was added, about to redraw chart');
-     //                    }
-     //                }
-     //            },
-     //            credits:{
-     //                enabled:false
-     //            },
-     //            title: {
-     //                text:""
-     //            },
-     //            tooltip: {
-     //                formatter: function() {
-     //                    return '<b>'+ this.series.name +'</b><br/>'+
-     //                        this.x +': '+ this.y;
-     //                }
-     //            },
-     //            xAxis: {
-     //                type: 'datetime',
-     //                dateTimeLabelFormats: {
-     //                    day:'%e/%b'
-     //                },
-     //                labels:{
-     //                    style:{
-     //                        fontWeight:800
-     //                    }
-     //                },
-     //                tickInterval: 24 * 3600 * 1000*7 // one day
-     //            },
-     //            yAxis: [{
-     //                title: {
-     //                    enabled:false
-     //                },
-     //                tickWidth:1,
-     //                offset:10,
-     //                labels:{
-     //                    format:'{value}$'
-     //                },
-     //                lineWidth:1
-     //            },{
-     //                opposite:true,
-     //                title:{
-     //                    enabled:false
-     //                },
-     //                tickWidth:1,
-     //                offset:10,
-     //                label:{
-     //                    format:'{value}days'
-     //                },
-     //                lineWidth:1
-     //            }],
-     //            series: [
-     //                {
-     //                    type:"area",
-     //                    name: 'actual',
-     //                    data: [100,100,100,150,150,150,200],
-     //                    pointStart: Date.UTC(chart.y,chart.m,chart.d),
-     //                    pointInterval: 24 * 3600 * 1000*7//one day
-     //                },
-     //                {
-     //                    type:"line",
-     //                    name: 'target',
-     //                    data: [80,110,120,140,150,150,300],
-     //                    pointStart: Date.UTC(chart.y,chart.m,chart.d),
-     //                    yAxis:1,
-     //                    pointInterval: 24 * 3600 * 1000*7 // one day
-     //                }
-     //            ]
-     //        }
-     //    );
-
-}
-
-function init_chart() {
-     var entity = $("#chart-entity :selected").attr("id");
-     var kpi = $("#none-kpi :selected").attr("id");
-     var date1 = ($("#from").val()).split("-");
-     var date2 = ($("#to").val()).split("-");
-     var dateBegin, dateEnd;
-     for( i = 0; i < 3; i++) {
-          if(parseInt(date1[i]) < parseInt(date2[i])) {
-               dateBegin = date1;
-               dateEnd = date2;
-               break;
-          } else if(parseInt(date1[i]) > parseInt(date2[i])) {
-               dateBegin = date2;
-               dateEnd = date1;
-               break;
-          } else {
-               dateBegin = date1;
-               dateEnd = date2;
-          }
-     };
-     var interval = $(".control-chart-btn.active").data("type");
-     var ticket = parseInt($(".control-chart-btn.active").data("interval"));
-     var startTime = dateBegin.join("-");
-     var endTime = dateEnd.join("-");
-     var chartScale = {
-          y : dateBegin[0],
-          m : parseInt(dateBegin[1]) - 1 == 0 ? 12 : dateBegin[1] - 1,
-          d : dateBegin[2]
+     var WeekFirstDay,WeekLastDay;
+     if(day==0){
+         WeekFirstDay = new Date(y, m, nowDate - 6);
+         WeekLastDay = new Date(y, m, nowDate);
      }
-     var options = {
-          chart : {
-               renderTo : 'container',
-               type : 'line'
-          },
-          credits : {
-               enabled : false
-          },
-          title : {
-               text : ""
-          },
-          tooltip : {
-               formatter : function() {
-                    return '<b>' + this.series.name + '</b><br/>' + this.x + ': ' + this.y;
-               }
-          },
-          xAxis : {
-               //                categories:[],
-               type : 'datetime',
-               dateTimeLabelFormats : {
-                    day : '%e/%b'
-               },
-               tickInterval : 24 * 3600 * 1000 * ticket, // one day
-               labels : {
-                    style : {
-                         fontWeight : 800
-                    }
-               }
-          },
-          yAxis : {
-               title : {
-                    enabled : false
-               },
-               tickWidth : 1,
-               offset : 10,
-               //              labels:{
-               //                    format:'{value}'
-               //              },
-               lineWidth : 1
-          },
-          series : []
-     };
-     $.post('../tasks/calendar', {
-          entity : entity,
-          kpi : kpi,
-          startTime : startTime,
-          endTime : endTime,
-          interval : interval
-     }, function(data) {
-          options.yAxis.label = {
-               format : '{value}' + data.unit
-          };
-          var lines = data.split('\n');
-          $.each(lines, function(lineNo, line) {
-               var items = line.split(',');
-               if(lineNo == 0) {
-                    var series = {
-                         type : "line",
-                         name : 'target',
-                         data : [],
-                         pointStart : Date.UTC(chartScale.y, chartScale.m, chartScale.d),
-                         pointInterval : 24 * 3600 * 1000 * ticket
-                    };
-                    $.each(items, function(itemNo, item) {
-                         //                      if (itemNo == 0) {
-                         //                          series.name = item;
-                         //                      } else {
-                         series.data.push(parseFloat(item));
-                         //                      }
-                    });
-                    options.series.push(series);
-               } else if(lineNo == 1) {
-                    var series = {
-                         type : "area",
-                         name : 'actual',
-                         data : [],
-                         pointStart : Date.UTC(chartScale.y, chartScale.m, chartScale.d),
-                         pointInterval : 24 * 3600 * 1000 * ticket
-                    };
-                    $.each(items, function(itemNo, item) {
-                         //                      if (itemNo == 0) {
-                         //                          series.name = item;
-                         //                      } else {
-                         series.data.push(parseFloat(item));
-                         //                      }
-                    });
+     else{
+         WeekFirstDay = new Date(y, m, nowDate - day + 1);
+         WeekLastDay = new Date(y, m, nowDate - day + 7);
+     }
+     $("#from").val(formatDate(WeekFirstDay)).attr("week",$.datepicker.iso8601Week(WeekFirstDay));
+     $("#to").val(formatDate(WeekLastDay)).attr("week",$.datepicker.iso8601Week(WeekFirstDay));
+     init_chart();
+//         var dateBegin,dateEnd;
+//         var date1=($("#from").val()).split("-");
+//         var date2=($("#to").val()).split("-");
+//         for(i=0;i<3;i++){
+//             if(parseInt(date1[i])<parseInt(date2[i])){
+//                 dateBegin=date1;
+//                 dateEnd=date2;
+//                 break;
+//             }
+//             else if(parseInt(date1[i])>parseInt(date2[i])){
+//                 dateBegin=date2;
+//                 dateEnd=date1;
+//                 break;
+//             }
+//             else{
+//                 dateBegin=date1;
+//                 dateEnd=date2;
+//             }
+//         }
+//         var chart={
+//             y:dateBegin[0],
+//             m:parseInt(dateBegin[1])-1==0 ? 12: dateBegin[1]-1,
+//             d:dateBegin[2]
+//         }
+//         $("#container").highcharts(
+//             {
+//                 chart: {
+//                     type: 'line',
+//                     events: {
+//                         addSeries: function() {
+//                             alert ('A series was added, about to redraw chart');
+//                         }
+//                     }
+//                 },
+//                 credits:{
+//                     enabled:false
+//                 },
+//                 title: {
+//                     text:""
+//                 },
+//                 tooltip: {
+////                     formatter: function() {
+////                         return '<b>'+ this.series.name +'</b><br/>'+
+////                             "数值"+this.y +'<br />'+this.x;
+////                     },
+//                     xDateFormat: '%Y-%m-%d'
+//                 },
+//                 xAxis: {
+//                     type: 'datetime',
+//                     dateTimeLabelFormats: {
+//                         day:'%e/%b'
+//                     },
+//                     labels:{
+//                         style:{
+//                             fontWeight:800
+//                         }
+//                     },
+//                     tickInterval: 24 * 3600 * 1000*365 // one day
+//                 },
+//                 yAxis: [{
+//                     title: {
+//                         enabled:false
+//                     },
+//                     tickWidth:1,
+//                     offset:10,
+//                     labels:{
+//                         format:'{value}$'
+//                     },
+//                     lineWidth:1
+//                 },{
+//                     opposite:true,
+//                     title:{
+//                         enabled:false
+//                     },
+//                     tickWidth:1,
+//                     offset:10,
+//                     label:{
+//                         format:'{value}days'
+//                     },
+//                     lineWidth:1
+//                 }],
+//                 series: [
+//                     {
+//                         type:"area",
+//                         name: 'actual',
+//                         data: [100,100,100,150,150,150,200],
+//                         pointStart: Date.UTC(chart.y,chart.m,chart.d),
+//                         pointInterval: 24 * 3600 * 1000*365//one day
+//                     },
+//                     {
+//                         type:"line",
+//                         name: 'target',
+//                         data: [80,110,120,140,150,150,300],
+//                         pointStart: Date.UTC(chart.y,chart.m,chart.d),
+//                         yAxis:1,
+//                         pointInterval: 24 * 3600 * 1000*365 // one day
+//                     }
+//                 ]
+//             }
+//         );
+//
+//}
+}
+function init_chart() {
+    var entity = $("#chart-entity :selected").attr("id");
+    var kpi = $("#none-kpi :selected").attr("id");
+    var date1 = ($("#from").val()).split("-");
+    var date2 = ($("#to").val()).split("-");
+    var week1=parseInt($("#from").attr("week"));
+    var week2=parseInt($("#to").attr("week"));
+    var dateBegin,dateEnd;
+    for( i = 0; i < 3; i++) {
+        if(parseInt(date1[i]) < parseInt(date2[i])) {
+            dateBegin = date1;
+            dateEnd = date2;
+            break;
+        } else if(parseInt(date1[i]) > parseInt(date2[i])) {
+            dateBegin = date2;
+            dateEnd = date1;
+            break;
+        } else {
+            dateBegin = date1;
+            dateEnd = date2;
+        }
+    };
+    var startWeek=week1-week2<=0?week1:week2;
+    var endWeek=week1-week2>=0?week1:week2;
+    var startQuarter=quarterBelong(dateBegin[1]);
+    var endQuarter=quarterBelong(dateEnd[1]);
+    var interval = $(".control-chart-btn.active").data("type");
+    var startTime,endTime;
+    switch(interval){
+        case "day":
+            startTime = dateBegin.join("-");
+            endTime = dateEnd.join("-");
+            break;
+        case "week":
+            startTime = dateBegin[0]+"-"+startWeek;
+            endTime = dateEnd[0]+"-"+endWeek;
+            break;
+        case "month":
+            startTime =dateBegin[0]+"-"+dateBegin[1];
+            endTime =dateEnd[0]+"-"+dateEnd[1];
+            break;
+        case "quarter":
+            startTime =dateBegin[0]+"-"+startQuarter;
+            endTime =dateEnd[0]+"-"+endQuarter;
+            break;
+        case "year":
+            startTime =dateBegin[0];
+            endTime =dateEnd[0];
+            break;
+    } ;
+//    var chartScale = {
+//        y : dateBegin[0],
+//        m : parseInt(dateBegin[1]) - 1 == 0 ? 12 : dateBegin[1] - 1,
+//        d : dateBegin[2]
+//    }
+    $.post('../tasks/calendar', {
+        entity : entity,
+        kpi : kpi,
+        startTime : startTime,
+        endTime : endTime,
+        interval : interval
+    }, function(data) {
+        form_chart(data.series,data.unit,interval);
+        });
+}
+function form_chart(series,unit,interval){
+    var options = {
+        chart : {
+            renderTo : 'container',
+            type : 'line'
+        },
+        credits : {
+            enabled : false
+        },
+        title : {
+            text : ""
+        },
+        tooltip : {
+ ////       formatter: function() {
+////           return '<b>'+ this.series.name +'</b><br/>'+
+////                  "数值"+this.y +'<br />'+this.x;
+////        },
+//          xDateFormat: '%Y-%m-%d'
+        },
+        xAxis : {
+            //                categories:[],
+//            type : 'datetime',
+//            dateTimeLabelFormats : {
+//                day : '%e/%b'
+//            },
+//            tickInterval : 24 * 3600 * 1000 * ticket, // one day
+            labels : {
+                style : {
+                    fontWeight : 800
+                }
+            }
+        },
+        yAxis : {
+            title : {
+                enabled : false
+            },
+            tickWidth : 1,
+            offset : 10,
+            //              labels:{
+            //                    format:'{value}'
+            //              },
+            lineWidth : 1
+        },
+        series : []
+    };
+    options.yAxis.label = {
+        format : '{value}' +unit
+    };
+    switch (interval){
+        case "day":
+            options.tooltip.xDateFormat='%Y-%m-%d';
+            options.xAxis.type='datetime';
+            options.xAxis.dateTimeLabelFormats={
+                day : '%e/%b'
+            };
+            options.xAxis.tickInterval=24 * 3600 * 1000;
+            break;
+        case "week":
+            options.tooltip.formatter=function(){
+                return '<b>'+ this.series.name +'</b><br/>'+
+                "数值"+this.y +'<br />'+this.x;
+            };
+            options.xAxis.categories
+            break;
+        case "month":
+            options.tooltip.xDateFormat='%Y-%m';
+            options.xAxis.type='datetime';
+            options.xAxis.dateTimeLabelFormats={
+                month : '%b/%Y'
+            };
+            options.xAxis.tickInterval=24 * 3600 * 1000 * 30;
+            break;
+        case "quarter":
+            break;
+        case "year":
+            options.tooltip.xDateFormat='%Y';
+            options.xAxis.type='datetime';
+            options.xAxis.dateTimeLabelFormats={
+                year : '%Y'
+            };
+            options.xAxis.tickInterval=24 * 3600 * 1000 * 365;
+            break;
+    };
+    var lines = data.split('\n');
+    $.each(lines, function(lineNo, line) {
+        var items = line.split(',');
+        if(lineNo == 0) {
+            var series = {
+                type : "line",
+                name : 'target',
+                data : [],
+                pointStart : Date.UTC(chartScale.y, chartScale.m, chartScale.d),
+                pointInterval : 24 * 3600 * 1000 * ticket
+            };
+            $.each(items, function(itemNo, item) {
+                //                      if (itemNo == 0) {
+                //                          series.name = item;
+                //                      } else {
+                series.data.push(parseFloat(item));
+                //                      }
+            });
+            options.series.push(series);
+        } else if(lineNo == 1) {
+            var series = {
+                type : "area",
+                name : 'actual',
+                data : [],
+                pointStart : Date.UTC(chartScale.y, chartScale.m, chartScale.d),
+                pointInterval : 24 * 3600 * 1000 * ticket
+            };
+            $.each(items, function(itemNo, item) {
+                //                      if (itemNo == 0) {
+                //                          series.name = item;
+                //                      } else {
+                series.data.push(parseFloat(item));
+                //                      }
+            });
+            options.series.push(series);
+           }
 
-                    options.series.push(series);
-
-               }
-
-          });
-
-          // Create the chart
-          var chart = new Highcharts.Chart(options);
-     });
+    });
+    // Create the chart
+    var chart = new Highcharts.Chart(options);
 }
 
-//            series: [
-//                {
-//                    type:"area",
-//                    name: 'actual',
-//                    data: [100,100,100,150,150,150,200],
-//                    pointStart: Date.UTC(2013,6,1),
-//                    pointInterval: 24 * 3600 * 1000//one day
-//                },
-//                {
-//                    type:"line",
-//                    name: 'target',
-//                    data: [80,110,120,140,150,150,300],
-//                    pointStart: Date.UTC(2013,6,1),
-//                    yAxis:1,
-//                    pointInterval: 24 * 3600 * 1000 // one day
-//                }
-//            ]
-
+function quarterBelong(a) {
+    if(a < 3)
+        return 1;
+    else if(a > 2 && a< 6)
+        return 2;
+    else if(a > 5 && a < 9)
+        return 3;
+    else if(a > 8)
+        return 4;
+}
 ////////////////////////////////////////////////     dashBoard  ///////////////////////////////////////
 function init_dashBoard() {
      init();
@@ -393,34 +486,86 @@ function add_kpi() {
      var name = $("#new-kpi-name").val();
      var desc = $("#new-kpi-desc").val();
      var interval = $("#add-interval").find(":selected").val();
-     var intervalP = $("#add-interval").find(":selected").data("order");
+     var intervalP = $("#add-interval").find(":selected").attr("value");
      var trend = $("#add-trend").find(":selected").val();
-     var trendP = $("#add-trend").find(":selected").data("order");
+     var trendP = $("#add-trend").find(":selected").attr("value");
      var target = $("#new-kpi-target").val();
      var unit = $("#add-unit").find(":selected").val();
-     var unitP = $("#add-unit").find(":selected").data("order");
+     var unitP = $("#add-unit").find(":selected").attr("value");
      var id = $("#kpi-table").find("tr").length;
      if($("#is-calcu-check").attr("checked") == "checked") {
-
-     } else {
-          if(name.length != 0 && target.length != 0) {
-               if($("#manage-group-kpi").find(".active").text() != entity) {
-
-               } else {
-                    if($("#manage-group-kpi li.active a").text() == entity) {
-                         $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(id).addClass("kpi-order-id")).append($("<td align='center' />").text(entity)).append($("<td align='center' />").text(name)).append($("<td align='center' />").text(desc)).append($("<td align='center' />").text(interval)).append($("<td align='center' />").text(target)).append($("<td align='center' />").text(unit)).append($("<td align='center' />").text(trend)).append($("<td align='center' />").text("否")).append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong", id).click(edit_kpiItem)).append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", id).click(finish_editKPI).text("完成"))).append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", id).click(remove_kpiItem)).append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi").data("belong", id).click(cancel_editKPI).text("取消"))));
-                    }
-
-                    cancel_add_kpi();
-               }
-          } else {
-               $("#add-warn").removeClass("hide");
+           if(name.length != 0 && target.length != 0 && $("#calcuType-input").val() && /\]$/.test($("#calcuType-input").val()) == true){
+               var formula=$("#takeCal").attr("cal");
+               $.post('', {
+                   entity : entity,
+                   name:name,
+                   desc:desc,
+                   interval:intervalP,
+                   trend:trendP,
+                   target:target,
+                   unit:unitP,
+                   formula:formula
+               }, function(data) {
+                   if($("#manage-group-kpi li.active a").text() == entity) {
+                       $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(id).addClass("kpi-order-id"))
+                           .append($("<td align='center' />").text(entity))
+                           .append($("<td align='center' />").text(name))
+                           .append($("<td align='center' />").text(desc))
+                           .append($("<td align='center' />").text(interval))
+                           .append($("<td align='center' />").text(target))
+                           .append($("<td align='center' />").text(unit))
+                           .append($("<td align='center' />").text(trend))
+                           .append($("<td align='center' />").attr("data-placement","bottom").attr("data-animation",false).text("是").attr("title",formula))
+                           .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong", id).click(edit_kpiItem))
+                               .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", id).click(finish_editKPI).text("完成")))
+                           .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", id).click(remove_kpiItem))
+                               .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi").data("belong", id).click(cancel_editKPI).text("取消")))
+                       );
+                   }
+                   cancel_add_kpi();
+               });
+           }
+           else{
+               $("#add-warn").removeClass("hide").text("请填写所有带*的选项");
                while_hide("add-warn");
-          }
+           }
+     }
+    else{
+         if(name.length != 0 && target.length != 0){
+             $.post('', {
+                 entity : entity,
+                 name:name,
+                 desc:desc,
+                 interval:intervalP,
+                 trend:trendP,
+                 target:target,
+                 unit:unitP
+             }, function(data) {
+                 if($("#manage-group-kpi li.active a").text() == entity) {
+                         $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(id).addClass("kpi-order-id"))
+                             .append($("<td align='center' />").text(entity))
+                             .append($("<td align='center' />").text(name))
+                             .append($("<td align='center' />").text(desc))
+                             .append($("<td align='center' />").text(interval))
+                             .append($("<td align='center' />").text(target))
+                             .append($("<td align='center' />").text(unit))
+                             .append($("<td align='center' />").text(trend))
+                             .append($("<td align='center' />").text("否"))
+                             .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong", id).click(edit_kpiItem))
+                                 .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", id).click(finish_editKPI).text("完成")))
+                             .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", id).click(remove_kpiItem))
+                                 .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi").data("belong", id).click(cancel_editKPI).text("取消"))));
+                 }
+                 cancel_add_kpi();
+             });
+         }
+         else{
+             $("#add-warn").removeClass("hide").text("请填写所有带*的选项");
+             while_hide("add-warn");
+         }
      }
 
 }
-
 function edit_kpiItem(event) {
      var id = find_id(event);
      $("#" + id).find('.manage-operate').each(function() {
@@ -537,10 +682,14 @@ function is_calcu() {
 
 function select_calcuRelate() {
      var val = "[" + $("#is-calcu-relate :selected").val() + "]";
-     var oldVal = $("#calcuType-input").val()
+     var valId= "[" + $("#is-calcu-relate :selected").attr("id") + "]";
+     var oldVal = $("#calcuType-input").val();
+     var oldValId=$("#takeCal").attr("cal");
      if(/\]$/.test(oldVal) == false) {
           var newVal = oldVal + val;
+          var newValId= oldValId+valId;
           $("#calcuType-input").val(newVal);
+          $("#takeCal").attr("cal",newValId);
      }
 }
 
@@ -548,15 +697,19 @@ function select_calcuMethod(event) {
      var e = event ? event : (window.event ? window.event : null);
      var obj = e.srcElement || e.target;
      var val = $(obj).text();
-     var oldVal = $("#calcuType-input").val()
+     var oldVal = $("#calcuType-input").val();
+     var oldValId=$("#takeCal").attr("cal");
      if(/\]$/.test(oldVal) == true) {
           var newVal = oldVal + val;
+          var newValId= oldValId+val;
           $("#calcuType-input").val(newVal);
+          $("#takeCal").attr("cal",newValId);
      }
 }
 
 function calcuRelate_clear() {
      $("#calcuType-input").val("");
+     $("#takeCal").attr("cal","");
      $("#is-calcu-relate").find("option[data-order='1']").attr("selected", "true");
 }
 
@@ -942,8 +1095,8 @@ function init_entryKpi() {
      date = new Date();
      d = date.getDate();
      day = date.getDay();
-     QuarterFirstMonth = showquarterFirstMonth();
-     m = date.getMonth() + 1;
+     QuarterFirstMonth = showquarterFirstMonth(date);
+     m = date.getMonth();
      y = date.getFullYear();
      WeekFirstDay = new Date(y, m, d - day + 1);
      WeekLastDay = new Date(y, m, d - day + 7);
@@ -960,7 +1113,7 @@ function init_entryKpi() {
                break;
           case "week":
                $("#entry-kpi").val(formatDate(WeekFirstDay) + " ~ " + formatDate(WeekLastDay));
-               $("#show-weekOfYear").css("display","inline-block").find("span").text($.datepicker.iso8601Week(new Date(y, m-1, d - day + 1)));
+               $("#show-weekOfYear").css("display","inline-block").find("span").text($.datepicker.iso8601Week(new Date(y, m, d - day + 1)));
                $("#entry-kpi").bind("click", select_week);
                break;
           case "month":
@@ -1005,15 +1158,14 @@ function init_entryKpi() {
 }
 
 //本季开始年月
-function showquarterFirstMonth() {
-     var Nowdate = new Date();
-     if(Nowdate.getMonth() < 3)
+function showquarterFirstMonth(a) {
+     if(a.getMonth() < 3)
           return "第一季度";
-     else if(Nowdate.getMonth() > 2 && Nowdate.getMonth() < 6)
+     else if(a.getMonth() > 2 && a.getMonth() < 6)
           return "第二季度";
-     else if(Nowdate.getMonth() > 5 && Nowdate.getMonth() < 9)
+     else if(a.getMonth() > 5 && a.getMonth() < 9)
           return "第三季度";
-     else if(Nowdate.getMonth() > 8)
+     else if(a.getMonth() > 8)
           return "第四季度";
 }
 

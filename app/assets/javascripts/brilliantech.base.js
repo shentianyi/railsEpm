@@ -141,7 +141,7 @@ function clearNoNum(obj)
     obj.value = obj.value.replace(/^0/g,"");
     //保证只有出现一个.而没有多个.
     obj.value = obj.value.replace(/\.{2,}/g,".");
-    obj.value = obj.value.replace(/^0{2,}/g,"");
+    obj.value = obj.value.replace(/^0{1,}/g,"");
     //保证.只出现一次，而不能出现两次以上
     obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
 }
