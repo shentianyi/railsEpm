@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" line="1292" />
+    <bookmark url="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" line="1300" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="524ddef3-5e9f-40ed-ae9e-278abe057882" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/Analytics.html" afterPath="$PROJECT_DIR$/app/assets/Analytics.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/EntryId.html" afterPath="$PROJECT_DIR$/app/assets/EntryId.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.base.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.base.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css" afterPath="$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/kpi_categories/_left_menu.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/users/new.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/entities/_left_menu.html.erb" afterPath="$PROJECT_DIR$/app/views/entities/_left_menu.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/shares/_menu.html.erb" afterPath="$PROJECT_DIR$/app/views/shares/_menu.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/kpis/_new.html.erb" afterPath="$PROJECT_DIR$/app/views/kpis/_new.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/role/ability.rb" afterPath="$PROJECT_DIR$/app/models/role/ability.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/manage-kpi.html" afterPath="$PROJECT_DIR$/app/assets/manage-kpi.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/entities_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/entities_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/entity.rb" afterPath="$PROJECT_DIR$/app/models/entity.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/kpis/index.html.erb" afterPath="$PROJECT_DIR$/app/views/kpis/index.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/index.html.erb" afterPath="$PROJECT_DIR$/app/views/users/index.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/kpi_categories_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/kpi_categories_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/kpi_category.rb" afterPath="$PROJECT_DIR$/app/models/kpi_category.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/kpis_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/kpis_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/role/role.rb" afterPath="$PROJECT_DIR$/app/models/role/role.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/observers/tenant_observer.rb" afterPath="$PROJECT_DIR$/app/observers/tenant_observer.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/users_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/users_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/users_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/users_helper.rb" />
     </list>
     <ignored path="railsEpm.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -92,7 +104,7 @@
       <file leaf-file-name="brilliantech.railsepm.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="311" column="40" selection-start="11061" selection-end="11061" vertical-scroll-proportion="0.93056893">
+            <state line="1133" column="55" selection-start="43972" selection-end="43972" vertical-scroll-proportion="-1.5024108">
               <folding />
             </state>
           </provider>
@@ -540,7 +552,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="311" column="40" selection-start="11061" selection-end="11061" vertical-scroll-proportion="0.93056893">
+        <state line="1133" column="55" selection-start="43972" selection-end="43972" vertical-scroll-proportion="-1.5024108">
           <folding />
         </state>
       </provider>

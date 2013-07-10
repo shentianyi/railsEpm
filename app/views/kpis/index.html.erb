@@ -1,2 +1,37 @@
-<h1>Kpi#index</h1>
-<p>Find me in app/views/kpi/index.html.erb</p>
+<div class="middle clearfix">
+     <%= render :partial=>'kpi_categories/left_menu'%>
+     <%= render :partial=>'kpis/new'%>
+     <div class="right-content pull-left" id="right-content">
+          <table class="manage-kpi" id="kpi-table">
+               <tr>
+                    <th>ID</th>
+                    <th>名称</th>
+                    <th width="221px">描述</th>
+                    <th>周期</th>
+                    <th>目标值</th>
+                    <th>方向</th>
+                    <th width="50px">计算型</th>
+                    <th width="50px" colspan="2">操作</th>
+               </tr>
+               <%@kpis.each_with_index do |kpi,i|%>
+               <tr id="<%= kpi.id%>">
+                    <td align="center" class="kpi-order-id"><%= i+1%></td>
+                    <td align="center"><%= kpi.name%></td>
+                    <td align="center"><%= kpi.description%></td>
+                    <td align="center"><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
+                    <td align="center" class="kpi-target"><%= kpi.target%><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></td>
+                    <td align="center"><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
+                    <td align="center"><%= kpi.is_calculated ? '是':'否'%></td>
+                    <td align="center"><div class="manage-operate manage-operate-edit" data-belong="<%= kpi.id%>" onclick="edit_kpiItem(event)"></div><a class="btn btn-success manage-operate-reverse  hide" data-belong="<%= kpi.id%>" onclick="finish_editKPI(event)">完成</a></td>
+                    <td align="center"><div class="manage-operate manage-operate-del" data-belong="<%= kpi.id%>" onclick="remove_kpiItem(event)"></div><a class="btn manage-operate-reverse  hide" id="cancel-edit-kpi" data-belong="<%= kpi.id%>" onclick="cancel_editKPI(event)">取消</a></td>
+               </tr>
+               <%end%>
+          </table>
+          <a class="btn manage-add-btn btn-primary pull-right" onclick="show_addBlock(event)" data-manage="kpi">添加KPI</a>
+     </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+	init_manage();
+	})
+</script>

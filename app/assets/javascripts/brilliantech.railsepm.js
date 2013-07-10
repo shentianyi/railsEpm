@@ -19,47 +19,46 @@ function init() {
 }
 
 //过段时间消失
- 
-function while_hide(a){
-    setTimeout(function(){
-        $("#"+a).addClass("hide");
-    },"2000");
+
+function while_hide(a) {
+     setTimeout(function() {
+          $("#" + a).addClass("hide");
+     }, "2000");
 }
-function init_rightContent(){
-    var fwidth=parseInt(document.body.scrollWidth);
-    if(fwidth>990){
-        document.getElementById("right-content").style.width=document.body.scrollWidth-171+"px";
-    }
-    else{
-        document.getElementById("right-content").style.width=990-171+"px";
-    }
+
+function init_rightContent() {
+     var fwidth = parseInt(document.body.scrollWidth);
+     if(fwidth > 990) {
+          document.getElementById("right-content").style.width = document.body.scrollWidth - 171 + "px";
+     } else {
+          document.getElementById("right-content").style.width = 990 - 171 + "px";
+     }
 }
-function show_addBlock(event){
-    var e = event ? event : (window.event ? window.event : null);
-    if (e.stopPropagation) {
-        e.stopPropagation();
-    }
-    else {
-        e.cancelBubble = true;
-    }
-    var obj = e.srcElement || e.target;
-    var height=parseInt($("#addBlock").height())+20+"px";
-    if($("#addBlock").data("state")=="off"){
-        $("#addBlock").slideDown("2000").data("state","on");
-        $("#right-content").css("padding-top",height);
-        if($(obj).data("manage")=="kpi"){
-            clear_add_kpi();
-            $("#add-block-mark").text("添加KPI");
-        }
-//        else if($(obj).data("manage")=="user"){
-//            clear_add_user();
-//            $("#add-block-mark").text("添加用户");
-//        }
-    }
-    else{
-//        $("#addBlock").slideUp("2000").data("state","off");
-//        $("#right-content").css("padding-top","0px");
-    } 
+
+function show_addBlock(event) {
+     var e = event ? event : (window.event ? window.event : null);
+     if(e.stopPropagation) {
+          e.stopPropagation();
+     } else {
+          e.cancelBubble = true;
+     }
+     var obj = e.srcElement || e.target;
+     var height = parseInt($("#addBlock").height()) + 20 + "px";
+     if($("#addBlock").data("state") == "off") {
+          $("#addBlock").slideDown("2000").data("state", "on");
+          $("#right-content").css("padding-top", height);
+          if($(obj).data("manage") == "kpi") {
+               clear_add_kpi();
+               $("#add-block-mark").text("添加KPI");
+          }
+          //        else if($(obj).data("manage")=="user"){
+          //            clear_add_user();
+          //            $("#add-block-mark").text("添加用户");
+          //        }
+     } else {
+          //        $("#addBlock").slideUp("2000").data("state","off");
+          //        $("#right-content").css("padding-top","0px");
+     }
 }
 
 function formatDate(date) {
@@ -636,11 +635,24 @@ function close_createEntity() {
 
 function insert_entity() {
      var test = test_sameEntity();
-     if($("#creat-newEntity").val() && test == -1) {
-          var length = $("#manage-group-kpi").find("li").length - 1;
-          var val = $("#creat-newEntity").val();
-          $("#manage-group-kpi li:eq(" + length + ")").before($("<li />").append($("<a href=''/>").text(val)));
-          $("#creat-newEntity").val("");
+           var val = $("#creat-newEntity").val();
+      if(val&& test == -1) {   
+     
+            if($('#creat-newEntity').val().length > 0) {
+               $.post('../kpi_categories', {
+                    category : {
+                         name : val
+                    }
+               }, function(data) {
+                    if(data.result) {
+                          var length = $("#manage-group-kpi").find("li").length - 1;
+                           $("#manage-group-kpi li:eq(" + length + ")").before($("<li />").append($("<a href='../kpis?p=" + data.object + "'/>").text(val)));
+                          $("#creat-newEntity").val("");
+                    } else {
+                         alert(data.content);
+                    }
+               });
+          }
      }
 }
 
@@ -666,7 +678,7 @@ function test_sameEntity() {
 function create_entity(event) {
      var e = event ? event : (window.event ? window.event : null);
      if(e.keyCode == 13) {
-          insert_entity();
+           insert_entity();
      } else if(e.keyCode == 27) {
           close_createEntity();
      }
@@ -717,37 +729,37 @@ function calcuRelate_clear() {
 function create_Userentity(event) {
      var e = event ? event : (window.event ? window.event : null);
      if(e.keyCode == 13) {
-          if($('#creat-newEntity').val().length > 0) {
-               $.post('../entities', {
-                    entity : {
-                         name : $('#creat-newEntity').val()
-                    }
-               }, function(data) {
-                    if(data.result) {
-                         insert_entityUser();
-                    } else {
-                         alert(data.content);
-                    }
-               });
-          }
+         insert_entityUser();
      } else if(e.keyCode == 27) {
           close_createEntity();
      }
 }
 
 function insert_entityUser() {
-     var test = test_sameEntityUser();
-     if($("#creat-newEntity").val() && test == -1) {
-          var length = $("#manage-group-user").find("li").length - 1;
-          var val = $("#creat-newEntity").val();
-          $("#manage-group-user li:eq(" + length + ")").before($("<li />").append($("<a href=''/>").text(val)));
-          $("#creat-newEntity").val("");
+     var test = test_sameEntityUser();     
+     var val = $("#creat-newEntity").val();
+     if(val && test == -1) {  
+     if($('#creat-newEntity').val().length > 0) {
+               $.post('../entities', {
+                    entity : {
+                         name : $('#creat-newEntity').val()
+                    }
+               }, function(data) {
+                    if(data.result) {
+                           var length = $("#manage-group-user").find("li").length - 1;
+                           $("#manage-group-user li:eq(" + length + ")").before($("<li />").append($("<a href='../users?p=" + data.object + "'/>").text(val)));
+                           $("#creat-newEntity").val("");
+                    } else {
+                         alert(data.content);
+                    }
+               });
+          }
      }
      close_createEntity();
 }
 
 function test_sameEntityUser() {
- 
+
      var a = $("#creat-newEntity").val();
      var b = [];
      $("#manage-group-user").find("a").each(function() {
@@ -769,220 +781,217 @@ function test_sameEntityUser() {
 function close_createEntity() {
      $("#creatEntity-block").addClass("hide");
      $("#creat-newEntity").val("");
-  
-    var a = $("#creat-newEntity").val();
-    var b = [];
-    $("#manage-group-user").find("a").each(function() {
-        b.push($(this).text());
-    });
-    if(!Array.indexOf){
-        Array.prototype.indexOf = function(obj){
-            for(var i=0; i<this.length; i++){
-                if(this[i]==obj){
-                    return i;
-                }
-            }
-            return -1;
-        }
-    }
-    return b.indexOf(a);
-}
-function remove_userItem(event){
-    if(confirm("确认删除？")){
-        var id=find_id(event);
-        $("#user-table").find("#"+id).nextAll("tr").each(function(){
-            var order=parseInt($(this).find(".kpi-order-id").text())-1;
-            $(this).find(".kpi-order-id").text(order);
-        });
-        $("#user-table").find("#"+id).remove();
-    }
+
+     var a = $("#creat-newEntity").val();
+     var b = [];
+     $("#manage-group-user").find("a").each(function() {
+          b.push($(this).text());
+     });
+     if(!Array.indexOf) {
+          Array.prototype.indexOf = function(obj) {
+               for(var i = 0; i < this.length; i++) {
+                    if(this[i] == obj) {
+                         return i;
+                    }
+               }
+               return -1;
+          }
+     }
+     return b.indexOf(a);
 }
 
-function cancel_add_user(){
-    $("#addBlock").slideUp("2000").data("state","off").find("input").val("");
-    $("#right-content").css("padding-top","0px");
-    clear_add_user();
+function remove_userItem(event) {
+     if(confirm("确认删除？")) {
+          var id = find_id(event);
+          $("#user-table").find("#" + id).nextAll("tr").each(function() {
+               var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
+               $(this).find(".kpi-order-id").text(order);
+          });
+          $("#user-table").find("#" + id).remove();
+     }
 }
-function clear_add_user(){
-    $("#new-user-name").val("");
-    $("#new-user-mail").val("");
-    $("#new-user-entity").find("option[data-order='1']").attr("selected","true");
-    $("#new-user-role").find("option[data-order='1']").attr("selected","true");
+
+function cancel_add_user() {
+     $("#addBlock").slideUp("2000").data("state", "off").find("input").val("");
+     $("#right-content").css("padding-top", "0px");
+     clear_add_user();
 }
+
+function clear_add_user() {
+     $("#new-user-name").val("");
+     $("#new-user-mail").val("");
+     $("#new-user-entity").find("option[data-order='1']").attr("selected", "true");
+     $("#new-user-role").find("option[data-order='1']").attr("selected", "true");
+}
+
 ///////////////  add user  ///////////////////////////////////////
-function init_addUser(){
-    var mark=$("#add-user-mark").data("type");
-    if(mark=="add"){
-        $("#add-user-mark").text("添加我的用户");
-    }else{
-        $("#add-user-mark").text("修改我的用户");
-    }
+function init_addUser() {
+     var mark = $("#add-user-mark").data("type");
+     if(mark == "add") {
+          $("#add-user-mark").text("添加我的用户");
+     } else {
+          $("#add-user-mark").text("修改我的用户");
+     }
 }
-function to_userPage(event){
-    var e = event ? event : (window.event ? window.event : null);
-    var obj = e.srcElement || e.target;
-    var type=$("obj").attr("type");
-    if(type=="add"){
-        $("#add-user-mark").text("添加我的用户");
-    }
-    else if(type=="edit"){
-        $("#add-user-mark").text("修改我的用户");
-    }
+
+function to_userPage(event) {
+     var e = event ? event : (window.event ? window.event : null);
+     var obj = e.srcElement || e.target;
+     var type = $("obj").attr("type");
+     if(type == "add") {
+          $("#add-user-mark").text("添加我的用户");
+     } else if(type == "edit") {
+          $("#add-user-mark").text("修改我的用户");
+     }
 }
+
 ///////////////  delivery kpi  ///////////////////////////////////////
-function choose_kpi(event){
-    var e = event ? event : (window.event ? window.event : null);
-    var obj = e.srcElement || e.target;
-    var id=$(obj).parent().attr("id");
-    var entity=$("#"+id).find(".deliveryKpi-entity").text();
-    var name=$("#"+id).find(".deliveryKpi-name").text();
-    var desc=$("#"+id).find(".deliveryKpi-desc").text();
-    var target=$("#"+id).find(".deliveryKpi-target").text();
-    var unit=$("#"+id).find(".deliveryKpi-unit").text();
-    var interval=$("#"+id).find(".deliveryKpi-interval").text();
-    if(test_sameDeliveryKpi(id)== -1){
-        $("#my-kpi").append($("<tr />").attr("id",id).click(remove_userkpi).append($("<td />").text(entity))
-            .append($("<td />").text(name))
-            .append($("<td />").text(desc))
-            .append($("<td />").append($("<input type='text'/>").click(myKpi_input).val(target).addClass("my-kpi-target")))
-            .append($("<td />").text(unit))
-            .append($("<td />").text(interval))
-        );
-    }
+function choose_kpi(event) {
+     var e = event ? event : (window.event ? window.event : null);
+     var obj = e.srcElement || e.target;
+     var id = $(obj).parent().attr("id");
+     var entity = $("#" + id).find(".deliveryKpi-entity").text();
+     var name = $("#" + id).find(".deliveryKpi-name").text();
+     var desc = $("#" + id).find(".deliveryKpi-desc").text();
+     var target = $("#" + id).find(".deliveryKpi-target").text();
+     var unit = $("#" + id).find(".deliveryKpi-unit").text();
+     var interval = $("#" + id).find(".deliveryKpi-interval").text();
+     if(test_sameDeliveryKpi(id) == -1) {
+          $("#my-kpi").append($("<tr />").attr("id", id).click(remove_userkpi).append($("<td />").text(entity)).append($("<td />").text(name)).append($("<td />").text(desc)).append($("<td />").append($("<input type='text'/>").click(myKpi_input).val(target).addClass("my-kpi-target"))).append($("<td />").text(unit)).append($("<td />").text(interval)));
+     }
 }
-function myKpi_input(event){
-    var e = event ? event : (window.event ? window.event : null);
-    if (e.stopPropagation) {
-        e.stopPropagation();
-    }
-    else {
-        e.cancelBubble = true;
-    }
-    $("#my-kpi").find("input").bind("keyup",function(){
-           clearNoNum(this);
-    })
+
+function myKpi_input(event) {
+     var e = event ? event : (window.event ? window.event : null);
+     if(e.stopPropagation) {
+          e.stopPropagation();
+     } else {
+          e.cancelBubble = true;
+     }
+     $("#my-kpi").find("input").bind("keyup", function() {
+          clearNoNum(this);
+     })
 }
+
 function test_sameDeliveryKpi(id) {
-    var a = id;
-    var b = [];
-    $("#my-kpi").find("tr").each(function() {
-        b.push($(this).attr('id'));
-    });
-    if(!Array.indexOf){
-        Array.prototype.indexOf = function(obj){
-            for(var i=0; i<this.length; i++){
-                if(this[i]==obj){
-                    return i;
-                }
-            }
-            return -1;
-        }
-    }
-    return b.indexOf(a);
+     var a = id;
+     var b = [];
+     $("#my-kpi").find("tr").each(function() {
+          b.push($(this).attr('id'));
+     });
+     if(!Array.indexOf) {
+          Array.prototype.indexOf = function(obj) {
+               for(var i = 0; i < this.length; i++) {
+                    if(this[i] == obj) {
+                         return i;
+                    }
+               }
+               return -1;
+          }
+     }
+     return b.indexOf(a);
 }
-function remove_userkpi(event){
-    var e = event ? event : (window.event ? window.event : null);
-    var obj = e.srcElement || e.target;
-    var id=$(obj).parent().attr("id");
-    $(obj).parent().remove();
+
+function remove_userkpi(event) {
+     var e = event ? event : (window.event ? window.event : null);
+     var obj = e.srcElement || e.target;
+     var id = $(obj).parent().attr("id");
+     $(obj).parent().remove();
 }
+
 ///////////////  view  ///////////////////////////////////////
-function create_Viewentity(event){
-    var e = event ? event : (window.event ? window.event : null);
-    if(e.keyCode == 13) {
-        insert_entityView();
-    } else if(e.keyCode == 27) {
-        close_createEntity();
-    }
+function create_Viewentity(event) {
+     var e = event ? event : (window.event ? window.event : null);
+     if(e.keyCode == 13) {
+          insert_entityView();
+     } else if(e.keyCode == 27) {
+          close_createEntity();
+     }
 }
-function insert_entityView(){
-    var test = test_sameEntityView();
-    if($("#creat-newEntity").val() && test == -1) {
-        var length=$("#manage-group-user").find("li").length-1;
-        var val=$("#creat-newEntity").val();
-        $("#manage-group-view li:eq("+length+")").before($("<li />").append($("<a href=''/>").text(val)));
-        $("#creat-newEntity").val("");
-    }
+
+function insert_entityView() {
+     var test = test_sameEntityView();
+     if($("#creat-newEntity").val() && test == -1) {
+          var length = $("#manage-group-user").find("li").length - 1;
+          var val = $("#creat-newEntity").val();
+          $("#manage-group-view li:eq(" + length + ")").before($("<li />").append($("<a href=''/>").text(val)));
+          $("#creat-newEntity").val("");
+     }
 }
+
 function test_sameEntityView() {
-    var a = $("#creat-newEntity").val();
-    var b = [];
-    $("#manage-group-view").find("a").each(function() {
-        b.push($(this).text());
-    });
-    if(!Array.indexOf){
-        Array.prototype.indexOf = function(obj){
-            for(var i=0; i<this.length; i++){
-                if(this[i]==obj){
-                    return i;
-                }
-            }
-            return -1;
-        }
-    }
-    return b.indexOf(a);
+     var a = $("#creat-newEntity").val();
+     var b = [];
+     $("#manage-group-view").find("a").each(function() {
+          b.push($(this).text());
+     });
+     if(!Array.indexOf) {
+          Array.prototype.indexOf = function(obj) {
+               for(var i = 0; i < this.length; i++) {
+                    if(this[i] == obj) {
+                         return i;
+                    }
+               }
+               return -1;
+          }
+     }
+     return b.indexOf(a);
 }
-function choose_view(event){
-    var e = event ? event : (window.event ? window.event : null);
-    var obj = e.srcElement || e.target;
-    var id=$(obj).attr("id");
-    var text=$(obj).text();
-    if(text_view(obj,"myView")== -1){
-        $("#myView").append($("<p />").attr("id",id).text(text).click(del_view));
-    }
+
+function choose_view(event) {
+     var e = event ? event : (window.event ? window.event : null);
+     var obj = e.srcElement || e.target;
+     var id = $(obj).attr("id");
+     var text = $(obj).text();
+     if(text_view(obj, "myView") == -1) {
+          $("#myView").append($("<p />").attr("id", id).text(text).click(del_view));
+     }
 }
-function text_view(obj,target){
-    var a = $(obj).text();
-    var b = [];
-    $("#"+target).find("p").each(function() {
-        b.push($(this).text());
-    });
-    if(!Array.indexOf){
-        Array.prototype.indexOf = function(obj){
-            for(var i=0; i<this.length; i++){
-                if(this[i]==obj){
-                    return i;
-                }
-            }
-            return -1;
-        }
-    }
-    return b.indexOf(a);
+
+function text_view(obj, target) {
+     var a = $(obj).text();
+     var b = [];
+     $("#" + target).find("p").each(function() {
+          b.push($(this).text());
+     });
+     if(!Array.indexOf) {
+          Array.prototype.indexOf = function(obj) {
+               for(var i = 0; i < this.length; i++) {
+                    if(this[i] == obj) {
+                         return i;
+                    }
+               }
+               return -1;
+          }
+     }
+     return b.indexOf(a);
 }
-function del_view(event){
-    var e = event ? event : (window.event ? window.event : null);
-    var obj = e.srcElement || e.target;
-    $(obj).remove();
+
+function del_view(event) {
+     var e = event ? event : (window.event ? window.event : null);
+     var obj = e.srcElement || e.target;
+     $(obj).remove();
 }
-function post_newUser(){
-    var name=$("#new-user-name").val();
-    var mail=$("#new-user-mail").val();
-    var password=$("#new-user-password").val();
-    var entityP=$("#new-user-entity").find(":selected").data("order");
-    var entity=$("#new-user-entity").find(":selected").val();
-    var roleP=$(":radio[name='optionsRadios']:checked").data("role");
-    var role=$(":radio[name='optionsRadios']:checked").parent().text();
-    if(name.length!=0 && mail.length!=0){
-        if(isEmail(mail)){
-                $("#user-table").append($("<tr />").attr("id",id).append($("<td align='center' />").text(id).addClass("kpi-order-id"))
-                    .append($("<td align='center' />").text(name))
-                    .append($("<td align='center' />").text(mail))
-                    .append($("<td align='center' />").text(entity))
-                    .append($("<td align='center' />").text(role))
-                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").attr("type","edit").attr("title","编辑").data("belong",id).click(to_userPage)))
-                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-delivery").attr("title","分配KPI").data("belong",id).click(edit_userItem)))
-                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").attr("title","删除").data("belong",id).click(remove_userItem)))
-                );
-        }
-        else{
-            $("#add-warn").text("请填写正确的邮箱").removeClass("hide");
-            while_hide("add-warn");
-        }
-    }
-    else{
-        $("#add-warn").removeClass("hide").text("请填写所有带*的选项");
-        while_hide("add-warn");
-    } 
+
+function post_newUser() {
+     var name = $("#new-user-name").val();
+     var mail = $("#new-user-mail").val();
+     var password = $("#new-user-password").val();
+     var entityP = $("#new-user-entity").find(":selected").data("order");
+     var entity = $("#new-user-entity").find(":selected").val();
+     var roleP = $(":radio[name='optionsRadios']:checked").data("role");
+     var role = $(":radio[name='optionsRadios']:checked").parent().text();
+     if(name.length != 0 && mail.length != 0) {
+          if(isEmail(mail)) {
+               $("#user-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(id).addClass("kpi-order-id")).append($("<td align='center' />").text(name)).append($("<td align='center' />").text(mail)).append($("<td align='center' />").text(entity)).append($("<td align='center' />").text(role)).append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").attr("type", "edit").attr("title", "编辑").data("belong", id).click(to_userPage))).append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-delivery").attr("title", "分配KPI").data("belong", id).click(edit_userItem))).append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").attr("title", "删除").data("belong", id).click(remove_userItem))));
+          } else {
+               $("#add-warn").text("请填写正确的邮箱").removeClass("hide");
+               while_hide("add-warn");
+          }
+     } else {
+          $("#add-warn").removeClass("hide").text("请填写所有带*的选项");
+          while_hide("add-warn");
+     }
 }
 
 function edit_userItem(event) {
@@ -1113,7 +1122,9 @@ function init_entryKpi() {
                break;
           case "week":
                $("#entry-kpi").val(formatDate(WeekFirstDay) + " ~ " + formatDate(WeekLastDay));
+
                $("#show-weekOfYear").css("display","inline-block").find("span").text($.datepicker.iso8601Week(new Date(y, m, d - day + 1)));
+
                $("#entry-kpi").bind("click", select_week);
                break;
           case "month":
@@ -1186,14 +1197,13 @@ function select_week() {
           dateFormat : 'yy-m-d',
           onSelect : function(dateText, inst) {
                var date = $(this).datepicker('getDate');
-              if( date.getDay()==0){
-                  startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-6);
-                  endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-              }
-              else{
-                  startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
-                  endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
-              }
+               if(date.getDay() == 0) {
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
+                    endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+               } else {
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+                    endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+               }
                var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
                $("#entry-kpi").val($.datepicker.formatDate(dateFormat, startDate, inst.settings) + " ~ " + $.datepicker.formatDate(dateFormat, endDate, inst.settings));
                $("#show-weekOfYear>span").text($.datepicker.iso8601Week(startDate));
@@ -1229,53 +1239,51 @@ function plus_unit(event) {
 function entry_kpiCurrent(event) {
      var e = event ? event : (window.event ? window.event : null);
      var obj = e.srcElement || e.target;
-    var id = $(obj).data("belong");
+     var id = $(obj).data("belong");
      clearNoNum(obj);
      if(e.keyCode == 13 && $(obj).val()) {
           fill_kpiCurrent(obj);
-     }
-    else if( !$(obj).val()){
-         $("#" + id).find(".entry-kpiPercent").text("");
-         $(obj).attr("source",0);
+     } else if(!$(obj).val()) {
+          $("#" + id).find(".entry-kpiPercent").text("");
+          $(obj).attr("source", 0);
      }
 }
 
 function fill_kpiCurrent(obj) {
-    var val = $(obj).val();
-    var source=$(obj).attr("source");
-    var id = $(obj).data("belong");
-    if(val){
-        if(val!=source){
-            $(obj).attr("source",val);
-            var type = $("#entry-date-type").find(".active").data("type");
-            var date;
-            switch(type) {
-                case "day":
-                    date=$("#entry-kpi").val();
-                    break;
-                case "week":
-                    date=$("#entry-kpi").val().split("-")[0]+"-"+$("#show-weekOfYear>span").text();
-                    break;
-                case "month":
-                    date=$("#entry-kpi").val();
-                    break;
-                case "quarter":
-                    date=$("#entry-kpi").val()+"-"+$("#select-quarter :selected").data("order");
-                    break;
-                case "year":
-                    date=$("#entry-kpi").val();
-                    break;
-            }
+     var val = $(obj).val();
+     var source = $(obj).attr("source");
+     var id = $(obj).data("belong");
+     if(val) {
+          if(val != source) {
+               $(obj).attr("source", val);
+               var type = $("#entry-date-type").find(".active").data("type");
+               var date;
+               switch(type) {
+                    case "day":
+                         date = $("#entry-kpi").val();
+                         break;
+                    case "week":
+                         date = $("#entry-kpi").val().split("-")[0] + "-" + $("#show-weekOfYear>span").text();
+                         break;
+                    case "month":
+                         date = $("#entry-kpi").val();
+                         break;
+                    case "quarter":
+                         date = $("#entry-kpi").val() + "-" + $("#select-quarter :selected").data("order");
+                         break;
+                    case "year":
+                         date = $("#entry-kpi").val();
+                         break;
+               }
 
-            var target = $(obj).data("target");
-            var percent = (parseFloat(val) / parseFloat(target) * 100).toFixed(0);
-            kpi_percent(percent, id);
-        }
-    }
-    else{
-        $("#" + id).find(".entry-kpiPercent").text("");
-        $(obj).attr("source",0);
-    }
+               var target = $(obj).data("target");
+               var percent = (parseFloat(val) / parseFloat(target) * 100).toFixed(0);
+               kpi_percent(percent, id);
+          }
+     } else {
+          $("#" + id).find(".entry-kpiPercent").text("");
+          $(obj).attr("source", 0);
+     }
 }
 
 function kpi_percent(a, b) {

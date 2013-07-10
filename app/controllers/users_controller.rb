@@ -3,6 +3,9 @@ class UsersController < ApplicationController
   skip_before_filter :authorize,:only=>:login
   skip_before_filter :find_current_user_tenant,:only=>:login
   skip_authorize_resource :only=>:login
+  
+  # get ability entity
+  before_filter :get_ability_entity,:only=>[:index,:new]
   def login
     # if request.post?
 
@@ -17,9 +20,12 @@ class UsersController < ApplicationController
   end
 
   def index
-    @entities=Entity.accessible_by(current_ability).all
-    @active_entity_id=params[:e].nil? ? @entities[0].id : params[:e]
+    @active_entity_id=params[:p].nil? ? @entities[0].id : params[:p].to_i
     @users=User.accessible_by(current_ability).where(:entity_id=>@active_entity_id).all
+  end
+
+  def new
+
   end
 
   def logout
@@ -29,5 +35,11 @@ class UsersController < ApplicationController
     if request.post?
 
     end
+  end
+
+  private
+
+  def get_ability_entity
+    @entities=Entity.accessible_by(current_ability).all
   end
 end

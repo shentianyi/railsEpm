@@ -1,25 +1,24 @@
 <div class="left-category pull-left">
-     <ul class="manage-group" id="manage-group-user">
+     <ul class="manage-group" id="manage-group-kpi">
           <li>
-               <h3 class="no-margin">组织</h3>
+               <h3 class="no-margin">类别</h3>
           </li>
-
-          <%@entities.each do |entity|%>
-          <li class="<%= entity.id==@active_entity_id ? 'active' : ''%>">
-               <a href="../users?p=<%=entity.id%>"><%= entity.name %></a>
+          <%@categories.each do |category|%>
+          <li class="<%= category.id==@active_category_id ? 'active' : ''%>">
+               <a href="../kpis?p=<%=category.id%>"><%= category.name %></a>
           </li>
           <%end%>
           <li>
                <button class="btn btn-primary" onclick="create_entityBlock()">
-                    创建组织
+                    创建类别
                </button>
           </li>
           <div class="absolute creat-entity-block hide" id="creatEntity-block">
                <p>
-                    创建组织
+                    创建类别
                </p>
                <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
-               <input type="text" id="creat-newEntity" onkeyup="create_Userentity(event)"/>
+               <input type="text" id="creat-newEntity" onkeyup="create_entity(event)"/>
           </div>
      </ul>
 </div>

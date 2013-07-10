@@ -1,21 +1,22 @@
 #encoding: utf-8
 class KpisController < ApplicationController
-  # show kpis by category
+  before_filter :get_ability_category,:only=>[:index]
   def index
-    @categories=KpiCategory.all
-    unless @category=KpiCategory.find_by_id(params[:category])
-      @category=@categories[0]
-    end
-    render :json=>[@categories,@category.kpis]
-  end
+    @active_category_id=params[:p].nil? ? @categories[0].id : params[:p].to_i
+    @kpis=Kpi.accessible_by(current_ability).where(:kpi_category_id=>@active_category_id).all
 
-  def new
-    @categories=KpiCategory.all
     @units=KpiUnit.all
     @frequencies=KpiFrequency.all
     @directions=KpiDirection.all
-    render :partial=>'new'
+    @base_kpis=Kpi.accessible_by(current_ability).where(:is_calculated=>false).all
   end
+# 
+  # def new
+    # @units=KpiUnit.all
+    # @frequencies=KpiFrequency.all
+    # @directions=KpiDirection.all
+    # render :partial=>'new'
+  # end
 
   # create api
   def create
@@ -57,5 +58,9 @@ class KpisController < ApplicationController
 
   def user_kpis
     @kpis=KpisHelper.get_kpis_by_user_id params[:user]
+  end
+
+  def get_ability_category
+    @categories=KpiCategory.accessible_by(current_ability).all
   end
 end
