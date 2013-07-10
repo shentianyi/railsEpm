@@ -693,7 +693,7 @@ function is_calcu() {
 }
 
 function select_calcuRelate() {
-     var val = "[" + $("#is-calcu-relate :selected").val() + "]";
+     var val = "[" + $("#is-calcu-relate :selected").text() + "]";
      var valId= "[" + $("#is-calcu-relate :selected").attr("id") + "]";
      var oldVal = $("#calcuType-input").val();
      var oldValId=$("#takeCal").attr("cal");
@@ -730,7 +730,8 @@ function create_Userentity(event) {
      var e = event ? event : (window.event ? window.event : null);
      if(e.keyCode == 13) {
          insert_entityUser();
-     } else if(e.keyCode == 27) {
+     }
+     else if(e.keyCode == 27) {
           close_createEntity();
      }
 }
