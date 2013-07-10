@@ -565,8 +565,13 @@ function edit_kpiItem(event) {
      var target = $("#" + id).find(".kpi-target").text();
      $("#cancel-edit-kpi").attr("entity", entity).attr("target", target);
      $("#" + id).find(".kpi-entity").text("").append(
-         $("#add-entity").clone().addClass("edit-kpiEntity-input")
+         $("#add-entity").clone().addClass("edit-kpiEntity-input").attr("id","")
      );
+     $("#" + id).find(".kpi-entity").find("option").each(function(){
+        if($(this).text()==$("#manage-group-kpi li.active a").text()){
+                     $(this).attr("selected","true");
+        }
+     });
      $("#" + id).find(".kpi-target").text("").append($("<input type='text' onkeyup='clearNoNum(this)'/>").val(target).addClass("edit-kpiTarget-input"));
 }
 
@@ -585,11 +590,22 @@ function finish_editKPI(event) {
      var id = find_id(event);
      var entity = $("#" + id).find(".kpi-entity").find(":selected").text();
      var target = $("#" + id).find(".kpi-target").find("input").val();
-     same_editKPI(id);
-     $("#" + id).find(".kpi-entity").text(entity);
-     $("#" + id).find(".kpi-target").text(target);
+    same_editKPI(id);
+     post('',{
+            id:id,
+            entity:entity,
+            target:target
+        },function(data){
+             if(entity==$("#manage-group-kpi li.active a").text()){
+                 $("#" + id).find(".kpi-entity").text(entity);
+                 $("#" + id).find(".kpi-target").text(target);
+             }
+             else{
+                 $("#kpi-table").find("#" + id).remove();
+             }
+        }
+     );
 }
-
 function cancel_editKPI(event) {
      var id = find_id(event);
      var e = event ? event : (window.event ? window.event : null);
@@ -600,7 +616,6 @@ function cancel_editKPI(event) {
      $("#" + id).find(".kpi-entity").text(entity);
      $("#" + id).find(".kpi-target").text(target);
 }
-
 function same_editKPI(a) {
      $("#" + a).find(".manage-operate-reverse").each(function() {
           $(this).addClass("hide").prev().removeClass("hide");
