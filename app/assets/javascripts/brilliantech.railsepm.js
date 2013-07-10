@@ -618,6 +618,11 @@ function finish_editKPI(event) {
              }
              else{
                  $("#kpi-table").find("#" + id).remove();
+                 $("#kpi-table").find("#" + id).nextAll("tr").each(function() {
+                     var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
+                     $(this).find(".kpi-order-id").text(order);
+                 });
+                 $("#kpi-table").find("#" + id).remove();
              }
         }
      });
