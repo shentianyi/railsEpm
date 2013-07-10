@@ -548,7 +548,7 @@ function is_calcu() {
 }
 
 function select_calcuRelate() {
-     var val = "[" + $("#is-calcu-relate :selected").val() + "]";
+     var val = "[" + $("#is-calcu-relate :selected").text() + "]";
      var oldVal = $("#calcuType-input").val()
      if(/\]$/.test(oldVal) == false) {
           var newVal = oldVal + val;
