@@ -11,7 +11,7 @@ class KpiUnit
     when KpiUnit::IntUnit,KpiUnit::IntPercentUnit
       value.round
     when KpiUnit::FloatUnit,KpiUnit::FloatPercentUnit
-      value
+      value.round(2)
     end
   end
 

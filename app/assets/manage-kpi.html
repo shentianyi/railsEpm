@@ -133,15 +133,16 @@
                         <div class="is-calcu-type clearfix" id="is-calcu-type" style="display:none">
                             <select id="is-calcu-relate" class="calcuRelate-kpi" onchange="select_calcuRelate()">
                                 <option data-order="1" class="empty-option" selected="selected" style="display:none"> </option>
-                                <option data-order="2">KPI 1</option>
-                                <option data-order="3">KPI 2</option>
+                                <option data-order="2" id="k1">KPI 1</option>
+                                <option data-order="3" id="k2">KPI 2</option>
                             </select>
                             <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="1" onclick="select_calcuMethod(event)">+</a>
                             <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="2" onclick="select_calcuMethod(event)">-</a>
                             <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="3" onclick="select_calcuMethod(event)">x</a>
                             <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="4" onclick="select_calcuMethod(event)">%</a>
-                            <input type="text" class="calcuType-input" id="calcuType-input" readonly="true"/>
+                            <span class="calcuInput-mark">*</span><input type="text" class="calcuType-input" id="calcuType-input" readonly="true"/>
                             <a class="btn calcuType-clear" id="calcuType-clear" onclick="calcuRelate_clear()">清空</a>
+                            <div style="display:none" id="takeCal" cal></div>
                         </div>
                     </td>
                 </tr>
