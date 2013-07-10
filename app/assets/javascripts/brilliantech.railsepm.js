@@ -495,12 +495,14 @@ function add_kpi() {
      var checkedP=Boolean;
      var check="";
      var formula="";
+     var formulaShow=""
      if($("#is-calcu-check").attr("checked") == "checked") {
            if(name.length != 0 && target.length != 0 && $("#calcuType-input").val() && /\]$/.test($("#calcuType-input").val()) == true){
                formula=$("#takeCal").attr("cal");
+               formulaShow=$("#calcuType-input").val();
                checkedP=true;
                check="是";
-               post_kpi(entity,name,desc,interval,intervalP,trend,trendP,target,unit,check,checkedP,formula,id);
+               post_kpi(entity,name,desc,interval,intervalP,trend,trendP,target,unit,check,checkedP,formula,formulaShow,id);
            }
            else{
                $("#add-warn").removeClass("hide").text("请填写所有带*的选项");
@@ -511,7 +513,7 @@ function add_kpi() {
          if(name.length != 0 && target.length != 0){
              checkedP=false;
              check="否";
-             post_kpi(entity,name,desc,interval,intervalP,trend,trendP,target,unit,check,checkedP,formula,id);
+             post_kpi(entity,name,desc,interval,intervalP,trend,trendP,target,unit,check,checkedP,formula,formulaShow,id);
          }
          else{
              $("#add-warn").removeClass("hide").text("请填写所有带*的选项");
@@ -519,7 +521,7 @@ function add_kpi() {
          }
      }
 }
-function post_kpi(entity,name,desc,interval,intervalP,trend,trendP,target,unit,check,checkedP,formula,id){
+function post_kpi(entity,name,desc,interval,intervalP,trend,trendP,target,unit,check,checkedP,formula,formulaShow,id){
     $.post('', {
         entity : entity,
         name:name,
@@ -529,7 +531,8 @@ function post_kpi(entity,name,desc,interval,intervalP,trend,trendP,target,unit,c
         target:target,
         unit:unitP,
         checked:checkedP,
-        formula:formula
+        formula:formula,
+        formulaShow:formulaShow
     }, function(data) {
         if($("#manage-group-kpi li.active a").text() == entity) {
             $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(id).addClass("kpi-order-id"))
@@ -547,7 +550,7 @@ function post_kpi(entity,name,desc,interval,intervalP,trend,trendP,target,unit,c
                     .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi").data("belong", id).click(cancel_editKPI).text("取消")))
             );
             if(formula){
-                $("#"+id).find(".kpi-checked").attr("title",formula);
+                $("#"+id).find(".kpi-checked").attr("title",formulaShow);
             }
         }
         cancel_add_kpi();
