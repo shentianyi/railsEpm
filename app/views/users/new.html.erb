@@ -1,0 +1,40 @@
+<div class="sub-middle sub-middle-manage">
+     <a class="btn btn-addUser" onclick="window.history.go(-1)">返回</a>
+     <a class="btn btn-primary btn-addUser" onclick="post_newUser()">完成</a>
+     <h3 class="text-center inline-block add-user-mark" data-type="add" id="add-user-mark"></h3>
+</div>
+<div class="middle clearfix">
+     <div class="add-user-left" id="add-user-left">
+          <!--<h4 class="text-center normal-blue">基本信息</h4>-->
+          <p>
+               *姓名
+          </p>
+          <input type="text" id="new-user-name" name="first_name"/>
+          <p>
+               *邮箱
+          </p>
+          <input type="text" id="new-user-mail" name="email"/>
+          <p>
+               *密码
+          </p>
+          <input type="password" id="new-user-password" name="password"/>
+          <p>
+               *组织
+          </p>
+          <%= select_tag :entity_id,options_from_collection_for_select(@entities,'id','name'),{:id=>'new-user-entity'}%>
+          <p>
+               *权限
+          </p>
+          <label class="radio">
+               <input type="radio" name="optionsRadios" data-role="1" checked>
+               role,dasdsadasdasasaSAsaSAsaSASASAsASas </label>
+          <label class="radio">
+               <input type="radio" name="optionsRadios" data-role="2">
+               role,dasdsadasdasasaSAsaSAsaSASASAsASas </label>
+          <label class="radio">
+               <input type="radio" name="optionsRadios" data-role="3">
+               role,dasdsadasdasasaSAsaSAsaSASASAsASas </label>
+          <p class="hide text-center text-warning" id="add-warn"></p>
+     </div>
+
+</div>

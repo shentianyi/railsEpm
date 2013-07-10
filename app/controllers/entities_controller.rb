@@ -10,7 +10,8 @@ class EntitiesController < ApplicationController
     @entity.tenant=current_tenant
     msg=Message.new
     if @entity.save
-    msg.result=true
+      msg.result=true
+      msg.object=@entity.id
     else
       msg.content=@entity.errors.messages.values.join('; ')
     end

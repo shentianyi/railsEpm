@@ -11,9 +11,10 @@ class Entity < ActiveRecord::Base
 
   acts_as_tenant(:tenant)
 
-  validate :validate_save,:on=>:save
+  validate :validate_create_update
   private
-  def validate_save
-    errors.add(:name,'组织名不可重复') if Entity.where(:name=>self.name,:entity_id=>self.entity_id)
+  def validate_create_update
+    errors.add(:name,'组织名不可重复') if Entity.where(:name=>self.name,:tenant_id=>self.tenant_id).first if new_record?
+    errors.add(:name,'组织名不可重复') if Entity.where(:name=>self.name,:tenant_id=>self.tenant_id).where('id<>?',self.id).first unless new_record?
   end
 end
