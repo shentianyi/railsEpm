@@ -1,8 +1,10 @@
 class RecreateUsers < ActiveRecord::Migration
   def change
-    drop_table :tenants
+    drop_table :users if self.table_exists?("users")
     create_table :users do |t|
-
+#Basic Info
+     t.string :first_name
+     t.string :last_name
       #t.string    :login,               :null => false                # optional, you can use email instead, or both
       t.string    :email,               :null => false                # optional, you can use login instead, or both
       t.string    :crypted_password,    :null => false                # optional, see below

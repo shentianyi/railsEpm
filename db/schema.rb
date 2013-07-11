@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(:version => 20130710085758) do
     t.string   "edition",                :null => false
     t.string   "subscription_reference"
     t.string   "expire_at",              :null => false
-    t.integer  "subscription_status",    :null => false
+    t.integer  "subscription_status"
     t.string   "customer_first_name"
     t.string   "customer_last_name"
     t.string   "customer_email"
@@ -135,6 +135,8 @@ ActiveRecord::Schema.define(:version => 20130710085758) do
   add_index "user_kpi_items", ["user_id"], :name => "index_user_kpi_items_on_user_id"
 
   create_table "users", :force => true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
     t.string   "email",                                  :null => false
     t.string   "crypted_password",                       :null => false
     t.string   "password_salt",                          :null => false
