@@ -519,34 +519,44 @@ function add_kpi() {
      }
 }
 
-function post_kpi(entity, entityP, name, desc, interval, intervalP, trend, trendP, target, unit, unitP, check, checkedP, formula, formulaShow, length) {
-     $.post('../kpis', {
-          kpi : {
-               kpi_category_id : entity,
-               name : name,
-               description : desc,
-               frequency : intervalP,
-               direction : trendP,
-               target : target,
-               unit : unitP,
-               is_calculated : checkedP,
-               formula : formula,
-               formula_string : formulaShow
-          }
-     }, function(data) {
-          if(data.result) {
-               var id = data.object;
-               if($("#manage-group-kpi li.active a").text() == entityP) {
-                    $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(length).addClass("kpi-order-id")).append($("<td align='center' />").text(entityP)).append($("<td align='center' />").text(name)).append($("<td align='center' />").text(desc)).append($("<td align='center' />").text(interval)).append($("<td align='center' />").text(target)).append($("<td align='center' />").text(unit)).append($("<td align='center' />").text(trend)).append($("<td align='center' />").addClass("kpi-checked").text(check)).append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong", id).click(edit_kpiItem)).append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", id).click(finish_editKPI).text("完成"))).append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", id).click(remove_kpiItem)).append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi-" + id).data("belong", id).click(cancel_editKPI).text("取消"))));
-                    if(formula) {
-                         $("#" + id).find(".kpi-checked").attr("title", formulaShow);
-                    }
-               }
-          } else {
-               alert(data.content);
-          }
-          cancel_add_kpi();
-     });
+function post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,target,unit,unitP,check,checkedP,formula,formulaShow,length){
+    $.post('../kpis', {kpi:{
+       kpi_category_id : entity,
+        name:name,
+        description:desc,
+        frequency:intervalP,
+        direction:trendP,
+        target:target,
+        unit:unitP,
+        is_calculated:checkedP,
+        formula:formula,
+        formula_string:formulaShow}
+    }, function(data) {
+         if(data.result){
+              var id=data.object;
+        if($("#manage-group-kpi li.active a").text() == entityP) {
+            $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(length).addClass("kpi-order-id"))
+                .append($("<td align='center' />").text(entityP).addClass("kpi-entity"))
+                .append($("<td align='center' />").text(name))
+                .append($("<td align='center' />").text(desc))
+                .append($("<td align='center' />").text(interval))
+                .append($("<td align='center' />").text(target).addClass("kpi-target"))
+                .append($("<td align='center' />").text(unit))
+                .append($("<td align='center' />").text(trend))
+                .append($("<td align='center' />").addClass("kpi-checked").text(check))
+                .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong", id).click(edit_kpiItem))
+                    .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", id).click(finish_editKPI).text("完成")))
+                .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", id).click(remove_kpiItem))
+                    .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi-"+id).data("belong", id).click(cancel_editKPI).text("取消")))
+            );
+            if(formula){
+                $("#"+id).find(".kpi-checked").attr("title",formulaShow);
+            }
+        }}else{
+             alert(data.content);
+        }
+        cancel_add_kpi();
+    });
 }
 
 function edit_kpiItem(event) {
@@ -997,59 +1007,101 @@ function to_userPage(event) {
 }
 
 ///////////////  delivery kpi  ///////////////////////////////////////
-function choose_kpi(event) {
-     var e = event ? event : (window.event ? window.event : null);
-     var obj = e.srcElement || e.target;
-     var id = $(obj).parent().attr("id");
-     var entity = $("#" + id).find(".deliveryKpi-entity").text();
-     var name = $("#" + id).find(".deliveryKpi-name").text();
-     var desc = $("#" + id).find(".deliveryKpi-desc").text();
-     var target = $("#" + id).find(".deliveryKpi-target").text();
-     var unit = $("#" + id).find(".deliveryKpi-unit").text();
-     var interval = $("#" + id).find(".deliveryKpi-interval").text();
-     if(test_sameDeliveryKpi(id) == -1) {
-          $("#my-kpi").append($("<tr />").attr("id", id).click(remove_userkpi).append($("<td />").text(entity)).append($("<td />").text(name)).append($("<td />").text(desc)).append($("<td />").append($("<input type='text'/>").click(myKpi_input).val(target).addClass("my-kpi-target"))).append($("<td />").text(unit)).append($("<td />").text(interval)));
-     }
+function edit_delivery(event) {
+    var id = find_id(event);
+    $("#" + id).find('.manage-operate').each(function() {
+        $(this).addClass("hide").next().removeClass("hide");
+    });
+    var target = $("#" + id).find(".kpi-target").text();
+    $("#cancel-edit-kpi-"+id).attr("target", target);
+    $("#" + id).find(".kpi-target").text("").append($("<input type='text' onkeyup='clearNoNum(this)'/>").val(target).addClass("edit-kpiTarget-input"));
+}
+function remove_delivery(event) {
+    if(confirm("确认删除？")) {
+        var id = find_id(event);
+        $.ajax({
+            url:'../kpis/'+id,
+            type: 'DELETE',
+            success:function(data){
+                if(data.result){
+                    $("#kpi-table").find("#" + id).nextAll("tr").each(function() {
+                        var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
+                        $(this).find(".kpi-order-id").text(order);
+                    });
+                    $("#kpi-table").find("#" + id).remove();
+                }else{
+                    alert(data.content);
+                }
+            }
+        });
+    }
 }
 
-function myKpi_input(event) {
-     var e = event ? event : (window.event ? window.event : null);
-     if(e.stopPropagation) {
-          e.stopPropagation();
-     } else {
-          e.cancelBubble = true;
-     }
-     $("#my-kpi").find("input").bind("keyup", function() {
-          clearNoNum(this);
-     })
+function finish_editDelivery(event) {
+    var id = find_id(event);
+    var entity = $("#" + id).find(".kpi-entity").find(":selected").text();
+    var target = $("#" + id).find(".kpi-target").find("input").val();
+    same_editDelivery(id);
+    $.ajax({
+        url:'../kpis',
+        type:'PUT',
+        data:{kpi:{id:id,target:target}},
+        success:function(data){
+                $("#" + id).find(".kpi-target").text(target);
+        }
+    });
 }
-
-function test_sameDeliveryKpi(id) {
-     var a = id;
-     var b = [];
-     $("#my-kpi").find("tr").each(function() {
-          b.push($(this).attr('id'));
-     });
-     if(!Array.indexOf) {
-          Array.prototype.indexOf = function(obj) {
-               for(var i = 0; i < this.length; i++) {
-                    if(this[i] == obj) {
-                         return i;
-                    }
-               }
-               return -1;
-          }
-     }
-     return b.indexOf(a);
+function cancel_editDelivery(event) {
+    var id = find_id(event);
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    var target = $(obj).attr("target");
+    same_editDelivery(id);
+    $("#" + id).find(".kpi-target").text(target);
 }
-
-function remove_userkpi(event) {
-     var e = event ? event : (window.event ? window.event : null);
-     var obj = e.srcElement || e.target;
-     var id = $(obj).parent().attr("id");
-     $(obj).parent().remove();
+function same_editDelivery(a) {
+    $("#" + a).find(".manage-operate-reverse").each(function() {
+        $(this).addClass("hide").prev().removeClass("hide");
+    });
+    $("#" + a).find(".kpi-target").find("input").remove();
 }
+function delivery_Kpi(){
+    var entityValue=$("#delivery-entity :selected").attr("value");
+    var entityText=$("#delivery-entity :selected").text();
+    var kpiValue=$("#delivery-kpi :selected").attr("value");
+    var kpiText=$("#delivery-kpi :selected").text();
+    var length = $("#kpi-table").find("tr").length;
+    post("..",{
+        entityValue:entityValue,
+        entityText:entityText,
+        kpiValue:kpiValue,
+        kpiText:kpiText
+    },function(data){
+        if(data.result){
+            $("#kpi-table").append($("<tr />").attr("id", data.id).append($("<td align='center' />").text(length).addClass("kpi-order-id"))
+                .append($("<td align='center' />").text(entityText))
+                .append($("<td align='center' />").text(kpiText))
+                .append($("<td align='center' />").text(data.desc))
+                .append($("<td align='center' />").text(data.interval))
+                .append($("<td align='center' />").text(data.target).addClass("kpi-target"))
+                .append($("<td align='center' />").text(data.unit))
+                .append($("<td align='center' />").text(data.trend))
+                .append($("<td align='center' />").text(data.check))
+                .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong", data.id).click(edit_delivery))
+                    .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", data.id).click(finish_editDelivery).text("完成")))
+                .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", data.id).click(remove_delivery))
+                    .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi-"+data.id).data("belong", data.id).click(cancel_editDelivery).text("取消")))
+            );
+            if(data.formula){
+                $("#"+data.id).find(".kpi-checked").attr("title",data.formulaShow);
+            }
+        }
+        else{
+            alert(data.content);
+        }
+    })
 
+}
 ///////////////  view  ///////////////////////////////////////
 function create_Viewentity(event) {
      var e = event ? event : (window.event ? window.event : null);
