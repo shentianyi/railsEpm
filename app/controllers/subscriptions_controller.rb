@@ -23,7 +23,8 @@ class SubscriptionsController < ApplicationController
 
       redirect_to new_user_confirmations_url
     rescue ActiveRecord::RecordInvalid => invalid
-
+      flash[:notice]='Account create failed'
+      render :action=>:new
 
     end
   end
