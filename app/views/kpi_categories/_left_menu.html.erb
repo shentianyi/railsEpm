@@ -5,7 +5,9 @@
           </li>
           <%@categories.each do |category|%>
           <li class="<%= category.id==@active_category_id ? 'active' : ''%>">
-               <a href="../kpis?p=<%=category.id%>"><%= category.name %></a>
+               <i class="icon-remove hide pull-left" number="1" belong="kpi" onclick="remove_leftNav(event)"></i>
+               <i class="icon-pencil hide pull-left" number="1" belong="kpi" onclick="edit_leftNav(event)"></i>
+               <a href="../kpis?p=<%=category.id%>" number="1" belong="kpi"><%= category.name %></a>
           </li>
           <%end%>
           <li>
@@ -19,6 +21,13 @@
                </p>
                <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
                <input type="text" id="creat-newEntity" onkeyup="create_entity(event)"/>
+          </div>
+          <div class="absolute creat-entity-block hide" id="edit-block">
+               <p>
+                    修改
+               </p>
+               <i class="icon-remove pull-right" onclick="close_editBlock()"></i>
+               <input type="text" id="change-leftNavi" onkeyup="change_leftNavi(event)"/>
           </div>
      </ul>
 </div>

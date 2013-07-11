@@ -6,7 +6,9 @@
 
           <%@entities.each do |entity|%>
           <li class="<%= entity.id==@active_entity_id ? 'active' : ''%>">
-               <a href="../users?p=<%=entity.id%>"><%= entity.name %></a>
+               <i class="icon-remove hide pull-left" number="1" belong="entity" onclick="remove_leftNav(event)"></i>
+               <i class="icon-pencil hide pull-left" number="1" belong="entity" onclick="edit_leftNav(event)"></i>
+               <a href="../users?p=<%=entity.id%>" number="1" belong="entity"><%= entity.name %></a>
           </li>
           <%end%>
           <li>
@@ -20,6 +22,13 @@
                </p>
                <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
                <input type="text" id="creat-newEntity" onkeyup="create_Userentity(event)"/>
+          </div>
+          <div class="absolute creat-entity-block hide" id="edit-block">
+               <p>
+                    修改
+               </p>
+               <i class="icon-remove pull-right" onclick="close_editBlock()"></i>
+               <input type="text" id="change-leftNavi" onkeyup="change_leftNavi(event)"/>
           </div>
      </ul>
 </div>
