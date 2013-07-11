@@ -8,10 +8,10 @@ class ApplicationController < ActionController::Base
   before_filter :check_tenant_status
 
 
-  #set_current_tenant_through_filter
+   set_current_tenant_through_filter
   ##before_filter :authorize
-  ##before_filter :find_current_user_tenant
-  #authorize_resource
+  before_filter :find_current_user_tenant
+   authorize_resource
   # protect_from_forgery
 
   private
@@ -21,15 +21,16 @@ class ApplicationController < ActionController::Base
   #  end
   #end
 
-  #def find_current_user_tenant
-  #  current_tenant=Tenant.find_by_id(@current_user.tenant_id)
-  #  set_current_tenant(current_tenant)
-  #end
+ def find_current_user_tenant
+   current_tenant=Tenant.find_by_id(@current_user.tenant_id)
+   set_current_tenant(current_tenant)
+ end
 
   # set cancan Ability
   def current_ability
     @current_ability||=Ability.new(@current_user)
   end
+
 
 
   def current_user_session
