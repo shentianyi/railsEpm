@@ -63,7 +63,7 @@ function show_addBlock(event) {
 
 function formatDate(date) {
      var myYear = date.getFullYear();
-     var myMonth = parseInt(date.getMonth()+1);
+     var myMonth = parseInt(date.getMonth() + 1);
      var myWeekday = date.getDate();
      return (myYear + "-" + myMonth + "-" + myWeekday);
 }
@@ -84,37 +84,35 @@ function init_analytics() {
      });
      $("#from").datepicker({
           showOtherMonths : true,
-          firstDay:1,
+          firstDay : 1,
           selectOtherMonths : true,
           dateFormat : 'yy-m-d',
-          showWeek:true,
+          showWeek : true,
           onSelect : function(dateText, inst) {
-            var date = $(this).datepicker('getDate');
-                if( date.getDay()==0){
-                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-6);
-                }
-                else{
+               var date = $(this).datepicker('getDate');
+               if(date.getDay() == 0) {
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
+               } else {
                     startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
-                }
-            var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
-            $("#from").attr("week",($.datepicker.iso8601Week(startDate)));
+               }
+               var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+               $("#from").attr("week", ($.datepicker.iso8601Week(startDate)));
           }
      });
      $("#to").datepicker({
           showOtherMonths : true,
           selectOtherMonths : true,
-          firstDay:1,
+          firstDay : 1,
           dateFormat : 'yy-m-d',
           onSelect : function(dateText, inst) {
-            var date = $(this).datepicker('getDate');
-            if( date.getDay()==0){
-                startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-6);
-            }
-            else{
-                startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
-            }
-            var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
-            $("#to").attr("week",($.datepicker.iso8601Week(startDate)));
+               var date = $(this).datepicker('getDate');
+               if(date.getDay() == 0) {
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
+               } else {
+                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+               }
+               var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+               $("#to").attr("week", ($.datepicker.iso8601Week(startDate)));
           }
      });
      $(".control-chart-btn").bind("click", function(event) {
@@ -128,321 +126,322 @@ function init_analytics() {
      var day = date.getDay();
      var m = date.getMonth();
      var y = date.getFullYear();
-     var WeekFirstDay,WeekLastDay;
-     if(day==0){
-         WeekFirstDay = new Date(y, m, nowDate - 6);
-         WeekLastDay = new Date(y, m, nowDate);
+     var WeekFirstDay, WeekLastDay;
+     if(day == 0) {
+          WeekFirstDay = new Date(y, m, nowDate - 6);
+          WeekLastDay = new Date(y, m, nowDate);
+     } else {
+          WeekFirstDay = new Date(y, m, nowDate - day + 1);
+          WeekLastDay = new Date(y, m, nowDate - day + 7);
      }
-     else{
-         WeekFirstDay = new Date(y, m, nowDate - day + 1);
-         WeekLastDay = new Date(y, m, nowDate - day + 7);
-     }
-     $("#from").val(formatDate(WeekFirstDay)).attr("week",$.datepicker.iso8601Week(WeekFirstDay));
-     $("#to").val(formatDate(WeekLastDay)).attr("week",$.datepicker.iso8601Week(WeekFirstDay));
+     $("#from").val(formatDate(WeekFirstDay)).attr("week", $.datepicker.iso8601Week(WeekFirstDay));
+     $("#to").val(formatDate(WeekLastDay)).attr("week", $.datepicker.iso8601Week(WeekFirstDay));
      init_chart();
-//         var dateBegin,dateEnd;
-//         var date1=($("#from").val()).split("-");
-//         var date2=($("#to").val()).split("-");
-//         for(i=0;i<3;i++){
-//             if(parseInt(date1[i])<parseInt(date2[i])){
-//                 dateBegin=date1;
-//                 dateEnd=date2;
-//                 break;
-//             }
-//             else if(parseInt(date1[i])>parseInt(date2[i])){
-//                 dateBegin=date2;
-//                 dateEnd=date1;
-//                 break;
-//             }
-//             else{
-//                 dateBegin=date1;
-//                 dateEnd=date2;
-//             }
-//         }
-//         var chart={
-//             y:dateBegin[0],
-//             m:parseInt(dateBegin[1])-1==0 ? 12: dateBegin[1]-1,
-//             d:dateBegin[2]
-//         }
-//         $("#container").highcharts(
-//             {
-//                 chart: {
-//                     type: 'line',
-//                     events: {
-//                         addSeries: function() {
-//                             alert ('A series was added, about to redraw chart');
-//                         }
-//                     }
-//                 },
-//                 credits:{
-//                     enabled:false
-//                 },
-//                 title: {
-//                     text:""
-//                 },
-//                 tooltip: {
-////                     formatter: function() {
-////                         return '<b>'+ this.series.name +'</b><br/>'+
-////                             "数值"+this.y +'<br />'+this.x;
-////                     },
-//                     xDateFormat: '%Y-%m-%d'
-//                 },
-//                 xAxis: {
-//                     type: 'datetime',
-//                     dateTimeLabelFormats: {
-//                         day:'%e/%b'
-//                     },
-//                     labels:{
-//                         style:{
-//                             fontWeight:800
-//                         }
-//                     },
-//                     tickInterval: 24 * 3600 * 1000*365 // one day
-//                 },
-//                 yAxis: [{
-//                     title: {
-//                         enabled:false
-//                     },
-//                     tickWidth:1,
-//                     offset:10,
-//                     labels:{
-//                         format:'{value}$'
-//                     },
-//                     lineWidth:1
-//                 },{
-//                     opposite:true,
-//                     title:{
-//                         enabled:false
-//                     },
-//                     tickWidth:1,
-//                     offset:10,
-//                     label:{
-//                         format:'{value}days'
-//                     },
-//                     lineWidth:1
-//                 }],
-//                 series: [
-//                     {
-//                         type:"area",
-//                         name: 'actual',
-//                         data: [100,100,100,150,150,150,200],
-//                         pointStart: Date.UTC(chart.y,chart.m,chart.d),
-//                         pointInterval: 24 * 3600 * 1000*365//one day
-//                     },
-//                     {
-//                         type:"line",
-//                         name: 'target',
-//                         data: [80,110,120,140,150,150,300],
-//                         pointStart: Date.UTC(chart.y,chart.m,chart.d),
-//                         yAxis:1,
-//                         pointInterval: 24 * 3600 * 1000*365 // one day
-//                     }
-//                 ]
-//             }
-//         );
-//
-//}
+     //         var dateBegin,dateEnd;
+     //         var date1=($("#from").val()).split("-");
+     //         var date2=($("#to").val()).split("-");
+     //         for(i=0;i<3;i++){
+     //             if(parseInt(date1[i])<parseInt(date2[i])){
+     //                 dateBegin=date1;
+     //                 dateEnd=date2;
+     //                 break;
+     //             }
+     //             else if(parseInt(date1[i])>parseInt(date2[i])){
+     //                 dateBegin=date2;
+     //                 dateEnd=date1;
+     //                 break;
+     //             }
+     //             else{
+     //                 dateBegin=date1;
+     //                 dateEnd=date2;
+     //             }
+     //         }
+     //         var chart={
+     //             y:dateBegin[0],
+     //             m:parseInt(dateBegin[1])-1==0 ? 12: dateBegin[1]-1,
+     //             d:dateBegin[2]
+     //         }
+     //         $("#container").highcharts(
+     //             {
+     //                 chart: {
+     //                     type: 'line',
+     //                     events: {
+     //                         addSeries: function() {
+     //                             alert ('A series was added, about to redraw chart');
+     //                         }
+     //                     }
+     //                 },
+     //                 credits:{
+     //                     enabled:false
+     //                 },
+     //                 title: {
+     //                     text:""
+     //                 },
+     //                 tooltip: {
+     ////                     formatter: function() {
+     ////                         return '<b>'+ this.series.name +'</b><br/>'+
+     ////                             "数值"+this.y +'<br />'+this.x;
+     ////                     },
+     //                     xDateFormat: '%Y-%m-%d'
+     //                 },
+     //                 xAxis: {
+     //                     type: 'datetime',
+     //                     dateTimeLabelFormats: {
+     //                         day:'%e/%b'
+     //                     },
+     //                     labels:{
+     //                         style:{
+     //                             fontWeight:800
+     //                         }
+     //                     },
+     //                     tickInterval: 24 * 3600 * 1000*365 // one day
+     //                 },
+     //                 yAxis: [{
+     //                     title: {
+     //                         enabled:false
+     //                     },
+     //                     tickWidth:1,
+     //                     offset:10,
+     //                     labels:{
+     //                         format:'{value}$'
+     //                     },
+     //                     lineWidth:1
+     //                 },{
+     //                     opposite:true,
+     //                     title:{
+     //                         enabled:false
+     //                     },
+     //                     tickWidth:1,
+     //                     offset:10,
+     //                     label:{
+     //                         format:'{value}days'
+     //                     },
+     //                     lineWidth:1
+     //                 }],
+     //                 series: [
+     //                     {
+     //                         type:"area",
+     //                         name: 'actual',
+     //                         data: [100,100,100,150,150,150,200],
+     //                         pointStart: Date.UTC(chart.y,chart.m,chart.d),
+     //                         pointInterval: 24 * 3600 * 1000*365//one day
+     //                     },
+     //                     {
+     //                         type:"line",
+     //                         name: 'target',
+     //                         data: [80,110,120,140,150,150,300],
+     //                         pointStart: Date.UTC(chart.y,chart.m,chart.d),
+     //                         yAxis:1,
+     //                         pointInterval: 24 * 3600 * 1000*365 // one day
+     //                     }
+     //                 ]
+     //             }
+     //         );
+     //
+     //}
 }
-function init_chart() {
-    var entity = $("#chart-entity :selected").attr("id");
-    var kpi = $("#none-kpi :selected").attr("id");
-    var date1 = ($("#from").val()).split("-");
-    var date2 = ($("#to").val()).split("-");
-    var week1=parseInt($("#from").attr("week"));
-    var week2=parseInt($("#to").attr("week"));
-    var dateBegin,dateEnd;
-    for( i = 0; i < 3; i++) {
-        if(parseInt(date1[i]) < parseInt(date2[i])) {
-            dateBegin = date1;
-            dateEnd = date2;
-            break;
-        } else if(parseInt(date1[i]) > parseInt(date2[i])) {
-            dateBegin = date2;
-            dateEnd = date1;
-            break;
-        } else {
-            dateBegin = date1;
-            dateEnd = date2;
-        }
-    };
-    var startWeek=week1-week2<=0?week1:week2;
-    var endWeek=week1-week2>=0?week1:week2;
-    var startQuarter=quarterBelong(dateBegin[1]);
-    var endQuarter=quarterBelong(dateEnd[1]);
-    var interval = $(".control-chart-btn.active").data("type");
-    var startTime,endTime;
-    switch(interval){
-        case "day":
-            startTime = dateBegin.join("-");
-            endTime = dateEnd.join("-");
-            break;
-        case "week":
-            startTime = dateBegin[0]+"-"+startWeek;
-            endTime = dateEnd[0]+"-"+endWeek;
-            break;
-        case "month":
-            startTime =dateBegin[0]+"-"+dateBegin[1];
-            endTime =dateEnd[0]+"-"+dateEnd[1];
-            break;
-        case "quarter":
-            startTime =dateBegin[0]+"-"+startQuarter;
-            endTime =dateEnd[0]+"-"+endQuarter;
-            break;
-        case "year":
-            startTime =dateBegin[0];
-            endTime =dateEnd[0];
-            break;
-    } ;
-//    var chartScale = {
-//        y : dateBegin[0],
-//        m : parseInt(dateBegin[1]) - 1 == 0 ? 12 : dateBegin[1] - 1,
-//        d : dateBegin[2]
-//    }
-    $.post('../tasks/calendar', {
-        entity : entity,
-        kpi : kpi,
-        startTime : startTime,
-        endTime : endTime,
-        interval : interval
-    }, function(data) {
-        form_chart(data.series,data.unit,interval);
-        });
-}
-function form_chart(series,unit,interval){
-    var options = {
-        chart : {
-            renderTo : 'container',
-            type : 'line'
-        },
-        credits : {
-            enabled : false
-        },
-        title : {
-            text : ""
-        },
-        tooltip : {
- ////       formatter: function() {
-////           return '<b>'+ this.series.name +'</b><br/>'+
-////                  "数值"+this.y +'<br />'+this.x;
-////        },
-//          xDateFormat: '%Y-%m-%d'
-        },
-        xAxis : {
-            //                categories:[],
-//            type : 'datetime',
-//            dateTimeLabelFormats : {
-//                day : '%e/%b'
-//            },
-//            tickInterval : 24 * 3600 * 1000 * ticket, // one day
-            labels : {
-                style : {
-                    fontWeight : 800
-                }
-            }
-        },
-        yAxis : {
-            title : {
-                enabled : false
-            },
-            tickWidth : 1,
-            offset : 10,
-            //              labels:{
-            //                    format:'{value}'
-            //              },
-            lineWidth : 1
-        },
-        series : []
-    };
-    options.yAxis.label = {
-        format : '{value}' +unit
-    };
-    switch (interval){
-        case "day":
-            options.tooltip.xDateFormat='%Y-%m-%d';
-            options.xAxis.type='datetime';
-            options.xAxis.dateTimeLabelFormats={
-                day : '%e/%b'
-            };
-            options.xAxis.tickInterval=24 * 3600 * 1000;
-            break;
-        case "week":
-            options.tooltip.formatter=function(){
-                return '<b>'+ this.series.name +'</b><br/>'+
-                "数值"+this.y +'<br />'+this.x;
-            };
-            options.xAxis.categories
-            break;
-        case "month":
-            options.tooltip.xDateFormat='%Y-%m';
-            options.xAxis.type='datetime';
-            options.xAxis.dateTimeLabelFormats={
-                month : '%b/%Y'
-            };
-            options.xAxis.tickInterval=24 * 3600 * 1000 * 30;
-            break;
-        case "quarter":
-            break;
-        case "year":
-            options.tooltip.xDateFormat='%Y';
-            options.xAxis.type='datetime';
-            options.xAxis.dateTimeLabelFormats={
-                year : '%Y'
-            };
-            options.xAxis.tickInterval=24 * 3600 * 1000 * 365;
-            break;
-    };
-    var lines = data.split('\n');
-    $.each(lines, function(lineNo, line) {
-        var items = line.split(',');
-        if(lineNo == 0) {
-            var series = {
-                type : "line",
-                name : 'target',
-                data : [],
-                pointStart : Date.UTC(chartScale.y, chartScale.m, chartScale.d),
-                pointInterval : 24 * 3600 * 1000 * ticket
-            };
-            $.each(items, function(itemNo, item) {
-                //                      if (itemNo == 0) {
-                //                          series.name = item;
-                //                      } else {
-                series.data.push(parseFloat(item));
-                //                      }
-            });
-            options.series.push(series);
-        } else if(lineNo == 1) {
-            var series = {
-                type : "area",
-                name : 'actual',
-                data : [],
-                pointStart : Date.UTC(chartScale.y, chartScale.m, chartScale.d),
-                pointInterval : 24 * 3600 * 1000 * ticket
-            };
-            $.each(items, function(itemNo, item) {
-                //                      if (itemNo == 0) {
-                //                          series.name = item;
-                //                      } else {
-                series.data.push(parseFloat(item));
-                //                      }
-            });
-            options.series.push(series);
-           }
 
-    });
-    // Create the chart
-    var chart = new Highcharts.Chart(options);
+function init_chart() {
+     var entity = $("#chart-entity :selected").attr("id");
+     var kpi = $("#none-kpi :selected").attr("id");
+     var date1 = ($("#from").val()).split("-");
+     var date2 = ($("#to").val()).split("-");
+     var week1 = parseInt($("#from").attr("week"));
+     var week2 = parseInt($("#to").attr("week"));
+     var dateBegin, dateEnd;
+     for( i = 0; i < 3; i++) {
+          if(parseInt(date1[i]) < parseInt(date2[i])) {
+               dateBegin = date1;
+               dateEnd = date2;
+               break;
+          } else if(parseInt(date1[i]) > parseInt(date2[i])) {
+               dateBegin = date2;
+               dateEnd = date1;
+               break;
+          } else {
+               dateBegin = date1;
+               dateEnd = date2;
+          }
+     };
+     var startWeek = week1 - week2 <= 0 ? week1 : week2;
+     var endWeek = week1 - week2 >= 0 ? week1 : week2;
+     var startQuarter = quarterBelong(dateBegin[1]);
+     var endQuarter = quarterBelong(dateEnd[1]);
+     var interval = $(".control-chart-btn.active").data("type");
+     var startTime, endTime;
+     switch(interval) {
+          case "day":
+               startTime = dateBegin.join("-");
+               endTime = dateEnd.join("-");
+               break;
+          case "week":
+               startTime = dateBegin[0] + "-" + startWeek;
+               endTime = dateEnd[0] + "-" + endWeek;
+               break;
+          case "month":
+               startTime = dateBegin[0] + "-" + dateBegin[1];
+               endTime = dateEnd[0] + "-" + dateEnd[1];
+               break;
+          case "quarter":
+               startTime = dateBegin[0] + "-" + startQuarter;
+               endTime = dateEnd[0] + "-" + endQuarter;
+               break;
+          case "year":
+               startTime = dateBegin[0];
+               endTime = dateEnd[0];
+               break;
+     } ;
+     //    var chartScale = {
+     //        y : dateBegin[0],
+     //        m : parseInt(dateBegin[1]) - 1 == 0 ? 12 : dateBegin[1] - 1,
+     //        d : dateBegin[2]
+     //    }
+     $.post('../tasks/calendar', {
+          entity : entity,
+          kpi : kpi,
+          startTime : startTime,
+          endTime : endTime,
+          interval : interval
+     }, function(data) {
+          form_chart(data.series, data.unit, interval);
+     });
+}
+
+function form_chart(series, unit, interval) {
+     var options = {
+          chart : {
+               renderTo : 'container',
+               type : 'line'
+          },
+          credits : {
+               enabled : false
+          },
+          title : {
+               text : ""
+          },
+          tooltip : {
+               ////       formatter: function() {
+               ////           return '<b>'+ this.series.name +'</b><br/>'+
+               ////                  "数值"+this.y +'<br />'+this.x;
+               ////        },
+               //          xDateFormat: '%Y-%m-%d'
+          },
+          xAxis : {
+               //                categories:[],
+               //            type : 'datetime',
+               //            dateTimeLabelFormats : {
+               //                day : '%e/%b'
+               //            },
+               //            tickInterval : 24 * 3600 * 1000 * ticket, // one day
+               labels : {
+                    style : {
+                         fontWeight : 800
+                    }
+               }
+          },
+          yAxis : {
+               title : {
+                    enabled : false
+               },
+               tickWidth : 1,
+               offset : 10,
+               //              labels:{
+               //                    format:'{value}'
+               //              },
+               lineWidth : 1
+          },
+          series : []
+     };
+     options.yAxis.label = {
+          format : '{value}' + unit
+     };
+     switch (interval) {
+          case "day":
+               options.tooltip.xDateFormat = '%Y-%m-%d';
+               options.xAxis.type = 'datetime';
+               options.xAxis.dateTimeLabelFormats = {
+                    day : '%e/%b'
+               };
+               options.xAxis.tickInterval = 24 * 3600 * 1000;
+               break;
+          case "week":
+               options.tooltip.formatter = function() {
+                    return '<b>' + this.series.name + '</b><br/>' + "数值" + this.y + '<br />' + this.x;
+               };
+               options.xAxis.categories
+               break;
+          case "month":
+               options.tooltip.xDateFormat = '%Y-%m';
+               options.xAxis.type = 'datetime';
+               options.xAxis.dateTimeLabelFormats = {
+                    month : '%b/%Y'
+               };
+               options.xAxis.tickInterval = 24 * 3600 * 1000 * 30;
+               break;
+          case "quarter":
+               break;
+          case "year":
+               options.tooltip.xDateFormat = '%Y';
+               options.xAxis.type = 'datetime';
+               options.xAxis.dateTimeLabelFormats = {
+                    year : '%Y'
+               };
+               options.xAxis.tickInterval = 24 * 3600 * 1000 * 365;
+               break;
+     };
+     var lines = data.split('\n');
+     $.each(lines, function(lineNo, line) {
+          var items = line.split(',');
+          if(lineNo == 0) {
+               var series = {
+                    type : "line",
+                    name : 'target',
+                    data : [],
+                    pointStart : Date.UTC(chartScale.y, chartScale.m, chartScale.d),
+                    pointInterval : 24 * 3600 * 1000 * ticket
+               };
+               $.each(items, function(itemNo, item) {
+                    //                      if (itemNo == 0) {
+                    //                          series.name = item;
+                    //                      } else {
+                    series.data.push(parseFloat(item));
+                    //                      }
+               });
+               options.series.push(series);
+          } else if(lineNo == 1) {
+               var series = {
+                    type : "area",
+                    name : 'actual',
+                    data : [],
+                    pointStart : Date.UTC(chartScale.y, chartScale.m, chartScale.d),
+                    pointInterval : 24 * 3600 * 1000 * ticket
+               };
+               $.each(items, function(itemNo, item) {
+                    //                      if (itemNo == 0) {
+                    //                          series.name = item;
+                    //                      } else {
+                    series.data.push(parseFloat(item));
+                    //                      }
+               });
+               options.series.push(series);
+          }
+
+     });
+     // Create the chart
+     var chart = new Highcharts.Chart(options);
 }
 
 function quarterBelong(a) {
-    if(a < 3)
-        return 1;
-    else if(a > 2 && a< 6)
-        return 2;
-    else if(a > 5 && a < 9)
-        return 3;
-    else if(a > 8)
-        return 4;
+     if(a < 3)
+          return 1;
+     else if(a > 2 && a < 6)
+          return 2;
+     else if(a > 5 && a < 9)
+          return 3;
+     else if(a > 8)
+          return 4;
 }
+
 ////////////////////////////////////////////////     dashBoard  ///////////////////////////////////////
 function init_dashBoard() {
      init();
@@ -482,7 +481,7 @@ function clear_add_kpi() {
 
 function add_kpi() {
      var entity = $("#add-entity").find(":selected").val();
-          var entityP = $("#add-entity").find(":selected").text();
+     var entityP = $("#add-entity").find(":selected").text();
      var name = $("#new-kpi-name").val();
      var desc = $("#new-kpi-desc").val();
      var interval = $("#add-interval").find(":selected").text();
@@ -493,74 +492,63 @@ function add_kpi() {
      var unit = $("#add-unit").find(":selected").attr("sym");
      var unitP = $("#add-unit").find(":selected").val();
      var length = $("#kpi-table").find("tr").length;
-     var checkedP=Boolean;
-     var check="";
-     var formula="";
-     var formulaShow=""
+     var checkedP = Boolean;
+     var check = "";
+     var formula = "";
+     var formulaShow = ""
      if($("#is-calcu-check").attr("checked") == "checked") {
-           if(name.length != 0 && target.length != 0 && $("#calcuType-input").val() && /\]$/.test($("#calcuType-input").val()) == true){
-               formula=$("#takeCal").attr("cal");
-               formulaShow=$("#calcuType-input").val();
-               checkedP=true;
-               check="是";
-               post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,target,unit,unitP,check,checkedP,formula,formulaShow,length);
-           }
-           else{
+          if(name.length != 0 && target.length != 0 && $("#calcuType-input").val() && /\]$/.test($("#calcuType-input").val()) == true) {
+               formula = $("#takeCal").attr("cal");
+               formulaShow = $("#calcuType-input").val();
+               checkedP = true;
+               check = "是";
+               post_kpi(entity, entityP, name, desc, interval, intervalP, trend, trendP, target, unit, unitP, check, checkedP, formula, formulaShow, length);
+          } else {
                $("#add-warn").removeClass("hide").text("请填写所有带*的选项");
                while_hide("add-warn");
-           }
-     }
-    else{
-         if(name.length != 0 && target.length != 0){
-             checkedP=false;
-             check="否";
-             post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,target,unit,unitP,check,checkedP,formula,formulaShow,length);
-         }
-         else{
-             $("#add-warn").removeClass("hide").text("请填写所有带*的选项");
-             while_hide("add-warn");
-         }
+          }
+     } else {
+          if(name.length != 0 && target.length != 0) {
+               checkedP = false;
+               check = "否";
+               post_kpi(entity, entityP, name, desc, interval, intervalP, trend, trendP, target, unit, unitP, check, checkedP, formula, formulaShow, length);
+          } else {
+               $("#add-warn").removeClass("hide").text("请填写所有带*的选项");
+               while_hide("add-warn");
+          }
      }
 }
-function post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,target,unit,unitP,check,checkedP,formula,formulaShow,length){
-    $.post('../kpis', {kpi:{
-       kpi_category_id : entity,
-        name:name,
-        description:desc,
-        frequency:intervalP,
-       direction:trendP,
-        target:target,
-        unit:unitP,
-        is_calculated:checkedP,
-        formula:formula,
-        formula_string:formulaShow}
-    }, function(data) {
-         if(data.result){
-              var id=data.object;
-        if($("#manage-group-kpi li.active a").text() == entityP) {
-            $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(length).addClass("kpi-order-id"))
-                .append($("<td align='center' />").text(entityP))
-                .append($("<td align='center' />").text(name))
-                .append($("<td align='center' />").text(desc))
-                .append($("<td align='center' />").text(interval))
-                .append($("<td align='center' />").text(target))
-                .append($("<td align='center' />").text(unit))
-                .append($("<td align='center' />").text(trend))
-                .append($("<td align='center' />").addClass("kpi-checked").text(check))
-                .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong", id).click(edit_kpiItem))
-                    .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", id).click(finish_editKPI).text("完成")))
-                .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", id).click(remove_kpiItem))
-                    .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi-"+id).data("belong", id).click(cancel_editKPI).text("取消")))
-            );
-            if(formula){
-                $("#"+id).find(".kpi-checked").attr("title",formulaShow);
-            }
-        }}else{
-             alert(data.content);
-        }
-        cancel_add_kpi();
-    });
+
+function post_kpi(entity, entityP, name, desc, interval, intervalP, trend, trendP, target, unit, unitP, check, checkedP, formula, formulaShow, length) {
+     $.post('../kpis', {
+          kpi : {
+               kpi_category_id : entity,
+               name : name,
+               description : desc,
+               frequency : intervalP,
+               direction : trendP,
+               target : target,
+               unit : unitP,
+               is_calculated : checkedP,
+               formula : formula,
+               formula_string : formulaShow
+          }
+     }, function(data) {
+          if(data.result) {
+               var id = data.object;
+               if($("#manage-group-kpi li.active a").text() == entityP) {
+                    $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(length).addClass("kpi-order-id")).append($("<td align='center' />").text(entityP)).append($("<td align='center' />").text(name)).append($("<td align='center' />").text(desc)).append($("<td align='center' />").text(interval)).append($("<td align='center' />").text(target)).append($("<td align='center' />").text(unit)).append($("<td align='center' />").text(trend)).append($("<td align='center' />").addClass("kpi-checked").text(check)).append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong", id).click(edit_kpiItem)).append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", id).click(finish_editKPI).text("完成"))).append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", id).click(remove_kpiItem)).append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi-" + id).data("belong", id).click(cancel_editKPI).text("取消"))));
+                    if(formula) {
+                         $("#" + id).find(".kpi-checked").attr("title", formulaShow);
+                    }
+               }
+          } else {
+               alert(data.content);
+          }
+          cancel_add_kpi();
+     });
 }
+
 function edit_kpiItem(event) {
      var id = find_id(event);
      $("#" + id).find('.manage-operate').each(function() {
@@ -568,34 +556,32 @@ function edit_kpiItem(event) {
      });
      var entity = $("#" + id).find(".kpi-entity").text();
      var target = $("#" + id).find(".kpi-target").text();
-     $("#cancel-edit-kpi-"+id).attr("entity", entity).attr("target", target);
-     $("#" + id).find(".kpi-entity").text("").append(
-         $("#add-entity").clone().addClass("edit-kpiEntity-input").attr("id","")
-     );
-     $("#" + id).find(".kpi-entity").find("option").each(function(){
-        if($(this).text()==$("#manage-group-kpi li.active a").text()){
-                     $(this).attr("selected","true");
-        }
+     $("#cancel-edit-kpi-" + id).attr("entity", entity).attr("target", target);
+     $("#" + id).find(".kpi-entity").text("").append($("#add-entity").clone().addClass("edit-kpiEntity-input").attr("id", ""));
+     $("#" + id).find(".kpi-entity").find("option").each(function() {
+          if($(this).text() == $("#manage-group-kpi li.active a").text()) {
+               $(this).attr("selected", "true");
+          }
      });
      $("#" + id).find(".kpi-target").text("").append($("<input type='text' onkeyup='clearNoNum(this)'/>").val(target).addClass("edit-kpiTarget-input"));
 }
 
 function remove_kpiItem(event) {
-     if(confirm("确认删除？")) {   
-           var id = find_id(event);
+     if(confirm("确认删除？")) {
+          var id = find_id(event);
           $.ajax({
-               url:'../kpis/'+id,
-               type: 'DELETE',
-               success:function(data){
-                     if(data.result){
+               url : '../kpis/' + id,
+               type : 'DELETE',
+               success : function(data) {
+                    if(data.result) {
                          $("#kpi-table").find("#" + id).nextAll("tr").each(function() {
-                          var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
-                            $(this).find(".kpi-order-id").text(order);
-                        });
-                        $("#kpi-table").find("#" + id).remove();
-                    }else{
-                          alert(data.content);
-                     }
+                              var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
+                              $(this).find(".kpi-order-id").text(order);
+                         });
+                         $("#kpi-table").find("#" + id).remove();
+                    } else {
+                         alert(data.content);
+                    }
                }
           });
      }
@@ -604,29 +590,35 @@ function remove_kpiItem(event) {
 function finish_editKPI(event) {
      var id = find_id(event);
      var entity = $("#" + id).find(".kpi-entity").find(":selected").text();
-     var category= $("#" + id).find(".kpi-entity").find(":selected").val();
+     var category = $("#" + id).find(".kpi-entity").find(":selected").val();
      var target = $("#" + id).find(".kpi-target").find("input").val();
-    same_editKPI(id);
+     same_editKPI(id);
      $.ajax({
-          url:'../kpis',
-          type:'PUT',
-          data:{kpi:{id:id,kpi_category_id:category,target:target}},
-          success:function(data){
-             if(entity==$("#manage-group-kpi li.active a").text()){
-                 $("#" + id).find(".kpi-entity").text(entity);
-                 $("#" + id).find(".kpi-target").text(target);
-             }
-             else{
-                 $("#kpi-table").find("#" + id).remove();
-                 $("#kpi-table").find("#" + id).nextAll("tr").each(function() {
-                     var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
-                     $(this).find(".kpi-order-id").text(order);
-                 });
-                 $("#kpi-table").find("#" + id).remove();
-             }
-        }
+          url : '../kpis',
+          type : 'PUT',
+          data : {
+               kpi : {
+                    id : id,
+                    kpi_category_id : category,
+                    target : target
+               }
+          },
+          success : function(data) {
+               if(entity == $("#manage-group-kpi li.active a").text()) {
+                    $("#" + id).find(".kpi-entity").text(entity);
+                    $("#" + id).find(".kpi-target").text(target);
+               } else {
+                    $("#kpi-table").find("#" + id).remove();
+                    $("#kpi-table").find("#" + id).nextAll("tr").each(function() {
+                         var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
+                         $(this).find(".kpi-order-id").text(order);
+                    });
+                    $("#kpi-table").find("#" + id).remove();
+               }
+          }
      });
 }
+
 function cancel_editKPI(event) {
      var id = find_id(event);
      var e = event ? event : (window.event ? window.event : null);
@@ -637,6 +629,7 @@ function cancel_editKPI(event) {
      $("#" + id).find(".kpi-entity").text(entity);
      $("#" + id).find(".kpi-target").text(target);
 }
+
 function same_editKPI(a) {
      $("#" + a).find(".manage-operate-reverse").each(function() {
           $(this).addClass("hide").prev().removeClass("hide");
@@ -664,21 +657,19 @@ function close_createEntity() {
 
 function insert_entity() {
      var test = test_sameEntity();
-           var val = $("#creat-newEntity").val();
-      if(val&& test == -1) {   
-     
-            if($('#creat-newEntity').val().length > 0) {
+     var val = $("#creat-newEntity").val();
+     if(val && test == -1) {
+
+          if($('#creat-newEntity').val().length > 0) {
                $.post('../kpi_categories', {
                     category : {
                          name : val
                     }
                }, function(data) {
                     if(data.result) {
-                          var length = $("#manage-group-kpi").find("li").length - 1;
-                           $("#manage-group-kpi li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number",data.number).attr("belong","kpi"))
-                               .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number",data.object).attr("belong","kpi"))
-                               .append($("<a href='../kpis?p=" + data.object + "'/>").text(val)));
-                          $("#creat-newEntity").val("");
+                         var length = $("#manage-group-kpi").find("li").length - 1;
+                         $("#manage-group-kpi li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "kpi")).append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.object).attr("belong", "kpi")).append($("<a href='../kpis?p=" + data.object + "'/>").text(val)));
+                         $("#creat-newEntity").val("");
                     } else {
                          alert(data.content);
                     }
@@ -709,7 +700,7 @@ function test_sameEntity() {
 function create_entity(event) {
      var e = event ? event : (window.event ? window.event : null);
      if(e.keyCode == 13) {
-           insert_entity();
+          insert_entity();
      } else if(e.keyCode == 27) {
           close_createEntity();
      }
@@ -718,7 +709,7 @@ function create_entity(event) {
 function is_calcu() {
      if($("#is-calcu-check").attr("checked") == "checked") {
           $("#is-calcu-type").slideDown("2000");
-          $("#is-calcu-relate option").eq(0).css("display","none");
+          $("#is-calcu-relate option").eq(0).css("display", "none");
      } else {
           $("#is-calcu-type").slideUp("2000");
      }
@@ -726,14 +717,14 @@ function is_calcu() {
 
 function select_calcuRelate() {
      var val = "[" + $("#is-calcu-relate :selected").text() + "]";
-     var valId= "[" + $("#is-calcu-relate :selected").attr("value") + "]";
+     var valId = "[" + $("#is-calcu-relate :selected").attr("value") + "]";
      var oldVal = $("#calcuType-input").val();
-     var oldValId=$("#takeCal").attr("cal"); 
+     var oldValId = $("#takeCal").attr("cal");
      if(/\]$/.test(oldVal) == false) {
           var newVal = oldVal + val;
-          var newValId= oldValId+valId;
+          var newValId = oldValId + valId;
           $("#calcuType-input").val(newVal);
-          $("#takeCal").attr("cal",newValId);
+          $("#takeCal").attr("cal", newValId);
      }
 }
 
@@ -742,190 +733,173 @@ function select_calcuMethod(event) {
      var obj = e.srcElement || e.target;
      var val = $(obj).text();
      var oldVal = $("#calcuType-input").val();
-     var oldValId=$("#takeCal").attr("cal");
+     var oldValId = $("#takeCal").attr("cal");
      if(/\]$/.test(oldVal) == true) {
           var newVal = oldVal + val;
-          var newValId= oldValId+val;
+          var newValId = oldValId + val;
           $("#calcuType-input").val(newVal);
-          $("#takeCal").attr("cal",newValId);
+          $("#takeCal").attr("cal", newValId);
      }
 }
 
 function calcuRelate_clear() {
      $("#calcuType-input").val("");
-     $("#takeCal").attr("cal","");
+     $("#takeCal").attr("cal", "");
      $("#is-calcu-relate").find("option[data-order='1']").attr("selected", "true");
 }
+
 //左边的删除和编辑
-function remove_leftNav(event){
-    var e = event ? event : (window.event ? window.event : null);
-    var obj = e.srcElement || e.target;
-    var number=$(obj).attr("number");
-    var belong=$(obj).attr("belong");
-    switch(belong){
-        case "kpi":
-            post('',{
-                number:number
-            },function(data){
-                if(data.result){
-                    window.location.href="../Kpis";
-                }
-                else{
-                    MessageBox("只能删除空的类别","message-warning");
-                }
-            })
-            break;
-        case "entity":
-            post('',{
-                number:number
-            },function(data){
-                if(data.result){
-                    window.location.href="../";
-                }
-                else{
-                    MessageBox("只能删除空的用户组","message-warning");
-                }
-            })
-            break;
-        case "view":
-            post('',{
-                number:number
-            },function(data){
-                if(data.result){
-                    window.location.href="../";
-                }
-                else{
-                    MessageBox("只能删除空的观察点","message-warning");
-                }
-            })
-            break;
-    }
-
-}
-function edit_leftNav(event){
-    var e = event ? event : (window.event ? window.event : null);
-    var obj = e.srcElement || e.target;
-    var number=$(obj).attr("number");
-    var belong=$(obj).attr("belong");
-    var text=$("a[number='"+number+"']").text();
-    var left = e.pageX;
-    var top = e.pageY;
-    $("#edit-block").removeClass("hide").addClass("absolute").offset({
-        left : left - 35,
-        top : top + 25
-    });
-    $("#change-leftNavi").val(text).attr("origin",text).attr("number",number).attr("belong",belong);
-}
-function update_leftNavi() {
-    var test = test_sameLeftNavi();
-    var val = $("#change-leftNavi").val();
-    var belong=$("#change-leftNavi").attr("belong");
-    var number=$("#change-leftNavi").attr("number");
-    if(val&& test == -1) {
-            $("a[number='"+number+"']").text(val);
-            close_editBlock();
-            switch(belong){
-                case "kpi":
-                    $.post('../kpi_categories', {
-                    category : {
-                        number : number,
-                        val : val
+function remove_leftNav(event) {
+     if(!confirm('确定删除？'))
+     return;
+     var e = event ? event : (window.event ? window.event : null);
+     var obj = e.srcElement || e.target;
+     var number = $(obj).attr("number");
+     var belong = $(obj).attr("belong");
+     var url;
+     var local;
+          switch(belong) {
+               case "kpi":
+                    url = "../kpi_categories/";
+                    local="../kpis";
+                    break;
+               case "entity":
+                    url = "../entities/";
+                    local="../users"
+                    break;
+               case "view":
+                    url = "../entity_groups/";
+                    break;
+          }
+          if(url) {
+               $.ajax({
+                    url : url+number,
+                    type : 'DELETE',
+                    success : function(data) {
+                        if(data.result){
+                             window.location.href = local;
+                        } 
+                        else{
+                             MessageBox(data.content, "message-warning");
+                        }
                     }
-                    },function(data){
-                        if(!data.result){
-                            alert(data.content);
-                        }
-                    });
-                    break;
-                case "entity":
-                    $.post('../kpi_categories', {
-                        category : {
-                            number : number,
-                            val : val
-                        }
-                    },function(data){
-                        if(!data.result){
-                            alert(data.content);
-                        }
-                    });
-                    break;
-                case "view":
-                    $.post('../kpi_categories', {
-                        category : {
-                            number : number,
-                            val : val
-                        }
-                    },function(data){
-                        if(!data.result){
-                            alert(data.content);
-                        }
-                    });
-                    break;
+               });
+          }
+}
 
-            }
-    }
+function edit_leftNav(event) {
+     var e = event ? event : (window.event ? window.event : null);
+     var obj = e.srcElement || e.target;
+     var number = $(obj).attr("number");
+     var belong = $(obj).attr("belong");
+     var text = $("a[number='" + number + "']").text();
+     var left = e.pageX;
+     var top = e.pageY;
+     $("#edit-block").removeClass("hide").addClass("absolute").offset({
+          left : left - 35,
+          top : top + 25
+     });
+     $("#change-leftNavi").val(text).attr("origin", text).attr("number", number).attr("belong", belong).focus();
+}
+
+function update_leftNavi() {
+     var test = test_sameLeftNavi();
+     var val = $("#change-leftNavi").val();
+     var belong = $("#change-leftNavi").attr("belong");
+     var number = $("#change-leftNavi").attr("number");
+     if(val && test == -1) {
+          var url;
+          switch(belong) {
+               case "kpi":
+                    url = "../kpi_categories"
+                    break;
+               case "entity":
+                    url = "../entities"
+                    break;
+               case "view":
+                    url = "../entity_groups";
+                    break;
+          }
+          if(url) {
+               $.ajax({
+                    url : url,
+                    type : 'PUT',
+                    data : {
+                         id:number,
+                         data:{
+                             name:val
+                        }
+                    },
+                    success : function(data) {
+                        if(data){
+                               $("a[number='" + number + "']").text(val);
+                        } 
+                        close_editBlock();
+                    }
+               });
+          }
+     }
 }
 
 function test_sameLeftNavi() {
-    var a = $("#change-leftNavi").val();
-    var b = [];
-    var belong= $("#change-leftNavi").attr("belong");
-    $("a[belong='"+belong+"']").each(function() {
-        b.push($(this).text());
-    });
-    if(!Array.indexOf) {
-        Array.prototype.indexOf = function(obj) {
-            for(var i = 0; i < this.length; i++) {
-                if(this[i] == obj) {
-                    return i;
-                }
-            }
-            return -1;
-        }
-    }
-    return b.indexOf(a);
+     var a = $("#change-leftNavi").val();
+     var b = [];
+     var belong = $("#change-leftNavi").attr("belong");
+     $("a[belong='" + belong + "']").each(function() {
+          b.push($(this).text());
+     });
+     if(!Array.indexOf) {
+          Array.prototype.indexOf = function(obj) {
+               for(var i = 0; i < this.length; i++) {
+                    if(this[i] == obj) {
+                         return i;
+                    }
+               }
+               return -1;
+          }
+     }
+     return b.indexOf(a);
 }
 
 function change_leftNavi(event) {
-    var e = event ? event : (window.event ? window.event : null);
-    var origin= $("#change-leftNavi").attr("origin");
-    if(e.keyCode == 13 && $("#change-leftNavi").val()!=origin && $("#change-leftNavi").val()) {
-        update_leftNavi();
-    } else if(e.keyCode == 27) {
-        close_editBlock();
-    }
+     var e = event ? event : (window.event ? window.event : null);
+     var origin = $("#change-leftNavi").attr("origin");
+     if(e.keyCode == 13 && $("#change-leftNavi").val() != origin && $("#change-leftNavi").val()) {
+          update_leftNavi();
+     } else if(e.keyCode == 27) {
+          close_editBlock();
+     }
 }
-function close_editBlock(){
-    $("#edit-block").addClass("hide").find("input").val("");
+
+function close_editBlock() {
+     $("#edit-block").addClass("hide").find("input").val("");
 }
+
 ///////////////  user  ///////////////////////////////////////
 
 function create_Userentity(event) {
      var e = event ? event : (window.event ? window.event : null);
      if(e.keyCode == 13) {
-         insert_entityUser();
-     }
-     else if(e.keyCode == 27) {
+          insert_entityUser();
+     } else if(e.keyCode == 27) {
           close_createEntity();
      }
 }
 
 function insert_entityUser() {
-     var test = test_sameEntityUser();     
+     var test = test_sameEntityUser();
      var val = $("#creat-newEntity").val();
-     if(val && test == -1) {  
-     if($('#creat-newEntity').val().length > 0) {
+     if(val && test == -1) {
+          if($('#creat-newEntity').val().length > 0) {
                $.post('../entities', {
                     entity : {
                          name : $('#creat-newEntity').val()
                     }
                }, function(data) {
                     if(data.result) {
-                           var length = $("#manage-group-user").find("li").length - 1;
-                           $("#manage-group-user li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number",data.number).attr("belong","entity"))
-                               .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number",data.number).attr("belong","entity"))
-                               .append($("<a href='../users?p=" + data.object + "'/>").text(val)));
-                           $("#creat-newEntity").val("");
+                         var length = $("#manage-group-user").find("li").length - 1;
+                         $("#manage-group-user li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "entity")).append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "entity")).append($("<a href='../users?p=" + data.object + "'/>").text(val)));
+                         $("#creat-newEntity").val("");
                     } else {
                          alert(data.content);
                     }
@@ -1300,7 +1274,7 @@ function init_entryKpi() {
           case "week":
                $("#entry-kpi").val(formatDate(WeekFirstDay) + " ~ " + formatDate(WeekLastDay));
 
-               $("#show-weekOfYear").css("display","inline-block").find("span").text($.datepicker.iso8601Week(new Date(y, m, d - day + 1)));
+               $("#show-weekOfYear").css("display", "inline-block").find("span").text($.datepicker.iso8601Week(new Date(y, m, d - day + 1)));
 
                $("#entry-kpi").bind("click", select_week);
                break;

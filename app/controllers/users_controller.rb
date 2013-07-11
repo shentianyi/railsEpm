@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   #skip_before_filter :authorize,:only=>:login
   #skip_before_filter :find_current_user_tenant,:only=>:login
   #skip_authorize_resource :only=>:login
-  before_filter :check_tenant_function
+  # before_filter :check_tenant_function
 
   # get ability entity
   before_filter :get_ability_entity,:only=>[:index,:new]

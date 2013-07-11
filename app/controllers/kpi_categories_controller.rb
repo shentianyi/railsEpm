@@ -1,5 +1,6 @@
 #encoding: utf-8
 class KpiCategoriesController < ApplicationController
+  before_filter :get_ability_category,:only=>[:update,:destroy]
   def new
     render :partial=>'new'
   end
@@ -17,22 +18,28 @@ class KpiCategoriesController < ApplicationController
     render :json=>msg
   end
 
-  def edit
-    @category=KpiCategory.find_by_id(params[:id])
-  end
-
   def update
-    @category=KpiCategory.find_by_id(params[:id])
-    if @category and @category.update_attributes(params[:category])
-      render :json=>true
-    else
-      render :json=>false
+    if @category
+      render :json=>@category.update_attributes(params[:data])
     end
   end
 
   def destroy
+    msg=Message.new
+    if @category and @category.kpi_quantity==0
+     msg.result=@category.destroy
+     else
+       msg.content="类别不可删除，包含KPI"
+    end
+    render :json=>msg
   end
 
   def assign
+  end
+
+  private
+
+  def get_ability_category
+    @category=KpiCategory.accessible_by(current_ability).find_by_id(params[:id])
   end
 end
