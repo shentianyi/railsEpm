@@ -675,7 +675,9 @@ function insert_entity() {
                }, function(data) {
                     if(data.result) {
                           var length = $("#manage-group-kpi").find("li").length - 1;
-                           $("#manage-group-kpi li:eq(" + length + ")").before($("<li />").append($("<a href='../kpis?p=" + data.object + "'/>").text(val)));
+                           $("#manage-group-kpi li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number",data.number).attr("belong","kpi"))
+                               .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number",data.object).attr("belong","kpi"))
+                               .append($("<a href='../kpis?p=" + data.object + "'/>").text(val)));
                           $("#creat-newEntity").val("");
                     } else {
                          alert(data.content);
@@ -754,6 +756,7 @@ function calcuRelate_clear() {
      $("#takeCal").attr("cal","");
      $("#is-calcu-relate").find("option[data-order='1']").attr("selected", "true");
 }
+//左边的删除和编辑
 function remove_leftNav(event){
     var e = event ? event : (window.event ? window.event : null);
     var obj = e.srcElement || e.target;
@@ -772,7 +775,7 @@ function remove_leftNav(event){
                 }
             })
             break;
-        case "user":
+        case "entity":
             post('',{
                 number:number
             },function(data){
@@ -808,34 +811,58 @@ function edit_leftNav(event){
     var left = e.pageX;
     var top = e.pageY;
     $("#edit-block").removeClass("hide").addClass("absolute").offset({
-        left : left - 20,
-        top : top +10
+        left : left - 35,
+        top : top + 25
     });
-    $("#change-leftNavi").val(text).attr("origin",text);
-    $("#change-leftNavi").attr("belong",belong)
+    $("#change-leftNavi").val(text).attr("origin",text).attr("number",number).attr("belong",belong);
 }
-function insert_entity() {
+function update_leftNavi() {
     var test = test_sameLeftNavi();
     var val = $("#change-leftNavi").val();
     var belong=$("#change-leftNavi").attr("belong");
+    var number=$("#change-leftNavi").attr("number");
     if(val&& test == -1) {
-        if($('#change-leftNavi').val().length > 0) {
-            $.post('../kpi_categories', {
-                category : {
-                    name : val
-                }
-            }, function(data) {
-                if(data.result) {
-                    var length = $("a[belong='"+belong+"']").length;
-                    $("#manage-group-kpi li:eq(" + length + ")").after($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number",data.number).attr("belong",belong))
-                        .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number",data.number).attr("belong",belong))
-                        .append($("<a href='../kpis?p=" + data.object + "'/>").text(val)));
-                    $("#creat-newEntity").val("");
-                } else {
-                    alert(data.content);
-                }
-            });
-        }
+            $("a[number='"+number+"']").text(val);
+            close_editBlock();
+            switch(belong){
+                case "kpi":
+                    $.post('../kpi_categories', {
+                    category : {
+                        number : number,
+                        val : val
+                    }
+                    },function(data){
+                        if(!data.result){
+                            alert(data.content);
+                        }
+                    });
+                    break;
+                case "entity":
+                    $.post('../kpi_categories', {
+                        category : {
+                            number : number,
+                            val : val
+                        }
+                    },function(data){
+                        if(!data.result){
+                            alert(data.content);
+                        }
+                    });
+                    break;
+                case "view":
+                    $.post('../kpi_categories', {
+                        category : {
+                            number : number,
+                            val : val
+                        }
+                    },function(data){
+                        if(!data.result){
+                            alert(data.content);
+                        }
+                    });
+                    break;
+
+            }
     }
 }
 
@@ -862,13 +889,12 @@ function test_sameLeftNavi() {
 function change_leftNavi(event) {
     var e = event ? event : (window.event ? window.event : null);
     var origin= $("#change-leftNavi").attr("origin");
-    if(e.keyCode == 13 && $("#change-leftNavi").val()!=origin) {
-        insert_entity();
+    if(e.keyCode == 13 && $("#change-leftNavi").val()!=origin && $("#change-leftNavi").val()) {
+        update_leftNavi();
     } else if(e.keyCode == 27) {
         close_editBlock();
     }
 }
-
 function close_editBlock(){
     $("#edit-block").addClass("hide").find("input").val("");
 }
@@ -896,7 +922,9 @@ function insert_entityUser() {
                }, function(data) {
                     if(data.result) {
                            var length = $("#manage-group-user").find("li").length - 1;
-                           $("#manage-group-user li:eq(" + length + ")").before($("<li />").append($("<a href='../users?p=" + data.object + "'/>").text(val)));
+                           $("#manage-group-user li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number",data.number).attr("belong","entity"))
+                               .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number",data.number).attr("belong","entity"))
+                               .append($("<a href='../users?p=" + data.object + "'/>").text(val)));
                            $("#creat-newEntity").val("");
                     } else {
                          alert(data.content);
