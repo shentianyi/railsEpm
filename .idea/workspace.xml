@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="34223306-c906-4ca0-8d18-592e401da2bb" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/entities/_left_menu.html.erb" afterPath="$PROJECT_DIR$/app/views/entities/_left_menu.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/delivery-kpi.html" afterPath="$PROJECT_DIR$/app/assets/delivery-kpi.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="railsEpm.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="34223306-c906-4ca0-8d18-592e401da2bb" time="1373514837591" ignored="false" />
     <file path="/application_controller.rb" changelist="34223306-c906-4ca0-8d18-592e401da2bb" time="1373511936621" ignored="false" />
-    <file path="/_left_menu.html.erb" changelist="34223306-c906-4ca0-8d18-592e401da2bb" time="1373514984798" ignored="false" />
+    <file path="/_left_menu.html.erb" changelist="34223306-c906-4ca0-8d18-592e401da2bb" time="1373515498941" ignored="false" />
+    <file path="/delivery-kpi.html" changelist="34223306-c906-4ca0-8d18-592e401da2bb" time="1373517095791" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,28 +31,42 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="_left_menu.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/kpi_categories/_left_menu.html.erb">
+      <file leaf-file-name="delivery-kpi.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/assets/delivery-kpi.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="90" selection-start="509" selection-end="511" vertical-scroll-proportion="0.0">
+            <state line="47" column="31" selection-start="2138" selection-end="2149" vertical-scroll-proportion="0.6571429">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_left_menu.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/entities/_left_menu.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="75" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="brilliantech.railsepm.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="brilliantech.railsepm.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="853" column="36" selection-start="30967" selection-end="30967" vertical-scroll-proportion="1.3713478">
+            <state line="1023" column="18" selection-start="36357" selection-end="36357" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1373515709000" expanded="true" signature="36458:37427" placeholder="{...}" />
+                <marker date="1373515709000" expanded="true" signature="37058:37423" placeholder="{...}" />
+                <marker date="1373515709000" expanded="true" signature="37461:37760" placeholder="{...}" />
+                <marker date="1373515709000" expanded="true" signature="37561:37604" placeholder="{...}" />
+                <marker date="1373515709000" expanded="true" signature="37610:37655" placeholder="{...}" />
+                <marker date="1373515709000" expanded="true" signature="37715:37755" placeholder="{...}" />
+                <marker date="1373515709000" expanded="true" signature="37800:38283" placeholder="{...}" />
+                <marker date="1373515709000" expanded="true" signature="37887:37937" placeholder="{...}" />
+                <marker date="1373515709000" expanded="true" signature="37966:38251" placeholder="{...}" />
+                <marker date="1373515709000" expanded="true" signature="38020:38242" placeholder="{...}" />
+                <marker date="1373515709000" expanded="true" signature="38076:38200" placeholder="{...}" />
+                <marker date="1373515709000" expanded="true" signature="38119:38181" placeholder="{...}" />
+                <marker date="1373515709000" expanded="true" signature="38320:38514" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="brilliantech.railsepm.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -79,9 +93,10 @@
         <option value="$PROJECT_DIR$/app/controllers/users_controller.rb" />
         <option value="$PROJECT_DIR$/app/observers/tenant_observer.rb" />
         <option value="$PROJECT_DIR$/app/controllers/application_controller.rb" />
-        <option value="$PROJECT_DIR$/app/views/kpi_categories/_left_menu.html.erb" />
         <option value="$PROJECT_DIR$/app/views/entities/_left_menu.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/kpi_categories/_left_menu.html.erb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" />
+        <option value="$PROJECT_DIR$/app/assets/delivery-kpi.html" />
       </list>
     </option>
   </component>
@@ -147,68 +162,6 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="railsEpm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="railsEpm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kpi_categories" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="railsEpm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="railsEpm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="entities" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="railsEpm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="railsEpm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -246,7 +199,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="javascripts" />
+              <option name="myItemId" value="stylesheets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -278,7 +231,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18833227" sideWeight="0.7513612" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16613823" sideWeight="0.7513612" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -355,21 +308,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/controllers/kpis_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="16" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/helpers/users_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20130627085050_create_kpi_categories.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
@@ -422,21 +360,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/kpi_categories/_left_menu.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="90" selection-start="509" selection-end="511" vertical-scroll-proportion="0.0">
+        <state line="28" column="22" selection-start="1311" selection-end="1311" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/entities/_left_menu.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="75" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0">
+        <state line="10" column="75" selection-start="619" selection-end="619" vertical-scroll-proportion="0.1396648">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/manage-entitygroup.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="31" selection-start="917" selection-end="917" vertical-scroll-proportion="-11.875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="853" column="36" selection-start="30967" selection-end="30967" vertical-scroll-proportion="1.3713478">
+        <state line="1023" column="18" selection-start="36357" selection-end="36357" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1373515709000" expanded="true" signature="36458:37427" placeholder="{...}" />
+            <marker date="1373515709000" expanded="true" signature="37058:37423" placeholder="{...}" />
+            <marker date="1373515709000" expanded="true" signature="37461:37760" placeholder="{...}" />
+            <marker date="1373515709000" expanded="true" signature="37561:37604" placeholder="{...}" />
+            <marker date="1373515709000" expanded="true" signature="37610:37655" placeholder="{...}" />
+            <marker date="1373515709000" expanded="true" signature="37715:37755" placeholder="{...}" />
+            <marker date="1373515709000" expanded="true" signature="37800:38283" placeholder="{...}" />
+            <marker date="1373515709000" expanded="true" signature="37887:37937" placeholder="{...}" />
+            <marker date="1373515709000" expanded="true" signature="37966:38251" placeholder="{...}" />
+            <marker date="1373515709000" expanded="true" signature="38020:38242" placeholder="{...}" />
+            <marker date="1373515709000" expanded="true" signature="38076:38200" placeholder="{...}" />
+            <marker date="1373515709000" expanded="true" signature="38119:38181" placeholder="{...}" />
+            <marker date="1373515709000" expanded="true" signature="38320:38514" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/delivery-kpi.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="31" selection-start="2138" selection-end="2149" vertical-scroll-proportion="0.6571429">
           <folding />
         </state>
       </provider>

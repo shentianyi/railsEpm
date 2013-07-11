@@ -1023,58 +1023,58 @@ function to_userPage(event) {
 }
 
 ///////////////  delivery kpi  ///////////////////////////////////////
-function choose_kpi(event) {
-     var e = event ? event : (window.event ? window.event : null);
-     var obj = e.srcElement || e.target;
-     var id = $(obj).parent().attr("id");
-     var entity = $("#" + id).find(".deliveryKpi-entity").text();
-     var name = $("#" + id).find(".deliveryKpi-name").text();
-     var desc = $("#" + id).find(".deliveryKpi-desc").text();
-     var target = $("#" + id).find(".deliveryKpi-target").text();
-     var unit = $("#" + id).find(".deliveryKpi-unit").text();
-     var interval = $("#" + id).find(".deliveryKpi-interval").text();
-     if(test_sameDeliveryKpi(id) == -1) {
-          $("#my-kpi").append($("<tr />").attr("id", id).click(remove_userkpi).append($("<td />").text(entity)).append($("<td />").text(name)).append($("<td />").text(desc)).append($("<td />").append($("<input type='text'/>").click(myKpi_input).val(target).addClass("my-kpi-target"))).append($("<td />").text(unit)).append($("<td />").text(interval)));
-     }
-}
-
-function myKpi_input(event) {
-     var e = event ? event : (window.event ? window.event : null);
-     if(e.stopPropagation) {
-          e.stopPropagation();
-     } else {
-          e.cancelBubble = true;
-     }
-     $("#my-kpi").find("input").bind("keyup", function() {
-          clearNoNum(this);
-     })
-}
-
-function test_sameDeliveryKpi(id) {
-     var a = id;
-     var b = [];
-     $("#my-kpi").find("tr").each(function() {
-          b.push($(this).attr('id'));
-     });
-     if(!Array.indexOf) {
-          Array.prototype.indexOf = function(obj) {
-               for(var i = 0; i < this.length; i++) {
-                    if(this[i] == obj) {
-                         return i;
-                    }
-               }
-               return -1;
-          }
-     }
-     return b.indexOf(a);
-}
-
-function remove_userkpi(event) {
-     var e = event ? event : (window.event ? window.event : null);
-     var obj = e.srcElement || e.target;
-     var id = $(obj).parent().attr("id");
-     $(obj).parent().remove();
-}
+//function choose_kpi(event) {
+//     var e = event ? event : (window.event ? window.event : null);
+//     var obj = e.srcElement || e.target;
+//     var id = $(obj).parent().attr("id");
+//     var entity = $("#" + id).find(".deliveryKpi-entity").text();
+//     var name = $("#" + id).find(".deliveryKpi-name").text();
+//     var desc = $("#" + id).find(".deliveryKpi-desc").text();
+//     var target = $("#" + id).find(".deliveryKpi-target").text();
+//     var unit = $("#" + id).find(".deliveryKpi-unit").text();
+//     var interval = $("#" + id).find(".deliveryKpi-interval").text();
+//     if(test_sameDeliveryKpi(id) == -1) {
+//          $("#my-kpi").append($("<tr />").attr("id", id).click(remove_userkpi).append($("<td />").text(entity)).append($("<td />").text(name)).append($("<td />").text(desc)).append($("<td />").append($("<input type='text'/>").click(myKpi_input).val(target).addClass("my-kpi-target"))).append($("<td />").text(unit)).append($("<td />").text(interval)));
+//     }
+//}
+//
+//function myKpi_input(event) {
+//     var e = event ? event : (window.event ? window.event : null);
+//     if(e.stopPropagation) {
+//          e.stopPropagation();
+//     } else {
+//          e.cancelBubble = true;
+//     }
+//     $("#my-kpi").find("input").bind("keyup", function() {
+//          clearNoNum(this);
+//     })
+//}
+//
+//function test_sameDeliveryKpi(id) {
+//     var a = id;
+//     var b = [];
+//     $("#my-kpi").find("tr").each(function() {
+//          b.push($(this).attr('id'));
+//     });
+//     if(!Array.indexOf) {
+//          Array.prototype.indexOf = function(obj) {
+//               for(var i = 0; i < this.length; i++) {
+//                    if(this[i] == obj) {
+//                         return i;
+//                    }
+//               }
+//               return -1;
+//          }
+//     }
+//     return b.indexOf(a);
+//}
+//
+//function remove_userkpi(event) {
+//     var e = event ? event : (window.event ? window.event : null);
+//     var obj = e.srcElement || e.target;
+//     var id = $(obj).parent().attr("id");
+//     $(obj).parent().remove();
+//}
 
 ///////////////  view  ///////////////////////////////////////
 function create_Viewentity(event) {
