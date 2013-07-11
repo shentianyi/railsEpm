@@ -5,12 +5,13 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user
   before_filter :require_user
   before_filter :require_active_user
-  before_filter :check_tenant_status
+  before_filter :find_current_user_tenant
+  # before_filter :check_tenant_status
 
 
    set_current_tenant_through_filter
   ##before_filter :authorize
-  before_filter :find_current_user_tenant
+
    authorize_resource
   # protect_from_forgery
 
@@ -45,10 +46,10 @@ class ApplicationController < ActionController::Base
   end
 
 
-  def current_tenant
-    return @current_tenant if defined?(@current_tenant)
-    @current_tenant = Tenant.find current_user.tenant_id
-  end
+  # def current_tenant
+    # return @current_tenant if defined?(@current_tenant)
+    # @current_tenant = Tenant.find current_user.tenant_id
+  # end
 
 
   def store_location
@@ -84,7 +85,6 @@ class ApplicationController < ActionController::Base
 
 
   def count_tenant_resource (controller)
-
     return controller.classify.constantize.where(tenant_id= current_user.tenant_id).count()
   end
 
@@ -181,10 +181,6 @@ class ApplicationController < ActionController::Base
     end
   end
   #filter methods end
-
-
-
-
 
   def billing_url
 

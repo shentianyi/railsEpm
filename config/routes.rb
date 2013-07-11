@@ -1,29 +1,36 @@
 IFEpm::Application.routes.draw do
   root :to => 'welcome#index'
   # get "welcome/navigate"
-  
-  resources :entities
+
+  resources :entities  do
+    collection do
+      put :update
+    end
+  end
 
   resources :users do
-   collection do
-    match :login
-    post :add
-   end
+    collection do
+      match :login
+      post :add
+    end
   end
 
   resource :user_sessions
   resource :user_confirmations
-
+  resource :subscriptions
   resources :kpis do
     collection do
       put :update
-      # post :create
     end
   end
-  resources :kpi_categories
+  resources :kpi_categories do
+    collection do
+      put :update
+    end
+  end
 
   mount Resque::Server.new, :at=>"/admin/resque"
-  
+
 #	constraints(Subdomain) do
 #
 #	  resourses :users

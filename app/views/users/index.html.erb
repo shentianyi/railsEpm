@@ -10,7 +10,7 @@
                     <th>姓名</th>
                     <th min-width="221px">邮箱</th>
                     <th>角色</th>
-                    <th width="100px" colspan="2">操作</th>
+                    <th width="100px" colspan="3">操作</th>
                </tr>
                <%@users.each_with_index do |user,i|%>
                <tr id="<%= user.id%>">
@@ -18,8 +18,18 @@
                     <td align="center" class="manage-userName"><%= user.first_name%></td>
                     <td align="center" class="manage-userMail"><%= user.email%></td>
                     <td align="center" class="manage-userRole"><%= UsersHelper.get_user_role_display(user.role_id)%></td>
-                    <td align="center"><div class="manage-operate manage-operate-edit" data-belong="<%= user.id%>" onclick="edit_userItem(event)"></div><a class="btn btn-success manage-operate-reverse  hide" data-belong="<%= user.id%>" onclick="finish_editUser(event)">完成</a></td>
-                    <td align="center"><div class="manage-operate manage-operate-del" data-belong="<%= user.id%>" onclick="remove_userItem(event)"></div><a class="btn manage-operate-reverse  hide" id="cancel-edit-user" data-belong="<%= user.id%>" onclick="cancel_editUser(event)">取消</a></td>
+              
+                <td align="center">
+                     <a href="www.g.cn">
+                        <div class="manage-operate manage-operate-edit" title="编辑" data-belong="<%= user.id%>" onclick="to_userPage(event)"></div>
+                        </a>
+                    </td>
+                    <td align="center">
+                        <div class="manage-operate manage-operate-delivery" title="分配KPI" data-belong="<%= user.id%>" onclick="delivery_kpi(event)"></div>
+                    </td>
+                    <td align="center">
+                        <div class="manage-operate manage-operate-del" title="删除" data-belong="<%= user.id%>" onclick="remove_userItem(event)"></div>
+                    </td>
                </tr>
                <%end%>
           </table>

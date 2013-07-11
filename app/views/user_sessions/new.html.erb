@@ -1,4 +1,4 @@
-<%= form_for @user_session, :url=>'/user_sessions/create' do |f| %>
+<%= form_for @user_session, :url=>user_sessions_path do |f| %>
     <p>errors</p>
     <% if @user_session.errors.any? %>
         <div id="error_explanation">
@@ -21,4 +21,4 @@
 <% end %>
 
 <%= flash[:notice] %>
-<%= flash[:alert] %>
+<%= flash[:alert] %> 

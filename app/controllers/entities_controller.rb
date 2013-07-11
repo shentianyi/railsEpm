@@ -1,5 +1,6 @@
 #encoding: utf-8
 class EntitiesController < ApplicationController
+    before_filter :get_ability_entity,:only=>[:update,:destroy]
   # get entity list
   def list
   end
@@ -18,7 +19,19 @@ class EntitiesController < ApplicationController
     render :json=>msg
   end
 
-  # destroy tenant
+  def update
+    if @entity
+      render :json=>@entity.update_attributes(params[:data])
+    end
+  end
+
   def destroy
+
+  end
+  
+  private
+
+  def get_ability_entity
+    @entity=Entity.accessible_by(current_ability).find_by_id(params[:id])
   end
 end
