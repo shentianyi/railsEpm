@@ -6,9 +6,9 @@
 
           <%@entities.each do |entity|%>
           <li class="<%= entity.id==@active_entity_id ? 'active' : ''%>">
-               <i class="icon-remove hide pull-left" number="1" belong="entity" onclick="remove_leftNav(event)"></i>
-               <i class="icon-pencil hide pull-left" number="1" belong="entity" onclick="edit_leftNav(event)"></i>
-               <a href="../users?p=<%=entity.id%>" number="1" belong="entity"><%= entity.name %></a>
+               <i class="icon-remove hide pull-left" number="<%= entity.id%>" belong="entity" onclick="remove_leftNav(event)"></i>
+               <i class="icon-pencil hide pull-left" number="<%= entity.id%>" belong="entity" onclick="edit_leftNav(event)"></i>
+               <a href="../users?p=<%=entity.id%>" number="<%= entity.id%>" belong="entity"><%= entity.name %></a>
           </li>
           <%end%>
           <li>

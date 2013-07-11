@@ -675,8 +675,8 @@ function insert_entity() {
                }, function(data) {
                     if(data.result) {
                           var length = $("#manage-group-kpi").find("li").length - 1;
-                           $("#manage-group-kpi li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number",data.number).attr("belong",data.belong))
-                               .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number",data.number).attr("belong",data.belong))
+                           $("#manage-group-kpi li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number",data.number).attr("belong","kpi"))
+                               .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number",data.object).attr("belong","kpi"))
                                .append($("<a href='../kpis?p=" + data.object + "'/>").text(val)));
                           $("#creat-newEntity").val("");
                     } else {
@@ -828,7 +828,6 @@ function update_leftNavi() {
                 case "kpi":
                     $.post('../kpi_categories', {
                     category : {
-                        belong : belong,
                         number : number,
                         val : val
                     }
@@ -841,7 +840,6 @@ function update_leftNavi() {
                 case "entity":
                     $.post('../kpi_categories', {
                         category : {
-                            belong : belong,
                             number : number,
                             val : val
                         }
@@ -854,7 +852,6 @@ function update_leftNavi() {
                 case "view":
                     $.post('../kpi_categories', {
                         category : {
-                            belong : belong,
                             number : number,
                             val : val
                         }
@@ -925,8 +922,8 @@ function insert_entityUser() {
                }, function(data) {
                     if(data.result) {
                            var length = $("#manage-group-user").find("li").length - 1;
-                           $("#manage-group-user li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number",data.number).attr("belong",data.belong))
-                               .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number",data.number).attr("belong",data.belong))
+                           $("#manage-group-user li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number",data.number).attr("belong","entity"))
+                               .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number",data.number).attr("belong","entity"))
                                .append($("<a href='../users?p=" + data.object + "'/>").text(val)));
                            $("#creat-newEntity").val("");
                     } else {
