@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130701085453) do
+ActiveRecord::Schema.define(:version => 20130710085758) do
 
   create_table "entities", :force => true do |t|
     t.string   "name"
@@ -104,16 +104,19 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
   add_index "kpis", ["user_id"], :name => "index_kpis_on_user_id"
 
   create_table "tenants", :force => true do |t|
-    t.integer  "edition_id"
-    t.integer  "status"
-    t.string   "company"
-    t.integer  "user_quantity", :default => 0
-    t.datetime "expires_at"
-    t.string   "domain"
-    t.string   "phone_number"
+    t.string   "company_name",           :null => false
+    t.string   "edition",                :null => false
+    t.string   "subscription_reference"
+    t.string   "expire_at",              :null => false
+    t.integer  "subscription_status",    :null => false
+    t.string   "customer_first_name"
+    t.string   "customer_last_name"
+    t.string   "customer_email"
+    t.string   "customer_phone"
     t.integer  "user_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.string   "domain"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
   end
 
   add_index "tenants", ["user_id"], :name => "index_tenants_on_user_id"
@@ -132,20 +135,27 @@ ActiveRecord::Schema.define(:version => 20130701085453) do
   add_index "user_kpi_items", ["user_id"], :name => "index_user_kpi_items_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.integer  "role_id"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "email"
-    t.string   "password"
-    t.string   "salt"
-    t.string   "remember_token"
-    t.datetime "remember_token_expires_at"
-    t.integer  "status"
-    t.boolean  "is_tenant",                 :default => false
+    t.string   "email",                                  :null => false
+    t.string   "crypted_password",                       :null => false
+    t.string   "password_salt",                          :null => false
+    t.string   "persistence_token",                      :null => false
+    t.string   "single_access_token",                    :null => false
+    t.string   "perishable_token",                       :null => false
+    t.integer  "login_count",         :default => 0,     :null => false
+    t.integer  "failed_login_count",  :default => 0,     :null => false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
+    t.integer  "status",              :default => 0,     :null => false
+    t.boolean  "confirmed",           :default => false, :null => false
     t.integer  "tenant_id"
+    t.boolean  "is_tenant",           :default => false
     t.integer  "entity_id"
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
+    t.integer  "role_id"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
   end
 
   add_index "users", ["entity_id"], :name => "index_users_on_entity_id"
