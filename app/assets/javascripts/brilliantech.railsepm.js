@@ -381,6 +381,11 @@ function form_chart(series,unit,interval){
             options.xAxis.tickInterval=24 * 3600 * 1000 * 30;
             break;
         case "quarter":
+            options.tooltip.formatter=function(){
+                return '<b>'+ this.series.name +'</b><br/>'+
+                    "数值"+this.y +'<br />'+this.x;
+            };
+            options.xAxis.categories
             break;
         case "year":
             options.tooltip.xDateFormat='%Y';
@@ -1459,22 +1464,25 @@ function entry_kpiCurrent(event) {
      var e = event ? event : (window.event ? window.event : null);
      var obj = e.srcElement || e.target;
      var id = $(obj).data("belong");
-     clearNoNum(obj);
-     if(e.keyCode == 13 && $(obj).val()) {
+     if(($(obj).val()).split("")[0]==0 && ($(obj).val()).split("")[1]!="."){
+         $(obj).val(0);
+     }
+     clearNoNumZero(obj);
+     if(e.keyCode == 13) {
+          if(parseFloat($(obj).val())==0){
+              $(obj).val(0);
+          }
           fill_kpiCurrent(obj);
      } else if(!$(obj).val()) {
           $("#" + id).find(".entry-kpiPercent").text("");
-          $(obj).attr("source", 0);
      }
 }
-
 function fill_kpiCurrent(obj) {
      var val = $(obj).val();
      var source = $(obj).attr("source");
      var id = $(obj).data("belong");
      if(val) {
           if(val != source) {
-               $(obj).attr("source", val);
                var type = $("#entry-date-type").find(".active").data("type");
                var date;
                switch(type) {
@@ -1494,14 +1502,26 @@ function fill_kpiCurrent(obj) {
                          date = $("#entry-kpi").val();
                          break;
                }
+               post('',{
+                   id:id,
+                   date:date,
+                   value:val
+               },function(data){
+                   if(data.result){
+                       $(obj).attr("source", val);
+                       var target = $(obj).data("target");
+                       var percent = (parseFloat(val) / parseFloat(target) * 100).toFixed(0);
+                       kpi_percent(percent, id);
+                   }
+                   else{
+                      alert(data.content);
+                   }
+               })
 
-               var target = $(obj).data("target");
-               var percent = (parseFloat(val) / parseFloat(target) * 100).toFixed(0);
-               kpi_percent(percent, id);
           }
-     } else {
+     }
+     else {
           $("#" + id).find(".entry-kpiPercent").text("");
-          $(obj).attr("source", 0);
      }
 }
 

@@ -131,7 +131,7 @@ function flash_hidden_message(obj, times) {
 //function MessageBoxAdd(str) {
 //     $('#MessageBox > p').html($('#MessageBox > p').html() + str).parent().show();
 //}
-//只能输入数字和小数点
+//只能输入数字和小数点,不能0开头
 function clearNoNum(obj)
 {
     //先把非数字的都替换掉，除了数字和.
@@ -142,6 +142,18 @@ function clearNoNum(obj)
     //保证只有出现一个.而没有多个.
     obj.value = obj.value.replace(/\.{2,}/g,".");
     obj.value = obj.value.replace(/^0{1,}/g,"");
+    //保证.只出现一次，而不能出现两次以上
+}
+//只能输入数字和小数点,可以0开头，最多两位
+function clearNoNumZero(obj)
+{
+    //先把非数字的都替换掉，除了数字和.
+    obj.value = obj.value.replace(/[^\d.]/g,"");
+    //必须保证第一个为数字而不是.
+    obj.value = obj.value.replace(/^\./g,"");
+    //保证只有出现一个.而没有多个.
+    obj.value = obj.value.replace(/\.{2,}/g,".");
+    obj.value = obj.value.replace(/^0{2,}/g,"");
     //保证.只出现一次，而不能出现两次以上
     obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
 }
