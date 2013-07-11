@@ -5,7 +5,9 @@
           </li>
           <%@categories.each do |category|%>
           <li class="<%= category.id==@active_category_id ? 'active' : ''%>">
-               <a href="../kpis?p=<%=category.id%>"><%= category.name %></a>
+               <i class="icon-remove hide pull-left" number="<%= category.id%>" belong="kpi" onclick="remove_leftNav(event)"></i>
+               <i class="icon-pencil hide pull-left" number="<%= category.id%>" belong="kpi" onclick="edit_leftNav(event)"></i>
+               <a href="../kpis?p=<%= category.id%>"><%= category.name %></a>
           </li>
           <%end%>
           <li>
