@@ -83,12 +83,13 @@
                     <!--<label>compare to</label>-->
                     <!--<input type="text" readonly="true" id="compare-from"/><span>to</span><input type="text" readonly="true" id="compare-to"/>-->
                 </div>
+                <a class="btn btn-wzx btn-primary pull-right analyze-btn" onclick="init_chart()">分析</a>
             </div>
            <div class="control-chart">
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn control-chart-btn-last" data-animation=false data-interval="365" data-type="year" title="year">Y</a>
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-interval="90" data-type="quarter" title="quarter">Q</a>
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-interval="30" data-type="month" title="month">M</a>
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-interval="7" data-type="week" title="week">W</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn control-chart-btn-last" data-animation=false data-type="year" title="year">Y</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-interval="90" title="quarter">Q</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-interval="30" title="month">M</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-interval="7" title="week">W</a>
                <a class="btn btn-mini btn-primary pull-right control-chart-btn active" data-animation=false data-interval="1" data-type="day" title="day">D</a>
            </div>
            <div id="container" class="analyze-chart">

@@ -4,35 +4,27 @@ class UsersController < ApplicationController
   #skip_before_filter :find_current_user_tenant,:only=>:login
   #skip_authorize_resource :only=>:login
   before_filter :check_tenant_function
-  #def login
-  #  # if request.post?
-  #
-  #  # if user=User.authenticate(params[:email],params[:password])
-  #  if user=User.first
-  #    session[:user_id]=user.id
-  #    render :json=>{:authed=>true}
-  #  else
-  #    render :json => {:authed=>false}
-  #  end
-  ## end
-  #end
-  def create
 
-  end
+  # get ability entity
+  before_filter :get_ability_entity,:only=>[:index,:new]
+
 
 
   def index
-    @entities=Entity.accessible_by(current_ability).all
-    @active_entity_id=params[:e].nil? ? @entities[0].id : params[:e]
+    @active_entity_id=params[:p].nil? ? @entities[0].id : params[:p].to_i
     @users=User.accessible_by(current_ability).where(:entity_id=>@active_entity_id).all
   end
 
-  #def logout
-  #end
 
   def add
     if request.post?
 
     end
+  end
+
+  private
+
+  def get_ability_entity
+    @entities=Entity.accessible_by(current_ability).all
   end
 end

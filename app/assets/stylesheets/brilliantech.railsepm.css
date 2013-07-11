@@ -161,7 +161,7 @@ b.caret{
     padding-top:2px;
 }
 .left-category{
-    width:150px;
+    width:170px;
     height:600px;
     border-right:1px solid #ddd;
 }
@@ -183,7 +183,7 @@ b.caret{
 /*content control*/
 .content-condition{
     width:750px;
-    margin:30px auto ;
+    margin:30px auto 50px;
 }
 .content-condition-part{
     width:310px;
@@ -233,7 +233,7 @@ b.caret{
 /*chart*/
 .control-chart{
     width:70%;
-    margin:0px auto;
+    margin:0 auto;
     height:45px;
     background:white;
 }
@@ -263,6 +263,10 @@ box-shadow:0 2px 0px #F39C12;
    width:70%;
    margin:0px auto;
    height:350px;
+}
+.btn.analyze-btn{
+    margin-right:20px;
+    margin-top:5px;
 }
 /***************************************************** dashboard **************************************************************/
 /*sub middle*/
@@ -338,22 +342,30 @@ ul.manage-group{
 }
 ul.manage-group>li{
     text-align:center;
-    padding:9px 10px;
+    padding:9px 20px;
     border-bottom:1px solid #ddd;
     text-overflow:ellipsis;
     white-space:nowrap;
     overflow:hidden;
     width:115px;
+    transition:all 0.15s ease 0s;
+}
+ul.manage-group>li i{
+    position:relative;
+    left:-10px;
+    margin-left:5px;
+    cursor:pointer;
+}
+ul.manage-group>li:hover i{
+    display:block;
 }
 ul.manage-group>li>a:hover {
-    padding-left:25px;
     color:#3498db;
 }
 ul.manage-group>li>a{
-    padding:9px 10px;
+    padding:9px 0px;
     font-size:17px;
     color:#9d9d9d;
-    transition:padding 0.15s ease 0s;
 }
 ul.manage-group>li.active{
     border-right:1px solid #f4f4f4;
@@ -374,8 +386,8 @@ ul.manage-group>li.active>a{
     width:30px;
     height:30px;
     background-repeat:no-repeat;
-    background-image:url("../images/manage-operate.png");
-    /*background-image:url("/assets/manage-operate.png");*/
+    /*background-image:url("../images/manage-operate.png");*/
+    background-image:url("/assets/manage-operate.png");
     cursor:pointer;
 }
 .manage-operate-edit{
@@ -483,6 +495,11 @@ select.calcuRelate-kpi{
 .calcuType-clear{
     margin-top:24px;
     margin-left:9px;
+}
+.calcuInput-mark{
+    position:relative;
+    left:-225px;
+    top:33px;
 }
 /*************************    user     ******************************/
 .edit-userTarget-input{
@@ -712,3 +729,4 @@ input.entry-kpi-date{
     height:100%;
     background-color:white;
 }
+

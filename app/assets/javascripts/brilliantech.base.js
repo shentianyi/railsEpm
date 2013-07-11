@@ -45,7 +45,7 @@ function hide_handle_dialog() {
 }
 
 function MessageBox(str, type) {
-     $('#message-content').html(str);
+     $('#MessageBox .message-body').find("p").text(str);
      $('#MessageBox').removeClass('hide');
      if(type != null) {
           $(".message-header").addClass(type);
@@ -124,13 +124,13 @@ function flash_hidden_message(obj, times) {
 }
 
 
-function MessageBoxClear() {
-     $('#MessageBox > p').html("");
-}
-
-function MessageBoxAdd(str) {
-     $('#MessageBox > p').html($('#MessageBox > p').html() + str).parent().show();
-}
+//function MessageBoxClear() {
+//     $('#MessageBox > p').html("");
+//}
+//
+//function MessageBoxAdd(str) {
+//     $('#MessageBox > p').html($('#MessageBox > p').html() + str).parent().show();
+//}
 //只能输入数字和小数点
 function clearNoNum(obj)
 {
@@ -141,7 +141,7 @@ function clearNoNum(obj)
     obj.value = obj.value.replace(/^0/g,"");
     //保证只有出现一个.而没有多个.
     obj.value = obj.value.replace(/\.{2,}/g,".");
-    obj.value = obj.value.replace(/^0{2,}/g,"");
+    obj.value = obj.value.replace(/^0{1,}/g,"");
     //保证.只出现一次，而不能出现两次以上
     obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
 }
