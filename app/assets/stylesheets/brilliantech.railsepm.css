@@ -342,7 +342,7 @@ ul.manage-group{
 }
 ul.manage-group>li{
     text-align:center;
-    padding:9px 20px;
+    padding:9px 5px 9px 35px;
     border-bottom:1px solid #ddd;
     text-overflow:ellipsis;
     white-space:nowrap;
@@ -351,10 +351,13 @@ ul.manage-group>li{
     transition:all 0.15s ease 0s;
 }
 ul.manage-group>li i{
-    position:relative;
-    left:-10px;
+    position: absolute;
+    left:-5px;
     margin-left:5px;
     cursor:pointer;
+}
+ul.manage-group>li i.icon-pencil{
+    left:15px;
 }
 ul.manage-group>li:hover i{
     display:block;
@@ -507,6 +510,31 @@ select.calcuRelate-kpi{
     position:relative;
     top:4px;
 }
+.nav.nav-tabs.manage-userTab{
+    position:relative;
+    left:19px;
+    top:-10px;
+    display:inline-block;
+    margin-bottom:-53px;
+}
+.nav.nav-tabs.manage-userTab>li a{
+    font-size:15px;
+    padding:13px 21px 8px;
+    color:#9d9d9d;
+}
+.nav.nav-tabs.manage-userTab>li a:hover{
+    background:transparent;
+    border-color:transparent;
+    color:#5496c2
+}
+.nav.nav-tabs.manage-userTab>li.active a{
+    background-color:#f4f4f4;
+    border-color:#DDDDDD #DDDDDD transparent !important;
+    color:#5496c2;
+}
+.btn.btn-addUser.btn-manageUser{
+    top:19px;
+}
 /*************************    add user     ******************************/
 .add-user-left{
     width:300px;
@@ -555,6 +583,26 @@ select.calcuRelate-kpi{
     color:white;
 }
 /*************************    delivery kpi     ******************************/
+.delivery-part{
+    width:400px;
+    margin:0 auto 60px;
+    padding:20px 50px;
+    border-bottom:2px dashed #ddd;
+}
+.delivery-part select.delivery-entity{
+    margin-top:7px;
+    width:122px;
+}
+.delivery-part select.delivery-kpi{
+    margin-top:8px;
+    margin-left:6px;
+}
+.delivery-mykpiMark{
+    font-size:21px;
+    width:84%;
+    margin:0 auto -26px;
+    border-bottom:1px solid #ddd;
+}
 .my-kpi{
     width:40%;
     margin-left:6%;
@@ -570,33 +618,12 @@ select.calcuRelate-kpi{
     word-wrap:break-word;
     word-break:break-all;
 }
-.all-kpi{
-    width:40%;
-    margin-right:6%;
-    margin-top:20px;
-
-}
-.all-kpi>table{
-    width:100%;
-}
-.all-kpi td{
-    text-align:center;
-    word-wrap:break-word;
-    word-break:break-all;
-    padding:5px 10px;
-    cursor:pointer;
-}
 .my-kpi-target{
     width:120px;
     position:relative;
     top:5px;
 }
-.deliverKpi-introMark{
-    font-size:12px;
-    margin-top:1px;
-    margin-right:4px;
-    color:#9d9d9d;
-}
+
 /***************************************************** kpi entry **************************************************************/
 .entryKPI-intervalMark{
     font-size:19px;
