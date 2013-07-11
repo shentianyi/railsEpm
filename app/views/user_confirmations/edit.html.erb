@@ -1,0 +1,11 @@
+<h1>Change My Password</h1>
+
+
+
+
+<%= form_tag( {:controller => :user_confirmations, :action => :update,
+               :id => @id}, {:method => :put} ) do %>
+
+    <%= submit_tag 'confirm!' %>
+
+<% end %>

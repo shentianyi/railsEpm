@@ -5,5 +5,7 @@ class Tenant < ActiveRecord::Base
   has_many :entities,:dependent=>:destroy
   has_many :kpis,:dependent=>:destroy
   belongs_to :super_user ,:class_name=>'User',:foreign_key=>'user_id'
-  attr_accessible :company, :domain, :edition_id, :expires_at, :phone_number, :status, :user_quantity
+
+  attr_accessible :company_name, :edition, :subscription_reference, :expire_at,:subscription_status
+  attr_accessible :customer_first_name, :customer_last_name,:customer_email,:customer_phone
 end
