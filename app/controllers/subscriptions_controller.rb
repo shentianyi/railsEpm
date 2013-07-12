@@ -1,3 +1,4 @@
+#utf-8
 class SubscriptionsController < ApplicationController
   skip_before_filter :require_user,:only=>[:new,:create]
   skip_before_filter :require_active_user,:only=>[:new,:create]
@@ -6,7 +7,10 @@ class SubscriptionsController < ApplicationController
   skip_authorize_resource :only=>[:new,:create]
   before_filter :require_no_user, :only => [:new, :create]
 
+  layout 'non_authorized'
+
   def new
+    @title= 'Sign up'
      render
   end
 

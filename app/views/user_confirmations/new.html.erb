@@ -1,12 +1,7 @@
-<%=flash[:notice]%>
-<%=flash[:alert]%>
-<p>if you have not received your confirmation letter, please click here to obtain a new one</p>
-<%= form_tag(:action=>'create') do %>
-    <%= label_tag(:email, "Email:") %>
+
+<p style="text-align: center">if you have not received your confirmation letter, please click here to obtain a new one</p>
+<%= form_tag({:action=>'create'},{:class=>'login-form'}) do %>
+    <%= label_tag(:email, "Your email for login:") %>
     <%= text_field_tag(:email) %>
-
-
-
-
-    <%= submit_tag("submit") %>
+    <%= submit_tag("submit", {:class=>"btn btn-wzx btn-success pull-right"}) %>
 <% end %>
