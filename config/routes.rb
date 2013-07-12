@@ -12,15 +12,22 @@ IFEpm::Application.routes.draw do
     collection do
       match :login
       post :add
+      post :update
     end
   end
 
   resource :user_sessions
   resource :user_confirmations
   resource :subscriptions
+  
   resources :kpis do
     collection do
       put :update
+      post :assign
+      post :kpi_option
+    end
+    member do
+      get :assign
     end
   end
   resources :kpi_categories do
@@ -28,6 +35,8 @@ IFEpm::Application.routes.draw do
       put :update
     end
   end
+  
+  resources :kpi_entries
 
   mount Resque::Server.new, :at=>"/admin/resque"
 
@@ -90,5 +99,5 @@ IFEpm::Application.routes.draw do
 
 # This is a legacy wild controller route that's not recommended for RESTful applications.
 # Note: This route will make all actions in every controller accessible via GET requests.
-#match ':controller(/:action(/:id))(.:format)'
+# match ':controller(/:action(/:id))(.:format)'
 end

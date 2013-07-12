@@ -674,7 +674,7 @@ function finish_editKPI(event) {
      var target = $("#" + id).find(".kpi-target").find("input").val();
      same_editKPI(id);
      $.ajax({
-          url : '../kpis',
+          url : '/kpis',
           type : 'PUT',
           data : {
                kpi : {
@@ -1146,34 +1146,12 @@ function delivery_Kpi(){
     var kpiValue=$("#delivery-kpi :selected").attr("value");
     var kpiText=$("#delivery-kpi :selected").text();
     var length = $("#kpi-table").find("tr").length;
-    post("..",{
-        entityValue:entityValue,
-        entityText:entityText,
-        kpiValue:kpiValue,
-        kpiText:kpiText
+    $.post("/kpis/assign",{
+         id:$('#user-id').val(),
+        category:entityValue, 
+        kpi:kpiValue
     },function(data){
-        if(data.result){
-            $("#kpi-table").append($("<tr />").attr("id", data.id).append($("<td align='center' />").text(length).addClass("kpi-order-id"))
-                .append($("<td align='center' />").text(entityText))
-                .append($("<td align='center' />").text(kpiText))
-                .append($("<td align='center' />").text(data.desc))
-                .append($("<td align='center' />").text(data.interval))
-                .append($("<td align='center' />").text(data.target).addClass("kpi-target"))
-                .append($("<td align='center' />").text(data.unit))
-                .append($("<td align='center' />").text(data.trend))
-                .append($("<td align='center' />").text(data.check))
-                .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-edit").data("belong", data.id).click(edit_delivery))
-                    .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", data.id).click(finish_editDelivery).text("完成")))
-                .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", data.id).click(remove_delivery))
-                    .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi-"+data.id).data("belong", data.id).click(cancel_editDelivery).text("取消")))
-            );
-            if(data.formula){
-                $("#"+data.id).find(".kpi-checked").attr("title",data.formulaShow);
-            }
-        }
-        else{
-            alert(data.content);
-        }
+       $("#user-assigned-kpis").html(data);
     })
 
 }
@@ -1624,3 +1602,11 @@ function kpi_percent(a, b) {
      }
 
 }
+
+
+  function kpi_reinit_by_category() {
+          var id = $("#delivery-entity :selected").attr("value");
+         $.post('/kpis/kpi_option',{id:id},function(data){
+              $("#kpi-select").html(data);
+         },'html');
+     }

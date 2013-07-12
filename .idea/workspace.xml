@@ -2,10 +2,40 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4d02d32-1234-4cb8-a218-cb1bce8f6844" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/Analytics.html" afterPath="$PROJECT_DIR$/app/assets/Analytics.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css" afterPath="$PROJECT_DIR$/app/assets/stylesheets/brilliantech.railsepm.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/kpis/_select_option.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/kpis/_user_kpi.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/kpi_entries/new.html.erb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/layouts/non_authorized.html.erb" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/kpi_entries/create.html.erb" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/views/users/index.html.erb~" afterPath="$PROJECT_DIR$/app/views/users/index.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.generators" afterPath="$PROJECT_DIR$/.idea/.generators" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.rakeTasks" afterPath="$PROJECT_DIR$/.idea/.rakeTasks" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/shares/_menu.html.erb" afterPath="$PROJECT_DIR$/app/views/shares/_menu.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/kpis/assign.html.erb" afterPath="$PROJECT_DIR$/app/views/kpis/assign.html.erb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/database.yml" afterPath="$PROJECT_DIR$/config/database.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/user_confirmations/edit.html.erb" afterPath="$PROJECT_DIR$/app/views/user_confirmations/edit.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/edit.html.erb" afterPath="$PROJECT_DIR$/app/views/users/edit.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/entity_groups_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/entity_groups_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/kpi_categories_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/kpi_categories_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/kpi_entries_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/kpi_entries_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/kpis_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/kpis_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/helpers/kpis_helper.rb" afterPath="$PROJECT_DIR$/app/helpers/kpis_helper.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/subscriptions/new.html.erb" afterPath="$PROJECT_DIR$/app/views/subscriptions/new.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/user_confirmations/new.html.erb" afterPath="$PROJECT_DIR$/app/views/user_confirmations/new.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/user_sessions/new.html.erb" afterPath="$PROJECT_DIR$/app/views/user_sessions/new.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/railsEpm.iml" afterPath="$PROJECT_DIR$/.idea/railsEpm.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/register.html" afterPath="$PROJECT_DIR$/app/assets/register.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/subscriptions_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/subscriptions_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/tenant.rb" afterPath="$PROJECT_DIR$/app/models/tenant.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/user_confirmations_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/user_confirmations_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/user_sessions_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/user_sessions_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/users_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/users_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="railsEpm.iws" />
@@ -55,7 +85,7 @@
       <file leaf-file-name="brilliantech.railsepm.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="436" column="67" selection-start="16532" selection-end="16532" vertical-scroll-proportion="0.70366883">
+            <state line="419" column="55" selection-start="15757" selection-end="15757" vertical-scroll-proportion="0.46378174">
               <folding />
             </state>
           </provider>
@@ -506,7 +536,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/brilliantech.railsepm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="436" column="67" selection-start="16532" selection-end="16532" vertical-scroll-proportion="0.70366883">
+        <state line="419" column="55" selection-start="15757" selection-end="15757" vertical-scroll-proportion="0.46378174">
           <folding />
         </state>
       </provider>

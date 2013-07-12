@@ -1,11 +1,12 @@
-<h1>Change My Password</h1>
 
 
 
 
-<%= form_tag( {:controller => :user_confirmations, :action => :update,
-               :id => @id}, {:method => :put} ) do %>
 
-    <%= submit_tag 'confirm!' %>
+
+<%= form_tag({:controller => :user_confirmations, :action => :update,
+               :id => @id}, {:class=>'login-form',:method => :put}) do %>
+    <%=label_tag('')%>
+    <%= submit_tag("click here to finalize your registration",{:class=>"btn btn-wzx btn-success pull-right"}) %>
 
 <% end %>

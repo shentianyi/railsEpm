@@ -5,7 +5,12 @@ class UserSessionsController < ApplicationController
   skip_before_filter :find_current_user_tenant,:only=>[:new,:create]
   skip_authorize_resource :only=>[:new,:create]
   before_filter :require_no_user, :only => [:new, :create]
+
+  layout 'non_authorized'
+
+
   def new
+    @title='Login'
     @user_session = UserSession.new
   end
 

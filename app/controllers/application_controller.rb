@@ -1,19 +1,20 @@
 #encoding: utf-8
 class ApplicationController < ActionController::Base
   #  include UrlHelper
+  protect_from_forgery
   helper :all
   helper_method :current_user_session, :current_user
   before_filter :require_user
   before_filter :require_active_user
   before_filter :find_current_user_tenant
-  # before_filter :check_tenant_status
+  before_filter :check_tenant_status
 
 
    set_current_tenant_through_filter
   ##before_filter :authorize
 
    authorize_resource
-  # protect_from_forgery
+
 
   private
   #def authorize
@@ -46,10 +47,10 @@ class ApplicationController < ActionController::Base
   end
 
 
-  # def current_tenant
-    # return @current_tenant if defined?(@current_tenant)
-    # @current_tenant = Tenant.find current_user.tenant_id
-  # end
+  def current_user_tenant
+    return @current_user_tenant if defined?(@current_user_tenant)
+    @current_user_tenant = Tenant.find current_user.tenant_id
+  end
 
 
   def store_location
@@ -58,7 +59,6 @@ class ApplicationController < ActionController::Base
 
 
   def redirect_back_or_default(default)
-    a = session[:return_to]
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
   end
@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       store_location
-      flash[:notice] = "You must be logged in to access this page"
+      flash[:alert] = "You must be logged in to access this page"
       redirect_to new_user_sessions_url
       return false
     end
@@ -106,7 +106,7 @@ class ApplicationController < ActionController::Base
   def require_no_user
     if current_user
       store_location
-      flash[:notice] = "You must be logged out to access this page"
+      flash[:alert] = "You must be logged out to access this page"
       redirect_to root_url
       return false
     end
@@ -115,7 +115,7 @@ class ApplicationController < ActionController::Base
   #must be login and active
   def require_active_user
     unless current_user && current_user.status == User_status::ACTIVE
-      flash[:notice]="Your user account is locked, if it's your new account, " +
+      flash[:alert]="Your user account is locked, if it's your new account, " +
           "please finish your registration with our confirmation letter"
       current_user_session.destroy
       redirect_to new_user_sessions_url
@@ -127,7 +127,7 @@ class ApplicationController < ActionController::Base
   def load_user_using_perishable_token
     @user = User.find_using_perishable_token(params[:id])
     unless @user
-      flash[:notice] = "We're sorry, but we could not locate your account. " +
+      flash[:alert] = "We're sorry, but we could not locate your account. " +
           "If you are having issues try copying and pasting the URL " +
           "from your email into your browser or restarting the " +
           "reset password process."
@@ -139,10 +139,10 @@ class ApplicationController < ActionController::Base
   def check_tenant_resource_limitation
     store_location
     count = count_tenant_resource controller_name
-    tenant = Tenant.find(current_tenant.id)
+    tenant = Tenant.find(current_user_tenant.id)
     limit = edition_resource_limit tenant.edition,controller_name.classify
     unless limit< 0 || count<limit
-      flash[:notice]= 'The resource you created has reached ' +
+      flash[:alert]= 'The resource you created has reached ' +
           'the limitation of your subscription. You may upgrade your plan'
       redirect_to billing_url
     end
@@ -151,31 +151,31 @@ class ApplicationController < ActionController::Base
 
   #check tenant status
   def check_tenant_status
-    unless (current_tenant.subscription_status ==Subscription_status::TRIAL ||
-        current_tenant.subscription_status ==Subscription_status::ACTIVE) &&
-        current_tenant.expire_at.to_time.utc >= Time.now.utc
-      case current_tenant.subscription_status
+    unless (current_user_tenant.subscription_status ==Subscription_status::TRIAL ||
+        current_user_tenant.subscription_status ==Subscription_status::ACTIVE) &&
+        current_user_tenant.expire_at.to_time.utc >= Time.now.utc
+      case current_user_tenant.subscription_status
         when Subscription_status::EXPIRED #expired
-          flash[:notice]='You account has been expired.' +
+          flash[:alert]='You account has been expired.' +
               'If you have renewed, please get contact with our service'
           redirect_to billing_url
         when Subscription_status::TRIAL #Expired
-          flash[:notice]='You account has been locked.'  +
+          flash[:alert]='You account has been locked.'  +
               ' If you have renewed, please get contact with our service'
           redirect_to billing_url
         when Subscription_status::LOCKED #Locked
           render_internal_error_page
         else
-          flash[:notice] = 'Something wrong with your account. Please contact the service'
+          flash[:alert] = 'Something wrong with your account. Please contact the service'
           render_internal_error_page
       end
     end
   end
 
   def check_tenant_function
-    unless($tenant_editions[current_tenant.edition][:functions].include?("#{params[:controller]}##{params[:action]}"))
+    unless($tenant_editions[current_user_tenant.edition][:functions].include?("#{params[:controller]}##{params[:action]}"))
       store_location
-      flash[:notice]='Your edition does not support the function, you may upgrade your plan'
+      flash[:alert]='Your edition does not support the function, you may upgrade your plan'
       redirect_back_or_default billing_url
          return false
     end

@@ -1,4 +1,17 @@
-<%= form_tag(:action=>'create') do %>
+<% if @user && @user.errors.any? %>
+    <div id="error_explanation" class="error_explanation ">
+      <h6>Oops..something wrong with your input</h6>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
+<%= form_tag({:action=>'create'},{:class=>'login-form'})  do %>
+
+
+
     <%= label_tag(:email, "Email:") %>
     <%= text_field_tag(:email) %>
 
@@ -12,5 +25,5 @@
     <%= text_field_tag(:company_name) %>
 
 
-    <%= submit_tag("submit") %>
+    <%= submit_tag("submit",{:class=>"btn btn-wzx btn-success pull-right"}) %>
 <% end %>
