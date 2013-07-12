@@ -182,11 +182,11 @@ b.caret{
 /*****************************************************     Anaytics      **************************************************************/
 /*content control*/
 .content-condition{
-    width:750px;
+    width:830px;
     margin:30px auto 50px;
 }
 .content-condition-part{
-    width:310px;
+    width:400px;
 }
 .content-condition-part>p{
     margin-bottom:10px;
@@ -210,14 +210,22 @@ b.caret{
 .content-condition-part.content-condition-rightpart{
     width:390px;
 }
+
 .content-condition-leftpart>select.conditionPart-entity{
     width:170px;
 }
+.content-condition-leftpart>select.conditionPart-group{
+    width:90px;
+    margin-right:5px;
+}
 .content-condition-leftpart>select{
     width:110px;
+
 }
 .content-condition-leftpart>span{
-    margin:5px 7px;
+    margin:0px 7px;
+    font-weight:bold;
+    font-size:16px;
 }
 .content-condition-rightpart>input{
     width:150px;
@@ -241,6 +249,7 @@ b.caret{
     margin-left:10px;
     margin-top:9px;
     padding:3px 7px 0px;
+    cursor:default;
 }
 .control-chart-btn.control-chart-btn-last{
     margin-right:38px;

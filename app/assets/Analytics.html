@@ -56,19 +56,27 @@
             <div class="content-condition clearfix">
                 <div class="content-condition-part content-condition-leftpart pull-left">
                     <p class="text-center">KPI</p>
-                    <select class="pull-left conditionPart-entity" id="chart-entity">
-                        <option style="display:none" selected="selected" id="none-entity">选择观察组</option>
-                        <option id="entity1">entityGroup 1</option>
-                        <option id="entity2">entityGroup 2</option>
-                        <option id="entity3">entityGroup 3</option>
+                    <select class="pull-left conditionPart-group" id="chart-group" origin="全部">
+                        <option style="display:none" selected="selected" id="none-group">类别</option>
+                        <option value="group0">全部</option>
+                        <option value="group1">entity1</option>
+                        <option value="group2">entity2</option>
+                        <option value="group3">entity3</option>
                     </select>
-                    <span class="inline pull-left">-</span>
                     <select class="pull-left" id="chart-kpi">
                         <option style="display:none" selected="selected" id="none-kpi">选择KPI</option>
-                        <option id="kpi1">KPI 1</option>
-                        <option id="kpi2">KPI 2</option>
-                        <option id="kpi3">KPI 3</option>
+                        <option value="kpi1" interval="day">KPI 1</option>
+                        <option value="kpi2" interval="week">KPI 2</option>
+                        <option value="kpi3" interval="day">KPI 3</option>
                     </select>
+                    <span class="inline pull-left">-</span>
+                    <select class="pull-left conditionPart-entity" id="chart-view">
+                        <option style="display:none" selected="selected" id="none-view">选择观察组</option>
+                        <option value="entity1">view1</option>
+                        <option value="entity2">view2</option>
+                        <option value="entity3">view3</option>
+                    </select>
+
                     <!--<label>compare to</label>-->
                     <!--<select>-->
                         <!--<option>KPI 1</option>-->
@@ -85,6 +93,7 @@
                 </div>
                 <a class="btn btn-wzx btn-primary pull-right analyze-btn" onclick="init_chart()">分析</a>
             </div>
+            <p class="text-warning text-center hide" id="chart-chooseWarning"></p>
            <div class="control-chart">
                <a class="btn btn-mini btn-primary pull-right control-chart-btn control-chart-btn-last" data-animation=false data-type="year" title="year">Y</a>
                <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-interval="90" title="quarter">Q</a>
