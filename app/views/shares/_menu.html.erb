@@ -1,5 +1,5 @@
 <div class="page-top">
-     <img src="../assets/headicon.png"/>
+     <img src="/assets/headicon.png"/>
      <label class="company-name">BrillianTech</label>
      <div class="top-tool pull-right">
           <a class="tool-setting" data-placement="bottom" data-animation=false id="tool-setting" title="设置" > </a>
@@ -25,10 +25,10 @@
                <a class="dropdown-toggle" data-toggle="dropdown" href="#"> 管理<b class="caret"></b> </a>
                <ul class="dropdown-menu">
                     <li>
-                         <a class="main-navi-dropitem" href="../kpis">KPI</a>
+                         <a class="main-navi-dropitem" href="<%=kpis_path%>">KPI</a>
                     </li>
                     <li>
-                         <a class="main-navi-dropitem" href="../users">用户</a>
+                         <a class="main-navi-dropitem" href="<%=users_path%>">用户</a>
                     </li>
                     <li>
                          <a class="main-navi-dropitem" href="#">付费</a>
@@ -36,5 +36,5 @@
                </ul>
           </li>
      </ul>
-     <a class="btn btn-success btn-navi pull-right" href="">输入 KPI</a>
+     <a class="btn btn-success btn-navi pull-right" href="/kpi_entries/new">输入 KPI</a>
 </div>

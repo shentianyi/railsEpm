@@ -1,2 +1,45 @@
-<h1>Kpi#assign</h1>
-<p>Find me in app/views/kpi/assign.html.erb</p>
+<!--导航的sub middle-->
+<div class="sub-middle sub-middle-manage">
+     <a class="btn btn-addUser btn-manageUser" onclick="window.history.go(-1)">返回</a>
+     <ul class="nav nav-tabs manage-userTab">
+          <li>
+               <a href="#">添加用户</a>
+          </li>
+          <li>
+               <a href="#">编辑用户</a>
+          </li>
+          <li class="active">
+               <a href="#">分配权限</a>
+          </li>
+     </ul>
+</div>
+
+<div class="middle clearfix">
+
+     <!--delivery part-->
+     <div class="delivery-part">
+          <p class="inline">
+               类别:
+          </p>
+          <%= select_tag :category_id,options_from_collection_for_select(@categories,'id','name'),{:id=>'delivery-entity',:class=>"delivery-entity",:onchange=>'kpi_reinit_by_category()'}%>
+          <br />
+          <p class="inline">
+               KPI:
+          </p>
+          <div id="kpi-select">
+               <%= select_tag :kpi_id,options_from_collection_for_select(@kpis,'id','name'),{:id=>'delivery-kpi',:class=>"delivery-kpi",:prompt=>'------all------'}%>
+          </div>
+          <a class="btn btn-wzx btn-primary pull-right" onclick="delivery_Kpi()">分配</a>
+     </div>
+     <h3 class="normal-blue text-center delivery-mykpiMark">该用户的KPI</h3>
+     <div id="user-assigned-kpis">
+          <%= render :partial=>'user_kpi'%>
+          </div> 
+     <input type="hidden" id="user-id" value="<%= @user_id%>"/>
+</div>
+<script type="text/javascript">
+     $(document).ready(function() {
+          init_addUser();
+     }); 
+</script>
+

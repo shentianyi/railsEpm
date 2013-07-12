@@ -33,10 +33,7 @@ class KpiCategoriesController < ApplicationController
     end
     render :json=>msg
   end
-
-  def assign
-  end
-
+ 
   private
 
   def get_ability_category

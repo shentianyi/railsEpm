@@ -1,7 +1,6 @@
 #encoding: utf-8
 class User < ActiveRecord::Base
-  attr_accessible :email, :password, :password_confirmation,:status,:perishable_token,:confirmed,:first_name,:last_name,:is_tenant
-  attr_accessible :tenant_id
+
   belongs_to :tenant
   belongs_to :entity
   
@@ -10,6 +9,9 @@ class User < ActiveRecord::Base
   has_many :user_kpi_items,:dependent=>:destroy
   has_many :kpi_entries, :through=>:user_kpi_items
   
+
+  attr_accessible :email, :password, :password_confirmation,:status,:perishable_token,:confirmed,:first_name,:last_name,:is_tenant
+  attr_accessible :tenant_id,:role_id,:entity_id
 
 
   acts_as_authentic do |c|
