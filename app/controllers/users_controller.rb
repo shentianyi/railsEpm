@@ -18,27 +18,38 @@ class UsersController < ApplicationController
   end
 
   def update
-       if @user and @user.update_attributes(params[:user])
-         redirect_to users_path
-       else
-         flash[:notice]='error'
-         render 'edit'
-       end
-  end
-
-  def add
-    if request.post?
-
+    if @user and @user.update_attributes(params[:user])
+      redirect_to users_path
+    else
+      flash[:notice]='error'
+      render 'edit'
     end
   end
 
+  def new
+    @user=User.new
+  end
+
+  def create
+    @user=User.new(params[:user])
+    if @user.save
+      redirect_to users_path
+    else
+      flash[:notice]='error'
+      render 'new'
+    end
+  end
+
+  def destroy
+
+  end
   private
 
   def get_ability_entity
     @entities=Entity.accessible_by(current_ability).all
   end
-  
-    def get_ability_user
+
+  def get_ability_user
     @user=User.accessible_by(current_ability).find_by_id(params[:id])
   end
 end

@@ -12,7 +12,7 @@
           <th width="50px" colspan="2">操作</th>
      </tr>
      <%@user_kpis.each_with_index do |kpi,i|%>
-     <tr id="<%= kpi.id%>">
+     <tr id="<%= kpi.user_kpi_item_id%>">
           <td align="center" class="kpi-order-id"><%= i+1%></td>
           <td align="center"><%= kpi.category_name%></td>
           <td align="center"><%= kpi.name%></td>
@@ -26,8 +26,8 @@
           <%else%>
           <td align="center" >否</td>
           <%end%>
-          <td align="center"><div class="manage-operate manage-operate-edit" data-belong="<%= kpi.id%>" onclick="edit_kpiItem(event)"></div><a class="btn btn-success manage-operate-reverse  hide" data-belong="<%= kpi.id%>" onclick="finish_editKPI(event)">完成</a></td>
-          <td align="center"><div class="manage-operate manage-operate-del" data-belong="<%= kpi.id%>" onclick="remove_kpiItem(event)"></div><a class="btn manage-operate-reverse  hide" id="cancel-edit-kpi-<%= kpi.id%>" data-belong="<%= kpi.id%>" onclick="cancel_editKPI(event)">取消</a></td>
+          <td align="center"><div class="manage-operate manage-operate-edit" data-belong="<%= kpi.user_kpi_item_id%>" onclick="edit_delivery(event)"></div><a class="btn btn-success manage-operate-reverse  hide" data-belong="<%= kpi.user_kpi_item_id%>" onclick="finish_editDelivery(event)">完成</a></td>
+          <td align="center"><div class="manage-operate manage-operate-del" data-belong="<%= kpi.user_kpi_item_id%>" onclick="remove_delivery(event)"></div><a class="btn manage-operate-reverse  hide" id="cancel-edit-kpi-<%= kpi.user_kpi_item_id%>" data-belong="<%= kpi.user_kpi_item_id%>" onclick="cancel_editDelivery(event)">取消</a></td>
      </tr>
      <%end%>
 </table>

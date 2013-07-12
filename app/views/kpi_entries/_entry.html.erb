@@ -15,7 +15,7 @@
           if kpi.user_kpi_item_target==0
             percent="NaN%"
           else
-          percent="#{(value/ kpi.user_kpi_item_target).round(2)}%"
+          percent="#{(value/ kpi.user_kpi_item_target*100).round(2)}%"
           end
       end
      %>

@@ -1,0 +1,33 @@
+<div class="left-entity_group pull-left">
+     <ul class="manage-group" id="manage-group-view">
+          <li>
+               <h3 class="no-margin">观察点</h3>
+          </li>
+          <%@entity_groups.each do |entity_group|%>
+          <li class="<%= entity_group.id==@active_entity_group_id ? 'active' : ''%>">
+               <i class="icon-remove hide pull-left" number="<%= entity_group.id%>" belong="view" onclick="remove_leftNav(event)"></i>
+               <i class="icon-pencil hide pull-left" number="<%= entity_group.id%>" belong="view" onclick="edit_leftNav(event)"></i>
+               <a href="../entity_groups?p=<%= entity_group.id%>"  number="<%= entity_group.id%>" belong="view"><%= entity_group.name %></a>
+          </li>
+          <%end%>
+          <li>
+               <button class="btn btn-primary" onclick="create_entityBlock()">
+                    观察点
+               </button>
+          </li>
+          <div class="absolute creat-entity-block hide" id="creatEntity-block">
+               <p>
+                    观察点
+               </p>
+               <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
+               <input type="text" id="creat-newEntity" onkeyup="create_Viewentity(event)"/>
+          </div>
+          <div class="absolute creat-entity-block hide" id="edit-block">
+               <p>
+                    修改
+               </p>
+               <i class="icon-remove pull-right" onclick="close_editBlock()"></i>
+               <input type="text" id="change-leftNavi" onkeyup="change_leftNavi(event)"/>
+          </div>
+     </ul>
+</div>

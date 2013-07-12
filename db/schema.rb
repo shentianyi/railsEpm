@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130710085758) do
+ActiveRecord::Schema.define(:version => 20130712080747) do
 
   create_table "entities", :force => true do |t|
     t.string   "name"
@@ -65,10 +65,14 @@ ActiveRecord::Schema.define(:version => 20130710085758) do
     t.boolean  "abnormal",         :default => false
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
+    t.integer  "user_id"
+    t.integer  "entity_id"
   end
 
+  add_index "kpi_entries", ["entity_id"], :name => "index_kpi_entries_on_entity_id"
   add_index "kpi_entries", ["entry_at"], :name => "index_kpi_entries_on_entry_at"
   add_index "kpi_entries", ["parsed_entry_at"], :name => "index_kpi_entries_on_parsed_entry_at"
+  add_index "kpi_entries", ["user_id"], :name => "index_kpi_entries_on_user_id"
   add_index "kpi_entries", ["user_kpi_item_id"], :name => "index_kpi_entries_on_user_kpi_item_id"
 
   create_table "kpi_items", :force => true do |t|

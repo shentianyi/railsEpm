@@ -19,7 +19,7 @@ IFEpm::Application.routes.draw do
   resource :user_sessions
   resource :user_confirmations
   resource :subscriptions
-  
+
   resources :kpis do
     collection do
       put :update
@@ -30,18 +30,31 @@ IFEpm::Application.routes.draw do
       get :assign
     end
   end
+  
   resources :kpi_categories do
     collection do
       put :update
     end
   end
-  
+
   resources :kpi_entries do
     collection do
       post :entry
     end
   end
-
+  
+  resources :entity_groups do
+    collection do
+      put :update
+    end
+  end
+    resources :user_kpi_items do
+    collection do
+      put :update
+    end
+  end
+  
+  resources :entity_group_items
   mount Resque::Server.new, :at=>"/admin/resque"
 
 #	constraints(Subdomain) do

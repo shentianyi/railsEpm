@@ -5,11 +5,6 @@ module KpisHelper
     formula.scan(/\[\d+\]/).map{|item| /\d+/.match(item).to_s}
   end
 
-  # parse formula to calculate format
-  # def self.parse_formula_to_calculate_fromat formula
-  # formula.gsub(/\[/,"f[:'").gsub(/\]/,"']")
-  # end
-
   # assign kpi to user by id
   def self.assign_kpi_to_user_by_id kpi_id,user_id,current_ability
     if kpi=Kpi.accessible_by(current_ability).find_by_id(kpi_id) and user=User.accessible_by(current_ability).find_by_id(user_id)

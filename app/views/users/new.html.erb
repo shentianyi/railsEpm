@@ -1,40 +1,64 @@
 <div class="sub-middle sub-middle-manage">
-     <a class="btn btn-addUser" onclick="window.history.go(-1)">返回</a>
-     <a class="btn btn-primary btn-addUser" onclick="post_newUser()">完成</a>
-     <h3 class="text-center inline-block add-user-mark" data-type="add" id="add-user-mark"></h3>
+     <a class="btn btn-addUser btn-manageUser" onclick="window.history.go(-1)">返回</a>
+     <ul class="nav nav-tabs manage-userTab">
+          <li class="active">
+               <a href="#">添加用户</a>
+          </li>
+          <li>
+               <a href="#">编辑用户</a>
+          </li>
+          <li>
+               <a href="#">分配权限</a>
+          </li>
+     </ul>
 </div>
 <div class="middle clearfix">
      <div class="add-user-left" id="add-user-left">
-          <!--<h4 class="text-center normal-blue">基本信息</h4>-->
-          <p>
-               *姓名
-          </p>
-          <input type="text" id="new-user-name" name="first_name"/>
-          <p>
-               *邮箱
-          </p>
-          <input type="text" id="new-user-mail" name="email"/>
-          <p>
-               *密码
-          </p>
-          <input type="password" id="new-user-password" name="password"/>
-          <p>
-               *组织
-          </p>
-          <%= select_tag :entity_id,options_from_collection_for_select(@entities,'id','name'),{:id=>'new-user-entity'}%>
-          <p>
-               *权限
-          </p>
-          <label class="radio">
-               <input type="radio" name="optionsRadios" data-role="1" checked>
-               role,dasdsadasdasasaSAsaSAsaSASASAsASas </label>
-          <label class="radio">
-               <input type="radio" name="optionsRadios" data-role="2">
-               role,dasdsadasdasasaSAsaSAsaSASASAsASas </label>
-          <label class="radio">
-               <input type="radio" name="optionsRadios" data-role="3">
-               role,dasdsadasdasasaSAsaSAsaSASASAsASas </label>
-          <p class="hide text-center text-warning" id="add-warn"></p>
+          <%= form_for(@user)   do %>
+          <div class="add-user-left" id="add-user-left">
+               <p>
+                    *姓名
+               </p>
+               <input type="text" id="new-user-name"  name="user[first_name]"/>
+               <p>
+                    *邮箱
+               </p>
+               <input type="text" id="new-user-mail"   name="user[email]"/>
+               <p>
+                    *密码
+               </p>
+               <input type="password" id="new-user-password" name="user[password]"/>
+               <p>
+               <p>
+                    *组
+               </p>
+               <%= select_tag :entity,options_from_collection_for_select(@entities,'id','name'),{:id=>'new-user-entity',:name=>'user[entity_id]'}%>
+               <p>
+                    *权限
+               </p>
+               <label class="radio">
+                    <input type="radio" name="user[role_id]" data-role="1" checked value="100">
+                    普通用户 </label>
+               <label class="radio">
+                    <input type="radio" name="user[role_id]" data-role="2" value="200">
+                    部门经理</label>
+               <label class="radio">
+                    <input type="radio" name="user[role_id]" data-role="3" value="300">
+                    总经理</label>
+               <label class="radio">
+                    <input type="radio" name="user[role_id]" data-role="4" value="400">
+                    管理员</label>
+               <p class="hide text-center text-warning" id="add-warn">
+                    <%= flash[:notice]%>
+               </p>
+               <%= submit_tag '保存' %>
+
+               <% end %>
+          </div>
      </div>
 
-</div>
+     <script type="text/javascript">
+          $(document).ready(function() {
+               init_addUser();
+          })
+     </script>

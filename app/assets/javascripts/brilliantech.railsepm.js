@@ -650,7 +650,7 @@ function remove_kpiItem(event) {
      if(confirm("确认删除？")) {
           var id = find_id(event);
           $.ajax({
-               url : '../kpis/' + id,
+               url : '/kpis/' + id,
                type : 'DELETE',
                success : function(data) {
                     if(data.result) {
@@ -847,10 +847,11 @@ function remove_leftNav(event) {
                     break;
                case "entity":
                     url = "../entities/";
-                    local="../users"
+                    local="../users";
                     break;
                case "view":
                     url = "../entity_groups/";
+                       local= "../entity_groups/";
                     break;
           }
           if(url) {
@@ -1095,7 +1096,7 @@ function remove_delivery(event) {
     if(confirm("确认删除？")) {
         var id = find_id(event);
         $.ajax({
-            url:'../kpis/'+id,
+            url:'/user_kpi_items/'+id,
             type: 'DELETE',
             success:function(data){
                 if(data.result){
@@ -1118,9 +1119,9 @@ function finish_editDelivery(event) {
     var target = $("#" + id).find(".kpi-target").find("input").val();
     same_editDelivery(id);
     $.ajax({
-        url:'../kpis',
+        url:'/user_kpi_items',
         type:'PUT',
-        data:{kpi:{id:id,target:target}},
+        data:{id:id,user_kpi_item:{target:target}},
         success:function(data){
                 $("#" + id).find(".kpi-target").text(target);
         }
@@ -1168,20 +1169,20 @@ function create_Viewentity(event) {
 function insert_entityView() {
      var test = test_sameEntityView();
      if($("#creat-newEntity").val() && test == -1) {
-          var length = $("#manage-group-user").find("li").length - 1;
+          var length = $("#manage-group-view").find("li").length - 1;
           var val = $("#creat-newEntity").val();
          if($('#creat-newEntity').val().length > 0) {
              $.post('../entity_groups', {
-                 view : {
+                 entity_group : {
                      name : $('#creat-newEntity').val()
                  }
              }, function(data) {
                  if(data.result) {
-                     var length = $("#manage-group-user").find("li").length - 1;
+                     var length = $("#manage-group-view").find("li").length - 1;
                      $("#manage-group-view li:eq(" + length + ")").before($("<li />")
                          .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "view"))
                          .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "view"))
-                         .append($("<a href='../users?p=" + data.object + "'/>").text(val)));
+                         .append($("<a href='../entity_groups?p=" + data.object + "'/>").text(val)));
                      $("#creat-newEntity").val("");
                  } else {
                      alert(data.content);
@@ -1221,10 +1222,11 @@ function delivery_view() {
             test=false;
         }
     });
-    if(test){
-        post("..",{
-            viewText:viewText,
-            viewValue:viewValue
+    if(test && $("#entity_group_id").val().length>0){
+        $.post("/entity_group_items",{
+           entity_group_item:{ entity_group_id:$("#entity_group_id").val(),
+            entity_id:viewValue
+            }
         },function(data){
             if(data.result){
                 $("#kpi-table").append($("<tr />").attr("id", data.id).append($("<td align='center' />").text(length).addClass("kpi-order-id"))
@@ -1243,7 +1245,7 @@ function remove_viewEntity(event) {
     if(confirm("确认删除？")) {
         var id = find_id(event);
         $.ajax({
-            url:'',
+            url:'../entity_group_items/'+id,
             type: 'DELETE',
             success:function(data){
                 if(data.result){

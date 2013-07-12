@@ -23,7 +23,6 @@
                *邮箱
           </p>
           <input type="text" id="new-user-mail" value="<%= @user.email%>" name="user[email]"/>
-          <p>
                *组
           </p>
           <%= select_tag :entity,options_from_collection_for_select(@entities,'id','name',:selected=>@user.entity_id),{:id=>'new-user-entity',:name=>'user[entity_id]'}%>

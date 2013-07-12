@@ -9,7 +9,8 @@ module KpiEntriesHelper
         if kpi_entry=KpiEntry.where(:user_kpi_item_id=>params[:id],:entry_at=>entry_at).first
           kpi_entry.update_attributes(:original_value=>params[:value])
         else
-          kpi_entry=KpiEntry.new(:original_value=>params[:value],:user_kpi_item_id=>params[:id],:entry_at=>entry_at, :parsed_entry_at=>parsed_entry_at)
+          user_kpi_item=UserKpiItem.find_by_id(params[:id])
+          kpi_entry=KpiEntry.new(:original_value=>params[:value],:user_kpi_item_id=>params[:id],:entry_at=>entry_at, :parsed_entry_at=>parsed_entry_at,:entity_id=>user_kpi_item,:user_id=>user_kpi_item.user_id)
         kpi_entry.kpi=kpi
         kpi_entry.save
         end
@@ -18,7 +19,13 @@ module KpiEntriesHelper
     rescue Exception=>e
       puts e.message
     end
+  end
 
+  def self.get_kpi_entry_analysis_data kpi_id,entity_group_id,start_date,end_date
+    if kpi=Kpi.find_by_id and entity_group=EntityGroup.find_by_id(entity_group_id)
+      entities=entity_group.entities
+      entries=  KpiEntry.where(:kpi_id=>kpi_id,:entity_id=>entities.collect{|entity| entity.id},:entry_at=>[start_date,end_date]).all
+    end
   end
 
   # calculate kpi parent value
