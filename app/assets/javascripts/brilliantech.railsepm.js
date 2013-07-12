@@ -23,7 +23,7 @@ function init() {
 function while_hide(a) {
      setTimeout(function() {
           $("#" + a).addClass("hide");
-     }, "2000");
+     }, "1000");
 }
 
 function init_rightContent() {
@@ -104,6 +104,7 @@ function init_analytics() {
           selectOtherMonths : true,
           firstDay : 1,
           dateFormat : 'yy-m-d',
+          showWeek : true,
           onSelect : function(dateText, inst) {
                var date = $(this).datepicker('getDate');
                if(date.getDay() == 0) {
@@ -115,12 +116,12 @@ function init_analytics() {
                $("#to").attr("week", ($.datepicker.iso8601Week(startDate)));
           }
      });
-     $(".control-chart-btn").bind("click", function(event) {
-          $(".control-chart-btn").removeClass("active");
-          $(this).addClass("active");
-          var type = $(this).data("type");
-          init_chart();
-     });
+//     $(".control-chart-btn").bind("click", function(event) {
+//          $(".control-chart-btn").removeClass("active");
+//          $(this).addClass("active");
+//          var type = $(this).data("type");
+//          init_chart();
+//     });
      var date = new Date();
      var nowDate = date.getDate();
      var day = date.getDay();
@@ -136,178 +137,190 @@ function init_analytics() {
      }
      $("#from").val(formatDate(WeekFirstDay)).attr("week", $.datepicker.iso8601Week(WeekFirstDay));
      $("#to").val(formatDate(WeekLastDay)).attr("week", $.datepicker.iso8601Week(WeekFirstDay));
-     init_chart();
-     //         var dateBegin,dateEnd;
-     //         var date1=($("#from").val()).split("-");
-     //         var date2=($("#to").val()).split("-");
-     //         for(i=0;i<3;i++){
-     //             if(parseInt(date1[i])<parseInt(date2[i])){
-     //                 dateBegin=date1;
-     //                 dateEnd=date2;
-     //                 break;
-     //             }
-     //             else if(parseInt(date1[i])>parseInt(date2[i])){
-     //                 dateBegin=date2;
-     //                 dateEnd=date1;
-     //                 break;
-     //             }
-     //             else{
-     //                 dateBegin=date1;
-     //                 dateEnd=date2;
-     //             }
-     //         }
-     //         var chart={
-     //             y:dateBegin[0],
-     //             m:parseInt(dateBegin[1])-1==0 ? 12: dateBegin[1]-1,
-     //             d:dateBegin[2]
-     //         }
-     //         $("#container").highcharts(
-     //             {
-     //                 chart: {
-     //                     type: 'line',
-     //                     events: {
-     //                         addSeries: function() {
-     //                             alert ('A series was added, about to redraw chart');
-     //                         }
-     //                     }
-     //                 },
-     //                 credits:{
-     //                     enabled:false
-     //                 },
-     //                 title: {
-     //                     text:""
-     //                 },
-     //                 tooltip: {
-     ////                     formatter: function() {
-     ////                         return '<b>'+ this.series.name +'</b><br/>'+
-     ////                             "数值"+this.y +'<br />'+this.x;
-     ////                     },
-     //                     xDateFormat: '%Y-%m-%d'
-     //                 },
-     //                 xAxis: {
-     //                     type: 'datetime',
-     //                     dateTimeLabelFormats: {
-     //                         day:'%e/%b'
-     //                     },
-     //                     labels:{
-     //                         style:{
-     //                             fontWeight:800
-     //                         }
-     //                     },
-     //                     tickInterval: 24 * 3600 * 1000*365 // one day
-     //                 },
-     //                 yAxis: [{
-     //                     title: {
-     //                         enabled:false
-     //                     },
-     //                     tickWidth:1,
-     //                     offset:10,
-     //                     labels:{
-     //                         format:'{value}$'
-     //                     },
-     //                     lineWidth:1
-     //                 },{
-     //                     opposite:true,
-     //                     title:{
-     //                         enabled:false
-     //                     },
-     //                     tickWidth:1,
-     //                     offset:10,
-     //                     label:{
-     //                         format:'{value}days'
-     //                     },
-     //                     lineWidth:1
-     //                 }],
-     //                 series: [
-     //                     {
-     //                         type:"area",
-     //                         name: 'actual',
-     //                         data: [100,100,100,150,150,150,200],
-     //                         pointStart: Date.UTC(chart.y,chart.m,chart.d),
-     //                         pointInterval: 24 * 3600 * 1000*365//one day
-     //                     },
-     //                     {
-     //                         type:"line",
-     //                         name: 'target',
-     //                         data: [80,110,120,140,150,150,300],
-     //                         pointStart: Date.UTC(chart.y,chart.m,chart.d),
-     //                         yAxis:1,
-     //                         pointInterval: 24 * 3600 * 1000*365 // one day
-     //                     }
-     //                 ]
-     //             }
-     //         );
-     //
-     //}
+     $("#chart-group").find("option").each(function(){
+        $(this).bind("click",chart_chooseEntity)
+     });
+//              var dateBegin,dateEnd;
+//              var date1=($("#from").val()).split("-");
+//              var date2=($("#to").val()).split("-");
+//              for(i=0;i<3;i++){
+//                  if(parseInt(date1[i])<parseInt(date2[i])){
+//                      dateBegin=date1;
+//                      dateEnd=date2;
+//                      break;
+//                  }
+//                  else if(parseInt(date1[i])>parseInt(date2[i])){
+//                      dateBegin=date2;
+//                      dateEnd=date1;
+//                      break;
+//                  }
+//                  else{
+//                      dateBegin=date1;
+//                      dateEnd=date2;
+//                  }
+//              }
+//              var chart={
+//                  y:dateBegin[0],
+//                  m:parseInt(dateBegin[1])-1==0 ? 12: dateBegin[1]-1,
+//                  d:dateBegin[2]
+//              }
+//              $("#container").highcharts(
+//                  {
+//                      chart: {
+//                          type: 'line',
+//                          events: {
+//                              addSeries: function() {
+//                                  alert ('A series was added, about to redraw chart');
+//                              }
+//                          }
+//                      },
+//                      credits:{
+//                          enabled:false
+//                      },
+//                      title: {
+//                          text:""
+//                      },
+//                      tooltip: {
+//     //                     formatter: function() {
+//     //                         return '<b>'+ this.series.name +'</b><br/>'+
+//     //                             "数值"+this.y +'<br />'+this.x;
+//     //                     },
+//                          xDateFormat: '%Y-%m-%d'
+//                      },
+//                      xAxis: {
+//                          type: 'datetime',
+//                          dateTimeLabelFormats: {
+//                              day:'%e/%b'
+//                          },
+//                          labels:{
+//                              style:{
+//                                  fontWeight:800
+//                              }
+//                          },
+//                          tickInterval: 24 * 3600 * 1000 // one day
+//                      },
+//                      yAxis: [{
+//                          title: {
+//                              enabled:false
+//                          },
+//                          tickWidth:1,
+//                          offset:10,
+//                          labels:{
+//                              format:'{value}$'
+//                          },
+//                          lineWidth:1
+//                      },{
+//                          opposite:true,
+//                          title:{
+//                              enabled:false
+//                          },
+//                          tickWidth:1,
+//                          offset:10,
+//                          label:{
+//                              format:'{value}days'
+//                          },
+//                          lineWidth:1
+//                      }],
+//                      series: [
+//                          {
+//                              type:"area",
+//                              name: 'actual',
+//                              data: [100,100,100,150,150,150,200],
+//                              pointStart: Date.UTC(chart.y,chart.m,chart.d),
+//                              pointInterval: 24 * 3600 * 1000//one day
+//                          },
+//                          {
+//                              type:"line",
+//                              name: 'target',
+//                              data: [80,110,120,140,150,150,300],
+//                              pointStart: Date.UTC(chart.y,chart.m,chart.d),
+//                              yAxis:1,
+//                              pointInterval: 24 * 3600 * 1000 // one day
+//                          }
+//                      ]
+//                  }
+//              );
+
+
 }
 
 function init_chart() {
-     var entity = $("#chart-entity :selected").attr("id");
-     var kpi = $("#none-kpi :selected").attr("id");
-     var date1 = ($("#from").val()).split("-");
-     var date2 = ($("#to").val()).split("-");
-     var week1 = parseInt($("#from").attr("week"));
-     var week2 = parseInt($("#to").attr("week"));
-     var dateBegin, dateEnd;
-     for( i = 0; i < 3; i++) {
-          if(parseInt(date1[i]) < parseInt(date2[i])) {
-               dateBegin = date1;
-               dateEnd = date2;
-               break;
-          } else if(parseInt(date1[i]) > parseInt(date2[i])) {
-               dateBegin = date2;
-               dateEnd = date1;
-               break;
-          } else {
-               dateBegin = date1;
-               dateEnd = date2;
-          }
-     };
-     var startWeek = week1 - week2 <= 0 ? week1 : week2;
-     var endWeek = week1 - week2 >= 0 ? week1 : week2;
-     var startQuarter = quarterBelong(dateBegin[1]);
-     var endQuarter = quarterBelong(dateEnd[1]);
-     var interval = $(".control-chart-btn.active").data("type");
-     var startTime, endTime;
-     switch(interval) {
-          case "day":
-               startTime = dateBegin.join("-");
-               endTime = dateEnd.join("-");
-               break;
-          case "week":
-               startTime = dateBegin[0] + "-" + startWeek;
-               endTime = dateEnd[0] + "-" + endWeek;
-               break;
-          case "month":
-               startTime = dateBegin[0] + "-" + dateBegin[1];
-               endTime = dateEnd[0] + "-" + dateEnd[1];
-               break;
-          case "quarter":
-               startTime = dateBegin[0] + "-" + startQuarter;
-               endTime = dateEnd[0] + "-" + endQuarter;
-               break;
-          case "year":
-               startTime = dateBegin[0];
-               endTime = dateEnd[0];
-               break;
-     } ;
-     //    var chartScale = {
-     //        y : dateBegin[0],
-     //        m : parseInt(dateBegin[1]) - 1 == 0 ? 12 : dateBegin[1] - 1,
-     //        d : dateBegin[2]
-     //    }
-     $.post('../tasks/calendar', {
-          entity : entity,
-          kpi : kpi,
-          startTime : startTime,
-          endTime : endTime,
-          interval : interval
-     }, function(data) {
-          form_chart(data.series, data.unit, interval);
-     });
+     var kpi = $("#chart-kpi :selected").attr("value");
+     var view = $("#chart-view :selected").attr("value");
+     if($("#chart-kpi :selected").attr('id')=="none-kpi"){
+         $("#chart-chooseWarning").removeClass("hide").text("请选择KPI");
+         while_hide("chart-chooseWarning");
+     }
+     else if($("#chart-view :selected").attr('id')=="none-view"){
+         $("#chart-chooseWarning").removeClass("hide").text("请选择观察组");
+         while_hide("chart-chooseWarning");
+     }
+     else{
+         var date1 = ($("#from").val()).split("-");
+         var date2 = ($("#to").val()).split("-");
+         var week1 = parseInt($("#from").attr("week"));
+         var week2 = parseInt($("#to").attr("week"));
+         var dateBegin, dateEnd;
+         for( i = 0; i < 3; i++) {
+             if(parseInt(date1[i]) < parseInt(date2[i])) {
+                 dateBegin = date1;
+                 dateEnd = date2;
+                 break;
+             } else if(parseInt(date1[i]) > parseInt(date2[i])) {
+                 dateBegin = date2;
+                 dateEnd = date1;
+                 break;
+             } else {
+                 dateBegin = date1;
+                 dateEnd = date2;
+             }
+         };
+         var startWeek = week1 - week2 <= 0 ? week1 : week2;
+         var endWeek = week1 - week2 >= 0 ? week1 : week2;
+         var startQuarter = quarterBelong(dateBegin[1]);
+         var endQuarter = quarterBelong(dateEnd[1]);
+//         var interval = $(".control-chart-btn.active").data("type");
+         var interval=$("#chart-kpi :selected").attr("interval");
+         var startTime, endTime;
+         switch(interval) {
+             case "day":
+                 startTime = dateBegin.join("-");
+                 endTime = dateEnd.join("-");
+                 break;
+             case "week":
+                 startTime = dateBegin[0] + "-" + startWeek;
+                 endTime = dateEnd[0] + "-" + endWeek;
+                 break;
+             case "month":
+                 startTime = dateBegin[0] + "-" + dateBegin[1];
+                 endTime = dateEnd[0] + "-" + dateEnd[1];
+                 break;
+             case "quarter":
+                 startTime = dateBegin[0] + "-" + startQuarter;
+                 endTime = dateEnd[0] + "-" + endQuarter;
+                 break;
+             case "year":
+                 startTime = dateBegin[0];
+                 endTime = dateEnd[0];
+                 break;
+         } ;
+         $.post('', {
+             kpi : kpi,
+             view: view,
+             startTime : startTime,
+             endTime : endTime
+         }, function(data) {
+             if(data.result){
+                 form_chart(data.current,data.target, data.unit,interval,startTime,endTime);
+             }
+             else{
+                 alert(data.content);
+             }
+         });
+     }
 }
 
-function form_chart(series,unit,interval){
+function form_chart(current,target,unit,interval,startTime,endTime){
     var options = {
         chart : {
             renderTo : 'container',
@@ -350,11 +363,22 @@ function form_chart(series,unit,interval){
             //              },
             lineWidth : 1
         },
-        series : []
+        series : [
+            {
+               type:"area",
+               name: '实际值'
+            },
+            {
+               type:"line",
+               name: '目标值'
+            }
+        ]
     };
     options.yAxis.label = {
         format : '{value}' +unit
     };
+    var start=startTime.split("-");
+    var end=endTime.split("-");
     switch (interval){
         case "day":
             options.tooltip.xDateFormat='%Y-%m-%d';
@@ -363,13 +387,37 @@ function form_chart(series,unit,interval){
                 day : '%e/%b'
             };
             options.xAxis.tickInterval=24 * 3600 * 1000;
+            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,start[2]);
+            options.series[0].pointInterval=24 * 3600 * 1000;
+            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,start[2]);
+            options.series[1].pointInterval=24 * 3600 * 1000;
             break;
         case "week":
             options.tooltip.formatter=function(){
                 return '<b>'+ this.series.name +'</b><br/>'+
                 "数值"+this.y +'<br />'+this.x;
             };
-            options.xAxis.categories
+            options.xAxis.categories=[];
+            var yearInterval=parseInt(end[0])-parseInt(start[0]);
+            var xItem;
+            var year;
+            var lastWeek=52*(yearInterval)+parseInt(end[1]);
+            for(var i=0;i<=yearInterval;i++){
+               if(i==0){
+                    year=parseInt(start[0]);
+                    for(var a=parseInt(start[1]);a<=(lastWeek-52>0?52:parseInt(end[1]));a++){
+                         xItem=year+"/"+"第"+a+"周";
+                         options.xAxis.categories.push(xItem);
+                    }
+               }
+               else{
+                    year=parseInt(start[0])+i;
+                    for(var b=1;b<=((lastWeek-(yearInterval+1)*52)>=0?52:parseInt(end[1]));b++){
+                        xItem=year+"/"+"第"+b+"周";
+                        options.xAxis.categories.push(xItem);
+                    }
+               }
+            };
             break;
         case "month":
             options.tooltip.xDateFormat='%Y-%m';
@@ -378,13 +426,37 @@ function form_chart(series,unit,interval){
                 month : '%b/%Y'
             };
             options.xAxis.tickInterval=24 * 3600 * 1000 * 30;
+            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,1);
+            options.series[0].pointInterval=24 * 3600 * 1000 *30;
+            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,1);
+            options.series[1].pointInterval=24 * 3600 * 1000 *30;
             break;
         case "quarter":
             options.tooltip.formatter=function(){
                 return '<b>'+ this.series.name +'</b><br/>'+
                     "数值"+this.y +'<br />'+this.x;
             };
-            options.xAxis.categories
+            options.xAxis.categories=[];
+            var yearInterval=parseInt(end[0])-parseInt(start[0]);
+            var xItem;
+            var year;
+            var lastQuarter=4*(yearInterval)+parseInt(end[1]);
+            for(var i=0;i<=yearInterval;i++){
+                if(i==0){
+                    year=parseInt(start[0]);
+                    for(var a=parseInt(start[1]);a<=(lastQuarter-4>0?4:parseInt(end[1]));a++){
+                        xItem=year+"/"+"第"+a+"季度";
+                        options.xAxis.categories.push(xItem);
+                    }
+                }
+                else{
+                    year=parseInt(start[0])+i;
+                    for(var b=1;b<=((lastQuarter-(yearInterval+1)*4)>=0?4:parseInt(end[1]));b++){
+                        xItem=year+"/"+"第"+b+"季度";
+                        options.xAxis.categories.push(xItem);
+                    }
+                }
+            };
             break;
         case "year":
             options.tooltip.xDateFormat='%Y';
@@ -393,48 +465,36 @@ function form_chart(series,unit,interval){
                 year : '%Y'
             };
             options.xAxis.tickInterval=24 * 3600 * 1000 * 365;
+            options.series[0].pointStart=Date.UTC(start[0],0,1);
+            options.series[0].pointInterval=24 * 3600 * 1000*365;
+            options.series[1].pointStart=Date.UTC(start[0],0,1);
+            options.series[1].pointInterval=24 * 3600 * 1000*365;
             break;
     };
-    var lines = data.split('\n');
-    $.each(lines, function(lineNo, line) {
-        var items = line.split(',');
-        if(lineNo == 0) {
-            var series = {
-                type : "line",
-                name : 'target',
-                data : [],
-                pointStart : Date.UTC(chartScale.y, chartScale.m, chartScale.d),
-                pointInterval : 24 * 3600 * 1000 * ticket
-            };
-            $.each(items, function(itemNo, item) {
-                //                      if (itemNo == 0) {
-                //                          series.name = item;
-                //                      } else {
-                series.data.push(parseFloat(item));
-                //                      }
-            });
-            options.series.push(series);
-        } else if(lineNo == 1) {
-            var series = {
-                type : "area",
-                name : 'actual',
-                data : [],
-                pointStart : Date.UTC(chartScale.y, chartScale.m, chartScale.d),
-                pointInterval : 24 * 3600 * 1000 * ticket
-            };
-            $.each(items, function(itemNo, item) {
-                //                      if (itemNo == 0) {
-                //                          series.name = item;
-                //                      } else {
-                series.data.push(parseFloat(item));
-                //                      }
-            });
-            options.series.push(series);
-           }
-
-    })
+    options.series[0].data=current;
+    options.series[1].data=target;
+    var chart = new Highcharts.Chart(options);
 }
+function chart_chooseEntity(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    if($(obj).text()!=$("#chart-group").attr("origin")){
+        $.post("..",{
+            text:$(obj).text(),
+            value:$(obj).attr("value")
+        },function(data){
+               if(data.result){
+                   $("#chart-kpi").html();
+                   $("#chart-group").attr("origin",$(obj).text());
+               }
+               else{
+                   alert(data.content);
+               }
+            }
+        )
+    }
 
+}
 function quarterBelong(a) {
      if(a < 3)
           return 1;
@@ -1333,30 +1393,58 @@ function init_entryKpi() {
      d = date.getDate();
      day = date.getDay();
      QuarterFirstMonth = showquarterFirstMonth(date);
-     m = date.getMonth();
+     m = date.getMonth()+1;
      y = date.getFullYear();
      WeekFirstDay = new Date(y, m, d - day + 1);
      WeekLastDay = new Date(y, m, d - day + 7);
      var type = $("#entry-date-type").find(".active").data("type");
      switch(type) {
           case "day":
-               $("#entry-kpi").val(y + "-" + m + "-" + d);
+              var realMonth=parseInt(m)+1;
+               $("#entry-kpi").val(y + "-" + realMonth + "-" + d);
+               $("#entry-kpi").attr("compare",$("#entry-kpi").val());
                $("#entry-kpi").datepicker({
                     dateFormat : "yy-m-d",
                     showOtherMonths : true,
                     firstDay : 1,
-                    selectOtherMonths : true
+                    selectOtherMonths : true,
+                    onSelect:function(dateText, inst){
+                        var date = $(this).datepicker('getDate');
+                        var today=new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                        var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+                        var chooseDay=$.datepicker.formatDate(dateFormat, today, inst.settings);
+                        if(chooseDay!=$("#entry-kpi").attr('compare')){
+                            $.post('',{
+                                date:chooseDay
+                            },function(data){
+                                if(data.result){
+                                    $("#entry-kpi").attr('compare',chooseDay);
+                                }
+                                else{
+                                    alert(data.content)
+                                }
+                            });
+                        }
+                    }
                });
                break;
           case "week":
                $("#entry-kpi").val(formatDate(WeekFirstDay) + " ~ " + formatDate(WeekLastDay));
-
+               $("#entry-kpi").attr("compare",$("#entry-kpi").val());
                $("#show-weekOfYear").css("display", "inline-block").find("span").text($.datepicker.iso8601Week(new Date(y, m, d - day + 1)));
-
                $("#entry-kpi").bind("click", select_week);
+               if(date.getDay() == 0) {
+                  startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
+               } else {
+                  startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+               }
+               var originWeek=$.datepicker.iso8601Week(startDate);
+               $("#entry-kpi").attr("compare",y+"-"+originWeek);
                break;
           case "month":
-               $("#entry-kpi").val(y + "-" + m);
+               var realMonth=parseInt(m)+1;
+               $("#entry-kpi").val(y + "-" + realMonth);
+               $("#entry-kpi").attr("compare",$("#entry-kpi").val());
                $('#entry-kpi').datepicker({
                     changeMonth : true,
                     changeYear : true,
@@ -1367,8 +1455,28 @@ function init_entryKpi() {
                     onClose : function(dateText, inst) {
                          var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
                          var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                         $(this).datepicker('setDate', new Date(year, month, 1));
-                    }
+                         var showMonth=parseInt(month)+1;
+                         $("#entry-kpi").val(year + "-" + showMonth);
+                         var chooseMonth=year+"-"+showMonth;
+                         if(chooseMonth!=$("#entry-kpi").attr('compare')){
+                            $.post('',{
+                                date:chooseMonth
+                            },function(data){
+                                if(data.result){
+                                    $("#entry-kpi").attr('compare',chooseMonth);
+                                }
+                                else{
+                                    alert(data.content)
+                                }
+                            });
+                         }
+                    },
+                   onChangeMonthYear:function(year,month,inst){
+                       var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                       var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                       var showMonth=parseInt(month)+1;
+                       $("#entry-kpi").val(year + "-" + showMonth);
+                   }
                }).focus(function() {
                     $(".ui-datepicker-calendar").hide();
                     $("#ui-datepicker-div").position({
@@ -1382,11 +1490,29 @@ function init_entryKpi() {
                $("#entry-kpi").css("width", "100px");
                $("#entry-kpi").val(y);
                $("#entry-prev-btn,#entry-next-btn").removeClass("hide");
+               var originQuarter=y+"-"+$("#select-quarter :selected").data("order");
+               $("#entry-kpi").attr("compare",originQuarter);
                $("#select-quarter").removeClass("hide").find("option").each(function() {
                     if($(this).val() == QuarterFirstMonth) {
                          $(this).attr("selected", true);
-                    }
+                    };
+                    $(this).bind('click',function(){
+                        var chooseQuarter=$("#entry-kpi").val()+"-"+$(this).data('order');
+                        if(chooseQuarter!=$("#entry-kpi").attr("compare")){
+                            $.post('',{
+                                date:chooseQuarter
+                            },function(data){
+                                if(data.result){
+                                    $("#entry-kpi").attr('compare',chooseQuarter);
+                                }
+                                else{
+                                    alert(data.content);
+                                }
+                            });
+                        }
+                    })
                });
+
                break;
           case "year":
                $("#entry-kpi").css("width", "100px");
@@ -1416,7 +1542,7 @@ function select_week() {
           window.setTimeout(function() {
                $('.week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active')
           }, 1);
-     }
+     };
      $('.week-picker').removeClass("hide").datepicker({
           showOtherMonths : true,
           selectOtherMonths : true,
@@ -1436,6 +1562,19 @@ function select_week() {
                $("#entry-kpi").val($.datepicker.formatDate(dateFormat, startDate, inst.settings) + " ~ " + $.datepicker.formatDate(dateFormat, endDate, inst.settings));
                $("#show-weekOfYear>span").text($.datepicker.iso8601Week(startDate));
                selectCurrentWeek();
+               var chooseWeek=date.getFullYear()+"-"+$.datepicker.iso8601Week(startDate);
+               if(chooseWeek!=$("#entry-kpi").attr("compare")){
+                   $.post('',{
+                       date:chooseWeek
+                   },function(data){
+                       if(data.result){
+                           $("#entry-kpi").attr('compare',chooseWeek);
+                       }
+                       else{
+                           alert(data.content)
+                       }
+                   });
+               }
                $('.week-picker').addClass("hide");
           },
           beforeShowDay : function(date) {
@@ -1457,11 +1596,67 @@ function select_week() {
 }
 
 function minus_unit(event) {
-     $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1);
+     var type = $("#entry-date-type").find(".active").data("type");
+     switch(type) {
+         case "quarter":
+             var chooseQuarter= $("#entry-kpi").val() + "-" + $("#select-quarter :selected").data("order");
+             $.post('',{
+                 date:chooseQuarter
+             },function(data){
+                 if(data.result){
+                     $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1).attr('compare',chooseQuarter);
+                 }
+                 else{
+                     alert(data.content);
+                 }
+             });
+             break;
+         case "year":
+             var chooseYear= $("#entry-kpi").val();
+             $.post('',{
+                 date:chooseYear
+             },function(data){
+                 if(data.result){
+                     $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1);
+                 }
+                 else{
+                     alert(data.content);
+                 }
+             });
+             break;
+     };
 }
 
 function plus_unit(event) {
-     $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1);
+     var type = $("#entry-date-type").find(".active").data("type");
+     switch(type) {
+        case "quarter":
+            var chooseQuarter= $("#entry-kpi").val() + "-" + $("#select-quarter :selected").data("order");
+            $.post('',{
+                date:chooseQuarter
+            },function(data){
+                if(data.result){
+                    $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1).attr('compare',chooseQuarter);
+                }
+                else{
+                    alert(data.content);
+                }
+            });
+            break;
+        case "year":
+            var chooseYear= $("#entry-kpi").val();
+            $.post('',{
+                date:chooseYear
+            },function(data){
+                if(data.result){
+                    $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1);
+                }
+                else{
+                    alert(data.content);
+                }
+            });
+            break;
+     };
 }
 
 function entry_kpiCurrent(event) {
@@ -1506,10 +1701,11 @@ function fill_kpiCurrent(obj) {
                          date = $("#entry-kpi").val();
                          break;
                }
-               post('',{
+               $.post('/kpi_entries/entry',{
                    id:id,
-                   date:date,
-                   value:val
+                   entry_at:date,
+                   value:val,
+                   kpi:$(obj).attr("kpi-id")
                },function(data){
                    if(data.result){
                        $(obj).attr("source", val);

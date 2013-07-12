@@ -36,30 +36,9 @@
                <option data-order="3">第三季度</option>
                <option data-order="4">第四季度</option>
           </select>
-          <table class="entry-table">
-               <tr>
-                    <th>ID</th>
-                    <th>类别</th>
-                    <th>名称</th>
-                    <th width="450px;">描述</th>
-                    <th>目标</th>
-                    <th>现在</th>
-                    <th>完成度</th>
-               </tr>
-               <%@user_kpis.each_with_index do |kpi,i|%>
-               <tr id="<%= kpi.id%>">
-                    <td align="center" class="kpi-order-id"><%= i+1%></td>
-                    <td align="center"><%= kpi.category_name%></td>
-                    <td align="center"><%= kpi.name%></td>
-                    <td align="center"><%= kpi.description%></td>
-                    <td align="center" class="kpi-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target)%></td>
-                    <td align="center">
-                    <input data-target="2000" class="entry-kpi-current" data-belong="kpi1" source type="text" onkeyup="entry_kpiCurrent(event)" onblur="fill_kpiCurrent(this)"/>
-                    </td>
-                    <td align="center" class="entry-kpiPercent "></td>
-               </tr>
-               <%end%>
-          </table>
+          <div id="kpi-entry">
+             <%= render :partial=>'entry'%>
+           </div>
      </div>
 </div>
 <script type="text/javascript">
