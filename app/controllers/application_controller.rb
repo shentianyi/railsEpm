@@ -1,19 +1,20 @@
 #encoding: utf-8
 class ApplicationController < ActionController::Base
   #  include UrlHelper
+  protect_from_forgery
   helper :all
   helper_method :current_user_session, :current_user
   before_filter :require_user
   before_filter :require_active_user
-  #before_filter :find_current_user_tenant
-  #before_filter :check_tenant_status
+  before_filter :find_current_user_tenant
+  before_filter :check_tenant_status
 
 
    set_current_tenant_through_filter
   ##before_filter :authorize
 
    authorize_resource
-  # protect_from_forgery
+
 
   private
   #def authorize
@@ -58,7 +59,6 @@ class ApplicationController < ActionController::Base
 
 
   def redirect_back_or_default(default)
-    a = session[:return_to]
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
   end
