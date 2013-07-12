@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   before_filter :require_user
   before_filter :require_active_user
   before_filter :find_current_user_tenant
+ 
   before_filter :check_tenant_status
 
 
@@ -24,13 +25,13 @@ class ApplicationController < ActionController::Base
   #end
 
  def find_current_user_tenant
-   current_tenant=Tenant.find_by_id(@current_user.tenant_id)
+   current_tenant=Tenant.find_by_id(current_user.tenant_id)
    set_current_tenant(current_tenant)
  end
 
   # set cancan Ability
   def current_ability
-    @current_ability||=Ability.new(@current_user)
+    @current_ability||=Ability.new(current_user)
   end
 
 

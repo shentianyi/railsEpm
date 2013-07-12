@@ -51,11 +51,12 @@ class KpisController < ApplicationController
     render :json=>msg
   end
 
-  def assign
+  def assign 
+     @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
     if request.get?
       get_ability_category
       get_kpis_by_category
-      @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
+    
       @user_id=params[:id]
     else
      if params[:kpi] and params[:kpi].length>0
@@ -63,7 +64,7 @@ class KpisController < ApplicationController
       elsif params[:category] and params[:category].length>0
          KpisHelper.assign_kpi_to_user_by_category params[:category],params[:id],current_ability
       end
-            @user_kpis=KpisHelper.get_kpis_by_user_id params[:id]
+
       render :partial=>'user_kpi'
     end
   end
@@ -74,7 +75,7 @@ class KpisController < ApplicationController
   end
 
   def user_kpis
-    @user_kpis=KpisHelper.get_kpis_by_user_id params[:user]
+    @user_kpis=KpisHelper.get_kpis_by_user_id params[:user],current_ability
   end
 
   def get_ability_category

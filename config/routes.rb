@@ -36,7 +36,11 @@ IFEpm::Application.routes.draw do
     end
   end
   
-  resources :kpi_entries
+  resources :kpi_entries do
+    collection do
+      post :entry
+    end
+  end
 
   mount Resque::Server.new, :at=>"/admin/resque"
 

@@ -1393,7 +1393,7 @@ function init_entryKpi() {
      d = date.getDate();
      day = date.getDay();
      QuarterFirstMonth = showquarterFirstMonth(date);
-     m = date.getMonth();
+     m = date.getMonth()+1;
      y = date.getFullYear();
      WeekFirstDay = new Date(y, m, d - day + 1);
      WeekLastDay = new Date(y, m, d - day + 7);
@@ -1701,10 +1701,11 @@ function fill_kpiCurrent(obj) {
                          date = $("#entry-kpi").val();
                          break;
                }
-               post('',{
+               $.post('/kpi_entries/entry',{
                    id:id,
-                   date:date,
-                   value:val
+                   entry_at:date,
+                   value:val,
+                   kpi:$(obj).attr("kpi-id")
                },function(data){
                    if(data.result){
                        $(obj).attr("source", val);

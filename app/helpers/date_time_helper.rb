@@ -24,7 +24,7 @@ module DateTimeHelper
   # parse week string: 2013-20 to date hour
   def self.parse_week_string_to_date_hour str
     arr=str.split('-')
-    parse_string_to_date_hour(Date.commerial(arr[0].to_i,arr[1].to_i,1).to_s)
+    parse_string_to_date_hour(Date.commercial(arr[0].to_i,arr[1].to_i,1).to_s)
   end
 
   # parse time to month string
