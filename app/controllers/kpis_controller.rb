@@ -12,17 +12,17 @@ class KpisController < ApplicationController
   end
 
   # create api
-  def create 
+  def create
     msg=Message.new
-      @kpi=Kpi.new(params[:kpi])
-      @kpi.creator=@current_user
-      if @kpi.save
-        msg.result=true
-        msg.object=@kpi.id
-      else
-         msg.content=@kpi.errors.messages.values.join('; ')
-      end
-      render :json=>msg
+    @kpi=Kpi.new(params[:kpi])
+    @kpi.creator=current_user
+    if @kpi.save
+    msg.result=true
+    msg.object=@kpi.id
+    else
+      msg.content=@kpi.errors.messages.values.join('; ')
+    end
+    render :json=>msg
   end
 
   # edit kpi
@@ -31,7 +31,7 @@ class KpisController < ApplicationController
   end
 
   # update kpi
-  def update 
+  def update
     if @kpi=Kpi.accessible_by(current_ability).find_by_id(params[:kpi].delete(:id))
       render :json=>@kpi.update_attributes(params[:kpi])
     end
@@ -52,16 +52,37 @@ class KpisController < ApplicationController
   end
 
   def assign
-    if request.post?
-      KpisHelper.assign_kpi_to_user_by_id params[:kpi],params[:user]
+    if request.get?
+      get_ability_category
+      get_kpis_by_category
+      @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
+      @user_id=params[:id]
+    else
+     if params[:kpi] and params[:kpi].length>0
+        KpisHelper.assign_kpi_to_user_by_id params[:kpi],params[:id],current_ability
+      elsif params[:category] and params[:category].length>0
+         KpisHelper.assign_kpi_to_user_by_category params[:category],params[:id],current_ability
+      end
+            @user_kpis=KpisHelper.get_kpis_by_user_id params[:id]
+      render :partial=>'user_kpi'
     end
   end
 
+  def kpi_option
+    get_kpis_by_category
+    render :partial=>'select_option'
+  end
+
   def user_kpis
-    @kpis=KpisHelper.get_kpis_by_user_id params[:user]
+    @user_kpis=KpisHelper.get_kpis_by_user_id params[:user]
   end
 
   def get_ability_category
     @categories=KpiCategory.accessible_by(current_ability).all
+  end
+
+  def get_kpis_by_category
+    id=params[:id].nil? ? @categories[0].id : params[:id].to_i
+    @kpis=Kpi.accessible_by(current_ability).joins(:kpi_category).where(:kpi_category_id=>id).select("kpis.*,kpi_categories.name as 'category_name'").all
   end
 end

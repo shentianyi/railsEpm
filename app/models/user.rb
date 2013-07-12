@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :kpi_entries, :through=>:user_kpi_items
   
   attr_accessible :email, :password, :password_confirmation,:status,:perishable_token,:confirmed,:first_name,:last_name,:is_tenant
-  attr_accessible :tenant_id
+  attr_accessible :tenant_id,:role_id,:entity_id
 
   acts_as_authentic do |c|
     c.login_field = :email

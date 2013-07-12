@@ -18,22 +18,14 @@
                     <td align="center" class="manage-userName"><%= user.first_name%></td>
                     <td align="center" class="manage-userMail"><%= user.email%></td>
                     <td align="center" class="manage-userRole"><%= UsersHelper.get_user_role_display(user.role_id)%></td>
-              
-                <td align="center">
-		    <a href="../users/<%=user.id%>/edit">
-                        <div class="manage-operate manage-operate-edit" title="编辑" data-belong="<%= user.id%>" onclick="to_userPage(event)"></div>
-                        </a>
-                    </td>
-                    <td align="center">
-                        <div class="manage-operate manage-operate-delivery" title="分配KPI" data-belong="<%= user.id%>" onclick="delivery_kpi(event)"></div>
-                    </td>
-                    <td align="center">
-                        <div class="manage-operate manage-operate-del" title="删除" data-belong="<%= user.id%>" onclick="remove_userItem(event)"></div>
-                    </td>
+
+                    <td align="center"><a href="../users/<%= user.id%>/edit"> <div class="manage-operate manage-operate-edit" title="编辑" data-belong="<%= user.id%>"></div> </a></td>
+                    <td align="center"><a href="../kpis/<%= user.id%>/assign/"> <div class="manage-operate manage-operate-delivery" title="分配KPI" data-belong="<%= user.id%>" ></div></a></td>
+                    <td align="center"><div class="manage-operate manage-operate-del" title="删除" data-belong="<%= user.id%>" onclick="remove_userItem(event)"></div></td>
                </tr>
                <%end%>
           </table>
-          <a class="btn manage-add-btn btn-primary pull-right" href="<%=new_user_path%>"  data-manage="user">添加用户</a>
+          <a class="btn manage-add-btn btn-primary pull-right" href="<%= new_user_path%>"  data-manage="user">添加用户</a>
      </div>
 </div>
 

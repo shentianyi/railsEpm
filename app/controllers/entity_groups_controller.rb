@@ -5,7 +5,7 @@ class EntityGroupsController < ApplicationController
   end
 
   def list
-    @current_user.entity_groups
+    current_user.entity_groups
     render :partial=>'list'
   end
 end
