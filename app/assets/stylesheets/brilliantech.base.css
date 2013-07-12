@@ -140,6 +140,19 @@ a:hover,a:focus{
     -moz-box-shadow:0 2px 0px #F39C12;
     -webkit-box-shadow:0 2px 0px #F39C12;
 }
+.btn.btn-danger{
+    background-color:#e74c3c ;
+    color:white !important;
+    box-shadow:0 2px 0px #c0392b;
+    -moz-box-shadow:0 2px 0px #c0392b;
+    -webkit-box-shadow:0 2px 0px #c0392b;
+}
+.btn.btn-danger:hover{
+    background-color:#EC7063 !important;
+    box-shadow:0 2px 0px #e74c3c;
+    -moz-box-shadow:0 2px 0px #e74c3c;
+    -webkit-box-shadow:0 2px 0px #e74c3c;
+}
 /*与position有关的*/
 .relative{
 	position:relative
@@ -339,11 +352,7 @@ a:hover,a:focus{
     margin-top:5px;
     margin-right:-13px;
 }
-.btn-edit-confirm{
-	margin-top:10px;
-	margin-right:-13px;
-	margin-left:10px;
-}
+
 .btn-edit-cancel{
 	margin-top:10px;
 }

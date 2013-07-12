@@ -1402,23 +1402,51 @@ function init_entryKpi() {
      var type = $("#entry-date-type").find(".active").data("type");
      switch(type) {
           case "day":
-               $("#entry-kpi").val(y + "-" + m + "-" + d);
+              var realMonth=parseInt(m)+1;
+               $("#entry-kpi").val(y + "-" + realMonth + "-" + d);
+               $("#entry-kpi").attr("compare",$("#entry-kpi").val());
                $("#entry-kpi").datepicker({
                     dateFormat : "yy-m-d",
                     showOtherMonths : true,
                     firstDay : 1,
-                    selectOtherMonths : true
+                    selectOtherMonths : true,
+                    onSelect:function(dateText, inst){
+                        var date = $(this).datepicker('getDate');
+                        var today=new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                        var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+                        var chooseDay=$.datepicker.formatDate(dateFormat, today, inst.settings);
+                        if(chooseDay!=$("#entry-kpi").attr('compare')){
+                            $.post('',{
+                                date:chooseDay
+                            },function(data){
+                                if(data.result){
+                                    $("#entry-kpi").attr('compare',chooseDay);
+                                }
+                                else{
+                                    alert(data.content)
+                                }
+                            });
+                        }
+                    }
                });
                break;
           case "week":
                $("#entry-kpi").val(formatDate(WeekFirstDay) + " ~ " + formatDate(WeekLastDay));
-
+               $("#entry-kpi").attr("compare",$("#entry-kpi").val());
                $("#show-weekOfYear").css("display", "inline-block").find("span").text($.datepicker.iso8601Week(new Date(y, m, d - day + 1)));
-
                $("#entry-kpi").bind("click", select_week);
+               if(date.getDay() == 0) {
+                  startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
+               } else {
+                  startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+               }
+               var originWeek=$.datepicker.iso8601Week(startDate);
+               $("#entry-kpi").attr("compare",y+"-"+originWeek);
                break;
           case "month":
-               $("#entry-kpi").val(y + "-" + m);
+               var realMonth=parseInt(m)+1;
+               $("#entry-kpi").val(y + "-" + realMonth);
+               $("#entry-kpi").attr("compare",$("#entry-kpi").val());
                $('#entry-kpi').datepicker({
                     changeMonth : true,
                     changeYear : true,
@@ -1429,8 +1457,28 @@ function init_entryKpi() {
                     onClose : function(dateText, inst) {
                          var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
                          var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                         $(this).datepicker('setDate', new Date(year, month, 1));
-                    }
+                         var showMonth=parseInt(month)+1;
+                         $("#entry-kpi").val(year + "-" + showMonth);
+                         var chooseMonth=year+"-"+showMonth;
+                         if(chooseMonth!=$("#entry-kpi").attr('compare')){
+                            $.post('',{
+                                date:chooseMonth
+                            },function(data){
+                                if(data.result){
+                                    $("#entry-kpi").attr('compare',chooseMonth);
+                                }
+                                else{
+                                    alert(data.content)
+                                }
+                            });
+                         }
+                    },
+                   onChangeMonthYear:function(year,month,inst){
+                       var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                       var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                       var showMonth=parseInt(month)+1;
+                       $("#entry-kpi").val(year + "-" + showMonth);
+                   }
                }).focus(function() {
                     $(".ui-datepicker-calendar").hide();
                     $("#ui-datepicker-div").position({
@@ -1444,11 +1492,29 @@ function init_entryKpi() {
                $("#entry-kpi").css("width", "100px");
                $("#entry-kpi").val(y);
                $("#entry-prev-btn,#entry-next-btn").removeClass("hide");
+               var originQuarter=y+"-"+$("#select-quarter :selected").data("order");
+               $("#entry-kpi").attr("compare",originQuarter);
                $("#select-quarter").removeClass("hide").find("option").each(function() {
                     if($(this).val() == QuarterFirstMonth) {
                          $(this).attr("selected", true);
-                    }
+                    };
+                    $(this).bind('click',function(){
+                        var chooseQuarter=$("#entry-kpi").val()+"-"+$(this).data('order');
+                        if(chooseQuarter!=$("#entry-kpi").attr("compare")){
+                            $.post('',{
+                                date:chooseQuarter
+                            },function(data){
+                                if(data.result){
+                                    $("#entry-kpi").attr('compare',chooseQuarter);
+                                }
+                                else{
+                                    alert(data.content);
+                                }
+                            });
+                        }
+                    })
                });
+
                break;
           case "year":
                $("#entry-kpi").css("width", "100px");
@@ -1478,7 +1544,7 @@ function select_week() {
           window.setTimeout(function() {
                $('.week-picker').find('.ui-datepicker-current-day a').addClass('ui-state-active')
           }, 1);
-     }
+     };
      $('.week-picker').removeClass("hide").datepicker({
           showOtherMonths : true,
           selectOtherMonths : true,
@@ -1498,6 +1564,19 @@ function select_week() {
                $("#entry-kpi").val($.datepicker.formatDate(dateFormat, startDate, inst.settings) + " ~ " + $.datepicker.formatDate(dateFormat, endDate, inst.settings));
                $("#show-weekOfYear>span").text($.datepicker.iso8601Week(startDate));
                selectCurrentWeek();
+               var chooseWeek=date.getFullYear()+"-"+$.datepicker.iso8601Week(startDate);
+               if(chooseWeek!=$("#entry-kpi").attr("compare")){
+                   $.post('',{
+                       date:chooseWeek
+                   },function(data){
+                       if(data.result){
+                           $("#entry-kpi").attr('compare',chooseWeek);
+                       }
+                       else{
+                           alert(data.content)
+                       }
+                   });
+               }
                $('.week-picker').addClass("hide");
           },
           beforeShowDay : function(date) {
@@ -1519,11 +1598,67 @@ function select_week() {
 }
 
 function minus_unit(event) {
-     $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1);
+     var type = $("#entry-date-type").find(".active").data("type");
+     switch(type) {
+         case "quarter":
+             var chooseQuarter= $("#entry-kpi").val() + "-" + $("#select-quarter :selected").data("order");
+             $.post('',{
+                 date:chooseQuarter
+             },function(data){
+                 if(data.result){
+                     $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1).attr('compare',chooseQuarter);
+                 }
+                 else{
+                     alert(data.content);
+                 }
+             });
+             break;
+         case "year":
+             var chooseYear= $("#entry-kpi").val();
+             $.post('',{
+                 date:chooseYear
+             },function(data){
+                 if(data.result){
+                     $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1);
+                 }
+                 else{
+                     alert(data.content);
+                 }
+             });
+             break;
+     };
 }
 
 function plus_unit(event) {
-     $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1);
+     var type = $("#entry-date-type").find(".active").data("type");
+     switch(type) {
+        case "quarter":
+            var chooseQuarter= $("#entry-kpi").val() + "-" + $("#select-quarter :selected").data("order");
+            $.post('',{
+                date:chooseQuarter
+            },function(data){
+                if(data.result){
+                    $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1).attr('compare',chooseQuarter);
+                }
+                else{
+                    alert(data.content);
+                }
+            });
+            break;
+        case "year":
+            var chooseYear= $("#entry-kpi").val();
+            $.post('',{
+                date:chooseYear
+            },function(data){
+                if(data.result){
+                    $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1);
+                }
+                else{
+                    alert(data.content);
+                }
+            });
+            break;
+     };
 }
 
 function entry_kpiCurrent(event) {

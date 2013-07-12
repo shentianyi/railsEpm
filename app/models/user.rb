@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   acts_as_tenant(:tenant)
 
   def confirmed?
-    return self.confirmed
+    return true #self.confirmed
   end
 
   def lock (email)

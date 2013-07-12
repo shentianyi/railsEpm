@@ -732,38 +732,43 @@ input.entry-kpi-date{
     position:absolute;
     left:50px;
 }
-/***************************************************** setting **************************************************************/
-.nav.nav-tabs.entry-nav-tabs.setting-nav-tabs{
-    margin-left:2px;
-}
-.entry-kpi-part.setting-part{
-    padding-top:30px;
-}
-.setting-classify{
-    width:700px;
-    margin:0px auto;
-}
-.setting-classify th{
-   text-align:center
-}
-.setting-operateDel{
-    margin:auto
-}
-.settingSave-btn{
-   width:700px;
-    margin:20px auto;
-}
+
 /***************************************************** setting right **************************************************************/
 .setting-right{
     border-left:1px solid #E3E3E3;
     box-shadow:-2px 0px 13px rgba(0,0,0,0.5);
-    width:300px;
+    width:260px;
     position:fixed;
     top:0;
     right:0;
     z-index:20;
     height:100%;
     background-color:white;
+    padding:10px 20px;
+}
+.setting-right>.icon-remove{
+    margin-left:-10px;
+}
+.user-info{
+    margin-top:50px;
+}
+.user-info>p{
+    font-size:16px;
+    margin-bottom:1px
+}
+.user-info>p.user-name{
+   text-align:center;
+   font-size:30px;
+   color:#5496c2;
+    margin-bottom:20px;
+}
+.password-block{
+    padding-bottom:30px;
+    border-bottom:2px dashed #DDD;
+}
+.btn-logout{
+    margin-left:90px;
+    margin-top:40px;
 }
 /***************************************************** login 注册什么的 **************************************************************/
 .login-sub-middle{
