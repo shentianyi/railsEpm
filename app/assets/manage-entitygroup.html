@@ -51,7 +51,12 @@
             <ul class="manage-group" id="manage-group-view">
                 <li><h3 class="no-margin">观察点</h3></li>
                 <li class="active"><a href="">默认</a></li>
-                <li><a href="">组1</a></li>
+                <!--每个li要加上i-->
+                <li>
+                    <i class="icon-remove hide pull-left" number="1" belong="view" onclick="remove_leftNav(event)"></i>
+                    <i class="icon-pencil hide pull-left" number="1" belong="view" onclick="edit_leftNav(event)"></i>
+                    <a number="1" belong="view" href="">默认</a>
+                </li>
                 <li><a href="">组2</a></li>
                 <li><a href="">组3</a></li>
                 <li><button class="btn btn-primary" onclick="create_entityBlock()">创建新观察点</button></li>
@@ -60,26 +65,64 @@
                     <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
                     <input type="text" id="creat-newEntity" onkeyup="create_Viewentity(event)"/>
                 </div>
+
+
+
+                <!--用作修改左边目录弹出的框-->
+                <div class="absolute creat-entity-block hide" id="edit-block">
+                    <p>修改</p>
+                    <i class="icon-remove pull-right" onclick="close_editBlock()"></i>
+                    <input type="text" id="change-leftNavi" onkeyup="change_leftNavi(event)"/>
+                </div>
+
+
+
             </ul>
         </div>
 
 
 
         <div class="right-content pull-left clearfix" id="right-content">
-            <div class="all-view  view-block" id="allView">
-                <h4 class="text-center">所有的entity</h4>
-                <p id="entity1" onclick="choose_view(event)">entity1</p>
-                <p id="entity2" onclick="choose_view(event)">entity2</p>
-                <p id="entity3" onclick="choose_view(event)">entity3</p>
-                <p id="entity4" onclick="choose_view(event)">entity4</p>
-                <p id="entity5" onclick="choose_view(event)">entity5</p>
+
+
+            <!--delivery part-->
+            <div class="delivery-part">
+                <p class="inline">用户组:</p>
+                <select class="delivery-kpi" id="delivery-view">
+                    <option value="1">全部</option>
+                    <option value="2">entity1</option>
+                    <option value="3">entity2</option>
+                    <option value="4">entity3</option>
+                </select>
+                <a class="btn btn-wzx btn-primary pull-right" onclick="delivery_view()">分配</a>
             </div>
-            <div class="view-arrow"> </div>
-            <div class="my-view view-block" id="myView" >
-                <h4 class="text-center">该观察点的entity</h4>
-                <p data-belong="entity1" onclick="del_view(event)">entity1</p>
-                <p data-belong="entity2" onclick="del_view(event)">entity2</p>
-            </div>
+            <h3 class="normal-blue text-center delivery-mykpiMark">该观察点下的用户组</h3>
+            <table class="manage-kpi" id="kpi-table">
+                <tr>
+                    <th>ID</th>
+                    <th>用户组</th>
+                    <th>操作</th>
+                </tr>
+                <tr id="1">
+                    <td align="center" class="kpi-order-id">1</td>
+                    <td align="center" class="kpi-order-entity">entity1</td>
+                    <td align="center"><div class="manage-operate manage-operate-del" data-belong="1" onclick="remove_viewEntity(event)"></div>
+                    </td>
+                </tr>
+            </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
     </div>
 
