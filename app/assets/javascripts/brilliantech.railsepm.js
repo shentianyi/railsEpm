@@ -460,6 +460,12 @@ function init_manage() {
      } else {
           window.addEventListener('resize', init_rightContent, false);
      }
+    if($("#is-calcu-relate")){
+        $("#is-calcu-relate").find("option").each(function(){
+            $(this).bind("click", select_calcuRelate);
+        })
+
+    }
 }
 
 ///////////////  KPI  ///////////////////////////////////////
@@ -729,9 +735,11 @@ function is_calcu() {
      }
 }
 
-function select_calcuRelate() {
-     var val = "[" + $("#is-calcu-relate :selected").text() + "]";
-     var valId = "[" + $("#is-calcu-relate :selected").attr("value") + "]";
+function select_calcuRelate(event) {
+     var e = event ? event : (window.event ? window.event : null);
+     var obj = e.srcElement || e.target;
+     var val = "[" + $(obj).text() + "]";
+     var valId = "[" + $(obj).attr("value") + "]";
      var oldVal = $("#calcuType-input").val();
      var oldValId = $("#takeCal").attr("cal");
      if(/\]$/.test(oldVal) == false) {
@@ -912,7 +920,10 @@ function insert_entityUser() {
                }, function(data) {
                     if(data.result) {
                          var length = $("#manage-group-user").find("li").length - 1;
-                         $("#manage-group-user li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "entity")).append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "entity")).append($("<a href='../users?p=" + data.object + "'/>").text(val)));
+                         $("#manage-group-user li:eq(" + length + ")").before($("<li />")
+                             .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "entity"))
+                             .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "entity"))
+                             .append($("<a href='../users?p=" + data.object + "'/>").text(val)));
                          $("#creat-newEntity").val("");
                     } else {
                          alert(data.content);
@@ -1099,8 +1110,25 @@ function insert_entityView() {
      if($("#creat-newEntity").val() && test == -1) {
           var length = $("#manage-group-user").find("li").length - 1;
           var val = $("#creat-newEntity").val();
-          $("#manage-group-view li:eq(" + length + ")").before($("<li />").append($("<a href=''/>").text(val)));
-          $("#creat-newEntity").val("");
+         if($('#creat-newEntity').val().length > 0) {
+             $.post('../entity_groups', {
+                 view : {
+                     name : $('#creat-newEntity').val()
+                 }
+             }, function(data) {
+                 if(data.result) {
+                     var length = $("#manage-group-user").find("li").length - 1;
+                     $("#manage-group-view li:eq(" + length + ")").before($("<li />")
+                         .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "view"))
+                         .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "view"))
+                         .append($("<a href='../users?p=" + data.object + "'/>").text(val)));
+                     $("#creat-newEntity").val("");
+                 } else {
+                     alert(data.content);
+                 }
+             });
+         }
+
      }
 }
 
@@ -1123,40 +1151,55 @@ function test_sameEntityView() {
      return b.indexOf(a);
 }
 
-function choose_view(event) {
-     var e = event ? event : (window.event ? window.event : null);
-     var obj = e.srcElement || e.target;
-     var id = $(obj).attr("id");
-     var text = $(obj).text();
-     if(text_view(obj, "myView") == -1) {
-          $("#myView").append($("<p />").attr("id", id).text(text).click(del_view));
-     }
+function delivery_view() {
+    var length = $("#kpi-table").find("tr").length;
+    var viewText=$("#delivery-view :selected").text();
+    var viewValue=$("#delivery-view :selected").attr("value");
+    var test=true;
+    $("#kpi-table").find(".kpi-order-entity").each(function(){
+        if($(this).text()==viewText){
+            test=false;
+        }
+    });
+    if(test){
+        post("..",{
+            viewText:viewText,
+            viewValue:viewValue
+        },function(data){
+            if(data.result){
+                $("#kpi-table").append($("<tr />").attr("id", data.id).append($("<td align='center' />").text(length).addClass("kpi-order-id"))
+                    .append($("<td align='center' />").addClass("kpi-order-entity").text(viewText))
+                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong",data.id).click(remove_viewEntity)))
+                );
+            }
+            else{
+                alert(data.content);
+            }
+        })
+    }
+
+}
+function remove_viewEntity(event) {
+    if(confirm("确认删除？")) {
+        var id = find_id(event);
+        $.ajax({
+            url:'',
+            type: 'DELETE',
+            success:function(data){
+                if(data.result){
+                    $("#kpi-table").find("#" + id).nextAll("tr").each(function() {
+                        var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
+                        $(this).find(".kpi-order-id").text(order);
+                    });
+                    $("#kpi-table").find("#" + id).remove();
+                }else{
+                    alert(data.content);
+                }
+            }
+        });
+    }
 }
 
-function text_view(obj, target) {
-     var a = $(obj).text();
-     var b = [];
-     $("#" + target).find("p").each(function() {
-          b.push($(this).text());
-     });
-     if(!Array.indexOf) {
-          Array.prototype.indexOf = function(obj) {
-               for(var i = 0; i < this.length; i++) {
-                    if(this[i] == obj) {
-                         return i;
-                    }
-               }
-               return -1;
-          }
-     }
-     return b.indexOf(a);
-}
-
-function del_view(event) {
-     var e = event ? event : (window.event ? window.event : null);
-     var obj = e.srcElement || e.target;
-     $(obj).remove();
-}
 
 function post_newUser() {
      var name = $("#new-user-name").val();
