@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     @users=User.accessible_by(current_ability).where(:entity_id=>@active_entity_id).all
   end
 
-  def edit
+  def show
     @user=User.accessible_by(current_ability).find_by_id(params[:id])
   end
 

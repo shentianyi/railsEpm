@@ -1,0 +1,44 @@
+    <div class="sub-middle sub-middle-manage">
+        <a class="btn btn-addUser btn-manageUser" onclick="window.history.go(-1)">返回</a>
+        <ul class="nav nav-tabs manage-userTab">
+            <li>
+                <a href="#">添加用户</a>
+            </li>
+            <li class="active">
+                <a href="#">编辑用户</a>
+            </li>
+            <li>
+                <a href="#">分配权限</a>
+            </li>
+        </ul>
+    </div>
+    <div class="middle clearfix">
+   <div class="add-user-left" id="add-user-left">
+            <p>*姓名</p>
+            <input type="text" id="new-user-name" value="<%=@user.first_name%>"/>
+            <p>*邮箱</p>
+            <input type="text" id="new-user-mail" value="<%=@user.%>"/>
+            <p>*组</p>
+            <select id="new-user-entity">
+                <option data-order="1" selected="selected">entity1</option>
+                <option data-order="2">entity2</option>
+                <option data-order="3">entity3</option>
+            </select>
+            <p>*权限</p>
+            <label class="radio">
+                <input type="radio" name="optionsRadios" data-role="1" checked>
+                role,dasdsadasdasasaSAsaSAsaSASASAsASas
+            </label>
+            <label class="radio">
+                <input type="radio" name="optionsRadios" data-role="2">
+                role,dasdsadasdasasaSAsaSAsaSASASAsASas
+            </label>
+            <label class="radio">
+                <input type="radio" name="optionsRadios" data-role="3">
+                role,dasdsadasdasasaSAsaSAsaSASASAsASas
+            </label>
+            <p class="hide text-center text-warning" id="add-warn"></p>
+        </div>
+
+    </div>
+

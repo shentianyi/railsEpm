@@ -20,7 +20,7 @@
                     <td align="center" class="manage-userRole"><%= UsersHelper.get_user_role_display(user.role_id)%></td>
               
                 <td align="center">
-		    <a href="../users/<%=user.id%>/edit">
+		    <a href="../users/<%=user.id%>">
                         <div class="manage-operate manage-operate-edit" title="编辑" data-belong="<%= user.id%>" onclick="to_userPage(event)"></div>
                         </a>
                     </td>
