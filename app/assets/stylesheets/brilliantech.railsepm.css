@@ -200,6 +200,10 @@ b.caret{
     font-size:15px;
     text-overflow:ellipsis;
 }
+.content-condition-part>input.analytics-time{
+    width:45px;
+    margin-left:-8px;
+}
 .content-condition-part>label{
     margin:4px 0 6px;
     font-size:15px;
@@ -208,7 +212,7 @@ b.caret{
     color:#9eb7c6;
 }
 .content-condition-part.content-condition-rightpart{
-    width:390px;
+    width:392px;
 }
 
 .content-condition-leftpart>select.conditionPart-entity{
@@ -228,7 +232,7 @@ b.caret{
     font-size:16px;
 }
 .content-condition-rightpart>input{
-    width:150px;
+    width:80px;
     margin-left:10px;
     margin-right:10px;
     margin-bottom:2px;

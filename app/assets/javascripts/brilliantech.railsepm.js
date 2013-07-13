@@ -23,7 +23,7 @@ function init() {
 function while_hide(a) {
      setTimeout(function() {
           $("#" + a).addClass("hide");
-     }, "1000");
+     }, "1500");
 }
 
 function init_rightContent() {
@@ -109,12 +109,9 @@ function init_analytics() {
                $("#to").attr("week", ($.datepicker.iso8601Week(startDate)));
           }
      });
-//     $(".control-chart-btn").bind("click", function(event) {
-//          $(".control-chart-btn").removeClass("active");
-//          $(this).addClass("active");
-//          var type = $(this).data("type");
-//          init_chart();
-//     });
+     $("#fromTime,#toTime").timePicker({
+         step:60
+     });
      var date = new Date();
      var nowDate = date.getDate();
      var day = date.getDay();
@@ -178,19 +175,19 @@ function init_analytics() {
 //     //                         return '<b>'+ this.series.name +'</b><br/>'+
 //     //                             "数值"+this.y +'<br />'+this.x;
 //     //                     },
-//                          xDateFormat: '%Y-%m-%d'
+//                          xDateFormat: '%Y-%m-%d %H:%M'
 //                      },
 //                      xAxis: {
 //                          type: 'datetime',
 //                          dateTimeLabelFormats: {
-//                              day:'%e/%b'
+//                              hour: '%e/%b %H:%M'
 //                          },
 //                          labels:{
 //                              style:{
 //                                  fontWeight:800
 //                              }
 //                          },
-//                          tickInterval: 24 * 3600 * 1000 // one day
+//                          tickInterval:  3600 * 1000 // one day
 //                      },
 //                      yAxis: [{
 //                          title: {
@@ -219,16 +216,16 @@ function init_analytics() {
 //                              type:"area",
 //                              name: 'actual',
 //                              data: [100,100,100,150,150,150,200],
-//                              pointStart: Date.UTC(chart.y,chart.m,chart.d),
-//                              pointInterval: 24 * 3600 * 1000//one day
+//                              pointStart: Date.UTC(chart.y,chart.m,chart.d,21),
+//                              pointInterval:  3600 * 1000//one day
 //                          },
 //                          {
 //                              type:"line",
 //                              name: 'target',
 //                              data: [80,110,120,140,150,150,300],
-//                              pointStart: Date.UTC(chart.y,chart.m,chart.d),
+//                              pointStart: Date.UTC(chart.y,chart.m,chart.d,23),
 //                              yAxis:1,
-//                              pointInterval: 24 * 3600 * 1000 // one day
+//                              pointInterval:  3600 * 1000 // one day
 //                          }
 //                      ]
 //                  }
@@ -238,8 +235,6 @@ function init_analytics() {
 }
 
 function init_chart() {
-     var kpi = $("#chart-kpi :selected").attr("value");
-     var view = $("#chart-view :selected").attr("value");
      if($("#chart-kpi :selected").attr('id')=="none-kpi"){
          $("#chart-chooseWarning").removeClass("hide").text("请选择KPI");
          while_hide("chart-chooseWarning");
@@ -249,23 +244,48 @@ function init_chart() {
          while_hide("chart-chooseWarning");
      }
      else{
+         var kpi = $("#chart-kpi :selected").attr("value");
+         var view = $("#chart-view :selected").attr("value");
+         var fromPost,toPost;
+         if($("#fromTime").val() && $("#toTime").val()){
+             var fromSelect=($("#fromTime").val()).split("");
+             var toSelect=($("#toTime").val()).split("");
+             if(fromSelect[0]==0){
+                 fromPost=fromSelect[1];
+             }
+             else{
+                 fromPost=fromSelect[0]+fromSelect[1];
+             }
+             if(toSelect[0]==0){
+                 toPost=toSelect[1];
+             }
+             else{
+                 toPost=toSelect[0]+toSelect[1];
+             }
+         } ;
          var date1 = ($("#from").val()).split("-");
          var date2 = ($("#to").val()).split("-");
          var week1 = parseInt($("#from").attr("week"));
          var week2 = parseInt($("#to").attr("week"));
-         var dateBegin, dateEnd;
-         for( i = 0; i < 3; i++) {
+         var dateBegin, dateEnd,timeBegin,timeEnd;
+         for(var i = 0; i < 3; i++) {
              if(parseInt(date1[i]) < parseInt(date2[i])) {
                  dateBegin = date1;
+                 timeBegin=fromPost;
                  dateEnd = date2;
+                 timeEnd=toPost;
                  break;
              } else if(parseInt(date1[i]) > parseInt(date2[i])) {
                  dateBegin = date2;
+                 timeBegin=toPost;
                  dateEnd = date1;
+                 timeEnd=fromPost;
                  break;
              } else {
                  dateBegin = date1;
                  dateEnd = date2;
+                 timeBegin=fromPost-toPost<=0?fromPost:toPost;
+                 timeEnd=fromPost-toPost>=0?fromPost:toPost;
              }
          };
          var startWeek = week1 - week2 <= 0 ? week1 : week2;
@@ -276,6 +296,16 @@ function init_chart() {
          var interval=$("#chart-kpi :selected").attr("interval");
          var startTime, endTime;
          switch(interval) {
+             case "hour":
+                 if($("#fromTime").val() && $("#toTime").val()){
+                     startTime = dateBegin.join("-")+"-"+timeBegin;
+                     endTime = dateEnd.join("-")+"-"+timeEnd;
+                 }
+                 else{
+                     $("#chart-chooseWarning").removeClass("hide").text("该KPI需要选择时间");
+                     while_hide("chart-chooseWarning");
+                 }
+                 break
              case "day":
                  startTime = dateBegin.join("-");
                  endTime = dateEnd.join("-");
@@ -305,6 +335,10 @@ function init_chart() {
          }, function(data) {
              if(data.result){
                  form_chart(data.current,data.target, data.unit,interval,startTime,endTime);
+                 $(".control-chart-btn").each(function(){
+                     $(this).removeClass('active');
+                 });
+                 $(".control-chart-btn[data-type='"+interval+"']").addClass("active");
              }
              else{
                  alert(data.content);
@@ -373,6 +407,18 @@ function form_chart(current,target,unit,interval,startTime,endTime){
     var start=startTime.split("-");
     var end=endTime.split("-");
     switch (interval){
+        case "hour":
+            options.tooltip.xDateFormat='%Y-%m-%d %H:%M';
+            options.xAxis.type='datetime';
+            options.xAxis.dateTimeLabelFormats={
+                hour: '%e/%b %H:%M'
+            };
+            options.xAxis.tickInterval=3600 * 1000;
+            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,start[2],start[3]);
+            options.series[0].pointInterval=3600 * 1000;
+            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,start[2],start[3]);
+            options.series[1].pointInterval=3600 * 1000;
+            break;
         case "day":
             options.tooltip.xDateFormat='%Y-%m-%d';
             options.xAxis.type='datetime';
@@ -1571,10 +1617,10 @@ function entry_hourChange(){
     var hourSelect=($(".time-picker li.selected").text()).split("");
     var hourPost;
     if(hourSelect[0]==0){
-         hourPost=hourSelect[1];
+        hourPost=hourSelect[1];
     }
     else{
-         hourPost=hourSelect[0]+hourSelect[1];
+        hourPost=hourSelect[0]+hourSelect[1];
     }
     if(hourPost!=$("#kpi-hour").attr("compare")){
         var chooseHour=$("#entry-kpi").val()+"-"+hourPost;

@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" >
     <link href="stylesheets/wzx-jquery-ui.css" rel="stylesheet" >
+    <link href="stylesheets/timePicker.css" rel="stylesheet" >
     <link href="stylesheets/wzx-bootstrap.css" rel="stylesheet" >
     <link href="stylesheets/brilliantech.base.css" rel="stylesheet" >
     <link href="stylesheets/brilliantech.railsepm.css" rel="stylesheet" >
@@ -42,11 +43,11 @@
         <a class="btn btn-success btn-navi pull-right" href="">输入 KPI</a>
     </div>
     <div class="sub-middle">
-        <div class="sub-middle-tool pull-right">
-            <a data-placement="bottom" data-animation=false id="tool-print" title="print this page"><i class="icon-print"></i> 打印</a>
-            <a data-placement="bottom" data-animation=false id="tool-excel" title="export to Excel"><i class="icon-share-alt"></i>Excel</a>
-            <a data-placement="bottom" data-animation=false id="tool-pdf" title="export to PDF"><i class="icon-share-alt"></i>PDF</a>
-        </div>
+        <!--<div class="sub-middle-tool pull-right">-->
+            <!--<a data-placement="bottom" data-animation=false id="tool-print" title="print this page"><i class="icon-print"></i> 打印</a>-->
+            <!--<a data-placement="bottom" data-animation=false id="tool-excel" title="export to Excel"><i class="icon-share-alt"></i>Excel</a>-->
+            <!--<a data-placement="bottom" data-animation=false id="tool-pdf" title="export to PDF"><i class="icon-share-alt"></i>PDF</a>-->
+        <!--</div>-->
     </div>
     <div class="middle clearfix">
         <div class="left-category pull-left">
@@ -65,7 +66,7 @@
                     </select>
                     <select class="pull-left" id="chart-kpi">
                         <option style="display:none" selected="selected" id="none-kpi">选择KPI</option>
-                        <option value="kpi1" interval="day">KPI 1</option>
+                        <option value="kpi1" interval="hour">KPI 1</option>
                         <option value="kpi2" interval="week">KPI 2</option>
                         <option value="kpi3" interval="day">KPI 3</option>
                     </select>
@@ -77,29 +78,26 @@
                         <option value="entity3">view3</option>
                     </select>
 
-                    <!--<label>compare to</label>-->
-                    <!--<select>-->
-                        <!--<option>KPI 1</option>-->
-                        <!--<option>KPI 2</option>-->
-                        <!--<option>KPI 3</option>-->
-                        <!--<option selected = "selected" >none</option>-->
-                    <!--</select>-->
                 </div>
+
                 <div class="content-condition-part pull-right content-condition-rightpart">
-                    <p class="text-center">时间范围</p>
-                    <input type="text" readonly="true" id="from" /><span>to</span><input type="text" readonly="true" id="to" />
-                    <!--<label>compare to</label>-->
-                    <!--<input type="text" readonly="true" id="compare-from"/><span>to</span><input type="text" readonly="true" id="compare-to"/>-->
+                    <p class="text-center">日期范围</p>
+                    <input type="text" readonly="true" id="from" />
+                    <input placeholder="时间" type="text" readonly="true" id="fromTime" class="analytics-time"/>
+                    <span>to</span>
+                    <input  type="text" readonly="true" id="to" />
+                    <input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>
                 </div>
                 <a class="btn btn-wzx btn-primary pull-right analyze-btn" onclick="init_chart()">分析</a>
             </div>
             <p class="text-warning text-center hide" id="chart-chooseWarning"></p>
            <div class="control-chart">
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn control-chart-btn-last" data-animation=false data-type="year" title="year">Y</a>
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-interval="90" title="quarter">Q</a>
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-interval="30" title="month">M</a>
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-interval="7" title="week">W</a>
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn active" data-animation=false data-interval="1" data-type="day" title="day">D</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn control-chart-btn-last" data-animation=false data-type="year" title="年">Y</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="quarter" title="季度">Q</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="month" title="月">M</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="week" title="周">W</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false  data-type="day" title="天">D</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn active" data-animation=false data-type="hour" title="小时">H</a>
            </div>
            <div id="container" class="analyze-chart">
            </div>
@@ -108,6 +106,7 @@
 
 </div>
 <script src="javascripts/jquery-1.8.2.min.js"></script>
+<script src="javascripts/jquery.timePicker.min.js"></script>
 <script src="javascripts/jquery-ui-1.10.3.custom.min.js"></script>
 <script src="javascripts/highcharts.js"></script>
 <script src="javascripts/bootstrap.min.js"></script>
