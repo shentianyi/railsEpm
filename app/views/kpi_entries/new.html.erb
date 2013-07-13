@@ -7,6 +7,9 @@
           <!--  <li data-type="hour" class="<%='active' if @f=='hourly'%>">
           <a href="/kpi_entries/new?f=hourly">小时</a>
           </li> -->
+          <li data-type="hour" class="<%= 'active' if @f==KpiFrequency::Hourly%>">
+               <a  href="/kpi_entries/new?f=<%= KpiFrequency::Hourly%>">小时</a>
+          </li>
           <li data-type="day" class="<%= 'active' if @f==KpiFrequency::Daily%>">
                <a  href="/kpi_entries/new?f=<%= KpiFrequency::Daily%>">日</a>
           </li>
@@ -27,6 +30,7 @@
           <img src="/assets/calendar.png" style="margin:16px 0 0 18px;"/>
           <a class="entry-prev-btn entry-btn hide" id="entry-prev-btn" onclick="minus_unit(event)"></a>
           <input type="text" id="entry-kpi" class="entry-kpi-date" readonly="true" />
+          <input type="text" id="kpi-hour" onchange="entry_hourChange()" class="entry-kpi-date entry-kpi-hour" readonly="true" style="display:none"/>
           <label class="show-weekOfYear inline-block" id="show-weekOfYear" style="display:none">第<span></span>周</label>
           <div class="week-picker hide"></div>
           <a class="entry-next-btn entry-btn hide" id="entry-next-btn" onclick="plus_unit(event)"></a>

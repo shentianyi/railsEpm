@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" >
     <link href="stylesheets/wzx-jquery-ui.css" rel="stylesheet" >
+    <link href="stylesheets/timePicker.css" rel="stylesheet" >
     <link href="stylesheets/wzx-bootstrap.css" rel="stylesheet" >
     <link href="stylesheets/brilliantech.base.css" rel="stylesheet" >
     <link href="stylesheets/brilliantech.railsepm.css" rel="stylesheet" >
@@ -47,16 +48,18 @@
     <div class="middle clearfix">
         <label class="inline pull-left entryKPI-intervalMark" >KPI周期</label>
         <ul class="nav nav-tabs entry-nav-tabs" id="entry-date-type">
+            <li class="active" data-type="hour"><a href="#">小时</a></li>
             <li data-type="day"><a href="#">日</a></li>
             <li data-type="week"><a href="#" >周</a></li>
             <li data-type="month"><a href="#" >月</a></li>
             <li  data-type="quarter"><a href="#">季度</a></li>
-            <li class="active" data-type="year"><a href="#">年</a></li>
+            <li data-type="year"><a href="#">年</a></li>
         </ul>
         <div class="entry-kpi-part">
             <img src="images/calendar.png" style="margin:16px 0 0 18px;"/>
             <a class="entry-prev-btn entry-btn hide" id="entry-prev-btn" onclick="minus_unit(event)"></a>
             <input type="text" id="entry-kpi" class="entry-kpi-date" readonly="true" />
+            <input type="text" id="kpi-hour" onchange="entry_hourChange()" class="entry-kpi-date entry-kpi-hour" readonly="true" style="display:none"/>
             <label class="show-weekOfYear inline-block" id="show-weekOfYear" style="display:none">第<span></span>周</label>
             <div class="week-picker hide"> </div>
             <a class="entry-next-btn entry-btn hide" id="entry-next-btn" onclick="plus_unit(event)"></a>
@@ -92,7 +95,9 @@
 </div>
 
 <script src="javascripts/jquery-1.8.2.min.js"></script>
+
 <script src="javascripts/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="javascripts/jquery.timePicker.min.js"></script>
 <script src="javascripts/bootstrap.min.js"></script>
 <script src="javascripts/brilliantech.base.js"></script>
 <script src="javascripts/brilliantech.railsepm.js"></script>

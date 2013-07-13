@@ -51,13 +51,6 @@ function show_addBlock(event) {
                clear_add_kpi();
                $("#add-block-mark").text("添加KPI");
           }
-          //        else if($(obj).data("manage")=="user"){
-          //            clear_add_user();
-          //            $("#add-block-mark").text("添加用户");
-          //        }
-     } else {
-          //        $("#addBlock").slideUp("2000").data("state","off");
-          //        $("#right-content").css("padding-top","0px");
      }
 }
 
@@ -1391,16 +1384,60 @@ function add_user() {
 ////////////////////////////////////////////////     entry kpi  ///////////////////////////////////////
 function init_entryKpi() {
      init();
-     date = new Date();
-     d = date.getDate();
-     day = date.getDay();
-     QuarterFirstMonth = showquarterFirstMonth(date);
-     m = date.getMonth()+1;
-     y = date.getFullYear();
-     WeekFirstDay = new Date(y, m, d - day + 1);
-     WeekLastDay = new Date(y, m, d - day + 7);
+     var date = new Date();
+     var d = date.getDate();
+     var day = date.getDay();
+     var QuarterFirstMonth = showquarterFirstMonth(date);
+     var  m = date.getMonth();
+     var realMonth=parseInt(m)+1;
+     var y = date.getFullYear();
+     var WeekFirstDay = new Date(y, m, d - day + 1);
+     var WeekLastDay = new Date(y, m, d - day + 7);
+     var generateHTML;
      var type = $("#entry-date-type").find(".active").data("type");
      switch(type) {
+         case "hour":
+             $("#entry-kpi").val(y + "-" + realMonth + "-" + d);
+             $("#entry-kpi").attr("compare",$("#entry-kpi").val());
+             $("#kpi-hour").css("display","inline-block").val("00:00").attr("compare","0").timePicker({
+                 startTime:"00:00",
+                 step: 60
+             });
+             $("#entry-kpi").datepicker({
+                 dateFormat : "yy-m-d",
+                 showOtherMonths : true,
+                 firstDay : 1,
+                 selectOtherMonths : true,
+                 onSelect:function(dateText, inst){
+                     var date = $(this).datepicker('getDate');
+                     var today=new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                     var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+                     var hourSelect=($("#kpi-hour").val()).split("");
+                     var hourPost;
+                     if(hourSelect[0]==0){
+                         hourPost=hourSelect[1];
+                     }
+                     else{
+                         hourPost=hourSelect[0]+hourSelect[1];
+                     }
+                     var chooseDay=$.datepicker.formatDate(dateFormat, today, inst.settings);
+                     alert(chooseDay+"-"+hourPost)
+                     if(chooseDay!=$("#entry-kpi").attr('compare')){
+                         $.post('',{
+                             date:chooseDay+"-"+hourPost
+                         },function(data){
+                             if(data.result){
+                                 $("#entry-kpi").attr('compare',chooseDay);
+                             }
+                             else{
+                                 alert(data.content);
+                             }
+                         });
+                     }
+                 }
+             });
+             generateHTML=y + "-" + realMonth + "-" + d+"-"+0;
+             break;
           case "day":
               var realMonth=parseInt(m)+1;
                $("#entry-kpi").val(y + "-" + realMonth + "-" + d);
@@ -1415,6 +1452,7 @@ function init_entryKpi() {
                         var today=new Date(date.getFullYear(), date.getMonth(), date.getDate());
                         var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
                         var chooseDay=$.datepicker.formatDate(dateFormat, today, inst.settings);
+
                         if(chooseDay!=$("#entry-kpi").attr('compare')){
                             $.post('',{
                                 date:chooseDay
@@ -1429,6 +1467,8 @@ function init_entryKpi() {
                         }
                     }
                });
+               generateHTML=y + "-" + realMonth + "-" + d;
+              alert( generateHTML)
                break;
           case "week":
                $("#entry-kpi").val(formatDate(WeekFirstDay) + " ~ " + formatDate(WeekLastDay));
@@ -1442,6 +1482,7 @@ function init_entryKpi() {
                }
                var originWeek=$.datepicker.iso8601Week(startDate);
                $("#entry-kpi").attr("compare",y+"-"+originWeek);
+               generateHTML=y + "-" +$.datepicker.iso8601Week(new Date(y, m, d - day + 1));
                break;
           case "month":
                var realMonth=parseInt(m)+1;
@@ -1487,12 +1528,13 @@ function init_entryKpi() {
                          of : $(this)
                     });
                });
+               generateHTML=y + "-" +realMonth;
                break;
           case "quarter":
                $("#entry-kpi").css("width", "100px");
                $("#entry-kpi").val(y);
                $("#entry-prev-btn,#entry-next-btn").removeClass("hide");
-               var originQuarter=y+"-"+$("#select-quarter :selected").data("order");
+               var originQuarter=y+"-"+quarterBelong(m);
                $("#entry-kpi").attr("compare",originQuarter);
                $("#select-quarter").removeClass("hide").find("option").each(function() {
                     if($(this).val() == QuarterFirstMonth) {
@@ -1514,16 +1556,40 @@ function init_entryKpi() {
                         }
                     })
                });
-
+              generateHTML=originQuarter;
                break;
           case "year":
                $("#entry-kpi").css("width", "100px");
                $("#entry-kpi").val(y);
-               $("#entry-prev-btn,#entry-next-btn").removeClass("hide");
+               $("#entry-prev-btn,#entry-next-btn").removeClass("hide")
+               generateHTML=y;
                break;
      };
 }
-
+//选择完小时后触发的事件
+function entry_hourChange(){
+    var hourSelect=($(".time-picker li.selected").text()).split("");
+    var hourPost;
+    if(hourSelect[0]==0){
+         hourPost=hourSelect[1];
+    }
+    else{
+         hourPost=hourSelect[0]+hourSelect[1];
+    }
+    if(hourPost!=$("#kpi-hour").attr("compare")){
+        var chooseHour=$("#entry-kpi").val()+"-"+hourPost;
+        $.post('',{
+            date:chooseHour
+        },function(data){
+            if(data.result){
+                $("#kpi-hour").attr("compare",hourPost)
+            }
+            else{
+                alert(data.content);
+            }
+        });
+    }
+}
 //本季开始年月
 function showquarterFirstMonth(a) {
      if(a.getMonth() < 3)
@@ -1687,6 +1753,17 @@ function fill_kpiCurrent(obj) {
                var type = $("#entry-date-type").find(".active").data("type");
                var date;
                switch(type) {
+                    case "hour":
+                        var hourSelect=($("#kpi-hour").val()).split("");
+                        var hourPost;
+                        if(hourSelect[0]==0){
+                            hourPost=hourSelect[1];
+                        }
+                        else{
+                            hourPost=hourSelect[0]+hourSelect[1];
+                        }
+                       date = $("#entry-kpi").val()+"-"+hourPost;
+                       break;
                     case "day":
                          date = $("#entry-kpi").val();
                          break;

@@ -699,6 +699,9 @@ input.entry-kpi-date{
     background-color:white !important;
     font-size:16px;
 }
+input.entry-kpi-date.entry-kpi-hour{
+    width:50px;
+}
 .entry-selectQuarter{
     width:100px;
     position:relative;
