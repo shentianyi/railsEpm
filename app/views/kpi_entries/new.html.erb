@@ -4,9 +4,7 @@
 <div class="middle clearfix">
      <label class="inline pull-left entryKPI-intervalMark" >KPI周期</label>
      <ul class="nav nav-tabs entry-nav-tabs" id="entry-date-type">
-          <!--  <li data-type="hour" class="<%='active' if @f=='hourly'%>">
-          <a href="/kpi_entries/new?f=hourly">小时</a>
-          </li> -->
+         
           <li data-type="hour" class="<%= 'active' if @f==KpiFrequency::Hourly%>">
                <a  href="/kpi_entries/new?f=<%= KpiFrequency::Hourly%>">小时</a>
           </li>
@@ -28,23 +26,24 @@
      </ul>
      <div class="entry-kpi-part">
           <img src="/assets/calendar.png" style="margin:16px 0 0 18px;"/>
-          <a class="entry-prev-btn entry-btn hide" id="entry-prev-btn" onclick="minus_unit(event)"></a>
-          <input type="text" id="entry-kpi" class="entry-kpi-date" readonly="true" />
-          <input type="text" id="kpi-hour" onchange="entry_hourChange()" class="entry-kpi-date entry-kpi-hour" readonly="true" style="display:none"/>
-          <label class="show-weekOfYear inline-block" id="show-weekOfYear" style="display:none">第<span></span>周</label>
-          <div class="week-picker hide"></div>
-          <a class="entry-next-btn entry-btn hide" id="entry-next-btn" onclick="plus_unit(event)"></a>
-          <select id="select-quarter" class="entry-selectQuarter hide">
-               <option data-order="1">第一季度</option>
-               <option data-order="2">第二季度</option>
-               <option data-order="3">第三季度</option>
-               <option data-order="4">第四季度</option>
-          </select>
+            <a class="entry-prev-btn entry-btn hide" id="entry-prev-btn" onclick="minus_unit(event)"></a>
+            <input type="text" id="entry-kpi" class="entry-kpi-date" readonly="true" />
+            <input type="text" id="kpi-hour" onchange="entry_hourChange()" class="entry-kpi-date entry-kpi-hour" readonly="true" style="display:none"/>
+            <label class="show-weekOfYear inline-block" id="show-weekOfYear" style="display:none">第<span></span>周</label>
+            <div class="week-picker hide"> </div>
+            <a class="entry-next-btn entry-btn hide" id="entry-next-btn" onclick="plus_unit(event)"></a>
+            <select id="select-quarter" class="entry-selectQuarter hide">
+                <option data-order="1">第一季度</option>
+                <option data-order="2">第二季度</option>
+                <option data-order="3">第三季度</option>
+                <option data-order="4">第四季度</option>
+            </select>
           <div id="kpi-entry">
              <%= render :partial=>'entry'%>
            </div>
      </div>
 </div>
+<input type="hidden" value="<%=@f%>" id="kpi-type-hidden" />
 <script type="text/javascript">
      $(document).ready(function() {
           init_entryKpi();

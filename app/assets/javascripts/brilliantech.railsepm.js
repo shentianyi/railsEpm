@@ -79,7 +79,7 @@ function init_analytics() {
           showOtherMonths : true,
           firstDay : 1,
           selectOtherMonths : true,
-          dateFormat : 'yy-m-d',
+          dateFormat : 'yy-mm-dd',
           showWeek : true,
           onSelect : function(dateText, inst) {
                var date = $(this).datepicker('getDate');
@@ -96,7 +96,7 @@ function init_analytics() {
           showOtherMonths : true,
           selectOtherMonths : true,
           firstDay : 1,
-          dateFormat : 'yy-m-d',
+          dateFormat : 'yy-mm-dd',
           showWeek : true,
           onSelect : function(dateText, inst) {
                var date = $(this).datepicker('getDate');
@@ -295,55 +295,62 @@ function init_chart() {
 //         var interval = $(".control-chart-btn.active").data("type");
          var interval=$("#chart-kpi :selected").attr("interval");
          var startTime, endTime;
+         var vali=true;
          switch(interval) {
-             case "hour":
+              // hour
+             case "90":
                  if($("#fromTime").val() && $("#toTime").val()){
                      startTime = dateBegin.join("-")+"-"+timeBegin;
                      endTime = dateEnd.join("-")+"-"+timeEnd;
                  }
                  else{
                      $("#chart-chooseWarning").removeClass("hide").text("该KPI需要选择时间");
+                     vali=false;
                      while_hide("chart-chooseWarning");
                  }
                  break
-             case "day":
+                 // day
+             case "100":
                  startTime = dateBegin.join("-");
                  endTime = dateEnd.join("-");
                  break;
-             case "week":
+                 // week
+             case "200":
                  startTime = dateBegin[0] + "-" + startWeek;
                  endTime = dateEnd[0] + "-" + endWeek;
                  break;
-             case "month":
+                 // month
+             case "300":
                  startTime = dateBegin[0] + "-" + dateBegin[1];
                  endTime = dateEnd[0] + "-" + dateEnd[1];
                  break;
-             case "quarter":
+                 // quarter
+             case "400":
                  startTime = dateBegin[0] + "-" + startQuarter;
                  endTime = dateEnd[0] + "-" + endQuarter;
                  break;
-             case "year":
+                 // year
+             case "500":
                  startTime = dateBegin[0];
                  endTime = dateEnd[0];
                  break;
-         } ;
-         $.post('', {
+         };
+         if(vali){
+         $.post('/kpi_entries/analyse', {
              kpi : kpi,
-             view: view,
+             entity_group: view,
              startTime : startTime,
              endTime : endTime
-         }, function(data) {
-             if(data.result){
+         }, function(msg) {
+             if(msg.result){
+                 var data=msg.object;
                  form_chart(data.current,data.target, data.unit,interval,startTime,endTime);
                  $(".control-chart-btn").each(function(){
                      $(this).removeClass('active');
                  });
                  $(".control-chart-btn[data-type='"+interval+"']").addClass("active");
              }
-             else{
-                 alert(data.content);
-             }
-         });
+         });}
      }
 }
 
@@ -407,7 +414,7 @@ function form_chart(current,target,unit,interval,startTime,endTime){
     var start=startTime.split("-");
     var end=endTime.split("-");
     switch (interval){
-        case "hour":
+        case "90":
             options.tooltip.xDateFormat='%Y-%m-%d %H:%M';
             options.xAxis.type='datetime';
             options.xAxis.dateTimeLabelFormats={
@@ -419,7 +426,7 @@ function form_chart(current,target,unit,interval,startTime,endTime){
             options.series[1].pointStart=Date.UTC(start[0],start[1]-1,start[2],start[3]);
             options.series[1].pointInterval=3600 * 1000;
             break;
-        case "day":
+        case "100":
             options.tooltip.xDateFormat='%Y-%m-%d';
             options.xAxis.type='datetime';
             options.xAxis.dateTimeLabelFormats={
@@ -431,7 +438,7 @@ function form_chart(current,target,unit,interval,startTime,endTime){
             options.series[1].pointStart=Date.UTC(start[0],start[1]-1,start[2]);
             options.series[1].pointInterval=24 * 3600 * 1000;
             break;
-        case "week":
+        case "200":
             options.tooltip.formatter=function(){
                 return '<b>'+ this.series.name +'</b><br/>'+
                 "数值"+this.y +'<br />'+this.x;
@@ -458,7 +465,7 @@ function form_chart(current,target,unit,interval,startTime,endTime){
                }
             };
             break;
-        case "month":
+        case "300":
             options.tooltip.xDateFormat='%Y-%m';
             options.xAxis.type='datetime';
             options.xAxis.dateTimeLabelFormats={
@@ -470,7 +477,7 @@ function form_chart(current,target,unit,interval,startTime,endTime){
             options.series[1].pointStart=Date.UTC(start[0],start[1]-1,1);
             options.series[1].pointInterval=24 * 3600 * 1000 *30;
             break;
-        case "quarter":
+        case "400":
             options.tooltip.formatter=function(){
                 return '<b>'+ this.series.name +'</b><br/>'+
                     "数值"+this.y +'<br />'+this.x;
@@ -497,7 +504,7 @@ function form_chart(current,target,unit,interval,startTime,endTime){
                 }
             };
             break;
-        case "year":
+        case "500":
             options.tooltip.xDateFormat='%Y';
             options.xAxis.type='datetime';
             options.xAxis.dateTimeLabelFormats={
@@ -1468,19 +1475,22 @@ function init_entryKpi() {
                      var date = $(this).datepicker('getDate');
                      var today=new Date(date.getFullYear(), date.getMonth(), date.getDate());
                      var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
-                     var hourSelect=($("#kpi-hour").val()).split("");
-                     var hourPost;
-                     if(hourSelect[0]==0){
-                         hourPost=hourSelect[1];
-                     }
-                     else{
-                         hourPost=hourSelect[0]+hourSelect[1];
-                     }
+                     // var hourSelect=($("#kpi-hour").val()).split("");
+                     // var hourSelect=$("#kpi-hour").val();
+                     var hourSelect=$(".time-picker li.selected").text()
+                     console.log(hourSelect);
+                     var hourPost=hourSelect;
+                     // if(hourSelect[0]==0){
+                         // hourPost=hourSelect[1];
+                     // }
+                     // else{
+                         // hourPost=hourSelect[0]+hourSelect[1];
+                     // }
                      var chooseDay=$.datepicker.formatDate(dateFormat, today, inst.settings);
-                     alert(chooseDay+"-"+hourPost)
+                     // alert(chooseDay+"-"+hourPost)
                      if(chooseDay!=$("#entry-kpi").attr('compare')){
                          $.post('',{
-                             date:chooseDay+"-"+hourPost
+                             date:chooseDay+" "+hourPost+":00"
                          },function(data){
                              if(data.result){
                                  $("#entry-kpi").attr('compare',chooseDay);
@@ -1509,22 +1519,13 @@ function init_entryKpi() {
                         var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
                         var chooseDay=$.datepicker.formatDate(dateFormat, today, inst.settings);
 
-                        if(chooseDay!=$("#entry-kpi").attr('compare')){
-                            $.post('',{
-                                date:chooseDay
-                            },function(data){
-                                if(data.result){
-                                    $("#entry-kpi").attr('compare',chooseDay);
-                                }
-                                else{
-                                    alert(data.content)
-                                }
-                            });
-                        }
+                        // if(chooseDay!=$("#entry-kpi").attr('compare')){
+                             refresh_kpi_entry(chooseDay);
+                        // }
                     }
                });
                generateHTML=y + "-" + realMonth + "-" + d;
-              alert( generateHTML)
+              // alert( generateHTML)
                break;
           case "week":
                $("#entry-kpi").val(formatDate(WeekFirstDay) + " ~ " + formatDate(WeekLastDay));
@@ -1557,18 +1558,9 @@ function init_entryKpi() {
                          var showMonth=parseInt(month)+1;
                          $("#entry-kpi").val(year + "-" + showMonth);
                          var chooseMonth=year+"-"+showMonth;
-                         if(chooseMonth!=$("#entry-kpi").attr('compare')){
-                            $.post('',{
-                                date:chooseMonth
-                            },function(data){
-                                if(data.result){
-                                    $("#entry-kpi").attr('compare',chooseMonth);
-                                }
-                                else{
-                                    alert(data.content)
-                                }
-                            });
-                         }
+                         // if(chooseMonth!=$("#entry-kpi").attr('compare')){
+                           refresh_kpi_entry(chooseMonth);
+                         // }
                     },
                    onChangeMonthYear:function(year,month,inst){
                        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
@@ -1598,18 +1590,19 @@ function init_entryKpi() {
                     };
                     $(this).bind('click',function(){
                         var chooseQuarter=$("#entry-kpi").val()+"-"+$(this).data('order');
-                        if(chooseQuarter!=$("#entry-kpi").attr("compare")){
-                            $.post('',{
-                                date:chooseQuarter
-                            },function(data){
-                                if(data.result){
-                                    $("#entry-kpi").attr('compare',chooseQuarter);
-                                }
-                                else{
-                                    alert(data.content);
-                                }
-                            });
-                        }
+                        // if(chooseQuarter!=$("#entry-kpi").attr("compare")){
+                            // $.post('',{
+                                // date:chooseQuarter
+                            // },function(data){
+                                // if(data.result){
+                                    // $("#entry-kpi").attr('compare',chooseQuarter);
+                                // }
+                                // else{
+                                    // alert(data.content);
+                                // }
+                            // });
+                            refresh_kpi_entry(chooseQuarter);
+                        // }
                     })
                });
               generateHTML=originQuarter;
@@ -1622,18 +1615,26 @@ function init_entryKpi() {
                break;
      };
 }
+
+function refresh_kpi_entry(date){
+     $.post('../kpi_entries/refresh_entry',{f:$('#kpi-type-hidden').val(),date:date},function(data){
+          $("#kpi-entry").html(data);
+     });
+}
 //选择完小时后触发的事件
 function entry_hourChange(){
-    var hourSelect=($(".time-picker li.selected").text()).split("");
-    var hourPost;
-    if(hourSelect[0]==0){
-        hourPost=hourSelect[1];
-    }
-    else{
-        hourPost=hourSelect[0]+hourSelect[1];
-    }
+     // console.log($(".time-picker li.selected").text());
+    // var hourSelect=($(".time-picker li.selected").text()).split("");
+    var hourSelect=$(".time-picker li.selected").text();
+    var hourPost=hourSelect;
+    // if(hourSelect[0]==0){
+        // hourPost=hourSelect[1];
+    // }
+    // else{
+        // hourPost=hourSelect[0]+hourSelect[1];
+    // }
     if(hourPost!=$("#kpi-hour").attr("compare")){
-        var chooseHour=$("#entry-kpi").val()+"-"+hourPost;
+        var chooseHour=$("#entry-kpi").val()+"  "+hourPost+":00";
         $.post('',{
             date:chooseHour
         },function(data){
@@ -1641,7 +1642,7 @@ function entry_hourChange(){
                 $("#kpi-hour").attr("compare",hourPost)
             }
             else{
-                alert(data.content);
+                // alert(data.content);
             }
         });
     }
@@ -1723,30 +1724,14 @@ function minus_unit(event) {
      var type = $("#entry-date-type").find(".active").data("type");
      switch(type) {
          case "quarter":
-             var chooseQuarter= $("#entry-kpi").val() + "-" + $("#select-quarter :selected").data("order");
-             $.post('',{
-                 date:chooseQuarter
-             },function(data){
-                 if(data.result){
-                     $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1).attr('compare',chooseQuarter);
-                 }
-                 else{
-                     alert(data.content);
-                 }
-             });
+          var chooseQuarter= (parseInt($("#entry-kpi").val())-1) + "-" + $("#select-quarter :selected").data("order");
+             refresh_kpi_entry(chooseQuarter);
+              $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1).attr('compare',chooseQuarter);
              break;
          case "year":
-             var chooseYear= $("#entry-kpi").val();
-             $.post('',{
-                 date:chooseYear
-             },function(data){
-                 if(data.result){
-                     $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1);
-                 }
-                 else{
-                     alert(data.content);
-                 }
-             });
+              var chooseYear=parseInt($("#entry-kpi").val()) -1;
+              refresh_kpi_entry(chooseYear);
+            $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1);
              break;
      };
 }
@@ -1755,30 +1740,15 @@ function plus_unit(event) {
      var type = $("#entry-date-type").find(".active").data("type");
      switch(type) {
         case "quarter":
-            var chooseQuarter= $("#entry-kpi").val() + "-" + $("#select-quarter :selected").data("order");
-            $.post('',{
-                date:chooseQuarter
-            },function(data){
-                if(data.result){
-                    $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1).attr('compare',chooseQuarter);
-                }
-                else{
-                    alert(data.content);
-                }
-            });
+            var chooseQuarter= (parseInt($("#entry-kpi").val())+1) + "-" + $("#select-quarter :selected").data("order");
+            refresh_kpi_entry(chooseQuarter);
+            $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1).attr('compare',chooseQuarter);
             break;
         case "year":
-            var chooseYear= $("#entry-kpi").val();
-            $.post('',{
-                date:chooseYear
-            },function(data){
-                if(data.result){
-                    $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1);
-                }
-                else{
-                    alert(data.content);
-                }
-            });
+            var chooseYear=parseInt($("#entry-kpi").val()) + 1;
+              refresh_kpi_entry(chooseYear);
+     
+            $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1);
             break;
      };
 }
@@ -1810,15 +1780,18 @@ function fill_kpiCurrent(obj) {
                var date;
                switch(type) {
                     case "hour":
-                        var hourSelect=($("#kpi-hour").val()).split("");
-                        var hourPost;
-                        if(hourSelect[0]==0){
-                            hourPost=hourSelect[1];
-                        }
-                        else{
-                            hourPost=hourSelect[0]+hourSelect[1];
-                        }
-                       date = $("#entry-kpi").val()+"-"+hourPost;
+                        // var hourSelect=($("#kpi-hour").val()).split("");
+                        // var hourPost;
+                        // if(hourSelect[0]==0){
+                            // hourPost=hourSelect[1];
+                        // }
+                        // else{
+                            // hourPost=hourSelect[0]+hourSelect[1];
+                        // }
+                       // date = $("#entry-kpi").val()+"  "+hourSelect;
+                        var hourSelect=$(".time-picker li.selected").text();
+                       var hourPost=hourSelect;
+                       date=$("#entry-kpi").val()+"  "+hourPost+":00";
                        break;
                     case "day":
                          date = $("#entry-kpi").val();
@@ -1875,9 +1848,18 @@ function kpi_percent(a, b) {
 }
 
 
-  function kpi_reinit_by_category() {
-          var id = $("#delivery-entity :selected").attr("value");
-         $.post('/kpis/kpi_option',{id:id},function(data){
-              $("#kpi-select").html(data);
+  function kpi_reinit_by_category(cid,kid,sid,sclass,prompt) {
+          var id = $("#"+cid+" :selected").attr("value");
+         $.post('/kpis/kpi_option',{id:id,options:{sid:sid,sclass:sclass},prompt:prompt},function(data){
+              $("#"+kid).html(data);
          },'html');
      }
+
+
+  function kpi_entries_reinit_by_category(cid,kid,sid,sclass,prompt) {
+          var id = $("#"+cid+" :selected").attr("value");
+         $.post('/kpi_entries/kpi_option',{id:id,options:{sid:sid,sclass:sclass},prompt:prompt},function(data){
+              $("#"+kid).html(data);
+         },'html');
+     }
+

@@ -21,11 +21,13 @@ module KpiEntriesHelper
     end
   end
 
-  def self.get_kpi_entry_analysis_data kpi_id,entity_group_id,start_date,end_date
-    if kpi=Kpi.find_by_id and entity_group=EntityGroup.find_by_id(entity_group_id)
+  def self.get_kpi_entry_analysis_data kpi_id,entity_group_id,start_time,end_time
+    if kpi=Kpi.find_by_id(kpi_id) and entity_group=EntityGroup.find_by_id(entity_group_id)
       entities=entity_group.entities
-      entries=  KpiEntry.where(:kpi_id=>kpi_id,:entity_id=>entities.collect{|entity| entity.id},:entry_at=>[start_date,end_date]).all
+      entries=  KpiEntry.where(:kpi_id=>kpi_id,:entity_id=>entities.collect{|entity| entity.id},:entry_at=>start_time..end_time).all
+      
     end
+    return nil
   end
 
   # calculate kpi parent value
@@ -124,5 +126,4 @@ module KpiEntriesHelper
   def self.get_kpi_entry_for_entry kpi_item_id, entry_at
     KpiEntry.where(:user_kpi_item_id=>kpi_item_id,:entry_at=>entry_at).first
   end
-
 end

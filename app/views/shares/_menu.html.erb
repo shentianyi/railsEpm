@@ -2,6 +2,7 @@
      <img src="/assets/headicon.png"/>
      <label class="company-name">BrillianTech</label>
      <div class="top-tool pull-right">
+          <%=current_user.first_name%>
           <a class="tool-setting" data-placement="bottom" data-animation=false id="tool-setting" title="设置" > </a>
           <a class="tool-help" data-placement="bottom" data-animation=false id="tool-help" title="帮助"> </a>
           <a class="tool-user" data-placement="bottom" data-animation=false id="tool-user" title="账户" onclick="$('#setting-right').show('2000')"> </a>
@@ -16,7 +17,7 @@
                <a href="">仪表盘</a>
           </li>
           <li>
-               <a  href="">分析</a>
+               <a  href="<%=analyse_kpi_entries_path%>">分析</a>
           </li>
           <li>
                <a href="">报告</a>

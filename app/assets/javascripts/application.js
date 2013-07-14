@@ -12,6 +12,7 @@
 //
 //=require jquery-1.8.2.min
 //=require jquery-ui-1.10.3.custom.min
+//=require jquery.timePicker.min.js
 //=require bootstrap.min
 //=require highcharts
 //=require brilliantech.base

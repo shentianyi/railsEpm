@@ -1,0 +1,59 @@
+<div class="sub-middle">
+     <!--<div class="sub-middle-tool pull-right">-->
+     <!--<a data-placement="bottom" data-animation=false id="tool-print" title="print this page"><i class="icon-print"></i> 打印</a>-->
+     <!--<a data-placement="bottom" data-animation=false id="tool-excel" title="export to Excel"><i class="icon-share-alt"></i>Excel</a>-->
+     <!--<a data-placement="bottom" data-animation=false id="tool-pdf" title="export to PDF"><i class="icon-share-alt"></i>PDF</a>-->
+     <!--</div>-->
+</div>
+<div class="middle clearfix">
+     <div class="left-category pull-left"></div>
+
+     <div class="right-content pull-left" id="right-content">
+          <div class="content-condition clearfix">
+               <div class="content-condition-part content-condition-leftpart pull-left">
+                    <p class="text-center">
+                         KPI
+                    </p>
+                    <%= select_tag :category_id,options_from_collection_for_select(@categories,'id','name'),
+                    {:id=>'chart-group',:class=>"pull-left conditionPart-group",:onchange=>"kpi_entries_reinit_by_category('chart-group','kpi-select','chart-kpi','pull-left')"}%>
+                    <div id="kpi-select">
+                         <select class="pull-left" id="chart-kpi">
+                              <%@kpis.each do |kpi|%>
+                              <option value="<%= kpi.id%>" interval="<%= kpi.frequency%>"><%= kpi.name%></option>
+                              <%end%>
+                         </select>
+                    </div>
+                    <span class="inline pull-left">-</span>
+
+                    <%= select_tag :entity_group,options_from_collection_for_select(@entity_groups,'id','name'),{:id=>'chart-view',:class=>'pull-left conditionPart-entity'}%>
+               </div>
+
+               <div class="content-condition-part pull-right content-condition-rightpart">
+                    <p class="text-center">
+                         日期范围
+                    </p>
+                    <input type="text" readonly="true" id="from" />
+                    <input placeholder="时间" type="text" readonly="true" id="fromTime" class="analytics-time"/>
+                    <span>to</span>
+                    <input  type="text" readonly="true" id="to" />
+                    <input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>
+               </div>
+               <a class="btn btn-wzx btn-primary pull-right analyze-btn" onclick="init_chart()">分析</a>
+          </div>
+          <p class="text-warning text-center hide" id="chart-chooseWarning"></p>
+          <div class="control-chart">
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn control-chart-btn-last" data-animation=false data-type="year" title="年">Y</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="quarter" title="季度">Q</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="month" title="月">M</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="week" title="周">W</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false  data-type="day" title="天">D</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn active" data-animation=false data-type="hour" title="小时">H</a>
+          </div>
+          <div id="container" class="analyze-chart"></div>
+     </div>
+</div>
+<script type="text/javascript">
+     $(document).ready(function() {
+          init_analytics();
+     })
+</script>

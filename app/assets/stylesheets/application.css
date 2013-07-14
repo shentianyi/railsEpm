@@ -12,5 +12,6 @@
  *= require bootstrap.min
 *= require brilliantech.base
 *= require brilliantech.railsepm
+* = require timePicker
 *= require_self
  */

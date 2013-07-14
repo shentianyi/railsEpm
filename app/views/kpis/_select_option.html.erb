@@ -1,1 +1,5 @@
-<%= select_tag :kpi_id,options_from_collection_for_select(@kpis,'id','name'),{:id=>'delivery-kpi',:class=>"delivery-kpi",:prompt=>'------all------'}%>
+<%if @prompt%>
+<%= select_tag :kpi_id,options_from_collection_for_select(@kpis,'id','name'),{:id=>@options[:sid],:class=>@options[:sclass],:prompt=>'------全部------'}%>
+<%else%>
+<%= select_tag :kpi_id,options_from_collection_for_select(@kpis,'id','name'),{:id=>@options[:sid],:class=>@options[:sclass]}%>
+<%end%>

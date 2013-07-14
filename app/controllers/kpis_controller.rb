@@ -51,18 +51,18 @@ class KpisController < ApplicationController
     render :json=>msg
   end
 
-  def assign 
-     @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
+  def assign
+    @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
     if request.get?
       get_ability_category
       get_kpis_by_category
-    
+
       @user_id=params[:id]
     else
-     if params[:kpi] and params[:kpi].length>0
+      if params[:kpi] and params[:kpi].length>0
         KpisHelper.assign_kpi_to_user_by_id params[:kpi],params[:id],current_ability
       elsif params[:category] and params[:category].length>0
-         KpisHelper.assign_kpi_to_user_by_category params[:category],params[:id],current_ability
+        KpisHelper.assign_kpi_to_user_by_category params[:category],params[:id],current_ability
       end
 
       render :partial=>'user_kpi'
@@ -71,6 +71,8 @@ class KpisController < ApplicationController
 
   def kpi_option
     get_kpis_by_category
+    @options=params[:options]
+    @prompt=!params[:prompt].nil?
     render :partial=>'select_option'
   end
 
