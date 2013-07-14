@@ -12,7 +12,7 @@ IFEpm::Application.routes.draw do
     collection do
       match :login
       post :add
-      post :update
+      put :update
     end
   end
 
@@ -30,7 +30,7 @@ IFEpm::Application.routes.draw do
       get :assign
     end
   end
-  
+
   resources :kpi_categories do
     collection do
       put :update
@@ -42,18 +42,18 @@ IFEpm::Application.routes.draw do
       post :entry
     end
   end
-  
+
   resources :entity_groups do
     collection do
       put :update
     end
   end
-    resources :user_kpi_items do
+  resources :user_kpi_items do
     collection do
       put :update
     end
   end
-  
+
   resources :entity_group_items
   mount Resque::Server.new, :at=>"/admin/resque"
 

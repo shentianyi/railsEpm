@@ -35,13 +35,19 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to users_path
     else
-      flash[:notice]='error'
+      get_ability_entity
       render 'new'
     end
   end
 
   def destroy
-
+   msg=Message.new
+    if @user  and !@user.is_tenant
+     msg.result=@user.destroy
+     else
+       msg.content="用户不可删除"
+    end
+    render :json=>msg
   end
   private
 

@@ -1037,16 +1037,16 @@ function close_createEntity() {
      return b.indexOf(a);
 }
 
-function remove_userItem(event) {
-     if(confirm("确认删除？")) {
-          var id = find_id(event);
-          $("#user-table").find("#" + id).nextAll("tr").each(function() {
-               var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
-               $(this).find(".kpi-order-id").text(order);
-          });
-          $("#user-table").find("#" + id).remove();
-     }
-}
+// function remove_userItem(event) {
+     // if(confirm("确认删除？")) {
+          // var id = find_id(event);
+          // $("#user-table").find("#" + id).nextAll("tr").each(function() {
+               // var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
+               // $(this).find(".kpi-order-id").text(order);
+          // });
+          // $("#user-table").find("#" + id).remove();
+     // }
+// }
 
 function cancel_add_user() {
      $("#addBlock").slideUp("2000").data("state", "off").find("input").val("");
@@ -1303,11 +1303,21 @@ function edit_userItem(event) {
 function remove_userItem(event) {
      if(confirm("确认删除？")) {
           var id = find_id(event);
-          $("#user-table").find("#" + id).nextAll("tr").each(function() {
+          $.ajax({
+            url:'/users/'+id,
+            type: 'DELETE',
+            success:function(data){
+                if(data.result){
+                     $("#user-table").find("#" + id).nextAll("tr").each(function() {
                var order = parseInt($(this).find(".kpi-order-id").text()) - 1;
                $(this).find(".kpi-order-id").text(order);
           });
           $("#user-table").find("#" + id).remove();
+                }else{
+                    alert(data.content);
+                }
+            }
+        });
      }
 }
 

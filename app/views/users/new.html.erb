@@ -15,6 +15,19 @@
 <div class="middle clearfix">
      <div class="add-user-left" id="add-user-left">
           <%= form_for(@user)   do %>
+          <% if @user.errors.any? %>
+          <div id="error_explanation">
+               <h2><%= pluralize(@user.errors.count, "error") %>error:</h2>
+
+               <ul>
+                    <% @user.errors.full_messages.each do |msg| %>
+                    <li>
+                         <%= msg %>
+                    </li>
+                    <% end %>
+               </ul>
+          </div>
+          <% end %>
           <div class="add-user-left" id="add-user-left">
                <p>
                     *姓名
@@ -28,6 +41,10 @@
                     *密码
                </p>
                <input type="password" id="new-user-password" name="user[password]"/>
+               <p>
+                    *确认密码
+               </p>
+               <input type="password" id="new-user-password" name="user[password_confirmation]"/>
                <p>
                <p>
                     *组
@@ -48,9 +65,7 @@
                <label class="radio">
                     <input type="radio" name="user[role_id]" data-role="4" value="400">
                     管理员</label>
-               <p class="hide text-center text-warning" id="add-warn">
-                    <%= flash[:notice]%>
-               </p>
+
                <%= submit_tag '保存' %>
 
                <% end %>
