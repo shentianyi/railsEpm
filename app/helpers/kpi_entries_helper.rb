@@ -10,7 +10,7 @@ module KpiEntriesHelper
           kpi_entry.update_attributes(:original_value=>params[:value])
         else
           user_kpi_item=UserKpiItem.find_by_id(params[:id])
-          kpi_entry=KpiEntry.new(:original_value=>params[:value],:user_kpi_item_id=>params[:id],:entry_at=>entry_at, :parsed_entry_at=>parsed_entry_at,:entity_id=>user_kpi_item,:user_id=>user_kpi_item.user_id)
+          kpi_entry=KpiEntry.new(:original_value=>params[:value],:user_kpi_item_id=>params[:id],:entry_at=>entry_at, :parsed_entry_at=>parsed_entry_at,:entity_id=>user_kpi_item.entity_id,:user_id=>user_kpi_item.user_id,:target=>user_kpi_item.target)
         kpi_entry.kpi=kpi
         kpi_entry.save
         end
@@ -20,16 +20,6 @@ module KpiEntriesHelper
       puts e.message
     end
   end
-
-  def self.get_kpi_entry_analysis_data kpi_id,entity_group_id,start_time,end_time
-    if kpi=Kpi.find_by_id(kpi_id) and entity_group=EntityGroup.find_by_id(entity_group_id)
-      entities=entity_group.entities
-      entries=  KpiEntry.where(:kpi_id=>kpi_id,:entity_id=>entities.collect{|entity| entity.id},:entry_at=>start_time..end_time).all
-      
-    end
-    return nil
-  end
-
   # calculate kpi parent value
   def self.calculate_kpi_parent_value kpi_entry_id=nil,entry=nil
     if entry=(kpi_entry_id.nil? ? entry : KpiEntry.joins(:user_kpi_item).where(:id=>kpi_entry_id).select('*,user_kpi_items.*').first)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130712080747) do
+ActiveRecord::Schema.define(:version => 20130714183857) do
 
   create_table "entities", :force => true do |t|
     t.string   "name"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20130712080747) do
     t.datetime "updated_at",                          :null => false
     t.integer  "user_id"
     t.integer  "entity_id"
+    t.float    "target"
   end
 
   add_index "kpi_entries", ["entity_id"], :name => "index_kpi_entries_on_entity_id"

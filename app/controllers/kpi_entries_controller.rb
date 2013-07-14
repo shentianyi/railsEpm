@@ -31,7 +31,7 @@ class KpiEntriesController < ApplicationController
       get_kpis_by_category
     else
       msg=Message.new
-      if data=KpiEntriesHelper.get_kpi_entry_analysis_data(params[:kpi],params[:entity_group],params[:startTime],params[:endTime])
+      if data=KpiEntryAnalyseHelper.get_kpi_entry_analysis_data(params[:kpi],params[:entity_group],params[:startTime],params[:endTime])
       msg.result=true
       msg.object=data
       end
