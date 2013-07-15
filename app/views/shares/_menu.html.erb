@@ -2,12 +2,19 @@
      <img src="/assets/headicon.png"/>
      <label class="company-name">BrillianTech</label>
      <div class="top-tool pull-right">
-          <%=current_user.first_name%>
           <a class="tool-setting" data-placement="bottom" data-animation=false id="tool-setting" title="设置" > </a>
           <a class="tool-help" data-placement="bottom" data-animation=false id="tool-help" title="帮助"> </a>
           <a class="tool-user" data-placement="bottom" data-animation=false id="tool-user" title="账户" onclick="$('#setting-right').show('2000')"> </a>
      </div>
 </div>
+<div class="setting-right hide" id="setting-right">
+    <i class="icon-remove pull-left" onclick="$('#setting-right').hide('2000')"></i>
+    <div class="user-info">
+        <p class="font-gray user-name"><%=current_user.first_name%></p>
+        <a class="btn btn-wzx btn-danger btn-logout" href="/user_sessions/destroy">注销</a>
+    </div>
+</div>
+
 <div class="page-navi clearfix">
      <ul class="main-navi pull-left">
           <li>
