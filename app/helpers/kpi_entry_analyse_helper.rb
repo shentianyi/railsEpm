@@ -12,44 +12,54 @@ module KpiEntryAnalyseHelper
 	    when KpiFrequency::Hourly
 
 	    when KpiFrequency::Daily
-		date=start_date=Date.parse(start_time)
-		end_date=Date.parse(end_time)
-		days=end_date.mjd-start_date.mjd+1
-		for i in 0..days
-		    key=date.to_s
-		    current_data[key]=0
-		    target_data[key]=target
-		    unit_data[key]=KpiUnit.get_entry_unit_sym kpi.unit
-		    date=date.next
-		end
-
-		entries.each do |entry|
+	        	date=start_date=Date.parse(start_time)
+	        	end_date=Date.parse(end_time)
+	         	days=end_date.mjd-start_date.mjd+1
+	       	for i in 0..days
+		         key=date.to_s
+		        current_data[key]=0
+		        target_data[key]=target
+		        unit_data[key]=KpiUnit.get_entry_unit_sym kpi.unit
+		        date=date.next
+		       end
+		       entries.each do |entry|
 		    current_data[entry.entry_at]+= entry.value
 		end
 
-	    when KpiFrequency::Weekly
+	    when KpiFrequency::Weekly,KpiFrequency::Monthly,KpiFrequency::Quarterly
 		start_date=start_time.split('-')
 		end_date=end_time.split('-')
-		start_year,start_week=start_date[0].to_i,start_date[1].to_i
-		end_year,end_week=end_date[0].to_i,end_date[1].to_i
-
-		for year in start_year..end_year
-		    if year==start_year
-			if end_year>start_year
-			generate_week_data start_week,52,year,target,current_data,target_data,unit_data
+		start_index_a,start_index_b=start_date[0].to_i,start_date[1].to_i
+		end_index_a,end_index_b=end_date[0].to_i,end_date[1].to_i
+                step=0
+		case kpi.frequency
+		  when KpiFrequency::Weekly
+		     step=52
+		  when KpiFrequency::Monthly
+		     step=12
+		  when KpiFrequency::Quarterly
+		     step=4 
+		end 
+		for start_index in start_index_a..end_index_a
+		    if start_index==start_index_a
+			if end_index_a>start_index_a
+			generate_cycle_data start_index_b,step,start_index,target,current_data,target_data,unit_data,kpi
 			else
-			generate_week_data start_week,end_week,year,target,current_data,target_data,unit_data
+			generate_cycle_data start_index_b,end_index_b,start_index,target,current_data,target_data,unit_data,kpi
 			end
-		    elsif year==end_year
-			generate_week_data 1,end_week,year,target,current_data,target_data,unit_data
+		    elsif start_index==end_index_a
+			generate_cycle_data 1,end_index_b,start_index,target,current_data,target_data,unit_data,kpi
 		    else
-			generate_week_data 1,52,year,target,current_data,target_data,unit_data
+			generate_cycle_data 1,step,start_index,target,current_data,target_data,unit_data,kpi
 
 		    end
 		end
 		entries.each do |entry|
 		    current_data[entry.entry_at]+= entry.value
 		end
+		puts '---------------'
+		puts current_data
+		
 	    when KpiFrequency::Monthly
 
 	    end
@@ -59,9 +69,9 @@ module KpiEntryAnalyseHelper
     end
 
     private
-    def self.generate_week_data start_index,end_index,year,target,current_data,target_data,unit_data,kpi
-	for week in start_index..end_index
-			    key="#{year}-#{week}"
+    def self.generate_cycle_data start_index,end_index,cycle_index,target,current_data,target_data,unit_data,kpi
+	for cycle_value in start_index..end_index
+			    key="#{cycle_index}-#{cycle_value}"
 			    current_data[key]=0
 			    target_data[key]=target
 			    unit_data[key]=KpiUnit.get_entry_unit_sym kpi.unit

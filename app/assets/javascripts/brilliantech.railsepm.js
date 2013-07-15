@@ -1652,15 +1652,7 @@ function select_week() {
                $("#show-weekOfYear>span").text($.datepicker.iso8601Week(startDate));
                selectCurrentWeek();
                var chooseWeek=date.getFullYear()+"-"+$.datepicker.iso8601Week(startDate);
-                   $.post('',{
-                       date:chooseWeek
-                   },function(data){
-                       if(data.result){
-                       }
-                       else{
-                           alert(data.content)
-                       }
-                   });
+               refresh_kpi_entry(chooseWeek);
                $('.week-picker').addClass("hide");
           },
           beforeShowDay : function(date) {
