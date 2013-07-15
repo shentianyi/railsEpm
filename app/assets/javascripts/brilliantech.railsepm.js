@@ -663,8 +663,8 @@ function post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,targe
     }, function(data) {
          if(data.result){
               var id=data.object;
-        if($("#manage-group-kpi li.active a").text() == entityP) {
-            $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(length).addClass("kpi-order-id"))
+              if($("#manage-group-kpi li.active a").text() == entityP) {
+               $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(length).addClass("kpi-order-id"))
                 .append($("<td align='center' />").text(entityP).addClass("kpi-entity"))
                 .append($("<td align='center' />").text(name))
                 .append($("<td align='center' />").text(desc))
@@ -677,11 +677,13 @@ function post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,targe
                     .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", id).click(finish_editKPI).text("完成")))
                 .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", id).click(remove_kpiItem))
                     .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi-"+id).data("belong", id).click(cancel_editKPI).text("取消")))
-            );
-            if(formula){
-                $("#"+id).find(".kpi-checked").attr("title",formulaShow);
-            }
-        }}else{
+                );
+                if(formula){
+                 $("#"+id).find(".kpi-checked").attr("title",formulaShow);
+                }
+               }
+         }
+         else{
              alert(data.content);
         }
         cancel_add_kpi();
@@ -807,7 +809,10 @@ function insert_entity() {
                }, function(data) {
                     if(data.result) {
                          var length = $("#manage-group-kpi").find("li").length - 1;
-                         $("#manage-group-kpi li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "kpi")).append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.object).attr("belong", "kpi")).append($("<a href='../kpis?p=" + data.object + "'/>").text(val)));
+                         $("#manage-group-kpi li:eq(" + length + ")").before($("<li />")
+                             .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "kpi"))
+                             .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "kpi"))
+                             .append($("<a href='../kpis?p=" + data.object + "'/>").text(val).attr("number", data.number).attr("belong", "kpi")));
                          $("#creat-newEntity").val("");
                     } else {
                          alert(data.content);
@@ -975,7 +980,7 @@ function update_leftNavi() {
                     success : function(data) {
                         if(data){
                                $("a[number='" + number + "']").text(val);
-                        } 
+                        }
                         close_editBlock();
                     }
                });
@@ -1043,9 +1048,10 @@ function insert_entityUser() {
                          $("#manage-group-user li:eq(" + length + ")").before($("<li />")
                              .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "entity"))
                              .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "entity"))
-                             .append($("<a href='../users?p=" + data.object + "'/>").text(val)));
+                             .append($("<a href='../users?p=" + data.object + "'/>").text(val).attr("number", data.number).attr("belong", "entity")));
                          $("#creat-newEntity").val("");
-                    } else {
+                    }
+                    else {
                          alert(data.content);
                     }
                });
@@ -1055,7 +1061,6 @@ function insert_entityUser() {
 }
 
 function test_sameEntityUser() {
-
      var a = $("#creat-newEntity").val();
      var b = [];
      $("#manage-group-user").find("a").each(function() {
@@ -1241,7 +1246,7 @@ function insert_entityView() {
                      $("#manage-group-view li:eq(" + length + ")").before($("<li />")
                          .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "view"))
                          .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "view"))
-                         .append($("<a href='../entity_groups?p=" + data.object + "'/>").text(val)));
+                         .append($("<a href='../entity_groups?p=" + data.object + "'/>").text(val).attr("number", data.number).attr("belong", "view")));
                      $("#creat-newEntity").val("");
                  } else {
                      alert(data.content);
