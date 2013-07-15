@@ -66,9 +66,10 @@
                     </select>
                     <select class="pull-left" id="chart-kpi">
                         <option style="display:none" selected="selected" id="none-kpi">选择KPI</option>
-                        <option value="kpi1" interval="hour">KPI 1</option>
-                        <option value="kpi2" interval="week">KPI 2</option>
-                        <option value="kpi3" interval="day">KPI 3</option>
+                        <option value="kpi1" interval="200">week</option>
+                        <option value="kpi2" interval="400">quarter</option>
+                        <option value="kpi3" interval="300">month</option>
+                        <option value="kpi3" interval="500">year</option>
                     </select>
                     <span class="inline pull-left">-</span>
                     <select class="pull-left conditionPart-entity" id="chart-view">
@@ -92,12 +93,12 @@
             </div>
             <p class="text-warning text-center hide" id="chart-chooseWarning"></p>
            <div class="control-chart">
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn control-chart-btn-last" data-animation=false data-type="year" title="年">Y</a>
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="quarter" title="季度">Q</a>
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="month" title="月">M</a>
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="week" title="周">W</a>
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false  data-type="day" title="天">D</a>
-               <a class="btn btn-mini btn-primary pull-right control-chart-btn active" data-animation=false data-type="hour" title="小时">H</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn control-chart-btn-last" data-animation=false data-type="500" title="年">Y</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="400" title="季度">Q</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="300" title="月">M</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="200" title="周">W</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false  data-type="100" title="天">D</a>
+               <a class="btn btn-mini btn-primary pull-right control-chart-btn" data-animation=false data-type="90" title="小时">H</a>
            </div>
            <div id="container" class="analyze-chart">
            </div>
