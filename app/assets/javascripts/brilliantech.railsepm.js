@@ -271,33 +271,37 @@ function init_chart() {
          var date2 = ($("#to").val()).split("-");
          var week1 = parseInt($("#from").attr("week"));
          var week2 = parseInt($("#to").attr("week"));
-         var dateBegin, dateEnd,timeBegin,timeEnd;
+         var dateBegin, dateEnd,timeBegin,timeEnd,startWeek,endWeek;
          for(var i = 0; i < 3; i++) {
              if(parseInt(date1[i]) < parseInt(date2[i])) {
                  dateBegin = date1;
                  timeBegin=fromPost;
+                 startWeek=week1
                  dateEnd = date2;
                  timeEnd=toPost;
+                 endWeek=week2;
                  break;
              } else if(parseInt(date1[i]) > parseInt(date2[i])) {
                  dateBegin = date2;
                  timeBegin=toPost;
+                 startWeek=week2
                  dateEnd = date1;
                  timeEnd=fromPost;
+                 endWeek=week1;
                  break;
              } else {
                  dateBegin = date1;
                  dateEnd = date2;
                  timeBegin=fromPost-toPost<=0?fromPost:toPost;
                  timeEnd=fromPost-toPost>=0?fromPost:toPost;
+                 startWeek = week1 - week2 <= 0 ? week1 : week2;
+                 endWeek = week1 - week2 >= 0 ? week1 : week2;
+
              }
          };
          var timeBeginChart=timeBegin;
-         var timeEndChart=timeEnd;
          timeBegin=timeBegin>10?timeBegin+":00:00":"0"+timeBegin+":00:00";
          timeEnd=timeEnd>10?timeEnd+":00:00":"0"+timeEnd+":00:00";
-         var startWeek = week1 - week2 <= 0 ? week1 : week2;
-         var endWeek = week1 - week2 >= 0 ? week1 : week2;
          var startQuarter = quarterBelong(dateBegin[1]);
          var endQuarter = quarterBelong(dateEnd[1]);
 //         var interval = $(".control-chart-btn.active").data("type");
