@@ -593,26 +593,26 @@ function form_chart(current,target,unit,interval,startTime,endTime,timeBeginChar
     options.series[1].data=target;
     var chart = new Highcharts.Chart(options);
 }
-function chart_chooseEntity(event){
-    var e = event ? event : (window.event ? window.event : null);
-    var obj = e.srcElement || e.target;
-    if($(obj).text()!=$("#chart-group").attr("origin")){
-        $.post("..",{
-            text:$(obj).text(),
-            value:$(obj).attr("value")
-        },function(data){
-               if(data.result){
-                   $("#chart-kpi").html();
-                   $("#chart-group").attr("origin",$(obj).text());
-               }
-               else{
-                   alert(data.content);
-               }
-            }
-        )
-    }
-
-}
+// function chart_chooseEntity(event){
+    // var e = event ? event : (window.event ? window.event : null);
+    // var obj = e.srcElement || e.target;
+    // if($(obj).text()!=$("#chart-group").attr("origin")){
+        // $.post("..",{
+            // text:$(obj).text(),
+            // value:$(obj).attr("value")
+        // },function(data){
+               // if(data.result){
+                   // $("#chart-kpi").html();
+                   // $("#chart-group").attr("origin",$(obj).text());
+               // }
+               // else{
+                   // alert(data.content);
+               // }
+            // }
+        // )
+    // }
+// 
+// }
 function quarterBelong(a) {
      if(a < 4)
           return 1;
