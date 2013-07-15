@@ -87,7 +87,9 @@ ul.setting-navi>li>a{
     margin:0 auto;
 }
 .login-pageNavi>a{
-    right:0
+    position:absolute;
+    right:15px;
+    top:9px;
 }
 .main-navi{
     list-style: none;
