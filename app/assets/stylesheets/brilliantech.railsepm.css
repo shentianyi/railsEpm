@@ -81,6 +81,8 @@ ul.setting-navi>li>a{
 }
 .login-pageNavi{
     padding:10px;
+    margin-top:-41px;
+    margin-bottom:40px;
 }
 .login-pageNavi>h3{
     display:table;
@@ -796,7 +798,7 @@ input.entry-kpi-date.entry-kpi-hour{
     box-shadow:0 1px 2px rgba(0,0,0,0.45);
     -moz-box-shadow:0 1px 2px rgba(0,0,0,0.45);
     -webkit-box-shadow:0 1px 2px rgba(0,0,0,0.45);
-    padding:40px 10px;
+    padding:40px 0px;
 }
 .login-form{
     width:220px;

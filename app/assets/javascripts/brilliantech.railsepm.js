@@ -93,6 +93,22 @@ function init_analytics() {
                $(this).attr("endDateYear",endDate.getFullYear());
                var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
                $("#from").attr("week", ($.datepicker.iso8601Week(endDate)));
+          },
+          onChangeMonthYear:function(year,month,inst){
+             var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+             var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+             var showMonth=(parseInt(month)+1)<10?"0"+(parseInt(month)+1):parseInt(month)+1;
+             var newDate=($("#from").val()).split("-");
+             $("#from").val(year+"-"+showMonth+"-"+newDate[2]);
+              var date = $(this).datepicker('getDate');
+              if(date.getDay() == 0) {
+                  var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+              } else {
+                  var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+              }
+              $(this).attr("endDateYear",endDate.getFullYear());
+              var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+              $("#from").attr("week", ($.datepicker.iso8601Week(endDate)));
           }
      });
      $("#to").datepicker({
@@ -113,6 +129,22 @@ function init_analytics() {
                $(this).attr("endDateYear",endDate.getFullYear());
                var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
                $("#to").attr("week", ($.datepicker.iso8601Week(endDate)));
+          },
+          onChangeMonthYear:function(year,month,inst){
+             var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+             var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+             var showMonth=(parseInt(month)+1)<10?"0"+(parseInt(month)+1):parseInt(month)+1;
+             var newDate=($("#to").val()).split("-");
+             $("#to").val(year+"-"+showMonth+"-"+newDate[2]);
+              var date = $(this).datepicker('getDate');
+              if(date.getDay() == 0) {
+                  var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+              } else {
+                  var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+              }
+              $(this).attr("endDateYear",endDate.getFullYear());
+              var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+              $("#to").attr("week", ($.datepicker.iso8601Week(endDate)));
           }
      });
      $("#fromTime,#toTime").timePicker({
