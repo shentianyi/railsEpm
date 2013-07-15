@@ -1525,16 +1525,7 @@ function init_entryKpi() {
                      var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
                      var hourSelect=$("#kpi-hour").val();
                      var chooseDay=$.datepicker.formatDate(dateFormat, today, inst.settings);
-                     $.post('',{
-                             date:chooseDay+" "+hourSelect+":00"
-                         },function(data){
-                             if(data.result){
-
-                             }
-                             else{
-                                 alert(data.content);
-                             }
-                         });
+                     refresh_kpi_entry(chooseDay+" "+hourSelect+":00");
                      }
              });
              generateHTML=y + "-" + realMonth + "-" + d+"-"+"00:00:00";
