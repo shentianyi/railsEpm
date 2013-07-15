@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130714185831) do
+ActiveRecord::Schema.define(:version => 20130715171755) do
 
   create_table "entities", :force => true do |t|
     t.string   "name"
@@ -109,10 +109,10 @@ ActiveRecord::Schema.define(:version => 20130714185831) do
   add_index "kpis", ["user_id"], :name => "index_kpis_on_user_id"
 
   create_table "tenants", :force => true do |t|
-    t.string   "company_name",           :null => false
-    t.string   "edition",                :null => false
+    t.string   "company_name",                                                               :null => false
+    t.string   "edition",                                                                    :null => false
     t.string   "subscription_reference"
-    t.string   "expire_at",              :null => false
+    t.string   "expire_at",                                                                  :null => false
     t.integer  "subscription_status"
     t.string   "customer_first_name"
     t.string   "customer_last_name"
@@ -120,8 +120,9 @@ ActiveRecord::Schema.define(:version => 20130714185831) do
     t.string   "customer_phone"
     t.integer  "user_id"
     t.string   "domain"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.datetime "created_at",                                                                 :null => false
+    t.datetime "updated_at",                                                                 :null => false
+    t.string   "access_key",             :default => "334aff4d-acc9-467f-a468-99a0164b005c"
   end
 
   add_index "tenants", ["user_id"], :name => "index_tenants_on_user_id"
