@@ -86,12 +86,13 @@ function init_analytics() {
           onSelect : function(dateText, inst) {
                var date = $(this).datepicker('getDate');
                if(date.getDay() == 0) {
-                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
+                   var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
                } else {
-                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+                   var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
                }
+               $(this).attr("endDateYear",endDate.getFullYear());
                var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
-               $("#from").attr("week", ($.datepicker.iso8601Week(startDate)));
+               $("#from").attr("week", ($.datepicker.iso8601Week(endDate)));
           }
      });
      $("#to").datepicker({
@@ -105,12 +106,13 @@ function init_analytics() {
           onSelect : function(dateText, inst) {
                var date = $(this).datepicker('getDate');
                if(date.getDay() == 0) {
-                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
+                   var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
                } else {
-                    startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+                   var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
                }
+               $(this).attr("endDateYear",endDate.getFullYear());
                var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
-               $("#to").attr("week", ($.datepicker.iso8601Week(startDate)));
+               $("#to").attr("week", ($.datepicker.iso8601Week(endDate)));
           }
      });
      $("#fromTime,#toTime").timePicker({
@@ -129,8 +131,8 @@ function init_analytics() {
           WeekFirstDay = new Date(y, m, nowDate - day + 1);
           WeekLastDay = new Date(y, m, nowDate - day + 7);
      }
-     $("#from").val(formatDate(WeekFirstDay)).attr("week", $.datepicker.iso8601Week(WeekFirstDay));
-     $("#to").val(formatDate(WeekLastDay)).attr("week", $.datepicker.iso8601Week(WeekFirstDay));
+     $("#from").val(formatDate(WeekFirstDay)).attr("week", $.datepicker.iso8601Week(WeekFirstDay)).attr("endDateYear",WeekLastDay.getFullYear());
+     $("#to").val(formatDate(WeekLastDay)).attr("week", $.datepicker.iso8601Week(WeekFirstDay)).attr("endDateYear",WeekLastDay.getFullYear());
      $("#chart-group").find("option").each(function(){
         $(this).bind("click",chart_chooseEntity)
      });
@@ -271,39 +273,48 @@ function init_chart() {
          var date2 = ($("#to").val()).split("-");
          var week1 = parseInt($("#from").attr("week"));
          var week2 = parseInt($("#to").attr("week"));
-         var dateBegin, dateEnd,timeBegin,timeEnd,startWeek,endWeek;
+         var weekYear1=parseInt($("#from").attr("endDateYear"));
+         var weekYear2=parseInt($("#to").attr("endDateYear"));
+         var dateBegin, dateEnd,timeBegin,timeEnd,startWeek,endWeek,startWeekYear,endWeekYear;
          for(var i = 0; i < 3; i++) {
              if(parseInt(date1[i]) < parseInt(date2[i])) {
                  dateBegin = date1;
                  timeBegin=fromPost;
-                 startWeek=week1
+                 startWeek=week1;
+                 startWeekYear=weekYear1;
                  dateEnd = date2;
                  timeEnd=toPost;
                  endWeek=week2;
+                 endWeekYear=weekYear2;
                  break;
              } else if(parseInt(date1[i]) > parseInt(date2[i])) {
                  dateBegin = date2;
                  timeBegin=toPost;
                  startWeek=week2
+                 startWeekYear=weekYear2;
                  dateEnd = date1;
                  timeEnd=fromPost;
                  endWeek=week1;
+                 endWeekYear=weekYear1;
                  break;
              } else {
                  dateBegin = date1;
                  dateEnd = date2;
                  timeBegin=fromPost-toPost<=0?fromPost:toPost;
                  timeEnd=fromPost-toPost>=0?fromPost:toPost;
-                 startWeek = week1 - week2 <= 0 ? week1 : week2;
-                 endWeek = week1 - week2 >= 0 ? week1 : week2;
-
+                 startWeek = week1;
+                 endWeek = week2;
+                 startWeekYear=weekYear1;
+                 endWeekYear=weekYear2;
              }
          };
+         startWeek=startWeek<10?"0"+startWeek:startWeek;
+         endWeek=endWeek<10?"0"+endWeek:endWeek;
          var timeBeginChart=timeBegin;
          timeBegin=timeBegin>10?timeBegin+":00:00":"0"+timeBegin+":00:00";
          timeEnd=timeEnd>10?timeEnd+":00:00":"0"+timeEnd+":00:00";
-         var startQuarter = quarterBelong(dateBegin[1]);
-         var endQuarter = quarterBelong(dateEnd[1]);
+         var startQuarter ="0"+quarterBelong(dateBegin[1]);
+         var endQuarter ="0"+quarterBelong(dateEnd[1]);
 //         var interval = $(".control-chart-btn.active").data("type");
          var interval=$("#chart-kpi :selected").attr("interval");
          var startTime, endTime;
@@ -328,8 +339,10 @@ function init_chart() {
                  break;
                  // week
              case "200":
-                 startTime = dateBegin[0] + "-" + startWeek;
-                 endTime = dateEnd[0] + "-" + endWeek;
+                 startTime = startWeekYear + "-" + startWeek;
+                 endTime = endWeekYear + "-" + endWeek;
+                 var start=startTime.split("-");
+                 var end=endTime.split("-");
                  break;
                  // month
              case "300":
@@ -426,6 +439,18 @@ function form_chart(current,target,unit,interval,startTime,endTime,timeBeginChar
     };
     var start=startTime.split("-");
     var end=endTime.split("-");
+    if((start[1].split(""))[0]==0){
+       var startWQ=(start[1].split(""))[1];
+    }
+    else{
+       var startWQ=start[1];
+    }
+    if((end[1].split(""))[0]==0){
+        var endWQ=(end[1].split(""))[1];
+    }
+    else{
+        var endWQ=end[1];
+    }
     switch (interval){
         case "90":
             options.tooltip.xDateFormat='%Y-%m-%d %H:%M';
@@ -464,14 +489,14 @@ function form_chart(current,target,unit,interval,startTime,endTime,timeBeginChar
             for(var i=0;i<=yearInterval;i++){
                if(i==0){
                     year=parseInt(start[0]);
-                    for(var a=parseInt(start[1]);a<=((lastWeek-52*(i+1))>=0?52:parseInt(end[1]));a++){
+                    for(var a=parseInt(startWQ);a<=((lastWeek-52*(i+1))>=0?52:parseInt(endWQ[1]));a++){
                          xItem=year+"<br />"+"第"+a+"周";
                          options.xAxis.categories.push(xItem);
                     }
                }
                else{
                     year=parseInt(start[0])+i;
-                    for(var b=1;b<=((lastWeek-52*(i+1))>=0?52:parseInt(end[1]));b++){
+                    for(var b=1;b<=((lastWeek-52*(i+1))>=0?52:parseInt(endWQ[1]));b++){
                         xItem=year+"<br />"+"第"+b+"周";
                         options.xAxis.categories.push(xItem);
                     }
@@ -482,7 +507,7 @@ function form_chart(current,target,unit,interval,startTime,endTime,timeBeginChar
             options.tooltip.xDateFormat='%Y-%m';
             options.xAxis.type='datetime';
             options.xAxis.dateTimeLabelFormats={
-                month : '%b/%Y'
+                month : '%b'+"<br />"+'%Y'
             };
             options.xAxis.tickInterval=24 * 3600 * 1000 * 31;
             options.series[0].pointStart=Date.UTC(start[0],start[1]-1,1);
@@ -499,18 +524,18 @@ function form_chart(current,target,unit,interval,startTime,endTime,timeBeginChar
             var yearInterval=parseInt(end[0])-parseInt(start[0]);
             var xItem;
             var year;
-            var lastQuarter=4*(yearInterval)+parseInt(end[1])
+            var lastQuarter=4*(yearInterval)+parseInt(endWQ[1])
             for(var i=0;i<=yearInterval;i++){
                 if(i==0){
                     year=parseInt(start[0]);
-                    for(var a=parseInt(start[1]);a<=((lastQuarter-4*(i+1))>=0?4:parseInt(end[1]));a++){
+                    for(var a=parseInt(startWQ[1]);a<=((lastQuarter-4*(i+1))>=0?4:parseInt(endWQ[1]));a++){
                         xItem=year+"<br />"+"第"+a+"季度";
                         options.xAxis.categories.push(xItem);
                     }
                 }
                 else{
                     year=parseInt(start[0])+i;
-                    for(var b=1;b<=((lastQuarter-4*(i+1))>=0?4:parseInt(end[1]));b++){
+                    for(var b=1;b<=((lastQuarter-4*(i+1))>=0?4:parseInt(endWQ[1]));b++){
                         xItem=year+"<br />"+"第"+b+"季度";
                         options.xAxis.categories.push(xItem);
                     }
@@ -663,8 +688,8 @@ function post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,targe
     }, function(data) {
          if(data.result){
               var id=data.object;
-        if($("#manage-group-kpi li.active a").text() == entityP) {
-            $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(length).addClass("kpi-order-id"))
+              if($("#manage-group-kpi li.active a").text() == entityP) {
+               $("#kpi-table").append($("<tr />").attr("id", id).append($("<td align='center' />").text(length).addClass("kpi-order-id"))
                 .append($("<td align='center' />").text(entityP).addClass("kpi-entity"))
                 .append($("<td align='center' />").text(name))
                 .append($("<td align='center' />").text(desc))
@@ -677,11 +702,13 @@ function post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,targe
                     .append($("<a />").addClass("btn btn-success manage-operate-reverse hide").data("belong", id).click(finish_editKPI).text("完成")))
                 .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong", id).click(remove_kpiItem))
                     .append($("<a />").addClass("btn manage-operate-reverse hide").attr("id", "cancel-edit-kpi-"+id).data("belong", id).click(cancel_editKPI).text("取消")))
-            );
-            if(formula){
-                $("#"+id).find(".kpi-checked").attr("title",formulaShow);
-            }
-        }}else{
+                );
+                if(formula){
+                 $("#"+id).find(".kpi-checked").attr("title",formulaShow);
+                }
+               }
+         }
+         else{
              alert(data.content);
         }
         cancel_add_kpi();
@@ -807,7 +834,10 @@ function insert_entity() {
                }, function(data) {
                     if(data.result) {
                          var length = $("#manage-group-kpi").find("li").length - 1;
-                         $("#manage-group-kpi li:eq(" + length + ")").before($("<li />").append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "kpi")).append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.object).attr("belong", "kpi")).append($("<a href='../kpis?p=" + data.object + "'/>").text(val)));
+                         $("#manage-group-kpi li:eq(" + length + ")").before($("<li />")
+                             .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "kpi"))
+                             .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "kpi"))
+                             .append($("<a href='../kpis?p=" + data.object + "'/>").text(val).attr("number", data.number).attr("belong", "kpi")));
                          $("#creat-newEntity").val("");
                     } else {
                          alert(data.content);
@@ -975,7 +1005,7 @@ function update_leftNavi() {
                     success : function(data) {
                         if(data){
                                $("a[number='" + number + "']").text(val);
-                        } 
+                        }
                         close_editBlock();
                     }
                });
@@ -1043,9 +1073,10 @@ function insert_entityUser() {
                          $("#manage-group-user li:eq(" + length + ")").before($("<li />")
                              .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "entity"))
                              .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "entity"))
-                             .append($("<a href='../users?p=" + data.object + "'/>").text(val)));
+                             .append($("<a href='../users?p=" + data.object + "'/>").text(val).attr("number", data.number).attr("belong", "entity")));
                          $("#creat-newEntity").val("");
-                    } else {
+                    }
+                    else {
                          alert(data.content);
                     }
                });
@@ -1055,7 +1086,6 @@ function insert_entityUser() {
 }
 
 function test_sameEntityUser() {
-
      var a = $("#creat-newEntity").val();
      var b = [];
      $("#manage-group-user").find("a").each(function() {
@@ -1241,7 +1271,7 @@ function insert_entityView() {
                      $("#manage-group-view li:eq(" + length + ")").before($("<li />")
                          .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "view"))
                          .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "view"))
-                         .append($("<a href='../entity_groups?p=" + data.object + "'/>").text(val)));
+                         .append($("<a href='../entity_groups?p=" + data.object + "'/>").text(val).attr("number", data.number).attr("belong", "view")));
                      $("#creat-newEntity").val("");
                  } else {
                      alert(data.content);
@@ -1529,12 +1559,14 @@ function init_entryKpi() {
                $("#show-weekOfYear").css("display", "inline-block").find("span").text($.datepicker.iso8601Week(new Date(y, m, d - day + 1)));
                $("#entry-kpi").bind("click", select_week);
                if(date.getDay() == 0) {
-                  startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
+                  var startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
+                  var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
                } else {
-                  startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+                  var startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+                  var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
                }
-               var originWeek=$.datepicker.iso8601Week(startDate);
-               generateHTML=y + "-" +$.datepicker.iso8601Week(new Date(y, m, d - day + 1));
+               var originWeek=$.datepicker.iso8601Week(startDate)>10?$.datepicker.iso8601Week(startDate):"0"+$.datepicker.iso8601Week(startDate);
+               generateHTML=endDate.getFullYear() + "-" +originWeek;
                break;
           case "month":
                $("#entry-kpi").val(y + "-" + realMonth);
@@ -1573,14 +1605,14 @@ function init_entryKpi() {
                $("#entry-kpi").css("width", "100px");
                $("#entry-kpi").val(y);
                $("#entry-prev-btn,#entry-next-btn").removeClass("hide");
-               var originQuarter=y+"-"+quarterBelong(m);
+               var originQuarter=y+"-0"+quarterBelong(m);
                $("#entry-kpi").attr("compare",originQuarter);
                $("#select-quarter").removeClass("hide").find("option").each(function() {
                     if($(this).val() == QuarterFirstMonth) {
                          $(this).attr("selected", true);
                     };
                     $(this).bind('click',function(){
-                        var chooseQuarter=$("#entry-kpi").val()+"-"+$(this).data('order');
+                        var chooseQuarter=$("#entry-kpi").val()+"-0"+$(this).data('order');
                             refresh_kpi_entry(chooseQuarter);
                     })
                });
@@ -1646,7 +1678,8 @@ function select_week() {
                $("#entry-kpi").val($.datepicker.formatDate(dateFormat, startDate, inst.settings) + " ~ " + $.datepicker.formatDate(dateFormat, endDate, inst.settings));
                $("#show-weekOfYear>span").text($.datepicker.iso8601Week(startDate));
                selectCurrentWeek();
-               var chooseWeek=date.getFullYear()+"-"+$.datepicker.iso8601Week(startDate);
+               var alterWeek=$.datepicker.iso8601Week(startDate)>10?$.datepicker.iso8601Week(startDate):"0"+$.datepicker.iso8601Week(startDate)
+               var chooseWeek=endDate.getFullYear()+"-"+alterWeek;
                refresh_kpi_entry(chooseWeek);
                $('.week-picker').addClass("hide");
           },
@@ -1672,7 +1705,7 @@ function minus_unit(event) {
      var type = $("#entry-date-type").find(".active").data("type");
      switch(type) {
          case "quarter":
-          var chooseQuarter= (parseInt($("#entry-kpi").val())-1) + "-" + $("#select-quarter :selected").data("order");
+          var chooseQuarter= (parseInt($("#entry-kpi").val())-1) + "-0" + $("#select-quarter :selected").data("order");
              refresh_kpi_entry(chooseQuarter);
               $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1);
              break;
@@ -1688,7 +1721,7 @@ function plus_unit(event) {
      var type = $("#entry-date-type").find(".active").data("type");
      switch(type) {
         case "quarter":
-            var chooseQuarter= (parseInt($("#entry-kpi").val())+1) + "-" + $("#select-quarter :selected").data("order");
+            var chooseQuarter= (parseInt($("#entry-kpi").val())+1) + "-0" + $("#select-quarter :selected").data("order");
             refresh_kpi_entry(chooseQuarter);
             $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1);
             break;
