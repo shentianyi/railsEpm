@@ -2,7 +2,7 @@
 module DateTimeHelper
   # parse time to hour string
   def self.parse_time_to_hour_string time
-    time.strftime('%Y-%m-%d %H:%M:%S')
+    time.strftime('%Y-%m-%d %H:00:00')
   end
 
   # parse string to date hour
@@ -18,7 +18,8 @@ module DateTimeHelper
   # parse time to week string
   def self.parse_time_to_week_string time
     date=Date.parse(parse_time_to_day_string(time))
-    "#{date.year}-#{date.cweek}"
+    week=date.cweek>9 ? date.cweek : "0#{date.cweek}" 
+    "#{date.year}-#{week}"
   end
 
   # parse week string: 2013-20 to date hour
@@ -29,7 +30,8 @@ module DateTimeHelper
 
   # parse time to month string
   def self.parse_time_to_month_string time
-    "#{time.year}-#{time.month}"
+    month=time.month>9 ? time.month : "0#{time.month}" 
+    "#{time.year}-#{month}"
   end
 
   # parse month string: 2013-12 to date hour
@@ -40,7 +42,7 @@ module DateTimeHelper
 
   # parse time to quarter string
   def self.parse_time_to_quarter_string time
-    "#{time.year}-#{(time.month-1)/3+1}"
+    "#{time.year}-0#{(time.month-1)/3+1}"
   end
 
   # parse quarter string: 2013-1 to date hour
