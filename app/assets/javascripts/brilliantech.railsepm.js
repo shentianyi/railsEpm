@@ -489,14 +489,14 @@ function form_chart(current,target,unit,interval,startTime,endTime,timeBeginChar
             for(var i=0;i<=yearInterval;i++){
                if(i==0){
                     year=parseInt(start[0]);
-                    for(var a=parseInt(startWQ);a<=((lastWeek-52*(i+1))>=0?52:parseInt(endWQ[1]));a++){
+                    for(var a=parseInt(startWQ);a<=((lastWeek-52*(i+1))>=0?52:parseInt(endWQ));a++){
                          xItem=year+"<br />"+"第"+a+"周";
                          options.xAxis.categories.push(xItem);
                     }
                }
                else{
                     year=parseInt(start[0])+i;
-                    for(var b=1;b<=((lastWeek-52*(i+1))>=0?52:parseInt(endWQ[1]));b++){
+                    for(var b=1;b<=((lastWeek-52*(i+1))>=0?52:parseInt(endWQ));b++){
                         xItem=year+"<br />"+"第"+b+"周";
                         options.xAxis.categories.push(xItem);
                     }
@@ -524,18 +524,18 @@ function form_chart(current,target,unit,interval,startTime,endTime,timeBeginChar
             var yearInterval=parseInt(end[0])-parseInt(start[0]);
             var xItem;
             var year;
-            var lastQuarter=4*(yearInterval)+parseInt(endWQ[1])
+            var lastQuarter=4*(yearInterval)+parseInt(endWQ)
             for(var i=0;i<=yearInterval;i++){
                 if(i==0){
                     year=parseInt(start[0]);
-                    for(var a=parseInt(startWQ[1]);a<=((lastQuarter-4*(i+1))>=0?4:parseInt(endWQ[1]));a++){
+                    for(var a=parseInt(startWQ);a<=((lastQuarter-4*(i+1))>=0?4:parseInt(endWQ));a++){
                         xItem=year+"<br />"+"第"+a+"季度";
                         options.xAxis.categories.push(xItem);
                     }
                 }
                 else{
                     year=parseInt(start[0])+i;
-                    for(var b=1;b<=((lastQuarter-4*(i+1))>=0?4:parseInt(endWQ[1]));b++){
+                    for(var b=1;b<=((lastQuarter-4*(i+1))>=0?4:parseInt(endWQ));b++){
                         xItem=year+"<br />"+"第"+b+"季度";
                         options.xAxis.categories.push(xItem);
                     }

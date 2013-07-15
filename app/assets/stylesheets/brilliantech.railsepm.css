@@ -79,6 +79,16 @@ ul.setting-navi>li>a{
 .page-navi{
     background-color:white;
 }
+.login-pageNavi{
+    padding:10px;
+}
+.login-pageNavi>h3{
+    display:table;
+    margin:0 auto;
+}
+.login-pageNavi>a{
+    right:0
+}
 .main-navi{
     list-style: none;
     display:block;
