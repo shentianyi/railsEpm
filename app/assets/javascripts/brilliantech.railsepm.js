@@ -439,17 +439,19 @@ function form_chart(current,target,unit,interval,startTime,endTime,timeBeginChar
     };
     var start=startTime.split("-");
     var end=endTime.split("-");
-    if((start[1].split(""))[0]==0){
-       var startWQ=(start[1].split(""))[1];
-    }
-    else{
-       var startWQ=start[1];
-    }
-    if((end[1].split(""))[0]==0){
-        var endWQ=(end[1].split(""))[1];
-    }
-    else{
-        var endWQ=end[1];
+    if(start[1] && end[1]){
+        if((start[1].split(""))[0]==0){
+            var startWQ=(start[1].split(""))[1];
+        }
+        else{
+            var startWQ=start[1];
+        }
+        if((end[1].split(""))[0]==0){
+            var endWQ=(end[1].split(""))[1];
+        }
+        else{
+            var endWQ=end[1];
+        }
     }
     switch (interval){
         case "90":
