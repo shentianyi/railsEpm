@@ -78,6 +78,8 @@ function init_analytics() {
      $("#from").datepicker({
           showOtherMonths : true,
           firstDay : 1,
+          changeMonth:true,
+          changeYear:true,
           selectOtherMonths : true,
           dateFormat : 'yy-mm-dd',
           showWeek : true,
@@ -96,6 +98,8 @@ function init_analytics() {
           showOtherMonths : true,
           selectOtherMonths : true,
           firstDay : 1,
+          changeMonth:true,
+          changeYear:true,
           dateFormat : 'yy-mm-dd',
           showWeek : true,
           onSelect : function(dateText, inst) {
@@ -267,29 +271,37 @@ function init_chart() {
          var date2 = ($("#to").val()).split("-");
          var week1 = parseInt($("#from").attr("week"));
          var week2 = parseInt($("#to").attr("week"));
-         var dateBegin, dateEnd,timeBegin,timeEnd;
+         var dateBegin, dateEnd,timeBegin,timeEnd,startWeek,endWeek;
          for(var i = 0; i < 3; i++) {
              if(parseInt(date1[i]) < parseInt(date2[i])) {
                  dateBegin = date1;
                  timeBegin=fromPost;
+                 startWeek=week1
                  dateEnd = date2;
                  timeEnd=toPost;
+                 endWeek=week2;
                  break;
              } else if(parseInt(date1[i]) > parseInt(date2[i])) {
                  dateBegin = date2;
                  timeBegin=toPost;
+                 startWeek=week2
                  dateEnd = date1;
                  timeEnd=fromPost;
+                 endWeek=week1;
                  break;
              } else {
                  dateBegin = date1;
                  dateEnd = date2;
                  timeBegin=fromPost-toPost<=0?fromPost:toPost;
                  timeEnd=fromPost-toPost>=0?fromPost:toPost;
+                 startWeek = week1 - week2 <= 0 ? week1 : week2;
+                 endWeek = week1 - week2 >= 0 ? week1 : week2;
+
              }
          };
-         var startWeek = week1 - week2 <= 0 ? week1 : week2;
-         var endWeek = week1 - week2 >= 0 ? week1 : week2;
+         var timeBeginChart=timeBegin;
+         timeBegin=timeBegin>10?timeBegin+":00:00":"0"+timeBegin+":00:00";
+         timeEnd=timeEnd>10?timeEnd+":00:00":"0"+timeEnd+":00:00";
          var startQuarter = quarterBelong(dateBegin[1]);
          var endQuarter = quarterBelong(dateEnd[1]);
 //         var interval = $(".control-chart-btn.active").data("type");
@@ -300,15 +312,15 @@ function init_chart() {
               // hour
              case "90":
                  if($("#fromTime").val() && $("#toTime").val()){
-                     startTime = dateBegin.join("-")+"-"+timeBegin;
-                     endTime = dateEnd.join("-")+"-"+timeEnd;
+                     startTime = dateBegin.join("-")+" "+timeBegin;
+                     endTime = dateEnd.join("-")+" "+timeEnd;
                  }
                  else{
                      $("#chart-chooseWarning").removeClass("hide").text("该KPI需要选择时间");
                      vali=false;
                      while_hide("chart-chooseWarning");
                  }
-                 break
+                 break;
                  // day
              case "100":
                  startTime = dateBegin.join("-");
@@ -344,17 +356,18 @@ function init_chart() {
          }, function(msg) {
              if(msg.result){
                  var data=msg.object;
-                 form_chart(data.current,data.target, data.unit,interval,startTime,endTime);
+                 form_chart(data.current,data.target,data.unit,interval,startTime,endTime,timeBeginChart);
                  $(".control-chart-btn").each(function(){
                      $(this).removeClass('active');
                  });
                  $(".control-chart-btn[data-type='"+interval+"']").addClass("active");
              }
-         });}
+         });
+         }
      }
 }
 
-function form_chart(current,target,unit,interval,startTime,endTime){
+function form_chart(current,target,unit,interval,startTime,endTime,timeBeginChart){
     var options = {
         chart : {
             renderTo : 'container',
@@ -392,9 +405,9 @@ function form_chart(current,target,unit,interval,startTime,endTime){
             },
             tickWidth : 1,
             offset : 10,
-            //              labels:{
-            //                    format:'{value}'
-            //              },
+//                          labels:{
+//                                format:'{value}m'
+//                          },
             lineWidth : 1
         },
         series : [
@@ -408,8 +421,8 @@ function form_chart(current,target,unit,interval,startTime,endTime){
             }
         ]
     };
-    options.yAxis.label = {
-        format : '{value}' +unit
+    options.yAxis.labels = {
+        format : '{value}' +unit[0]
     };
     var start=startTime.split("-");
     var end=endTime.split("-");
@@ -418,19 +431,19 @@ function form_chart(current,target,unit,interval,startTime,endTime){
             options.tooltip.xDateFormat='%Y-%m-%d %H:%M';
             options.xAxis.type='datetime';
             options.xAxis.dateTimeLabelFormats={
-                hour: '%e/%b %H:%M'
+                hour: '%H:%M'+"<br />"+'%e/%b'
             };
             options.xAxis.tickInterval=3600 * 1000;
-            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,start[2],start[3]);
+            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,start[2].split(" ")[0],timeBeginChart);
             options.series[0].pointInterval=3600 * 1000;
-            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,start[2],start[3]);
+            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,start[2].split(" ")[0],timeBeginChart);
             options.series[1].pointInterval=3600 * 1000;
             break;
         case "100":
             options.tooltip.xDateFormat='%Y-%m-%d';
             options.xAxis.type='datetime';
             options.xAxis.dateTimeLabelFormats={
-                day : '%e/%b'
+                day : '%e/%b'+"<br />"+"%Y"
             };
             options.xAxis.tickInterval=24 * 3600 * 1000;
             options.series[0].pointStart=Date.UTC(start[0],start[1]-1,start[2]);
@@ -451,15 +464,15 @@ function form_chart(current,target,unit,interval,startTime,endTime){
             for(var i=0;i<=yearInterval;i++){
                if(i==0){
                     year=parseInt(start[0]);
-                    for(var a=parseInt(start[1]);a<=(lastWeek-52>0?52:parseInt(end[1]));a++){
-                         xItem=year+"/"+"第"+a+"周";
+                    for(var a=parseInt(start[1]);a<=((lastWeek-52*(i+1))>=0?52:parseInt(end[1]));a++){
+                         xItem=year+"<br />"+"第"+a+"周";
                          options.xAxis.categories.push(xItem);
                     }
                }
                else{
                     year=parseInt(start[0])+i;
-                    for(var b=1;b<=((lastWeek-(yearInterval+1)*52)>=0?52:parseInt(end[1]));b++){
-                        xItem=year+"/"+"第"+b+"周";
+                    for(var b=1;b<=((lastWeek-52*(i+1))>=0?52:parseInt(end[1]));b++){
+                        xItem=year+"<br />"+"第"+b+"周";
                         options.xAxis.categories.push(xItem);
                     }
                }
@@ -471,34 +484,34 @@ function form_chart(current,target,unit,interval,startTime,endTime){
             options.xAxis.dateTimeLabelFormats={
                 month : '%b/%Y'
             };
-            options.xAxis.tickInterval=24 * 3600 * 1000 * 30;
+            options.xAxis.tickInterval=24 * 3600 * 1000 * 31;
             options.series[0].pointStart=Date.UTC(start[0],start[1]-1,1);
-            options.series[0].pointInterval=24 * 3600 * 1000 *30;
+            options.series[0].pointInterval=24 * 3600 * 1000 *31;
             options.series[1].pointStart=Date.UTC(start[0],start[1]-1,1);
-            options.series[1].pointInterval=24 * 3600 * 1000 *30;
+            options.series[1].pointInterval=24 * 3600 * 1000 *31;
             break;
         case "400":
             options.tooltip.formatter=function(){
                 return '<b>'+ this.series.name +'</b><br/>'+
-                    "数值"+this.y +'<br />'+this.x;
+                    "数值 "+this.y +'<br />'+this.x;
             };
             options.xAxis.categories=[];
             var yearInterval=parseInt(end[0])-parseInt(start[0]);
             var xItem;
             var year;
-            var lastQuarter=4*(yearInterval)+parseInt(end[1]);
+            var lastQuarter=4*(yearInterval)+parseInt(end[1])
             for(var i=0;i<=yearInterval;i++){
                 if(i==0){
                     year=parseInt(start[0]);
-                    for(var a=parseInt(start[1]);a<=(lastQuarter-4>0?4:parseInt(end[1]));a++){
-                        xItem=year+"/"+"第"+a+"季度";
+                    for(var a=parseInt(start[1]);a<=((lastQuarter-4*(i+1))>=0?4:parseInt(end[1]));a++){
+                        xItem=year+"<br />"+"第"+a+"季度";
                         options.xAxis.categories.push(xItem);
                     }
                 }
                 else{
                     year=parseInt(start[0])+i;
-                    for(var b=1;b<=((lastQuarter-(yearInterval+1)*4)>=0?4:parseInt(end[1]));b++){
-                        xItem=year+"/"+"第"+b+"季度";
+                    for(var b=1;b<=((lastQuarter-4*(i+1))>=0?4:parseInt(end[1]));b++){
+                        xItem=year+"<br />"+"第"+b+"季度";
                         options.xAxis.categories.push(xItem);
                     }
                 }
@@ -542,13 +555,13 @@ function chart_chooseEntity(event){
 
 }
 function quarterBelong(a) {
-     if(a < 3)
+     if(a < 4)
           return 1;
-     else if(a > 2 && a < 6)
+     else if(a > 3 && a < 7)
           return 2;
-     else if(a > 5 && a < 9)
+     else if(a > 6 && a < 10)
           return 3;
-     else if(a > 8)
+     else if(a > 9)
           return 4;
 }
 
