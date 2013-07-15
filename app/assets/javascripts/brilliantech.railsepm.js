@@ -356,7 +356,7 @@ function init_chart() {
          }, function(msg) {
              if(msg.result){
                  var data=msg.object;
-                 form_chart(data.current,data.target,data.current,interval,startTime,endTime,timeBeginChart);
+                 form_chart(data.current,data.target,data.unit,interval,startTime,endTime,timeBeginChart);
                  $(".control-chart-btn").each(function(){
                      $(this).removeClass('active');
                  });
