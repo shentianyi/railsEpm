@@ -1591,16 +1591,7 @@ function refresh_kpi_entry(date){
 function entry_hourChange(){
     var hourSelect=$(".time-picker li.selected").text();
     var chooseHour=$("#entry-kpi").val()+"  "+hourSelect+":00";
-    $.post('',{
-        date:chooseHour
-        },function(data){
-            if(data.result){
-
-            }
-            else{
-                // alert(data.content);
-            }
-        });
+   refresh_kpi_entry(chooseHour);
 }
 //本季开始年月
 function showquarterFirstMonth(a) {

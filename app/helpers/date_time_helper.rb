@@ -2,7 +2,7 @@
 module DateTimeHelper
   # parse time to hour string
   def self.parse_time_to_hour_string time
-    DateTime.strptime(time.to_s,'%Y-%m-%d %H:%M:%S')
+    time.strftime('%Y-%m-%d %H:%M:%S')
   end
 
   # parse string to date hour
