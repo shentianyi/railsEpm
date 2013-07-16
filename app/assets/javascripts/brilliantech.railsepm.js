@@ -608,6 +608,103 @@ function quarterBelong(a) {
 ////////////////////////////////////////////////     dashBoard  ///////////////////////////////////////
 function init_dashBoard() {
      init();
+    $("#from").datepicker({
+        showOtherMonths : true,
+        firstDay : 1,
+        changeMonth:true,
+        changeYear:true,
+        selectOtherMonths : true,
+        dateFormat : 'yy-mm-dd',
+        showWeek : true,
+        onSelect : function(dateText, inst) {
+            var date = $(this).datepicker('getDate');
+            if(date.getDay() == 0) {
+                var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            } else {
+                var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+            }
+            $(this).attr("endDateYear",endDate.getFullYear());
+            var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+            $("#from").attr("week", ($.datepicker.iso8601Week(endDate)));
+        },
+        onChangeMonthYear:function(year,month,inst){
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            var showMonth=(parseInt(month)+1)<10?"0"+(parseInt(month)+1):parseInt(month)+1;
+            var newDate=($("#from").val()).split("-");
+            $("#from").val(year+"-"+showMonth+"-"+newDate[2]);
+            var date = $(this).datepicker('getDate');
+            if(date.getDay() == 0) {
+                var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            } else {
+                var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+            }
+            $(this).attr("endDateYear",endDate.getFullYear());
+            var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+            $("#from").attr("week", ($.datepicker.iso8601Week(endDate)));
+        }
+    });
+    $("#to").datepicker({
+        showOtherMonths : true,
+        selectOtherMonths : true,
+        firstDay : 1,
+        changeMonth:true,
+        changeYear:true,
+        dateFormat : 'yy-mm-dd',
+        showWeek : true,
+        onSelect : function(dateText, inst) {
+            var date = $(this).datepicker('getDate');
+            if(date.getDay() == 0) {
+                var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            } else {
+                var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+            }
+            $(this).attr("endDateYear",endDate.getFullYear());
+            var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+            $("#to").attr("week", ($.datepicker.iso8601Week(endDate)));
+        },
+        onChangeMonthYear:function(year,month,inst){
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            var showMonth=(parseInt(month)+1)<10?"0"+(parseInt(month)+1):parseInt(month)+1;
+            var newDate=($("#to").val()).split("-");
+            $("#to").val(year+"-"+showMonth+"-"+newDate[2]);
+            var date = $(this).datepicker('getDate');
+            if(date.getDay() == 0) {
+                var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            } else {
+                var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+            }
+            $(this).attr("endDateYear",endDate.getFullYear());
+            var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
+            $("#to").attr("week", ($.datepicker.iso8601Week(endDate)));
+        }
+    });
+    $("#fromTime,#toTime").timePicker({
+        step:60
+    });
+    var date = new Date();
+    var nowDate = date.getDate();
+    var day = date.getDay();
+    var m = date.getMonth();
+    var y = date.getFullYear();
+    var WeekFirstDay, WeekLastDay;
+    if(day == 0) {
+        WeekFirstDay = new Date(y, m, nowDate - 6);
+        WeekLastDay = new Date(y, m, nowDate);
+    } else {
+        WeekFirstDay = new Date(y, m, nowDate - day + 1);
+        WeekLastDay = new Date(y, m, nowDate - day + 7);
+    }
+
+}
+function dashNew_chooseType(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    $(".choose-db-item").each(function(){
+        $(this).removeClass("active");
+    });
+    $(obj).addClass("active");
 }
 //控制左边的添加
 function insert_dashView() {

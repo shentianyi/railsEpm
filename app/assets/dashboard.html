@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" >
     <link href="stylesheets/wzx-jquery-ui.css" rel="stylesheet" >
+    <link href="stylesheets/timePicker.css" rel="stylesheet" >
     <link href="stylesheets/wzx-bootstrap.css" rel="stylesheet" >
     <link href="stylesheets/brilliantech.base.css" rel="stylesheet" >
     <link href="stylesheets/brilliantech.railsepm.css" rel="stylesheet" >
@@ -45,8 +46,12 @@
 
     </div>
     <div class="dashBlock " id="addBlock" data-state="off" style="display:none">
-        <h4 class="text-center">创建视图</h4>
-        <div class="content-condition clearfix">
+        <h4 class="text-center light-gray">创建视图</h4>
+        <div class="content-condition clearfix dashBoard-condition">
+            <div class="pull-left dashboard-conditionn-name">
+                <label>视图名称</label>
+                <input type="text" />
+            </div>
             <div class="content-condition-part content-condition-leftpart pull-left">
                 <div class="chart-leftMark">
                     <label>类别</label>
@@ -88,11 +93,11 @@
 
         </div>
         <div class="chooseChart-wrap clearfix">
-            <div class="choose-db-item db-chart-line pull-left"><label>折线图</label></div>
-            <div class="choose-db-item db-chart-column pull-left"><label>直方图</label></div>
-            <div class="choose-db-item db-chart-pie pull-left"><label>饼图</label></div>
+            <div class="choose-db-item db-chart-line pull-left" onclick="dashNew_chooseType(event)"><label>折线图</label></div>
+            <div class="choose-db-item db-chart-column pull-left" onclick="dashNew_chooseType(event)"><label>直方图</label></div>
+            <div class="choose-db-item db-chart-pie pull-left" onclick="dashNew_chooseType(event)"><label>饼图</label></div>
         </div>
-        <a class="btn btn-wzx btn-primary pull-right analyze-btn" onclick="init_chart()">分析</a>
+        <a class="btn btn-wzx btn-primary dashboard-condition-btn">分析</a>
     </div>
     <div class="middle clearfix">
         <!--左边的categories-->
@@ -144,7 +149,7 @@
 
 </div>
 <script src="javascripts/jquery-1.8.2.min.js"></script>
-<script src="javascripts/highcharts.js"></script>
+<script src="javascripts/jquery.timePicker.min.js"></script>
 <script src="javascripts/jquery-ui-1.10.3.custom.min.js"></script>
 <script src="javascripts/bootstrap.min.js"></script>
 <script src="javascripts/brilliantech.base.js"></script>

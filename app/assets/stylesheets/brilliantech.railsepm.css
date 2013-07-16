@@ -335,6 +335,28 @@ box-shadow:0 2px 0px #F39C12;
     border-top:1px solid #ddd;
     border-bottom:1px solid #ddd;
 }
+.dashBoard-condition.content-condition{
+    margin-top:15px;
+    margin-bottom:15px;
+    width:980px;
+}
+.dashboard-conditionn-name{
+    margin-right:30px;
+    margin-top:10px;
+}
+.dashboard-conditionn-name>label{
+    font-size:21px;
+    margin-bottom:9px
+}
+.dashboard-conditionn-name>input{
+    width:120px;
+    height:24px;
+}
+.dashboard-condition-btn{
+    display:table;
+    margin:30px auto 10px;
+    padding:11px 65px !important;
+}
 /*choose db*/
 .chooseChart-wrap{
     width:864px;
@@ -353,8 +375,13 @@ box-shadow:0 2px 0px #F39C12;
     /*background-image:url("/assets/db-chart.png");*/
     background-repeat:no-repeat;
     position:relative;
+    color:#ddd;
 }
 .choose-db-item:hover{
+    border:2px solid #f39c12;
+    color:#f39c12;
+}
+.choose-db-item.active{
     border:2px solid #f39c12;
     color:#f39c12;
 }
