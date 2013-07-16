@@ -740,7 +740,10 @@ function create_dashView(event) {
     }
 }
 function showDash_new(){
-        $("#addBlock").slideDown("2000").data("state","on");
+        $("#addBlock").slideDown("2000");
+}
+function close_dash(){
+    $("#addBlock").slideUp("2000");
 }
 ////////////////////////////////////////////////     manage  ///////////////////////////////////////
 function init_manage() {
