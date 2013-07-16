@@ -42,19 +42,56 @@
         <a class="btn btn-success btn-navi pull-right" href="">输入 KPI</a>
     </div>
     <div class="sub-middle db-sub-middle">
-        <div class="sub-middle-tool pull-left" onclick="show_addBlock(event)">
-          <a class="db-add" > KPI视图</a>
-        </div>
+
     </div>
-    <div class="addBlock " id="addBlock " data-state="off" style="display:block">
-        <h4 class="text-center">选择一种视图类型</h4>
-        <div class="chooseChart-wrap clearfix">
-            <div class="choose-db-item db-chart-line pull-left"><label>折线图</label></div>
-            <div class="choose-db-item db-chart-column pull-left"><label>直方图</label></div>
-            <div class="choose-db-item db-chart-pie pull-left"><label>饼图</label></div>
-        </div>
-    </div>
+    <!--<div class="addBlock " id="addBlock " data-state="off" style="display:block">-->
+        <!--<h4 class="text-center">选择一种视图类型</h4>-->
+        <!--<div class="chooseChart-wrap clearfix">-->
+            <!--<div class="choose-db-item db-chart-line pull-left"><label>折线图</label></div>-->
+            <!--<div class="choose-db-item db-chart-column pull-left"><label>直方图</label></div>-->
+            <!--<div class="choose-db-item db-chart-pie pull-left"><label>饼图</label></div>-->
+        <!--</div>-->
+    <!--</div>-->
     <div class="middle clearfix">
+        <!--左边的categories-->
+        <div class="left-category pull-left">
+            <ul class="manage-group" id="manage-group-kpi">
+                <li><h3 class="no-margin">视角</h3></li>
+                <li  class="active">
+                    <i class="icon-remove hide pull-left" number="1" belong="kpi" onclick="remove_leftNav(event)"></i>
+                    <i class="icon-pencil hide pull-left" number="1" belong="kpi" onclick="edit_leftNav(event)"></i>
+                    <a number="1" belong="kpi" href="">默认</a>
+                </li>
+                <li>
+                    <i class="icon-remove hide pull-left" number="2" belong="kpi" onclick="remove_leftNav(event)"></i>
+                    <i class="icon-pencil hide pull-left" number="2" belong="kpi" onclick="edit_leftNav(event)"></i>
+                    <a number="2" belong="kpi" href="">entity1</a>
+                </li>
+                <li>
+                    <i class="icon-remove hide pull-left" number="3" belong="kpi" onclick="remove_leftNav(event)"></i>
+                    <i class="icon-pencil hide pull-left" number="3" belong="kpi" onclick="edit_leftNav(event)"></i>
+                    <a number="3" belong="kpi" href="">entity2</a>
+                </li>
+                <li>
+                    <i class="icon-remove hide pull-left" number="4" belong="kpi" onclick="remove_leftNav(event)"></i>
+                    <i class="icon-pencil hide pull-left" number="4" belong="kpi" onclick="edit_leftNav(event)"></i>
+                    <a number="4" belong="kpi" href="">entity3</a>
+                </li>
+                <li><button class="btn btn-primary" onclick="create_entityBlock()">创建新视角</button></li>
+                <div class="absolute creat-entity-block hide" id="creatEntity-block">
+                    <p>创建新视角</p>
+                    <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
+                    <input type="text" id="creat-newEntity" onkeyup="create_entity(event)"/>
+                </div>
+                <div class="absolute creat-entity-block hide" id="edit-block">
+                    <p>修改视角</p>
+                    <i class="icon-remove pull-right" onclick="close_editBlock()"></i>
+                    <input type="text" id="change-leftNavi" onkeyup="change_leftNavi(event)"/>
+                </div>
+            </ul>
+        </div>
+
+
 
     </div>
 

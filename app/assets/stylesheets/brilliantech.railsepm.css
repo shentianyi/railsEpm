@@ -336,12 +336,12 @@ box-shadow:0 2px 0px #F39C12;
 }
 .db-add{
     padding:3px 3px 3px 25px;
-    /*background:url("../images/add-db.png")no-repeat -6px 3px;*/
-    background:url("/assets/add-db.png")no-repeat -6px 3px;
+    background:url("../images/add-db.png")no-repeat -6px 3px;
+    /*background:url("/assets/add-db.png")no-repeat -6px 3px;*/
 }
 .db-add:hover{
-    /*background:url("../images/add-db.png")no-repeat -6px -19px;*/
-    background:url("/assets/add-db.png")no-repeat -6px -19px;
+    background:url("../images/add-db.png")no-repeat -6px -19px;
+    /*background:url("/assets/add-db.png")no-repeat -6px -19px;*/
     color:#1ABC9C !important;
 }
 .sub-middle-tool>a.db-add{
@@ -362,8 +362,8 @@ box-shadow:0 2px 0px #F39C12;
     cursor:pointer;
     -moz-border-radius:3px;
     -webkit-border-radius:3px;
-    /*background-image:url("../images/db-chart.png");*/
-    background-image:url("/assets/db-chart.png");
+    background-image:url("../images/db-chart.png");
+    /*background-image:url("/assets/db-chart.png");*/
     background-repeat:no-repeat;
     position:relative;
 }

@@ -921,7 +921,8 @@ function is_calcu() {
 function select_calcuRelate(event) {
      var e = event ? event : (window.event ? window.event : null);
      var obj = e.srcElement || e.target;
-     var val = "[" + $(obj).text() + "]";
+     var wzx=document.getElementById("is-calcu-relate");
+     var val = "[" + wzx.options[wzx.selectedIndex].text + "]";
      var valId = "[" + $(obj).attr("value") + "]";
      var oldVal = $("#calcuType-input").val();
      var oldValId = $("#takeCal").attr("cal");
