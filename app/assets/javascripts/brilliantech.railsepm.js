@@ -1560,7 +1560,7 @@ function init_entryKpi() {
                      refresh_kpi_entry(chooseDay+" "+hourSelect+":00");
                      }
              });
-             generateHTML=y + "-" + realMonth + "-" + d+"-"+"00:00:00";
+             generateHTML=y + "-" + realMonth + "-" + realDate+"-"+"00:00:00";
              break;
           case "day":
                $("#entry-kpi").val(y + "-" + realMonth + "-" + realDate);
@@ -1577,7 +1577,7 @@ function init_entryKpi() {
                              refresh_kpi_entry(chooseDay);
                     }
                });
-               generateHTML=y + "-" + realMonth + "-" + d;
+               generateHTML=y + "-" + realMonth + "-" + realDate;
                break;
           case "week":
                $("#entry-kpi").val(formatDate(WeekFirstDay) + " ~ " + formatDate(WeekLastDay));
