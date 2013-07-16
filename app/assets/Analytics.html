@@ -57,6 +57,11 @@
             <div class="content-condition clearfix">
                 <div class="content-condition-part content-condition-leftpart pull-left">
                     <p class="text-center">KPI</p>
+                    <div class="chart-leftMark">
+                        <label>类别</label>
+                        <label>KPI</label>
+                        <label class="chart-leftMark-view">观察点</label>
+                    </div>
                     <select class="pull-left conditionPart-group" id="chart-group" origin="全部">
                         <option style="display:none" selected="selected" id="none-group">类别</option>
                         <option value="group0">全部</option>
@@ -78,7 +83,16 @@
                         <option value="entity2">view2</option>
                         <option value="entity3">view3</option>
                     </select>
-
+                    <div class="chart-optionRadio">
+                        <label class="radio ">
+                            <input type="radio" name="chartRadios" checked>
+                            以综合值分析
+                        </label>
+                        <label class="radio ">
+                            <input type="radio" name="chartRadios" >
+                            以平均值分析
+                        </label>
+                    </div>
                 </div>
 
                 <div class="content-condition-part pull-right content-condition-rightpart">

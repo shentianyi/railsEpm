@@ -202,6 +202,18 @@ b.caret{
 .content-condition-part{
     width:420px;
 }
+.chart-leftMark{
+    width:420px;
+    margin-top:-10px;
+}
+.chart-leftMark>label{
+    display:inline-block;
+    margin-right:67px;
+
+}
+.chart-leftMark>label.chart-leftMark-view{
+    margin-left:35px
+}
 .content-condition-part>p{
     margin-bottom:10px;
     font-size:21px;
@@ -236,9 +248,8 @@ b.caret{
     width:90px;
     margin-right:5px;
 }
-.content-condition-leftpart>select{
+.content-condition-leftpart select{
     width:110px;
-
 }
 .content-condition-leftpart>span{
     margin:0px 7px;
@@ -294,6 +305,16 @@ box-shadow:0 2px 0px #F39C12;
 .btn.analyze-btn{
     margin-right:20px;
     margin-top:5px;
+}
+.chart-optionRadio{
+    float:left;
+    width:200px;
+    margin-top:5px;
+}
+.chart-optionRadio>label{
+    font-size:13px;
+    margin-bottom:0px;
+    color:#9eb7c6
 }
 /***************************************************** dashboard **************************************************************/
 /*sub middle*/
