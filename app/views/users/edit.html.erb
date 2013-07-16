@@ -8,7 +8,7 @@
                <a href="#">编辑用户</a>
           </li>
           <li>
-               <a href="#">分配权限</a>
+               <a href="#">分配KPI</a>
           </li>
      </ul>
 </div>
@@ -43,7 +43,7 @@
                <input type="radio" name="user[role_id]" data-role="4" value="400">
                管理员</label>
           <p class="hide text-center text-warning" id="add-warn"><%=flash[:notice]%></p>
-          <%= submit_tag '保存' %>
+          <%= submit_tag("保存",{:class=>"btn btn-wzx btn-primary"})%>
 
           <% end %>
      </div>

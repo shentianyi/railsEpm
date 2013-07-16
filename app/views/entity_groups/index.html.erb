@@ -10,7 +10,7 @@
                     组织
                </p>
                <%= select_tag :entity_id,options_from_collection_for_select(@entities,'id','name'),{ :class=>"delivery-kpi", :id=>"delivery-view"}%>
-               <a class="btn btn-wzx btn-primary pull-right" onclick="delivery_view()">分配</a>
+               <a class="btn btn-wzx btn-primary pull-right" onclick="delivery_view()">分配组织</a>
           </div>
           <h3 class="normal-blue text-center delivery-mykpiMark">该观察点下的组织</h3>
           <table class="manage-kpi" id="kpi-table">

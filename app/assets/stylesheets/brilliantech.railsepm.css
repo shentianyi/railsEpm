@@ -183,6 +183,11 @@ b.caret{
     height:600px;
     transition:padding 0.5s ease 0s;
 }
+.middle.startup-middle{
+    border-top:2px solid #ddd;
+    background-color:white;
+    padding:40px 0 100px 0;
+}
 /***************************************************** 公用的功能区 **************************************************************/
 .addBlock{
     width:100%;

@@ -26,7 +26,7 @@
           <p class="inline">
                KPI:
           </p>
-          <div id="kpi-select">
+          <div id="kpi-select" class="inline>
                <%= select_tag :kpi_id,options_from_collection_for_select(@kpis,'id','name'),{:id=>'delivery-kpi',:class=>"delivery-kpi",:prompt=>'------all------'}%>
           </div>
           <a class="btn btn-wzx btn-primary pull-right" onclick="delivery_Kpi()">分配</a>
