@@ -1,4 +1,4 @@
-#encoding: utf-8
+#encoding: utf-8 
 class Kpi < ActiveRecord::Base
   belongs_to :kpi_category
   has_many :kpi_items,:dependent=>:destroy
@@ -14,4 +14,12 @@ class Kpi < ActiveRecord::Base
   attr_accessible :kpi_category_id,:tenant_id
 
   acts_as_tenant(:tenant)
+  
+  validate :validate_create ,:on=>:create
+  
+  def validate_create
+    if  !self.formula.blank?
+        errors.add(:formula,"公式不合法")  if ! FormulaValidator::complete_validate_infix(self.formula)
+      end
+  end
 end

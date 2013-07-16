@@ -1,5 +1,5 @@
 require "resque/server"
- 
+
 $redis=Redis.new(:host => "127.0.0.1",:port => "6379",:db=>6)
 
 if defined?(PhusionPassenger)
@@ -14,3 +14,4 @@ end
 Resque.redis=Redis::Namespace.new("prefix_resque_job_", :redis => $redis)
 Dir["#{Rails.root}/app/jobs/*.rb"].each { |file| require file }
 
+# rake resque:work COUNT=5 QUEUE=*  PIDFILE=tmp/pids/resque.pid BACKGROUND=yes INTERVAL=1
