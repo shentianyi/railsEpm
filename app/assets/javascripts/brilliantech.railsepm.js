@@ -29,9 +29,9 @@ function while_hide(a) {
 function init_rightContent() {
      var fwidth = parseInt(document.body.scrollWidth);
      if(fwidth > 990) {
-          document.getElementById("right-content").style.width = document.body.scrollWidth - 191 + "px";
+          document.getElementById("right-content").style.width = document.body.scrollWidth - 265 + "px";
      } else {
-          document.getElementById("right-content").style.width = 990 - 191 + "px";
+          document.getElementById("right-content").style.width = 990 - 231 + "px";
      }
 }
 
@@ -1032,7 +1032,11 @@ function is_calcu() {
           $("#is-calcu-type").slideUp("2000");
      }
 }
-
+function calcuInput(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    $("#takeCal").attr("cal", $(obj).val());
+}
 function select_calcuRelate(event) {
      var e = event ? event : (window.event ? window.event : null);
      var obj = e.srcElement || e.target;
@@ -1041,12 +1045,10 @@ function select_calcuRelate(event) {
      var valId = "[" + $(obj).attr("value") + "]";
      var oldVal = $("#calcuType-input").val();
      var oldValId = $("#takeCal").attr("cal");
-     if(/\]$/.test(oldVal) == false) {
-          var newVal = oldVal + val;
-          var newValId = oldValId + valId;
-          $("#calcuType-input").val(newVal);
-          $("#takeCal").attr("cal", newValId);
-     }
+     var newVal = oldVal + val;
+     var newValId = oldValId + valId;
+     $("#calcuType-input").val(newVal);
+     $("#takeCal").attr("cal", newValId);
 }
 
 function select_calcuMethod(event) {
