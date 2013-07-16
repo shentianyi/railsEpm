@@ -5,7 +5,7 @@ ActiveRecord::Base.transaction do
   user.status=0
   user =user.create_tenant_user!('admin@leoni.com','123456@',"123456@","Shanghai Leoni")
   tenant=user.tenant
-  
+  user.update_attributes(:first_name=>'admin') 
   puts '*************** TENANT AND ADMIN***************'
   puts "tenant-----#{tenant.id}:#{tenant.company_name} created!"
   puts "user-----#{user.id}:#{user.email} created!"

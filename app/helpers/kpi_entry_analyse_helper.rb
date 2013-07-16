@@ -1,13 +1,18 @@
 #encoding: utf-8
 module KpiEntryAnalyseHelper
 
-    def self.get_kpi_entry_analysis_data kpi_id,entity_group_id,start_time,end_time
+    def self.get_kpi_entry_analysis_data kpi_id,entity_group_id,start_time,end_time,average
 	if kpi=Kpi.find_by_id(kpi_id) and entity_group=EntityGroup.find_by_id(entity_group_id)
 	    entities=entity_group.entities
 	    entity_ids=entities.collect{|entity| entity.id}
 	    entries=  KpiEntry.where(:kpi_id=>kpi_id,:entity_id=>entity_ids,:entry_at=>start_time..end_time).all
-	    target=UserKpiItem.where(:kpi_id=>kpi_id,:entity_id=>entity_ids).sum(:target)
-	    current_data={};target_data={};unit_data={}    
+	    target_relation=UserKpiItem.where(:kpi_id=>kpi_id,:entity_id=>entity_ids)
+	    if average
+		target=target_relation.average(:target).to_i
+	    else
+		target=target_relation.sum(:target)
+	    end
+	    current_data={};target_data={};unit_data={};current_data_count={}
 	    case   kpi.frequency
 	    when KpiFrequency::Hourly
 		start_hour=DateTimeHelper.parse_string_to_date_hour(start_time)
@@ -17,6 +22,7 @@ module KpiEntryAnalyseHelper
 		    key=DateTimeHelper.parse_time_to_hour_string(start_hour)
 		    puts key
 		    current_data[key]=0
+		    current_data_count[key]=0
 		    target_data[key]=target
 		    unit_data[key]=KpiUnit.get_entry_unit_sym kpi.unit
 		    start_hour=start_hour.advance :hours=>1
@@ -49,15 +55,14 @@ module KpiEntryAnalyseHelper
 		for start_index in start_index_a..end_index_a
 		    if start_index==start_index_a
 			if end_index_a>start_index_a
-			    generate_cycle_data start_index_b,step,start_index,target,current_data,target_data,unit_data,kpi
+			    generate_cycle_data start_index_b,step,start_index,target,current_data,current_data_count,target_data,unit_data,kpi
 			else
-			    generate_cycle_data start_index_b,end_index_b,start_index,target,current_data,target_data,unit_data,kpi
+			    generate_cycle_data start_index_b,end_index_b,start_index,target,current_data,current_data_count,target_data,unit_data,kpi
 			end
 		    elsif start_index==end_index_a
-			generate_cycle_data 1,end_index_b,start_index,target,current_data,target_data,unit_data,kpi
+			generate_cycle_data 1,end_index_b,start_index,target,current_data,current_data_count,target_data,unit_data,kpi
 		    else
-			generate_cycle_data 1,step,start_index,target,current_data,target_data,unit_data,kpi
-
+			generate_cycle_data 1,step,start_index,target,current_data,current_data_count,target_data,unit_data,kpi
 		    end
 		end
 
@@ -66,12 +71,23 @@ module KpiEntryAnalyseHelper
 		    key=i.to_s
 		    current_data[key]=0
 		    target_data[key]=target
+		    current_data_count[key]=0
 		    unit_data[key]=KpiUnit.get_entry_unit_sym kpi.unit
 		end
 	    end
 
 	    entries.each do |entry|
 		current_data[entry.entry_at]+= entry.value
+		current_data_count[entry.entry_at]+=1
+	    end
+	    if average
+		count=entity_ids.count
+	      current_data.each do |k,v|
+	        current_data[k]=(v/count).round(2)
+		  #current_data[k]=(v/current_data_count[k]).round(2)
+	      end
+	    else
+
 	    end
 puts current_data
 	    return {:current=>current_data.values,:target=>target_data.values,:unit=>unit_data.values}
@@ -80,11 +96,12 @@ puts current_data
     end
 
     private
-    def self.generate_cycle_data start_index,end_index,cycle_index,target,current_data,target_data,unit_data,kpi
+    def self.generate_cycle_data start_index,end_index,cycle_index,target,current_data,current_data_count,target_data,unit_data,kpi
 	for cycle_value in start_index..end_index
 	    cycle_value=cycle_value>9 ? cycle_value : "0#{cycle_value}" 
 	    key="#{cycle_index}-#{cycle_value}"
 	    current_data[key]=0
+	    current_data_count[key]=0
 	    target_data[key]=target
 	    unit_data[key]=KpiUnit.get_entry_unit_sym kpi.unit
 	end

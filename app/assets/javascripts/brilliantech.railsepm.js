@@ -343,8 +343,8 @@ function init_chart() {
          startWeek=startWeek<10?"0"+startWeek:startWeek;
          endWeek=endWeek<10?"0"+endWeek:endWeek;
          var timeBeginChart=timeBegin;
-         timeBegin=timeBegin>10?timeBegin+":00:00":"0"+timeBegin+":00:00";
-         timeEnd=timeEnd>10?timeEnd+":00:00":"0"+timeEnd+":00:00";
+         timeBegin=timeBegin>9?timeBegin+":00:00":"0"+timeBegin+":00:00";
+         timeEnd=timeEnd>9?timeEnd+":00:00":"0"+timeEnd+":00:00";
          var startQuarter ="0"+quarterBelong(dateBegin[1]);
          var endQuarter ="0"+quarterBelong(dateEnd[1]);
 //         var interval = $(".control-chart-btn.active").data("type");
@@ -395,6 +395,7 @@ function init_chart() {
          if(vali){
          $.post('/kpi_entries/analyse', {
              kpi : kpi,
+	     average:$("input:radio[name='chartRadios']:checked").val()=="0",
              entity_group: view,
              startTime : startTime,
              endTime : endTime
