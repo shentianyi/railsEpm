@@ -3,14 +3,14 @@ module KpiEntriesHelper
   # create or update kpi entry
   def self.create_update_kpi_entry params
     begin
-      if   kpi=Kpi.find_by_id(params[:kpi])
+      if   kpi=Kpi.find_by_id(params[:kpi_id])
         parsed_entry_at=KpiEntriesHelper.parse_entry_date(kpi.frequency,params[:entry_at])
         entry_at=KpiEntriesHelper.reparse_entry_date(kpi.frequency, parsed_entry_at)
-        if kpi_entry=KpiEntry.where(:user_kpi_item_id=>params[:id],:entry_at=>entry_at).first
+        if kpi_entry=KpiEntry.where(:user_kpi_item_id=>params[:user_kpi_item_id],:entry_at=>entry_at).first
           kpi_entry.update_attributes(:original_value=>params[:value])
         else
-          user_kpi_item=UserKpiItem.find_by_id(params[:id])
-          kpi_entry=KpiEntry.new(:original_value=>params[:value],:user_kpi_item_id=>params[:id],:entry_at=>entry_at, :parsed_entry_at=>parsed_entry_at,:entity_id=>user_kpi_item.entity_id,:user_id=>user_kpi_item.user_id,:target=>user_kpi_item.target)
+          user_kpi_item=UserKpiItem.find_by_id(params[:user_kpi_item_id])
+          kpi_entry=KpiEntry.new(:original_value=>params[:value],:user_kpi_item_id=>user_kpi_item.id,:entry_at=>entry_at, :parsed_entry_at=>parsed_entry_at,:entity_id=>user_kpi_item.entity_id,:user_id=>user_kpi_item.user_id,:target=>user_kpi_item.target)
         kpi_entry.kpi=kpi
         kpi_entry.save
         end

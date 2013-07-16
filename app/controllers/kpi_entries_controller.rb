@@ -11,8 +11,8 @@ class KpiEntriesController < ApplicationController
 
   def new
     @f = params[:f].nil? ? KpiFrequency::Hourly : params[:f].to_i
-    @entry_at=KpiEntriesHelper.reparse_entry_date(@f,Time.now)
-    @user_kpis=KpisHelper.get_kpis_by_user_and_frequency current_user,@f
+    # @entry_at=KpiEntriesHelper.reparse_entry_date(@f,Time.now)
+    # @user_kpis=KpisHelper.get_kpis_by_user_and_frequency current_user,@f
   end
 
   #

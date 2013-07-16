@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(:version => 20130715171755) do
     t.string   "domain"
     t.datetime "created_at",                                                                 :null => false
     t.datetime "updated_at",                                                                 :null => false
-    t.string   "access_key",             :default => "334aff4d-acc9-467f-a468-99a0164b005c"
+    t.string   "access_key",             :default => "1c60ca0a-060e-455d-904c-cdc1fd3187ff"
   end
 
   add_index "tenants", ["user_id"], :name => "index_tenants_on_user_id"

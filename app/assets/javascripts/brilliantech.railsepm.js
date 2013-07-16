@@ -1560,7 +1560,8 @@ function init_entryKpi() {
                      refresh_kpi_entry(chooseDay+" "+hourSelect+":00");
                      }
              });
-             generateHTML=y + "-" + realMonth + "-" + d+"-"+"00:00:00";
+             generateHTML=y + "-" + realMonth + "-" + d+" "+"00:00:00";
+              refresh_kpi_entry(generateHTML);
              break;
           case "day":
                $("#entry-kpi").val(y + "-" + realMonth + "-" + realDate);
@@ -1578,6 +1579,7 @@ function init_entryKpi() {
                     }
                });
                generateHTML=y + "-" + realMonth + "-" + d;
+               refresh_kpi_entry(generateHTML);
                break;
           case "week":
                $("#entry-kpi").val(formatDate(WeekFirstDay) + " ~ " + formatDate(WeekLastDay));
@@ -1592,6 +1594,7 @@ function init_entryKpi() {
                }
                var originWeek=$.datepicker.iso8601Week(startDate)>10?$.datepicker.iso8601Week(startDate):"0"+$.datepicker.iso8601Week(startDate);
                generateHTML=endDate.getFullYear() + "-" +originWeek;
+                refresh_kpi_entry(generateHTML);
                break;
           case "month":
                $("#entry-kpi").val(y + "-" + realMonth);
@@ -1625,6 +1628,7 @@ function init_entryKpi() {
                     });
                });
                generateHTML=y + "-" +realMonth;
+                refresh_kpi_entry(generateHTML);
                break;
           case "quarter":
                $("#entry-kpi").css("width", "100px");
@@ -1642,12 +1646,14 @@ function init_entryKpi() {
                     })
                });
               generateHTML=originQuarter;
+               refresh_kpi_entry(generateHTML);
                break;
           case "year":
                $("#entry-kpi").css("width", "100px");
                $("#entry-kpi").val(y);
                $("#entry-prev-btn,#entry-next-btn").removeClass("hide")
                generateHTML=y;
+                refresh_kpi_entry(generateHTML);
                break;
      };
 }
@@ -1805,10 +1811,10 @@ function fill_kpiCurrent(obj) {
                          break;
                }
                $.post('/kpi_entries/entry',{
-                   id:id,
+                   user_kpi_item_id:id,
                    entry_at:date,
                    value:val,
-                   kpi:$(obj).attr("kpi-id")
+                   kpi_id:$(obj).attr("kpi-id")
                },function(data){
                    if(data.result){
                        var target = $(obj).data("target");
