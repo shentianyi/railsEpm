@@ -1,0 +1,81 @@
+#encoding: utf-8
+
+ActiveRecord::Base.transaction do
+  user=User.new
+  user.status=0
+  user =user.create_tenant_user!('admin@leoni.com','123456@',"123456@","Shanghai Leoni")
+  tenant=user.tenant
+  
+  puts '*************** TENANT AND ADMIN***************'
+  puts "tenant-----#{tenant.id}:#{tenant.company_name} created!"
+  puts "user-----#{user.id}:#{user.email} created!"
+  # create kpis
+
+  kpi_category=tenant.kpi_categories.first
+  kpis=[
+    {:name=>"WorkerAttendanceKpi",:description=>"出勤人数KPI",:direction=>KpiDirection::Up,:frequency=>KpiFrequency::Hourly,:is_calculated=>false,:target=>100,:unit=>KpiUnit::IntUnit},
+    {:name=>"ProductTestTotalQuantityKpi",:description=>"产品总测试数量KPI",:direction=>KpiDirection::Up,:frequency=>KpiFrequency::Hourly,:is_calculated=>false,:target=>100,:unit=>KpiUnit::IntUnit},
+    {:name=>"ProductTestPassQuantityKpi",:description=>"产品测试通过数量KPI",:direction=>KpiDirection::Up,:frequency=>KpiFrequency::Hourly,:is_calculated=>false,:target=>100,:unit=>KpiUnit::IntUnit},
+    {:name=>"ProductTestFailQuantityKpi",:description=>"产品测试失败数量KPI",:direction=>KpiDirection::Down,:frequency=>KpiFrequency::Hourly,:is_calculated=>false,:target=>100,:unit=>KpiUnit::IntUnit},
+    {:name=>"ProductQuantityKpi",:description=>"产品产量KPI",:direction=>KpiDirection::Up,:frequency=>KpiFrequency::Hourly,:is_calculated=>false,:target=>100,:unit=>KpiUnit::IntUnit},
+    {:name=>"WorkerAttendanceTimeKpi",:description=>"出勤总时间KPI",:direction=>KpiDirection::Up,:frequency=>KpiFrequency::Hourly,:is_calculated=>false,:target=>100,:unit=>KpiUnit::FloatUnit},
+    {:name=>"ProductTotalTargetTimeKpi",:description=>"产品理论生产总时间KPI",:direction=>KpiDirection::Up,:frequency=>KpiFrequency::Hourly,:is_calculated=>false,:target=>100,:unit=>KpiUnit::FloatUnit},
+    {:name=>"E1Kpi",:description=>"E1Kpi",:direction=>KpiDirection::Up,:frequency=>KpiFrequency::Hourly,:is_calculated=>true,:target=>100,:unit=>KpiUnit::FloatUnit,:formula=>"[7]/[6]",:formula_string=>"[ProductTotalTargetTimeKpi]/[WorkerAttendanceTimeKpi]"}
+  ]
+  puts '*************** CREATE KPI ***************'
+  kpis.each do |k|
+    kpi=Kpi.new(k)
+    kpi.creator=user
+    kpi.tenant=tenant
+    kpi.kpi_category=kpi_category
+    kpi.save
+    puts "kpi------#{kpi.id}:#{kpi.name} created!"
+  end
+
+  entities=[{:name=>"RBA1"},{:name=>"RBA2"},{:name=>"RBA4"},{:name=>"COC"},{:name=>"Motor"},{:name=>"MRA"},{:name=>"Minor"},{:name=>"NCV3"}]
+
+  users=[{:first_name=>"RBA1_User",:email=>"RBA1@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>"RBA2_User",:email=>"RBA2@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>"RBA4_User",:email=>"RBA4@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>"COC_User",:email=>"COC@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>"Motor_User",:email=>"Motor@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>"MRA_User",:email=>"MRA@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>"Minor_User",:email=>"Minor@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>"NCV3_User",:email=>"NCV3@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'}
+  ]
+
+  puts '*************** CREATE ENTITY, USER, USER_KPI_ITEM, ENTITY_GROUP, ENTITY_GROUP_ITEM ***************'
+  entities.each_with_index do |entity,i|
+
+    entity=Entity.new(entity)
+    entity.tenant=tenant
+    entity.save
+
+    puts "entity-----#{entity.id}:#{entity.name} created!"
+
+    euser=User.new(users[i])
+    euser.tenant=tenant
+    euser.entity=entity
+    euser.save
+    puts "user-----#{euser.id}:#{euser.email} created!"
+
+    eg=EntityGroup.new(:name=>entity[:name]+"_Observer")
+    eg.user=user
+    eg.save
+    puts "entity_group-----#{eg.id}:#{eg.name} created!"
+
+    egi=EntityGroupItem.new
+    egi.entity=entity
+    egi.entity_group=eg
+    egi.save
+    puts "entity_group_item-----#{egi.id}:#{egi.entity.name}:#{egi.entity_group.name} created!"
+    Kpi.all.each do |kpi|
+      uki=UserKpiItem.new(:target=>kpi.target)
+      uki.user=euser
+      uki.kpi=kpi
+      uki.entity=entity
+      uki.save
+      puts "user_kpi_item-----#{uki.id}:#{uki.entity.name}:#{uki.user.email}:#{uki.kpi.name} created!"
+    end
+  end
+end

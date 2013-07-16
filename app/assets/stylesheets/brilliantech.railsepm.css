@@ -175,7 +175,7 @@ b.caret{
     padding-top:2px;
 }
 .left-category{
-    width:170px;
+    width:200px;
     height:600px;
     border-right:1px solid #ddd;
 }
@@ -455,7 +455,7 @@ ul.manage-group>li{
     text-overflow:ellipsis;
     white-space:nowrap;
     overflow:hidden;
-    width:115px;
+    width:145px;
     transition:all 0.15s ease 0s;
 }
 ul.manage-group>li i{
@@ -483,7 +483,7 @@ ul.manage-group>li.active{
 }
 ul.manage-group>li.active>a{
     color:#3498db;
-    padding-left:25px;
+    padding-left:10px;
 }
 .sub-middle.sub-middle-manage{
     height:60px;

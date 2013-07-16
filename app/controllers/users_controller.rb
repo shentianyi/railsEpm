@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    params[:user][:role_id]=400
     if @user and @user.update_attributes(params[:user])
       redirect_to users_path
     else
@@ -31,6 +32,7 @@ class UsersController < ApplicationController
   end
 
   def create
+    params[:user][:role_id]=400
     @user=User.new(params[:user])
     if @user.save
       redirect_to users_path
@@ -41,11 +43,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
-   msg=Message.new
+    msg=Message.new
     if @user  and !@user.is_tenant
-     msg.result=@user.destroy
-     else
-       msg.content="用户不可删除"
+    msg.result=@user.destroy
+    else
+      msg.content="用户不可删除"
     end
     render :json=>msg
   end

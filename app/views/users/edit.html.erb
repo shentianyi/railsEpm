@@ -27,7 +27,7 @@
                *组织
           </p>
           <%= select_tag :entity,options_from_collection_for_select(@entities,'id','name',:selected=>@user.entity_id),{:id=>'new-user-entity',:name=>'user[entity_id]'}%>
-          <p>
+          <!-- <p>
                *权限
           </p>
           <label class="radio">
@@ -41,7 +41,7 @@
                总经理</label>
           <label class="radio">
                <input type="radio" name="user[role_id]" data-role="4" value="400">
-               管理员</label>
+               管理员</label> -->
           <p class="hide text-center text-warning" id="add-warn"><%=flash[:notice]%></p>
           <%= submit_tag("保存",{:class=>"btn btn-wzx btn-primary"})%>
 

@@ -11,7 +11,7 @@ class RecreateTenants < ActiveRecord::Migration
       t.string :edition,:null=>false
       t.string :subscription_reference
       t.string :expire_at,:null=>false
-      # t.integer :subscription_status,:null=>Subscription_status::TRIAL
+      # t.integer :subscription_status,:null=>SubscriptionStatus::TRIAL
       t.integer :subscription_status,:null=>0
       #payer information
       t.string :customer_first_name

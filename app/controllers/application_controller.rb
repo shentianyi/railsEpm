@@ -115,7 +115,7 @@ class ApplicationController < ActionController::Base
 
   #must be login and active
   def require_active_user
-    unless current_user && current_user.status == User_status::ACTIVE
+    unless current_user && current_user.status == UserStatus::ACTIVE
       flash[:alert]="Your user account is locked, if it's your new account, " +
           "please finish your registration with our confirmation letter"
       current_user_session.destroy
@@ -152,19 +152,19 @@ class ApplicationController < ActionController::Base
 
   #check tenant status
   def check_tenant_status
-    unless (current_user_tenant.subscription_status ==Subscription_status::TRIAL ||
-        current_user_tenant.subscription_status ==Subscription_status::ACTIVE) &&
+    unless (current_user_tenant.subscription_status ==SubscriptionStatus::TRIAL ||
+        current_user_tenant.subscription_status ==SubscriptionStatus::ACTIVE) &&
         current_user_tenant.expire_at.to_time.utc >= Time.now.utc
       case current_user_tenant.subscription_status
-        when Subscription_status::EXPIRED #expired
+        when SubscriptionStatus::EXPIRED #expired
           flash[:alert]='You account has been expired.' +
               'If you have renewed, please get contact with our service'
           redirect_to billing_url
-        when Subscription_status::TRIAL #Expired
+        when SubscriptionStatus::TRIAL #Expired
           flash[:alert]='You account has been locked.'  +
               ' If you have renewed, please get contact with our service'
           redirect_to billing_url
-        when Subscription_status::LOCKED #Locked
+        when SubscriptionStatus::LOCKED #Locked
           render_internal_error_page
         else
           flash[:alert] = 'Something wrong with your account. Please contact the service'
@@ -192,17 +192,17 @@ class ApplicationController < ActionController::Base
   end
 end
 
-module Subscription_status
-  TRIAL = 0
-  ACTIVE = 1
-  EXPIRED = 2
-  LOCKED =3
-end
-
-module User_status
-  ACTIVE=0
-  LOCKED=1
-end
+# module SubscriptionStatus
+  # TRIAL = 0
+  # ACTIVE = 1
+  # EXPIRED = 2
+  # LOCKED =3
+# end
+# 
+# module UserStatus
+  # ACTIVE=0
+  # LOCKED=1
+# end
 
 
 

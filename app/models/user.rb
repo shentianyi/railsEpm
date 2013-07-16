@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   def lock (email)
     user = User.find_by_email(email)
     if user
-      user.status = User_status::LOCKED
+      user.status = UserStatus::LOCKED
       return user.save
     else
       return false
@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
 
     @tenant= Tenant.new(:company_name=>company_name,
                         :edition=>$trial_edition,
-                        :subscription_status=>Subscription_status::TRIAL,
+                        :subscription_status=>SubscriptionStatus::TRIAL,
                         :expire_at=>15.days.from_now)
 
     begin
@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
         @tenant.super_user=self
 
         self.tenant = @tenant
-        self.status = User_status::ACTIVE
+        self.status = UserStatus::ACTIVE
         self.is_tenant=true
         @tenant.save!
         self.save!
