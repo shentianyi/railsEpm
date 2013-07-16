@@ -21,7 +21,7 @@ class KpisController < ApplicationController
     msg.object=@kpi.id
     else
       msg.content=@kpi.errors.messages.values.join('; ')
-    end
+    end 
     render :json=>msg
   end
 

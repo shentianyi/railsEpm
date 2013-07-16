@@ -593,26 +593,7 @@ function form_chart(current,target,unit,interval,startTime,endTime,timeBeginChar
     options.series[1].data=target;
     var chart = new Highcharts.Chart(options);
 }
-// function chart_chooseEntity(event){
-    // var e = event ? event : (window.event ? window.event : null);
-    // var obj = e.srcElement || e.target;
-    // if($(obj).text()!=$("#chart-group").attr("origin")){
-        // $.post("..",{
-            // text:$(obj).text(),
-            // value:$(obj).attr("value")
-        // },function(data){
-               // if(data.result){
-                   // $("#chart-kpi").html();
-                   // $("#chart-group").attr("origin",$(obj).text());
-               // }
-               // else{
-                   // alert(data.content);
-               // }
-            // }
-        // )
-    // }
-// 
-// }
+
 function quarterBelong(a) {
      if(a < 4)
           return 1;
@@ -628,7 +609,42 @@ function quarterBelong(a) {
 function init_dashBoard() {
      init();
 }
-
+//控制左边的添加
+function insert_dashView() {
+    var test = test_sameEntity();
+    var val = $("#creat-newEntity").val();
+    if(val && test == -1) {
+        if($('#creat-newEntity').val().length > 0) {
+            $.post('', {
+                category : {
+                    name : val
+                }
+            }, function(data) {
+                if(data.result) {
+                    var length = $("#manage-group-kpi").find("li").length - 1;
+                    $("#manage-group-kpi li:eq(" + length + ")").before($("<li />")
+                        .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "dashView"))
+                        .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "dashView"))
+                        .append($("<a href='../kpis?p=" + data.object + "'/>").text(val).attr("number", data.number).attr("belong", "dashView")));
+                    $("#creat-newEntity").val("");
+                } else {
+                    alert(data.content);
+                }
+            });
+        }
+    }
+}
+function create_dashView(event) {
+    var e = event ? event : (window.event ? window.event : null);
+    if(e.keyCode == 13) {
+        insert_dashView();
+    } else if(e.keyCode == 27) {
+        close_createEntity();
+    }
+}
+function showDash_new(){
+        $("#addBlock").slideDown("2000").data("state","on");
+}
 ////////////////////////////////////////////////     manage  ///////////////////////////////////////
 function init_manage() {
      init();
@@ -859,7 +875,6 @@ function insert_entity() {
      var test = test_sameEntity();
      var val = $("#creat-newEntity").val();
      if(val && test == -1) {
-
           if($('#creat-newEntity').val().length > 0) {
                $.post('../kpi_categories', {
                     category : {
@@ -977,6 +992,8 @@ function remove_leftNav(event) {
                     url = "../entity_groups/";
                        local= "../entity_groups/";
                     break;
+              case "dashView":
+                    break;
           }
           if(url) {
                $.ajax({
@@ -1025,6 +1042,8 @@ function update_leftNavi() {
                     break;
                case "view":
                     url = "../entity_groups";
+                    break;
+              case "dashView":
                     break;
           }
           if(url) {

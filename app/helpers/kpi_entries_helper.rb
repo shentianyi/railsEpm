@@ -20,6 +20,7 @@ module KpiEntriesHelper
       puts e.message
     end
   end
+
   # calculate kpi parent value
   def self.calculate_kpi_parent_value kpi_entry_id=nil,entry=nil
     if entry=(kpi_entry_id.nil? ? entry : KpiEntry.joins(:user_kpi_item).where(:id=>kpi_entry_id).select('*,user_kpi_items.*').first)
@@ -48,7 +49,8 @@ module KpiEntriesHelper
             # calcualted_entry.original_value=value
             # calcualted_entry.save
             else
-              KpiEntry.new(:original_value=>value,:user_kpi_item_id=>kpi.user_kpi_items.where(:entity_id=>entry.entity_id,:user_id=>entry.user_id).first.id,:kpi_id=>kpi.id,:entry_at=>kpi_entry_at,:parsed_entry_at=>kpi_parsed_entry_at).save
+             user_kpi_item= kpi.user_kpi_items.where(:entity_id=>entry.entity_id,:user_id=>entry.user_id).first
+              KpiEntry.new(:original_value=>value,:user_kpi_item_id=>user_kpi_item.id,:kpi_id=>kpi.id,:entry_at=>kpi_entry_at,:parsed_entry_at=>kpi_parsed_entry_at,:user_id=>user_kpi_item.user_id,:entity_id=>user_kpi_item.entity_id,:target=>user_kpi_item.target).save
             end
           end
         end
@@ -60,11 +62,13 @@ module KpiEntriesHelper
     if kpi=Kpi.find_by_id(kpi_id)
       kpi.base_kpis.each do |base_kpi|
         count= base_kpi.kpi_entries.count
-        steps= count/1000 +count%2
-        end_index=base_kpi.kpi_entries.order('id desc').limit(1).id
-        for i in 0..steps
-          base_kpi.kpi_entries.offset(i*1000).limit(1000).where('id<?',end_index).each do |entry|
-            calculate_kpi_parent_value(nil,entry)
+        if count>0
+          steps= count/1000 +count%2
+          end_index=base_kpi.kpi_entries.order('kpi_entries.id desc').first.id
+          for i in 0..steps
+            base_kpi.kpi_entries.offset(i*1000).limit(1000).where('kpi_entries.id<?',end_index).each do |entry|
+              calculate_kpi_parent_value(nil,entry)
+            end
           end
         end
       end

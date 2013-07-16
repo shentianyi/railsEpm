@@ -16,7 +16,7 @@ IFEpm::Application.routes.draw do
     end
   end
 
-  resource :user_sessions
+  resource :user_sessions 
   resource :user_confirmations
   resource :subscriptions
 
@@ -58,6 +58,13 @@ IFEpm::Application.routes.draw do
   end
 
   resources :entity_group_items
+  
+   namespace :api,defaults:{format:'json'} do
+     controller :kpi_entries do
+       match 'kpi_entries/entry'=>:entry
+     end
+   end
+  
   mount Resque::Server.new, :at=>"/admin/resque"
 
 #	constraints(Subdomain) do
@@ -119,5 +126,5 @@ IFEpm::Application.routes.draw do
 
 # This is a legacy wild controller route that's not recommended for RESTful applications.
 # Note: This route will make all actions in every controller accessible via GET requests.
-match ':controller(/:action(/:id))(.:format)'
+# match ':controller(/:action(/:id))(.:format)'
 end

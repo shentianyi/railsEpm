@@ -44,14 +44,56 @@
     <div class="sub-middle db-sub-middle">
 
     </div>
-    <!--<div class="addBlock " id="addBlock " data-state="off" style="display:block">-->
-        <!--<h4 class="text-center">选择一种视图类型</h4>-->
-        <!--<div class="chooseChart-wrap clearfix">-->
-            <!--<div class="choose-db-item db-chart-line pull-left"><label>折线图</label></div>-->
-            <!--<div class="choose-db-item db-chart-column pull-left"><label>直方图</label></div>-->
-            <!--<div class="choose-db-item db-chart-pie pull-left"><label>饼图</label></div>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="dashBlock " id="addBlock" data-state="off" style="display:none">
+        <h4 class="text-center">创建视图</h4>
+        <div class="content-condition clearfix">
+            <div class="content-condition-part content-condition-leftpart pull-left">
+                <div class="chart-leftMark">
+                    <label>类别</label>
+                    <label>KPI</label>
+                    <label class="chart-leftMark-view">观察点</label>
+                </div>
+                <select class="pull-left conditionPart-group" id="chart-group" origin="全部">
+                    <option style="display:none" selected="selected" id="none-group">类别</option>
+                    <option value="group0">全部</option>
+                    <option value="group1">entity1</option>
+                    <option value="group2">entity2</option>
+                    <option value="group3">entity3</option>
+                </select>
+                <select class="pull-left" id="chart-kpi">
+                    <option style="display:none" selected="selected" id="none-kpi">选择KPI</option>
+                    <option value="kpi1" interval="200">week</option>
+                    <option value="kpi2" interval="400">quarter</option>
+                    <option value="kpi3" interval="300">month</option>
+                    <option value="kpi3" interval="500">year</option>
+                </select>
+                <span class="inline pull-left">-</span>
+                <select class="pull-left conditionPart-entity" id="chart-view">
+                    <option style="display:none" selected="selected" id="none-view">选择观察组</option>
+                    <option value="entity1">view1</option>
+                    <option value="entity2">view2</option>
+                    <option value="entity3">view3</option>
+                </select>
+
+            </div>
+
+            <div class="content-condition-part pull-right content-condition-rightpart">
+                <p class="text-center">日期范围</p>
+                <input type="text" readonly="true" id="from" />
+                <input placeholder="时间" type="text" readonly="true" id="fromTime" class="analytics-time"/>
+                <span>to</span>
+                <input  type="text" readonly="true" id="to" />
+                <input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>
+            </div>
+
+        </div>
+        <div class="chooseChart-wrap clearfix">
+            <div class="choose-db-item db-chart-line pull-left"><label>折线图</label></div>
+            <div class="choose-db-item db-chart-column pull-left"><label>直方图</label></div>
+            <div class="choose-db-item db-chart-pie pull-left"><label>饼图</label></div>
+        </div>
+        <a class="btn btn-wzx btn-primary pull-right analyze-btn" onclick="init_chart()">分析</a>
+    </div>
     <div class="middle clearfix">
         <!--左边的categories-->
         <div class="left-category pull-left">
@@ -81,7 +123,7 @@
                 <div class="absolute creat-entity-block hide" id="creatEntity-block">
                     <p>创建新视角</p>
                     <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
-                    <input type="text" id="creat-newEntity" onkeyup="create_entity(event)"/>
+                    <input type="text" id="creat-newEntity" onkeyup="create_dashView(event)"/>
                 </div>
                 <div class="absolute creat-entity-block hide" id="edit-block">
                     <p>修改视角</p>
@@ -90,6 +132,11 @@
                 </div>
             </ul>
         </div>
+
+        <div>
+            <a class="btn btn-wzx btn-primary dashboard-addNew-btn" onclick="showDash_new()"><i class="icon-plus icon-white"></i> 视图</a>
+        </div>
+
 
 
 

@@ -326,27 +326,14 @@ box-shadow:0 2px 0px #F39C12;
 }
 /***************************************************** dashboard **************************************************************/
 /*sub middle*/
-.sub-middle.db-sub-middle{
-    height:45px;
-    margin-bottom:2px;
-}
-.sub-middle-tool{
-    margin-top:8px;
-    margin-left:-6px;
-}
-.db-add{
-    padding:3px 3px 3px 25px;
-    background:url("../images/add-db.png")no-repeat -6px 3px;
-    /*background:url("/assets/add-db.png")no-repeat -6px 3px;*/
-}
-.db-add:hover{
-    background:url("../images/add-db.png")no-repeat -6px -19px;
-    /*background:url("/assets/add-db.png")no-repeat -6px -19px;*/
-    color:#1ABC9C !important;
-}
-.sub-middle-tool>a.db-add{
-    font-size:16px;
-    color:#9d9d9d
+.dashBlock{
+    position:absolute;
+    z-index:20;
+    background-color:white;
+    width:100%;
+    padding-bottom:20px;
+    border-top:1px solid #ddd;
+    border-bottom:1px solid #ddd;
 }
 /*choose db*/
 .chooseChart-wrap{
@@ -386,6 +373,10 @@ box-shadow:0 2px 0px #F39C12;
 .choose-db-item.db-chart-pie{
     background-position:-155px 31px;
     margin-right:0
+}
+.dashboard-addNew-btn{
+    margin-left:30px;
+    margin-top:15px;
 }
 /*****************************************************     manage      **************************************************************/
 ul.manage-group{
