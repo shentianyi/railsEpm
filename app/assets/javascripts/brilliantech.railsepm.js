@@ -798,7 +798,7 @@ function add_kpi() {
      var formula = "";
      var formulaShow = ""
      if($("#is-calcu-check").attr("checked") == "checked") {
-          if(name.length != 0 && target.length != 0 && $("#calcuType-input").val() && /\]$/.test($("#calcuType-input").val()) == true) {
+          if(name.length != 0 && target.length != 0 && $("#calcuType-input").val()) {
                formula = $("#takeCal").attr("cal");
                formulaShow = $("#calcuType-input").val();
                checkedP = true;
@@ -1052,12 +1052,10 @@ function select_calcuMethod(event) {
      var val = $(obj).text();
      var oldVal = $("#calcuType-input").val();
      var oldValId = $("#takeCal").attr("cal");
-     if(/\]$/.test(oldVal) == true) {
           var newVal = oldVal + val;
           var newValId = oldValId + val;
           $("#calcuType-input").val(newVal);
           $("#takeCal").attr("cal", newValId);
-     }
 }
 
 function calcuRelate_clear() {
