@@ -29,7 +29,7 @@ function while_hide(a) {
 function init_rightContent() {
      var fwidth = parseInt(document.body.scrollWidth);
      if(fwidth > 990) {
-          document.getElementById("right-content").style.width = document.body.scrollWidth - 255 + "px";
+          document.getElementById("right-content").style.width = document.body.scrollWidth - 265 + "px";
      } else {
           document.getElementById("right-content").style.width = 990 - 231 + "px";
      }
