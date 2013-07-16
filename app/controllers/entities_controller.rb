@@ -26,7 +26,13 @@ class EntitiesController < ApplicationController
   end
 
   def destroy
-
+    msg=Message.new
+    if @entity 
+     msg.result=@entity.destroy
+     else
+       msg.content="删除失败"
+    end
+    render :json=>msg
   end
   
   private

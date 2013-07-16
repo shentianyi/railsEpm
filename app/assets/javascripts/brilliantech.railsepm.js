@@ -1470,9 +1470,9 @@ function delivery_view() {
             }
         },function(data){
             if(data.result){
-                $("#kpi-table").append($("<tr />").attr("id", data.id).append($("<td align='center' />").text(length).addClass("kpi-order-id"))
+                $("#kpi-table").append($("<tr />").attr("id", data.object).append($("<td align='center' />").text(length).addClass("kpi-order-id"))
                     .append($("<td align='center' />").addClass("kpi-order-entity").text(viewText))
-                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong",data.id).click(remove_viewEntity)))
+                    .append($("<td align='center' />").append($("<div />").addClass("manage-operate manage-operate-del").data("belong",data.object).click(remove_viewEntity)))
                 );
             }
             else{
