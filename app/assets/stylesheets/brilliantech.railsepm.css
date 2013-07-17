@@ -432,12 +432,36 @@ ul.dashBoard-show li{
 .dashboard-moreDetail{
    position:absolute;
     top:0;
-    right:5px;
+    left:5px;
     width:200px;
-    text-align:right;
+    text-align:left;
 }
 .dashboard-moreDetail p{
     margin-bottom:2px;
+}
+.chart-optionRadio.db-optionRadio{
+    margin-top:26px;
+}
+.db-infoMark{
+    position:absolute;
+    right:5px;
+    top:11px;
+}
+.db-infoMark:hover ~ .db-itemInfo{
+    right:20px;
+    left:auto;
+}
+.table.db-itemInfo{
+    width:230px;
+    position:absolute;
+    font-size:13px;
+    box-shadow:-2px 2px 2px #9d9d9d;
+    top:0px;
+    left:-999em;
+    background:white;
+}
+.db-itemInfo tr td:first-child{
+    text-align:right
 }
 /*****************************************************     manage      **************************************************************/
 ul.manage-group{

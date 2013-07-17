@@ -51,6 +51,7 @@
             <div class="pull-left dashboard-conditionn-name">
                 <label>视图名称</label>
                 <input type="text" />
+
             </div>
             <div class="content-condition-part content-condition-leftpart pull-left">
                 <div class="chart-leftMark">
@@ -76,7 +77,6 @@
                     <option value="entity2">view2</option>
                     <option value="entity3">view3</option>
                 </select>
-
             </div>
 
             <div class="content-condition-part pull-right content-condition-rightpart">
@@ -96,6 +96,16 @@
         </div>
 
         <div class="chooseChart-wrap clearfix">
+            <div class="chart-optionRadio db-optionRadio pull-left">
+                <label class="radio ">
+                    <input type="radio" name="chartRadios" checked>
+                    以综合值分析
+                </label>
+                <label class="radio ">
+                    <input type="radio" name="chartRadios" >
+                    以平均值分析
+                </label>
+            </div>
             <a class="btn btn-primary dashboard-condition-btn pull-right">添加</a>
             <a class="btn dashboard-condition-btn pull-right" onclick="close_dash()">取消</a>
         </div>
@@ -149,6 +159,33 @@
                             <p>da</p>
                             <p>2013.4</p>
                         </div>
+                        <i class="icon-list db-infoMark"></i>
+                        <table class="table table-bordered table-striped db-itemInfo">
+                           <tr>
+                               <td>视图名称</td>
+                               <td></td>
+                           </tr>
+                            <tr>
+                                <td>KPI名称</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>观察点</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>开始时间</td>
+                                <td>2013-03-03 23：00：00</td>
+                            </tr>
+                            <tr>
+                                <td>结束时间</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>计算方式</td>
+                                <td></td>
+                            </tr>
+                        </table>
                     </div>
                     <div>
 
