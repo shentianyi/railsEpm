@@ -463,6 +463,21 @@ ul.dashBoard-show li{
 .db-itemInfo tr td:first-child{
     text-align:right
 }
+.db-chartItem{
+    width:100%;
+    height:279px;
+}
+.db-placeHolder{
+    width:100%;
+    background-color:#eaedec;
+    height:279px;
+}
+.db-placeHolder>h2{
+    margin:0 auto 0;
+    text-align:center;
+    padding-top:100px;
+    color:#9eb7c6
+}
 /*****************************************************     manage      **************************************************************/
 ul.manage-group{
     list-style: none;
