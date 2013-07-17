@@ -61,7 +61,7 @@ function formatDate(date) {
      return (myYear + "-" + myMonth + "-" + myWeekday);
 }
 
-/////////////////////////////////////////////////////////////////////////  Analytics   //////////////////////////////////
+/////////////////////////////////////////////////////////////////////////  Analytics   ///////////////////////////////////////
 function init_analytics() {
      init();
      init_rightContent();
@@ -343,8 +343,8 @@ function init_chart() {
          startWeek=startWeek<10?"0"+startWeek:startWeek;
          endWeek=endWeek<10?"0"+endWeek:endWeek;
          var timeBeginChart=timeBegin;
-         timeBegin=timeBegin>9?timeBegin+":00:00":"0"+timeBegin+":00:00";
-         timeEnd=timeEnd>9?timeEnd+":00:00":"0"+timeEnd+":00:00";
+         timeBegin=timeBegin<10?"0"+timeBegin+":00:00":timeBegin+":00:00";
+         timeEnd=timeEnd<10?"0"+timeEnd+":00:00":timeEnd+":00:00";
          var startQuarter ="0"+quarterBelong(dateBegin[1]);
          var endQuarter ="0"+quarterBelong(dateEnd[1]);
 //         var interval = $(".control-chart-btn.active").data("type");
@@ -1715,7 +1715,7 @@ function init_entryKpi() {
                   var startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
                   var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
                }
-               var originWeek=$.datepicker.iso8601Week(startDate)>10?$.datepicker.iso8601Week(startDate):"0"+$.datepicker.iso8601Week(startDate);
+               var originWeek=$.datepicker.iso8601Week(startDate)>=10?$.datepicker.iso8601Week(startDate):"0"+$.datepicker.iso8601Week(startDate);
                generateHTML=endDate.getFullYear() + "-" +originWeek;
                 refresh_kpi_entry(generateHTML);
                break;
@@ -1832,7 +1832,7 @@ function select_week() {
                $("#entry-kpi").val($.datepicker.formatDate(dateFormat, startDate, inst.settings) + " ~ " + $.datepicker.formatDate(dateFormat, endDate, inst.settings));
                $("#show-weekOfYear>span").text($.datepicker.iso8601Week(startDate));
                selectCurrentWeek();
-               var alterWeek=$.datepicker.iso8601Week(startDate)>10?$.datepicker.iso8601Week(startDate):"0"+$.datepicker.iso8601Week(startDate)
+               var alterWeek=$.datepicker.iso8601Week(startDate)>=10?$.datepicker.iso8601Week(startDate):"0"+$.datepicker.iso8601Week(startDate)
                var chooseWeek=endDate.getFullYear()+"-"+alterWeek;
                refresh_kpi_entry(chooseWeek);
                $('.week-picker').addClass("hide");
