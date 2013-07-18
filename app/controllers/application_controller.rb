@@ -4,17 +4,17 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper :all
   helper_method :current_user_session, :current_user
-  before_filter :require_user
-  before_filter :require_active_user
-  before_filter :find_current_user_tenant
- 
-  before_filter :check_tenant_status
-
-
-   set_current_tenant_through_filter
-  ##before_filter :authorize
-
-   authorize_resource
+  #before_filter :require_user
+  #before_filter :require_active_user
+  #before_filter :find_current_user_tenant
+  #
+  #before_filter :check_tenant_status
+  #
+  #
+  # set_current_tenant_through_filter
+  ###before_filter :authorize
+  #
+  # authorize_resource
 
 
   private
@@ -205,6 +205,12 @@ end
 # end
 
 
+def jsonp_str(obj)
+  str=''
+  str =obj.to_json.to_s if obj
+  return params[:callback]?params[:callback]:''+'('+ str +')'
+end
 
-
-
+def new_message
+  return {:return=>false,:errors=>[]}
+end
