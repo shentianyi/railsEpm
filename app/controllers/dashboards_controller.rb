@@ -5,17 +5,18 @@ class DashboardsController < ApplicationController
   end
 
   def create
-     @new_dashboard = Dashboard.new(params[:dashboard])
+     @new_dashboard = Dashboard.new(params[:data])
      @new_dashboard.user_id = current_user.id
      msg = new_message
      if !@new_dashboard.save
        msg[:errors]= @new_dashboard.errors.full_messages
      else
        msg[:result]=true
+       msg[:id]=@new_dashboard.id
      end
      respond_to do |t|
-       t.json {render :json=>{:result=>false,:errors=>@new_dashboard.errors.full_messages}}
-       t.js {render :js=> jsonp_str({:result=>false,:errors=>@new_dashboard.errors.full_messages})}
+       t.json {render :json=>msg}
+       t.js {render :js=> jsonp_str(msg)}
      end
   end
 
@@ -23,8 +24,8 @@ class DashboardsController < ApplicationController
   def destroy
     Dashboard.destroy(params[:id])
     respond_to do |t|
-      t.json {render :json=>{:result=>true}}
-      t.js {render :js=> jsonp_str({:result=>true})}
+      t.json {render :json=>{:result=>true,:id=>params[:id]}}
+      t.js {render :js=> jsonp_str({:result=>true,:id=>params[:id]})}
     end
   end
 
@@ -38,6 +39,7 @@ class DashboardsController < ApplicationController
     else
       msg[:errors]=@dashboard.errors.full_messages
     end
+    msg[:id]=params[:dashboard][:id]
     respond_to do |t|
       t.json {render :json=>msg}
       t.js {render :js=>jsonp_str(msg)}

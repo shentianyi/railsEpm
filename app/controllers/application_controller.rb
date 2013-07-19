@@ -212,5 +212,5 @@ def jsonp_str(obj)
 end
 
 def new_message
-  return {:return=>false,:errors=>[]}
+  return {:return=>false,:errors=>[], :id=>nil}
 end
