@@ -113,6 +113,7 @@ function init_analytics() {
      });
      $("#to").datepicker({
           showOtherMonths : true,
+          showOtherMonths : true,
           selectOtherMonths : true,
           firstDay : 1,
           changeMonth:true,
