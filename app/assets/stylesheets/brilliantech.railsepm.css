@@ -336,9 +336,8 @@ box-shadow:0 2px 0px #F39C12;
     border-bottom:1px solid #ddd;
 }
 .dashBoard-condition.content-condition{
-    margin-top:15px;
-    margin-bottom:15px;
-    width:980px;
+    margin:20px auto;
+    width:400px;
 }
 .dashboard-conditionn-name{
     margin-right:30px;
