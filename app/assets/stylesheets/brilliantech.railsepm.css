@@ -335,28 +335,54 @@ box-shadow:0 2px 0px #F39C12;
     border-top:1px solid #ddd;
     border-bottom:1px solid #ddd;
 }
-.dashBoard-condition.content-condition{
-    margin:20px auto;
+.dashBoard-condition{
     width:400px;
+    margin:20px auto;
 }
-.dashboard-conditionn-name{
-    margin-right:30px;
-    margin-top:10px;
+.dashBoard-condition tr td:first-child{
+    width:100px;
+    text-align:right;
 }
-.dashboard-conditionn-name>label{
-    font-size:21px;
-    margin-bottom:9px
+.dashBoard-condition tr td input{
+    width:100px;
 }
-.dashboard-conditionn-name>input{
-    width:120px;
-    height:24px;
+.dashBoard-condition tr td input[type='radio']{
+    width:20px;
 }
-.dashboard-condition-btn{
-    display:table;
-    margin:30px 0 10px 20px;
-    padding:11px 47px !important;
+.analyticType-radio{
+    position:relative;
+    top:4px;
+}
+.dashBoard-condition tr td input.analytics-date{
+    background-color:white;
+    cursor:default;
+}
+.dashBoard-condition tr td input.analytics-time{
+    background-color:white;
+    cursor:default;
+    width:40px;
+    margin-left:0px;
+}
+.dashBoard-condition tr td input,.dashBoard-condition tr td select{
+    margin-top:7px;
+    margin-left:10px;
+}
+.dashBoard-condition tr td select{
+    width:113px;
+}
+.dashBoard-condition tr td input.db-photoDesc{
+    width:152px;
 }
 /*choose db*/
+.chooseBtn-wrap{
+    width:300px;
+    margin:10px auto;
+}
+.dashboard-condition-btn{
+    margin-top:17px;
+    margin-right:16px;
+    padding:8px 46px 5px;
+}
 .chooseChart-wrap{
     width:864px;
     margin:0 auto;
@@ -435,19 +461,25 @@ ul.dashBoard-show li{
     width:200px;
     text-align:left;
 }
-.dashboard-moreDetail p{
-    margin-bottom:2px;
+.dashboard-moreDetail>p{
+    margin-bottom:-2px;
 }
 .chart-optionRadio.db-optionRadio{
     margin-top:26px;
 }
 .db-infoMark{
     position:absolute;
+    right:26px;
+    top:12px;
+}
+.db-itemRemove{
+    position:absolute;
     right:5px;
-    top:11px;
+    top:13px;
 }
 .db-infoMark:hover ~ .db-itemInfo{
-    right:20px;
+    right:41px;
+    top:12px;
     left:auto;
 }
 .table.db-itemInfo{

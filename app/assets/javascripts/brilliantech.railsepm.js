@@ -747,6 +747,12 @@ function showDash_new(){
 function close_dash(){
     $("#addBlock").slideUp("2000");
 }
+function remove_dbItem(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    var target=$(obj).attr("belong");
+    $("#dashBoard-show").find("#"+target).remove();
+}
 ////////////////////////////////////////////////     manage  ///////////////////////////////////////
 function init_manage() {
      init();
