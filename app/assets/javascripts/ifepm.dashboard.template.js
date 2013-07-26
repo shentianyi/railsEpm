@@ -1,0 +1,62 @@
+/**
+ * Created with JetBrains WebStorm.
+ * User: tianyi
+ * Date: 13-7-19
+ * Time: 下午4:26
+ * To change this template use File | Settings | File Templates.
+ */
+
+var ifepm = ifepm || {};
+
+
+ifepm.template = {};
+
+//do not change the structure and the !*! part. Insert css class into element to change the theme
+ifepm.template.view = '<li !attr!=!id!>' +
+    '<div class="dashboard-eachDetail relative">' +
+    '<p class="text-center">!name!</p>' +
+    '<div class="dashboard-moreDetail">' +
+    '<p class="dbItem-name">!title!</p>' +
+    '<p class="dbItem-desc">desc</p>' +
+    '</div>' +
+    '<i class="icon-list db-infoMark"></i>' +
+    '<i class="icon-remove db-itemRemove" onclick=custom_handler></i>' +
+    '<table class="table table-bordered table-striped db-itemInfo">' +
+    '<tr>' +
+    '<td>视图名称</td>' +
+    '<td>!name!</td>' +
+    '</tr>' +
+    '<tr>'  +
+    '<td>KPI名称</td>' +
+    '<td>!kpi_name!</td>' +
+    '</tr>' +
+    '<tr>'+
+    '<td>观察点</td>' +
+    '<td>!entity_group!</td>'+
+    '</tr>'+
+    '<tr>'+
+    '<td>开始时间</td>'+
+    '<td>!from!</td>' +
+    '</tr>' +
+    '<tr>' +
+    '<td>结束时间</td>' +
+    '<td>!to!</td>'+
+    '</tr>'+
+    '<tr>' +
+    '<td>计算方式</td>' +
+    '<td>!calculate_type!</td>' +
+    '</tr>' +
+    '</table>'+
+    '</div>' +
+    '<div id=!item_container_id! class="db-placeHolder">' +
+    '</div>' +
+    '</li>' +
+    '<script type="text/javascript">ifepm.dashboard.load_graph("!id!")</script>'
+
+//placeholder when change the position of a dashboard view
+ifepm.template.view_placeholder='';
+
+
+
+
+

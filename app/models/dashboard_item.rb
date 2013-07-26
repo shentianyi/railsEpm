@@ -18,15 +18,10 @@ class DashboardItem < ActiveRecord::Base
      formatted_items = []
      if items
        items.each{|item|
-         formatted={}
-         formatted[:id]=item.id
-         formatted[:entity_group]= item.entity_group
-         formatted[:kpi_id]=item.kpi_id
+         formatted=item.as_json
          formatted[:kpi_name]=Kpi.find(item.kpi_id).name
-         formatted[:calculate_type]=item.calculate_type
          formatted[:start] = self.time_string_to_time_span(item.time_string)[:start]
          formatted[:end] = self.time_string_to_time_span(item.time_string)[:end]
-         formatted[:interval]=item.interval
          formatted_items << formatted
        }
      end

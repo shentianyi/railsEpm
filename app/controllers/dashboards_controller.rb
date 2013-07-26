@@ -13,6 +13,7 @@ class DashboardsController < ApplicationController
      else
        msg[:result]=true
        msg[:id]=@new_dashboard.id
+       msg[:object] = @new_dashboard
      end
      respond_to do |t|
        t.json {render :json=>msg}
@@ -44,6 +45,11 @@ class DashboardsController < ApplicationController
       t.json {render :json=>msg}
       t.js {render :js=>jsonp_str(msg)}
     end
+  end
+
+  def index
+    @dashboards = Dashboard.find_all_by_user_id(current_user.id)
+    render
   end
 
 

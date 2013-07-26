@@ -1,0 +1,166 @@
+
+<div class="sub-middle db-sub-middle">
+
+</div>
+<div class="dashBlock " id="addBlock" data-state="off" style="display:none">
+  <h4 class="text-center light-gray">创建视图</h4>
+  <table class="dashBoard-condition">
+    <tr>
+      <td>*视图名称</td>
+      <td><input type="text" id="view_name_input"/></td>
+    </tr>
+    <tr>
+      <td>视图描述</td>
+      <td><input type="text" id="view_title_input" class="db-photoDesc"/></td>
+    </tr>
+    <tr>
+      <td>KPI类别</td>
+      <td>
+        <select class=" conditionPart-group" id="chart-group" origin="全部">-->
+          <option value="group0">全部</option>
+          <option value="group1">entity1</option>
+          <option value="group2">entity2</option>
+          <option value="group3">entity3</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>*KPI名称</td>
+      <td>
+        <select class="" id="chart-kpi">
+          <option value="kpi1" interval="200">week</option>
+          <option value="kpi2" interval="400">quarter</option>
+          <option value="kpi3" interval="300">month</option>
+          <option value="kpi3" interval="500">year</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>*观察点</td>
+      <td>
+        <select class=" conditionPart-entity" id="chart-view">
+          <option value="entity1">view1</option>
+          <option value="entity2">view2</option>
+          <option value="entity3">view3</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td>*开始时间</td>
+      <td>
+        <input type="text" readonly="true" id="from" class="analytics-date"/>
+        <input placeholder="时间" type="text" readonly="true" id="fromTime" class="analytics-time"/>
+      </td>
+    </tr>
+    <tr>
+      <td>*结束时间</td>
+      <td>
+        <input  type="text" readonly="true" id="to" class="analytics-date"/>
+        <input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>
+      </td>
+    </tr>
+    <tr>
+      <td>*分析方式</td>
+      <td>
+        <input type="radio" name="chartRadios" checked><span class="analyticType-radio">以综合值分析</span>
+        <br />
+        <input type="radio" name="chartRadios" ><span class="analyticType-radio">以平均值分析</span>
+      </td>
+    </tr>
+  </table>
+  <div class="chooseChart-wrap clearfix">
+    <div class="choose-db-item db-chart-line pull-left" onclick="dashNew_chooseType(event)"><label>折线图</label></div>
+    <div class="choose-db-item db-chart-column pull-left" onclick="dashNew_chooseType(event)"><label>直方图</label></div>
+    <div class="choose-db-item db-chart-pie pull-left" onclick="dashNew_chooseType(event)"><label>饼图</label></div>
+  </div>
+
+  <div class="chooseBtn-wrap clearfix">
+    <a class="btn dashboard-condition-btn pull-left" onclick="close_dash()">取消</a>
+    <a class="btn btn-primary dashboard-condition-btn pull-left">添加</a>
+  </div>
+</div>
+
+
+
+<div class="middle clearfix">
+  <!--左边的categories-->
+  <div class="left-category pull-left">
+    <ul class="manage-group" id="sty-dashboards">
+      <li><h3 class="no-margin">视角</h3></li>
+      <%@dashboards.each do |dashboard| %>
+          <li class="sty-db-node" obj_id=<%=dashboard.id%>  >
+            <i class="icon-remove hide pull-left"  onclick="dashboard_delete(<%=dashboard.id%>)"></i>
+            <a href="#" onclick="select_dashboard(<%=dashboard.id%>)"><%=dashboard.name%></a>
+           </li>
+
+      <%end%>
+      </ul>
+    <ul class="manage-group">
+      <li><button class="btn btn-primary" onclick="create_entityBlock()">创建新视角</button></li>
+      <div class="absolute creat-entity-block hide" id="creatEntity-block">
+        <p>创建新视角</p>
+        <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
+        <input type="text" id="creat-newEntity" onkeyup="if(event.keyCode==13){dashboard_create({name:$(this).val()})}"/>
+      </div>
+     <!-- <div class="absolute creat-entity-block hide" id="edit-block">
+        <p>修改视角</p>
+        <i class="icon-remove pull-right" onclick="close_editBlock()"></i>
+        <input type="text" id="change-leftNavi" onkeyup="change_leftNavi(event)"/>
+      </div>-->
+    </ul>
+  </div>
+
+  <div class="pull-left dashboard-block">
+    <a class="btn btn-wzx btn-primary dashboard-addNew-btn" onclick="showDash_new()"><i class="icon-plus icon-white"></i> 视图</a>
+    <ul class="dashBoard-show" id="dashBoard-show">
+      <li>
+        <div class="dashboard-eachDetail relative">
+
+
+
+          <table class="table table-bordered table-striped db-itemInfo">
+            <tr>
+              <td>视图名称</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>KPI名称</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>观察点</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>开始时间</td>
+              <td>2013-03-03 23:00:00</td>
+            </tr>
+            <tr>
+              <td>结束时间</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>计算方式</td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+        <div class="db-placeHolder">
+          <h2 onclick="showDash_new()">+ 点击新建视图</h2>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+
+
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    })
+</script>

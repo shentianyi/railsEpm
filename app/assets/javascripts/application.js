@@ -17,3 +17,9 @@
 //=require highcharts
 //=require brilliantech.base
 //=require brilliantech.railsepm
+//=require ifepm.activeSelector.js
+//=require ifepm.text.js
+//=require ifepm.config.js
+//=require ifepm.dashboard.template.js
+//=require ifepm.dashboard.main.js
+//=require dashboard.js
