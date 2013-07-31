@@ -218,6 +218,7 @@ ifepm.dashboard.form_chart=function(option_args){
 //container of the current dashboard's item.
 ifepm.dashboard.graphs=ifepm.dashboard.graphs || {};
 
+ifepm.dashboard.graph_sequence =[];
 
 ifepm.dashboard.load_graph=function(id){
     if (!ifepm.dashboard.graphs[id])
@@ -267,17 +268,19 @@ function Graph(){
     this.name = null;
     this.title = null;
     this.sequence = null;
+    this.placeholder = ifepm.template.view_placeholder;
     this.container=  function(graph_item){
         return ifepm.template.view
             .replace(/custom_handler/g,ifepm.config.remove_view_function)
             .replace(/!id!/g,graph_item.id)
+            .replace(/!title!/g,graph_item.title)
             .replace(/!item_container_id!/g,ifepm.dashboard.make_item_container_id(graph_item.id))
             .replace(/!attr!/g,ifepm.config.graph_indicator)
             .replace(/!name!/g,graph_item.name)
             .replace(/!kpi_name!/g,graph_item.kpi_name)
-            .replace(/!entitiy_group!/g,graph_item.entity_group)
+            .replace(/!entity_group!/g,graph_item.entity_group)
             .replace(/!from!/g,graph_item.from)
-            .replace(/!to!/g,graph_item.to)
+            .replace(/!to!/g,graph_item.end)
             .replace(/!calculate_type!/g,graph_item.calculate_type)
     };
 }
@@ -288,18 +291,18 @@ function Graph(){
 //when user sorts the dashboard layout, the sequence should be updated in the server side
 ifepm.dashboard.update_item_sequence= function(container_selector){
 
-    var sequence=[];
+    ifepm.dashboard.graph_sequence = [];
 
   $(container_selector).children().filter(ifepm.config.graph_container_tag)
         .each(function(){
-        sequence.push($(this).attr(ifepm.config.graph_indicator));
+          ifepm.dashboard.graph_sequence.push($(this).attr(ifepm.config.graph_indicator));
     });
 
     $.ajax({
         url:ifepm.config.update_sequence_url.url,
         dataType:ifepm.config.update_sequence_url.dataType,
         crossDomain:ifepm.config.update_sequence_url.crossDomain,
-        data:{sequence:sequence}
+        data:{sequence:ifepm.dashboard.graph_sequence}
     })
 };
 
@@ -310,23 +313,26 @@ ifepm.dashboard.update_item_sequence= function(container_selector){
 //append a new dashboard item to the main dashboard container
 ifepm.dashboard.create_dashboard=function(){
     var container_selector=ifepm.config.container_selector;
-
+    $(container_selector).children().remove();
     if (Object.keys(ifepm.dashboard.graphs).length>0){
 
-                $(container_selector).children().remove();
-                for(index in ifepm.dashboard.graphs){
+                for(index in ifepm.dashboard.graph_sequence){
+                     var graph_id = ifepm.dashboard.graph_sequence[index]
                     $(container_selector).append(
-                        ifepm.dashboard.graphs[index].container(ifepm.dashboard.graphs[index]))
+                        ifepm.dashboard.graphs[graph_id].container(ifepm.dashboard.graphs[graph_id]))
                 }
                 //configure the sortable
                 $(container_selector).sortable(
                     {
-                        placeholder: ifepm.template.view_placeholder,
+                        placeholder: ifepm.template.move_placeholder,
                         //update the sequence when the layout is changed
                         stop:function(){ifepm.dashboard.update_item_sequence(container_selector)}
                     }
                 );
                 $(container_selector).disableSelection();
+    }
+    else {
+        $(container_selector).append((new Graph()).placeholder)
     }
 };
 
@@ -336,8 +342,10 @@ ifepm.dashboard.create_dashboard=function(){
 
 
 ifepm.dashboard.init=function(id){
+    ifepm.dashboard.graphs = {};
+    ifepm.dashboard.graph_sequence = [];
     $.ajax(
-        {before_send:function(){},
+        {
             crossDomain:ifepm.config.get_dashboard_items_url.crossDomain,
             dataType:ifepm.config.get_dashboard_items_url.dataType,
             url:ifepm.config.get_dashboard_items_url.url,
@@ -358,13 +366,16 @@ ifepm.dashboard.init=function(id){
                     graph_item.kpi_name = data[i].kpi_name
                     graph_item.interval = data[i].interval
                     graph_item.sequence = data[i].sequence
-
+                    graph_item.dashboard_id = data[i].dashboard_id
 
                     ifepm.dashboard.graphs[data[i].id]=graph_item;
+                    ifepm.dashboard.graph_sequence.push(data[i].id)
+
                 }
                 ifepm.dashboard.create_dashboard();
             },
-            error:function(jqXHR){alert("Oops, something went wrong, please try again");}}
+            error:function(jqXHR,textStatus,errorThrown){alert("Oops, something went wrong, please try again");}}
+
     );
 };
 

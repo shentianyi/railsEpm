@@ -48,7 +48,14 @@ class DashboardsController < ApplicationController
   end
 
   def index
+    get_ability_category
+
+    get_kpis_by_category
+
+    get_user_entity_groups
+
     @dashboards = Dashboard.find_all_by_user_id(current_user.id)
+
     render
   end
 

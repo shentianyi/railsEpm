@@ -3,6 +3,7 @@ class DashboardItemsController < ApplicationController
 
 
     def create
+
       @new_item = DashboardItem.new(params[:dashboard_item])
       msg = new_message
       if @new_item.save
@@ -20,15 +21,15 @@ class DashboardItemsController < ApplicationController
   def destroy
     DashboardItem.destroy(params[:id])
     respond_to do |t|
-      t.json {render :json=>{:result=>true}}
-      t.js {render :js=> jsonp_str({:result=>true})}
+      t.json {render :json=>{:result=>true,:id=>params[:id]}}
+      t.js {render :js=> jsonp_str({:result=>true,id=>params[:id]})}
     end
   end
 
 
 
-  def item_by_dashboard_id
-    formatted_items = DashboardItem::get_formatted_items_by_dashboard_id(params[:id])
+  def items_by_dashboard_id
+      formatted_items = DashboardItem::get_formatted_items_by_dashboard_id(params[:id])
     respond_to do |t|
       t.json {render :json=>formatted_items}
       t.js {render :js => jsonp_str(formatted_items)}
@@ -52,8 +53,12 @@ class DashboardItemsController < ApplicationController
     seq_arr=params[:sequence]
     if seq_arr && seq_arr.kind_of?(Array)
         for i in 0..seq_arr.length-1
-            DashboardItem.find(seq[i].to_i).update_attributes(:sequence=>i)
+            DashboardItem.find(seq_arr[i].to_i).update_attributes(:sequence=>i)
         end
+    end
+    respond_to do |t|
+      t.json {render :json=>true}
+      t.js {render :js=>jsonp_str(true)}
     end
   end
 

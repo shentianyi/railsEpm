@@ -16,33 +16,31 @@
     <tr>
       <td>KPI类别</td>
       <td>
-        <select class=" conditionPart-group" id="chart-group" origin="全部">-->
-          <option value="group0">全部</option>
-          <option value="group1">entity1</option>
-          <option value="group2">entity2</option>
-          <option value="group3">entity3</option>
+        <%= select_tag :category_id,options_from_collection_for_select(@categories,'id','name'),
+                       {:id=>'chart-group',:class=>"pull-left conditionPart-group",:onchange=>"kpi_entries_reinit_by_category('chart-group','kpi-select','chart-kpi','pull-left')"}%>
+
         </select>
       </td>
     </tr>
     <tr>
       <td>*KPI名称</td>
       <td>
-        <select class="" id="chart-kpi">
-          <option value="kpi1" interval="200">week</option>
-          <option value="kpi2" interval="400">quarter</option>
-          <option value="kpi3" interval="300">month</option>
-          <option value="kpi3" interval="500">year</option>
+
+
+        <select class="pull-left" id="chart-kpi">
+          <%@kpis.each do |kpi|%>
+              <option value="<%= kpi.id%>" interval="<%= kpi.frequency%>"><%= kpi.name%></option>
+          <%end%>
         </select>
+
       </td>
     </tr>
     <tr>
       <td>*观察点</td>
       <td>
-        <select class=" conditionPart-entity" id="chart-view">
-          <option value="entity1">view1</option>
-          <option value="entity2">view2</option>
-          <option value="entity3">view3</option>
-        </select>
+
+        <%= select_tag :entity_group,options_from_collection_for_select(@entity_groups,'id','name'),{:id=>'chart-view',:class=>'pull-left conditionPart-entity'}%>
+
       </td>
     </tr>
     <tr>
@@ -76,7 +74,7 @@
 
   <div class="chooseBtn-wrap clearfix">
     <a class="btn dashboard-condition-btn pull-left" onclick="close_dash()">取消</a>
-    <a class="btn btn-primary dashboard-condition-btn pull-left">添加</a>
+    <a class="btn btn-primary dashboard-condition-btn pull-left" onclick="db_view_create(prepare_to_create_db_view())">添加</a>
   </div>
 </div>
 
@@ -146,7 +144,7 @@
           </table>
         </div>
         <div class="db-placeHolder">
-          <h2 onclick="showDash_new()">+ 点击新建视图</h2>
+          <h2>请选择一个仪表盘开始</h2>
         </div>
       </li>
     </ul>

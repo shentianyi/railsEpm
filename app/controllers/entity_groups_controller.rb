@@ -50,5 +50,10 @@ class EntityGroupsController < ApplicationController
     render :json=>msg
   end
  
-
+   def get_entity_groups
+     get_user_entity_groups
+     respond_to do |t|
+       t.json {render :json=>@entity_groups}
+     end
+   end
 end
