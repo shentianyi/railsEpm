@@ -56,7 +56,6 @@ class KpisController < ApplicationController
     if request.get?
       get_ability_category
       get_kpis_by_category
-
       @user_id=params[:id]
     else
       if params[:kpi] and params[:kpi].length>0
@@ -64,7 +63,6 @@ class KpisController < ApplicationController
       elsif params[:category] and params[:category].length>0
         KpisHelper.assign_kpi_to_user_by_category params[:category],params[:id],current_ability
       end
-
       render :partial=>'user_kpi'
     end
   end

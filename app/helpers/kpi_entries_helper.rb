@@ -4,13 +4,12 @@ module KpiEntriesHelper
   def self.create_update_kpi_entry params
     begin
       if   kpi=Kpi.find_by_id(params[:kpi_id])
-        parsed_entry_at=KpiEntriesHelper.parse_entry_date(kpi.frequency,params[:entry_at])
-        entry_at=KpiEntriesHelper.reparse_entry_date(kpi.frequency, parsed_entry_at)
-        if kpi_entry=KpiEntry.where(:user_kpi_item_id=>params[:user_kpi_item_id],:entry_at=>entry_at).first
+        parsed_entry_at=DateTimeHelper.get_utc_time_by_str(params[:entry_at])
+        if kpi_entry=KpiEntry.where(:user_kpi_item_id=>params[:user_kpi_item_id],:parsed_entry_at=>parsed_entry_at).first
           kpi_entry.update_attributes(:original_value=>params[:value])
         else
           user_kpi_item=UserKpiItem.find_by_id(params[:user_kpi_item_id])
-          kpi_entry=KpiEntry.new(:original_value=>params[:value],:user_kpi_item_id=>user_kpi_item.id,:entry_at=>entry_at, :parsed_entry_at=>parsed_entry_at,:entity_id=>user_kpi_item.entity_id,:user_id=>user_kpi_item.user_id,:target=>user_kpi_item.target)
+          kpi_entry=KpiEntry.new(:original_value=>params[:value],:user_kpi_item_id=>user_kpi_item.id, :parsed_entry_at=>parsed_entry_at,:entity_id=>user_kpi_item.entity_id,:user_id=>user_kpi_item.user_id,:target=>user_kpi_item.target)
         kpi_entry.kpi=kpi
         kpi_entry.save
         end
@@ -23,16 +22,15 @@ module KpiEntriesHelper
 
   # calculate kpi parent value
   def self.calculate_kpi_parent_value kpi_entry_id=nil,entry=nil
-    if entry=(kpi_entry_id.nil? ? entry : KpiEntry.joins(:user_kpi_item).where(:id=>kpi_entry_id).select('*,user_kpi_items.*').first)
-      if calcualted_kpis=KpisHelper.get_calculated_kpis_by_base_kpi_id(entry.kpi_id)
+    if entry=(kpi_entry_id.nil? ? entry : KpiEntry.where(:id=>kpi_entry_id).first)
+      if calcualted_kpis=Kpi.parent_kpis_by_id(entry.kpi_id)
         calcualted_kpis.each do |kpi|
           kpi_entry_at=reparse_entry_date(kpi.frequency,entry.parsed_entry_at)
           kpi_parsed_entry_at=parse_entry_date(kpi.frequency,kpi_entry_at)
           if kpi_parsed_entry_at==entry.parsed_entry_at
             f={}
             kpi.base_kpis.each do |base_bkpi|
-              sym=base_bkpi.id.to_s.to_sym
-              f[sym]=nil
+              sym=base_bkpi.id.to_s.to_sym ; f[sym]=nil
               if base_entry=get_kpi_entry_for_calculate(entry.user_id,entry.entity_id,base_bkpi.id,entry.parsed_entry_at)
               f[sym]=base_entry.value
               else
@@ -42,14 +40,11 @@ module KpiEntriesHelper
             KpisHelper.parse_formula_items(kpi.formula).each do |item|
               kpi.formula.sub!("[#{item}]",f[item.to_sym].to_s)
             end
-            puts "-----------------#{kpi.formula}"
             value=kpi.formula.calculate
             if calcualted_entry=get_kpi_entry_for_calculate(entry.user_id,entry.entity_id,kpi.id,kpi_parsed_entry_at)
               calcualted_entry.update_attributes(:original_value=>value)
-            # calcualted_entry.original_value=value
-            # calcualted_entry.save
             else
-             user_kpi_item= kpi.user_kpi_items.where(:entity_id=>entry.entity_id,:user_id=>entry.user_id).first
+              user_kpi_item= kpi.user_kpi_items.where(:entity_id=>entry.entity_id,:user_id=>entry.user_id).first
               KpiEntry.new(:original_value=>value,:user_kpi_item_id=>user_kpi_item.id,:kpi_id=>kpi.id,:entry_at=>kpi_entry_at,:parsed_entry_at=>kpi_parsed_entry_at,:user_id=>user_kpi_item.user_id,:entity_id=>user_kpi_item.entity_id,:target=>user_kpi_item.target).save
             end
           end
@@ -73,6 +68,16 @@ module KpiEntriesHelper
         end
       end
     end
+  end
+
+  # get base kpi entry for calculate
+  def self.get_kpi_entry_for_calculate user_id,entity_id,kpi_id,parsed_entry_at
+    KpiEntry.joins(:user_kpi_item=>:kpi).where('user_kpi_items.user_id=? and user_kpi_items.entity_id=? and kpi_entries.kpi_id=? and kpi_entries.parsed_entry_at=?',user_id,entity_id,kpi_id,parsed_entry_at).readonly(false).first
+  end
+
+  # get kpi entry by user kpi item id, frequency and datetime
+  def self.get_kpi_entry_for_entry kpi_item_id, parsed_entry_at
+    KpiEntry.where( :user_kpi_item_id=>kpi_item_id,:parsed_entry_at=>parsed_entry_at).first
   end
 
   # get kpi entry parsed entry date by frequency
@@ -109,15 +114,5 @@ module KpiEntriesHelper
     when KpiFrequency::Yearly
       DateTimeHelper.parse_time_to_year_stirng(parsed_entry_at)
     end
-  end
-
-  # get base kpi entry for calculate
-  def self.get_kpi_entry_for_calculate user_id,entity_id,kpi_id,parsed_entry_at
-    KpiEntry.joins(:user_kpi_item=>:kpi).where('user_kpi_items.user_id=? and user_kpi_items.entity_id=? and kpi_entries.kpi_id=? and kpi_entries.parsed_entry_at=?',user_id,entity_id,kpi_id,parsed_entry_at).readonly(false).first
-  end
-
-  # get kpi entry by user kpi item id, frequency and datetime
-  def self.get_kpi_entry_for_entry kpi_item_id, entry_at
-    KpiEntry.where(:user_kpi_item_id=>kpi_item_id,:entry_at=>entry_at).first
   end
 end

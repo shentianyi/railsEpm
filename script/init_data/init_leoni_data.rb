@@ -32,16 +32,33 @@ ActiveRecord::Base.transaction do
     puts "kpi------#{kpi.id}:#{kpi.name} created!"
   end
 
-  entities=[{:name=>"RBA1"},{:name=>"RBA2"},{:name=>"RBA4"},{:name=>"COC"},{:name=>"Motor"},{:name=>"MRA"},{:name=>"Minor"},{:name=>"NCV3"}]
+  entities=[{:name=>'C-RBA'},{:name=>'G-RBA'},{:name=>'E-RBA'},{:name=>'C-COC'},{:name=>'G-COC'},{:name=>'E-COC'},
+    {:name=>'C-MRA'},{:name=>'G-MRA'},{:name=>'E-MRA'},{:name=>'Minor'},{:name=>'Motor'},{:name=>'NCV2-COC'},
+    {:name=>'NCV2-INR'},{:name=>'NCV2-MRA'},{:name=>'NCV2-Minor'},{:name=>'NCV3-COC'},
+    {:name=>'NCV3-BODY'},{:name=>'NCV3-ROOF'},{:name=>'NCV3-Minor'},{:name=>'C-G-COC'},{:name=>'C-G-MRA'},{:name=>'NCV2-3'}]
 
-  users=[{:first_name=>"RBA1_User",:email=>"RBA1@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
-    {:first_name=>"RBA2_User",:email=>"RBA2@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
-    {:first_name=>"RBA4_User",:email=>"RBA4@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
-    {:first_name=>"COC_User",:email=>"COC@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
-    {:first_name=>"Motor_User",:email=>"Motor@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
-    {:first_name=>"MRA_User",:email=>"MRA@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
-    {:first_name=>"Minor_User",:email=>"Minor@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
-    {:first_name=>"NCV3_User",:email=>"NCV3@leoni.com",:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'}
+  users=[{:first_name=>'C-RBA_User',:email=>'C-RBA_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'G-RBA_User',:email=>'G-RBA_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'E-RBA_User',:email=>'E-RBA_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'C-COC_User',:email=>'C-COC_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'G-COC_User',:email=>'G-COC_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'E-COC_User',:email=>'E-COC_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'C-MRA_User',:email=>'C-MRA_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'G-MRA_User',:email=>'G-MRA_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'E-MRA_User',:email=>'E-MRA_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'Minor_User',:email=>'Minor_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'Motor_User',:email=>'Motor_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'NCV2-COC_User',:email=>'NCV2-COC_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'NCV2-INR_User',:email=>'NCV2-INR_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'NCV2-MRA_User',:email=>'NCV2-MRA_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'NCV2-Minor_User',:email=>'NCV2-Minor_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'NCV3-COC_User',:email=>'NCV3-COC_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'NCV3-BODY_User',:email=>'NCV3-BODY_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'NCV3-ROOF_User',:email=>'NCV3-ROOF_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'NCV3-Minor_User',:email=>'NCV3-Minor_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'C-G-COC_User',:email=>'C-G-COC_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'C-G-MRA_User',:email=>'C-G-MRA_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'},
+    {:first_name=>'NCV2-3_User',:email=>'NCV2-3_User@leoni.com',:role_id=>400,:password=>'123456@',:password_confirmation=>'123456@'}
   ]
 
   puts '*************** CREATE ENTITY, USER, USER_KPI_ITEM, ENTITY_GROUP, ENTITY_GROUP_ITEM ***************'
