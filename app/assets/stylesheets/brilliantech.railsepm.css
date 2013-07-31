@@ -396,8 +396,7 @@ box-shadow:0 2px 0px #F39C12;
     cursor:pointer;
     -moz-border-radius:3px;
     -webkit-border-radius:3px;
-    background-image:url("../images/db-chart.png");
-    /*background-image:url("/assets/db-chart.png");*/
+    background-image:url("/assets/db-chart.png");
     background-repeat:no-repeat;
     position:relative;
     color:#ddd;

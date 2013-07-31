@@ -17,7 +17,6 @@ ifepm.template.view = '<li !attr!=!id!>' +
     '<p class="text-center">!name!</p>' +
     '<div class="dashboard-moreDetail">' +
     '<p class="dbItem-name">!title!</p>' +
-    '<p class="dbItem-desc">desc</p>' +
     '</div>' +
     '<i class="icon-list db-infoMark"></i>' +
     '<i class="icon-remove db-itemRemove" onclick=custom_handler></i>' +
@@ -54,7 +53,12 @@ ifepm.template.view = '<li !attr!=!id!>' +
     '<script type="text/javascript">ifepm.dashboard.load_graph("!id!")</script>'
 
 //placeholder when change the position of a dashboard view
-ifepm.template.view_placeholder='';
+ifepm.template.view_placeholder='<div class="db-placeHolder">' +
+    '<h2 onclick="showDash_new()">+ 点击新建视图</h2>' +
+'</div>';
+
+
+ifepm.template.move_placeholder = 'empty-placeHolder'
 
 
 

@@ -64,7 +64,9 @@ IFEpm::Application.routes.draw do
        match 'kpi_entries/entry'=>:entry
      end
    end
-  
+
+  resource :Dashboards
+
   mount Resque::Server.new, :at=>"/admin/resque"
 
 #	constraints(Subdomain) do

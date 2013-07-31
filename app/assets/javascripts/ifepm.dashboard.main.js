@@ -267,17 +267,19 @@ function Graph(){
     this.name = null;
     this.title = null;
     this.sequence = null;
+    this.placeholder = ifepm.template.view_placeholder;
     this.container=  function(graph_item){
         return ifepm.template.view
             .replace(/custom_handler/g,ifepm.config.remove_view_function)
             .replace(/!id!/g,graph_item.id)
+            .replace(/!title!/g,graph_item.title)
             .replace(/!item_container_id!/g,ifepm.dashboard.make_item_container_id(graph_item.id))
             .replace(/!attr!/g,ifepm.config.graph_indicator)
             .replace(/!name!/g,graph_item.name)
             .replace(/!kpi_name!/g,graph_item.kpi_name)
-            .replace(/!entitiy_group!/g,graph_item.entity_group)
+            .replace(/!entity_group!/g,graph_item.entity_group)
             .replace(/!from!/g,graph_item.from)
-            .replace(/!to!/g,graph_item.to)
+            .replace(/!to!/g,graph_item.end)
             .replace(/!calculate_type!/g,graph_item.calculate_type)
     };
 }
@@ -310,10 +312,9 @@ ifepm.dashboard.update_item_sequence= function(container_selector){
 //append a new dashboard item to the main dashboard container
 ifepm.dashboard.create_dashboard=function(){
     var container_selector=ifepm.config.container_selector;
-
+    $(container_selector).children().remove();
     if (Object.keys(ifepm.dashboard.graphs).length>0){
 
-                $(container_selector).children().remove();
                 for(index in ifepm.dashboard.graphs){
                     $(container_selector).append(
                         ifepm.dashboard.graphs[index].container(ifepm.dashboard.graphs[index]))
@@ -321,12 +322,15 @@ ifepm.dashboard.create_dashboard=function(){
                 //configure the sortable
                 $(container_selector).sortable(
                     {
-                        placeholder: ifepm.template.view_placeholder,
+                        placeholder: ifepm.template.move_placeholder,
                         //update the sequence when the layout is changed
                         stop:function(){ifepm.dashboard.update_item_sequence(container_selector)}
                     }
                 );
                 $(container_selector).disableSelection();
+    }
+    else {
+        $(container_selector).append((new Graph()).placeholder)
     }
 };
 
@@ -336,8 +340,9 @@ ifepm.dashboard.create_dashboard=function(){
 
 
 ifepm.dashboard.init=function(id){
+    ifepm.dashboard.graphs = {};
     $.ajax(
-        {before_send:function(){},
+        {
             crossDomain:ifepm.config.get_dashboard_items_url.crossDomain,
             dataType:ifepm.config.get_dashboard_items_url.dataType,
             url:ifepm.config.get_dashboard_items_url.url,
@@ -358,13 +363,14 @@ ifepm.dashboard.init=function(id){
                     graph_item.kpi_name = data[i].kpi_name
                     graph_item.interval = data[i].interval
                     graph_item.sequence = data[i].sequence
-
+                    graph_item.dashboard_id = data[i].dashboard_id
 
                     ifepm.dashboard.graphs[data[i].id]=graph_item;
                 }
                 ifepm.dashboard.create_dashboard();
             },
-            error:function(jqXHR){alert("Oops, something went wrong, please try again");}}
+            error:function(jqXHR,textStatus,errorThrown){alert("Oops, something went wrong, please try again");}}
+
     );
 };
 

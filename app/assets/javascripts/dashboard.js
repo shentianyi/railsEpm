@@ -32,9 +32,7 @@ if (!Date.prototype.toISOString) {
             + pad(this.getUTCMinutes()) + ':'
             + pad(this.getUTCSeconds()) + 'Z';
     };
-}
-
-
+};
 
 var config={
     //Container of the dashboards
@@ -56,7 +54,7 @@ var config={
     //a page specified ID combined with the object(dashboard_id) id
   item_id_filter:function(id){return ''+ id },
     //a page specified ID combined with the graph(dashboard_item_id) id
-  view_id_filter:function(id){return '' + id},
+  view_id_filter:function(id){return '#' + id},
     //the attribute name which hold the actual id of the object
     db_id_field:'',
     view_id_field:''
@@ -75,10 +73,12 @@ function page_load(){
 }
 
 function select_dashboard(id){
+    current_dashboard_id=id;
+
     menu_selector.select_single_node(config.db_container_selector,
         config.db_item_filter,
         config.db_single_item_filter(id));
-    current_dashboard_id=id;
+
     ifepm.dashboard.init(id)
 }
 
@@ -99,6 +99,7 @@ function prepare_to_create_db_view(){
     dashboard_item.name = get_name();
     dashboard_item.title = get_title();
     dashboard_item.type = get_type();
+    dashboard_item.dashboard_id= get_dashboard_id();
     return dashboard_item;
 }
 
@@ -124,10 +125,14 @@ function get_calculate_type(){
     return $("input:radio[name='chartRadios']:checked").val()=="0"?"AVERAGE":"ACCUMULATE";
 }
 
+function get_dashboard_id(){
+    return current_dashboard_id;
+}
+
 function get_time_string(){
-    var from =  $.trim($("#from").val()) + " " + $.trim($("#fromTime"));
-    var to = $.trim($("#to").val()) + " " + $.trim($("#toTime"));
-    return connect_time_str(new Date(from)).toISOString() + '|' + (new Date(to)).toISOString()
+    var from =  $.trim($("#from").val()) + " " + $.trim($("#fromTime").val());
+    var to = $.trim($("#to").val()) + " " + $.trim($("#toTime").val());
+    return connect_time_str(new Date(from) ,new Date(to));
 }
 
 
@@ -145,6 +150,8 @@ function db_view_create(view){
 }
 
 function db_view_create_callback(data){
+    alert("添加成功");
+    close_dash();
     if(current_dashboard_id){
         ifepm.dashboard.init(current_dashboard_id)
     }
@@ -156,7 +163,7 @@ function db_view_delete(id){
 
 function db_view_delete_callback(data){
     var to_delete_view = menu_selector.get_first_in_container(
-        config.view_container_selector,
+        ifepm.config.container_selector,
         config.view_id_filter(data.id));
     if(to_delete_view){
         to_delete_view.remove();
@@ -200,6 +207,47 @@ function dashboard_create_callback(data){
     select_dashboard(data.id);
 
 }
+
+
+
+//Main
+
+
+var date_picker_option =  {
+    showOtherMonths : true,
+    selectOtherMonths : true,
+    firstDay : 1,
+    changeMonth:true,
+    changeYear:true,
+    dateFormat : 'yy-mm-dd',
+    showWeek : true
+    };
+
+
+function init_time_picker(){
+    $("#fromTime,#toTime").timePicker({
+        step:60
+    });
+}
+
+function init_date_picker(){
+    $("#from").datepicker(
+        date_picker_option
+    );
+
+    $("#to").datepicker(
+        date_picker_option
+    );
+}
+
+function init_component(){
+    init_time_picker();
+    init_date_picker();
+
+}
+
+
+$(document).ready(init_component);
 
 
 

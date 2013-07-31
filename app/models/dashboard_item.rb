@@ -1,14 +1,12 @@
 class DashboardItem < ActiveRecord::Base
   belongs_to :dashboard
-  attr_accessible :dashboard_id,:entity_group,:kpi_id,:calculate_type,:time_string,:sequence,:interval
-  attr_accessible :name,:title,:type
+  attr_accessible :dashboard_id,:entity_group,:kpi_id,:calculate_type,:time_string,:sequence,:interval,:name,:title,:type
 
   validates_with TimeStringValidator
   validates :dashboard_id,:presence => true
   validates :entity_group,:presence => true
   validates :kpi_id,:presence => true
   validates :calculate_type,:presence => true
-  validates :interval,:presence => true
   validates :name,:presence=>true
 
 
