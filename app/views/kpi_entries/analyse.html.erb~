@@ -22,7 +22,7 @@
                          <select class="pull-left" id="chart-kpi">
                               <%@kpis.each do |kpi|%>
                               <option value="<%= kpi.id%>" interval="<%= kpi.frequency%>"><%= kpi.name%></option>
-                              <%end %>
+                              <%end%>
                          </select>
                     </div>
                     <span class="inline pull-left">-</span>
@@ -31,11 +31,11 @@
 
  <div class="chart-optionRadio">
                         <label class="radio ">
-                            <input type="radio" name="chartRadios" checked value="1"/>
+                            <input type="radio" name="chartRadios" checked value="1">
                             以综合值分析
                         </label>
                         <label class="radio ">
-                            <input type="radio" name="chartRadios" value="0"/>
+                            <input type="radio" name="chartRadios" value="0">
                             以平均值分析
                         </label>
                     </div>

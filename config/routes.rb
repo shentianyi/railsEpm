@@ -64,7 +64,9 @@ IFEpm::Application.routes.draw do
        match 'kpi_entries/entry'=>:entry
      end
    end
-  
+
+  resource :Dashboards
+
   mount Resque::Server.new, :at=>"/admin/resque"
 
 #	constraints(Subdomain) do
@@ -73,7 +75,7 @@ IFEpm::Application.routes.draw do
 #	end
 # The priority is based upon order of creation:
 # first created -> highest priority.
-
+ match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
 # Sample of regular route:
 #   match 'products/:id' => 'catalog#view'
 # Keep in mind you can assign values other than :controller and :action

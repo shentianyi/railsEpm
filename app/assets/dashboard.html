@@ -47,57 +47,79 @@
     </div>
     <div class="dashBlock " id="addBlock" data-state="off" style="display:none">
         <h4 class="text-center light-gray">创建视图</h4>
-        <div class="content-condition clearfix dashBoard-condition">
-            <div class="pull-left dashboard-conditionn-name">
-                <label>视图名称</label>
-                <input type="text" />
-            </div>
-            <div class="content-condition-part content-condition-leftpart pull-left">
-                <div class="chart-leftMark">
-                    <label>类别</label>
-                    <label>KPI</label>
-                    <label class="chart-leftMark-view">观察点</label>
-                </div>
-                <select class="pull-left conditionPart-group" id="chart-group" origin="全部">
+        <table class="dashBoard-condition">
+            <tr>
+                <td>*视图名称</td>
+                <td><input type="text" /></td>
+            </tr>
+            <tr>
+                <td>视图描述</td>
+                <td><input type="text" class="db-photoDesc"/></td>
+            </tr>
+            <tr>
+                <td>KPI类别</td>
+                <td>
+                    <select class=" conditionPart-group" id="chart-group" origin="全部">-->
                     <option value="group0">全部</option>
                     <option value="group1">entity1</option>
                     <option value="group2">entity2</option>
                     <option value="group3">entity3</option>
-                </select>
-                <select class="pull-left" id="chart-kpi">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>*KPI名称</td>
+                <td>
+                    <select class="" id="chart-kpi">
                     <option value="kpi1" interval="200">week</option>
                     <option value="kpi2" interval="400">quarter</option>
                     <option value="kpi3" interval="300">month</option>
                     <option value="kpi3" interval="500">year</option>
-                </select>
-                <span class="inline pull-left">-</span>
-                <select class="pull-left conditionPart-entity" id="chart-view">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>*观察点</td>
+                <td>
+                    <select class=" conditionPart-entity" id="chart-view">
                     <option value="entity1">view1</option>
                     <option value="entity2">view2</option>
                     <option value="entity3">view3</option>
-                </select>
-
-            </div>
-
-            <div class="content-condition-part pull-right content-condition-rightpart">
-                <p class="text-center">日期范围</p>
-                <input type="text" readonly="true" id="from" />
-                <input placeholder="时间" type="text" readonly="true" id="fromTime" class="analytics-time"/>
-                <span>to</span>
-                <input  type="text" readonly="true" id="to" />
-                <input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>
-            </div>
-
-        </div>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>*开始时间</td>
+                <td>
+                    <input type="text" readonly="true" id="from" class="analytics-date"/>
+                    <input placeholder="时间" type="text" readonly="true" id="fromTime" class="analytics-time"/>
+                </td>
+            </tr>
+            <tr>
+                <td>*结束时间</td>
+                <td>
+                    <input  type="text" readonly="true" id="to" class="analytics-date"/>
+                    <input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>
+                </td>
+            </tr>
+            <tr>
+                <td>*分析方式</td>
+                <td>
+                    <input type="radio" name="chartRadios" checked><span class="analyticType-radio">以综合值分析</span>
+                    <br />
+                    <input type="radio" name="chartRadios" ><span class="analyticType-radio">以平均值分析</span>
+                </td>
+            </tr>
+        </table>
         <div class="chooseChart-wrap clearfix">
             <div class="choose-db-item db-chart-line pull-left" onclick="dashNew_chooseType(event)"><label>折线图</label></div>
             <div class="choose-db-item db-chart-column pull-left" onclick="dashNew_chooseType(event)"><label>直方图</label></div>
             <div class="choose-db-item db-chart-pie pull-left" onclick="dashNew_chooseType(event)"><label>饼图</label></div>
         </div>
 
-        <div class="chooseChart-wrap clearfix">
-            <a class="btn btn-primary dashboard-condition-btn pull-right">添加</a>
-            <a class="btn dashboard-condition-btn pull-right" onclick="close_dash()">取消</a>
+        <div class="chooseBtn-wrap clearfix">
+            <a class="btn dashboard-condition-btn pull-left" onclick="close_dash()">取消</a>
+            <a class="btn btn-primary dashboard-condition-btn pull-left">添加</a>
         </div>
     </div>
     <div class="middle clearfix">
@@ -141,20 +163,48 @@
 
         <div class="pull-left dashboard-block">
             <a class="btn btn-wzx btn-primary dashboard-addNew-btn" onclick="showDash_new()"><i class="icon-plus icon-white"></i> 视图</a>
-            <ul class="dashBoard-show">
-                <li>
+            <ul class="dashBoard-show" id="dashBoard-show">
+                <li id="1">
                     <div class="dashboard-eachDetail relative">
                         <p class="text-center">title</p>
                         <div class="dashboard-moreDetail">
-                            <p>da</p>
-                            <p>2013.4</p>
+                            <p class="dbItem-name">name</p>
+                            <p class="dbItem-desc">desc</p>
                         </div>
+                        <i class="icon-list db-infoMark"></i>
+                        <i class="icon-remove db-itemRemove" belong="1" onclick="remove_dbItem(event)"></i>
+                        <table class="table table-bordered table-striped db-itemInfo">
+                           <tr>
+                               <td>视图名称</td>
+                               <td></td>
+                           </tr>
+                            <tr>
+                                <td>KPI名称</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>观察点</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>开始时间</td>
+                                <td>2013-03-03 23:00:00</td>
+                            </tr>
+                            <tr>
+                                <td>结束时间</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>计算方式</td>
+                                <td></td>
+                            </tr>
+                        </table>
                     </div>
-                    <div>
+                    <div class="db-placeHolder">
 
                     </div>
                 </li>
-                <li></li>
+                <li id="2"></li>
             </ul>
         </div>
 

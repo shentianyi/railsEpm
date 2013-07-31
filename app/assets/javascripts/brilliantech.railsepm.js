@@ -61,7 +61,7 @@ function formatDate(date) {
      return (myYear + "-" + myMonth + "-" + myWeekday);
 }
 
-/////////////////////////////////////////////////////////////////////////  Analytics   //////////////////////////////////
+/////////////////////////////////////////////////////////////////////////  Analytics   ///////////////////////////////////////
 function init_analytics() {
      init();
      init_rightContent();
@@ -112,6 +112,7 @@ function init_analytics() {
           }
      });
      $("#to").datepicker({
+          showOtherMonths : true,
           showOtherMonths : true,
           selectOtherMonths : true,
           firstDay : 1,
@@ -343,8 +344,8 @@ function init_chart() {
          startWeek=startWeek<10?"0"+startWeek:startWeek;
          endWeek=endWeek<10?"0"+endWeek:endWeek;
          var timeBeginChart=timeBegin;
-         timeBegin=timeBegin>10?timeBegin+":00:00":"0"+timeBegin+":00:00";
-         timeEnd=timeEnd>10?timeEnd+":00:00":"0"+timeEnd+":00:00";
+         timeBegin=timeBegin<10?"0"+timeBegin+":00:00":timeBegin+":00:00";
+         timeEnd=timeEnd<10?"0"+timeEnd+":00:00":timeEnd+":00:00";
          var startQuarter ="0"+quarterBelong(dateBegin[1]);
          var endQuarter ="0"+quarterBelong(dateEnd[1]);
 //         var interval = $(".control-chart-btn.active").data("type");
@@ -395,6 +396,7 @@ function init_chart() {
          if(vali){
          $.post('/kpi_entries/analyse', {
              kpi : kpi,
+	     average:$("input:radio[name='chartRadios']:checked").val()=="0",
              entity_group: view,
              startTime : startTime,
              endTime : endTime
@@ -744,6 +746,12 @@ function showDash_new(){
 }
 function close_dash(){
     $("#addBlock").slideUp("2000");
+}
+function remove_dbItem(event){
+    var e = event ? event : (window.event ? window.event : null);
+    var obj = e.srcElement || e.target;
+    var target=$(obj).attr("belong");
+    $("#dashBoard-show").find("#"+target).remove();
 }
 ////////////////////////////////////////////////     manage  ///////////////////////////////////////
 function init_manage() {
@@ -1673,16 +1681,13 @@ function init_entryKpi() {
                  selectOtherMonths : true,
                  onSelect:function(dateText, inst){
                      var date = $(this).datepicker('getDate');
-                     var today=new Date(date.getFullYear(), date.getMonth(), date.getDate());
-                     var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
-                     var hourSelect=$("#kpi-hour").val();
-                     var chooseDay=$.datepicker.formatDate(dateFormat, today, inst.settings);
-                     refresh_kpi_entry(chooseDay+" "+hourSelect+":00");
-                     }
+                     var hourSelect=($("#kpi-hour").val()).split(":")[0];
+                     var postDate=new Date(date.getFullYear(),date.getMonth(),date.getDate(),hourSelect,00,00).toISOString();
+                     refresh_kpi_entry(postDate);
+                 }
              });
- 
-                generateHTML=y + "-" + realMonth + "-" + realDate+" "+"00:00:00";
-                refresh_kpi_entry(generateHTML); 
+             generateHTML=new Date(y,m,d).toISOString();
+             refresh_kpi_entry(generateHTML);
              break;
           case "day":
                $("#entry-kpi").val(y + "-" + realMonth + "-" + realDate);
@@ -1693,30 +1698,26 @@ function init_entryKpi() {
                     selectOtherMonths : true,
                     onSelect:function(dateText, inst){
                         var date = $(this).datepicker('getDate');
-                        var today=new Date(date.getFullYear(), date.getMonth(), date.getDate());
-                        var dateFormat = inst.settings.dateFormat || $.datepicker._defaults.dateFormat;
-                        var chooseDay=$.datepicker.formatDate(dateFormat, today, inst.settings);
-                             refresh_kpi_entry(chooseDay);
+                        var postDate=new Date(date.getFullYear(),date.getMonth(),date.getDate()).toISOString();
+                        refresh_kpi_entry(postDate);
                     }
                });
- 
-               generateHTML=y + "-" + realMonth + "-" + realDate;
-               refresh_kpi_entry(generateHTML);
+              generateHTML=new Date(y,m,d).toISOString();
+              refresh_kpi_entry(generateHTML);
                break;
           case "week":
                $("#entry-kpi").val(formatDate(WeekFirstDay) + " ~ " + formatDate(WeekLastDay));
                $("#show-weekOfYear").css("display", "inline-block").find("span").text($.datepicker.iso8601Week(new Date(y, m, d - day + 1)));
                $("#entry-kpi").bind("click", select_week);
-               if(date.getDay() == 0) {
-                  var startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
+               if(date == 0) {
+                  var startDate = new Date(y, m, d - 6).toISOString();
                   var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-               } else {
-                  var startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 1);
+               }
+               else {
+                  var startDate = new Date(y, m, d - day + 1).toISOString();
                   var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
                }
-               var originWeek=$.datepicker.iso8601Week(startDate)>10?$.datepicker.iso8601Week(startDate):"0"+$.datepicker.iso8601Week(startDate);
-               generateHTML=endDate.getFullYear() + "-" +originWeek;
-                refresh_kpi_entry(generateHTML);
+               refresh_kpi_entry(startDate);
                break;
           case "month":
                $("#entry-kpi").val(y + "-" + realMonth);
@@ -1732,7 +1733,8 @@ function init_entryKpi() {
                          var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
                          var showMonth=(parseInt(month)+1)<10?"0"+(parseInt(month)+1):parseInt(month)+1;
                          $("#entry-kpi").val(year + "-" + showMonth);
-                         var chooseMonth=year+"-"+showMonth;
+                         var chooseMonth=new Date(year,month).toISOString();
+                        alert(chooseMonth)
                            refresh_kpi_entry(chooseMonth);
                     },
                    onChangeMonthYear:function(year,month,inst){
@@ -1749,13 +1751,15 @@ function init_entryKpi() {
                          of : $(this)
                     });
                });
-               generateHTML=y + "-" +realMonth;
+               generateHTML=new Date(y,m).toISOString();
                 refresh_kpi_entry(generateHTML);
                break;
           case "quarter":
                $("#entry-kpi").css("width", "100px");
                $("#entry-kpi").val(y);
                $("#entry-prev-btn,#entry-next-btn").removeClass("hide");
+               var quarter=quarterBelong(m+1);
+               var month=quarterConvertMonth(quarter)
                var originQuarter=y+"-0"+quarterBelong(m);
                $("#entry-kpi").attr("compare",originQuarter);
                $("#select-quarter").removeClass("hide").find("option").each(function() {
@@ -1763,18 +1767,19 @@ function init_entryKpi() {
                          $(this).attr("selected", true);
                     };
                     $(this).bind('click',function(){
-                        var chooseQuarter=$("#entry-kpi").val()+"-0"+$(this).data('order');
-                            refresh_kpi_entry(chooseQuarter);
+                        var month=quarterConvertMonth($(this).data('order'));
+                        var chooseQuarter=new Date($("#entry-kpi").val(),month).toISOString();
+                        refresh_kpi_entry(chooseQuarter);
                     })
                });
-              generateHTML=originQuarter;
+               generateHTML=new Date(y,month).toISOString();
                refresh_kpi_entry(generateHTML);
                break;
           case "year":
                $("#entry-kpi").css("width", "100px");
                $("#entry-kpi").val(y);
                $("#entry-prev-btn,#entry-next-btn").removeClass("hide")
-               generateHTML=y;
+               generateHTML=new Date(y,00).toISOString();
                 refresh_kpi_entry(generateHTML);
                break;
      };
@@ -1787,8 +1792,9 @@ function refresh_kpi_entry(date){
 }
 //选择完小时后触发的事件
 function entry_hourChange(){
-    var hourSelect=$(".time-picker li.selected").text();
-    var chooseHour=$("#entry-kpi").val()+"  "+hourSelect+":00";
+    var hourSelect=($(".time-picker li.selected").text()).split(":")[0];
+    var date=($("#entry-kpi").val()).split("-");
+    var chooseHour=new Date(date[0],parseInt(date[1])-1,date[2],hourSelect,00,00).toISOString();
    refresh_kpi_entry(chooseHour);
 }
 //本季开始年月
@@ -1831,9 +1837,9 @@ function select_week() {
                $("#entry-kpi").val($.datepicker.formatDate(dateFormat, startDate, inst.settings) + " ~ " + $.datepicker.formatDate(dateFormat, endDate, inst.settings));
                $("#show-weekOfYear>span").text($.datepicker.iso8601Week(startDate));
                selectCurrentWeek();
-               var alterWeek=$.datepicker.iso8601Week(startDate)>10?$.datepicker.iso8601Week(startDate):"0"+$.datepicker.iso8601Week(startDate)
+               var alterWeek=$.datepicker.iso8601Week(startDate)>=10?$.datepicker.iso8601Week(startDate):"0"+$.datepicker.iso8601Week(startDate)
                var chooseWeek=endDate.getFullYear()+"-"+alterWeek;
-               refresh_kpi_entry(chooseWeek);
+               refresh_kpi_entry(startDate.toISOString());
                $('.week-picker').addClass("hide");
           },
           beforeShowDay : function(date) {
@@ -1858,12 +1864,13 @@ function minus_unit(event) {
      var type = $("#entry-date-type").find(".active").data("type");
      switch(type) {
          case "quarter":
-          var chooseQuarter= (parseInt($("#entry-kpi").val())-1) + "-0" + $("#select-quarter :selected").data("order");
+             var month=quarterConvertMonth($("#select-quarter :selected").data("order"));
+             var chooseQuarter= new Date((parseInt($("#entry-kpi").val())-1),month).toISOString() ;
              refresh_kpi_entry(chooseQuarter);
               $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1);
              break;
          case "year":
-              var chooseYear=parseInt($("#entry-kpi").val()) -1;
+              var chooseYear=new Date(parseInt($("#entry-kpi").val()) -1,00).toISOString();
               refresh_kpi_entry(chooseYear);
             $("#entry-kpi").val(parseInt($("#entry-kpi").val()) - 1);
              break;
@@ -1874,12 +1881,13 @@ function plus_unit(event) {
      var type = $("#entry-date-type").find(".active").data("type");
      switch(type) {
         case "quarter":
-            var chooseQuarter= (parseInt($("#entry-kpi").val())+1) + "-0" + $("#select-quarter :selected").data("order");
+            var month=quarterConvertMonth($("#select-quarter :selected").data("order"));
+            var chooseQuarter= new Date((parseInt($("#entry-kpi").val())+1),month).toISOString() ;
             refresh_kpi_entry(chooseQuarter);
             $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1);
             break;
         case "year":
-            var chooseYear=parseInt($("#entry-kpi").val()) + 1;
+            var chooseYear=new Date(parseInt($("#entry-kpi").val()) +1,00).toISOString();
               refresh_kpi_entry(chooseYear);
             $("#entry-kpi").val(parseInt($("#entry-kpi").val()) + 1);
             break;
@@ -1985,4 +1993,19 @@ function kpi_percent(a, b) {
               $("#"+kid).html(data);
          },'html');
      }
-
+function quarterConvertMonth(a){
+    switch (a){
+        case 1:
+            return '00';
+            break;
+        case 2:
+            return '03';
+            break;
+        case 3:
+            return '06';
+            break;
+        case 4:
+            return '09';
+            break;
+    }
+}

@@ -11,7 +11,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130715171755) do
+ActiveRecord::Schema.define(:version => 20130719093921) do
+
+  create_table "dashboard_items", :force => true do |t|
+    t.integer  "dashboard_id",   :null => false
+    t.string   "entity_group",   :null => false
+    t.string   "kpi_id",         :null => false
+    t.string   "calculate_type", :null => false
+    t.string   "time_string",    :null => false
+    t.integer  "sequence"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "interval"
+    t.string   "name"
+    t.string   "title"
+    t.string   "type"
+  end
+
+  create_table "dashboards", :force => true do |t|
+    t.integer  "user_id",     :null => false
+    t.string   "name",        :null => false
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "entities", :force => true do |t|
     t.string   "name"
