@@ -158,7 +158,9 @@ function db_view_create_callback(data){
 }
 
 function db_view_delete(id){
+    if (confirm('You are about to delete a view from your dashboard,are you sure?')){
     ifepm.dashboard.delete_item(id,{success:db_view_delete_callback})
+    }
 }
 
 function db_view_delete_callback(data){
