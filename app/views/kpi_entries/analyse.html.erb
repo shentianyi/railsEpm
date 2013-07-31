@@ -22,7 +22,7 @@
                          <select class="pull-left" id="chart-kpi">
                               <%@kpis.each do |kpi|%>
                               <option value="<%= kpi.id%>" interval="<%= kpi.frequency%>"><%= kpi.name%></option>
-                              <%end%>
+                              <%end %>
                          </select>
                     </div>
                     <span class="inline pull-left">-</span>

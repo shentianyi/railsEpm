@@ -226,7 +226,7 @@ b.caret{
     margin-bottom:10px;
     font-size:21px;
 }
-.content-condition-part>select{
+.content-condition-part select{
     margin-bottom:2px;
     width:260px;
     height:35px;
@@ -507,6 +507,20 @@ ul.dashBoard-show li{
     text-align:center;
     padding-top:100px;
     color:#9eb7c6
+}
+.empty-placeHolder{
+    background-color:#eaedec;
+    height:279px;
+    border:2px dashed rgba(0,0,0,0.2);
+}
+.empty-placeHolder:after{
+    content:"放置于此";
+    display:block;
+    text-align:center;
+    color:#556d7c;
+    letter-spacing:2px;
+    font-size:21px;
+    margin-top:120px;
 }
 /*****************************************************     manage      **************************************************************/
 ul.manage-group{
