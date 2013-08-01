@@ -18,7 +18,7 @@
           <td align="center"><%= kpi.name%></td>
           <td align="center"><%= kpi.description%></td>
           <td align="center"><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
-          <td align="center" class="kpi-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target)%></td>
+          <td align="center" class="kpi-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target)%></td>
           <td align="center"><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></td>
           <td align="center"><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
           <%if kpi.is_calculated%>

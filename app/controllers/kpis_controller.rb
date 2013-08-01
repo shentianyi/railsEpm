@@ -1,14 +1,15 @@
 #encoding: utf-8
 class KpisController < ApplicationController
-  before_filter :get_ability_category,:only=>[:index]
+  before_filter :get_ability_category,:only=>[:index,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
+  before_filter :get_kpis_by_category,:only=>[:kpi_option,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
   def index
     @active_category_id=params[:p].nil? ? @categories[0].id : params[:p].to_i
-    @kpis=Kpi.accessible_by(current_ability).joins(:kpi_category).where(:kpi_category_id=>@active_category_id).select("kpis.*,kpi_categories.name as 'category_name'").all
+    @kpis=get_kpis_by_category @active_category_id
 
     @units=KpiUnit.all
     @frequencies=KpiFrequency.all
     @directions=KpiDirection.all
-    @base_kpis=Kpi.accessible_by(current_ability).where(:is_calculated=>false).all
+    @base_kpis=Kpi.base_kpis  current_ability
   end
 
   # create api
@@ -21,18 +22,18 @@ class KpisController < ApplicationController
     msg.object=@kpi.id
     else
       msg.content=@kpi.errors.messages.values.join('; ')
-    end 
+    end
     render :json=>msg
   end
 
   # edit kpi
   def edit
-    @kpi=Kpi.accessible_by(current_ability).find_by_id(params[:id])
+    @kpi=Kpi.ability_find_by_id(params[:id],current_ability)
   end
 
   # update kpi
   def update
-    if @kpi=Kpi.accessible_by(current_ability).find_by_id(params[:kpi].delete(:id))
+    if @kpi=Kpi.ability_find_by_id(params[:kpi].delete(:id),current_ability)
       render :json=>@kpi.update_attributes(params[:kpi])
     end
   end
@@ -54,8 +55,6 @@ class KpisController < ApplicationController
   def assign
     @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
     if request.get?
-      get_ability_category
-      get_kpis_by_category
       @user_id=params[:id]
     else
       if params[:kpi] and params[:kpi].length>0
@@ -68,7 +67,6 @@ class KpisController < ApplicationController
   end
 
   def kpi_option
-    get_kpis_by_category
     @options=params[:options]
     @prompt=!params[:prompt].nil?
     render :partial=>'select_option'
@@ -78,28 +76,13 @@ class KpisController < ApplicationController
     @user_kpis=KpisHelper.get_kpis_by_user_id params[:user],current_ability
   end
 
-
-  #和applicationController有冗余
-  def get_ability_category
-    @categories=KpiCategory.accessible_by(current_ability).all
-    # respond_to do |t|
-      # t.html {render}
-      # t.json {render :json => @categories}
-    # end
-  end
-
-
-  #和applicationController有冗余
-  def get_kpis_by_category
-    if action_name=="assign"
-      id=@categories[0].id
-    else
-          id=params[:id].nil? ? @categories[0].id : params[:id].to_i
-    end
-    @kpis=Kpi.accessible_by(current_ability).joins(:kpi_category).where(:kpi_category_id=>id).select("kpis.*,kpi_categories.name as 'category_name'").all
-    # respond_to do |t|
-      # t.html {render}
-      # t.json {render :json => @kpis}
-    # end
-  end
+# #和applicationController有冗余
+# def get_kpis_by_category
+# if action_name=="assign"
+# id=@categories[0].id
+# else
+# id=params[:id].nil? ? @categories[0].id : params[:id].to_i
+# end
+# @kpis=Kpi.accessible_by(current_ability).joins(:kpi_category).where(:kpi_category_id=>id).select("kpis.*,kpi_categories.name as 'category_name'").all
+# end
 end
