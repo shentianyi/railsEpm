@@ -14,7 +14,6 @@ module Api
       else
         render :json=>'this is a post'
       end
-
     end
   end
 end

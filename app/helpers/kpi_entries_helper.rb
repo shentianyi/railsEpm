@@ -2,7 +2,7 @@
 module KpiEntriesHelper
   # create or update kpi entry
   def self.create_update_kpi_entry params
-    begin
+    # begin
       if   kpi=Kpi.find_by_id(params[:kpi_id])
         parsed_entry_at=DateTimeHelper.get_utc_time_by_str(params[:entry_at])
         if kpi_entry=KpiEntry.where(:user_kpi_item_id=>params[:user_kpi_item_id],:parsed_entry_at=>parsed_entry_at).first
@@ -15,9 +15,9 @@ module KpiEntriesHelper
         end
       return kpi_entry
       end
-    rescue Exception=>e
-      puts e.message
-    end
+    # rescue Exception=>e
+      # puts e.message
+    # end
   end
 
   # calculate kpi parent value
