@@ -33,10 +33,4 @@ class KpiCategoriesController < ApplicationController
     end
     render :json=>msg
   end
- 
-  private
-  #冗余
-  def get_ability_category
-    @category=KpiCategory.accessible_by(current_ability).find_by_id(params[:id])
-  end
 end

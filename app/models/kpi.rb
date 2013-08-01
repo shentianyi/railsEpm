@@ -26,4 +26,12 @@ class Kpi < ActiveRecord::Base
     kpis= Kpi.joins(:kpi_items).where('kpi_items.item_id=?',kpi_id).all
     kpis.count>0 ? kpis : nil
   end
+
+  def self.base_kpis current_ability
+    Kpi.accessible_by(current_ability).where(:is_calculated=>false).all
+  end
+
+  def self.ability_find_by_id id,current_ability
+    Kpi.accessible_by(current_ability).find_by_id(id)
+  end
 end
