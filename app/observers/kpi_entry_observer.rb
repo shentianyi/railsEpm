@@ -5,7 +5,7 @@ class KpiEntryObserver<ActiveRecord::Observer
   def before_save kpi_entry
     kpi_entry.kpi=Kpi.find_by_id(kpi_entry.kpi_id)
     if kpi_entry.new_record?
-      kpi_entry.frequency=kpi.frequency
+    kpi_entry.frequency=  kpi_entry.kpi.frequency
     end
     if  kpi_entry.original_value.finite?
       kpi_entry.value=KpiUnit.parse_entry_value( kpi_entry.kpi.unit,kpi_entry.original_value)

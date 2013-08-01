@@ -14,6 +14,7 @@ module KpiEntryAnalyseHelper
 	    target_relation=UserKpiItem.where(:kpi_id=>kpi_id,:entity_id=>entity_ids)
 	    target= average ? target_relation.average(:target).to_i : target_relation.sum(:target)
 	    current_data={};current_data_count={};target_data={};unit_data={}    
+	    params={:current_data=>current_data,:current_data_count=>current_data_count,:target_data=>target_data,:unit_data=>unit_data,:kpi=>kpi,:target=>target}
 	    case   kpi.frequency
 	    when KpiFrequency::Hourly,KpiFrequency::Daily,KpiFrequency::Weekly
 		case kpi.frequency
@@ -29,14 +30,14 @@ module KpiEntryAnalyseHelper
 		    step=60*60*24*7
 		end
 		while start_time<=end_time do 
-		    generate_init_data(start_time,current_data,current_data_count,target_data,unit_data,kpi)
+		    generate_init_data(start_time,params)
 		    start_time+=step
 		end 
 	    when KpiFrequency::Monthly
 		start_time=DateTimeHelper.get_entry_unit_sym(Date.new(start_time.year,start_time.month,1).to_s)
 		end_time=DateTimeHelper.get_entry_unit_sym(Date.new(end_time.year,end_time.month,1).to_s)
 		while start_time<=end_time
-		    generate_init_data(key,current_data,current_data_count,target_data,unit_data,kpi)
+		    generate_init_data(start_time,params)
 		    if start_time.month==2
 			start_time+=(start_time.year.leap? ? 60*60*24*29 : 60*60*24*28)
 		    else
@@ -48,7 +49,7 @@ module KpiEntryAnalyseHelper
 		end_time=DateTimeHelper.get_entry_unit_sym(Date.new(end_time.year,(end_time.month-1)/3*3+1,1).to_s)
 		step_arr=[90,91,92,92]
 		while start_time<=end_time
-		    generate_init_data(key,current_data,current_data_count,target_data,unit_data,kpi)
+		    generate_init_data(start_time,params)
 		    if (start_time.month-1)/3==0
 			start_time+=(start_time.year.leap? ? 60*60*24*(step_arr[0]+1) : 60*60*24*step_arr[0])
 		    else
@@ -59,7 +60,7 @@ module KpiEntryAnalyseHelper
 		start_time=DateTimeHelper.get_entry_unit_sym(Date.new(start_time.year,1,1).to_s)
 		end_time=DateTimeHelper.get_entry_unit_sym(Date.new(end_time.year,1,1).to_s)
 		while start_time<=end_time
-		    generate_init_data(key,current_data,current_data_count,target_data,unit_data,kpi)
+		    generate_init_data(start_time,params)
 		    start_time+=(start_time.year.leap? ? 60*60*24*366 : 60*60*24*365)
 		end
 	    end
@@ -80,11 +81,11 @@ module KpiEntryAnalyseHelper
     end
 
     private
-    def self.generate_init_data start_time,current_data,current_data_count,target_data,unit_data,kpi
+    def self.generate_init_data start_time,params
 	key=start_time.to_s
-	current_data[key]=0
-	current_data_count[key]=0
-	target_data[key]=0
-	unit_data[key]=KpiUnit.get_entry_unit_sym kpi.unit 
+	params[:current_data][key]=0
+	params[:current_data_count][key]=0
+	params[:target_data][key]=params[:target]
+	params[:unit_data][key]=KpiUnit.get_entry_unit_sym params[:kpi].unit 
     end
 end
