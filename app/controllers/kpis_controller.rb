@@ -76,13 +76,4 @@ class KpisController < ApplicationController
     @user_kpis=KpisHelper.get_kpis_by_user_id params[:user],current_ability
   end
 
-# #和applicationController有冗余
-# def get_kpis_by_category
-# if action_name=="assign"
-# id=@categories[0].id
-# else
-# id=params[:id].nil? ? @categories[0].id : params[:id].to_i
-# end
-# @kpis=Kpi.accessible_by(current_ability).joins(:kpi_category).where(:kpi_category_id=>id).select("kpis.*,kpi_categories.name as 'category_name'").all
-# end
 end
