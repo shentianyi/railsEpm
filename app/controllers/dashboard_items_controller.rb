@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 require 'time'
 class DashboardItemsController < ApplicationController
 
@@ -12,8 +14,8 @@ class DashboardItemsController < ApplicationController
         msg[:errors]= @new_item.errors.full_messages
       end
       respond_to do |t|
-        t.json {render :json=>{:result=>false,:errors=>@new_item.errors.full_messages}}
-        t.js {render :js=> jsonp_str({:result=>false,:errors=>@new_item.errors.full_messages})}
+        t.json {render :json=>msg }
+        t.js {render :js=> jsonp_str(msg)}
       end
     end
 

@@ -150,11 +150,17 @@ function db_view_create(view){
 }
 
 function db_view_create_callback(data){
-    alert("添加成功");
-    close_dash();
-    if(current_dashboard_id){
-        ifepm.dashboard.init(current_dashboard_id)
+    if(data.result){
+        alert("添加成功");
+        close_dash();
+        if(current_dashboard_id){
+            ifepm.dashboard.init(current_dashboard_id)
+        }
     }
+    else{
+        alert("新建视图时发生错误，请选择一个仪表盘后再新建视图")
+    }
+
 }
 
 function db_view_delete(id){

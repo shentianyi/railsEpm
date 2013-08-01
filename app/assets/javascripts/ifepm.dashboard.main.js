@@ -119,9 +119,9 @@ ifepm.dashboard.form_chart=function(option_args){
                 hour: '%H:%M'+"<br />"+'%e/%b'
             };
             options.xAxis.tickInterval=3600 * 1000;
-            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,start[2].split(" ")[0],option_args['timeBeginChart']);
+            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,start[2],start[3]);
             options.series[0].pointInterval=3600 * 1000;
-            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,start[2].split(" ")[0],option_args['timeBeginChart']);
+            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,start[2],start[3]);
             options.series[1].pointInterval=3600 * 1000;
             break;
         case "100":
