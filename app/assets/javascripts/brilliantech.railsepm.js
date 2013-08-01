@@ -350,7 +350,7 @@ function init_chart() {
          var endQuarter ="0"+quarterBelong(dateEnd[1]);
 //         var interval = $(".control-chart-btn.active").data("type");
          var interval=$("#chart-kpi :selected").attr("interval");
-         var startTime, endTime;
+         var startTime, endTime,startTimePost,endTimePost;
          var vali=true;
          switch(interval) {
               // hour
@@ -358,6 +358,8 @@ function init_chart() {
                  if($("#fromTime").val() && $("#toTime").val()){
                      startTime = dateBegin.join("-")+" "+timeBegin;
                      endTime = dateEnd.join("-")+" "+timeEnd;
+                     startTimePost = new Date(dateBegin.join("-")+"T"+timeBegin).toISOString();
+                     endTimePost = new Date(dateEnd.join("-")+"T"+timeEnd).toISOString();
                  }
                  else{
                      $("#chart-chooseWarning").removeClass("hide").text("该KPI需要选择时间");
@@ -393,13 +395,17 @@ function init_chart() {
                  endTime = dateEnd[0];
                  break;
          };
+         if(interval!=90) {
+                 startTimePost = new Date(dateBegin.join("-")+"T"+"00:00").toISOString();
+                 endTimePost = new Date(dateEnd.join("-")+"T"+"00:00").toISOString();
+         };
          if(vali){
          $.post('/kpi_entries/analyse', {
              kpi : kpi,
-	     average:$("input:radio[name='chartRadios']:checked").val()=="0",
+	         average:$("input:radio[name='chartRadios']:checked").val()=="0",
              entity_group: view,
-             startTime : startTime,
-             endTime : endTime
+             startTime : startTimePost,
+             endTime : endTimePost
          }, function(msg) {
              if(msg.result){
                  var data=msg.object;
