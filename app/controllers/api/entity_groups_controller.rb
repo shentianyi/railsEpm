@@ -1,7 +1,12 @@
 class Api::EntityGroupsController < ApplicationController
   def index
-
+    get_user_entity_groups
+    respond_to do |t|
+      t.json {render :json=>@entity_groups}
+      t.js {render :js=>jsonp_str(@entity_groups)}
+    end
   end
+
 
   def show
 
@@ -14,6 +19,7 @@ class Api::EntityGroupsController < ApplicationController
   def create
 
   end
+
 
 
 end

@@ -34,6 +34,9 @@ if (!Date.prototype.toISOString) {
     };
 };
 
+function system_error(){
+    alert("我们遇到了点小麻烦，管理员已经开始工作了，请耐心等待片刻后重试！");
+}
 var config={
     //Container of the dashboards
   db_container_selector:'#sty-dashboards',
@@ -145,20 +148,25 @@ function get_interval(){
 }
 
 
+
+
+
+
+
 function db_view_create(view){
     ifepm.dashboard.add_item(view,{success:db_view_create_callback})
 }
 
 function db_view_create_callback(data){
     if(data.result){
-        alert("添加成功");
+        slide_box("添加成功",true);
         close_dash();
         if(current_dashboard_id){
             ifepm.dashboard.init(current_dashboard_id)
         }
     }
     else{
-        alert("新建视图时发生错误，请选择一个仪表盘后再新建视图")
+        slide_box("新建视图时发生错误，请选择一个仪表盘后再新建视图",false)
     }
 
 }
@@ -178,6 +186,10 @@ function db_view_delete_callback(data){
     }
 }
 
+function db_view_delete_error_callback(jqXhr){
+  system_error();
+}
+
 
 function dashboard_delete(id){
     if (confirm("you will delete a dashboard,are you sure?"))
@@ -187,7 +199,7 @@ function dashboard_delete(id){
 }
 
 function dashboard_delete_callback(data){
-
+    slide_box("仪表盘已经删除",true);
       var item_obj =menu_selector.get_first_in_container(
           config.db_container_selector,
           config.db_single_item_filter(data.id)) ;
@@ -196,24 +208,30 @@ function dashboard_delete_callback(data){
           item_obj.remove();
          current_dashboard_id=null;
       }
-
-
 }
 
 
 function dashboard_create(dashboard){
-    ifepm.dashboard.add(dashboard,{success:dashboard_create_callback});
+    ifepm.dashboard.add(dashboard,{success:dashboard_create_callback,error:dashboard_create_error_callback});
 }
 
 function dashboard_create_callback(data){
     //insert a new node in the dashboard column
     //select it
-    alert("添加成功")
-    var new_node = dashboard_list_item_template.replace(/!id!/g,data.object["id"]).replace(/!name!/,data.object["name"])
-    $(config.db_container_selector).append(new_node);
-    close_createEntity();
-    select_dashboard(data.id);
+    if(data.result){
+        slide_box("添加成功",true)
+        var new_node = dashboard_list_item_template.replace(/!id!/g,data.object["id"]).replace(/!name!/,data.object["name"])
+        $(config.db_container_selector).append(new_node);
+        close_createEntity();
+        select_dashboard(data.id);
+    }
+    else {
+        slide_box("添加仪表盘时出错了",false)
+    }
+}
 
+function dashboard_create_error_callback(jqXhr){
+    system_error()
 }
 
 

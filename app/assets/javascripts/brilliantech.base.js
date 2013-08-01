@@ -192,3 +192,27 @@ if (!Date.prototype.toISOString) {
     };
 };
 
+
+function slide_box(text,success){
+
+    var message_selector = "#slide_box";
+
+    var messageSuccess = "messageSuccess";
+    var messageFail = "messageFail";
+
+    var insert_class =  (success==true?messageSuccess:messageFail);
+
+    $(message_selector).removeClass(messageSuccess);
+    $(message_selector).removeClass(messageFail);
+
+
+    $(message_selector).addClass(insert_class);
+
+    $(message_selector).children().first().text(text);
+
+    $(message_selector).slideDown();
+
+    setTimeout(function(){
+        $(message_selector).slideUp();
+    },"4000")
+}
