@@ -356,8 +356,8 @@ function init_chart() {
               // hour
              case "90":
                  if($("#fromTime").val() && $("#toTime").val()){
-                     startTime = dateBegin.join("-")+" "+timeBegin;
-                     endTime = dateEnd.join("-")+" "+timeEnd;
+                     startTime = new Date(dateBegin.join("-")+"T"+timeBegin).toISOString();
+                     endTime = new Date(dateEnd.join("-")+"T"+timeEnd).toISOString();
                  }
                  else{
                      $("#chart-chooseWarning").removeClass("hide").text("该KPI需要选择时间");
@@ -365,38 +365,15 @@ function init_chart() {
                      while_hide("chart-chooseWarning");
                  }
                  break;
-                 // day
-             case "100":
-                 startTime = dateBegin.join("-");
-                 endTime = dateEnd.join("-");
-                 break;
-                 // week
-             case "200":
-                 startTime = startWeekYear + "-" + startWeek;
-                 endTime = endWeekYear + "-" + endWeek;
-                 var start=startTime.split("-");
-                 var end=endTime.split("-");
-                 break;
-                 // month
-             case "300":
-                 startTime = dateBegin[0] + "-" + dateBegin[1];
-                 endTime = dateEnd[0] + "-" + dateEnd[1];
-                 break;
-                 // quarter
-             case "400":
-                 startTime = dateBegin[0] + "-" + startQuarter;
-                 endTime = dateEnd[0] + "-" + endQuarter;
-                 break;
-                 // year
-             case "500":
-                 startTime = dateBegin[0];
-                 endTime = dateEnd[0];
+             default:
+                 startTime = new Date(dateBegin.join("-")).toISOString();
+                 endTime = new Date(dateEnd.join("-")).toISOString();
                  break;
          };
          if(vali){
          $.post('/kpi_entries/analyse', {
              kpi : kpi,
-	     average:$("input:radio[name='chartRadios']:checked").val()=="0",
+	         average:$("input:radio[name='chartRadios']:checked").val()=="0",
              entity_group: view,
              startTime : startTime,
              endTime : endTime
