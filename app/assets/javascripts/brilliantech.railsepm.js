@@ -350,14 +350,16 @@ function init_chart() {
          var endQuarter ="0"+quarterBelong(dateEnd[1]);
 //         var interval = $(".control-chart-btn.active").data("type");
          var interval=$("#chart-kpi :selected").attr("interval");
-         var startTime, endTime;
+         var startTime, endTime,startTimePost,endTimePost;
          var vali=true;
          switch(interval) {
               // hour
              case "90":
                  if($("#fromTime").val() && $("#toTime").val()){
-                     startTime = new Date(dateBegin.join("-")+"T"+timeBegin).toISOString();
-                     endTime = new Date(dateEnd.join("-")+"T"+timeEnd).toISOString();
+                     startTime = dateBegin.join("-")+" "+timeBegin;
+                     endTime = dateEnd.join("-")+" "+timeEnd;
+                     startTimePost = new Date(dateBegin.join("-")+"T"+timeBegin).toISOString();
+                     endTimePost = new Date(dateEnd.join("-")+"T"+timeEnd).toISOString();
                  }
                  else{
                      $("#chart-chooseWarning").removeClass("hide").text("该KPI需要选择时间");
@@ -365,18 +367,45 @@ function init_chart() {
                      while_hide("chart-chooseWarning");
                  }
                  break;
-             default:
-                 startTime = new Date(dateBegin.join("-")).toISOString();
-                 endTime = new Date(dateEnd.join("-")).toISOString();
+                 // day
+             case "100":
+                 startTime = dateBegin.join("-");
+                 endTime = dateEnd.join("-");
                  break;
+                 // week
+             case "200":
+                 startTime = startWeekYear + "-" + startWeek;
+                 endTime = endWeekYear + "-" + endWeek;
+                 var start=startTime.split("-");
+                 var end=endTime.split("-");
+                 break;
+                 // month
+             case "300":
+                 startTime = dateBegin[0] + "-" + dateBegin[1];
+                 endTime = dateEnd[0] + "-" + dateEnd[1];
+                 break;
+                 // quarter
+             case "400":
+                 startTime = dateBegin[0] + "-" + startQuarter;
+                 endTime = dateEnd[0] + "-" + endQuarter;
+                 break;
+                 // year
+             case "500":
+                 startTime = dateBegin[0];
+                 endTime = dateEnd[0];
+                 break;
+         };
+         if(interval!=90) {
+                 startTimePost = new Date(dateBegin.join("-")+"T"+"00:00").toISOString();
+                 endTimePost = new Date(dateEnd.join("-")+"T"+"00:00").toISOString();
          };
          if(vali){
          $.post('/kpi_entries/analyse', {
              kpi : kpi,
 	         average:$("input:radio[name='chartRadios']:checked").val()=="0",
              entity_group: view,
-             startTime : startTime,
-             endTime : endTime
+             startTime : startTimePost,
+             endTime : endTimePost
          }, function(msg) {
              if(msg.result){
                  var data=msg.object;
