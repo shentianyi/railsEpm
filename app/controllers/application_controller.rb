@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper :all
   helper_method :current_user_session, :current_user
-  #before_filter :require_user
+  before_filter :require_user
   #before_filter :require_active_user
   #before_filter :find_current_user_tenant
   #

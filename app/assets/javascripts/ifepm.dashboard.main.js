@@ -255,15 +255,33 @@ ifepm.dashboard.make_item_container_id=function(item_id){
 };
 
 
-//Define the  graph class
+/*
+* @class 代表在仪表盘中的一个图表以及其代表的搜索条件和数据
+*
+* */
 function Graph(){
+    /*@field 全局唯一的ID号*/
     this.id=null;
+    /*@field 用户自定义的观察点，观察点是数个KPI输入点的集合 */
     this.entity_group=null;
+    /*@field 图中使用的KPI的ID*/
     this.kpi_id=null;
+    /*@field 图中使用的KPI的名称*/
     this.kpi_name=null;
+    /*
+    @field 计算类型, ACCUMULATE or AVERAGE
+    ACCUMULATE 将获取到的同类数据做加法合并
+    AVERAGE 将获取到的同类数据做除法平均
+    * */
     this.calculate_type=null;
+
+    /*@field 监测时间开始*/
     this.from = null;
+
+    /*@field 监测时间结束*/
     this.end = null;
+
+    /*@field 查看间隔，指数据将在怎么*/
     this.interval = null;
     this.name = null;
     this.title = null;
