@@ -82,10 +82,12 @@ class KpisController < ApplicationController
   #和applicationController有冗余
   def get_ability_category
     @categories=KpiCategory.accessible_by(current_ability).all
+=begin
     respond_to do |t|
       t.html {render}
       t.json {render :json => @categories}
     end
+=end
   end
 
 
