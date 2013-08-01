@@ -9,7 +9,7 @@
           <th>完成度</th>
      </tr>
      <%@user_kpis.each_with_index do |kpi,i|
-      value =KpiUnit.parse_entry_value(kpi.unit, entry.value)  if(entry=KpiEntriesHelper.get_kpi_entry_for_entry(kpi.user_kpi_item_id,@entry_at))
+      value =KpiUnit.parse_entry_value(kpi.unit, entry.value)  if(entry=KpiEntriesHelper.get_kpi_entry_for_entry(kpi.user_kpi_item_id,@parsed_entry_at))
       percent=nil
       if value
           if kpi.user_kpi_item_target==0

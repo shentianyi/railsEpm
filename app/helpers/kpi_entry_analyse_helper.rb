@@ -1,110 +1,91 @@
 #encoding: utf-8
-module KpiEntryAnalyseHelper
+class Fixnum
+    def leap?
+	(self%4==0 && self%100!=0) || slef%400==0
+    end
+end
 
+module KpiEntryAnalyseHelper
     def self.get_kpi_entry_analysis_data kpi_id,entity_group_id,start_time,end_time,average
 	if kpi=Kpi.find_by_id(kpi_id) and entity_group=EntityGroup.find_by_id(entity_group_id)
-	    entities=entity_group.entities
-	    entity_ids=entities.collect{|entity| entity.id}
-	    entries=  KpiEntry.where(:kpi_id=>kpi_id,:entity_id=>entity_ids,:entry_at=>start_time..end_time).all
+	    entity_ids=entity_group.entities.collect{|entity| entity.id}
+	    start_time,end_time=DateTimeHelper.get_utc_time_by_str(start_time),DateTimeHelper.get_utc_time_by_str(end_time)
+	    entries=  KpiEntry.where(:kpi_id=>kpi_id,:entity_id=>entity_ids,:parsed_entry_at=>start_time..end_time).all
 	    target_relation=UserKpiItem.where(:kpi_id=>kpi_id,:entity_id=>entity_ids)
-	    if average
-		target=target_relation.average(:target).to_i
-	    else
-		target=target_relation.sum(:target)
-	    end
-	    current_data={};target_data={};unit_data={};current_data_count={}
+	    target= average ? target_relation.average(:target).to_i : target_relation.sum(:target)
+	    current_data={};current_data_count={};target_data={};unit_data={}    
+	    params={:current_data=>current_data,:current_data_count=>current_data_count,:target_data=>target_data,:unit_data=>unit_data,:kpi=>kpi,:target=>target}
 	    case   kpi.frequency
-	    when KpiFrequency::Hourly
-		start_hour=DateTimeHelper.parse_string_to_date_hour(start_time)
-		end_hour=DateTimeHelper.parse_string_to_date_hour(end_time)
-
-		while start_hour<=end_hour do 
-		    key=DateTimeHelper.parse_time_to_hour_string(start_hour)
-		    puts key
-		    current_data[key]=0
-		    current_data_count[key]=0
-		    target_data[key]=target
-		    unit_data[key]=KpiUnit.get_entry_unit_sym kpi.unit
-		    start_hour=start_hour.advance :hours=>1
-		end 
-	    when KpiFrequency::Daily
-		date=start_date=Date.parse(start_time)
-		end_date=Date.parse(end_time)
-		days=end_date.mjd-start_date.mjd
-		for i in 0..days
-		    key=date.to_s
-		    current_data[key]=0
-		    target_data[key]=target
-		    unit_data[key]=KpiUnit.get_entry_unit_sym kpi.unit
-		    date=date.next
-		end 
-	    when KpiFrequency::Weekly,KpiFrequency::Monthly,KpiFrequency::Quarterly
-		start_date=start_time.split('-')
-		end_date=end_time.split('-')
-		start_index_a,start_index_b=start_date[0].to_i,start_date[1].to_i
-		end_index_a,end_index_b=end_date[0].to_i,end_date[1].to_i
-		step=0
+	    when KpiFrequency::Hourly,KpiFrequency::Daily,KpiFrequency::Weekly
 		case kpi.frequency
+		when KpiFrequency::Hourly
+		    step=60*60
+		when KpiFrequency::Daily
+		    step=60*60*24
 		when KpiFrequency::Weekly
-		    step=52
-		when KpiFrequency::Monthly
-		    step=12
-		when KpiFrequency::Quarterly
-		    step=4 
+		    start_date=Date.parse(start_time.to_s)
+		    end_date=Date.parse(end_time.to_s)
+		    start_time=DateTimeHelper.get_utc_time_by_str(Date.commercial(start_date.year,start_date.cweek,1).to_s)
+		    end_time=DateTimeHelper.get_utc_time_by_str(Date.commercial(end_date.year,end_date.cweek,1).to_s)
+		    step=60*60*24*7
+		end
+		while start_time<=end_time do 
+		    generate_init_data(start_time,params)
+		    start_time+=step
 		end 
-		for start_index in start_index_a..end_index_a
-		    if start_index==start_index_a
-			if end_index_a>start_index_a
-			    generate_cycle_data start_index_b,step,start_index,target,current_data,current_data_count,target_data,unit_data,kpi
-			else
-			    generate_cycle_data start_index_b,end_index_b,start_index,target,current_data,current_data_count,target_data,unit_data,kpi
-			end
-		    elsif start_index==end_index_a
-			generate_cycle_data 1,end_index_b,start_index,target,current_data,current_data_count,target_data,unit_data,kpi
+	    when KpiFrequency::Monthly
+		start_time=DateTimeHelper.get_entry_unit_sym(Date.new(start_time.year,start_time.month,1).to_s)
+		end_time=DateTimeHelper.get_entry_unit_sym(Date.new(end_time.year,end_time.month,1).to_s)
+		while start_time<=end_time
+		    generate_init_data(start_time,params)
+		    if start_time.month==2
+			start_time+=(start_time.year.leap? ? 60*60*24*29 : 60*60*24*28)
 		    else
-			generate_cycle_data 1,step,start_index,target,current_data,current_data_count,target_data,unit_data,kpi
+			start_time+=([1,3,5,7,8,10,12].include?(start_time.month) ? 60*60*24*31 : 60*60*24*30)
 		    end
 		end
-
+	    when KpiFrequency::Quarterly
+		start_time=DateTimeHelper.get_entry_unit_sym(Date.new(start_time.year,(start_time.month-1)/3*3+1,1).to_s)
+		end_time=DateTimeHelper.get_entry_unit_sym(Date.new(end_time.year,(end_time.month-1)/3*3+1,1).to_s)
+		step_arr=[90,91,92,92]
+		while start_time<=end_time
+		    generate_init_data(start_time,params)
+		    if (start_time.month-1)/3==0
+			start_time+=(start_time.year.leap? ? 60*60*24*(step_arr[0]+1) : 60*60*24*step_arr[0])
+		    else
+			start_time+=60*60*24*step_arr[(start_time.month-1)/3]
+		    end
+		end
 	    when KpiFrequency::Yearly
-		for i in start_time.to_i..end_time.to_i
-		    key=i.to_s
-		    current_data[key]=0
-		    target_data[key]=target
-		    current_data_count[key]=0
-		    unit_data[key]=KpiUnit.get_entry_unit_sym kpi.unit
+		start_time=DateTimeHelper.get_entry_unit_sym(Date.new(start_time.year,1,1).to_s)
+		end_time=DateTimeHelper.get_entry_unit_sym(Date.new(end_time.year,1,1).to_s)
+		while start_time<=end_time
+		    generate_init_data(start_time,params)
+		    start_time+=(start_time.year.leap? ? 60*60*24*366 : 60*60*24*365)
 		end
 	    end
 
 	    entries.each do |entry|
-		current_data[entry.entry_at]+= entry.value
-		current_data_count[entry.entry_at]+=1
+		current_data[entry.parsed_entry_at.to_s]+= entry.value
+		current_data_count[entry.parsed_entry_at.to_s]+=1
 	    end
 	    if average
 		count=entity_ids.count
-	      current_data.each do |k,v|
-	        current_data[k]=(v/count).round(2)
-		  #current_data[k]=(v/current_data_count[k]).round(2)
-	      end
-	    else
-
+		current_data.each do |k,v|
+		    current_data[k]=(v/count).round(2)
+		end
 	    end
-puts current_data
 	    return {:current=>current_data.values,:target=>target_data.values,:unit=>unit_data.values}
 	end
 	return nil
     end
 
     private
-    def self.generate_cycle_data start_index,end_index,cycle_index,target,current_data,current_data_count,target_data,unit_data,kpi
-	for cycle_value in start_index..end_index
-	    cycle_value=cycle_value>9 ? cycle_value : "0#{cycle_value}" 
-	    key="#{cycle_index}-#{cycle_value}"
-	    current_data[key]=0
-	    current_data_count[key]=0
-	    target_data[key]=target
-	    unit_data[key]=KpiUnit.get_entry_unit_sym kpi.unit
-	end
+    def self.generate_init_data start_time,params
+	key=start_time.to_s
+	params[:current_data][key]=0
+	params[:current_data_count][key]=0
+	params[:target_data][key]=params[:target]
+	params[:unit_data][key]=KpiUnit.get_entry_unit_sym params[:kpi].unit 
     end
-
 end
