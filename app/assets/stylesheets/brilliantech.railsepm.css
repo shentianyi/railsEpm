@@ -489,6 +489,7 @@ ul.dashBoard-show li{
     top:0px;
     left:-999em;
     background:white;
+    z-index:99;
 }
 .db-itemInfo tr td:first-child{
     text-align:right
