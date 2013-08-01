@@ -2,7 +2,7 @@
 module ApplicationHelper
   protected
   def get_ability_category
-    @categories=KpiCategory.accessible_by(current_ability).all
+    @categories=KpiCategory.ability_all(current_ability)
   end
 
   def get_kpis_by_category id=nil
@@ -11,6 +11,10 @@ module ApplicationHelper
   end
 
   def get_user_entity_groups
-    @entity_groups=current_user.entity_groups.accessible_by(current_ability)
+    @entity_groups=current_user.ability_entity_groups(current_ability)
+  end
+
+  def get_ability_entity
+    @entity=Entity.ability_find_by_id(params[:id])
   end
 end

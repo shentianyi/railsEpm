@@ -16,4 +16,3 @@ end
 Resque.redis=Redis::Namespace.new("prefix_resque_job_", :redis => $redis)
 Dir["#{Rails.root}/app/jobs/*.rb"].each { |file| require file }
 
-# rake resque:work COUNT=5 QUEUE=*  PIDFILE=tmp/pids/resque.pid BACKGROUND=yes INTERVAL=1

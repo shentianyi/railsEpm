@@ -13,6 +13,11 @@ class Entity < ActiveRecord::Base
   acts_as_tenant(:tenant)
 
   validate :validate_create_update
+  
+   def self.ability_find_by_id id,current_ability
+    self.accessible_by(current_ability).find_by_id(id)
+  end
+  
   private
   def validate_create_update
     errors.add(:name,'组织名不可重复') if Entity.where(:name=>self.name,:tenant_id=>self.tenant_id).first if new_record?

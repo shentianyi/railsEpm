@@ -1,10 +1,7 @@
 #encoding: utf-8
 class EntitiesController < ApplicationController
     before_filter :get_ability_entity,:only=>[:update,:destroy]
-  # get entity list
-  def list
-  end
-
+ 
   # create tenant
   def create
     @entity=Entity.new(params[:entity])
@@ -34,10 +31,5 @@ class EntitiesController < ApplicationController
     end
     render :json=>msg
   end
-  
-  private
-
-  def get_ability_entity
-    @entity=Entity.accessible_by(current_ability).find_by_id(params[:id])
-  end
+   
 end

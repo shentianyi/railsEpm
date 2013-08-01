@@ -75,6 +75,8 @@ class User < ActiveRecord::Base
     end
   end
 
-
+ def ability_entity_groups current_ability
+   self.entity_groups.accessible_by(current_ability)
+ end
 
 end
