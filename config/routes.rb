@@ -65,7 +65,9 @@ IFEpm::Application.routes.draw do
      end
    end
 
+
   resources :dashboards
+
 
   mount Resque::Server.new, :at=>"/admin/resque"
 

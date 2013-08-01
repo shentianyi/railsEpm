@@ -60,5 +60,8 @@ module DateTimeHelper
   def self.parse_year_string_to_date_hour str
     parse_string_to_date_hour(Date.new(str.to_i).to_s)
   end
-
+  
+  def self.get_utc_time_by_str str
+    Time.parse(str).utc
+  end
 end
