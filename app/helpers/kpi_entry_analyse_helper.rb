@@ -80,7 +80,7 @@ module KpiEntryAnalyseHelper
     end
 
     private
-    def generate_init_data start_time,current_data,current_data_count,target_data,unit_data,kpi
+    def self.generate_init_data start_time,current_data,current_data_count,target_data,unit_data,kpi
 	key=start_time.to_s
 	current_data[key]=0
 	current_data_count[key]=0
