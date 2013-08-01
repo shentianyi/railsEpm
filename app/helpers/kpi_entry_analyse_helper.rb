@@ -34,7 +34,7 @@ module KpiEntryAnalyseHelper
 		end 
 	    when KpiFrequency::Monthly
 		start_time=DateTimeHelper.get_entry_unit_sym(Date.new(start_time.year,start_time.month,1).to_s)
-		end_time=DateTimeHelper.get_entry_unit_sym(Date.new(end_time.year,end_time.month),1).to_s)
+		end_time=DateTimeHelper.get_entry_unit_sym(Date.new(end_time.year,end_time.month,1).to_s)
 		while start_time<=end_time
 		    generate_init_data(key,current_data,current_data_count,target_data,unit_data,kpi)
 		    if start_time.month==2
