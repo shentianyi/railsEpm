@@ -358,8 +358,8 @@ function init_chart() {
                  if($("#fromTime").val() && $("#toTime").val()){
                      startTime = dateBegin.join("-")+" "+timeBegin;
                      endTime = dateEnd.join("-")+" "+timeEnd;
-                     startTimePost = new Date(dateBegin.join("-")+"T"+timeBegin).toISOString();
-                     endTimePost = new Date(dateEnd.join("-")+"T"+timeEnd).toISOString();
+                     startTimePost = new Date(dateBegin[0],dateBegin[1]-1,dateBegin[2],timeBegin.split(":")[0]).toISOString();
+                     endTimePost = new Date(dateEnd[0],dateEnd[1]-1,dateEnd[2],timeEnd.split(":")[0]).toISOString();
                  }
                  else{
                      $("#chart-chooseWarning").removeClass("hide").text("该KPI需要选择时间");
@@ -396,8 +396,8 @@ function init_chart() {
                  break;
          };
          if(interval!=90) {
-                 startTimePost = new Date(dateBegin.join("-")+"T"+"00:00").toISOString();
-                 endTimePost = new Date(dateEnd.join("-")+"T"+"00:00").toISOString();
+             startTimePost = new Date(dateBegin[0],dateBegin[1]-1,dateBegin[2]).toISOString();
+             endTimePost = new Date(dateEnd[0],dateEnd[1]-1,dateEnd[2]).toISOString();
          };
          if(vali){
          $.post('/kpi_entries/analyse', {
