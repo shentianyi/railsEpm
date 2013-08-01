@@ -63,9 +63,18 @@ IFEpm::Application.routes.draw do
     controller :kpi_entries do
       match 'kpi_entries/entry'=>:entry
     end
+    resources :dashboards
+    controller :dashboard_items do
+      match 'dashboard_items/get_data'=>:get_data
+      match 'dashboard_items/items_by_dashboard_id'=>:items_by_dashboard_id
+      match 'dashboard_items/update_sequence' => :update_sequence
+    end
+    resources :user_sessions
+
   end
 
   resources :dashboards
+
 
   mount Resque::Server.new, :at=>"/admin/resque"
 
