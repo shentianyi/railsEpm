@@ -34,10 +34,12 @@ module KpiEntryAnalyseHelper
 		    start_time+=step
 		end 
 	    when KpiFrequency::Monthly
-		start_time=DateTimeHelper.get_entry_unit_sym(Date.new(start_time.year,start_time.month,1).to_s)
-		end_time=DateTimeHelper.get_entry_unit_sym(Date.new(end_time.year,end_time.month,1).to_s)
+	      puts "--#{start_time}"
+		start_time=DateTimeHelper.get_utc_time_by_str(Date.new(start_time.year,start_time.month,1).to_s)
+		end_time=DateTimeHelper.get_utc_time_by_str(Date.new(end_time.year,end_time.month,1).to_s)
 		while start_time<=end_time
 		    generate_init_data(start_time,params)
+		    puts "--#{start_time.month}--#{[1,3,5,7,8,10,12].include?(start_time.month)}"
 		    if start_time.month==2
 			start_time+=(start_time.year.leap? ? 60*60*24*29 : 60*60*24*28)
 		    else
@@ -45,8 +47,8 @@ module KpiEntryAnalyseHelper
 		    end
 		end
 	    when KpiFrequency::Quarterly
-		start_time=DateTimeHelper.get_entry_unit_sym(Date.new(start_time.year,(start_time.month-1)/3*3+1,1).to_s)
-		end_time=DateTimeHelper.get_entry_unit_sym(Date.new(end_time.year,(end_time.month-1)/3*3+1,1).to_s)
+		start_time=DateTimeHelper.get_utc_time_by_str(Date.new(start_time.year,(start_time.month-1)/3*3+1,1).to_s)
+		end_time=DateTimeHelper.get_utc_time_by_str(Date.new(end_time.year,(end_time.month-1)/3*3+1,1).to_s)
 		step_arr=[90,91,92,92]
 		while start_time<=end_time
 		    generate_init_data(start_time,params)
@@ -64,7 +66,6 @@ module KpiEntryAnalyseHelper
 		    start_time+=(start_time.year.leap? ? 60*60*24*366 : 60*60*24*365)
 		end
 	    end
-
 	    entries.each do |entry|
 		current_data[entry.parsed_entry_at.to_s]+= entry.value
 		current_data_count[entry.parsed_entry_at.to_s]+=1

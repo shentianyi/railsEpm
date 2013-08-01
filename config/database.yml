@@ -17,7 +17,7 @@ development:
  pool: 5
  username: epmer
  password: epmer@
- socket: /tmp/mysql.sock
+ socket: /var/run/mysqld/mysqld.sock
 #
 #
 # Warning: The database defined as "test" will be erased and
