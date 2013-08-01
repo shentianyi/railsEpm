@@ -1734,7 +1734,6 @@ function init_entryKpi() {
                          var showMonth=(parseInt(month)+1)<10?"0"+(parseInt(month)+1):parseInt(month)+1;
                          $("#entry-kpi").val(year + "-" + showMonth);
                          var chooseMonth=new Date(year,month).toISOString();
-                        alert(chooseMonth)
                            refresh_kpi_entry(chooseMonth);
                     },
                    onChangeMonthYear:function(year,month,inst){
@@ -1788,7 +1787,11 @@ function init_entryKpi() {
 function refresh_kpi_entry(date){
      $.post('../kpi_entries/refresh_entry',{f:$('#kpi-type-hidden').val(),date:date},function(data){
           $("#kpi-entry").html(data);
+          save_format_date(date);
      });
+}
+function save_format_date(date){
+    $("#entry-kpi").attr("format",date);
 }
 //选择完小时后触发的事件
 function entry_hourChange(){
@@ -1918,28 +1921,7 @@ function fill_kpiCurrent(obj) {
      if(val) {
           if(val != source) {
                var type = $("#entry-date-type").find(".active").data("type");
-               var date;
-               switch(type) {
-                    case "hour":
-                       var hourSelect=$("#kpi-hour").val();
-                       date=$("#entry-kpi").val()+"  "+hourSelect+":00";
-                       break;
-                    case "day":
-                         date = $("#entry-kpi").val();
-                         break;
-                    case "week":
-                         date = $("#entry-kpi").val().split("-")[0] + "-" + $("#show-weekOfYear>span").text();
-                         break;
-                    case "month":
-                         date = $("#entry-kpi").val();
-                         break;
-                    case "quarter":
-                         date = $("#entry-kpi").val() + "-" + $("#select-quarter :selected").data("order");
-                         break;
-                    case "year":
-                         date = $("#entry-kpi").val();
-                         break;
-               }
+               var date =$("#entry-kpi").attr("format");
                $.post('/kpi_entries/entry',{
                    user_kpi_item_id:id,
                    entry_at:date,
