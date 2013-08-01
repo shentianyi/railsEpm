@@ -36,8 +36,8 @@ class DashboardItem < ActiveRecord::Base
       data = KpiEntryAnalyseHelper::get_kpi_entry_analysis_data(
           item.kpi_id,
           item.entity_group,
-          time_span[:start],
-          time_span[:end],
+          time_span[:start].to_s,
+          time_span[:end].to_s,
           item.calculate_type=='AVERAGE')
       if data
         data[:result]=true
