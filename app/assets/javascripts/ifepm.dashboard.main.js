@@ -24,6 +24,17 @@
 //include ifepm.text.js which contains the text message used in this lib
 
 
+if (!Date.prototype.toArray) {
+    Date.prototype.toArray = function() {
+         return [this.getFullYear(),this.getMonth()+1,
+             this.getDate(),this.getHours(),this.getMinutes(),this.getSeconds(),
+             this.getMilliseconds()];
+    };
+};
+
+
+
+
 //load or initialize the ifepm object
 var ifepm = ifepm || {};
 
@@ -90,21 +101,15 @@ ifepm.dashboard.form_chart=function(option_args){
     options.yAxis.labels = {
         format : '{value}' +option_args["unit"][0]
     };
-    var start=option_args['startTime'].split("-");
-    var end=option_args['endTime'].split("-");
+    var start=new Date(option_args['startTime']).toArray();
+    var end=new Date(option_args['endTime']).toArray();
     if(start[1] && end[1]){
-        if((start[1].split(""))[0]==0){
-            var startWQ=(start[1].split(""))[1];
-        }
-        else{
+
             var startWQ=start[1];
-        }
-        if((end[1].split(""))[0]==0){
-            var endWQ=(end[1].split(""))[1];
-        }
-        else{
+
+
             var endWQ=end[1];
-        }
+
     }
     switch (option_args["interval"].toString()){
         case "90":

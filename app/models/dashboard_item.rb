@@ -43,8 +43,7 @@ class DashboardItem < ActiveRecord::Base
         data[:result]=true
         data[:startTime] = time_span[:start].to_s
         data[:endTime]=time_span[:end].to_s
-        kpi=Kpi.find_by_id(item.kpi_id)
-        data[:interval] = kpi.frequency.to_s
+        data[:interval] = Kpi.find_by_id(item.kpi_id).frequency.to_s
       end
     end
     return data
