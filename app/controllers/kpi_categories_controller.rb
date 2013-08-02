@@ -1,6 +1,6 @@
 #encoding: utf-8
 class KpiCategoriesController < ApplicationController
-  before_filter :get_ability_category,:only=>[:update,:destroy]
+  before_filter :get_ability_category_by_id,:only=>[:update,:destroy]
   def new
     render :partial=>'new'
   end

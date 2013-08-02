@@ -15,7 +15,7 @@ class Entity < ActiveRecord::Base
   validate :validate_create_update
   
    def self.ability_find_by_id id,current_ability
-    self.accessible_by(current_ability).find_by_id(id)
+    Entity.accessible_by(current_ability).find_by_id(id)
   end
   
   private
