@@ -1,7 +1,8 @@
 #encoding: utf-8
 class KpiEntriesController < ApplicationController
   # create or update kpi entry
-  before_filter :get_ability_category,:only=>[:analyse]
+  before_filter :get_ability_category,:only=>[:analyse],:if=>lambda{|c|  request.get?}
+  before_filter :get_kpis_by_category,:only=>[:analyse,:kpi_option],:if=>lambda{|c|   action_name=="analyse" ? request.get?  : true}
   def entry
     if request.post?
       @kpi_entry=KpiEntriesHelper.create_update_kpi_entry params
@@ -23,10 +24,7 @@ class KpiEntriesController < ApplicationController
 
   def analyse
     if request.get?
-      # @ent
-      @entity_groups=current_user.entity_groups.accessible_by(current_ability)
-      get_ability_category
-      get_kpis_by_category
+      @entity_groups=get_user_entity_groups
     else
       msg=Message.new
       if data=KpiEntryAnalyseHelper.get_kpi_entry_analysis_data(params[:kpi],params[:entity_group],params[:startTime],params[:endTime],params[:average]=="true")
@@ -38,16 +36,8 @@ class KpiEntriesController < ApplicationController
   end
 
   def kpi_option
-    get_kpis_by_category
     @options=params[:options]
     @prompt=!params[:prompt].nil?
     render :partial=>'select_option'
-  end
-
-  private
-  #冗余
-  def get_kpis_by_category
-    id=params[:id].nil? ? @categories[0].id : params[:id].to_i
-    @kpis=Kpi.accessible_by(current_ability).joins(:kpi_category).where(:kpi_category_id=>id).select("kpis.*,kpi_categories.name as 'category_name'").all
   end
 end

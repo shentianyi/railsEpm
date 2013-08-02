@@ -17,8 +17,9 @@ module DateTimeHelper
 
   # parse time to week string
   def self.parse_time_to_week_string time
-    date=Date.parse(parse_time_to_day_string(time))
-    week=date.cweek>9 ? date.cweek : "0#{date.cweek}" 
+    date=Date.parse(time.to_s)
+    week=date.cweek+1
+    week= week>9 ?  week : "0#{week}" 
     "#{date.year}-#{week}"
   end
 

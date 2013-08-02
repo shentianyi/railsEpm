@@ -4,6 +4,9 @@ module ApplicationHelper
   def get_ability_category
     @categories=KpiCategory.ability_all(current_ability)
   end
+    def get_ability_category_by_id
+    @category=KpiCategory.accessible_by(current_ability).find_by_id(params[:id])
+  end
 
   def get_kpis_by_category id=nil
     id=params[:id].nil? ? @categories[0].id : params[:id].to_i unless id
@@ -15,6 +18,6 @@ module ApplicationHelper
   end
 
   def get_ability_entity
-    @entity=Entity.ability_find_by_id(params[:id])
+    @entity=Entity.ability_find_by_id(params[:id],current_ability)
   end
 end
