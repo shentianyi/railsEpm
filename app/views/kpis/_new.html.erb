@@ -47,12 +47,12 @@
                     <input type="checkbox" class="is-calcu-check" id="is-calcu-check" onclick="is_calcu()"/>
                     <div class="is-calcu-type clearfix" id="is-calcu-type" style="display:none">
                          <%= select_tag :frequency,options_from_collection_for_select(@base_kpis,'id','name'),{:id=>'is-calcu-relate',:onchange=>'select_calcuRelate()',:prompt=>''}%>
-                         <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="1" onclick="select_calcuMethod(event)">+</a>
-                         <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="2" onclick="select_calcuMethod(event)">-</a>
-                         <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="3" onclick="select_calcuMethod(event)">x</a>
-                         <a class="pull-left btn btn-primary calcuType-method-btn" data-calcuType="4" onclick="select_calcuMethod(event)">/</a>
+                         <a class="pull-left btn btn-primary calcuType-method-btn" sign="+" data-calcuType="1" onclick="select_calcuMethod(event)">+</a>
+                         <a class="pull-left btn btn-primary calcuType-method-btn" sign="-" data-calcuType="2" onclick="select_calcuMethod(event)">-</a>
+                         <a class="pull-left btn btn-primary calcuType-method-btn" sign="*" data-calcuType="3" onclick="select_calcuMethod(event)">x</a>
+                         <a class="pull-left btn btn-primary calcuType-method-btn" sign="/" data-calcuType="4" onclick="select_calcuMethod(event)">/</a>
 
-                         <input type="text" class="calcuType-input" id="calcuType-input" />
+                         <input type="text" class="calcuType-input" id="calcuType-input" onkeyup="calcuInput(event)"/>
                          <a class="btn calcuType-clear" id="calcuType-clear" onclick="calcuRelate_clear()">清空</a>
                          <div style="display:none" id="takeCal" cal></div>
                     </div></td>
