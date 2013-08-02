@@ -272,11 +272,11 @@ function init_analytics() {
 }
 
 function init_chart() {
-     if($("#chart-kpi :selected").attr('id')=="none-kpi"){
+     if($("#chart-kpi option").length==0){
          $("#chart-chooseWarning").removeClass("hide").text("请选择KPI");
          while_hide("chart-chooseWarning");
      }
-     else if($("#chart-view :selected").attr('id')=="none-view"){
+     else if($("#chart-view option").length==0){
          $("#chart-chooseWarning").removeClass("hide").text("请选择观察组");
          while_hide("chart-chooseWarning");
      }
@@ -769,12 +769,11 @@ function init_manage() {
      } else {
           window.addEventListener('resize', init_rightContent, false);
      }
-    if($("#is-calcu-relate")){
-        $("#is-calcu-relate").find("option").each(function(){
-            $(this).bind("click", select_calcuRelate);
-        })
-
-    }
+//    if($("#is-calcu-relate")){
+//        $("#is-calcu-relate").find("option").each(function(){
+//            $(this).bind("click", select_calcuRelate);
+//        })
+//    }
 }
 
 ///////////////  KPI  ///////////////////////////////////////
@@ -1050,20 +1049,26 @@ function is_calcu() {
 function calcuInput(event){
     var e = event ? event : (window.event ? window.event : null);
     var obj = e.srcElement || e.target;
-    $("#takeCal").attr("cal", $(obj).val());
+    var post_value=$(obj).val();
+    var reg;
+    $("#is-calcu-relate").find("option").each(function(){
+        reg="/\\["+$(this).text()+"]/g";
+        post_value=post_value.replace(eval(reg),"["+$(this).attr('value')+"]");
+    });
+    $("#takeCal").attr("cal", post_value);
 }
-function select_calcuRelate(event) {
-     var e = event ? event : (window.event ? window.event : null);
-     var obj = e.srcElement || e.target;
+function select_calcuRelate() {
      var wzx=document.getElementById("is-calcu-relate");
-     var val = "[" + wzx.options[wzx.selectedIndex].text + "]";
-     var valId = "[" + $(obj).attr("value") + "]";
-     var oldVal = $("#calcuType-input").val();
-     var oldValId = $("#takeCal").attr("cal");
-     var newVal = oldVal + val;
-     var newValId = oldValId + valId;
-     $("#calcuType-input").val(newVal);
-     $("#takeCal").attr("cal", newValId);
+     if(wzx.options[wzx.selectedIndex].text !=""){
+         var val = "[" + wzx.options[wzx.selectedIndex].text + "]";
+         var valId = "[" + wzx.options[wzx.selectedIndex].getAttribute("value") + "]";
+         var oldVal = $("#calcuType-input").val();
+         var oldValId = $("#takeCal").attr("cal");
+         var newVal = oldVal + val;
+         var newValId = oldValId + valId;
+         $("#calcuType-input").val(newVal);
+         $("#takeCal").attr("cal", newValId);
+     }
 }
 
 function select_calcuMethod(event) {

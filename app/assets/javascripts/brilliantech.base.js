@@ -45,19 +45,12 @@ function hide_handle_dialog() {
 }
 
 function MessageBox(str, type) {
-     $('#MessageBox .message-body').find("p").text(str);
-     $('#MessageBox').removeClass('hide');
-     if(type != null) {
-          $(".message-header").addClass(type);
-     }
-     else{
-     	  $(".message-header").addClass('message-normal');
-     }
+     $('#MessageBox').addClass(type).find("p").text(str);
+     $('#MessageBox').slideDown("2000");
+     setTimeout(function(){
+         $("#MessageBox").slideUp("2000");
+     },2000)
 }
-function message_close() {
-     $("#MessageBox").addClass('hide');
-}
-
 function change_label_to_text(obj) {
      var tag = obj.firstChild.tagName;
      if( typeof (tag) != "undefined" && (tag == "INPUT" || tag == "TEXTAREA"))
@@ -123,14 +116,6 @@ function flash_hidden_message(obj, times) {
      }, 300);
 }
 
-
-//function MessageBoxClear() {
-//     $('#MessageBox > p').html("");
-//}
-//
-//function MessageBoxAdd(str) {
-//     $('#MessageBox > p').html($('#MessageBox > p').html() + str).parent().show();
-//}
 //只能输入数字和小数点,不能0开头
 function clearNoNum(obj)
 {
