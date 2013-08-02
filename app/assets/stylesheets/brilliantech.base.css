@@ -459,3 +459,29 @@ a:hover,a:focus{
 .font-margin-right{
 	margin-right:10px;
 }
+
+
+
+
+/***********************************************************    slidebox
+*****************************************************************************************************/
+.slideBox{
+    position:fixed;
+    bottom:0px;
+    width:860px;
+    margin-left:-430px;
+    left:50%;
+    color:white;
+    text-align:center;
+    padding:12px 0 3px;
+    font-size:15px;
+    z-index:99;
+}
+
+.messageSuccess {
+    background-color:#27ae60;
+}
+
+.messageFail {
+    background-color:red;
+}
