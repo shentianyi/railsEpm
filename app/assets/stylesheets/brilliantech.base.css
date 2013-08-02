@@ -172,70 +172,31 @@ a:hover,a:focus{
 
 /***************************************************** MessageBox **************************************************************/
 .message-box{
-	position:fixed;
-	width:600px; 
-	left:50%;
-	top:30%;
-	margin-left:-300px;
-	z-index:99;
-	background-color:white;
-	box-shadow:2px 2px 2px #9d9d9d;
-	-webkit-box-shadow:2px 2px 2px #9d9d9d;
-	-moz-box-shadow:2px 2px 2px #9d9d9d;
-	border:1px solid rgba(0, 0, 0, 0.2);
-	border-radius:3px;
-	box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);
-	-webkit-box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);
+    position:fixed;
+    z-index:99;
+    bottom:0;
+    width:600px;
+    margin-left:-300px;
+    word-break:break-all;
+    word-wrap:break-word;
+    left:50%;
+    padding:10px 5px 2px;
+    background-color:#2db12d;
+    color:white;
+
 }
-.message-header{
-	font-size:20px;
-	margin-left:1px;
-	margin-bottom:0px;
-	margin-top:2px;
-	padding:5px 26px; 
-	position:relative;
-	top:0px;
-	left:-3px;
-	background-position:-5px 6px;
-	background-repeat:no-repeat;
+
+.message-box.message-correct{
+    background:#2db12d;
+    color:white;
 }
-.message-correct{
-    /*background-image:url("../images/message-correct.png");*/
-    background-image:url("/assets/message-correct.png");
-    color:#468847;
-}
-.message-error{
-    /*background-image:url("../images/message-wrong.png");*/
-    background-image:url("/assets/message-wrong.png");
-    color:#B94A48;
-    background-position:-5px -2px;
+.message-box.message-error{
+    background-color:#fa4545;
+    color:white
 }
 .message-warning{
-    /*background-image:url("../images/message-warning.png");*/
-    background-image:url("/assets/message-warning.png");
-    color:#C09853;
-}
-.message-normal{
-	padding:3px !important;
-}
-.message-remove{
-	margin-top:5px;
-	margin-right:5px;
-}
-.message-heading{
-	padding:7px;
-	border-bottom:2px solid #eaedec;
-}
-.message-body{
-	padding:11px 8px;
-    font-size:18px;
-	word-break:break-all;
-	word-wrap:break-word;
-}
-.message-body p{
-	color:#9d9d9d;
-    margin-bottom:0px;
+    color:white;
+    background-color:#f7c61b;
 }
 /********************************************************* 底部的装饰 ***************************************************/
 .bottom-decoration{
