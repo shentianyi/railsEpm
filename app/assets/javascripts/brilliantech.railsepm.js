@@ -166,9 +166,7 @@ function init_analytics() {
      }
      $("#from").val(formatDate(WeekFirstDay)).attr("week", $.datepicker.iso8601Week(WeekFirstDay)).attr("endDateYear",WeekLastDay.getFullYear());
      $("#to").val(formatDate(WeekLastDay)).attr("week", $.datepicker.iso8601Week(WeekFirstDay)).attr("endDateYear",WeekLastDay.getFullYear());
-     // $("#chart-group").find("option").each(function(){
-        // $(this).bind("click",chart_chooseEntity)
-     // });
+
 //              var dateBegin,dateEnd;
 //              var date1=($("#from").val()).split("-");
 //              var date2=($("#to").val()).split("-");
@@ -1770,15 +1768,15 @@ function init_entryKpi() {
                var month=quarterConvertMonth(quarter)
                var originQuarter=y+"-0"+quarterBelong(m);
                $("#entry-kpi").attr("compare",originQuarter);
-               $("#select-quarter").removeClass("hide").find("option").each(function() {
+               $("#select-quarter").removeClass("hide").change(function(){
+                   var month=quarterConvertMonth($(this).find(":selected").data('order'));
+                   var chooseQuarter=new Date($("#entry-kpi").val(),month).toISOString();
+                   refresh_kpi_entry(chooseQuarter);
+
+               }).find("option").each(function() {
                     if($(this).val() == QuarterFirstMonth) {
                          $(this).attr("selected", true);
                     };
-                    $(this).bind('click',function(){
-                        var month=quarterConvertMonth($(this).data('order'));
-                        var chooseQuarter=new Date($("#entry-kpi").val(),month).toISOString();
-                        refresh_kpi_entry(chooseQuarter);
-                    })
                });
                generateHTML=new Date(y,month).toISOString();
                refresh_kpi_entry(generateHTML);
