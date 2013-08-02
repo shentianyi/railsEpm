@@ -269,11 +269,7 @@ function init_date_picker(){
 function init_component(){
     init_time_picker();
     init_date_picker();
-
 }
-
-
-$(document).ready(init_component);
 
 
 

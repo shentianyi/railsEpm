@@ -29,15 +29,13 @@
 
                     <%= select_tag :entity_group,options_from_collection_for_select(@entity_groups,'id','name'),{:id=>'chart-view',:class=>'pull-left conditionPart-entity'}%>
 
- <div class="chart-optionRadio">
-                        <label class="radio ">
-                            <input type="radio" name="chartRadios" checked value="1"/>
-                            以综合值分析
-                        </label>
-                        <label class="radio ">
-                            <input type="radio" name="chartRadios" value="0"/>
-                            以平均值分析
-                        </label>
+                    <div class="chart-optionRadio">
+                         <label class="radio ">
+                              <input type="radio" name="chartRadios" checked value="1"/>
+                              以综合值分析 </label>
+                         <label class="radio ">
+                              <input type="radio" name="chartRadios" value="0"/>
+                              以平均值分析 </label>
                     </div>
                </div>
 

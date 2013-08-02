@@ -166,9 +166,9 @@ function init_analytics() {
      }
      $("#from").val(formatDate(WeekFirstDay)).attr("week", $.datepicker.iso8601Week(WeekFirstDay)).attr("endDateYear",WeekLastDay.getFullYear());
      $("#to").val(formatDate(WeekLastDay)).attr("week", $.datepicker.iso8601Week(WeekFirstDay)).attr("endDateYear",WeekLastDay.getFullYear());
-     $("#chart-group").find("option").each(function(){
-        $(this).bind("click",chart_chooseEntity)
-     });
+     // $("#chart-group").find("option").each(function(){
+        // $(this).bind("click",chart_chooseEntity)
+     // });
 //              var dateBegin,dateEnd;
 //              var date1=($("#from").val()).split("-");
 //              var date2=($("#to").val()).split("-");
@@ -400,6 +400,8 @@ function init_chart() {
              endTimePost = new Date(dateEnd[0],dateEnd[1]-1,dateEnd[2]).toISOString();
          };
          if(vali){
+              console.log(startTime,endTime)
+              // form_chart([1,2,3],[1,2,3],[1,2,3],interval,startTime,endTime,timeBeginChart);
          $.post('/kpi_entries/analyse', {
              kpi : kpi,
 	         average:$("input:radio[name='chartRadios']:checked").val()=="0",
@@ -409,6 +411,7 @@ function init_chart() {
          }, function(msg) {
              if(msg.result){
                  var data=msg.object;
+                             console.log(startTime,endTime)
                  form_chart(data.current,data.target,data.unit,interval,startTime,endTime,timeBeginChart);
                  $(".control-chart-btn").each(function(){
                      $(this).removeClass('active');
