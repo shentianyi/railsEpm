@@ -2,17 +2,19 @@
 module DateTimeHelper
   # parse time to hour string
   def self.parse_time_to_hour_string time
-    time.strftime('%Y-%m-%d %H:00:00')
+    time.strftime('%Y-%m-%d %H:00:00%z')
   end
 
   # parse string to date hour
   def self.parse_string_to_date_hour str
-    DateTime.strptime(Time.parse(str).to_s,'%Y-%m-%d %H:%M:%S')
+    # DateTime.strptime(Time.parse(str).to_s,'%Y-%m-%d %H:%M:%S')
+    Time.parse(str).utc
   end
 
   # parse time to day string
   def self.parse_time_to_day_string time
-    time.strftime('%Y-%m-%d')
+    # time.strftime('%Y-%m-%d %Z')
+    Time.at(time.to_i).strftime('%Y-%m-%d %Z')
   end
 
   # parse time to week string
