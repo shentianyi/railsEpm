@@ -1074,11 +1074,10 @@ function select_calcuRelate() {
 function select_calcuMethod(event) {
      var e = event ? event : (window.event ? window.event : null);
      var obj = e.srcElement || e.target;
-     var val = $(obj).text();
      var sign = $(obj).attr("sign");
      var oldVal = $("#calcuType-input").val();
      var oldValId = $("#takeCal").attr("cal");
-          var newVal = oldVal + val;
+          var newVal = oldVal + sign;
           var newValId = oldValId + sign;
           $("#calcuType-input").val(newVal);
           $("#takeCal").attr("cal", newValId);
