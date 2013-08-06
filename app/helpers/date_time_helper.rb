@@ -19,8 +19,8 @@ module DateTimeHelper
 
   # parse time to week string
   def self.parse_time_to_week_string time
-    date=Date.parse(time.to_s)
-    week=date.cweek+1
+    date=Date.parse(parse_time_to_day_string(time))
+    week=date.cweek
     week= week>9 ?  week : "0#{week}" 
     "#{date.year}-#{week}"
   end
@@ -33,7 +33,7 @@ module DateTimeHelper
 
   # parse time to month string
   def self.parse_time_to_month_string time
-    month=time.month>9 ? time.month : "0#{time.month}" 
+    month=Time.at(time.to_i).month>9 ? Time.at(time.to_i).month : "0#{Time.at(time.to_i).month}" 
     "#{time.year}-#{month}"
   end
 
@@ -45,6 +45,7 @@ module DateTimeHelper
 
   # parse time to quarter string
   def self.parse_time_to_quarter_string time
+    time=Time.at(time.to_i)
     "#{time.year}-0#{(time.month-1)/3+1}"
   end
 
@@ -56,6 +57,7 @@ module DateTimeHelper
 
   # parse time to year string
   def self.parse_time_to_year_stirng time
+    time=Time.at(time.to_i)
     "#{time.year}"
   end
 

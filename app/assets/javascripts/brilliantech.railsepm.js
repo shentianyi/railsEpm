@@ -1444,9 +1444,9 @@ function insert_entityView() {
                  if(data.result) {
                      var length = $("#manage-group-view").find("li").length - 1;
                      $("#manage-group-view li:eq(" + length + ")").before($("<li />")
-                         .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "view"))
-                         .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "view"))
-                         .append($("<a href='../entity_groups?p=" + data.object + "'/>").text(val).attr("number", data.number).attr("belong", "view")));
+                         .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.object).attr("belong", "view"))
+                         .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.object).attr("belong", "view"))
+                         .append($("<a href='../entity_groups?p=" + data.object + "'/>").text(val).attr("number", data.object).attr("belong", "view")));
                      $("#creat-newEntity").val("");
                  } else {
                      alert(data.content);
