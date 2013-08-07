@@ -210,7 +210,7 @@ end
 def jsonp_str(obj)
   str=''
   str =obj.to_json.to_s if obj
-  return params[:callback]?params[:callback]:''+'('+ str +')'
+  return params[:callback]?params[:callback]+'('+ str +')':''+'('+ str +')'
 end
 
 def new_message
