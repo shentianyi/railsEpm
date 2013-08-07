@@ -62,6 +62,7 @@ IFEpm::Application.routes.draw do
   namespace :api,defaults:{format:'json'} do
     controller :kpi_entries do
       match 'kpi_entries/entry'=>:entry
+      match 'kpi_entries/analyse'=>:analyse
     end
     resources :dashboards
     controller :dashboard_items do

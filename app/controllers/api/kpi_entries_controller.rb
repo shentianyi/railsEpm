@@ -1,6 +1,6 @@
 #encoding: utf-8
 module Api
-  class KpiEntriesController < ApiController
+  class KpiEntriesController < ApplicationController
     # create or update kpi entry
     def entry
       if request.post?
@@ -18,12 +18,12 @@ module Api
 
 
     def analyse
-      if request.get?
+
         # @ent
         @entity_groups=current_user.entity_groups.accessible_by(current_ability)
         get_ability_category
         get_kpis_by_category
-      else
+
         msg=Message.new
         if data=KpiEntryAnalyseHelper.get_kpi_entry_analysis_data(params[:kpi],params[:entity_group],params[:startTime],params[:endTime],params[:average]=="true")
           msg.result=true
@@ -34,7 +34,7 @@ module Api
           t.json {render :json=>msg}
           t.js {render :js=>jsonp_str(msg)}
         end
-      end
+
     end
   end
 end
