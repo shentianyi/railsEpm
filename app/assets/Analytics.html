@@ -2,11 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8" >
-    <link href="stylesheets/wzx-jquery-ui.css" rel="stylesheet" >
-    <link href="stylesheets/timePicker.css" rel="stylesheet" >
     <link href="stylesheets/wzx-bootstrap.css" rel="stylesheet" >
     <link href="stylesheets/brilliantech.base.css" rel="stylesheet" >
     <link href="stylesheets/brilliantech.railsepm.css" rel="stylesheet" >
+    <link href="stylesheets/Analytic-main.css" rel="stylesheet" >
+    <link href="stylesheets/Analytic-chosen.css" rel="stylesheet" >
     <title>if kpi</title>
 </head>
 <body>
@@ -42,47 +42,48 @@
         </ul>
         <a class="btn btn-success btn-navi pull-right" href="">输入 KPI</a>
     </div>
-    <div class="sub-middle">
-        <!--<div class="sub-middle-tool pull-right">-->
-            <!--<a data-placement="bottom" data-animation=false id="tool-print" title="print this page"><i class="icon-print"></i> 打印</a>-->
-            <!--<a data-placement="bottom" data-animation=false id="tool-excel" title="export to Excel"><i class="icon-share-alt"></i>Excel</a>-->
-            <!--<a data-placement="bottom" data-animation=false id="tool-pdf" title="export to PDF"><i class="icon-share-alt"></i>PDF</a>-->
-        <!--</div>-->
+
+
+
+
+
+
+    <!--以下是analytic独有的-->
+    <div>
+        <select data-placeholder="entity" style="width:80px;" class="chosen-select" id="chart-group" >
+            <option value="group1">entity1</option>
+            <option value="group2">entity2</option>
+            <option value="group3">entity3</option>
+        </select>
+
+        <select data-placeholder="kpi" style="width:150px;" class="chosen-select" id="chart-kpi" >
+            <option value="kpi1" interval="200">week</option>
+            <option value="kpi1" interval="90">hour</option>
+            <option value="kpi2" interval="400">quarter</option>
+            <option value="kpi3" interval="300">month</option>
+            <option value="kpi3" interval="500">year</option>
+        </select>
+
+
+
+        <select data-placeholder="view" style="width:150px;" class="chosen-select" id="chart-view" >
+            <option value="entity1">view1</option>
+            <option value="entity2">view2</option>
+            <option value="entity3">view3</option>
+        </select>
+
     </div>
-    <div class="middle clearfix">
-        <div class="left-category pull-left">
-        </div>
 
         <div class="right-content pull-left" id="right-content">
             <div class="content-condition clearfix">
                 <div class="content-condition-part content-condition-leftpart pull-left">
-                    <div class="chart-leftMark">
-                        <label>类别</label>
-                        <label>KPI</label>
-                        <label class="chart-leftMark-view">观察点</label>
-                    </div>
-                    <select class="pull-left conditionPart-group" id="chart-group" origin="全部">
-                        <!--<option style="display:none" selected="selected" id="none-group">类别</option>-->
-                        <option value="group0">全部</option>
-                        <option value="group1">entity1</option>
-                        <option value="group2">entity2</option>
-                        <option value="group3">entity3</option>
-                    </select>
-                    <select class="pull-left" id="chart-kpi">
-                        <!--<option style="display:none" selected="selected" id="none-kpi">选择KPI</option>-->
-                        <option value="kpi1" interval="200">week</option>
-                        <option value="kpi1" interval="90">hour</option>
-                        <option value="kpi2" interval="400">quarter</option>
-                        <option value="kpi3" interval="300">month</option>
-                        <option value="kpi3" interval="500">year</option>
-                    </select>
-                    <span class="inline pull-left">-</span>
-                    <select class="pull-left conditionPart-entity" id="chart-view">
-                        <!--<option style="display:none" selected="selected" id="none-view">选择观察组</option>-->
-                        <option value="entity1">view1</option>
-                        <option value="entity2">view2</option>
-                        <option value="entity3">view3</option>
-                    </select>
+
+
+
+
+
+
+
                     <div class="chart-optionRadio">
                         <label class="radio ">
                             <input type="radio" name="chartRadios" checked>
@@ -117,20 +118,21 @@
            <div id="container" class="analyze-chart">
            </div>
         </div>
-    </div>
+
 
 </div>
 <script src="javascripts/jquery-1.8.2.min.js"></script>
-<script src="javascripts/jquery.timePicker.min.js"></script>
 <script src="javascripts/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="javascripts/chosen.jquery.min.js"></script>
 <script src="javascripts/highcharts.js"></script>
 <script src="javascripts/bootstrap.min.js"></script>
 <script src="javascripts/brilliantech.base.js"></script>
 <script src="javascripts/brilliantech.railsepm.js"></script>
+<script src="javascripts/Analytics_init.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         init_analytics();
-    })
+    });
 </script>
 </body>
 </html>
