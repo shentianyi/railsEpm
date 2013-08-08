@@ -26,13 +26,13 @@
       <td>*KPI名称</td>
       <td>
 
-
+    <div id="kpi-select">
         <select class="pull-left" id="chart-kpi">
           <%@kpis.each do |kpi|%>
               <option value="<%= kpi.id%>" interval="<%= kpi.frequency%>"><%= kpi.name%></option>
           <%end%>
         </select>
-
+</div>
       </td>
     </tr>
     <tr>
