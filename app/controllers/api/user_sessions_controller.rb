@@ -1,4 +1,4 @@
-class Api::UserSessionsController < ApplicationController
+class Api::UserSessionsController < ApplicationController 
   def create
     result = {:result=>false}
     @user_session = UserSession.new(params[:user_session])
