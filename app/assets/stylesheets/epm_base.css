@@ -20,17 +20,27 @@ header{
     color:white;
     font-size:18px;
     position:absolute;
-    top:40px;
+    top:35px;
     left:0;
     right:0
 }
 .user-portrait-brand>p:nth-of-type(2){
-    font-size:27px;
-    top:70px;
+    font-size:40px;
+    top:65px;
 }
-.user-portrait{
+nav ul{
+    list-style: none;
+    display:inline-block;
+    margin:0;
 
 }
-.user-portrait-name{
-
+nav ul li{
+    float:left;
+}
+nav ul li a{
+    display:block;
+    width:150px;
+    color:#959595;
+    font-weight:400;
+    font-size:17px;
 }

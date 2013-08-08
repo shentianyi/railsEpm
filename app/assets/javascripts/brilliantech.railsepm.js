@@ -869,6 +869,7 @@ function post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,targe
                 );
                 if(formula){
                  $("#"+id).find(".kpi-checked").attr("title",formulaShow);
+                 $("#is-calcu-relate").append($("<option />").attr("value",id).text(name));
                 }
                }
          }
@@ -1002,6 +1003,7 @@ function insert_entity() {
                              .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.object).attr("belong", "kpi"))
                              .append($("<a href='../kpis?p=" + data.object + "'/>").text(val).attr("number", data.object).attr("belong", "kpi")));
                          $("#creat-newEntity").val("");
+                         $("#add-entity").append($("<option />").attr("value",data.object).text(val));
                     } else {
                          alert(data.content);
                     }
