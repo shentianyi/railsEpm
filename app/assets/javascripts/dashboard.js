@@ -187,7 +187,7 @@ function db_view_create_callback(data){
         }
     }
     else{
-        slide_box("新建视图时发生错误，请选择一个仪表盘后再新建视图",false)
+        slide_box("新建时发生错误，请选择一个视角后再新建",false)
     }
 
 }
