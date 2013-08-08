@@ -998,9 +998,9 @@ function insert_entity() {
                     if(data.result) {
                          var length = $("#manage-group-kpi").find("li").length - 1;
                          $("#manage-group-kpi li:eq(" + length + ")").before($("<li />")
-                             .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "kpi"))
-                             .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "kpi"))
-                             .append($("<a href='../kpis?p=" + data.object + "'/>").text(val).attr("number", data.number).attr("belong", "kpi")));
+                             .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.object).attr("belong", "kpi"))
+                             .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.object).attr("belong", "kpi"))
+                             .append($("<a href='../kpis?p=" + data.object + "'/>").text(val).attr("number", data.object).attr("belong", "kpi")));
                          $("#creat-newEntity").val("");
                     } else {
                          alert(data.content);
@@ -1245,9 +1245,9 @@ function insert_entityUser() {
                     if(data.result) {
                          var length = $("#manage-group-user").find("li").length - 1;
                          $("#manage-group-user li:eq(" + length + ")").before($("<li />")
-                             .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.number).attr("belong", "entity"))
-                             .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.number).attr("belong", "entity"))
-                             .append($("<a href='../users?p=" + data.object + "'/>").text(val).attr("number", data.number).attr("belong", "entity")));
+                             .append($("<i />").addClass("icon-remove hide pull-left").click(remove_leftNav).attr("number", data.object).attr("belong", "entity"))
+                             .append($("<i />").addClass("icon-pencil hide pull-left").click(edit_leftNav).attr("number", data.object).attr("belong", "entity"))
+                             .append($("<a href='../users?p=" + data.object + "'/>").text(val).attr("number", data.object).attr("belong", "entity")));
                          $("#creat-newEntity").val("");
                     }
                     else {
