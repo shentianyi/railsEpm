@@ -869,7 +869,9 @@ function post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,targe
                 );
                 if(formula){
                  $("#"+id).find(".kpi-checked").attr("title",formulaShow);
-                 $("#is-calcu-relate").append($("<option />").attr("value",id).text(name));
+                }
+                else{
+                    $("#is-calcu-relate").append($("<option />").attr("value",id).text(name));
                 }
                }
          }
