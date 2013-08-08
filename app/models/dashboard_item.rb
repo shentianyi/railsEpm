@@ -41,8 +41,8 @@ class DashboardItem < ActiveRecord::Base
           item.calculate_type=='AVERAGE')
       if data
         data[:result]=true
-        data[:startTime] = time_span[:start].to_s
-        data[:endTime]=time_span[:end].to_s
+        data[:startTime] = time_span[:start].iso8601
+        data[:endTime]=time_span[:end].iso8601
         data[:interval] = Kpi.find_by_id(item.kpi_id).frequency.to_s
       end
     end
