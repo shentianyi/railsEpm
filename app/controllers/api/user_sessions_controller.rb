@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Api::UserSessionsController < ApplicationController
  before_filter :require_no_user, :only=>:create
  skip_before_filter :require_user,:only=>:create
