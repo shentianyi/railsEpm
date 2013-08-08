@@ -17,6 +17,8 @@ $trial_edition = 'basic'
 
 $product_name = 'EPM'
 
+$open_signup = false
+
 
 
 

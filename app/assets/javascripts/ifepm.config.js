@@ -9,25 +9,25 @@ var ifepm=ifepm||{};
 
 ifepm.config={
 
-    update_sequence_url:{url:"http://localhost:3000/DashboardItems/update_sequence.json",crossDomain:false,dataType:"json"},
+    update_sequence_url:{url:"/DashboardItems/update_sequence.json",crossDomain:false,dataType:"json"},
 
 
-    get_dashboard_items_url:{url:"http://localhost:3000/DashboardItems/items_by_dashboard_id.json",crossDomain:false,dataType:"json"},
+    get_dashboard_items_url:{url:"/DashboardItems/items_by_dashboard_id.json",crossDomain:false,dataType:"json"},
 
 
-    get_item_data_url:{url:"http://localhost:3000/DashboardItems/get_data.json",crossDomain:false,dataType:"json"},
+    get_item_data_url:{url:"/DashboardItems/get_data.json",crossDomain:false,dataType:"json"},
 
 
-    dashboard_create_url:{url:"http://localhost:3000/Dashboards/create.json",crossDomain:false,dataType:"json"},
+    dashboard_create_url:{url:"/Dashboards/create.json",crossDomain:false,dataType:"json"},
 
 
-    dashboard_delete_url:{url:"http://localhost:3000/Dashboards/destroy.json",crossDomain:false,dataType:"json"},
+    dashboard_delete_url:{url:"/Dashboards/destroy.json",crossDomain:false,dataType:"json"},
 
 
-    dashboard_item_delete_url:{url:"http://localhost:3000/DashboardItems/destroy.json",crossDomain:false,dataType:"json"},
+    dashboard_item_delete_url:{url:"/DashboardItems/destroy.json",crossDomain:false,dataType:"json"},
 
 
-    dashboard_item_create_url:{url:"http://localhost:3000/DashboardItems/create.json",crossDomain:false,dataType:"json"},
+    dashboard_item_create_url:{url:"/DashboardItems/create.json",crossDomain:false,dataType:"json"},
 
 
     container:"dashBoard-show",

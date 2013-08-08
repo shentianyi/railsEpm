@@ -62,6 +62,7 @@ IFEpm::Application.routes.draw do
   namespace :api,defaults:{format:'json'} do
     controller :kpi_entries do
       match 'kpi_entries/entry'=>:entry
+      match 'kpi_entries/analyse'=>:analyse
     end
     resources :dashboards
     controller :dashboard_items do
@@ -69,12 +70,17 @@ IFEpm::Application.routes.draw do
       match 'dashboard_items/items_by_dashboard_id'=>:items_by_dashboard_id
       match 'dashboard_items/update_sequence' => :update_sequence
     end
+    controller :user_sessions do
+      match 'user_sessions/create' =>:create
+      match 'user_sessions/destroy' => :destroy
+    end
+
 
     controller :kpis do
       match 'kpis/kpis_by_category'=>:kpis_by_category
     end
 
-    resources :user_sessions
+    #resources :user_sessions
     resources :entity_groups
     resources :kpi_categories
 

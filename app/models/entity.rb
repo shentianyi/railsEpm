@@ -19,6 +19,7 @@ class Entity < ActiveRecord::Base
   end
   
   private
+  
   def validate_create_update
     errors.add(:name,'组织名不可重复') if Entity.where(:name=>self.name,:tenant_id=>self.tenant_id).first if new_record?
     errors.add(:name,'组织名不可重复') if Entity.where(:name=>self.name,:tenant_id=>self.tenant_id).where('id<>?',self.id).first unless new_record?

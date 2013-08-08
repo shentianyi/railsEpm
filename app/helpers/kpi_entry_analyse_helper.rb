@@ -46,6 +46,7 @@ module KpiEntryAnalyseHelper
 		    end
 		end
 	    when KpiFrequency::Quarterly
+	      start_time,end_time=Time.at(start_time.to_i),Time.at(end_time.to_i)
 		start_time=DateTimeHelper.get_utc_time_by_str(Date.new(start_time.year,(start_time.month-1)/3*3+1,1).to_s)
 		end_time=DateTimeHelper.get_utc_time_by_str(Date.new(end_time.year,(end_time.month-1)/3*3+1,1).to_s)
 		  entries=  KpiEntry.where(:kpi_id=>kpi_id,:entity_id=>entity_ids,:parsed_entry_at=>start_time..end_time).all
@@ -59,6 +60,7 @@ module KpiEntryAnalyseHelper
 		    end
 		end
 	    when KpiFrequency::Yearly
+	       start_time,end_time=Time.at(start_time.to_i),Time.at(end_time.to_i)
 		start_time=DateTimeHelper.get_utc_time_by_str(Date.new(start_time.year,1,1).to_s)
 		end_time=DateTimeHelper.get_utc_time_by_str(Date.new(end_time.year,1,1).to_s)
 		  entries=  KpiEntry.where(:kpi_id=>kpi_id,:entity_id=>entity_ids,:parsed_entry_at=>start_time..end_time).all

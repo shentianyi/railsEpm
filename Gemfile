@@ -15,6 +15,8 @@ gem 'cancan'
 gem 'redis'
 gem 'resque'
 gem 'redis-namespace'
+# gem 'guard-resque'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

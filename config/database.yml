@@ -18,7 +18,7 @@ development:
  username: epmer
  password: epmer@
  socket: /var/run/mysqld/mysqld.sock
- # socket: /tmp/mysql.sock
+ #socket: /tmp/mysql.sock
 #
 #
 # Warning: The database defined as "test" will be erased and
@@ -28,7 +28,7 @@ test:
  adapter: mysql2
  encoding: utf8
  reconnect: false
- database: epmdb_test
+ database: epmdb
  pool: 5
  username: epmer
  password: epmer@

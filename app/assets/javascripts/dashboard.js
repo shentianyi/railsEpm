@@ -133,9 +133,30 @@ function get_dashboard_id(){
 }
 
 function get_time_string(){
-    var from =  $.trim($("#from").val()) + " " + $.trim($("#fromTime").val());
-    var to = $.trim($("#to").val()) + " " + $.trim($("#toTime").val());
-    return connect_time_str(new Date(from) ,new Date(to));
+    var from = $("#from").datepicker("getDate")
+    var fromTime = $.timePicker("#fromTime").getTime();
+    if (fromTime){
+        from.setHours(fromTime.getHours());
+        from.setMinutes(fromTime.getMinutes());
+        from.setSeconds(fromTime.getSeconds());
+    }
+
+    var to =$( "#to" ).datepicker("getDate");
+    var toTime = $.timePicker("#toTime").getTime();
+    if (toTime){
+        to.setHours(toTime.getHours());
+        to.setMinutes(toTime.getMinutes());
+        to.setSeconds(toTime.getSeconds());
+        to.setMilliseconds(toTime.getMilliseconds());
+    }
+    else {
+        to.setHours(23);
+        to.setMinutes(59);
+        to.setSeconds(59);
+        to.setMilliseconds(999);
+    }
+
+    return connect_time_str(from ,to);
 }
 
 
