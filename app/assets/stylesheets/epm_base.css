@@ -1,30 +1,84 @@
+@font-face {
+    font-family:"open-sans";
+    src: url("font/OpenSans-Regular.eot");
+    src: local("OpenSans-Regular Regular"),
+    local("OpenSans-Regular"),
+    url('OpenSans-Regular.woff') format('woff'),
+    url('OpenSans-Regular.ttf') format('truetype'),
+    url('OpenSans-Regular.svg#OpenSans-Regular') format('svg');
+}
+html{
+    height:100%;
+}
 body{
     margin:0;
+    height:100%;
     font-family:"Helvetica Neue",sans-serif;
+    font-weight:500;
+    font-family:"open-sans";
+}
+/*********************************************************************************************************左边用户设置部分
+*******************************************************************************************************************/
+.left-user-setting{
+    position:absolute;
+    top:0;
+    height:100%;
+    bottom:0;
+    width:200px;
+    background-color:#333;
+    z-index:10;
+    left:-200px;
+    transition:left 0.25s ease-out;
+    -moz-transition:left 0.25s ease-out;
+    -webkit-transition:left 0.25s ease-out;
+}
+.btn-log-out{
+    z-index:20;
+    position:absolute;
+    bottom:40px;
+    width:76%;
+    left:50%;
+    margin-left:-38%;
+}
+/********************************************************************************************************* 右边主内容区
+*******************************************************************************************************************/
+.wrap-main{
+    min-width:1000px;
+    height:100%;
+    position:absolute;
+    transition:left 0.25s ease-out;
+    right:0;
+    left:0;
 }
 /*********************************************************************************************************头部
 *******************************************************************************************************************/
 header{
-    height:150px;
+    height:135px;
     background-color:#f2f2f2;
 }
 .user-portrait-background{
+    background:rgba(69,159,210,0.8);
     background:-moz-radial-gradient(rgba(69,159,210,0.5),rgba(69,159,210,0.8));
+    background:-webkit-radial-gradient(rgba(69,159,210,0.5),rgba(69,159,210,0.8));
     position:relative;
     height:100%;
     width:150px;
+    cursor:pointer;
 }
 .user-portrait-brand{
     background:url("../images/logo.png") no-repeat center bottom;
     width:150px;
-    height:100px;
+    height:95px;
 }
 .user-portrait-name{
     color:white;
-    font-family:"tekton pro";
-    padding-left:40px;
+    font-family:"Brush Script std";
+    padding-left:31px;
     font-size:18px;
     margin-top:5px;
+}
+nav{
+    height:100%;
 }
 nav ul{
     list-style: none;
@@ -32,18 +86,18 @@ nav ul{
     margin:0;
     padding-left:5px;
 }
-nav ul li{
+nav>ul>li{
     float:left;
 }
-nav ul li a{
+nav>ul>li>a{
     display:block;
-    width:140px;
+    width:135px;
     color:#959595;
-    font-weight:400;
-    font-size:17px;
-    height:150px;
+    font-size:16px;
+    height:105px;
     text-align:center;
     cursor:pointer;
+    text-decoration:none;
 }
 nav ul li a:hover{
     color:#f5a133;
@@ -60,33 +114,80 @@ nav ul li a span:nth-of-type(2){
     background-image:url("../images/nav-btn.png");
     background-repeat:no-repeat;
 }
+/********************************************************* get start
+**************************************************************/
 .nav-get-started{
     background-position:center 0px;
 }
 nav ul li a:hover .nav-get-started{
     background-position:center -50px;
 }
+/********************************************************* dash board
+**************************************************************/
 .nav-dash-board{
     background-position:center -100px;
 }
 nav ul li a:hover .nav-dash-board{
     background-position:center -148px;
 }
+/********************************************************* analytics
+**************************************************************/
 .nav-analytics{
     background-position:center -195px;
 }
 nav ul li a:hover .nav-analytics{
     background-position:center -238px;
 }
+/********************************************************* manage
+**************************************************************/
+.nav-manage{
+    background-position:center -515px;
+}
+nav ul li a:hover .nav-manage{
+    background-position:center -561px;
+}
+nav ul li a:hover ~ .nav-manage-sub{
+    left:auto;
+}
+.nav-manage-sub{
+    position:absolute;
+    width:135px;
+    padding:0;
+    background:#f2f2f2;
+    z-index:100;
+    left:-999em;
+}
+.nav-manage-sub:hover{
+    left:auto;
+}
+.nav-manage-sub>li>a{
+    text-align:center;
+    display:block;
+    color:#959595;
+    padding:7px 0;
+    cursor:pointer;
+    text-decoration:none;
+}
+/********************************************************* reports
+**************************************************************/
 .nav-report{
     background-position:center -299px;
 }
 nav ul li a:hover .nav-report{
     background-position:center -353px;
 }
+/********************************************************* entry kpi
+**************************************************************/
 .nav-entry-kpi{
     background-position:center -413px;
 }
 nav ul li a:hover .nav-entry-kpi{
     background-position:center -466px;
+}
+.manage-nav-table{
+    height:100%;
+}
+.manage-nav-table td a{
+    text-decoration:none;
+    color:#959595;
 }
