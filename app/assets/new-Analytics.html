@@ -2,6 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/datepicker.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/datetimepicker.css" rel="stylesheet" media="screen">
     <link href="stylesheets/wayne_sunny.css" rel="stylesheet">
     <link href="stylesheets/epm_base.css" rel="stylesheet">
     <link href="stylesheets/Analytic-chosen.css" rel="stylesheet">
@@ -64,36 +67,57 @@
                 <h2 class="normal-blue text-center">Analytics</h2>
             </div>
             <div class="pull-left analytics-condition-choose">
-                <select data-placeholder="entity" style="width:90px;" class="chosen-select" id="chart-group">
-                    <option value=""> </option>
-                    <option value="group1">entity1</option>
-                    <option value="group2">entity2</option>
-                    <option value="group3">entity3</option>
-                </select>
-                <select data-placeholder="kpi" style="width:150px;" class="chosen-select" id="chart-kpi">
-                    <option value=""> </option>
-                    <option value="kpi1" interval="200">week</option>
-                    <option value="kpi1" interval="90">hour</option>
-                    <option value="kpi2" interval="400">quarter</option>
-                    <option value="kpi3" interval="300">month</option>
-                    <option value="kpi3" interval="500">year</option>
-                </select>
-                <select data-placeholder="view" style="width:150px;" class="chosen-select" id="chart-view">
-                    <option value=""> </option>
-                    <option value="entity1">view1</option>
-                    <option value="entity2">view2</option>
-                    <option value="entity3">view3</option>
-                </select>
-
+                <div class="index-condition-group">
+                    <select data-placeholder="Entity" style="width:90px;" class="chosen-select" title="analy-entity-select" id="chart-group">
+                        <option value=""> </option>
+                        <option value="group1">entity1</option>
+                        <option value="group2">entity2</option>
+                        <option value="group3">entity3</option>
+                    </select>
+                    <select data-placeholder="Kpi" style="width:150px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi">
+                        <option value=""> </option>
+                        <option value="kpi1" interval="200">week</option>
+                        <option value="kpi1" interval="90">hour</option>
+                        <option value="kpi1" interval="100">day</option>
+                        <option value="kpi2" interval="400">quarter</option>
+                        <option value="kpi3" interval="300">month</option>
+                        <option value="kpi3" interval="500">year</option>
+                    </select>
+                    <select data-placeholder="view" style="width:150px;" class="chosen-select" title="analy-view-select" id="chart-view">
+                        <option value=""> </option>
+                        <option value="entity1">view1</option>
+                        <option value="entity2">view2</option>
+                        <option value="entity3">view3</option>
+                    </select>
+                </div>
+                <div class="index-condition-group">
+                    <input type="date" class="index-pick-date" placeholder="Begin Time" data-date-format="yy-mm-dd" id="analy-begin-time" />
+                    <input type="date" class="index-pick-date" placeholder="End Time" data-date-format="yy-mm-dd" id="analy-end-time" />
+                </div>
+                <div class="index-condition-group" style="width:120px">
+                    <label class="radio analy-radio">
+                        <input type="radio" name="chartRadios" value="1" checked>
+                        Summary
+                    </label>
+                    <label class="radio analy-radio">
+                        <input type="radio" name="chartRadios" value="2">
+                        Average
+                    </label>
+                </div>
+                <a class="btn btn-primary btn-normal" style="margin-top:14px">add chart</a>
             </div>
         </div>
     </div>
 </article>
 <script src="javascripts/jquery-1.8.2.min.js"></script>
-<script src="javascripts/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="javascripts/bootstrap.min.js"></script>
+<script src="javascripts/bootstrap-datepicker.js" charset="UTF-8"></script>
+<script src="javascripts/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+<script src="javascripts/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
 <script src="javascripts/chosen.jquery.min.js"></script>
 <script src="javascripts/wayne-base.js"></script>
 <script src="javascripts/Template.js"></script>
+<script src="javascripts/datetime_picker_template.js"></script>
 <script src="javascripts/Analytics_init.js"></script>
 <script>
     $(document).ready(function(){

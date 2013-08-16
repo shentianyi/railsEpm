@@ -13,4 +13,7 @@ function init_analytics(){
             disable_search_threshold:7
         }
     );
+    $("#analy-begin-time,#analy-end-time").on("click",function(){
+        form_date_picker($("#chart-kpi :selected").attr("interval"));
+    })
 }

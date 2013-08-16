@@ -308,9 +308,6 @@ function Graph(){
     };
 }
 
-
-
-
 //when user sorts the dashboard layout, the sequence should be updated in the server side
 ifepm.dashboard.update_item_sequence= function(container_selector){
 

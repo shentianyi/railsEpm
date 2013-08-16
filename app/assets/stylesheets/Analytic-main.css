@@ -8,10 +8,46 @@
 ****************************************************************************************/
 .analytics-condition{
     height:100px;
+    background-color:rgba(221,221,221,0.13);
+    border-top:1px solid rgba(221,221,221,0.5)
+}
+.index-condition-group{
+    width:250px;
+    float:left;
 }
 /************************************************* select
 ********************************************************************/
 .analytics-condition-choose {
-    margin-top:30px;
-    padding:5px 50px;
+    padding:18px 0px 5px 31px;
+}
+.chosen-container-single .chosen-single{
+    background:none;
+}
+div[title='analy-entity-select']{
+    float:left;
+}
+div[title='analy-kpi-select']{
+    float:right;
+ }
+div[title='analy-view-select']{
+    float:right;
+    margin-top:8px;
+}
+/************************************************* date input
+********************************************************************/
+.index-pick-date[type="date"]{
+    padding:4px 5px;
+    background-color:white;
+    width:150px !important;
+    margin-left:35px;
+    font-size:13px;
+}
+.index-pick-date[type="date"]:nth-of-type(2){
+    margin-top:6px;
+}
+/************************************************* radio input
+********************************************************************/
+.analy-radio{
+    margin-top:7px;
+    font-size:13px;
 }
