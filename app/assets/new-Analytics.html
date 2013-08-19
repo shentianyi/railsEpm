@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link href="stylesheets/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/wzx-bootstrap.css" rel="stylesheet" media="screen">
     <link href="stylesheets/datepicker.css" rel="stylesheet" media="screen">
     <link href="stylesheets/datetimepicker.css" rel="stylesheet" media="screen">
     <link href="stylesheets/wayne_sunny.css" rel="stylesheet">
@@ -74,7 +74,7 @@
                         <option value="group2">entity2</option>
                         <option value="group3">entity3</option>
                     </select>
-                    <select data-placeholder="Kpi" style="width:150px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi">
+                    <select data-placeholder="Kpi" style="width:150px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
                         <option value=""> </option>
                         <option value="kpi1" interval="200">week</option>
                         <option value="kpi1" interval="90">hour</option>
@@ -91,8 +91,10 @@
                     </select>
                 </div>
                 <div class="index-condition-group">
-                    <input type="date" class="index-pick-date" placeholder="Begin Time" data-date-format="yy-mm-dd" id="analy-begin-time" />
-                    <input type="date" class="index-pick-date" placeholder="End Time" data-date-format="yy-mm-dd" id="analy-end-time" />
+                    <input type="text" class="index-pick-date" placeholder="Begin Time" id="analy-begin-time" readonly=true />
+                    <label class="index-date-extra-info"></label>
+                    <input type="text" class="index-pick-date" placeholder="End Time" id="analy-end-time" readonly=true />
+                    <label class="index-date-extra-info"></label>
                 </div>
                 <div class="index-condition-group" style="width:120px">
                     <label class="radio analy-radio">
@@ -109,6 +111,7 @@
         </div>
     </div>
 </article>
+
 <script src="javascripts/jquery-1.8.2.min.js"></script>
 <script src="javascripts/bootstrap.min.js"></script>
 <script src="javascripts/bootstrap-datepicker.js" charset="UTF-8"></script>
@@ -117,7 +120,7 @@
 <script src="javascripts/chosen.jquery.min.js"></script>
 <script src="javascripts/wayne-base.js"></script>
 <script src="javascripts/Template.js"></script>
-<script src="javascripts/datetime_picker_template.js"></script>
+<script src="javascripts/date_picker_template.js"></script>
 <script src="javascripts/Analytics_init.js"></script>
 <script>
     $(document).ready(function(){

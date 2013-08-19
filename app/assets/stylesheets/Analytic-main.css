@@ -15,6 +15,9 @@
     width:250px;
     float:left;
 }
+.index-condition-group:nth-of-type(2){
+    width:260px;
+}
 /************************************************* select
 ********************************************************************/
 .analytics-condition-choose {
@@ -35,15 +38,43 @@ div[title='analy-view-select']{
 }
 /************************************************* date input
 ********************************************************************/
-.index-pick-date[type="date"]{
+.index-pick-date[type="text"]{
     padding:4px 5px;
     background-color:white;
     width:150px !important;
-    margin-left:35px;
+    margin-left:42px;
     font-size:13px;
+    cursor:default;
+    margin-bottom:0px;
 }
-.index-pick-date[type="date"]:nth-of-type(2){
+.index-pick-date[type="text"]:nth-of-type(2){
     margin-top:6px;
+}
+.week-tr-highlight{
+    background-color:#eee;
+}
+tr.week-tr-active{
+    background: linear-gradient(center top , #0088CC, #0044CC);
+    background: -moz-linear-gradient(center top , #0088CC, #0044CC);
+    background: -webkit-linear-gradient(top , #0088CC, #0044CC);
+    color:white;
+}
+tr.week-tr-active>td{
+    border-radius:0;
+    -webkit-border-radius:0;
+}
+.datepicker table tr.week-tr-active td.day:hover{
+    background:none;
+}
+.index-date-extra-info{
+    display:inline-block;
+    color:#888;
+    margin:0;
+    vertical-align:middle;
+    font-size:12px;
+    width:42px;
+    text-align:center;
+    line-height:14px;
 }
 /************************************************* radio input
 ********************************************************************/

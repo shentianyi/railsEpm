@@ -18,3 +18,22 @@ function stop_propagation(event) {
         event.cancelBubble = true;
     }
 }
+//从月份转化为季度
+if(!Date.prototype.monthToQuarter){
+    Date.prototype.monthToQuarter=function(){
+        switch(Math.floor(this.getMonth()/3)){
+            case 0:
+                return 1;
+            break;
+            case 1:
+                return 2;
+                break;
+            case 2:
+                return 3;
+                break;
+            case 3:
+                return 4;
+                break;
+        }
+    }
+}
