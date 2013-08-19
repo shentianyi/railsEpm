@@ -1,6 +1,12 @@
 #encoding: utf-8
 module Api
   class KpiEntriesController < ApplicationController
+    before_filter :require_no_user, :only=>:entry
+    skip_before_filter :require_user,:only=>:entry
+    skip_before_filter :require_active_user,:only=>:entry
+    skip_before_filter :find_current_user_tenant,:only=>:entry
+    skip_before_filter :check_tenant_status,:only=>:entry
+    skip_authorize_resource :only=>:entry
     # create or update kpi entry
     def entry
       if request.post?
@@ -16,24 +22,23 @@ module Api
       end
     end
 
-
     def analyse
 
-        # @ent
-        @entity_groups=current_user.entity_groups.accessible_by(current_ability)
-        get_ability_category
-        get_kpis_by_category
+      # @ent
+      @entity_groups=current_user.entity_groups.accessible_by(current_ability)
+      get_ability_category
+      get_kpis_by_category
 
-        msg=Message.new
-        if data=KpiEntryAnalyseHelper.get_kpi_entry_analysis_data(params[:kpi],params[:entity_group],params[:startTime],params[:endTime],params[:average]=="true")
-          msg.result=true
-          msg.object=data
-        end
+      msg=Message.new
+      if data=KpiEntryAnalyseHelper.get_kpi_entry_analysis_data(params[:kpi],params[:entity_group],params[:startTime],params[:endTime],params[:average]=="true")
+      msg.result=true
+      msg.object=data
+      end
 
-        respond_to do |t|
-          t.json {render :json=>msg}
-          t.js {render :js=>jsonp_str(msg)}
-        end
+      respond_to do |t|
+        t.json {render :json=>msg}
+        t.js {render :js=>jsonp_str(msg)}
+      end
 
     end
   end
