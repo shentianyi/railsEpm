@@ -7,42 +7,59 @@
     <title>if kpi</title>
 </head>
 <body>
-<header>
-    <div class="user-portrait-background pull-left">
-        <div class="user-portrait-brand">
-            <p>IntelligiantFactory</p>
-            <p>EPM</p>
-        </div>
+<aside class="left-user-setting" id="left-user-setting">
+    <div style="height:100%">
+        <a class="btn btn-primary btn-log-out">Log out</a>
     </div>
-    <nav class="pull-left">
-        <ul>
-            <li><a>
-                <span></span>
-                <span>Get Started</span>
-            </a></li>
-            <li><a>
-                <span></span>
-                <span>DashBoard</span>
-            </a></li>
-            <li><a>
-                <span></span>
-                <span>Analytics</span>
-            </a></li>
-            <li><a>
-                <span></span>
-                <span>Reports</span>
-            </a></li>
-            <li><a>
-                <span></span>
-                <span>Entry KPIs</span>
-            </a></li>
 
-        </ul>
-    </nav>
-</header>
-
-
-<script src="javascripts/jquery-1.8.2.min.js"></script>
+</aside>
+<article class="wrap-main" id="wrap-main">
+    <header>
+        <div class="user-portrait-background pull-left" data-open=true id="user-portrait-background">
+            <div class="user-portrait-brand"></div>
+            <div class="user-portrait-name">IF-EPM</div>
+        </div>
+        <nav class="pull-left">
+            <ul>
+                <li><a>
+                    <span>Get Started</span>
+                    <span class="nav-get-started"></span>
+                </a></li>
+                <li><a>
+                    <span>DashBoard</span>
+                    <span class="nav-dash-board"></span>
+                </a></li>
+                <li><a href="new-Analytics.html">
+                    <span>Analytics</span>
+                    <span class="nav-analytics"></span>
+                </a></li>
+                <li><a>
+                    <span>Reports</span>
+                    <span class='nav-report'></span>
+                </a></li>
+                <li class="relative">
+                    <a>
+                        <span>Manage</span>
+                        <span class='nav-manage'></span>
+                    </a>
+                    <ul class="nav-manage-sub">
+                        <li><a>KPIs</a></li>
+                        <li><a>Users</a></li>
+                        <li><a>Views</a></li>
+                        <li><a>Billings</a></li>
+                    </ul>
+                </li>
+                <li><a>
+                    <span>Entry KPIs</span>
+                    <span class="nav-entry-kpi"></span>
+                </a></li>
+            </ul>
+        </nav>
+    </header>
+</article>
+<script src="javascripts/jquery-1.8.3.min.js"></script>
 <script src="javascripts/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="javascripts/wayne-base.js"></script>
+<script src="javascripts/Template.js"></script>
 </body>
 </html>
