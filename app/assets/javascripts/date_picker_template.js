@@ -7,7 +7,7 @@
 function date_picker_template(spec_date_picker) {
         this.weekStart = 1,
         this.autoclose = true,
-        this.todayBtn = true,
+        this.todayBtn = false,
         this.todayHighlight = true,
         this.language = 'en',
         this.format = spec_date_picker.format,
@@ -74,7 +74,7 @@ function form_date_or_time_picker(interval, target) {
         $(target).datetimepicker({
             weekStart: 1,
             autoclose: true,
-            todayBtn: true,
+            todayBtn: false,
             todayHighlight: true,
             language: 'en',
             format: 'yyyy-mm-dd hh:ii',

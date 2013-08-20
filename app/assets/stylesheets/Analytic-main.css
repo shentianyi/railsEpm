@@ -54,9 +54,10 @@ div[title='analy-view-select']{
     background-color:#eee;
 }
 tr.week-tr-active{
-    background: linear-gradient(center top , #0088CC, #0044CC);
-    background: -moz-linear-gradient(center top , #0088CC, #0044CC);
-    background: -webkit-linear-gradient(top , #0088CC, #0044CC);
+    background-color:#5fa9da;
+    /*background: linear-gradient(center top , #0088CC, #0044CC);*/
+    /*background: -moz-linear-gradient(center top , #0088CC, #0044CC);*/
+    /*background: -webkit-linear-gradient(top , #0088CC, #0044CC);*/
     color:white;
 }
 tr.week-tr-active>td{
