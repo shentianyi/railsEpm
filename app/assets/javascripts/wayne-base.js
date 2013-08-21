@@ -55,3 +55,19 @@ function standardParse(date_value){
     }
     return new Date(date_template["0"],date_template["1"],date_template["2"],date_template["3"],date_template["4"])
 }
+//获取窗口可视部分的宽、高
+function inner_size(){
+    var width,height
+    if (window.innerWidth)
+        width = window.innerWidth;
+    else if (document.body.clientWidth)
+        width = document.body.clientWidth;
+    if (window.innerHeight)
+        height = window.innerHeight;
+    else if (document.body.clientHeight)
+        height = document.body.clientHeight;
+    return {
+        height:height,
+        width:width
+    }
+}

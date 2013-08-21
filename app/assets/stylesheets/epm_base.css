@@ -31,14 +31,14 @@ body{
     bottom:0;
     width:200px;
     background-color:#333;
-    z-index:10;
+    z-index:90;
     left:-200px;
     transition:left 0.25s ease-out;
     -moz-transition:left 0.25s ease-out;
     -webkit-transition:left 0.25s ease-out;
 }
 .btn-log-out{
-    z-index:20;
+    z-index:100;
     position:absolute;
     bottom:40px;
     width:76%;
@@ -48,7 +48,7 @@ body{
 /********************************************************************************************************* 右边主内容区
 *******************************************************************************************************************/
 .wrap-main{
-    min-width:1000px;
+    min-width:1024px;
     height:100%;
     position:absolute;
     transition:left 0.25s ease-out;
@@ -60,6 +60,8 @@ body{
 header{
     height:135px;
     background-color:#f2f2f2;
+    z-index:10;
+    position:relative;
 }
 .user-portrait-background{
     background:rgba(69,159,210,0.8);

@@ -62,19 +62,19 @@
         </nav>
     </header>
     <div>
-        <div class="analytics-condition clearfix">
+        <div class="analytics-condition clearfix" id="analytics-condition">
             <div class="analytics-mark pull-left">
                 <h2 class="normal-blue text-center">Analytics</h2>
             </div>
             <div class="pull-left analytics-condition-choose">
                 <div class="index-condition-group">
-                    <select data-placeholder="Entity" style="width:90px;" class="chosen-select" title="analy-entity-select" id="chart-group">
+                    <select data-placeholder="Entity *" style="width:90px;" class="chosen-select" title="analy-entity-select" id="chart-group">
                         <option value=""> </option>
                         <option value="group1">entity1</option>
                         <option value="group2">entity2</option>
                         <option value="group3">entity3</option>
                     </select>
-                    <select data-placeholder="Kpi" style="width:150px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
+                    <select data-placeholder="Kpi *" style="width:150px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
                         <option value=""> </option>
                         <option value="kpi1" interval="200">week</option>
                         <option value="kpi1" interval="90">hour</option>
@@ -83,7 +83,7 @@
                         <option value="kpi3" interval="300">month</option>
                         <option value="kpi3" interval="500">year</option>
                     </select>
-                    <select data-placeholder="view" style="width:150px;" class="chosen-select" title="analy-view-select" id="chart-view">
+                    <select data-placeholder="View" style="width:150px;" class="chosen-select" title="analy-view-select" id="chart-view">
                         <option value=""> </option>
                         <option value="entity1">view1</option>
                         <option value="entity2">view2</option>
@@ -91,7 +91,7 @@
                     </select>
                 </div>
                 <div class="index-condition-group">
-                    <input type="text" class="index-pick-date" placeholder="Begin Time" id="analy-begin-time" readonly=true />
+                    <input type="text" class="index-pick-date" placeholder="Begin Time *"  id="analy-begin-time" readonly=true />
                     <label class="index-date-extra-info"></label>
                     <input type="text" class="index-pick-date" placeholder="End Time" id="analy-end-time" readonly=true />
                     <label class="index-date-extra-info"></label>
@@ -108,6 +108,11 @@
                 </div>
                 <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px">add chart</a>
             </div>
+            <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible" open=true onclick="analytic_control_condition_visible()"> </i>
+            <p class="analytics-condition-invisible-mark" id="analytics-condition-invisible-mark" style="display:none">Analytics</p>
+        </div>
+        <div class="chart-body" id="chart-body">
+
         </div>
     </div>
 </article>
@@ -118,12 +123,59 @@
 <script src="javascripts/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
 <script src="javascripts/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
 <script src="javascripts/chosen.jquery.min.js"></script>
+<script src="javascripts/highcharts.js"></script>
 <script src="javascripts/wayne-base.js"></script>
 <script src="javascripts/Template.js"></script>
 <script src="javascripts/date_picker_template.js"></script>
 <script src="javascripts/Analytics_init.js"></script>
 <script>
     $(document).ready(function(){
+        $("#chart-body").highcharts({
+            chart: {
+                type: 'line'
+            },
+            title:{
+                text:null
+            },
+            colors: [
+                'rgba(245,161,51,0.8)',
+                '#0d233a',
+                '#8bbc21',
+                '#910000',
+                '#1aadce',
+                '#492970',
+                '#f28f43',
+                '#77a1e5',
+                '#c42525',
+                '#a6c96a'
+            ],
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            plotOptions: {
+                series: {
+                    marker: {
+                        enabled: true,
+                        fillColor: null,
+                        lineWidth: 2,
+                        lineColor: "white"
+
+                    }
+                }
+            },
+            yAxis: {
+                gridLineColor: '#ddd',
+                gridLineDashStyle:'Dot',
+                offset: -20,
+                title:{
+                    enabled:false
+                }
+            },
+            series: [{
+
+                data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+            }]
+        });
         init_analytics()
     })
 </script>

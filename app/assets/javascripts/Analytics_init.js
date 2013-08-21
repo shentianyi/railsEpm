@@ -8,18 +8,15 @@ var config = {
 }
 
 function init_analytics() {
-//   select生成
     $(".chosen-select").chosen({
         disable_search_threshold: 7
     });
-//   time picker or date picker
     $("#chart-kpi").change(function () {
         var interval = $(this).find(":selected").attr("interval");
         var target = "#analy-begin-time,#analy-end-time";
         //interval 只接受90，100等数字，target接收字符串id\class
         form_date_or_time_picker(interval, target);
     });
-//  week quarter 打开时量身定做
     $("#analy-begin-time,#analy-end-time").datepicker().on("show", function () {
         // 美化datepicker的prev，next图标
         $(".datepicker").find(".prev").text("").append($("<i />").addClass('icon-arrow-left'));
@@ -38,7 +35,6 @@ function init_analytics() {
             $(this).datetimepicker("remove");
         }
     });
-//   week quarter 选择好日期时量身定做
     $("#analy-begin-time,#analy-end-time").datepicker().on("changeDate", function () {
         var interval = $("#chart-kpi").find(":selected").attr("interval");
         if (interval == "200") {
@@ -50,5 +46,20 @@ function init_analytics() {
             $(this).next().text("quarter "+quarter);
         }
     });
+}
+function analytic_control_condition_visible(){
+    var open_state=$("#analytic-control-condition-visible").attr("open");
+    if(open_state){
+        $("#analytics-condition").css("top","48px");
+        $("#chart-body").css("top","23px");
+        $("#analytics-condition-invisible-mark").css("display","block");
+        $("#analytic-control-condition-visible").attr("open",false).removeClass("icon-chevron-up").addClass("icon-chevron-down");
+    }
+    else{
+        $("#analytics-condition").css("top","135px");
+        $("#chart-body").css("top","110px");
+        $("#analytics-condition-invisible-mark").css("display","none");
+        $("#analytic-control-condition-visible").attr("open",true).removeClass("icon-chevron-down").addClass("icon-chevron-up");
+    }
 }
 
