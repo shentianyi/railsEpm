@@ -18,7 +18,6 @@ html{
 body{
     margin:0;
     height:100%;
-    font-family:"Helvetica Neue",sans-serif;
     font-weight:500;
     font-family:"open-sans";
 }
@@ -198,4 +197,42 @@ nav ul li a:hover .nav-entry-kpi{
 .manage-nav-table td a{
     text-decoration:none;
     color:#959595;
+}
+/********************************************************************************************************* Message
+*******************************************************************************************************************/
+.message-box{
+    position:fixed;
+    z-index:100;
+    width:600px;
+    margin-left:-300px;
+    word-break:break-all;
+    word-wrap:break-word;
+    left:50%;
+    padding:15px 10px 8px;
+    text-align:center;
+    display:none;
+    word-break:break-all;
+    word-wrap:break-word;
+}
+.message-box p{
+    font-size:16px;
+    text-shadow:1px 1px 1px rgba(0,0,0,0.5);
+}
+.message-box.top{
+    top:0;
+}
+.message-box.bottom{
+    bottom:0;
+}
+.message-box.success{
+    background:#45d263;
+    color:white;
+}
+.message-box.danger{
+    background-color:#fa4545;
+    color:white
+}
+.message-box.warning{
+    color:white;
+    background-color:#f3ca39;
 }

@@ -71,3 +71,25 @@ function inner_size(){
         width:width
     }
 }
+//得到日期，登出该日期的最后一天的日期以及年份
+function last_date_of_week(date_value){
+    var date=standardParse(date_value),endDate;
+    if(date.getDay() == 0) {
+        endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    } else {
+        endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 7);
+    }
+    return {
+        date:endDate,
+        year:endDate.getFullYear()
+    }
+}
+//compare time,return first and last
+function compare_time(begin_time,end_time){
+    var begin=standardParse(begin_time)-standardParse(end_time)<=0?begin_time:end_time;
+    var end=standardParse(begin_time)-standardParse(end_time)>=0?begin_time:end_time;
+    return{
+        begin:begin,
+        end:end
+    }
+}

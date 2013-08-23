@@ -6,7 +6,7 @@
     <link href="stylesheets/datepicker.css" rel="stylesheet" media="screen">
     <link href="stylesheets/datetimepicker.css" rel="stylesheet" media="screen">
     <link href="stylesheets/wayne_sunny.css" rel="stylesheet">
-    <link href="stylesheets/epm_base.css" rel="stylesheet">
+    <link href="stylesheets/_epm_base.css" rel="stylesheet">
     <link href="stylesheets/Analytic-chosen.css" rel="stylesheet">
     <link href="stylesheets/Analytic-main.css" rel="stylesheet">
     <title>if kpi</title>
@@ -64,7 +64,7 @@
     <div>
         <div class="analytics-condition clearfix" id="analytics-condition">
             <div class="analytics-mark pull-left">
-                <h2 class="normal-blue text-center">Analytics</h2>
+                <h2 class="normal-blue text-center pointer" onclick="analytic_control_condition_visible()">Analytics</h2>
             </div>
             <div class="pull-left analytics-condition-choose">
                 <div class="index-condition-group">
@@ -82,6 +82,7 @@
                         <option value="kpi2" interval="400">quarter</option>
                         <option value="kpi3" interval="300">month</option>
                         <option value="kpi3" interval="500">year</option>
+                        <option value="kpi3" interval="">empty</option>
                     </select>
                     <select data-placeholder="View" style="width:150px;" class="chosen-select" title="analy-view-select" id="chart-view">
                         <option value=""> </option>
@@ -106,42 +107,78 @@
                         Average
                     </label>
                 </div>
-                <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px">add chart</a>
+                <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px" onclick="form_chart()">add chart</a>
             </div>
             <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible" open=true onclick="analytic_control_condition_visible()"> </i>
-            <p class="analytics-condition-invisible-mark" id="analytics-condition-invisible-mark" style="display:none">Analytics</p>
+            <p class="analytics-condition-invisible-mark pointer" id="analytics-condition-invisible-mark" style="display:none"  onclick="analytic_control_condition_visible()">Analytics</p>
         </div>
         <div class="chart-body" id="chart-body">
-
+           <div class="clearfix">
+                  <ul class="control-chart-interval-group">
+                      <li interval="90"><a class="active">Hr</a></li>
+                      <li interval="100"><a>D</a></li>
+                      <li interval="200"><a>W</a></li>
+                      <li interval="300"><a>M</a></li>
+                      <li interval="400"><a>Qr</a></li>
+                      <li interval="500"><a>Y</a></li>
+                  </ul>
+           </div>
+           <div class="chart-container" id="chart-container">
+           </div>
+           <table class="chart-type-alternate" id="chart-type-alternate">
+               <tr>
+                   <td class="analytics-chart-line active image">
+                       <p style="display:none">Line</p>
+                   </td>
+                   <td class="analytics-chart-column">
+                       <p>Column</p>
+                   </td>
+                   <td class="analytics-chart-pie">
+                       <p>Pie</p>
+                   </td>
+                   <td class="analytics-chart-scatter">
+                       <p>Scatter</p>
+                   </td>
+                   <!--<td class="analytics-chart-line"></td>-->
+               </tr>
+           </table>
         </div>
     </div>
 </article>
-
+<div class="message-box" id="MessageBox">
+    <p></p>
+</div>
 <script src="javascripts/jquery-1.8.2.min.js"></script>
 <script src="javascripts/bootstrap.min.js"></script>
 <script src="javascripts/bootstrap-datepicker.js" charset="UTF-8"></script>
 <script src="javascripts/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
-<script src="javascripts/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
 <script src="javascripts/chosen.jquery.min.js"></script>
 <script src="javascripts/highcharts.js"></script>
+<script src="javascripts/exporting.js"></script>
 <script src="javascripts/wayne-base.js"></script>
 <script src="javascripts/Template.js"></script>
 <script src="javascripts/date_picker_template.js"></script>
 <script src="javascripts/Analytics_init.js"></script>
+<script src="javascripts/brilliantech.base.js"></script>
 <script>
     $(document).ready(function(){
-        $("#chart-body").highcharts({
+        $("#chart-container").highcharts({
             chart: {
-                type: 'line'
+                type: 'line',
+                zoomType:'xy',
+                height:700
             },
             title:{
                 text:null
             },
+            credits:{
+                enabled:false
+            },
             colors: [
-                'rgba(245,161,51,0.8)',
-                '#0d233a',
-                '#8bbc21',
-                '#910000',
+                'rgba(245,161,51,0.7)',
+                'rgba(69,159,210,0.7)',
+                'rgba(71,230,79,0.7)',
+                'rgba(247,55,55,0.7)',
                 '#1aadce',
                 '#492970',
                 '#f28f43',
@@ -149,7 +186,12 @@
                 '#c42525',
                 '#a6c96a'
             ],
+            legend:{
+                enabled:false
+            },
+
             xAxis: {
+                lineWidth:0,
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             },
             plotOptions: {
@@ -174,6 +216,12 @@
             series: [{
 
                 data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+            },{
+
+                data: [19.9, 171.5, 146.4, 52, 144.0,567.0, 186, 148.5, 35.4, 194.1, 56.6, 54.4]
+            },{
+
+                data: [39.9, 31.5, 106.4, 139.2, 147.0, 116.0, 5.6, 48.5, 216.4, 16, 95.6, 54.4]
             }]
         });
         init_analytics()

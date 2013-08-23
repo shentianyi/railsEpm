@@ -44,12 +44,12 @@ function hide_handle_dialog() {
      document.getElementById('dialog-overlay').style.display = 'none';
 }
 
-function MessageBox(str, type) {
-     $('#MessageBox').addClass(type).find("p").text(str);
-     $('#MessageBox').slideDown("2000");
+function MessageBox(str,position, type) {
+     $('#MessageBox').addClass(type).addClass(position).find("p").text(str);
+     $('#MessageBox').slideDown("2500");
      setTimeout(function(){
-         $("#MessageBox").slideUp("2000");
-     },2000)
+         $("#MessageBox").slideUp("2500");
+     },3500)
 }
 function change_label_to_text(obj) {
      var tag = obj.firstChild.tagName;

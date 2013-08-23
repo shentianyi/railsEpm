@@ -42,7 +42,7 @@
 
 .analytics-condition-invisible-mark {
     position: absolute;
-    bottom: 0px;
+    bottom: 2px;
     margin: 0px;
     left: 40px;
     color: #5fa9da;
@@ -87,25 +87,19 @@ div[title='analy-view-select'] {
 .index-pick-date[type="text"]:nth-of-type(2) {
     margin-top: 6px;
 }
-
-.week-tr-highlight {
+[week="picker"] tbody tr:hover{
     background-color: #eee;
 }
-
-tr.week-tr-active {
+[week="picker"] tbody tr.week-tr-active{
     background-color: #5fa9da;
-    /*background: linear-gradient(center top , #0088CC, #0044CC);*/
-    /*background: -moz-linear-gradient(center top , #0088CC, #0044CC);*/
-    /*background: -webkit-linear-gradient(top , #0088CC, #0044CC);*/
     color: white;
 }
-
-tr.week-tr-active>td {
+[week="picker"] tbody tr.week-tr-active>td {
     border-radius: 0;
     -webkit-border-radius: 0;
 }
 
-.datepicker table tr.week-tr-active td.day:hover {
+.datepicker [week="picker"] table  tr.week-tr-active td.day:hover {
     background: none;
 }
 
@@ -129,13 +123,104 @@ tr.week-tr-active>td {
 
 /************************************************************************** chart body
 ****************************************************************************************/
+.control-chart-interval-group {
+    list-style-type: none;
+    display: block;
+    float: right;
+    margin: 0;
+    border-right: 1px solid #ddd;
+}
+
+.control-chart-interval-group>li {
+    display: inline;
+    border-width: 0px 0px 1px 1px;
+    border-color: #ddd;
+    border-style: solid;
+    float: left;
+}
+
+.control-chart-interval-group>li>a {
+    display: block;
+    width: 35px;
+    height: 20px;
+    text-align: center;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.3);
+    transition: color 0.2s ease-out, background-color 0.2s ease-out;
+    font-size: 15px;
+}
+
+.control-chart-interval-group>li>a.active {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.control-chart-interval-group>li>a:hover {
+    color: rgba(0, 0, 0, 0.7);
+}
+
 .chart-body {
-    padding-top:20px;
+    padding: 0 0 10px;
     position: relative;
     top: 110px;
+    right: 0;
+    overflow-x: hidden;
     transition: top 0.35s ease-out;
     width: 100%;
-    height:700px;
     border-top: 1px dotted #ddd;
-    border-bottom: 1px dotted #ddd;
+}
+
+.chart-type-alternate {
+    width: 100%;
+    height: 70px;
+    margin-top: 15px;
+    border-collapse: collapse;
+}
+
+.chart-type-alternate td {
+    border-width: 0 1px 1px 1px;
+    border-color: #ddd;
+    border-style: dotted;
+    width: 10%;
+    transition: width 0.4s ease-out;
+    cursor:pointer;
+}
+
+.chart-type-alternate td.image {
+    background-image: url("../images/analytics-chart-type.png");
+    background-repeat: no-repeat;
+
+}
+
+.chart-type-alternate td p {
+    text-align:center;
+    font-family: "helve";
+    letter-spacing: 1px;
+    font-size: 41px;
+    color: rgba(0, 0, 0, 0.3);
+}
+.chart-type-alternate td p:hover {
+    color: black;
+}
+
+.chart-type-alternate td.image p {
+    color: black
+}
+
+.chart-type-alternate td.active {
+    width: 70%;
+}
+
+td.analytics-chart-line {
+    background-position: center 2px;
+}
+td.analytics-chart-column {
+    background-position: center -103px;
+}
+
+td.analytics-chart-pie {
+    background-position: center -207px;
+}
+
+td.analytics-chart-scatter {
+    background-position: center -313px;
 }
