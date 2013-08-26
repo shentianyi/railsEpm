@@ -1,43 +1,43 @@
-var high_chart={
-    chart: {
-        zoomType:'xy'
+function high_chart(target,type_template,interval_template){
+    this.chart={
+        zoomType:'xy',
+        renderTo:target,
+        type:type_template.type
     },
-    title:{
+    this.title={
         text:null
     },
-    credits:{
+    this.tooltip={
+        xDateFormat:interval_template.tooltip.xDateFormat,
+        formatter:interval_template.tooltip.formatter
+    },
+    this.credits={
         enabled:false
     },
-    colors: [
-        'rgba(245,161,51,0.7)',
-        'rgba(69,159,210,0.7)',
-        'rgba(71,230,79,0.7)',
-        'rgba(247,55,55,0.7)',
-        '#1aadce',
-        '#492970',
-        '#f28f43',
-        '#77a1e5',
-        '#c42525',
-        '#a6c96a'
-    ],
-    legend:{
+    this.colors= type_template.colors,
+        this.legend={
         enabled:false
     },
-    plotOptions: {
+    this.plotOptions= {
         series: {
             marker: {
                 enabled: true,
                 fillColor: null,
-                lineWidth: 2,
-                lineColor: "white"
-
+                lineWidth: type_template.plotOptions.series.marker.lineWidth,
+                lineColor: "white",
+                radius:type_template.plotOptions.series.marker.radius,
+                symbol:type_template.plotOptions.series.marker.symbol
             }
         }
     },
-    xAxis: {
-        lineWidth:0
+    this.xAxis= {
+        lineWidth:0,
+        type:interval_template.xAxis.type,
+        dateTimeLabelFormats:interval_template.xAxis.dateTimeLabelFormats,
+        tickInterval:interval_template.xAxis.tickInterval,
+        categories:interval_template.xAxis.categories
     },
-    yAxis: {
+    this.yAxis= {
         gridLineColor: '#ddd',
         gridLineDashStyle:'Dot',
         offset: -20,
@@ -45,44 +45,133 @@ var high_chart={
             enabled:false
         }
     },
-    high_chart:function(option){
-       $(option.target).highcharts({
-           chart: {
-               zoomType:this.chart.zoomType,
-               type:option.chart.type,
-               height:option.chart.height
-           },
-           title:{
-               text:this.title.text
-           },
-           credits:{
-               enabled:this.credits.enabled
-           },
-           colors:this.colors,
-           legend:{
-               enabled:this.legend.enabled
-           },
-           plotOptions: {
-               series: {
-                   marker: {
-                       enabled: this.plotOptions.series.marker.enabled,
-                       fillColor: this.plotOptions.series.marker.fillColor,
-                       lineWidth: this.plotOptions.series.marker.lineWidth,
-                       lineColor: this.plotOptions.series.marker.lineColor
-                   }
-               }
-           },
-           xAxis: {
-               lineWidth:this.xAxis.lineWidth
-           },
-           yAxis: {
-               gridLineColor: this.yAxis.gridLineColor,
-               gridLineDashStyle:this.yAxis.gridLineDashStyle,
-               offset: this.yAxis.offset,
-               title:{
-                   enabled:this.yAxis.title.enabled
-               }
-           }
-       })
+    this.series={
+        pointStart:interval_template.series.pointStart,
+        pointInterval:interval_template.series.pointInterval
+    }
+}
+
+
+var type_template={
+    line:{
+        type:"line",
+        colors:[
+            'rgba(245,161,51,0.7)',
+            'rgba(52,152,219,0.7)',
+            'rgba(205,208,164,0.7)',
+            'rgba(231,76,60,0.7)',
+            'rgba(26,188,156,0.7)',
+            'rgba(241,196,15,0.7)',
+            'rgba(149,165,166,0.7)',
+            'rgba(103,116,210,0.7)',
+            'rgba(219,88,168,0.7)',
+            'rgba(53,200,209,0.7)'
+        ],
+        plotOptions:{
+            series:{
+                marker:{
+                    lineWidth: 2,
+                    radius:4,
+                    symbol:"diamond"
+                }
+            }
+        }
+    },
+    column:{
+        type:"column",
+        colors:[
+            'rgba(245,161,51,0.7)',
+            'rgba(52,152,219,0.7)',
+            'rgba(205,208,164,0.7)',
+            'rgba(231,76,60,0.7)',
+            'rgba(26,188,156,0.7)',
+            'rgba(241,196,15,0.7)',
+            'rgba(149,165,166,0.7)',
+            'rgba(103,116,210,0.7)',
+            'rgba(219,88,168,0.7)',
+            'rgba(53,200,209,0.7)'
+        ],
+        plotOptions:{
+            series:{
+                marker:{
+                    lineWidth: 2,
+                    radius:4,
+                    symbol:"diamond"
+                }
+            }
+
+        }
+    },
+    pie:{
+        type:"pie",
+        colors:[
+            'rgba(245,161,51,0.7)',
+            'rgba(52,152,219,0.7)',
+            'rgba(205,208,164,0.7)',
+            'rgba(231,76,60,0.7)',
+            'rgba(26,188,156,0.7)',
+            'rgba(241,196,15,0.7)',
+            'rgba(149,165,166,0.7)',
+            'rgba(103,116,210,0.7)',
+            'rgba(219,88,168,0.7)',
+            'rgba(53,200,209,0.7)'
+        ],
+        plotOptions:{
+            series:{
+                marker:{
+                    lineWidth: 2,
+                    radius:4,
+                    symbol:"diamond"
+                }
+            }
+
+        }
+    },
+    scatter:{
+        type:"scatter",
+        colors:[
+            'rgba(245,161,51,0.4)',
+            'rgba(52,152,219,0.4)',
+            'rgba(205,208,164,0.4)',
+            'rgba(231,76,60,0.4)',
+            'rgba(26,188,156,0.4)',
+            'rgba(241,196,15,0.4)',
+            'rgba(149,165,166,0.4)',
+            'rgba(103,116,210,0.4)',
+            'rgba(219,88,168,0.4)',
+            'rgba(53,200,209,0.4)'
+        ],
+        plotOptions:{
+            series:{
+                marker:{
+                    lineWidth: 2,
+                    radius:5,
+                    symbol:"circle"
+                }
+            }
+
+        }
+    }
+}
+
+
+var interval_template={
+    "90":{
+
+    },
+    "100":{
+
+    },
+    "200":{
+
+    },
+    "300":{
+
+    },
+    "400":{
+
+    },
+    "500":{
+
     }
 }

@@ -123,10 +123,12 @@ div[title='analy-view-select'] {
 
 /************************************************************************** chart body
 ****************************************************************************************/
+.chart-interval-alternate{
+    height:28px;
+}
 .control-chart-interval-group {
     list-style-type: none;
     display: block;
-    float: right;
     margin: 0;
     border-right: 1px solid #ddd;
 }
@@ -142,12 +144,13 @@ div[title='analy-view-select'] {
 .control-chart-interval-group>li>a {
     display: block;
     width: 35px;
-    height: 20px;
+    height: 27px;
     text-align: center;
     cursor: pointer;
     color: rgba(0, 0, 0, 0.3);
     transition: color 0.2s ease-out, background-color 0.2s ease-out;
     font-size: 15px;
+    line-height:27px;
 }
 
 .control-chart-interval-group>li>a.active {
@@ -159,7 +162,7 @@ div[title='analy-view-select'] {
 }
 
 .chart-body {
-    padding: 0 0 10px;
+    padding: 0;
     position: relative;
     top: 110px;
     right: 0;
@@ -188,9 +191,7 @@ div[title='analy-view-select'] {
 .chart-type-alternate td.image {
     background-image: url("../images/analytics-chart-type.png");
     background-repeat: no-repeat;
-
 }
-
 .chart-type-alternate td p {
     text-align:center;
     font-family: "helve";

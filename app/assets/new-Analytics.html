@@ -62,7 +62,7 @@
         </nav>
     </header>
     <div>
-        <div class="analytics-condition clearfix" id="analytics-condition">
+            <div class="analytics-condition clearfix" id="analytics-condition">
             <div class="analytics-mark pull-left">
                 <h2 class="normal-blue text-center pointer" onclick="analytic_control_condition_visible()">Analytics</h2>
             </div>
@@ -113,15 +113,15 @@
             <p class="analytics-condition-invisible-mark pointer" id="analytics-condition-invisible-mark" style="display:none"  onclick="analytic_control_condition_visible()">Analytics</p>
         </div>
         <div class="chart-body" id="chart-body">
-           <div class="clearfix">
-                  <ul class="control-chart-interval-group">
-                      <li interval="90"><a class="active">Hr</a></li>
-                      <li interval="100"><a>D</a></li>
-                      <li interval="200"><a>W</a></li>
-                      <li interval="300"><a>M</a></li>
-                      <li interval="400"><a>Qr</a></li>
-                      <li interval="500"><a>Y</a></li>
-                  </ul>
+           <div class="clearfix" id="chart-interval-alternate">
+                       <ul class="pull-right control-chart-interval-group">
+                           <li interval="90"><a class="active">Hr</a></li>
+                           <li interval="100"><a>D</a></li>
+                           <li interval="200"><a>W</a></li>
+                           <li interval="300"><a>M</a></li>
+                           <li interval="400"><a>Qr</a></li>
+                           <li interval="500"><a>Y</a></li>
+                       </ul>
            </div>
            <div class="chart-container" id="chart-container">
            </div>
@@ -158,6 +158,7 @@
 <script src="javascripts/wayne-base.js"></script>
 <script src="javascripts/Template.js"></script>
 <script src="javascripts/date_picker_template.js"></script>
+<script src="javascripts/high_chart_template.js"></script>
 <script src="javascripts/Analytics_init.js"></script>
 <script src="javascripts/brilliantech.base.js"></script>
 <script>
@@ -165,26 +166,29 @@
         $("#chart-container").highcharts({
             chart: {
                 type: 'line',
-                zoomType:'xy',
-                height:700
+                zoomType:'xy'
+
             },
             title:{
                 text:null
             },
+            tooltip:{
+                enabled:false
+            },
             credits:{
                 enabled:false
             },
-            colors: [
+            colors:[
                 'rgba(245,161,51,0.7)',
-                'rgba(69,159,210,0.7)',
-                'rgba(71,230,79,0.7)',
-                'rgba(247,55,55,0.7)',
-                '#1aadce',
-                '#492970',
-                '#f28f43',
-                '#77a1e5',
-                '#c42525',
-                '#a6c96a'
+                'rgba(52,152,219,0.7)',
+                'rgba(205,208,164,0.7)',
+                'rgba(231,76,60,0.7)',
+                'rgba(26,188,156,0.7)',
+                'rgba(241,196,15,0.7)',
+                'rgba(149,165,166,0.7)',
+                'rgba(103,116,210,0.7)',
+                'rgba(219,88,168,0.7)',
+                'rgba(53,200,209,0.7)'
             ],
             legend:{
                 enabled:false
@@ -198,10 +202,11 @@
                 series: {
                     marker: {
                         enabled: true,
-                        fillColor: null,
+                        fillColor:null,
                         lineWidth: 2,
-                        lineColor: "white"
-
+                        lineColor: "white",
+                        radius:4,
+                        symbol:"diamond"
                     }
                 }
             },
@@ -215,16 +220,18 @@
             },
             series: [{
 
-                data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+                data: [21,42,3,1,43,5,3,1,34,45,3]
             },{
 
-                data: [19.9, 171.5, 146.4, 52, 144.0,567.0, 186, 148.5, 35.4, 194.1, 56.6, 54.4]
-            },{
-
-                data: [39.9, 31.5, 106.4, 139.2, 147.0, 116.0, 5.6, 48.5, 216.4, 16, 95.6, 54.4]
+                data: [3,41,23,3,4,31,3,4,12,21,3,45,5]
             }]
         });
         init_analytics()
+    })
+    $(window).resize(function(){
+        if($("#chart-body")){
+            resize_chart();
+        }
     })
 </script>
 </body>

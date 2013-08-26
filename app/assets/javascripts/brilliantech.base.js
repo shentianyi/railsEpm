@@ -49,7 +49,7 @@ function MessageBox(str,position, type) {
      $('#MessageBox').slideDown("2500");
      setTimeout(function(){
          $("#MessageBox").slideUp("2500");
-     },3500)
+     },2500)
 }
 function change_label_to_text(obj) {
      var tag = obj.firstChild.tagName;

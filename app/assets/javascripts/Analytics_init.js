@@ -66,7 +66,6 @@ function form_date_or_time_picker(interval, target) {
     $(target).val("");
     $(".index-date-extra-info").text("");
     date_and_datetime.remove_date_picker_model(target);
-
     switch (interval) {
         case "90":
             date_and_datetime.dateTimepickerPicker(target, spec_option['hour']);
@@ -90,6 +89,20 @@ function form_date_or_time_picker(interval, target) {
         default:
             return false
     }
+}
+function resize_chart(){
+    $("#chart-body").height(parseInt($(window).height()-$("header").height()-$("#analytics-condition").height())-1>=0 ?
+        parseInt($(window).height()-$("header").height()-$("#analytics-condition").height())-1:0);
+    var chart=$("#chart-container").highcharts();
+    chart.setSize(
+        $("#wrap-main").width(),
+        parseInt($("#chart-body").height()-$("#chart-interval-alternate").height()-$("#chart-type-alternate").height())-16,
+        false
+    );
+//    if(navigator.userAgent.toLowerCase().match(/chrome/) != null){
+//    }
+//    else if(navigator.userAgent.toLowerCase().match(/mozilla/) != null){
+//    }
 }
 function form_chart(){
     var kpi=$("#chart-kpi :selected").text();
@@ -116,7 +129,6 @@ function form_chart(){
         }, function(msg) {
             if(msg.result){
                 var data=msg.object;
-                console.log(startTime,endTime)
                 form_chart(data.current,data.target,data.unit,interval,startTime,endTime,timeBeginChart);
                 $(".control-chart-btn").each(function(){
                     $(this).removeClass('active');
