@@ -18,7 +18,7 @@
     </div>
 
 </aside>
-<article class="wrap-main" id="wrap-main">
+<article class="wrap-main hidden-y" id="wrap-main">
     <header>
         <div class="user-portrait-background pull-left" data-open=true id="user-portrait-background">
             <div class="user-portrait-brand"></div>
@@ -109,7 +109,7 @@
                 </div>
                 <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px" onclick="form_chart()">add chart</a>
             </div>
-            <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible" open=true onclick="analytic_control_condition_visible()"> </i>
+            <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible" open=true  onclick="analytic_control_condition_visible()"> </i>
             <p class="analytics-condition-invisible-mark pointer" id="analytics-condition-invisible-mark" style="display:none"  onclick="analytic_control_condition_visible()">Analytics</p>
         </div>
         <div class="chart-body" id="chart-body">
@@ -167,7 +167,6 @@
             chart: {
                 type: 'line',
                 zoomType:'xy'
-
             },
             title:{
                 text:null

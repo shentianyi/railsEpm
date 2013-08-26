@@ -10,7 +10,7 @@ var config = {
 function init_analytics() {
     var target = "#analy-begin-time,#analy-end-time";
     var interval_target = "#chart-kpi";
-    date_and_datetime.unit_them_at_begin(target,interval_target);
+    date_and_datetime.unit_them_at_begin(target, interval_target);
     $(".chosen-select").chosen({
         disable_search_threshold: 7
     });
@@ -49,17 +49,37 @@ function init_analytics() {
 }
 function analytic_control_condition_visible() {
     var open_state = $("#analytic-control-condition-visible").attr("open");
+    var validate = false, chart;
+    if ($("#chart-container")) {
+        chart = $("#chart-container").highcharts();
+        validate = true
+    }
     if (open_state) {
         $("#analytics-condition").css("top", "48px");
-        $("#chart-body").css("top", "23px");
+        $("#chart-body").css("top", "23px").height(parseInt($("#chart-body").height()) + 87);
         $("#analytics-condition-invisible-mark").css("display", "block");
         $("#analytic-control-condition-visible").attr("open", false).removeClass("icon-chevron-up").addClass("icon-chevron-down");
+        if (validate) {
+            chart.setSize(
+                $("#wrap-main").width(),
+                parseInt($("#chart-body").height() - $("#chart-interval-alternate").height() - $("#chart-type-alternate").height()) - 15,
+                true
+            );
+        }
     }
     else {
         $("#analytics-condition").css("top", "135px");
-        $("#chart-body").css("top", "110px");
+        $("#chart-body").css("top", "110px").height(parseInt($("#chart-body").height()) - 87);
         $("#analytics-condition-invisible-mark").css("display", "none");
         $("#analytic-control-condition-visible").attr("open", true).removeClass("icon-chevron-down").addClass("icon-chevron-up");
+        if (validate) {
+            chart.setSize(
+                $("#wrap-main").width(),
+                parseInt($("#chart-body").height() - $("#chart-interval-alternate").height() - $("#chart-type-alternate").height()) - 15,
+                true
+            );
+
+        }
     }
 }
 function form_date_or_time_picker(interval, target) {
@@ -90,13 +110,14 @@ function form_date_or_time_picker(interval, target) {
             return false
     }
 }
-function resize_chart(){
-    $("#chart-body").height(parseInt($(window).height()-$("header").height()-$("#analytics-condition").height())-1>=0 ?
-        parseInt($(window).height()-$("header").height()-$("#analytics-condition").height())-1:0);
-    var chart=$("#chart-container").highcharts();
+
+function resize_chart() {
+    $("#chart-body").height(parseInt($(window).height() - $("header").height() - $("#analytics-condition").height()) - 1 >= 0 ?
+        parseInt($(window).height() - $("header").height() - $("#analytics-condition").height()) - 1 : 0);
+    var chart = $("#chart-container").highcharts();
     chart.setSize(
         $("#wrap-main").width(),
-        parseInt($("#chart-body").height()-$("#chart-interval-alternate").height()-$("#chart-type-alternate").height())-16,
+        parseInt($("#chart-body").height() - $("#chart-interval-alternate").height() - $("#chart-type-alternate").height()) - 15,
         false
     );
 //    if(navigator.userAgent.toLowerCase().match(/chrome/) != null){
@@ -104,41 +125,42 @@ function resize_chart(){
 //    else if(navigator.userAgent.toLowerCase().match(/mozilla/) != null){
 //    }
 }
-function form_chart(){
-    var kpi=$("#chart-kpi :selected").text();
-    var view=$("#chart-view :selected").text();
-    var method=$("input[name='chartRadios']:checked").attr("value");
-    var interval=$("#chart-view :selected").attr("interval");
-    var begin_time=$("#analy-begin-time").val(),end_time=$("#analy-end-time").val();
-    if(kpi,begin_time){
-        if(end_time){
-            var compare_result=compare_time(begin_time,end_time);
-            begin_time=compare_result.begin;
-            end_time=compare_result.end;
+
+function form_chart() {
+    var kpi = $("#chart-kpi :selected").text();
+    var view = $("#chart-view :selected").text();
+    var method = $("input[name='chartRadios']:checked").attr("value");
+    var interval = $("#chart-view :selected").attr("interval");
+    var begin_time = $("#analy-begin-time").val(), end_time = $("#analy-end-time").val();
+    if (kpi, begin_time) {
+        if (end_time) {
+            var compare_result = compare_time(begin_time, end_time);
+            begin_time = compare_result.begin;
+            end_time = compare_result.end;
         }
-        else{
-            end_time=begin_time
+        else {
+            end_time = begin_time
         }
-        console.log(begin_time,end_time)
+        console.log(begin_time, end_time)
         $.post('/kpi_entries/analyse', {
-            kpi : kpi,
-            average:method=="0",
+            kpi: kpi,
+            average: method == "0",
             entity_group: view,
-            startTime : begin_time,
-            endTime : end_time
-        }, function(msg) {
-            if(msg.result){
-                var data=msg.object;
-                form_chart(data.current,data.target,data.unit,interval,startTime,endTime,timeBeginChart);
-                $(".control-chart-btn").each(function(){
+            startTime: begin_time,
+            endTime: end_time
+        }, function (msg) {
+            if (msg.result) {
+                var data = msg.object;
+                form_chart(data.current, data.target, data.unit, interval, startTime, endTime, timeBeginChart);
+                $(".control-chart-btn").each(function () {
                     $(this).removeClass('active');
                 });
-                $(".control-chart-btn[data-type='"+interval+"']").addClass("active");
+                $(".control-chart-btn[data-type='" + interval + "']").addClass("active");
             }
         });
     }
-    else{
-        MessageBox("u need to fill the blank with *","top","warning")
+    else {
+        MessageBox("u need to fill the blank with *", "top", "warning")
     }
 }
 
