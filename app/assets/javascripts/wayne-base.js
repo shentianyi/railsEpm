@@ -39,7 +39,7 @@ if(!Date.prototype.monthToQuarter){
 }
 //yy-mm-dd hh:ii格式解析
 function standardParse(date_value){
-    var date_value=(date_value.replace(/\s/g,"-").replace(/:/g,"-")).split("-");
+    var date_value=(date_value.replace(/\s/g,"-").replace(/:/g,"-").replace(/T/g,"-")).split("-");
     var date_template={
         "0":'0000',
         "1":'00',
@@ -51,9 +51,12 @@ function standardParse(date_value){
         date_template[i.toString()]=date_value[i];
     }
     if(date_template["1"]!="00"){
-        date_template["1"]="0"+(parseInt(date_template["1"])-1).toString();
+        date_template["1"]=(parseInt(date_template["1"])-1).toString();
     }
-    return new Date(date_template["0"],date_template["1"],date_template["2"],date_template["3"],date_template["4"])
+    return {
+        date:new Date(date_template["0"],date_template["1"],date_template["2"],date_template["3"],date_template["4"]),
+        template:date_template
+    }
 }
 //获取窗口可视部分的宽、高
 function inner_size(){
@@ -71,7 +74,7 @@ function inner_size(){
         width:width
     }
 }
-//得到日期，登出该日期的最后一天的日期以及年份
+//得到日期，登出该日期所在周的最后一天的日期以及年份
 function last_date_of_week(date_value){
     var date=standardParse(date_value),endDate;
     if(date.getDay() == 0) {
@@ -86,8 +89,8 @@ function last_date_of_week(date_value){
 }
 //compare time,return first and last
 function compare_time(begin_time,end_time){
-    var begin=standardParse(begin_time)-standardParse(end_time)<=0?begin_time:end_time;
-    var end=standardParse(begin_time)-standardParse(end_time)>=0?begin_time:end_time;
+    var begin=standardParse(begin_time).date-standardParse(end_time).date<=0?begin_time:end_time;
+    var end=standardParse(begin_time).date-standardParse(end_time).date>=0?begin_time:end_time;
     return{
         begin:begin,
         end:end

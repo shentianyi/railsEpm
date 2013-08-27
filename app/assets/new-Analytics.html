@@ -62,21 +62,24 @@
         </nav>
     </header>
     <div>
-            <div class="analytics-condition clearfix" id="analytics-condition">
+        <div class="analytics-condition clearfix" id="analytics-condition">
             <div class="analytics-mark pull-left">
-                <h2 class="normal-blue text-center pointer" onclick="analytic_control_condition_visible()">Analytics</h2>
+                <h2 class="normal-blue text-center pointer" onclick="analytic_control_condition_visible()">
+                    Analytics</h2>
             </div>
             <div class="pull-left analytics-condition-choose">
                 <div class="index-condition-group">
-                    <select data-placeholder="Entity *" style="width:90px;" class="chosen-select" title="analy-entity-select" id="chart-group">
-                        <option value=""> </option>
+                    <select data-placeholder="Entity *" style="width:90px;" class="chosen-select"
+                            title="analy-entity-select" id="chart-group">
+                        <option value=""></option>
                         <option value="group1">entity1</option>
                         <option value="group2">entity2</option>
                         <option value="group3">entity3</option>
                     </select>
-                    <select data-placeholder="Kpi *" style="width:150px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
-                        <option value=""> </option>
-                        <option value="kpi1" interval="200">week</option>
+                    <select data-placeholder="Kpi *" style="width:150px;" class="chosen-select" title="analy-kpi-select"
+                            id="chart-kpi" date-pick=false>
+                        <option value=""></option>
+                        <option value="kpi1" interval="200" type="">week</option>
                         <option value="kpi1" interval="90">hour</option>
                         <option value="kpi1" interval="100">day</option>
                         <option value="kpi2" interval="400">quarter</option>
@@ -84,17 +87,20 @@
                         <option value="kpi3" interval="500">year</option>
                         <option value="kpi3" interval="">empty</option>
                     </select>
-                    <select data-placeholder="View" style="width:150px;" class="chosen-select" title="analy-view-select" id="chart-view">
-                        <option value=""> </option>
+                    <select data-placeholder="View" style="width:150px;" class="chosen-select" title="analy-view-select"
+                            id="chart-view">
+                        <option value=""></option>
                         <option value="entity1">view1</option>
                         <option value="entity2">view2</option>
                         <option value="entity3">view3</option>
                     </select>
                 </div>
                 <div class="index-condition-group">
-                    <input type="text" class="index-pick-date" placeholder="Begin Time *"  id="analy-begin-time" readonly=true />
+                    <input type="text" class="index-pick-date" placeholder="Begin Time *" id="analy-begin-time"
+                           readonly=true/>
                     <label class="index-date-extra-info"></label>
-                    <input type="text" class="index-pick-date" placeholder="End Time" id="analy-end-time" readonly=true />
+                    <input type="text" class="index-pick-date" placeholder="End Time" id="analy-end-time"
+                           readonly=true/>
                     <label class="index-date-extra-info"></label>
                 </div>
                 <div class="index-condition-group" style="width:120px">
@@ -107,41 +113,44 @@
                         Average
                     </label>
                 </div>
-                <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px" onclick="form_chart()">add chart</a>
+                <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px" onclick="prepare_form_chart()">add
+                    chart</a>
             </div>
-            <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible" open=true  onclick="analytic_control_condition_visible()"> </i>
-            <p class="analytics-condition-invisible-mark pointer" id="analytics-condition-invisible-mark" style="display:none"  onclick="analytic_control_condition_visible()">Analytics</p>
+            <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible"
+               open=true onclick="analytic_control_condition_visible()"> </i>
+
+            <p class="analytics-condition-invisible-mark pointer" id="analytics-condition-invisible-mark"
+               style="display:none" onclick="analytic_control_condition_visible()">Analytics</p>
         </div>
-        <div class="chart-body" id="chart-body">
-           <div class="clearfix" id="chart-interval-alternate">
-                       <ul class="pull-right control-chart-interval-group">
-                           <li interval="90"><a class="active">Hr</a></li>
-                           <li interval="100"><a>D</a></li>
-                           <li interval="200"><a>W</a></li>
-                           <li interval="300"><a>M</a></li>
-                           <li interval="400"><a>Qr</a></li>
-                           <li interval="500"><a>Y</a></li>
-                       </ul>
-           </div>
-           <div class="chart-container" id="chart-container">
-           </div>
-           <table class="chart-type-alternate" id="chart-type-alternate">
-               <tr>
-                   <td class="analytics-chart-line active image">
-                       <p style="display:none">Line</p>
-                   </td>
-                   <td class="analytics-chart-column">
-                       <p>Column</p>
-                   </td>
-                   <td class="analytics-chart-pie">
-                       <p>Pie</p>
-                   </td>
-                   <td class="analytics-chart-scatter">
-                       <p>Scatter</p>
-                   </td>
-                   <!--<td class="analytics-chart-line"></td>-->
-               </tr>
-           </table>
+        <div class="chart-body" id="chart-body" style="display:none">
+            <div class="clearfix" id="chart-interval-alternate">
+                <ul class="pull-right control-chart-interval-group">
+                    <li interval="90" class="active"><a>Hr</a></li>
+                    <li interval="100"><a>D</a></li>
+                    <li interval="200"><a>W</a></li>
+                    <li interval="300"><a>M</a></li>
+                    <li interval="400"><a>Qr</a></li>
+                    <li interval="500"><a>Y</a></li>
+                </ul>
+            </div>
+            <div class="chart-container" id="chart-container">
+            </div>
+            <table class="chart-type-alternate" id="chart-type-alternate">
+                <tr>
+                    <td class="analytics-chart-line active image" type="line">
+                        <p style="display:none">Line</p>
+                    </td>
+                    <td class="analytics-chart-column" type="column">
+                        <p>Column</p>
+                    </td>
+                    <td class="analytics-chart-pie" type="pie">
+                        <p>Pie</p>
+                    </td>
+                    <td class="analytics-chart-scatter" type="scatter">
+                        <p>Scatter</p>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </article>
@@ -162,76 +171,17 @@
 <script src="javascripts/Analytics_init.js"></script>
 <script src="javascripts/brilliantech.base.js"></script>
 <script>
-    $(document).ready(function(){
-        $("#chart-container").highcharts({
-            chart: {
-                type: 'line',
-                zoomType:'xy'
-            },
-            title:{
-                text:null
-            },
-            tooltip:{
-                enabled:false
-            },
-            credits:{
-                enabled:false
-            },
-            colors:[
-                'rgba(245,161,51,0.7)',
-                'rgba(52,152,219,0.7)',
-                'rgba(205,208,164,0.7)',
-                'rgba(231,76,60,0.7)',
-                'rgba(26,188,156,0.7)',
-                'rgba(241,196,15,0.7)',
-                'rgba(149,165,166,0.7)',
-                'rgba(103,116,210,0.7)',
-                'rgba(219,88,168,0.7)',
-                'rgba(53,200,209,0.7)'
-            ],
-            legend:{
-                enabled:false
-            },
-
-            xAxis: {
-                lineWidth:0,
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            plotOptions: {
-                series: {
-                    marker: {
-                        enabled: true,
-                        fillColor:null,
-                        lineWidth: 2,
-                        lineColor: "white",
-                        radius:4,
-                        symbol:"diamond"
-                    }
-                }
-            },
-            yAxis: {
-                gridLineColor: '#ddd',
-                gridLineDashStyle:'Dot',
-                offset: -20,
-                title:{
-                    enabled:false
-                }
-            },
-            series: [{
-
-                data: [21,42,3,1,43,5,3,1,34,45,3]
-            },{
-
-                data: [3,41,23,3,4,31,3,4,12,21,3,45,5]
-            }]
-        });
-        init_analytics()
-    })
-    $(window).resize(function(){
-        if($("#chart-body")){
+    $(document).ready(function () {
+//        var wzx=new interval_template("2013-04");
+//        var btt=new high_chart("chart-container", type_template['line'], wzx['_400'](),[1,2,3,4,5,6,7,8,9,10]);
+//        var chart = new Highcharts.Chart(btt);
+        init_analytics();
+    });
+    $(window).resize(function () {
+        if ($("#chart-body")) {
             resize_chart();
         }
-    })
+    });
 </script>
 </body>
 </html>
