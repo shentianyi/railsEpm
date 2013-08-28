@@ -1,8 +1,8 @@
-function high_chart(target, type_template, interval_template,data) {
+function high_chart(target, type_template, interval_template) {
     this.chart = {
         zoomType: 'xy',
-        spacingLeft: 15,
-        spacingRight: 20,
+        spacingLeft: 5,
+        spacingRight: 10,
         renderTo: target,
         type: type_template.type
     },
@@ -18,7 +18,12 @@ function high_chart(target, type_template, interval_template,data) {
         },
         this.colors = type_template.colors,
         this.legend = {
-            enabled: false
+            enabled: true,
+            borderRadius:2,
+            borderColor:"rgba(0,0,0,0.15)",
+            itemStyle: {
+                color: 'rgba(0,0,0,0.25)'
+            }
         },
         this.plotOptions = {
             series: {
@@ -36,6 +41,15 @@ function high_chart(target, type_template, interval_template,data) {
             lineWidth: 0,
             tickWidth:0,
             offset: 10,
+            labels:{
+                style:{
+                    color:"rgba(0,0,0,0.4)"
+                }
+            },
+            minPadding:0.02,
+            maxPadding:0.02,
+            startOfWeek: interval_template.xAxis.startOfWeek,
+            maxZoom: interval_template.xAxis.maxZoom,
             type: interval_template.xAxis.type,
             dateTimeLabelFormats: interval_template.xAxis.dateTimeLabelFormats,
             tickInterval: interval_template.xAxis.tickInterval,
@@ -45,12 +59,13 @@ function high_chart(target, type_template, interval_template,data) {
             gridLineColor: '#ddd',
             gridLineDashStyle: 'Dot',
             offset: -25,
+            showFirstLabel:false,
             title: {
                 enabled: false
             },
             labels:{
                 style:{
-                    color:"rgba(0,0,0,0.3)"
+                    color:"rgba(0,0,0,0.25)"
                 },
                 y:-2
             }
@@ -58,7 +73,7 @@ function high_chart(target, type_template, interval_template,data) {
         this.series = [{
             pointStart: interval_template.series.pointStart,
             pointInterval: interval_template.series.pointInterval,
-            data:data
+            data:interval_template.series.data
         }]
 }
 
@@ -110,7 +125,6 @@ var type_template = {
                     symbol: "diamond"
                 }
             }
-
         }
     },
     pie: {
@@ -135,7 +149,6 @@ var type_template = {
                     symbol: "diamond"
                 }
             }
-
         }
     },
     scatter: {
@@ -160,16 +173,19 @@ var type_template = {
                     symbol: "circle"
                 }
             }
-
         }
     }
 }
 
 
-function interval_template(date_time) {
+function interval_template(date_time,data) {
         this.date = (standardParse(date_time)).date,
         this.template = (standardParse(date_time)).template,
+        this.data=data;
         this._90 = function () {
+            for(var i= 0;i<this.data.length;i++){
+                this.data[i].name=new Date(this.template[0],this.template[1], this.template[2], parseInt(this.template[3])+i).toWayneString().hour;
+            }
             return {
                 tooltip: {
                     xDateFormat: '%Y-%m-%d %H:%M'
@@ -183,11 +199,15 @@ function interval_template(date_time) {
                 },
                 series: {
                     pointStart: Date.UTC(this.template[0], this.template[1], this.template[2], this.template[3], this.template[4]),
-                    pointInterval: 3600 * 1000
+                    pointInterval: 3600 * 1000,
+                    data:this.data
                 }
             }
         },
         this._100 = function () {
+            for(var i= 0;i<this.data.length;i++){
+                this.data[i].name=new Date(this.template[0],this.template[1],parseInt(this.template[2])+i).toWayneString().day;
+            }
             return {
                 tooltip: {
                     xDateFormat: '%Y-%m-%d'
@@ -195,32 +215,34 @@ function interval_template(date_time) {
                 xAxis: {
                     type: 'datetime',
                     dateTimeLabelFormats: {
-                        day: '%e/%b' + "<br />" + "%Y"
+                        day: '%e' + "<br />" + "%b"
                     },
                     tickInterval: 24 * 3600 * 1000
                 },
                 series: {
-                    pointStart: Date.UTC(this.template[0], this.template[1], this.template[2], this.template[3], this.template[4]),
-                    pointInterval: 24 * 3600 * 1000
+                    pointStart: Date.UTC(this.template[0], this.template[1], this.template[2]),
+                    pointInterval: 24 * 3600 * 1000,
+                    data:this.data
                 }
             }
         },
         this._200 = function () {
+            for(var i= 0;i<this.data.length;i++){
+                this.data[i].name=new Date(this.template[0],this.template[1],parseInt(this.template[2])+7 * i).toWayneString().day;
+            }
+            var date=new Date(this.template[0], this.template[1], this.template[2]);
+            var day=date.getDay();
             Highcharts.dateFormats = {
                 W: function (timestamp) {
-                    d = new Date(timestamp);
+                    var d = new Date(timestamp);
                     d.setHours(0, 0, 0);
-                    // Set to nearest Thursday: current date + 4 - current day number
-                    // Make Sunday's day number 7
                     d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-                    // Get first day of year
                     var yearStart = new Date(d.getFullYear(), 0, 1);
-                    // Calculate full weeks to nearest Thursday
-                    var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1) / 7)
+                    var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1) / 7);
                     return  weekNo;
                 },
                 YW: function (timestamp) {
-                    d = new Date(timestamp);
+                    var d = new Date(timestamp);
                     d.setHours(0, 0, 0);
                     d.setDate(d.getDate() + 4 - (d.getDay() || 7));
                     return d.getFullYear();
@@ -228,22 +250,32 @@ function interval_template(date_time) {
             }
             return {
                 tooltip: {
-                    xDateFormat: '%Y-%m'
+                    formatter:function(){
+                        return '<b>'+ this.point.name +'</b><br/>'+
+                            "数值 "+this.y +'<br />'+this.x;
+                    }
                 },
                 xAxis: {
                     type: 'datetime',
                     dateTimeLabelFormats: {
-                        week: '%e/%b'+ "<br />" +"week "+"%W"
+                        week: '%e/%b'+ "<br />" +"W"+"%W"
                     },
-                    tickInterval: 7 * 24 * 3600 * 1000
+                    startOfWeek:day,
+                    tickInterval: 7 * 24 * 3600 * 1000,
+                    maxZoom: 24 * 3600 * 1000
                 },
                 series: {
-                    pointStart: Date.UTC(this.template[0], this.template[1], this.template[2], this.template[3], this.template[4]),
-                    pointInterval: 7 * 24 * 3600 * 1000
+                    pointStart: Date.UTC(this.template[0], this.template[1], this.template[2]),
+                    pointInterval: 7 * 24 * 3600 * 1000,
+                    data:this.data
                 }
             }
         },
         this._300 = function () {
+            for(var i= 0;i<this.data.length;i++){
+                this.data[i].x=Date.UTC(this.template[0], parseInt(this.template[1])+i);
+                this.data[i].name=new Date(this.template[0],parseInt(this.template[1])+i).toWayneString().month;
+            }
             return {
                 tooltip: {
                     xDateFormat: '%YW-week %W'
@@ -253,15 +285,18 @@ function interval_template(date_time) {
                     dateTimeLabelFormats: {
                         month: '%b' + '<br />' + '%Y'
                     },
-                    tickInterval: 2628000000
+                    tickInterval: 2628000000,
+                    maxZoom: 7 * 24 * 3600 * 1000
                 },
                 series: {
-                    pointStart: Date.UTC(this.template[0], this.template[1], this.template[2], this.template[3], this.template[4]),
-                    pointInterval: 2628000000
+                    data:this.data
                 }
             }
         },
         this._400 = function () {
+            for(var i= 0;i<this.data.length;i++){
+                this.data[i].name=new Date(this.template[0],parseInt(this.template[1])+3 * i).toWayneString().month;
+            }
             Highcharts.dateFormats = {
                 Q: function (timestamp) {
                     d = new Date(timestamp);
@@ -281,15 +316,22 @@ function interval_template(date_time) {
                     tickInterval: 2628000000 * 3
                 },
                 series: {
-                    pointStart: Date.UTC(this.template[0], first_month_in_quarter, this.template[2], this.template[3], this.template[4]),
-                    pointInterval: 2628000000 * 3
+                    pointStart: Date.UTC(this.template[0], first_month_in_quarter),
+                    pointInterval: 2628000000 * 3,
+                    data:this.data
                 }
             }
         },
         this._500 = function () {
+            for(var i= 0;i<this.data.length;i++){
+                this.data[i].name=new Date(parseInt(this.template[0])+i,0).toWayneString().year;
+            }
             return {
                 tooltip: {
-                    xDateFormat: '%Y'
+                    formatter:function(){
+                            return '<b>'+ this.point.name +'</b><br/>'+
+                            "数值 "+this.y +'<br />'+this.x;
+                    }
                 },
                 xAxis: {
                     type: 'datetime',
@@ -299,8 +341,9 @@ function interval_template(date_time) {
                     tickInterval: 365 * 24 * 3600 * 1000
                 },
                 series: {
-                    pointStart: Date.UTC(this.template[0], this.template[1], this.template[2], this.template[3], this.template[4]),
-                    pointInterval: 365 * 24 * 3600 * 1000
+                    pointStart: Date.UTC(this.template[0], 0),
+                    pointInterval: 365 * 24 * 3600 * 1000,
+                    data:this.data
                 }
             }
         }

@@ -37,6 +37,21 @@ if(!Date.prototype.monthToQuarter){
         }
     }
 }
+//化为标准格式显示用
+if(!Date.prototype.toWayneString){
+    Date.prototype.toWayneString=function(){
+       var hour=this.getHours()<10?"0"+this.getHours():this.getHours();
+       var day=this.getDate()<10?"0"+this.getDate():this.getDate();
+       var month=this.getMonth()+1<10?"0"+(this.getMonth()+1):this.getMonth()+1;
+       var year=this.getFullYear();
+       return{
+            hour:year+"-"+month+"-"+day+" "+hour+":00",
+            day:year+"-"+month+"-"+day,
+            month:year+"-"+month,
+            year:year
+       }
+    }
+}
 //yy-mm-dd hh:ii格式解析
 function standardParse(date_value){
     var date_value=(date_value.replace(/\s/g,"-").replace(/:/g,"-").replace(/T/g,"-")).split("-");
