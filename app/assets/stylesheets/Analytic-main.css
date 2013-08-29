@@ -151,6 +151,7 @@ div[title='analy-view-select'] {
     transition: color 0.2s ease-out, background-color 0.2s ease-out;
     font-size: 15px;
     line-height:27px;
+    pointer-events:none;
 }
 
 .control-chart-interval-group>li.active>a {
@@ -198,18 +199,12 @@ div[title='analy-view-select'] {
     letter-spacing: 1px;
     font-size: 41px;
     color: rgba(0, 0, 0, 0.3);
+    pointer-events: none;
 }
 .chart-type-alternate td p:hover {
     color: black;
 }
 
-.chart-type-alternate td.image p {
-    color: black
-}
-
-.chart-type-alternate td.active {
-    width: 70%;
-}
 
 td.analytics-chart-line {
     background-position: center 2px;
