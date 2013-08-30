@@ -1,30 +1,30 @@
 function high_chart(option) {
     Highcharts.dateFormats = {
         W: function (timestamp) {
-            var d = new Date(timestamp);
-            d.setHours(0, 0, 0);
-            d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-            var yearStart = new Date(d.getFullYear(), 0, 1);
-            var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1) / 7);
-            return  weekNo;
+                var d = new Date(timestamp);
+                d.setHours(0, 0, 0);
+                d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+                var yearStart = new Date(d.getFullYear(), 0, 1);
+                var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1) / 7);
+                return  weekNo;
         },
         Q: function (timestamp) {
-            d = new Date(timestamp);
-            return  d.monthToQuarter();
-        },
-        YW: function (timestamp) {
-            var d = new Date(timestamp);
-            d.setHours(0, 0, 0);
-            d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-            return d.getFullYear();
+                d = new Date(timestamp);
+                return  d.monthToQuarter();
+            },
+            YW: function (timestamp) {
+                var d = new Date(timestamp);
+                d.setHours(0, 0, 0);
+                d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+                return d.getFullYear();
+            }
         }
-    }
-    this.chart = {
-        zoomType: 'xy',
-        spacingLeft: 5,
-        spacingRight: 10,
-        renderTo: option.target
-    },
+        this.chart = {
+            zoomType: 'xy',
+            spacingLeft: 5,
+            spacingRight: 10,
+            renderTo: option.target
+        },
         this.title = {
             text: null
         },
@@ -79,6 +79,7 @@ function high_chart(option) {
                     mouseOut: function () {
                         this.graph.attr('zIndex', this.index);
                     }
+
                 }
             },
             scatter: {
@@ -92,6 +93,7 @@ function high_chart(option) {
             lineWidth: 0,
             tickWidth: 0,
             offset: 10,
+            ordinal: true,
             labels: {
                 style: {
                     color: "rgba(0,0,0,0.4)"
@@ -99,7 +101,7 @@ function high_chart(option) {
             },
             minPadding: 0.02,
             maxPadding: 0.02,
-            startOfWeek: option.interval_week_special.xAxis.startOfWeek,
+//            startOfWeek: option.interval_week_special.xAxis.startOfWeek,
             maxZoom: option.interval_template.xAxis.maxZoom,
             type: option.interval_template.xAxis.type,
             dateTimeLabelFormats: option.interval_template.xAxis.dateTimeLabelFormats,
@@ -121,11 +123,6 @@ function high_chart(option) {
                 y: -2
             }
         }
-//        this.series = [{
-//            pointStart: interval_template.series.pointStart,
-//            pointInterval: interval_template.series.pointInterval,
-//            data:interval_template.series.data
-//        }]
 }
 var interval_template = {
     _90: {
@@ -150,7 +147,8 @@ var interval_template = {
             dateTimeLabelFormats: {
                 day: '%e' + "<br />" + "%b"
             },
-            tickInterval: 24 * 3600 * 1000
+            tickInterval: 24 * 3600 * 1000,
+            maxZoom:  3600 * 1000
         }
     },
     _200: {
@@ -166,7 +164,7 @@ var interval_template = {
                 week: '%e/%b' + "<br />" + "W" + "%W"
             },
             tickInterval: 7 * 24 * 3600 * 1000,
-            maxZoom: 24 * 3600 * 1000
+            maxZoom:  3600 * 1000
         }
 
     },
@@ -180,7 +178,7 @@ var interval_template = {
                 month: '%b' + '<br />' + '%Y'
             },
             tickInterval: 2628000000,
-            maxZoom: 7 * 24 * 3600 * 1000
+            maxZoom:  24 * 3600 * 1000
         }
     },
     _400: {
@@ -193,7 +191,8 @@ var interval_template = {
             dateTimeLabelFormats: {
                 month: "quarter " + '%Q' + '<br />' + '%Y'
             },
-            tickInterval: 2628000000 * 3
+            tickInterval: 2628000000 * 3,
+            maxZoom:  24 * 3600 * 1000
         }
     },
     _500: {
@@ -209,34 +208,36 @@ var interval_template = {
             dateTimeLabelFormats: {
                 year: '%Y'
             },
-            tickInterval: 365 * 24 * 3600 * 1000
+            tickInterval: 365 * 24 * 3600 * 1000,
+            maxZoom:  24 * 3600 * 1000
         }
     }
 }
 
-function data_template(target, date_time, type, data) {
-    this.date = (standardParse(date_time)).date,
-    this.template = (standardParse(date_time)).template,
-    this.data = data;
+function data_template(option) {
+    this.date = (standardParse(option.begin_time)).date,
+    this.template = (standardParse(option.begin_time)).template,
+    this.data = option.data;
     var secondSeries = this.template[4];
     var hourSeries = this.template[3];
     var daySeries = this.template[2];
     var monthSeries = this.template[1];
     var yearSeries = this.template[0];
+    var chart = $("#" + option.target).highcharts();
     var data;
-    var chart = $("#" + target).highcharts();
     this._90 = function () {
         for (var i = 0; i < this.data.length; i++) {
             this.data[i].name = new Date(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i).toWayneString().hour;
         }
         data = this.data;
         chart.addSeries({
-            type: type,
+            name:option.kpi,
+            id:option.kpi,
+            type: option.type,
             pointStart: Date.UTC(yearSeries, monthSeries, daySeries, hourSeries, secondSeries),
-            pointInterval: 3600 * 1000,
+            pointInterval: 3600 * 1000   ,
             data: data
         });
-
 
     },
         this._100 = function () {
@@ -245,23 +246,27 @@ function data_template(target, date_time, type, data) {
             }
             data = this.data;
             chart.addSeries({
-                type: type,
+                name:option.kpi,
+                id:option.kpi,
+                type: option.type,
                 pointStart: Date.UTC(yearSeries, monthSeries, daySeries),
                 pointInterval: 24 * 3600 * 1000,
                 data: data
             });
-
         },
         this._200 = function () {
             for (var i = 0; i < this.data.length; i++) {
+                this.data[i].x = Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i);
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWayneString().day;
             }
             data = this.data;
 
             chart.addSeries({
-                type: type,
-                pointStart: Date.UTC(yearSeries, monthSeries, daySeries),
-                pointInterval: 7 * 24 * 3600 * 1000,
+                name:option.kpi,
+                id:option.kpi,
+                type: option.type,
+//                pointStart: Date.UTC(yearSeries, monthSeries, daySeries),
+//                pointInterval: 7 * 24 * 3600 * 1000,
                 data: data
             });
 
@@ -274,6 +279,9 @@ function data_template(target, date_time, type, data) {
             data = this.data;
 
             chart.addSeries({
+                name:option.kpi,
+                id:option.kpi,
+                type: option.type,
                 data: data
             });
 
@@ -286,7 +294,9 @@ function data_template(target, date_time, type, data) {
 
             var first_month_in_quarter = Math.floor(parseInt(this.template[1]) / 3) * 3
             chart.addSeries({
-                type: type,
+                name:option.kpi,
+                id:option.kpi,
+                type: option.type,
                 pointStart: Date.UTC(yearSeries, first_month_in_quarter),
                 pointInterval: 2628000000 * 3,
                 data: data
@@ -300,25 +310,169 @@ function data_template(target, date_time, type, data) {
             data = this.data;
 
             chart.addSeries({
-                type: type,
+                name:option.kpi,
+                id:option.kpi,
+                type: option.type,
                 pointStart: Date.UTC(yearSeries, 0),
                 pointInterval: 365 * 24 * 3600 * 1000,
                 data: data
             });
+
         }
 
 }
 
-function interval_week_special(date_time,interval){
-    if(interval=="200"){
-        this.date = (standardParse(date_time)).date;
-        this.xAxis={
-            startOfWeek:this.date.getDay()
+
+
+
+
+//function interval_week_special(date_time,interval){
+//    if(interval=="200"){
+//        this.date = (standardParse(date_time)).date;
+//        this.xAxis={
+//            startOfWeek:this.date.getDay()
+//        }
+//    }
+//    else{
+//        this.xAxis={
+//            startOfWeek:undefined
+//        }
+//    }
+//}
+
+
+
+
+
+
+var limit_pointer_condition={
+    _90:{
+        limit:36,
+        limitAction:function(chart){
+            var extreme=[];
+            for(var i=0;i<chart.series.length;i++){
+                extreme.push(chart.series[i].processedXData[0]);
+                extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
+            }
+            chart.xAxis[0].update({
+                labels: {
+                    formatter: function() {
+                        for(var j=0;j<extreme.length;j++){
+                            if(this.value==extreme[j]){
+                                return Highcharts.dateFormat('%H:%M' + "<br />" + '%e/%b', this.value)
+                            }
+                        }
+                    }
+                }
+            });
         }
-    }
-    else{
-        this.xAxis={
-            startOfWeek:undefined
+    },
+    _100:{
+        limit:50,
+        limitAction:function(chart){
+            var extreme=[];
+            for(var i=0;i<chart.series.length;i++){
+                extreme.push(chart.series[i].processedXData[0]);
+                extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
+            }
+            chart.xAxis[0].update({
+                labels: {
+                    formatter: function() {
+                        for(var j=0;j<extreme.length;j++){
+                            if(this.value==extreme[j]){
+                                return Highcharts.dateFormat('%e' + "<br />" + "%b", this.value)
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    },
+    _200:{
+        limit:33,
+        limitAction:function(chart){
+            var extreme=[];
+            for(var i=0;i<chart.series.length;i++){
+                extreme.push(chart.series[i].processedXData[0]);
+                extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
+            }
+            console.log(extreme)
+            chart.xAxis[0].update({
+                labels: {
+                    formatter: function() {
+                        console.log(this.value)
+                        for(var j=0;j<extreme.length;j++){
+                            if(this.value==extreme[j]){
+                                return Highcharts.dateFormat('%e/%b' + "<br />" + "W" + "%W", this.value)
+                            }
+
+                        }
+                    }
+                }
+            });
+        }
+    },
+    _300:{
+        limit:26,
+        limitAction:function(chart){
+            var extreme=[];
+            for(var i=0;i<chart.series.length;i++){
+                extreme.push(chart.series[i].processedXData[0]);
+                extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
+            }
+            chart.xAxis[0].update({
+                labels: {
+                    formatter: function() {
+                        for(var j=0;j<extreme.length;j++){
+                            if(this.value==extreme[j]){
+                                return Highcharts.dateFormat('%b' + '<br />' + '%Y', this.value)
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    },
+    _400:{
+        limit:25,
+        limitAction:function(chart){
+            var extreme=[];
+            for(var i=0;i<chart.series.length;i++){
+                extreme.push(chart.series[i].processedXData[0]);
+                extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
+            }
+            chart.xAxis[0].update({
+                labels: {
+                    formatter: function() {
+                        for(var j=0;j<extreme.length;j++){
+                            if(this.value==extreme[j]){
+                                return Highcharts.dateFormat("quarter " + '%Q' + '<br />' + '%Y', this.value)
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    },
+    _500:{
+        limit:32,
+        limitAction:function(chart){
+            var extreme=[];
+            for(var i=0;i<chart.series.length;i++){
+                extreme.push(chart.series[i].processedXData[0]);
+                extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
+            }
+            chart.xAxis[0].update({
+                labels: {
+                    formatter: function() {
+                        for(var j=0;j<extreme.length;j++){
+                            if(this.value==extreme[j]){
+                                return Highcharts.dateFormat('%Y', this.value)
+                            }
+                        }
+                    }
+                }
+            });
         }
     }
 }

@@ -119,13 +119,14 @@ function prepare_form_chart() {
         }
 //        post
         var option={
+            kpi:kpi,
             target:"chart-container",
             begin_time:begin_time,
             type:type,
             interval:interval
         }
         if(chart_body_close_validate){
-            show_chart_body(interval,type);
+            show_chart_body(option);
             option.data=[{y:2},{y:3},{y:21},{y:3},{y:10},{y:7},{y:3},{y:1},{y:17},{y:13}];
             chart_form_frame(option);
             chart_addSeries(option);
@@ -134,6 +135,7 @@ function prepare_form_chart() {
             option.data=[{y:12},{y:3},{y:1},{y:13},{y:10},{y:17},{y:3},{y:2},{y:12},{y:5}];
             chart_addSeries(option);
         }
+        limit_pointer_number(option);
         clear_chart_condition();
         chartSeries.addSeries(
             {
@@ -150,22 +152,7 @@ function prepare_form_chart() {
         MessageBox("u fuckin' blind  ???  fill those * blank" , "top", "warning")
     }
 }
-function chart_form_frame(option){
-    var form_option={
-        target:option.target,
-        interval_week_special:new interval_week_special(option.begin_time,option.interval),
-        interval_template : interval_template["_"+option.interval]
-    }
-    new Highcharts.Chart(new high_chart(form_option));
-}
-function chart_addSeries(option){
-    (new data_template(option.target,option.begin_time,option.type,option.data))["_"+option.interval]();
-}
-function destroy_chart(target){
-    var chart=$("#"+target).highcharts();
-    chart.destroy();
-}
-function show_chart_body(interval,type){
+function show_chart_body(option){
     $("#chart-body").css("display","block");
     $("#chart-type-alternate td").hover(function () {
         $("#chart-type-alternate td").each(function () {
@@ -187,7 +174,7 @@ function show_chart_body(interval,type){
     $("#chart-type-alternate td").each(function () {
         $(this).css("width", '10%').removeClass("image").find("p").css("display", "block");
     });
-    $("#chart-type-alternate td[type='"+type+"']").css("width", "70%").addClass("image active").find("p").css("display","none");
+    $("#chart-type-alternate td[type='"+option.type+"']").css("width", "70%").addClass("image active").find("p").css("display","none");
     $("#chart-type-alternate").find("td").each(function(){
         $(this).bind("click",alternate_chart_type)
     });
@@ -199,10 +186,12 @@ function show_chart_body(interval,type){
             if(!$(target).hasClass("active")){
                 var interval=$(target).attr("interval");
                 change_interval("chart-container",interval,type);
+                $("#chart-interval-alternate").find("li").removeClass("active");
+                $(target).addClass("active");
             }
         });
     });
-    $("#chart-interval-alternate").find("li[interval='"+interval+"']").addClass("active");
+    $("#chart-interval-alternate").find("li[interval='"+option.interval+"']").addClass("active");
 }
 function hide_chart_body(){
     $("#chart-body").css("display","none");
@@ -217,20 +206,21 @@ function change_interval(target,interval,type){
     }
     if(new_data_wrapper.length==chartSeries.getCount()){
         chart.destroy();
-        var option;
+        var option={
+            target:target,
+            type:type,
+            interval:interval
+        };
         for(var j=0;j<chartSeries.getCount();j++){
-            option={
-                target:"chart-container",
-                begin_time:chartSeries.getSeries()[j],
-                type:type,
-                interval:interval,
-                data:new_data_wrapper[j]
-            }
-            if(j=0){
+            option.kpi=chartSeries.getSeries()[j]["kpi"];
+            option.begin_time=chartSeries.getSeries()[j]["begin_time"];
+            option.data=new_data_wrapper[j];
+            if(j==0){
                 chart_form_frame(option);
             }
             chart_addSeries(option);
         }
+        limit_pointer_number(option)
     }
 }
 var resize_chart={
@@ -272,4 +262,34 @@ function clear_chart_condition(){
 }
 
 
+
+
+
+
+function chart_form_frame(option){
+    var form_option={
+        target:option.target,
+//        interval_week_special:new interval_week_special(option.begin_time,option.interval),
+        interval_template : interval_template["_"+option.interval]
+    }
+    new Highcharts.Chart(new high_chart(form_option));
+}
+function chart_addSeries(option){
+    (new data_template(option))["_"+option.interval]();
+}
+
+function destroy_chart(option){
+    var chart=$("#"+option.target).highcharts();
+    chart.destroy();
+}
+
+function limit_pointer_number(option){
+    var chart = $("#" + option.target).highcharts();
+    var interval=chart.options.xAxis[0].tickInterval;
+    var maxDate=chart.xAxis[0].getExtremes().max;
+    var minDate=chart.xAxis[0].getExtremes().min;
+    if(Math.ceil((maxDate-minDate)/interval)>=limit_pointer_condition["_"+option.interval].limit){
+        limit_pointer_condition["_"+option.interval].limitAction(chart)
+    }
+}
 
