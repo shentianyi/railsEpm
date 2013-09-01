@@ -24,16 +24,17 @@ var chartSeries={
     }
 }
 function init_analytics() {
-    var target = "#analy-begin-time,#analy-end-time";
-    var interval_target = "#chart-kpi";
-    date_and_datetime.unit_them_at_begin(target, interval_target);
     $(".chosen-select").chosen({
         disable_search_threshold: 7
     });
-    $("#chart-kpi").change(function () {
-        var interval = $(this).find(":selected").attr("interval");
-        form_date_or_time_picker(interval, target);
-    });
+
+    var date_picker_option={
+        target:"#analy-begin-time,#analy-end-time",
+        interval_source:"#chart-kpi",
+        have_shortcut:true
+    }
+    date_picker_init(date_picker_option);
+
     $("#analy-begin-time,#analy-end-time").datepicker().on("changeDate", function () {
         var interval = $("#chart-kpi").find(":selected").attr("interval");
         if (interval == "200") {
@@ -45,9 +46,17 @@ function init_analytics() {
             $(this).next().text("quarter " + quarter);
         }
     });
+
     resize_chart.body();
     resize_chart.container();
 }
+function date_picker_init(option){
+    date_and_datetime.unit_them_at_begin(option.target,option.interval_source,option.have_shortcut);
+    $(option.interval_source).change(function () {
+        var interval = $(this).find(":selected").attr("interval");
+        form_date_or_time_picker(interval, option.target);
+    });
+};
 function analytic_control_condition_visible() {
     var open_state = $("#analytic-control-condition-visible").attr("open");
     if (open_state) {
@@ -269,7 +278,7 @@ function clear_chart_condition(){
 function chart_form_frame(option){
     var form_option={
         target:option.target,
-//        interval_week_special:new interval_week_special(option.begin_time,option.interval),
+        interval_week_special:new interval_week_special(option),
         interval_template : interval_template["_"+option.interval]
     }
     new Highcharts.Chart(new high_chart(form_option));

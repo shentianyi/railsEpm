@@ -236,3 +236,65 @@ nav ul li a:hover .nav-entry-kpi{
     color:white;
     background-color:#f3ca39;
 }
+/*********************************************************************************************************  date picker
+*******************************************************************************************************************/
+.date-picker-shortcut{
+    text-align:center;
+    cursor:pointer;
+    font-size:14px;
+    padding:0px;
+    text-align:center;
+}
+.date-picker-shortcut:hover{
+    background-color:#eee
+}
+.date-picker-shortcut[interval='90']:after{
+    content:'last 24 hours';
+}
+.date-picker-shortcut[interval='100']:after{
+    content:'last 7 days';
+}
+.date-picker-shortcut[interval='200']:after{
+    content:'last 4 weeks';
+}
+.date-picker-shortcut[interval='300']:after{
+    content:'last 6 months';
+}
+.date-picker-shortcut[interval='400']:after{
+    content:'last 4 quarters';
+}
+.date-picker-shortcut[interval='500']:after{
+    content:'last 10 years';
+}
+/************************************************* date input
+********************************************************************/
+.index-pick-date[type="text"] {
+    padding: 4px 5px;
+    background-color: white;
+    width: 150px !important;
+    margin-left: 42px;
+    font-size: 13px;
+    cursor: default;
+    margin-bottom: 0px;
+    font-family: 'open-sans'
+}
+
+.index-pick-date[type="text"]:nth-of-type(2) {
+    margin-top: 6px;
+}
+[week="picker"] tbody tr:hover{
+    background-color: #eee;
+}
+[week="picker"] tbody tr.week-tr-active{
+    background-color: #5fa9da;
+    color: white;
+}
+[week="picker"] tbody tr.week-tr-active>td {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+}
+
+.datepicker [week="picker"] table  tr.week-tr-active td.day:hover {
+    background: none;
+}
+

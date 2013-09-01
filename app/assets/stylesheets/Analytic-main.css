@@ -71,38 +71,6 @@ div[title='analy-view-select'] {
     margin-top: 8px;
 }
 
-/************************************************* date input
-********************************************************************/
-.index-pick-date[type="text"] {
-    padding: 4px 5px;
-    background-color: white;
-    width: 150px !important;
-    margin-left: 42px;
-    font-size: 13px;
-    cursor: default;
-    margin-bottom: 0px;
-    font-family: 'open-sans'
-}
-
-.index-pick-date[type="text"]:nth-of-type(2) {
-    margin-top: 6px;
-}
-[week="picker"] tbody tr:hover{
-    background-color: #eee;
-}
-[week="picker"] tbody tr.week-tr-active{
-    background-color: #5fa9da;
-    color: white;
-}
-[week="picker"] tbody tr.week-tr-active>td {
-    border-radius: 0;
-    -webkit-border-radius: 0;
-}
-
-.datepicker [week="picker"] table  tr.week-tr-active td.day:hover {
-    background: none;
-}
-
 .index-date-extra-info {
     display: inline-block;
     color: #888;

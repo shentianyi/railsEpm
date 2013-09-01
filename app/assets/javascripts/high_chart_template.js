@@ -37,16 +37,16 @@ function high_chart(option) {
             enabled: false
         },
         this.colors = [
-            'rgba(245,161,51,0.7)',
-            'rgba(52,152,219,0.7)',
-            'rgba(205,208,164,0.7)',
-            'rgba(231,76,60,0.7)',
-            'rgba(26,188,156,0.7)',
-            'rgba(241,196,15,0.7)',
-            'rgba(149,165,166,0.7)',
-            'rgba(103,116,210,0.7)',
-            'rgba(219,88,168,0.7)',
-            'rgba(53,200,209,0.7)'
+            'rgba(245,161,51,0.8)',
+            'rgba(52,152,219,0.8)',
+            'rgba(205,208,164,0.8)',
+            'rgba(231,76,60,0.8)',
+            'rgba(26,188,156,0.8)',
+            'rgba(241,196,15,0.8)',
+            'rgba(149,165,166,0.8)',
+            'rgba(103,116,210,0.8)',
+            'rgba(219,88,168,0.8)',
+            'rgba(53,200,209,0.8)'
         ],
         this.legend = {
             enabled: true,
@@ -101,8 +101,8 @@ function high_chart(option) {
             },
             minPadding: 0.02,
             maxPadding: 0.02,
-//            startOfWeek: option.interval_week_special.xAxis.startOfWeek,
-            maxZoom: option.interval_template.xAxis.maxZoom,
+            tickPositioner: option.interval_week_special.xAxis.tickPositioner,
+            minRange: option.interval_template.xAxis.minRange,
             type: option.interval_template.xAxis.type,
             dateTimeLabelFormats: option.interval_template.xAxis.dateTimeLabelFormats,
             tickInterval: option.interval_template.xAxis.tickInterval,
@@ -148,7 +148,7 @@ var interval_template = {
                 day: '%e' + "<br />" + "%b"
             },
             tickInterval: 24 * 3600 * 1000,
-            maxZoom:  3600 * 1000
+            minRange:  3600 * 1000
         }
     },
     _200: {
@@ -164,7 +164,7 @@ var interval_template = {
                 week: '%e/%b' + "<br />" + "W" + "%W"
             },
             tickInterval: 7 * 24 * 3600 * 1000,
-            maxZoom:  3600 * 1000
+            minRange:  3600 * 1000
         }
 
     },
@@ -178,7 +178,7 @@ var interval_template = {
                 month: '%b' + '<br />' + '%Y'
             },
             tickInterval: 2628000000,
-            maxZoom:  24 * 3600 * 1000
+            minRange:  24 * 3600 * 1000
         }
     },
     _400: {
@@ -192,7 +192,7 @@ var interval_template = {
                 month: "quarter " + '%Q' + '<br />' + '%Y'
             },
             tickInterval: 2628000000 * 3,
-            maxZoom:  24 * 3600 * 1000
+            minRange:  24 * 3600 * 1000
         }
     },
     _500: {
@@ -209,7 +209,7 @@ var interval_template = {
                 year: '%Y'
             },
             tickInterval: 365 * 24 * 3600 * 1000,
-            maxZoom:  24 * 3600 * 1000
+            minRange:  24 * 3600 * 1000
         }
     }
 }
@@ -326,19 +326,31 @@ function data_template(option) {
 
 
 
-//function interval_week_special(date_time,interval){
-//    if(interval=="200"){
-//        this.date = (standardParse(date_time)).date;
-//        this.xAxis={
-//            startOfWeek:this.date.getDay()
-//        }
-//    }
-//    else{
-//        this.xAxis={
-//            startOfWeek:undefined
-//        }
-//    }
-//}
+function interval_week_special(option){
+    if(option.interval=="200"){
+        this.xAxis={
+            tickPositioner:function(){
+                var extreme=[];
+                var chart=$("#"+option.target).highcharts();
+                for(var i=0;i<chart.series.length;i++){
+                    for(var j=0;j<chart.series[i].processedXData.length;j++){
+                        extreme.push(chart.series[i].processedXData[j]);
+                    }
+                }
+                extreme.info={
+                    unitName:"week",
+                    higherRanks:{}
+                }
+                return extreme
+            }
+        }
+    }
+    else{
+        this.xAxis={
+            tickPositioner:null
+        }
+    }
+}
 
 
 
@@ -349,20 +361,18 @@ var limit_pointer_condition={
     _90:{
         limit:36,
         limitAction:function(chart){
-            var extreme=[];
-            for(var i=0;i<chart.series.length;i++){
-                extreme.push(chart.series[i].processedXData[0]);
-                extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
-            }
             chart.xAxis[0].update({
-                labels: {
-                    formatter: function() {
-                        for(var j=0;j<extreme.length;j++){
-                            if(this.value==extreme[j]){
-                                return Highcharts.dateFormat('%H:%M' + "<br />" + '%e/%b', this.value)
-                            }
-                        }
+                tickPositioner:function(){
+                    var extreme=[];
+                    for(var i=0;i<chart.series.length;i++){
+                        extreme.push(chart.series[i].processedXData[0]);
+                        extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
                     }
+                    extreme.info={
+                        unitName:"hour",
+                        higherRanks:{}
+                    }
+                    return extreme
                 }
             });
         }
@@ -370,20 +380,18 @@ var limit_pointer_condition={
     _100:{
         limit:50,
         limitAction:function(chart){
-            var extreme=[];
-            for(var i=0;i<chart.series.length;i++){
-                extreme.push(chart.series[i].processedXData[0]);
-                extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
-            }
             chart.xAxis[0].update({
-                labels: {
-                    formatter: function() {
-                        for(var j=0;j<extreme.length;j++){
-                            if(this.value==extreme[j]){
-                                return Highcharts.dateFormat('%e' + "<br />" + "%b", this.value)
-                            }
-                        }
+                tickPositioner:function(){
+                    var extreme=[];
+                    for(var i=0;i<chart.series.length;i++){
+                        extreme.push(chart.series[i].processedXData[0]);
+                        extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
                     }
+                    extreme.info={
+                        unitName:"day",
+                        higherRanks:{}
+                    }
+                    return extreme
                 }
             });
         }
@@ -391,23 +399,18 @@ var limit_pointer_condition={
     _200:{
         limit:33,
         limitAction:function(chart){
-            var extreme=[];
-            for(var i=0;i<chart.series.length;i++){
-                extreme.push(chart.series[i].processedXData[0]);
-                extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
-            }
-            console.log(extreme)
             chart.xAxis[0].update({
-                labels: {
-                    formatter: function() {
-                        console.log(this.value)
-                        for(var j=0;j<extreme.length;j++){
-                            if(this.value==extreme[j]){
-                                return Highcharts.dateFormat('%e/%b' + "<br />" + "W" + "%W", this.value)
-                            }
-
-                        }
+                tickPositioner:function(){
+                    var extreme=[];
+                    for(var i=0;i<chart.series.length;i++){
+                        extreme.push(chart.series[i].processedXData[0]);
+                        extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
                     }
+                    extreme.info={
+                        unitName:"week",
+                        higherRanks:{}
+                    }
+                    return extreme
                 }
             });
         }
@@ -415,20 +418,18 @@ var limit_pointer_condition={
     _300:{
         limit:26,
         limitAction:function(chart){
-            var extreme=[];
-            for(var i=0;i<chart.series.length;i++){
-                extreme.push(chart.series[i].processedXData[0]);
-                extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
-            }
             chart.xAxis[0].update({
-                labels: {
-                    formatter: function() {
-                        for(var j=0;j<extreme.length;j++){
-                            if(this.value==extreme[j]){
-                                return Highcharts.dateFormat('%b' + '<br />' + '%Y', this.value)
-                            }
-                        }
+                tickPositioner:function(){
+                    var extreme=[];
+                    for(var i=0;i<chart.series.length;i++){
+                        extreme.push(chart.series[i].processedXData[0]);
+                        extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
                     }
+                    extreme.info={
+                        unitName:"month",
+                        higherRanks:{}
+                    }
+                    return extreme
                 }
             });
         }
@@ -436,20 +437,18 @@ var limit_pointer_condition={
     _400:{
         limit:25,
         limitAction:function(chart){
-            var extreme=[];
-            for(var i=0;i<chart.series.length;i++){
-                extreme.push(chart.series[i].processedXData[0]);
-                extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
-            }
             chart.xAxis[0].update({
-                labels: {
-                    formatter: function() {
-                        for(var j=0;j<extreme.length;j++){
-                            if(this.value==extreme[j]){
-                                return Highcharts.dateFormat("quarter " + '%Q' + '<br />' + '%Y', this.value)
-                            }
-                        }
+                tickPositioner:function(){
+                    var extreme=[];
+                    for(var i=0;i<chart.series.length;i++){
+                        extreme.push(chart.series[i].processedXData[0]);
+                        extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
                     }
+                    extreme.info={
+                        unitName:"month",
+                        higherRanks:{}
+                    }
+                    return extreme
                 }
             });
         }
@@ -457,20 +456,18 @@ var limit_pointer_condition={
     _500:{
         limit:32,
         limitAction:function(chart){
-            var extreme=[];
-            for(var i=0;i<chart.series.length;i++){
-                extreme.push(chart.series[i].processedXData[0]);
-                extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
-            }
             chart.xAxis[0].update({
-                labels: {
-                    formatter: function() {
-                        for(var j=0;j<extreme.length;j++){
-                            if(this.value==extreme[j]){
-                                return Highcharts.dateFormat('%Y', this.value)
-                            }
-                        }
+                tickPositioner:function(){
+                    var extreme=[];
+                    for(var i=0;i<chart.series.length;i++){
+                        extreme.push(chart.series[i].processedXData[0]);
+                        extreme.push(chart.series[i].processedXData[chart.series[i].processedXData.length-1]);
                     }
+                    extreme.info={
+                        unitName:"year",
+                        higherRanks:{}
+                    }
+                    return extreme
                 }
             });
         }

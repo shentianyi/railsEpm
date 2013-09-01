@@ -42,7 +42,7 @@ var date_and_datetime = {
         $(target).datepicker('remove');
         $(target).datetimepicker('remove');
     },
-    unit_them_at_begin: function (target, interval_target) {
+    unit_them_at_begin: function (target, interval_target,have_shortcut) {
         $(target).datepicker().on("show", function () {
             var interval = $(interval_target).find(":selected").attr("interval");
             if (interval) {
@@ -52,6 +52,20 @@ var date_and_datetime = {
                 $(".datepicker").on("click",function(){
                     $(".datepicker-days").find(".active").parent().addClass("week-tr-active");
                 });
+                if(have_shortcut && $(".table-condensed").attr("already-shorcut")!="yes"){
+                    if(interval=="200"){
+                        $(".table-condensed").attr("already-shorcut","yes").find("tfoot").append($("<tr />")
+                            .append($("<th />").attr("colSpan",8).addClass("date-picker-shortcut").attr("interval",interval).click(function(){
+                                date_shortcut(target);
+                            })));
+                    }
+                    else{
+                        $(".table-condensed").attr("already-shorcut","yes").find("tfoot").append($("<tr />")
+                            .append($("<th />").attr("colSpan",7).addClass("date-picker-shortcut").attr("interval",interval).click(function(){
+                                date_shortcut(target);
+                            })));
+                    }
+                }
             }
             else {
                 date_and_datetime.remove_date_picker_model(target);
@@ -60,7 +74,7 @@ var date_and_datetime = {
     },
     week_picker_decorate: function (target) {
         $(target).datepicker().one("show", function () {
-            $(".datepicker-days").attr("week", "picker").find(".clear").attr("colspan","8");
+            $(".datepicker-days").attr("week", "picker");
         })
     }
 }
@@ -102,5 +116,17 @@ var spec_option = {
         calendarWeeks: false,
         startView: "decade",
         minViewMode: "years"
+    }
+}
+
+function date_shortcut(target){
+    var place_to_input=target.split(",");
+    var begin_place=place_to_input[0];
+    var end_place=place_to_input[1];
+    if($(".dropdown-menu").hasClass("datepicker")){
+        $(target).datepicker("hide");
+    }
+    else{
+        $(target).datetimepicker("hide");
     }
 }
