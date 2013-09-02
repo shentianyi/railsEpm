@@ -37,16 +37,16 @@ function high_chart(option) {
             enabled: false
         },
         this.colors = [
-            'rgba(245,161,51,0.8)',
-            'rgba(52,152,219,0.8)',
-            'rgba(205,208,164,0.8)',
-            'rgba(231,76,60,0.8)',
-            'rgba(26,188,156,0.8)',
-            'rgba(241,196,15,0.8)',
-            'rgba(149,165,166,0.8)',
-            'rgba(103,116,210,0.8)',
-            'rgba(219,88,168,0.8)',
-            'rgba(53,200,209,0.8)'
+            'rgba(245,161,51,0.7)',
+            'rgba(52,152,219,0.7)',
+            'rgba(205,208,164,0.7)',
+            'rgba(231,76,60,0.7)',
+            'rgba(26,188,156,0.7)',
+            'rgba(241,196,15,0.7)',
+            'rgba(149,165,166,0.7)',
+            'rgba(103,116,210,0.7)',
+            'rgba(205,123,173,0.7)',
+            'rgba(53,200,209,0.7)'
         ],
         this.legend = {
             enabled: true,
@@ -63,7 +63,19 @@ function high_chart(option) {
                 marker: {
                     enabled: true,
                     fillColor: null,
-                    lineColor: "white"
+                    lineColor: "white",
+                    states: {
+                        select: {
+                            fillColor: null,
+                            lineColor: "white"
+                        }
+                    }
+                },
+                states: {
+                    select: {
+                        color:null,
+                        borderColor:null
+                    }
                 }
             },
             line: {
@@ -79,7 +91,18 @@ function high_chart(option) {
                     mouseOut: function () {
                         this.graph.attr('zIndex', this.index);
                     }
-
+                }
+            },
+            pie: {
+                size: '70%',
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: 'rgba(0,0,0,0.25)',
+                    connectorColor: 'rgba(0,0,0,0.15)',
+                    connectorWidth:1,
+                    format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
                 }
             },
             scatter: {
@@ -163,7 +186,7 @@ var interval_template = {
             dateTimeLabelFormats: {
                 week: '%e/%b' + "<br />" + "W" + "%W"
             },
-            tickInterval: 7 * 24 * 3600 * 1000,
+//            tickInterval: 7 * 24 * 3600 * 1000,
             minRange:  3600 * 1000
         }
 
@@ -177,7 +200,7 @@ var interval_template = {
             dateTimeLabelFormats: {
                 month: '%b' + '<br />' + '%Y'
             },
-            tickInterval: 2628000000,
+//            tickInterval: 2628000000,
             minRange:  24 * 3600 * 1000
         }
     },
@@ -214,6 +237,14 @@ var interval_template = {
     }
 }
 
+
+
+
+
+
+
+
+
 function data_template(option) {
     this.date = (standardParse(option.begin_time)).date,
     this.template = (standardParse(option.begin_time)).template,
@@ -232,7 +263,7 @@ function data_template(option) {
         data = this.data;
         chart.addSeries({
             name:option.kpi,
-            id:option.kpi,
+            id:option.id,
             type: option.type,
             pointStart: Date.UTC(yearSeries, monthSeries, daySeries, hourSeries, secondSeries),
             pointInterval: 3600 * 1000   ,
@@ -247,7 +278,7 @@ function data_template(option) {
             data = this.data;
             chart.addSeries({
                 name:option.kpi,
-                id:option.kpi,
+                id:option.id,
                 type: option.type,
                 pointStart: Date.UTC(yearSeries, monthSeries, daySeries),
                 pointInterval: 24 * 3600 * 1000,
@@ -257,13 +288,13 @@ function data_template(option) {
         this._200 = function () {
             for (var i = 0; i < this.data.length; i++) {
                 this.data[i].x = Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i);
-                this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWayneString().day;
+                this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWayneString().day
+                                    +" week"+new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWeekNumber();
             }
             data = this.data;
-
             chart.addSeries({
                 name:option.kpi,
-                id:option.kpi,
+                id:option.id,
                 type: option.type,
 //                pointStart: Date.UTC(yearSeries, monthSeries, daySeries),
 //                pointInterval: 7 * 24 * 3600 * 1000,
@@ -280,7 +311,7 @@ function data_template(option) {
 
             chart.addSeries({
                 name:option.kpi,
-                id:option.kpi,
+                id:option.id,
                 type: option.type,
                 data: data
             });
@@ -288,14 +319,14 @@ function data_template(option) {
         },
         this._400 = function () {
             for (var i = 0; i < this.data.length; i++) {
-                this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + 3 * i).toWayneString().month;
+                this.data[i].name ="quarter "+new Date(this.template[0], parseInt(this.template[1]) + 3 * i).monthToQuarter()   ;
             }
             data = this.data;
 
             var first_month_in_quarter = Math.floor(parseInt(this.template[1]) / 3) * 3
             chart.addSeries({
                 name:option.kpi,
-                id:option.kpi,
+                id:option.id,
                 type: option.type,
                 pointStart: Date.UTC(yearSeries, first_month_in_quarter),
                 pointInterval: 2628000000 * 3,
@@ -311,7 +342,7 @@ function data_template(option) {
 
             chart.addSeries({
                 name:option.kpi,
-                id:option.kpi,
+                id:option.id,
                 type: option.type,
                 pointStart: Date.UTC(yearSeries, 0),
                 pointInterval: 365 * 24 * 3600 * 1000,

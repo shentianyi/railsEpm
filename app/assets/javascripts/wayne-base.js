@@ -102,6 +102,16 @@ function last_date_of_week(date_value){
         year:endDate.getFullYear()
     }
 }
+//得到日期，返回所在周
+if(!Date.prototype.toWeekNumber){
+    Date.prototype.toWeekNumber=function(){
+        this.setHours(0, 0, 0);
+        this.setDate(this.getDate() + 4 - (this.getDay() || 7));
+        var yearStart = new Date(this.getFullYear(), 0, 1);
+        var weekNo = Math.ceil(( ( (this - yearStart) / 86400000) + 1) / 7);
+        return  weekNo;
+    }
+}
 //compare time,return first and last
 function compare_time(begin_time,end_time){
     var begin=standardParse(begin_time).date-standardParse(end_time).date<=0?begin_time:end_time;
