@@ -47,6 +47,7 @@ function init_analytics() {
         }
     });
 
+
     resize_chart.body();
     resize_chart.container();
 }
@@ -126,7 +127,17 @@ function prepare_form_chart() {
         else {
             end_time = begin_time
         }
+
+
+
+
 //        post
+
+
+
+
+
+
         var option={
             kpi:kpi,
             id:chartSeries.getCount(),
@@ -137,6 +148,8 @@ function prepare_form_chart() {
         }
         var addSeriesOption={
             kpi:kpi,
+            id:chartSeries.getCount(),
+            interval:interval,
             view:view,
             method:method,
             begin_time:begin_time,
@@ -147,6 +160,11 @@ function prepare_form_chart() {
             option.data=[{y:2},{y:3},{y:21},{y:3},{y:10},{y:7},{y:3},{y:1},{y:17},{y:13}];
             addSeriesOption[interval]=[{y:2},{y:3},{y:21},{y:3},{y:10},{y:7},{y:3},{y:1},{y:17},{y:13}];
             chartSeries.addSeries(addSeriesOption);
+
+//            new Highcharts.Chart(new render_to(option).high_chart);
+//            new add_series(option).add_new_series();
+//            eval("new interval_"+option.interval+"(option).set_new_data()");
+
             var originalType;
             if(type=="pie"){
                 originalType="pie"

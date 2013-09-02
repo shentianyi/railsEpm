@@ -9,7 +9,7 @@ function high_chart(option) {
                 return  weekNo;
         },
         Q: function (timestamp) {
-                d = new Date(timestamp);
+                var d = new Date(timestamp);
                 return  d.monthToQuarter();
             },
             YW: function (timestamp) {
@@ -18,7 +18,7 @@ function high_chart(option) {
                 d.setDate(d.getDate() + 4 - (d.getDay() || 7));
                 return d.getFullYear();
             }
-        }
+    }
         this.chart = {
             zoomType: 'xy',
             spacingLeft: 5,
@@ -200,7 +200,7 @@ var interval_template = {
             dateTimeLabelFormats: {
                 month: '%b' + '<br />' + '%Y'
             },
-//            tickInterval: 2628000000,
+            tickInterval: 2628000000,
             minRange:  24 * 3600 * 1000
         }
     },
