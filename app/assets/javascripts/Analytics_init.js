@@ -144,7 +144,8 @@ function prepare_form_chart() {
             target:"chart-container",
             begin_time:begin_time,
             type:type,
-            interval:interval
+            interval:interval,
+            count:chartSeries.getCount()+1
         }
         var addSeriesOption={
             kpi:kpi,
@@ -156,42 +157,29 @@ function prepare_form_chart() {
             end_time:end_time
         }
         if(chart_body_close_validate){
-            show_chart_body(option);
+
             option.data=[{y:2},{y:3},{y:21},{y:3},{y:10},{y:7},{y:3},{y:1},{y:17},{y:13}];
             addSeriesOption[interval]=[{y:2},{y:3},{y:21},{y:3},{y:10},{y:7},{y:3},{y:1},{y:17},{y:13}];
             chartSeries.addSeries(addSeriesOption);
+            show_chart_body(option);
 
-//            new Highcharts.Chart(new render_to(option).high_chart);
-//            new add_series(option).add_new_series();
-//            eval("new interval_"+option.interval+"(option).set_new_data()");
 
-            var originalType;
-            if(type=="pie"){
-                originalType="pie"
-            }
-            chart_form_frame(option);
-            chart_addSeries(option);
-            if(originalType=="pie"){
-                var chart=$("#chart-container").highcharts();
-                remove_pie_type(chart);
-                show_pie_type(chart);
-            }
+            render_to(option);
+            create_environment_for_data(option);
+            new Highcharts.Chart(high_chart);
+            add_series(option);
+            proper_type_for_chart(option);
+
             chartSeries.addCount();
         }
         else{
             option.data=[{y:12},{y:3},{y:1},{y:13},{y:10},{y:17},{y:3},{y:2},{y:12},{y:5}];
             addSeriesOption[interval]=[{y:12},{y:3},{y:1},{y:13},{y:10},{y:17},{y:3},{y:2},{y:12},{y:5}];
             chartSeries.addSeries(addSeriesOption);
-            var originalType;
-            if(type=="pie"){
-                originalType="pie"
-            }
-            chart_addSeries(option);
-            if(originalType=="pie"){
-                var chart=$("#chart-container").highcharts();
-                remove_pie_type(chart);
-                show_pie_type(chart);
-            }
+
+            add_series(option);
+            proper_type_for_chart(option);
+
             chartSeries.addCount();
         }
         limit_pointer_number(option);
@@ -231,10 +219,13 @@ function show_chart_body(option){
     $("#chart-interval-alternate").find("li").each(function(){
         $(this).bind("click",function(event){
             var target=adapt_event(event).target;
-            var type=$("#chart-type-alternate").find(".active").attr("type");
             if(!$(target).hasClass("active")){
-                var interval=$(target).attr("interval");
-                change_interval("chart-container",interval,type);
+                var option={
+                    interval:$(target).attr("interval"),
+                    target:'chart-container',
+                    type:$("#chart-type-alternate").find(".active").attr("type")
+                }
+                change_interval(option);
                 $("#chart-interval-alternate").find("li").removeClass("active");
                 $(target).addClass("active");
             }
@@ -242,44 +233,75 @@ function show_chart_body(option){
     });
     $("#chart-interval-alternate").find("li[interval='"+option.interval+"']").addClass("active");
 }
-function hide_chart_body(){
-    $("#chart-body").css("display","none");
+function alternate_chart_type(event){
+    var target=adapt_event(event).target;
+    if(!$(target).hasClass("active")){
+        var option={
+            target:"chart-container",
+            type:$(target).attr("type"),
+            count:chartSeries.getCount()
+        }
+        for(var i=0;i<chartSeries.series.length;i++){
+            option.id=chartSeries.series[i].id;
+            proper_type_for_chart(option)
+        }
+    }
 }
-function change_interval(target,interval,type){
+
+function change_interval(option){
     var series_object,new_data_wrapper=[];
-    var chart=$("#"+target).highcharts();
+    var chart=$("#"+option.target).highcharts();
     for(var i=0;i<chartSeries.getCount();i++){
         series_object=chartSeries.getSeries()[i];
-        if(series_object[interval]){
-            new_data_wrapper.push(series_object[interval])
+        if(series_object[option.interval]){
+            new_data_wrapper.push(series_object[option.interval])
         }
         else{
-            //        post(use new interval)
+
+            // post(use new interval)
             new_data_wrapper.push([{y:1},{y:13},{y:22},{y:4},{y:12},{y:7},{y:31},{y:26},{y:15.3},{y:24}]);
         }
     }
     if(new_data_wrapper.length==chartSeries.getCount()){
         chart.destroy();
         var option={
-            target:target,
-            type:type == "pie"?"line":type,
-            interval:interval
+            target:"chart-container",
+            type:option.type,
+            interval:option.interval,
+            count:chartSeries.getCount()
         };
-        for(var j=0;j<chartSeries.getCount();j++){
-            option.kpi=chartSeries.getSeries()[j]["kpi"];
-            option.kpi=chartSeries.getSeries()[j]["id"];
-            option.begin_time=chartSeries.getSeries()[j]["begin_time"];
-            option.data=new_data_wrapper[j];
-            if(j==0){
-                chart_form_frame(option);
+        if(option.type=="pie"){
+            for(var j=0;j<chartSeries.getCount();j++){
+                option.kpi=chartSeries.getSeries()[j]["kpi"];
+                option.id=chartSeries.getSeries()[j]["id"];
+                option.begin_time=chartSeries.getSeries()[j]["begin_time"];
+                option.data=new_data_wrapper[j];
+                if(j==0){
+                    render_to(option);
+                    create_environment_for_data(option);
+                    new Highcharts.Chart(high_chart);
+                }
+                add_series(option);
             }
-            chart_addSeries(option);
+            proper_type_for_chart(option);
+        }
+        else{
+            for(var j=0;j<chartSeries.getCount();j++){
+                option.kpi=chartSeries.getSeries()[j]["kpi"];
+                option.id=chartSeries.getSeries()[j]["id"];
+                option.begin_time=chartSeries.getSeries()[j]["begin_time"];
+                option.data=new_data_wrapper[j];
+                if(j==0){
+                    render_to(option);
+                    create_environment_for_data(option);
+                    new Highcharts.Chart(high_chart);
+                }
+                add_series(option);
+                proper_type_for_chart(option);
+            }
         }
         limit_pointer_number(option);
-        if(type=="pie"){
-            chart=$("#"+target).highcharts();
-            show_pie_type(chart);
-        }
+
     }
 }
 var resize_chart={
@@ -288,37 +310,25 @@ var resize_chart={
             parseInt($(window).height()) - parseInt($("#analytics-condition").height())-parseInt($("#analytics-condition").css("top")) - 1: 0);
     },
     container:function(){
-        $("#chart-container").height(parseInt($("#chart-body").height()) - parseInt($("#chart-interval-alternate").attr("my_height")) - parseInt($("#chart-type-alternate").attr("my_height")) - 15);
+        $("#chart-main-middle").height(parseInt($("#chart-body").height()) - parseInt($("#chart-interval-alternate").attr("my_height")) - parseInt($("#chart-type-alternate").attr("my_height")) -1);
         if($("#chart-container").highcharts()){
             var chart = $("#chart-container").highcharts();
             chart.setSize(
-                $("#wrap-main").width(),
-                parseInt($("#chart-body").height()) - parseInt($("#chart-interval-alternate").attr("my_height")) - parseInt($("#chart-type-alternate").attr("my_height"))  - 15,
+                $("#chart-main-middle").width(),
+                $("#chart-main-middle").height(),
                 false
             );
         }
-    }
-}
-function alternate_chart_type(event){
-    var target=adapt_event(event).target;
-    var chart=$("#chart-container").highcharts();
-    if(!$(target).hasClass("active")){
-       var type= $(target).attr("type");
-        if(type=="pie"){
-            show_pie_type(chart);
-        }
-        else{
-            remove_pie_type(chart)
-            for(var i=0;i<chartSeries.getCount();i++){
-                chart.series[i].update({
-                    type: type
-                },false);
-                chart.series[i].show();
+        if($("#chart-type-alternate td.active").attr("type")=="pie"){
+            for(var k=0;k<$("#chart-container").highcharts().series.length;k++){
+                $("#chart-container").highcharts().series[k].update({
+                    showInLegend:false
+                })
             }
         }
-        chart.redraw();
     }
 }
+
 function clear_chart_condition(){
     $("#analytics-condition").find("input[type='text']").each(function(){
             $(this).val("");
@@ -330,88 +340,48 @@ function clear_chart_condition(){
 
 
 
-
-
-
-
-
-function chart_form_frame(option){
-    var form_option={
-        target:option.target,
-        interval_week_special:new interval_week_special(option),
-        interval_template : interval_template["_"+option.interval]
-    }
-    new Highcharts.Chart(new high_chart(form_option));
-}
-function chart_addSeries(option){
-    if(option.type=="pie"){
-        option.type="line";
-    }
-    (new data_template(option))["_"+option.interval]();
-}
-
-
-function destroy_chart(option){
-    var chart=$("#"+option.target).highcharts();
-    chart.destroy();
-}
-
-function limit_pointer_number(option){
-    var chart = $("#" + option.target).highcharts();
-    var interval=chart.options.xAxis[0].tickInterval;
-    var maxDate=chart.xAxis[0].getExtremes().max;
-    var minDate=chart.xAxis[0].getExtremes().min;
-    if(Math.ceil((maxDate-minDate)/interval)>=limit_pointer_condition["_"+option.interval].limit){
-        limit_pointer_condition["_"+option.interval].limitAction(chart)
-    }
-}
-
-function show_pie_type(chart){
-    if(chartSeries.getCount()==1){
-        var data=[],dataItem;
-        for(var i=0;i<chart.series[0].processedYData.length;i++){
-            dataItem=[];
-            dataItem.push(chart.series[0].data[i].name);
-            dataItem.push(chart.series[0].processedYData[i]);
-            data.push(dataItem);
+function  chart_point_click(object){
+    $("#chart-point-detail").css("left","0");
+    $("#chart-container").css("left","320px");
+    if(object.series.type=="pie"){
+        if(object.time_from!=null){
+            $("#chart-detail-kpi").text(object.series.name).css("color",object.color);
+            $("#chart-detail-date").text(object.time_from).prev().text("From:");
+            $("#chart-detail-end-date").text(object.time_to).parent().removeClass("hide");
+            $("#chart-detail-value").text(object.y).prev().text("Sum");
+            $("#chart-detail-aver-date").text(object.average_y).parent().removeClass("hide");
+            $("#chart-detail-percent").text((object.percentage).toFixed(2)).parent().removeClass("hide");
         }
-        chart.series[0].hide();
+        else{
+            $("#chart-detail-kpi").text(object.series.name).css("color",object.color);
+            $("#chart-detail-date").text(object.name).prev().text("Date:");
+            $("#chart-detail-value").text(object.y).prev().text("Value:");
+            $("#chart-detail-end-date").parent().addClass("hide");
+            $("#chart-detail-aver-date").parent().addClass("hide");
+            $("#chart-detail-percent").text((object.percentage).toFixed(2)).parent().removeClass("hide");
+        }
+
     }
     else{
-        var data=[],dataItem=[],dataItemValue;
-        for(var i=0;i<chartSeries.getCount();i++){
-            chart.series[i].show();
-            dataItem=[];
-            dataItemValue=0;
-            dataItem.push(chart.series[i].name+"<br />S:"+chart.series[i].data[0].name+"<br />F:"+chart.series[i].data[chart.series[i].data.length-1].name);
-            for(var j=0;j<chart.series[i].processedYData.length;j++){
-                dataItemValue+=chart.series[i].processedYData[j];
-            }
-            dataItem.push(dataItemValue);
-            data.push(dataItem);
-            chart.series[i].hide();
-        };
-    }
-    chart.addSeries({
-        name:'pie_extra_series',
-        id:'pie_extra_series',
-        data:data,
-        type:"pie"
-    });
-    for(var k=0;k<chart.series.length;k++){
-        chart.series[k].update({
-            showInLegend:false
-        })
+        $("#chart-detail-kpi").text(object.series.name).css("color",object.series.color);
+        $("#chart-detail-date").text(object.name).prev().text("Date:");
+        $("#chart-detail-value").text(object.y).prev().text("Value:");
+        $("#chart-detail-end-date").parent().addClass("hide");
+        $("#chart-detail-aver-date").parent().addClass("hide");
+        $("#chart-detail-percent").parent().addClass("hide");
     }
 }
-function remove_pie_type(chart){
-    if(chart.get('pie_extra_series')){
-        chart.get('pie_extra_series').remove();
-        for(var k=0;k<chart.series.length;k++){
-            chart.series[k].update({
-                showInLegend:true
-            })
-        }
-    }
+function close_chart_detail(){
+    $("#chart-point-detail").css("left","-300px");
+    $("#chart-container").css("left","0px");
 }
+
+
+
+
+
+
+
+
+
 

@@ -23,6 +23,9 @@ function high_chart(option) {
             zoomType: 'xy',
             spacingLeft: 5,
             spacingRight: 10,
+            animation: {
+                duration: 1000
+            },
             renderTo: option.target
         },
         this.title = {

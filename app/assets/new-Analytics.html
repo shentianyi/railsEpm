@@ -133,7 +133,40 @@
                     <li interval="500"><a>Y</a></li>
                 </ul>
             </div>
-            <div class="chart-container relative" id="chart-container">
+            <div class="relative" id="chart-main-middle">
+                <div class="chart-container " id="chart-container"></div>
+                <div id="chart-point-detail" class="chart-point-detail">
+                    <table class="chart-detail-table">
+                        <thead>
+                            <tr>
+                                <td colspan="2" align="center" id="chart-detail-kpi" ></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td width="80px"  align="right">Date:</td>
+                                <td id="chart-detail-date" align="left"></td>
+                            </tr>
+                            <tr class="hide">
+                                <td width="80px"  align="right">To:</td>
+                                <td id="chart-detail-end-date" align="left"></td>
+                            </tr>
+                            <tr>
+                                <td width="80px"  align="right">Value:</td>
+                                <td id="chart-detail-value" align="left"></td>
+                            </tr>
+                            <tr class="hide">
+                                <td width="80px"  align="right">Average</td>
+                                <td id="chart-detail-aver-date" align="left"></td>
+                            </tr>
+                            <tr class="hide">
+                                <td width="80px"  align="right">Percent:</td>
+                                <td id="chart-detail-percent" align="left"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="chart-detail-close" id="chart-detail-close" onclick="close_chart_detail()">Close</div>
+                </div>
             </div>
             <table class="chart-type-alternate" id="chart-type-alternate"  my_height="70">
                 <tr>
@@ -167,15 +200,12 @@
 <script src="javascripts/wayne-base.js"></script>
 <script src="javascripts/Template.js"></script>
 <script src="javascripts/date_picker_template.js"></script>
-<script src="javascripts/high_chart_template.js"></script>
-<!--<script src="javascripts/high_chart_template1.js"></script>-->
+<!--<script src="javascripts/high_chart_template.js"></script>-->
+<script src="javascripts/high_chart_template1.js"></script>
 <script src="javascripts/Analytics_init.js"></script>
 <script src="javascripts/brilliantech.base.js"></script>
 <script>
     $(document).ready(function () {
-//        var wzx=new interval_template("2013",[{y:10},{y:11},{y:12},{y:15}]);
-//        var btt=new high_chart("chart-container", type_template['line'], wzx['_90']());
-//        var chart = new Highcharts.Chart(btt);
         init_analytics();
     });
     $(window).resize(function () {

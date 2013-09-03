@@ -144,7 +144,6 @@ div[title='analy-view-select'] {
 .chart-type-alternate {
     width: 100%;
     height: 70px;
-    margin-top: 15px;
     border-collapse: collapse;
 }
 
@@ -187,4 +186,60 @@ td.analytics-chart-pie {
 
 td.analytics-chart-scatter {
     background-position: center -313px;
+}
+
+.chart-container{
+    position:relative;
+    left:0;
+    transition:left 0.35s ease-out;
+}
+.chart-point-detail{
+    position:absolute;
+    top:0px;
+    bottom:57px;
+    left:-300px;
+    width:250px;
+    overflow-y:auto;
+    padding:5px 25px;
+    border-right:1px dotted #ddd;
+    transition:left 0.35s ease-out;
+}
+.chart-detail-table{
+    width:100%;
+    color:rgba(0,0,0,0.4);
+    font-size:13px;
+    font-weight:lighter;
+    border-collapse:collapse;
+    margin-top:5px;
+}
+.chart-detail-table thead td{
+    font-size:21px;
+    padding-bottom:18px;
+}
+.chart-detail-table tbody tr{
+    border-top:1px dotted #ddd;
+    border-bottom:1px dotted #ddd;
+}
+.chart-detail-table tbody td{
+    padding:5px 7px;
+}
+.chart-detail-close{
+    cursor:pointer;
+    text-align:center;
+    position:relative;
+    top:40px;
+    left:50%;
+    width:150px;
+    margin-left:-75px;
+    padding:5px 0;
+    background-color:#eee;
+    border-radius:2px;
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    color:rgba(0,0,0,0.5);
+    transition:background-color 0.25s ease-out,color 0.25s ease-out;
+}
+.chart-detail-close:hover{
+    background-color:rgba(238,238,238,0.7);
+    color:rgba(0,0,0,0.4);
 }
