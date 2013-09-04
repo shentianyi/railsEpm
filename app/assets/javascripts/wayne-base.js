@@ -91,7 +91,7 @@ function inner_size(){
 }
 //得到日期，登出该日期所在周的最后一天的日期以及年份
 function last_date_of_week(date_value){
-    var date=standardParse(date_value),endDate;
+    var date=new Date(date_value),endDate;
     if(date.getDay() == 0) {
         endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     } else {
@@ -135,7 +135,14 @@ function deepCopy(p,c){
     }
     return c
 }
-//mod
-function MOD(s,t){
-    return((s%t)==0?s:s%t);
+
+//计算百分率
+function TCR(a,t){
+    var a=parseFloat(a);
+    var t=parseFloat(t);
+    var judge= (a / t) < 1 ? "low" : ((a / t) == 1 ? "middle" : "high");
+    return {
+        value: (a / t * 100).toFixed(1)+" %",
+        judge: judge
+    }
 }

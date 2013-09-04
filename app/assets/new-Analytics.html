@@ -16,9 +16,9 @@
     <div style="height:100%">
         <a class="btn btn-primary btn-log-out">Log out</a>
     </div>
-
 </aside>
-<article class="wrap-main hidden-y" id="wrap-main">
+
+<article class="wrap-main" id="wrap-main">
     <header>
         <div class="user-portrait-background pull-left" data-open=true id="user-portrait-background">
             <div class="user-portrait-brand"></div>
@@ -61,6 +61,9 @@
             </ul>
         </nav>
     </header>
+
+
+
     <div>
         <div class="analytics-condition clearfix" id="analytics-condition">
             <div class="analytics-mark pull-left">
@@ -87,7 +90,7 @@
                         <option value="kpi3" interval="500">year</option>
                         <option value="kpi3" interval="">empty</option>
                     </select>
-                    <select data-placeholder="View" style="width:150px;" class="chosen-select" title="analy-view-select"
+                    <select data-placeholder="View *" style="width:150px;" class="chosen-select" title="analy-view-select"
                             id="chart-view">
                         <option value=""></option>
                         <option value="entity1">view1</option>
@@ -151,17 +154,30 @@
                                 <td width="80px"  align="right">To:</td>
                                 <td id="chart-detail-end-date" align="left"></td>
                             </tr>
+                            <tr class="hide">
+                                <td width="80px"  align="right">Percent:</td>
+                                <td id="chart-detail-percent" align="left"></td>
+                            </tr>
+                            <tr>
+                                <td width="80px"  align="right">Target:</td>
+                                <td id="chart-detail-target" align="left"></td>
+                            </tr>
+                            <tr class="hide">
+                                <td width="80px"  align="right">Aver Target:</td>
+                                <td id="chart-detail-aver-target" align="left"></td>
+                            </tr>
                             <tr>
                                 <td width="80px"  align="right">Value:</td>
                                 <td id="chart-detail-value" align="left"></td>
                             </tr>
+
                             <tr class="hide">
-                                <td width="80px"  align="right">Average</td>
+                                <td width="80px"  align="right">Aver Value</td>
                                 <td id="chart-detail-aver-date" align="left"></td>
                             </tr>
-                            <tr class="hide">
-                                <td width="80px"  align="right">Percent:</td>
-                                <td id="chart-detail-percent" align="left"></td>
+                            <tr>
+                                <td width="80px"  align="right">TCR:</td>
+                                <td id="chart-detail-tcr" align="left"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -200,8 +216,7 @@
 <script src="javascripts/wayne-base.js"></script>
 <script src="javascripts/Template.js"></script>
 <script src="javascripts/date_picker_template.js"></script>
-<!--<script src="javascripts/high_chart_template.js"></script>-->
-<script src="javascripts/high_chart_template1.js"></script>
+<script src="javascripts/high_chart_template.js"></script>
 <script src="javascripts/Analytics_init.js"></script>
 <script src="javascripts/brilliantech.base.js"></script>
 <script>

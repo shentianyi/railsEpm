@@ -148,7 +148,7 @@ div[title='analy-view-select'] {
 }
 
 .chart-type-alternate td {
-    border-width: 0 1px 1px 1px;
+    border-width: 0 1px 0px 1px;
     border-color: #ddd;
     border-style: dotted;
     width: 10%;
@@ -242,4 +242,23 @@ td.analytics-chart-scatter {
 .chart-detail-close:hover{
     background-color:rgba(238,238,238,0.7);
     color:rgba(0,0,0,0.4);
+}
+/************************************************************************** chart detail
+****************************************************************************************/
+.tcr-trend{
+    background-image:url("../images/TCR-trend.png");
+    background-repeat:no-repeat;
+}
+
+.tcr-trend.high{
+    color:#4aaf5d;
+    background-position:133px 7px;
+}
+.tcr-trend.middle{
+    color:#5fa9da;
+    background-position:133px -18px;
+}
+.tcr-trend.low{
+    color:#fa4545;
+    background-position:133px -47px;
 }

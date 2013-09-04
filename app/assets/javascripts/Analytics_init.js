@@ -46,8 +46,7 @@ function init_analytics() {
             $(this).next().text("quarter " + quarter);
         }
     });
-
-
+    $("article").addClass("hidden-y");
     resize_chart.body();
     resize_chart.container();
 }
@@ -118,7 +117,7 @@ function prepare_form_chart() {
         type="line";
     }
     var begin_time = $("#analy-begin-time").val(), end_time = $("#analy-end-time").val();
-    if (kpi, begin_time) {
+    if (kpi, begin_time,view) {
         if (end_time) {
             var compare_result = compare_time(begin_time, end_time);
             begin_time = compare_result.begin;
@@ -158,8 +157,8 @@ function prepare_form_chart() {
         }
         if(chart_body_close_validate){
 
-            option.data=[{y:2},{y:3},{y:21},{y:3},{y:10},{y:7},{y:3},{y:1},{y:17},{y:13}];
-            addSeriesOption[interval]=[{y:2},{y:3},{y:21},{y:3},{y:10},{y:7},{y:3},{y:1},{y:17},{y:13}];
+            option.data=[{y:2,target:10},{y:3,target:10},{y:21,target:10},{y:3,target:10},{y:10,target:10},{y:7,target:10}];
+            addSeriesOption[interval]=[{y:2,target:10},{y:3,target:10},{y:21,target:10},{y:3,target:10},{y:10,target:10},{y:7,target:10}];
             chartSeries.addSeries(addSeriesOption);
             show_chart_body(option);
 
@@ -173,8 +172,8 @@ function prepare_form_chart() {
             chartSeries.addCount();
         }
         else{
-            option.data=[{y:12},{y:3},{y:1},{y:13},{y:10},{y:17},{y:3},{y:2},{y:12},{y:5}];
-            addSeriesOption[interval]=[{y:12},{y:3},{y:1},{y:13},{y:10},{y:17},{y:3},{y:2},{y:12},{y:5}];
+            option.data=[{y:12,target:15},{y:3,target:15},{y:1,target:15},{y:13,target:15},{y:10,target:15},{y:17,target:15}];
+            addSeriesOption[interval]=[{y:12,target:15},{y:3,target:15},{y:1,target:15},{y:13,target:15},{y:10,target:15},{y:17,target:15}];
             chartSeries.addSeries(addSeriesOption);
 
             add_series(option);
@@ -259,7 +258,8 @@ function change_interval(option){
         else{
 
             // post(use new interval)
-            new_data_wrapper.push([{y:1},{y:13},{y:22},{y:4},{y:12},{y:7},{y:31},{y:26},{y:15.3},{y:24}]);
+            new_data_wrapper.push([{y:1,target:17},{y:13,target:17},{y:22,target:17},{y:4,target:17},{y:12,target:17},{y:7,target:17}]);
+            series_object[option.interval] = [{y:1,target:17},{y:13,target:17},{y:22,target:17},{y:4,target:17},{y:12,target:17},{y:7,target:17}];
         }
     }
     if(new_data_wrapper.length==chartSeries.getCount()){
@@ -311,6 +311,7 @@ var resize_chart={
     },
     container:function(){
         $("#chart-main-middle").height(parseInt($("#chart-body").height()) - parseInt($("#chart-interval-alternate").attr("my_height")) - parseInt($("#chart-type-alternate").attr("my_height")) -1);
+        $("#chart-container").height(parseInt($("#chart-main-middle").height()));
         if($("#chart-container").highcharts()){
             var chart = $("#chart-container").highcharts();
             chart.setSize(
@@ -333,7 +334,7 @@ function clear_chart_condition(){
     $("#analytics-condition").find("input[type='text']").each(function(){
             $(this).val("");
     });
-    $("#chart-view").val('').trigger('chosen:updated');
+//    $("#chart-view").val('').trigger('chosen:updated');
     $(".index-date-extra-info").text("");
 }
 
@@ -345,35 +346,63 @@ function  chart_point_click(object){
     $("#chart-container").css("left","320px");
     if(object.series.type=="pie"){
         if(object.time_from!=null){
-            $("#chart-detail-kpi").text(object.series.name).css("color",object.color);
+            $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color",object.color);
             $("#chart-detail-date").text(object.time_from).prev().text("From:");
             $("#chart-detail-end-date").text(object.time_to).parent().removeClass("hide");
-            $("#chart-detail-value").text(object.y).prev().text("Sum");
+            $("#chart-detail-target").text(object.target).prev().text("Sum Target");
+            $("#chart-detail-aver-target").text(object.average_target).parent().removeClass("hide");
+            $("#chart-detail-value").text(object.y).prev().text("Sum Value");
+            $("#chart-detail-tcr").text(TCR(object.y,object.target).value);
+            tcr_trend(TCR(object.y,object.target).judge);
             $("#chart-detail-aver-date").text(object.average_y).parent().removeClass("hide");
-            $("#chart-detail-percent").text((object.percentage).toFixed(2)).parent().removeClass("hide");
+            $("#chart-detail-percent").text((object.percentage).toFixed(1)+" %").parent().removeClass("hide");
         }
         else{
             $("#chart-detail-kpi").text(object.series.name).css("color",object.color);
             $("#chart-detail-date").text(object.name).prev().text("Date:");
+            $("#chart-detail-target").text(object.target).prev().text("Target");
             $("#chart-detail-value").text(object.y).prev().text("Value:");
+            $("#chart-detail-tcr").text(TCR(object.y,object.target).value);
+            tcr_trend(TCR(object.y,object.target).judge);
             $("#chart-detail-end-date").parent().addClass("hide");
             $("#chart-detail-aver-date").parent().addClass("hide");
-            $("#chart-detail-percent").text((object.percentage).toFixed(2)).parent().removeClass("hide");
+            $("#chart-detail-aver-target").parent().addClass("hide");
+            $("#chart-detail-percent").text((object.percentage).toFixed(1)+" %").parent().removeClass("hide");
         }
 
     }
     else{
         $("#chart-detail-kpi").text(object.series.name).css("color",object.series.color);
         $("#chart-detail-date").text(object.name).prev().text("Date:");
+        $("#chart-detail-target").text(object.target).prev().text("Target");
         $("#chart-detail-value").text(object.y).prev().text("Value:");
+        $("#chart-detail-tcr").text(TCR(object.y,object.target).value);
+        tcr_trend(TCR(object.y,object.target).judge);
         $("#chart-detail-end-date").parent().addClass("hide");
         $("#chart-detail-aver-date").parent().addClass("hide");
         $("#chart-detail-percent").parent().addClass("hide");
+        $("#chart-detail-aver-target").parent().addClass("hide");
     }
 }
 function close_chart_detail(){
     $("#chart-point-detail").css("left","-300px");
     $("#chart-container").css("left","0px");
+}
+function tcr_trend(judge){
+    switch(judge){
+        case "low":
+            $("#chart-detail-tcr").attr("class","");
+            $("#chart-detail-tcr").addClass("tcr-trend low");
+            break;
+        case "middle":
+            $("#chart-detail-tcr").attr("class","");
+            $("#chart-detail-tcr").addClass("tcr-trend middle");
+            break;
+        case "high":
+            $("#chart-detail-tcr").attr("class","");
+            $("#chart-detail-tcr").addClass("tcr-trend high");
+            break;
+    }
 }
 
 
