@@ -22,7 +22,9 @@ class KpisController < ApplicationController
     msg.result=true
     msg.object=@kpi.id
     else
-      msg.content=@kpi.errors.messages.values.join('; ')
+       puts @kpi.errors.messages.to_json
+     @kpi.errors.messages[:result]="添加失败"
+     msg.content=@kpi.errors.messages.values.join('; ')
     end
     render :json=>msg
   end
