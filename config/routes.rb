@@ -24,7 +24,7 @@ IFEpm::Application.routes.draw do
     collection do
       put :update
       post :assign
-      post :kpi_option
+      post :get_by_category
     end
     member do
       get :assign
@@ -42,7 +42,7 @@ IFEpm::Application.routes.draw do
       post :entry
       post :refresh_entry
       match :analyse
-      post :kpi_option
+      # post :kpi_option
     end
   end
 

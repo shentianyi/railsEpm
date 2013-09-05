@@ -17,7 +17,7 @@
       <td>KPI类别</td>
       <td>
         <%= select_tag :category_id,options_from_collection_for_select(@categories,'id','name'),
-                       {:id=>'chart-group',:class=>"pull-left conditionPart-group",:onchange=>"kpi_entries_reinit_by_category('chart-group','kpi-select','chart-kpi','pull-left')"}%>
+                       {:id=>'chart-group',:class=>"pull-left conditionPart-group",:onchange=>"get_kpis_by_category(this);"}%>
 
         </select>
       </td>
