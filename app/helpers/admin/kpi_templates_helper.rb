@@ -1,0 +1,2 @@
+module Admin::KpiTemplatesHelper
+end

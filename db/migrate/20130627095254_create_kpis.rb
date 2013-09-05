@@ -11,7 +11,7 @@ class CreateKpis < ActiveRecord::Migration
       t.integer :direction
       t.integer :period
       t.string :formula
-     t.string :formula_string
+      t.string :formula_string
       t.references :user
       t.references :tenant
       t.timestamps

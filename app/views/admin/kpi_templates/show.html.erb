@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Description:</b>
+  <%= @admin_kpi_template.description %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @admin_kpi_template.name %>
+</p>
+
+<p>
+  <b>Unit:</b>
+  <%= @admin_kpi_template.unit %>
+</p>
+
+<p>
+  <b>Frequency:</b>
+  <%= @admin_kpi_template.frequency %>
+</p>
+
+<p>
+  <b>Target:</b>
+  <%= @admin_kpi_template.target %>
+</p>
+
+<p>
+  <b>Is calculated:</b>
+  <%= @admin_kpi_template.is_calculated %>
+</p>
+
+<p>
+  <b>Direction:</b>
+  <%= @admin_kpi_template.direction %>
+</p>
+
+<p>
+  <b>Period:</b>
+  <%= @admin_kpi_template.period %>
+</p>
+
+<p>
+  <b>Formula:</b>
+  <%= @admin_kpi_template.formula %>
+</p>
+
+<p>
+  <b>Formula string:</b>
+  <%= @admin_kpi_template.formula_string %>
+</p>
+
+<p>
+  <b>Admin kpi category template:</b>
+  <%= @admin_kpi_template.admin_kpi_category_template %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_kpi_template_path(@admin_kpi_template) %> |
+<%= link_to 'Back', admin_kpi_templates_path %>

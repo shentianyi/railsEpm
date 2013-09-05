@@ -11,7 +11,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130719093921) do
+ActiveRecord::Schema.define(:version => 20130905205924) do
+
+  create_table "admin_kpi_category_templates", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "kpi_quantity"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "admin_kpi_templates", :force => true do |t|
+    t.string   "description"
+    t.string   "name"
+    t.integer  "unit"
+    t.integer  "frequency"
+    t.float    "target"
+    t.boolean  "is_calculated"
+    t.integer  "direction"
+    t.integer  "period"
+    t.string   "formula"
+    t.string   "formula_string"
+    t.integer  "admin_kpi_category_template_id"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  add_index "admin_kpi_templates", ["admin_kpi_category_template_id"], :name => "index_admin_kpi_templates_on_admin_kpi_category_template_id"
 
   create_table "dashboard_items", :force => true do |t|
     t.integer  "dashboard_id",   :null => false

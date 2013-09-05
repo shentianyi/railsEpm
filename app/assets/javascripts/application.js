@@ -12,10 +12,12 @@
 //
 //=require jquery-1.8.2.min
 //=require jquery-ui-1.10.3.custom.min
+//= require jquery_ujs
 //=require bootstrap.min
 //=require highcharts
 //=require exporting
 //=require brilliantech.base
+//=require brilliantech.railsepm
 //=require ifepm.activeSelector.js
 //=require ifepm.text.js
 //=require ifepm.config.js

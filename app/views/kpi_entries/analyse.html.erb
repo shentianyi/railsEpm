@@ -8,9 +8,6 @@
                     <select data-placeholder="Entity *" style="width:90px;" class="chosen-select"
                     title="analy-entity-select" id="chart-group" onchange="get_kpis_by_category(this);">
                          <%@categories.each_with_index do |catetory,i|%>
-                         <%if i==0%>
-                         <option value=""></option>
-                         <%end%>
                          <option value="<%= catetory.id%>"><%= catetory.name%></option>
                          <%end %>
                     </select>
@@ -20,9 +17,6 @@
                     <select data-placeholder="View *" style="width:150px;" class="chosen-select" title="analy-view-select"
                     id="chart-view">
                          <%@entity_groups.each_with_index do |entity_group,i|%>
-                         <%if i==0%>
-                         <option value=""></option>
-                         <%end%>
                          <option value="<%= entity_group.id%>" ><%= entity_group.name%></option>
                          <%end %>
 

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @admin_kpi_category_template.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @admin_kpi_category_template.description %>
+</p>
+
+<p>
+  <b>Kpi quantity:</b>
+  <%= @admin_kpi_category_template.kpi_quantity %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_kpi_category_template_path(@admin_kpi_category_template) %> |
+<%= link_to 'Back', admin_kpi_category_templates_path %>

@@ -1,0 +1,61 @@
+<%= form_for(@admin_kpi_template) do |f| %>
+  <% if @admin_kpi_template.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@admin_kpi_template.errors.count, "error") %> prohibited this admin_kpi_template from being saved:</h2>
+
+      <ul>
+      <% @admin_kpi_template.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :unit %><br />
+    <%= f.number_field :unit %>
+  </div>
+  <div class="field">
+    <%= f.label :frequency %><br />
+    <%= f.number_field :frequency %>
+  </div>
+  <div class="field">
+    <%= f.label :target %><br />
+    <%= f.text_field :target %>
+  </div>
+  <div class="field">
+    <%= f.label :is_calculated %><br />
+    <%= f.check_box :is_calculated %>
+  </div>
+  <div class="field">
+    <%= f.label :direction %><br />
+    <%= f.number_field :direction %>
+  </div>
+  <div class="field">
+    <%= f.label :period %><br />
+    <%= f.number_field :period %>
+  </div>
+  <div class="field">
+    <%= f.label :formula %><br />
+    <%= f.text_field :formula %>
+  </div>
+  <div class="field">
+    <%= f.label :formula_string %><br />
+    <%= f.text_field :formula_string %>
+  </div>
+  <div class="field">
+    <%= f.label :admin_kpi_category_template %><br />
+    <%= f.text_field :admin_kpi_category_template %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
