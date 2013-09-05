@@ -2,115 +2,131 @@
 //在不变的部分需要更改language以适应多语言
 
 
-////////////////////////////////////////////////////////////////datepicker template
-//不变的部分
-function date_picker_template(spec_date_picker) {
-        this.weekStart = 1,
-        this.autoclose = true,
-        this.todayBtn = true,
-        this.todayHighlight = true,
-        this.language = 'en',
-        this.format = spec_date_picker.format,
-        this.calendarWeeks = spec_date_picker.calendarWeeks,
-        this.minViewMode = spec_date_picker.minViewMode,
-        this.startView = spec_date_picker.startView
-}
-
-
-//变化的部分
-function spec_date_picker_template(format, calendarWeeks, minViewMode, startView) {
-        this.format = format,
-        this.calendarWeeks = calendarWeeks,
-        this.minViewMode = minViewMode,
-        this.startView = startView
-}
-//datepicker template//////////////////////////////////////////////////////////////
-
-
-
-
-
-////////////////////////////////////////////////////////////////根据模板生成date picker
-function generate_date_picker(target, date_picker_template) {
-        this.target = target,
-        this.date_picker_template = date_picker_template,
-        this.generate_date_picker_model = function () {
-            $(this.target).datepicker({
-                weekStart: this.date_picker_template.weekStart,
-                autoclose: this.date_picker_template.autoclose,
-                todayBtn: this.date_picker_template.todayBtn,
-                todayHighlight: this.date_picker_template.todayHighlight,
-                language: this.date_picker_template.language,
-                format: this.date_picker_template.format,
-                calendarWeeks: this.date_picker_template.calendarWeeks,
-                minViewMode: this.date_picker_template.minViewMode,
-                startView: this.date_picker_template.startView
-            })
-        }
-        this.remove_date_picker_model = function () {
-            $(this.target).datepicker('remove');
-            $(this.target).datetimepicker('remove');
-        }
-}
-//根据模板生成date picker//////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-//根据KPI的interval来生成不同的datepicker,调用不同的datepicker
-function form_date_or_time_picker(interval, target) {
-    $(target).val("");
-    $(".index-date-extra-info").text("");
-    if (interval == "90") {
-        var init_date=new Date();
-        $(target).datepicker('remove');
+var date_and_datetime = {
+    weekStart: 1,
+    autoclose: true,
+    todayBtn: false,
+    clearBtn: false,
+    todayHighlight: true,
+    language: 'en',
+    datePicker: function (target, spec_option) {
+        $(target).datepicker({
+            weekStart: this.weekStart,
+            autoclose: this.autoclose,
+            todayBtn: this.todayBtn,
+            clearBtn:this.clearBtn,
+            todayHighlight: this.todayHighlight,
+            language: this.language,
+            format: spec_option.format,
+            calendarWeeks: spec_option.calendarWeeks,
+            startView: spec_option.startView,
+            minViewMode: spec_option.minViewMode
+        })
+    },
+    dateTimepickerPicker: function (target, spec_option) {
         $(target).datetimepicker({
-            weekStart: 1,
-            autoclose: true,
-            todayBtn: true,
-            todayHighlight: true,
-            language: 'en',
-            format: 'yyyy-mm-dd hh:ii',
-            calendarWeeks: false,
-            startView: "month",
-            minView:"day",
-            initialDate:new Date(init_date.getFullYear(),init_date.getMonth(),init_date.getDay(),init_date.getHours(),00)
+            weekStart: this.weekStart,
+            autoclose: this.autoclose,
+            todayBtn: this.todayBtn,
+            clearBtn:this.clearBtn,
+            todayHighlight: this.todayHighlight,
+            language: this.language,
+            format: spec_option.format,
+            calendarWeeks: spec_option.calendarWeeks,
+            startView: spec_option.startView,
+            minView: spec_option.minView,
+            initialDate: spec_option.initialDate
+        });
+    },
+    remove_date_picker_model: function (target) {
+        $(target).datepicker('remove');
+        $(target).datetimepicker('remove');
+    },
+    unit_them_at_begin: function (target, interval_target,have_shortcut) {
+        $(target).datepicker().on("show", function () {
+            var interval = $(interval_target).find(":selected").attr("interval");
+            if (interval) {
+                $(".datepicker").find(".prev").text("").append($("<i />").addClass('icon-arrow-left'));
+                $(".datepicker").find(".next").text("").append($("<i />").addClass('icon-arrow-right'));
+                $(".datepicker-days").find(".active").parent().addClass("week-tr-active");
+                $(".datepicker").on("click",function(){
+                    $(".datepicker-days").find(".active").parent().addClass("week-tr-active");
+                });
+                if(have_shortcut && $(".table-condensed").attr("already-shorcut")!="yes"){
+                    if(interval=="200"){
+                        $(".table-condensed").attr("already-shorcut","yes").find("tfoot").append($("<tr />")
+                            .append($("<th />").attr("colSpan",8).addClass("date-picker-shortcut").attr("interval",interval).click(function(){
+                                date_shortcut(target);
+                            })));
+                    }
+                    else{
+                        $(".table-condensed").attr("already-shorcut","yes").find("tfoot").append($("<tr />")
+                            .append($("<th />").attr("colSpan",7).addClass("date-picker-shortcut").attr("interval",interval).click(function(){
+                                date_shortcut(target);
+                            })));
+                    }
+                }
+            }
+            else {
+                date_and_datetime.remove_date_picker_model(target);
+            }
+        });
+    },
+    week_picker_decorate: function (target) {
+        $(target).datepicker().one("show", function () {
+            $(".datepicker-days").attr("week", "picker");
         })
     }
-    else {
-        var spec_template, template, generate;
-        switch (interval) {
-            case "100":
-                spec_template = new spec_date_picker_template("yyyy-mm-dd", false, 0, 0);
-                break;
-            case "200":
-                spec_template = new spec_date_picker_template("yyyy-mm-dd", true, 0, 0);
-                break;
-            case "300":
-                spec_template = new spec_date_picker_template("yyyy-mm", false, 1, 1);
-                break;
-            case "400":
-                spec_template = new spec_date_picker_template("yyyy-mm", false, 1, 1);
-                break;
-            case "500":
-                spec_template = new spec_date_picker_template("yyyy", false, 2, 2);
-                break;
-            default:
-                generate = new generate_date_picker(target, null);
-                generate.remove_date_picker_model();
-                return false
-        }
-        template = new date_picker_template(spec_template);
-        generate = new generate_date_picker(target, template);
-        generate.remove_date_picker_model();
-        generate.generate_date_picker_model();
+}
+
+var spec_option = {
+    hour: {
+        format: "yyyy-mm-dd hh:ii",
+        minuteStep: 60,
+        startView: "month",
+        minView: "day",
+        initialDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours(), 00)
+    },
+    day: {
+        format: "yyyy-mm-dd",
+        calendarWeeks: false,
+        startView: "month",
+        minViewMode: "days"
+    },
+    week: {
+        format: "yyyy-mm-dd",
+        calendarWeeks: true,
+        startView: "month",
+        minViewMode: "days"
+    },
+    month: {
+        format: "yyyy-mm",
+        calendarWeeks: false,
+        startView: "year",
+        minViewMode: "months"
+    },
+    quarter: {
+        format: "yyyy-mm",
+        calendarWeeks: false,
+        startView: "year",
+        minViewMode: "months"
+    },
+    year: {
+        format: "yyyy",
+        calendarWeeks: false,
+        startView: "decade",
+        minViewMode: "years"
     }
 }
 
+function date_shortcut(target){
+    var place_to_input=target.split(",");
+    var begin_place=place_to_input[0];
+    var end_place=place_to_input[1];
+    if($(".dropdown-menu").hasClass("datepicker")){
+        $(target).datepicker("hide");
+    }
+    else{
+        $(target).datetimepicker("hide");
+    }
+}

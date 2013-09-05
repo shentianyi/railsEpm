@@ -18,7 +18,6 @@ html{
 body{
     margin:0;
     height:100%;
-    font-family:"Helvetica Neue",sans-serif;
     font-weight:500;
     font-family:"open-sans";
 }
@@ -31,14 +30,14 @@ body{
     bottom:0;
     width:200px;
     background-color:#333;
-    z-index:10;
+    z-index:90;
     left:-200px;
     transition:left 0.25s ease-out;
     -moz-transition:left 0.25s ease-out;
     -webkit-transition:left 0.25s ease-out;
 }
 .btn-log-out{
-    z-index:20;
+    z-index:100;
     position:absolute;
     bottom:40px;
     width:76%;
@@ -48,7 +47,7 @@ body{
 /********************************************************************************************************* 右边主内容区
 *******************************************************************************************************************/
 .wrap-main{
-    min-width:1000px;
+    min-width:1024px;
     height:100%;
     position:absolute;
     transition:left 0.25s ease-out;
@@ -60,6 +59,8 @@ body{
 header{
     height:135px;
     background-color:#f2f2f2;
+    z-index:10;
+    position:relative;
 }
 .user-portrait-background{
     background:rgba(69,159,210,0.8);
@@ -197,3 +198,103 @@ nav ul li a:hover .nav-entry-kpi{
     text-decoration:none;
     color:#959595;
 }
+/********************************************************************************************************* Message
+*******************************************************************************************************************/
+.message-box{
+    position:fixed;
+    z-index:100;
+    width:600px;
+    margin-left:-300px;
+    word-break:break-all;
+    word-wrap:break-word;
+    left:50%;
+    padding:15px 10px 8px;
+    text-align:center;
+    display:none;
+    word-break:break-all;
+    word-wrap:break-word;
+}
+.message-box p{
+    font-size:16px;
+    text-shadow:1px 1px 1px rgba(0,0,0,0.5);
+}
+.message-box.top{
+    top:0;
+}
+.message-box.bottom{
+    bottom:0;
+}
+.message-box.success{
+    background:#45d263;
+    color:white;
+}
+.message-box.danger{
+    background-color:#fa4545;
+    color:white
+}
+.message-box.warning{
+    color:white;
+    background-color:#f3ca39;
+}
+/*********************************************************************************************************  date picker
+*******************************************************************************************************************/
+.date-picker-shortcut{
+    text-align:center;
+    cursor:pointer;
+    font-size:14px;
+    padding:0px;
+    text-align:center;
+}
+.date-picker-shortcut:hover{
+    background-color:#eee
+}
+.date-picker-shortcut[interval='90']:after{
+    content:'last 24 hours';
+}
+.date-picker-shortcut[interval='100']:after{
+    content:'last 7 days';
+}
+.date-picker-shortcut[interval='200']:after{
+    content:'last 4 weeks';
+}
+.date-picker-shortcut[interval='300']:after{
+    content:'last 6 months';
+}
+.date-picker-shortcut[interval='400']:after{
+    content:'last 4 quarters';
+}
+.date-picker-shortcut[interval='500']:after{
+    content:'last 10 years';
+}
+/************************************************* date input
+********************************************************************/
+.index-pick-date[type="text"] {
+    padding: 4px 5px;
+    background-color: white;
+    width: 150px !important;
+    margin-left: 42px;
+    font-size: 13px;
+    cursor: default;
+    margin-bottom: 0px;
+    font-family: 'open-sans'
+}
+
+.index-pick-date[type="text"]:nth-of-type(2) {
+    margin-top: 6px;
+}
+[week="picker"] tbody tr:hover{
+    background-color: #eee;
+}
+[week="picker"] tbody tr.week-tr-active{
+    background-color: #5fa9da;
+    color: white;
+}
+[week="picker"] tbody tr.week-tr-active>td {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+}
+
+.datepicker [week="picker"] table  tr.week-tr-active td.day:hover {
+    background: none;
+}
+
