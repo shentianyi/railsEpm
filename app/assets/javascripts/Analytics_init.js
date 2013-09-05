@@ -49,6 +49,7 @@ function init_analytics() {
     $("article").addClass("hidden-y");
     resize_chart.body();
     resize_chart.container();
+    $("#chart-group").val('').trigger('chosen:updated');
 }
 function date_picker_init(option){
     date_and_datetime.unit_them_at_begin(option.target,option.interval_source,option.have_shortcut);
