@@ -1,0 +1,53 @@
+/********************************************************************************************************* 分类系列
+*******************************************************************************************************************/
+.manage-left-menu{
+    background-color:rgba(221, 221, 221, 0.13);
+    position:absolute;
+    top:135px;
+    left:0;
+    bottom:0;
+    width:150px;
+    margin:0;
+    padding:0;
+    list-style-type: none;
+    overflow-y:auto;
+}
+.manage-left-menu li{
+    text-align:center;
+    color:rgba(0,0,0,0.4);
+    padding:11px 24px;
+    cursor:pointer;
+    transition:padding 0.3s ease-out;
+    position:relative;
+
+}
+.manage-left-menu li:hover{
+    padding:11px 0 11px 47px;
+}
+.manage-left-menu li:hover i.icon-item{
+    display:block;
+}
+.manage-left-menu li.active{
+    color:#F5A133;
+}
+.manage-left-menu li a{
+    width:103px;
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.manage-left-menu li i.icon-item{
+    position:absolute;
+    top:9px;
+    color:rgba(0,0,0,0.4);
+    display:none;
+    pointer-events:auto;
+    transition:color 0.2s ease;
+}
+.manage-left-menu li:hover i.icon-item:hover{
+    color:rgba(0,0,0,0.65);
+}
+.manage-left-menu li .icon-trash{
+    left:25px;
+}
