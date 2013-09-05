@@ -146,3 +146,18 @@ function TCR(a,t){
         judge: judge
     }
 }
+//show loading
+function show_loading(top,right,bottom,left){
+    var body=document.getElementsByTagName("body")[0];
+    var loading=document.createElement("div");
+    loading.className="loading";
+    loading.innerHTML="<p>Wait a minute , it's coming </p>";
+    loading.setAttribute("id","loading");
+    loading.setAttribute("style","top:"+top+"px;right:"+right+"px;bottom:"+bottom+"px;left:"+left+"px;");
+    body.appendChild(loading);
+}
+function remove_loading(){
+    var body=document.getElementsByTagName("body")[0];
+    var loading=document.getElementById("loading");
+    body.removeChild(loading);
+}

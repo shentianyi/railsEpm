@@ -386,8 +386,8 @@ function proper_type_for_chart(){
                 dataItem.name=this.chart.series[0].data[i].name;
                 dataItem.y=this.chart.series[0].processedYData[i];
                 dataItem.target=this.chart.series[0].data[i].target;
+                dataItem.unit=this.chart.series[0].data[i].unit;
                 data.push(dataItem);
-
             }
             chart_name=this.chart.series[0].name;
             this.chart.series[0].hide();
@@ -412,6 +412,7 @@ function proper_type_for_chart(){
                 dataItem.average_target=(dataItemTarget/this.chart.series[i].processedYData.length).toFixed(2);
                 dataItem.time_from=this.chart.series[i].data[0].name;
                 dataItem.time_to=this.chart.series[i].data[this.chart.series[i].data.length-1].name;
+                dataItem.unit=this.chart.series[i].data[0].unit;
                 data.push(dataItem);
                 this.chart.series[i].hide();
             };

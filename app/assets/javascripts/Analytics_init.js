@@ -64,13 +64,20 @@ function analytic_control_condition_visible() {
         $("#chart-body").css("top", "23px").height(parseInt($("#chart-body").height()) + 87);
         $("#analytics-condition-invisible-mark").css("display", "block");
         $("#analytic-control-condition-visible").attr("open", false).removeClass("icon-chevron-up").addClass("icon-chevron-down");
+        if($("#loading").length>0){
+            $("#loading").css("top",parseInt($("#analytics-condition").height())+48);
+        }
     }
     else {
         $("#analytics-condition").css("top", "135px");
         $("#chart-body").css("top", "110px").height(parseInt($("#chart-body").height()) - 87);
         $("#analytics-condition-invisible-mark").css("display", "none");
         $("#analytic-control-condition-visible").attr("open", true).removeClass("icon-chevron-down").addClass("icon-chevron-up");
+        if($("#loading").length>0){
+            $("#loading").css("top",parseInt($("#analytics-condition").height())+135);
+        }
     }
+
     resize_chart.container();
 }
 function form_date_or_time_picker(interval, target) {
@@ -126,122 +133,123 @@ function prepare_form_chart() {
         else {
             end_time = begin_time
         }
-
-        $.post('/kpi_entries/analyse',{
-            kpi : kpi,
-            average:method=="0",
-            entity_group: view,
-            startTime : begin_time,
-            endTime : end_time,
-            interval:interval
-        },function(msg){
-            if(msg.result){
-                var option={
-                    kpi:kpi,
-                    id:chartSeries.getCount(),
-                    target:"chart-container",
-                    begin_time:begin_time,
-                    type:type,
-                    interval:interval,
-                    count:chartSeries.getCount()+1
-                }
-                var addSeriesOption={
-                    kpi:kpi,
-                    id:chartSeries.getCount(),
-                    interval:interval,
-                    view:view,
-                    method:method,
-                    begin_time:begin_time,
-                    end_time:end_time
-                }
-                var length=msg.data.current.length;
-                var data_array=[];
-                for(var i=0;i<length;i++){
-                    data_array[i]={};
-                    data_array[i].y=msg.data.current[i];
-                    data_array[i].target=msg.data.target[i];
-                    data_array[i].unit=msg.data.unit[i];
-                }
-                if(chart_body_close_validate){
-
-                    option.data=data_array;
-                    addSeriesOption[interval]=data_array;
-                    chartSeries.addSeries(addSeriesOption);
-                    show_chart_body(option);
-
-
-                    render_to(option);
-                    create_environment_for_data(option);
-                    new Highcharts.Chart(high_chart);
-                    add_series(option);
-                    proper_type_for_chart(option);
-
-                    chartSeries.addCount();
-                }
-                else{
-                    option.data=data_array;
-                    addSeriesOption[interval]=data_array;
-                    chartSeries.addSeries(addSeriesOption);
-
-                    add_series(option);
-                    proper_type_for_chart(option);
-
-                    chartSeries.addCount();
-                }
-                limit_pointer_number(option);
-                clear_chart_condition();
-            }
-            else{
-                MessageBox("sorry , something wrong" , "top", "warning") ;
-            }
-        })
-
-//        var option={
-//            kpi:kpi,
-//            id:chartSeries.getCount(),
-//            target:"chart-container",
-//            begin_time:begin_time,
-//            type:type,
-//            interval:interval,
-//            count:chartSeries.getCount()+1
-//        }
-//        var addSeriesOption={
-//            kpi:kpi,
-//            id:chartSeries.getCount(),
-//            interval:interval,
-//            view:view,
-//            method:method,
-//            begin_time:begin_time,
-//            end_time:end_time
-//        }
-//        if(chart_body_close_validate){
+        var top=parseInt($("#analytics-condition").height())+parseInt($("#analytics-condition").css("top"));
+        show_loading(top,0,0,0);
+//        $.post('/kpi_entries/analyse',{
+//            kpi : kpi,
+//            average:method=="0",
+//            entity_group: view,
+//            startTime : begin_time,
+//            endTime : end_time,
+//            interval:interval
+//        },function(msg){
+//            remove_loading()
+//            if(msg.result){
+//                var option={
+//                    kpi:kpi,
+//                    id:chartSeries.getCount(),
+//                    target:"chart-container",
+//                    begin_time:begin_time,
+//                    type:type,
+//                    interval:interval,
+//                    count:chartSeries.getCount()+1
+//                }
+//                var addSeriesOption={
+//                    kpi:kpi,
+//                    id:chartSeries.getCount(),
+//                    interval:interval,
+//                    view:view,
+//                    method:method,
+//                    begin_time:begin_time,
+//                    end_time:end_time
+//                }
+//                var length=msg.data.current.length;
+//                var data_array=[];
+//                for(var i=0;i<length;i++){
+//                    data_array[i]={};
+//                    data_array[i].y=msg.data.current[i];
+//                    data_array[i].target=msg.data.target[i];
+//                    data_array[i].unit=msg.data.unit[i];
+//                }
+//                if(chart_body_close_validate){
 //
-//            option.data=[{y:2,target:10},{y:3,target:10},{y:21,target:10},{y:3,target:10},{y:10,target:10},{y:7,target:10}];
-//            addSeriesOption[interval]=[{y:2,target:10},{y:3,target:10},{y:21,target:10},{y:3,target:10},{y:10,target:10},{y:7,target:10}];
-//            chartSeries.addSeries(addSeriesOption);
-//            show_chart_body(option);
+//                    option.data=data_array;
+//                    addSeriesOption[interval]=data_array;
+//                    chartSeries.addSeries(addSeriesOption);
+//                    show_chart_body(option);
 //
 //
-//            render_to(option);
-//            create_environment_for_data(option);
-//            new Highcharts.Chart(high_chart);
-//            add_series(option);
-//            proper_type_for_chart(option);
+//                    render_to(option);
+//                    create_environment_for_data(option);
+//                    new Highcharts.Chart(high_chart);
+//                    add_series(option);
+//                    proper_type_for_chart(option);
 //
-//            chartSeries.addCount();
-//        }
-//        else{
-//            option.data=[{y:12,target:15},{y:3,target:15},{y:1,target:15},{y:13,target:15},{y:10,target:15},{y:17,target:15}];
-//            addSeriesOption[interval]=[{y:12,target:15},{y:3,target:15},{y:1,target:15},{y:13,target:15},{y:10,target:15},{y:17,target:15}];
-//            chartSeries.addSeries(addSeriesOption);
+//                    chartSeries.addCount();
+//                }
+//                else{
+//                    option.data=data_array;
+//                    addSeriesOption[interval]=data_array;
+//                    chartSeries.addSeries(addSeriesOption);
 //
-//            add_series(option);
-//            proper_type_for_chart(option);
+//                    add_series(option);
+//                    proper_type_for_chart(option);
 //
-//            chartSeries.addCount();
-//        }
-//        limit_pointer_number(option);
-//        clear_chart_condition();
+//                    chartSeries.addCount();
+//                }
+//                limit_pointer_number(option);
+//                clear_chart_condition();
+//            }
+//            else{
+//                MessageBox("sorry , something wrong" , "top", "warning") ;
+//            }
+//        });
+        var option={
+            kpi:kpi,
+            id:chartSeries.getCount(),
+            target:"chart-container",
+            begin_time:begin_time,
+            type:type,
+            interval:interval,
+            count:chartSeries.getCount()+1
+        }
+        var addSeriesOption={
+            kpi:kpi,
+            id:chartSeries.getCount(),
+            interval:interval,
+            view:view,
+            method:method,
+            begin_time:begin_time,
+            end_time:end_time
+        }
+        if(chart_body_close_validate){
+
+            option.data=[{y:2,target:10,unit:"$"},{y:3,target:10,unit:"$"},{y:21,target:10,unit:"$"},{y:3,target:10,unit:"$"},{y:10,target:10,unit:"$"},{y:7,target:10,unit:"$"}];
+            addSeriesOption[interval]=[{y:2,target:10,unit:"$"},{y:3,target:10,unit:"$"},{y:21,target:10,unit:"$"},{y:3,target:10,unit:"$"},{y:10,target:10,unit:"$"},{y:7,target:10,unit:"$"}];
+            chartSeries.addSeries(addSeriesOption);
+            show_chart_body(option);
+
+
+            render_to(option);
+            create_environment_for_data(option);
+            new Highcharts.Chart(high_chart);
+            add_series(option);
+            proper_type_for_chart(option);
+
+            chartSeries.addCount();
+        }
+        else{
+            option.data=[{y:12,target:15,unit:"$"},{y:3,target:15,unit:"$"},{y:1,target:15,unit:"$"},{y:13,target:15,unit:"$"},{y:10,target:15,unit:"$"},{y:17,target:15,unit:"$"}];
+            addSeriesOption[interval]=[{y:12,target:15,unit:"$"},{y:3,target:15,unit:"$"},{y:1,target:15,unit:"$"},{y:13,target:15,unit:"$"},{y:10,target:15,unit:"$"},{y:17,target:15,unit:"$"}];
+            chartSeries.addSeries(addSeriesOption);
+
+            add_series(option);
+            proper_type_for_chart(option);
+
+            chartSeries.addCount();
+        }
+        limit_pointer_number(option);
+        clear_chart_condition();
     }
     else {
         MessageBox("please fill all blanks in *" , "top", "warning")
@@ -297,12 +305,14 @@ function alternate_chart_type(event){
         var option={
             target:"chart-container",
             type:$(target).attr("type"),
-            count:chartSeries.getCount()
+            count:chartSeries.getCount(),
+            interval:$("#chart-interval-alternate li.active").attr("interval")
         }
         for(var i=0;i<chartSeries.series.length;i++){
             option.id=chartSeries.series[i].id;
             proper_type_for_chart(option)
         }
+        limit_pointer_number(option);
     }
 }
 
@@ -315,32 +325,35 @@ function change_interval(option){
             new_data_wrapper.push(series_object[option.interval])
         }
         else{
-            $.post('/kpi_entries/analyse',{
-                kpi : series_object.kpi,
-                average:series_object.method=="0",
-                entity_group: series_object.view,
-                startTime : series_object.begin_time,
-                endTime : series_object.end_time,
-                interval: option.interval
-            },function(){
-                if(msg.result){
-                     var length=msg.data.current.length;
-                     var data_array=[];
-                     for(var i=0;i<length;i++){
-                         data_array[i]={};
-                         data_array[i].y=msg.data.current[i];
-                         data_array[i].target=msg.data.target[i];
-                         data_array[i].unit=msg.data.unit[i];
-                     }
-                    new_data_wrapper.push(data_array);
-                    series_object[option.interval] = data_array;
-                }
-                else{
-                    MessageBox("sorry , something wrong" , "top", "warning");
-                }
-            })
-//            new_data_wrapper.push([{y:1,target:17},{y:13,target:17},{y:22,target:17},{y:4,target:17},{y:12,target:17},{y:7,target:17}]);
-//            series_object[option.interval] = [{y:1,target:17},{y:13,target:17},{y:22,target:17},{y:4,target:17},{y:12,target:17},{y:7,target:17}];
+//            var top=parseInt($("#analytics-condition").height())+parseInt($("#analytics-condition").css("top"));
+//            show_loading(top,0,0,0);
+//            $.post('/kpi_entries/analyse',{
+//                kpi : series_object.kpi,
+//                average:series_object.method=="0",
+//                entity_group: series_object.view,
+//                startTime : series_object.begin_time,
+//                endTime : series_object.end_time,
+//                interval: option.interval
+//            },function(){
+//                remove_loading();
+//                if(msg.result){
+//                     var length=msg.data.current.length;
+//                     var data_array=[];
+//                     for(var i=0;i<length;i++){
+//                         data_array[i]={};
+//                         data_array[i].y=msg.data.current[i];
+//                         data_array[i].target=msg.data.target[i];
+//                         data_array[i].unit=msg.data.unit[i];
+//                     }
+//                    new_data_wrapper.push(data_array);
+//                    series_object[option.interval] = data_array;
+//                }
+//                else{
+//                    MessageBox("sorry , something wrong" , "top", "warning");
+//                }
+//            });
+            new_data_wrapper.push([{y:1,target:17,unit:"$"},{y:13,target:17,unit:"$"},{y:22,target:17,unit:"$"},{y:4,target:17,unit:"$"},{y:12,target:17,unit:"$"},{y:7,target:17,unit:"$"}]);
+            series_object[option.interval] = [{y:1,target:17,unit:"$"},{y:13,target:17,unit:"$"},{y:22,target:17,unit:"$"},{y:4,target:17,unit:"$"},{y:12,target:17,unit:"$"},{y:7,target:17,unit:"$"}];
         }
     }
     if(new_data_wrapper.length==chartSeries.getCount()){
@@ -430,19 +443,19 @@ function  chart_point_click(object){
             $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color",object.color);
             $("#chart-detail-date").text(object.time_from).prev().text("From:");
             $("#chart-detail-end-date").text(object.time_to).parent().removeClass("hide");
-            $("#chart-detail-target").text(object.target).prev().text("Sum Target");
-            $("#chart-detail-aver-target").text(object.average_target).parent().removeClass("hide");
-            $("#chart-detail-value").text(object.y).prev().text("Sum Value");
+            $("#chart-detail-target").text(object.target+" "+object.unit).prev().text("Sum Target");
+            $("#chart-detail-aver-target").text(object.average_target+" "+object.unit).parent().removeClass("hide");
+            $("#chart-detail-value").text(object.y+" "+object.unit).prev().text("Sum Value");
             $("#chart-detail-tcr").text(TCR(object.y,object.target).value);
             tcr_trend(TCR(object.y,object.target).judge);
-            $("#chart-detail-aver-date").text(object.average_y).parent().removeClass("hide");
+            $("#chart-detail-aver-date").text(object.average_y+" "+object.unit).parent().removeClass("hide");
             $("#chart-detail-percent").text((object.percentage).toFixed(1)+" %").parent().removeClass("hide");
         }
         else{
             $("#chart-detail-kpi").text(object.series.name).css("color",object.color);
             $("#chart-detail-date").text(object.name).prev().text("Date:");
-            $("#chart-detail-target").text(object.target).prev().text("Target");
-            $("#chart-detail-value").text(object.y).prev().text("Value:");
+            $("#chart-detail-target").text(object.target+" "+object.unit).prev().text("Target");
+            $("#chart-detail-value").text(object.y+" "+object.unit).prev().text("Value:");
             $("#chart-detail-tcr").text(TCR(object.y,object.target).value);
             tcr_trend(TCR(object.y,object.target).judge);
             $("#chart-detail-end-date").parent().addClass("hide");
@@ -455,8 +468,8 @@ function  chart_point_click(object){
     else{
         $("#chart-detail-kpi").text(object.series.name).css("color",object.series.color);
         $("#chart-detail-date").text(object.name).prev().text("Date:");
-        $("#chart-detail-target").text(object.target).prev().text("Target");
-        $("#chart-detail-value").text(object.y).prev().text("Value:");
+        $("#chart-detail-target").text(object.target+" "+object.unit).prev().text("Target");
+        $("#chart-detail-value").text(object.y+" "+object.unit).prev().text("Value:");
         $("#chart-detail-tcr").text(TCR(object.y,object.target).value);
         tcr_trend(TCR(object.y,object.target).judge);
         $("#chart-detail-end-date").parent().addClass("hide");

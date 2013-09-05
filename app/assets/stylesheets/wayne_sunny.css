@@ -200,3 +200,30 @@ label,p,h1,h2,h3,h4,h5{
     color:white;
     background-color:#f3ca39;
 }
+/*********************************************************************************************************  loading
+*******************************************************************************************************************/
+.loading{
+    position:absolute;
+    z-index:101;
+    background:rgba(238,238,238,0.75);
+    top:auto;
+    transition:all 0.35s ease-out;
+}
+.loading p{
+    text-align:center;
+    margin:0;
+    vertical-align:middle;
+    font-size:35px;
+    font-family:"helve";
+    position:relative;
+    top:40%;
+    color:rgba(0,0,0,0.5)
+}
+.loading p:after{
+    content:url("../images/loading_tea.png");
+    opacity:0.6;
+    position:relative;
+    top:3px;
+    left:6px;
+
+}
