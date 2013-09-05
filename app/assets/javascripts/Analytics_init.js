@@ -127,62 +127,121 @@ function prepare_form_chart() {
             end_time = begin_time
         }
 
+        $.post('/kpi_entries/analyse',{
+            kpi : kpi,
+            average:method=="0",
+            entity_group: view,
+            startTime : begin_time,
+            endTime : end_time,
+            interval:interval
+        },function(msg){
+            if(msg.result){
+                var option={
+                    kpi:kpi,
+                    id:chartSeries.getCount(),
+                    target:"chart-container",
+                    begin_time:begin_time,
+                    type:type,
+                    interval:interval,
+                    count:chartSeries.getCount()+1
+                }
+                var addSeriesOption={
+                    kpi:kpi,
+                    id:chartSeries.getCount(),
+                    interval:interval,
+                    view:view,
+                    method:method,
+                    begin_time:begin_time,
+                    end_time:end_time
+                }
+                var length=msg.data.current.length;
+                var data_array=[];
+                for(var i=0;i<length;i++){
+                    data_array[i]={};
+                    data_array[i].y=msg.data.current[i];
+                    data_array[i].target=msg.data.target[i];
+                    data_array[i].unit=msg.data.unit[i];
+                }
+                if(chart_body_close_validate){
+
+                    option.data=data_array;
+                    addSeriesOption[interval]=data_array;
+                    chartSeries.addSeries(addSeriesOption);
+                    show_chart_body(option);
 
 
+                    render_to(option);
+                    create_environment_for_data(option);
+                    new Highcharts.Chart(high_chart);
+                    add_series(option);
+                    proper_type_for_chart(option);
 
-//        post
+                    chartSeries.addCount();
+                }
+                else{
+                    option.data=data_array;
+                    addSeriesOption[interval]=data_array;
+                    chartSeries.addSeries(addSeriesOption);
 
+                    add_series(option);
+                    proper_type_for_chart(option);
 
+                    chartSeries.addCount();
+                }
+                limit_pointer_number(option);
+                clear_chart_condition();
+            }
+            else{
+                MessageBox("sorry , something wrong" , "top", "warning") ;
+            }
+        })
 
-
-
-
-        var option={
-            kpi:kpi,
-            id:chartSeries.getCount(),
-            target:"chart-container",
-            begin_time:begin_time,
-            type:type,
-            interval:interval,
-            count:chartSeries.getCount()+1
-        }
-        var addSeriesOption={
-            kpi:kpi,
-            id:chartSeries.getCount(),
-            interval:interval,
-            view:view,
-            method:method,
-            begin_time:begin_time,
-            end_time:end_time
-        }
-        if(chart_body_close_validate){
-
-            option.data=[{y:2,target:10},{y:3,target:10},{y:21,target:10},{y:3,target:10},{y:10,target:10},{y:7,target:10}];
-            addSeriesOption[interval]=[{y:2,target:10},{y:3,target:10},{y:21,target:10},{y:3,target:10},{y:10,target:10},{y:7,target:10}];
-            chartSeries.addSeries(addSeriesOption);
-            show_chart_body(option);
-
-
-            render_to(option);
-            create_environment_for_data(option);
-            new Highcharts.Chart(high_chart);
-            add_series(option);
-            proper_type_for_chart(option);
-
-            chartSeries.addCount();
-        }
-        else{
-            option.data=[{y:12,target:15},{y:3,target:15},{y:1,target:15},{y:13,target:15},{y:10,target:15},{y:17,target:15}];
-            addSeriesOption[interval]=[{y:12,target:15},{y:3,target:15},{y:1,target:15},{y:13,target:15},{y:10,target:15},{y:17,target:15}];
-            chartSeries.addSeries(addSeriesOption);
-
-            add_series(option);
-            proper_type_for_chart(option);
-
-            chartSeries.addCount();
-        }
-        limit_pointer_number(option);
-        clear_chart_condition();
+//        var option={
+//            kpi:kpi,
+//            id:chartSeries.getCount(),
+//            target:"chart-container",
+//            begin_time:begin_time,
+//            type:type,
+//            interval:interval,
+//            count:chartSeries.getCount()+1
+//        }
+//        var addSeriesOption={
+//            kpi:kpi,
+//            id:chartSeries.getCount(),
+//            interval:interval,
+//            view:view,
+//            method:method,
+//            begin_time:begin_time,
+//            end_time:end_time
+//        }
+//        if(chart_body_close_validate){
+//
+//            option.data=[{y:2,target:10},{y:3,target:10},{y:21,target:10},{y:3,target:10},{y:10,target:10},{y:7,target:10}];
+//            addSeriesOption[interval]=[{y:2,target:10},{y:3,target:10},{y:21,target:10},{y:3,target:10},{y:10,target:10},{y:7,target:10}];
+//            chartSeries.addSeries(addSeriesOption);
+//            show_chart_body(option);
+//
+//
+//            render_to(option);
+//            create_environment_for_data(option);
+//            new Highcharts.Chart(high_chart);
+//            add_series(option);
+//            proper_type_for_chart(option);
+//
+//            chartSeries.addCount();
+//        }
+//        else{
+//            option.data=[{y:12,target:15},{y:3,target:15},{y:1,target:15},{y:13,target:15},{y:10,target:15},{y:17,target:15}];
+//            addSeriesOption[interval]=[{y:12,target:15},{y:3,target:15},{y:1,target:15},{y:13,target:15},{y:10,target:15},{y:17,target:15}];
+//            chartSeries.addSeries(addSeriesOption);
+//
+//            add_series(option);
+//            proper_type_for_chart(option);
+//
+//            chartSeries.addCount();
+//        }
+//        limit_pointer_number(option);
+//        clear_chart_condition();
     }
     else {
         MessageBox("please fill all blanks in *" , "top", "warning")
@@ -256,10 +315,32 @@ function change_interval(option){
             new_data_wrapper.push(series_object[option.interval])
         }
         else{
-
-            // post(use new interval)
-            new_data_wrapper.push([{y:1,target:17},{y:13,target:17},{y:22,target:17},{y:4,target:17},{y:12,target:17},{y:7,target:17}]);
-            series_object[option.interval] = [{y:1,target:17},{y:13,target:17},{y:22,target:17},{y:4,target:17},{y:12,target:17},{y:7,target:17}];
+            $.post('/kpi_entries/analyse',{
+                kpi : series_object.kpi,
+                average:series_object.method=="0",
+                entity_group: series_object.view,
+                startTime : series_object.begin_time,
+                endTime : series_object.end_time,
+                interval: option.interval
+            },function(){
+                if(msg.result){
+                     var length=msg.data.current.length;
+                     var data_array=[];
+                     for(var i=0;i<length;i++){
+                         data_array[i]={};
+                         data_array[i].y=msg.data.current[i];
+                         data_array[i].target=msg.data.target[i];
+                         data_array[i].unit=msg.data.unit[i];
+                     }
+                    new_data_wrapper.push(data_array);
+                    series_object[option.interval] = data_array;
+                }
+                else{
+                    MessageBox("sorry , something wrong" , "top", "warning");
+                }
+            })
+//            new_data_wrapper.push([{y:1,target:17},{y:13,target:17},{y:22,target:17},{y:4,target:17},{y:12,target:17},{y:7,target:17}]);
+//            series_object[option.interval] = [{y:1,target:17},{y:13,target:17},{y:22,target:17},{y:4,target:17},{y:12,target:17},{y:7,target:17}];
         }
     }
     if(new_data_wrapper.length==chartSeries.getCount()){
