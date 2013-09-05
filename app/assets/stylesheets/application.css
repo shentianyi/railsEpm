@@ -12,6 +12,11 @@
  *= require bootstrap.min
 *= require brilliantech.base
 *= require brilliantech.railsepm
-* = require timePicker
+*= require datepicker
+*= require datetimepicker
+*= require wayne_sunny
+*= require _epm_base
+*= require Analytic-chosen
+*= require Analytic-main
 *= require_self
  */

@@ -1,7 +1,7 @@
 #encoding: utf-8
 class KpisController < ApplicationController
   before_filter :get_ability_category,:only=>[:index,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
-  before_filter :get_kpis_by_category,:only=>[:kpi_option,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
+  before_filter :get_kpis_by_category,:only=>[:get_by_category,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
   
   def index
     @active_category_id=params[:p].nil? ? @categories[0].id : params[:p].to_i
@@ -69,10 +69,8 @@ class KpisController < ApplicationController
     end
   end
 
-  def kpi_option
-    @options=params[:options]
-    @prompt=!params[:prompt].nil?
-    render :partial=>'select_option'
+  def get_by_category 
+    render :json=>@kpis
   end
 
   def user_kpis

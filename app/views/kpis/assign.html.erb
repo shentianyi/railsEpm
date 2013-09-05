@@ -21,7 +21,7 @@
           <p class="inline">
                类别:
           </p>
-          <%= select_tag :category_id,options_from_collection_for_select(@categories,'id','name'),{:id=>'delivery-entity',:class=>"delivery-entity",:onchange=>"kpi_reinit_by_category('delivery-entity','kpi-select','delivery-kpi','delivery-kpi',true)"}%>
+          <%= select_tag :category_id,options_from_collection_for_select(@categories,'id','name'),{:id=>'delivery-entity',:class=>"delivery-entity",:onchange=>"get_kpis_by_category(this)"}%>
           <br />
           <p class="inline">
                KPI:

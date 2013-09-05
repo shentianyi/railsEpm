@@ -499,7 +499,11 @@ function tcr_trend(judge){
     }
 }
 
-
+function get_kpis_by_category(element){
+     $.post('/kpis/get_by_category',{id:$(element).attr("value")},function(data){
+          
+     },'json');
+}
 
 
 

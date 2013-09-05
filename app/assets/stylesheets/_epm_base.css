@@ -1,16 +1,16 @@
 @font-face {
     font-family:"open-sans";
-    src: url("font/OpenSans-Regular.eot");
-    src: local("OpenSans-Regular Regular"),
-    local("OpenSans-Regular"),
-    url('OpenSans-Regular.woff') format('woff'),
-    url('OpenSans-Regular.ttf') format('truetype'),
-    url('OpenSans-Regular.svg#OpenSans-Regular') format('svg');
+    src: url("/assets/OpenSans-Regular.eot");
+    src: local("/assets/OpenSans-Regular Regular"),
+    local("/assets/OpenSans-Regular"),
+    url('/assets/OpenSans-Regular.woff') format('woff'),
+    url('/assets/OpenSans-Regular.ttf') format('truetype'),
+    url('/assets/OpenSans-Regular.svg#OpenSans-Regular') format('svg');
 }
 @font-face {
     font-family:"helve";
-    src:url("font/helveticaneueultralight.ttf"),
-    url("font/helveticaneueultralight.eot.eot");
+    src:url("/assets/helveticaneueultralight.ttf"),
+    url("/assets/helveticaneueultralight.eot");
 }
 html{
     height:100%;
@@ -72,7 +72,7 @@ header{
     cursor:pointer;
 }
 .user-portrait-brand{
-    background:url("../images/logo.png") no-repeat center bottom;
+    background:url("/assets/logo.png") no-repeat center bottom;
     width:150px;
     height:95px;
 }
@@ -118,7 +118,7 @@ nav ul li a span:nth-of-type(2){
     display:block;
     width:100%;
     height:52px;
-    background-image:url("../images/nav-btn.png");
+    background-image:url("/assets/nav-btn.png");
     background-repeat:no-repeat;
 }
 /********************************************************* get start
