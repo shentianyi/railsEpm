@@ -5,8 +5,7 @@
           </div>
           <div class="pull-left analytics-condition-choose">
                <div class="index-condition-group">
-                    <select data-placeholder="Entity *" style="width:90px;" class="chosen-select"
-                    title="analy-entity-select" id="chart-group" onchange="get_kpis_by_category(this);">
+                    <select data-placeholder="Entity *" style="width:90px;" class="chosen-select"   title="analy-entity-select" id="chart-group">
                          <%@categories.each_with_index do |catetory,i|%>
                          <option value="<%= catetory.id%>"><%= catetory.name%></option>
                          <%end %>

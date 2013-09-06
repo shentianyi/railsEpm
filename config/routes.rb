@@ -25,7 +25,7 @@ IFEpm::Application.routes.draw do
     collection do
       put :update
       post :assign
-      post :get_by_category
+      get :get_by_category
     end
     member do
       get :assign
