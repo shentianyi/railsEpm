@@ -11,7 +11,65 @@
     padding:0;
     list-style-type: none;
     overflow-y:auto;
+    overflow-x:hidden;
 }
+.manage-left-menu li:nth-of-type(2){
+    position:relative;
+    text-align:center;
+    font-size:13px;
+    color:rgba(0,0,0,0.3);
+    background-color:rgba(209,209,209,0.22);
+    padding:0px;
+    width:123px;
+    height:30px;
+    margin:0 12px 30px;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    cursor:pointer;
+    transition:all 0.35s ease-out
+}
+.manage-left-menu li:nth-of-type(2):hover{
+    padding:0px;
+    color:rgba(0,0,0,0.6);
+    background-color:rgba(209,209,209,0.35);
+}
+.manage-left-menu li:nth-of-type(2) span{
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    line-height:30px;
+}
+.manage-left-menu li:nth-of-type(2) input{
+    position:absolute;
+    width:100px;
+    height:20px;
+    font-size:13px;
+    padding:0px 2px;
+    top:4px;
+    left:-999em;
+
+}
+.manage-left-menu li:nth-of-type(2) input:focus ~ .manage-add-tooltip{
+    color:rgba(0,0,0,0.4);
+    display:block;
+}
+.manage-left-menu li:nth-of-type(2) .manage-add-tooltip{
+    position:fixed;
+    text-align:left;
+    left:141px;
+    font-size:13px;
+    line-height:17px;
+    display:none;
+}
+
+
+
+
+
+
 .manage-left-menu li{
     text-align:center;
     color:rgba(0,0,0,0.4);

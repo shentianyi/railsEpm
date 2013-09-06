@@ -73,7 +73,11 @@
 
     <ul class="manage-left-menu" id="manage-left-menu">
        <li>Manage KPI</li>
-       <li><i class="icon-plus"></i> Category</li>
+       <li type="category" id="manage-menu-add">
+           <input type="text" placeholder="new category"/>
+           <span><i class="icon-plus"></i> Category</span>
+           <p class="manage-add-tooltip">Enter: confirm <br />Esc: cancel</p>
+       </li>
        <li class="active" title="Category1" number="1">
            <i class="icon-trash icon-item"></i>
            <a>Category1</a>
@@ -105,5 +109,7 @@
 <script src="javascripts/wayne-base.js"></script>
 <script src="javascripts/Template.js"></script>
 <script src="javascripts/brilliantech.base.js"></script>
+<script src="javascripts/Manage-left-menu.js"></script>
+<script src="javascripts/Mangae-kpi.js"></script>
 </body>
 </html>
