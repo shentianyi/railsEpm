@@ -358,7 +358,7 @@ function change_interval(option){
                 startTime : standardParse(series_object.begin_time).date.toISOString(),
                 endTime : standardParse(series_object.end_time).date.toISOString(),
                 interval: option.interval
-            },function(){
+            },function(msg){
                 remove_loading();
                 if(msg.result){
                      var length=msg.object.current.length;
