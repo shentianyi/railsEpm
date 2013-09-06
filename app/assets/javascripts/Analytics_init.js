@@ -351,14 +351,18 @@ function change_interval(option){
         else{
             var top=parseInt($("#analytics-condition").height())+parseInt($("#analytics-condition").css("top"));
             show_loading(top,0,0,0);
-            $.post('/kpi_entries/analyse',{
+            $.ajax({url:'/kpi_entries/analyse',
+            data:{
                 kpi : series_object.kpi_id,
                 average:series_object.method=="0",
                 entity_group: series_object.view,
                 startTime : standardParse(series_object.begin_time).date.toISOString(),
                 endTime : standardParse(series_object.end_time).date.toISOString(),
                 interval: option.interval
-            },function(msg){
+            },
+            type:'POST',
+            async:false,
+            success:function(msg){
                 remove_loading();
                 if(msg.result){
                      var length=msg.object.current.length;
@@ -375,7 +379,7 @@ function change_interval(option){
                 else{
                     MessageBox("sorry , something wrong" , "top", "warning");
                 }
-            });
+            }});
 //            new_data_wrapper.push([{y:1,target:17,unit:"$"},{y:13,target:17,unit:"$"},{y:22,target:17,unit:"$"},{y:4,target:17,unit:"$"},{y:12,target:17,unit:"$"},{y:7,target:17,unit:"$"}]);
 //            series_object[option.interval] = [{y:1,target:17,unit:"$"},{y:13,target:17,unit:"$"},{y:22,target:17,unit:"$"},{y:4,target:17,unit:"$"},{y:12,target:17,unit:"$"},{y:7,target:17,unit:"$"}];
         }
