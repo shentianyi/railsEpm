@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130905205924) do
+ActiveRecord::Schema.define(:version => 20130905210059) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"

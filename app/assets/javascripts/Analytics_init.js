@@ -58,7 +58,7 @@ function init_analytics() {
         var id=$(adapt_event(event).target).attr("value");
         $.ajax({
             url:'/kpis/get_by_category',
-            dataType:"json",
+            dataType:"json", 
             data:{
                 id:id
             },
