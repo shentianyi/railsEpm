@@ -162,14 +162,14 @@ function prepare_form_chart() {
             kpi : kpi,
             average:method=="0",
             entity_group: view,
-            startTime : begin_time,
-            endTime : end_time,
+            startTime : standardParse(begin_time).date.toISOString() ,
+            endTime : standardParse(end_time).date.toISOString(),
             interval:interval
         },function(msg){
             remove_loading()
             if(msg.result){
                 var option={
-                    kpi:kpi,
+                    kpi:$("#chart-kpi :selected").text(),
                     id:chartSeries.getCount(),
                     target:"chart-container",
                     begin_time:begin_time,
@@ -178,7 +178,8 @@ function prepare_form_chart() {
                     count:chartSeries.getCount()+1
                 }
                 var addSeriesOption={
-                    kpi:kpi,
+                    kpi:$("#chart-kpi :selected").text(),
+                    kpi_id:kpi,
                     id:chartSeries.getCount(),
                     interval:interval,
                     view:view,
@@ -351,11 +352,11 @@ function change_interval(option){
             var top=parseInt($("#analytics-condition").height())+parseInt($("#analytics-condition").css("top"));
             show_loading(top,0,0,0);
             $.post('/kpi_entries/analyse',{
-                kpi : series_object.kpi,
+                kpi : series_object.kpi_id,
                 average:series_object.method=="0",
                 entity_group: series_object.view,
-                startTime : series_object.begin_time,
-                endTime : series_object.end_time,
+                startTime : standardParse(series_object.begin_time).date.toISOString(),
+                endTime : standardParse(series_object.end_time).date.toISOString(),
                 interval: option.interval
             },function(){
                 remove_loading();
