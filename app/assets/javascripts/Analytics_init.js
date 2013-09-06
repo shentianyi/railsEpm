@@ -55,7 +55,7 @@ function init_analytics() {
     $("#chart-view").prepend($("<option />").attr("value",""));
     $("#chart-view").val('').trigger('chosen:updated');
     $("#chart-group").on("change",function(event){
-        var id=$(adapt_event(event).target).attr("value")
+        var id=$(adapt_event(event).target).attr("value");
         $.ajax({
             url:'/kpis/get_by_category',
             dataType:"json",
@@ -132,8 +132,8 @@ function form_date_or_time_picker(interval, target) {
     }
 }
 function prepare_form_chart() {
-    var kpi = $("#chart-kpi :selected").text();
-    var view = $("#chart-view :selected").text();
+    var kpi = $("#chart-kpi :selected").attr("value");
+    var view = $("#chart-view :selected").attr("value");
     var method = $("input[name='chartRadios']:checked").attr("value");
     var interval,type,chart_body_close_validate
     if($("#chart-body").css("display")=="block"){
