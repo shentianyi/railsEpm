@@ -13,12 +13,10 @@
                     <select data-placeholder="Kpi *" style="width:150px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
                          <option value=""></option>
                     </select>
-                    <select data-placeholder="View *" style="width:150px;" class="chosen-select" title="analy-view-select"
-                    id="chart-view">
+                    <select data-placeholder="View *" style="width:150px;" class="chosen-select" title="analy-view-select"  id="chart-view">
                          <%@entity_groups.each_with_index do |entity_group,i|%>
                          <option value="<%= entity_group.id%>" ><%= entity_group.name%></option>
                          <%end %>
-
                     </select>
                </div>
                <div class="index-condition-group">

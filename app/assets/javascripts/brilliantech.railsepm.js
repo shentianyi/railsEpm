@@ -1806,6 +1806,7 @@ function refresh_kpi_entry(date){
           save_format_date(date);
      });
 }
+
 function save_format_date(date){
     $("#entry-kpi").attr("format",date);
 }

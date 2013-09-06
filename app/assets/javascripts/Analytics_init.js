@@ -186,13 +186,13 @@ function prepare_form_chart() {
                     begin_time:begin_time,
                     end_time:end_time
                 }
-                var length=msg.data.current.length;
+                var length=msg.object.current.length;
                 var data_array=[];
                 for(var i=0;i<length;i++){
                     data_array[i]={};
-                    data_array[i].y=msg.data.current[i];
-                    data_array[i].target=msg.data.target[i];
-                    data_array[i].unit=msg.data.unit[i];
+                    data_array[i].y=msg.object.current[i];
+                    data_array[i].target=msg.object.target[i];
+                    data_array[i].unit=msg.object.unit[i];
                 }
                 if(chart_body_close_validate){
 
@@ -360,13 +360,13 @@ function change_interval(option){
             },function(){
                 remove_loading();
                 if(msg.result){
-                     var length=msg.data.current.length;
+                     var length=msg.object.current.length;
                      var data_array=[];
                      for(var i=0;i<length;i++){
                          data_array[i]={};
-                         data_array[i].y=msg.data.current[i];
-                         data_array[i].target=msg.data.target[i];
-                         data_array[i].unit=msg.data.unit[i];
+                         data_array[i].y=msg.object.current[i];
+                         data_array[i].target=msg.object.target[i];
+                         data_array[i].unit=msg.object.unit[i];
                      }
                     new_data_wrapper.push(data_array);
                     series_object[option.interval] = data_array;
