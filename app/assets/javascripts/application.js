@@ -16,6 +16,7 @@
 //=require bootstrap.min
 //=require highcharts
 //=require exporting
+//=require exporting.extend.src.js
 //=require brilliantech.base
 //=require brilliantech.railsepm
 //=require ifepm.activeSelector.js

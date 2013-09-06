@@ -52,6 +52,7 @@ module KpiEntryAnalyseHelper
           current_data[k]=(v/count).round(2)
         end
       end
+      puts params
       return {:current=>current_data.values,:target=>target_data.values,:unit=>unit_data.values}
     end
     return nil
@@ -70,35 +71,36 @@ module KpiEntryAnalyseHelper
       when KpiFrequency::Weekly
         step=60*60*24*7
       end
+      
       while start_time<=end_time do
         next_time=start_time+step
         generate_init_data(start_time,next_time,params)
         start_time=next_time
       end
     when KpiFrequency::Monthly
-      while start_time<=end_time
+      while start_time<=end_time do  
         if start_time.month==2
-        next_time=(start_time.year.leap? ? 60*60*24*29 : 60*60*24*28)
+        next_time=start_time+(start_time.year.leap? ? 60*60*24*29 : 60*60*24*28)
         else
-          next_time=([1,3,5,7,8,10,12].include?(start_time.month+1) ? 60*60*24*31 : 60*60*24*30)
+          next_time=start_time+([1,3,5,7,8,10,12].include?(start_time.month+1) ? 60*60*24*31 : 60*60*24*30)
         end
        generate_init_data(start_time,next_time,params)
-        start_time=next_time
+        start_time=next_time        
       end
     when KpiFrequency::Quarterly
        step_arr=[90,91,92,92]
-      while start_time<=end_time
+      while start_time<=end_time do
         if (start_time.month-1)/3==3
-          next_time=((start_time.year+1).leap? ? 60*60*24*(step_arr[0]+1) : 60*60*24*step_arr[0])
+          next_time=start_time+((start_time.year+1).leap? ? 60*60*24*(step_arr[0]+1) : 60*60*24*step_arr[0])
         else
-          next_time=60*60*24*step_arr[(start_time.month-1)/3+1]
+          next_time=start_time+60*60*24*step_arr[(start_time.month-1)/3+1]
         end
         generate_init_data(start_time,next_time,params)
         start_time=next_time
       end
     when KpiFrequency::Yearly
-      while start_time<=end_time
-        next_time=((start_time.year+1).leap? ? 60*60*24*366 : 60*60*24*365)
+      while start_time<=end_time do
+        next_time=start_time+((start_time.year+1).leap? ? 60*60*24*366 : 60*60*24*365)
         generate_init_data(start_time,next_time,params)
         start_time=next_time
       end

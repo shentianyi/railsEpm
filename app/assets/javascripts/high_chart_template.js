@@ -1,3 +1,5 @@
+var url = 'http://42.121.111.38:9002/HighChartsFileService/';
+
 var high_chart = {
     chart: {
         zoomType: 'xy',
@@ -27,6 +29,12 @@ var high_chart = {
         maxHeight: 40,
         itemMarginBottom: -2
     },
+    exporting : {
+                    url : url,
+                    filename : 'MyChart',
+                    width : 700, // chart width
+                    exportTypes : ['chart', 'png', 'jpeg', 'pdf', 'svg', 'doc', 'docx', 'pptx', 'xls', 'xlsx'] // set download file type
+               },
     plotOptions: {
         series: {
             animation: {
