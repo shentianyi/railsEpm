@@ -5,6 +5,7 @@ var high_chart = {
         zoomType: 'xy',
         spacingLeft: 5,
         spacingRight: 10,
+        marginTop: 30,
         animation: {
             duration: 800
         }
