@@ -594,4 +594,36 @@ var limit_pointer_condition={
 }
 
 
+var HIGH_CHART=HIGH_CHART || {} ;
+HIGH_CHART.postPrepare=function(begin_time,interval){
+    var template=standardParse(begin_time).template;
+    switch(interval){
+        case "90":
+            return new Date(template[0],template[1],template[2],template[3]).toISOString();
+            break;
+        case "100":
+            return new Date(template[0],template[1],template[2]).toISOString();
+            break;
+        case "200":
+            if(standardParse(begin_time).date.getDay()==0){
+                return new Date(template[0],template[1],+template[2]-6).toISOString();
+            }
+            else{
+                return new Date(template[0],template[1],+template[2]-standardParse(begin_time).date.getDay()+1).toISOString();
+            }
+            break;
+        case "300":
+            return new Date(template[0],template[1]).toISOString();
+            break;
+        case "400":
+            return new Date(template[0],Math.floor(+template[1]/3)*3).toISOString();
+            break;
+        case "500":
+            return new Date(template[0],0).toISOString();
+            break;
+    }
+
+}
+
+
 
