@@ -85,8 +85,8 @@ class Admin::KpiCategoryTemplatesController < Admin::ApplicationController
   def updata 
       super {|data,query,row,row_line|
         raise(ArgumentError,"行:#{row_line}, Name 不能为空值") if row["Name"].nil?
-        data["name"]=row["Name"] if row["Name"]
-        data["description"]=row["Description"] if row["Description"]
+        data["name"]=row["Name"]
+        data["description"]=row["Description"]
         query["name"]=row["Name"]   if query
       } 
   end

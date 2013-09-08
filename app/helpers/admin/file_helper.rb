@@ -33,7 +33,7 @@ module Admin::FileHelper
           data={}
           query=nil
           if block_given?
-            if m.respond_to?(:uniq)
+            if m.respond_to?(:uniq_attr)
               query={}
             end
           yield(data,query,row,row_line)
