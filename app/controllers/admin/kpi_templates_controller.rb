@@ -1,6 +1,5 @@
 #encoding: utf-8
 class Admin::KpiTemplatesController < Admin::ApplicationController
-  
   # GET /admin/kpi_templates
   # GET /admin/kpi_templates.json
   def index
@@ -82,8 +81,13 @@ class Admin::KpiTemplatesController < Admin::ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   def updata
-    
+    super {|data,query,row,row_line|
+      raise(ArgumentError,"行:#{row_line}, Name 不能为空值") if row["Name"].nil?
+      data["name"]=row["Name"] if row["Name"]
+      data["description"]=row["Description"] if row["Description"]
+      query["name"]=row["Name"]   if query
+    }
   end
 end

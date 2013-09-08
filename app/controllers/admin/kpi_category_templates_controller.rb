@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Admin::KpiCategoryTemplatesController < Admin::ApplicationController
   # GET /admin/kpi_category_templates
   # GET /admin/kpi_category_templates.json
@@ -79,25 +80,14 @@ class Admin::KpiCategoryTemplatesController < Admin::ApplicationController
       format.html { redirect_to admin_kpi_category_templates_url }
       format.json { head :no_content }
     end
-  end
+  end 
   
-  def updata
-     def updata
-    super {|data,query,row,row_line|
-      raise(ArgumentError,"行:#{row_line}, PartNr/ UnitTime 不能为空值") if row["PartNr"].nil? or row["UnitTime"].nil?
-      data["partNr"]=row["PartNr"]
-      data["name"]=row["Name"] if row["Name"]
-      data["clientPartNr"]=row["ClientPartNr"] if row["ClientPartNr"]
-      data["orderNr"]=row["OrderNr"] if row["OrderNr"]
-      data["unitTime"]=row["UnitTime"] if row["UnitTime"]
-      if row["EntityNr"]
-        if entity=Entity.find_by(:entityNr=>row["EntityNr"])
-          data["entity_id"]=entity.id
-        end
-      end
-      query["partNr"]=row["PartNr"]   if query
-    }
-  end
-
+  def updata 
+      super {|data,query,row,row_line|
+        raise(ArgumentError,"行:#{row_line}, Name 不能为空值") if row["Name"].nil?
+        data["name"]=row["Name"] if row["Name"]
+        data["description"]=row["Description"] if row["Description"]
+        query["name"]=row["Name"]   if query
+      } 
   end
 end

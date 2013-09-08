@@ -16,9 +16,9 @@ ActiveRecord::Schema.define(:version => 20130905210059) do
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
     t.string   "description"
-    t.integer  "kpi_quantity"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "kpi_quantity", :default => 0
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
   end
 
   create_table "admin_kpi_templates", :force => true do |t|
@@ -27,14 +27,14 @@ ActiveRecord::Schema.define(:version => 20130905210059) do
     t.integer  "unit"
     t.integer  "frequency"
     t.float    "target"
-    t.boolean  "is_calculated"
+    t.boolean  "is_calculated",                  :default => false
     t.integer  "direction"
     t.integer  "period"
     t.string   "formula"
     t.string   "formula_string"
     t.integer  "admin_kpi_category_template_id"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
   end
 
   add_index "admin_kpi_templates", ["admin_kpi_category_template_id"], :name => "index_admin_kpi_templates_on_admin_kpi_category_template_id"

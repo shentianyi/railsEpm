@@ -1,4 +1,5 @@
 #encoding: utf-8
+require 'csv'
 class CSV
   class Row
     def strip
@@ -39,7 +40,7 @@ module Admin::FileHelper
           end
           data.delete($UPMARKER)
           if query
-            if item=m.find_by(query)
+            if item=m.where(query).first
             item.update_attributes(data) if row[$UPMARKER].to_i==1
             else
             m.create(data)
@@ -54,6 +55,7 @@ module Admin::FileHelper
         msg.content='未选择文件或只能上传一个文件'
       end
     rescue Exception=>e
+      puts e.backtrace
     msg.content=e.message
     end
     render :json=>msg
