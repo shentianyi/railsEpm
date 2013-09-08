@@ -1,4 +1,6 @@
+#encoding: utf-8
 class Admin::KpiTemplatesController < Admin::ApplicationController
+  
   # GET /admin/kpi_templates
   # GET /admin/kpi_templates.json
   def index
@@ -79,5 +81,9 @@ class Admin::KpiTemplatesController < Admin::ApplicationController
       format.html { redirect_to admin_kpi_templates_url }
       format.json { head :no_content }
     end
+  end
+  
+  def updata
+    
   end
 end

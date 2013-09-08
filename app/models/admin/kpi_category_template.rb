@@ -1,6 +1,8 @@
+#encoding: utf-8
 class Admin::KpiCategoryTemplate < ActiveRecord::Base
   has_many :admin_kpi_templates
   attr_accessible :description, :kpi_quantity, :name
+  
   def self.uniq
     ['name']
   end
@@ -8,4 +10,5 @@ class Admin::KpiCategoryTemplate < ActiveRecord::Base
   def self.csv_headers
        ['Name','Description',$UPMARKER]
   end
+  
 end

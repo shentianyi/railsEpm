@@ -33,6 +33,7 @@
     left: 50%;
     opacity: 0.5;
     cursor: pointer;
+    pointer-events:auto;
     transition: opacity 0.25s ease-out;
 }
 
@@ -101,22 +102,22 @@ div[title='analy-view-select'] {
     border-right: 1px solid #ddd;
 }
 
-.control-chart-interval-group>li {
+.control-chart-interval-group li {
     display: inline;
     border-width: 0px 0px 1px 1px;
     border-color: #ddd;
     border-style: solid;
     float: left;
+    color: rgba(0, 0, 0, 0.3);
+    transition: color 0.2s ease-out;
+    cursor: pointer;
 }
 
-.control-chart-interval-group>li>a {
+.control-chart-interval-group li a {
     display: block;
     width: 35px;
     height: 27px;
     text-align: center;
-    cursor: pointer;
-    color: rgba(0, 0, 0, 0.3);
-    transition: color 0.2s ease-out, background-color 0.2s ease-out;
     font-size: 15px;
     line-height:27px;
     pointer-events:none;
@@ -126,7 +127,7 @@ div[title='analy-view-select'] {
     color: rgba(0, 0, 0, 0.7);
 }
 
-.control-chart-interval-group>li>a:hover {
+.control-chart-interval-group li:hover {
     color: rgba(0, 0, 0, 0.7);
 }
 
