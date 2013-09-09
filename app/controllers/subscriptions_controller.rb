@@ -27,8 +27,8 @@ class SubscriptionsController < ApplicationController
 
   def create
     begin
+      raise(ArgumentError,"email has been token")  if $invalid_emails.include?(params[:email])
       @user=User.new
-
       @user = @user.create_tenant_user!(params[:email],
                                         params[:password],
                                         params[:password_confirmation],
@@ -38,10 +38,12 @@ class SubscriptionsController < ApplicationController
       flash[:notice] = 'Your account has been created.Please finish the process with the mail confirmation'
 
       redirect_to new_user_sessions_url#new_user_confirmations_url
+    rescue ArgumentError=>invalid
+         flash[:notice]='email has been token'
+      render :action=>:new
     rescue ActiveRecord::RecordInvalid => invalid
       flash[:notice]='Account create failed'
       render :action=>:new
-
     end
   end
 

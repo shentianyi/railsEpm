@@ -91,6 +91,8 @@ class Admin::KpiTemplatesController < Admin::ApplicationController
 
       if !row["IsCalculated"].nil? && row["IsCalculated"].to_i==1 && row["Formula"].nil?
         raise(ArgumentError,"行:#{row_line}, Formula 不能为空值");
+      else
+        data["formula_string"]=row["Formula"]
       end
       if kpi_category=Admin::KpiCategoryTemplate.find_by_name(row["KpiCategory"])
         data["admin_kpi_category_template_id"]=kpi_category.id
@@ -102,8 +104,12 @@ class Admin::KpiTemplatesController < Admin::ApplicationController
       data["is_calculated"]=row["IsCalculated"]
       data["frequency"]=row["Frequency"]
       data["direction"]=row["Direction"]
-      data["target"]=row["Target"]
+      data["target"]=row["Target"] 
       data["unit"]=row["Unit"]
+      if query
+        query["name"]=data["name"]  
+        query["admin_kpi_category_template_id"]= data["admin_kpi_category_template_id"]
+      end
     }
   end
   

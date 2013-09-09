@@ -7,6 +7,12 @@
 		<%= csrf_meta_tags %>
 	</head>
 	<body>
+	     <div>
+	          <ul>
+	               <li><a href="<%= admin_kpi_category_templates_path%>">KPICategory</a></li>
+                    <li><a href="<%= admin_kpi_templates_path%>">Kpi</a></li>
+	          </ul>
+	     </div>
 		<div class="wrap-page">
 			<%= yield %>
 		</div>

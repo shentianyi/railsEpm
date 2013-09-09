@@ -55,7 +55,7 @@ module Admin::FileHelper
         msg.content='未选择文件或只能上传一个文件'
       end
     rescue Exception=>e
-      puts e.backtrace
+      puts e.message.to_json
     msg.content=e.message
     end
     render :json=>msg

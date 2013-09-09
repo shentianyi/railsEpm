@@ -4,6 +4,10 @@ module KpisHelper
   def self.parse_formula_items formula
     formula.scan(/\[\d+\]/).map{|item| /\d+/.match(item).to_s}
   end
+  
+  def self.parse_formula_string_items formula
+     formula.scan(/\[\w+\]/).map{|item| /\w+/.match(item).to_s}
+  end
 
   # assign kpi to user by id
   def self.assign_kpi_to_user_by_id kpi_id,user_id,current_ability

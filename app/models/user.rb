@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   
 
   attr_accessible :email, :password, :password_confirmation,:status,:perishable_token,:confirmed,:first_name,:last_name,:is_tenant
-  attr_accessible :tenant_id,:role_id,:entity_id
+  attr_accessible :tenant_id,:role_id,:entity_id,:is_sys
 
 
   acts_as_authentic do |c|

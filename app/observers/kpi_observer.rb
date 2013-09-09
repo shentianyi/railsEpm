@@ -14,7 +14,6 @@ class KpiObserver<ActiveRecord::Observer
     else
       kpi.formula=kpi.formula_string=nil
     end
-    
   end
 
   def after_create kpi
