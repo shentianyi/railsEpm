@@ -1,6 +1,6 @@
 #encoding:utf-8
 class Admin::KpiTemplate < ActiveRecord::Base
-  belongs_to :admin_kpi_category_template,:class_name=>'Admin::KpiCategoryTemplate'
+  belongs_to :admin_kpi_category_template,:foreign_key=>'admin_kpi_category_template_id',:class_name=>'Admin::KpiCategoryTemplate'
   attr_accessible :description, :direction, :formula, :formula_string, :frequency, :is_calculated, :name, :period, :target, :unit
   attr_accessible :admin_kpi_category_template_id
   def self.csv_headers

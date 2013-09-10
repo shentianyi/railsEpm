@@ -1,28 +1,31 @@
 <h1>Listing admin_kpi_category_templates</h1>
 
 <table>
-  <tr>
-    <th>名称</th>
-    <th>描述</th>
-    <th>KPI数量</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+     <tr>
+          <th>&nbsp;</th>
+          <th>名称</th>
+          <th>描述</th>
+          <th>KPI数量</th>
+          <th></th>
+          <th></th>
+          <th></th>
+     </tr>
 
-<% @admin_kpi_category_templates.each do |admin_kpi_category_template| %>
-  <tr>
-    <td><%= admin_kpi_category_template.name %></td>
-    <td><%= admin_kpi_category_template.description %></td>
-    <td><%= admin_kpi_category_template.kpi_quantity %></td>
-    <td><%= link_to '查看', admin_kpi_category_template %></td>
-    <td><%= link_to '编辑', edit_admin_kpi_category_template_path(admin_kpi_category_template) %></td>
-    <td><%= link_to '删除', admin_kpi_category_template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+     <% @admin_kpi_category_templates.each_with_index do |admin_kpi_category_template,i| %>
+     <tr>
+          <td><%= i+1%></td>
+          <td>
+              <a href="<%=categoried_admin_kpi_templates_path%>/<%=admin_kpi_category_template.id%>"> <%= admin_kpi_category_template.name %></td>
+          <td><%= admin_kpi_category_template.description %></td>
+          <td><%= admin_kpi_category_template.kpi_quantity %></td>
+          <td><%= link_to '查看', admin_kpi_category_template %></td>
+          <td><%= link_to '编辑', edit_admin_kpi_category_template_path(admin_kpi_category_template) %></td>
+          <td><%= link_to '删除', admin_kpi_category_template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+     </tr>
+     <% end %>
 </table>
 
 <br />
-
+<%= will_paginate @admin_kpi_category_templates,{:previous_label=>'<',:next_label=>'>'}%>
 <%= link_to '新建', new_admin_kpi_category_template_path %>
 <%= link_to '上传/更新', import_admin_kpi_category_templates_path %>

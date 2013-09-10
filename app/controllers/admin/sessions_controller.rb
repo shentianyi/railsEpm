@@ -1,6 +1,6 @@
 #encoding: utf-8
 class Admin::SessionsController < Admin::ApplicationController
-  skip_before_filter  :require_admin
+  before_filter  :require_admin,:only=>[:index]
   skip_before_filter :set_model
 
   layout "admin_login"

@@ -26,6 +26,7 @@ IFEpm::Application.routes.draw do
       put :update
       post :assign
       get :get_by_category
+      post :import
     end
     member do
       get :assign
@@ -96,7 +97,11 @@ IFEpm::Application.routes.draw do
 
   namespace :admin do
   resources :sessions
-  #  #resources :kpi_category_templates
+    resources :kpi_templates do
+      collection do
+        get :categoried
+      end
+    end
     [:kpi_templates,:kpi_category_templates].each do |model|
       resources model do
         collection do

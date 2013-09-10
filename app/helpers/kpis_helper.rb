@@ -6,7 +6,7 @@ module KpisHelper
   end
   
   def self.parse_formula_string_items formula
-     formula.scan(/\[\w+\]/).map{|item| /\w+/.match(item).to_s}
+     formula.scan(/\[(.*?)\]/).map{|item| item[0]}
   end
 
   # assign kpi to user by id
