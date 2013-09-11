@@ -7,3 +7,81 @@
     color:#5FA9DA;
     padding:32px 0 10px;
 }
+/********************************************************************************************************* 右边的内容部分
+*******************************************************************************************************************/
+.manage-btn-group>a.kpi-library-btn{
+    position:absolute;
+    left:135px;
+    top:0px;
+    width:120px;
+}
+.manage-btn-group>a.kpi-library-btn i{
+    left:-3px;
+}
+
+/***************************************************** 右边的list
+*********************************************************/
+.manage-sort-list li>table.category tr td{
+    display:inline-block;
+    width:12%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    cursor:default;
+}
+.manage-sort-list li>table.category tr:first-of-type{
+    font-size:21px;
+    color:rgba(0,0,0,0.5);
+}
+.manage-sort-list li>table.category tr:first-of-type td{
+    padding:10px 0 0px;
+}
+/*first column*/
+.manage-sort-list li>table.category tr:first-of-type td:first-of-type{
+    color:#5FA9DA;
+    width:35%;
+    padding-right:10px;
+}
+.manage-sort-list li>table.category tr:nth-of-type(2) td:first-of-type{
+    width:35%;
+    padding-right:10px;
+}
+/*third column*/
+.manage-sort-list li>table.category tr:first-of-type td:nth-of-type(3){
+    width:10%;
+}
+.manage-sort-list li>table.category tr:nth-of-type(2) td:nth-of-type(3){
+    width:10%;
+}
+/*forth column*/
+.manage-sort-list li>table.category tr:first-of-type td:nth-of-type(4){
+    width:15%;
+    color:#55c8b4;
+    padding-right:15px;
+}
+.manage-sort-list li>table.category tr:nth-of-type(2) td:nth-of-type(4){
+    width:15%;
+    padding-right:15px;
+}
+/*last column*/
+.manage-sort-list li>table.category tr td:last-of-type{
+    width:18%;
+
+}
+.manage-sort-list li>table.category tr:nth-of-type(2) td:last-of-type{
+    width:18%
+}
+
+.manage-sort-list li>table.category tr:nth-of-type(2){
+    color:rgba(0,0,0,0.3);
+    font-size:13px;
+}
+
+.manage-kpi-target input{
+    position:absolute;
+    z-index:10;
+    left:59%;
+    width:15%;
+    top:3px;
+    display:none;
+}

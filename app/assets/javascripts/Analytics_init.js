@@ -27,7 +27,9 @@ function init_analytics() {
     $(".chosen-select").chosen({
         disable_search_threshold: 7
     });
-
+    $("input[type='radio']").iCheck({
+        radioClass: 'iradio_minimal-aero'
+    });
     var date_picker_option = {
         target: "#analy-begin-time,#analy-end-time",
         interval_source: "#chart-kpi",
