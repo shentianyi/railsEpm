@@ -2,7 +2,6 @@
 class KpisController < ApplicationController
   before_filter :get_ability_category,:only=>[:index,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
   before_filter :get_kpis_by_category,:only=>[:get_by_category,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
-  
   def index
     @active_category_id=params[:p].nil? ? @categories[0].id : params[:p].to_i
     @kpis=get_kpis_by_category @active_category_id
@@ -22,9 +21,9 @@ class KpisController < ApplicationController
     msg.result=true
     msg.object=@kpi.id
     else
-       puts @kpi.errors.messages.to_json
-     @kpi.errors.messages[:result]="添加失败"
-     msg.content=@kpi.errors.messages.values.join('; ')
+      puts @kpi.errors.messages.to_json
+      @kpi.errors.messages[:result]="添加失败"
+      msg.content=@kpi.errors.messages.values.join('; ')
     end
     render :json=>msg
   end
@@ -69,7 +68,7 @@ class KpisController < ApplicationController
     end
   end
 
-  def get_by_category 
+  def get_by_category
     render :json=>@kpis
   end
 
@@ -77,4 +76,27 @@ class KpisController < ApplicationController
     @user_kpis=KpisHelper.get_kpis_by_user_id params[:user],current_ability
   end
 
+  def import
+    msg=Message.new
+    ActiveRecord::Base.transaction do
+      if template_category= Admin::KpiCategoryTemplate.find_by_id(params[:category])
+        count=KpiCategory.accessible_by(current_ability).count(:name=>template_category.name)
+        name = count==0 ? template_category.name : "#{template_category.name}_#{count+1}"
+        category=KpiCategory.create(:name=>name,:description=>template_category.description)
+        check={}
+        params[:kpis].each do |kpi_id|
+          t= Admin::KpiTemplate.find_by_id(kpi_id)
+
+          if t.is_calculated
+
+            else
+            kpi=Kpi.create(:name=>t.name,:description=>t.description,:frequency=>t.frequency,:direction=>t.direction,:target=>t.target,:unit=>t.unit,:is_calculated=>t.is_calculated,:kpi_category_id=>catetory.id)
+          check[kpi_id]=kpi.id
+          end
+
+        end
+      end
+    end
+    render :json=>msg
+  end
 end

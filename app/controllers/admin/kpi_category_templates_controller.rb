@@ -1,8 +1,9 @@
+#encoding: utf-8
 class Admin::KpiCategoryTemplatesController < Admin::ApplicationController
   # GET /admin/kpi_category_templates
   # GET /admin/kpi_category_templates.json
   def index
-    @admin_kpi_category_templates = Admin::KpiCategoryTemplate.all
+    @admin_kpi_category_templates = Admin::KpiCategoryTemplate.paginate(:page=>params[:page],:per_page=>20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -79,5 +80,15 @@ class Admin::KpiCategoryTemplatesController < Admin::ApplicationController
       format.html { redirect_to admin_kpi_category_templates_url }
       format.json { head :no_content }
     end
+  end 
+  
+  def updata 
+      super {|data,query,row,row_line|
+        raise(ArgumentError,"行:#{row_line}, Name 不能为空值") if row["Name"].nil?
+        data["name"]=row["Name"]
+        data["description"]=row["Description"]
+        query["name"]=row["Name"]   if query
+      } 
   end
+  
 end

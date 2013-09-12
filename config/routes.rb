@@ -26,6 +26,7 @@ IFEpm::Application.routes.draw do
       put :update
       post :assign
       get :get_by_category
+      post :import
     end
     member do
       get :assign
@@ -89,14 +90,26 @@ IFEpm::Application.routes.draw do
   resources :dashboards
 
   mount Resque::Server.new, :at=>"/admin/resque"
- 
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
   match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
-  
+
   namespace :admin do
-    resources :kpi_templates
-    resources :kpi_category_templates
+  resources :sessions
+    resources :kpi_templates do
+      collection do
+        get :categoried
+      end
+    end
+    [:kpi_templates,:kpi_category_templates].each do |model|
+      resources model do
+        collection do
+          post :updata
+          get :import
+        end
+      end
+    end
   end
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.

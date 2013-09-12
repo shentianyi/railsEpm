@@ -26,11 +26,10 @@ i{
 input[type="text"],input[type="password"]{
     width:230px;
     padding:8px 5px;
-    font-size:14px;
     color:#555;
-    font-weight:lighter;
     border-radius:4px;
     border:1px solid #ddd;
+    font-size:14px;
 }
 input[type="date"]{
     width:120px;
@@ -41,6 +40,13 @@ input[type="date"]{
     border-radius:4px;
     border:1px solid #c8c8c8;
     margin:0;
+}
+textarea{
+    color:#555;
+    border-radius:4px;
+    border:1px solid #ddd;
+    padding:8px 5px;
+    font-size:14px;
 }
 /*************************************************************  basic detail
 *********************************************************************************************************/
@@ -118,20 +124,28 @@ label,p,h1,h2,h3,h4,h5{
 .btn{
     display:block;
     text-align:center;
-    background:#ddd;
-    transition: background-color 0.25s ease 0s;
+    background:#EEEEEE;
+    transition: background-color 0.25s ease 0s,color 0.25s ease 0s;
     -moz-transition: background-color 0.25s ease 0s;
     -webkit-transition: background-color 0.25s ease 0s;
     cursor:pointer;
-    padding:8px 0;
+    padding:8px 8px;
     margin:0 20px;
-    text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
+    /*text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);*/
     border:none;
     border-radius:2px;
     vertical-align:middle;
+    color:rgba(0, 0, 0, 0.5);
+    font-weight:lighter;
 }
 .btn:hover{
-
+    background:rgba(238,238,238,0.7);
+    color:rgba(0,0,0,0.4)
+}
+.btn i{
+    position:relative;
+    top:0px;
+    left:-2px
 }
 /************************************** button color
 ********************************************************/
@@ -150,11 +164,11 @@ label,p,h1,h2,h3,h4,h5{
     background:#69aef5
 }
 .btn.btn-success{
-    background:#41eb79;
+    background:#2fcc76;
     color:white;
 }
 .btn.btn-success:hover{
-    background:#69f59e
+    background:#3bdf81
 }
 .btn.btn-warning{
     background:#eb9541;

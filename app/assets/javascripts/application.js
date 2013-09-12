@@ -11,7 +11,6 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //=require jquery-1.8.2.min
-//=require jquery-ui-1.10.3.custom.min
 //= require jquery_ujs
 //=require bootstrap.min
 //=require highcharts
@@ -33,3 +32,5 @@
 //=require date_picker_template
 //=require high_chart_template
 //=require Analytics_init
+//= require jquery.file.upload/jquery.fileupload
+//=require brilliantech.ifemp.file.upload

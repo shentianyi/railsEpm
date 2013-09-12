@@ -1,11 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////init select
-var config = {
-    '.chosen-select': {},
-    '.chosen-select-deselect': {allow_single_deselect: true},
-    '.chosen-select-no-single': {disable_search_threshold: 10},
-    '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
-    '.chosen-select-width': {width: "95%"}
-}
+
 //where to record series
 var chartSeries = {
     count: 0,
@@ -24,10 +18,9 @@ var chartSeries = {
     }
 }
 function init_analytics() {
-    $(".chosen-select").chosen({
-        disable_search_threshold: 7
+    $("input[type='radio']").iCheck({
+        radioClass: 'iradio_minimal-aero'
     });
-
     var date_picker_option = {
         target: "#analy-begin-time,#analy-end-time",
         interval_source: "#chart-kpi",
@@ -46,7 +39,6 @@ function init_analytics() {
             $(this).next().text("quarter " + quarter);
         }
     });
-    $("article").addClass("hidden-y");
     resize_chart.body();
     resize_chart.container();
     $("#chart-group").prepend($("<option />").attr("value", ""));
@@ -382,14 +374,18 @@ function change_interval(option) {
             option.start="sadsa"
             console.log(option)
             show_loading(top,0,0,0);
-            $.post('/kpi_entries/analyse',{
+            $.ajax({url:'/kpi_entries/analyse',
+            data:{
                 kpi : series_object.kpi_id,
                 average:series_object.method=="0",
                 entity_group: series_object.view,
                 startTime : HIGH_CHART.postPrepare(series_object.begin_time,option.interval) ,
                 endTime : HIGH_CHART.postPrepare(series_object.end_time,option.interval),
                 interval: option.interval
-            },function(msg){
+            },
+            type:'POST',
+            async:false,
+            success:function(msg){
                 remove_loading();
                 if(msg.result){
                      var length=msg.object.current.length;
@@ -405,24 +401,8 @@ function change_interval(option) {
                 }
                 else{
                     MessageBox("sorry , something wrong" , "top", "warning");
-                }
-            });
-//            new_data_wrapper.push([
-//                {y: 1, target: 17, unit: "$"},
-//                {y: 13, target: 17, unit: "$"},
-//                {y: 22, target: 17, unit: "$"},
-//                {y: 4, target: 17, unit: "$"},
-//                {y: 12, target: 17, unit: "$"},
-//                {y: 7, target: 17, unit: "$"}
-//            ]);
-//            series_object[option.interval] = [
-//                {y: 1, target: 17, unit: "$"},
-//                {y: 13, target: 17, unit: "$"},
-//                {y: 22, target: 17, unit: "$"},
-//                {y: 4, target: 17, unit: "$"},
-//                {y: 12, target: 17, unit: "$"},
-//                {y: 7, target: 17, unit: "$"}
-//            ];
+                } 
+            }});  
         }
     }
     if (new_data_wrapper.length == chartSeries.getCount()) {

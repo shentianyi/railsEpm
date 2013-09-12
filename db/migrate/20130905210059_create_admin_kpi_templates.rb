@@ -6,7 +6,7 @@ class CreateAdminKpiTemplates < ActiveRecord::Migration
       t.integer :unit
       t.integer :frequency
       t.float :target
-      t.boolean :is_calculated
+      t.boolean :is_calculated,:default=>false
       t.integer :direction
       t.integer :period
       t.string :formula

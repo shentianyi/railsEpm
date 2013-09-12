@@ -5,6 +5,8 @@
     <link href="stylesheets/wayne_sunny.css" rel="stylesheet">
     <link href="stylesheets/_epm_base.css" rel="stylesheet">
     <link href="stylesheets/font-awesome.min.css" rel="stylesheet">
+    <link href="stylesheets/chosen.css" rel="stylesheet">
+    <link href="stylesheets/aero.css" rel="stylesheet">
     <link href="stylesheets/Manage.css" rel="stylesheet">
     <link href="stylesheets/Manage-kpi.css" rel="stylesheet">
     <title>if kpi</title>
@@ -71,10 +73,10 @@
 
 
 
-    <ul class="manage-left-menu" id="manage-left-menu">
+    <ul class="manage-left-menu" id="manage-left-menu" type="category">
        <li>Manage KPI</li>
-       <li type="category" id="manage-menu-add">
-           <input type="text" placeholder="new category"/>
+       <li id="manage-menu-add">
+           <input type="text" />
            <span><i class="icon-plus"></i> Category</span>
            <p class="manage-add-tooltip">Enter: confirm <br />Esc: cancel</p>
        </li>
@@ -97,6 +99,168 @@
 
 
 
+    <div class="manage-kpi-add" id="manage-kpi-add">
+       <i class="icon-remove" id="close-add-kpi"></i>
+       <div>
+           <input type="text" placeholder="* Name" id="new-kpi-name"/>
+           <textarea placeholder="   Description" id="new-kpi-desc"></textarea>
+           <div class="select-div">
+               <select class="chosen-select" data-placeholder="* Frequency" id="add-interval">
+                   <option value=""> </option>
+                   <option>Hour</option>
+                   <option>Day</option>
+                   <option>Week</option>
+                   <option>Month</option>
+                   <option>Quarter</option>
+                   <option>Year</option>
+               </select>
+           </div>
+
+           <input type="text" placeholder="* Target" id="new-kpi-target"/>
+
+           <div class="select-div">
+               <select class="chosen-select" data-placeholder="* Unit" id="add-unit">
+                   <option value=""> </option>
+                   <option>Meter</option>
+                   <option>Dollar</option>
+                   <option>Kilogram</option>
+               </select>
+           </div>
+
+           <div class="select-div">
+               <select class="chosen-select"  data-placeholder="&nbsp;&nbsp;&nbsp;Trend" id="add-trend">
+                   <option value=""> </option>
+                   <option>Up</option>
+                   <option>None</option>
+                   <option>Down</option>
+               </select>
+           </div>
+
+           <input type="checkbox" id="is-calcu-check"/>
+           <label>Calculate Type</label>
+
+           <div class="calculate-type-box" id="calculate-type-box">
+               <div class="select-div">
+                   <select class="chosen-select"  data-placeholder="KPI You Have" id="is-calcu-relate">
+                       <option value="1" id="k1">KPI1</option>
+                       <option value="2" id="k2">KPI2</option>
+                   </select>
+               </div>
+               <label sign="+">+</label>
+               <label sign="-">-</label>
+               <label sign="*">x</label>
+               <label sign="/">/</label>
+               <label sign="(">(</label>
+               <label sign=")">)</label>
+               <input type="text" placeholder="* KPI Equation" id="calcuType-input"/>
+               <div style="display:none" id="takeCal" cal></div>
+           </div>
+
+
+           <a class="btn btn-primary">Add</a>
+       </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="manage-right-content" id="manage-right-content">
+
+        <div class="manage-btn-group" id="manage-btn-group">
+            <a class="btn btn-primary" id="kpi-add-show"><i class="icon-plus"></i> KPI</a>
+            <a class="btn btn-primary kpi-library-btn"><i class="icon-th-list"></i> KPI Library</a>
+            <p id="manage-edit-target" >Category1 </p>
+            <i class="icon-pencil"></i>
+            <input type="text"/>
+            <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
+        </div>
+
+
+        <div class="manage-right-list">
+            <div class="right-list-top-control" id="right-list-top-control">
+                <input type="checkbox" id="manage-total-check"/>
+                <a class="btn" id="manage-item-remove">Delete</a>
+                <a class="btn" id="manage-item-edit">Edit</a>
+            </div>
+
+
+            <ul id="manage-sort-list" class="manage-sort-list">
+                <li id="1">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="category">
+                        <tr>
+                            <td>KPI1</td>
+                            <td>Hour</td>
+                            <td>Up</td>
+                            <td class="manage-kpi-target"><span class="can-change">200</span><span>$</span><input type='text' effect_on="1"/></td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>all the description here</td>
+                            <td>Frequency</td>
+                            <td>Trend</td>
+                            <td>Target</td>
+                            <td>Is Calcu Type</td>
+                        </tr>
+                    </table>
+                </li>
+                <li id="2">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="category">
+                        <tr>
+                            <td>KPI2</td>
+                            <td>Year</td>
+                            <td>Down</td>
+                            <td class="manage-kpi-target"><span class="can-change">100.20</span><span>$</span><input type='text' effect_on="2"/></td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>all the description here</td>
+                            <td>Frequency</td>
+                            <td>Trend</td>
+                            <td>Target</td>
+                            <td>Is Calcu Type</td>
+                        </tr>
+                    </table>
+                </li>
+                <li id="3">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="category">
+                        <tr>
+                            <td>KPI3</td>
+                            <td>Quarter</td>
+                            <td>None</td>
+                            <td class="manage-kpi-target"><span class="can-change">20</span><span>$</span><input type='text' effect_on="2"/></td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>all the description here</td>
+                            <td>Frequency</td>
+                            <td>Trend</td>
+                            <td>Target</td>
+                            <td>Is Calcu Type</td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+
+
+
+
+
 
 
 
@@ -106,10 +270,22 @@
     <p></p>
 </div>
 <script src="javascripts/jquery-1.8.2.min.js"></script>
+<script src="javascripts/chosen.jquery.min.js"></script>
 <script src="javascripts/wayne-base.js"></script>
 <script src="javascripts/Template.js"></script>
 <script src="javascripts/brilliantech.base.js"></script>
+<script src="javascripts/jquery.ba-resize.min.js"></script>
+<script src="javascripts/jquery.icheck.min.js"></script>
+<script src="javascripts/jquery.sortable.min.js"></script>
 <script src="javascripts/Manage-left-menu.js"></script>
-<script src="javascripts/Mangae-kpi.js"></script>
+<script src="javascripts/Manage-right-list.js"></script>
+<script src="javascripts/Manage.js"></script>
+<script src="javascripts/Manage-kpi.js"></script>
+<<script>
+    $(document).ready(function(){
+        MANAGE_INIT();
+        MANAGE_KPI_INIT();
+    })
+</script>
 </body>
 </html>
