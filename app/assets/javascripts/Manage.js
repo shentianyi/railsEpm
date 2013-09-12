@@ -5,21 +5,22 @@
  * Time: 上午11:37
  * To change this template use File | Settings | File Templates.
  */
-function MANAGE_INIT(){
-    manage_left_add_init();
-    manage_left_delete_init();
-    manage_left_edit_init();
-    iCheck_init();
-    sort_init();
-    resize_sort_table();
+var MANAGE=MANAGE || {} ;
+MANAGE.init=function(){
+    MANAGE.left.manage_left_add_init();
+    MANAGE.left.manage_left_delete_init();
+    MANAGE.left.manage_left_edit_init();
+    MANAGE.iCheck_init();
+    MANAGE.sort_init();
+    MANAGE.resize_sort_table();
     $("#manage-sort-list li").on("resize",function(){
-        resize_sort_table()
+        MANAGE.resize_sort_table()
     });
     $("body").on("click","#manage-item-remove",manage_item_remove).on("click","#manage-item-edit",manage_item_edit);
 }
 
 
-function iCheck_init(){
+MANAGE.iCheck_init=function(){
     $("input[type='checkbox']").iCheck({
         checkboxClass: 'icheckbox_minimal-aero'
     });
@@ -49,7 +50,7 @@ function iCheck_init(){
     });
 }
 
-function sort_init(){
+MANAGE.sort_init=function(){
     $('#manage-sort-list').sortable({
         handle: '.sort-handle'
     });
@@ -75,7 +76,6 @@ function sort_init(){
 
 }
 
-
 function total_check_listener(){
     if(MANAGE.totalChecked >= 1){
         if(!$("#manage-total-check").parent().hasClass("checked")){
@@ -86,7 +86,7 @@ function total_check_listener(){
         $("#manage-total-check").iCheck("uncheck");
     }
 }
-function resize_sort_table(){
+MANAGE.resize_sort_table=function(){
     var table_size=$("#manage-sort-list li").width()-70;
     $("#manage-sort-list table").width(table_size)
 }

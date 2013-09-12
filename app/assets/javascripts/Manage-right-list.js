@@ -5,7 +5,7 @@
  * Time: 下午5:33
  * To change this template use File | Settings | File Templates.
  */
-MANAAGE=MANAGE || {};
+MANAGE=MANAGE || {};
 MANAGE.category=MANAGE.category || {};
 MANAGE.group=MANAGE.group || {};
 MANAGE.entity=MANAGE.entity || {};
@@ -167,6 +167,3 @@ MANAGE.category.item_drag=new category_item_drag();
 
 
 
-function manage_item_drag(){
-
-}

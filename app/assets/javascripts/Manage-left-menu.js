@@ -8,6 +8,7 @@ MANAGE.manage_menu_left_add=function(){};
 MANAGE.category=MANAGE.category || {};
 MANAGE.group=MANAGE.group || {};
 MANAGE.entity=MANAGE.entity || {};
+MANAGE.left={};
 MANAGE.type=$("#manage-left-menu").attr("type");
 
 
@@ -90,7 +91,7 @@ MANAGE.category.add=new category_add();
 MANAGE.group.add=new group_add();
 MANAGE.entity.add=new entity_add();
 
-function  manage_left_add_init(){
+MANAGE.left.manage_left_add_init=function(){
     $("#manage-menu-add").on("click",function(){
         MANAGE[MANAGE.type].add.add_show();
     });
@@ -154,7 +155,7 @@ MANAGE.category.delete=new category_delete();
 MANAGE.group.delete=new group_delete();
 MANAGE.entity.delete=new entity_delete();
 
-function  manage_left_delete_init(){
+MANAGE.left.manage_left_delete_init=function(){
     $("#manage-left-menu").on("click","i.icon-trash",function(event){
         if(confirm("Confirm to delete  ?")){
             var e = adapt_event(event).event;
@@ -243,7 +244,7 @@ MANAGE.category.edit=new category_edit();
 MANAGE.group.edit=new group_edit();
 MANAGE.entity.edit=new entity_edit();
 
-function  manage_left_edit_init(){
+MANAGE.left.manage_left_edit_init=function(){
     $("#manage-edit-target").on("click",function(){
         var name=$(this).text();
         MANAGE[MANAGE.type].edit.edit_show(name);

@@ -107,12 +107,12 @@
            <div class="select-div">
                <select class="chosen-select" data-placeholder="* Frequency" id="add-interval">
                    <option value=""> </option>
-                   <option>Hour</option>
-                   <option>Day</option>
-                   <option>Week</option>
-                   <option>Month</option>
-                   <option>Quarter</option>
-                   <option>Year</option>
+                   <option value="90">Hour</option>
+                   <option value="100">Day</option>
+                   <option value="200">Week</option>
+                   <option value="300">Month</option>
+                   <option value="400">Quarter</option>
+                   <option value="500">Year</option>
                </select>
            </div>
 
@@ -121,18 +121,18 @@
            <div class="select-div">
                <select class="chosen-select" data-placeholder="* Unit" id="add-unit">
                    <option value=""> </option>
-                   <option>Meter</option>
-                   <option>Dollar</option>
-                   <option>Kilogram</option>
+                   <option sym="M">Meter</option>
+                   <option sym="$">Dollar</option>
+                   <option sym="KM">Kilogram</option>
                </select>
            </div>
 
            <div class="select-div">
                <select class="chosen-select"  data-placeholder="&nbsp;&nbsp;&nbsp;Trend" id="add-trend">
                    <option value=""> </option>
-                   <option>Up</option>
-                   <option>None</option>
-                   <option>Down</option>
+                   <option value="200">Up</option>
+                   <option value="100">None</option>
+                   <option value="300">Down</option>
                </select>
            </div>
 
@@ -157,7 +157,7 @@
            </div>
 
 
-           <a class="btn btn-primary">Add</a>
+           <a class="btn btn-primary" id="manage-kpi-add-new">Add</a>
        </div>
     </div>
 
@@ -283,8 +283,8 @@
 <script src="javascripts/Manage-kpi.js"></script>
 <<script>
     $(document).ready(function(){
-        MANAGE_INIT();
-        MANAGE_KPI_INIT();
+        MANAGE.init();
+        MANAGE.kpi.init();
     })
 </script>
 </body>
