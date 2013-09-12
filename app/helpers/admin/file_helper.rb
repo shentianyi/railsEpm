@@ -1,5 +1,6 @@
 #encoding: utf-8
 require 'csv'
+require 'iconv' unless String.method_defined?(:encoding)
 class CSV
   class Row
     def strip
@@ -21,7 +22,8 @@ module Admin::FileHelper
         csv.saveFile
         hfile=File.join($UPDATAPATH,csv.pathName)
         row_line=0
-        CSV.foreach(hfile,:headers=>true,:col_sep=>$CSVSP) do |row|
+        encoding=SystemHelper.csv_read_encode( request.user_agent)
+        CSV.foreach(hfile,:headers=>true,:col_sep=>$CSVSP,:encoding=>encoding) do |row|
           row.strip
           row_line+=1
           m=model
@@ -55,7 +57,7 @@ module Admin::FileHelper
         msg.content='未选择文件或只能上传一个文件'
       end
     rescue Exception=>e
-      puts e.backtrace
+      puts e.message.to_json
     msg.content=e.message
     end
     render :json=>msg

@@ -1,7 +1,7 @@
 /********************************************************************************************************* 分类系列
 *******************************************************************************************************************/
 .manage-left-menu{
-    background-color:rgba(221, 221, 221, 0.13);
+    background-color:#FBFBFB;
     position:absolute;
     top:135px;
     left:0;
@@ -82,7 +82,7 @@
 
 }
 .manage-left-menu li:hover{
-    padding:11px 0 11px 47px;
+    padding:11px 0 11px 35px;
 }
 .manage-left-menu li:hover i.icon-item{
     display:block;
@@ -123,6 +123,7 @@
     right:0px;
     overflow-x:hidden;
     overflow-y:auto;
+    transition:left 0.35s ease-out;
 }
 /**************************************************** 上角的按钮
 *****************************************************************/
@@ -223,7 +224,7 @@
 .manage-sort-list{
     list-style:none;
     padding-left:33px;
-    margin-top:22px;
+    margin-top:15px;
 }
 .manage-sort-list li{
     display:inline-block;

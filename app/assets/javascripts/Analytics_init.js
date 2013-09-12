@@ -1,11 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////init select
-var config = {
-    '.chosen-select': {},
-    '.chosen-select-deselect': {allow_single_deselect: true},
-    '.chosen-select-no-single': {disable_search_threshold: 10},
-    '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
-    '.chosen-select-width': {width: "95%"}
-}
+
 //where to record series
 var chartSeries = {
     count: 0,
@@ -24,9 +18,6 @@ var chartSeries = {
     }
 }
 function init_analytics() {
-    $(".chosen-select").chosen({
-        disable_search_threshold: 7
-    });
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
     });
@@ -48,7 +39,6 @@ function init_analytics() {
             $(this).next().text("quarter " + quarter);
         }
     });
-    $("article").addClass("hidden-y");
     resize_chart.body();
     resize_chart.container();
     $("#chart-group").prepend($("<option />").attr("value", ""));

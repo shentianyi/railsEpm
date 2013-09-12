@@ -166,7 +166,7 @@ function  manage_left_delete_init(){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.manage_menu_left_edit.prototype={
     edit_show:function(name){
-        $("#manage-edit-target").css("display","none");
+        $("#manage-edit-target").blur().css("display","none");
         $("#manage-btn-group>input").val(name).css("display","inherit").focus();
     },
     edit_check:function(e){

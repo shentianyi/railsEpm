@@ -4,8 +4,7 @@ class Admin::KpiTemplatesController < Admin::ApplicationController
   # GET /admin/kpi_templates
   # GET /admin/kpi_templates.json
   def index
-    @admin_kpi_templates = Admin::KpiTemplate.all
-
+    @admin_kpi_templates = Admin::KpiTemplate.paginate(:page=>params[:page],:per_page=>20)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @admin_kpi_templates }
@@ -91,6 +90,8 @@ class Admin::KpiTemplatesController < Admin::ApplicationController
 
       if !row["IsCalculated"].nil? && row["IsCalculated"].to_i==1 && row["Formula"].nil?
         raise(ArgumentError,"行:#{row_line}, Formula 不能为空值");
+      else
+        data["formula_string"]=row["Formula"]
       end
       if kpi_category=Admin::KpiCategoryTemplate.find_by_name(row["KpiCategory"])
         data["admin_kpi_category_template_id"]=kpi_category.id
@@ -104,10 +105,24 @@ class Admin::KpiTemplatesController < Admin::ApplicationController
       data["direction"]=row["Direction"]
       data["target"]=row["Target"]
       data["unit"]=row["Unit"]
+      if query
+        query["name"]=data["name"]
+        query["admin_kpi_category_template_id"]= data["admin_kpi_category_template_id"]
+      end
     }
   end
-  
-  private 
+
+  def categoried
+    @admin_kpi_templates= if category=Admin::KpiCategoryTemplate.find(params[:id])
+          category.admin_kpi_templates.paginate(:page=>params[:page],:per_page=>20)
+        else
+          []
+    end
+    render 'index'
+  end
+
+  private
+
   def get_conditions
     @units=KpiUnit.all
     @frequencies=KpiFrequency.all

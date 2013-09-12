@@ -1,0 +1,23 @@
+<div class="page-navi login-pageNavi relative">
+
+      <a class="btn btn-wzx btn-primary" href='/subscriptions/new'>Sign up</a>
+</div>
+<% if @user_session && @user_session.errors.any? %>
+    <div id="error_explanation" class="error_explanation ">
+
+      <ul>
+        <% @user_session.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
+<%= form_for @user_session, :url=>admin_sessions_path, :html=>{:class=>'login-form'} do |f| %>
+    <%= f.label(:email, "Email:") %>
+    <%= f.text_field(:email) %>
+
+    <%= f.label(:password, "Password:") %>
+    <%= f.password_field(:password ) %>
+
+    <%= f.submit("submit",{:class=>"btn btn-wzx btn-success pull-right"}) %>
+<% end %>

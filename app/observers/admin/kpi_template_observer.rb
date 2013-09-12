@@ -1,5 +1,20 @@
 #encoding: utf-8
 class Admin::KpiTemplateObserver<ActiveRecord::Observer
+  def before_create kpi
+    if kpi.is_calculated
+      formula=kpi.formula_string.dup
+      KpisHelper.parse_formula_string_items(kpi.formula_string).each do |item|
+        if sub_kpi=Admin::KpiTemplate.where(:admin_kpi_category_template_id=>kpi.admin_kpi_category_template_id,:name=>item).first
+          formula.gsub!("#{item}",sub_kpi.id.to_s)
+        else
+        return false
+        end
+      end
+      kpi.formula=formula
+    else
+      kpi.formula=kpi.formula_string=nil
+    end
+  end
 
   def after_create kpi
     # incr kpi category count

@@ -3,7 +3,7 @@ class Admin::KpiCategoryTemplatesController < Admin::ApplicationController
   # GET /admin/kpi_category_templates
   # GET /admin/kpi_category_templates.json
   def index
-    @admin_kpi_category_templates = Admin::KpiCategoryTemplate.all
+    @admin_kpi_category_templates = Admin::KpiCategoryTemplate.paginate(:page=>params[:page],:per_page=>20)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -90,4 +90,5 @@ class Admin::KpiCategoryTemplatesController < Admin::ApplicationController
         query["name"]=row["Name"]   if query
       } 
   end
+  
 end

@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   def create
     params[:user][:role_id]=400
     @user=User.new(params[:user])
-    if @user.save
+    if  @user.save
       redirect_to users_path
     else
       get_ability_entity

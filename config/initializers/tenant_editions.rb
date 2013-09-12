@@ -19,6 +19,7 @@ $product_name = 'EPM'
 
 $open_signup = true
 
+$invalid_emails=['admin@ifscm.com']
 
 
 

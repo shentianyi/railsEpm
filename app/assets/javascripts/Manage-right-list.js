@@ -11,6 +11,7 @@ MANAGE.group=MANAGE.group || {};
 MANAGE.entity=MANAGE.entity || {};
 MANAGE.item_remove=function(){};
 MANAGE.item_edit=function(){};
+MANAGE.item_drag=function(){};
 MANAGE.totalChecked=0;
 
 
@@ -62,8 +63,12 @@ MANAGE.item_edit.prototype={
             text=$(this).parent().next().find("."+target+">.can-change").text();
             $(this).parent().next().find("input[type='text']").css("display","block").val(text);
         });
-    },
-    edit_complete:function(option){
+    }
+}
+function category_item_edit(){
+    this.edit_target="manage-kpi-target";
+    this.url='/kpis';
+    this.complete=function(option){
 //        $.ajax({
 //            url : this.url,
 //            type : 'PUT',
@@ -75,15 +80,13 @@ MANAGE.item_edit.prototype={
 //                }
 //            },
 //            success : function(data) {
-//                return true
+//                option.edit_input.prevAll(".can-change").text( option.target );
+//                option.edit_input.css("display","none");
 //            }
 //        });
-        return true
-    }
-}
-function category_item_edit(){
-    this.edit_target="manage-kpi-target";
-    this.url='/kpis';
+        option.edit_input.prevAll(".can-change").text( option.target );
+        option.edit_input.css("display","none");
+    },
     this.edit_check=function(object){
          clearNoNumZero(object);
     } ;
@@ -103,12 +106,10 @@ function manage_item_edit(){
             var option={
                 id:$(e.target).attr("effect_on"),
                 belong:$("#manage-left-menu li.active").find("a").text(),
-                target:$(e.target).val()
+                target:$(e.target).val(),
+                edit_input:$(e.target)
             }
-            if( MANAGE[MANAGE.type].item_edit.edit_complete(option) ){
-                $(e.target).prevAll(".can-change").text( option.target );
-                $(e.target).css("display","none");
-            }
+            MANAGE[MANAGE.type].item_edit.complete(option)
         }
         else if(e.keyCode==27){
             $(e.target).css("display","none");
@@ -119,4 +120,53 @@ function manage_item_edit(){
                 MANAGE[MANAGE.type].item_edit.edit_check(e.target);
             }
     });
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////   item drag
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+MANAGE.item_drag.prototype={
+    constructor:MANAGE.item_drag,
+    drag_complete:function(id){
+        if($("#manage-sort-list").find("#"+id).find("input[type='checkbox']").prop("checked")){
+            MANAGE.totalChecked-=1;
+            total_check_listener();
+        }
+        $("#manage-sort-list").find("#"+id).remove();
+        $("#manage-sort-list").find(".sortable-placeholder").remove();
+    }
+
+}
+function category_item_drag(){
+    this.url='/kpis';
+    this.drag_complete_post=function(id,belong){
+//        var option={
+//            id:id,
+//            belong:belong,
+//            target:$("#"+id).find(".can-change").text()
+//        }
+//        $.ajax({
+//            url : this.url,
+//            type : 'PUT',
+//            data : {
+//                kpi : {
+//                    id : option.id,
+//                    kpi_category_id : option.belong,
+//                    target : option.target
+//                }
+//            },
+//            success : function(data) {
+//                this.drag_complete(option.id);
+//            }
+//        });
+        this.drag_complete(id);
+    }
+}
+category_item_drag.prototype=MANAGE.item_drag.prototype;
+category_item_drag.prototype.constructor=category_item_drag;
+
+MANAGE.category.item_drag=new category_item_drag();
+
+
+
+function manage_item_drag(){
+
 }
