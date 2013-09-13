@@ -31,5 +31,6 @@
 //=require date_picker_template
 //=require high_chart_template
 //=require Analytics_init
+//=require jquery-ui-1.10.3.custom.min
 //=require jquery.file.upload/jquery.fileupload
 //=require brilliantech.ifemp.file.upload

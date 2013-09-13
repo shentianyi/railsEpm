@@ -82,21 +82,42 @@ class KpisController < ApplicationController
       if template_category= Admin::KpiCategoryTemplate.find_by_id(params[:category])
         count=KpiCategory.accessible_by(current_ability).count(:name=>template_category.name)
         name = count==0 ? template_category.name : "#{template_category.name}_#{count+1}"
-        category=KpiCategory.create(:name=>name,:description=>template_category.description)
+        category=KpiCategory.new(:name=>name,:description=>template_category.description)
+        catetory.tenant=current_tenant
+        msg.result=true
+        msg.object=category.id
+        msg.content=category.name
         check={}
         params[:kpis].each do |kpi_id|
           t= Admin::KpiTemplate.find_by_id(kpi_id)
-
+          formula=t.formula
           if t.is_calculated
-
-            else
-            kpi=Kpi.create(:name=>t.name,:description=>t.description,:frequency=>t.frequency,:direction=>t.direction,:target=>t.target,:unit=>t.unit,:is_calculated=>t.is_calculated,:kpi_category_id=>catetory.id)
-          check[kpi_id]=kpi.id
+            KpisHelper.parse_formula_items(t.formula).each do |item|
+              unless check[item]
+                tt=Admin::KpiTemplate.find_by_id(item)
+                kpi=generate_kpi_by_template tt,category,nil
+              check[kpi_id]=kpi.id
+              end
+              formula.gsub!(Regexp.new("\\[#{item}\\]"),"[#{check[item]}]")
+            end
+            kpi= generate_kpi_by_template t,category,nil
+            check[kpi_id]=kpi.id
           end
-
         end
       end
     end
     render :json=>msg
+  end
+
+  private
+
+  def generate_kpi_by_template t,category,formula
+    kpi=Kpi.new(:name=>t.name,:description=>t.description,:frequency=>t.frequency,
+    :direction=>t.direction,:target=>t.target,:unit=>t.unit,
+    :is_calculated=>t.is_calculated,:formula_string=>t.formula_string,:formula=>formula,
+    :kpi_category_id=>catetory.id)
+    kpi.creator=current_user
+    category.kpis<<kpi
+    return kpi
   end
 end
