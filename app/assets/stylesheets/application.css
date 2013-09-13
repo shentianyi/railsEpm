@@ -16,7 +16,7 @@
 *= require datetimepicker
 *= require wayne_sunny
 *= require _epm_base
-*= require Analytic-chosen
+*= require chosen
 *= require Analytic-main
 *= require_self
  */

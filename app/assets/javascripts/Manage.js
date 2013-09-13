@@ -21,6 +21,9 @@ MANAGE.init=function(){
 
 
 MANAGE.iCheck_init=function(){
+    $("body").on("iCheck","input[type='checkbox']",function(){
+        checkboxClass: 'icheckbox_minimal-aero'
+    })
     $("input[type='checkbox']").iCheck({
         checkboxClass: 'icheckbox_minimal-aero'
     });

@@ -179,13 +179,13 @@ function post_kpi(option){
     var formula_string= option.is_calculated ? option.formula_string : "No";
     $("#manage-sort-list").prepend($("<li />").attr("id",id)
         .append($("<p />").addClass("sort-handle").text(":"))
-        .append($("<input type='checkbox'/>"))
+        .append($("<input/>").attr("type","checkbox"))
         .append($("<table />").addClass("category")
             .append($("<tr />")
                 .append($("<td />").text(option.name).attr("title",option.name))
                 .append($("<td />").text(option.interval))
                 .append($("<td />").text(option.trend))
-                .append($("<td />").addClass("manage-kpi-target").append($("<span />").addClass("can-change").text(option.target).attr("title",option.target)).append($("<span />").text(option.section)).append($("<input type='text'/>").attr("effect_on",id)))
+                .append($("<td />").addClass("manage-kpi-target").append($("<span />").addClass("can-change").text(option.target).attr("title",option.target)).append($("<span />").text(option.section)).append($("<input />").attr("type","text").attr("effect_on",id)))
                 .append($("<td />").text(formula_string).attr("title",formula_string))
             )
             .append($("<tr />")
@@ -197,5 +197,7 @@ function post_kpi(option){
             )
         )
     );
-
+    MANAGE.iCheck_init();
+    MANAGE.sort_init();
+    MANAGE.resize_sort_table();
 }
