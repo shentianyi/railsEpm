@@ -121,6 +121,7 @@ class Admin::KpiTemplatesController < Admin::ApplicationController
     render 'index'
   end
 
+  
   private
 
   def get_conditions

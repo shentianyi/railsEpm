@@ -79,7 +79,7 @@ class KpisController < ApplicationController
   def import
     msg=Message.new
     ActiveRecord::Base.transaction do
-      if template_category= Admin::KpiCategoryTemplate.find_by_id(params[:category])
+      if template_category= Admin::KpiCategoryTemplate.find_by_iee(params[:category])
         count=KpiCategory.accessible_by(current_ability).count(:name=>template_category.name)
         name = count==0 ? template_category.name : "#{template_category.name}_#{count+1}"
         category=KpiCategory.create(:name=>name,:description=>template_category.description)
@@ -100,3 +100,4 @@ class KpisController < ApplicationController
     render :json=>msg
   end
 end
+E 

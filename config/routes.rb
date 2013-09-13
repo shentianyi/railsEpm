@@ -96,13 +96,9 @@ IFEpm::Application.routes.draw do
   match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
 
   namespace :admin do
-  resources :sessions
-    resources :kpi_templates do
-      collection do
-        get :categoried
-      end
-    end
-    [:kpi_templates,:kpi_category_templates].each do |model|
+    resources :sessions
+
+    [:kpi_templates, :kpi_category_templates].each do |model|
       resources model do
         collection do
           post :updata
@@ -110,6 +106,12 @@ IFEpm::Application.routes.draw do
         end
       end
     end
+    resources :kpi_templates do
+      collection do
+        get :categoried
+      end
+    end
+
   end
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.

@@ -1,0 +1,2 @@
+Admin::KpiCategoryTemplate.destroy_all
+Admin::KpiTemplate.destroy_all
