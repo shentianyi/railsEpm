@@ -14,6 +14,10 @@ MANAGE.kpi.init=function(){
         $("#manage-kpi-add").css("left","150px");
         $("#manage-right-content").css("left","350px");
     });
+    $("#kpi-library-btn").on("click",function(){
+        $("#kpi-library").css("display","block");
+        $("#kpi-library>div").slideDown("3000")
+    });
 }
 MANAGE.kpi.kpi_for_calculate=[];
 
@@ -130,78 +134,76 @@ MANAGE.kpi.add_new_kpi=function(){
     }
 };
 function post_kpi(option){
-    $.post('../kpis', {
-        kpi:
-            {
-                kpi_category_id : option.entity,
-                name:option.name,
-                description:option.desc,
-                frequency:option.frequency,
-                direction:option.direction,
-                target:option.target,
-                unit:option.unit,
-                is_calculated:option.is_calculated,
-                formula:option.formula,
-                formula_string:option.formula_string
-            }
-        }, function(data) {
-        if(data.result){
-            var id=data.object;
-            var formula_string= option.is_calculated ? option.formula_string : "No";
-            $("#manage-sort-list").prepend($("<li />").attr("id",id)
-                .append($("<p />").addClass("sort-handle").text(":"))
-                .append($("<input type='checkbox'/>"))
-                .append($("<table />").addClass("category")
-                    .append($("<tr />")
-                        .append($("<td />").text(option.name).attr("title",option.name))
-                        .append($("<td />").text(option.interval))
-                        .append($("<td />").text(option.trend))
-                        .append($("<td />").addClass("manage-kpi-target").append($("<span />").addClass("can-change").text(option.target).attr("title",option.target)).append($("<span />").text(option.section)).append($("<input type='text'/>").attr("effect_on",id)))
-                        .append($("<td />").text(formula_string).attr("title",formula_string))
-                    )
-                    .append($("<tr />")
-                        .append($("<td />").text(option.desc).attr("title",option.desc))
-                        .append($("<td />").text("Frequency"))
-                        .append($("<td />").text("Trend"))
-                        .append($("<td />").text("Target"))
-                        .append($("<td />").text("Is Calcu Type"))
-                    )
-                )
-            );
-            window.location.href = "../kpis";
-        }
-        else{
-            MessageBox(data.content,"top","warning");
-        }
-    });
+//    $.post('../kpis', {
+//        kpi:
+//            {
+//                kpi_category_id : option.entity,
+//                name:option.name,
+//                description:option.desc,
+//                frequency:option.frequency,
+//                direction:option.direction,
+//                target:option.target,
+//                unit:option.unit,
+//                is_calculated:option.is_calculated,
+//                formula:option.formula,
+//                formula_string:option.formula_string
+//            }
+//        }, function(data) {
+//        if(data.result){
+//            var id=data.object;
+//            var formula_string= option.is_calculated ? option.formula_string : "No";
+//            $("#manage-sort-list").prepend($("<li />").attr("id",id)
+//                .append($("<p />").addClass("sort-handle").text(":"))
+//                .append($("<input type='checkbox'/>"))
+//                .append($("<table />").addClass("category")
+//                    .append($("<tr />")
+//                        .append($("<td />").text(option.name).attr("title",option.name))
+//                        .append($("<td />").text(option.interval))
+//                        .append($("<td />").text(option.trend))
+//                        .append($("<td />").addClass("manage-kpi-target").append($("<span />").addClass("can-change").text(option.target).attr("title",option.target)).append($("<span />").text(option.section)).append($("<input type='text'/>").attr("effect_on",id)))
+//                        .append($("<td />").text(formula_string).attr("title",formula_string))
+//                    )
+//                    .append($("<tr />")
+//                        .append($("<td />").text(option.desc).attr("title",option.desc))
+//                        .append($("<td />").text("Frequency"))
+//                        .append($("<td />").text("Trend"))
+//                        .append($("<td />").text("Target"))
+//                        .append($("<td />").text("Is Calcu Type"))
+//                    )
+//                )
+//            );
+//            MANAGE.iCheck_init();
+//            MANAGE.sort_init();
+//            MANAGE.resize_sort_table();
+//        }
+//        else{
+//            MessageBox(data.content,"top","warning");
+//        }
+//    });
 
-//    var id="21";
-//    var formula_string= option.is_calculated ? option.formula_string : "No";
-//    $("#manage-sort-list").prepend($("<li />").attr("id",id)
-//        .append($("<p />").addClass("sort-handle").text(":"))
-//        .append($("<input/>").attr("type","checkbox"))
-//        .append($("<table />").addClass("category")
-//            .append($("<tr />")
-//                .append($("<td />").text(option.name).attr("title",option.name))
-//                .append($("<td />").text(option.interval))
-//                .append($("<td />").text(option.trend))
-//                .append($("<td />").addClass("manage-kpi-target").append($("<span />").addClass("can-change").text(option.target).attr("title",option.target)).append($("<span />").text(option.section)).append($("<input />").attr("type","text").attr("effect_on",id)))
-//                .append($("<td />").text(formula_string).attr("title",formula_string))
-//            )
-//            .append($("<tr />")
-//                .append($("<td />").text(option.desc).attr("title",option.desc))
-//                .append($("<td />").text("Frequency"))
-//                .append($("<td />").text("Trend"))
-//                .append($("<td />").text("Target"))
-//                .append($("<td />").text("Is Calcu Type"))
-//            )
-//        )
-//    );
-
+    var id="21";
+    var formula_string= option.is_calculated ? option.formula_string : "No";
+    $("#manage-sort-list").prepend($("<li />").attr("id",id)
+        .append($("<p />").addClass("sort-handle").text(":"))
+        .append($("<input/>").attr("type","checkbox"))
+        .append($("<table />").addClass("category")
+            .append($("<tr />")
+                .append($("<td />").text(option.name).attr("title",option.name))
+                .append($("<td />").text(option.interval))
+                .append($("<td />").text(option.trend))
+                .append($("<td />").addClass("manage-kpi-target").append($("<span />").addClass("can-change").text(option.target).attr("title",option.target)).append($("<span />").text(option.section)).append($("<input />").attr("type","text").attr("effect_on",id)))
+                .append($("<td />").text(formula_string).attr("title",formula_string))
+            )
+            .append($("<tr />")
+                .append($("<td />").text(option.desc).attr("title",option.desc))
+                .append($("<td />").text("Frequency"))
+                .append($("<td />").text("Trend"))
+                .append($("<td />").text("Target"))
+                .append($("<td />").text("Is Calcu Type"))
+            )
+        )
+    );
     MANAGE.iCheck_init();
     MANAGE.sort_init();
     MANAGE.resize_sort_table();
-    $("#manage-sort-list li").on("resize",function(){
-        MANAGE.resize_sort_table()
-    });
 }

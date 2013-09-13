@@ -12,7 +12,6 @@
 //
 //=require jquery-1.8.2.min
 //= require jquery_ujs
-//=require bootstrap.min
 //=require highcharts
 //=require exporting
 //=require exporting.extend.src.js

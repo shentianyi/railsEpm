@@ -21,13 +21,16 @@
 
 /***************************************************** 右边的list
 *********************************************************/
+.manage-sort-list li>table.category{
+    table-layout:fixed
+}
 .manage-sort-list li>table.category tr td{
-    display:inline-block;
     width:12%;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
     cursor:default;
+
 }
 .manage-sort-list li>table.category tr:first-of-type{
     font-size:21px;
@@ -42,15 +45,8 @@
     width:35%;
     padding-right:10px;
 }
-.manage-sort-list li>table.category tr:nth-of-type(2) td:first-of-type{
-    width:35%;
-    padding-right:10px;
-}
 /*third column*/
 .manage-sort-list li>table.category tr:first-of-type td:nth-of-type(3){
-    width:10%;
-}
-.manage-sort-list li>table.category tr:nth-of-type(2) td:nth-of-type(3){
     width:10%;
 }
 /*forth column*/
@@ -59,28 +55,19 @@
     color:#55c8b4;
     padding-right:15px;
 }
-.manage-sort-list li>table.category tr:nth-of-type(2) td:nth-of-type(4){
-    width:15%;
-    padding-right:15px;
-}
 /*last column*/
 .manage-sort-list li>table.category tr td:last-of-type{
-    width:18%;
+    width:26%;
 
 }
-.manage-sort-list li>table.category tr:nth-of-type(2) td:last-of-type{
-    width:18%
-}
-
 .manage-sort-list li>table.category tr:nth-of-type(2){
     color:rgba(0,0,0,0.3);
     font-size:13px;
 }
-
 .manage-kpi-target input{
     position:absolute;
     z-index:10;
-    left:59%;
+    left:auto;
     width:15%;
     top:3px;
     display:none;
@@ -239,3 +226,55 @@
     margin-left:26px;
     font-size:14px;
 }
+/********************************************************************************************************* kpi library
+*******************************************************************************************************************/
+/*.kpi-library{*/
+    /*position:fixed;*/
+    /*top:0;*/
+    /*right:0;*/
+    /*bottom:0;*/
+    /*left:0;*/
+    /*z-index:101;*/
+    /*background-color:rgba(0,0,0,0.55);*/
+    /*display:none;*/
+/*}*/
+/*.kpi-library>div{*/
+    /*position:relative;*/
+    /*border-radius:3px;*/
+    /*-webkit-border-radius:3px;*/
+    /*-moz-border-radius:3px;*/
+    /*width:750px;*/
+    /*height:550px;*/
+    /*left:50%;*/
+    /*margin-left:-375px;*/
+    /*top:50%;*/
+    /*margin-top:-275px;*/
+    /*background-color:white;*/
+    /*display:none;*/
+/*}*/
+/*.kpi-library>div:before{*/
+    /*content:"KPI\00a0\00a0LIBRARY";*/
+    /*position:absolute;*/
+    /*font-size:60px;*/
+    /*color:white;*/
+    /*top:-57px;*/
+/*}*/
+/*.kpi-library-inner{*/
+    /*position:absolute;*/
+    /*top:30px;*/
+    /*right:30px;*/
+    /*bottom:30px;*/
+    /*left:30px;*/
+/*}*/
+/*.kpi-library-inner>.left{*/
+    /*width:60%;*/
+    /*height:100%;*/
+    /*background:yellowgreen;*/
+    /*float:left;*/
+/*}*/
+/*.kpi-library-inner>.right{*/
+    /*width:40%;*/
+    /*height:100%;*/
+    /*background:cornflowerblue;*/
+    /*float:left;*/
+/*}*/

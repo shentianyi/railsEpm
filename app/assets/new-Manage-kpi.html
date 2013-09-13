@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <!--<link href="stylesheets/wzx-bootstrap.css" rel="stylesheet">-->
     <link href="stylesheets/wayne_sunny.css" rel="stylesheet">
     <link href="stylesheets/_epm_base.css" rel="stylesheet">
     <link href="stylesheets/font-awesome.min.css" rel="stylesheet">
@@ -9,6 +10,7 @@
     <link href="stylesheets/aero.css" rel="stylesheet">
     <link href="stylesheets/Manage.css" rel="stylesheet">
     <link href="stylesheets/Manage-kpi.css" rel="stylesheet">
+
     <title>if kpi</title>
 </head>
 <body>
@@ -155,8 +157,6 @@
                <input type="text" placeholder="* KPI Equation" id="calcuType-input"/>
                <div style="display:none" id="takeCal" cal></div>
            </div>
-
-
            <a class="btn btn-primary" id="manage-kpi-add-new">Add</a>
        </div>
     </div>
@@ -171,17 +171,14 @@
 
 
     <div class="manage-right-content" id="manage-right-content">
-
         <div class="manage-btn-group" id="manage-btn-group">
             <a class="btn btn-primary" id="kpi-add-show"><i class="icon-plus"></i> KPI</a>
-            <a class="btn btn-primary kpi-library-btn"><i class="icon-th-list"></i> KPI Library</a>
+            <a class="btn btn-primary kpi-library-btn" id="kpi-library-btn"><i class="icon-th-list"></i> KPI Library</a>
             <p id="manage-edit-target" >Category1 </p>
             <i class="icon-pencil"></i>
             <input type="text"/>
             <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
         </div>
-
-
         <div class="manage-right-list">
             <div class="right-list-top-control" id="right-list-top-control">
                 <input type="checkbox" id="manage-total-check"/>
@@ -196,11 +193,11 @@
                     <input type="checkbox" />
                     <table class="category">
                         <tr>
-                            <td>KPI1</td>
-                            <td>Hour</td>
-                            <td>Up</td>
+                            <td >KPI1</td>
+                            <td >Hour</td>
+                            <td >Up</td>
                             <td class="manage-kpi-target"><span class="can-change">200</span><span>$</span><input type='text' effect_on="1"/></td>
-                            <td>No</td>
+                            <td >No</td>
                         </tr>
                         <tr>
                             <td>all the description here</td>
@@ -252,10 +249,52 @@
                     </table>
                 </li>
             </ul>
-
-
         </div>
     </div>
+
+
+
+    <div class="kpi-library" id="kpi-library">
+        <div>
+            <div class="kpi-library-inner">
+                <div class="left">
+                    <div class="accordion" id="accordion2">
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                                    Collapsible Group Item #1
+                                </a>
+                            </div>
+                            <div id="collapseOne" class="accordion-body collapse in">
+                                <div class="accordion-inner">
+                                    Anim pariatur cliche...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                                    Collapsible Group Item #2
+                                </a>
+                            </div>
+                            <div id="collapseTwo" class="accordion-body collapse">
+                                <div class="accordion-inner">
+                                    Anim pariatur cliche...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
 
 
 
@@ -274,6 +313,7 @@
 <script src="javascripts/wayne-base.js"></script>
 <script src="javascripts/Template.js"></script>
 <script src="javascripts/brilliantech.base.js"></script>
+<script src="javascripts/bootstrap.min.js"></script>
 <script src="javascripts/jquery.ba-resize.min.js"></script>
 <script src="javascripts/jquery.icheck.min.js"></script>
 <script src="javascripts/jquery.sortable.min.js"></script>
