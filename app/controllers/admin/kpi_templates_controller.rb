@@ -118,10 +118,12 @@ class Admin::KpiTemplatesController < Admin::ApplicationController
         else
           []
     end
-    render 'index'
+    respond_to do |format|
+      format.html {render 'index'}
+      format.json { render json: @admin_kpi_templates }
+    end
   end
 
-  
   private
 
   def get_conditions
