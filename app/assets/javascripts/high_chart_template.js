@@ -75,10 +75,14 @@ var high_chart = {
             },
             events: {
                 mouseOver: function () {
-                    this.graph.attr('zIndex', 99);
+                    if(this.data.length>1){
+                        this.graph.attr('zIndex', 99);
+                    }
                 },
                 mouseOut: function () {
-                    this.graph.attr('zIndex', this.index);
+                    if(this.data.length>1){
+                        this.graph.attr('zIndex', this.index);
+                    }
                 }
             }
         },

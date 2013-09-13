@@ -9,7 +9,7 @@
 ****************************************************************************************/
 .analytics-condition {
     height: 110px;
-    background-color: rgba(221, 221, 221, 0.13);
+    background-color: #fbfbfb;
     border-top: 1px solid rgba(221, 221, 221, 0.5);
     position: absolute;
     right: 0;
@@ -85,11 +85,17 @@ div[title='analy-view-select'] {
 
 /************************************************* radio input
 ********************************************************************/
-.analy-radio {
-    margin-top: 7px;
-    font-size: 13px;
+.analytics-radio-label{
+    margin-bottom:12px;
+    margin-top:3px;
+    color:rgba(0,0,0,0.5);
+    margin-left:-1px;
 }
-
+.analytics-radio-label>div{
+    display:inline-block;
+    top:4px;
+    left:-2px;
+}
 /************************************************************************** chart body
 ****************************************************************************************/
 .chart-interval-alternate{
@@ -259,9 +265,9 @@ td.analytics-chart-scatter {
 }
 .tcr-trend.middle{
     color:#5fa9da;
-    background-position:133px -18px;
+    background-position:133px -33px;
 }
 .tcr-trend.low{
     color:#fa4545;
-    background-position:133px -47px;
+    background-position:133px -81px;
 }
