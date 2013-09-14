@@ -31,7 +31,8 @@
     position: absolute;
     bottom: 5px;
     left: 50%;
-    opacity: 0.5;
+    opacity: 0.4;
+    font-size:15px;
     cursor: pointer;
     pointer-events:auto;
     transition: opacity 0.25s ease-out;
@@ -90,6 +91,8 @@ div[title='analy-view-select'] {
     margin-top:3px;
     color:rgba(0,0,0,0.5);
     margin-left:-1px;
+    display:block;
+    font-size:14px;
 }
 .analytics-radio-label>div{
     display:inline-block;
