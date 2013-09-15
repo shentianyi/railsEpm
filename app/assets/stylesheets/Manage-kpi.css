@@ -236,7 +236,7 @@
     left:0;
     z-index:101;
     background-color:rgba(0,0,0,0.55);
-    /*display:none;*/
+    display:none;
 }
 .kpi-library>div{
     position:relative;
@@ -244,20 +244,20 @@
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
     width:750px;
-    height:550px;
+    height:540px;
     left:50%;
     margin-left:-375px;
     top:50%;
     margin-top:-275px;
     background-color:white;
-    /*display:none;*/
+    display:none;
 }
 .kpi-library>div:before{
     content:"KPI\00a0\00a0LIBRARY";
     position:absolute;
-    font-size:60px;
+    font-size:40px;
     color:white;
-    top:-57px;
+    top:-38px;
 }
 .kpi-library-inner{
     position:absolute;
@@ -265,20 +265,9 @@
     right:30px;
     bottom:30px;
     left:30px;
+    border:2px solid #ddd;
 }
-.kpi-library-inner>.left{
-    width:60%;
-    height:100%;
-
-    float:left;
-}
-.kpi-library-inner>.right{
-    width:40%;
-    height:100%;
-
-    float:left;
-}
-/***************************************************************** accodion
+/***************************************************************** accordion
 *********************************************************************/
 .Accordion>.accordion-header{
     cursor:pointer;
@@ -288,4 +277,141 @@
 }
 .Accordion>.accordion-header.in + .accordion-body{
     display:block
+}
+/***************************************************************** accordion style (left part)
+*********************************************************************/
+.kpi-library-inner>.left{
+    width:55%;
+    height:100%;
+    float:left;
+    overflow-y:auto;
+}
+.kpi-library-inner>.left .accordion-header{
+    padding:12px 10px;
+    color:#9d9d9d;
+    font-size:17px;
+    border-style:solid;
+    border-color:#ddd;
+    border-width:1px 0px 1px 0;
+    transition:color 0.25s ease-out;
+}
+.kpi-library-inner>.left .accordion-header:first-of-type{
+    border-width:0px 0px 1px 0;
+}
+.kpi-library-inner>.left .accordion-header:hover{
+    color:rgba(0,0,0,0.7);
+}
+.kpi-library-inner>.left .accordion-header.accordion-in{
+    background:#5fa9da;
+    border-color:#5fa9da;
+    color:white;
+}
+.kpi-library-inner>.left ul{
+    list-style:none;
+    padding:0px;
+    margin:0px;
+}
+.kpi-library-inner>.left ul:last-of-type{
+    border-bottom:1px solid #ddd;
+}
+.kpi-library-inner>.left ul>li{
+    position:relative;
+    padding:10px 12px 2px;
+}
+.kpi-library-inner>.left ul>li:last-of-type{
+    padding:10px 12px;
+}
+.kpi-library-inner>.left ul li input[type="checkbox"]{
+    position:absolute;
+}
+.kpi-library-inner>.left ul li h3{
+    position:absolute;
+    top:7px;
+    left:41px;
+    margin:0px;
+    width:319px;
+    color:#5fa9da;
+    font-size:15px;
+    font-weight:lighter;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+}
+.kpi-library-inner>.left ul li p{
+    position:absolute;
+    left:42px;
+    top:24px;
+    margin:0px;
+    width:319px;
+    font-size:13px;
+    font-weight:lighter;
+    color:#9d9d9d;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+}
+/*****************************************************************  (right part)
+*********************************************************************/
+.kpi-library-inner>.right{
+    width:306px;
+    height:100%;
+    float:left;
+    border-left:2px solid #ddd;
+    position:relative;
+}
+.kpi-library-inner>.right .library-chosen-kpi{
+    width:100%;
+    height:90%;
+    list-style:none;
+    padding:0px;
+    margin:0px;
+    overflow-y:auto;
+}
+.kpi-library-inner>.right .library-chosen-kpi>li{
+    padding:3px 5px;
+    cursor:pointer;
+}
+.kpi-library-inner>.right .library-chosen-kpi>li:hover{
+    background:rgba(234,237,236,0.4);
+}
+.kpi-library-inner>.right .library-chosen-kpi>li h3{
+    margin:0px;
+    width:299px;
+    color:#5fa9da;
+    font-size:15px;
+    font-weight:lighter;
+    pointer-events:none;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+}
+.kpi-library-inner>.right .library-chosen-kpi>li p{
+    margin:-3px 0 0;
+    width:299px;
+    font-size:13px;
+    font-weight:lighter;
+    color:#9d9d9d;
+    pointer-events:none;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+
+
+
+.kpi-library-inner>.right div:last-of-type{
+    width:309px;
+    height:45px;
+    border-top:2px solid #ddd;
+    position:absolute;
+    bottom:0px;
+}
+.kpi-library-inner>.right div:last-of-type>a{
+    display:inline-block;
+    width:65px;
+    float:right;
+    font-size:13px;
+    padding:6px 0px;
+    margin:8px 12px 0 2px;
 }
