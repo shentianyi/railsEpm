@@ -228,53 +228,64 @@
 }
 /********************************************************************************************************* kpi library
 *******************************************************************************************************************/
-/*.kpi-library{*/
-    /*position:fixed;*/
-    /*top:0;*/
-    /*right:0;*/
-    /*bottom:0;*/
-    /*left:0;*/
-    /*z-index:101;*/
-    /*background-color:rgba(0,0,0,0.55);*/
+.kpi-library{
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index:101;
+    background-color:rgba(0,0,0,0.55);
     /*display:none;*/
-/*}*/
-/*.kpi-library>div{*/
-    /*position:relative;*/
-    /*border-radius:3px;*/
-    /*-webkit-border-radius:3px;*/
-    /*-moz-border-radius:3px;*/
-    /*width:750px;*/
-    /*height:550px;*/
-    /*left:50%;*/
-    /*margin-left:-375px;*/
-    /*top:50%;*/
-    /*margin-top:-275px;*/
-    /*background-color:white;*/
+}
+.kpi-library>div{
+    position:relative;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    width:750px;
+    height:550px;
+    left:50%;
+    margin-left:-375px;
+    top:50%;
+    margin-top:-275px;
+    background-color:white;
     /*display:none;*/
-/*}*/
-/*.kpi-library>div:before{*/
-    /*content:"KPI\00a0\00a0LIBRARY";*/
-    /*position:absolute;*/
-    /*font-size:60px;*/
-    /*color:white;*/
-    /*top:-57px;*/
-/*}*/
-/*.kpi-library-inner{*/
-    /*position:absolute;*/
-    /*top:30px;*/
-    /*right:30px;*/
-    /*bottom:30px;*/
-    /*left:30px;*/
-/*}*/
-/*.kpi-library-inner>.left{*/
-    /*width:60%;*/
-    /*height:100%;*/
-    /*background:yellowgreen;*/
-    /*float:left;*/
-/*}*/
-/*.kpi-library-inner>.right{*/
-    /*width:40%;*/
-    /*height:100%;*/
-    /*background:cornflowerblue;*/
-    /*float:left;*/
-/*}*/
+}
+.kpi-library>div:before{
+    content:"KPI\00a0\00a0LIBRARY";
+    position:absolute;
+    font-size:60px;
+    color:white;
+    top:-57px;
+}
+.kpi-library-inner{
+    position:absolute;
+    top:30px;
+    right:30px;
+    bottom:30px;
+    left:30px;
+}
+.kpi-library-inner>.left{
+    width:60%;
+    height:100%;
+
+    float:left;
+}
+.kpi-library-inner>.right{
+    width:40%;
+    height:100%;
+
+    float:left;
+}
+/***************************************************************** accodion
+*********************************************************************/
+.Accordion>.accordion-header{
+    cursor:pointer;
+}
+.Accordion>.accordion-body{
+    display:none;
+}
+.Accordion>.accordion-header.in + .accordion-body{
+    display:block
+}

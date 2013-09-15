@@ -207,3 +207,13 @@ function post_kpi(option){
     MANAGE.sort_init();
     MANAGE.resize_sort_table();
 }
+//////////////////////////////////////////////////////////////////////////  KPI Library
+///////////////////////////////////////////////////////////////////////////////////////////////////
+$("body").on("click",".Accordion>.accordion-header",function(){
+   if(!$(this).hasClass("accordion-in")){
+       $(".Accordion>.accordion-header.accordion-in + .accordion-body").slideUp("2000");
+       $(".Accordion>.accordion-header.accordion-in").removeClass("accordion-in");
+       $(this).next().slideDown("2000");
+       $(this).addClass("accordion-in");
+   }
+});
