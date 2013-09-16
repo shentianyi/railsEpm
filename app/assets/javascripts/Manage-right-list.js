@@ -20,18 +20,18 @@ MANAGE.totalChecked=0;
 MANAGE.item_remove.prototype={
     constructor:MANAGE.item_remove,
     remove_complete:function(id){
-        $("#manage-sort-list").find("#"+id).remove();
-//        $.ajax({
-//            url : this.url + id,
-//            type : 'DELETE',
-//            success : function(data) {
-//                if(data.result) {
-//                    $("#manage-sort-list").find("#"+id).remove();
-//                } else {
-//                    MessageBox(data.content,"top","warning");
-//                }
-//            }
-//        });
+//        $("#manage-sort-list").find("#"+id).remove();
+        $.ajax({
+            url : this.url + id,
+            type : 'DELETE',
+            success : function(data) {
+                if(data.result) {
+                    $("#manage-sort-list").find("#"+id).remove();
+                } else {
+                    MessageBox(data.content,"top","warning");
+                }
+            }
+        });
     }
 }
 function category_item_remove(){
@@ -69,23 +69,23 @@ function category_item_edit(){
     this.edit_target="manage-kpi-target";
     this.url='/kpis';
     this.complete=function(option){
-//        $.ajax({
-//            url : this.url,
-//            type : 'PUT',
-//            data : {
-//                kpi : {
-//                    id : option.id,
-//                    kpi_category_id : option.belong,
-//                    target : option.target
-//                }
-//            },
-//            success : function(data) {
-//                option.edit_input.prevAll(".can-change").text( option.target );
-//                option.edit_input.css("display","none");
-//            }
-//        });
-        option.edit_input.prevAll(".can-change").text( option.target );
-        option.edit_input.css("display","none");
+        $.ajax({
+            url : this.url,
+            type : 'PUT',
+            data : {
+                kpi : {
+                    id : option.id,
+                    kpi_category_id : option.belong,
+                    target : option.target
+                }
+            },
+            success : function(data) {
+                option.edit_input.prevAll(".can-change").text( option.target );
+                option.edit_input.css("display","none");
+            }
+        });
+//        option.edit_input.prevAll(".can-change").text( option.target );
+//        option.edit_input.css("display","none");
     },
     this.edit_check=function(object){
          clearNoNumZero(object);
@@ -105,7 +105,7 @@ function manage_item_edit(){
         if(e.keyCode==13){
             var option={
                 id:$(e.target).attr("effect_on"),
-                belong:$("#manage-left-menu li.active").find("a").text(),
+                belong:$("#manage-left-menu li.active").attr("number"),
                 target:$(e.target).val(),
                 edit_input:$(e.target)
             }
@@ -138,26 +138,26 @@ MANAGE.item_drag.prototype={
 function category_item_drag(){
     this.url='/kpis';
     this.drag_complete_post=function(id,belong){
-//        var option={
-//            id:id,
-//            belong:belong,
-//            target:$("#"+id).find(".can-change").text()
-//        }
-//        $.ajax({
-//            url : this.url,
-//            type : 'PUT',
-//            data : {
-//                kpi : {
-//                    id : option.id,
-//                    kpi_category_id : option.belong,
-//                    target : option.target
-//                }
-//            },
-//            success : function(data) {
-//                this.drag_complete(option.id);
-//            }
-//        });
-        this.drag_complete(id);
+        var option={
+            id:id,
+            belong:belong,
+            target:$("#"+id).find(".can-change").text()
+        }
+        $.ajax({
+            url : this.url,
+            type : 'PUT',
+            data : {
+                kpi : {
+                    id : option.id,
+                    kpi_category_id : option.belong,
+                    target : option.target
+                }
+            },
+            success : function(data) {
+                this.drag_complete(option.id);
+            }
+        });
+//        this.drag_complete(id);
     }
 }
 category_item_drag.prototype=MANAGE.item_drag.prototype;

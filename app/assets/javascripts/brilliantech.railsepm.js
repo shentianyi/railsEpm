@@ -839,7 +839,7 @@ function add_kpi() {
 
 function post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,target,unit,unitP,check,checkedP,formula,formulaShow,length){
     $.post('../kpis', {kpi:{
-       kpi_category_id : entity,
+        kpi_category_id : entity,
         name:name,
         description:desc,
         frequency:intervalP,

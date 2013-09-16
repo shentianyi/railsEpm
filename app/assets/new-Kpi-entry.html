@@ -7,6 +7,7 @@
     <link href="stylesheets/font-awesome.min.css" rel="stylesheet">
     <link href="stylesheets/chosen.css" rel="stylesheet">
     <link href="stylesheets/aero.css" rel="stylesheet">
+    <link href="stylesheets/Entry.css" rel="stylesheet">
     <title>if kpi</title>
 </head>
 <body>
@@ -59,6 +60,51 @@
             </ul>
         </nav>
     </header>
+
+
+
+    <ul class="entry-left-menu" >
+        <li>KPI Entry</li>
+        <li class="active" >
+            <a>Hour</a>
+        </li>
+        <li>
+            <a>Day</a>
+        </li>
+        <li>
+            <a>Week</a>
+        </li>
+        <li>
+            <a>Month</a>
+        </li>
+        <li>
+            <a>Quarter</a>
+        </li>
+        <li>
+            <a>Year</a>
+        </li>
+    </ul>
+
+
+    <div class="entry-right-content">
+        <div class="entry-block">
+            <i class="icon-chevron-left"></i>
+            <input type="text"  readonly=true id="entry-date-picker"/>
+            <i class="icon-chevron-right"></i>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
 </article>
 <div class="message-box" id="MessageBox">
     <p></p>
@@ -70,6 +116,11 @@
 <script src="javascripts/brilliantech.base.js"></script>
 <script src="javascripts/jquery.ba-resize.min.js"></script>
 <script src="javascripts/jquery.icheck.min.js"></script>
-<script src="javascripts/jquery.sortable.min.js"></script
+<script src="javascripts/jquery.sortable.min.js"></script>
+<script src="javascripts/date_picker_template.js"></script>
+<script src="javascripts/Entry.js"></script>
+<script>
+    ENTRY.init();
+</script>
 </body>
 </html>

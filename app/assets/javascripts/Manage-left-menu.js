@@ -32,25 +32,25 @@ MANAGE.manage_menu_left_add.prototype={
               }
           });
           if(validate){
-              $("#manage-left-menu").append($("<li />").attr("title",name)
-                  .append($("<i />").addClass("icon-trash icon-item")).append($("<a />").text(name)));
-              $("#manage-menu-add input").val("");
-              this.add_hide();
-//              var href=this.href;
-//              $.post('../kpi_categories', {
-//                  category : {
-//                      name : name
-//                  }
-//              }, function(data) {
-//                  if(data.result) {
-//                      $("#manage-left-menu").append($("<li />").attr("title",name).attr("number", data.object)
-//                        .append($("<i />").addClass("icon-trash icon-item")).append($("<a href='"+href + data.object + "'/>").text(name)));
-//                      $("#manage-menu-add input").val("");
-//                  } else {
-//                      MessageBox(data.content,"top","warning");
-//                      MANAGE.manage_menu_left_add.add_hide();
-//                  }
-//              });
+//              $("#manage-left-menu").append($("<li />").attr("title",name)
+//                  .append($("<i />").addClass("icon-trash icon-item")).append($("<a />").text(name)));
+//              $("#manage-menu-add input").val("");
+//              this.add_hide();
+              var href=this.href;
+              $.post('../kpi_categories', {
+                  category : {
+                      name : name
+                  }
+              }, function(data) {
+                  if(data.result) {
+                      $("#manage-left-menu").append($("<li />").attr("title",name).attr("number", data.object)
+                        .append($("<i />").addClass("icon-trash icon-item")).append($("<a href='"+href + data.object + "'/>").text(name)));
+                      $("#manage-menu-add input").val("");
+                      MANAGE.manage_menu_left_add.add_hide();
+                  } else {
+                      MessageBox(data.content,"top","warning");
+                  }
+              });
           }
           else{
               if(name.length>0){
@@ -109,20 +109,20 @@ MANAGE.left.manage_left_add_init=function(){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.manage_menu_left_delete.prototype={
     delete_complete:function(e){
-        $(e.target).parent().remove();
-//        var number = $(e.target).parent().attr("number");
-//        $.ajax({
-//            url : this.url+number,
-//            type : 'DELETE',
-//            success : function(data) {
-//              if(data.result){
-//                   window.location.href = this.local;
-//              }
-//              else{
-//                   MessageBox(data.content,"top","warning");
-//              }
-//            }
-//        });
+//        $(e.target).parent().remove();
+        var number = $(e.target).parent().attr("number");
+        $.ajax({
+            url : this.url+number,
+            type : 'DELETE',
+            success : function(data) {
+              if(data.result){
+                   window.location.href = this.local;
+              }
+              else{
+                   MessageBox(data.content,"top","warning");
+              }
+            }
+        });
     },
     constructor:MANAGE.manage_menu_left_delete
 }
@@ -194,26 +194,26 @@ MANAGE.manage_menu_left_edit.prototype={
     edit_update:function(){
         var id=$("#manage-left-menu li.active").attr("number");
         var name=$("#manage-btn-group>input").val();
-        $("#manage-left-menu li.active>a").text(name);
-        this.edit_hide();
-        $("#manage-edit-target").text(name);
-//        $.ajax({
-//            url : this.url,
-//            type : 'PUT',
-//            data : {
-//                id:id,
-//                data:{
-//                    name:name
-//                }
-//            },
-//            success : function(data) {
-//                if(data){
-//                    $("#manage-left-menu li.active>a").text(name);
-//                    this.edit_hide();
-//                    $("#manage-edit-target").text(name);
-//                }
-//            }
-//        });
+//        $("#manage-left-menu li.active>a").text(name);
+//        this.edit_hide();
+//        $("#manage-edit-target").text(name);
+        $.ajax({
+            url : this.url,
+            type : 'PUT',
+            data : {
+                id:id,
+                data:{
+                    name:name
+                }
+            },
+            success : function(data) {
+                if(data){
+                    $("#manage-left-menu li.active>a").text(name);
+                    this.edit_hide();
+                    $("#manage-edit-target").text(name);
+                }
+            }
+        });
     },
     edit_hide:function(){
         $("#manage-edit-target").css("display","inline-block");

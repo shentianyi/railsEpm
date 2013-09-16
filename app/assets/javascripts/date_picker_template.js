@@ -1,5 +1,41 @@
 //需求变更时的注意事项：
 //在不变的部分需要更改language以适应多语言
+var DATE_PICKER= DATE_PICKER || {};
+DATE_PICKER.date_picker_template=function(){};
+
+
+
+
+DATE_PICKER.date_picker_template.prototype={
+    constructor: DATE_PICKER.date_picker_template,
+    weekStart: 1,
+    autoclose: true,
+    todayBtn: false,
+    clearBtn: false,
+    todayHighlight: true,
+    language: 'en',
+    datePicker: function () {
+        $(this.target).datepicker({
+            weekStart: this.weekStart,
+            autoclose: this.autoclose,
+            todayBtn: this.todayBtn,
+            clearBtn:this.clearBtn,
+            todayHighlight: this.todayHighlight,
+            language: this.language,
+            format: this.format,
+            calendarWeeks: this.calendarWeeks,
+            startView: this.startView,
+            minViewMode: this.minViewMode
+        })
+    }
+}
+
+
+
+
+
+
+
 
 
 var date_and_datetime = {
@@ -82,9 +118,9 @@ var date_and_datetime = {
 var spec_option = {
     hour: {
         format: "yyyy-mm-dd hh:ii",
-        minuteStep: 60,
         startView: "month",
         minView: "day",
+        calendarWeeks: undefined,
         initialDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), new Date().getHours(), 00)
     },
     day: {

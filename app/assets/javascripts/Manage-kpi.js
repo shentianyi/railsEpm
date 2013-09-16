@@ -7,6 +7,9 @@
  */
 var MANAGE=MANAGE || {};
 MANAGE.kpi={};
+MANAGE.kpi.library={};
+//////////////////////////////////////////////////////////////////////////  KPI init
+//////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.kpi.init=function(){
     MANAGE.kpi.kpi_add_box_bind();
     MANAGE.kpi.kpi_add_clear();
@@ -17,7 +20,23 @@ MANAGE.kpi.init=function(){
     $("#kpi-library-btn").on("click",function(){
         $("#kpi-library").css("display","block");
         $("#kpi-library>div").slideDown("3000");
+        $.ajax(
+            {
+                url:"/admin/kpi_category_templates",
+                dataType:"json",
+                success:function(data){
+                        var category_id;
+                        for(var i=0;i<data.length;i++){
+                            category_id = data[i];
+                            $("#kpi-library-inner-left")
+                                .append($("<div />").addClass("accordion-header").attr("title",category_id).attr("id",category_id).text(category_id))
+                                .append($("<ul />").addClass("accordion-body"));
+                        }
+                }
+            }
+        );
     });
+    MANAGE.kpi.library.init()
 }
 MANAGE.kpi.kpi_for_calculate=[];
 
@@ -104,6 +123,7 @@ MANAGE.kpi.calculate_input=function(object){
 MANAGE.kpi.add_new_kpi=function(){
     var option={
         entity : $("#manage-left-menu li.active").find("a").text(),
+        kpi_category_id:$("#manage-left-menu li.active").attr("u"),
         name : $("#new-kpi-name").val(),
         desc : $("#new-kpi-desc").val().length>0 ? $("#new-kpi-desc").val() : "No Description",
         frequency :  $("#add-interval :selected").attr("value"),
@@ -134,111 +154,219 @@ MANAGE.kpi.add_new_kpi=function(){
     }
 };
 function post_kpi(option){
-//    $.post('../kpis', {
-//        kpi:
-//            {
-//                kpi_category_id : option.entity,
-//                name:option.name,
-//                description:option.desc,
-//                frequency:option.frequency,
-//                direction:option.direction,
-//                target:option.target,
-//                unit:option.unit,
-//                is_calculated:option.is_calculated,
-//                formula:option.formula,
-//                formula_string:option.formula_string
-//            }
-//        }, function(data) {
-//        if(data.result){
-//            var id=data.object;
-//            var formula_string= option.is_calculated ? option.formula_string : "No";
-//            $("#manage-sort-list").prepend($("<li />").attr("id",id)
-//                .append($("<p />").addClass("sort-handle").text(":"))
-//                .append($("<input type='checkbox'/>"))
-//                .append($("<table />").addClass("category")
-//                    .append($("<tr />")
-//                        .append($("<td />").text(option.name).attr("title",option.name))
-//                        .append($("<td />").text(option.interval))
-//                        .append($("<td />").text(option.trend))
-//                        .append($("<td />").addClass("manage-kpi-target").append($("<span />").addClass("can-change").text(option.target).attr("title",option.target)).append($("<span />").text(option.section)).append($("<input type='text'/>").attr("effect_on",id)))
-//                        .append($("<td />").text(formula_string).attr("title",formula_string))
-//                    )
-//                    .append($("<tr />")
-//                        .append($("<td />").text(option.desc).attr("title",option.desc))
-//                        .append($("<td />").text("Frequency"))
-//                        .append($("<td />").text("Trend"))
-//                        .append($("<td />").text("Target"))
-//                        .append($("<td />").text("Is Calcu Type"))
-//                    )
-//                )
-//            );
-//            MANAGE.iCheck_init();
-//            MANAGE.sort_init();
-//            MANAGE.resize_sort_table();
-//        }
-//        else{
-//            MessageBox(data.content,"top","warning");
-//        }
-//    });
+    $.post('../kpis', {
+        kpi:
+            {
+                kpi_category_id : option.entity,
+                name:option.name,
+                description:option.desc,
+                frequency:option.frequency,
+                direction:option.direction,
+                target:option.target,
+                unit:option.unit,
+                is_calculated:option.is_calculated,
+                formula:option.formula,
+                formula_string:option.formula_string
+            }
+        }, function(data) {
+        if(data.result){
+            var id=data.object;
+            var formula_string= option.is_calculated ? option.formula_string : "No";
+            $("#manage-sort-list").prepend($("<li />").attr("id",id)
+                .append($("<p />").addClass("sort-handle").text(":"))
+                .append($("<input type='checkbox'/>"))
+                .append($("<table />").addClass("category")
+                    .append($("<tr />")
+                        .append($("<td />").text(option.name).attr("title",option.name))
+                        .append($("<td />").text(option.interval))
+                        .append($("<td />").text(option.trend))
+                        .append($("<td />").addClass("manage-kpi-target").append($("<span />").addClass("can-change").text(option.target).attr("title",option.target)).append($("<span />").text(option.section)).append($("<input type='text'/>").attr("effect_on",id)))
+                        .append($("<td />").text(formula_string).attr("title",formula_string))
+                    )
+                    .append($("<tr />")
+                        .append($("<td />").text(option.desc).attr("title",option.desc))
+                        .append($("<td />").text("Frequency"))
+                        .append($("<td />").text("Trend"))
+                        .append($("<td />").text("Target"))
+                        .append($("<td />").text("Is Calcu Type"))
+                    )
+                )
+            );
+            MANAGE.iCheck_init();
+            MANAGE.sort_init();
+            MANAGE.resize_sort_table();
+        }
+        else{
+            MessageBox(data.content,"top","warning");
+        }
+    });
 
-    var id="21";
-    var formula_string= option.is_calculated ? option.formula_string : "No";
-    $("#manage-sort-list").prepend($("<li />").attr("id",id)
-        .append($("<p />").addClass("sort-handle").text(":"))
-        .append($("<input/>").attr("type","checkbox"))
-        .append($("<table />").addClass("category")
-            .append($("<tr />")
-                .append($("<td />").text(option.name).attr("title",option.name))
-                .append($("<td />").text(option.interval))
-                .append($("<td />").text(option.trend))
-                .append($("<td />").addClass("manage-kpi-target").append($("<span />").addClass("can-change").text(option.target).attr("title",option.target)).append($("<span />").text(option.section)).append($("<input />").attr("type","text").attr("effect_on",id)))
-                .append($("<td />").text(formula_string).attr("title",formula_string))
-            )
-            .append($("<tr />")
-                .append($("<td />").text(option.desc).attr("title",option.desc))
-                .append($("<td />").text("Frequency"))
-                .append($("<td />").text("Trend"))
-                .append($("<td />").text("Target"))
-                .append($("<td />").text("Is Calcu Type"))
-            )
-        )
-    );
-    MANAGE.iCheck_init();
-    MANAGE.sort_init();
-    MANAGE.resize_sort_table();
+//    var id="21";
+//    var formula_string= option.is_calculated ? option.formula_string : "No";
+//    $("#manage-sort-list").prepend($("<li />").attr("id",id)
+//        .append($("<p />").addClass("sort-handle").text(":"))
+//        .append($("<input/>").attr("type","checkbox"))
+//        .append($("<table />").addClass("category")
+//            .append($("<tr />")
+//                .append($("<td />").text(option.name).attr("title",option.name))
+//                .append($("<td />").text(option.interval))
+//                .append($("<td />").text(option.trend))
+//                .append($("<td />").addClass("manage-kpi-target").append($("<span />").addClass("can-change").text(option.target).attr("title",option.target)).append($("<span />").text(option.section)).append($("<input />").attr("type","text").attr("effect_on",id)))
+//                .append($("<td />").text(formula_string).attr("title",formula_string))
+//            )
+//            .append($("<tr />")
+//                .append($("<td />").text(option.desc).attr("title",option.desc))
+//                .append($("<td />").text("Frequency"))
+//                .append($("<td />").text("Trend"))
+//                .append($("<td />").text("Target"))
+//                .append($("<td />").text("Is Calcu Type"))
+//            )
+//        )
+//    );
+//    MANAGE.iCheck_init();
+//    MANAGE.sort_init();
+//    MANAGE.resize_sort_table();
 }
 //////////////////////////////////////////////////////////////////////////  KPI Library
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-$("body").on("click",".Accordion>.accordion-header",function(){
-   if(!$(this).hasClass("accordion-in")){
-       $(".Accordion>.accordion-header.accordion-in + .accordion-body").slideUp("2000");
-       $(".Accordion>.accordion-header.accordion-in").removeClass("accordion-in");
-       $(this).next().slideDown("1000");
-       $(this).addClass("accordion-in");
-   }
-    else{
-       $(this).next().slideUp("1000");
-       $(this).removeClass("accordion-in");
-   }
-});
-$("#kpi-library-inner-left .accordion-body input[type='checkbox']").on("ifChecked",function(){
-    var h=$(this).parent().nextAll("h3").text();
-    var id=$(this).attr("id");
-    var p=$(this).parent().nextAll("p").text();
-    $("#library-chosen-kpi").append($("<li />")
-        .append($("<h3 />").text(h).attr("title",h).attr("id",id))
-        .append($("<p />").text(p).attr("title",p))
-    )
-}).on("ifUnchecked",function(){
-    var id=$(this).attr("id");
-    $("#library-chosen-kpi").find("#"+id).parent().remove();
-});
-$("body").on("click","#library-chosen-kpi li",function(){
-    var id=$(this).children("h3").attr("id");
-    $("#kpi-library-inner-left .accordion-body").find("#"+id).iCheck("uncheck");
-});
-$("body").on("click","#library-cancel",function(){
+MANAGE.kpi.library.init=function(){
+    $("body").on("click","#kpi-library-inner-left>.accordion-header",function(){
+        if(!$(this).hasClass("accordion-in")){
+            $("#kpi-library-inner-left>.accordion-header.accordion-in + .accordion-body").slideUp("2000");
+            $("#kpi-library-inner-left>.accordion-header.accordion-in").removeClass("accordion-in");
+            $(this).next().slideDown("1000");
+            $(this).addClass("accordion-in");
+            var category_id=$(this).attr("id");
+            $.ajax(
+                {
+                    url:"/admin/kpi_templates/categoried/"+category_id,
+                    data:{id:category_id},
+                    dateType:"json",
+                    success:function(data){
+                            var kpi_id;
+                            var kpi_desc;
+                            for(var i=0;i<data.length;i++){
+                                kpi_id = data[i].name;
+                                kpi_desc = data[i].description;
+                                $(this).next(".accordion-body").append($("<li />")
+                                    .append($("<input type='checkbox'/>").attr("id",kpi_id).attr("belong",category_id))
+                                    .append($("<h3 />").attr("title",kpi_id).text(kpi_id))
+                                    .append($("<p />").attr("title",kpi_desc).text(kpi_desc))
+                                );
+                            }
+                    }
+                }
+            );
+            $("input[type='checkbox']").iCheck({
+                checkboxClass: 'icheckbox_minimal-aero'
+            });
+        }
+        else{
+            $(this).next().slideUp("1000");
+            $(this).removeClass("accordion-in");
+        }
+    });
+    $("#kpi-library-inner-left .accordion-body input[type='checkbox']").on("ifChecked",function(){
+        var h=$(this).parent().nextAll("h3").text();
+        var id=$(this).attr("id");
+        var belong=$(this).attr("belong");
+        var p=$(this).parent().nextAll("p").text();
+        $("#library-chosen-kpi").append($("<li />").attr("id",id).attr("belong",belong)
+            .append($("<h3 />").text(h).attr("title",h))
+            .append($("<p />").text(p).attr("title",p))
+        )
+    }).on("ifUnchecked",function(){
+            var id=$(this).attr("id");
+            $("#library-chosen-kpi").find("#"+id).remove();
+        });
+    $("body").on("click","#library-chosen-kpi li",function(){
+        var id=$(this).attr("id");
+        $("#kpi-library-inner-left .accordion-body").find("#"+id).iCheck("uncheck");
+    });
+    $("body").on("click","#library-cancel",function(){
+        MANAGE.kpi.library.cancel();
+    });
+    $("body").on("click","#library-add",function(){
+        var length=$("#library-chosen-kpi").children().length;
+        var belong_init=$("#library-chosen-kpi li").eq(0).attr("belong");
+        var kpi_group=[$("#library-chosen-kpi li").eq(0).attr("id")];
+        if(belong_init !=undefined){
+            MANAGE.kpi.library.add_active_category=false;
+            for(var i=1;i<=length;i++){
+                if($("#library-chosen-kpi li").eq(i).attr("belong")==belong_init){
+                    kpi_group.push($("#library-chosen-kpi li").eq(i).attr("id"));
+                }
+                else if($("#library-chosen-kpi li").eq(i).attr("belong")==undefined){
+                    MANAGE.kpi.library.add_post(belong_init,kpi_group);
+                }
+                else{
+                    MANAGE.kpi.library.add_post(belong_init,kpi_group);
+                    belong_init=$("#library-chosen-kpi li").eq(i).attr("belong");
+                    kpi_group=[];
+                    kpi_group.push($("#library-chosen-kpi li").eq(i).attr("id"));
+                }
+            }
+            MessageBox("KPI Library Add Success","top","success");
+            MANAGE.kpi.library.cancel();
+            if(MANAGE.kpi.library.add_active_category.validate){
+                window.location.href = MANAGE.kpi.library.add_active_category.href;
+            }
+        }
+        else{
+            MessageBox("Nothing have been chosen","top","warning");
+        }
+
+    });
+}
+MANAGE.kpi.library.add_post=function(category,kpis){
+    $.ajax(
+        {
+            url:"/kpis/import",
+            type:"PUT",
+            dataType:"json",
+            data:{
+                category:category,
+                kpis:kpis
+            },
+            async:false,
+            success:function(data){
+                 if(data.result){
+                    var validate_no_exist=true;
+                    $("#manage-left-menu li").each(function(){
+                        if($(this).find("a").text()==data.content){
+                            validate_no_exist=false;
+                            if($(this).hasClass('active')){
+                                MANAGE.kpi.library.add_active_category.validate=true;
+                                MANAGE.kpi.library.add_active_category.href=$(this).find("a").attr("href");
+                            }
+                            return false;
+                        }
+                    });
+                    if(validate_no_exist){
+                        $("#manage-left-menu").append(
+                            $("<li />").attr("title",data.content).attr("number", data.object)
+                                .append($("<i />").addClass("icon-trash icon-item"))
+                                .append($("<a href='../kpis?p="+ data.object + "'/>").text(data.content))
+                        );
+                    }
+                 }
+                 else{
+                    MessageBox(data.content,"top","warning");
+                 }
+            }
+        }
+    );
+}
+MANAGE.kpi.library.cancel=function(){
     $("#kpi-library>div").slideUp("3000");
     $("#kpi-library").css("display","none");
-});
+    $("#kpi-library-inner-left").empty();
+    $("#library-chosen-kpi").empty();
+}
+MANAGE.kpi.library.add_active_category={
+    validate :false,
+    href :""
+};
+
+
 

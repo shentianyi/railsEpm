@@ -1,0 +1,79 @@
+/********************************************************************************************************* 分类系列
+*******************************************************************************************************************/
+.entry-left-menu{
+    background-color:#FBFBFB;
+    position:absolute;
+    top:135px;
+    left:0;
+    bottom:0;
+    width:150px;
+    margin:0;
+    padding:0;
+    list-style-type: none;
+    overflow-y:auto;
+    overflow-x:hidden;
+    z-index:20;
+}
+.entry-left-menu li:first-of-type{
+    text-align:center;
+    font-weight:lighter;
+    font-size:27px;
+    color:#5FA9DA;
+    padding:22px 0 15px;
+    cursor:default;
+}
+
+
+.entry-left-menu li{
+    text-align:center;
+    color:rgba(0,0,0,0.2);
+    padding:11px 24px;
+    cursor:pointer;
+    transition:color 0.2s ease-out;
+    position:relative;
+
+}
+.entry-left-menu li:not(:first-of-type):hover{
+    color:#F5A133;
+}
+
+.entry-left-menu li.active{
+    color:#F5A133;
+}
+/********************************************************************************************************* 右边
+*******************************************************************************************************************/
+.entry-right-content{
+    position:absolute;
+    top:135px;
+    left:150px;
+    bottom:0px;
+    right:0px;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+/******************************************************************** 输入
+**********************************************************************/
+.entry-block{
+    position:relative;
+    top:23px;
+    left:36px;
+}
+.entry-block>i{
+    color:rgba(121,121,121,0.4);
+    font-size:20px;
+    cursor:pointer;
+    pointer-events:auto;
+    position:relative;
+    top:2px;
+    transition:color 0.3s ease-out;
+}
+.entry-block>i:hover{
+    color:rgba(121,121,121,0.9);
+}
+.entry-block>input[type="text"]{
+    width:150px;
+    margin:0 10px;
+    cursor:pointer;
+    padding:4px 5px;
+    height:22px;
+}

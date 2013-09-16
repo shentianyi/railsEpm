@@ -68,7 +68,7 @@ MANAGE.sort_init=function(){
         this.style.color="rgba(0, 0, 0, 0.2)";
         var e=adapt_event(event).event;
         var id = e.dataTransfer.getData("id");
-        var belong = $(this).find("a").text();
+        var belong = $(this).attr("number");
         MANAGE[MANAGE.type].item_drag.drag_complete_post(id,belong);
         adapt_event(event).event.preventDefault();
         stop_propagation(event);

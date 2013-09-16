@@ -2,7 +2,6 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <!--<link href="stylesheets/wzx-bootstrap.css" rel="stylesheet">-->
     <link href="stylesheets/wayne_sunny.css" rel="stylesheet">
     <link href="stylesheets/_epm_base.css" rel="stylesheet">
     <link href="stylesheets/font-awesome.min.css" rel="stylesheet">
@@ -122,7 +121,6 @@
 
            <div class="select-div">
                <select class="chosen-select" data-placeholder="* Unit" id="add-unit">
-                   <option value=""> </option>
                    <option sym="M">Meter</option>
                    <option sym="$">Dollar</option>
                    <option sym="KM">Kilogram</option>
@@ -254,27 +252,30 @@
 
 
 
+
+
     <div class="kpi-library" id="kpi-library">
         <div>
             <div class="kpi-library-inner">
                 <div class="left Accordion" id="kpi-library-inner-left">
-                    <div class="accordion-header">Category 1</div>
+                    <div class="accordion-header" id="Category 1">Category 1</div>
                     <ul class="accordion-body">
                        <li>
-                           <input type="checkbox" id="kpilibrary1"/>
+                           <input type="checkbox" id="kpilibrary1" belong="Category 1"/>
                            <h3 title="KPI1" >KPI 1</h3>
                            <p title="Description1">Description</p>
                        </li>
                         <li>
-                            <input type="checkbox"  id="kpilibrary2"/>
+                            <input type="checkbox"  id="kpilibrary2" belong="Category 1"/>
                             <h3>KPI 2</h3>
                             <p>Description</p>
                         </li>
                     </ul>
-                    <div class="accordion-header">Category 1</div>
+
+                    <div class="accordion-header" id="Category 2">Category 2</div>
                     <ul class="accordion-body">
                         <li>
-                            <input type="checkbox"  id="kpilibrary3"/>
+                            <input type="checkbox"  id="kpilibrary3" belong="Category 2"/>
                             <h3 title="KPI1">KPI 3</h3>
                             <p title="Description1">Description</p>
                         </li>
@@ -282,10 +283,11 @@
                 </div>
                 <div class="right">
                     <ul class="library-chosen-kpi" id="library-chosen-kpi">
+
                     </ul>
                     <div>
                         <a class="btn" id="library-cancel">Cancel</a>
-                        <a class="btn btn-primary">Add</a>
+                        <a class="btn btn-primary" id="library-add">Add</a>
                     </div>
                 </div>
             </div>
@@ -315,7 +317,6 @@
 <script src="javascripts/wayne-base.js"></script>
 <script src="javascripts/Template.js"></script>
 <script src="javascripts/brilliantech.base.js"></script>
-<script src="javascripts/bootstrap.min.js"></script>
 <script src="javascripts/jquery.ba-resize.min.js"></script>
 <script src="javascripts/jquery.icheck.min.js"></script>
 <script src="javascripts/jquery.sortable.min.js"></script>

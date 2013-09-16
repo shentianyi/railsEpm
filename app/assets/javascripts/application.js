@@ -33,3 +33,10 @@
 //=require Analytics_init
 //=require jquery.file.upload/jquery.fileupload
 //=require brilliantech.ifemp.file.upload
+//=require jquery.ba-resize.min
+//=require jquery.icheck.min
+//=require jquery.sortable.min
+//=require Manage-left-menu
+//=require Manage-right-list
+//=require Manage
+//=require Manage-kpi

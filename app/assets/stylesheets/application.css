@@ -17,5 +17,9 @@
 *= require _epm_base
 *= require chosen
 *= require Analytic-main
+*= require font-awesome.min
+*= require aero
+*= require Manage
+*= require Manage-kpi
 *= require_self
  */
