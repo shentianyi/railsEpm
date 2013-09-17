@@ -7,6 +7,8 @@
     <link href="stylesheets/font-awesome.min.css" rel="stylesheet">
     <link href="stylesheets/chosen.css" rel="stylesheet">
     <link href="stylesheets/aero.css" rel="stylesheet">
+    <link href="stylesheets/datepicker.css" rel="stylesheet">
+    <link href="stylesheets/datetimepicker.css" rel="stylesheet">
     <link href="stylesheets/Entry.css" rel="stylesheet">
     <title>if kpi</title>
 </head>
@@ -63,24 +65,24 @@
 
 
 
-    <ul class="entry-left-menu" >
+    <ul class="entry-left-menu" id="entry-left-menu">
         <li>KPI Entry</li>
-        <li class="active" >
+        <li class="active" interval="90" show_section="hour">
             <a>Hour</a>
         </li>
-        <li>
+        <li interval="100" show_section="day">
             <a>Day</a>
         </li>
-        <li>
+        <li interval="200" show_section="day">
             <a>Week</a>
         </li>
-        <li>
+        <li interval="300" show_section="month">
             <a>Month</a>
         </li>
-        <li>
+        <li interval="400" show_section="month">
             <a>Quarter</a>
         </li>
-        <li>
+        <li interval="500" show_section="month">
             <a>Year</a>
         </li>
     </ul>
@@ -88,10 +90,78 @@
 
     <div class="entry-right-content">
         <div class="entry-block">
-            <i class="icon-chevron-left"></i>
-            <input type="text"  readonly=true id="entry-date-picker"/>
-            <i class="icon-chevron-right"></i>
+            <i class="icon-chevron-left" id="entry-minus"></i>
+            <input type="text" readonly=true id="entry-date-picker"/>
+            <i class="icon-chevron-right" id="entry-plus"></i>
+            <span id="entry-date-extra"></span>
         </div>
+
+
+        <ul class="entry-sort-list" id="entry-sort-list">
+            <li id="1">
+                <table>
+                    <tr>
+                        <td >KPI1</td>
+                        <td >Environment</td>
+                        <td >Up</td>
+                        <td ><span class="entry-target">15</span>$</td>
+                        <td ><input type="text" class="entry-actual"/></td>
+                        <td ></td>
+                    </tr>
+                    <tr>
+                        <td>all the description here</td>
+                        <td>Category</td>
+                        <td>Trend</td>
+                        <td>Target</td>
+                        <td>Actual</td>
+                        <td>TCR</td>
+                    </tr>
+                </table>
+            </li>
+            <li id="2">
+                <table>
+                    <tr>
+                        <td >KPI1</td>
+                        <td >Category1</td>
+                        <td >Up</td>
+                        <td ><span class="entry-target">200</span>$</td>
+                        <td ><input type="text" class="entry-actual"/></td>
+                        <td ></td>
+                    </tr>
+                    <tr>
+                        <td>all the description here</td>
+                        <td>Category</td>
+                        <td>Trend</td>
+                        <td>Target</td>
+                        <td>Actual</td>
+                        <td>TCR</td>
+                    </tr>
+                </table>
+            </li>
+            <li id="3">
+                <table>
+                    <tr>
+                        <td >KPI1</td>
+                        <td >Category1</td>
+                        <td >Up</td>
+                        <td ><span class="entry-target">0.3</span>$</td>
+                        <td ><input type="text" class="entry-actual"/></td>
+                        <td ></td>
+                    </tr>
+                    <tr>
+                        <td>all the description here</td>
+                        <td>Category</td>
+                        <td>Trend</td>
+                        <td>Target</td>
+                        <td>Actual</td>
+                        <td>TCR</td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+
+
+
     </div>
 
 
@@ -110,15 +180,21 @@
     <p></p>
 </div>
 <script src="javascripts/jquery-1.8.2.min.js"></script>
+<script src="javascripts/bootstrap-datepicker.js" charset="UTF-8"></script>
+<script src="javascripts/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
 <script src="javascripts/chosen.jquery.min.js"></script>
+<script src="javascripts/highcharts.js"></script>
+<script src="javascripts/exporting.js"></script>
 <script src="javascripts/wayne-base.js"></script>
-<script src="javascripts/Template.js"></script>
-<script src="javascripts/brilliantech.base.js"></script>
-<script src="javascripts/jquery.ba-resize.min.js"></script>
 <script src="javascripts/jquery.icheck.min.js"></script>
-<script src="javascripts/jquery.sortable.min.js"></script>
+<script src="javascripts/jquery.ba-resize.min.js"></script>
+<script src="javascripts/Template.js"></script>
 <script src="javascripts/date_picker_template.js"></script>
+<script src="javascripts/high_chart_template.js"></script>
+<script src="javascripts/Analytics_init.js"></script>
+<script src="javascripts/brilliantech.base.js"></script>
 <script src="javascripts/Entry.js"></script>
+<script src="javascripts/Manage.js"></script>
 <script>
     ENTRY.init();
 </script>

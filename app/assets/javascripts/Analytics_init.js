@@ -21,23 +21,23 @@ function init_analytics() {
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
     });
-    var date_picker_option = {
-        target: "#analy-begin-time,#analy-end-time",
-        interval_source: "#chart-kpi",
-        have_shortcut: true
-    }
-    date_picker_init(date_picker_option);
-
-    $("#analy-begin-time,#analy-end-time").datepicker().on("changeDate", function () {
+    $("#chart-kpi").chosen().change(function(){
         var interval = $("#chart-kpi").find(":selected").attr("interval");
-        if (interval == "200") {
-            var week = $(".datepicker").find(".active").prevAll(".cw").text();
-            $(this).next().text("week " + week);
-        }
-        else if (interval == "400") {
-            var quarter = new Date($(this).val()).monthToQuarter();
-            $(this).next().text("quarter " + quarter);
-        }
+        var target="#analy-begin-time,#analy-end-time";
+        $(target).val("");
+        $(".index-date-extra-info").text("");
+        $("#analy-begin-time,#analy-end-time").datepicker().on("changeDate", function () {
+            var interval = $("#chart-kpi").find(":selected").attr("interval");
+            if (interval == "200") {
+                var week = $(".datepicker").find(".active").prevAll(".cw").text();
+                $(this).next().text("week " + week);
+            }
+            else if (interval == "400") {
+                var quarter = new Date($(this).val()).monthToQuarter();
+                $(this).next().text("quarter " + quarter);
+            }
+        });
+        new DATE_PICKER[interval](target,true).datePicker();
     });
     resize_chart.body();
     resize_chart.container();
@@ -65,13 +65,7 @@ function init_analytics() {
         });
     })
 }
-function date_picker_init(option) {
-    date_and_datetime.unit_them_at_begin(option.target, option.interval_source, option.have_shortcut);
-    $(option.interval_source).change(function () {
-        var interval = $(this).find(":selected").attr("interval");
-        form_date_or_time_picker(interval, option.target);
-    });
-};
+
 function analytic_control_condition_visible() {
     var open_state = $("#analytic-control-condition-visible").attr("open");
     if (open_state) {
@@ -94,34 +88,6 @@ function analytic_control_condition_visible() {
     }
 
     resize_chart.container();
-}
-function form_date_or_time_picker(interval, target) {
-    $(target).val("");
-    $(".index-date-extra-info").text("");
-    date_and_datetime.remove_date_picker_model(target);
-    switch (interval) {
-        case "90":
-            date_and_datetime.dateTimepickerPicker(target, spec_option['hour']);
-            break;
-        case "100":
-            date_and_datetime.datePicker(target, spec_option['day']);
-            break;
-        case "200":
-            date_and_datetime.datePicker(target, spec_option['week']);
-            date_and_datetime.week_picker_decorate(target);
-            break;
-        case "300":
-            date_and_datetime.datePicker(target, spec_option['month']);
-            break;
-        case "400":
-            date_and_datetime.datePicker(target, spec_option['quarter']);
-            break;
-        case "500":
-            date_and_datetime.datePicker(target, spec_option['year']);
-            break;
-        default:
-            return false
-    }
 }
 function prepare_form_chart() {
     var kpi = $("#chart-kpi :selected").attr("value");

@@ -259,22 +259,22 @@ nav ul li a:hover .nav-entry-kpi{
 .date-picker-shortcut:hover{
     background-color:#eee
 }
-.date-picker-shortcut[interval='90']:after{
+.date-picker-shortcut[interval='hour']:after{
     content:'last 24 hours';
 }
-.date-picker-shortcut[interval='100']:after{
+.date-picker-shortcut[interval='day']:after{
     content:'last 7 days';
 }
-.date-picker-shortcut[interval='200']:after{
+.date-picker-shortcut[interval='week']:after{
     content:'last 4 weeks';
 }
-.date-picker-shortcut[interval='300']:after{
+.date-picker-shortcut[interval='month']:after{
     content:'last 6 months';
 }
-.date-picker-shortcut[interval='400']:after{
+.date-picker-shortcut[interval='quarter']:after{
     content:'last 4 quarters';
 }
-.date-picker-shortcut[interval='500']:after{
+.date-picker-shortcut[interval='year']:after{
     content:'last 10 years';
 }
 /************************************************* date input

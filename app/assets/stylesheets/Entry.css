@@ -75,5 +75,94 @@
     margin:0 10px;
     cursor:pointer;
     padding:4px 5px;
-    height:22px;
+    height:20px;
+    font-size:14px;
+    color:rgba(0,0,0,0.7);
+    font-family:"open-sans";
 }
+.entry-block>span{
+    position:absolute;
+    left:120px;
+    top:6px;
+    color:rgba(0,0,0,0.4);
+    font-size:13px;
+    pointer-events:none;
+}
+/******************************************************************** list
+**********************************************************************/
+.entry-sort-list{
+    position:relative;
+    top:37px;
+}
+.entry-sort-list li{
+    display:inline-block;
+    width:97%;
+    height:80px;
+    border:1px solid #ddd;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    margin-bottom:15px;
+    position:relative;
+}
+.entry-sort-list li>table{
+    position:absolute;
+    left:19px;
+    top:14px;
+    bottom:5px;
+    width:inherit;
+    transition:width 0.45s ease-out 0.1s;
+}
+.entry-sort-list li>table{
+    table-layout:fixed
+}
+.entry-sort-list li>table tr td{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    cursor:default;
+}
+.entry-sort-list li>table tr:first-of-type{
+    font-size:21px;
+    color:rgba(0,0,0,0.5);
+}
+.entry-sort-list li>table tr:nth-of-type(2){
+    color:rgba(0,0,0,0.3);
+    font-size:13px;
+}
+/*first column*/
+.entry-sort-list li>table tr:first-of-type td:first-of-type{
+    color:#5FA9DA;
+    width:25%;
+    padding-right:10px;
+}
+/*second column*/
+.entry-sort-list li>table tr:first-of-type td:nth-of-type(2){
+    width:140px
+}
+/*third column*/
+.entry-sort-list li>table tr:first-of-type td:nth-of-type(3){
+    width:100px
+}
+/*forth column*/
+.entry-sort-list li>table tr:first-of-type td:nth-of-type(4){
+    color:#55c8b4;
+    padding-right:15px;
+    width:100px;
+}
+/*fifth column*/
+.entry-sort-list li>table tr:first-of-type td:nth-of-type(5){
+    position:relative;
+    width:14%;
+}
+.entry-sort-list li>table tr:first-of-type td:nth-of-type(5) input{
+    position:absolute;
+    left:auto;
+    top:-2px;
+    width:80px;
+    padding:5px;
+    height:20px;
+}
+
+
+
