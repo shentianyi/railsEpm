@@ -64,18 +64,13 @@
     color:rgba(0,0,0,0.3);
     font-size:13px;
 }
-.manage-kpi-target{
-    pointer-events:auto;
-}
 .manage-kpi-target input{
     position:absolute;
     z-index:10;
     left:auto;
-    width:14%;
-    top:8px;
+    width:15%;
+    top:3px;
     display:none;
-    height:15px;
-    padding:5px;
 }
 /********************************************************************************************************* 添加 KPI
 *******************************************************************************************************************/
@@ -244,7 +239,7 @@
     display:none;
 }
 .kpi-library>div{
-    position:fixed;
+    position:relative;
     border-radius:3px;
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
