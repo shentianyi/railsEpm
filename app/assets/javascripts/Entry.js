@@ -198,11 +198,12 @@ ENTRY.datepicker.post=function(){
     var post_date=HIGH_CHART.postPrepare(date_original,interval);
     $.ajax({
         url:'../kpi_entries/refresh_entry',
+        type:'post',
         data:{
             f:$('#kpi-type-hidden').val(),
             date:post_date
         },
-        dataType:"json",
+        dataType:"html",
         success:function(data){
             $("#entry-sort-list").html(data);
             $(".entry-actual").each(function(){

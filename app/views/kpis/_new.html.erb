@@ -4,7 +4,7 @@
           <input type="text" placeholder="* Name" id="new-kpi-name"/>
           <textarea placeholder="   Description" id="new-kpi-desc"></textarea>
           <div class="select-div">
-               <%= select_tag :frequency,options_from_collection_for_select(@frequencies,'value','desc'),{:id=>'add-interval',"data-placeholder"=>"* Frequency"}%>
+               <%= select_tag :frequency,options_from_collection_for_select(@frequencies,'value','desc'),{:id=>'add-interval',"data-placeholder"=>"* Frequency",:class=>"chosen-select" }%>
           </div>
 
           <input type="text" placeholder="* Target" id="new-kpi-target"/>
@@ -18,7 +18,7 @@
           </div>
 
           <div class="select-div">
-               <%= select_tag :direction,options_from_collection_for_select(@directions,'value','desc'),{:id=>'add-trend',"data-placeholder"=>"&nbsp;&nbsp;&nbsp;Trend"}%>
+               <%= select_tag :direction,options_from_collection_for_select(@directions,'value','desc'),{:id=>'add-trend',"data-placeholder"=>"    Trend",:class=>"chosen-select"}%>
           </div>
 
           <input type="checkbox" id="is-calcu-check"/>
