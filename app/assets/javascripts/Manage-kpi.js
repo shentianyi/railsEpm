@@ -123,7 +123,7 @@ MANAGE.kpi.calculate_input=function(object){
 } ;
 MANAGE.kpi.add_new_kpi=function(){
     var option={
-        entity : $("#manage-left-menu li.active").find("a").text(),
+        entity : $("#manage-left-menu li.active").attr("number"),
         kpi_category_id:$("#manage-left-menu li.active").attr("u"),
         name : $("#new-kpi-name").val(),
         desc : $("#new-kpi-desc").val().length>0 ? $("#new-kpi-desc").val() : "No Description",
