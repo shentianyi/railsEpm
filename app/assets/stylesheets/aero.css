@@ -8,7 +8,7 @@
     width: 18px;
     height: 18px;
     /*background: url(../images/aero.png) no-repeat;*/
-    background: url(/asset/aero.png) no-repeat;
+    background: url(/assets/aero.png) no-repeat;
     border: none;
     cursor: pointer;
 }
@@ -19,11 +19,11 @@
     width: 22px !important;
     height: 22px !important;
     /*background: url(../images/blue.png) 0 0 no-repeat !important;*/
-    background: url(/asset/blue.png) 0 0 no-repeat important;
+    background: url(/assets/blue.png) 0 0 no-repeat important;
 }
     .icheckbox_minimal-aero.hover {
         /*background: url(../images/blue.png) 0 0 no-repeat !important;*/
-        background: url(/asset/blue.png) 0 0 no-repeat important;
+        background: url(/assets/blue.png) 0 0 no-repeat important;
         border:1px solid #d3cfc8;
         opacity:1;
     }
@@ -31,16 +31,16 @@
         opacity:0.8;
         /*background: url(../images/blue.png) no-repeat -48px 0 !important;*/
         border:1px solid #2489c5;
-        background: url(/asset/blue.png) no-repeat -48px 0 !important;
+        background: url(/assets/blue.png) no-repeat -48px 0 !important;
     }
     .icheckbox_minimal-aero.disabled {
         /*background: url(../images/blue.png) no-repeat -72px 0 !important;*/
-        background: url(/asset/blue.png) no-repeat -72px 0 !important;
+        background: url(/assets/blue.png) no-repeat -72px 0 !important;
         cursor: default;
     }
     .icheckbox_minimal-aero.checked.disabled {
         /*background: url(../images/blue.png) no-repeat -96px 0 !important;*/
-        background: url(/asset/blue.png) no-repeat -96px 0 !important;
+        background: url(/assets/blue.png) no-repeat -96px 0 !important;
     }
 
 .iradio_minimal-aero {

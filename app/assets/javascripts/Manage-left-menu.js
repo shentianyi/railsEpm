@@ -9,7 +9,7 @@ MANAGE.category=MANAGE.category || {};
 MANAGE.group=MANAGE.group || {};
 MANAGE.entity=MANAGE.entity || {};
 MANAGE.left={};
-MANAGE.type=$("#manage-left-menu").attr("type");
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////    add

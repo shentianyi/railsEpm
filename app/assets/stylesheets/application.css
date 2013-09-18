@@ -9,13 +9,17 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5dc4477f3cc973946afd7244f23f1140dcc4b6e1
 *= require datepicker
 *= require datetimepicker
 *= require wayne_sunny
 *= require _epm_base
 *= require chosen
 *= require Analytic-main
-*= require font-awesome.min
+*= require font-awesome
 *= require aero
 *= require Manage
 *= require Manage-kpi
