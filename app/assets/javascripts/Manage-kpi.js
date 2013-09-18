@@ -252,7 +252,7 @@ MANAGE.kpi.library.init=function(){
                             for(var i=0;i<data.length;i++){
                                 header.next(".accordion-body").append($("<li />")
                                     .append($("<input type='checkbox'/>").attr("id",data[i].id).attr("belong",data[i].admin_kpi_category_template_id))
-                                    .append($("<h3 />").attr("title",data[i].name).text(data[i].id))
+                                    .append($("<h3 />").attr("title",data[i].name).text(data[i].name))
                                     .append($("<p />").attr("title",data[i].description).text(data[i].description))
                                 );
                             }
