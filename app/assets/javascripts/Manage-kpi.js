@@ -54,6 +54,10 @@ MANAGE.kpi.kpi_add_box_bind=function(){
     });
     $("#add-unit").prepend($("<option />").attr("value", ""));
     $("#add-unit").val('').trigger('chosen:updated');
+    $("#add-interval").prepend($("<option />").attr("value", ""));
+    $("#add-interval").val('').trigger('chosen:updated');
+    $("#add-trend").prepend($("<option />").attr("value", ""));
+    $("#add-trend").val('').trigger('chosen:updated');
     $("#is-calcu-check").on("ifChecked",function(){
         $("#calculate-type-box").slideDown("2000");
         $("#is_calcu_relate_chosen").css("width","131px");
