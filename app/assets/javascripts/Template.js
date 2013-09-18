@@ -14,15 +14,15 @@ $(document).ready(function(){
 })
 //左边的用户设置
 function show_left_user_setting(){
-    var validate=$("#user-portrait-background").data("open");
-    if(validate){
+    var validate=$("#user-portrait-background").attr("state");
+    if(validate=="close"){
         $("#left-user-setting").css("left","0");
         $("#wrap-main").css("left","200px");
-        $("#user-portrait-background").data("open",false);
+        $("#user-portrait-background").attr("state","open");
     }
     else{
         $("#left-user-setting").css("left","-200px");
         $("#wrap-main").css("left","0");
-        $("#user-portrait-background").data("open",true);
+        $("#user-portrait-background").attr("state","close");
     }
 }

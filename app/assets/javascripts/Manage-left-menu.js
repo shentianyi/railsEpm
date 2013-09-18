@@ -111,12 +111,13 @@ MANAGE.manage_menu_left_delete.prototype={
     delete_complete:function(e){
 //        $(e.target).parent().remove();
         var number = $(e.target).parent().attr("number");
+        var local=this.local
         $.ajax({
             url : this.url+number,
             type : 'DELETE',
             success : function(data) {
               if(data.result){
-                   window.location.href = this.local;
+                   window.location.href = local;
               }
               else{
                    MessageBox(data.content,"top","warning");

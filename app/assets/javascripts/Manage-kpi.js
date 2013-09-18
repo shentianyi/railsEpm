@@ -243,11 +243,7 @@ MANAGE.kpi.library.init=function(){
                     url:"/kpis/template/"+category_id,
                     dataType:"json",
                     success:function(data){
-                           // var kpi_id;
-                        //    var kpi_desc;
                             for(var i=0;i<data.length;i++){
-                        //        kpi_id = data[i].name;
-                          //      kpi_desc = data[i].description;
                                 header.next(".accordion-body").append($("<li />")
                                     .append($("<input type='checkbox'/>").attr("id",data[i].id).attr("belong",data[i].admin_kpi_category_template_id))
                                     .append($("<h3 />").attr("title",data[i].name).text(data[i].id))
@@ -293,7 +289,6 @@ MANAGE.kpi.library.init=function(){
         var belong_init=$("#library-chosen-kpi li").eq(0).attr("belong");
         var kpi_group=[$("#library-chosen-kpi li").eq(0).attr("id")];
         if(belong_init !=undefined){
-            MANAGE.kpi.library.add_active_category=false;
             for(var i=1;i<=length;i++){
                 if($("#library-chosen-kpi li").eq(i).attr("belong")==belong_init){
                     kpi_group.push($("#library-chosen-kpi li").eq(i).attr("id"));
@@ -310,9 +305,6 @@ MANAGE.kpi.library.init=function(){
             }
             MessageBox("KPI Library Add Success","top","success");
             MANAGE.kpi.library.cancel();
-            if(MANAGE.kpi.library.add_active_category.validate){
-                window.location.href = MANAGE.kpi.library.add_active_category.href;
-            }
         }
         else{
             MessageBox("Nothing have been chosen","top","warning");
@@ -333,24 +325,11 @@ MANAGE.kpi.library.add_post=function(category,kpis){
             async:false,
             success:function(data){
                  if(data.result){
-                    var validate_no_exist=true;
-                    $("#manage-left-menu li").each(function(){
-                        if($(this).find("a").text()==data.content){
-                            validate_no_exist=false;
-                            if($(this).hasClass('active')){
-                                MANAGE.kpi.library.add_active_category.validate=true;
-                                MANAGE.kpi.library.add_active_category.href=$(this).find("a").attr("href");
-                            }
-                            return false;
-                        }
-                    });
-                    if(validate_no_exist){
                         $("#manage-left-menu").append(
                             $("<li />").attr("title",data.content).attr("number", data.object)
                                 .append($("<i />").addClass("icon-trash icon-item"))
                                 .append($("<a href='../kpis?p="+ data.object + "'/>").text(data.content))
                         );
-                    }
                  }
                  else{
                     MessageBox(data.content,"top","warning");
@@ -365,10 +344,7 @@ MANAGE.kpi.library.cancel=function(){
     $("#kpi-library-inner-left").empty();
     $("#library-chosen-kpi").empty();
 }
-MANAGE.kpi.library.add_active_category={
-    validate :false,
-    href :""
-};
+
 
 
 
