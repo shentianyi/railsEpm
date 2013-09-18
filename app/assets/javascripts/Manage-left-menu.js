@@ -246,7 +246,7 @@ MANAGE.entity.edit=new entity_edit();
 
 MANAGE.left.manage_left_edit_init=function(){
     $("#manage-edit-target").on("click",function(){
-        var name=$(this).text();
+        var name= $.trim($(this).text());
         MANAGE[MANAGE.type].edit.edit_show(name);
     });
     $("#manage-btn-group").on("keydown","input",function(event){
