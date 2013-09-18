@@ -33,8 +33,14 @@ ENTRY.init=function(){
            var actual= $(e.target).val();
            var target= $(e.target).parent().prev().find(".entry-target").text();
            var tcr= (parseFloat(actual) / parseFloat(target))*100;
-           var color_style=tcr>100 ? "#55cd5e" : (tcr==100 ? "#5FA9DA" : "#ed5959")
-           $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
+           var color_style=tcr>100 ? "#55cd5e" : (tcr==100 ? "#5FA9DA" : "#ed5959");
+           if(actual.length>0){
+               $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
+           }
+           else{
+               $(e.target).parent().next().text("");
+           }
+
    });
 }
 
