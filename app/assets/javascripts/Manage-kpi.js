@@ -243,11 +243,7 @@ MANAGE.kpi.library.init=function(){
                     url:"/kpis/template/"+category_id,
                     dataType:"json",
                     success:function(data){
-                           // var kpi_id;
-                        //    var kpi_desc;
                             for(var i=0;i<data.length;i++){
-                        //        kpi_id = data[i].name;
-                          //      kpi_desc = data[i].description;
                                 header.next(".accordion-body").append($("<li />")
                                     .append($("<input type='checkbox'/>").attr("id",data[i].id).attr("belong",data[i].admin_kpi_category_template_id))
                                     .append($("<h3 />").attr("title",data[i].name).text(data[i].id))
@@ -310,9 +306,6 @@ MANAGE.kpi.library.init=function(){
             }
             MessageBox("KPI Library Add Success","top","success");
             MANAGE.kpi.library.cancel();
-            if(MANAGE.kpi.library.add_active_category.validate){
-                window.location.href = MANAGE.kpi.library.add_active_category.href;
-            }
         }
         else{
             MessageBox("Nothing have been chosen","top","warning");
