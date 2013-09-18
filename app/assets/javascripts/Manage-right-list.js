@@ -74,7 +74,6 @@ function category_item_edit(){
             data : {
                 kpi : {
                     id : option.id,
-                    kpi_category_id : option.belong,
                     target : option.target
                 }
             },

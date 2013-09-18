@@ -1,45 +1,32 @@
 <div class="manage-kpi-add" id="manage-kpi-add">
-       <i class="icon-remove" id="close-add-kpi"></i>
-       <div>
-           <input type="text" placeholder="* Name" id="new-kpi-name"/>
-           <textarea placeholder="   Description" id="new-kpi-desc"></textarea>
-           <div class="select-div">
-               <select class="chosen-select" data-placeholder="* Frequency" id="add-interval">
-                   <option value=""> </option>
-                   <option value="90">Hour</option>
-                   <option value="100">Day</option>
-                   <option value="200">Week</option>
-                   <option value="300">Month</option>
-                   <option value="400">Quarter</option>
-                   <option value="500">Year</option>
-               </select>
-           </div>
+     <i class="icon-remove" id="close-add-kpi"></i>
+     <div>
+          <input type="text" placeholder="* Name" id="new-kpi-name"/>
+          <textarea placeholder="   Description" id="new-kpi-desc"></textarea>
+          <div class="select-div">
+               <%= select_tag :frequency,options_from_collection_for_select(@frequencies,'value','desc'),{:id=>'add-interval',"data-placeholder"=>"* Frequency"}%>
+          </div>
 
-           <input type="text" placeholder="* Target" id="new-kpi-target"/>
+          <input type="text" placeholder="* Target" id="new-kpi-target"/>
 
-           <div class="select-div">
+          <div class="select-div">
                <select class="chosen-select" data-placeholder="* Unit" id="add-unit">
-                   <%@units.each do |unit|%>
-                   <option value="<%= unit.value%>" sym="<%= KpiUnit.get_entry_unit_sym(unit.value)%>"><%= unit.desc%></option>
-                   <%end%>
+                    <%@units.each do |unit|%>
+                    <option value="<%= unit.value%>" sym="<%= KpiUnit.get_entry_unit_sym(unit.value)%>"><%= unit.desc%></option>
+                    <%end%>
                </select>
-           </div>
+          </div>
 
-           <div class="select-div">
-               <select class="chosen-select"  data-placeholder="&nbsp;&nbsp;&nbsp;Trend" id="add-trend">
-                   <option value=""> </option>
-                   <option value="200">Up</option>
-                   <option value="100">None</option>
-                   <option value="300">Down</option>
-               </select>
-           </div>
+          <div class="select-div">
+               <%= select_tag :direction,options_from_collection_for_select(@directions,'value','desc'),{:id=>'add-trend',"data-placeholder"=>"&nbsp;&nbsp;&nbsp;Trend"}%>
+          </div>
 
-           <input type="checkbox" id="is-calcu-check"/>
-           <label>Calculate Type</label>
+          <input type="checkbox" id="is-calcu-check"/>
+          <label>Calculate Type</label>
 
-           <div class="calculate-type-box" id="calculate-type-box">
+          <div class="calculate-type-box" id="calculate-type-box">
                <div class="select-div">
-                   <%= select_tag :frequency,options_from_collection_for_select(@base_kpis,'id','name'),{:class=>'chosen-select',"data-placeholder"=>'KPI You Have',:id=>'is-calcu-relate',:prompt=>''}%>
+                    <%= select_tag :base_kpi,options_from_collection_for_select(@base_kpis,'id','name'),{:class=>'chosen-select',"data-placeholder"=>'KPI You Have',:id=>'is-calcu-relate',:prompt=>''}%>
                </div>
                <label sign="+">+</label>
                <label sign="-">-</label>
@@ -49,7 +36,7 @@
                <label sign=")">)</label>
                <input type="text" placeholder="* KPI Equation" id="calcuType-input"/>
                <div style="display:none" id="takeCal" cal></div>
-           </div>
-           <a class="btn btn-primary" id="manage-kpi-add-new">Add</a>
-       </div>
+          </div>
+          <a class="btn btn-primary" id="manage-kpi-add-new">Add</a>
+     </div>
 </div>
