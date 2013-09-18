@@ -37,7 +37,7 @@ MANAGE.kpi.init=function(){
         );
     });
     $("#manage-edit-target").text($("#manage-left-menu li.active").find("a").text());
-    MANAGE.kpi.library.init()
+    MANAGE.kpi.library.init();
 }
 MANAGE.kpi.kpi_for_calculate=[];
 
@@ -54,6 +54,10 @@ MANAGE.kpi.kpi_add_box_bind=function(){
     });
     $("#add-unit").prepend($("<option />").attr("value", ""));
     $("#add-unit").val('').trigger('chosen:updated');
+    $("#add-interval").prepend($("<option />").attr("value", ""));
+    $("#add-interval").val('').trigger('chosen:updated');
+    $("#add-trend").prepend($("<option />").attr("value", ""));
+    $("#add-trend").val('').trigger('chosen:updated');
     $("#is-calcu-check").on("ifChecked",function(){
         $("#calculate-type-box").slideDown("2000");
         $("#is_calcu_relate_chosen").css("width","131px");
@@ -132,7 +136,7 @@ MANAGE.kpi.add_new_kpi=function(){
         direction : $("#add-trend :selected").attr("value"),
         trend : $("#add-trend :selected").text()==false ? "None" : $("#add-trend :selected").text() ,
         target : $("#new-kpi-target").val(),
-        unit : $("#add-unit :selected").text(),
+        unit : $("#add-unit :selected").attr("value"),
         section : $("#add-unit :selected").attr("sym"),
         is_calculated : $("#is-calcu-check").prop("checked"),
         formula : $("#takeCal").attr("cal"),
@@ -196,6 +200,7 @@ function post_kpi(option){
             MANAGE.iCheck_init();
             MANAGE.sort_init();
             MANAGE.resize_sort_table();
+            MANAGE.judge_kpi_count();
         }
         else{
             MessageBox(data.content,"top","warning");

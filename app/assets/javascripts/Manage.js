@@ -18,6 +18,7 @@ MANAGE.init=function(){
         MANAGE.resize_sort_table()
     });
     $("body").on("click","#manage-item-remove",manage_item_remove).on("click","#manage-item-edit",manage_item_edit);
+    MANAGE.judge_kpi_count();
 }
 
 
@@ -90,4 +91,12 @@ function total_check_listener(){
 MANAGE.resize_sort_table=function(){
     var table_size=$("#manage-sort-list li").width()-70;
     $("#manage-sort-list table").width(table_size)
+}
+MANAGE.judge_kpi_count=function(){
+    if($("#manage-sort-list").children().length>0){
+        $("#right-list-top-control").css("display","block");
+    }
+    else{
+        $("#right-list-top-control").css("display","none");
+    }
 }
