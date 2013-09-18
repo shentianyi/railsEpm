@@ -37,7 +37,7 @@ MANAGE.manage_menu_left_add.prototype={
 //              $("#manage-menu-add input").val("");
 //              this.add_hide();
               var href=this.href;
-              $.post('../kpi_categories', {
+              $.post(this.postHref, {
                   category : {
                       name : name
                   }
@@ -69,18 +69,21 @@ MANAGE.manage_menu_left_add.prototype={
 function category_add(){
     this.name="category";
     this.href="../kpis?p=";
+    this.postHref='../kpi_categories';
 }
 category_add.prototype=MANAGE.manage_menu_left_add.prototype;
 category_add.prototype.constructor=category_add;
 function group_add(){
     this.name="group";
     this.href="../users?p=";
+    this.postHref='../entities';
 }
 group_add.prototype=MANAGE.manage_menu_left_add.prototype;
 group_add.prototype.constructor=group_add;
 function entity_add(){
     this.name="entity";
     this.href="../entity_groups?p=";
+    this.postHref='../entity_groups';
 }
 entity_add.prototype=MANAGE.manage_menu_left_add.prototype;
 entity_add.prototype.constructor=entity_add;

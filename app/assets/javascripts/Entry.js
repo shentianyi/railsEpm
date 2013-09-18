@@ -16,44 +16,45 @@ ENTRY.init=function(){
    ENTRY.datepicker.init();
    $("#entry-date-picker").val(new Date().toWayneString()[$("#entry-left-menu li.active").attr("show_section")]);
    ENTRY.datepicker.extra_convert($("#entry-left-menu li.active").attr("interval"));
+   ENTRY.datepicker.post();
    ENTRY.resize_sort_table();
    $("#entry-sort-list li").on("resize",function(){
         ENTRY.resize_sort_table()
    });
-   $(".entry-actual").on("keyup",function(event){
+   $("body").on("keyup",".entry-actual",function(event){
        var object=adapt_event(event).target;
        clearNoNumZero(object);
-   }).on("keydown",function(event){
+   }).on("keydown",".entry-actual",function(event){
        var e=adapt_event(event).event;
        if(e.keyCode==13){
            $(e.target).blur();
        }
-   }).on("blur",function(event){
+   }).on("blur",".entry-actual",function(event){
            var e=adapt_event(event).event;
            var actual= $(e.target).val();
            var target= $(e.target).parent().prev().find(".entry-target").text();
            var tcr= (parseFloat(actual) / parseFloat(target))*100;
            var color_style=tcr>100 ? "#55cd5e" : (tcr==100 ? "#5FA9DA" : "#ed5959");
            if(actual.length>0){
-               $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
-//               $.ajax({
-//                  url:"/kpi_entries/entry",
-//                  type:'POST',
-//                  data:{
-//                      user_kpi_item_id:$(e.target).attr("user_kpi_item_id"),
-//                      entry_at:standardParse($("#entry-date-picker").val()).date.toISOString(),
-//                      value:$(e.target).val(),
-//                      kpi_id:$(e.target).attr("kpi_id")
-//                  },
-//                  success:function(data){
-//                      if(data.result){
-//                          $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
-//                      }
-//                      else{
-//                          MessageBox(data.content,"top","warning");
-//                      }
-//                  }
-//               });
+//               $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
+               $.ajax({
+                  url:"/kpi_entries/entry",
+                  type:'POST',
+                  data:{
+                      user_kpi_item_id:$(e.target).attr("user_kpi_item_id"),
+                      entry_at:standardParse($("#entry-date-picker").val()).date.toISOString(),
+                      value:$(e.target).val(),
+                      kpi_id:$(e.target).attr("kpi_id")
+                  },
+                  success:function(data){
+                      if(data.result){
+                          $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
+                      }
+                      else{
+                          MessageBox(data.content,"top","warning");
+                      }
+                  }
+               });
            }
            else{
                $(e.target).parent().next().text("");
@@ -87,6 +88,7 @@ ENTRY.datepicker.init=function(){
             var quarter = new Date($(this).val()).monthToQuarter();
             $("#entry-date-extra").text("Quarter: " + quarter);
         }
+        ENTRY.datepicker.post();
     });
     new DATE_PICKER[interval]("#entry-date-picker",false).datePicker();
     var entry=new ENTRY.datepicker[interval]();
@@ -95,6 +97,7 @@ ENTRY.datepicker.init=function(){
             var target=$("#entry-date-picker").val();
             $("#entry-date-picker").val(entry.minus(target));
             ENTRY.datepicker.extra_convert(interval);
+            ENTRY.datepicker.post();
         }
     });
     $("#entry-plus").on("click",function(){
@@ -102,6 +105,7 @@ ENTRY.datepicker.init=function(){
             var target=$("#entry-date-picker").val();
             $("#entry-date-picker").val(entry.plus(target));
             ENTRY.datepicker.extra_convert(interval);
+            ENTRY.datepicker.post();
         }
     });
 }
@@ -188,7 +192,27 @@ ENTRY.datepicker["500"]=function(){
         return new_d
     }
 }
-
+ENTRY.datepicker.post=function(){
+    var interval=$("#entry-left-menu li.active").attr("interval");
+    var date_original=$("#entry-date-picker").val();
+    var post_date=HIGH_CHART.postPrepare(date_original,interval);
+    $.ajax({
+        url:'../kpi_entries/refresh_entry',
+        data:{
+            f:$('#kpi-type-hidden').val(),
+            date:post_date
+        },
+        dataType:"json",
+        success:function(data){
+            $("#entry-sort-list").html(data);
+            $(".entry-actual").each(function(){
+               var percent=parseFloat($(this).parent().next().text());
+               var color_style=percent>100 ? "#55cd5e" : (percent==100 ? "#5FA9DA" : "#ed5959");
+               $(this).parent().next().css("color",color_style);
+            });
+        }
+    });
+}
 
 
 

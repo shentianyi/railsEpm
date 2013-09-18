@@ -1801,7 +1801,10 @@ function init_entryKpi() {
 }
 
 function refresh_kpi_entry(date){
-     $.post('../kpi_entries/refresh_entry',{f:$('#kpi-type-hidden').val(),date:date},function(data){
+     $.post('../kpi_entries/refresh_entry',{
+         f:$('#kpi-type-hidden').val(),
+         date:date
+     },function(data){
           $("#kpi-entry").html(data);
           save_format_date(date);
      });

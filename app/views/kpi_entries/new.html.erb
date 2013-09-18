@@ -1,51 +1,41 @@
-<div class="sub-middle sub-middle-manage">
-     <h3 class="text-center">输入KPI </h3>
-</div>
-<div class="middle clearfix">
-     <label class="inline pull-left entryKPI-intervalMark" >KPI周期</label>
-     <ul class="nav nav-tabs entry-nav-tabs" id="entry-date-type">
-         
-          <li data-type="hour" class="<%= 'active' if @f==KpiFrequency::Hourly%>">
-               <a  href="/kpi_entries/new?f=<%= KpiFrequency::Hourly%>">小时</a>
-          </li>
-          <li data-type="day" class="<%= 'active' if @f==KpiFrequency::Daily%>">
-               <a  href="/kpi_entries/new?f=<%= KpiFrequency::Daily%>">日</a>
-          </li>
-          <li data-type="week" class="<%= 'active' if @f==KpiFrequency::Weekly%>">
-               <a  href="/kpi_entries/new?f=<%= KpiFrequency::Weekly%>">周</a>
-          </li>
-          <li data-type="month" class="<%= 'active' if @f==KpiFrequency::Monthly%>">
-               <a  href="/kpi_entries/new?f=<%= KpiFrequency::Monthly%>">月</a>
-          </li>
-          <li data-type="quarter" class="<%= 'active' if @f==KpiFrequency::Quarterly%>">
-               <a  href="/kpi_entries/new?f=<%= KpiFrequency::Quarterly%>">季度</a>
-          </li>
-          <li data-type="year" class="<%= 'active' if @f==KpiFrequency::Yearly%>">
-               <a   href="/kpi_entries/new?f=<%= KpiFrequency::Yearly%>" >年</a>
-          </li>
-     </ul>
-     <div class="entry-kpi-part">
-          <img src="/assets/calendar.png" style="margin:16px 0 0 18px;"/>
-            <a class="entry-prev-btn entry-btn hide" id="entry-prev-btn" onclick="minus_unit(event)"></a>
-            <input type="text" id="entry-kpi" class="entry-kpi-date" readonly="true" />
-            <input type="text" id="kpi-hour" onchange="entry_hourChange()" class="entry-kpi-date entry-kpi-hour" readonly="true" style="display:none"/>
-            <label class="show-weekOfYear inline-block" id="show-weekOfYear" style="display:none">第<span></span>周</label>
-            <div class="week-picker hide"> </div>
-            <a class="entry-next-btn entry-btn hide" id="entry-next-btn" onclick="plus_unit(event)"></a>
-            <select id="select-quarter" class="entry-selectQuarter hide">
-                <option data-order="1">第一季度</option>
-                <option data-order="2">第二季度</option>
-                <option data-order="3">第三季度</option>
-                <option data-order="4">第四季度</option>
-            </select>
-          <div id="kpi-entry">
-              
-           </div>
-     </div>
-</div>
+
+<ul class="entry-left-menu" id="entry-left-menu">
+        <li>KPI Entry</li>
+        <li class="<%= 'active' if @f==KpiFrequency::Hourly%>" interval="90" show_section="hour">
+            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Hourly%>">Hour</a>
+        </li>
+        <li class="<%= 'active' if @f==KpiFrequency::Daily%>" interval="100" show_section="day">
+            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Daily%>">Day</a>
+        </li>
+        <li class="<%= 'active' if @f==KpiFrequency::Weekly%>" interval="200" show_section="day">
+            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Weekly%>">Week</a>
+        </li>
+        <li class="<%= 'active' if @f==KpiFrequency::Monthly%>" interval="300" show_section="month">
+            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Monthly%>">Month</a>
+        </li>
+        <li class="<%= 'active' if @f==KpiFrequency::Quarterly%>" interval="400" show_section="month">
+            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Quarterly%>">Quarter</a>
+        </li>
+        <li class="<%= 'active' if @f==KpiFrequency::Yearly%>" interval="500" show_section="month">
+            <a   href="/kpi_entries/new?f=<%= KpiFrequency::Yearly%>" >Year</a>
+        </li>
+</ul>
+
+<div class="entry-right-content">
+        <div class="entry-block">
+            <i class="icon-chevron-left" id="entry-minus"></i>
+            <input type="text" readonly=true id="entry-date-picker"/>
+            <i class="icon-chevron-right" id="entry-plus"></i>
+            <span id="entry-date-extra"></span>
+        </div>
+        <ul class="entry-sort-list" id="entry-sort-list">
+
+        </ul>
+ </div>
+
 <input type="hidden" value="<%=@f%>" id="kpi-type-hidden" />
-<script type="text/javascript">
-     $(document).ready(function() {
-          init_entryKpi();
-     })
+<script>
+    $(document).ready(function(){
+       ENTRY.init();
+    })
 </script>

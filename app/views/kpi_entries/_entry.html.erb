@@ -1,14 +1,7 @@
-<table class="entry-table">
-     <tr>
-          <th>ID</th>
-          <th>类别</th>
-          <th>名称</th>
-          <th width="450px;">描述</th>
-          <th>目标</th>
-          <th>现在</th>
-          <th>完成度</th>
-     </tr>
-     <%@user_kpis.each_with_index do |kpi,i|
+
+
+
+<%@user_kpis.each_with_index do |kpi,i|
       value =KpiUnit.parse_entry_value(kpi.unit, entry.value)  if(entry=KpiEntriesHelper.get_kpi_entry_for_entry(kpi.user_kpi_item_id,@parsed_entry_at))
       percent=nil
       if value
@@ -19,17 +12,29 @@
           end
       end
      %>
-     <tr id="<%= kpi.user_kpi_item_id%>">
-          <td align="center" class="kpi-order-id"><%= i+1%></td>
-          <td align="center"><%= kpi.category_name%></td>
-          <td align="center"><%= kpi.name%></td>
-          <td align="center"><%= kpi.description%></td>
-          <td align="center" class="kpi-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target)%></td>
-          <td align="center">
-          <input data-target="<%= kpi.user_kpi_item_target%>" class="entry-kpi-current" data-belong="<%= kpi.user_kpi_item_id%>" kpi-id="<%=kpi.id%>"
-           source type="text" onkeyup="entry_kpiCurrent(event)" onblur="fill_kpiCurrent(this)" value="<%=value%>"/>
-          </td>
-          <td align="center" class="entry-kpiPercent "><%=percent%></td>
-     </tr>
-     <%end%>
-</table>
+     <li id="<%= kpi.user_kpi_item_id%>">
+          <table>
+                  <tr>
+                      <td ><%= kpi.name%></td>
+                      <td ><%= kpi.category_name%></td>
+                      <td ><%= kpi.direction%></td>
+                      <td >
+                        <span class="entry-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target)%></span>
+                        <%= kpi.unit%>
+                       </td>
+                      <td ><input type="text" class="entry-actual"  kpi_id="<%=kpi.id%>" user_kpi_item_id="<%= kpi.user_kpi_item_id%>" /></td>
+                      <td ><%=percent%></td>
+                  </tr>
+                  <tr>
+                      <td><%= kpi.description%></td>
+                      <td>Category</td>
+                      <td>Trend</td>
+                      <td>Target</td>
+                      <td>Actual</td>
+                      <td>TCR</td>
+                  </tr>
+          </table>
+     </li>
+<%end%>
+
+

@@ -19,5 +19,6 @@
 *= require aero
 *= require Manage
 *= require Manage-kpi
+*= require Entry
 *= require_self
  */
