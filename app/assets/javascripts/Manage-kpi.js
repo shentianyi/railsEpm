@@ -316,7 +316,7 @@ MANAGE.kpi.library.add_post=function(category,kpis){
     $.ajax(
         {
             url:"/kpis/import",
-            type:"PUT",
+            type:"POST",
             dataType:"json",
             data:{
                 category:category,

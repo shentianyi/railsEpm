@@ -80,30 +80,41 @@ class KpisController < ApplicationController
     msg=Message.new
     ActiveRecord::Base.transaction do
       if template_category= Admin::KpiCategoryTemplate.find_by_id(params[:category])
-        count=KpiCategory.accessible_by(current_ability).count(:name=>template_category.name)
-        name = count==0 ? template_category.name : "#{template_category.name}_#{count+1}"
+        count=KpiCategory.accessible_by(current_ability).where(:name=>template_category.name).count
+     
+        name = count==0 ? template_category.name : "#{template_category.name}_#{count+1}"  
+         puts "#{count}--#{name}"
         category=KpiCategory.new(:name=>name,:description=>template_category.description)
-        catetory.tenant=current_tenant
-        msg.result=true
-        msg.object=category.id
-        msg.content=category.name
-        check={}
+        category.tenant=current_tenant
+
+        check={} 
         params[:kpis].each do |kpi_id|
           t= Admin::KpiTemplate.find_by_id(kpi_id)
+          puts "#{t.to_json}"
           formula=t.formula
           if t.is_calculated
             KpisHelper.parse_formula_items(t.formula).each do |item|
               unless check[item]
                 tt=Admin::KpiTemplate.find_by_id(item)
                 kpi=generate_kpi_by_template tt,category,nil
-              check[kpi_id]=kpi.id
+              kpi.save
+              check[item]=kpi.id
               end
+              puts "#{item}--#{item.class}"
+              puts "[#{check[item]}]"
+              puts "#{check}"
               formula.gsub!(Regexp.new("\\[#{item}\\]"),"[#{check[item]}]")
             end
-            kpi= generate_kpi_by_template t,category,nil
-          check[kpi_id]=kpi.id
           end
+          kpi= generate_kpi_by_template t,category,formula
+         
+          kpi.save
+          check[kpi_id]=kpi.id
         end
+      category.save
+      msg.result=true
+      msg.object=category.id
+      msg.content=category.name
       end
     end
     render :json=>msg
@@ -127,9 +138,9 @@ class KpisController < ApplicationController
     kpi=Kpi.new(:name=>t.name,:description=>t.description,:frequency=>t.frequency,
     :direction=>t.direction,:target=>t.target,:unit=>t.unit,
     :is_calculated=>t.is_calculated,:formula_string=>t.formula_string,:formula=>formula,
-    :kpi_category_id=>catetory.id)
+    :kpi_category_id=>category.id)
     kpi.creator=current_user
-    category.kpis<<kpi
+    kpi.kpi_category=category
     return kpi
   end
 end
