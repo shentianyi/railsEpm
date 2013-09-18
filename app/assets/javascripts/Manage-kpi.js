@@ -289,7 +289,6 @@ MANAGE.kpi.library.init=function(){
         var belong_init=$("#library-chosen-kpi li").eq(0).attr("belong");
         var kpi_group=[$("#library-chosen-kpi li").eq(0).attr("id")];
         if(belong_init !=undefined){
-            MANAGE.kpi.library.add_active_category=false;
             for(var i=1;i<=length;i++){
                 if($("#library-chosen-kpi li").eq(i).attr("belong")==belong_init){
                     kpi_group.push($("#library-chosen-kpi li").eq(i).attr("id"));

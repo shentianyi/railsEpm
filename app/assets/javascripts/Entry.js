@@ -36,6 +36,24 @@ ENTRY.init=function(){
            var color_style=tcr>100 ? "#55cd5e" : (tcr==100 ? "#5FA9DA" : "#ed5959");
            if(actual.length>0){
                $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
+//               $.ajax({
+//                  url:"/kpi_entries/entry",
+//                  type:'POST',
+//                  data:{
+//                      user_kpi_item_id:$(e.target).attr("user_kpi_item_id"),
+//                      entry_at:standardParse($("#entry-date-picker").val()).date.toISOString(),
+//                      value:$(e.target).val(),
+//                      kpi_id:$(e.target).attr("kpi_id")
+//                  },
+//                  success:function(data){
+//                      if(data.result){
+//                          $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
+//                      }
+//                      else{
+//                          MessageBox(data.content,"top","warning");
+//                      }
+//                  }
+//               });
            }
            else{
                $(e.target).parent().next().text("");
