@@ -7,6 +7,7 @@
  */
 var MANAGE=MANAGE || {} ;
 MANAGE.init=function(){
+    MANAGE.type=MANAGE.type || $("#manage-left-menu").attr("type");
     MANAGE.left.manage_left_add_init();
     MANAGE.left.manage_left_delete_init();
     MANAGE.left.manage_left_edit_init();
