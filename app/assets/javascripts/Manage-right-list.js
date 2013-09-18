@@ -48,7 +48,8 @@ function manage_item_remove(){
             MANAGE[MANAGE.type].item_remove.remove_complete(id);
             MANAGE.totalChecked-=1;
             total_check_listener();
-        })
+        });
+        MANAGE.judge_kpi_count();
     }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////   item edit
