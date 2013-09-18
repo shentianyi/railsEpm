@@ -26,7 +26,7 @@ MANAGE.iCheck_init=function(){
         checkboxClass: 'icheckbox_minimal-aero'
     });
     $("input[type='checkbox']").iCheck('uncheck');
-    $("body").on("ifChanged","#manage-sort-list","input[type='checkbox']",function(){
+    $("body").on("ifChanged","#manage-sort-list input[type='checkbox']",function(){
         if(!$(this).parent().hasClass("checked")){
             MANAGE.totalChecked+=1;
             total_check_listener();
