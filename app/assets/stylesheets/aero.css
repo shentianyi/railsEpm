@@ -19,11 +19,11 @@
     width: 22px !important;
     height: 22px !important;
     /*background: url(../images/blue.png) 0 0 no-repeat !important;*/
-    background: url(/assets/blue.png) 0 0 no-repeat important;
+    background: url(/assets/blue.png) 0 0 no-repeat !important;
 }
     .icheckbox_minimal-aero.hover {
         /*background: url(../images/blue.png) 0 0 no-repeat !important;*/
-        background: url(/assets/blue.png) 0 0 no-repeat important;
+        background: url(/assets/blue.png) 0 0 no-repeat !important;
         border:1px solid #d3cfc8;
         opacity:1;
     }
