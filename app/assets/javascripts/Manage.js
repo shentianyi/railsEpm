@@ -27,7 +27,7 @@ MANAGE.iCheck_init=function(){
         checkboxClass: 'icheckbox_minimal-aero'
     });
     $("input[type='checkbox']").iCheck('uncheck');
-    $("body").on("ifChanged","#manage-sort-list input[type='checkbox']",function(){
+    $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
         if(!$(this).parent().hasClass("checked")){
             MANAGE.totalChecked+=1;
             total_check_listener();
@@ -37,12 +37,12 @@ MANAGE.iCheck_init=function(){
             total_check_listener();
         }
     });
-    $("body").on("ifChecked","#manage-total-check",function(){
+    $("#manage-total-check").on("ifChecked",function(){
         $("#right-list-top-control>a").css("display","inline-block")
-    }).on("ifUnchecked","#manage-total-check",function(){
+    }).on("ifUnchecked",function(){
             $("#right-list-top-control>a").css("display","none")
         });
-    $("body").on("ifClicked","#manage-total-check",function(){
+    $("#manage-total-check").on("ifClicked",function(){
         if(!$(this).parent().hasClass("checked")){
             $("#manage-sort-list input[type='checkbox']").not(":checked").iCheck("check");
         }
@@ -94,7 +94,7 @@ MANAGE.resize_sort_table=function(){
 }
 MANAGE.judge_kpi_count=function(){
     if($("#manage-sort-list").children().length>0){
-        $("#right-list-top-control").css("display","block");
+        $("#right-list-top-control").css("display","inherit");
     }
     else{
         $("#right-list-top-control").css("display","none");

@@ -197,10 +197,25 @@ function post_kpi(option){
                     )
                 )
             );
-            MANAGE.iCheck_init();
-            MANAGE.sort_init();
-            MANAGE.resize_sort_table();
             MANAGE.judge_kpi_count();
+            $("#manage-sort-list input[type='checkbox']").iCheck({
+                  checkboxClass: 'icheckbox_minimal-aero'
+            });
+            $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
+                if(!$(this).parent().hasClass("checked")){
+                     MANAGE.totalChecked+=1;
+                     total_check_listener();
+                }
+                else{
+                     MANAGE.totalChecked-=1;
+                     total_check_listener();
+            }
+    });
+    MANAGE.sort_init();
+    MANAGE.resize_sort_table();
+    $("#manage-kpi-add").css("left","-50px");
+    $("#manage-right-content").css("left","150px");
+    MANAGE.kpi.kpi_add_clear();
         }
         else{
             MessageBox(data.content,"top","warning");
@@ -229,9 +244,28 @@ function post_kpi(option){
 //            )
 //        )
 //    );
-//    MANAGE.iCheck_init();
+//    MANAGE.judge_kpi_count();
+//    $("#manage-sort-list input[type='checkbox']").iCheck({
+//        checkboxClass: 'icheckbox_minimal-aero'
+//    });
+//    $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
+//        if(!$(this).parent().hasClass("checked")){
+//            MANAGE.totalChecked+=1;
+//            total_check_listener();
+//        }
+//        else{
+//            MANAGE.totalChecked-=1;
+//            total_check_listener();
+//        }
+//    });
 //    MANAGE.sort_init();
 //    MANAGE.resize_sort_table();
+//    $("#manage-kpi-add").css("left","-50px");
+//    $("#manage-right-content").css("left","150px");
+//    MANAGE.kpi.kpi_add_clear();
+
+
+
 }
 //////////////////////////////////////////////////////////////////////////  KPI Library
 ///////////////////////////////////////////////////////////////////////////////////////////////////
