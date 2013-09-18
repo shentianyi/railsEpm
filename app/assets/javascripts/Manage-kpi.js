@@ -254,19 +254,20 @@ MANAGE.kpi.library.init=function(){
                                     .append($("<p />").attr("title",data[i].description).text(data[i].description))
                                 );
                             }
+                            $("input[type='checkbox']").iCheck({
+                                checkboxClass: 'icheckbox_minimal-aero'
+                            });
                     }
                 }
             );
-            $("input[type='checkbox']").iCheck({
-                checkboxClass: 'icheckbox_minimal-aero'
-            });
         }
         else{
             $(this).next().slideUp("1000");
             $(this).removeClass("accordion-in");
         }
     });
-    $("#kpi-library-inner-left .accordion-body input[type='checkbox']").on("ifChecked",function(){
+
+    $("body").on("ifChecked","#kpi-library-inner-left .accordion-body input[type='checkbox']",function(){
         var h=$(this).parent().nextAll("h3").text();
         var id=$(this).attr("id");
         var belong=$(this).attr("belong");
@@ -275,10 +276,11 @@ MANAGE.kpi.library.init=function(){
             .append($("<h3 />").text(h).attr("title",h))
             .append($("<p />").text(p).attr("title",p))
         )
-    }).on("ifUnchecked",function(){
+    }).on("ifUnchecked","#kpi-library-inner-left .accordion-body input[type='checkbox']",function(){
             var id=$(this).attr("id");
             $("#library-chosen-kpi").find("#"+id).remove();
-        });
+    });
+
     $("body").on("click","#library-chosen-kpi li",function(){
         var id=$(this).attr("id");
         $("#kpi-library-inner-left .accordion-body").find("#"+id).iCheck("uncheck");
