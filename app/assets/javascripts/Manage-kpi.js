@@ -333,24 +333,11 @@ MANAGE.kpi.library.add_post=function(category,kpis){
             async:false,
             success:function(data){
                  if(data.result){
-                    var validate_no_exist=true;
-                    $("#manage-left-menu li").each(function(){
-                        if($(this).find("a").text()==data.content){
-                            validate_no_exist=false;
-                            if($(this).hasClass('active')){
-                                MANAGE.kpi.library.add_active_category.validate=true;
-                                MANAGE.kpi.library.add_active_category.href=$(this).find("a").attr("href");
-                            }
-                            return false;
-                        }
-                    });
-                    if(validate_no_exist){
                         $("#manage-left-menu").append(
                             $("<li />").attr("title",data.content).attr("number", data.object)
                                 .append($("<i />").addClass("icon-trash icon-item"))
                                 .append($("<a href='../kpis?p="+ data.object + "'/>").text(data.content))
                         );
-                    }
                  }
                  else{
                     MessageBox(data.content,"top","warning");
@@ -365,10 +352,7 @@ MANAGE.kpi.library.cancel=function(){
     $("#kpi-library-inner-left").empty();
     $("#library-chosen-kpi").empty();
 }
-MANAGE.kpi.library.add_active_category={
-    validate :false,
-    href :""
-};
+
 
 
 
