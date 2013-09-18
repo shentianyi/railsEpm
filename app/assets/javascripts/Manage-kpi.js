@@ -237,6 +237,7 @@ MANAGE.kpi.library.init=function(){
             $(this).next().slideDown("1000");
             $(this).addClass("accordion-in");
             var category_id=$(this).attr("id");
+            var header=$(this);
             $.ajax(
                 {
                     url:"/kpis/template/"+category_id,
@@ -247,7 +248,7 @@ MANAGE.kpi.library.init=function(){
                             for(var i=0;i<data.length;i++){
                         //        kpi_id = data[i].name;
                           //      kpi_desc = data[i].description;
-                                $(this).next(".accordion-body").append($("<li />")
+                                header.next(".accordion-body").append($("<li />")
                                     .append($("<input type='checkbox'/>").attr("id",data[i].id).attr("belong",data[i].admin_kpi_category_template_id))
                                     .append($("<h3 />").attr("title",data[i].name).text(data[i].id))
                                     .append($("<p />").attr("title",data[i].description).text(data[i].description))
