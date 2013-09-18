@@ -39,7 +39,7 @@
 
            <div class="calculate-type-box" id="calculate-type-box">
                <div class="select-div">
-                   <%= select_tag :frequency,options_from_collection_for_select(@base_kpis,'id','name'),{:class=>'chosen-select',:data-placeholder='KPI You Have',:id=>'is-calcu-relate',:prompt=>''}%>
+                   <%= select_tag :frequency,options_from_collection_for_select(@base_kpis,'id','name'),{:class=>'chosen-select',"data-placeholder"=>'KPI You Have',:id=>'is-calcu-relate',:prompt=>''}%>
                </div>
                <label sign="+">+</label>
                <label sign="-">-</label>

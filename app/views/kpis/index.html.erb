@@ -1,68 +1,114 @@
-
 <%= render :partial=>'kpi_categories/left_menu'%>
 <%= render :partial=>'kpis/new'%>
 <div class="manage-right-content" id="manage-right-content">
 
-        <div class="manage-btn-group" id="manage-btn-group">
-            <a class="btn btn-primary" id="kpi-add-show"><i class="icon-plus"></i> KPI</a>
-            <a class="btn btn-primary kpi-library-btn" id="kpi-library-btn"><i class="icon-th-list"></i> KPI Library</a>
-            <p id="manage-edit-target" >Category1 </p>
-            <i class="icon-pencil"></i>
-            <input type="text"/>
-            <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
-        </div>
+     <div class="manage-btn-group" id="manage-btn-group">
+          <a class="btn btn-primary" id="kpi-add-show"><i class="icon-plus"></i> KPI</a>
+          <a class="btn btn-primary kpi-library-btn" id="kpi-library-btn"><i class="icon-th-list"></i> KPI Library</a>
+          <p id="manage-edit-target" >
+               Category1
+          </p>
+          <i class="icon-pencil"></i>
+          <input type="text"/>
+          <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
+     </div>
 
+     <div class="manage-right-list">
+          <div class="right-list-top-control" id="right-list-top-control">
+               <input type="checkbox" id="manage-total-check"/>
+               <a class="btn" id="manage-item-remove">Delete</a>
+               <a class="btn" id="manage-item-edit">Edit</a>
+          </div>
 
-
-        <div class="manage-right-list">
-            <div class="right-list-top-control" id="right-list-top-control">
-                <input type="checkbox" id="manage-total-check"/>
-                <a class="btn" id="manage-item-remove">Delete</a>
-                <a class="btn" id="manage-item-edit">Edit</a>
-            </div>
-
-
-            <ul id="manage-sort-list" class="manage-sort-list">
-                <%@kpis.each_with_index do |kpi,i|%>
-                <li id="<%= kpi.id%>">
-                    <p class="sort-handle">:</p>
+          <ul id="manage-sort-list" class="manage-sort-list">
+               <%@kpis.each_with_index do |kpi,i|%>
+               <li id="<%= kpi.id%>">
+                    <p class="sort-handle">
+                         :
+                    </p>
                     <input type="checkbox" />
                     <table class="category">
-                        <tr>
-                            <td title='<%= kpi.name%>'><%= kpi.name%></td>
-                            <td ><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
-                            <td ><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
-                            <td class="manage-kpi-target" title='<%= KpiUnit.parse_entry_value(kpi.unit, kpi.target)%>+<%= KpiUnit.get_entry_unit_sym(kpi.unit)%>'>
-                                <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target)%></span>
-                                <span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
-                                <input type='text' effect_on="<%= kpi.id%>"/>
-                            </td>
-                            <%if kpi.is_calculated%>
-                                 <td title="<%= kpi.formula_string%>"><%= kpi.formula_string%></td>
-                            <%else%>
-                                 <td>No</td>
-                            <%end%>
-                        </tr>
-                        <tr>
-                            <td title='<%= kpi.description%>'><%= kpi.description%></td>
-                            <td>Frequency</td>
-                            <td>Trend</td>
-                            <td>Target</td>
-                            <td>Is Calcu Type</td>
-                        </tr>
+                         <tr>
+                              <td title='<%= kpi.name%>'><%= kpi.name%></td>
+                              <td ><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
+                              <td ><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
+                              <td class="manage-kpi-target" title='<%= KpiUnit.parse_entry_value(kpi.unit, kpi.target)%>+<%= KpiUnit.get_entry_unit_sym(kpi.unit)%>'><span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
+                              <input type='text' effect_on="<%= kpi.id%>"/>
+                              </td>
+                              <%if kpi.is_calculated%>
+                              <td title="<%= kpi.formula_string%>"><%= kpi.formula_string%></td>
+                              <%else%>
+                              <td>No</td>
+                              <%end%>
+                         </tr>
+                         <tr>
+                              <td title='<%= kpi.description%>'><%= kpi.description%></td>
+                              <td>Frequency</td>
+                              <td>Trend</td>
+                              <td>Target</td>
+                              <td>Is Calcu Type</td>
+                         </tr>
                     </table>
-                </li>
-                <%end%>
-            </ul>
+               </li>
+               <%end%>
+          </ul>
 
-
-        </div>
+     </div>
 </div>
 
+<div class="kpi-library" id="kpi-library">
+     <div>
+          <div class="kpi-library-inner">
+               <div class="left Accordion" id="kpi-library-inner-left">
+                    <div class="accordion-header" id="Category 1">
+                         Category 1
+                    </div>
+                    <ul class="accordion-body">
+                         <li>
+                              <input type="checkbox" id="kpilibrary1" belong="Category 1"/>
+                              <h3 title="KPI1" >KPI 1</h3>
+                              <p title="Description1">
+                                   Description
+                              </p>
+                         </li>
+                         <li>
+                              <input type="checkbox"  id="kpilibrary2" belong="Category 1"/>
+                              <h3>KPI 2</h3>
+                              <p>
+                                   Description
+                              </p>
+                         </li>
+                    </ul>
+
+                    <div class="accordion-header" id="Category 2">
+                         Category 2
+                    </div>
+                    <ul class="accordion-body">
+                         <li>
+                              <input type="checkbox"  id="kpilibrary3" belong="Category 2"/>
+                              <h3 title="KPI1">KPI 3</h3>
+                              <p title="Description1">
+                                   Description
+                              </p>
+                         </li>
+                    </ul>
+               </div>
+               <div class="right">
+                    <ul class="library-chosen-kpi" id="library-chosen-kpi">
+
+                    </ul>
+                    <div>
+                         <a class="btn" id="library-cancel">Cancel</a>
+                         <a class="btn btn-primary" id="library-add">Add</a>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>
 
 <script type="text/javascript">
-     $(document).ready(function(){
-             MANAGE.init();
-             MANAGE.kpi.init();
+     $(document).ready(function() {
+          MANAGE.init();
+          MANAGE.kpi.init();
      })
 </script>

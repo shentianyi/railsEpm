@@ -22,14 +22,14 @@ MANAGE.kpi.init=function(){
         $("#kpi-library>div").slideDown("3000");
         $.ajax(
             {
-                url:"/admin/kpi_category_templates",
+                url:"/kpi_categories/template",
                 dataType:"json",
                 success:function(data){
                         var category_id;
                         for(var i=0;i<data.length;i++){
-                            category_id = data[i];
+                            category= data[i];
                             $("#kpi-library-inner-left")
-                                .append($("<div />").addClass("accordion-header").attr("title",category_id).attr("id",category_id).text(category_id))
+                                .append($("<div />").addClass("accordion-header").attr("title",category.name).attr("id",category.id).text(category.name))
                                 .append($("<ul />").addClass("accordion-body"));
                         }
                 }
@@ -239,19 +239,18 @@ MANAGE.kpi.library.init=function(){
             var category_id=$(this).attr("id");
             $.ajax(
                 {
-                    url:"/admin/kpi_templates/categoried/"+category_id,
-                    data:{id:category_id},
-                    dateType:"json",
+                    url:"/kpis/template/"+category_id,
+                    dataType:"json",
                     success:function(data){
-                            var kpi_id;
-                            var kpi_desc;
+                           // var kpi_id;
+                        //    var kpi_desc;
                             for(var i=0;i<data.length;i++){
-                                kpi_id = data[i].name;
-                                kpi_desc = data[i].description;
+                        //        kpi_id = data[i].name;
+                          //      kpi_desc = data[i].description;
                                 $(this).next(".accordion-body").append($("<li />")
-                                    .append($("<input type='checkbox'/>").attr("id",kpi_id).attr("belong",category_id))
-                                    .append($("<h3 />").attr("title",kpi_id).text(kpi_id))
-                                    .append($("<p />").attr("title",kpi_desc).text(kpi_desc))
+                                    .append($("<input type='checkbox'/>").attr("id",data[i].id).attr("belong",data[i].admin_kpi_category_template_id))
+                                    .append($("<h3 />").attr("title",data[i].name).text(data[i].id))
+                                    .append($("<p />").attr("title",data[i].description).text(data[i].description))
                                 );
                             }
                     }

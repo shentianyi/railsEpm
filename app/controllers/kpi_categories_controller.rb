@@ -27,10 +27,18 @@ class KpiCategoriesController < ApplicationController
   def destroy
     msg=Message.new
     if @category and @category.kpi_quantity==0
-     msg.result=@category.destroy
-     else
-       msg.content="类别不可删除，包含KPI"
+    msg.result=@category.destroy
+    else
+      msg.content="类别不可删除，包含KPI"
     end
     render :json=>msg
+  end
+
+  def template
+    @admin_kpi_category_templates = Admin::KpiCategoryTemplate.all
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @admin_kpi_category_templates }
+    end
   end
 end

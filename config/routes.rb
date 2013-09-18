@@ -27,6 +27,7 @@ IFEpm::Application.routes.draw do
       post :assign
       get :get_by_category
       post :import
+      get :template
     end
     member do
       get :assign
@@ -36,6 +37,7 @@ IFEpm::Application.routes.draw do
   resources :kpi_categories do
     collection do
       put :update
+      get :template
     end
   end
 

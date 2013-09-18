@@ -101,12 +101,24 @@ class KpisController < ApplicationController
               formula.gsub!(Regexp.new("\\[#{item}\\]"),"[#{check[item]}]")
             end
             kpi= generate_kpi_by_template t,category,nil
-            check[kpi_id]=kpi.id
+          check[kpi_id]=kpi.id
           end
         end
       end
     end
     render :json=>msg
+  end
+
+  def template
+    @admin_kpi_templates= if category=Admin::KpiCategoryTemplate.find(params[:id])
+          category.admin_kpi_templates
+        else
+          []
+    end
+    respond_to do |format|
+      format.html {render 'index'}
+      format.json { render json: @admin_kpi_templates }
+    end
   end
 
   private
