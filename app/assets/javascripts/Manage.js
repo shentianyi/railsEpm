@@ -26,7 +26,7 @@ MANAGE.iCheck_init=function(){
         checkboxClass: 'icheckbox_minimal-aero'
     });
     $("input[type='checkbox']").iCheck('uncheck');
-    $("#manage-sort-list").on("ifChanged","input[type='checkbox']",function(){
+    $("body").on("ifChanged","#manage-sort-list","input[type='checkbox']",function(){
         if(!$(this).parent().hasClass("checked")){
             MANAGE.totalChecked+=1;
             total_check_listener();
@@ -36,12 +36,12 @@ MANAGE.iCheck_init=function(){
             total_check_listener();
         }
     });
-    $("#manage-total-check").on("ifChecked",function(){
+    $("body").on("ifChecked","#manage-total-check",function(){
         $("#right-list-top-control>a").css("display","inline-block")
-    }).on("ifUnchecked",function(){
+    }).on("ifUnchecked","#manage-total-check",function(){
             $("#right-list-top-control>a").css("display","none")
         });
-    $("#manage-total-check").on("ifClicked",function(){
+    $("body").on("ifClicked","#manage-total-check",function(){
         if(!$(this).parent().hasClass("checked")){
             $("#manage-sort-list input[type='checkbox']").not(":checked").iCheck("check");
         }
