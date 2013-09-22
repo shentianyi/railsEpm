@@ -27,7 +27,7 @@ MANAGE.kpi.init=function(){
                 success:function(data){
                         var category_id;
                         for(var i=0;i<data.length;i++){
-                            category= data[i];
+                            var category= data[i];
                             $("#kpi-library-inner-left")
                                 .append($("<div />").addClass("accordion-header").attr("title",category.name).attr("id",category.id).text(category.name))
                                 .append($("<ul />").addClass("accordion-body"));
@@ -38,6 +38,7 @@ MANAGE.kpi.init=function(){
     });
     $("#manage-edit-target").text($("#manage-left-menu li.active").find("a").text());
     MANAGE.kpi.library.init();
+
 }
 MANAGE.kpi.kpi_for_calculate=[];
 
@@ -89,6 +90,8 @@ MANAGE.kpi.kpi_add_box_bind=function(){
         var newValId = oldValId + valId;
         $("#calcuType-input").val(newVal);
         $("#takeCal").attr("cal", newValId);
+        $("#calcuType-input")[0].selectionStart=$("#calcuType-input").val().length;
+        $("#calcuType-input").focus();
     });
     $("body").on("keyup","#calcuType-input",function(event){
         var object=adapt_event(event).target;
@@ -111,6 +114,7 @@ MANAGE.kpi.kpi_add_box_bind=function(){
 MANAGE.kpi.kpi_add_clear=function(){
     $("#manage-kpi-add input").val("");
     $("#manage-kpi-add select").val("").trigger('chosen:updated');
+    $("#manage-kpi-add textarea").val("");
     $("#manage-kpi-add textarea").val("");
     if($("#is-calcu-check").prop("checked")){
         $("#is-calcu-check").iCheck("uncheck")
@@ -289,6 +293,9 @@ MANAGE.kpi.library.init=function(){
                                     .append($("<h3 />").attr("title",data[i].name).text(data[i].name))
                                     .append($("<p />").attr("title",data[i].description).text(data[i].description))
                                 );
+                                if(data[i].is_calculated){
+                                    header.next(".accordion-body li").append($("<i />").addClass("icon-lightbulb").attr("title",data[i].formula_string))
+                                }
                             }
                             $("input[type='checkbox']").iCheck({
                                 checkboxClass: 'icheckbox_minimal-aero'

@@ -33,6 +33,7 @@ DATE_PICKER.date_picker_template.prototype={
                 minViewMode: this.minViewMode,
                 minView:this.minView,
                 initialDate:this.initialDate
+
             });
         }
         else{

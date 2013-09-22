@@ -128,6 +128,7 @@ MANAGE.item_drag.prototype={
         if($("#manage-sort-list").find("#"+id).find("input[type='checkbox']").prop("checked")){
             MANAGE.totalChecked-=1;
             total_check_listener();
+            MANAGE.judge_kpi_count();
         }
         $("#manage-sort-list").find("#"+id).remove();
         $("#manage-sort-list").find(".sortable-placeholder").remove();

@@ -96,6 +96,9 @@ ENTRY.datepicker.init=function(){
         if($("#entry-date-picker").val().length>0){
             var target=$("#entry-date-picker").val();
             $("#entry-date-picker").val(entry.minus(target));
+            if(interval!="90"){
+                $("#entry-date-picker").datepicker("update",entry.minus(target));
+            }
             ENTRY.datepicker.extra_convert(interval);
             ENTRY.datepicker.post();
         }
@@ -104,6 +107,9 @@ ENTRY.datepicker.init=function(){
         if($("#entry-date-picker").val().length>0){
             var target=$("#entry-date-picker").val();
             $("#entry-date-picker").val(entry.plus(target));
+            if(interval!="90"){
+                $("#entry-date-picker").datepicker("update",entry.plus(target));
+            }
             ENTRY.datepicker.extra_convert(interval);
             ENTRY.datepicker.post();
         }

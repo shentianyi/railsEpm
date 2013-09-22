@@ -213,11 +213,11 @@ MANAGE.manage_menu_left_edit.prototype={
             success : function(data) {
                 if(data){
                     $("#manage-left-menu li.active>a").text(name);
-                    this.edit_hide();
                     $("#manage-edit-target").text(name);
                 }
             }
         });
+        this.edit_hide();
     },
     edit_hide:function(){
         $("#manage-edit-target").css("display","inline-block");

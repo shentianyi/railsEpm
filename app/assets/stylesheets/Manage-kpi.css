@@ -68,7 +68,7 @@
     position:absolute;
     z-index:10;
     left:auto;
-    width:15%;
+    width:14%;
     top:3px;
     display:none;
 }
@@ -344,6 +344,19 @@
     text-overflow:ellipsis;
     overflow:hidden;
     white-space:nowrap;
+}
+.kpi-library-inner>.left ul li>i{
+    position:absolute;
+    right:6px;
+    top:9px;
+    color:#5fa9da;
+    font-size:16px;
+    pointer-events:auto;
+    cursor:default;
+    transition:color 0.55s ease-out;
+}
+.kpi-library-inner>.left ul li>i:hover{
+    color:#F5A133;
 }
 /*****************************************************************  (right part)
 *********************************************************************/

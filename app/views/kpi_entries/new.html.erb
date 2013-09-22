@@ -16,7 +16,7 @@
         <li class="<%= 'active' if @f==KpiFrequency::Quarterly%>" interval="400" show_section="month">
             <a  href="/kpi_entries/new?f=<%= KpiFrequency::Quarterly%>">Quarter</a>
         </li>
-        <li class="<%= 'active' if @f==KpiFrequency::Yearly%>" interval="500" show_section="month">
+        <li class="<%= 'active' if @f==KpiFrequency::Yearly%>" interval="500" show_section="year">
             <a   href="/kpi_entries/new?f=<%= KpiFrequency::Yearly%>" >Year</a>
         </li>
 </ul>
