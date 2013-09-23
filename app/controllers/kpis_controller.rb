@@ -81,13 +81,11 @@ class KpisController < ApplicationController
     ActiveRecord::Base.transaction do
       if template_category= Admin::KpiCategoryTemplate.find_by_id(params[:category])
         count=KpiCategory.accessible_by(current_ability).where(:name=>template_category.name).count
-     
-        name = count==0 ? template_category.name : "#{template_category.name}_#{count+1}"  
-         puts "#{count}--#{name}"
+        name = count==0 ? template_category.name : "#{template_category.name}_#{SecureRandom.uuid}"
         category=KpiCategory.new(:name=>name,:description=>template_category.description)
         category.tenant=current_tenant
 
-        check={} 
+        check={}
         params[:kpis].each do |kpi_id|
           t= Admin::KpiTemplate.find_by_id(kpi_id)
           puts "#{t.to_json}"
@@ -100,14 +98,10 @@ class KpisController < ApplicationController
               kpi.save
               check[item]=kpi.id
               end
-              puts "#{item}--#{item.class}"
-              puts "[#{check[item]}]"
-              puts "#{check}"
               formula.gsub!(Regexp.new("\\[#{item}\\]"),"[#{check[item]}]")
             end
           end
           kpi= generate_kpi_by_template t,category,formula
-         
           kpi.save
           check[kpi_id]=kpi.id
         end
