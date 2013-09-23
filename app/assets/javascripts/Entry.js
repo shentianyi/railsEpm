@@ -78,17 +78,24 @@ ENTRY.init=function(){
 
 ENTRY.datepicker.init=function(){
     var interval=$("#entry-left-menu li.active").attr("interval");
-    $("#entry-date-picker").datepicker().on("changeDate", function () {
-        if (interval == "200") {
-            var week = $(".datepicker").find(".active").prevAll(".cw").text();
-            $("#entry-date-extra").text("Week: " + week).css("left","127px");
-        }
-        else if (interval == "400") {
-            var quarter = new Date($(this).val()).monthToQuarter();
-            $("#entry-date-extra").text("Quarter: " + quarter);
-        }
-        ENTRY.datepicker.post();
-    });
+    if(interval=="90"){
+        $("#entry-date-picker").datetimepicker().on("changeDate", function () {
+            ENTRY.datepicker.post();
+        });
+    }
+    else{
+        $("#entry-date-picker").datepicker().on("changeDate", function () {
+            if (interval == "200") {
+                var week = $(".datepicker").find(".active").prevAll(".cw").text();
+                $("#entry-date-extra").text("Week: " + week).css("left","127px");
+            }
+            else if (interval == "400") {
+                var quarter = new Date($(this).val()).monthToQuarter();
+                $("#entry-date-extra").text("Quarter: " + quarter);
+            }
+            ENTRY.datepicker.post();
+        });
+    }
     new DATE_PICKER[interval]("#entry-date-picker").datePicker();
     var entry=new ENTRY.datepicker[interval]();
     $("#entry-minus").on("click",function(){
@@ -99,7 +106,7 @@ ENTRY.datepicker.init=function(){
                 $("#entry-date-picker").datepicker("update",entry.minus(target));
             }
             ENTRY.datepicker.extra_convert(interval);
-
+            ENTRY.datepicker.post()
         }
     });
 
@@ -111,7 +118,7 @@ ENTRY.datepicker.init=function(){
                 $("#entry-date-picker").datepicker("update",entry.plus(target));
             }
             ENTRY.datepicker.extra_convert(interval);
-
+            ENTRY.datepicker.post()
         }
     });
 }
@@ -199,6 +206,7 @@ ENTRY.datepicker["500"]=function(){
     }
 }
 ENTRY.datepicker.post=function(){
+    console.log("here")
     var interval=$("#entry-left-menu li.active").attr("interval");
     var date_original=$("#entry-date-picker").val();
     var post_date=HIGH_CHART.postPrepare(date_original,interval);
