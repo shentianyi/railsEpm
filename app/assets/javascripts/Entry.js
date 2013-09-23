@@ -206,7 +206,6 @@ ENTRY.datepicker["500"]=function(){
     }
 }
 ENTRY.datepicker.post=function(){
-    console.log("here")
     var interval=$("#entry-left-menu li.active").attr("interval");
     var date_original=$("#entry-date-picker").val();
     var post_date=HIGH_CHART.postPrepare(date_original,interval);
@@ -225,6 +224,7 @@ ENTRY.datepicker.post=function(){
                var color_style=percent>100 ? "#55cd5e" : (percent==100 ? "#5FA9DA" : "#ed5959");
                $(this).parent().next().css("color",color_style);
             });
+            ENTRY.resize_sort_table();
         }
     });
 }
