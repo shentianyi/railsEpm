@@ -218,6 +218,7 @@
     font-size:13px;
     font-weight:lighter;
     font-family:"open-sans";
+    background-color:white;
 }
 /* btn */
 .manage-kpi-add>div>.btn{

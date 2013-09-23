@@ -122,8 +122,8 @@ function prepare_form_chart() {
             kpi : kpi,
             average:method=="0",
             entity_group: view,
-            startTime : HIGH_CHART.postPrepare(begin_time,interval) ,
-            endTime : HIGH_CHART.postPrepare(end_time,interval),
+            startTime : standardParse(begin_time).date.toISOString() ,
+            endTime : standardParse(end_time).date.toISOString(),
             interval:interval
         },function(msg){
             remove_loading()
@@ -348,16 +348,14 @@ function change_interval(option) {
         }
         else {
             var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
-            option.start="sadsa"
-            console.log(option)
             show_loading(top,0,0,0);
             $.ajax({url:'/kpi_entries/analyse',
             data:{
                 kpi : series_object.kpi_id,
                 average:series_object.method=="0",
                 entity_group: series_object.view,
-                startTime : HIGH_CHART.postPrepare(series_object.begin_time,option.interval) ,
-                endTime : HIGH_CHART.postPrepare(series_object.end_time,option.interval),
+                startTime : standardParse(series_object.begin_time).date.toISOString() ,
+                endTime : standardParse(series_object.end_time).date.toISOString(),
                 interval: option.interval
             },
             type:'POST',
