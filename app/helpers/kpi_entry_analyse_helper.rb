@@ -52,7 +52,6 @@ module KpiEntryAnalyseHelper
           current_data[k]=(v/count).round(2)
         end
       end
-      puts params
       return {:current=>current_data.values,:target=>target_data.values,:unit=>unit_data.values}
     end
     return nil

@@ -2,22 +2,22 @@
 <ul class="entry-left-menu" id="entry-left-menu">
         <li>KPI Entry</li>
         <li class="<%= 'active' if @f==KpiFrequency::Hourly%>" interval="90" show_section="hour">
-            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Hourly%>">Hour</a>
+            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Hourly%>">Hourly</a>
         </li>
         <li class="<%= 'active' if @f==KpiFrequency::Daily%>" interval="100" show_section="day">
-            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Daily%>">Day</a>
+            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Daily%>">Daily</a>
         </li>
         <li class="<%= 'active' if @f==KpiFrequency::Weekly%>" interval="200" show_section="day">
-            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Weekly%>">Week</a>
+            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Weekly%>">Weekly</a>
         </li>
         <li class="<%= 'active' if @f==KpiFrequency::Monthly%>" interval="300" show_section="month">
-            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Monthly%>">Month</a>
+            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Monthly%>">Monthly</a>
         </li>
         <li class="<%= 'active' if @f==KpiFrequency::Quarterly%>" interval="400" show_section="month">
-            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Quarterly%>">Quarter</a>
+            <a  href="/kpi_entries/new?f=<%= KpiFrequency::Quarterly%>">Quarterly</a>
         </li>
         <li class="<%= 'active' if @f==KpiFrequency::Yearly%>" interval="500" show_section="year">
-            <a   href="/kpi_entries/new?f=<%= KpiFrequency::Yearly%>" >Year</a>
+            <a   href="/kpi_entries/new?f=<%= KpiFrequency::Yearly%>" >Yearly</a>
         </li>
 </ul>
 
