@@ -79,6 +79,8 @@ MANAGE.kpi.kpi_add_box_bind=function(){
         var newValId = oldValId + sign;
         $("#calcuType-input").val(newVal);
         $("#takeCal").attr("cal", newValId);
+        $("#calcuType-input")[0].selectionStart=$("#calcuType-input").val().length;
+        $("#calcuType-input").focus();
     });
     $("#is_calcu_relate_chosen .chosen-results").on("click","li",function(){
         var order=parseInt($(this).attr("data-option-array-index"));
