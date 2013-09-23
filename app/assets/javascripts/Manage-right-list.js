@@ -26,6 +26,9 @@ MANAGE.item_remove.prototype={
             success : function(data) {
                 if(data.result) {
                     $("#manage-sort-list").find("#"+id).remove();
+                    MANAGE.totalChecked-=1;
+                    total_check_listener();
+                    MANAGE.judge_kpi_count();
                 } else {
                     MessageBox(data.content,"top","warning");
                 }
@@ -46,10 +49,10 @@ function manage_item_remove(){
         $("#manage-sort-list :checked").each(function(){
             var id=$(this).parent().parent().attr("id");
             MANAGE[MANAGE.type].item_remove.remove_complete(id);
-            MANAGE.totalChecked-=1;
-            total_check_listener();
+//            MANAGE.totalChecked-=1;
+//            total_check_listener();
         });
-        MANAGE.judge_kpi_count();
+//        MANAGE.judge_kpi_count();
     }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////   item edit
@@ -69,22 +72,22 @@ function category_item_edit(){
     this.edit_target="manage-kpi-target";
     this.url='/kpis';
     this.complete=function(option){
-        $.ajax({
-            url : this.url,
-            type : 'PUT',
-            data : {
-                kpi : {
-                    id : option.id,
-                    target : option.target
-                }
-            },
-            success : function(data) {
-                option.edit_input.prevAll(".can-change").text( option.target );
-                option.edit_input.css("display","none");
-            }
-        });
-//        option.edit_input.prevAll(".can-change").text( option.target );
-//        option.edit_input.css("display","none");
+//        $.ajax({
+//            url : this.url,
+//            type : 'PUT',
+//            data : {
+//                kpi : {
+//                    id : option.id,
+//                    target : option.target
+//                }
+//            },
+//            success : function(data) {
+//                option.edit_input.prevAll(".can-change").text(option.target).attr("title",option.target);
+//                option.edit_input.css("display","none");
+//            }
+//        });
+        option.edit_input.prevAll(".can-change").text( option.target );
+        option.edit_input.css("display","none");
     },
     this.edit_check=function(object){
          clearNoNumZero(object);
@@ -99,26 +102,6 @@ MANAGE.category.item_edit=new category_item_edit();
 
 function manage_item_edit(){
     MANAGE[MANAGE.type].item_edit.edit_show();
-    $("#manage-sort-list table").find("input[type='text']").on("keydown",function(event){
-        var e = adapt_event(event).event;
-        if(e.keyCode==13){
-            var option={
-                id:$(e.target).attr("effect_on"),
-                belong:$("#manage-left-menu li.active").attr("number"),
-                target:$(e.target).val(),
-                edit_input:$(e.target)
-            }
-            MANAGE[MANAGE.type].item_edit.complete(option)
-        }
-        else if(e.keyCode==27){
-            $(e.target).css("display","none");
-        }
-    }).on("keyup",function(event){
-            var e = adapt_event(event).event;
-            if(MANAGE[MANAGE.type].item_edit.edit_check){
-                MANAGE[MANAGE.type].item_edit.edit_check(e.target);
-            }
-    });
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////   item drag
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

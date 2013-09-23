@@ -269,13 +269,13 @@ nav ul li a:hover .nav-entry-kpi{
     content:'last 4 weeks';
 }
 .date-picker-shortcut[interval='month']:after{
-    content:'last 6 months';
+    content:'last 3 months';
 }
 .date-picker-shortcut[interval='quarter']:after{
     content:'last 4 quarters';
 }
 .date-picker-shortcut[interval='year']:after{
-    content:'last 10 years';
+    content:'last 3 years';
 }
 /************************************************* date input
 ********************************************************************/

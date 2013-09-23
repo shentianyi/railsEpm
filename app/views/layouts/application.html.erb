@@ -8,10 +8,10 @@
      </head>
      <body>
           <%= render :partial=>'shares/user_aside'%>
-          <div class="wrap-page">
+          <article class="wrap-main" id="wrap-main">
                <%= render :partial=>'shares/menu'%>
                <%= yield %>
-          </div>
+          </article>
           <%= render :partial=>'shares/message_box'%>
            <%= render :partial=>'shares/slide_box'%>
      </body>
