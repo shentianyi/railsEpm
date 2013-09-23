@@ -90,7 +90,7 @@ ENTRY.datepicker.init=function(){
         }
         ENTRY.datepicker.post();
     });
-    new DATE_PICKER[interval]("#entry-date-picker",false).datePicker();
+    new DATE_PICKER[interval]("#entry-date-picker").datePicker();
     var entry=new ENTRY.datepicker[interval]();
     $("#entry-minus").on("click",function(){
         if($("#entry-date-picker").val().length>0){

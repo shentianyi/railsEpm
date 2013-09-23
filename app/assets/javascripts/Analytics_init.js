@@ -37,7 +37,7 @@ function init_analytics() {
                 $(this).next().text("quarter " + quarter);
             }
         });
-        new DATE_PICKER[interval](target,true).datePicker();
+        new DATE_PICKER[interval](target,"date").datePicker();
     });
     resize_chart.body();
     resize_chart.container();
@@ -182,7 +182,7 @@ function prepare_form_chart() {
                     chartSeries.addCount();
                 }
                 limit_pointer_number(option);
-                clear_chart_condition();
+//                clear_chart_condition();
             }
             else{
                 MessageBox("sorry , something wrong" , "top", "warning") ;

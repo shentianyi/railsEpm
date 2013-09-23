@@ -219,10 +219,10 @@ function post_kpi(option){
                      MANAGE.totalChecked-=1;
                      total_check_listener();
             }
-            MANAGE.sort_init();
-            MANAGE.resize_sort_table();
-    });
 
+    });
+    MANAGE.sort_init();
+    MANAGE.resize_sort_table();
     $("#manage-kpi-add").css("left","-50px");
     $("#manage-right-content").css("left","150px");
     MANAGE.kpi.kpi_add_clear();
