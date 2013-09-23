@@ -46,7 +46,7 @@ MANAGE.manage_menu_left_add.prototype={
                       $("#manage-left-menu").append($("<li />").attr("title",name).attr("number", data.object)
                         .append($("<i />").addClass("icon-trash icon-item")).append($("<a href='"+href + data.object + "'/>").text(name)));
                       $("#manage-menu-add input").val("");
-                      MANAGE.manage_menu_left_add.add_hide();
+                      MANAGE.manage_menu_left_add.prototype.add_hide();
                   } else {
                       MessageBox(data.content,"top","warning");
                   }

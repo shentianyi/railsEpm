@@ -14,10 +14,33 @@ MANAGE.init=function(){
     MANAGE.iCheck_init();
     MANAGE.sort_init();
     MANAGE.resize_sort_table();
-    $("#manage-sort-list li").on("resize",function(){
+    $("body").on("resize","#manage-sort-list li",function(){
         MANAGE.resize_sort_table()
     });
     $("body").on("click","#manage-item-remove",manage_item_remove).on("click","#manage-item-edit",manage_item_edit);
+    if($("#manage-item-edit").length>0){
+        $("#manage-sort-list table").find("input[type='text']").on("keydown",function(event){
+            var e = adapt_event(event).event;
+            if(e.keyCode==13){
+                var option={
+                    id:$(e.target).attr("effect_on"),
+                    belong:$("#manage-left-menu li.active").attr("number"),
+                    target:$(e.target).val(),
+                    edit_input:$(e.target)
+                }
+                console.log("w")
+                MANAGE[MANAGE.type].item_edit.complete(option)
+            }
+            else if(e.keyCode==27){
+                $(e.target).css("display","none");
+            }
+        }).on("keyup",function(event){
+                var e = adapt_event(event).event;
+                if(MANAGE[MANAGE.type].item_edit.edit_check){
+                    MANAGE[MANAGE.type].item_edit.edit_check(e.target);
+                }
+         });
+    }
     MANAGE.judge_kpi_count();
 }
 
