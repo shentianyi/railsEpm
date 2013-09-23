@@ -225,6 +225,9 @@ ENTRY.datepicker.post=function(){
                $(this).parent().next().css("color",color_style);
             });
             ENTRY.resize_sort_table();
+            $("#entry-sort-list li").on("resize",function(){
+                ENTRY.resize_sort_table()
+            });
         }
     });
 }
