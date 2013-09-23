@@ -222,7 +222,6 @@
     margin-top:15px;
 }
 .manage-sort-list li{
-    display:inline-block;
     width:97%;
     height:80px;
     border:1px solid #ddd;
@@ -231,6 +230,7 @@
     -moz-border-radius:3px;
     margin-bottom:15px;
     position:relative;
+
 }
 .manage-sort-list li>p{
     font-family:"Arial";
@@ -240,13 +240,14 @@
     margin:0;
     padding-left:5px;
     width:15px;
-    display:inline-block;
+    float:left;
     height:80px;
     line-height:80px;
     cursor:move
 }
 .manage-sort-list li>.icheckbox_minimal-aero{
-    top:1px;
+    top:31px;
+    float:left;
 }
 .manage-sort-list li>table{
     position:absolute;

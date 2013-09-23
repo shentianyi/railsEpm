@@ -14,7 +14,7 @@ MANAGE.init=function(){
     MANAGE.iCheck_init();
     MANAGE.sort_init();
     MANAGE.resize_sort_table();
-    $("body").on("resize","#manage-sort-list li",function(){
+    $("#manage-sort-list li").on("resize",function(){
         MANAGE.resize_sort_table()
     });
     $("body").on("click","#manage-item-remove",manage_item_remove).on("click","#manage-item-edit",manage_item_edit);

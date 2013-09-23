@@ -13,10 +13,9 @@ ENTRY.datepicker={};
 
 
 ENTRY.init=function(){
-   ENTRY.datepicker.init();
    $("#entry-date-picker").val(new Date().toWayneString()[$("#entry-left-menu li.active").attr("show_section")]);
+   ENTRY.datepicker.init();
    ENTRY.datepicker.extra_convert($("#entry-left-menu li.active").attr("interval"));
-   ENTRY.datepicker.post();
    ENTRY.resize_sort_table();
    $("#entry-sort-list li").on("resize",function(){
         ENTRY.resize_sort_table()
@@ -100,9 +99,10 @@ ENTRY.datepicker.init=function(){
                 $("#entry-date-picker").datepicker("update",entry.minus(target));
             }
             ENTRY.datepicker.extra_convert(interval);
-            ENTRY.datepicker.post();
+
         }
     });
+
     $("#entry-plus").on("click",function(){
         if($("#entry-date-picker").val().length>0){
             var target=$("#entry-date-picker").val();
@@ -111,7 +111,7 @@ ENTRY.datepicker.init=function(){
                 $("#entry-date-picker").datepicker("update",entry.plus(target));
             }
             ENTRY.datepicker.extra_convert(interval);
-            ENTRY.datepicker.post();
+
         }
     });
 }

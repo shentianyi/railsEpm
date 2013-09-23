@@ -207,7 +207,7 @@ function post_kpi(option){
                 $("#is-calcu-relate").append($("<option />").attr("value",id).text(option.name));
             }
             MANAGE.judge_kpi_count();
-            $("#manage-sort-list input[type='checkbox'  ]").iCheck({
+            $("#manage-sort-list input[type='checkbox']").iCheck({
                   checkboxClass: 'icheckbox_minimal-aero'
             });
             $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
@@ -219,13 +219,15 @@ function post_kpi(option){
                      MANAGE.totalChecked-=1;
                      total_check_listener();
             }
-
-    });
-    MANAGE.sort_init();
-    MANAGE.resize_sort_table();
-    $("#manage-kpi-add").css("left","-50px");
-    $("#manage-right-content").css("left","150px");
-    MANAGE.kpi.kpi_add_clear();
+            });
+            MANAGE.sort_init();
+            MANAGE.resize_sort_table();
+            $("#manage-kpi-add").css("left","-50px");
+            $("#manage-right-content").css("left","150px");
+            MANAGE.kpi.kpi_add_clear();
+            $("#manage-sort-list li").on("resize",function(){
+                MANAGE.resize_sort_table()
+            });
         }
         else{
             MessageBox(data.content,"top","warning");
@@ -273,7 +275,9 @@ function post_kpi(option){
 //    $("#manage-kpi-add").css("left","-50px");
 //    $("#manage-right-content").css("left","150px");
 //    MANAGE.kpi.kpi_add_clear();
-
+//    $("#manage-sort-list li").on("resize",function(){
+//        MANAGE.resize_sort_table()
+//    });
 
 
 }
