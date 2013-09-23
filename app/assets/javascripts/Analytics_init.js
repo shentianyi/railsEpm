@@ -26,19 +26,30 @@ function init_analytics() {
         var target="#analy-begin-time,#analy-end-time";
         $(target).val("");
         $(".index-date-extra-info").text("");
-        $("#analy-begin-time,#analy-end-time").datepicker().on("changeDate", function () {
+        new DATE_PICKER[interval](target,"date").datePicker();
+    });
+    $("body").on("change","#analy-begin-time",function(){
+        var interval = $("#chart-kpi").find(":selected").attr("interval");
+        if (interval == "200") {
+            var week=standardParse($(this).val()).date.toWeekNumber();
+            $(this).next().text("week " + week);
+        }
+        else if (interval == "400") {
+            var quarter=standardParse($(this).val()).date.monthToQuarter();
+            $(this).next().text("quarter " + quarter);
+        }
+    }).on("change","#analy-end-time",function(){
             var interval = $("#chart-kpi").find(":selected").attr("interval");
             if (interval == "200") {
-                var week = $(".datepicker").find(".active").prevAll(".cw").text();
+                var week=standardParse($(this).val()).date.toWeekNumber();
                 $(this).next().text("week " + week);
             }
             else if (interval == "400") {
-                var quarter = new Date($(this).val()).monthToQuarter();
+                var quarter=standardParse($(this).val()).date.monthToQuarter();
                 $(this).next().text("quarter " + quarter);
             }
-        });
-        new DATE_PICKER[interval](target,"date").datePicker();
     });
+
     resize_chart.body();
     resize_chart.container();
     $("#chart-group").prepend($("<option />").attr("value", ""));
@@ -65,7 +76,6 @@ function init_analytics() {
         });
     })
 }
-
 function analytic_control_condition_visible() {
     var open_state = $("#analytic-control-condition-visible").attr("open");
     if (open_state) {

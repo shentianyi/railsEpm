@@ -62,7 +62,7 @@ DATE_PICKER.date_picker_template.prototype={
                 if( shortcut!=undefined && $(".table-condensed").attr("already-have-shortcut")!="yes"){
                     $(".table-condensed").attr("already-have-shortcut","yes").find("tfoot")
                         .append($("<tr />")
-                          .append($("<th />").attr("colSpan",7).addClass("date-picker-shortcut").attr("interval",name)).bind("click",function(){date_shortcut(name,target)})
+                          .append($("<th />").attr("colSpan",7).addClass("date-picker-shortcut").attr("interval",name)).bind("click",function(){date_shortcut(name,target,shortcut)})
                     );
                 }
 
@@ -72,25 +72,27 @@ DATE_PICKER.date_picker_template.prototype={
             $(target).datepicker().one("show", function(){
                 $(".datepicker").find(".prev").text("").append($("<i />").addClass('icon-arrow-left'));
                 $(".datepicker").find(".next").text("").append($("<i />").addClass('icon-arrow-right'));
-                $(".datepicker-days").find(".active").parent().addClass("week-tr-active");
-                $(".datepicker").on("click",function(){
-                    $(".datepicker-days").find(".active").parent().addClass("week-tr-active");
-                });
                 if( shortcut!=undefined && $(".table-condensed").attr("already-have-shortcut")!="yes"){
                     if(name =="week"){
                         $(".datepicker-days").attr("week", "picker");
                         $(".table-condensed").attr("already-have-shortcut","yes").find("tfoot")
                             .append($("<tr />")
-                                .append($("<th />").attr("colSpan",8).addClass("date-picker-shortcut").attr("interval",name)).bind("click",function(){date_shortcut(name,target)})
+                                .append($("<th />").attr("colSpan",8).addClass("date-picker-shortcut").attr("interval",name)).bind("click",function(){date_shortcut(name,target,shortcut)})
                         );
                     }
                     else{
                         $(".table-condensed").attr("already-have-shortcut","yes").find("tfoot")
                             .append($("<tr />")
-                                .append($("<th />").attr("colSpan",7).addClass("date-picker-shortcut").attr("interval",name)).bind("click",function(){date_shortcut(name,target)})
+                                .append($("<th />").attr("colSpan",7).addClass("date-picker-shortcut").attr("interval",name)).bind("click",function(){date_shortcut(name,target,shortcut)})
                         );
                     }
                 }
+            });
+            $(target).datepicker().on("show", function(){
+                $(".datepicker-days").find(".active").parent().addClass("week-tr-active");
+                $(".datepicker").on("click",function(){
+                    $(".datepicker-days").find(".active").parent().addClass("week-tr-active");
+                });
             });
         }
     }
@@ -187,41 +189,78 @@ DATE_PICKER.shortcut=(
         var d=new Date()
         var today=d.toWayneString();
         var nearHour=new Date(d.setHours(d.getHours()-23)).toWayneString().hour;
-        var nearDay=new Date(d.setDate(d.getDate()-6)).toWayneString().hour;
-        var nearWeek=new Date(d.setDate(d.getDate()-7*3)).toWayneString().hour;
-        var nearMonth=new Date(d.setMonth(d.getMonth()-2)).toWayneString().hour;
-        var nearQuarter=new Date(d.setMonth(d.getMonth()-9)).toWayneString().hour;
-        var nearYear=new Date(d.setFullYear(d.getFullYear()-2)).toWayneString().hour;
+        var nearDay=new Date(d.setDate(d.getDate()-5)).toWayneString().day;
+        var nearWeek=new Date(d.setDate(d.getDate()-7*3+6)).toWayneString().day;
+        var nearMonth=new Date(d.setMonth(d.getMonth()-2)).toWayneString().month;
+        var nearQuarter=new Date(d.setMonth(d.getMonth()-3*2-1)).toWayneString().month;
+        var nearYear=new Date(d.setFullYear(d.getFullYear()-1)).toWayneString().year;
         return {
             hour:{
-                today:today.hour,
-                nearHour:nearHour
+                date:[nearHour,today.hour],
+                string:"Last 24 Hours",
+                update:function(target,value){
+                     $(target).datetimepicker("update",value);
+                }
             },
             day:{
-                today:today.day,
-                nearDay:nearDay
+                date:[nearDay,today.day],
+                string:"Last 7 Days",
+                update:function(target,value){
+                    $(target).datepicker("update",value);
+                }
             },
             week:{
-                today:today.day,
-                nearWeek:nearWeek
+                date:[nearWeek,today.day],
+                string:"Last 4 Weeks",
+                update:function(target,value){
+                    $(target).datepicker("update",value);
+                }
             },
             month:{
-                today:today.month,
-                nearMonth:nearMonth
+                date:[nearMonth,today.month],
+                string:"Last 3 Months",
+                update:function(target,value){
+                    $(target).datepicker("update",value);
+                }
             },
             quarter:{
-                today:today.month,
-                nearQuarter:nearQuarter
+                date:[nearQuarter,today.month],
+                string:"Last 4 Quarters",
+                update:function(target,value){
+                    $(target).datepicker("update",value);
+                }
             },
             year:{
-                today:today.year,
-                nearYear:nearYear
+                date:[nearYear,today.year],
+                string:"Last 3 Years",
+                update:function(target,value){
+                    $(target).datepicker("update",value);
+                }
             }
         }
     }()
 );
 
 
-function date_shortcut(name,target){
-    console.log("asd")
+function date_shortcut(name,target,shortcut){
+    var targetSplit=target.replace(",","").split("#"),
+        i;
+    if(shortcut=="date"){
+        for(i=1;i<targetSplit.length;i++){
+            $("#"+targetSplit[i]).val(DATE_PICKER.shortcut[name].date[i-1]);
+            DATE_PICKER.shortcut[name].update("#"+targetSplit[i],DATE_PICKER.shortcut[name].date[i-1]);
+        }
+    }
+    else if(shortcut=="string"){
+        for(i=1;i<targetSplit.length;i++){
+            $("#"+targetSplit[i]).val(DATE_PICKER.shortcut[name].string);
+        }
+    }
+    if(name=="hour"){
+        $(target).datetimepicker("hide");
+    }
+    else{
+        $(target).datepicker("hide");
+    }
 }
+
