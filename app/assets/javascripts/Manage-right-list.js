@@ -154,7 +154,7 @@ function category_item_drag(){
                 }
             },
             success : function(data) {
-                this.drag_complete(option.id);
+                MANAGE.item_drag.drag_complete(option.id);
             }
         });
 //        this.drag_complete(id);
