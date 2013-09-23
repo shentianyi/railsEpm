@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="stylesheets/wayne_sunny.css" rel="stylesheet">
+    <link href="stylesheets/_epm_base.css" rel="stylesheet">
+    <link href="stylesheets/font-awesome.min.css" rel="stylesheet">
+    <link href="stylesheets/chosen.css" rel="stylesheet">
+    <link href="stylesheets/aero.css" rel="stylesheet">
+    <link href="stylesheets/Manage.css" rel="stylesheet">
+    <link href="stylesheets/Manage-kpi.css" rel="stylesheet">
+    <link href="stylesheets/Manage-user.css" rel="stylesheet">
+    <title>if kpi</title>
+</head>
+<body>
+<aside class="left-user-setting" id="left-user-setting">
+    <div style="height:100%">
+        <a class="btn btn-primary btn-log-out">Log out</a>
+    </div>
+
+</aside>
+<article class="wrap-main" id="wrap-main">
+    <header>
+        <div class="user-portrait-background pull-left" state="close" id="user-portrait-background">
+            <div class="user-portrait-brand"></div>
+            <!--<div class="user-portrait-name">IF-EPM</div>-->
+        </div>
+        <nav class="pull-left">
+            <ul>
+                <li><a>
+                    <span>Get Started</span>
+                    <span class="nav-get-started"></span>
+                </a></li>
+                <li><a>
+                    <span>DashBoard</span>
+                    <span class="nav-dash-board"></span>
+                </a></li>
+                <li><a href="new-Analytics.html">
+                    <span>Analytics</span>
+                    <span class="nav-analytics"></span>
+                </a></li>
+                <li><a>
+                    <span>Reports</span>
+                    <span class='nav-report'></span>
+                </a></li>
+                <li class="relative">
+                    <a>
+                        <span>Manage</span>
+                        <span class='nav-manage'></span>
+                    </a>
+                    <ul class="nav-manage-sub">
+                        <li><a>KPIs</a></li>
+                        <li><a>Users</a></li>
+                        <li><a>Views</a></li>
+                        <li><a>Billings</a></li>
+                    </ul>
+                </li>
+                <li><a>
+                    <span>Entry KPIs</span>
+                    <span class="nav-entry-kpi"></span>
+                </a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+
+
+    <ul class="manage-left-menu" id="manage-left-menu" type="group">
+        <li>Manage User</li>
+        <li id="manage-menu-add">
+            <input type="text" />
+            <span><i class="icon-plus"></i> Group</span>
+            <p class="manage-add-tooltip">Enter: confirm <br />Esc: cancel</p>
+        </li>
+        <li class="active" title="Group1" number="1">
+            <i class="icon-trash icon-item"></i>
+            <a>Group1</a>
+        </li>
+        <li title="Group2" number="2">
+            <i class="icon-trash icon-item"></i>
+            <a >Group2</a>
+        </li>
+        <li title="Group3" number="3">
+            <i class="icon-trash icon-item"></i>
+            <a>Group3</a>
+        </li>
+    </ul>
+
+
+
+
+
+
+
+
+
+
+    <div class="manage-user-add" id="manage-user-add">
+        <i class="icon-remove" id="close-add-user"></i>
+        <div>
+            <input type="text" placeholder="* Name" id="new-user-name"/>
+            <input type="text" placeholder="* Email" id="new-user-mail"/>
+            <input type="password" placeholder="* Password" id="new-user-password"/>
+            <input type="password" placeholder="* Password Confirm" id="new-user-password-confirm"/>
+            <label>
+                <input type="radio" name="user-role" data-name="General"  data-role="1"  value="100" checked>
+                General
+            </label>
+            <label>
+                <input type="radio" name="user-role" data-name="Department Manager" data-role="2" value="200">
+                Department Manager
+            </label>
+            <label>
+                <input type="radio" name="user-role" data-name="General Manager" data-role="3" value="300">
+                General Manager
+            </label>
+            <label>
+                <input type="radio" name="user-role" data-name="Administrator" data-role="4" value="400">
+                Administrator
+            </label>
+            <input type="submit" value="Add" class="btn btn-primary" id="manage-user-add-new" />
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="manage-right-content" id="manage-right-content">
+        <div class="manage-btn-group" id="manage-btn-group">
+            <a class="btn btn-primary" id="add-user-show"><i class="icon-plus"></i> User</a>
+            <p id="manage-edit-target" ></p>
+            <i class="icon-pencil"></i>
+            <input type="text"/>
+            <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
+        </div>
+
+        <div class="manage-right-list">
+            <div class="right-list-top-control" id="right-list-top-control">
+                <input type="checkbox" id="manage-total-check"/>
+                <a class="btn" id="manage-item-remove">Delete</a>
+                <a class="btn" id="manage-user-edit">Edit</a>
+                <a class="btn btn-primary" id="manage-user-delivery">Assign KPI</a>
+            </div>
+
+
+            <ul id="manage-sort-list" class="manage-sort-list" >
+                <li id="1">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="group">
+                        <tr>
+                            <td >Wayne</td>
+                            <td >
+                                <span>General</span>
+
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>zixiao.wang@cz-tek.com</td>
+                            <td>Authority</td>
+                        </tr>
+                    </table>
+                </li>
+                <li id="2">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="group">
+                        <tr>
+                            <td >White</td>
+                            <td >General</td>
+                        </tr>
+                        <tr>
+                            <td>zixiao.wang@cz-tek.com</td>
+                            <td>Authority</td>
+                        </tr>
+                    </table>
+                </li>
+                <li id="3">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="group">
+                        <tr>
+                            <td >Jason</td>
+                            <td >General</td>
+
+                        </tr>
+                        <tr>
+                            <td>zixiao.wang@cz-tek.com</td>
+                            <td>Authority</td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+<div class="message-box" id="MessageBox">
+    <p></p>
+</div>
+<script src="javascripts/jquery-1.8.2.min.js"></script>
+<script src="javascripts/chosen.jquery.min.js"></script>
+<script src="javascripts/wayne-base.js"></script>
+<script src="javascripts/Template.js"></script>
+<script src="javascripts/brilliantech.base.js"></script>
+<script src="javascripts/jquery.ba-resize.min.js"></script>
+<script src="javascripts/jquery.icheck.min.js"></script>
+<script src="javascripts/jquery.sortable.min.js"></script>
+<script src="javascripts/Manage-left-menu.js"></script>
+<script src="javascripts/Manage-right-list.js"></script>
+<script src="javascripts/Manage.js"></script>
+<script src="javascripts/Manage-kpi.js"></script>
+<script src="javascripts/Manage-user.js"></script>
+<<script>
+    $(document).ready(function(){
+        MANAGE.init();
+        MANAGE.user.init();
+    })
+</script>
+</body>
+</html>

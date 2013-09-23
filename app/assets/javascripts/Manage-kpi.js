@@ -36,7 +36,6 @@ MANAGE.kpi.init=function(){
             }
         );
     });
-    $("#manage-edit-target").text($("#manage-left-menu li.active").find("a").text());
     MANAGE.kpi.library.init();
 
 }

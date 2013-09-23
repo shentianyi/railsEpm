@@ -28,7 +28,6 @@ MANAGE.init=function(){
                     target:$(e.target).val(),
                     edit_input:$(e.target)
                 }
-                console.log("w")
                 MANAGE[MANAGE.type].item_edit.complete(option)
             }
             else if(e.keyCode==27){

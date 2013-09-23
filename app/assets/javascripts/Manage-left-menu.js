@@ -249,7 +249,7 @@ MANAGE.group.edit=new group_edit();
 MANAGE.entity.edit=new entity_edit();
 
 MANAGE.left.manage_left_edit_init=function(){
-    $("#manage-edit-target").on("click",function(){
+    $("#manage-edit-target").text($("#manage-left-menu li.active").find("a").text()).on("click",function(){
         var name= $.trim($(this).text());
         MANAGE[MANAGE.type].edit.edit_show(name);
     });

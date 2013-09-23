@@ -41,8 +41,15 @@ function category_item_remove(){
 }
 category_item_remove.prototype=MANAGE.item_remove.prototype;
 category_item_remove.prototype.constructor=category_item_remove;
-
 MANAGE.category.item_remove=new category_item_remove();
+
+function group_item_remove(){
+    this.url='/users/';
+}
+group_item_remove.prototype=MANAGE.item_remove.prototype;
+group_item_remove.prototype.constructor=group_item_remove;
+
+MANAGE.group.item_remove=new group_item_remove();
 
 function manage_item_remove(){
     if(confirm("Confirm to delete")){
@@ -72,22 +79,22 @@ function category_item_edit(){
     this.edit_target="manage-kpi-target";
     this.url='/kpis';
     this.complete=function(option){
-//        $.ajax({
-//            url : this.url,
-//            type : 'PUT',
-//            data : {
-//                kpi : {
-//                    id : option.id,
-//                    target : option.target
-//                }
-//            },
-//            success : function(data) {
-//                option.edit_input.prevAll(".can-change").text(option.target).attr("title",option.target);
-//                option.edit_input.css("display","none");
-//            }
-//        });
-        option.edit_input.prevAll(".can-change").text( option.target );
-        option.edit_input.css("display","none");
+        $.ajax({
+            url : this.url,
+            type : 'PUT',
+            data : {
+                kpi : {
+                    id : option.id,
+                    target : option.target
+                }
+            },
+            success : function(data) {
+                option.edit_input.prevAll(".can-change").text(option.target).attr("title",option.target);
+                option.edit_input.css("display","none");
+            }
+        });
+//        option.edit_input.prevAll(".can-change").text( option.target );
+//        option.edit_input.css("display","none");
     },
     this.edit_check=function(object){
          clearNoNumZero(object);

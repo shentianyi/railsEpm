@@ -1,6 +1,6 @@
 /********************************************************************************************************* 分类系列
 *******************************************************************************************************************/
-.manage-left-menu li:first-of-type{
+.manage-left-menu[type="categoty"] li:first-of-type{
     text-align:center;
     font-weight:lighter;
     font-size:22px;
@@ -56,7 +56,7 @@
     padding-right:15px;
 }
 /*last column*/
-.manage-sort-list li>table.category tr td:last-of-type{
+.manage-sort-list li>table.category tr:first-of-type td:last-of-type{
     width:26%;
 
 }

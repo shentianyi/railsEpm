@@ -1,0 +1,105 @@
+/********************************************************************************************************* 分类系列
+*******************************************************************************************************************/
+.manage-left-menu[type="group"] li:first-of-type{
+    text-align:center;
+    font-weight:lighter;
+    font-size:22px;
+    color:#5FA9DA;
+    padding:32px 0 10px;
+}
+/********************************************************************************************************* 添加 User
+*******************************************************************************************************************/
+.manage-user-add{
+    position:absolute;
+    top:135px;
+    bottom:0px;
+    left:-50px;
+    width:200px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    background:rgba(251,251,251,0.8);
+    transition:left 0.35s ease-out;
+}
+.manage-user-add>i{
+    pointer-events:auto;
+    position:relative;
+    left:170px;
+    top:6px;
+    cursor:pointer;
+    font-size:18px;
+    color:rgba(0,0,0,0.25)
+}
+.manage-user-add>div{
+    position:relative;
+    top:15px;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+
+/*input*/
+.manage-user-add>div>input{
+    width:140px;
+    margin-left:25px;
+    margin-bottom:10px;
+    padding:5px 4px;
+    font-size:13px;
+    font-weight:lighter;
+    font-family:"open-sans";
+}
+/*radio*/
+.manage-user-add>div>label{
+    display:block;
+    color:rgba(0,0,0,0.5);
+    font-size:13px;
+    width:155px;
+    margin-bottom:5px;
+    padding-left:24px;
+}
+.manage-user-add>div>label:first-of-type{
+    margin-top:30px;
+}
+.manage-user-add>div>label>div.iradio_minimal-aero{
+    top:4px;
+}
+/* btn */
+.manage-user-add>div>.btn{
+    margin-top:45px;
+    width:133px;
+    margin-left:26px;
+    font-size:14px;
+}
+/*********************************************************************************************************  右边的列表
+*******************************************************************************************************************/
+.manage-sort-list li>table.group{
+    table-layout:fixed
+}
+.manage-sort-list li>table.group tr td{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    cursor:default;
+}
+.manage-sort-list li>table.group tr:first-of-type{
+    font-size:21px;
+    color:rgba(0,0,0,0.5);
+}
+.manage-sort-list li>table.group tr:first-of-type td{
+    padding:10px 0 0px;
+}
+/*first column*/
+.manage-sort-list li>table.group tr:first-of-type td:first-of-type{
+    color:#5FA9DA;
+    width:35%;
+    padding-right:10px;
+}
+/*last column*/
+.manage-sort-list li>table.group tr:first-of-type td:last-of-type{
+    width:26%;
+
+}
+.manage-sort-list li>table.group tr:nth-of-type(2){
+    color:rgba(0,0,0,0.3);
+    font-size:13px;
+}
