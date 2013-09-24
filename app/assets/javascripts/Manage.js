@@ -14,6 +14,7 @@ MANAGE.init=function(){
     MANAGE.iCheck_init();
     MANAGE.sort_init();
     MANAGE.resize_sort_table();
+    MANAGE.judge_kpi_count();
     $("#manage-sort-list li").on("resize",function(){
         MANAGE.resize_sort_table()
     });
@@ -40,7 +41,9 @@ MANAGE.init=function(){
                 }
          });
     }
-    MANAGE.judge_kpi_count();
+    $("input[type='radio']").iCheck({
+        radioClass: 'iradio_minimal-aero'
+    });
 }
 
 

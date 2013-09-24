@@ -118,7 +118,7 @@
     right:0px;
     overflow-x:hidden;
     overflow-y:auto;
-    transition:left 0.35s ease-out;
+    transition:left 0.35s ease-out,right 0.55s ease-out;
 }
 /**************************************************** 上角的按钮
 *****************************************************************/

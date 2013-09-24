@@ -72,9 +72,9 @@ DATE_PICKER.date_picker_template.prototype={
             $(target).datepicker().one("show", function(){
                 $(".datepicker").find(".prev").text("").append($("<i />").addClass('icon-arrow-left'));
                 $(".datepicker").find(".next").text("").append($("<i />").addClass('icon-arrow-right'));
+                $(".datepicker-days").attr("week", "picker");
                 if( shortcut!=undefined && $(".table-condensed").attr("already-have-shortcut")!="yes"){
                     if(name =="week"){
-                        $(".datepicker-days").attr("week", "picker");
                         $(".table-condensed").attr("already-have-shortcut","yes").find("tfoot")
                             .append($("<tr />")
                                 .append($("<th />").attr("colSpan",8).addClass("date-picker-shortcut").attr("interval",name)).bind("click",function(){date_shortcut(name,target,shortcut)})
