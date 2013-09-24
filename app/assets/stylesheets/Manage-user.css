@@ -36,8 +36,6 @@
     left:0;
     right:0;
 }
-
-
 /*input*/
 .manage-user-add>div>input{
     width:140px;
@@ -72,6 +70,12 @@
 }
 /*********************************************************************************************************  右边的列表
 *******************************************************************************************************************/
+.right-list-top-control[name='group']>div.icheckbox_minimal-aero{
+    display:none !important;
+}
+.right-list-top-control[name='group']>a:first-of-type{
+    margin-left:32px !important;
+}
 .manage-sort-list li>table.group{
     table-layout:fixed
 }
@@ -97,9 +101,198 @@
 /*last column*/
 .manage-sort-list li>table.group tr:first-of-type td:last-of-type{
     width:26%;
-
 }
 .manage-sort-list li>table.group tr:nth-of-type(2){
     color:rgba(0,0,0,0.3);
     font-size:13px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*********************************************************************************************************  Assign Kpi
+*******************************************************************************************************************/
+/************************************************  same part using with view assign kpi
+*************************************************************/
+.assign-kpi{
+    position:absolute;
+    top:135px;
+    left:150px;
+    bottom:0px;
+    right:0px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    transition:left 0.35s ease-out,right 0.55s ease-out;
+}
+.assign-kpi-inner{
+    position:absolute;
+    top:139px;
+    right:30px;
+    bottom:30px;
+    left:30px;
+    /*border:2px solid #ddd;*/
+}
+.assign-kpi-top{
+    position:absolute;
+    right:0px;
+    top:35px;
+    left:32px;
+}
+.assign-kpi-top>a{
+    display:inline-block;
+    width:80px;
+    margin:0px 10px 0 0;
+    font-size:13px;
+}
+.assign-kpi-top>p{
+    margin-top:10px;
+    color:rgba(0, 0, 0, 0.35);
+    position:relative;
+    padding-left:1px;
+}
+/****************************  (left part)
+*********************************/
+.assign-kpi-inner ul.left{
+    list-style-type: none;
+    width:45%;
+    padding-left:0px;
+    margin:0px;
+
+}
+.assign-kpi-inner ul.left>li{
+    border-bottom:1px solid #ddd;
+    padding:8px 0;
+    cursor:pointer;
+}
+.assign-kpi-inner ul.left>li:first-of-type{
+    padding:0 0 8px;
+}
+.assign-kpi-inner ul.left>li>h3{
+    margin:0;
+    color:#5FA9DA;
+    font-size:20px;
+    font-weight:lighter;
+    width:100%;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    transition:color 0.35s ease-out;
+}
+.assign-kpi-inner ul.left>li>p{
+    margin:0;
+    color:rgba(0,0,0,0.3);
+    font-size:13px;
+    width:100%;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    transition:color 0.35s ease-out;
+}
+.assign-kpi-inner ul.left>li>p:hover{
+    color:rgba(0,0,0,0.8);
+}
+/****************************  kpi options for choose
+*********************************/
+.assign-kpi-options{
+    width:250px;
+    position:absolute;
+    top:135px;
+    bottom:0px;
+    right:-250px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    background:#333;
+    transition:left 0.35s ease-out,right 0.35s ease-out;
+}
+.assign-kpi-options>i{
+    color:white;
+    position:relative;
+    left:5px;
+    top:5px;
+    pointer-events:auto;
+    cursor:pointer
+}
+
+.assign-kpi-options>.select-div{
+    width:180px;
+    position:relative;
+    top:13px;
+    left:50%;
+    margin-left:-90px;
+}
+.assign-kpi-options>.select-div>select{
+    width:180px;
+}
+.assign-kpi-options>.select-div .chosen-container-single .chosen-single{
+    background:white !important;
+    border:1px solid #ddd;
+    box-shadow:none !important;
+}
+.assign-kpi-options>.select-div .chosen-container-single .chosen-single div{
+    background:white !important;
+    border-left:none !important;
+}
+.assign-kpi-options>.select-div .chosen-container .chosen-drop{
+    border-left-color:white;
+    border-right-color:white;
+}
+
+.assign-kpi-options>ul{
+    list-style-type:none;
+    padding:0 0 0 34px;
+    margin:0px;
+    position:relative;
+    top:45px;
+}
+.assign-kpi-options>ul li{
+    padding-bottom:20px;
+
+}
+.assign-kpi-options>ul li h3{
+    margin:0px;
+    font-weight:lighter;
+    font-size:20px;
+    width:180px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    color:#5194cd;
+    transition:color 0.25s ease-out;
+}
+.assign-kpi-options>ul li h3:hover{
+    color:#cda351
+}
+.assign-kpi-options>ul li h3:hover + p{
+    color:rgba(255,255,255,0.95)
+}
+.assign-kpi-options>ul li p{
+    margin:0px;
+    width:180px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    color:rgba(255,255,255,0.8);
+    font-size:13px;
+    transition:color 0.25s ease-out;
+}
+/************************************************  user assign kpi
+*************************************************************/
+.assign-kpi[special="user"]{
+    width:1024px;
+    right:-1024px;
+    left:auto;
+}
+.assign-kpi[special="user"]>.assign-kpi-top>a:last-of-type{
+    width:100px;
+    margin-left:30px;
 }

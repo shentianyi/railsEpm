@@ -58,6 +58,11 @@ function manage_item_remove(){
             MANAGE[MANAGE.type].item_remove.remove_complete(id);
 //            MANAGE.totalChecked-=1;
 //            total_check_listener();
+            if(MANAGE.type=="group" && $("#user-edit").css("left")!="-50px"){
+                $("#user-edit").css("left","-50px");
+                $("#manage-right-content").css("left","150px");
+                MANAGE.user.user_add_clear();
+            }
         });
 //        MANAGE.judge_kpi_count();
     }

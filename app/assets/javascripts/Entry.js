@@ -29,11 +29,23 @@ ENTRY.init=function(){
            $(e.target).blur();
        }
    }).on("blur",".entry-actual",function(event){
-           var e=adapt_event(event).event;
-           var actual= $(e.target).val();
-           var target= $(e.target).parent().prev().find(".entry-target").text();
-           var tcr= (parseFloat(actual) / parseFloat(target))*100;
-           var color_style=tcr>100 ? "#55cd5e" : (tcr==100 ? "#5FA9DA" : "#ed5959");
+           var e=adapt_event(event).event,
+               actual= $(e.target).val(),
+               target= $(e.target).parent().prev().find(".entry-target").text(),
+               tcr= (parseFloat(actual) / parseFloat(target))*100,
+               color_style=tcr>100 ? "#55cd5e" : (tcr==100 ? "#5FA9DA" : "#ed5959"),
+               interval=$("#entry-left-menu li.active").attr("interval"),
+               date=$("#entry-date-picker").val(),entry_at,d=standardParse(date).date;
+           if(interval=="200"){
+               entry_at=new Date(d.setDate(d.getDate()- d.getDay()+1)).toISOString();
+           }
+           else if(interval=="400"){
+               entry_at=new Date(d.setMonth(Math.floor(d.getMonth()/3)*3)).toISOString();
+           }
+           else{
+               entry_at=standardParse(date).date.toISOString()
+           }
+           console.log(entry_at)
            if(actual.length>0){
 //               $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
                $.ajax({
@@ -41,7 +53,7 @@ ENTRY.init=function(){
                   type:'POST',
                   data:{
                       user_kpi_item_id:$(e.target).attr("user_kpi_item_id"),
-                      entry_at:standardParse($("#entry-date-picker").val()).date.toISOString(),
+                      entry_at:entry_at,
                       value:$(e.target).val(),
                       kpi_id:$(e.target).attr("kpi_id")
                   },

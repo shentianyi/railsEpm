@@ -97,11 +97,11 @@
 
 
 
-    <div class="manage-user-add" id="manage-user-add">
-        <i class="icon-remove" id="close-add-user"></i>
+    <div class="manage-user-add" id="manage-user-add"  general="manage-user-add">
+        <i class="icon-remove" id="close-add-user"  general="close-user"></i>
         <div>
-            <input type="text" placeholder="* Name" id="new-user-name"/>
-            <input type="text" placeholder="* Email" id="new-user-mail"/>
+            <input type="text" placeholder="* Name" id="new-user-name" general="user-name"/>
+            <input type="text" placeholder="* Email" id="new-user-mail"  general="user-mail"/>
             <input type="password" placeholder="* Password" id="new-user-password"/>
             <input type="password" placeholder="* Password Confirm" id="new-user-password-confirm"/>
             <label>
@@ -137,6 +137,104 @@
 
 
 
+    <div class="manage-user-add" id="user-edit"   general="manage-user-add">
+        <i class="icon-remove" id="close-user-edit"  general="close-user"></i>
+        <div>
+            <input type="text" placeholder="* Name" id="edit-user-name" general="user-name"/>
+            <input type="text" placeholder="* Email" id="edit-user-mail"  general="user-mail"/>
+            <label>
+                <input type="radio" name="edit-user-role" data-name="General"  data-role="1"  value="100" checked>
+                General
+            </label>
+            <label>
+                <input type="radio" name="edit-user-role" data-name="Department Manager" data-role="2" value="200">
+                Department Manager
+            </label>
+            <label>
+                <input type="radio" name="edit-user-role" data-name="General Manager" data-role="3" value="300">
+                General Manager
+            </label>
+            <label>
+                <input type="radio" name="edit-user-role" data-name="Administrator" data-role="4" value="400">
+                Administrator
+            </label>
+            <input type="submit" value="Edit" class="btn btn-primary" id="manage-user-edit-old" />
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div id="assign-kpi" class="assign-kpi" special="user">
+         <div class="assign-kpi-top" >
+             <a class="btn">Cancel</a>
+             <a class="btn btn-primary">OK</a>
+             <a class="btn btn-primary"><i class="icon-key"></i> Pick KPI</a>
+             <p>Wayne</p>
+         </div>
+
+
+        <div class="assign-kpi-inner">
+            <ul class="left">
+                <li>
+                    <h3>KPI 1</h3>
+                    <p>some description here</p>
+                </li>
+                <li>
+                    <h3>KPI 1</h3>
+                    <p>some description here</p>
+                </li>
+                <li>
+                    <h3>KPI 1</h3>
+                    <p>some description here</p>
+                </li>
+                <li>
+                    <h3>KPI 1</h3>
+                    <p>some description here</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="assign-kpi-options">
+        <i class="icon-remove" id="close-assign-kpi-options"></i>
+        <div class="select-div">
+            <select class="chosen-select"  data-placeholder="KPI Category" >
+                <option value=""> </option>
+                <option value="200">Up</option>
+                <option value="100">None</option>
+                <option value="300">Down</option>
+            </select>
+        </div>
+        <ul>
+            <li>
+                <h3>KPI 1</h3>
+                <p>some description here</p>
+            </li>
+            <li>
+                <h3>KPI 1</h3>
+                <p>some description here</p>
+            </li>
+            <li>
+                <h3>KPI 1</h3>
+                <p>some description here</p>
+            </li>
+        </ul>
+    </div>
+
+
+
+
+
+
+
 
 
 
@@ -159,8 +257,8 @@
         </div>
 
         <div class="manage-right-list">
-            <div class="right-list-top-control" id="right-list-top-control">
-                <input type="checkbox" id="manage-total-check"/>
+            <div class="right-list-top-control" id="right-list-top-control" name="group">
+                <input type="checkbox" id="manage-total-check" />
                 <a class="btn" id="manage-item-remove">Delete</a>
                 <a class="btn" id="manage-user-edit">Edit</a>
                 <a class="btn btn-primary" id="manage-user-delivery">Assign KPI</a>
@@ -173,15 +271,11 @@
                     <input type="checkbox" />
                     <table class="group">
                         <tr>
-                            <td >Wayne</td>
-                            <td >
-                                <span>General</span>
-
-                            </td>
-
+                            <td class="user-manage-name">Wayne</td>
+                            <td class="user-manage-authority" value="100">General</td>
                         </tr>
                         <tr>
-                            <td>zixiao.wang@cz-tek.com</td>
+                            <td class="user-manage-mail">zixiao.wang@cz-tek.com</td>
                             <td>Authority</td>
                         </tr>
                     </table>
@@ -191,11 +285,11 @@
                     <input type="checkbox" />
                     <table class="group">
                         <tr>
-                            <td >White</td>
-                            <td >General</td>
+                            <td class="user-manage-name">White</td>
+                            <td class="user-manage-authority" value="300">General Manager</td>
                         </tr>
                         <tr>
-                            <td>zixiao.wang@cz-tek.com</td>
+                            <td class="user-manage-mail">123@163.com</td>
                             <td>Authority</td>
                         </tr>
                     </table>
@@ -205,12 +299,11 @@
                     <input type="checkbox" />
                     <table class="group">
                         <tr>
-                            <td >Jason</td>
-                            <td >General</td>
-
+                            <td class="user-manage-name">Jason</td>
+                            <td class="user-manage-authority" value="200">Department Manger</td>
                         </tr>
                         <tr>
-                            <td>zixiao.wang@cz-tek.com</td>
+                            <td class="user-manage-mail">sdfa@sina.com</td>
                             <td>Authority</td>
                         </tr>
                     </table>
