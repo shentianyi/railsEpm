@@ -175,6 +175,8 @@ MANAGE.user.user_edit_box_bind=function(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.user.assign={};
 MANAGE.user.assign.init=function(){
-    $("#manage-right-content").width("1024").css("right","-1024px").css("left","auto");
-    $("#assign-kpi").css("right","0").css("width","auto").css("left","150px");
+
 };
+MANAGE.user.assign.close=function(){
+
+}

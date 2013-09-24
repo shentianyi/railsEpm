@@ -129,7 +129,7 @@
     right:0px;
     overflow-x:hidden;
     overflow-y:auto;
-    transition:left 0.35s ease-out,right 0.55s ease-out;
+    transition:left 0.35s ease-out,right 0.35s ease-out;
 }
 .assign-kpi-inner{
     position:absolute;
@@ -152,10 +152,14 @@
     font-size:13px;
 }
 .assign-kpi-top>p{
-    margin-top:10px;
+    margin:6px 0 0;
     color:rgba(0, 0, 0, 0.35);
     position:relative;
     padding-left:1px;
+    font-size:18px;
+}
+.assign-kpi-top>p>span:nth-of-type(2){
+    font-size:14px;
 }
 /****************************  (left part)
 *********************************/
@@ -168,11 +172,12 @@
 }
 .assign-kpi-inner ul.left>li{
     border-bottom:1px solid #ddd;
-    padding:8px 0;
+    padding:2px 0;
     cursor:pointer;
+    position:relative;
 }
-.assign-kpi-inner ul.left>li:first-of-type{
-    padding:0 0 8px;
+.assign-kpi-inner ul.left>li:first-of-type>p{
+    font-size:15px;
 }
 .assign-kpi-inner ul.left>li>h3{
     margin:0;
@@ -185,6 +190,9 @@
     white-space:nowrap;
     cursor:pointer;
     transition:color 0.35s ease-out;
+}
+.assign-kpi-inner ul.left>li>h3:hover ~ i{
+    display:block;
 }
 .assign-kpi-inner ul.left>li>p{
     margin:0;
@@ -200,6 +208,31 @@
 .assign-kpi-inner ul.left>li>p:hover{
     color:rgba(0,0,0,0.8);
 }
+.assign-kpi-inner ul.left>li>p:hover ~ i{
+    display:block;
+}
+.assign-kpi-inner ul.left>li>i{
+    position:absolute;
+    right:10px;
+    top:17px;
+    color:rgba(0,0,0,0.5);
+    display:none;
+    pointer-events:auto;
+    transition:color 0.35s ease-out;
+}
+.assign-kpi-inner ul.left>li>i:hover{
+    color:rgba(0,0,0,0.8);
+    display:block;
+}
+
+
+
+
+
+
+
+
+
 /****************************  kpi options for choose
 *********************************/
 .assign-kpi-options{
@@ -211,7 +244,6 @@
     overflow-y:auto;
     overflow-x:hidden;
     background:#333;
-    transition:left 0.35s ease-out,right 0.35s ease-out;
 }
 .assign-kpi-options>i{
     color:white;
@@ -255,7 +287,6 @@
 }
 .assign-kpi-options>ul li{
     padding-bottom:20px;
-
 }
 .assign-kpi-options>ul li h3{
     margin:0px;
@@ -285,14 +316,50 @@
     font-size:13px;
     transition:color 0.25s ease-out;
 }
-/************************************************  user assign kpi
+/************************************************  user assign kpi(special)
 *************************************************************/
+.assign-kpi-wrap{
+    position:fixed;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    z-index:30;
+    background-color:rgba(0,0,0,0.7);
+
+}
 .assign-kpi[special="user"]{
-    width:1024px;
-    right:-1024px;
-    left:auto;
+    position:fixed;
+    width:900px;
+    left:50%;
+    margin-left:-450px;
+    height:600px;
+    top:50%;
+    margin-top:-300px;
+    background-color:#ddd;
+    overflow-x:hidden;
+    overflow-y:hidden;
 }
 .assign-kpi[special="user"]>.assign-kpi-top>a:last-of-type{
     width:100px;
     margin-left:30px;
+}
+.assign-kpi[special="user"] ul.left{
+    height:100%;
+    overflow-y:auto;
+    width:55%
+}
+.assign-kpi[special="user"] ul.left li{
+    border-bottom:1px solid rgba(0,0,0,0.05);
+}
+.assign-kpi[special="user"] .assign-kpi-inner{
+    top:135px
+}
+/************************************************  kpi options (special)
+*************************************************************/
+.assign-kpi-options[special="user"]{
+   right:0px;
+    top:0px;
+    bottom:0px;
+    display:none
 }

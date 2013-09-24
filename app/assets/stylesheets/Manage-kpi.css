@@ -1,6 +1,6 @@
 /********************************************************************************************************* 分类系列
 *******************************************************************************************************************/
-.manage-left-menu[type="categoty"] li:first-of-type{
+.manage-left-menu[type="category"] li:first-of-type{
     text-align:center;
     font-weight:lighter;
     font-size:22px;
