@@ -15,9 +15,6 @@ module KpiEntriesHelper
       end
     return kpi_entry
     end
-  # rescue Exception=>e
-  # puts e.message
-  # end
   end
 
   # calculate kpi parent value
