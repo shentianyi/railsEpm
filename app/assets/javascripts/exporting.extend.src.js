@@ -109,11 +109,13 @@
                     //console.log(chart.series);
                     //console.log(chart.xAxis.labels);
                     //console.log(chart.xAxis.categories);
-                   // console.log(chart.options);
-                  //  console.log(chart.options.chart.type);
+                    // console.log(chart.options);
+                    //  console.log(chart.options.chart.type);
+           //         console.log(chart.series[chart.series.length-1]);
+             //       console.log(chart.series[chart.series.length-1].type);
                     var table = null;
-                    // var tabled = exportTableFileTypes.indexOf(options.type) != -1 && exportTableChartTypes.indexOf(chart.options.chart.type) != -1;
-                    var tabled = exportTableFileTypes.indexOf(options.type) != -1;
+                   var tabled = exportTableFileTypes.indexOf(options.type) != -1 && exportTableChartTypes.indexOf(chart.series[chart.series.length-1].type) != -1;
+                  //  var tabled = exportTableFileTypes.indexOf(options.type) != -1;
                     if(tabled)
                          table = chart.generateTableData();
                     // if (exportTableFileTypes.indexOf(options.type) != -1) {
@@ -166,7 +168,7 @@
                               }
                          }
                     }
-                   // console.log(this.options);
+                    // console.log(this.options);
                     // console.log(table);
                     return table;
                }
