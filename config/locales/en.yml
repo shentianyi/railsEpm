@@ -210,6 +210,9 @@ en:
     errors:
       <<: *errors
   # brilliantech project
-  session:
+  auth:
+   view:
     login: Login
     sign: Sign Up
+   msg:
+    login_success: Login successful!

@@ -1,4 +1,4 @@
-zh-CN:
+zh:
   date:
     abbr_day_names:
     - 日
@@ -198,6 +198,12 @@ zh-CN:
     errors:
       <<: *errors
   # brilliantech project
-  session:
-    login: 登录
-    sign: 注册
+  auth:
+    view:
+      login_title: 登 录
+      login_btn: 登 录
+      sign_title: 注 册
+      sign_btn: 注 册
+    msg:
+      login_success: 登录成功
+      logout_success: 登出成功

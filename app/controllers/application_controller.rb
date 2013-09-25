@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_tenant_status
   
   # I18n
-  before_f  :set_locale
+  before_filter  :set_locale
   #
   #
   set_current_tenant_through_filter
@@ -198,7 +198,12 @@ class ApplicationController < ActionController::Base
   
   # I18n
   def set_locale
-    I18n.locale=cookies[:locale] || I18n.default_locale
+    I18n.locale=cookies[:locale] || extract_locale_from_accept_language_header || I18n.default_locale
+  end
+  
+  private
+  def extract_locale_from_accept_language_header
+     request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
   end
 end
 
