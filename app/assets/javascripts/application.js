@@ -38,4 +38,6 @@
 //=require Manage-right-list
 //=require Manage
 //=require Manage-kpi
+//=require Manage-user
+//=require Manage-view
 //=require Entry
