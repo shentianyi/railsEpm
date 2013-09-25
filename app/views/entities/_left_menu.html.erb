@@ -32,3 +32,31 @@
           </div>
      </ul>
 </div>
+
+
+
+
+<ul class="manage-left-menu" id="manage-left-menu" type="group">
+    <li>Manage User</li>
+    <li id="manage-menu-add">
+        <input type="text"/>
+        <span><i class="icon-plus"></i> Group</span>
+
+        <p class="manage-add-tooltip">Enter: confirm <br/>Esc: cancel</p>
+    </li>
+
+
+    <%@entities.each do |entity|%>
+    <li class="active" title="Group1" number="1">
+        <i class="icon-trash icon-item"></i>
+        <a>Group1</a>
+    </li>
+    <li title="Group2" number="2">
+        <i class="icon-trash icon-item"></i>
+        <a>Group2</a>
+    </li>
+    <li title="Group3" number="3">
+        <i class="icon-trash icon-item"></i>
+        <a>Group3</a>
+    </li>
+</ul>

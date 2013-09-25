@@ -326,7 +326,7 @@
     right:0px;
     z-index:30;
     background-color:rgba(0,0,0,0.7);
-
+    display:none;
 }
 .assign-kpi[special="user"]{
     position:fixed;
