@@ -75,25 +75,25 @@
 
 
 
-<ul class="manage-left-menu" id="manage-left-menu" type="group">
-    <li>Manage User</li>
+<ul class="manage-left-menu" id="manage-left-menu" type="entity">
+    <li>Manage View</li>
     <li id="manage-menu-add">
         <input type="text"/>
-        <span><i class="icon-plus"></i> Group</span>
+        <span><i class="icon-plus"></i> View</span>
 
         <p class="manage-add-tooltip">Enter: confirm <br/>Esc: cancel</p>
     </li>
-    <li class="active" title="Group1" number="1">
+    <li class="active" title="View1" number="1">
         <i class="icon-trash icon-item"></i>
-        <a>Group1</a>
+        <a>View1</a>
     </li>
-    <li title="Group2" number="2">
+    <li title="View2" number="2">
         <i class="icon-trash icon-item"></i>
-        <a>Group2</a>
+        <a>View2</a>
     </li>
-    <li title="Group3" number="3">
+    <li title="View3" number="3">
         <i class="icon-trash icon-item"></i>
-        <a>Group3</a>
+        <a>View3</a>
     </li>
 </ul>
 
@@ -103,266 +103,56 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-<div class="manage-user-add" id="manage-user-add" general="manage-user-add">
-    <i class="icon-remove" id="close-add-user" general="close-user"></i>
-
-    <div>
-        <input type="text" placeholder="* Name" id="new-user-name" general="user-name"/>
-        <input type="text" placeholder="* Email" id="new-user-mail" general="user-mail"/>
-        <input type="password" placeholder="* Password" id="new-user-password"/>
-        <input type="password" placeholder="* Password Confirm" id="new-user-password-confirm"/>
-        <label>
-            <input type="radio" name="user-role" data-name="General" data-role="1" value="100" checked>
-            General
-        </label>
-        <label>
-            <input type="radio" name="user-role" data-name="Department Manager" data-role="2" value="200">
-            Department Manager
-        </label>
-        <label>
-            <input type="radio" name="user-role" data-name="General Manager" data-role="3" value="300">
-            General Manager
-        </label>
-        <label>
-            <input type="radio" name="user-role" data-name="Administrator" data-role="4" value="400">
-            Administrator
-        </label>
-        <input type="submit" value="Add" class="btn btn-primary" id="manage-user-add-new"/>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-<div class="manage-user-add" id="user-edit" general="manage-user-add">
-    <i class="icon-remove" id="close-user-edit" general="close-user"></i>
-
-    <div>
-        <input type="text" placeholder="* Name" id="edit-user-name" general="user-name"/>
-        <input type="text" placeholder="* Email" id="edit-user-mail" general="user-mail"/>
-        <label>
-            <input type="radio" name="edit-user-role" data-name="General" data-role="1" value="100" checked>
-            General
-        </label>
-        <label>
-            <input type="radio" name="edit-user-role" data-name="Department Manager" data-role="2" value="200">
-            Department Manager
-        </label>
-        <label>
-            <input type="radio" name="edit-user-role" data-name="General Manager" data-role="3" value="300">
-            General Manager
-        </label>
-        <label>
-            <input type="radio" name="edit-user-role" data-name="Administrator" data-role="4" value="400">
-            Administrator
-        </label>
-        <input type="submit" value="Edit" class="btn btn-primary" id="manage-user-edit-old"/>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="assign-kpi-wrap" id="assign-kpi-wrap">
-    <div id="assign-kpi" class="assign-kpi" special="user">
-        <div class="assign-kpi-top">
-            <a class="btn" id="assign-kpi-cancel">Cancel</a>
-            <a class="btn btn-primary" id="assign-kpi-ok">OK</a>
-            <a class="btn btn-primary" id="assign-kpi-pick"><i class="icon-key"></i> Pick KPI</a>
-            <p><span class="normal-blue"></span><span>'s KPI</span></p>
+    <div class="manage-right-content" id="manage-right-content">
+        <div class="manage-btn-group" id="manage-btn-group" special="view">
+            <a class="btn btn-primary" id="entity-add-show"><i class="icon-plus"></i> User Group</a>
+            <p id="manage-edit-target" ></p>
+            <i class="icon-pencil"></i>
+            <input type="text"/>
+            <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
         </div>
-        <div class="assign-kpi-inner" id="assign-kpi-inner">
-            <ul class="left">
-                <li id="kpi1">
-                    <h3>KPI 1</h3>
-                    <p>some description here</p>
+        <div class="assign-entity-wrap">
+            <ul>
+                <li>
+                    <h3 entity_id="1">User Group1</h3>
                     <i class="icon-trash"></i>
                 </li>
-                <li id="kpi2">
-                    <h3>KPI 1</h3>
-                    <p>ddd</p>
+                <li>
+                    <h3 entity_id="2">User Group2</h3>
                     <i class="icon-trash"></i>
                 </li>
-                <li id="kpi3">
-                    <h3>KPI 1</h3>
-
-                    <p>some description here</p>
+                <li>
+                    <h3 entity_id="3">User Group3</h3>
                     <i class="icon-trash"></i>
                 </li>
             </ul>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <div class="assign-kpi-options" special="user" id="assign-kpi-options">
-            <i class="icon-remove" id="close-assign-kpi-options"></i>
-
-            <div class="select-div">
-                <select class="chosen-select" data-placeholder="KPI Category" id="kpi-category">
-                    <option value="200">Up</option>
-                    <option value="100">None</option>
-                    <option value="300">Down</option>
-                </select>
-            </div>
-            <ul id="assign-kpi-list">
-                <li>
-                    <h3 kpi_id="kk1">KPI 1</h3>
-                    <p>some description here</p>
-                </li>
-                <li>
-                    <h3 kpi_id="kk2">KPI 1</h3>
-                    <p>some description here</p>
-                </li>
-                <li>
-                    <h3 kpi_id="kk3">KPI 1</h3>
-                    <p>some description here</p>
-                </li>
-            </ul>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
 
 
 
+    <div class="assign-kpi-options"  id="assign-kpi-options">
+        <i class="icon-remove" id="close-assign-kpi-options"></i>
 
-
-</div>
-
-
-
-
-
-
-
-
-
-
-<div class="manage-right-content" id="manage-right-content">
-    <div class="manage-btn-group" id="manage-btn-group">
-        <a class="btn btn-primary" id="add-user-show"><i class="icon-plus"></i> User</a>
-
-        <p id="manage-edit-target"></p>
-        <i class="icon-pencil"></i>
-        <input type="text"/>
-        <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
-    </div>
-
-    <div class="manage-right-list">
-        <div class="right-list-top-control" id="right-list-top-control" name="group">
-            <input type="checkbox" id="manage-total-check"/>
-            <a class="btn" id="manage-item-remove">Delete</a>
-            <a class="btn" id="manage-user-edit">Edit</a>
-            <a class="btn btn-primary" id="manage-user-delivery">Assign KPI</a>
-        </div>
-
-
-        <ul id="manage-sort-list" class="manage-sort-list">
-            <li id="1">
-                <p class="sort-handle">:</p>
-                <input type="checkbox"/>
-                <table class="group">
-                    <tr>
-                        <td class="user-manage-name">Wayne</td>
-                        <td class="user-manage-authority" value="100">General</td>
-                    </tr>
-                    <tr>
-                        <td class="user-manage-mail">zixiao.wang@cz-tek.com</td>
-                        <td>Authority</td>
-                    </tr>
-                </table>
+        <ul id="assign-kpi-list">
+            <li>
+                <h3 kpi_id="kk1">KPI 1</h3>
+                <p>some description here</p>
             </li>
-            <li id="2">
-                <p class="sort-handle">:</p>
-                <input type="checkbox"/>
-                <table class="group">
-                    <tr>
-                        <td class="user-manage-name">White</td>
-                        <td class="user-manage-authority" value="300">General Manager</td>
-                    </tr>
-                    <tr>
-                        <td class="user-manage-mail">123@163.com</td>
-                        <td>Authority</td>
-                    </tr>
-                </table>
+            <li>
+                <h3 kpi_id="kk2">KPI 1</h3>
+                <p>some description here</p>
             </li>
-            <li id="3">
-                <p class="sort-handle">:</p>
-                <input type="checkbox"/>
-                <table class="group">
-                    <tr>
-                        <td class="user-manage-name">Jason</td>
-                        <td class="user-manage-authority" value="200">Department Manger</td>
-                    </tr>
-                    <tr>
-                        <td class="user-manage-mail">sdfa@sina.com</td>
-                        <td>Authority</td>
-                    </tr>
-                </table>
+            <li>
+                <h3 kpi_id="kk3">KPI 1</h3>
+                <p>some description here</p>
             </li>
         </ul>
     </div>
-</div>
+
+
+
+
 
 
 </article>
@@ -386,7 +176,7 @@
 <script>
     $(document).ready(function () {
         MANAGE.init();
-        MANAGE.user.init();
+        MANAGE.view.init();
     })
 </script>
 </body>
