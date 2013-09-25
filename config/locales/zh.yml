@@ -236,14 +236,16 @@ zh:
       view: 观察点
       begin_time: 开始时间
       end_time: 结束时间
-      sum: 求和
+      sum: 累计
       average: 平均
       add_chart: 分析           
       date: 时间
       percent: 比例
       target: 目标值
+      sum_target: 累计目标值
       aver_target: 平均目标值
-      value: 值
-      aver_value: 平均值
+      value: 实际值
+      sum_value: 累计实际值
+      aver_value: 平均实际值
       tcr: TCR
       close_btn: 关闭

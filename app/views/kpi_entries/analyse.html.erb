@@ -29,13 +29,11 @@
                </div>
                <div class="index-condition-group" style="width:120px">
                     <label class="analytics-radio-label">
-                          <input type="radio" name="chartRadios" value="1" checked>
-                          <%= t 'view.analytics.sum'%>
-                    </label>
+                         <input type="radio" name="chartRadios" value="1" checked>
+                         <%= t 'view.analytics.sum'%> </label>
                     <label class="analytics-radio-label">
-                          <input type="radio" name="chartRadios" value="2">
-                          <%= t 'view.analytics.average'%>
-                    </label>
+                         <input type="radio" name="chartRadios" value="2">
+                         <%= t 'view.analytics.average'%> </label>
                </div>
                <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px" onclick="prepare_form_chart()"><%= t 'view.analytics.add_chart'%></a>
           </div>
@@ -79,39 +77,50 @@
                                    <td colspan="2" align="center" id="chart-detail-kpi" ></td>
                               </tr>
                          </thead>
-                         <tbody>
+                         <tbody> 
                               <tr>
                                    <td width="80px"  align="right"><%= t 'view.analytics.date'%>:</td>
-                                   <td id="chart-detail-date" align="left"></td>
+                                   <td id="date" align="left"></td>
+                              </tr>
+                              <tr>
+                                   <td width="80px"  align="right"><%= t 'view.analytics.begin_time'%>:</td>
+                                   <td id="from" align="left"></td>
                               </tr>
                               <tr class="hide">
                                    <td width="80px"  align="right"><%= t 'view.analytics.end_time'%>:</td>
-                                   <td id="chart-detail-end-date" align="left"></td>
+                                   <td id="to" align="left"></td>
                               </tr>
                               <tr class="hide">
                                    <td width="80px"  align="right"><%= t 'view.analytics.percent'%>:</td>
-                                   <td id="chart-detail-percent" align="left"></td>
+                                   <td id="percent" align="left"></td>
+                              </tr>
+                              <tr>
+                                   <td width="80px"  align="right"><%= t 'view.analytics.sum_target'%>:</td>
+                                   <td id="sum-target" align="left"></td>
+                              </tr>
+                              <tr>
+                                   <td width="80px"  align="right"><%= t 'view.analytics.sum_value'%>:</td>
+                                   <td id="sum-value" align="left"></td>
                               </tr>
                               <tr>
                                    <td width="80px"  align="right"><%= t 'view.analytics.target'%>:</td>
-                                   <td id="chart-detail-target" align="left"></td>
+                                   <td id="target" align="left"></td>
                               </tr>
                               <tr class="hide">
                                    <td width="80px"  align="right"><%= t 'view.analytics.aver_target'%>:</td>
-                                   <td id="chart-detail-aver-target" align="left"></td>
+                                   <td id="aver-target" align="left"></td>
                               </tr>
                               <tr>
                                    <td width="80px"  align="right"><%= t 'view.analytics.value'%>:</td>
-                                   <td id="chart-detail-value" align="left"></td>
+                                   <td id="value" align="left"></td>
                               </tr>
-
                               <tr class="hide">
                                    <td width="80px"  align="right"><%= t 'view.analytics.aver_value'%>:</td>
-                                   <td id="chart-detail-aver-date" align="left"></td>
+                                   <td id="aver-value" align="left"></td>
                               </tr>
                               <tr>
                                    <td width="80px"  align="right"><%= t 'view.analytics.tcr'%>:</td>
-                                   <td id="chart-detail-tcr" align="left"></td>
+                                   <td id="tcr" align="left"></td>
                               </tr>
                          </tbody>
                     </table>

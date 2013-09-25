@@ -358,6 +358,7 @@ function change_interval(option) {
         }
         else {
             var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
+
             show_loading(top,0,0,0);
             $.ajax({url:'/kpi_entries/analyse',
             data:{
@@ -386,8 +387,15 @@ function change_interval(option) {
                 }
                 else{
                     MessageBox("sorry , something wrong" , "top", "warning");
-                } 
-            }});  
+                }
+            }});
+
+
+//            var data_array=[{y:10,target:20,unit:"$"},{y:15,target:20,unit:"$"},{y:20,target:11,unit:"$"},{y:30,target:12,unit:"$"},{y:25,target:5,unit:"$"}];
+//            new_data_wrapper.push(data_array);
+//            series_object[option.interval] = data_array;
+
+
         }
     }
     if (new_data_wrapper.length == chartSeries.getCount()) {
@@ -473,41 +481,37 @@ function chart_point_click(object) {
     if (object.series.type == "pie") {
         if (object.time_from != null) {
             $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
-            $("#chart-detail-date").text(object.time_from).prev().text("From:");
-            $("#chart-detail-end-date").text(object.time_to).parent().removeClass("hide");
-            $("#chart-detail-target").text(object.target + " " + object.unit).prev().text("Sum Target");
-            $("#chart-detail-aver-target").text(object.average_target + " " + object.unit).parent().removeClass("hide");
-            $("#chart-detail-value").text(object.y + " " + object.unit).prev().text("Sum Value");
-            $("#chart-detail-tcr").text(TCR(object.y, object.target).value);
+            $("#chart-point-detail tbody>tr").addClass("hide");
+            $("#from").text(object.time_from).parent().removeClass("hide");
+            $("#to").text(object.time_to).parent().removeClass("hide");
+            $("#sum-target").text(object.target + object.unit).parent().removeClass("hide");
+            $("#aver-target").text(object.average_target + " " + object.unit).parent().removeClass("hide");
+            $("#sum-value").text(object.y + object.unit).parent().removeClass("hide");
+            $("#aver-value").text(object.average_y + object.unit).parent().removeClass("hide");
+            $("#tcr").text(TCR(object.y, object.target).value).parent().removeClass("hide");
             tcr_trend(TCR(object.y, object.target).judge);
-            $("#chart-detail-aver-date").text(object.average_y + " " + object.unit).parent().removeClass("hide");
-            $("#chart-detail-percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
+            $("#percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
         }
         else {
-            $("#chart-detail-kpi").text(object.series.name).css("color", object.color);
-            $("#chart-detail-date").text(object.name).prev().text("Date:");
-            $("#chart-detail-target").text(object.target + " " + object.unit).prev().text("Target");
-            $("#chart-detail-value").text(object.y + " " + object.unit).prev().text("Value:");
-            $("#chart-detail-tcr").text(TCR(object.y, object.target).value);
+            $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
+            $("#chart-point-detail tbody>tr").addClass("hide");
+            $("#date").text(object.name).parent().removeClass("hide");
+            $("#target").text(object.target + object.unit).parent().removeClass("hide");
+            $("#value").text(object.y + object.unit).parent().removeClass("hide");
+            $("#tcr").text(TCR(object.y, object.target).value).parent().removeClass("hide");
             tcr_trend(TCR(object.y, object.target).judge);
-            $("#chart-detail-end-date").parent().addClass("hide");
-            $("#chart-detail-aver-date").parent().addClass("hide");
-            $("#chart-detail-aver-target").parent().addClass("hide");
-            $("#chart-detail-percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
+            $("#percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
         }
 
     }
     else {
-        $("#chart-detail-kpi").text(object.series.name).css("color", object.series.color);
-        $("#chart-detail-date").text(object.name).prev().text("Date:");
-        $("#chart-detail-target").text(object.target + " " + object.unit).prev().text("Target");
-        $("#chart-detail-value").text(object.y + " " + object.unit).prev().text("Value:");
-        $("#chart-detail-tcr").text(TCR(object.y, object.target).value);
+        $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
+        $("#chart-point-detail tbody>tr").addClass("hide");
+        $("#date").text(object.name).parent().removeClass("hide");
+        $("#target").text(object.target + object.unit).parent().removeClass("hide");
+        $("#value").text(object.y + object.unit).parent().removeClass("hide");
+        $("#tcr").text(TCR(object.y, object.target).value).parent().removeClass("hide");
         tcr_trend(TCR(object.y, object.target).judge);
-        $("#chart-detail-end-date").parent().addClass("hide");
-        $("#chart-detail-aver-date").parent().addClass("hide");
-        $("#chart-detail-percent").parent().addClass("hide");
-        $("#chart-detail-aver-target").parent().addClass("hide");
     }
 }
 function close_chart_detail() {
@@ -517,16 +521,16 @@ function close_chart_detail() {
 function tcr_trend(judge) {
     switch (judge) {
         case "low":
-            $("#chart-detail-tcr").attr("class", "");
-            $("#chart-detail-tcr").addClass("tcr-trend low");
+            $("#tcr").attr("class", "");
+            $("#tcr").addClass("tcr-trend low");
             break;
         case "middle":
-            $("#chart-detail-tcr").attr("class", "");
-            $("#chart-detail-tcr").addClass("tcr-trend middle");
+            $("#tcr").attr("class", "");
+            $("#tcr").addClass("tcr-trend middle");
             break;
         case "high":
-            $("#chart-detail-tcr").attr("class", "");
-            $("#chart-detail-tcr").addClass("tcr-trend high");
+            $("#tcr").attr("class", "");
+            $("#tcr").addClass("tcr-trend high");
             break;
     }
 }

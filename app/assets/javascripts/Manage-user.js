@@ -26,27 +26,8 @@ MANAGE.user.init=function(){
             MANAGE.user.user_edit_box_bind();
     });
     $("#manage-user-edit-old").on("click",function(){
-        var edit_name=$("#user-edit #edit-user-name").val(),
-            edit_mail=$("#user-edit #edit-user-mail").val(),
-            edit_role=$("#user-edit input[name='edit-user-role']:checked").data("name"),
-            edit_authority=$("#user-edit input[name='edit-user-role']:checked").attr("value"),
-            $target=$("#manage-sort-list").find("#"+$(this).attr("effect_on"));
-        if(edit_name.length>0 && edit_mail.length>0){
-            if($("#user-edit>div>input").filter("[red='true']").length==0){
-                $target.find(".user-manage-name").text(edit_name);
-                $target.find(".user-manage-mail").text(edit_mail);
-                $target.find(".user-manage-authority").text(edit_role).attr("value",edit_authority);
-                MANAGE.user.user_add_close();
-            }
-            else{
-                MessageBox("Please fix the input with red border","top","danger");
-            }
-        }
-        else{
-            MessageBox("Please fill all the blanket taking *","top","warning");
-        }
+        MANAGE.user.edit()
     });
-
 }
 //////////////////////////////////////////////////////////////////////////         list 那一块
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,41 +95,92 @@ MANAGE.user.add_new=function(){
     var authority=$("input[name='user-role']:checked").data("name");
     if(name.length>0&&mail.length>0&&password.length>0&&password_confirm.length>0){
        if($("#manage-user-add>div>input").filter("[red='true']").length==0){
-           $("#manage-sort-list").prepend($("<li />").attr("id","21")
-               .append($("<p />").addClass("sort-handle").text(":"))
-               .append($("<input type='checkbox'/>"))
-               .append($("<table />").addClass("group")
-                   .append($("<tr />")
-                       .append($("<td />").text(name).addClass("user-manage-name"))
-                       .append($("<td />").text(authority).addClass("user-manage-authority").attr("value","400"))
-                   )
-                   .append($("<tr />")
-                       .append($("<td />").text(mail).addClass("user-manage-mail"))
-                       .append($("<td />").text("Authority"))
-                   )
-               )
-           );
-           $("#manage-sort-list input[type='checkbox']").iCheck({
-               checkboxClass: 'icheckbox_minimal-aero'
+//           $("#manage-sort-list").prepend($("<li />").attr("id","21")
+//               .append($("<p />").addClass("sort-handle").text(":"))
+//               .append($("<input type='checkbox'/>"))
+//               .append($("<table />").addClass("group")
+//                   .append($("<tr />")
+//                       .append($("<td />").text(name).addClass("user-manage-name"))
+//                       .append($("<td />").text(authority).addClass("user-manage-authority").attr("value","400"))
+//                   )
+//                   .append($("<tr />")
+//                       .append($("<td />").text(mail).addClass("user-manage-mail"))
+//                       .append($("<td />").text("Authority"))
+//                   )
+//               )
+//           );
+//           $("#manage-sort-list input[type='checkbox']").iCheck({
+//               checkboxClass: 'icheckbox_minimal-aero'
+//           });
+//           $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
+//               if(!$(this).parent().hasClass("checked")){
+//                   MANAGE.totalChecked+=1;
+//                   total_check_listener();
+//               }
+//               else{
+//                   MANAGE.totalChecked-=1;
+//                   total_check_listener();
+//               }
+//           });
+//           $("#manage-sort-list li").on("resize",function(){
+//               MANAGE.resize_sort_table()
+//           });
+//           MANAGE.judge_kpi_count();
+//           MANAGE.sort_init();
+//           MANAGE.resize_sort_table();
+//           MANAGE.user.icheck.init();
+//           MANAGE.user.user_add_close();
+
+
+
+
+           $.ajax({
+              url:'',
+              data:{},
+              dataType:'json',
+              success:function(data){
+                  if(data.result){
+                      $("#manage-sort-list").prepend($("<li />").attr("id",data.id)
+                          .append($("<p />").addClass("sort-handle").text(":"))
+                          .append($("<input type='checkbox'/>"))
+                          .append($("<table />").addClass("group")
+                              .append($("<tr />")
+                                  .append($("<td />").text(name).addClass("user-manage-name"))
+                                  .append($("<td />").text(authority).addClass("user-manage-authority").attr("value","400"))
+                              )
+                              .append($("<tr />")
+                                  .append($("<td />").text(mail).addClass("user-manage-mail"))
+                                  .append($("<td />").text("Authority"))
+                              )
+                          )
+                      );
+                      $("#manage-sort-list input[type='checkbox']").iCheck({
+                          checkboxClass: 'icheckbox_minimal-aero'
+                      });
+                      $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
+                          if(!$(this).parent().hasClass("checked")){
+                              MANAGE.totalChecked+=1;
+                              total_check_listener();
+                          }
+                          else{
+                              MANAGE.totalChecked-=1;
+                              total_check_listener();
+                          }
+                      });
+                      $("#manage-sort-list li").on("resize",function(){
+                          MANAGE.resize_sort_table()
+                      });
+                      MANAGE.judge_kpi_count();
+                      MANAGE.sort_init();
+                      MANAGE.resize_sort_table();
+                      MANAGE.user.icheck.init();
+                      MANAGE.user.user_add_close();
+                  }
+                  else{
+                      MessageBox(data.content,"top","warning")
+                  }
+              }
            });
-           $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
-               if(!$(this).parent().hasClass("checked")){
-                   MANAGE.totalChecked+=1;
-                   total_check_listener();
-               }
-               else{
-                   MANAGE.totalChecked-=1;
-                   total_check_listener();
-               }
-           });
-           $("#manage-sort-list li").on("resize",function(){
-               MANAGE.resize_sort_table()
-           });
-           MANAGE.judge_kpi_count();
-           MANAGE.sort_init();
-           MANAGE.resize_sort_table();
-           MANAGE.user.icheck.init();
-           MANAGE.user.user_add_close();
        }
        else{
            MessageBox("Please fix the input with red border","top","danger");
@@ -169,6 +201,43 @@ MANAGE.user.user_edit_box_bind=function(){
     $("#user-edit #edit-user-mail").val(mail);
     $("#user-edit input[type='radio'][value='"+authority+"']").iCheck("check");
     $("#manage-user-edit-old").attr("effect_on",$target.parent().attr("id"));
+}
+MANAGE.user.edit=function(){
+    var edit_name=$("#user-edit #edit-user-name").val(),
+        edit_mail=$("#user-edit #edit-user-mail").val(),
+        edit_role=$("#user-edit input[name='edit-user-role']:checked").data("name"),
+        edit_authority=$("#user-edit input[name='edit-user-role']:checked").attr("value"),
+        edit_id=$(this).attr("effect_on"),
+        $target=$("#manage-sort-list").find("#"+edit_id);
+    if(edit_name.length>0 && edit_mail.length>0){
+        if($("#user-edit>div>input").filter("[red='true']").length==0){
+            $.ajax({
+                url:'',
+                data:{},
+                dataType:'json',
+                success:function(data){
+                    if(data.result){
+                        $target.find(".user-manage-name").text(edit_name);
+                        $target.find(".user-manage-mail").text(edit_mail);
+                        $target.find(".user-manage-authority").text(edit_role).attr("value",edit_authority);
+                    }
+                    else{
+                        MessageBox("Something get wrong","top","wrong");
+                    }
+                }
+            });
+//            $target.find(".user-manage-name").text(edit_name);
+//            $target.find(".user-manage-mail").text(edit_mail);
+//            $target.find(".user-manage-authority").text(edit_role).attr("value",edit_authority);
+            MANAGE.user.user_add_close();
+        }
+        else{
+            MessageBox("Please fix the input with red border","top","danger");
+        }
+    }
+    else{
+        MessageBox("Please fill all the blanket taking *","top","warning");
+    }
 }
 //////////////////////////////////////////////////////////////////////////         User assign kpi
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -241,9 +310,25 @@ MANAGE.user.assign.init=function(){
     });
     $("body").on("click","#assign-kpi-cancel",MANAGE.user.assign.close)
              .on("click","#assign-kpi-ok",function(){
-            MANAGE.user.assign.close();
+                  MANAGE.user.assign.ok();
+                  MANAGE.user.assign.close();
              }
     );
+};
+MANAGE.user.assign.ok=function(){
+    $.ajax({
+        url:'',
+        data:{},
+        dataType:'json',
+        success:function(data){
+              if(data.result){
+                  MessageBox("Assign success","top","success");
+              }
+              else{
+                  MessageBox(data.content,"top","warning");
+              }
+        }
+    })
 };
 MANAGE.user.assign.close=function(){
     $("#assign-kpi-inner>.left").empty();
@@ -251,4 +336,4 @@ MANAGE.user.assign.close=function(){
         $("#assign-kpi-options[special='user']").hide("1000")
     }
     $("#assign-kpi-wrap").css("display","none");
-}
+};

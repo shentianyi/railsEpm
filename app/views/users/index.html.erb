@@ -1,9 +1,6 @@
 
 <%= render :partial=>'entities/left_menu'%>
 
-
-
-
 <div class="manage-right-content" id="manage-right-content">
     <div class="manage-btn-group" id="manage-btn-group">
         <a class="btn btn-primary" id="add-user-show"><i class="icon-plus"></i> User</a>
@@ -41,7 +38,6 @@
 </div>
 
 
-
 <div class="manage-user-add" id="manage-user-add" general="manage-user-add">
     <i class="icon-remove" id="close-add-user" general="close-user"></i>
     <div>
@@ -69,16 +65,6 @@
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
 <div class="manage-user-add" id="user-edit" general="manage-user-add">
     <i class="icon-remove" id="close-user-edit" general="close-user"></i>
     <div>
@@ -104,24 +90,6 @@
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="assign-kpi-wrap" id="assign-kpi-wrap">
     <div id="assign-kpi" class="assign-kpi" special="user">
         <div class="assign-kpi-top">
@@ -132,46 +100,29 @@
         </div>
         <div class="assign-kpi-inner" id="assign-kpi-inner">
             <ul class="left">
-                <li id="kpi1">
-                    <h3>KPI 1</h3>
-                    <p>some description here</p>
+                <%@user_kpis.each_with_index do |kpi,i|%>
+                <li id="<%= kpi.user_kpi_item_id%>">
+                    <h3><%= kpi.name%></h3>
+                    <p title="<%= kpi.description%>"><%= kpi.description%></p>
                     <i class="icon-trash"></i>
                 </li>
-                <li id="kpi2">
-                    <h3>KPI 1</h3>
-                    <p>ddd</p>
-                    <i class="icon-trash"></i>
-                </li>
-                <li id="kpi3">
-                    <h3>KPI 1</h3>
-
-                    <p>some description here</p>
-                    <i class="icon-trash"></i>
-                </li>
+                <%end%>
             </ul>
         </div>
-
-
         <div class="assign-kpi-options" special="user" id="assign-kpi-options">
             <i class="icon-remove" id="close-assign-kpi-options"></i>
-
             <div class="select-div">
                 <select class="chosen-select" data-placeholder="KPI Category" id="kpi-category">
                     <%@categories.each_with_index do |catetory,i|%>
-                     <option value="<%= catetory.id%>"><%= catetory.name%></option>
-                                             <%end %>
+                        <option value="<%= catetory.id%>"><%= catetory.name%></option>
+                    <%end %>
                 </select>
             </div>
             <ul id="assign-kpi-list">
             </ul>
         </div>
-
-
     </div>
-
 </div>
-
-
 
 
 <script>
