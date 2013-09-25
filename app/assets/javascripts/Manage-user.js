@@ -14,6 +14,7 @@ MANAGE.user.init=function(){
     MANAGE.user.user_add_box_bind();
     MANAGE.user.user_add_clear();
     MANAGE.user.icheck.init();
+    MANAGE.user.assign.init();
     $("body").on("click","#add-user-show",function(){
         $("#manage-user-add").css("left","150px");
         $("#user-edit").css("left","-50px");
@@ -45,9 +46,7 @@ MANAGE.user.init=function(){
             MessageBox("Please fill all the blanket taking *","top","warning");
         }
     });
-    $("#manage-user-delivery").on("click",function(){
-        MANAGE.user.assign.init();
-    })
+
 }
 //////////////////////////////////////////////////////////////////////////         list 那一块
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,8 +174,81 @@ MANAGE.user.user_edit_box_bind=function(){
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.user.assign={};
 MANAGE.user.assign.init=function(){
-
+    $("body").on("click","#manage-user-delivery",function(){
+        var $target=$("#manage-sort-list").find(":checked"),
+            id=$target.parent().parent().attr("id"),
+            user_name=$target.parent().next().find(".user-manage-name").text();
+        $("#assign-kpi-wrap").css("display","block");
+        $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+    })
+    $("#assign-kpi-pick").on("click",function(){
+         $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width","180px");
+         $("#kpi-category").prepend($("<option />").attr("value", ""));
+         $("#kpi-category").val('').trigger('chosen:updated');
+    });
+    $("body").on("click","#close-assign-kpi-options",function(){
+        $("#assign-kpi-options[special='user']").hide("1000");
+        $("#assign-kpi-list").empty();
+        $("#kpi-category").children().first().remove();
+    });
+    $("#kpi-category").chosen().change(function(event){
+        var id = $(adapt_event(event).target).attr("value");
+        $.ajax({
+            url: '/kpis/get_by_category',
+            dataType: "json",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                $("#assign-kpi-list").empty();
+                for (var i = 0; i < data.length; i++) {
+                    $("#assign-kpi-list").append(
+                        $("<li />")
+                            .append($("<h3 />").attr("kpi_id",data[i].id).text(data[i].name))
+                            .append($("<p />").attr("title",data[i].description).text(data[i].description))
+                    );
+                }
+            }
+        });
+    });
+    $("body").on("click","#assign-kpi-list>li>h3",function(){
+        var id=$(this).attr("kpi_id"),
+            h3=$(this).text(),
+            p=$(this).next().text(),
+            validate=true;
+        $("#assign-kpi-inner>.left>li").each(function(){
+               if($(this).attr("id")==id){
+                   validate=false;
+                   return false
+               }
+        });
+        if(validate){
+            $("#assign-kpi-inner>.left").append(
+                $("<li />").attr("id",id)
+                    .append($("<h3 />").text(h3))
+                    .append($("<p />").text(p))
+                    .append($("<i />").addClass("icon-trash"))
+            );
+        }
+        else{
+            MessageBox("Same KPI has already been assigned","top","warning");
+        }
+    });
+    $("body").on("click","#assign-kpi-inner>ul>li>h3,#assign-kpi-inner>ul>li>p,#assign-kpi-inner>ul>li>i",function(){
+          if(confirm("Unassign this KPI ?")){
+              $(this).parent().remove();
+          }
+    });
+    $("body").on("click","#assign-kpi-cancel",MANAGE.user.assign.close)
+             .on("click","#assign-kpi-ok",function(){
+            MANAGE.user.assign.close();
+             }
+    );
 };
 MANAGE.user.assign.close=function(){
-
+    $("#assign-kpi-inner>.left").empty();
+    if($("#assign-kpi-options[special='user']").css("display")=="block"){
+        $("#assign-kpi-options[special='user']").hide("1000")
+    }
+    $("#assign-kpi-wrap").css("display","none");
 }
