@@ -11,6 +11,9 @@ class ApplicationController < ActionController::Base
   before_filter :find_current_user_tenant
   #
   before_filter :check_tenant_status
+  
+  # I18n
+  before_f  :set_locale
   #
   #
   set_current_tenant_through_filter
@@ -191,6 +194,11 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
      render :json=>{:access=>false}
+  end
+  
+  # I18n
+  def set_locale
+    I18n.locale=cookies[:locale] || I18n.default_locale
   end
 end
 
