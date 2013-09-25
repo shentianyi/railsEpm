@@ -10,14 +10,14 @@ class UserSessionsController < ApplicationController
 
 
   def new
-    @title='Login'
+    @title=I18n.t 'auth.view.login_title'
     @user_session = UserSession.new
   end
 
   def create
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
-      flash[:notice] = "Login successful!"
+      flash[:notice] = I18n.t 'auth.msg.login_success'
       redirect_to root_path
     else
       render :action => :new
@@ -26,7 +26,7 @@ class UserSessionsController < ApplicationController
 
   def destroy
     current_user_session.destroy
-    flash[:notice] = "Logout successful!"
+    flash[:notice] = I18n.t 'auth.msg.logout_success'
     redirect_to new_user_sessions_url
   end
 end
