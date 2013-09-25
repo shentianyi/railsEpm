@@ -6,36 +6,36 @@
      <nav class="pull-left">
           <ul>
                <li>
-                    <a href="/"> <span>Get Started</span> <span class="nav-get-started"></span> </a>
+                    <a href="/"> <span><%= t 'view.menu.start'%></span> <span class="nav-get-started"></span> </a>
                </li>
                <li>
-                    <a  href="<%= dashboards_path%>"> <span>DashBoard</span> <span class="nav-dash-board"></span> </a>
+                    <a  href="<%= dashboards_path%>"> <span><%= t 'view.menu.dashboard'%></span> <span class="nav-dash-board"></span> </a>
                </li>
                <li>
-                    <a   href="<%= analyse_kpi_entries_path%>"> <span>Analytics</span> <span class="nav-analytics"></span> </a>
+                    <a   href="<%= analyse_kpi_entries_path%>"> <span><%= t 'view.menu.analytics'%></span> <span class="nav-analytics"></span> </a>
                </li>
                <li>
-                    <a> <span>Reports</span> <span class='nav-report'></span> </a>
+                    <a> <span><%= t 'view.menu.reports'%></span> <span class='nav-report'></span> </a>
                </li>
                <li class="relative">
-                    <a> <span>Manage</span> <span class='nav-manage'></span> </a>
+                    <a> <span><%= t 'view.menu.manage'%></span> <span class='nav-manage'></span> </a>
                     <ul class="nav-manage-sub">
                          <li>
-                              <a href="<%= kpis_path%>">KPIs</a>
+                              <a href="<%= kpis_path%>"><%= t 'view.menu.kpi'%></a>
                          </li>
                          <li>
-                              <a  href="<%= users_path%>">Users</a>
+                              <a  href="<%= users_path%>"><%= t 'view.menu.user'%></a>
                          </li>
                          <li>
-                              <a  href="<%= entity_groups_path%>">Views</a>
+                              <a  href="<%= entity_groups_path%>"><%= t 'view.menu.view'%></a>
                          </li>
                          <li>
-                              <a>Billings</a>
+                              <a><%= t 'view.menu.billing'%></a>
                          </li>
                     </ul>
                </li>
                <li>
-                    <a href="<%= new_kpi_entry_path%>"> <span>Entry KPIs</span> <span class="nav-entry-kpi"></span> </a>
+                    <a href="<%= new_kpi_entry_path%>"> <span><%= t 'view.menu.entry_kpi'%></span> <span class="nav-entry-kpi"></span> </a>
                </li>
           </ul>
      </nav>
