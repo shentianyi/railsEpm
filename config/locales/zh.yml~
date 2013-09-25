@@ -244,6 +244,5 @@ zh:
       target: 目标值
       aver_target: 平均目标值
       value: 值
-      aver_value: 平均值
       tcr: TCR
-      close_btn: 关闭
+      close: 关闭

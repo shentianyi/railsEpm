@@ -1,51 +1,50 @@
 <div>
      <div class="analytics-condition clearfix" id="analytics-condition">
           <div class="analytics-mark pull-left">
-               <h2 class="normal-blue text-center pointer" onclick="analytic_control_condition_visible()"> Analytics</h2>
+               <h2 class="normal-blue text-center pointer" onclick="analytic_control_condition_visible()"><%= t 'view.analytics.title'%></h2>
           </div>
           <div class="pull-left analytics-condition-choose">
                <div class="index-condition-group">
-                    <select data-placeholder="Entity *" style="width:90px;" class="chosen-select"   title="analy-entity-select" id="chart-group">
+                    <select data-placeholder="<%= t 'view.analytics.kpi_category'%> *" style="width:90px;" class="chosen-select"   title="analy-entity-select" id="chart-group">
                          <%@categories.each_with_index do |catetory,i|%>
                          <option value="<%= catetory.id%>"><%= catetory.name%></option>
                          <%end %>
                     </select>
-                    <select data-placeholder="Kpi *" style="width:150px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
+                    <select data-placeholder="<%= t 'view.analytics.kpi'%> *" style="width:150px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
                          <option value=""></option>
                     </select>
-                    <select data-placeholder="View *" style="width:150px;" class="chosen-select" title="analy-view-select"  id="chart-view">
+                    <select data-placeholder="<%= t 'view.analytics.view'%> *" style="width:150px;" class="chosen-select" title="analy-view-select"  id="chart-view">
                          <%@entity_groups.each_with_index do |entity_group,i|%>
                          <option value="<%= entity_group.id%>" ><%= entity_group.name%></option>
                          <%end %>
                     </select>
                </div>
                <div class="index-condition-group">
-                    <input type="text" class="index-pick-date" placeholder="Begin Time *" id="analy-begin-time"
+                    <input type="text" class="index-pick-date" placeholder="<%= t 'view.analytics.begin_time'%> *" id="analy-begin-time"
                     readonly=true/>
                     <label class="index-date-extra-info"></label>
-                    <input type="text" class="index-pick-date" placeholder="End Time" id="analy-end-time"
+                    <input type="text" class="index-pick-date" placeholder="<%= t 'view.analytics.end_time'%>" id="analy-end-time"
                     readonly=true/>
                     <label class="index-date-extra-info"></label>
                </div>
                <div class="index-condition-group" style="width:120px">
                     <label class="analytics-radio-label">
                           <input type="radio" name="chartRadios" value="1" checked>
-                          Total
+                          <%= t 'view.analytics.sum'%>
                     </label>
                     <label class="analytics-radio-label">
                           <input type="radio" name="chartRadios" value="2">
-                          Average
+                          <%= t 'view.analytics.average'%>
                     </label>
                </div>
-               <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px" onclick="prepare_form_chart()">add
-               chart</a>
+               <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px" onclick="prepare_form_chart()"><%= t 'view.analytics.add_chart'%></a>
           </div>
           <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible"
           open=true onclick="analytic_control_condition_visible()"> </i>
 
           <p class="analytics-condition-invisible-mark pointer" id="analytics-condition-invisible-mark"
           style="display:none" onclick="analytic_control_condition_visible()">
-               Analytics
+               <%= t 'view.analytics.title'%>
           </p>
      </div>
      <div class="chart-body" id="chart-body" style="display:none">
@@ -82,42 +81,42 @@
                          </thead>
                          <tbody>
                               <tr>
-                                   <td width="80px"  align="right">Date:</td>
+                                   <td width="80px"  align="right"><%= t 'view.analytics.date'%>:</td>
                                    <td id="chart-detail-date" align="left"></td>
                               </tr>
                               <tr class="hide">
-                                   <td width="80px"  align="right">To:</td>
+                                   <td width="80px"  align="right"><%= t 'view.analytics.end_time'%>:</td>
                                    <td id="chart-detail-end-date" align="left"></td>
                               </tr>
                               <tr class="hide">
-                                   <td width="80px"  align="right">Percent:</td>
+                                   <td width="80px"  align="right"><%= t 'view.analytics.percent'%>:</td>
                                    <td id="chart-detail-percent" align="left"></td>
                               </tr>
                               <tr>
-                                   <td width="80px"  align="right">Target:</td>
+                                   <td width="80px"  align="right"><%= t 'view.analytics.target'%>:</td>
                                    <td id="chart-detail-target" align="left"></td>
                               </tr>
                               <tr class="hide">
-                                   <td width="80px"  align="right">Aver Target:</td>
+                                   <td width="80px"  align="right"><%= t 'view.analytics.aver_target'%>:</td>
                                    <td id="chart-detail-aver-target" align="left"></td>
                               </tr>
                               <tr>
-                                   <td width="80px"  align="right">Value:</td>
+                                   <td width="80px"  align="right"><%= t 'view.analytics.value'%>:</td>
                                    <td id="chart-detail-value" align="left"></td>
                               </tr>
 
                               <tr class="hide">
-                                   <td width="80px"  align="right">Aver Value</td>
+                                   <td width="80px"  align="right"><%= t 'view.analytics.aver_value'%>:</td>
                                    <td id="chart-detail-aver-date" align="left"></td>
                               </tr>
                               <tr>
-                                   <td width="80px"  align="right">TCR:</td>
+                                   <td width="80px"  align="right"><%= t 'view.analytics.tcr'%>:</td>
                                    <td id="chart-detail-tcr" align="left"></td>
                               </tr>
                          </tbody>
                     </table>
                     <div class="chart-detail-close" id="chart-detail-close" onclick="close_chart_detail()">
-                         Close
+                         <%= t 'view.analytics.close_btn'%>
                     </div>
                </div>
           </div>

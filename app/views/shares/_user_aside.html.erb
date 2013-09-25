@@ -3,6 +3,6 @@
           <p class="font-gray user-name">
                <%= current_user.first_name%>
           </p>
-          <a class="btn btn-primary btn-log-out"  href="/user_sessions/destroy">Log out</a>
+          <a class="btn btn-primary btn-log-out"  href="/user_sessions/destroy"><%= t 'auth.view.signout_btn'%></a>
      </div>
 </aside>
