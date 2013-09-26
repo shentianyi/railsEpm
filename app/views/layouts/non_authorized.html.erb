@@ -11,9 +11,6 @@
   <div class="page-top">
     <img src="/assets/headicon.png"/>
     <label class="company-name">BrillianTech</label>
-    <!--<ul class="setting-navi pull-right">-->
-    <!--<li><a >Hello Wayne</a></li>-->
-    <!--</ul>-->
   </div>
   <div class="page-navi clearfix">
     <h3 class="text-center"><%= @title %></h3>
@@ -32,4 +29,8 @@
 <%= render :partial=>'shares/message_box'%>
 
 </body>
+ <script type="text/javascript">
+           I18n.defaultLocale = "<%= I18n.default_locale %>";
+           I18n.locale = "<%= I18n.locale %>";
+  </script>
 </html>

@@ -41,3 +41,5 @@
 //=require Manage-user
 //=require Manage-view
 //=require Entry
+//= require i18n
+//= require i18n/translations
