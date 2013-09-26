@@ -12,7 +12,7 @@ class KpisController < ApplicationController
     @base_kpis=Kpi.base_kpis  current_ability
   end
 
-  # create api
+  # create kpi
   def create
     msg=Message.new
     @kpi=Kpi.new(params[:kpi])
@@ -21,7 +21,6 @@ class KpisController < ApplicationController
     msg.result=true
     msg.object=@kpi.id
     else
-      puts @kpi.errors.messages.to_json
       @kpi.errors.messages[:result]="添加失败"
       msg.content=@kpi.errors.messages.values.join('; ')
     end
@@ -45,8 +44,7 @@ class KpisController < ApplicationController
     msg=Message.new
     if @kpi=Kpi.accessible_by(current_ability).find_by_id(params[:id])
       if @kpi.kpi_parent_items.count==0
-      @kpi.destroy
-      msg.result=true
+      msg.result=@kpi.destroy
       else
         msg.content='can not destroy, as basci kpi'
       end
@@ -84,11 +82,9 @@ class KpisController < ApplicationController
         name = count==0 ? template_category.name : "#{template_category.name}_#{SecureRandom.uuid}"
         category=KpiCategory.new(:name=>name,:description=>template_category.description)
         category.tenant=current_tenant
-
         check={}
         params[:kpis].each do |kpi_id|
           t= Admin::KpiTemplate.find_by_id(kpi_id)
-          puts "#{t.to_json}"
           formula=t.formula
           if t.is_calculated
             KpisHelper.parse_formula_items(t.formula).each do |item|

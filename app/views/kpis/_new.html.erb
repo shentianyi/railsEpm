@@ -1,13 +1,13 @@
 <div class="manage-kpi-add" id="manage-kpi-add">
      <i class="icon-remove" id="close-add-kpi"></i>
      <div>
-          <input type="text" placeholder="* Name" id="new-kpi-name"/>
-          <textarea placeholder="   Description" id="new-kpi-desc"></textarea>
+          <input type="text" placeholder="* <%= t 'manage.kpi.name'%>" id="new-kpi-name"/>
+          <textarea placeholder="   <%= t 'manage.kpi.description'%>" id="new-kpi-desc"></textarea>
           <div class="select-div">
-               <%= select_tag :frequency,options_from_collection_for_select(@frequencies,'value','desc'),{:id=>'add-interval',"data-placeholder"=>"* Frequency",:class=>"chosen-select" }%>
+               <%= select_tag :frequency,options_from_collection_for_select(@frequencies,'value','desc'),{:id=>'add-interval',"data-placeholder"=>"* #{ t 'manage.kpi.frequency'}",:class=>"chosen-select" }%>
           </div>
 
-          <input type="text" placeholder="* Target" id="new-kpi-target"/>
+          <input type="text" placeholder="* <%= t 'manage.kpi.target'%>" id="new-kpi-target"/>
 
           <div class="select-div">
                <select class="chosen-select" data-placeholder="* Unit" id="add-unit">
@@ -18,15 +18,15 @@
           </div>
 
           <div class="select-div">
-               <%= select_tag :direction,options_from_collection_for_select(@directions,'value','desc'),{:id=>'add-trend',"data-placeholder"=>"    Trend",:class=>"chosen-select"}%>
+               <%= select_tag :direction,options_from_collection_for_select(@directions,'value','desc'),{:id=>'add-trend',"data-placeholder"=>"    #{ t 'manage.kpi.trend'}",:class=>"chosen-select"}%>
           </div>
 
           <input type="checkbox" id="is-calcu-check"/>
-          <label>Calculate Type</label>
+          <label><%= t 'manage.kpi.calculate_type'%></label>
 
           <div class="calculate-type-box" id="calculate-type-box">
                <div class="select-div">
-                    <%= select_tag :base_kpi,options_from_collection_for_select(@base_kpis,'id','name'),{:class=>'chosen-select',"data-placeholder"=>'KPI You Have',:id=>'is-calcu-relate',:prompt=>''}%>
+                    <%= select_tag :base_kpi,options_from_collection_for_select(@base_kpis,'id','name'),{:class=>'chosen-select',"data-placeholder"=>"#{ t 'manage.kpi.list'}",:id=>'is-calcu-relate',:prompt=>''}%>
                </div>
                <label sign="+">+</label>
                <label sign="-">-</label>
@@ -34,9 +34,9 @@
                <label sign="/">/</label>
                <label sign="(">(</label>
                <label sign=")">)</label>
-               <input type="text" placeholder="* KPI Equation" id="calcuType-input"/>
+               <input type="text" placeholder="* <%= t 'manage.kpi.formula'%>" id="calcuType-input"/>
                <div style="display:none" id="takeCal" cal></div>
           </div>
-          <a class="btn btn-primary" id="manage-kpi-add-new">Add</a>
+          <a class="btn btn-primary" id="manage-kpi-add-new"><%= t 'manage.base.add_btn'%></a>
      </div>
 </div>

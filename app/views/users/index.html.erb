@@ -99,23 +99,13 @@
             <p><span class="normal-blue"></span><span>'s KPI</span></p>
         </div>
         <div class="assign-kpi-inner" id="assign-kpi-inner">
-            <ul class="left">
-                <%@user_kpis.each_with_index do |kpi,i|%>
-                <li id="<%= kpi.user_kpi_item_id%>">
-                    <h3><%= kpi.name%></h3>
-                    <p title="<%= kpi.description%>"><%= kpi.description%></p>
-                    <i class="icon-trash"></i>
-                </li>
-                <%end%>
-            </ul>
+             
         </div>
         <div class="assign-kpi-options" special="user" id="assign-kpi-options">
             <i class="icon-remove" id="close-assign-kpi-options"></i>
             <div class="select-div">
                 <select class="chosen-select" data-placeholder="KPI Category" id="kpi-category">
-                    <%@categories.each_with_index do |catetory,i|%>
-                        <option value="<%= catetory.id%>"><%= catetory.name%></option>
-                    <%end %>
+                  
                 </select>
             </div>
             <ul id="assign-kpi-list">

@@ -217,8 +217,7 @@ zh:
       sign_success: 注册成功
       sign_close: 我们还没有开放注册
       sign_fail: 注册失败
-  view:
-    menu:
+  menu:
       start: 开始
       dashboard: 仪表盘
       analytics: 分析
@@ -229,20 +228,48 @@ zh:
       view: 观察点
       billing: 账户
       entry_kpi: KPI输入
-    analytics:
+  analytics:
       title: 分析
       kpi_category: KPI类别
       kpi: KPI
       view: 观察点
       begin_time: 开始时间
       end_time: 结束时间
-      sum: 求和
+      sum: 累计
       average: 平均
       add_chart: 分析           
       date: 时间
       percent: 比例
       target: 目标值
+      sum_target: 累计目标值
       aver_target: 平均目标值
-      value: 值
+      value: 实际值
+      sum_value: 累计实际值
+      aver_value: 平均实际值
       tcr: TCR
-      close: 关闭
+      close_btn: 关闭
+  manage:
+      base:
+        delete_btn: 删除
+        edit_btn: 编辑
+        add_btn: 添加
+        cancel_btn: 取消
+        enter_confirm: Enter：  确定
+        esc_cancel: ESC： 取消
+        delete_confirm:  确定删除？
+      kpi:
+        title: 管理KPI
+        category: 类别
+        kpi_library: KPI 库
+        name: 名称
+        description: 描述
+        frequency: 周期
+        target: 目标值
+        unit: 单位
+        trend: 趋势
+        calculate_type: 计算型
+        not_calculate_type: 否
+        kpi_list: 选择KPI
+        kpi_formula: 计算公式
+        kpi_invalid: 公式不合法
+        cannot_repeat: 同一类别KPI不可重复

@@ -249,6 +249,7 @@ MANAGE.user.assign.init=function(){
             user_name=$target.parent().next().find(".user-manage-name").text();
         $("#assign-kpi-wrap").css("display","block");
         $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+        
     })
     $("#assign-kpi-pick").on("click",function(){
          $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width","180px");

@@ -49,6 +49,8 @@ GEM
       multi_json (~> 1.0)
     hike (1.2.3)
     i18n (0.6.4)
+    i18n-js (2.1.2)
+      i18n
     journey (1.0.4)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
@@ -136,6 +138,7 @@ DEPENDENCIES
   authlogic
   cancan
   coffee-rails (~> 3.2.1)
+  i18n-js
   jquery-rails
   mysql2
   rails (= 3.2.8)
