@@ -155,7 +155,7 @@
 }
 /*fifth column*/
 .entry-sort-list li>table tr:first-of-type td:nth-of-type(5){
-    position:relative;
+    /*position:relative;*/
     width:14%;
 }
 .entry-sort-list li>table tr:first-of-type td:nth-of-type(5) input{

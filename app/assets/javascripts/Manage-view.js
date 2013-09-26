@@ -16,4 +16,63 @@ MANAGE.view.init=function(){
         $("#manage-entity-add").css("left","-50px");
         $("#manage-right-content").css("left","150px");
     });
+    $("body").on("click","#manage-entity-add ul h3",function(){
+        var id=$(this).attr("id"),
+            text=$(this).text(),
+            validate=true;
+        $("#assign-entity-wrap li>h3").each(function(){
+             if($(this).attr("entity_id")==id){
+                 validate=false;
+                 return false
+             }
+        });
+        if(validate){
+//            $.ajax({
+//               url:"/entity_group_items",
+//               data:{
+//                   entity_group_item:{
+//                       entity_group_id:$("#entity_group_id").val(),
+//                       entity_id:id
+//                   }
+//               },
+//               dataType:'json',
+//               success:function(data){
+//                   if(data.result){
+//                       $("#assign-entity-wrap>ul").append($("<li />")
+//                           .append($("<h3 />").attr("entity_id",id).text(text))
+//                           .append($("<i />").addClass("icon-trash"))
+//                       );
+//                   }
+//                   else{
+//                       MessageBox(data.content,"top","warning");
+//                   }
+//               }
+//            });
+            $("#assign-entity-wrap>ul").append($("<li />")
+                .append($("<h3 />").attr("entity_id",id).text(text))
+                .append($("<i />").addClass("icon-trash"))
+            );
+        }
+        else{
+            MessageBox("Same User Group has already been assigned","top","warning");
+        }
+    });
+    $("body").on("click","#assign-entity-wrap li>h3,#assign-entity-wrap li>i",function(){
+        var id=$(this).attr("entity_id"),
+            $this=$(this);
+        if(confirm("Unassign this user group ?")){
+            $.ajax({
+                url:'../entity_group_items/'+id,
+                type: 'DELETE',
+                success:function(data){
+                    if(data.result){
+                        $this.parent().remove();
+                    }else{
+                        MessageBox(data.content,"top","warning");
+                    }
+                }
+            });
+            $(this).parent().remove();
+        }
+    });
 };

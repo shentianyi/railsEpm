@@ -59,8 +59,36 @@
 /*********************************************************************************************************  添加部分
 *******************************************************************************************************************/
 .manage-user-add[special="entity"]{
-    background-color:#333
+    background-color:#333;
+    transition:left 0.3s ease-out;
 }
 .manage-user-add[special="entity"]>i{
     color:white;
+}
+.manage-user-add[special="entity"]>p{
+    margin-top:32px;
+    cursor:default;
+    text-align:center;
+    color:#ddd;
+    font-size:22px;
+}
+.manage-user-add[special="entity"]>ul{
+    margin:0;
+    padding:37px 0 0 0px;
+    list-style-type: none;
+}
+.manage-user-add[special="entity"]>ul h3{
+    font-weight:lighter;
+    font-size:16px;
+    color:#5194CD;
+    margin:0px;
+    padding:12px 5px;
+    word-break:break-all;
+    word-wrap:break-word;
+    text-align:center;
+    cursor:pointer;
+    transition:color 0.3s ease-out;
+}
+.manage-user-add[special="entity"]>ul h3:hover{
+    color:#F5A133;
 }

@@ -26,6 +26,7 @@ function init_analytics() {
         var target="#analy-begin-time,#analy-end-time";
         $(target).val("");
         $(".index-date-extra-info").text("");
+
         new DATE_PICKER[interval](target,"date").datePicker();
     });
     $("body").on("change","#analy-begin-time",function(){

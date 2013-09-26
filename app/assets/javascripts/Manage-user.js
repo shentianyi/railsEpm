@@ -328,7 +328,7 @@ MANAGE.user.assign.ok=function(){
                   MessageBox(data.content,"top","warning");
               }
         }
-    })
+    });
 };
 MANAGE.user.assign.close=function(){
     $("#assign-kpi-inner>.left").empty();
