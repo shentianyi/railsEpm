@@ -198,6 +198,11 @@ zh:
     errors:
       <<: *errors
   # brilliantech project
+  #authlogic:
+   # error_messages:
+   #   email_invalid: should look like an email address.
+   #   password_blank: 密码不可为空
+   #  password_invalid: 密码最短长度为4 
   auth:
     view:
       login_title: 登 录
@@ -212,7 +217,9 @@ zh:
       company: 公司
     msg:
       login_success: 登录成功
+      login_require: 请先登录
       logout_success: 注销成功
+      logout_require: 请先注册
       email_token: 邮箱已被注册
       sign_success: 注册成功
       sign_close: 我们还没有开放注册

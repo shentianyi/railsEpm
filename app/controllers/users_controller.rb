@@ -18,13 +18,9 @@ class UsersController < ApplicationController
   end
 
   def update
-    params[:user][:role_id]=400
-    if @user and @user.update_attributes(params[:user])
-      redirect_to users_path
-    else
-      flash[:notice]='error'
-      render 'edit'
-    end
+    msg=Message.new
+    msg.result=  @user.update_attributes(params[:user])
+    render :json=>msg
   end
 
   def new
@@ -32,14 +28,14 @@ class UsersController < ApplicationController
   end
 
   def create
-    params[:user][:role_id]=400
     @user=User.new(params[:user])
+    msg=Message.new
     if  @user.save
-      redirect_to users_path
+    msg.result=true
     else
-      get_ability_entity
-      render 'new'
+    msg.content=@user.errors
     end
+    render :json=>msg
   end
 
   def destroy

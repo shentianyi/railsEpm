@@ -102,7 +102,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       store_location
-      flash[:alert] = "You must be logged in to access this page"
+      flash[:alert] = I18n.t 'auth.msg.login_require'
       redirect_to new_user_sessions_url
       return false
     end
@@ -112,7 +112,7 @@ class ApplicationController < ActionController::Base
   def require_no_user
     if current_user
       store_location
-      flash[:alert] = "You must be logged out to access this page"
+      flash[:alert] =  I18n.t 'auth.msg.logout_require'
       redirect_to root_url
       return false
     end
