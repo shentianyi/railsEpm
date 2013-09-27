@@ -7,6 +7,8 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+
 <div class="wrap-page">
   <div class="page-top">
     <img src="/assets/headicon.png"/>
@@ -22,10 +24,14 @@
       </div>
   <% end %>
 
+
   <div class="login-sub-middle clearfix">
     <%= yield %>
   </div>
 </div>
+
+
+
 <%= render :partial=>'shares/message_box'%>
 
 </body>
@@ -34,3 +40,5 @@
            I18n.locale = "<%= I18n.locale %>";
   </script>
 </html>
+
+

@@ -29,6 +29,8 @@ function init_analytics() {
 
         new DATE_PICKER[interval](target,"date").datePicker();
     });
+
+
     $("body").on("change","#analy-begin-time",function(){
         var interval = $("#chart-kpi").find(":selected").attr("interval");
         if (interval == "200") {

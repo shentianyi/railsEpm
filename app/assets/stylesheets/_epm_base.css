@@ -87,6 +87,7 @@ header{
     /*background:url("../images/logo.png") no-repeat center bottom;*/
     width:150px;
     height:117px;
+    padding-top:0px;
 }
 /*.user-portrait-name{*/
     /*color:white;*/
@@ -311,4 +312,20 @@ nav ul li a:hover .nav-entry-kpi{
 .datepicker [week="picker"] table  tr.week-tr-active td.day:hover {
     background: none;
 }
-
+/********************************************************************************************************* language select
+*******************************************************************************************************************/
+.language-select{
+    width:90px;
+}
+.language-select>select{
+    width:90px;
+}
+.language-select .chosen-container-single .chosen-single{
+    background:white !important;
+    border:1px solid #ddd;
+    box-shadow:none !important;
+}
+.language-select .chosen-container-single .chosen-single div{
+    background:white !important;
+    border-left:none !important;
+}

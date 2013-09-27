@@ -40,6 +40,7 @@
 //=require Manage-kpi
 //=require Manage-user
 //=require Manage-view
+//=require Log
 //=require Entry
 //= require i18n
 //= require i18n/translations
