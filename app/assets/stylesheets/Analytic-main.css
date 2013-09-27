@@ -162,7 +162,7 @@ div[title='analy-view-select'] {
     border-color: #ddd;
     border-style: dotted;
     width: 10%;
-    transition: width 0.4s ease-out;
+    transition: width 0.5s ease-in;
     cursor:pointer;
 }
 
