@@ -182,25 +182,16 @@ MANAGE.user.add_new = function() {
 //////////////////////////////////////////////////////////////////////////         User 编辑那一块的
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.user.user_edit_box_bind = function() {
-     var $target = $("#manage-sort-list .icheckbox_minimal-aero.checked"),
-         name = $target.next().find(".user-manage-name").text(),
-         mail = $target.next().find(".user-manage-mail").text(),
-         authority = $target.next().find(".user-manage-authority").attr("value");
+     var $target = $("#manage-sort-list .icheckbox_minimal-aero.checked"), name = $target.next().find(".user-manage-name").text(), mail = $target.next().find(".user-manage-mail").text(), authority = $target.next().find(".user-manage-authority").attr("value");
      $("#user-edit #edit-user-name").val(name);
      $("#user-edit #edit-user-mail").val(mail);
      $("#user-edit input[type='radio'][value='" + authority + "']").iCheck("check");
      $("#manage-user-edit-old").attr("effect_on", $target.parent().attr("id"));
 }
 MANAGE.user.edit = function() {
-     var edit_name = $("#user-edit #edit-user-name").val(),
-         edit_mail = $("#user-edit #edit-user-mail").val(),
-         edit_role = $("#user-edit input[name='edit-user-role']:checked").data("name"),
-         edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"),
-         edit_id = $("#manage-user-edit-old").attr("effect_on"),
-         $target = $("#manage-sort-list").find("#" + edit_id);
+     var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(), edit_role = $("#user-edit input[name='edit-user-role']:checked").data("name"), edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"), edit_id = $("#manage-user-edit-old").attr("effect_on"), $target = $("#manage-sort-list").find("#" + edit_id);
      if(edit_name.length > 0 && edit_mail.length > 0) {
           if($("#user-edit>div>input").filter("[red='true']").length == 0) {
-               console.log($("#manage-sort-list").find(":checked").attr("id"));
                $.ajax({
                     url : '/users',
                     type : 'PUT',
@@ -215,6 +206,7 @@ MANAGE.user.edit = function() {
                     dataType : 'json',
                     success : function(data) {
                          if(data.result) {
+                              console.log(edit_name);
                               $target.find(".user-manage-name").text(edit_name);
                               $target.find(".user-manage-mail").text(edit_mail);
                               $target.find(".user-manage-authority").text(edit_role).attr("value", edit_authority);
@@ -223,9 +215,9 @@ MANAGE.user.edit = function() {
                          }
                     }
                });
-//                           $target.find(".user-manage-name").text(edit_name);
-//                           $target.find(".user-manage-mail").text(edit_mail);
-//                           $target.find(".user-manage-authority").text(edit_role).attr("value",edit_authority);
+               //                           $target.find(".user-manage-name").text(edit_name);
+               //                           $target.find(".user-manage-mail").text(edit_mail);
+               //                           $target.find(".user-manage-authority").text(edit_role).attr("value",edit_authority);
                MANAGE.user.user_add_close();
           } else {
                MessageBox("Please fix the input with red border", "top", "danger");
@@ -240,11 +232,27 @@ MANAGE.user.assign = {};
 MANAGE.user.assign.init = function() {
      $("body").on("click", "#manage-user-delivery", function() {
           var $target = $("#manage-sort-list").find(":checked"), id = $target.parent().parent().attr("id"), user_name = $target.parent().next().find(".user-manage-name").text();
-          $("#assign-kpi-wrap").css("display", "block");
-          $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
-
+          $.ajax({
+               url : '/kpis/user_kpis',
+               data : {
+                    id : id
+               },
+               dataType : 'html',
+               success : function(kpis) {
+                    $('#assign-kpi-inner').html(kpis);
+                    $("#assign-kpi-wrap").css("display", "block");
+                    $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+               }
+          });
      })
      $("#assign-kpi-pick").on("click", function() {
+          $.ajax({
+               url : 'kpi_categories/list',
+               dataType : 'json',
+               success : function(data) {
+                    // add category
+               }
+          });
           $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
           $("#kpi-category").prepend($("<option />").attr("value", ""));
           $("#kpi-category").val('').trigger('chosen:updated');
@@ -258,7 +266,7 @@ MANAGE.user.assign.init = function() {
           var id = $(adapt_event(event).target).attr("value");
           $.ajax({
                url : '/kpis/get_by_category',
-               dataType : "json",
+               dataType : 'json',
                data : {
                     id : id
                },
@@ -286,7 +294,19 @@ MANAGE.user.assign.init = function() {
      });
      $("body").on("click", "#assign-kpi-inner>ul>li>h3,#assign-kpi-inner>ul>li>p,#assign-kpi-inner>ul>li>i", function() {
           if(confirm("Unassign this KPI ?")) {
-               $(this).parent().remove();
+               $.ajax({
+                    url : '/user_kpi_items',
+                    dataType : 'json',
+                    data : {
+                         id : 1111
+                    },
+                    success : function(data) {
+                         if(data.result) {
+                              $(this).parent().remove();
+                         }
+                    }
+               });
+
           }
      });
      $("body").on("click", "#assign-kpi-cancel", MANAGE.user.assign.close).on("click", "#assign-kpi-ok", function() {
