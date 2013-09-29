@@ -9,22 +9,23 @@
     background-color:#8e8e8e;
 }
 .log-logo{
-    background:url("../images/log.png") -6px -129px no-repeat;
-    /*background:url("/assets/log.png") -6px -129px no-repeat;*/
+    /*background:url("../images/log.png") -6px -129px no-repeat;*/
+    background:url("/assets/log.png") -6px -129px no-repeat;
     height:133px;
     width:150px;
     margin-left:20px;
 }
 .log-logo:after{
-    content:url('../images/logo-after.png');
+    /*content:url('../images/logo-after.png');*/
+    content:url('/assets/logo-after.png');
     position:relative;
     left:145px;
     top:8px;
 
 }
 .log-header-image{
-    background:url("../images/log.png") right 0 no-repeat;
-    /*background:url("/assets/log.png") right 0 no-repeat;*/
+    /*background:url("../images/log.png") right 0 no-repeat;*/
+    background:url("/assets/log.png") right 0 no-repeat;
     height:133px;
     width:100%;
     position:relative;
@@ -117,8 +118,8 @@
     color:#484848
 }
 .log-btn-group>a:first-of-type{
-    background-image:url("../images/log.png");
-    /*background-image:url("/assets/log.png");*/
+    /*background-image:url("../images/log.png");*/
+    background-image:url("/assets/log.png");
     background-repeat:no-repeat;
     display:block;
     width:97px;
