@@ -34,6 +34,9 @@ class KpiCategoriesController < ApplicationController
     render :json=>msg
   end
 
+  def list
+   render :json=>get_ability_category
+  end
   def template
     @admin_kpi_category_templates = Admin::KpiCategoryTemplate.all
     respond_to do |format|

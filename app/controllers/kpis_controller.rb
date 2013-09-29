@@ -53,7 +53,7 @@ class KpisController < ApplicationController
   end
 
   def assign
-    @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
+    # @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
     if request.get?
       @user_id=params[:id]
     else
@@ -71,7 +71,8 @@ class KpisController < ApplicationController
   end
 
   def user_kpis
-    @user_kpis=KpisHelper.get_kpis_by_user_id params[:user],current_ability
+    @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
+    render :partial=>'user_kpi'
   end
 
   def import
