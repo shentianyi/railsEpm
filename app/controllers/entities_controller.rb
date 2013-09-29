@@ -4,7 +4,7 @@ class EntitiesController < ApplicationController
  
   # create tenant
   def create
-    @entity=Entity.new(params[:entity])
+    @entity=Entity.new(params[:data])
     @entity.tenant=current_tenant
     msg=Message.new
     if @entity.save

@@ -38,7 +38,7 @@ MANAGE.manage_menu_left_add.prototype={
 //              this.add_hide();
               var href=this.href;
               $.post(this.postHref, {
-                  category : {
+                  data : {
                       name : name
                   }
               }, function(data) {

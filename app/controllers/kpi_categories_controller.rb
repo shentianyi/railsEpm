@@ -6,7 +6,7 @@ class KpiCategoriesController < ApplicationController
   end
 
   def create
-    @category=KpiCategory.new(params[:category])
+    @category=KpiCategory.new(params[:data])
     @category.tenant=current_tenant
     msg=Message.new
     if @category.save

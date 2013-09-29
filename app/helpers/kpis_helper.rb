@@ -35,8 +35,9 @@ module KpisHelper
   # assign kpis to user
   def self.assign_kpi_to_user kpi,user
     unless user.kpis.find_by_id(kpi.id)
-      UserKpiItem.new(:user_id=>user.id,:kpi_id=>kpi.id,:entity_id=>user.entity_id,:target=>kpi.target).save
-    return kpi
+      item = UserKpiItem.new(:user_id=>user.id,:kpi_id=>kpi.id,:entity_id=>user.entity_id,:target=>kpi.target)
+      item.save
+    return item
     end
     return nil
   end

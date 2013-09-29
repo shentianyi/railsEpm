@@ -3,7 +3,7 @@ class EntityGroupItemsController < ApplicationController
   # create api
   def create
     msg=Message.new
-    @entity_group_item=EntityGroupItem.new(params[:entity_group_item])
+    @entity_group_item=EntityGroupItem.new(params[:data])
     if @entity_group_item.save
     msg.result=true
     msg.object=@entity_group_item.id

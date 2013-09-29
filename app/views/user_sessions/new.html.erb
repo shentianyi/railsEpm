@@ -1,6 +1,3 @@
-<div class="page-navi login-pageNavi relative">
-     <a class="btn btn-wzx btn-primary" href='/subscriptions/new'><%= t 'auth.view.sign_title'%></a>
-</div>
 <% if @user_session && @user_session.errors.any? %>
 <div id="error_explanation" class="error_explanation ">
      <ul>
@@ -11,11 +8,15 @@
           <% end %>
      </ul>
 </div>
-<% end %>
-<%= form_for @user_session, :url=>user_sessions_path, :html=>{:class=>'login-form'} do |f| %>
-<label for="user_session_email"><%= t 'auth.view.email'%></label>
-<%= f.text_field(:email) %>
-<label for="user_session_password"><%= t 'auth.view.pwd'%></label>
-<%= f.password_field(:password ) %>
-<input type="submit" class="btn btn-wzx btn-success pull-right" value="<%= t 'auth.view.submit_btn'%>"/>
-<% end %>
+<% end %> 
+<form action="/user_sessions/"  method="post">
+<div class="log-input">
+     <span><i class="icon-user"></i></span>
+     <input id="user_session_email" name="user_session[email]" size="30" type="text" placeholder="<%= t 'auth.view.email'%>"/>
+</div>
+<div class="log-input">
+     <span><i class="icon-lock"></i></span>
+     <input id="user_session_password" name="user_session[password]" size="30" type="password"  placeholder="<%= t 'auth.view.pwd'%>"/>
+</div> 
+</form>
+<a class="login-in-btn" onclick="document.forms[0].submit();"></a>

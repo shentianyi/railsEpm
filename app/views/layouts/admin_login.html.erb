@@ -12,7 +12,7 @@
                     <label class="company-name">BrillianTech</label>
                </div>
                <div class="page-navi clearfix">
-                    <h3 class="text-center"><%= @title %></h3>
+                    <h3 class="text-center"><a href="<%=@href%>"><%= @title %>d</a></h3>
                </div>
                <% if flash[:notice]!=nil || flash[:alert]!=nil %>
                <div class="alert <%= flash[:notice]==nil ? '':'alert-success' %>">
