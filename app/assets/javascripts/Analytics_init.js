@@ -29,7 +29,10 @@ function init_analytics() {
 
         new DATE_PICKER[interval](target,"date").datePicker();
     });
-
+    $("#chart-group").chosen().change(function(){
+        $("#analy-begin-time,#analy-end-time").datepicker("remove");
+        $("#analy-begin-time,#analy-end-time").datetimepicker("remove");
+    });
 
     $("body").on("change","#analy-begin-time",function(){
         var interval = $("#chart-kpi").find(":selected").attr("interval");

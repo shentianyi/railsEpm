@@ -44,7 +44,9 @@
     color:#d9d9d9;
     cursor:pointer;
 }
-
+.log-header-image>a:first-letter{
+    color:#55c8b4;
+}
 .log-header-image>a:hover{
     color:white
 }
@@ -122,7 +124,7 @@
     background-image:url("/assets/log.png");
     background-repeat:no-repeat;
     display:block;
-    width:97px;
+    width:87px;
     height:84px;
     position:relative;
     float:right;
@@ -134,14 +136,32 @@
     left:13px;
 }
 .login-in-btn{
-    background-position: -193px -150px;
+    background-position: -204px -150px;
 }
-.login-in-btn:hover{
-    background-position: -457px -149px;
+.login-in-btn:after{
+    content:"logIn";
+    font-size:22px;
+    color:#a5daf5;
+    display:block;
+    text-align:center;
+    margin-top:30px;
+    text-shadow:1px 1px 1px rgba(0,0,0,0.6);
+}
+.login-in-btn:hover {
+    background-position: -468px -149px;
 }
 .login-out-btn{
     background-position: -338px -150px;
 }
+.login-out-btn:after{
+    content:"signUp";
+    font-size:20px;
+    color:#f5bea5;
+    display:block;
+    text-align:center;
+    margin-top:30px;
+    text-shadow:1px 1px 1px rgba(0,0,0,0.6);
+}
 .login-out-btn:hover{
-    background-position: -595px -150px;
+    background-position: -596px -151px;
 }

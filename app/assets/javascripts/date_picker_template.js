@@ -89,7 +89,12 @@ DATE_PICKER.date_picker_template.prototype={
                 }
             });
             $(target).datepicker().on("show", function(){
+                if(name =="week"){
                 $(".datepicker-days").find(".active").parent().addClass("week-tr-active");
+                }
+                else{
+                    $(".datepicker-days").find(".active").parent().removeClass("week-tr-active");
+                }
                 $(".datepicker").on("click",function(){
                     $(".datepicker-days").find(".active").parent().addClass("week-tr-active");
                 });

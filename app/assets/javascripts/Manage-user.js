@@ -230,28 +230,29 @@ MANAGE.user.edit = function() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.user.assign = {};
 MANAGE.user.assign.init = function() {
+     //assign kpi初始化
      $("body").on("click", "#manage-user-delivery", function() {
-
           var $target = $("#manage-sort-list").find(":checked"),
               id = $target.parent().parent().attr("id"),
               user_name = $target.parent().next().find(".user-manage-name").text();
-//          $.ajax({
-//               url : '/kpis/user_kpis',
-//               data : {
-//                    id : id
-//               },
-//               dataType : 'html',
-//               success : function(kpis) {
-//                    $('#assign-kpi-inner').html(kpis);
-//                    $("#assign-kpi-wrap").css("display", "block");
-//                    $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
-//               }
-//          });
+          $.ajax({
+               url : '/kpis/user_kpis',
+               data : {
+                    id : id
+               },
+               dataType : 'html',
+               success : function(kpis) {
+                    $('#assign-kpi-inner').html(kpis);
+                    $("#assign-kpi-wrap").css("display", "block");
+                    $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+               }
+          });
 
 
          $("#assign-kpi-wrap").css("display", "block");
          $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
      });
+     //assign kpi category 初始化
      $("#assign-kpi-pick").on("click", function() {
           $.ajax({
                url : 'kpi_categories/list',
@@ -276,6 +277,7 @@ MANAGE.user.assign.init = function() {
           $("#assign-kpi-list").empty();
           $("#kpi-category").children().first().remove();
      });
+     //右边的KPI列出来
      $("#kpi-category").chosen().change(function(event) {
           var id = $(adapt_event(event).target).attr("value");
           $.ajax({
@@ -301,11 +303,39 @@ MANAGE.user.assign.init = function() {
                }
           });
           if(validate) {
-               $("#assign-kpi-inner>.left").append($("<li />").attr("id", id).append($("<h3 />").text(h3)).append($("<p />").text(p)).append($("<i />").addClass("icon-trash")));
+
+              $.ajax({
+                  url:'',
+                  dataType:'json',
+                  data:{},
+                  success:function(data){
+                      $("#assign-kpi-inner>.left").append(
+                          $("<li />").attr("id", id)
+                              .append(
+                                  $("<table />").append($("<tr />").append($("<td />").text(data.name)).append($("<td />").append($("<input type='text'/>").attr("kpi_id"))))
+                                      .append($("<tr />").append($("<td />").text(data.description)).append($("<td />").text("target")))
+                              )
+                              .append($("<i />").addClass("icon-trash"))
+                      );
+                  }
+              })
+
+
+//               $("#assign-kpi-inner>.left").append(
+//                   $("<li />").attr("id", id)
+//                       .append(
+//                           $("<table />").append($("<tr />").append($("<td />").text("dad")).append($("<td />").append($("<input type='text'/>").attr("kpi_id","21"))))
+//                               .append($("<tr />").append($("<td />").text("dasdsa")).append($("<td />").text("target")))
+//                       )
+//                       .append($("<i />").addClass("icon-trash"))
+//               );
           } else {
                MessageBox("Same KPI has already been assigned", "top", "warning");
           }
      });
+
+
+
 
 //左边KPI删除
      $("body").on("click","#assign-kpi-inner>ul>li>i", function() {
@@ -353,6 +383,10 @@ MANAGE.user.assign.input=function(event){
     var target=adapt_event(event).target;
     var id=$(target).attr("kpi_id");
     var value=$(target).val();
-    $.post("",{},function(data){if(!data) MessageBox("Something wrong","top","warning");});
+    $.post(
+        "",
+        {},
+        function(data){if(!data) MessageBox("Something wrong","top","warning");}
+    );
 }
 
