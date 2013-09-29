@@ -47,14 +47,14 @@
       <td>*开始时间</td>
       <td>
         <input type="text" readonly="true" id="from" class="analytics-date"/>
-        <input placeholder="时间" type="text" readonly="true" id="fromTime" class="analytics-time"/>
+        <!--<input placeholder="时间" type="text" readonly="true" id="fromTime" class="analytics-time"/>-->
       </td>
     </tr>
     <tr>
       <td>*结束时间</td>
       <td>
         <input  type="text" readonly="true" id="to" class="analytics-date"/>
-        <input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>
+        <!--<input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>-->
       </td>
     </tr>
     <tr>
@@ -108,14 +108,11 @@
     </ul>
   </div>
 
-  <div class="pull-left dashboard-block">
+  <!--<div class="pull-left dashboard-block">
     <a class="btn btn-wzx btn-primary dashboard-addNew-btn" onclick="showDash_new()"><i class="icon-plus icon-white"></i> 视图</a>
     <ul class="dashBoard-show" id="dashBoard-show">
       <li>
         <div class="dashboard-eachDetail relative">
-
-
-
           <table class="table table-bordered table-striped db-itemInfo">
             <tr>
               <td>视图名称</td>
@@ -149,10 +146,14 @@
       </li>
     </ul>
   </div>
-
-
-
-
+  -->
+  <a class="btn btn-wzx btn-primary dashboard-addNew-btn" onclick="showDash_new()"><i class="icon-plus icon-white"></i> 视图</a>
+  <div class="dashboard-block pull-left gridster" style="width: 80%;overflow-y: auto;">
+    <ul class="dashBoard-show" id="dashBoard-show">
+      <li data-row ="1" data-col="1" data-sizex="1" data-sizey="1">
+      </li>
+    </ul>
+  </div>
 </div>
 
 </div>

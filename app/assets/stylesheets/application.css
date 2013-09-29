@@ -17,6 +17,7 @@
 *= require Analytic-main
 *= require font-awesome
 *= require aero
+*= require jquery.gridster.min
 *= require Manage
 *= require Manage-kpi
 *= require Manage-user

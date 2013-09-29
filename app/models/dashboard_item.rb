@@ -1,6 +1,7 @@
 class DashboardItem < ActiveRecord::Base
   belongs_to :dashboard
   attr_accessible :dashboard_id,:entity_group,:kpi_id,:calculate_type,:time_string,:sequence,:interval,:name,:title,:type
+  attr_accessible :row, :col, :sizex, :sizey
 
   validates_with TimeStringValidator
   validates :dashboard_id,:presence => true
@@ -8,8 +9,6 @@ class DashboardItem < ActiveRecord::Base
   validates :kpi_id,:presence => true
   validates :calculate_type,:presence => true
   validates :name,:presence=>true
-
-
 
    def self.get_formatted_items_by_dashboard_id(dashboard_id)
      items= DashboardItem.where('dashboard_id=?',dashboard_id).reorder('sequence')

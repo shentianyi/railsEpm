@@ -291,6 +291,13 @@ function Graph(){
     this.name = null;
     this.title = null;
     this.sequence = null;
+
+    /*@field gridview 的位置*/
+    this.row = null;
+    this.col = null;
+    this.sizex = null;
+    this.sizey = null;
+
     this.placeholder = ifepm.template.view_placeholder;
     this.container=  function(graph_item){
         return ifepm.template.view
@@ -305,6 +312,10 @@ function Graph(){
             .replace(/!from!/g,graph_item.from)
             .replace(/!to!/g,graph_item.end)
             .replace(/!calculate_type!/g,graph_item.calculate_type)
+            .replace(/!row/g,graph_item.row)
+            .replace(/!col/g,graph_item.col)
+            .replace(/!sizex!/g,graph_item.sizex)
+            .replace(/!sizey!/g,graph_item.sizey)
     };
 }
 
@@ -325,10 +336,6 @@ ifepm.dashboard.update_item_sequence= function(container_selector){
         data:{sequence:ifepm.dashboard.graph_sequence}
     })
 };
-
-
-
-
 
 //append a new dashboard item to the main dashboard container
 ifepm.dashboard.create_dashboard=function(){
@@ -356,11 +363,6 @@ ifepm.dashboard.create_dashboard=function(){
     }
 };
 
-
-
-
-
-
 ifepm.dashboard.init=function(id){
     ifepm.dashboard.graphs = {};
     ifepm.dashboard.graph_sequence = [];
@@ -387,7 +389,10 @@ ifepm.dashboard.init=function(id){
                     graph_item.interval = data[i].interval
                     graph_item.sequence = data[i].sequence
                     graph_item.dashboard_id = data[i].dashboard_id
-
+                    graph_item.row = data[i].row;
+                    graph_item.col = data[i].col;
+                    graph_item.sizex = data[i].sizex;
+                    graph_item.sizey = data[i].sizey;
                     ifepm.dashboard.graphs[data[i].id]=graph_item;
                     ifepm.dashboard.graph_sequence.push(data[i].id)
 

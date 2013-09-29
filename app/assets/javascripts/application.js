@@ -11,6 +11,8 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //=require jquery-1.8.2.min
+//=require jquery.gridster.min
+//=require jquery.gridster.with-extras.min
 //= require jquery_ujs
 //=require highcharts
 //=require exporting
@@ -22,12 +24,12 @@
 //=require ifepm.config.js
 //=require ifepm.dashboard.template.js
 //=require ifepm.dashboard.main.js
+//=require Template
 //=require dashboard.js
 //=require bootstrap-datepicker
 //=require bootstrap-datetimepicker.min
 //=require chosen.jquery.min
 //=require wayne-base
-//=require Template
 //=require date_picker_template
 //=require high_chart_template
 //=require Analytics_init

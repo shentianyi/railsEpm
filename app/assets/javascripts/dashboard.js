@@ -37,7 +37,8 @@ if (!Date.prototype.toISOString) {
 function system_error(){
     alert("我们遇到了点小麻烦，管理员已经开始工作了，请耐心等待片刻后重试！");
 }
-var config={
+
+var config1={
     //Container of the dashboards
   db_container_selector:'#sty-dashboards',
     //a selector to select a dashboard node from the container
@@ -61,8 +62,9 @@ var config={
     //the attribute name which hold the actual id of the object
     db_id_field:'',
     view_id_field:''
-
 };
+
+$.extend(config,config1);
 
 var menu_selector = menu_selector || new ActiveSelect(config.selected_class)
 
@@ -77,12 +79,11 @@ function page_load(){
 
 function select_dashboard(id){
     current_dashboard_id=id;
-
     menu_selector.select_single_node(config.db_container_selector,
         config.db_item_filter,
         config.db_single_item_filter(id));
 
-    ifepm.dashboard.init(id)
+    ifepm.dashboard.init(id);
 }
 
 var dashboard_list_item_template =
@@ -134,27 +135,27 @@ function get_dashboard_id(){
 
 function get_time_string(){
     var from = $("#from").datepicker("getDate")
-    var fromTime = $.timePicker("#fromTime").getTime();
-    if (fromTime){
+    //var fromTime = $.timePicker("#fromTime").getTime();
+    /*if (fromTime){
         from.setHours(fromTime.getHours());
         from.setMinutes(fromTime.getMinutes());
         from.setSeconds(fromTime.getSeconds());
-    }
+    }*/
 
     var to =$( "#to" ).datepicker("getDate");
-    var toTime = $.timePicker("#toTime").getTime();
+    /*var toTime = $.timePicker("#toTime").getTime();
     if (toTime){
         to.setHours(toTime.getHours());
         to.setMinutes(toTime.getMinutes());
         to.setSeconds(toTime.getSeconds());
         to.setMilliseconds(toTime.getMilliseconds());
     }
-    else {
-        to.setHours(23);
-        to.setMinutes(59);
-        to.setSeconds(59);
-        to.setMilliseconds(999);
-    }
+    else {*/
+    to.setHours(23);
+    to.setMinutes(59);
+    to.setSeconds(59);
+    to.setMilliseconds(999);
+    //}
 
     return connect_time_str(from ,to);
 }
@@ -167,7 +168,6 @@ function connect_time_str(date1,date2){
 function get_interval(){
     return null;
 }
-
 
 
 
@@ -271,34 +271,40 @@ var date_picker_option =  {
     };
 
 
-function init_time_picker(){
-    $("#fromTime,#toTime").timePicker({
+/*function init_time_picker(){
+    $("#fromTime,#toTime").datepicker({
         step:60
     });
-}
+}*/
 
 function init_date_picker(){
-    $("#from").datepicker(
+    /*$("#from").datepicker(
         date_picker_option
     );
 
     $("#to").datepicker(
         date_picker_option
-    );
+    );*/
+
+    new DATE_PICKER["100"]("#from").datePicker();
+    new DATE_PICKER["100"]("#to").datePicker();
+}
+
+//grid view
+
+var girster = null;
+
+function inti_grid(){
+    $(".gridster ul").gridster({
+        widget_margins: [10, 10],
+        widget_base_dimensions: [140, 140]
+    });
+
+    girster = $(".girdster ul").gridster().data('gridster');
 }
 
 function init_component(){
-    init_time_picker();
+    //init_time_picker();
     init_date_picker();
+    inti_grid();
 }
-
-
-
-
-
-
-
-
-
-
-
