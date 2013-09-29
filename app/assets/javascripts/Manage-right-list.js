@@ -162,3 +162,34 @@ MANAGE.category.item_drag=new category_item_drag();
 
 
 
+function group_item_drag(){
+    this.url='/users';
+    this.drag_complete_post=function(id,belong){
+        console.log(id,belong)
+        var option={
+            id:id,
+            belong:belong
+        }
+        $.ajax({
+            url : this.url,
+            type : 'PUT',
+            data : {
+                kpi : {
+                    user_id : option.id,
+                    user_group_id : option.belong
+                }
+            },
+            success : function(data) {
+                MANAGE.item_drag.prototype.drag_complete(option.id);
+            }
+        });
+//        this.drag_complete(id);
+    }
+}
+group_item_drag.prototype=MANAGE.item_drag.prototype;
+group_item_drag.prototype.constructor=group_item_drag;
+
+MANAGE.group.item_drag=new group_item_drag();
+
+
+

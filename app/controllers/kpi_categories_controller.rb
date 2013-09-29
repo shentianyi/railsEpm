@@ -6,7 +6,7 @@ class KpiCategoriesController < ApplicationController
   end
 
   def create
-    @category=KpiCategory.new(params[:category])
+    @category=KpiCategory.new(params[:data])
     @category.tenant=current_tenant
     msg=Message.new
     if @category.save
@@ -34,6 +34,9 @@ class KpiCategoriesController < ApplicationController
     render :json=>msg
   end
 
+  def list
+   render :json=>get_ability_category
+  end
   def template
     @admin_kpi_category_templates = Admin::KpiCategoryTemplate.all
     respond_to do |format|

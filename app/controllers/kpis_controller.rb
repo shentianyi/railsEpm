@@ -53,16 +53,16 @@ class KpisController < ApplicationController
   end
 
   def assign
-    @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
+    # @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
     if request.get?
       @user_id=params[:id]
     else
-      if params[:kpi] and params[:kpi].length>0
-        KpisHelper.assign_kpi_to_user_by_id params[:kpi],params[:id],current_ability
-      elsif params[:category] and params[:category].length>0
-        KpisHelper.assign_kpi_to_user_by_category params[:category],params[:id],current_ability
-      end
-      render :partial=>'user_kpi'
+    # if params[:kpi] and params[:kpi].length>0
+      @item =  KpisHelper.assign_kpi_to_user_by_id params[:kpi],params[:id],current_ability
+      # elsif params[:category] and params[:category].length>0
+      # KpisHelper.assign_kpi_to_user_by_category params[:category],params[:id],current_ability
+      # end
+      render :json=>@item
     end
   end
 
@@ -71,7 +71,8 @@ class KpisController < ApplicationController
   end
 
   def user_kpis
-    @user_kpis=KpisHelper.get_kpis_by_user_id params[:user],current_ability
+    @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
+    render :partial=>'user_kpi'
   end
 
   def import

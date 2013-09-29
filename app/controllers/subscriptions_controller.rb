@@ -9,8 +9,8 @@ class SubscriptionsController < ApplicationController
   before_filter :is_sign_up_allowed, :only => [:new,:create]
   layout 'non_authorized'
   def new
-    @title= I18n.t 'auth.view.sign_title'
-    render
+     @title=I18n.t 'auth.view.login_title'
+    @href= '/user_sessions/new'
   end
 
   def is_sign_up_allowed
@@ -22,7 +22,9 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-  def create
+  def create  
+    @title=I18n.t 'auth.view.login_title'
+    @href= '/user_sessions/new'
     begin
       raise(ArgumentError, I18n.t('auth.msg.email_token'))  if $invalid_emails.include?(params[:email])
       @user=User.new

@@ -23,5 +23,6 @@
 *= require Manage-user
 *= require Manage-view
 *= require Entry
+*= require Log
 *= require_self
  */

@@ -7,14 +7,15 @@ class UserSessionsController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
 
   layout 'non_authorized'
-
-
   def new
-    @title=I18n.t 'auth.view.login_title'
+    @title= I18n.t 'auth.view.sign_title'
+    @href='/subscriptions/new'
     @user_session = UserSession.new
   end
 
   def create
+    @title= I18n.t 'auth.view.sign_title'
+    @href='/subscriptions/new'
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:notice] = I18n.t 'auth.msg.login_success'

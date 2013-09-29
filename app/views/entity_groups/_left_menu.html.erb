@@ -1,17 +1,14 @@
-
-
 <ul class="manage-left-menu" id="manage-left-menu" type="entity">
     <li>Manage View</li>
     <li id="manage-menu-add">
         <input type="text"/>
         <span><i class="icon-plus"></i> View</span>
-
         <p class="manage-add-tooltip">Enter: confirm <br/>Esc: cancel</p>
     </li>
     <%@entity_groups.each do |entity_group|%>
     <li  class="<%= entity_group.id==@active_entity_group_id ? 'active' : ''%>" title="<%= entity_group.name %>" number="<%= entity_group.id%>">
         <i class="icon-trash icon-item"></i>
-        <a href="../entity_groups?p=<%= entity_group.id%>"><%= entity_group.name %></a>
+        <a href="/entity_groups?p=<%= entity_group.id%>"><%= entity_group.name %></a>
     </li>
     <%end%>
 </ul>

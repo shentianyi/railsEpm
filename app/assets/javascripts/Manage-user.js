@@ -189,14 +189,14 @@ MANAGE.user.user_edit_box_bind = function() {
      $("#manage-user-edit-old").attr("effect_on", $target.parent().attr("id"));
 }
 MANAGE.user.edit = function() {
-     var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(), edit_role = $("#user-edit input[name='edit-user-role']:checked").data("name"), edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"), edit_id = $(this).attr("effect_on"), $target = $("#manage-sort-list").find("#" + edit_id);
+     var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(), edit_role = $("#user-edit input[name='edit-user-role']:checked").data("name"), edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"), edit_id = $("#manage-user-edit-old").attr("effect_on"), $target = $("#manage-sort-list").find("#" + edit_id);
      if(edit_name.length > 0 && edit_mail.length > 0) {
           if($("#user-edit>div>input").filter("[red='true']").length == 0) {
                $.ajax({
                     url : '/users',
                     type : 'PUT',
                     data : {
-                         id : $("#manage-sort-list").find(":checked").attr("id"),
+                         id : $("#manage-sort-list").find(":checked").parent().parent().attr("id"),
                          user : {
                               first_name : edit_name,
                               email : edit_mail,
@@ -206,6 +206,7 @@ MANAGE.user.edit = function() {
                     dataType : 'json',
                     success : function(data) {
                          if(data.result) {
+                              console.log(edit_name);
                               $target.find(".user-manage-name").text(edit_name);
                               $target.find(".user-manage-mail").text(edit_mail);
                               $target.find(".user-manage-authority").text(edit_role).attr("value", edit_authority);
@@ -214,9 +215,9 @@ MANAGE.user.edit = function() {
                          }
                     }
                });
-               //            $target.find(".user-manage-name").text(edit_name);
-               //            $target.find(".user-manage-mail").text(edit_mail);
-               //            $target.find(".user-manage-authority").text(edit_role).attr("value",edit_authority);
+               //                           $target.find(".user-manage-name").text(edit_name);
+               //                           $target.find(".user-manage-mail").text(edit_mail);
+               //                           $target.find(".user-manage-authority").text(edit_role).attr("value",edit_authority);
                MANAGE.user.user_add_close();
           } else {
                MessageBox("Please fix the input with red border", "top", "danger");
@@ -229,27 +230,59 @@ MANAGE.user.edit = function() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.user.assign = {};
 MANAGE.user.assign.init = function() {
+     //assign kpi初始化
      $("body").on("click", "#manage-user-delivery", function() {
-          var $target = $("#manage-sort-list").find(":checked"), id = $target.parent().parent().attr("id"), user_name = $target.parent().next().find(".user-manage-name").text();
-          $("#assign-kpi-wrap").css("display", "block");
-          $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+          var $target = $("#manage-sort-list").find(":checked"),
+              id = $target.parent().parent().attr("id"),
+              user_name = $target.parent().next().find(".user-manage-name").text();
+          $.ajax({
+               url : '/kpis/user_kpis',
+               data : {
+                    id : id
+               },
+               dataType : 'html',
+               success : function(kpis) {
+                    $('#assign-kpi-inner').html(kpis);
+                    $("#assign-kpi-wrap").css("display", "block");
+                    $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+               }
+          });
 
-     })
-     $("#assign-kpi-pick").on("click", function() {
-          $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
-          $("#kpi-category").prepend($("<option />").attr("value", ""));
-          $("#kpi-category").val('').trigger('chosen:updated');
+
+         $("#assign-kpi-wrap").css("display", "block");
+         $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
      });
+     //assign kpi category 初始化
+     $("#assign-kpi-pick").on("click", function() {
+          $.ajax({
+               url : 'kpi_categories/list',
+               dataType : 'json',
+               success : function(data) {
+                   for(var i=0;i<data.length;i++){
+                       $("#kpi-category").append($("<option />").attr("value",data[i].id).text(data[i].name))
+                   }
+                   $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
+                   $("#kpi-category").prepend($("<option />").attr("value", ""));
+                   $("#kpi-category").val('').trigger('chosen:updated');
+               }
+          });
+
+
+//         $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
+     });
+
+
      $("body").on("click", "#close-assign-kpi-options", function() {
           $("#assign-kpi-options[special='user']").hide("1000");
           $("#assign-kpi-list").empty();
           $("#kpi-category").children().first().remove();
      });
+     //右边的KPI列出来
      $("#kpi-category").chosen().change(function(event) {
           var id = $(adapt_event(event).target).attr("value");
           $.ajax({
                url : '/kpis/get_by_category',
-               dataType : "json",
+               dataType : 'json',
                data : {
                     id : id
                },
@@ -270,37 +303,75 @@ MANAGE.user.assign.init = function() {
                }
           });
           if(validate) {
-               $("#assign-kpi-inner>.left").append($("<li />").attr("id", id).append($("<h3 />").text(h3)).append($("<p />").text(p)).append($("<i />").addClass("icon-trash")));
+
+              $.ajax({
+                  url:'',
+                  dataType:'json',
+                  data:{},
+                  success:function(data){
+                      $("#assign-kpi-inner>.left").append(
+                          $("<li />").attr("id", id)
+                              .append(
+                                  $("<table />").append($("<tr />").append($("<td />").text(data.name)).append($("<td />").append($("<input type='text'/>").attr("kpi_id"))))
+                                      .append($("<tr />").append($("<td />").text(data.description)).append($("<td />").text("target")))
+                              )
+                              .append($("<i />").addClass("icon-trash"))
+                      );
+                  }
+              })
+
+
+//               $("#assign-kpi-inner>.left").append(
+//                   $("<li />").attr("id", id)
+//                       .append(
+//                           $("<table />").append($("<tr />").append($("<td />").text("dad")).append($("<td />").append($("<input type='text'/>").attr("kpi_id","21"))))
+//                               .append($("<tr />").append($("<td />").text("dasdsa")).append($("<td />").text("target")))
+//                       )
+//                       .append($("<i />").addClass("icon-trash"))
+//               );
           } else {
                MessageBox("Same KPI has already been assigned", "top", "warning");
           }
      });
-     $("body").on("click", "#assign-kpi-inner>ul>li>h3,#assign-kpi-inner>ul>li>p,#assign-kpi-inner>ul>li>i", function() {
+
+
+
+
+//左边KPI删除
+     $("body").on("click","#assign-kpi-inner>ul>li>i", function() {
           if(confirm("Unassign this KPI ?")) {
-               $(this).parent().remove();
+              var $target=$(this).parent();
+
+
+               $.ajax({
+                    url : '/user_kpi_items',
+                    dataType : 'json',
+                    data : {
+                         id : $target.attr("id")
+                    },
+                    success : function(data) {
+                         if(data.result) {
+                              $target.remove();
+                         }
+                    }
+               });
+
+//              $target.remove();
           }
      });
-     $("body").on("click", "#assign-kpi-cancel", MANAGE.user.assign.close).on("click", "#assign-kpi-ok", function() {
-          MANAGE.user.assign.ok();
-          MANAGE.user.assign.close();
-     });
+//左边input的js
+    $("body").on("keyup","#assign-kpi-inner>ul>li input[type='text']", function(event){
+            clearNoNumZero(adapt_event(event).target);
+    }).on("keydown","#assign-kpi-inner>ul>li input[type='text']",function(event){
+            if(adapt_event(event).event.keyCode==13){
+                $(adapt_event(event).target).blur();
+            }
+    });
+    $("#assign-kpi-wrap").on("blur","#assign-kpi-inner>ul>li input[type='text']",MANAGE.user.assign.input);
+    $("body").on("click", "#assign-kpi-cancel", MANAGE.user.assign.close);
 };
 
-MANAGE.user.assign.ok = function() {
-     $.ajax({
-          url : '',
-          data : {},
-          dataType : 'json',
-          success : function(data) {
-               if(data.result) {
-                    MessageBox("Assign success", "top", "success");
-               } else {
-                    MessageBox(data.content, "top", "warning");
-               }
-          }
-     })
 
-};
 MANAGE.user.assign.close = function() {
      $("#assign-kpi-inner>.left").empty();
      if($("#assign-kpi-options[special='user']").css("display") == "block") {
@@ -308,3 +379,14 @@ MANAGE.user.assign.close = function() {
      }
      $("#assign-kpi-wrap").css("display", "none");
 };
+MANAGE.user.assign.input=function(event){
+    var target=adapt_event(event).target;
+    var id=$(target).attr("kpi_id");
+    var value=$(target).val();
+    $.post(
+        "",
+        {},
+        function(data){if(!data) MessageBox("Something wrong","top","warning");}
+    );
+}
+
