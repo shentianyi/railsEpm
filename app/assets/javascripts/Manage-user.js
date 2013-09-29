@@ -182,14 +182,22 @@ MANAGE.user.add_new = function() {
 //////////////////////////////////////////////////////////////////////////         User 编辑那一块的
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.user.user_edit_box_bind = function() {
-     var $target = $("#manage-sort-list .icheckbox_minimal-aero.checked"), name = $target.next().find(".user-manage-name").text(), mail = $target.next().find(".user-manage-mail").text(), authority = $target.next().find(".user-manage-authority").attr("value");
+     var $target = $("#manage-sort-list .icheckbox_minimal-aero.checked"),
+         name = $target.next().find(".user-manage-name").text(),
+         mail = $target.next().find(".user-manage-mail").text(),
+         authority = $target.next().find(".user-manage-authority").attr("value");
      $("#user-edit #edit-user-name").val(name);
      $("#user-edit #edit-user-mail").val(mail);
      $("#user-edit input[type='radio'][value='" + authority + "']").iCheck("check");
      $("#manage-user-edit-old").attr("effect_on", $target.parent().attr("id"));
 }
 MANAGE.user.edit = function() {
-     var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(), edit_role = $("#user-edit input[name='edit-user-role']:checked").data("name"), edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"), edit_id = $(this).attr("effect_on"), $target = $("#manage-sort-list").find("#" + edit_id);
+     var edit_name = $("#user-edit #edit-user-name").val(),
+         edit_mail = $("#user-edit #edit-user-mail").val(),
+         edit_role = $("#user-edit input[name='edit-user-role']:checked").data("name"),
+         edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"),
+         edit_id = $("#manage-user-edit-old").attr("effect_on"),
+         $target = $("#manage-sort-list").find("#" + edit_id);
      if(edit_name.length > 0 && edit_mail.length > 0) {
           if($("#user-edit>div>input").filter("[red='true']").length == 0) {
                $.ajax({
@@ -215,9 +223,9 @@ MANAGE.user.edit = function() {
                          }
                     }
                });
-               //            $target.find(".user-manage-name").text(edit_name);
-               //            $target.find(".user-manage-mail").text(edit_mail);
-               //            $target.find(".user-manage-authority").text(edit_role).attr("value",edit_authority);
+//                           $target.find(".user-manage-name").text(edit_name);
+//                           $target.find(".user-manage-mail").text(edit_mail);
+//                           $target.find(".user-manage-authority").text(edit_role).attr("value",edit_authority);
                MANAGE.user.user_add_close();
           } else {
                MessageBox("Please fix the input with red border", "top", "danger");
