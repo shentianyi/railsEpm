@@ -192,7 +192,6 @@ MANAGE.user.edit = function() {
      var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(), edit_role = $("#user-edit input[name='edit-user-role']:checked").data("name"), edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"), edit_id = $(this).attr("effect_on"), $target = $("#manage-sort-list").find("#" + edit_id);
      if(edit_name.length > 0 && edit_mail.length > 0) {
           if($("#user-edit>div>input").filter("[red='true']").length == 0) {
-               console.log($("#manage-sort-list").find(":checked").attr("id"));
                $.ajax({
                     url : '/users',
                     type : 'PUT',
@@ -207,6 +206,7 @@ MANAGE.user.edit = function() {
                     dataType : 'json',
                     success : function(data) {
                          if(data.result) {
+                              console.log(edit_name);
                               $target.find(".user-manage-name").text(edit_name);
                               $target.find(".user-manage-mail").text(edit_mail);
                               $target.find(".user-manage-authority").text(edit_role).attr("value", edit_authority);
@@ -233,8 +233,7 @@ MANAGE.user.assign.init = function() {
      $("body").on("click", "#manage-user-delivery", function() {
           var $target = $("#manage-sort-list").find(":checked"), id = $target.parent().parent().attr("id"), user_name = $target.parent().next().find(".user-manage-name").text();
           $("#assign-kpi-wrap").css("display", "block");
-          $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
-
+          $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);           
      })
      $("#assign-kpi-pick").on("click", function() {
           $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
