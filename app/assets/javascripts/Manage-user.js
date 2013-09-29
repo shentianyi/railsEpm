@@ -196,7 +196,7 @@ MANAGE.user.edit = function() {
                     url : '/users',
                     type : 'PUT',
                     data : {
-                         id : $("#manage-sort-list").find(":checked").attr("id"),
+                         id : $("#manage-sort-list").find(":checked").parent().parent().attr("id"),
                          user : {
                               first_name : edit_name,
                               email : edit_mail,
