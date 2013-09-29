@@ -200,6 +200,7 @@ MANAGE.user.edit = function() {
          $target = $("#manage-sort-list").find("#" + edit_id);
      if(edit_name.length > 0 && edit_mail.length > 0) {
           if($("#user-edit>div>input").filter("[red='true']").length == 0) {
+               console.log($("#manage-sort-list").find(":checked").attr("id"));
                $.ajax({
                     url : '/users',
                     type : 'PUT',
