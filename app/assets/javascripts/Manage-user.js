@@ -231,32 +231,46 @@ MANAGE.user.edit = function() {
 MANAGE.user.assign = {};
 MANAGE.user.assign.init = function() {
      $("body").on("click", "#manage-user-delivery", function() {
-          var $target = $("#manage-sort-list").find(":checked"), id = $target.parent().parent().attr("id"), user_name = $target.parent().next().find(".user-manage-name").text();
-          $.ajax({
-               url : '/kpis/user_kpis',
-               data : {
-                    id : id
-               },
-               dataType : 'html',
-               success : function(kpis) {
-                    $('#assign-kpi-inner').html(kpis);
-                    $("#assign-kpi-wrap").css("display", "block");
-                    $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
-               }
-          });
-     })
+
+          var $target = $("#manage-sort-list").find(":checked"),
+              id = $target.parent().parent().attr("id"),
+              user_name = $target.parent().next().find(".user-manage-name").text();
+//          $.ajax({
+//               url : '/kpis/user_kpis',
+//               data : {
+//                    id : id
+//               },
+//               dataType : 'html',
+//               success : function(kpis) {
+//                    $('#assign-kpi-inner').html(kpis);
+//                    $("#assign-kpi-wrap").css("display", "block");
+//                    $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+//               }
+//          });
+
+
+         $("#assign-kpi-wrap").css("display", "block");
+         $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+     });
      $("#assign-kpi-pick").on("click", function() {
           $.ajax({
                url : 'kpi_categories/list',
                dataType : 'json',
                success : function(data) {
-                    // add category
+                   for(var i=0;i<data.length;i++){
+                       $("#kpi-category").append($("<option />").attr("value",data[i].id).text(data[i].name))
+                   }
+                   $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
+                   $("#kpi-category").prepend($("<option />").attr("value", ""));
+                   $("#kpi-category").val('').trigger('chosen:updated');
                }
           });
-          $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
-          $("#kpi-category").prepend($("<option />").attr("value", ""));
-          $("#kpi-category").val('').trigger('chosen:updated');
+
+
+//         $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
      });
+
+
      $("body").on("click", "#close-assign-kpi-options", function() {
           $("#assign-kpi-options[special='user']").hide("1000");
           $("#assign-kpi-list").empty();
@@ -292,44 +306,42 @@ MANAGE.user.assign.init = function() {
                MessageBox("Same KPI has already been assigned", "top", "warning");
           }
      });
-     $("body").on("click", "#assign-kpi-inner>ul>li>h3,#assign-kpi-inner>ul>li>p,#assign-kpi-inner>ul>li>i", function() {
+
+//左边KPI删除
+     $("body").on("click","#assign-kpi-inner>ul>li>i", function() {
           if(confirm("Unassign this KPI ?")) {
+              var $target=$(this).parent();
+
+
                $.ajax({
                     url : '/user_kpi_items',
                     dataType : 'json',
                     data : {
-                         id : 1111
+                         id : $target.attr("id")
                     },
                     success : function(data) {
                          if(data.result) {
-                              $(this).parent().remove();
+                              $target.remove();
                          }
                     }
                });
 
+//              $target.remove();
           }
      });
-     $("body").on("click", "#assign-kpi-cancel", MANAGE.user.assign.close).on("click", "#assign-kpi-ok", function() {
-          MANAGE.user.assign.ok();
-          MANAGE.user.assign.close();
-     });
+//左边input的js
+    $("body").on("keyup","#assign-kpi-inner>ul>li input[type='text']", function(event){
+            clearNoNumZero(adapt_event(event).target);
+    }).on("keydown","#assign-kpi-inner>ul>li input[type='text']",function(event){
+            if(adapt_event(event).event.keyCode==13){
+                $(adapt_event(event).target).blur();
+            }
+    });
+    $("#assign-kpi-wrap").on("blur","#assign-kpi-inner>ul>li input[type='text']",MANAGE.user.assign.input);
+    $("body").on("click", "#assign-kpi-cancel", MANAGE.user.assign.close);
 };
 
-MANAGE.user.assign.ok = function() {
-     $.ajax({
-          url : '',
-          data : {},
-          dataType : 'json',
-          success : function(data) {
-               if(data.result) {
-                    MessageBox("Assign success", "top", "success");
-               } else {
-                    MessageBox(data.content, "top", "warning");
-               }
-          }
-     })
 
-};
 MANAGE.user.assign.close = function() {
      $("#assign-kpi-inner>.left").empty();
      if($("#assign-kpi-options[special='user']").css("display") == "block") {
@@ -337,3 +349,10 @@ MANAGE.user.assign.close = function() {
      }
      $("#assign-kpi-wrap").css("display", "none");
 };
+MANAGE.user.assign.input=function(event){
+    var target=adapt_event(event).target;
+    var id=$(target).attr("kpi_id");
+    var value=$(target).val();
+    $.post("",{},function(data){if(!data) MessageBox("Something wrong","top","warning");});
+}
+
