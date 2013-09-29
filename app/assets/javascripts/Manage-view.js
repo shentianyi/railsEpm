@@ -27,31 +27,28 @@ MANAGE.view.init=function(){
              }
         });
         if(validate){
-//            $.ajax({
-//               url:"/entity_group_items",
-//               data:{
-//                   entity_group_item:{
-//                       entity_group_id:$("#entity_group_id").val(),
-//                       entity_id:id
-//                   }
-//               },
-//               dataType:'json',
-//               success:function(data){
-//                   if(data.result){
-//                       $("#assign-entity-wrap>ul").append($("<li />")
-//                           .append($("<h3 />").attr("entity_id",id).text(text))
-//                           .append($("<i />").addClass("icon-trash"))
-//                       );
-//                   }
-//                   else{
-//                       MessageBox(data.content,"top","warning");
-//                   }
-//               }
-//            });
-            $("#assign-entity-wrap>ul").append($("<li />")
-                .append($("<h3 />").attr("entity_id",id).text(text))
-                .append($("<i />").addClass("icon-trash"))
-            );
+           $.ajax({
+              url:"/entity_group_items",
+              data:{
+                  data:{
+                      entity_group_id:$("#entity_group_id").val(),
+                      entity_id:id
+                  }
+              },
+              dataType:'json',
+              type:'post',
+              success:function(data){
+                  if(data.result){
+                      $("#assign-entity-wrap>ul").append($("<li />")
+                          .append($("<h3 />").attr("entity_id",data.object).text(text))
+                          .append($("<i />").addClass("icon-trash"))
+                      );
+                  }
+                  else{
+                      MessageBox(data.content,"top","warning");
+                  }
+              }
+           });
         }
         else{
             MessageBox("Same User Group has already been assigned","top","warning");

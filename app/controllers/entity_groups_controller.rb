@@ -15,7 +15,7 @@ class EntityGroupsController < ApplicationController
   # create api
   def create
     msg=Message.new
-    @entity_group=EntityGroup.new(params[:entity_group])
+    @entity_group=EntityGroup.new(params[:data])
     @entity_group.user=current_user
     if @entity_group.save
     msg.result=true

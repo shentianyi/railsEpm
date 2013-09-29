@@ -1,47 +1,41 @@
-
 <%= render :partial=>'entity_groups/left_menu'%>
 <div class="manage-user-add" id="manage-entity-add" special="entity">
-        <i class="icon-remove" id="close-add-entity" ></i>
-        <p>UserGroup List</p>
-
-        <ul>
-            <li>
-                <h3 id="11">User Group11</h3>
-            </li>
-            <li>
-                <h3 id="21">User Group21</h3>
-            </li>
-            <li>
-                <h3 id="31">User Group31</h3>
-            </li>
-            <li>
-                <h3 id="41">User Group41</h3>
-            </li>
-        </ul>
+     <i class="icon-remove" id="close-add-entity" ></i>
+     <p>
+          UserGroup List
+     </p>
+     <ul>
+          <%@entities.each do |entity|%>
+          <li>
+               <h3 id="<%=entity.id%>"><%=entity.name%></h3>
+          </li>
+          <%end%>
+     </ul>
 </div>
 <div class="manage-right-content" id="manage-right-content">
-        <div class="manage-btn-group" id="manage-btn-group" special="view">
-            <a class="btn btn-primary" id="entity-add-show"><i class="icon-plus"></i> User Group</a>
-            <p id="manage-edit-target" ></p>
-            <i class="icon-pencil"></i>
-            <input type="text"/>
-            <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
-        </div>
-        <div class="assign-entity-wrap" id="assign-entity-wrap">
-            <ul>
-               <%if @user_group_entities@user_group_entities.each_with_index do |entity,i|%>
-                <li>
-                    <h3 entity_id="<%=entity.entity_group_item_id%>"><%=entity.name%></h3>
+     <div class="manage-btn-group" id="manage-btn-group" special="view">
+          <a class="btn btn-primary" id="entity-add-show"><i class="icon-plus"></i> User Group</a>
+          <p id="manage-edit-target" ></p>
+          <i class="icon-pencil"></i>
+          <input type="text"/>
+          <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
+     </div>
+     <div class="assign-entity-wrap" id="assign-entity-wrap">
+          <ul>
+               <%if @user_group_entities
+               @user_group_entities.each_with_index do |entity,i|%>
+               <li>
+                    <h3 entity_id="<%= entity.entity_group_item_id%>"><%= entity.name%></h3>
                     <i class="icon-trash"></i>
-                </li>
-                <% end;end%>
-            </ul>
-        </div>
+               </li>
+               <% end;end%>
+          </ul>
+     </div>
 </div>
-<input type="hidden" value="<%=@active_entity_group_id%>" id="entity_group_id" />
+<input type="hidden" value="<%= @active_entity_group_id%>" id="entity_group_id" />
 <script>
-    $(document).ready(function () {
-        MANAGE.init();
-        MANAGE.view.init();
-    })
+     $(document).ready(function() {
+          MANAGE.init();
+          MANAGE.view.init();
+     })
 </script>

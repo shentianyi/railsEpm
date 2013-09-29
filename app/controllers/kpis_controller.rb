@@ -57,12 +57,12 @@ class KpisController < ApplicationController
     if request.get?
       @user_id=params[:id]
     else
-      if params[:kpi] and params[:kpi].length>0
-        KpisHelper.assign_kpi_to_user_by_id params[:kpi],params[:id],current_ability
-      elsif params[:category] and params[:category].length>0
-        KpisHelper.assign_kpi_to_user_by_category params[:category],params[:id],current_ability
-      end
-      render :partial=>'user_kpi'
+    # if params[:kpi] and params[:kpi].length>0
+      @item =  KpisHelper.assign_kpi_to_user_by_id params[:kpi],params[:id],current_ability
+      # elsif params[:category] and params[:category].length>0
+      # KpisHelper.assign_kpi_to_user_by_category params[:category],params[:id],current_ability
+      # end
+      render :json=>@item
     end
   end
 

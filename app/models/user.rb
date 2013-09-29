@@ -3,22 +3,21 @@ class User < ActiveRecord::Base
 
   belongs_to :tenant
   belongs_to :entity
-  
+
   has_many :entity_groups,:dependent=>:destroy
   has_many :kpis,:through=>:user_kpi_items
   has_many :user_kpi_items,:dependent=>:destroy
   has_many :kpi_entries, :through=>:user_kpi_items
-  
 
   attr_accessible :email, :password, :password_confirmation,:status,:perishable_token,:confirmed,:first_name,:last_name,:is_tenant
   attr_accessible :tenant_id,:role_id,:entity_id,:is_sys
 
-
   acts_as_authentic do |c|
+    c.validate_email_field  :message=>'ddd'
     c.login_field = :email
   end
 
-    # acts as tenant
+  # acts as tenant
   acts_as_tenant(:tenant)
 
   def confirmed?
@@ -29,12 +28,11 @@ class User < ActiveRecord::Base
     user = User.find_by_email(email)
     if user
       user.status = UserStatus::LOCKED
-      return user.save
+    return user.save
     else
-      return false
+    return false
     end
   end
-
 
   def deliver_user_confirmation!
     reset_perishable_token!
@@ -45,8 +43,6 @@ class User < ActiveRecord::Base
     reset_perishable_token!
     UserConfirmationMailer.deliver_password_reset(self).deliver
   end
-
-
 
   def create_tenant_user!(email,password,password_confirmation,company_name)
     self.email=email
@@ -67,7 +63,7 @@ class User < ActiveRecord::Base
         self.is_tenant=true
         @tenant.save!
         self.save!
-         @tenant.update_attributes :user_id=>self.id
+        @tenant.update_attributes :user_id=>self.id
         return self
       end
     rescue ActiveRecord::RecordInvalid => invalid
@@ -75,8 +71,8 @@ class User < ActiveRecord::Base
     end
   end
 
- def ability_entity_groups current_ability
-   self.entity_groups.accessible_by(current_ability)
- end
+  def ability_entity_groups current_ability
+    self.entity_groups.accessible_by(current_ability)
+  end
 
 end
