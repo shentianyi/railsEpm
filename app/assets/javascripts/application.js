@@ -24,6 +24,7 @@
 //=require ifepm.config.js
 //=require ifepm.dashboard.template.js
 //=require ifepm.dashboard.main.js
+//=require ifepm.grid.main.js
 //=require Template
 //=require dashboard.js
 //=require bootstrap-datepicker

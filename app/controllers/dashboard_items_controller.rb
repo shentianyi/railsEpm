@@ -14,7 +14,7 @@ class DashboardItemsController < ApplicationController
         msg[:errors]= @new_item.errors.full_messages
       end
       respond_to do |t|
-        t.json {render :json=>msg }
+        t.json {render :json=> @new_item }
         t.js {render :js=> jsonp_str(msg)}
       end
     end
