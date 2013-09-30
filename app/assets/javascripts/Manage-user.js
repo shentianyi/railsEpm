@@ -209,6 +209,7 @@ MANAGE.user.edit = function() {
                               console.log(edit_name);
                               $target.find(".user-manage-name").text(edit_name);
                               $target.find(".user-manage-mail").text(edit_mail);
+                              if($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant")=="false")
                               $target.find(".user-manage-authority").text(edit_role).attr("value", edit_authority);
                          } else {
                               MessageBox("Something get wrong", "top", "wrong");
