@@ -116,7 +116,7 @@ function get_title(){
 }
 
 function get_type(){
-    return menu_selector.get_first_in_container("#",'div[class~="active"]>label').val();
+    return menu_selector.get_first_in_container("#view-chart-type",'div>label[class~="active"]').val();
 }
 
 function get_entity_group(){
@@ -179,12 +179,15 @@ function db_view_create(view){
 }
 
 function db_view_create_callback(data){
-    if(data.result){
+    /*if(data.result){
         slide_box("添加成功",true);
         close_dash();
-        if(current_dashboard_id){
-            ifepm.dashboard.init(current_dashboard_id)
+        if(data.id){
+            //ifepm.dashboard.init(current_dashboard_id)
         }
+    }*/
+    if(data){
+        ifepm.dashboard_widget.add(data);
     }
     else{
         slide_box("新建时发生错误，请选择一个视角后再新建",false)
