@@ -2,9 +2,13 @@
 class UserKpiItemsController < ApplicationController
   # update user kpi items
   def update
-  if @user_kpi_item=UserKpiItem.find_by_id(params[:id])
-      render :json=>@user_kpi_item.update_attributes(params[:user_kpi_item])
+    msg=Message.new
+    if @user_kpi_item=UserKpiItem.find_by_id(params[:id])
+      msg.result= @user_kpi_item.update_attributes(params[:user_kpi_item])
+    else
+      msg.content='can not update target'
     end
+    render :json=>msg
   end
 
   # delete kpi
