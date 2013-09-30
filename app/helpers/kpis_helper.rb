@@ -12,7 +12,7 @@ module KpisHelper
   # assign kpi to user by id
   def self.assign_kpi_to_user_by_id kpi_id,user_id,current_ability
     if kpi=Kpi.accessible_by(current_ability).find_by_id(kpi_id) and user=User.accessible_by(current_ability).find_by_id(user_id)
-      return assign_kpi_to_user kpi,user
+      return assign_kpi_to_user(kpi,user),kpi
     end
     return nil
   end

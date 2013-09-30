@@ -58,7 +58,7 @@ class KpisController < ApplicationController
       @user_id=params[:id]
     else
     # if params[:kpi] and params[:kpi].length>0
-      @item =  KpisHelper.assign_kpi_to_user_by_id params[:kpi],params[:id],current_ability
+      @item =  KpisHelper.assign_kpi_to_user_by_id params[:kpi],params[:user],current_ability
       # elsif params[:category] and params[:category].length>0
       # KpisHelper.assign_kpi_to_user_by_category params[:category],params[:id],current_ability
       # end
