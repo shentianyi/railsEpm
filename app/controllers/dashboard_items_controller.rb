@@ -28,6 +28,24 @@ class DashboardItemsController < ApplicationController
     end
   end
 
+    def save_grid
+      @sequence = params[:sequence]
+
+      @sequence.each {|data|
+        @item = DashboardItem.find(data[1][:id])
+        puts data[1]
+
+        @item.update_attributes(data[1])
+
+        @item.save
+      }
+
+      respond_to do |t|
+        t.json {render :json=>{:result=>true}}
+        t.js {render :js=> jsonp_str({:result=>true})}
+      end
+    end
+
 
 
   def items_by_dashboard_id

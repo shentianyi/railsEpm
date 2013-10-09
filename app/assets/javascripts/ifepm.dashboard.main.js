@@ -340,13 +340,22 @@ ifepm.dashboard.update_item_sequence= function(container_selector){
 //append a new dashboard item to the main dashboard container
 ifepm.dashboard.create_dashboard=function(){
     var container_selector=ifepm.config.container_selector;
+    ifepm.dashboard_widget.remove_all_widgets();
     $(container_selector).children().remove();
     if (Object.keys(ifepm.dashboard.graphs).length>0){
 
                 for(index in ifepm.dashboard.graph_sequence){
-                     var graph_id = ifepm.dashboard.graph_sequence[index]
+                    var graph_id = ifepm.dashboard.graph_sequence[index];
                     $(container_selector).append(
-                        ifepm.dashboard.graphs[graph_id].container(ifepm.dashboard.graphs[graph_id]))
+                        ifepm.dashboard.graphs[graph_id].container(ifepm.dashboard.graphs[graph_id]));
+
+                    var option = {};
+                    option.id = graph_id;
+                    option.row = ifepm.dashboard.graphs[graph_id].row;
+                    option.col = ifepm.dashboard.graphs[graph_id].col;
+                    option.sizex = ifepm.dashboard.graphs[graph_id].sizex;
+                    option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
+                    ifepm.dashboard_widget.setSize(option);
                 }
                 //configure the sortable
                 $(container_selector).sortable(
@@ -356,11 +365,13 @@ ifepm.dashboard.create_dashboard=function(){
                         stop:function(){ifepm.dashboard.update_item_sequence(container_selector)}
                     }
                 );
-                $(container_selector).disableSelection();
+                //$(container_selector).disableSelection();
     }
     else {
         $(container_selector).append((new Graph()).placeholder)
     }
+
+    ifepm.dashboard_widget.init();
 };
 
 ifepm.dashboard.init=function(id){
@@ -455,6 +466,18 @@ ifepm.dashboard.add_item=function(dashboard_item,options){
         complete:options.complete
     })
 };
+
+ifepm.dashboard.save_grid_pos=function(sequence,options){
+    $.ajax({
+        url:ifepm.config.dashboard_item_save_grid_url.url,
+        data:{sequence: sequence},
+        crossDomain:ifepm.config.dashboard_item_save_grid_url.crossDomain,
+        dataType:ifepm.config.dashboard_item_save_grid_url.dataType,
+        success:options.success,
+        error:options.error,
+        complete:options.complete
+    })
+}
 
 
 

@@ -12,7 +12,7 @@ var ifepm = ifepm || {};
 ifepm.template = {};
 
 //do not change the structure and the !*! part. Insert css class into element to change the theme
-ifepm.template.view = '<li !attr!=!id! data-row=!row! data-col=!col! data-sizex=!sizex! data-sizey=!sizey!>' +
+ifepm.template.view = '<li !attr!=!id!>' +
     '<div class="dashboard-eachDetail relative">' +
     '<p class="text-center">!name!</p>' +
     '<div class="dashboard-moreDetail">' +

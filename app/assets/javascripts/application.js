@@ -13,6 +13,8 @@
 //=require jquery-1.8.2.min
 //=require jquery.gridster.min
 //=require jquery.gridster.with-extras.min
+//=require jquery.gridster
+//=require jquery.gridster.with-extras
 //= require jquery_ujs
 //=require highcharts
 //=require exporting
@@ -22,9 +24,9 @@
 //=require ifepm.activeSelector.js
 //=require ifepm.text.js
 //=require ifepm.config.js
+//=require ifepm.grid.main.js
 //=require ifepm.dashboard.template.js
 //=require ifepm.dashboard.main.js
-//=require ifepm.grid.main.js
 //=require Template
 //=require dashboard.js
 //=require bootstrap-datepicker

@@ -187,6 +187,8 @@ function db_view_create_callback(data){
         }
     }*/
     if(data){
+        slide_box("添加成功",true);
+        close_dash();
         ifepm.dashboard_widget.add(data);
     }
     else{
@@ -289,25 +291,24 @@ function init_date_picker(){
         date_picker_option
     );*/
 
-    new DATE_PICKER["100"]("#from").datePicker();
-    new DATE_PICKER["100"]("#to").datePicker();
+    new DATE_PICKER["90"]("#from").datePicker();
+    new DATE_PICKER["90"]("#to").datePicker();
 }
 
 //grid view
-
-var girster = null;
-
-function inti_grid(){
-    $(".gridster ul").gridster({
-        widget_margins: [10, 10],
-        widget_base_dimensions: [140, 140]
-    });
-
-    girster = $(".girdster ul").gridster().data('gridster');
+function init_grid(){
+    console.log("grid init");
+    ifepm.dashboard_widget.init();
 }
 
 function init_component(){
     //init_time_picker();
     init_date_picker();
-    inti_grid();
+    console.log("test");
+    init_grid();
 }
+
+//save all the pos and size after move
+function on_dragstop(event,ui){
+    ifepm.dashboard_widget.drag_stop();
+};
