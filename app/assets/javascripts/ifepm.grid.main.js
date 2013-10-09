@@ -16,6 +16,21 @@ var ifepm = ifepm || {};
 //dashboard widget
 ifepm.dashboard_widget = ifepm.dashboard_widget || {};
 
+var gridster;
+
+//init
+ifepm.dashboard_widget.init = function(){
+    gridster = $(".gridster ul").gridster({
+        widget_margins: [10, 10],
+        widget_base_dimensions: [160, 160],
+        draggable:{
+            start: function(){console.log("drag start");},
+            drag: function(){console.log("drag");},
+            stop: on_dragstop,
+        },
+    }).data("gridster");
+};
+
 //add widget by a new added dashboard_item
 ifepm.dashboard_widget.add = function(data){
     //create chart
@@ -35,26 +50,40 @@ ifepm.dashboard_widget.add = function(data){
     graph_item.dashboard_id = data.dashboard_id
 
     //
-    var defsize = ifepm.dashboard_widget.init(data.type);
-    graph_item.row = defsize.row;
-    graph_item.col = defsize.col;
+    var defsize = ifepm.dashboard_widget.initsize(data.type);
     graph_item.sizex = defsize.sizex;
     graph_item.sizey = defsize.sizey;
 
     ifepm.dashboard.graphs[graph_item.id] = graph_item;
+    ifepm.dashboard.graph_sequence.push(graph_item.id);
 
     //create chart
     var container_selector=ifepm.config.container_selector;
     $(container_selector).append(graph_item.container(graph_item));
+
+    var option = {};
+    option.id = graph_item.id;
+    option.sizex = defsize.sizex;
+    option.sizey = defsize.sizey;
+    //add wiget
+    ifepm.dashboard_widget.setSize(option);
+
+    //get position
+    var opt={};
+    pos = gridster.serialize($("#"+graph_item.id));
+    ifepm.dashboard.graphs[graph_item.id].col = pos[0].col;
+    ifepm.dashboard.graphs[graph_item.id].row = pos[0].row;
+    option.col = pos[0].col;
+    option.row = pos[0].row;
+    //save grid pos and size
+    ifepm.dashboard.save_grid_pos(option);
 };
 
-//init widget by type
-ifepm.dashboard_widget.init = function(type){
+//get widget size and position by type
+ifepm.dashboard_widget.initsize = function(type){
     var defsize = {
-        row:1,
-        col:1,
         sizex:2,
-        sizey:2,
+        sizey:1,
     };
     switch (type)
     {
@@ -67,4 +96,48 @@ ifepm.dashboard_widget.init = function(type){
 //create widget form db
 ifepm.dashboard_widget.create = function(){
 
+};
+
+//set widget size
+ifepm.dashboard_widget.setSize = function(option){
+    var container_selector=ifepm.config.container_selector;
+    //set the size of li by the specific id
+    //set pos and size attributes
+    gridster.add_widget(container_selector+" li#"+option.id,option.sizex,option.sizey,option.col,option.row);
+};
+
+//
+ifepm.dashboard_widget.add_widget = function(){
+    gridster.add_widget('<li style="background-color: #16a085"></li>',2,1);
+}
+
+//remove widget
+ifepm.dashboard_widget.remove_all_widgets =function(callback){
+    gridster.remove_all_widgets(callback);
+};
+
+
+//drag stop
+ifepm.dashboard_widget.drag_stop = function(){
+    //get all the new position
+    var pos = {};
+    var options = [];
+    for(var i in ifepm.dashboard.graph_sequence){
+        var id = ifepm.dashboard.graph_sequence[i];
+        var opt={};
+        pos = gridster.serialize($("#"+id));
+        ifepm.dashboard.graphs[id].row = pos[0].row;
+        ifepm.dashboard.graphs[id].col = pos[0].col;
+        ifepm.dashboard.graphs[id].sizex = pos[0].size_x;
+        ifepm.dashboard.graphs[id].sizey = pos[0].size_y;
+
+        opt.id = id;
+        opt.row = pos[0].row;
+        opt.col = pos[0].col;
+        opt.sizex = pos[0].size_x;
+        opt.sizey = pos[0].size_y;
+        options.push(opt);
+    }
+    //
+    ifepm.dashboard.save_grid_pos(options,{success:function(){console.log("保存grid成功！")}});
 };

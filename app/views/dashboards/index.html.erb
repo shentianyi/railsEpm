@@ -18,7 +18,7 @@
       <td>
         <%= select_tag :category_id,options_from_collection_for_select(@categories,'id','name'),
                        {:id=>'chart-group',:class=>"pull-left conditionPart-group",:onchange=>"get_kpis_by_category(this);"}%>
-
+~
         </select>
       </td>
     </tr>
@@ -48,39 +48,41 @@
       <td>
         <input type="text" readonly="true" id="from" class="analytics-date"/>
         <!--<input placeholder="时间" type="text" readonly="true" id="fromTime" class="analytics-time"/>-->
-      </td>
-    </tr>
-    <tr>
-      <td>*结束时间</td>
-      <td>
-        <input  type="text" readonly="true" id="to" class="analytics-date"/>
-        <!--<input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>-->
-      </td>
-    </tr>
-    <tr>
-      <td>*分析方式</td>
-      <td>
-        <input type="radio" name="chartRadios" checked><span class="analyticType-radio">以综合值分析</span>
-        <br />
-        <input type="radio" name="chartRadios" ><span class="analyticType-radio">以平均值分析</span>
-      </td>
-    </tr>
-  </table>
-  <div class="chooseChart-wrap clearfix" id="view-chart-type">
-    <div class="choose-db-item db-chart-line pull-left"  onclick="dashNew_chooseType(event)" style="background: #002a80"><label>折线图</label></div>
-    <div class="choose-db-item db-chart-column pull-left"onclick="dashNew_chooseType(event)" style="background: #002a80"><label>直方图</label></div>
-    <div class="choose-db-item db-chart-pie pull-left" onclick="dashNew_chooseType(event)" style="background: #002a80"><label>饼图</label></div>
-  </div>
+</td>
+</tr>
+<tr>
+  <td>*结束时间</td>
+  <td>
+    <input  type="text" readonly="true" id="to" class="analytics-date"/>
+    <!--<input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>-->
+  </td>
+</tr>
+<tr>
+  <td>*分析方式</td>
+  <td>
+    <input type="radio" name="chartRadios" checked><span class="analyticType-radio">以综合值分析</span>
+    <br />
+    <input type="radio" name="chartRadios" ><span class="analyticType-radio">以平均值分析</span>
+  </td>
+</tr>
+</table>
+<div class="chooseChart-wrap clearfix" id="view-chart-type">
+  <div class="choose-db-item db-chart-line pull-left"  onclick="dashNew_chooseType(event)" style="background: #002a80"><label>折线图</label></div>
+  <div class="choose-db-item db-chart-column pull-left"onclick="dashNew_chooseType(event)" style="background: #002a80"><label>直方图</label></div>
+  <div class="choose-db-item db-chart-pie pull-left" onclick="dashNew_chooseType(event)" style="background: #002a80"><label>饼图</label></div>
+</div>
 
-  <div class="chooseBtn-wrap clearfix">
-    <a class="btn dashboard-condition-btn pull-left" onclick="close_dash()">取消</a>
-    <a class="btn btn-primary dashboard-condition-btn pull-left" onclick="db_view_create(prepare_to_create_db_view())">添加</a>
-  </div>
+<div class="chooseBtn-wrap clearfix">
+  <a class="btn dashboard-condition-btn pull-left" onclick="close_dash()">取消</a>
+  <a class="btn btn-primary dashboard-condition-btn pull-left" onclick="db_view_create(prepare_to_create_db_view())">添加</a>
+</div>
 </div>
 
 
 
-<div class="middle clearfix">
+
+<div class="middle clearfix" style="height:80%; overflow-x: hidden;overflow-y: auto;">
+
   <!--左边的categories-->
   <div class="left-category pull-left">
     <ul class="manage-group" id="sty-dashboards">
@@ -148,10 +150,10 @@
   </div>
   -->
   <a class="btn btn-wzx btn-primary dashboard-addNew-btn" onclick="showDash_new()"><i class="icon-plus icon-white"></i> 视图</a>
-  <div class="dashboard-block pull-left gridster" style="width: 80%;overflow-y: auto;">
+  <div class="gridster dashboard-block pull-left" style="width: 80%">
     <ul class="dashBoard-show" id="dashBoard-show">
-      <li data-row ="1" data-col="1" data-sizex="1" data-sizey="1">
-      </li>
+      <!--<li data-row ="1" data-col="1" data-sizex="1" data-sizey="1" draggable="true" style="background-color: #16a085">
+      </li>-->
     </ul>
   </div>
 </div>

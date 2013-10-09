@@ -30,6 +30,8 @@ ifepm.config={
     dashboard_item_create_url:{url:"/DashboardItems/create.json",crossDomain:false,dataType:"json"},
 
 
+    dashboard_item_save_grid_url:{url:"DashboardItems/save_grid.json",crossDomain:false,dataType:"json"},
+
     container:"dashBoard-show",
 
 

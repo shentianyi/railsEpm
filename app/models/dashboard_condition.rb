@@ -1,54 +1,13 @@
-class DashboardItem < ActiveRecord::Base
-  belongs_to :dashboard
-  attr_accessible :dashboard_id,:sequence,:interval,:name,:title,:type
-  attr_accessible :row, :col, :sizex, :sizey
+class DashboardCondition < ActiveRecord::Base
+  # attr_accessible :title, :body
+  belongs_to :dashboard_item
+  attr_accessible :dashboard_items_id,:entity_group,:kpi_id,:calculate_type,:time_string
 
-  #validates_with TimeStringValidator
-  validates :dashboard_id,:presence => true
-  #validates :entity_group,:presence => true
-  #validates :kpi_id,:presence => true
-  #validates :calculate_type,:presence => true
-  validates :name,:presence=>true
-
-   def self.get_formatted_items_by_dashboard_id(dashboard_id)
-     items= DashboardItem.where('dashboard_id=?',dashboard_id).reorder('sequence')
-     formatted_items = []
-     if items
-       items.each{|item|
-         formatted=item.as_json
-         #formatted[:kpi_name]=Kpi.find(item.kpi_id).name
-         #formatted[:start] = self.time_string_to_time_span(item.time_string)[:start]
-         #formatted[:end] = self.time_string_to_time_span(item.time_string)[:end]
-         formatted_items << formatted
-       }
-     end
-     return formatted_items
-   end
-
-
-
-  def self.get_item_formatted_data(id)
-    data=nil
-    item = DashboardItem.find(id)
-    if item
-      time_span=self.time_string_to_time_span item.time_string
-      data = KpiEntryAnalyseHelper::get_kpi_entry_analysis_data(
-          item.kpi_id,
-          item.entity_group,
-          time_span[:start].iso8601.to_s,
-          time_span[:end].iso8601.to_s,
-          item.calculate_type=='AVERAGE')
-      if data
-        data[:result]=true
-        data[:startTime] = time_span[:start].iso8601
-        data[:endTime]=time_span[:end].iso8601
-        data[:interval] = Kpi.find_by_id(item.kpi_id).frequency.to_s
-      end
-    end
-    return data
-  end
-
-
+  validates_with TimeStringValidator
+  validates :dashboard_items_id,:presence => true
+  validates :entity_group,:presence => true
+  validates :kpi_id,:presence => true
+  validates :calculate_type,:presence => true
 
   def self.time_string_to_time_span(time_str)
     result=nil
@@ -60,9 +19,33 @@ class DashboardItem < ActiveRecord::Base
     return result
   end
 
-
-
-
+  #
+  # move from DashboardItem::get_item_formatted_data(id)
+  # return the array of conditions
+  #
+  def self.get_item_formatted_data(id)
+    conditions = DashboardCondition.where('dashboard_items_id=?',id)
+    datas = []
+    if conditions
+      conditions.each { |condition|
+        time_span = self.time_string_to_time_span condition.time_string
+        data = KpiEntryAnalyseHelper::get_kpi_entry_analysis_data(
+            condition.kpi_id,
+            condition.entity_group,
+            time_span[:start].iso8601.to_s,
+            time_span[:end].iso8601.to_s,
+            condition.calculate_type=='AVERAGE')
+        if data
+          data[:result]=true
+          data[:startTime] = time_span[:start].iso8601
+          data[:endTime] = time_span[:end].iso8601
+          data[:interval] = Kpi.find_by_id(condition.kpi_id).frequency.to_s
+          datas << data
+        end
+      }
+    end
+    return datas
+  end
 
   private
   def self.time_string_patterns
@@ -113,6 +96,4 @@ class DashboardItem < ActiveRecord::Base
     }
 
   end
-
 end
-

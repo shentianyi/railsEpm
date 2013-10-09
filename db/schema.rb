@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130929090307) do
+ActiveRecord::Schema.define(:version => 20131009081826) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -39,15 +39,21 @@ ActiveRecord::Schema.define(:version => 20130929090307) do
 
   add_index "admin_kpi_templates", ["admin_kpi_category_template_id"], :name => "index_admin_kpi_templates_on_admin_kpi_category_template_id"
 
+  create_table "dashboard_conditions", :force => true do |t|
+    t.integer  "dashboard_items_id"
+    t.string   "entity_group",       :null => false
+    t.string   "kpi_id",             :null => false
+    t.string   "calculate_type",     :null => false
+    t.string   "time_string",        :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
   create_table "dashboard_items", :force => true do |t|
-    t.integer  "dashboard_id",   :null => false
-    t.string   "entity_group",   :null => false
-    t.string   "kpi_id",         :null => false
-    t.string   "calculate_type", :null => false
-    t.string   "time_string",    :null => false
+    t.integer  "dashboard_id", :null => false
     t.integer  "sequence"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "interval"
     t.string   "name"
     t.string   "title"
