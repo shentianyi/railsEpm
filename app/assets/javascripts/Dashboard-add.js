@@ -18,6 +18,9 @@ var db_chartSeries = {
     addCount: function () {
         this.count += 1
     },
+    minusCount: function () {
+        this.count -= 1
+    },
     getSeries: function () {
         return this.series
     },
@@ -90,7 +93,46 @@ DASHBOARD.add.init=function(){
         });
     });
 
-
+    high_chart.plotOptions.series.events.legendItemClick=function(){
+        var index=this.index;
+        delete db_chartSeries.series[index];
+        this.remove(false);
+        db_chartSeries.minusCount();
+        $('#chart-container').highcharts().destroy();
+        if(db_chartSeries.count==0){
+            $("#db-chart-body").css("display","none");
+            $("#add-dashboard").css("display","none");
+            $("#db-chart-type-alternate").css("display","none");
+            $("#db-chart-type-alternate li").removeClass("active");
+            $("#db-chart-interval-alternate li").removeClass("active");
+            return;
+        }
+        else{
+            var item, i,option;
+            for(i=0;i<db_chartSeries.count;i++){
+                item=db_chartSeries.series[i];
+                var option = {
+                    kpi: item.kpi,
+                    id: db_chartSeries.getCount(),
+                    target: "chart-container",
+                    begin_time: begin_time,
+                    type: type,
+                    interval: interval,
+                    count: db_chartSeries.getCount() + 1
+                }
+                var addSeriesOption = {
+                    kpi: $("#chart-kpi :selected").text(),
+                    kpi_id: kpi,
+                    id: db_chartSeries.getCount(),
+                    interval: interval,
+                    view: view,
+                    method: method,
+                    begin_time: begin_time,
+                    end_time: end_time
+                }
+            }
+        }
+    }
     $("#db-add-chart").on("click",DASHBOARD.add.prepare_form_chart);
 };
 

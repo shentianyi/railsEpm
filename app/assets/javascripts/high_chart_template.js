@@ -65,6 +65,9 @@ var high_chart = {
                     color: null,
                     borderColor: null
                 }
+            },
+            events:{
+
             }
         },
         line: {
