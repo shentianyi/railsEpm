@@ -13,8 +13,6 @@
 //=require jquery-1.8.2.min
 //=require jquery.gridster.min
 //=require jquery.gridster.with-extras.min
-//=require jquery.gridster
-//=require jquery.gridster.with-extras
 //= require jquery_ujs
 //=require highcharts
 //=require exporting
