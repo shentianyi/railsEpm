@@ -240,6 +240,7 @@ ifepm.dashboard.load_graph=function(id){
           dataType:ifepm.config.get_item_data_url.dataType,
           crossDomain:ifepm.config.get_item_data_url.crossDomain,
           success: function(data){
+              //condition array
               if(data){
                   ifepm.dashboard.form_chart({current:data.current,
                       target:data.target,
@@ -260,6 +261,33 @@ ifepm.dashboard.make_item_container_id=function(item_id){
 };
 
 
+/*
+* @class 代表一个图标的搜索条件
+*
+* */
+
+function Condition(){
+    /*@field 全局唯一的ID*/
+    this.id=null;
+    /*@field 用户自定义的观察点，观察点是数个KPI输入点的集合 */
+    this.entity_group=null;
+    /*@field 图中使用的KPI的ID*/
+    this.kpi_id=null;
+    /*@field 图中使用的KPI的名称*/
+    this.kpi_name=null;
+    /*
+     @field 计算类型, ACCUMULATE or AVERAGE
+     ACCUMULATE 将获取到的同类数据做加法合并
+     AVERAGE 将获取到的同类数据做除法平均
+     * */
+    this.calculate_type=null;
+
+    /*@field 监测时间开始*/
+    this.from = null;
+
+    /*@field 监测时间结束*/
+    this.end = null;
+};
 /*
 * @class 代表在仪表盘中的一个图表以及其代表的搜索条件和数据
 *
@@ -458,7 +486,10 @@ ifepm.dashboard.delete_item=function(item_id,options){
 ifepm.dashboard.add_item=function(dashboard_item,options){
     $.ajax({
         url:ifepm.config.dashboard_item_create_url.url,
-        data:{dashboard_item:dashboard_item},
+        data:{
+            dashboard_item: dashboard_item.db,
+            conditions: dashboard_item.conditions
+        },
         crossDomain:ifepm.config.dashboard_item_create_url.crossDomain,
         dataType:ifepm.config.dashboard_item_create_url.dataType,
         success:options.success,

@@ -20,10 +20,9 @@ var gridster;
 
 //init
 ifepm.dashboard_widget.init = function(){
-    console.log("grid init");
     gridster = $(".gridster ul").gridster({
         widget_margins: [10, 10],
-        widget_base_dimensions: [295, 295],
+        widget_base_dimensions: [160, 160],
         draggable:{
             start: function(){console.log("drag start");},
             drag: function(){console.log("drag");},
@@ -56,6 +55,7 @@ ifepm.dashboard_widget.add = function(data){
     graph_item.sizey = defsize.sizey;
 
     ifepm.dashboard.graphs[graph_item.id] = graph_item;
+    ifepm.dashboard.graph_sequence.push(graph_item.id);
 
     //create chart
     var container_selector=ifepm.config.container_selector;

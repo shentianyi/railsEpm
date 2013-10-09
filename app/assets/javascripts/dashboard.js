@@ -95,15 +95,32 @@ var dashboard_list_item_template =
 
 function prepare_to_create_db_view(){
     var dashboard_item = {};
+    dashboard_item.conditions = [];
+
+    /*
     dashboard_item.entity_group = get_entity_group();
     dashboard_item.kpi_id= get_kpi_id();
     dashboard_item.calculate_type = get_calculate_type();
     dashboard_item.time_string= get_time_string();
-    dashboard_item.interval = get_interval();
-    dashboard_item.name = get_name();
-    dashboard_item.title = get_title();
-    dashboard_item.type = get_type();
-    dashboard_item.dashboard_id= get_dashboard_id();
+    */
+    dashboard_item.db = {};
+    dashboard_item.db.interval = get_interval();
+    dashboard_item.db.name = get_name();
+    dashboard_item.db.title = get_title();
+    dashboard_item.db.type = get_type();
+    dashboard_item.db.dashboard_id= get_dashboard_id();
+
+    /*
+    * Test
+    * */
+    var condition = {};
+    condition.entity_group = get_entity_group();
+    condition.kpi_id = get_kpi_id();
+    condition.calculate_type = get_calculate_type();
+    condition.time_string = get_time_string();
+    condition.dashboard_items_id = null;
+
+    dashboard_item.conditions.push(condition);
     return dashboard_item;
 }
 
@@ -263,8 +280,6 @@ function dashboard_create_error_callback(jqXhr){
 
 
 //Main
-
-
 var date_picker_option =  {
     showOtherMonths : true,
     selectOtherMonths : true,
@@ -297,14 +312,12 @@ function init_date_picker(){
 
 //grid view
 function init_grid(){
-    console.log("grid init");
     ifepm.dashboard_widget.init();
 }
 
 function init_component(){
     //init_time_picker();
     init_date_picker();
-    console.log("test");
     init_grid();
 }
 

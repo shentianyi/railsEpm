@@ -5,14 +5,31 @@ class DashboardItemsController < ApplicationController
 
 
     def create
-
       @new_item = DashboardItem.new(params[:dashboard_item])
       msg = new_message
+
       if @new_item.save
         msg[:result]=true
+        #
+        # add condition to store serials
+        #
+        @conditions = params[:conditions]
+        id = @new_item.id
+        @conditions.each{|condition|
+          @new_condition = DashboardCondition.new(condition[1])
+          @new_condition.dashboard_items_id = id
+
+          if @new_condition.save
+
+          else
+            msg[:result]=false
+          end
+        }
+
       else
         msg[:errors]= @new_item.errors.full_messages
       end
+
       respond_to do |t|
         t.json {render :json=> @new_item }
         t.js {render :js=> jsonp_str(msg)}
@@ -59,10 +76,10 @@ class DashboardItemsController < ApplicationController
 
 
   def get_data
-   data = DashboardItem::get_item_formatted_data(params[:id])
+   datas = DashboardCondition::get_item_formatted_data(params[:id])
       respond_to do |t|
-        t.json {render :json=>data.to_json}
-        t.js {render :js=>jsonp_str(data)}
+        t.json {render :json=>datas.to_json}
+        t.js {render :js=>jsonp_str(datas)}
       end
     end
 
