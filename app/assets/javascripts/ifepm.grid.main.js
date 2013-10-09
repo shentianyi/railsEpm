@@ -23,7 +23,7 @@ ifepm.dashboard_widget.init = function(){
     console.log("grid init");
     gridster = $(".gridster ul").gridster({
         widget_margins: [10, 10],
-        widget_base_dimensions: [280, 280],
+        widget_base_dimensions: [295, 295],
         draggable:{
             start: function(){console.log("drag start");},
             drag: function(){console.log("drag");},
