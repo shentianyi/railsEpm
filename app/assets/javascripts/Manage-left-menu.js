@@ -8,6 +8,7 @@ MANAGE.manage_menu_left_add=function(){};
 MANAGE.category=MANAGE.category || {};
 MANAGE.group=MANAGE.group || {};
 MANAGE.entity=MANAGE.entity || {};
+MANAGE.dashboard=MANAGE.dashboard || {};
 MANAGE.left={};
 
 
@@ -87,12 +88,20 @@ function entity_add(){
 }
 entity_add.prototype=MANAGE.manage_menu_left_add.prototype;
 entity_add.prototype.constructor=entity_add;
-
+function dashboard_add(){
+//    this.name="entity";
+//    this.href="../entity_groups?p=";
+//    this.postHref='../entity_groups';
+}
+dashboard_add.prototype=MANAGE.manage_menu_left_add.prototype;
+dashboard_add.prototype.constructor=dashboard_add;
 
 
 MANAGE.category.add=new category_add();
 MANAGE.group.add=new group_add();
 MANAGE.entity.add=new entity_add();
+MANAGE.dashboard.add=new dashboard_add();
+
 
 MANAGE.left.manage_left_add_init=function(){
     $("#manage-menu-add").on("click",function(){
@@ -153,11 +162,18 @@ function entity_delete(){
 }
 entity_delete.prototype=MANAGE.manage_menu_left_delete.prototype;
 entity_delete.prototype.constructor=entity_delete;
-
+function dashboard_delete(){
+//    this.url="../entity_groups/";
+//    this.local= "../entity_groups/";
+//    this.name="entity";
+}
+dashboard_delete.prototype=MANAGE.manage_menu_left_delete.prototype;
+dashboard_delete.prototype.constructor=dashboard_delete;
 
 MANAGE.category.delete=new category_delete();
 MANAGE.group.delete=new group_delete();
 MANAGE.entity.delete=new entity_delete();
+MANAGE.dashboard.delete=new dashboard_delete();
 
 MANAGE.left.manage_left_delete_init=function(){
     $("#manage-left-menu").on("click","i.icon-trash",function(event){
@@ -242,11 +258,17 @@ function entity_edit(){
 }
 entity_edit.prototype=MANAGE.manage_menu_left_edit.prototype;
 entity_edit.prototype.constructor=entity_edit;
+function dashboard_edit(){
+    this.url = "../entity_groups";
+}
+dashboard_edit.prototype=MANAGE.manage_menu_left_edit.prototype;
+dashboard_edit.prototype.constructor=dashboard_edit;
 
 
 MANAGE.category.edit=new category_edit();
 MANAGE.group.edit=new group_edit();
 MANAGE.entity.edit=new entity_edit();
+MANAGE.dashboard.edit=new dashboard_edit();
 
 MANAGE.left.manage_left_edit_init=function(){
     $("#manage-edit-target").text($("#manage-left-menu li.active").find("a").text()).on("click",function(){

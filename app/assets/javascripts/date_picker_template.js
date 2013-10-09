@@ -1,7 +1,7 @@
 //需求变更时的注意事项：
 //在不变的部分需要更改language以适应多语言
 var DATE_PICKER= DATE_PICKER || {};
-
+DATE_PICKER.shortcut_count=0;
 
 
 
@@ -67,6 +67,13 @@ DATE_PICKER.date_picker_template.prototype={
                 }
 
             });
+            $(target).datetimepicker().on("change", function(){
+                $(this).attr("hide_value",$(this).val());
+                if($(this).attr("string_model","yes")){
+                    $(this).attr("string_model","no");
+                    DATE_PICKER.shortcut_supervise(target);
+                }
+            });
         }
         else{
             $(target).datepicker().one("show", function(){
@@ -99,10 +106,26 @@ DATE_PICKER.date_picker_template.prototype={
                     $(".datepicker-days").find(".active").parent().addClass("week-tr-active");
                 });
             });
+            $(target).datepicker().on("change", function(){
+                $(this).attr("hide_value",$(this).val());
+                if($(this).attr("string_model","yes")){
+                    $(this).attr("string_model","no");
+                    DATE_PICKER.shortcut_supervise(target);
+                }
+
+            });
         }
     }
 }
-
+DATE_PICKER.shortcut_supervise=function(target){
+    DATE_PICKER.shortcut_count--;
+    if(DATE_PICKER.shortcut_count==1){
+        var target=target.split(","),i;
+        for(i=0;i<target.length;i++){
+            $(target[i]).val($(target[i]).attr("hide_value"));
+        }
+    }
+};
 DATE_PICKER["90"]=function(target){
     this.target = target;
     this.name = "hour";
@@ -258,8 +281,11 @@ function date_shortcut(name,target,shortcut){
     }
     else if(shortcut=="string"){
         for(i=1;i<targetSplit.length;i++){
+            DATE_PICKER.shortcut[name].update("#"+targetSplit[i],DATE_PICKER.shortcut[name].date[i-1]);
             $("#"+targetSplit[i]).val(DATE_PICKER.shortcut[name].string);
+            $("#"+targetSplit[i]).attr("hide_value",DATE_PICKER.shortcut[name].date[i-1]).attr("string_model","yes");
         }
+        DATE_PICKER.shortcut_count=targetSplit.length-1;
     }
     if(name=="hour"){
         $(target).datetimepicker("hide");

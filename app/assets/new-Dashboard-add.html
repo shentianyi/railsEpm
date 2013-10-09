@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="stylesheets/wayne_sunny.css" rel="stylesheet">
+    <link href="stylesheets/_epm_base.css" rel="stylesheet">
+    <link href="stylesheets/font-awesome.min.css" rel="stylesheet">
+    <link href="stylesheets/chosen.css" rel="stylesheet">
+    <link href="stylesheets/aero.css" rel="stylesheet">
+    <link href="stylesheets/Manage.css" rel="stylesheet">
+    <link href="stylesheets/Manage-kpi.css" rel="stylesheet">
+    <link href="stylesheets/datetimepicker.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/datepicker.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/Dashboard.css" rel="stylesheet">
+    <link href="stylesheets/Dashboard-add.css" rel="stylesheet">
+    <title>if kpi</title>
+</head>
+<body>
+<aside class="left-user-setting" id="left-user-setting">
+    <div style="height:100%">
+        <a class="btn btn-primary btn-log-out">Log out</a>
+    </div>
+
+</aside>
+<article class="wrap-main" id="wrap-main">
+    <header>
+        <div class="user-portrait-background pull-left" state="close" id="user-portrait-background">
+            <div class="user-portrait-brand"></div>
+            <!--<div class="user-portrait-name">IF-EPM</div>-->
+        </div>
+        <nav class="pull-left">
+            <ul>
+                <li><a>
+                    <span>Get Started</span>
+                    <span class="nav-get-started"></span>
+                </a></li>
+                <li><a>
+                    <span>DashBoard</span>
+                    <span class="nav-dash-board"></span>
+                </a></li>
+                <li><a href="new-Analytics.html">
+                    <span>Analytics</span>
+                    <span class="nav-analytics"></span>
+                </a></li>
+                <li><a>
+                    <span>Reports</span>
+                    <span class='nav-report'></span>
+                </a></li>
+                <li class="relative">
+                    <a>
+                        <span>Manage</span>
+                        <span class='nav-manage'></span>
+                    </a>
+                    <ul class="nav-manage-sub">
+                        <li><a>KPIs</a></li>
+                        <li><a>Users</a></li>
+                        <li><a>Views</a></li>
+                        <li><a>Billings</a></li>
+                    </ul>
+                </li>
+                <li><a>
+                    <span>Entry KPIs</span>
+                    <span class="nav-entry-kpi"></span>
+                </a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <ul class="dashboard-add-left-menu">
+        <li>Add DashBoard</li>
+        <div class="select-div">
+            <select data-placeholder="Entity *" style="width:120px;" class="chosen-select"
+                    title="analy-entity-select" id="chart-group">
+                <option value="group1">entity1</option>
+                <option value="group2">entity2</option>
+                <option value="group3">entity3</option>
+            </select>
+        </div>
+        <div class="select-div">
+            <select data-placeholder="Kpi *" style="width:120px;" class="chosen-select" title="analy-kpi-select"
+                    id="chart-kpi" date-pick=false>
+                <option value=""> </option>
+                <option value="kpi1" interval="200" type="">week</option>
+                <option value="kpi1" interval="90">hour</option>
+                <option value="kpi1" interval="100">day</option>
+                <option value="kpi2" interval="400">quarter</option>
+                <option value="kpi3" interval="300">month</option>
+                <option value="kpi3" interval="500">year</option>
+                <option value="kpi3" interval="">empty</option>
+            </select>
+        </div>
+        <div class="select-div">
+            <select data-placeholder="View *" style="width:120px;" class="chosen-select" title="analy-view-select"
+                    id="chart-view">
+                <option value="entity1">view1</option>
+                <option value="entity2">view2</option>
+                <option value="entity3">view3</option>
+            </select>
+        </div>
+        <div class="time-select" id="time-select">
+            <input type="text" placeholder="Begin Time *" id="analy-begin-time" readonly=true />
+            <label class="index-date-extra-info"></label>
+            <input type="text" placeholder="End Time" id="analy-end-time" readonly=true />
+            <label class="index-date-extra-info"></label>
+        </div>
+        <div class="method-select">
+            <label class="analytics-radio-label">
+                <input type="radio" name="chartRadios" value="1" checked>
+                Total
+            </label>
+            <label class="analytics-radio-label">
+                <input type="radio" name="chartRadios" value="2">
+                Average
+            </label>
+        </div>
+        <a class="btn" id="db-add-chart">add chart</a>
+    </ul>
+
+
+    <div class="manage-right-content" id="manage-right-content">
+        <div class="dash-add-condition">
+           <a class="btn"><i class="icon-arrow-left"></i> Back</a>
+           <a class="btn btn-primary" style="display:none" id="add-dashboard"><i class="icon-plus"></i> Add DashBoard</a>
+           <ul id="db-chart-type-alternate">
+               <li class="line" type="line"></li>
+               <li class="column" type="column"></li>
+               <li class="pie" type="pie"></li>
+               <li class="scatter" type="scatter"></li>
+           </ul>
+        </div>
+
+        <div class="db-chart-body" id="db-chart-body" >
+            <div class="clearfix" id="db-chart-interval-alternate" my_height="28">
+                <ul class="pull-right db-control-chart-interval-group">
+                    <li interval="90"><a>Hr</a></li>
+                    <li interval="100"><a>D</a></li>
+                    <li interval="200"><a>W</a></li>
+                    <li interval="300"><a>M</a></li>
+                    <li interval="400"><a>Qr</a></li>
+                    <li interval="500"><a>Y</a></li>
+                </ul>
+            </div>
+            <div class="db-chart-container" id="chart-container">
+            </div>
+        </div>
+    </div>
+
+
+
+
+</article>
+
+<div class="message-box" id="MessageBox">
+    <p></p>
+</div>
+
+<script src="javascripts/jquery-1.8.2.min.js"></script>
+<script src="javascripts/chosen.jquery.min.js"></script>
+<script src="javascripts/wayne-base.js"></script>
+<script src="javascripts/Template.js"></script>
+<script src="javascripts/brilliantech.base.js"></script>
+<script src="javascripts/jquery.ba-resize.min.js"></script>
+<script src="javascripts/jquery.icheck.min.js"></script>
+<script src="javascripts/jquery.sortable.min.js"></script>
+<script src="javascripts/highcharts.js"></script>
+<script src="javascripts/exporting.js"></script>
+<script src="javascripts/bootstrap-datepicker.js" charset="UTF-8"></script>
+<script src="javascripts/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+<script src="javascripts/date_picker_template.js"></script>
+<script src="javascripts/high_chart_template.js"></script>
+<script src="javascripts/Manage.js"></script>
+<script src="javascripts/Manage-left-menu.js"></script>
+<script src="javascripts/Dashboard-init.js"></script>
+<script src="javascripts/Dashboard-add.js"></script>
+<script>
+    $(document).ready(function(){
+        DASHBOARD.add.init();
+    })
+</script>
+</body>
+</html>
