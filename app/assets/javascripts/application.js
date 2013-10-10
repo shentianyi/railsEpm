@@ -43,6 +43,8 @@
 //=require Manage-kpi
 //=require Manage-user
 //=require Manage-view
+//=require Dashboard-add
+//=require Dashboard-init
 //=require Log
 //=require Entry
 //= require i18n
