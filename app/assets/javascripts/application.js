@@ -27,6 +27,7 @@
 //=require ifepm.dashboard.main.js
 //=require Template
 //=require dashboard.js
+//=require dashboard_new.js
 //=require bootstrap-datepicker
 //=require bootstrap-datetimepicker.min
 //=require chosen.jquery.min

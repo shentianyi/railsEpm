@@ -93,6 +93,8 @@ IFEpm::Application.routes.draw do
 
   resources :dashboards
 
+  resources :dashboard_items
+
   mount Resque::Server.new, :at=>"/admin/resque"
 
   # The priority is based upon order of creation:

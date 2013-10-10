@@ -44,6 +44,11 @@ ifepm.dashboard = ifepm.dashboard || {};
 ifepm.active_selector = ifepm.active_selector || new ActiveSelect();
 
 //function to generate a chart-form dashboard view . Depands on highchart.js
+/*
+=============
+@Deprecated
+=============
+*/
 ifepm.dashboard.form_chart=function(option_args){
     var options = {
         chart : {
