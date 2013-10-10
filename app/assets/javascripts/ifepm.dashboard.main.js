@@ -230,6 +230,37 @@ ifepm.dashboard.graphs=ifepm.dashboard.graphs || {};
 
 ifepm.dashboard.graph_sequence =[];
 
+//
+var db_chartSeries = {
+    count: 0,
+    id_count:0,
+    series: [],
+    getCount: function () {
+        return this.count
+    },
+    addCount: function () {
+        this.count += 1
+    },
+    minusCount: function () {
+        this.count -= 1
+    },
+    getSeries: function () {
+        return this.series
+    },
+    addSeries: function (series) {
+        this.series.push(series)
+    }
+};
+/*
+* @ function form_graph a new function to render chart
+* @ params data
+* */
+var isformchart = false;
+
+ifepm.dashboard.form_graph = function(data){
+
+}
+
 ifepm.dashboard.load_graph=function(id){
     if (!ifepm.dashboard.graphs[id])
     {
@@ -264,7 +295,6 @@ ifepm.dashboard.load_graph=function(id){
 ifepm.dashboard.make_item_container_id=function(item_id){
   return "container_" + item_id;
 };
-
 
 /*
 * @class 代表一个图标的搜索条件
