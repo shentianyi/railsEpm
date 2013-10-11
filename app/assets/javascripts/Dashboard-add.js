@@ -165,6 +165,7 @@ DASHBOARD.add.init=function(){
             post.dashboard_name=$("#dashboard-name p:first-of-type").text();
             post.type=$("#db-chart-type-alternate li.active").attr("type");
             post.interval=$("#db-chart-interval-alternate li.active").attr("interval");
+            post.dashboard_id = $("#manage-left-menu>.active").attr("number");
             post.series=[];
             for(i=0;i<db_chartSeries.series.length;i++){
                 post.series[i]={};
@@ -176,6 +177,8 @@ DASHBOARD.add.init=function(){
                 post.series[i].count=i+1;
             }
             console.log(post)
+            prepare_to_create_db_view(post)
+            /*
             $.post(
                 "",
                 {
@@ -185,6 +188,7 @@ DASHBOARD.add.init=function(){
 
                 }
             )
+            */
         }
         else{
             MessageBox("please give the dashboard a name (edit in up left)" , "top", "warning") ;

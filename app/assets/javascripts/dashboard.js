@@ -38,11 +38,11 @@ if (!Date.prototype.toISOString) {
 
 var config1={
     //Container of the dashboards
-  db_container_selector:'#sty-dashboards',
+  db_container_selector:'#manage-left-menu',
     //a selector to select a dashboard node from the container
   db_item_filter:".sty-db-node",
   db_single_item_filter:function(id){
-      return "li[obj_id~=\"" + id + "\"]";
+      return "li[number~=\"" + id + "\"]";
   },
     //a class represents the element has been selected
   selected_class:'active',
@@ -91,7 +91,7 @@ var dashboard_list_item_template =
         '</li>';
 
 
-function prepare_to_create_db_view(){
+function prepare_to_create_db_view(post){
     var dashboard_item = {};
     dashboard_item.conditions = [];
 
@@ -102,24 +102,27 @@ function prepare_to_create_db_view(){
     dashboard_item.time_string= get_time_string();
     */
     dashboard_item.db = {};
-    dashboard_item.db.interval = get_interval();
-    dashboard_item.db.name = get_name();
-    dashboard_item.db.title = get_title();
-    dashboard_item.db.type = get_type();
-    dashboard_item.db.dashboard_id= get_dashboard_id();
+    dashboard_item.db.interval = post.interval;
+    //dashboard_item.db.name = null;
+    dashboard_item.db.title = post.dashboard_name;
+    dashboard_item.db.chart_type = post.type;
+    dashboard_item.db.dashboard_id= post.dashboard_id;
 
     /*
     * Test
     * */
-    var condition = {};
-    condition.entity_group = get_entity_group();
-    condition.kpi_id = get_kpi_id();
-    condition.calculate_type = get_calculate_type();
-    condition.time_string = get_time_string();
-    condition.dashboard_items_id = null;
-
-    dashboard_item.conditions.push(condition);
-    return dashboard_item;
+    for(var i in post.series){
+        var condition = {};
+        condition.entity_group = post.series[i].view;
+        condition.kpi_id = post.series[i].kpi;
+        condition.calculate_type = get_cal_type(post.series[i].average);
+        condition.time_string = post.series[i].begin_time +"|" + post.series[i].end_time;
+        condition.dashboard_item_id = null;
+        condition.count = post.series[i].count;
+        dashboard_item.conditions.push(condition);
+    }
+    //return dashboard_item;
+    db_view_create(dashboard_item);
 }
 
 function get_name(){
@@ -144,8 +147,26 @@ function get_calculate_type(){
     return $("input:radio[name='chartRadios']:checked").val()=="0"?"AVERAGE":"ACCUMULATE";
 }
 
+function get_cal_type(method){
+    switch (method){
+        case "1":
+            return "ACCUNULATE";
+            break;
+        case "2":
+            return "AVERAGE";
+            break;
+        default :
+            return null
+            break;
+    }
+}
+
 function get_dashboard_id(){
     return current_dashboard_id;
+}
+
+function get_time_string_by_twocar(start,end){
+    return connect_time_str(start,end);
 }
 
 function get_time_string(){
@@ -166,10 +187,10 @@ function get_time_string(){
         to.setMilliseconds(toTime.getMilliseconds());
     }
     else {*/
-    to.setHours(23);
-    to.setMinutes(59);
-    to.setSeconds(59);
-    to.setMilliseconds(999);
+    //to.setHours(23);
+    //to.setMinutes(59);
+    //to.setSeconds(59);
+    //to.setMilliseconds(999);
     //}
 
     return connect_time_str(from ,to);
@@ -202,6 +223,7 @@ function db_view_create_callback(data){
         }
     }*/
     if(data){
+        $("#dashboard-add-page").css("display","none");
         slide_box("添加成功",true);
         close_dash();
         ifepm.dashboard_widget.add(data);

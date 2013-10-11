@@ -17,7 +17,7 @@ class DashboardItemsController < ApplicationController
   def create
     @new_item = DashboardItem.new(params[:dashboard_item])
     msg = new_message
-
+    puts params[:dashboard_item]
     if @new_item.save
       msg[:result]=true
       #
@@ -26,11 +26,11 @@ class DashboardItemsController < ApplicationController
       @conditions = params[:conditions]
       id = @new_item.id
       @conditions.each{|condition|
+        puts condition[1]
         @new_condition = DashboardCondition.new(condition[1])
-        @new_condition.dashboard_items_id = id
+        @new_condition.dashboard_item_id = id
 
         if @new_condition.save
-
         else
           msg[:result]=false
         end

@@ -89,9 +89,9 @@ function entity_add(){
 entity_add.prototype=MANAGE.manage_menu_left_add.prototype;
 entity_add.prototype.constructor=entity_add;
 function dashboard_add(){
-//    this.name="entity";
-//    this.href="../entity_groups?p=";
-//    this.postHref='../entity_groups';
+    this.name="dashboard";
+    this.href="../dashboards?p=";
+    this.postHref='../dashboards';
 }
 dashboard_add.prototype=MANAGE.manage_menu_left_add.prototype;
 dashboard_add.prototype.constructor=dashboard_add;
@@ -163,9 +163,9 @@ function entity_delete(){
 entity_delete.prototype=MANAGE.manage_menu_left_delete.prototype;
 entity_delete.prototype.constructor=entity_delete;
 function dashboard_delete(){
-//    this.url="../entity_groups/";
-//    this.local= "../entity_groups/";
-//    this.name="entity";
+    this.url="../dashboards/";
+    this.local= "../dashboards";
+    this.name="dashboard";
 }
 dashboard_delete.prototype=MANAGE.manage_menu_left_delete.prototype;
 dashboard_delete.prototype.constructor=dashboard_delete;

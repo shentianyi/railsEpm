@@ -14,37 +14,37 @@ ifepm.template = {};
 //do not change the structure and the !*! part. Insert css class into element to change the theme
 ifepm.template.view = '<li !attr!=!id!>' +
     '<div class="dashboard-eachDetail relative">' +
-    '<p class="text-center">!name!</p>' +
+    //'<p class="text-center">!name!</p>' +
     '<div class="dashboard-moreDetail">' +
     '<p class="dbItem-name">!title!</p>' +
     '</div>' +
-    '<i class="icon-list db-infoMark"></i>' +
+    //'<i class="icon-list db-infoMark"></i>' +
     '<i class="icon-remove db-itemRemove" onclick=custom_handler></i>' +
     '<table class="table table-bordered table-striped db-itemInfo">' +
-    '<tr>' +
-    '<td>视图名称</td>' +
-    '<td>!name!</td>' +
-    '</tr>' +
-    '<tr>'  +
-    '<td>KPI名称</td>' +
-    '<td>!kpi_name!</td>' +
-    '</tr>' +
-    '<tr>'+
-    '<td>观察点</td>' +
-    '<td>!entity_group!</td>'+
-    '</tr>'+
-    '<tr>'+
-    '<td>开始时间</td>'+
-    '<td>!from!</td>' +
-    '</tr>' +
-    '<tr>' +
-    '<td>结束时间</td>' +
-    '<td>!to!</td>'+
-    '</tr>'+
-    '<tr>' +
-    '<td>计算方式</td>' +
-    '<td>!calculate_type!</td>' +
-    '</tr>' +
+    //'<tr>' +
+    //'<td>视图名称</td>' +
+    //'<td>!name!</td>' +
+    //'</tr>' +
+    //'<tr>'  +
+    //'<td>KPI名称</td>' +
+    //'<td>!kpi_name!</td>' +
+    //'</tr>' +
+    //'<tr>'+
+    ///'<td>观察点</td>' +
+    //'<td>!entity_group!</td>'+
+    //'</tr>'+
+    //'<tr>'+
+    //'<td>开始时间</td>'+
+    //'<td>!from!</td>' +
+    //'</tr>' +
+    //'<tr>' +
+    //'<td>结束时间</td>' +
+    //'<td>!to!</td>'+
+    //'</tr>'+
+    //'<tr>' +
+    //'<td>计算方式</td>' +
+    //'<td>!calculate_type!</td>' +
+    //'</tr>' +
     '</table>'+
     '</div>' +
     '<div id=!item_container_id! class="db-placeHolder">' +
@@ -54,7 +54,7 @@ ifepm.template.view = '<li !attr!=!id!>' +
 
 //placeholder when change the position of a dashboard view
 ifepm.template.view_placeholder='<div class="db-placeHolder">' +
-    '<h2 onclick="showDash_new()">+ 点击新建视图</h2>' +
+    //'<h2 onclick="showDash_new()">+ 点击新建视图</h2>' +
 '</div>';
 
 

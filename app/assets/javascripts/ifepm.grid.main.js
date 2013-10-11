@@ -41,7 +41,7 @@ ifepm.dashboard_widget.add = function(data){
     graph_item.calculate_type = data.calculate_type
     graph_item.from =data.start
     graph_item.end = data.end
-    graph_item.type = data.type
+    graph_item.chart_type = data.chart_type
     graph_item.entity_group = data.entity_group
     graph_item.kpi_id = data.kpi_id
     graph_item.kpi_name = data.kpi_name
@@ -50,7 +50,7 @@ ifepm.dashboard_widget.add = function(data){
     graph_item.dashboard_id = data.dashboard_id
 
     //
-    var defsize = ifepm.dashboard_widget.initsize(data.type);
+    var defsize = ifepm.dashboard_widget.initsize(data.chart_type);
     graph_item.sizex = defsize.sizex;
     graph_item.sizey = defsize.sizey;
 
@@ -83,10 +83,26 @@ ifepm.dashboard_widget.add = function(data){
 ifepm.dashboard_widget.initsize = function(type){
     var defsize = {
         sizex:2,
-        sizey:1,
+        sizey:2,
     };
     switch (type)
     {
+        case "line":
+            defsize.sizex = 4;
+            defsize.sizey = 2;
+            break;
+        case "pie":
+            defsize.sizex = 3;
+            defsize.sizey = 3;
+            break;
+        case "column":
+            defsize.sizex = 4;
+            defsize.sizey = 2;
+            break;
+        case "scatter":
+            defsize.sizex = 4;
+            defsize.sizey = 2;
+            break;
         default:
             break;
     }

@@ -1,6 +1,7 @@
 class DashboardItem < ActiveRecord::Base
   belongs_to :dashboard
-  attr_accessible :dashboard_id,:sequence,:interval,:name,:title,:type
+  has_many :dashboard_conditions, :dependent => :destroy
+  attr_accessible :dashboard_id,:sequence,:interval,:name,:title,:chart_type
   attr_accessible :row, :col, :sizex, :sizey
 
   #validates_with TimeStringValidator
@@ -8,14 +9,31 @@ class DashboardItem < ActiveRecord::Base
   #validates :entity_group,:presence => true
   #validates :kpi_id,:presence => true
   #validates :calculate_type,:presence => true
-  validates :name,:presence=>true
 
    def self.get_formatted_items_by_dashboard_id(dashboard_id)
+
      items= DashboardItem.where('dashboard_id=?',dashboard_id).reorder('sequence')
+
      formatted_items = []
+     formatted_conditions = []
      if items
        items.each{|item|
          formatted=item.as_json
+         #find conditions
+
+=begin
+         conditions = DashboardCondition.where('dashboard_item_id=?',item.id).reorder('count')
+         conditions.each{|condition|
+           formatted_con = condition.as_json
+           formatted_con[:kpi_name] = Kpi.find(condition.kpi_id).name
+           formatted_con[:start] = self.time_string_to_time_span(condition.time_string)[:start]
+           formatted_con[:end] = self.time_string_to_time_span(condition.time_string)[:end]
+           formatted_conditions << formatted_con
+         }
+         formatted[:conditions] = formatted_conditions
+=end
+
+
          #formatted[:kpi_name]=Kpi.find(item.kpi_id).name
          #formatted[:start] = self.time_string_to_time_span(item.time_string)[:start]
          #formatted[:end] = self.time_string_to_time_span(item.time_string)[:end]

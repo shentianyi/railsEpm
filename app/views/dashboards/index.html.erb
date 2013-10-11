@@ -2,6 +2,7 @@
 <div class="sub-middle db-sub-middle">
 
 </div>
+
 <!--
 <div class="dashBlock " id="addBlock" data-state="off" style="display:none">
   <h4 class="text-center light-gray">创建视图</h4>
@@ -117,7 +118,7 @@
 
 
   <div class="left-category pull-left">
-    <ul class="manage-left-menu " id="sty-dashboards" type="dashboard">
+    <ul class="manage-left-menu " id="manage-left-menu" type="dashboard">
       <li>DashBoard</li>
       <li id="manage-menu-add">
         <input type="text" />
@@ -126,7 +127,7 @@
       </li>
 
       <%@dashboards.each do |dashboard| %>
-          <li class="sty-db-node" obj_id=<%=dashboard.id%>  >
+          <li class="sty-db-node" number=<%=dashboard.id%>  >
             <i class="icon-trash icon-item"  onclick="dashboard_delete(<%=dashboard.id%>)"></i>
             <a href="#" onclick="select_dashboard(<%=dashboard.id%>)"><%=dashboard.name%></a>
           </li>
@@ -186,7 +187,7 @@
   <!--<a class="btn btn-wzx btn-primary dashboard-addNew-btn" onclick="showDash_new()"><i class="icon-plus icon-white"></i> 视图</a>-->
   <div class="manage-right-content" id="manage-right-content">
 
-
+    <!--
     <div class="manage-btn-group" id="manage-btn-group">
       <%= link_to raw("<i class=\"icon-plus\">Dashboard</i>"), new_dashboard_item_path ,class: "btn btn-primary" %>
 
@@ -195,18 +196,108 @@
       <input type="text"/>
       <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
     </div>
+    -->
+    <div class="manage-btn-group" id="manage-btn-group">
+      <a class="btn btn-primary" id="kpi-add-show"><i class="icon-plus"></i> Dashboard</a>
+      <p id="manage-edit-target" ></p>
+      <i class="icon-pencil"></i>
+      <input type="text"/>
+      <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
+    </div>
+
     <div class="dashboard-block gridster manage-btn-group" style="width: 80%">
       <ul class="dashBoard-show" id="dashBoard-show">
       </ul>
     </div>
   </div>
-</div>
+
+<div id="dashboard-add-page" class="dashboard-add-page">
+  <ul class="dashboard-add-left-menu" id="dashboard-add-left-menu">
+    <div class="dashboard-name clearfix" id="dashboard-name">
+      <p>Dashboard</p>
+      <i class="icon-pencil"></i>
+      <br />
+      <p>Name</p>
+    </div>
+    <input id="dashboard-name-edit" type="text" />
+    <div class="select-div">
+      <select data-placeholder="<%= t 'analytics.kpi_category'%> *" style="width:120px;" class="chosen-select"   title="analy-entity-select" id="chart-group">
+        <%@categories.each_with_index do |catetory,i|%>
+            <option value="<%= catetory.id%>"><%= catetory.name%></option>
+        <%end %>
+      </select>
+    </div>
+    <div class="select-div">
+      <select data-placeholder="<%= t 'analytics.kpi'%> *" style="width:120px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
+        <option value=""></option>
+      </select>
+    </div>
+    <div class="select-div">
+      <select data-placeholder="<%= t 'analytics.view'%> *" style="width:120px;" class="chosen-select" title="analy-view-select"  id="chart-view">
+        <%@entity_groups.each_with_index do |entity_group,i|%>
+            <option value="<%= entity_group.id%>" ><%= entity_group.name%></option>
+        <%end %>
+      </select>
+    </div>
+    <div class="time-select" id="time-select">
+      <input type="text" placeholder="Begin Time *" id="analy-begin-time" readonly=true />
+      <label class="index-date-extra-info"></label>
+      <input type="text" placeholder="End Time" id="analy-end-time" readonly=true />
+      <label class="index-date-extra-info"></label>
+    </div>
+    <div class="method-select">
+      <label class="analytics-radio-label">
+        <input type="radio" name="chartRadios" value="1" checked>
+        Total
+      </label>
+      <label class="analytics-radio-label">
+        <input type="radio" name="chartRadios" value="2">
+        Average
+      </label>
+    </div>
+    <a class="btn btn-primary" id="db-add-chart">add chart</a>
+  </ul>
+
+
+
+  <div class="manage-right-content">
+    <div class="dash-add-condition">
+      <a class="btn" href="#" id="add-back-db"><i class="icon-arrow-left"></i> Back</a>
+      <a class="btn btn-primary" style="display:none" id="add-dashboard"><i class="icon-plus"></i> Add DashBoard</a>
+      <ul id="db-chart-type-alternate">
+        <li class="line" type="line"></li>
+        <li class="column" type="column"></li>
+        <li class="pie" type="pie"></li>
+        <li class="scatter" type="scatter"></li>
+      </ul>
+    </div>
+
+    <div class="db-chart-body" id="db-chart-body" >
+      <div class="clearfix" id="db-chart-interval-alternate" my_height="28">
+        <ul class="pull-right db-control-chart-interval-group">
+          <li interval="90"><a>Hr</a></li>
+          <li interval="100"><a>D</a></li>
+          <li interval="200"><a>W</a></li>
+          <li interval="300"><a>M</a></li>
+          <li interval="400"><a>Qr</a></li>
+          <li interval="500"><a>Y</a></li>
+        </ul>
+      </div>
+      <div class="db-chart-container" id="chart-container">
+      </div>
+    </div>
+  </div>
+
 
 </div>
+</div>
+
 
 <script type="text/javascript">
     $(document).ready(function (){
         init_component();
         DASHBOARD.init();
+        DASHBOARD.add.init();
+        dashboard_item.init_component()
     });
 </script>

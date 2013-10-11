@@ -49,180 +49,8 @@ ifepm.active_selector = ifepm.active_selector || new ActiveSelect();
 @Deprecated
 =============
 */
-ifepm.dashboard.form_chart=function(option_args){
-    var options = {
-        chart : {
-            renderTo : option_args['container'],
-            type : 'line'
-        },
-        credits : {
-            enabled : false
-        },
-        title : {
-            text : ""
-        },
-        tooltip : {
-            ////       formatter: function() {
-////           return '<b>'+ this.series.name +'</b><br/>'+
-////                  "数值"+this.y +'<br />'+this.x;
-////        },
-//          xDateFormat: '%Y-%m-%d'
-        },
-        xAxis : {
-            //                categories:[],
-//            type : 'datetime',
-//            dateTimeLabelFormats : {
-//                day : '%e/%b'
-//            },
-//            tickInterval : 24 * 3600 * 1000 * ticket, // one day
-            labels : {
-                style : {
-                    fontWeight : 800
-                }
-            }
-        },
-        yAxis : {
-            title : {
-                enabled : false
-            },
-            tickWidth : 1,
-            offset : 10,
-//                          labels:{
-//                                format:'{value}m'
-//                          },
-            lineWidth : 1
-        },
-        series : [
-            {
-                type:"area",
-                name: "实际值"
-            },
-            {
-                type:"line",
-                name: "目标值"
-            }
-        ]
-    };
-    options.yAxis.labels = {
-        format : '{value}' +option_args["unit"][0]
-    };
-    var start=new Date(option_args['startTime']).toArray();
-    var end=new Date(option_args['endTime']).toArray();
-    if(start[1] && end[1]){
+ifepm.dashboard.form_chart=function(datas){
 
-            var startWQ=start[1];
-
-
-            var endWQ=end[1];
-
-    }
-    switch (option_args["interval"].toString()){
-        case "90":
-            options.tooltip.xDateFormat='%Y-%m-%d %H:%M';
-            options.xAxis.type='datetime';
-            options.xAxis.dateTimeLabelFormats={
-                hour: '%H:%M'+"<br />"+'%e/%b'
-            };
-            options.xAxis.tickInterval=3600 * 1000;
-            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,start[2],start[3]);
-            options.series[0].pointInterval=3600 * 1000;
-            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,start[2],start[3]);
-            options.series[1].pointInterval=3600 * 1000;
-            break;
-        case "100":
-            options.tooltip.xDateFormat='%Y-%m-%d';
-            options.xAxis.type='datetime';
-            options.xAxis.dateTimeLabelFormats={
-                day : '%e/%b'+"<br />"+"%Y"
-            };
-            options.xAxis.tickInterval=24 * 3600 * 1000;
-            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,start[2]);
-            options.series[0].pointInterval=24 * 3600 * 1000;
-            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,start[2]);
-            options.series[1].pointInterval=24 * 3600 * 1000;
-            break;
-        case "200":
-            options.tooltip.formatter=function(){
-                return '<b>'+ this.series.name +'</b><br/>'+
-                    "数值"+this.y +'<br />'+this.x;
-            };
-            options.xAxis.categories=[];
-            var yearInterval=parseInt(end[0])-parseInt(start[0]);
-            var xItem;
-            var year;
-            var lastWeek=52*(yearInterval)+parseInt(end[1]);
-            for(var i=0;i<=yearInterval;i++){
-                if(i==0){
-                    year=parseInt(start[0]);
-                    for(var a=parseInt(startWQ);a<=((lastWeek-52*(i+1))>=0?52:parseInt(endWQ));a++){
-                        xItem=year+"<br />"+"第"+a+"周";
-                        options.xAxis.categories.push(xItem);
-                    }
-                }
-                else{
-                    year=parseInt(start[0])+i;
-                    for(var b=1;b<=((lastWeek-52*(i+1))>=0?52:parseInt(endWQ));b++){
-                        xItem=year+"<br />"+"第"+b+"周";
-                        options.xAxis.categories.push(xItem);
-                    }
-                }
-            };
-            break;
-        case "300":
-            options.tooltip.xDateFormat='%Y-%m';
-            options.xAxis.type='datetime';
-            options.xAxis.dateTimeLabelFormats={
-                month : '%b'+"<br />"+'%Y'
-            };
-            options.xAxis.tickInterval=24 * 3600 * 1000 * 31;
-            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,1);
-            options.series[0].pointInterval=24 * 3600 * 1000 *31;
-            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,1);
-            options.series[1].pointInterval=24 * 3600 * 1000 *31;
-            break;
-        case "400":
-            options.tooltip.formatter=function(){
-                return '<b>'+ this.series.name +'</b><br/>'+
-                    "数值 "+this.y +'<br />'+this.x;
-            };
-            options.xAxis.categories=[];
-            var yearInterval=parseInt(end[0])-parseInt(start[0]);
-            var xItem;
-            var year;
-            var lastQuarter=4*(yearInterval)+parseInt(endWQ)
-            for(var i=0;i<=yearInterval;i++){
-                if(i==0){
-                    year=parseInt(start[0]);
-                    for(var a=parseInt(startWQ);a<=((lastQuarter-4*(i+1))>=0?4:parseInt(endWQ));a++){
-                        xItem=year+"<br />"+"第"+a+"季度";
-                        options.xAxis.categories.push(xItem);
-                    }
-                }
-                else{
-                    year=parseInt(start[0])+i;
-                    for(var b=1;b<=((lastQuarter-4*(i+1))>=0?4:parseInt(endWQ));b++){
-                        xItem=year+"<br />"+"第"+b+"季度";
-                        options.xAxis.categories.push(xItem);
-                    }
-                }
-            };
-            break;
-        case "500":
-            options.tooltip.xDateFormat='%Y';
-            options.xAxis.type='datetime';
-            options.xAxis.dateTimeLabelFormats={
-                year : '%Y'
-            };
-            options.xAxis.tickInterval=24 * 3600 * 1000 * 365;
-            options.series[0].pointStart=Date.UTC(start[0],0,1);
-            options.series[0].pointInterval=24 * 3600 * 1000*365;
-            options.series[1].pointStart=Date.UTC(start[0],0,1);
-            options.series[1].pointInterval=24 * 3600 * 1000*365;
-            break;
-    };
-    options.series[0].data=option_args["current"];
-    options.series[1].data=option_args["target"];
-    var chart = new Highcharts.Chart(options);
 }
 
 //container of the current dashboard's item.
@@ -257,8 +85,38 @@ var db_chartSeries = {
 * */
 var isformchart = false;
 
-ifepm.dashboard.form_graph = function(data){
+ifepm.dashboard.form_graph = function(datas,id){
+    var container = ifepm.dashboard.make_item_container_id(id);
+    var type = ifepm.dashboard.graphs[id].chart_type;
 
+    for(var i = 0;i<datas.length;i++){
+        data = [];
+        for(var j = 0;j<datas[i].current.length;j++){
+
+            data[j] = {};
+            data[j].y = datas[i].current[j];
+            data[j].target = datas[i].target[j];
+            data[j].unit = datas[i].unit[j];
+        }
+        option = {
+            kpi:datas[i].kpi_id,
+            id:datas[i].id,
+            target:container,
+            begin_time:datas[i].startTime,
+            type:type,
+            interval:datas[i].interval,
+            data:data,
+            count:datas[i].count
+        };
+        if(i==0){
+            render_to(option);
+            create_environment_for_data(option);
+            new Highcharts.Chart(high_chart);
+        }
+
+        add_series(option);
+        proper_type_for_chart(option);
+    }
 }
 
 ifepm.dashboard.load_graph=function(id){
@@ -278,14 +136,7 @@ ifepm.dashboard.load_graph=function(id){
           success: function(data){
               //condition array
               if(data){
-                  ifepm.dashboard.form_chart({current:data.current,
-                      target:data.target,
-                      unit:data.unit,
-                      interval:data.interval,
-                      startTime:data.startTime,
-                      endTime:data.endTime,
-                      timeBeginChart:data.startTime,
-                      container:ifepm.dashboard.make_item_container_id(id)});
+                  ifepm.dashboard.form_graph(data,id);
               }
           }
         }
@@ -322,6 +173,8 @@ function Condition(){
 
     /*@field 监测时间结束*/
     this.end = null;
+    /**/
+    this.count = null;
 };
 /*
 * @class 代表在仪表盘中的一个图表以及其代表的搜索条件和数据
@@ -331,27 +184,27 @@ function Graph(){
     /*@field 全局唯一的ID号*/
     this.id=null;
     /*@field 用户自定义的观察点，观察点是数个KPI输入点的集合 */
-    this.entity_group=null;
+    //this.entity_group=null;
     /*@field 图中使用的KPI的ID*/
-    this.kpi_id=null;
+    //this.kpi_id=null;
     /*@field 图中使用的KPI的名称*/
-    this.kpi_name=null;
+    //this.kpi_name=null;
     /*
     @field 计算类型, ACCUMULATE or AVERAGE
     ACCUMULATE 将获取到的同类数据做加法合并
     AVERAGE 将获取到的同类数据做除法平均
     * */
-    this.calculate_type=null;
+    //this.calculate_type=null;
 
     /*@field 监测时间开始*/
-    this.from = null;
+    //this.from = null;
 
     /*@field 监测时间结束*/
-    this.end = null;
+    //this.end = null;
 
     /*@field 查看间隔，指数据将在怎么*/
-    this.interval = null;
-    this.name = null;
+    //this.interval = null;
+    //this.name = null;
     this.title = null;
     this.sequence = null;
 
@@ -361,6 +214,9 @@ function Graph(){
     this.sizex = null;
     this.sizey = null;
 
+    /**/
+    this.chart_type = null;
+
     this.placeholder = ifepm.template.view_placeholder;
     this.container=  function(graph_item){
         return ifepm.template.view
@@ -369,16 +225,12 @@ function Graph(){
             .replace(/!title!/g,graph_item.title)
             .replace(/!item_container_id!/g,ifepm.dashboard.make_item_container_id(graph_item.id))
             .replace(/!attr!/g,ifepm.config.graph_indicator)
-            .replace(/!name!/g,graph_item.name)
-            .replace(/!kpi_name!/g,graph_item.kpi_name)
-            .replace(/!entity_group!/g,graph_item.entity_group)
-            .replace(/!from!/g,graph_item.from)
-            .replace(/!to!/g,graph_item.end)
-            .replace(/!calculate_type!/g,graph_item.calculate_type)
-            .replace(/!row/g,graph_item.row)
-            .replace(/!col/g,graph_item.col)
-            .replace(/!sizex!/g,graph_item.sizex)
-            .replace(/!sizey!/g,graph_item.sizey)
+            //.replace(/!name!/g,graph_item.name)
+            //.replace(/!kpi_name!/g,graph_item.kpi_name)
+            //.replace(/!entity_group!/g,graph_item.entity_group)
+            //.replace(/!from!/g,graph_item.from)
+            //.replace(/!to!/g,graph_item.end)
+            //.replace(/!calculate_type!/g,graph_item.calculate_type)
     };
 }
 
@@ -451,16 +303,16 @@ ifepm.dashboard.init=function(id){
                 for(var i in data){
                     var graph_item = new Graph();
                     graph_item.id = data[i].id
-                    graph_item.name = data[i].name
+                    //graph_item.name = data[i].name
                     graph_item.title = data[i].title
-                    graph_item.calculate_type = data[i].calculate_type
-                    graph_item.from =data[i].start
-                    graph_item.end = data[i].end
-                    graph_item.type = data[i].type
-                    graph_item.entity_group = data[i].entity_group
-                    graph_item.kpi_id = data[i].kpi_id
-                    graph_item.kpi_name = data[i].kpi_name
-                    graph_item.interval = data[i].interval
+                    //graph_item.calculate_type = data[i].calculate_type
+                    //graph_item.from =data[i].start
+                    //graph_item.end = data[i].end
+                    graph_item.chart_type = data[i].chart_type
+                    //graph_item.entity_group = data[i].entity_group
+                    //graph_item.kpi_id = data[i].kpi_id
+                    //graph_item.kpi_name = data[i].kpi_name
+                    //graph_item.interval = data[i].interval
                     graph_item.sequence = data[i].sequence
                     graph_item.dashboard_id = data[i].dashboard_id
                     graph_item.row = data[i].row;
