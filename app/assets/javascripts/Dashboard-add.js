@@ -143,14 +143,17 @@ DASHBOARD.add.init=function(){
                     data:item[$("#db-chart-interval-alternate li.active").attr("interval")],
                     count: i
                 }
+
                 if(i==0){
                    render_to(option);
                    create_environment_for_data(option);
                    new Highcharts.Chart(high_chart);
                 }
+
                 add_series(option);
                 proper_type_for_chart(option);
             }
+
         }
     };
 
@@ -458,7 +461,7 @@ DASHBOARD.add.change_interval=function(option) {
         else {
 
 
-            show_loading(top,0,0,0);
+            show_loading(185,0,0,150);;
             $.ajax({url:'/kpi_entries/analyse',
                 data:{
                     kpi : series_object.kpi_id,
