@@ -21,9 +21,9 @@ function init_analytics() {
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
     });
+    var target="#analy-begin-time,#analy-end-time";
     $("#chart-kpi").chosen().change(function(){
         var interval = $("#chart-kpi").find(":selected").attr("interval");
-        var target="#analy-begin-time,#analy-end-time";
         $(target).val("");
         $(".index-date-extra-info").text("");
 

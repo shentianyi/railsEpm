@@ -34,9 +34,7 @@ if (!Date.prototype.toISOString) {
     };
 };
 
-function system_error(){
-    alert("我们遇到了点小麻烦，管理员已经开始工作了，请耐心等待片刻后重试！");
-}
+
 
 var config1={
     //Container of the dashboards

@@ -1,0 +1,80 @@
+<ul class="dashboard-add-left-menu">
+  <div class="dashboard-name clearfix" id="dashboard-name">
+    <p>Dashboard</p>
+    <i class="icon-pencil"></i>
+    <br />
+    <p>Name</p>
+  </div>
+  <input id="dashboard-name-edit" type="text" />
+  <div class="select-div">
+    <select data-placeholder="<%= t 'analytics.kpi_category'%> *" style="width:120px;" class="chosen-select"   title="analy-entity-select" id="chart-group">
+      <%@categories.each_with_index do |catetory,i|%>
+          <option value="<%= catetory.id%>"><%= catetory.name%></option>
+      <%end %>
+    </select>
+  </div>
+  <div class="select-div">
+    <select data-placeholder="<%= t 'analytics.kpi'%> *" style="width:120px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
+      <option value=""></option>
+    </select>
+  </div>
+  <div class="select-div">
+    <select data-placeholder="<%= t 'analytics.view'%> *" style="width:120px;" class="chosen-select" title="analy-view-select"  id="chart-view">
+      <%@entity_groups.each_with_index do |entity_group,i|%>
+          <option value="<%= entity_group.id%>" ><%= entity_group.name%></option>
+      <%end %>
+    </select>
+  </div>
+  <div class="time-select" id="time-select">
+    <input type="text" placeholder="Begin Time *" id="analy-begin-time" readonly=true />
+    <label class="index-date-extra-info"></label>
+    <input type="text" placeholder="End Time" id="analy-end-time" readonly=true />
+    <label class="index-date-extra-info"></label>
+  </div>
+  <div class="method-select">
+    <label class="analytics-radio-label">
+      <input type="radio" name="chartRadios" value="1" checked>
+      Total
+    </label>
+    <label class="analytics-radio-label">
+      <input type="radio" name="chartRadios" value="2">
+      Average
+    </label>
+  </div>
+  <a class="btn btn-primary" id="db-add-chart">add chart</a>
+</ul>
+
+<div class="manage-right-content" id="manage-right-content">
+  <div class="dash-add-condition">
+    <%= link_to raw("<i class=\"icon-arrow-left\">Back</i>"), dashboards_path,class: "btn"%>
+    <a class="btn btn-primary" style="display:none" id="add-dashboard"><i class="icon-plus"></i> Add DashBoard</a>
+    <ul id="db-chart-type-alternate">
+      <li class="line" type="line"></li>
+      <li class="column" type="column"></li>
+      <li class="pie" type="pie"></li>
+      <li class="scatter" type="scatter"></li>
+    </ul>
+  </div>
+
+  <div class="db-chart-body" id="db-chart-body" >
+    <div class="clearfix" id="db-chart-interval-alternate" my_height="28">
+      <ul class="pull-right db-control-chart-interval-group">
+        <li interval="90"><a>Hr</a></li>
+        <li interval="100"><a>D</a></li>
+        <li interval="200"><a>W</a></li>
+        <li interval="300"><a>M</a></li>
+        <li interval="400"><a>Qr</a></li>
+        <li interval="500"><a>Y</a></li>
+      </ul>
+    </div>
+    <div class="db-chart-container" id="chart-container">
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function (){
+      DASHBOARD.add.init();
+      dashboard_item.init_component()
+  });
+</script>

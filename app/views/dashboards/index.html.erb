@@ -2,6 +2,7 @@
 <div class="sub-middle db-sub-middle">
 
 </div>
+<!--
 <div class="dashBlock " id="addBlock" data-state="off" style="display:none">
   <h4 class="text-center light-gray">创建视图</h4>
   <table class="dashBoard-condition">
@@ -47,14 +48,16 @@
       <td>*开始时间</td>
       <td>
         <input type="text" readonly="true" id="from" class="analytics-date"/>
-        <!--<input placeholder="时间" type="text" readonly="true" id="fromTime" class="analytics-time"/>-->
+
+        <input placeholder="时间" type="text" readonly="true" id="fromTime" class="analytics-time"/>
+
 </td>
 </tr>
 <tr>
   <td>*结束时间</td>
   <td>
     <input  type="text" readonly="true" id="to" class="analytics-date"/>
-    <!--<input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>-->
+    <input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>
   </td>
 </tr>
 <tr>
@@ -77,14 +80,13 @@
   <a class="btn btn-primary dashboard-condition-btn pull-left" onclick="db_view_create(prepare_to_create_db_view())">添加</a>
 </div>
 </div>
-
-
-
+-->
 
 <div class="middle clearfix" style="height:80%; overflow-x: hidden;overflow-y: auto;">
 
   <!--左边的categories-->
-  <div class="left-category pull-left">
+ <!-- 
+<div class="left-category pull-left">
     <ul class="manage-group" id="sty-dashboards">
       <li><h3 class="no-margin">视角</h3></li>
       <%@dashboards.each do |dashboard| %>
@@ -102,15 +104,46 @@
         <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
         <input type="text" id="creat-newEntity" onkeyup="if(event.keyCode==13){dashboard_create({name:$(this).val()})}"/>
       </div>
-     <!-- <div class="absolute creat-entity-block hide" id="edit-block">
+     <div class="absolute creat-entity-block hide" id="edit-block">
         <p>修改视角</p>
         <i class="icon-remove pull-right" onclick="close_editBlock()"></i>
         <input type="text" id="change-leftNavi" onkeyup="change_leftNavi(event)"/>
-      </div>-->
+      </div>
+    </ul>
+  </div>
+-->
+
+  <!--新的Dashboard类别-->
+
+
+  <div class="left-category pull-left">
+    <ul class="manage-left-menu " id="sty-dashboards" type="dashboard">
+      <li>DashBoard</li>
+      <li id="manage-menu-add">
+        <input type="text" />
+        <span><i class="icon-plus"></i> Category</span>
+        <p class="manage-add-tooltip">Enter: confirm <br />Esc: cancel</p>
+      </li>
+
+      <%@dashboards.each do |dashboard| %>
+          <li class="sty-db-node" obj_id=<%=dashboard.id%>  >
+            <i class="icon-trash icon-item"  onclick="dashboard_delete(<%=dashboard.id%>)"></i>
+            <a href="#" onclick="select_dashboard(<%=dashboard.id%>)"><%=dashboard.name%></a>
+          </li>
+      <%end%>
     </ul>
   </div>
 
-  <!--<div class="pull-left dashboard-block">
+  <!--<!doctype html>
+    <html lang="en-US">
+    <head>
+      <meta charset="UTF-8">
+      <title></title>
+    </head>
+    <body>
+
+    </body>
+    </html>--<div class="pull-left dashboard-block">
     <a class="btn btn-wzx btn-primary dashboard-addNew-btn" onclick="showDash_new()"><i class="icon-plus icon-white"></i> 视图</a>
     <ul class="dashBoard-show" id="dashBoard-show">
       <li>
@@ -146,20 +179,34 @@
           <h2>请选择一个仪表盘开始</h2>
         </div>
       </li>
-    </ul>
+    </ul>                     视图
+
   </div>
   -->
-  <a class="btn btn-wzx btn-primary dashboard-addNew-btn" onclick="showDash_new()"><i class="icon-plus icon-white"></i> 视图</a>
-  <div class="gridster dashboard-block pull-left" style="width: 80%">
-    <ul class="dashBoard-show" id="dashBoard-show">
-      <!--<li data-row ="1" data-col="1" data-sizex="1" data-sizey="1" draggable="true" style="background-color: #16a085">
-      </li>-->
-    </ul>
+  <!--<a class="btn btn-wzx btn-primary dashboard-addNew-btn" onclick="showDash_new()"><i class="icon-plus icon-white"></i> 视图</a>-->
+  <div class="manage-right-content" id="manage-right-content">
+
+
+    <div class="manage-btn-group" id="manage-btn-group">
+      <%= link_to raw("<i class=\"icon-plus\">Dashboard</i>"), new_dashboard_item_path ,class: "btn btn-primary" %>
+
+      <p id="manage-edit-target" ></p>
+      <i class="icon-pencil"></i>
+      <input type="text"/>
+      <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
+    </div>
+    <div class="dashboard-block gridster manage-btn-group" style="width: 80%">
+      <ul class="dashBoard-show" id="dashBoard-show">
+      </ul>
+    </div>
   </div>
 </div>
 
 </div>
 
 <script type="text/javascript">
-    $(document).ready(init_component);
+    $(document).ready(function (){
+        init_component();
+        DASHBOARD.init();
+    });
 </script>
