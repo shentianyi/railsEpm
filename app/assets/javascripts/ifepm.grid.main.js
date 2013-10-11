@@ -69,14 +69,18 @@ ifepm.dashboard_widget.add = function(data){
     ifepm.dashboard_widget.setSize(option);
 
     //get position
-    var opt={};
+    var pos={};
     pos = gridster.serialize($("#"+graph_item.id));
+
+    pos[0].col = pos[0].col == NaN ? 1:pos[0].col;
+    pos[0].row = pos[0].col == NaN ? 1:pos[0].row;
+
     ifepm.dashboard.graphs[graph_item.id].col = pos[0].col;
     ifepm.dashboard.graphs[graph_item.id].row = pos[0].row;
     option.col = pos[0].col;
     option.row = pos[0].row;
     //save grid pos and size
-    ifepm.dashboard.save_grid_pos(option);
+    ifepm.dashboard.save_grid_pos(option,{success:function(){console.log("Test")}});
 };
 
 //get widget size and position by type
