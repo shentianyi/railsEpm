@@ -15,4 +15,9 @@ DASHBOARD.init=function(){
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
     });
+    $("body").on("click","#kpi-add-show",function(){
+        $("#dashboard-add-page").css("display","block");
+        $("#dashboard-add-left-menu>.select-div>div").css("width","120px");
+        var dashboard_id=$("#manage-left-menu>.active").attr("number");
+    });
 }

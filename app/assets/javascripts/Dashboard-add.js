@@ -155,7 +155,7 @@ DASHBOARD.add.init=function(){
     };
 
 
-    $("#db-add-chart").on("click",DASHBOARD.add.prepare_form_chart);
+    $("body").on("click","#db-add-chart",DASHBOARD.add.prepare_form_chart);
     $("body").on("click","#add-dashboard",function(){
         if($("#dashboard-name p:first-of-type").text().length>0){
             var post={},i;
@@ -193,6 +193,9 @@ DASHBOARD.add.init=function(){
             },3000);
         }
     });
+    $("body").on("click","#add-back-db",function(){
+        $("#dashboard-add-page").css("display","none");
+    });
 };
 
 
@@ -224,7 +227,7 @@ DASHBOARD.add.prepare_form_chart=function() {
         }
 
 
-       show_loading(top,0,0,0);
+       show_loading(185,0,0,150);
        $.post('/kpi_entries/analyse',{
            kpi : kpi,
            average:method=="0",
