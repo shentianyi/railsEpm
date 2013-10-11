@@ -1,18 +1,19 @@
 .dashboard-add-page{
     position:absolute;
-    top:0px;
+    top:135px;
     left:0px;
     right:0px;
     bottom:0px;
     background-color:white;
     display:none;
+    z-index:30;
 }
 /********************************************************************************************************* 左边添加
 *******************************************************************************************************************/
 .dashboard-add-left-menu{
     background-color:#FBFBFB;
     position:absolute;
-    top:135px;
+    top:0px;
     left:0;
     bottom:0;
     width:150px;
@@ -22,6 +23,9 @@
     overflow-y:auto;
     overflow-x:hidden;
     z-index:20;
+}
+.dashboard-add-left-menu+.manage-right-content{
+    top:0px!important;
 }
 .dashboard-add-left-menu>li:first-of-type{
     text-align:center;
