@@ -94,7 +94,7 @@ ifepm.dashboard_widget.initsize = function(type){
     switch (type)
     {
         case "line":
-            defsize.sizex = 4;
+            defsize.sizex = 3;
             defsize.sizey = 2;
             break;
         case "pie":
@@ -102,11 +102,11 @@ ifepm.dashboard_widget.initsize = function(type){
             defsize.sizey = 3;
             break;
         case "column":
-            defsize.sizex = 4;
+            defsize.sizex = 3;
             defsize.sizey = 2;
             break;
         case "scatter":
-            defsize.sizex = 4;
+            defsize.sizex = 3;
             defsize.sizey = 2;
             break;
         default:
@@ -126,6 +126,9 @@ ifepm.dashboard_widget.setSize = function(option){
     //set the size of li by the specific id
     //set pos and size attributes
     gridster.add_widget(container_selector+" li#"+option.id,option.sizex,option.sizey,option.col,option.row);
+
+    //for test
+    //$(container_selector+" li#"+option.id).css("background-color","#f5bea5");
 };
 
 //
@@ -148,6 +151,9 @@ ifepm.dashboard_widget.drag_stop = function(){
         var id = ifepm.dashboard.graph_sequence[i];
         var opt={};
         pos = gridster.serialize($("#"+id));
+        if((ifepm.dashboard.graphs[id].row == pos[0].row )&&( ifepm.dashboard.graphs[id].col == pos[0].col) ){
+            continue;
+        }
         ifepm.dashboard.graphs[id].row = pos[0].row;
         ifepm.dashboard.graphs[id].col = pos[0].col;
         ifepm.dashboard.graphs[id].sizex = pos[0].size_x;
@@ -161,5 +167,7 @@ ifepm.dashboard_widget.drag_stop = function(){
         options.push(opt);
     }
     //
-    ifepm.dashboard.save_grid_pos(options,{success:function(){console.log("保存grid成功！")}});
+    if(options.length > 0){
+        ifepm.dashboard.save_grid_pos(options,{success:function(){console.log("保存grid成功！")}});
+    }
 };
