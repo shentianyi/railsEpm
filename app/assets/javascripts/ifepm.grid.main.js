@@ -79,8 +79,10 @@ ifepm.dashboard_widget.add = function(data){
     ifepm.dashboard.graphs[graph_item.id].row = pos[0].row;
     option.col = pos[0].col;
     option.row = pos[0].row;
+    var options = [];
+    options.push(option);
     //save grid pos and size
-    ifepm.dashboard.save_grid_pos(option,{success:function(){console.log("Test")}});
+    ifepm.dashboard.save_grid_pos(options,{success:function(){console.log("Test")}});
 };
 
 //get widget size and position by type

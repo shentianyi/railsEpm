@@ -224,12 +224,12 @@ function db_view_create_callback(data){
     }*/
     if(data){
         $("#dashboard-add-page").css("display","none");
-        slide_box("添加成功",true);
-        close_dash();
+        MessageBox("Delete dashboard item success","top","success");
+        //close_dash();
         ifepm.dashboard_widget.add(data);
     }
     else{
-        slide_box("新建时发生错误，请选择一个视角后再新建",false)
+        MessageBox("Delete dashboard item failed","top","warning");
     }
 
 }
@@ -262,7 +262,7 @@ function dashboard_delete(id){
 }
 
 function dashboard_delete_callback(data){
-    slide_box("仪表盘已经删除",true);
+    MessageBox("Delete dashboard success","top","success");
       var item_obj =menu_selector.get_first_in_container(
           config.db_container_selector,
           config.db_single_item_filter(data.id)) ;
@@ -282,14 +282,14 @@ function dashboard_create_callback(data){
     //insert a new node in the dashboard column
     //select it
     if(data.result){
-        slide_box("添加成功",true)
+        MessageBox("Add dashboard success","top","success");
         var new_node = dashboard_list_item_template.replace(/!id!/g,data.object["id"]).replace(/!name!/,data.object["name"])
         $(config.db_container_selector).append(new_node);
         close_createEntity();
         select_dashboard(data.id);
     }
     else {
-        slide_box("添加仪表盘时出错了",false)
+        MessageBox("Delete dashboard failed","top","warning");
     }
 }
 
