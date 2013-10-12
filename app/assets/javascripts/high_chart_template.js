@@ -217,14 +217,14 @@ function add_series(option) {
 function set_data(option) {
     this.date = option.begin_time ? standardParse(option.begin_time).date : null,
     this.template = option.begin_time ? standardParse(option.begin_time).template : null,
-    this.data = option.data;
-    this.chart_container = option.target;
-    this.chart = $("#" + option.target).highcharts();
-    this.series_id = option.id;
-    this.type = option.type;
-    this.interval = option.interval;
-    this.id=option.id;
-    this.count=option.count;
+    this.data = option.data ? option.data:null;
+    this.chart_container = option.target ? option.target:null;
+    this.chart = option.target ? $("#" + option.target).highcharts() : null;
+    this.series_id = option.id ? option.id:null;
+    this.type = option.type ? option.type:null;
+    this.interval = option.interval ? option.interval:null;
+    this.id=option.id ? option.id:null;
+    this.count=option.count ? option.count:null;
 }
 
 function deal_data() {
@@ -471,6 +471,16 @@ function proper_type_for_chart(){
         this.chart.redraw();
     }
 }
+//为dashboard专门做的PIE
+function pie_for_dashboard(container){
+    var option={
+        target:container,
+        type:'type',
+        count:$("#"+container).highcharts().series.length
+    }
+    proper_type_for_chart(option)
+}
+
 
 
 
