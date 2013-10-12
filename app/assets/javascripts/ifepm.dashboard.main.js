@@ -119,6 +119,147 @@ ifepm.dashboard.form_graph = function(datas,id){
     }
 }
 
+
+var intervals = [];
+/*
+* @function setTimer
+* set a timer for one graph to request kpi entries
+* @params graph
+* */
+ifepm.dashboard.setTimer = function(graph){
+    var interval= null;
+    var intv = ifepm.dashboard.getInteral(graph.sequence);
+    interval = setInterval(reload(graph.id),intv);
+    intervals.push(interval);
+}
+function reload(id){
+    return function(){
+        if(!ifepm.dashboard.graphs[id]){
+            return;
+        }
+        var current_graph = ifepm.dashboard.graphs[id];
+        $.ajax(
+            {
+                before_send: function(){},
+                url:ifepm.config.get_item_data_url.url,
+                data:{"id":id},
+                dataType:ifepm.config.get_item_data_url.dataType,
+                crossDomain:ifepm.config.get_item_data_url.crossDomain,
+                success: function(data){
+                    if(data){
+                        ifepm.dashboard.update_graph(data,id);
+                    }
+                }
+            }
+        );
+    };
+}
+
+/*
+* @function clearAllTimer
+* clear all the timer
+* */
+ifepm.dashboard.clear_all_timer = function(){
+    for(var i = 0;i<intervals.length;i++){
+        clearTimeout(intervals[i]);
+    }
+    intervals = [];
+}
+
+/*
+* @function getInterval
+* get the interval for timer
+* @params interval:interval of chart
+* */
+ifepm.dashboard.getInteral = function(interval){
+    var intvl = null;
+
+    var sec = 1000;
+    var min = 1000*60;
+    var hour = 1000*60*60;
+
+    switch (interval){
+        case "90":
+            intvl = sec * 60;
+            break;
+        case "100":
+            intvl = min * 60;
+            break;
+        case "200":
+            intvl = hour * 24;
+            break;
+        case "300":
+            intvl = hour * 24;
+            break;
+        case "400":
+            intvl = hour * 24;
+            break;
+        case "500":
+            intvl = hour * 24;
+            break;
+        default :
+            intvl = hour;
+            break;
+    }
+    return intvl;
+}
+
+/*
+* @function reloadGraph
+* @param id id of the dashboard item
+* */
+ifepm.dashboard.reload_graph = function(id){
+    if(!ifepm.dashboard.graphs[id]){
+        return;
+    }
+    var current_graph = ifepm.dashboard.graphs[id];
+    $.ajax(
+        {
+            before_send: function(){},
+            url:ifepm.config.get_item_data_url.url,
+            data:{"id":id},
+            dataType:ifepm.config.get_item_data_url.dataType,
+            crossDomain:ifepm.config.get_item_data_url.crossDomain,
+            success: function(data){
+                if(data){
+                    ifepm.dashboard.update_graph(data,id);
+                }
+            }
+        }
+    );
+}
+
+/*
+* @function update_graph
+* reload data and update series of high_charts
+* @param data
+* @param id
+* */
+ ifepm.dashboard.update_graph = function(datas,id){
+    var container = ifepm.dashboard.make_item_container_id(id);
+    var type = ifepm.dashboard.graphs[id].chart_type;
+    var chart = $('#'+container).highcharts();
+    if(chart){
+        for(var i = 0;i<datas.length;i++){
+            var series = chart.get(datas[i].id);
+            if(!series){
+                continue;
+            }
+            for(var j=0;j<datas[i].current.length;j++){
+                var point = series.data[j];
+                //point.update(Math.random()*(200+1));
+                series.data[j].update(datas[i].current[j],false);
+            }
+        }
+        if(type=="pie"){
+            pie_for_dashboard(container);
+        }
+        else{
+            chart.redraw();
+        }
+    }
+}
+
 ifepm.dashboard.load_graph=function(id){
     if (!ifepm.dashboard.graphs[id])
     {
@@ -299,7 +440,7 @@ ifepm.dashboard.init=function(id){
             url:ifepm.config.get_dashboard_items_url.url,
             data:{id:id},
             success:function(data){
-
+                //ifepm.dashboard.clear_all_timer();
                 for(var i in data){
                     var graph_item = new Graph();
                     graph_item.id = data[i].id
@@ -320,6 +461,7 @@ ifepm.dashboard.init=function(id){
                     graph_item.sizex = data[i].sizex;
                     graph_item.sizey = data[i].sizey;
                     ifepm.dashboard.graphs[data[i].id]=graph_item;
+                    //ifepm.dashboard.setTimer(ifepm.dashboard.graphs[data[i].id]);
                     ifepm.dashboard.graph_sequence.push(data[i].id)
 
                 }
@@ -396,6 +538,7 @@ ifepm.dashboard.save_grid_pos=function(sequence,options){
         complete:options.complete
     })
 }
+
 
 
 

@@ -397,6 +397,7 @@ function proper_type_for_chart(){
         }
         var data=[],dataItem,dataItemValue,dataItemTarget,chart_name;
         if(this.count==1){
+            this.chart.series[0].show();
             for(var i=0;i<this.chart.series[0].processedYData.length;i++){
                 dataItem={};
                 dataItem.name=this.chart.series[0].data[i].name;
@@ -475,8 +476,8 @@ function proper_type_for_chart(){
 function pie_for_dashboard(container){
     var option={
         target:container,
-        type:'type',
-        count:$("#"+container).highcharts().series.length
+        type:'pie',
+        count:$("#"+container).highcharts().series.length-1
     }
     proper_type_for_chart(option)
 }
