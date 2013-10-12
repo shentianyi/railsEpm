@@ -12,7 +12,7 @@ var ifepm = ifepm || {};
 ifepm.template = {};
 
 //do not change the structure and the !*! part. Insert css class into element to change the theme
-ifepm.template.view = '<li !attr!=!id!>' +
+ifepm.template.view = '<li !attr!=!id!><div>' +
     '<div class="dashboard-eachDetail relative">' +
     //'<p class="text-center">!name!</p>' +
     '<div class="dashboard-moreDetail">' +
@@ -49,7 +49,7 @@ ifepm.template.view = '<li !attr!=!id!>' +
     '</div>' +
     '<div id=!item_container_id! class="db-placeHolder">' +
     '</div>' +
-    '</li>' +
+    '</div></li>' +
     '<script type="text/javascript">ifepm.dashboard.load_graph("!id!")</script>'
 
 //placeholder when change the position of a dashboard view

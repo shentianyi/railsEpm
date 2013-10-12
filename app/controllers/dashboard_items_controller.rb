@@ -59,7 +59,6 @@ class DashboardItemsController < ApplicationController
     @sequence = params[:sequence]
     @sequence.each {|data|
       @item = DashboardItem.find(data[1][:id])
-      puts data[1]
       @item.update_attributes(data[1])
 
       @item.save

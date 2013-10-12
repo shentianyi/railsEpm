@@ -31,9 +31,7 @@ class DashboardCondition < ActiveRecord::Base
     if conditions
       conditions.each { |condition|
         time_span = self.time_string_to_time_span condition.time_string
-        puts "============="
-        puts condition.as_json
-        puts "============="
+
 
         data = KpiEntryAnalyseHelper::get_kpi_entry_analysis_data(
             condition.kpi_id,
@@ -42,9 +40,6 @@ class DashboardCondition < ActiveRecord::Base
             time_span[:end].iso8601.to_s,
             condition.calculate_type=='AVERAGE')
         if data
-          puts "=========================="
-          puts data
-          puts "=========================="
           data[:result]=true
           data[:startTime] = time_span[:start]
           data[:endTime] = time_span[:end]
