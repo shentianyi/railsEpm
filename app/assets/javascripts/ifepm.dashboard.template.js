@@ -16,10 +16,11 @@ ifepm.template.view = '<li !attr!=!id!><div>' +
     '<div class="dashboard-eachDetail relative">' +
     //'<p class="text-center">!name!</p>' +
     '<div class="dashboard-moreDetail">' +
-    '<p class="dbItem-name">!title!</p>' +
+    '<p>!title!</p>' +
+    '<i class="icon-remove"></i>' +
     '</div>' +
     //'<i class="icon-list db-infoMark"></i>' +
-    '<i class="icon-remove db-itemRemove" onclick=custom_handler></i>' +
+
     '<table class="table table-bordered table-striped db-itemInfo">' +
     //'<tr>' +
     //'<td>视图名称</td>' +

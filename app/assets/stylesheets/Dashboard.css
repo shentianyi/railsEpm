@@ -10,3 +10,31 @@
 .manage-btn-group>a{
     padding:8px 15px;
 }
+/********************************************************************************************************* dashboard item
+*******************************************************************************************************************/
+.dashBoard-show{
+    list-style-type: none;
+}
+.dashboard-moreDetail{
+    padding:2px 3px;
+    position:relative;
+}
+.dashboard-moreDetail>p{
+    margin:0px;
+    width:250px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    font-size:16px;
+    color:rgba(0,0,0,0.6);
+}
+.dashboard-moreDetail>i{
+    display:absolute;
+    right:2px;
+    pointer-events:auto;
+    color:rgba(0,0,0,0.6);
+    transition:color 0.25s ease-out;
+}
+.dashboard-moreDetail>i:hover{
+    color:rgba(0,0,0,0.9);
+}
