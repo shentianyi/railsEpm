@@ -215,15 +215,15 @@ function add_series(option) {
 
 
 function set_data(option) {
-    this.date = option.begin_time ? standardParse(option.begin_time).date : null,
-    this.template = option.begin_time ? standardParse(option.begin_time).template : null,
+    this.date = option.begin_time ? standardParse(option.begin_time).date : null;
+    this.template = option.begin_time ? standardParse(option.begin_time).template : null;
     this.data = option.data ? option.data:null;
     this.chart_container = option.target ? option.target:null;
     this.chart = option.target ? $("#" + option.target).highcharts() : null;
-    this.series_id = option.id ? option.id:null;
+    this.series_id = option.id!==null ? option.id:null;
     this.type = option.type ? option.type:null;
     this.interval = option.interval ? option.interval:null;
-    this.id=option.id ? option.id:null;
+    this.id=option.id!==null ? option.id : null;
     this.count=option.count ? option.count:null;
 }
 
