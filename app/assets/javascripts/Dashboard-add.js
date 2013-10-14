@@ -134,7 +134,7 @@ DASHBOARD.add.init=function(){
             }
             console.log(post)
             DASHBOARD.init_high_chart();
-            prepare_to_create_db_view(post)
+            prepare_to_create_db_view(post);
             /*
             $.post(
                 "",
