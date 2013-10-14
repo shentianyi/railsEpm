@@ -16,6 +16,11 @@
     top:62px;
     left:21px;
 }
+
+.db-add-show{
+    width:120px !important;
+}
+
 .dashBoard-show{
     list-style-type: none;
 }
