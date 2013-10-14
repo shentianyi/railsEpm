@@ -81,6 +81,7 @@ function select_dashboard(id){
         config.db_item_filter,
         config.db_single_item_filter(id));
 
+    MANAGE.left.manage_left_edit_init();
     ifepm.dashboard.init(id);
 }
 
