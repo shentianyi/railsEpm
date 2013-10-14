@@ -78,7 +78,9 @@ DASHBOARD.init=function(){
     });
 }
 DASHBOARD.init_high_chart=function(){
-    high_chart.plotOptions.series.events.legendItemClick=function(event){};
+    high_chart.plotOptions.series.events.legendItemClick=function(event){
+        return true;
+    };
     high_chart.chart.zoomType=null;
 }
 

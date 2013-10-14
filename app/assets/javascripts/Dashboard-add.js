@@ -156,6 +156,7 @@ DASHBOARD.add.init=function(){
             },3000);
         }
     });
+
     $("body").on("click","#add-back-db",function(){
         $("#dashboard-add-page").css("display","none");
         DASHBOARD.init_high_chart();
