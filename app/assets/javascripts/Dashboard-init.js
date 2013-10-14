@@ -74,7 +74,8 @@ DASHBOARD.init=function(){
     });
     $("body").on("click",".dashboard-moreDetail>i",function(){
         var id=$(this).attr("effect_on");
-        $("#dashBoard-show").find("#"+id).remove();
+        db_view_delete(id);
+        //$("#dashBoard-show").find("#"+id).remove();
     });
 }
 DASHBOARD.init_high_chart=function(){

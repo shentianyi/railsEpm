@@ -88,10 +88,11 @@ var isformchart = false;
 ifepm.dashboard.form_graph = function(datas,id){
     var container = ifepm.dashboard.make_item_container_id(id);
     var type = ifepm.dashboard.graphs[id].chart_type;
+    var chart = null;
 
-    for(var i = 0;i<datas.length;i++){
-        data = [];
-        for(var j = 0;j<datas[i].current.length;j++){
+    for(var i = 0;i<datas.length;++i){
+        var data = [];
+        for(var j = 0;j<datas[i].current.length;++j){
 
             data[j] = {};
             data[j].y = datas[i].current[j];
@@ -111,11 +112,39 @@ ifepm.dashboard.form_graph = function(datas,id){
         if(i==0){
             render_to(option);
             create_environment_for_data(option);
-            new Highcharts.Chart(high_chart);
+            chart = new Highcharts.Chart(high_chart);
         }
+
 
         add_series(option);
         proper_type_for_chart(option);
+    }
+
+    if(chart){
+        //targen line
+        if(datas.length == 1 && type !="pie"){
+            var data = [];
+            for(var j = 0;j<datas[0].target.length;++j){
+                data[j] = {};
+                data[j].y = datas[0].target[j];
+            }
+
+            option = {
+                kpi:"target",
+                id:"target",
+                target:container,
+                begin_time:datas[0].startTime,
+                type:type,
+                interval:datas[0].interval,
+                data:data,
+                count:datas[0].count,
+            }
+
+            add_series(option);
+            proper_type_for_chart(option);
+        }
+        var defsize = ifepm.dashboard_widget.initsize(type);
+        chart.setSize(ifepm.dashboard_widget.width*defsize.sizex,ifepm.dashboard_widget.height*defsize.sizey -40);
     }
 }
 
@@ -427,7 +456,7 @@ ifepm.dashboard.create_dashboard=function(){
         $(container_selector).append((new Graph()).placeholder)
     }
 
-    ifepm.dashboard_widget.init();
+    //ifepm.dashboard_widget.init();
 };
 
 ifepm.dashboard.init=function(id){
@@ -472,7 +501,20 @@ ifepm.dashboard.init=function(id){
     );
 };
 
+ifepm.dashboard.on_view_added = function(graph){
+    ifepm.dashboard.graphs[graph.id] = graph;
+    ifepm.dashboard.graph_sequence.push(graph.id);
+}
 
+ifepm.dashboard.on_view_deleted = function(id){
+    delete ifepm.dashboard.graphs[id];
+
+    var value = Number(id);
+    var index = ifepm.dashboard.graph_sequence.indexOf(value);
+    if(index >= 0){
+        ifepm.dashboard.graph_sequence.splice(index,1);
+    }
+}
 
 ifepm.dashboard.delete=function(id,options){
     $.ajax({

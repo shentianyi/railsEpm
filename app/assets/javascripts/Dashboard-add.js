@@ -132,7 +132,7 @@ DASHBOARD.add.init=function(){
                 post.series[i].end_time=db_chartSeries.series[i].end_time ;
                 post.series[i].count=i+1;
             }
-            console.log(post)
+            //console.log(post)
             DASHBOARD.init_high_chart();
             prepare_to_create_db_view(post);
             /*
