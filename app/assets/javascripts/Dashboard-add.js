@@ -111,51 +111,7 @@ DASHBOARD.add.init=function(){
         }
     });
 
-    high_chart.plotOptions.series.events.legendItemClick=function(){
-        var index=this.index;
-        db_chartSeries.series.splice(index,1);
-        this.remove(false);
-        db_chartSeries.minusCount();
-        $('#chart-container').highcharts().destroy();
-        if(db_chartSeries.count==0){
-            $("#db-chart-body").css("display","none");
-            $("#add-dashboard").css("display","none");
-            $("#db-chart-type-alternate").css("display","none");
-//            $("#dashboard-name").css("display","none");
-//            $("#dashboard-name-edit").css("display","none");
-            $("#db-chart-type-alternate li").removeClass("active");
-            $("#db-chart-interval-alternate li").removeClass("active");
-            return;
-        }
-        else{
-            var item, i,option, p,c;
-            for(i=0;i<db_chartSeries.count;i++){
-                p=db_chartSeries.series[i];
-                c={};
-                item=deepCopy(p,c);
-                option = {
-                    kpi: item.kpi,
-                    id: item.id,
-                    target: "chart-container",
-                    begin_time: item.begin_time,
-                    type: $("#db-chart-type-alternate li.active").attr("type"),
-                    interval: $("#db-chart-interval-alternate li.active").attr("interval"),
-                    data:item[$("#db-chart-interval-alternate li.active").attr("interval")],
-                    count: i
-                }
 
-                if(i==0){
-                   render_to(option);
-                   create_environment_for_data(option);
-                   new Highcharts.Chart(high_chart);
-                }
-
-                add_series(option);
-                proper_type_for_chart(option);
-            }
-
-        }
-    };
 
 
     $("body").on("click","#db-add-chart",DASHBOARD.add.prepare_form_chart);
@@ -202,6 +158,7 @@ DASHBOARD.add.init=function(){
     });
     $("body").on("click","#add-back-db",function(){
         $("#dashboard-add-page").css("display","none");
+        DASHBOARD.init_high_chart();
     });
 };
 
