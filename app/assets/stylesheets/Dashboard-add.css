@@ -41,6 +41,10 @@
     width:120px;
     margin-left:15px;
     margin-bottom:10px;
+    height:30px;
+}
+.dashboard-add-left-menu>.select-div>div[title="analy-view-select"]{
+    margin-top:0px;
 }
 .dashboard-add-left-menu>div .chosen-container-single .chosen-single{
     background:white !important;
@@ -147,7 +151,7 @@
 .dashboard-name>i{
     float:left;
     pointer-events:auto;
-    margin-top:2px;
+    margin-top:6px;
     transition:color 0.25s ease-out;
     color:rgba(0,0,0,0.5);
     position:absolute;

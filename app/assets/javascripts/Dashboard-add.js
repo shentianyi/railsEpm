@@ -145,6 +145,7 @@ DASHBOARD.add.init=function(){
                 }
             )
             */
+            DASHBOARD.init_high_chart();
         }
         else{
             MessageBox("please give the dashboard a name (edit in up left)" , "top", "warning") ;
@@ -158,8 +159,8 @@ DASHBOARD.add.init=function(){
     });
 
     $("body").on("click","#add-back-db",function(){
-        $("#dashboard-add-page").css("display","none");
         DASHBOARD.init_high_chart();
+        $("#dashboard-add-page").css("display","none");
     });
 };
 

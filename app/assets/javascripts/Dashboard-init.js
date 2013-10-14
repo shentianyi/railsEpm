@@ -72,15 +72,15 @@ DASHBOARD.init=function(){
         };
         high_chart.chart.zoomType="xy";
     });
-    $("body").on("click","dashboard-moreDetail>i",function(){
+    $("body").on("click",".dashboard-moreDetail>i",function(){
         var id=$(this).attr("effect_on");
         $("#dashBoard-show").find("#"+id).remove();
     });
 }
 DASHBOARD.init_high_chart=function(){
-    high_chart.plotOptions.series.events.legendItemClick=function(event){
+    high_chart.plotOptions.series.events.legendItemClick=function(){
         return true;
     };
-    high_chart.chart.zoomType=null;
+    high_chart.chart.zoomType="";
 }
 
