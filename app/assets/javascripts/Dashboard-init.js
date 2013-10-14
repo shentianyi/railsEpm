@@ -16,7 +16,7 @@ DASHBOARD.init=function(){
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
     });
-    $("body").on("click","#kpi-add-show",function(){
+    $("body").on("click","#db-add-show",function(){
         var dashboard_id=$("#manage-left-menu>.active").attr("number");
         if(dashboard_id){
             $("#dashboard-add-page").css("display","block");
@@ -79,7 +79,7 @@ DASHBOARD.init=function(){
 }
 DASHBOARD.init_high_chart=function(){
     high_chart.plotOptions.series.events.legendItemClick=function(){
-        return true;
+
     };
     high_chart.chart.zoomType="";
 }

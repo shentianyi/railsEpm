@@ -133,6 +133,7 @@ DASHBOARD.add.init=function(){
                 post.series[i].count=i+1;
             }
             console.log(post)
+            DASHBOARD.init_high_chart();
             prepare_to_create_db_view(post)
             /*
             $.post(
@@ -145,7 +146,7 @@ DASHBOARD.add.init=function(){
                 }
             )
             */
-            DASHBOARD.init_high_chart();
+
         }
         else{
             MessageBox("please give the dashboard a name (edit in up left)" , "top", "warning") ;
@@ -193,7 +194,7 @@ DASHBOARD.add.prepare_form_chart=function() {
         }
 
 
-       show_loading(185,0,0,150);
+       show_loading(232,0,0,150);
        $.post('/kpi_entries/analyse',{
            kpi : kpi,
            average:method=="0",
@@ -424,7 +425,7 @@ DASHBOARD.add.change_interval=function(option) {
         else {
 
 
-            show_loading(185,0,0,150);;
+            show_loading(232,0,0,150);;
             $.ajax({url:'/kpi_entries/analyse',
                 data:{
                     kpi : series_object.kpi_id,
