@@ -287,6 +287,16 @@ DASHBOARD.add.prepare_form_chart=function() {
                MessageBox("sorry , something wrong" , "top", "warning") ;
            }
        });
+        $("#chart-container").resize(function(){
+            if ($("#db-chart-type-alternate li.active").attr("type") == "pie") {
+                for (var k = 0; k < $("#chart-container").highcharts().series.length; k++) {
+                    $("#chart-container").highcharts().series[k].update({
+                        showInLegend: false
+                    })
+                }
+            }
+        });
+
 
 
 

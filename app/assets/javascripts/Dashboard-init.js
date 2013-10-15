@@ -80,6 +80,7 @@ DASHBOARD.init=function(){
 DASHBOARD.init_high_chart=function(){
     high_chart.plotOptions.series.events.legendItemClick=function(){
     };
+    high_chart.plotOptions.series.point.events={};
     high_chart.plotOptions.pie.dataLabels={
         enabled: true,
             color: 'rgba(0,0,0,0.25)',
