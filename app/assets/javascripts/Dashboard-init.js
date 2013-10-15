@@ -70,6 +70,19 @@ DASHBOARD.init=function(){
             }
         };
         high_chart.chart.zoomType="xy";
+        high_chart.plotOptions.pie.dataLabels={
+            enabled: true,
+            color: 'rgba(0,0,0,0.25)',
+            connectorColor: 'rgba(0,0,0,0.15)',
+            connectorWidth: 1,
+            format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
+        };
+        high_chart.tooltip={
+            enabled: false
+        };
+
+
+
     });
     $("body").on("click",".dashboard-moreDetail>i",function(){
         var id=$(this).attr("effect_on");
@@ -81,16 +94,6 @@ DASHBOARD.init_high_chart=function(){
     high_chart.plotOptions.series.events.legendItemClick=function(){
     };
     high_chart.plotOptions.series.point.events={};
-    high_chart.plotOptions.pie.dataLabels={
-        enabled: true,
-            color: 'rgba(0,0,0,0.25)',
-            connectorColor: 'rgba(0,0,0,0.15)',
-            connectorWidth: 1,
-            format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
-    };
-    high_chart.tooltip={
-        enabled: false
-    };
     high_chart.chart.zoomType="";
 }
 

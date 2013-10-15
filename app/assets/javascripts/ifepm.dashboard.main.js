@@ -110,6 +110,25 @@ ifepm.dashboard.form_graph = function(datas,id){
             count:datas[i].count
         };
         if(i==0){
+            if(option.type=="pie"){
+                high_chart.tooltip={
+                    formatter:function(){
+                        var key = '<b>'+ this.key +'</b><br />';
+                        if(datas.length==1){
+                            key+="Value: "+this.y+this.series.data[0].unit+
+                                "<br />Percentage: "+(this.percentage).toFixed(1);
+                            return key;
+                        }
+                        else{
+                            key+=(this.percentage).toFixed(1);
+                            return key;
+                        }
+                    }
+                };
+                high_chart.plotOptions.pie.dataLabels={
+                    enabled: false
+                }
+            }
             render_to(option);
             create_environment_for_data(option);
             chart = new Highcharts.Chart(high_chart);

@@ -134,27 +134,7 @@ DASHBOARD.add.init=function(){
             }
             //console.log(post)
             DASHBOARD.init_high_chart();
-            if(post.type=="pie"){
-                high_chart.tooltip={
-                    formatter:function(){
-                        var key = '<b>'+ this.key +'</b><br />';
-                        if(post.series.length==1){
-                            key+="Value: "+this.y+this.series.data[0].unit+
-                                "<br />Percentage: "+(this.percentage).toFixed(1);
-                            return key;
-                        }
-                        else{
-                            key+=(this.percentage).toFixed(1);
-                            return key;
-                        }
-                    }
-                };
-                high_chart.plotOptions.pie.dataLabels={
-                    enabled: false
-                }
-            }
             prepare_to_create_db_view(post);
-            DASHBOARD.init_high_chart();
             /*
             $.post(
                 "",
