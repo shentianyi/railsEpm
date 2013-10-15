@@ -23,6 +23,7 @@
 
 .dashBoard-show{
     list-style-type: none;
+    padding-bottom:50px;
 }
 .dashBoard-show>li{
     border:1px solid #ddd;
