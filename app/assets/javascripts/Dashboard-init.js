@@ -77,6 +77,7 @@ DASHBOARD.init=function(){
             connectorWidth: 1,
             format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
         };
+        high_chart.plotOptions.pie.size="70%";
         high_chart.tooltip={
             enabled: false
         };
