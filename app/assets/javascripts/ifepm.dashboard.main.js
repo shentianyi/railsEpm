@@ -145,6 +145,11 @@ ifepm.dashboard.form_graph = function(datas,id){
         }
         var defsize = ifepm.dashboard_widget.initsize(type);
         chart.setSize(ifepm.dashboard_widget.width*defsize.sizex,ifepm.dashboard_widget.height*defsize.sizey -40);
+        if(type == "pie"){
+            for(var i = 0;i<chart.series.length;++i){
+                chart.series[i].update({showInLegend:false});
+            }
+        }
     }
 }
 

@@ -19,14 +19,14 @@ ifepm.dashboard_widget = ifepm.dashboard_widget || {};
 var gridster;
 ifepm.dashboard_widget.height = 0,ifepm.dashboard_widget.width = 0;
 //minimum size of grid
-var min_width = (1024 - 150) / 3 - 20;
+var min_width = (1024 - 150) / 4 - 20;
 var min_height =  min_width;
 //init
 ifepm.dashboard_widget.init = function(){
     var div_width = $("div .dashboard-block").width();
     var div_height = $("div .manage-right-content").height();
-    ifepm.dashboard_widget.width = (div_width - 50)/3 - 20;
-    ifepm.dashboard_widget.height = (div_height - 40)/2 - 20;
+    ifepm.dashboard_widget.width = (div_width - 50)/4 - 20;
+    ifepm.dashboard_widget.height = (div_height - 40)/2 - 30;
 
     ifepm.dashboard_widget.width = ifepm.dashboard_widget.width < min_width ? min_width:ifepm.dashboard_widget.width;
     ifepm.dashboard_widget.height = ifepm.dashboard_widget.height < min_height ? min_height:ifepm.dashboard_widget.height;
