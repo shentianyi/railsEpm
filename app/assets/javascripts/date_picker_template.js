@@ -283,7 +283,7 @@ DATE_PICKER["500"].prototype.constructor=DATE_PICKER["500"];
 function date_shortcut(name,target,shortcut,index){
     $(".date-pick-dynamic").css("display","none");
     var lastIndex=parseInt($("#date-pick-dynamic-div :selected").attr("index")),
-        gap_count=$("#date-pick-dynamic-div>input").val(),
+        gap_count=$("#date-pick-dynamic-div:visible>input").val(),
         lastIndexName=$("#date-pick-dynamic-div :selected").attr("value");
     alert(gap_count)
     if(gap_count.length==0){
