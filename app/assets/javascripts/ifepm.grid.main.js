@@ -17,15 +17,33 @@ var ifepm = ifepm || {};
 ifepm.dashboard_widget = ifepm.dashboard_widget || {};
 
 var gridster;
-
+ifepm.dashboard_widget.height = 0,ifepm.dashboard_widget.width = 0;
+//minimum size of grid
+var min_width = (1024 - 150) / 4 - 20;
+var min_height =  min_width;
 //init
 ifepm.dashboard_widget.init = function(){
+    var div_width = $("div .dashboard-block").width();
+    var div_height = $("div .manage-right-content").height();
+    ifepm.dashboard_widget.width = (div_width - 50)/4 - 20;
+    ifepm.dashboard_widget.height = (div_height - 40)/2 - 30;
+
+    ifepm.dashboard_widget.width = ifepm.dashboard_widget.width < min_width ? min_width:ifepm.dashboard_widget.width;
+    ifepm.dashboard_widget.height = ifepm.dashboard_widget.height < min_height ? min_height:ifepm.dashboard_widget.height;
+
     gridster = $(".gridster ul").gridster({
         widget_margins: [10, 10],
-        widget_base_dimensions: [160, 160],
+        widget_base_dimensions: [ifepm.dashboard_widget.width, ifepm.dashboard_widget.height],
         draggable:{
             stop: on_dragstop,
         },
+        /*
+        collision:{
+            on_overlap:function(){console.log("on_overlap")},
+            on_overlap_start:function(){console.log("on_overlap_start")},
+            on_overlap_stop:function(){console.log("on_overlap_stop")},
+        },
+        */
     }).data("gridster");
 };
 
@@ -81,7 +99,7 @@ ifepm.dashboard_widget.add = function(data){
     var options = [];
     options.push(option);
     //save grid pos and size
-    ifepm.dashboard.save_grid_pos(options,{success:function(){console.log("Test")}});
+    ifepm.dashboard.save_grid_pos(options,{success:function(){}});
 };
 
 //get widget size and position by type
@@ -93,20 +111,20 @@ ifepm.dashboard_widget.initsize = function(type){
     switch (type)
     {
         case "line":
-            defsize.sizex = 3;
-            defsize.sizey = 2;
+            defsize.sizex = 2;
+            defsize.sizey = 1;
             break;
         case "pie":
-            defsize.sizex = 3;
-            defsize.sizey = 3;
+            defsize.sizex = 1;
+            defsize.sizey = 1;
             break;
         case "column":
-            defsize.sizex = 3;
-            defsize.sizey = 2;
+            defsize.sizex = 2;
+            defsize.sizey = 1;
             break;
         case "scatter":
-            defsize.sizex = 3;
-            defsize.sizey = 2;
+            defsize.sizex = 2;
+            defsize.sizey = 1;
             break;
         default:
             break;
@@ -148,6 +166,7 @@ ifepm.dashboard_widget.drag_stop = function(){
     var options = [];
     for(var i in ifepm.dashboard.graph_sequence){
         var id = ifepm.dashboard.graph_sequence[i];
+        if(id == null){continue;}
         var opt={};
         pos = gridster.serialize($("#"+id));
         if((ifepm.dashboard.graphs[id].row == pos[0].row )&&( ifepm.dashboard.graphs[id].col == pos[0].col) ){
@@ -167,6 +186,16 @@ ifepm.dashboard_widget.drag_stop = function(){
     }
     //
     if(options.length > 0){
-        ifepm.dashboard.save_grid_pos(options,{success:function(){console.log("保存grid成功！")}});
+        ifepm.dashboard.save_grid_pos(options,{success:function(){}});
     }
 };
+
+//
+ifepm.dashboard_widget.remove_widget = function(filter){
+    //gridster.remove_widget(filter);
+    if(gridster){
+        gridster.remove_widget($(filter));
+        $(filter).remove();
+        ifepm.dashboard_widget.drag_stop();
+    }
+}

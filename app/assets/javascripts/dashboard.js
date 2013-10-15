@@ -81,6 +81,7 @@ function select_dashboard(id){
         config.db_item_filter,
         config.db_single_item_filter(id));
 
+    MANAGE.left.manage_left_edit_init();
     ifepm.dashboard.init(id);
 }
 
@@ -224,7 +225,7 @@ function db_view_create_callback(data){
     }*/
     if(data){
         $("#dashboard-add-page").css("display","none");
-        MessageBox("Delete dashboard item success","top","success");
+        MessageBox("Create dashboard item success","top","success");
         //close_dash();
         ifepm.dashboard_widget.add(data);
     }
@@ -241,12 +242,17 @@ function db_view_delete(id){
 }
 
 function db_view_delete_callback(data){
+    MessageBox("Delete dashboard item success","top","success");
+    ifepm.dashboard.on_view_deleted(data.id);
+    ifepm.dashboard_widget.remove_widget(ifepm.config.container_selector + " "+config.view_id_filter(data.id));
+    /*
     var to_delete_view = menu_selector.get_first_in_container(
         ifepm.config.container_selector,
         config.view_id_filter(data.id));
     if(to_delete_view){
         to_delete_view.remove();
     }
+    */
 }
 
 function db_view_delete_error_callback(jqXhr){
@@ -337,6 +343,13 @@ function init_grid(){
 
 function init_component(){
     //init_time_picker();
+    var lenght = $("ul.manage-left-menu").children().length;
+    if(lenght > 2){
+        //$("ul.manage-left-menu").children("[number]:first").addClass("active");
+        var id = $("ul.manage-left-menu").children("[number]:first").attr("number");
+        select_dashboard(id);
+    }
+
     init_date_picker();
     init_grid();
 }

@@ -63,6 +63,18 @@ IFEpm::Application.routes.draw do
     end
   end
 
+  resources :dashboards do
+    collection do
+      put :update
+    end
+  end
+
+  resources :dashboard_items do
+    collection do
+      put :update
+    end
+  end
+
   resources :entity_group_items
 
   namespace :api,defaults:{format:'json'} do
@@ -90,10 +102,6 @@ IFEpm::Application.routes.draw do
     resources :kpi_categories
 
   end
-
-  resources :dashboards
-
-  resources :dashboard_items
 
   mount Resque::Server.new, :at=>"/admin/resque"
 

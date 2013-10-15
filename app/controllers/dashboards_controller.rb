@@ -35,13 +35,13 @@ class DashboardsController < ApplicationController
 
   def update
     msg = new_message
-    @dashboard = Dashboard.find(params[:dashboard][:id])
-    if @dashboard && @dashboard.update_attributes(params[:dashboard])
+    @dashboard = Dashboard.find(params[:id])
+    if @dashboard && @dashboard.update_attributes(params[:data])
       msg[:result]=true
     else
       msg[:errors]=@dashboard.errors.full_messages
     end
-    msg[:id]=params[:dashboard][:id]
+    msg[:id]=params[:id]
     respond_to do |t|
       t.json {render :json=>msg}
       t.js {render :js=>jsonp_str(msg)}
