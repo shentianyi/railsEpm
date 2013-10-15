@@ -116,11 +116,11 @@ ifepm.dashboard.form_graph = function(datas,id){
                         var key = '<b>'+ this.key +'</b><br />';
                         if(datas.length==1){
                             key+="Value: "+this.y+this.series.data[0].unit+
-                                "<br />Percentage: "+(this.percentage).toFixed(1);
+                                "<br />Percentage: "+(this.percentage).toFixed(1)+"%";
                             return key;
                         }
                         else{
-                            key+=(this.percentage).toFixed(1);
+                            key+=(this.percentage).toFixed(1)+"%";
                             return key;
                         }
                     }
