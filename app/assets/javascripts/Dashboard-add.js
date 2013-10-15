@@ -134,7 +134,27 @@ DASHBOARD.add.init=function(){
             }
             console.log(post)
             DASHBOARD.init_high_chart();
+            if(post.type=="pie"){
+                high_chart.tooltip={
+                    formatter:function(){
+                        var key = '<b>'+ this.key +'</b><br />';
+                        if(post.series.length==1){
+                            key+="Value: "+this.y+this.series.data[0].unit+
+                                "<br />Percentage: "+(this.percentage).toFixed(1);
+                            return key;
+                        }
+                        else{
+                            key+=(this.percentage).toFixed(1);
+                            return key;
+                        }
+                    }
+                };
+                high_chart.plotOptions.pie.dataLabels={
+                    enabled: false
+                }
+            }
             prepare_to_create_db_view(post);
+            DASHBOARD.init_high_chart();
             /*
             $.post(
                 "",
@@ -348,7 +368,15 @@ DASHBOARD.add.prepare_form_chart=function() {
 //        }
 //        limit_pointer_number(option);
 ////        clear_chart_condition();
-
+//        $("#chart-container").resize(function(){
+//            if ($("#db-chart-type-alternate li.active").attr("type") == "pie") {
+//                for (var k = 0; k < $("#chart-container").highcharts().series.length; k++) {
+//                    $("#chart-container").highcharts().series[k].update({
+//                        showInLegend: false
+//                    })
+//                }
+//            }
+//        });
 
 
 

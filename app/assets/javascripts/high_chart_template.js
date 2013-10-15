@@ -468,7 +468,7 @@ function proper_type_for_chart(){
         var new_series=deepCopy(p,c);
         new_series.type=this.type;
         this.chart.get(this.id).remove(false);
-        this.chart.addSeries(new_series,false)
+        this.chart.addSeries(new_series,false);
         this.chart.redraw();
     }
 }

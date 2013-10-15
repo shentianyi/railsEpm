@@ -63,7 +63,6 @@ DASHBOARD.init=function(){
                         create_environment_for_data(option);
                         new Highcharts.Chart(high_chart);
                     }
-
                     add_series(option);
                     proper_type_for_chart(option);
                 }
@@ -79,7 +78,16 @@ DASHBOARD.init=function(){
 }
 DASHBOARD.init_high_chart=function(){
     high_chart.plotOptions.series.events.legendItemClick=function(){
-
+    };
+    high_chart.plotOptions.pie.dataLabels={
+        enabled: true,
+            color: 'rgba(0,0,0,0.25)',
+            connectorColor: 'rgba(0,0,0,0.15)',
+            connectorWidth: 1,
+            format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
+    };
+    high_chart.tooltip={
+        enabled: false
     };
     high_chart.chart.zoomType="";
 }
