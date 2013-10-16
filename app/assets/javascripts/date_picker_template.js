@@ -291,8 +291,9 @@ function date_shortcut(name,target,shortcut,index){
                 object[name].update(target,date);
                 $(target).val(object[name].string);
                 $(target).attr("hide_value",date).attr("string_model","yes");
-                var count=gap_count>=10?gap_count:"0"+gap_count;
-                var unit=lastIndexName.toUpperCase().slice(0,-1);
+//                var count=gap_count>=10?gap_count:"0"+gap_count;
+                var count=gap_count,
+                    unit=lastIndexName.toUpperCase().slice(0,-1);
                 $(target).attr("hide_post","LAST"+count+"*"+unit);
             }
             DATE_PICKER.shortcut_count=targetSplit.length-1;
