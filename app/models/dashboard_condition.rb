@@ -67,7 +67,7 @@ class DashboardCondition < ActiveRecord::Base
              }},
 
 
-     :last=>{:pattern=>/^LAST[1-9][0-9]*(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
+     :last=>{:pattern=>/^LAST[0-9][1-9]*(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
              :processor=>Proc.new{|str|
                result={}
                span=0

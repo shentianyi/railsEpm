@@ -43,7 +43,7 @@ DASHBOARD.add.init=function(){
         $(".index-date-extra-info").text("");
         DATE_PICKER.shortcut_count=0;
 
-        new DATE_PICKER[interval](target,"date").datePicker();
+        new DATE_PICKER[interval](target,"string").datePicker();
     });
     $("#chart-group").chosen().change(function(){
         $("#analy-begin-time,#analy-end-time").datepicker("remove");
@@ -128,11 +128,11 @@ DASHBOARD.add.init=function(){
                 post.series[i].kpi=db_chartSeries.series[i].kpi_id;
                 post.series[i].view=db_chartSeries.series[i].view;
                 post.series[i].average=db_chartSeries.series[i].method;
-                post.series[i].begin_time=db_chartSeries.series[i].begin_time ;
-                post.series[i].end_time=db_chartSeries.series[i].end_time ;
+                post.series[i].begin_time=db_chartSeries.series[i].begin_post ;
+                post.series[i].end_time=db_chartSeries.series[i].end_post;
                 post.series[i].count=i+1;
             }
-            //console.log(post)
+            console.log(post)
             DASHBOARD.init_high_chart();
             prepare_to_create_db_view(post);
             /*
@@ -182,7 +182,8 @@ DASHBOARD.add.prepare_form_chart=function() {
         interval = $("#chart-kpi :selected").attr("interval");
         type = "line";
     }
-    var begin_time = $("#analy-begin-time").attr("hide_value"), end_time = $("#analy-end-time").attr("hide_value");
+    var begin_time = $("#analy-begin-time").attr("hide_value"), end_time = $("#analy-end-time").attr("hide_value"),
+        begin_post, end_post;
     if (kpi && begin_time && view) {
         if (end_time) {
             var compare_result = compare_time(begin_time, end_time);
@@ -192,6 +193,15 @@ DASHBOARD.add.prepare_form_chart=function() {
         else {
             end_time = begin_time
         }
+        if( $("#analy-begin-time").attr("hide_post").indexOf("LAST")!=-1){
+            begin_post=$("#analy-begin-time").attr("hide_post");
+            end_post=begin_post;
+        }
+        else{
+            begin_post=begin_time;
+            end_post=end_time;
+        }
+
 
 
        show_loading(232,0,0,150);
@@ -222,7 +232,9 @@ DASHBOARD.add.prepare_form_chart=function() {
                    view:view,
                    method:method,
                    begin_time:begin_time,
-                   end_time:end_time
+                   end_time:end_time,
+                   begin_post:begin_post,
+                   end_post:end_post
                }
                var length=msg.object.current.length;
                var data_array=[];
@@ -298,7 +310,9 @@ DASHBOARD.add.prepare_form_chart=function() {
 //            view: view,
 //            method: method,
 //            begin_time: begin_time,
-//            end_time: end_time
+//            end_time: end_time,
+//            begin_post: begin_post,
+//            end_post: end_post
 //        }
 //        if (chart_body_close_validate) {
 //
