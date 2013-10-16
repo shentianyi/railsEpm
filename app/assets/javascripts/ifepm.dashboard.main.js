@@ -128,7 +128,7 @@ ifepm.dashboard.form_graph = function(datas,id){
                 high_chart.plotOptions.pie.dataLabels={
                     enabled: false
                 };
-                high_chart.plotOptions.pie.size="90";
+                high_chart.plotOptions.pie.size="110%";
             }
             render_to(option);
             create_environment_for_data(option);

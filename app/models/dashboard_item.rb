@@ -94,10 +94,11 @@ class DashboardItem < ActiveRecord::Base
              }},
 
 
-     :last=>{:pattern=>/^LAST[1-9][0-9]*(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
+     :last=>{:pattern=>/^LAST(0|[1-9]\d*)(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
              :processor=>Proc.new{|str|
                result={}
                span=0
+               puts str.as_json
                before_first_digit= str.index(/\D\d/)
                last_digit =  str.index(/\d\D/)
                if before_first_digit+1 == last_digit
@@ -108,11 +109,12 @@ class DashboardItem < ActiveRecord::Base
 
                result[:start]=eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.ago')
                result[:end]=Time.now
+
                result
              }},
 
 
-     :next=>{:pattern=>/^NEXT[1-9][0-9]*(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
+     :next=>{:pattern=>/^NEXT(0|[1-9]\d*)(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
              :processor=>Proc.new{|str|
                result={}
                span=0

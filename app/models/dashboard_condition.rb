@@ -31,8 +31,10 @@ class DashboardCondition < ActiveRecord::Base
     if conditions
       conditions.each { |condition|
         time_span = self.time_string_to_time_span condition.time_string
-
-
+        puts condition.time_string
+        puts "===================="
+        puts time_span.as_json
+        puts "===================="
         data = KpiEntryAnalyseHelper::get_kpi_entry_analysis_data(
             condition.kpi_id,
             condition.entity_group,
@@ -67,7 +69,7 @@ class DashboardCondition < ActiveRecord::Base
              }},
 
 
-     :last=>{:pattern=>/^LAST[0-9][1-9]*(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
+     :last=>{:pattern=>/^LAST(0|[1-9]\d*)(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
              :processor=>Proc.new{|str|
                result={}
                span=0
@@ -78,14 +80,13 @@ class DashboardCondition < ActiveRecord::Base
                else
                  span= str[before_first_digit+1,last_digit-before_first_digit]
                end
-
                result[:start]=eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.ago')
                result[:end]=Time.now
                result
              }},
 
 
-     :next=>{:pattern=>/^NEXT[1-9][0-9]*(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
+     :next=>{:pattern=>/^NEXT(0|[1-9]\d*)(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
              :processor=>Proc.new{|str|
                result={}
                span=0

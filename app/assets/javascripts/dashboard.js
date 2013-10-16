@@ -117,7 +117,8 @@ function prepare_to_create_db_view(post){
         condition.entity_group = post.series[i].view;
         condition.kpi_id = post.series[i].kpi;
         condition.calculate_type = get_cal_type(post.series[i].average);
-        condition.time_string = post.series[i].begin_time +"|" + post.series[i].end_time;
+        //condition.time_string = post.series[i].begin_time +"|" + post.series[i].end_time;
+        condition.time_string = get_time_string_by_twocar(post.series[i].begin_time,post.series[i].end_time);
         condition.dashboard_item_id = null;
         condition.count = post.series[i].count;
         dashboard_item.conditions.push(condition);
@@ -167,7 +168,14 @@ function get_dashboard_id(){
 }
 
 function get_time_string_by_twocar(start,end){
-    return connect_time_str(start,end);
+    var pattern=new RegExp("^[0-9)]");
+    if(pattern.test(start)){
+        return start + "|" + end;
+    }else{
+        return start;
+    }
+
+    //return connect_time_str(start,end);
 }
 
 function get_time_string(){
