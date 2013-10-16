@@ -80,6 +80,12 @@ class DashboardCondition < ActiveRecord::Base
                else
                  span= str[before_first_digit+1,last_digit-before_first_digit]
                end
+               time_unit = str[last_digit+1,str.length-last_digit]
+
+               start_time = time_by_diff_unit(eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.ago'),time_unit)
+               end_time = time_by_diff_unit(Time.now,time_unit)
+               Time.parse(start_time)
+
                result[:start]=eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.ago')
                result[:end]=Time.now
                result
@@ -104,5 +110,27 @@ class DashboardCondition < ActiveRecord::Base
              }}
     }
 
+  end
+
+  def self.time_by_diff_unit(timestr,time_unit)
+    result = {}
+    puts "============================================="
+    localtime = timestr
+    if timestr.utc?
+      localtime = timestr.localtime
+    end
+
+    if time_unit == "MINUTE"
+      result = localtime.strftime("%Y-%m-%d %H:%M:00")
+    end
+    if time_unit == "HOUR"
+      result = localtime.strftime("%Y-%m-%d %H:00:00")
+    end
+    if time_unit == "DAY"
+      result = localtime.strftime("%Y-%m-%d")
+    end
+
+    result
+    puts result
   end
 end
