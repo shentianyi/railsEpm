@@ -98,7 +98,7 @@ class DashboardItem < ActiveRecord::Base
              :processor=>Proc.new{|str|
                result={}
                span=0
-               puts str.as_json
+
                before_first_digit= str.index(/\D\d/)
                last_digit =  str.index(/\d\D/)
                if before_first_digit+1 == last_digit
@@ -107,8 +107,12 @@ class DashboardItem < ActiveRecord::Base
                  span= str[before_first_digit+1,last_digit-before_first_digit]
                end
 
-               result[:start]=eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.ago')
-               result[:end]=Time.now
+               time_unit = str[last_digit+1,str.length-last_digit]
+               start_time = DashboardCondition.time_by_diff_unit(eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.ago'),time_unit)
+               end_time = DashboardCondition.time_by_diff_unit(Time.now,time_unit)
+
+               result[:start]=Time.parse(start_time)
+               result[:end]=Time.parse(end_time)
 
                result
              }},
@@ -125,6 +129,10 @@ class DashboardItem < ActiveRecord::Base
                else
                  span= str[before_first_digit+1,last_digit-before_first_digit]
                end
+
+               time_unit = str[last_digit+1,str.length-last_digit]
+               start_time = DashboardCondition.time_by_diff_unit(Time.now,time_unit)
+               end_time = DashboardCondition.time_by_diff_unit(eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.ago'),time_unit)
 
                result[:start]=Time.now
                result[:end]=eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.from_now')

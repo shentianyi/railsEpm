@@ -31,10 +31,7 @@ class DashboardCondition < ActiveRecord::Base
     if conditions
       conditions.each { |condition|
         time_span = self.time_string_to_time_span condition.time_string
-        puts condition.time_string
-        puts "===================="
-        puts time_span.as_json
-        puts "===================="
+
         data = KpiEntryAnalyseHelper::get_kpi_entry_analysis_data(
             condition.kpi_id,
             condition.entity_group,
@@ -83,11 +80,11 @@ class DashboardCondition < ActiveRecord::Base
                time_unit = str[last_digit+1,str.length-last_digit]
 
                start_time = time_by_diff_unit(eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.ago'),time_unit)
-               end_time = time_by_diff_unit(Time.now,time_unit)
-               Time.parse(start_time)
 
-               result[:start]=eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.ago')
-               result[:end]=Time.now
+               end_time = time_by_diff_unit(Time.now,time_unit)
+
+               result[:start]=Time.parse(start_time)
+               result[:end]=Time.parse(end_time)
                result
              }},
 
@@ -104,8 +101,12 @@ class DashboardCondition < ActiveRecord::Base
                  span= str[before_first_digit+1,last_digit-before_first_digit]
                end
 
-               result[:start]=Time.now
-               result[:end]=eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.from_now')
+               time_unit = str[last_digit+1,str.length-last_digit]
+               start_time = time_by_diff_unit(Time.now,time_unit)
+               end_time = time_by_diff_unit(eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.from_now'),time_unit)
+
+               result[:start]=Time.parse(time_start)
+               result[:end]= Time.parse(time_end)
                result
              }}
     }
@@ -114,7 +115,7 @@ class DashboardCondition < ActiveRecord::Base
 
   def self.time_by_diff_unit(timestr,time_unit)
     result = {}
-    puts "============================================="
+
     localtime = timestr
     if timestr.utc?
       localtime = timestr.localtime
@@ -130,7 +131,7 @@ class DashboardCondition < ActiveRecord::Base
       result = localtime.strftime("%Y-%m-%d")
     end
 
-    result
-    puts result
+
+    return result
   end
 end
