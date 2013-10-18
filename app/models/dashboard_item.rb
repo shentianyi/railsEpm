@@ -67,12 +67,14 @@ class DashboardItem < ActiveRecord::Base
   end
 
 
-
   def self.time_string_to_time_span(time_str)
     result=nil
     self.time_string_patterns.keys.each{|item|
+
       if time_str=~ time_string_patterns[item][:pattern]
+
         result=  time_string_patterns[item][:processor].call(time_str)
+
       end
     }
     return result
@@ -87,12 +89,32 @@ class DashboardItem < ActiveRecord::Base
     {:span=>{:pattern=>/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?\|([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/,
              :processor=>Proc.new{|str|     #请先使用：pattern检查输入的STR后再调用CALL，防止脏数据EVAL执行
                result={}
+
                time_arr= str.split('|')
+
                result[:start]=Time.parse(time_arr[0])
                result[:end]=Time.parse(time_arr[1])
+
                result
              }},
 
+     :today=>{:pattern=>/^TODAY$/,
+             :processor=>Proc.new{|str|
+               result={}
+               span=0
+
+               time_now = Time.now
+
+               if time_now.utc?
+                 time_now = time_now.localtime
+               end
+               start_time = time_now.strftime("%Y-%m-%d 00:00:00")
+               end_time = time_now.strftime("%Y-%m-%d 23:59:59")
+               result[:start]=Time.parse(start_time)
+               result[:end] = Time.parse(end_time)
+
+               result
+             }},
 
      :last=>{:pattern=>/^LAST(0|[1-9]\d*)(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
              :processor=>Proc.new{|str|
@@ -113,7 +135,6 @@ class DashboardItem < ActiveRecord::Base
 
                result[:start]=Time.parse(start_time)
                result[:end]=Time.parse(end_time)
-
                result
              }},
 

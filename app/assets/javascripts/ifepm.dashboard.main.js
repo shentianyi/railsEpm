@@ -100,7 +100,7 @@ ifepm.dashboard.form_graph = function(datas,id){
             data[j].unit = datas[i].unit[j];
         }
         option = {
-            kpi:datas[i].kpi_id,
+            kpi:datas[i].kpi_name,
             id:datas[i].id,
             target:container,
             begin_time:datas[i].startTime,
@@ -232,7 +232,9 @@ ifepm.dashboard.getInteral = function(interval){
     var min = 1000*60;
     var hour = 1000*60*60;
 
-    switch (interval){
+    intvl = min * 5;
+
+    /*switch (interval){
         case "90":
             intvl = sec * 60;
             break;
@@ -255,6 +257,7 @@ ifepm.dashboard.getInteral = function(interval){
             intvl = hour;
             break;
     }
+    */
     return intvl;
 }
 
@@ -494,7 +497,7 @@ ifepm.dashboard.init=function(id){
             url:ifepm.config.get_dashboard_items_url.url,
             data:{id:id},
             success:function(data){
-                //ifepm.dashboard.clear_all_timer();
+                ifepm.dashboard.clear_all_timer();
                 for(var i in data){
                     var graph_item = new Graph();
                     graph_item.id = data[i].id
@@ -515,7 +518,7 @@ ifepm.dashboard.init=function(id){
                     graph_item.sizex = data[i].sizex;
                     graph_item.sizey = data[i].sizey;
                     ifepm.dashboard.graphs[data[i].id]=graph_item;
-                    //ifepm.dashboard.setTimer(ifepm.dashboard.graphs[data[i].id]);
+                    ifepm.dashboard.setTimer(ifepm.dashboard.graphs[data[i].id]);
                     ifepm.dashboard.graph_sequence.push(data[i].id)
 
                 }

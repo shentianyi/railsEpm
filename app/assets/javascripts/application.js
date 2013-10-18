@@ -47,5 +47,4 @@
 //=require Dashboard-init
 //=require Log
 //=require Entry
-//= require i18n
 //= require i18n/translations
