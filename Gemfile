@@ -17,6 +17,8 @@ gem 'resque'
 gem 'redis-namespace'
 # gem 'guard-resque'
 
+gem 'will_paginate'
+gem 'i18n-js'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

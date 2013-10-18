@@ -1,38 +1,41 @@
-<div class="sub-middle sub-middle-manage">
-     <h3 class="text-center">管理我的观察点 </h3>
+<%= render :partial=>'entity_groups/left_menu'%>
+<div class="manage-user-add" id="manage-entity-add" special="entity">
+     <i class="icon-remove" id="close-add-entity" ></i>
+     <p>
+          UserGroup List
+     </p>
+     <ul>
+          <%@entities.each do |entity|%>
+          <li>
+               <h3 id="<%=entity.id%>"><%=entity.name%></h3>
+          </li>
+          <%end%>
+     </ul>
 </div>
-<div class="middle clearfix">
-     <%= render :partial=>'entity_groups/left_menu'%>
-     <div class="right-content pull-left clearfix" id="right-content">
-          <!--delivery part-->
-          <div class="delivery-part">
-               <p class="inline">
-                    组织
-               </p>
-               <%= select_tag :entity_id,options_from_collection_for_select(@entities,'id','name'),{ :class=>"delivery-kpi", :id=>"delivery-view"}%>
-               <a class="btn btn-wzx btn-primary pull-right" onclick="delivery_view()">分配组织</a>
-          </div>
-          <h3 class="normal-blue text-center delivery-mykpiMark">该观察点下的组织</h3>
-          <table class="manage-kpi" id="kpi-table">
-               <tr>
-                    <th>ID</th>
-                    <th>组织</th>
-                    <th>操作</th>
-               </tr>
+<div class="manage-right-content" id="manage-right-content">
+     <div class="manage-btn-group" id="manage-btn-group" special="view">
+          <a class="btn btn-primary" id="entity-add-show"><i class="icon-plus"></i> User Group</a>
+          <p id="manage-edit-target" ></p>
+          <i class="icon-pencil"></i>
+          <input type="text"/>
+          <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
+     </div>
+     <div class="assign-entity-wrap" id="assign-entity-wrap">
+          <ul>
                <%if @user_group_entities
                @user_group_entities.each_with_index do |entity,i|%>
-               <tr id="<%=entity.entity_group_item_id%>">
-                    <td align="center" class="kpi-order-id"><%=i+1%></td>
-                    <td align="center" class="kpi-order-entity"><%=entity.name%></td>
-                    <td align="center"><div class="manage-operate manage-operate-del" data-belong="<%=entity.entity_group_item_id%>" onclick="remove_viewEntity(event)"></div></td>
-               </tr>
+               <li>
+                    <h3 entity_id="<%= entity.entity_group_item_id%>"><%= entity.name%></h3>
+                    <i class="icon-trash"></i>
+               </li>
                <% end;end%>
-          </table>
+          </ul>
      </div>
 </div>
-<input type="hidden" value="<%=@active_entity_group_id%>" id="entity_group_id" />
-<script type="text/javascript">
-    $(document).ready(function(){
-        init_manage();
-    })
+<input type="hidden" value="<%= @active_entity_group_id%>" id="entity_group_id" />
+<script>
+     $(document).ready(function() {
+          MANAGE.init();
+          MANAGE.view.init();
+     })
 </script>

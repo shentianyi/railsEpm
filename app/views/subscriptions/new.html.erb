@@ -1,34 +1,30 @@
-    <div class="page-navi login-pageNavi relative">
-
-        <a class="btn btn-wzx btn-primary" href='/user_sessions/new'>Login</a>
-    </div>
-    
 <% if @user && @user.errors.any? %>
-    <div id="error_explanation" class="error_explanation ">
-      <h6>Oops..something wrong with your input</h6>
-      <ul>
-        <% @user.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
+<div id="error_explanation" class="error_explanation ">
+     <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+          <li>
+               <%= msg %>
+          </li>
+          <% end %>
+     </ul>
+</div>
 <% end %>
-<%= form_tag({:action=>'create'},{:class=>'login-form'})  do %>
-
-
-
-    <%= label_tag(:email, "Email:") %>
-    <%= text_field_tag(:email) %>
-
-    <%= label_tag(:password, "Password:") %>
-    <%= password_field_tag(:password ) %>
-
-    <%= label_tag(:password_confirmation, "Confirm Password:") %>
-    <%= password_field_tag(:password_confirmation) %>
-
-    <%= label_tag(:company_name, "Company Name:") %>
-    <%= text_field_tag(:company_name) %>
-
-
-    <%= submit_tag("submit",{:class=>"btn btn-wzx btn-success pull-right"}) %>
-<% end %>
+<form action="/subscriptions" method="post">
+     <div class="log-input">
+          <span><i class="icon-envelope"></i></span>
+          <input type="text" id="email" name="email"  placeholder="<%= t 'auth.view.email'%>"/>
+     </div>
+     <div class="log-input">
+          <span><i class="icon-lock"></i></span>
+          <input id="password" name="password" type="password"   placeholder="<%= t 'auth.view.pwd'%>"/>
+     </div>
+     <div class="log-input">
+          <span><i class="icon-lock"></i></span>
+          <input  id="password_confirmation" name="password_confirmation" type="password" placeholder="<%= t 'auth.view.con_pwd'%>"/>
+     </div>
+     <div class="log-input">
+          <span><i class="icon-home"></i></span>
+          <input id="company_name" name="company_name" type="text"  placeholder="<%= t 'auth.view.company'%>"/>
+     </div>
+</form>
+<a class="login-out-btn" onclick="document.forms[0].submit();"></a>

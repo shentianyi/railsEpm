@@ -1,25 +1,42 @@
 class DashboardItem < ActiveRecord::Base
   belongs_to :dashboard
-  attr_accessible :dashboard_id,:entity_group,:kpi_id,:calculate_type,:time_string,:sequence,:interval,:name,:title,:type
+  has_many :dashboard_conditions, :dependent => :destroy
+  attr_accessible :dashboard_id,:sequence,:interval,:name,:title,:chart_type
+  attr_accessible :row, :col, :sizex, :sizey
 
-  validates_with TimeStringValidator
+  #validates_with TimeStringValidator
   validates :dashboard_id,:presence => true
-  validates :entity_group,:presence => true
-  validates :kpi_id,:presence => true
-  validates :calculate_type,:presence => true
-  validates :name,:presence=>true
-
-
+  #validates :entity_group,:presence => true
+  #validates :kpi_id,:presence => true
+  #validates :calculate_type,:presence => true
 
    def self.get_formatted_items_by_dashboard_id(dashboard_id)
+
      items= DashboardItem.where('dashboard_id=?',dashboard_id).reorder('sequence')
+
      formatted_items = []
+     formatted_conditions = []
      if items
        items.each{|item|
          formatted=item.as_json
-         formatted[:kpi_name]=Kpi.find(item.kpi_id).name
-         formatted[:start] = self.time_string_to_time_span(item.time_string)[:start]
-         formatted[:end] = self.time_string_to_time_span(item.time_string)[:end]
+         #find conditions
+
+=begin
+         conditions = DashboardCondition.where('dashboard_item_id=?',item.id).reorder('count')
+         conditions.each{|condition|
+           formatted_con = condition.as_json
+           formatted_con[:kpi_name] = Kpi.find(condition.kpi_id).name
+           formatted_con[:start] = self.time_string_to_time_span(condition.time_string)[:start]
+           formatted_con[:end] = self.time_string_to_time_span(condition.time_string)[:end]
+           formatted_conditions << formatted_con
+         }
+         formatted[:conditions] = formatted_conditions
+=end
+
+
+         #formatted[:kpi_name]=Kpi.find(item.kpi_id).name
+         #formatted[:start] = self.time_string_to_time_span(item.time_string)[:start]
+         #formatted[:end] = self.time_string_to_time_span(item.time_string)[:end]
          formatted_items << formatted
        }
      end
@@ -77,10 +94,11 @@ class DashboardItem < ActiveRecord::Base
              }},
 
 
-     :last=>{:pattern=>/^LAST[1-9][0-9]*(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
+     :last=>{:pattern=>/^LAST(0|[1-9]\d*)(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
              :processor=>Proc.new{|str|
                result={}
                span=0
+
                before_first_digit= str.index(/\D\d/)
                last_digit =  str.index(/\d\D/)
                if before_first_digit+1 == last_digit
@@ -89,13 +107,18 @@ class DashboardItem < ActiveRecord::Base
                  span= str[before_first_digit+1,last_digit-before_first_digit]
                end
 
-               result[:start]=eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.ago')
-               result[:end]=Time.now
+               time_unit = str[last_digit+1,str.length-last_digit]
+               start_time = DashboardCondition.time_by_diff_unit(eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.ago'),time_unit)
+               end_time = DashboardCondition.time_by_diff_unit(Time.now,time_unit)
+
+               result[:start]=Time.parse(start_time)
+               result[:end]=Time.parse(end_time)
+
                result
              }},
 
 
-     :next=>{:pattern=>/^NEXT[1-9][0-9]*(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
+     :next=>{:pattern=>/^NEXT(0|[1-9]\d*)(MINUTE|HOUR|DAY|WEEK|MONTH|YEAR)$/,
              :processor=>Proc.new{|str|
                result={}
                span=0
@@ -106,6 +129,10 @@ class DashboardItem < ActiveRecord::Base
                else
                  span= str[before_first_digit+1,last_digit-before_first_digit]
                end
+
+               time_unit = str[last_digit+1,str.length-last_digit]
+               start_time = DashboardCondition.time_by_diff_unit(Time.now,time_unit)
+               end_time = DashboardCondition.time_by_diff_unit(eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.ago'),time_unit)
 
                result[:start]=Time.now
                result[:end]=eval(span+ '.' + str[last_digit+1,str.length-last_digit].downcase+'.from_now')

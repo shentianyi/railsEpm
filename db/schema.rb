@@ -11,21 +11,57 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130719093921) do
+ActiveRecord::Schema.define(:version => 20131011094335) do
+
+  create_table "admin_kpi_category_templates", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "kpi_quantity", :default => 0
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  create_table "admin_kpi_templates", :force => true do |t|
+    t.string   "description"
+    t.string   "name"
+    t.integer  "unit"
+    t.integer  "frequency"
+    t.float    "target"
+    t.boolean  "is_calculated",                  :default => false
+    t.integer  "direction"
+    t.integer  "period"
+    t.string   "formula"
+    t.string   "formula_string"
+    t.integer  "admin_kpi_category_template_id"
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
+  end
+
+  add_index "admin_kpi_templates", ["admin_kpi_category_template_id"], :name => "index_admin_kpi_templates_on_admin_kpi_category_template_id"
+
+  create_table "dashboard_conditions", :force => true do |t|
+    t.integer  "dashboard_item_id"
+    t.string   "entity_group",      :null => false
+    t.string   "kpi_id",            :null => false
+    t.string   "calculate_type",    :null => false
+    t.string   "time_string",       :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "count"
+  end
 
   create_table "dashboard_items", :force => true do |t|
-    t.integer  "dashboard_id",   :null => false
-    t.string   "entity_group",   :null => false
-    t.string   "kpi_id",         :null => false
-    t.string   "calculate_type", :null => false
-    t.string   "time_string",    :null => false
+    t.integer  "dashboard_id", :null => false
     t.integer  "sequence"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "interval"
-    t.string   "name"
     t.string   "title"
-    t.string   "type"
+    t.string   "chart_type"
+    t.integer  "row"
+    t.integer  "col"
+    t.integer  "sizex"
+    t.integer  "sizey"
   end
 
   create_table "dashboards", :force => true do |t|
@@ -187,6 +223,7 @@ ActiveRecord::Schema.define(:version => 20130719093921) do
     t.integer  "role_id"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.boolean  "is_sys",              :default => false
   end
 
   add_index "users", ["entity_id"], :name => "index_users_on_entity_id"

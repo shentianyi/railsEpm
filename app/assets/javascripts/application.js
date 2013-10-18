@@ -1,4 +1,4 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
+    // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
 // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
@@ -11,15 +11,41 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //=require jquery-1.8.2.min
-//=require jquery-ui-1.10.3.custom.min
-//=require jquery.timePicker.min.js
-//=require bootstrap.min
+//=require jquery.gridster
+//=require jquery.gridster.with-extras
+//= require jquery_ujs
 //=require highcharts
+//=require exporting
+//=require exporting.extend.src.js
 //=require brilliantech.base
 //=require brilliantech.railsepm
 //=require ifepm.activeSelector.js
 //=require ifepm.text.js
 //=require ifepm.config.js
+//=require ifepm.grid.main.js
 //=require ifepm.dashboard.template.js
 //=require ifepm.dashboard.main.js
+//=require Template
 //=require dashboard.js
+//=require bootstrap-datepicker
+//=require bootstrap-datetimepicker.min
+//=require chosen.jquery.min
+//=require wayne-base
+//=require date_picker_template
+//=require high_chart_template
+//=require Analytics_init
+//=require jquery.ba-resize.min
+//=require jquery.icheck.min
+//=require jquery.sortable.min
+//=require Manage-left-menu
+//=require Manage-right-list
+//=require Manage
+//=require Manage-kpi
+//=require Manage-user
+//=require Manage-view
+//=require Dashboard-add
+//=require Dashboard-init
+//=require Log
+//=require Entry
+//= require i18n
+//= require i18n/translations

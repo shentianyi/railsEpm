@@ -17,9 +17,9 @@ $trial_edition = 'basic'
 
 $product_name = 'EPM'
 
-$open_signup = false
+$open_signup = true
 
-
+$invalid_emails=['admin@ifscm.com']
 
 
 

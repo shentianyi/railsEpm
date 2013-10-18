@@ -1,0 +1,259 @@
+/********************************************************************************************************* 分类系列
+*******************************************************************************************************************/
+.manage-left-menu{
+    background-color:#FBFBFB;
+    position:absolute;
+    top:135px;
+    left:0;
+    bottom:0;
+    width:150px;
+    margin:0;
+    padding:0;
+    list-style-type: none;
+    overflow-y:auto;
+    overflow-x:hidden;
+    z-index:20;
+}
+.manage-left-menu li:nth-of-type(2){
+    position:relative;
+    text-align:center;
+    font-size:13px;
+    color:rgba(103,103,103,0.4);
+    background-color:rgba(209,209,209,0.1);
+    padding:0px;
+    width:123px;
+    height:30px;
+    margin:0 12px 30px;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    cursor:pointer;
+    transition:all 0.35s ease-out
+}
+.manage-left-menu li:nth-of-type(2):hover{
+    padding:0px;
+    color:rgba(0,0,0,0.6);
+    background-color:rgba(209,209,209,0.35);
+}
+.manage-left-menu li:nth-of-type(2) span{
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    line-height:30px;
+}
+.manage-left-menu li:nth-of-type(2) input{
+    position:absolute;
+    width:100px;
+    height:20px;
+    font-size:13px;
+    padding:0px 2px;
+    top:4px;
+    left:-999em;
+
+}
+.manage-left-menu li:nth-of-type(2) input:focus ~ .manage-add-tooltip{
+    color:rgba(0,0,0,0.4);
+    display:block;
+}
+.manage-left-menu li:nth-of-type(2) .manage-add-tooltip{
+    position:absolute;
+    text-align:left;
+    left:1px;
+    top:32px;
+    font-size:13px;
+    line-height:17px;
+    display:none;
+}
+
+.manage-left-menu li{
+    text-align:center;
+    color:rgba(0,0,0,0.2);
+    padding:11px 24px;
+    cursor:pointer;
+    transition:padding 0.3s ease-out;
+    position:relative;
+
+}
+.manage-left-menu li:hover{
+    padding:11px 0 11px 35px;
+}
+.manage-left-menu li:hover i.icon-item{
+    display:block;
+}
+.manage-left-menu li.active{
+    color:#F5A133;
+}
+.manage-left-menu li a{
+    width:103px;
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+.manage-left-menu li i.icon-item{
+    position:absolute;
+    top:13px;
+    color:rgba(0,0,0,0.4);
+    display:none;
+    pointer-events:auto;
+    transition:color 0.2s ease;
+}
+.manage-left-menu li:hover i.icon-item:hover{
+    color:rgba(0,0,0,0.65);
+}
+.manage-left-menu li .icon-trash{
+    left:25px;
+}
+
+
+/********************************************************************************************************* 右边的内容部分
+*******************************************************************************************************************/
+.manage-right-content{
+    position:absolute;
+    top:135px;
+    left:150px;
+    bottom:0px;
+    right:0px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    transition:left 0.35s ease-out,right 0.55s ease-out;
+}
+/**************************************************** 上角的按钮
+*****************************************************************/
+.manage-btn-group{
+    position:relative;
+    top:35px;
+    left:32px;
+    height:70px;
+}
+.manage-btn-group>a{
+    width:100px;
+    margin-right:20px;
+    margin-left:0;
+
+}
+.manage-btn-group>p{
+    margin-top:6px;
+    color:rgba(0, 0, 0, 0.35);
+    cursor:pointer;
+    display:inline-block;
+    transition:color 0.35s ease-out;
+}
+.manage-btn-group>p:hover{
+    color:rgba(0, 0, 0, 0.65);
+}
+.manage-btn-group>i{
+    color:rgba(0, 0, 0, 0.65);
+    position:relative;
+    left:6px;
+    display:none;
+}
+.manage-btn-group>p:hover + i{
+    display:inline-block;
+}
+.manage-btn-group>input{
+    position:absolute;
+    padding:1px 5px;
+    height:19px;
+    width:120px;
+    top:41px;
+    left:0px;
+    font-size:13px;
+    display:none;
+}
+.manage-btn-group>input:focus + span{
+    display:inherit;
+}
+.manage-btn-group>span{
+    font-size:13px;
+    position:absolute;
+    left:0px;
+    top:68px;
+    color:rgba(0,0,0,0.4);
+    display:none;
+}
+/**************************************************** 下角的列表
+*****************************************************************/
+.manage-right-list{
+    position:relative;
+    top:58px;
+}
+.right-list-top-control{
+    height:39px;
+}
+.right-list-top-control>.icheckbox_minimal-aero{
+    left:33px;
+    top:12px;
+}
+.right-list-top-control>a {
+    display:inline-block;
+    width:80px;
+    font-size:13px;
+    display:none;
+}
+.right-list-top-control>a:first-of-type{
+    margin-left:55px;
+    margin-right:-10px;
+}
+/*sortable*/
+.sortable-dragging{
+    opacity:0.9
+}
+.sortable-placeholder{
+    border:1px dashed #ddd !important;
+    background-color:rgba(242,196,84,0.7);
+}
+.sortable-placeholder:after{
+    content:"Drop Here";
+    font-size:20px;
+    color:rgba(0,0,0,0.4);
+    position:relative;
+    width:100px;
+    height:80px;
+    line-height:80px;
+    left:50%;
+    margin-left:-50px;
+}
+.manage-sort-list{
+    list-style:none;
+    padding-left:33px;
+    margin-top:15px;
+}
+.manage-sort-list li{
+    width:97%;
+    height:80px;
+    border:1px solid #ddd;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    margin-bottom:15px;
+    position:relative;
+
+}
+.manage-sort-list li>p{
+    font-family:"Arial";
+    font-weight:bold;
+    font-size:40px;
+    color:rgba(0,0,0,0.25);
+    margin:0;
+    padding-left:5px;
+    width:15px;
+    float:left;
+    height:80px;
+    line-height:80px;
+    cursor:move
+}
+.manage-sort-list li>.icheckbox_minimal-aero{
+    top:31px;
+    float:left;
+}
+.manage-sort-list li>table{
+    position:absolute;
+    left:68px;
+    top:5px;
+    bottom:5px;
+    width:inherit;
+    transition:width 0.45s ease-out 0.1s;
+}

@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  description: MyString
+  name: MyString
+  unit: 1
+  frequency: 1
+  target: 1.5
+  is_calculated: false
+  direction: 1
+  period: 1
+  formula: MyString
+  formula_string: MyString
+  admin_kpi_category_template: 
+
+two:
+  description: MyString
+  name: MyString
+  unit: 1
+  frequency: 1
+  target: 1.5
+  is_calculated: false
+  direction: 1
+  period: 1
+  formula: MyString
+  formula_string: MyString
+  admin_kpi_category_template: 

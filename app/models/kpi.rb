@@ -15,11 +15,13 @@ class Kpi < ActiveRecord::Base
 
   acts_as_tenant(:tenant)
 
-  validate :validate_create ,:on=>:create
-  def validate_create
+  validate :validate_create_update
+  def validate_create_update
     if  !self.formula.blank?
-      errors.add(:formula,"公式不合法")  if ! FormulaValidator::complete_validate_infix(self.formula)
+      errors.add(:formula, I18n.t('manage.kpi.invalid'))  if ! FormulaValidator::complete_validate_infix(self.formula)
     end
+    errors.add(:name,I18n.t('manage.kpi.cannot_repeat')) if self.class.where(:name=>self.name,:kpi_category_id=>self.kpi_category_id).first if new_record? # for create
+    errors.add(:name,I18n.t('manage.kpi.cannot_repeat')) if self.class.where(:name=>self.name,:kpi_category_id=>self.kpi_category_id).where('id<>?',self.id).first unless new_record? # for update
   end
 
   def self.parent_kpis_by_id id

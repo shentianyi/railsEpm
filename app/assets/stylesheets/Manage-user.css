@@ -1,0 +1,407 @@
+/********************************************************************************************************* 分类系列
+*******************************************************************************************************************/
+.manage-left-menu[type="group"] li:first-of-type{
+    text-align:center;
+    font-weight:lighter;
+    font-size:22px;
+    color:#5FA9DA;
+    padding:32px 0 10px;
+}
+/********************************************************************************************************* 添加 User
+*******************************************************************************************************************/
+.manage-user-add{
+    position:absolute;
+    top:135px;
+    bottom:0px;
+    left:-50px;
+    width:200px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    background:rgba(251,251,251,0.8);
+    transition:left 0.35s ease-out;
+}
+.manage-user-add>i{
+    pointer-events:auto;
+    position:relative;
+    left:170px;
+    top:6px;
+    cursor:pointer;
+    font-size:18px;
+    color:rgba(0,0,0,0.25)
+}
+.manage-user-add>div{
+    position:relative;
+    top:15px;
+    bottom:0;
+    left:0;
+    right:0;
+}
+/*input*/
+.manage-user-add>div>input{
+    width:140px;
+    margin-left:25px;
+    margin-bottom:10px;
+    padding:5px 4px;
+    font-size:13px;
+    font-weight:lighter;
+    font-family:"open-sans";
+}
+/*radio*/
+.manage-user-add>div>label{
+    display:block;
+    color:rgba(0,0,0,0.5);
+    font-size:13px;
+    width:155px;
+    margin-bottom:5px;
+    padding-left:24px;
+}
+.manage-user-add>div>label:first-of-type{
+    margin-top:30px;
+}
+.manage-user-add>div>label>div.iradio_minimal-aero{
+    top:4px;
+}
+/* btn */
+.manage-user-add>div>.btn{
+    margin-top:45px;
+    width:133px;
+    margin-left:26px;
+    font-size:14px;
+}
+/*********************************************************************************************************  右边的列表
+*******************************************************************************************************************/
+.right-list-top-control[name='group']>div.icheckbox_minimal-aero{
+    display:none !important;
+}
+.right-list-top-control[name='group']>a:first-of-type{
+    margin-left:32px !important;
+}
+.manage-sort-list li>table.group{
+    table-layout:fixed
+}
+.manage-sort-list li>table.group tr td{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    cursor:default;
+}
+.manage-sort-list li>table.group tr:first-of-type{
+    font-size:21px;
+    color:rgba(0,0,0,0.5);
+}
+.manage-sort-list li>table.group tr:first-of-type td{
+    padding:10px 0 0px;
+}
+/*first column*/
+.manage-sort-list li>table.group tr:first-of-type td:first-of-type{
+    color:#5FA9DA;
+    width:35%;
+    padding-right:10px;
+}
+/*last column*/
+.manage-sort-list li>table.group tr:first-of-type td:last-of-type{
+    width:26%;
+}
+.manage-sort-list li>table.group tr:nth-of-type(2){
+    color:rgba(0,0,0,0.3);
+    font-size:13px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*********************************************************************************************************  Assign Kpi
+*******************************************************************************************************************/
+/************************************************  same part using with view assign kpi
+*************************************************************/
+.assign-kpi{
+    position:absolute;
+    top:135px;
+    left:150px;
+    bottom:0px;
+    right:0px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    transition:left 0.35s ease-out,right 0.35s ease-out;
+}
+.assign-kpi-inner{
+    position:absolute;
+    top:139px;
+    right:30px;
+    bottom:30px;
+    left:30px;
+    /*border:2px solid #ddd;*/
+}
+.assign-kpi-top{
+    position:absolute;
+    right:0px;
+    top:35px;
+    left:32px;
+}
+.assign-kpi-top>a{
+    display:inline-block;
+    width:80px;
+    margin:0px 10px 0 0;
+    font-size:13px;
+}
+.assign-kpi-top>p{
+    margin:6px 0 0;
+    color:rgba(0, 0, 0, 0.35);
+    position:relative;
+    padding-left:1px;
+    font-size:18px;
+}
+.assign-kpi-top>p>span:nth-of-type(2){
+    font-size:14px;
+}
+/****************************  (left part)
+*********************************/
+.assign-kpi-inner ul.left{
+    list-style-type: none;
+    width:45%;
+    padding-left:0px;
+    margin:0px;
+
+}
+.assign-kpi-inner ul.left>li{
+    border-bottom:1px solid #ddd;
+    padding:2px 0;
+    position:relative;
+    cursor:default;
+}
+/*.assign-kpi-inner ul.left>li:first-of-type>p{*/
+    /*font-size:15px;*/
+/*}*/
+/*.assign-kpi-inner ul.left>li>h3{*/
+    /*margin:0;*/
+    /*color:#5FA9DA;*/
+    /*font-size:20px;*/
+    /*font-weight:lighter;*/
+    /*width:100%;*/
+    /*text-overflow:ellipsis;*/
+    /*overflow:hidden;*/
+    /*white-space:nowrap;*/
+    /*cursor:pointer;*/
+    /*transition:color 0.35s ease-out;*/
+/*}*/
+/*.assign-kpi-inner ul.left>li>h3:hover ~ i{*/
+    /*display:block;*/
+/*}*/
+/*.assign-kpi-inner ul.left>li>p{*/
+    /*margin:0;*/
+    /*color:rgba(0,0,0,0.3);*/
+    /*font-size:13px;*/
+    /*width:100%;*/
+    /*text-overflow:ellipsis;*/
+    /*overflow:hidden;*/
+    /*white-space:nowrap;*/
+    /*cursor:pointer;*/
+    /*transition:color 0.35s ease-out;*/
+/*}*/
+/*.assign-kpi-inner ul.left>li>p:hover{*/
+    /*color:rgba(0,0,0,0.8);*/
+/*}*/
+/*.assign-kpi-inner ul.left>li>p:hover ~ i{*/
+    /*display:block;*/
+/*}*/
+/*.assign-kpi-inner ul.left>li>i{*/
+    /*position:absolute;*/
+    /*right:10px;*/
+    /*top:17px;*/
+    /*color:rgba(0,0,0,0.5);*/
+    /*display:none;*/
+    /*pointer-events:auto;*/
+    /*transition:color 0.35s ease-out;*/
+/*}*/
+/*.assign-kpi-inner ul.left>li>i:hover{*/
+    /*color:rgba(0,0,0,0.8);*/
+    /*display:block;*/
+/*}*/
+.assign-kpi-inner ul.left>li>table{
+    table-layout:fixed;
+    width:90%;
+}
+.assign-kpi-inner ul.left>li>table tr:first-of-type td:first-of-type{
+    color:#5FA9DA;
+    font-size:22px;
+    padding:4px 0 0;
+    width:60%;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+}
+.assign-kpi-inner ul.left>li>table tr:first-of-type td:nth-of-type(2){
+    width:40%;
+}
+.assign-kpi-inner ul.left>li>table tr:first-of-type td input{
+    padding:4px 5px;
+    height:20px;
+    font-size:13px;
+    width:120px;
+    border:1px solid rgba(0,0,0,0.18);
+}
+.assign-kpi-inner ul.left>li>table tr:nth-of-type(2) td{
+    color:#9d9d9d;
+    font-size:13px;
+}
+.assign-kpi-inner ul.left>li>table tr:nth-of-type(2) td:first-of-type{
+    width:60%;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+.assign-kpi-inner ul.left>li>i{
+    position:absolute;
+    right:6px;
+    top:23px;
+    color:rgba(0,0,0,0.4);
+    pointer-events:auto;
+    cursor:pointer;
+    transition:color 0.25s ease-out;
+}
+.assign-kpi-inner ul.left>li>i:hover{
+    color:rgba(0,0,0,0.8);
+}
+
+
+
+
+
+/****************************  kpi options for choose
+*********************************/
+.assign-kpi-options{
+    width:250px;
+    position:absolute;
+    top:135px;
+    bottom:0px;
+    right:-250px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    background:#333;
+}
+.assign-kpi-options>i{
+    color:white;
+    position:relative;
+    left:5px;
+    top:5px;
+    pointer-events:auto;
+    cursor:pointer
+}
+
+.assign-kpi-options>.select-div{
+    width:180px;
+    position:relative;
+    top:13px;
+    left:50%;
+    margin-left:-90px;
+}
+.assign-kpi-options>.select-div>select{
+    width:180px;
+}
+.assign-kpi-options>.select-div .chosen-container-single .chosen-single{
+    background:white !important;
+    border:1px solid #ddd;
+    box-shadow:none !important;
+}
+.assign-kpi-options>.select-div .chosen-container-single .chosen-single div{
+    background:white !important;
+    border-left:none !important;
+}
+.assign-kpi-options>.select-div .chosen-container .chosen-drop{
+    border-left-color:white;
+    border-right-color:white;
+}
+
+.assign-kpi-options>ul{
+    list-style-type:none;
+    padding:0 0 0 34px;
+    margin:0px;
+    position:relative;
+    top:45px;
+}
+.assign-kpi-options>ul li{
+    padding-bottom:20px;
+}
+.assign-kpi-options>ul li h3{
+    margin:0px;
+    font-weight:lighter;
+    font-size:20px;
+    width:180px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    color:#5194cd;
+    transition:color 0.25s ease-out;
+}
+.assign-kpi-options>ul li h3:hover{
+    color:#cda351
+}
+.assign-kpi-options>ul li h3:hover + p{
+    color:rgba(255,255,255,0.95)
+}
+.assign-kpi-options>ul li p{
+    margin:0px;
+    width:180px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    color:rgba(255,255,255,0.8);
+    font-size:13px;
+    transition:color 0.25s ease-out;
+}
+/************************************************  user assign kpi(special)
+*************************************************************/
+.assign-kpi-wrap{
+    position:fixed;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    z-index:30;
+    background-color:rgba(0,0,0,0.7);
+    display:none;
+}
+.assign-kpi[special="user"]{
+    position:fixed;
+    width:900px;
+    left:50%;
+    margin-left:-450px;
+    height:600px;
+    top:50%;
+    margin-top:-300px;
+    background-color:#ddd;
+    overflow-x:hidden;
+    overflow-y:hidden;
+}
+.assign-kpi[special="user"]>.assign-kpi-top>a:last-of-type{
+    width:100px;
+    margin-left:3px;
+}
+.assign-kpi[special="user"] ul.left{
+    height:100%;
+    overflow-y:auto;
+    width:55%
+}
+.assign-kpi[special="user"] ul.left li{
+    border-bottom:1px solid rgba(0,0,0,0.05);
+}
+.assign-kpi[special="user"] .assign-kpi-inner{
+    top:135px
+}
+/************************************************  kpi options (special)
+*************************************************************/
+.assign-kpi-options[special="user"]{
+    right:0px;
+    top:0px;
+    bottom:0px;
+    display:none
+}

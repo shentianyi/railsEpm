@@ -1,76 +1,42 @@
-<div class="addBlock" id="addBlock" data-state="off" style="display:none">
-     <h4 class="text-center normal-blue" id="add-block-mark">添加新的KPI</h4>
-     <div class="wrap-add-manage clearfix">
-          <table class="wrap-add-manage-left pull-left" >
-               <tr>
-                    <td align="right" valign="top">*类别</td>
-                    <td> <%= select_tag :category_id,options_from_collection_for_select(@categories,'id','name'),{:id=>'add-entity'}%> </td>
-               </tr>
-               <tr>
-                    <td align="right" valign="top">*名称</td>
-                    <td>
-                    <input type="text" id="new-kpi-name"/>
-                    </td>
-               </tr>
-               <tr>
-                    <td align="right" valign="top">描述</td>
-                    <td>
-                    <input type="text" id="new-kpi-desc"/>
-                    </td>
-               </tr>
-               <tr>
-                    <td align="right" valign="top">*周期</td>
-                    <td> <%= select_tag :frequency,options_from_collection_for_select(@frequencies,'value','desc'),{:id=>'add-interval'}%> </td>
-               </tr>
-               <tr>
-                    <td align="right" valign="top">趋势</td>
-                    <td> <%= select_tag :direction,options_from_collection_for_select(@directions,'value','desc'),{:id=>'add-trend'}%> </td>
-               </tr>
-               <tr>
-                    <td align="right" valign="top">*目标</td>
-                    <td>
-                    <input type="text"  onkeyup="clearNoNum(this)" id="new-kpi-target"/>
-                    </td>
-               </tr>
-               <tr>
-                    <td align="right" valign="top">*单位</td>
-                    <td>
-                    <select id="add-unit">
-                         <%@units.each do |unit|%>
-                         <option value="<%= unit.value%>" sym="<%= KpiUnit.get_entry_unit_sym(unit.value)%>"><%= unit.desc%></option>
-                         <%end%>
-                    </select></td>
-               </tr>
-               <tr>
-                    <td align="right" valign="top">是否为计算型</td>
-                    <td valign="top">
-                    <input type="checkbox" class="is-calcu-check" id="is-calcu-check" onclick="is_calcu()"/>
-                    <div class="is-calcu-type clearfix" id="is-calcu-type" style="display:none">
-                         <%= select_tag :frequency,options_from_collection_for_select(@base_kpis,'id','name'),{:id=>'is-calcu-relate',:onchange=>'select_calcuRelate()',:prompt=>''}%>
-                         <div  class="clearfix wrap-calcuType-method-btn">
-                         <a class="pull-left btn btn-primary calcuType-method-btn" sign="+" data-calcuType="1" onclick="select_calcuMethod(event)">+</a>
-                         <a class="pull-left btn btn-primary calcuType-method-btn" sign="-" data-calcuType="2" onclick="select_calcuMethod(event)">-</a>
-                         <a class="pull-left btn btn-primary calcuType-method-btn" sign="*" data-calcuType="3" onclick="select_calcuMethod(event)">x</a>
-                         <a class="pull-left btn btn-primary calcuType-method-btn" sign="/" data-calcuType="4" onclick="select_calcuMethod(event)">/</a>
-                         <a class="pull-left btn btn-primary calcuType-method-btn" sign="[" data-calcuType="5" onclick="select_calcuMethod(event)">[</a>
-                         <a class="pull-left btn btn-primary calcuType-method-btn" sign="]" data-calcuType="6" onclick="select_calcuMethod(event)">]</a>
-                         </div>
-                         <input type="text" class="calcuType-input" id="calcuType-input" onkeyup="calcuInput(event)"/>
-                         <a class="btn calcuType-clear pull-left" id="calcuType-clear" onclick="calcuRelate_clear()">清空</a>
-                         <div style="display:none" id="takeCal" cal></div>
-                    </div></td>
-               </tr>
-          </table>
-          <div class="wrap-add-manage-right pull-right">
-               <button class="add-manage-kpi btn  btn-success" id="add-manage-kpi" onclick="add_kpi()">
-                    添加
-               </button>
-               <button class="cancel-manage-kpi btn " onclick="cancel_add_kpi()">
-                    取消
-               </button>
+<div class="manage-kpi-add" id="manage-kpi-add">
+     <i class="icon-remove" id="close-add-kpi"></i>
+     <div>
+          <input type="text" placeholder="* <%= t 'manage.kpi.name'%>" id="new-kpi-name"/>
+          <textarea placeholder="   <%= t 'manage.kpi.description'%>" id="new-kpi-desc"></textarea>
+          <div class="select-div">
+               <%= select_tag :frequency,options_from_collection_for_select(@frequencies,'value','desc'),{:id=>'add-interval',"data-placeholder"=>"* #{ t 'manage.kpi.frequency'}",:class=>"chosen-select" }%>
           </div>
+
+          <input type="text" placeholder="* <%= t 'manage.kpi.target'%>" id="new-kpi-target"/>
+
+          <div class="select-div">
+               <select class="chosen-select" data-placeholder="* Unit" id="add-unit">
+                    <%@units.each do |unit|%>
+                    <option value="<%= unit.value%>" sym="<%= KpiUnit.get_entry_unit_sym(unit.value)%>"><%= unit.desc%></option>
+                    <%end%>
+               </select>
+          </div>
+
+          <div class="select-div">
+               <%= select_tag :direction,options_from_collection_for_select(@directions,'value','desc'),{:id=>'add-trend',"data-placeholder"=>"    #{ t 'manage.kpi.trend'}",:class=>"chosen-select"}%>
+          </div>
+
+          <input type="checkbox" id="is-calcu-check"/>
+          <label><%= t 'manage.kpi.calculate_type'%></label>
+
+          <div class="calculate-type-box" id="calculate-type-box">
+               <div class="select-div">
+                    <%= select_tag :base_kpi,options_from_collection_for_select(@base_kpis,'id','name'),{:class=>'chosen-select',"data-placeholder"=>"#{ t 'manage.kpi.list'}",:id=>'is-calcu-relate',:prompt=>''}%>
+               </div>
+               <label sign="+">+</label>
+               <label sign="-">-</label>
+               <label sign="*">x</label>
+               <label sign="/">/</label>
+               <label sign="(">(</label>
+               <label sign=")">)</label>
+               <input type="text" placeholder="* <%= t 'manage.kpi.formula'%>" id="calcuType-input"/>
+               <div style="display:none" id="takeCal" cal></div>
+          </div>
+          <a class="btn btn-primary" id="manage-kpi-add-new"><%= t 'manage.base.add_btn'%></a>
      </div>
-     <p class="text-center light-orange hide" id="add-warn">
-          请填写所有带*的选项
-     </p>
 </div>

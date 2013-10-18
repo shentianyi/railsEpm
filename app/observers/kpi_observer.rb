@@ -5,12 +5,15 @@ class KpiObserver<ActiveRecord::Observer
     # add kpi items
     if kpi.is_calculated
       KpisHelper.parse_formula_items(kpi.formula).each do |item|
-        kpi.kpi_items<<KpiItem.new(:item_id=>item)
+        if Kpi.where(:id=>item,:tenant_id=>kpi.tenant_id).first
+          kpi.kpi_items<<KpiItem.new(:item_id=>item) 
+        else
+          return false
+        end
       end
     else
       kpi.formula=kpi.formula_string=nil
     end
-    
   end
 
   def after_create kpi

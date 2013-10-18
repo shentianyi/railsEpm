@@ -1,5 +1,5 @@
 class Dashboard < ActiveRecord::Base
-  has_many :dashboard_items
+  has_many :dashboard_items, :dependent => :destroy
   attr_accessible :user_id,:name,:description
   validates :user_id,:presence => true
   validates :name,:presence => true

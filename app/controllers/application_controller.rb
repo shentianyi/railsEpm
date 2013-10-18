@@ -11,6 +11,9 @@ class ApplicationController < ActionController::Base
   before_filter :find_current_user_tenant
   #
   before_filter :check_tenant_status
+  
+  # I18n
+  before_filter  :set_locale
   #
   #
   set_current_tenant_through_filter
@@ -99,7 +102,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       store_location
-      flash[:alert] = "You must be logged in to access this page"
+      flash[:alert] = I18n.t 'auth.msg.login_require'
       redirect_to new_user_sessions_url
       return false
     end
@@ -109,7 +112,7 @@ class ApplicationController < ActionController::Base
   def require_no_user
     if current_user
       store_location
-      flash[:alert] = "You must be logged out to access this page"
+      flash[:alert] =  I18n.t 'auth.msg.logout_require'
       redirect_to root_url
       return false
     end
@@ -191,6 +194,16 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
      render :json=>{:access=>false}
+  end
+  
+  # I18n
+  def set_locale
+    I18n.locale=cookies[:locale] || extract_locale_from_accept_language_header || I18n.default_locale
+  end
+  
+  private
+  def extract_locale_from_accept_language_header
+     request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
   end
 end
 

@@ -409,7 +409,7 @@ function init_chart() {
          }, function(msg) {
              if(msg.result){
                  var data=msg.object;
-                             console.log(startTime,endTime)
+
                  form_chart(data.current,data.target,data.unit,interval,startTime,endTime,timeBeginChart);
                  $(".control-chart-btn").each(function(){
                      $(this).removeClass('active');
@@ -839,7 +839,7 @@ function add_kpi() {
 
 function post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,target,unit,unitP,check,checkedP,formula,formulaShow,length){
     $.post('../kpis', {kpi:{
-       kpi_category_id : entity,
+        kpi_category_id : entity,
         name:name,
         description:desc,
         frequency:intervalP,
@@ -869,7 +869,9 @@ function post_kpi(entity,entityP,name,desc,interval,intervalP,trend,trendP,targe
                 );
                 if(formula){
                  $("#"+id).find(".kpi-checked").attr("title",formulaShow);
-                 $("#is-calcu-relate").append($("<option />").attr("value",id).text(name));
+                }
+                else{
+                    $("#is-calcu-relate").append($("<option />").attr("value",id).text(name));
                 }
                }
          }
@@ -1799,11 +1801,15 @@ function init_entryKpi() {
 }
 
 function refresh_kpi_entry(date){
-     $.post('../kpi_entries/refresh_entry',{f:$('#kpi-type-hidden').val(),date:date},function(data){
+     $.post('../kpi_entries/refresh_entry',{
+         f:$('#kpi-type-hidden').val(),
+         date:date
+     },function(data){
           $("#kpi-entry").html(data);
           save_format_date(date);
      });
 }
+
 function save_format_date(date){
     $("#entry-kpi").attr("format",date);
 }
@@ -1974,21 +1980,21 @@ function kpi_percent(a, b) {
 
 }
 
-
-  function kpi_reinit_by_category(cid,kid,sid,sclass,prompt) {
-          var id = $("#"+cid+" :selected").attr("value");
-         $.post('/kpis/kpi_option',{id:id,options:{sid:sid,sclass:sclass},prompt:prompt},function(data){
-              $("#"+kid).html(data);
-         },'html');
-     }
-
-
-  function kpi_entries_reinit_by_category(cid,kid,sid,sclass,prompt) {
-          var id = $("#"+cid+" :selected").attr("value");
-         $.post('/kpi_entries/kpi_option',{id:id,options:{sid:sid,sclass:sclass},prompt:prompt},function(data){
-              $("#"+kid).html(data);
-         },'html');
-     }
+// 
+  // function kpi_reinit_by_category(cid,kid,sid,sclass,prompt) {
+          // var id = $("#"+cid+" :selected").attr("value");
+         // $.post('/kpis/kpi_option',{id:id,options:{sid:sid,sclass:sclass},prompt:prompt},function(data){
+              // $("#"+kid).html(data);
+         // },'html');
+     // }
+// 
+// 
+  // function kpi_entries_reinit_by_category(cid,kid,sid,sclass,prompt) {
+          // var id = $("#"+cid+" :selected").attr("value");
+         // $.post('/kpi_entries/kpi_option',{id:id,options:{sid:sid,sclass:sclass},prompt:prompt},function(data){
+              // $("#"+kid).html(data);
+         // },'html');
+     // }
 function quarterConvertMonth(a){
     switch (a){
         case 1:

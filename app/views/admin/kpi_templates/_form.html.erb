@@ -1,0 +1,64 @@
+<%= form_for(@admin_kpi_template) do |f| %>
+<% if @admin_kpi_template.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@admin_kpi_template.errors.count, "error") %> prohibited this admin_kpi_template from being saved:</h2>
+
+	<ul>
+		<% @admin_kpi_template.errors.full_messages.each do |msg| %>
+		<li>
+			<%= msg %>
+		</li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
+<div class="field">
+	<%= f.label :name %>
+	<%= f.text_field :name %>
+</div>
+
+<div class="field">
+	<%= f.label :description %>
+	<%= f.text_field :description %>
+</div>
+
+<div class="field">
+	<%= f.label :unit %>
+	<%= select_tag 'admin_kpi_template[unit]',options_from_collection_for_select(@units,'value','desc',:selected=>@admin_kpi_template.unit)%>
+</div>
+<div class="field">
+	<%= f.label :frequency %>
+	<%= select_tag 'admin_kpi_template[frequency]',options_from_collection_for_select(@frequencies,'value','desc',:selected=>@admin_kpi_template.frequency)%>
+</div>
+<div class="field">
+	<%= f.label :target %>
+	<%= f.text_field :target %>
+</div>
+<div class="field">
+	<%= f.label :is_calculated %>
+	<%= f.check_box :is_calculated %>
+</div>
+<div class="field">
+	<%= f.label :direction %>
+	<%= select_tag 'admin_kpi_template[direction]',options_from_collection_for_select(@directions,'value','desc',:selected=>@admin_kpi_template.direction)%>
+</div>
+<div class="field">
+	<%= f.label :period %>
+	<%= f.number_field :period %>
+</div>
+<div class="field">
+	<%= f.label :formula %>
+	<%= f.text_field :formula %>
+</div>
+<div class="field">
+	<%= f.label :formula_string %>
+	<%= f.text_field :formula_string %>
+</div>
+<div class="field">
+	<%= f.label :admin_kpi_category_template %>
+	<%= select_tag 'admin_kpi_template[admin_kpi_category_template_id]',options_from_collection_for_select(@categories,'id','name',:selected=>@admin_kpi_template.admin_kpi_category_template_id)%>
+</div>
+<div class="actions">
+	<%= f.submit %>
+</div>
+<% end %>

@@ -44,186 +44,275 @@ ifepm.dashboard = ifepm.dashboard || {};
 ifepm.active_selector = ifepm.active_selector || new ActiveSelect();
 
 //function to generate a chart-form dashboard view . Depands on highchart.js
-ifepm.dashboard.form_chart=function(option_args){
-    var options = {
-        chart : {
-            renderTo : option_args['container'],
-            type : 'line'
-        },
-        credits : {
-            enabled : false
-        },
-        title : {
-            text : ""
-        },
-        tooltip : {
-            ////       formatter: function() {
-////           return '<b>'+ this.series.name +'</b><br/>'+
-////                  "数值"+this.y +'<br />'+this.x;
-////        },
-//          xDateFormat: '%Y-%m-%d'
-        },
-        xAxis : {
-            //                categories:[],
-//            type : 'datetime',
-//            dateTimeLabelFormats : {
-//                day : '%e/%b'
-//            },
-//            tickInterval : 24 * 3600 * 1000 * ticket, // one day
-            labels : {
-                style : {
-                    fontWeight : 800
-                }
-            }
-        },
-        yAxis : {
-            title : {
-                enabled : false
-            },
-            tickWidth : 1,
-            offset : 10,
-//                          labels:{
-//                                format:'{value}m'
-//                          },
-            lineWidth : 1
-        },
-        series : [
-            {
-                type:"area",
-                name: "实际值"
-            },
-            {
-                type:"line",
-                name: "目标值"
-            }
-        ]
-    };
-    options.yAxis.labels = {
-        format : '{value}' +option_args["unit"][0]
-    };
-    var start=new Date(option_args['startTime']).toArray();
-    var end=new Date(option_args['endTime']).toArray();
-    if(start[1] && end[1]){
+/*
+=============
+@Deprecated
+=============
+*/
+ifepm.dashboard.form_chart=function(datas){
 
-            var startWQ=start[1];
-
-
-            var endWQ=end[1];
-
-    }
-    switch (option_args["interval"].toString()){
-        case "90":
-            options.tooltip.xDateFormat='%Y-%m-%d %H:%M';
-            options.xAxis.type='datetime';
-            options.xAxis.dateTimeLabelFormats={
-                hour: '%H:%M'+"<br />"+'%e/%b'
-            };
-            options.xAxis.tickInterval=3600 * 1000;
-            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,start[2],start[3]);
-            options.series[0].pointInterval=3600 * 1000;
-            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,start[2],start[3]);
-            options.series[1].pointInterval=3600 * 1000;
-            break;
-        case "100":
-            options.tooltip.xDateFormat='%Y-%m-%d';
-            options.xAxis.type='datetime';
-            options.xAxis.dateTimeLabelFormats={
-                day : '%e/%b'+"<br />"+"%Y"
-            };
-            options.xAxis.tickInterval=24 * 3600 * 1000;
-            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,start[2]);
-            options.series[0].pointInterval=24 * 3600 * 1000;
-            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,start[2]);
-            options.series[1].pointInterval=24 * 3600 * 1000;
-            break;
-        case "200":
-            options.tooltip.formatter=function(){
-                return '<b>'+ this.series.name +'</b><br/>'+
-                    "数值"+this.y +'<br />'+this.x;
-            };
-            options.xAxis.categories=[];
-            var yearInterval=parseInt(end[0])-parseInt(start[0]);
-            var xItem;
-            var year;
-            var lastWeek=52*(yearInterval)+parseInt(end[1]);
-            for(var i=0;i<=yearInterval;i++){
-                if(i==0){
-                    year=parseInt(start[0]);
-                    for(var a=parseInt(startWQ);a<=((lastWeek-52*(i+1))>=0?52:parseInt(endWQ));a++){
-                        xItem=year+"<br />"+"第"+a+"周";
-                        options.xAxis.categories.push(xItem);
-                    }
-                }
-                else{
-                    year=parseInt(start[0])+i;
-                    for(var b=1;b<=((lastWeek-52*(i+1))>=0?52:parseInt(endWQ));b++){
-                        xItem=year+"<br />"+"第"+b+"周";
-                        options.xAxis.categories.push(xItem);
-                    }
-                }
-            };
-            break;
-        case "300":
-            options.tooltip.xDateFormat='%Y-%m';
-            options.xAxis.type='datetime';
-            options.xAxis.dateTimeLabelFormats={
-                month : '%b'+"<br />"+'%Y'
-            };
-            options.xAxis.tickInterval=24 * 3600 * 1000 * 31;
-            options.series[0].pointStart=Date.UTC(start[0],start[1]-1,1);
-            options.series[0].pointInterval=24 * 3600 * 1000 *31;
-            options.series[1].pointStart=Date.UTC(start[0],start[1]-1,1);
-            options.series[1].pointInterval=24 * 3600 * 1000 *31;
-            break;
-        case "400":
-            options.tooltip.formatter=function(){
-                return '<b>'+ this.series.name +'</b><br/>'+
-                    "数值 "+this.y +'<br />'+this.x;
-            };
-            options.xAxis.categories=[];
-            var yearInterval=parseInt(end[0])-parseInt(start[0]);
-            var xItem;
-            var year;
-            var lastQuarter=4*(yearInterval)+parseInt(endWQ)
-            for(var i=0;i<=yearInterval;i++){
-                if(i==0){
-                    year=parseInt(start[0]);
-                    for(var a=parseInt(startWQ);a<=((lastQuarter-4*(i+1))>=0?4:parseInt(endWQ));a++){
-                        xItem=year+"<br />"+"第"+a+"季度";
-                        options.xAxis.categories.push(xItem);
-                    }
-                }
-                else{
-                    year=parseInt(start[0])+i;
-                    for(var b=1;b<=((lastQuarter-4*(i+1))>=0?4:parseInt(endWQ));b++){
-                        xItem=year+"<br />"+"第"+b+"季度";
-                        options.xAxis.categories.push(xItem);
-                    }
-                }
-            };
-            break;
-        case "500":
-            options.tooltip.xDateFormat='%Y';
-            options.xAxis.type='datetime';
-            options.xAxis.dateTimeLabelFormats={
-                year : '%Y'
-            };
-            options.xAxis.tickInterval=24 * 3600 * 1000 * 365;
-            options.series[0].pointStart=Date.UTC(start[0],0,1);
-            options.series[0].pointInterval=24 * 3600 * 1000*365;
-            options.series[1].pointStart=Date.UTC(start[0],0,1);
-            options.series[1].pointInterval=24 * 3600 * 1000*365;
-            break;
-    };
-    options.series[0].data=option_args["current"];
-    options.series[1].data=option_args["target"];
-    var chart = new Highcharts.Chart(options);
 }
 
 //container of the current dashboard's item.
 ifepm.dashboard.graphs=ifepm.dashboard.graphs || {};
 
 ifepm.dashboard.graph_sequence =[];
+
+//
+var db_chartSeries = {
+    count: 0,
+    id_count:0,
+    series: [],
+    getCount: function () {
+        return this.count
+    },
+    addCount: function () {
+        this.count += 1
+    },
+    minusCount: function () {
+        this.count -= 1
+    },
+    getSeries: function () {
+        return this.series
+    },
+    addSeries: function (series) {
+        this.series.push(series)
+    }
+};
+/*
+* @ function form_graph a new function to render chart
+* @ params data
+* */
+var isformchart = false;
+
+ifepm.dashboard.form_graph = function(datas,id){
+    var container = ifepm.dashboard.make_item_container_id(id);
+    var type = ifepm.dashboard.graphs[id].chart_type;
+    var chart = null;
+
+    for(var i = 0;i<datas.length;++i){
+        var data = [];
+        for(var j = 0;j<datas[i].current.length;++j){
+
+            data[j] = {};
+            data[j].y = datas[i].current[j];
+            data[j].target = datas[i].target[j];
+            data[j].unit = datas[i].unit[j];
+        }
+        option = {
+            kpi:datas[i].kpi_id,
+            id:datas[i].id,
+            target:container,
+            begin_time:datas[i].startTime,
+            type:type,
+            interval:datas[i].interval,
+            data:data,
+            count:datas[i].count
+        };
+        if(i==0){
+            if(option.type=="pie"){
+                high_chart.tooltip={
+                    formatter:function(){
+                        var key = '<b>'+ this.key +'</b><br />';
+                        if(datas.length==1){
+                            key+="Value: "+this.y+this.series.data[0].unit+
+                                "<br />Percentage: "+(this.percentage).toFixed(1)+"%";
+                            return key;
+                        }
+                        else{
+                            key+=(this.percentage).toFixed(1)+"%";
+                            return key;
+                        }
+                    }
+                };
+                high_chart.plotOptions.pie.dataLabels={
+                    enabled: false
+                };
+                high_chart.plotOptions.pie.size="110%";
+            }
+            render_to(option);
+            create_environment_for_data(option);
+            chart = new Highcharts.Chart(high_chart);
+        }
+
+
+        add_series(option);
+        proper_type_for_chart(option);
+    }
+
+    if(chart){
+        //targen line
+        if(datas.length == 1 && type !="pie"){
+            var data = [];
+            for(var j = 0;j<datas[0].target.length;++j){
+                data[j] = {};
+                data[j].y = datas[0].target[j];
+            }
+
+            option = {
+                kpi:"target",
+                id:"target",
+                target:container,
+                begin_time:datas[0].startTime,
+                type:type,
+                interval:datas[0].interval,
+                data:data,
+                count:datas[0].count,
+            }
+
+            add_series(option);
+            proper_type_for_chart(option);
+        }
+        var defsize = ifepm.dashboard_widget.initsize(type);
+        chart.setSize(ifepm.dashboard_widget.width*defsize.sizex,ifepm.dashboard_widget.height*defsize.sizey -40);
+        if(type == "pie"){
+            for(var i = 0;i<chart.series.length;++i){
+                chart.series[i].update({showInLegend:false});
+            }
+        }
+    }
+}
+
+
+var intervals = [];
+/*
+* @function setTimer
+* set a timer for one graph to request kpi entries
+* @params graph
+* */
+ifepm.dashboard.setTimer = function(graph){
+    var interval= null;
+    var intv = ifepm.dashboard.getInteral(graph.sequence);
+    interval = setInterval(reload(graph.id),intv);
+    intervals.push(interval);
+}
+function reload(id){
+    return function(){
+        if(!ifepm.dashboard.graphs[id]){
+            return;
+        }
+        var current_graph = ifepm.dashboard.graphs[id];
+        $.ajax(
+            {
+                before_send: function(){},
+                url:ifepm.config.get_item_data_url.url,
+                data:{"id":id},
+                dataType:ifepm.config.get_item_data_url.dataType,
+                crossDomain:ifepm.config.get_item_data_url.crossDomain,
+                success: function(data){
+                    if(data){
+                        ifepm.dashboard.update_graph(data,id);
+                    }
+                }
+            }
+        );
+    };
+}
+
+/*
+* @function clearAllTimer
+* clear all the timer
+* */
+ifepm.dashboard.clear_all_timer = function(){
+    for(var i = 0;i<intervals.length;i++){
+        clearTimeout(intervals[i]);
+    }
+    intervals = [];
+}
+
+/*
+* @function getInterval
+* get the interval for timer
+* @params interval:interval of chart
+* */
+ifepm.dashboard.getInteral = function(interval){
+    var intvl = null;
+
+    var sec = 1000;
+    var min = 1000*60;
+    var hour = 1000*60*60;
+
+    switch (interval){
+        case "90":
+            intvl = sec * 60;
+            break;
+        case "100":
+            intvl = min * 60;
+            break;
+        case "200":
+            intvl = hour * 24;
+            break;
+        case "300":
+            intvl = hour * 24;
+            break;
+        case "400":
+            intvl = hour * 24;
+            break;
+        case "500":
+            intvl = hour * 24;
+            break;
+        default :
+            intvl = hour;
+            break;
+    }
+    return intvl;
+}
+
+/*
+* @function reloadGraph
+* @param id id of the dashboard item
+* */
+ifepm.dashboard.reload_graph = function(id){
+    if(!ifepm.dashboard.graphs[id]){
+        return;
+    }
+    var current_graph = ifepm.dashboard.graphs[id];
+    $.ajax(
+        {
+            before_send: function(){},
+            url:ifepm.config.get_item_data_url.url,
+            data:{"id":id},
+            dataType:ifepm.config.get_item_data_url.dataType,
+            crossDomain:ifepm.config.get_item_data_url.crossDomain,
+            success: function(data){
+                if(data){
+                    ifepm.dashboard.update_graph(data,id);
+                }
+            }
+        }
+    );
+}
+
+/*
+* @function update_graph
+* reload data and update series of high_charts
+* @param data
+* @param id
+* */
+ ifepm.dashboard.update_graph = function(datas,id){
+    var container = ifepm.dashboard.make_item_container_id(id);
+    var type = ifepm.dashboard.graphs[id].chart_type;
+    var chart = $('#'+container).highcharts();
+    if(chart){
+        for(var i = 0;i<datas.length;i++){
+            var series = chart.get(datas[i].id);
+            if(!series){
+                continue;
+            }
+            for(var j=0;j<datas[i].current.length;j++){
+                var point = series.data[j];
+                //point.update(Math.random()*(200+1));
+                series.data[j].update(datas[i].current[j],false);
+            }
+        }
+        if(type=="pie"){
+            pie_for_dashboard(container);
+        }
+        else{
+            chart.redraw();
+        }
+    }
+}
 
 ifepm.dashboard.load_graph=function(id){
     if (!ifepm.dashboard.graphs[id])
@@ -240,15 +329,9 @@ ifepm.dashboard.load_graph=function(id){
           dataType:ifepm.config.get_item_data_url.dataType,
           crossDomain:ifepm.config.get_item_data_url.crossDomain,
           success: function(data){
+              //condition array
               if(data){
-                  ifepm.dashboard.form_chart({current:data.current,
-                      target:data.target,
-                      unit:data.unit,
-                      interval:data.interval,
-                      startTime:data.startTime,
-                      endTime:data.endTime,
-                      timeBeginChart:data.startTime,
-                      container:ifepm.dashboard.make_item_container_id(id)});
+                  ifepm.dashboard.form_graph(data,id);
               }
           }
         }
@@ -259,13 +342,13 @@ ifepm.dashboard.make_item_container_id=function(item_id){
   return "container_" + item_id;
 };
 
-
 /*
-* @class 代表在仪表盘中的一个图表以及其代表的搜索条件和数据
+* @class 代表一个图标的搜索条件
 *
 * */
-function Graph(){
-    /*@field 全局唯一的ID号*/
+
+function Condition(){
+    /*@field 全局唯一的ID*/
     this.id=null;
     /*@field 用户自定义的观察点，观察点是数个KPI输入点的集合 */
     this.entity_group=null;
@@ -274,10 +357,10 @@ function Graph(){
     /*@field 图中使用的KPI的名称*/
     this.kpi_name=null;
     /*
-    @field 计算类型, ACCUMULATE or AVERAGE
-    ACCUMULATE 将获取到的同类数据做加法合并
-    AVERAGE 将获取到的同类数据做除法平均
-    * */
+     @field 计算类型, ACCUMULATE or AVERAGE
+     ACCUMULATE 将获取到的同类数据做加法合并
+     AVERAGE 将获取到的同类数据做除法平均
+     * */
     this.calculate_type=null;
 
     /*@field 监测时间开始*/
@@ -285,12 +368,50 @@ function Graph(){
 
     /*@field 监测时间结束*/
     this.end = null;
+    /**/
+    this.count = null;
+};
+/*
+* @class 代表在仪表盘中的一个图表以及其代表的搜索条件和数据
+*
+* */
+function Graph(){
+    /*@field 全局唯一的ID号*/
+    this.id=null;
+    /*@field 用户自定义的观察点，观察点是数个KPI输入点的集合 */
+    //this.entity_group=null;
+    /*@field 图中使用的KPI的ID*/
+    //this.kpi_id=null;
+    /*@field 图中使用的KPI的名称*/
+    //this.kpi_name=null;
+    /*
+    @field 计算类型, ACCUMULATE or AVERAGE
+    ACCUMULATE 将获取到的同类数据做加法合并
+    AVERAGE 将获取到的同类数据做除法平均
+    * */
+    //this.calculate_type=null;
+
+    /*@field 监测时间开始*/
+    //this.from = null;
+
+    /*@field 监测时间结束*/
+    //this.end = null;
 
     /*@field 查看间隔，指数据将在怎么*/
-    this.interval = null;
-    this.name = null;
+    //this.interval = null;
+    //this.name = null;
     this.title = null;
     this.sequence = null;
+
+    /*@field gridview 的位置*/
+    this.row = null;
+    this.col = null;
+    this.sizex = null;
+    this.sizey = null;
+
+    /**/
+    this.chart_type = null;
+
     this.placeholder = ifepm.template.view_placeholder;
     this.container=  function(graph_item){
         return ifepm.template.view
@@ -299,17 +420,14 @@ function Graph(){
             .replace(/!title!/g,graph_item.title)
             .replace(/!item_container_id!/g,ifepm.dashboard.make_item_container_id(graph_item.id))
             .replace(/!attr!/g,ifepm.config.graph_indicator)
-            .replace(/!name!/g,graph_item.name)
-            .replace(/!kpi_name!/g,graph_item.kpi_name)
-            .replace(/!entity_group!/g,graph_item.entity_group)
-            .replace(/!from!/g,graph_item.from)
-            .replace(/!to!/g,graph_item.end)
-            .replace(/!calculate_type!/g,graph_item.calculate_type)
+            //.replace(/!name!/g,graph_item.name)
+            //.replace(/!kpi_name!/g,graph_item.kpi_name)
+            //.replace(/!entity_group!/g,graph_item.entity_group)
+            //.replace(/!from!/g,graph_item.from)
+            //.replace(/!to!/g,graph_item.end)
+            //.replace(/!calculate_type!/g,graph_item.calculate_type)
     };
 }
-
-
-
 
 //when user sorts the dashboard layout, the sequence should be updated in the server side
 ifepm.dashboard.update_item_sequence= function(container_selector){
@@ -329,20 +447,25 @@ ifepm.dashboard.update_item_sequence= function(container_selector){
     })
 };
 
-
-
-
-
 //append a new dashboard item to the main dashboard container
 ifepm.dashboard.create_dashboard=function(){
     var container_selector=ifepm.config.container_selector;
+    ifepm.dashboard_widget.remove_all_widgets();
     $(container_selector).children().remove();
     if (Object.keys(ifepm.dashboard.graphs).length>0){
 
                 for(index in ifepm.dashboard.graph_sequence){
-                     var graph_id = ifepm.dashboard.graph_sequence[index]
+                    var graph_id = ifepm.dashboard.graph_sequence[index];
                     $(container_selector).append(
-                        ifepm.dashboard.graphs[graph_id].container(ifepm.dashboard.graphs[graph_id]))
+                        ifepm.dashboard.graphs[graph_id].container(ifepm.dashboard.graphs[graph_id]));
+
+                    var option = {};
+                    option.id = graph_id;
+                    option.row = ifepm.dashboard.graphs[graph_id].row;
+                    option.col = ifepm.dashboard.graphs[graph_id].col;
+                    option.sizex = ifepm.dashboard.graphs[graph_id].sizex;
+                    option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
+                    ifepm.dashboard_widget.setSize(option);
                 }
                 //configure the sortable
                 $(container_selector).sortable(
@@ -352,17 +475,14 @@ ifepm.dashboard.create_dashboard=function(){
                         stop:function(){ifepm.dashboard.update_item_sequence(container_selector)}
                     }
                 );
-                $(container_selector).disableSelection();
+                //$(container_selector).disableSelection();
     }
     else {
         $(container_selector).append((new Graph()).placeholder)
     }
+
+    //ifepm.dashboard_widget.init();
 };
-
-
-
-
-
 
 ifepm.dashboard.init=function(id){
     ifepm.dashboard.graphs = {};
@@ -374,24 +494,28 @@ ifepm.dashboard.init=function(id){
             url:ifepm.config.get_dashboard_items_url.url,
             data:{id:id},
             success:function(data){
-
+                //ifepm.dashboard.clear_all_timer();
                 for(var i in data){
                     var graph_item = new Graph();
                     graph_item.id = data[i].id
-                    graph_item.name = data[i].name
+                    //graph_item.name = data[i].name
                     graph_item.title = data[i].title
-                    graph_item.calculate_type = data[i].calculate_type
-                    graph_item.from =data[i].start
-                    graph_item.end = data[i].end
-                    graph_item.type = data[i].type
-                    graph_item.entity_group = data[i].entity_group
-                    graph_item.kpi_id = data[i].kpi_id
-                    graph_item.kpi_name = data[i].kpi_name
-                    graph_item.interval = data[i].interval
+                    //graph_item.calculate_type = data[i].calculate_type
+                    //graph_item.from =data[i].start
+                    //graph_item.end = data[i].end
+                    graph_item.chart_type = data[i].chart_type
+                    //graph_item.entity_group = data[i].entity_group
+                    //graph_item.kpi_id = data[i].kpi_id
+                    //graph_item.kpi_name = data[i].kpi_name
+                    //graph_item.interval = data[i].interval
                     graph_item.sequence = data[i].sequence
                     graph_item.dashboard_id = data[i].dashboard_id
-
+                    graph_item.row = data[i].row;
+                    graph_item.col = data[i].col;
+                    graph_item.sizex = data[i].sizex;
+                    graph_item.sizey = data[i].sizey;
                     ifepm.dashboard.graphs[data[i].id]=graph_item;
+                    //ifepm.dashboard.setTimer(ifepm.dashboard.graphs[data[i].id]);
                     ifepm.dashboard.graph_sequence.push(data[i].id)
 
                 }
@@ -402,7 +526,20 @@ ifepm.dashboard.init=function(id){
     );
 };
 
+ifepm.dashboard.on_view_added = function(graph){
+    ifepm.dashboard.graphs[graph.id] = graph;
+    ifepm.dashboard.graph_sequence.push(graph.id);
+}
 
+ifepm.dashboard.on_view_deleted = function(id){
+    delete ifepm.dashboard.graphs[id];
+
+    var value = Number(id);
+    var index = ifepm.dashboard.graph_sequence.indexOf(value);
+    if(index >= 0){
+        ifepm.dashboard.graph_sequence.splice(index,1);
+    }
+}
 
 ifepm.dashboard.delete=function(id,options){
     $.ajax({
@@ -445,7 +582,10 @@ ifepm.dashboard.delete_item=function(item_id,options){
 ifepm.dashboard.add_item=function(dashboard_item,options){
     $.ajax({
         url:ifepm.config.dashboard_item_create_url.url,
-        data:{dashboard_item:dashboard_item},
+        data:{
+            dashboard_item: dashboard_item.db,
+            conditions: dashboard_item.conditions
+        },
         crossDomain:ifepm.config.dashboard_item_create_url.crossDomain,
         dataType:ifepm.config.dashboard_item_create_url.dataType,
         success:options.success,
@@ -453,6 +593,19 @@ ifepm.dashboard.add_item=function(dashboard_item,options){
         complete:options.complete
     })
 };
+
+ifepm.dashboard.save_grid_pos=function(sequence,options){
+    $.ajax({
+        url:ifepm.config.dashboard_item_save_grid_url.url,
+        data:{sequence: sequence},
+        crossDomain:ifepm.config.dashboard_item_save_grid_url.crossDomain,
+        dataType:ifepm.config.dashboard_item_save_grid_url.dataType,
+        success:options.success,
+        error:options.error,
+        complete:options.complete
+    })
+}
+
 
 
 

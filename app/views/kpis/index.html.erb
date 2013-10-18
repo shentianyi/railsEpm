@@ -1,48 +1,84 @@
-<div class="sub-middle sub-middle-manage">
-     <h3 class="text-center">管理我的KPI </h3>
-</div>
-<div class="middle clearfix">
-     <%= render :partial=>'kpi_categories/left_menu'%>
-     <%= render :partial=>'kpis/new'%>
-     <div class="right-content pull-left" id="right-content">
-          <table class="manage-kpi" id="kpi-table">
-               <tr>
-                    <th>ID</th>
-                    <th>类别</th>
-                    <th>名称</th>
-                    <th width="221px">描述</th>
-                    <th>周期</th>
-                    <th>目标值</th>
-                    <th>单位</th>
-                    <th>方向</th>
-                    <th width="50px">计算型</th>
-                    <th width="50px" colspan="2">操作</th>
-               </tr>
+<%= render :partial=>'kpi_categories/left_menu'%>
+<%= render :partial=>'kpis/new'%>
+<div class="manage-right-content" id="manage-right-content">
+
+     <div class="manage-btn-group" id="manage-btn-group">
+          <a class="btn btn-primary" id="kpi-add-show"><i class="icon-plus"></i> KPI</a>
+          <a class="btn btn-primary kpi-library-btn" id="kpi-library-btn"><i class="icon-th-list"></i><%= t 'manage.kpi.kpi_library'%></a>
+          <p id="manage-edit-target" >
+
+          </p>
+          <i class="icon-pencil"></i>
+          <input type="text"/>
+          <span><%= t 'manage.base.enter_confirm'%>&nbsp;&nbsp;&nbsp;&nbsp;<%= t 'manage.base.esc_cancel'%></span>
+     </div>
+
+     <div class="manage-right-list">
+          <div class="right-list-top-control" id="right-list-top-control">
+               <input type="checkbox" id="manage-total-check"/>
+               <a class="btn" id="manage-item-remove"><%= t 'manage.base.delete_btn'%></a>
+               <a class="btn" id="manage-item-edit"><%= t 'manage.base.edit_btn'%></a>
+          </div>
+
+          <ul id="manage-sort-list" class="manage-sort-list">
                <%@kpis.each_with_index do |kpi,i|%>
-               <tr id="<%= kpi.id%>">
-                    <td align="center" class="kpi-order-id"><%= i+1%></td>
-                    <td align="center" class="kpi-entity"><%= kpi.category_name%></td>
-                    <td align="center"><%= kpi.name%></td>
-                    <td align="center"><%= kpi.description%></td>
-                    <td align="center"><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
-                    <td align="center" class="kpi-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target)%></td>
-                    <td align="center"><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></td>
-                    <td align="center"><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
-                    <%if kpi.is_calculated%>
-                    <td align="center" title="<%= kpi.formula_string%>">是</td>
-                    <%else%>
-                    <td align="center" >否</td>
-                    <%end%>
-                    <td align="center"><div class="manage-operate manage-operate-edit" data-belong="<%= kpi.id%>" onclick="edit_kpiItem(event)"></div><a class="btn btn-success manage-operate-reverse  hide" data-belong="<%= kpi.id%>" onclick="finish_editKPI(event)">完成</a></td>
-                    <td align="center"><div class="manage-operate manage-operate-del" data-belong="<%= kpi.id%>" onclick="remove_kpiItem(event)"></div><a class="btn manage-operate-reverse  hide" id="cancel-edit-kpi-<%= kpi.id%>" data-belong="<%= kpi.id%>" onclick="cancel_editKPI(event)">取消</a></td>
-               </tr>
+               <li id="<%= kpi.id%>">
+                    <p class="sort-handle">
+                         :
+                    </p>
+                    <input type="checkbox" />
+                    <table class="category">
+                         <tr>
+                              <td title='<%= kpi.name%>'><%= kpi.name%></td>
+                              <td ><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
+                              <td ><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
+                              <td class="manage-kpi-target">
+                                   <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
+                              <input type='text' effect_on="<%= kpi.id%>"/>
+                              </td>
+                              <%if kpi.is_calculated%>
+                              <td title="<%= kpi.formula_string%>"><%= kpi.formula_string%></td>
+                              <%else%>
+                              <td><%= t 'manage.kpi.not_calculate_type'%></td>
+                              <%end%>
+                         </tr>
+                         <tr>
+                              <td title='<%= kpi.description%>'><%= kpi.description%></td>
+                              <td><%= t 'manage.kpi.frequency'%></td>
+                              <td><%= t 'manage.kpi.trend'%></td>
+                              <td><%= t 'manage.kpi.target'%></td>
+                              <td><%= t 'manage.kpi.calculate_type'%></td>
+                         </tr>
+                    </table>
+               </li>
                <%end%>
-          </table>
-          <a class="btn manage-add-btn btn-primary pull-right" onclick="show_addBlock(event)" data-manage="kpi">添加KPI</a>
+          </ul>
+
      </div>
 </div>
+
+<div class="kpi-library" id="kpi-library">
+     <div>
+          <div class="kpi-library-inner">
+               <div class="left Accordion" id="kpi-library-inner-left">
+                    
+               </div>
+               <div class="right">
+                    <ul class="library-chosen-kpi" id="library-chosen-kpi">
+
+                    </ul>
+                    <div>
+                         <a class="btn" id="library-cancel"><%= t 'manage.base.cancel_btn'%></a>
+                         <a class="btn btn-primary" id="library-add"><%= t 'manage.base.add_btn'%></a>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>
+
 <script type="text/javascript">
      $(document).ready(function() {
-          init_manage();
+          MANAGE.init();
+          MANAGE.kpi.init();
      })
 </script>

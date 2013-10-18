@@ -34,16 +34,15 @@ if (!Date.prototype.toISOString) {
     };
 };
 
-function system_error(){
-    alert("我们遇到了点小麻烦，管理员已经开始工作了，请耐心等待片刻后重试！");
-}
-var config={
+
+
+var config1={
     //Container of the dashboards
-  db_container_selector:'#sty-dashboards',
+  db_container_selector:'#manage-left-menu',
     //a selector to select a dashboard node from the container
   db_item_filter:".sty-db-node",
   db_single_item_filter:function(id){
-      return "li[obj_id~=\"" + id + "\"]";
+      return "li[number~=\"" + id + "\"]";
   },
     //a class represents the element has been selected
   selected_class:'active',
@@ -61,8 +60,9 @@ var config={
     //the attribute name which hold the actual id of the object
     db_id_field:'',
     view_id_field:''
-
 };
+
+$.extend(config,config1);
 
 var menu_selector = menu_selector || new ActiveSelect(config.selected_class)
 
@@ -77,12 +77,12 @@ function page_load(){
 
 function select_dashboard(id){
     current_dashboard_id=id;
-
     menu_selector.select_single_node(config.db_container_selector,
         config.db_item_filter,
         config.db_single_item_filter(id));
 
-    ifepm.dashboard.init(id)
+    MANAGE.left.manage_left_edit_init();
+    ifepm.dashboard.init(id);
 }
 
 var dashboard_list_item_template =
@@ -92,18 +92,39 @@ var dashboard_list_item_template =
         '</li>';
 
 
-function prepare_to_create_db_view(){
+function prepare_to_create_db_view(post){
     var dashboard_item = {};
+    dashboard_item.conditions = [];
+
+    /*
     dashboard_item.entity_group = get_entity_group();
     dashboard_item.kpi_id= get_kpi_id();
     dashboard_item.calculate_type = get_calculate_type();
     dashboard_item.time_string= get_time_string();
-    dashboard_item.interval = get_interval();
-    dashboard_item.name = get_name();
-    dashboard_item.title = get_title();
-    dashboard_item.type = get_type();
-    dashboard_item.dashboard_id= get_dashboard_id();
-    return dashboard_item;
+    */
+    dashboard_item.db = {};
+    dashboard_item.db.interval = post.interval;
+    //dashboard_item.db.name = null;
+    dashboard_item.db.title = post.dashboard_name;
+    dashboard_item.db.chart_type = post.type;
+    dashboard_item.db.dashboard_id= post.dashboard_id;
+
+    /*
+    * Test
+    * */
+    for(var i in post.series){
+        var condition = {};
+        condition.entity_group = post.series[i].view;
+        condition.kpi_id = post.series[i].kpi;
+        condition.calculate_type = get_cal_type(post.series[i].average);
+        //condition.time_string = post.series[i].begin_time +"|" + post.series[i].end_time;
+        condition.time_string = get_time_string_by_twocar(post.series[i].begin_time,post.series[i].end_time);
+        condition.dashboard_item_id = null;
+        condition.count = post.series[i].count;
+        dashboard_item.conditions.push(condition);
+    }
+    //return dashboard_item;
+    db_view_create(dashboard_item);
 }
 
 function get_name(){
@@ -115,7 +136,7 @@ function get_title(){
 }
 
 function get_type(){
-    return menu_selector.get_first_in_container("#",'div[class~="active"]>label').val();
+    return menu_selector.get_first_in_container("#view-chart-type",'div>label[class~="active"]').val();
 }
 
 function get_entity_group(){
@@ -128,33 +149,58 @@ function get_calculate_type(){
     return $("input:radio[name='chartRadios']:checked").val()=="0"?"AVERAGE":"ACCUMULATE";
 }
 
+function get_cal_type(method){
+    switch (method){
+        case "1":
+            return "ACCUNULATE";
+            break;
+        case "2":
+            return "AVERAGE";
+            break;
+        default :
+            return null
+            break;
+    }
+}
+
 function get_dashboard_id(){
     return current_dashboard_id;
 }
 
+function get_time_string_by_twocar(start,end){
+    var pattern=new RegExp("^[0-9)]");
+    if(pattern.test(start)){
+        return start + "|" + end;
+    }else{
+        return start;
+    }
+
+    //return connect_time_str(start,end);
+}
+
 function get_time_string(){
     var from = $("#from").datepicker("getDate")
-    var fromTime = $.timePicker("#fromTime").getTime();
-    if (fromTime){
+    //var fromTime = $.timePicker("#fromTime").getTime();
+    /*if (fromTime){
         from.setHours(fromTime.getHours());
         from.setMinutes(fromTime.getMinutes());
         from.setSeconds(fromTime.getSeconds());
-    }
+    }*/
 
     var to =$( "#to" ).datepicker("getDate");
-    var toTime = $.timePicker("#toTime").getTime();
+    /*var toTime = $.timePicker("#toTime").getTime();
     if (toTime){
         to.setHours(toTime.getHours());
         to.setMinutes(toTime.getMinutes());
         to.setSeconds(toTime.getSeconds());
         to.setMilliseconds(toTime.getMilliseconds());
     }
-    else {
-        to.setHours(23);
-        to.setMinutes(59);
-        to.setSeconds(59);
-        to.setMilliseconds(999);
-    }
+    else {*/
+    //to.setHours(23);
+    //to.setMinutes(59);
+    //to.setSeconds(59);
+    //to.setMilliseconds(999);
+    //}
 
     return connect_time_str(from ,to);
 }
@@ -173,21 +219,26 @@ function get_interval(){
 
 
 
-
 function db_view_create(view){
     ifepm.dashboard.add_item(view,{success:db_view_create_callback})
 }
 
 function db_view_create_callback(data){
-    if(data.result){
+    /*if(data.result){
         slide_box("添加成功",true);
         close_dash();
-        if(current_dashboard_id){
-            ifepm.dashboard.init(current_dashboard_id)
+        if(data.id){
+            //ifepm.dashboard.init(current_dashboard_id)
         }
+    }*/
+    if(data){
+        $("#dashboard-add-page").css("display","none");
+        MessageBox("Create dashboard item success","top","success");
+        //close_dash();
+        ifepm.dashboard_widget.add(data);
     }
     else{
-        slide_box("新建时发生错误，请选择一个视角后再新建",false)
+        MessageBox("Delete dashboard item failed","top","warning");
     }
 
 }
@@ -199,12 +250,17 @@ function db_view_delete(id){
 }
 
 function db_view_delete_callback(data){
+    MessageBox("Delete dashboard item success","top","success");
+    ifepm.dashboard.on_view_deleted(data.id);
+    ifepm.dashboard_widget.remove_widget(ifepm.config.container_selector + " "+config.view_id_filter(data.id));
+    /*
     var to_delete_view = menu_selector.get_first_in_container(
         ifepm.config.container_selector,
         config.view_id_filter(data.id));
     if(to_delete_view){
         to_delete_view.remove();
     }
+    */
 }
 
 function db_view_delete_error_callback(jqXhr){
@@ -220,7 +276,7 @@ function dashboard_delete(id){
 }
 
 function dashboard_delete_callback(data){
-    slide_box("仪表盘已经删除",true);
+    MessageBox("Delete dashboard success","top","success");
       var item_obj =menu_selector.get_first_in_container(
           config.db_container_selector,
           config.db_single_item_filter(data.id)) ;
@@ -240,14 +296,14 @@ function dashboard_create_callback(data){
     //insert a new node in the dashboard column
     //select it
     if(data.result){
-        slide_box("添加成功",true)
+        MessageBox("Add dashboard success","top","success");
         var new_node = dashboard_list_item_template.replace(/!id!/g,data.object["id"]).replace(/!name!/,data.object["name"])
         $(config.db_container_selector).append(new_node);
         close_createEntity();
         select_dashboard(data.id);
     }
     else {
-        slide_box("添加仪表盘时出错了",false)
+        MessageBox("Delete dashboard failed","top","warning");
     }
 }
 
@@ -258,8 +314,6 @@ function dashboard_create_error_callback(jqXhr){
 
 
 //Main
-
-
 var date_picker_option =  {
     showOtherMonths : true,
     selectOtherMonths : true,
@@ -271,34 +325,44 @@ var date_picker_option =  {
     };
 
 
-function init_time_picker(){
-    $("#fromTime,#toTime").timePicker({
+/*function init_time_picker(){
+    $("#fromTime,#toTime").datepicker({
         step:60
     });
-}
+}*/
 
 function init_date_picker(){
-    $("#from").datepicker(
+    /*$("#from").datepicker(
         date_picker_option
     );
 
     $("#to").datepicker(
         date_picker_option
-    );
+    );*/
+
+    new DATE_PICKER["90"]("#from").datePicker();
+    new DATE_PICKER["90"]("#to").datePicker();
+}
+
+//grid view
+function init_grid(){
+    ifepm.dashboard_widget.init();
 }
 
 function init_component(){
-    init_time_picker();
+    //init_time_picker();
+    var lenght = $("ul.manage-left-menu").children().length;
+    if(lenght > 2){
+        //$("ul.manage-left-menu").children("[number]:first").addClass("active");
+        var id = $("ul.manage-left-menu").children("[number]:first").attr("number");
+        select_dashboard(id);
+    }
+
     init_date_picker();
+    init_grid();
 }
 
-
-
-
-
-
-
-
-
-
-
+//save all the pos and size after move
+function on_dragstop(event,ui){
+    ifepm.dashboard_widget.drag_stop();
+};

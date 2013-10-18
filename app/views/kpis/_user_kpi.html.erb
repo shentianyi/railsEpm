@@ -1,33 +1,18 @@
-<table class="manage-kpi" id="kpi-table">
-     <tr>
-          <th>ID</th>
-          <th>类别</th>
-          <th>名称</th>
-          <th width="221px">描述</th>
-          <th>周期</th>
-          <th>目标值</th>
-          <th>单位</th>
-          <th>方向</th>
-          <th width="50px">计算型</th>
-          <th width="50px" colspan="2">操作</th>
-     </tr>
+<ul class="left">
      <%@user_kpis.each_with_index do |kpi,i|%>
-     <tr id="<%= kpi.user_kpi_item_id%>">
-          <td align="center" class="kpi-order-id"><%= i+1%></td>
-          <td align="center"><%= kpi.category_name%></td>
-          <td align="center"><%= kpi.name%></td>
-          <td align="center"><%= kpi.description%></td>
-          <td align="center"><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
-          <td align="center" class="kpi-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target)%></td>
-          <td align="center"><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></td>
-          <td align="center"><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
-          <%if kpi.is_calculated%>
-          <td align="center" title="<%= kpi.formula_string%>">是</td>
-          <%else%>
-          <td align="center" >否</td>
-          <%end%>
-          <td align="center"><div class="manage-operate manage-operate-edit" data-belong="<%= kpi.user_kpi_item_id%>" onclick="edit_delivery(event)"></div><a class="btn btn-success manage-operate-reverse  hide" data-belong="<%= kpi.user_kpi_item_id%>" onclick="finish_editDelivery(event)">完成</a></td>
-          <td align="center"><div class="manage-operate manage-operate-del" data-belong="<%= kpi.user_kpi_item_id%>" onclick="remove_delivery(event)"></div><a class="btn manage-operate-reverse  hide" id="cancel-edit-kpi-<%= kpi.user_kpi_item_id%>" data-belong="<%= kpi.user_kpi_item_id%>" onclick="cancel_editDelivery(event)">取消</a></td>
-     </tr>
+     <li id="<%= kpi.user_kpi_item_id%>" kpi_id="<%=kpi.id%>">
+          <table>
+              <tr>
+                  <td title="<%= kpi.name%>"><%= kpi.name%></td>
+                  <td><input type="text" value="<%= kpi.user_kpi_item_target%>" id="<%= kpi.user_kpi_item_id%>"/></td>
+              </tr>
+              <tr>
+                  <td title="<%= kpi.description%>"><%= kpi.description%></td>
+                  <td>Target</td>
+              </tr>
+          </table>
+          <i class="icon-trash"></i>
+     </li>
      <%end%>
-</table>
+</ul>
+

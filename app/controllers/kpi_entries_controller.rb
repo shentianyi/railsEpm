@@ -2,7 +2,6 @@
 class KpiEntriesController < ApplicationController
   # create or update kpi entry
   before_filter :get_ability_category,:only=>[:analyse],:if=>lambda{|c|  request.get?}
-  before_filter :get_kpis_by_category,:only=>[:analyse,:kpi_option],:if=>lambda{|c|   action_name=="analyse" ? request.get?  : true}
   def entry
     if request.post?
       @kpi_entry=KpiEntriesHelper.create_update_kpi_entry params
@@ -27,17 +26,12 @@ class KpiEntriesController < ApplicationController
       @entity_groups=get_user_entity_groups
     else
       msg=Message.new
-      if data=KpiEntryAnalyseHelper.get_kpi_entry_analysis_data(params[:kpi],params[:entity_group],params[:startTime],params[:endTime],params[:average]=="true")
+      if data=KpiEntryAnalyseHelper.get_kpi_entry_analysis_data(params[:kpi],params[:entity_group],params[:startTime],params[:endTime],params[:average]=="true",params[:interval].to_i)
       msg.result=true
       msg.object=data
       end
       render :json=>msg
     end
-  end
-
-  def kpi_option
-    @options=params[:options]
-    @prompt=!params[:prompt].nil?
-    render :partial=>'select_option'
-  end
+  end 
+  
 end

@@ -7,11 +7,16 @@
           <%= csrf_meta_tags %>
      </head>
      <body>
-          <div class="wrap-page">
+          <%= render :partial=>'shares/user_aside'%>
+          <article class="wrap-main" id="wrap-main">
                <%= render :partial=>'shares/menu'%>
                <%= yield %>
-          </div>
+          </article>
           <%= render :partial=>'shares/message_box'%>
            <%= render :partial=>'shares/slide_box'%>
      </body>
+     <script type="text/javascript">
+           I18n.defaultLocale = "<%= I18n.default_locale %>";
+           I18n.locale = "<%= I18n.locale %>";
+     </script>
 </html>

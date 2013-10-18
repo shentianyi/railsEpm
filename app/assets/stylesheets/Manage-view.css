@@ -1,0 +1,94 @@
+/********************************************************************************************************* 分类系列
+*******************************************************************************************************************/
+.manage-left-menu[type="entity"] li:first-of-type{
+    text-align:center;
+    font-weight:lighter;
+    font-size:22px;
+    color:#5FA9DA;
+    padding:32px 0 10px;
+}
+/********************************************************************************************************* 右边的头部
+*******************************************************************************************************************/
+.manage-btn-group[special='view']>a{
+    width:120px;
+}
+/********************************************************************************************************* 右边的内容部分
+*******************************************************************************************************************/
+.assign-entity-wrap{
+    position:relative;
+    top:53px;
+}
+.assign-entity-wrap>ul{
+    list-style-type:none;
+    padding:0 0 0 31px;
+    margin:0px;
+}
+.assign-entity-wrap>ul>li{
+    padding:15px 0;
+    border-bottom:1px solid #ddd;
+    width:50%;
+    position:relative;
+}
+.assign-entity-wrap>ul>li>h3{
+    font-weight:lighter;
+    font-size:18px;
+    color:#5FA9DA;
+    margin:0px;
+    cursor:pointer;
+    transition:color 0.35s ease-out;
+}
+.assign-entity-wrap>ul>li>h3:hover{
+    color:#F5A133;
+}
+.assign-entity-wrap>ul>li>h3:hover+i{
+    display:block;
+}
+.assign-entity-wrap>ul>li>i{
+    position:absolute;
+    right:20px;
+    top:20px;
+    color:rgba(0,0,0,0.3);
+    display:none;
+    pointer-events:auto;
+    cursor:pointer;
+}
+.assign-entity-wrap>ul>li>i:hover{
+    display:block;
+    color:rgba(0,0,0,0.7)
+}
+/*********************************************************************************************************  添加部分
+*******************************************************************************************************************/
+.manage-user-add[special="entity"]{
+    background-color:#333;
+    transition:left 0.3s ease-out;
+}
+.manage-user-add[special="entity"]>i{
+    color:white;
+}
+.manage-user-add[special="entity"]>p{
+    margin-top:32px;
+    cursor:default;
+    text-align:center;
+    color:#ddd;
+    font-size:22px;
+}
+.manage-user-add[special="entity"]>ul{
+    margin:0;
+    padding:37px 0 0 0px;
+    list-style-type: none;
+}
+.manage-user-add[special="entity"]>ul h3{
+    font-weight:lighter;
+    font-size:16px;
+    color:#5194CD;
+    margin:0px;
+    padding:12px 5px;
+    word-break:break-all;
+    word-wrap:break-word;
+    text-align:center;
+    cursor:pointer;
+    transition:color 0.3s ease-out;
+}
+.manage-user-add[special="entity"]>ul h3:hover{
+    color:#F5A133;
+}

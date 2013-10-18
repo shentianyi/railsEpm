@@ -26,6 +26,7 @@ module IFEpm
 
     # Activate observers that should always be running.
     config.active_record.observers = :tenant_observer,:user_observer,:kpi_observer,:kpi_entry_observer
+    config.active_record.observers+=['Admin::KpiTemplateObserver']
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
@@ -33,7 +34,7 @@ module IFEpm
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
+    # config.i18n.default_locale = "zh-CN"
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -60,5 +61,6 @@ module IFEpm
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    config.assets.paths << "#{Rails.root}/app/assets/fonts"
   end
 end

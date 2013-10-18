@@ -1,35 +1,15 @@
-<div class="left-category pull-left">
-     <ul class="manage-group" id="manage-group-kpi">
-          <li>
-               <h3 class="no-margin">类别</h3>
-          </li>
-          <%@categories.each do |category|%>
-          <li class="<%= category.id==@active_category_id ? 'active' : ''%>">
+<ul class="manage-left-menu" id="manage-left-menu" type="category">
+       <li><%= t 'manage.kpi.title'%></li>
+       <li id="manage-menu-add">
+           <input type="text" />
+           <span><i class="icon-plus"></i> <%= t 'manage.kpi.category'%></span>
+           <p class="manage-add-tooltip"><%= t 'manage.base.enter_confirm'%><br /><%= t 'manage.base.esc_cancel'%></p>
+       </li>
 
-               <i class="icon-remove hide pull-left" number="<%= category.id%>" belong="kpi" onclick="remove_leftNav(event)"></i>
-               <i class="icon-pencil hide pull-left" number="<%= category.id%>" belong="kpi" onclick="edit_leftNav(event)"></i>
-               <a href="../kpis?p=<%= category.id%>"  number="<%= category.id%>" belong="kpi"><%= category.name %></a>
-
-          </li>
-          <%end%>
-          <li>
-               <button class="btn btn-primary" onclick="create_entityBlock()">
-                    创建类别
-               </button>
-          </li>
-          <div class="absolute creat-entity-block hide" id="creatEntity-block">
-               <p>
-                    创建类别
-               </p>
-               <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
-               <input type="text" id="creat-newEntity" onkeyup="create_entity(event)"/>
-          </div>
-          <div class="absolute creat-entity-block hide" id="edit-block">
-               <p>
-                    修改
-               </p>
-               <i class="icon-remove pull-right" onclick="close_editBlock()"></i>
-               <input type="text" id="change-leftNavi" onkeyup="change_leftNavi(event)"/>
-          </div>
-     </ul>
-</div>
+       <%@categories.each do |category|%>
+                 <li class="<%= category.id==@active_category_id ? 'active' : ''%>" number="<%= category.id%>" title="<%= category.name %>">
+                        <i class="icon-trash icon-item"></i>
+                        <a href="../kpis?p=<%= category.id%>"><%= category.name %></a>
+                 </li>
+       <%end%>
+</ul>

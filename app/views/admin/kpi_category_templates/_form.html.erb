@@ -1,0 +1,26 @@
+<%= form_for(@admin_kpi_category_template) do |f| %>
+  <% if @admin_kpi_category_template.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@admin_kpi_category_template.errors.count, "error") %> prohibited this admin_kpi_category_template from being saved:</h2>
+
+      <ul>
+      <% @admin_kpi_category_template.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name,'名称' %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description,'描述' %><br />
+    <%= f.text_field :description %>
+  </div>
+   
+  <div class="actions">
+    <%= f.submit  '提交' %>
+  </div>
+<% end %>

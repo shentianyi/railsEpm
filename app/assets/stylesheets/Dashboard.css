@@ -1,0 +1,60 @@
+/********************************************************************************************************* 分类系列
+*******************************************************************************************************************/
+.manage-left-menu[type="dashboard"] li:first-of-type{
+    text-align:center;
+    font-weight:lighter;
+    font-size:25px;
+    color:#5FA9DA;
+    padding:28px 0 10px;
+}
+.manage-btn-group>a{
+    padding:8px 15px;
+}
+/********************************************************************************************************* dashboard item
+*******************************************************************************************************************/
+.dashboard-block{
+    top:62px;
+    left:21px;
+}
+
+.db-add-show{
+    width:120px !important;
+}
+
+.dashBoard-show{
+    list-style-type: none;
+    padding-bottom:50px;
+}
+.dashBoard-show>li{
+    border:1px solid #ddd;
+    padding:2px 0;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+}
+.dashboard-moreDetail{
+    padding:6px 7px;
+    position:relative;
+    border-bottom:1px solid #ddd;
+}
+.dashboard-moreDetail>p{
+    margin:0px;
+    width:250px;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+    font-size:16px;
+    color:rgba(0,0,0,0.5);
+}
+.dashboard-moreDetail>i{
+    position:absolute;
+    top:8px;
+    right:6px;
+    pointer-events:auto;
+    color:rgba(0,0,0,0.15);
+    cursor:pointer;
+    transition:color 0.35s ease-out;
+}
+.dashboard-moreDetail>i:hover{
+    color:rgba(0,0,0,0.9);
+}

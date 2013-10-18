@@ -15,21 +15,15 @@ module KpiEntriesHelper
       end
     return kpi_entry
     end
-  # rescue Exception=>e
-  # puts e.message
-  # end
   end
 
   # calculate kpi parent value
   def self.calculate_kpi_parent_value kpi_entry_id=nil,entry=nil
     if entry=(kpi_entry_id.nil? ? entry : KpiEntry.where(:id=>kpi_entry_id).first)
-      puts "1.----#{entry.to_json}"
       if calcualted_kpis=Kpi.parent_kpis_by_id(entry.kpi_id)
-             puts "2.---#{calcualted_kpis.to_json}"
         calcualted_kpis.each do |kpi|
           kpi_entry_at=reparse_entry_date(kpi.frequency,entry.parsed_entry_at)
           kpi_parsed_entry_at=parse_entry_date(kpi.frequency,kpi_entry_at)
-          puts "----#{kpi_entry_at}---#{kpi_parsed_entry_at}---#{entry.parsed_entry_at}"
           if kpi_parsed_entry_at==entry.parsed_entry_at
             f={}
             kpi.base_kpis.each do |base_bkpi|

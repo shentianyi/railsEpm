@@ -17,3 +17,5 @@
 /tmp
 /.idea/*
 /.project
+/uploadfiles/data/*.csv
+/uploadfiles/download/*.csv

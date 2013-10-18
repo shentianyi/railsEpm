@@ -1,34 +1,18 @@
-<div class="left-category pull-left">
-     <ul class="manage-group" id="manage-group-user">
-          <li>
-               <h3 class="no-margin">组织</h3>
-          </li>
 
-          <%@entities.each do |entity|%>
-          <li class="<%= entity.id==@active_entity_id ? 'active' : ''%>">
-               <i class="icon-remove hide pull-left" number="<%= entity.id%>" belong="entity" onclick="remove_leftNav(event)"></i>
-               <i class="icon-pencil hide pull-left" number="<%= entity.id%>" belong="entity" onclick="edit_leftNav(event)"></i>
-               <a href="../users?p=<%=entity.id%>" number="<%= entity.id%>" belong="entity"><%= entity.name %></a>
-          </li>
-          <%end%>
-          <li>
-               <button class="btn btn-primary" onclick="create_entityBlock()">
-                    创建组织
-               </button>
-          </li>
-          <div class="absolute creat-entity-block hide" id="creatEntity-block">
-               <p>
-                    创建组织
-               </p>
-               <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
-               <input type="text" id="creat-newEntity" onkeyup="create_Userentity(event)"/>
-          </div>
-          <div class="absolute creat-entity-block hide" id="edit-block">
-               <p>
-                    修改
-               </p>
-               <i class="icon-remove pull-right" onclick="close_editBlock()"></i>
-               <input type="text" id="change-leftNavi" onkeyup="change_leftNavi(event)"/>
-          </div>
-     </ul>
-</div>
+<ul class="manage-left-menu" id="manage-left-menu" type="group">
+    <li>Manage User</li>
+    <li id="manage-menu-add">
+        <input type="text"/>
+        <span><i class="icon-plus"></i> Entity</span>
+
+        <p class="manage-add-tooltip">Enter: confirm <br/>Esc: cancel</p>
+    </li>
+
+
+    <%@entities.each do |entity|%>
+    <li class="<%= entity.id==@active_entity_id ? 'active' : ''%>" title="<%= entity.name %>" number="<%= entity.id%>">
+        <i class="icon-trash icon-item"></i>
+        <a href="../users?p=<%=entity.id%>"><%= entity.name %></a>
+    </li>
+    <%end%>
+</ul>
