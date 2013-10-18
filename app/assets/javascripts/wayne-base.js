@@ -47,8 +47,10 @@ if(!Date.prototype.toWayneString){
        return{
             hour:year+"-"+month+"-"+day+" "+hour+":00",
             day:year+"-"+month+"-"+day,
+            week:year+"-"+month+"-"+day,
             month:year+"-"+month,
-            year:year
+            quarter:year+"-"+month,
+            year:year.toString()
        }
     }
 }
