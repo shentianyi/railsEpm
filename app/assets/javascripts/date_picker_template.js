@@ -12,7 +12,7 @@ DATE_PICKER.date_picker_template.prototype={
     constructor: DATE_PICKER.date_picker_template,
     weekStart: 1,
     autoclose: true,
-    todayBtn: false,
+    todayBtn: true,
     clearBtn: false,
     todayHighlight: true,
     language: 'en',
@@ -59,11 +59,11 @@ DATE_PICKER.date_picker_template.prototype={
     init_company: function (target,name,shortcut,index,dynamic_input,select_name) {
         if(name=="hour"){
             $(target).datetimepicker().one("show", function(){
-                $(this.target).datepicker('remove');
                 if( shortcut!=undefined && $(".table-condensed").attr("already-have-shortcut")!="yes"){
                        DATE_PICKER.shortcut_form(7,name,target,shortcut,index,dynamic_input,select_name);
                 }
-
+                $(this.target).datepicker('remove');
+                $(".datepicker").remove();
             });
             $(target).datetimepicker().on("change", function(){
                 $(this).attr("hide_value",$(this).val());
@@ -73,16 +73,13 @@ DATE_PICKER.date_picker_template.prototype={
                     DATE_PICKER.shortcut_supervise(target);
                 }
             });
-            $(target).datetimepicker().on("hide",function(){
-                $(".date-pick-dynamic").css("display","none");
-            });
         }
         else{
             $(target).datepicker().one("show", function(){
-                $(this.target).datetimepicker('remove');
                 $(".datepicker").find(".prev").text("").append($("<i />").addClass('icon-arrow-left'));
                 $(".datepicker").find(".next").text("").append($("<i />").addClass('icon-arrow-right'));
-
+                $(this.target).datetimepicker('remove');
+                $(".datetimepicker").remove();
                 if( shortcut!=undefined && $(".table-condensed").attr("already-have-shortcut")!="yes"){
                     if(name =="week"){
                         DATE_PICKER.shortcut_form(8,name,target,shortcut,index,dynamic_input,select_name);
@@ -93,7 +90,6 @@ DATE_PICKER.date_picker_template.prototype={
                 }
             });
             $(target).datepicker().on("show", function(){
-                $(this.target).datetimepicker('remove');
                 if(name =="week"){
                     $(".datepicker-days").find(".active").parent().addClass("week-tr-active");
                     $(".datepicker").bind("click",function(){
@@ -105,7 +101,6 @@ DATE_PICKER.date_picker_template.prototype={
                     $(".datepicker-days").find(".active").parent().removeClass("week-tr-active");
                     $(".datepicker-days").attr("week", "");
                 }
-
             });
             $(target).datepicker().on("change", function(){
                 $(this).attr("hide_value",$(this).val());
@@ -116,12 +111,117 @@ DATE_PICKER.date_picker_template.prototype={
                 }
 
             });
-            $(target).datepicker().on("hide",function(){
-                $(".date-pick-dynamic").css("display","none");
-            });
         }
     }
 }
+DATE_PICKER["90"]=function(target){
+    this.target = target;
+    this.name = "hour";
+    this.startIndex = 0;
+    this.shortcut = arguments[1];
+    this.format = "yyyy-mm-dd hh:ii";
+    this.calendarWeeks = undefined;
+    this.startView = "month";
+    this.minViewMode = undefined;
+    this.minView = "day";
+    this.initialDate = new Date(new Date().setMinutes(0));
+    this.dynamic_input="8";
+    this.select_name="Hours";
+    this.interval="90";
+};
+DATE_PICKER["90"].prototype=DATE_PICKER.date_picker_template.prototype;
+DATE_PICKER["90"].prototype.constructor=DATE_PICKER["90"];
+
+DATE_PICKER["100"]=function(target){
+    this.target = target;
+    this.name = "day";
+    this.startIndex = 1;
+    this.shortcut = arguments[1];
+    this.format = "yyyy-mm-dd";
+    this.calendarWeeks = false;
+    this.startView = "month";
+    this.minViewMode = "days";
+    this.minView = undefined;
+    this.initialDate = undefined;
+    this.dynamic_input="7";
+    this.select_name="Days";
+    this.interval="100";
+};
+DATE_PICKER["100"].prototype=DATE_PICKER.date_picker_template.prototype;
+DATE_PICKER["100"].prototype.constructor=DATE_PICKER["100"];
+
+DATE_PICKER["200"]=function(target){
+    this.target = target;
+    this.name = "week";
+    this.startIndex = 2;
+    this.shortcut = arguments[1];
+    this.format = "yyyy-mm-dd";
+    this.calendarWeeks = true;
+    this.startView = "month";
+    this.minViewMode = "days";
+    this.minView = undefined;
+    this.initialDate = undefined;
+    this.dynamic_input="4";
+    this.select_name="Weeks";
+    this.interval="200";
+};
+DATE_PICKER["200"].prototype=DATE_PICKER.date_picker_template.prototype;
+DATE_PICKER["200"].prototype.constructor=DATE_PICKER["200"];
+
+DATE_PICKER["300"]=function(target){
+    this.target = target;
+    this.name = "month";
+    this.startIndex = 3;
+    this.shortcut = arguments[1];
+    this.format = "yyyy-mm";
+    this.calendarWeeks = false;
+    this.startView = "year";
+    this.minViewMode = "months";
+    this.minView = undefined;
+    this.initialDate = undefined;
+    this.dynamic_input="3";
+    this.select_name="Months";
+    this.interval="300";
+};
+DATE_PICKER["300"].prototype=DATE_PICKER.date_picker_template.prototype;
+DATE_PICKER["300"].prototype.constructor=DATE_PICKER["300"];
+
+DATE_PICKER["400"]=function(target){
+    this.target = target;
+    this.name = "quarter";
+    this.startIndex = 4;
+    this.shortcut = arguments[1];
+    this.format = "yyyy-mm";
+    this.calendarWeeks = false;
+    this.startView = "year";
+    this.minViewMode = "months";
+    this.minView = undefined;
+    this.initialDate = undefined;
+    this.dynamic_input="3";
+    this.select_name="Quarters";
+    this.interval="400";
+};
+DATE_PICKER["400"].prototype=DATE_PICKER.date_picker_template.prototype;
+DATE_PICKER["400"].prototype.constructor=DATE_PICKER["400"];
+
+DATE_PICKER["500"]=function(target){
+    this.target = target;
+    this.name = "year";
+    this.startIndex = 5;
+    this.shortcut = arguments[1];
+    this.format = "yyyy";
+    this.calendarWeeks = false;
+    this.startView = "decade";
+    this.minViewMode = "years";
+    this.minView = undefined;
+    this.initialDate = undefined;
+    this.dynamic_input="2";
+    this.select_name="Years";
+    this.interval="500";
+};
+DATE_PICKER["500"].prototype=DATE_PICKER.date_picker_template.prototype;
+DATE_PICKER["500"].prototype.constructor=DATE_PICKER["500"];
+
 DATE_PICKER.shortcut_form=function(column,name,target,shortcut,index,dynamic_input,select_name){
     $(".table-condensed").attr("already-have-shortcut","yes").find("tfoot")
         .append($("<tr />").addClass("relative")
@@ -162,107 +262,7 @@ DATE_PICKER.shortcut_form=function(column,name,target,shortcut,index,dynamic_inp
         clearNoNum(object);
     })
 };
-DATE_PICKER["90"]=function(target){
-    this.target = target;
-    this.name = "hour";
-    this.startIndex = 0;
-    this.shortcut = arguments[1];
-    this.format = "yyyy-mm-dd hh:ii";
-    this.calendarWeeks = undefined;
-    this.startView = "month";
-    this.minViewMode = undefined;
-    this.minView = "day";
-    this.initialDate = new Date(new Date().setMinutes(0));
-    this.dynamic_input="8";
-    this.select_name="Hours";
-};
-DATE_PICKER["90"].prototype=DATE_PICKER.date_picker_template.prototype;
-DATE_PICKER["90"].prototype.constructor=DATE_PICKER["90"];
 
-DATE_PICKER["100"]=function(target){
-    this.target = target;
-    this.name = "day";
-    this.startIndex = 1;
-    this.shortcut = arguments[1];
-    this.format = "yyyy-mm-dd";
-    this.calendarWeeks = false;
-    this.startView = "month";
-    this.minViewMode = "days";
-    this.minView = undefined;
-    this.initialDate = undefined;
-    this.dynamic_input="7";
-    this.select_name="Days";
-};
-DATE_PICKER["100"].prototype=DATE_PICKER.date_picker_template.prototype;
-DATE_PICKER["100"].prototype.constructor=DATE_PICKER["100"];
-
-DATE_PICKER["200"]=function(target){
-    this.target = target;
-    this.name = "week";
-    this.startIndex = 2;
-    this.shortcut = arguments[1];
-    this.format = "yyyy-mm-dd";
-    this.calendarWeeks = true;
-    this.startView = "month";
-    this.minViewMode = "days";
-    this.minView = undefined;
-    this.initialDate = undefined;
-    this.dynamic_input="4";
-    this.select_name="Weeks";
-};
-DATE_PICKER["200"].prototype=DATE_PICKER.date_picker_template.prototype;
-DATE_PICKER["200"].prototype.constructor=DATE_PICKER["200"];
-
-DATE_PICKER["300"]=function(target){
-    this.target = target;
-    this.name = "month";
-    this.startIndex = 3;
-    this.shortcut = arguments[1];
-    this.format = "yyyy-mm";
-    this.calendarWeeks = false;
-    this.startView = "year";
-    this.minViewMode = "months";
-    this.minView = undefined;
-    this.initialDate = undefined;
-    this.dynamic_input="3";
-    this.select_name="Months";
-};
-DATE_PICKER["300"].prototype=DATE_PICKER.date_picker_template.prototype;
-DATE_PICKER["300"].prototype.constructor=DATE_PICKER["300"];
-
-DATE_PICKER["400"]=function(target){
-    this.target = target;
-    this.name = "quarter";
-    this.startIndex = 4;
-    this.shortcut = arguments[1];
-    this.format = "yyyy-mm";
-    this.calendarWeeks = false;
-    this.startView = "year";
-    this.minViewMode = "months";
-    this.minView = undefined;
-    this.initialDate = undefined;
-    this.dynamic_input="3";
-    this.select_name="Quarters";
-};
-DATE_PICKER["400"].prototype=DATE_PICKER.date_picker_template.prototype;
-DATE_PICKER["400"].prototype.constructor=DATE_PICKER["400"];
-
-DATE_PICKER["500"]=function(target){
-    this.target = target;
-    this.name = "year";
-    this.startIndex = 5;
-    this.shortcut = arguments[1];
-    this.format = "yyyy";
-    this.calendarWeeks = false;
-    this.startView = "decade";
-    this.minViewMode = "years";
-    this.minView = undefined;
-    this.initialDate = undefined;
-    this.dynamic_input="2";
-    this.select_name="Years";
-};
-DATE_PICKER["500"].prototype=DATE_PICKER.date_picker_template.prototype;
-DATE_PICKER["500"].prototype.constructor=DATE_PICKER["500"];
 
 function date_shortcut(name,target,shortcut,index){
     var lastIndex=parseInt($("#date-pick-dynamic-div:visible :selected").attr("index")),
@@ -273,31 +273,36 @@ function date_shortcut(name,target,shortcut,index){
         MessageBox("Fill the blank after the word 'Last' please","top","warning");
     }
     else{
-        var object=DATE_PICKER.shortcut_model(index,lastIndex,gap_count,lastIndexName);
+        var object=DATE_PICKER.shortcut_model(lastIndex,gap_count,lastIndexName);
         var targetSplit=target.replace(",","").split("#"),
             i;
         if(shortcut=="date"){
             for(i=1;i<targetSplit.length;i++){
                 var target="#"+targetSplit[i],
-                    date=object[name].date[i-1];
+                    date=object[lastIndex].date[i-1],
+                    datePost=object[lastIndex].datePost(name)[i-1];
+                object[lastIndex].update(target,datePost);
                 $(target).val(date);
-                object[name].update(target,date);
             }
+            $(effect_target).attr("interval",object[lastIndex].datePost(name)[2]);
         }
         else if(shortcut=="string"){
             for(i=1;i<targetSplit.length;i++){
                 var target="#"+targetSplit[i],
-                    date=object[name].date[i-1];
-                object[name].update(target,date);
-                $(target).val(object[name].string);
-                $(target).attr("hide_value",date).attr("string_model","yes");
+                    date=object[lastIndex].date[i-1],
+                    datePost=object[lastIndex].datePost(name)[i-1];
+                object[lastIndex].update(target,datePost);
+                $(target).val(object[lastIndex].string);
+                $(target).attr("hide_value",datePost).attr("string_model","yes");
 //                var count=gap_count>=10?gap_count:"0"+gap_count;
                 var count=gap_count,
                     unit=lastIndexName.toUpperCase().slice(0,-1);
                 $(target).attr("hide_post","LAST"+count+unit);
             }
+            $(effect_target).attr("interval",object[lastIndex].datePost(name)[2]);
             DATE_PICKER.shortcut_count=targetSplit.length-1;
         }
+        $(".date-pick-dynamic").css("display","none");
         if(name=="hour"){
             $(effect_target).datetimepicker("hide");
         }
@@ -305,7 +310,6 @@ function date_shortcut(name,target,shortcut,index){
             $(effect_target).datepicker("hide");
         }
     }
-
 }
 DATE_PICKER.shortcut_supervise=function(target){
     DATE_PICKER.shortcut_count--;
@@ -317,119 +321,123 @@ DATE_PICKER.shortcut_supervise=function(target){
         }
     }
 };
-//DATE_PICKER.shortcut=(
-//    function(){
-//        var d=new Date()
-//        var today=d.toWayneString();
-//        var nearHour=new Date(d.setHours(d.getHours()-23)).toWayneString().hour;
-//        var nearDay=new Date(d.setDate(d.getDate()-5)).toWayneString().day;
-//        var nearWeek=new Date(d.setDate(d.getDate()-7*3+6)).toWayneString().day;
-//        var nearMonth=new Date(d.setMonth(d.getMonth()-2)).toWayneString().month;
-//        var nearQuarter=new Date(d.setMonth(d.getMonth()-3*2-1)).toWayneString().month;
-//        var nearYear=new Date(d.setFullYear(d.getFullYear()-1)).toWayneString().year;
-//        return {
-//            hour:{
-//                date:[nearHour,today.hour],
-//                string:"Last 24 Hours",
-//                update:function(target,value){
-//                     $(target).datetimepicker("update",value);
-//                }
-//            },
-//            day:{
-//                date:[nearDay,today.day],
-//                string:"Last 7 Days",
-//                update:function(target,value){
-//                    $(target).datepicker("update",value);
-//                }
-//            },
-//            week:{
-//                date:[nearWeek,today.day],
-//                string:"Last 4 Weeks",
-//                update:function(target,value){
-//                    $(target).datepicker("update",value);
-//                }
-//            },
-//            month:{
-//                date:[nearMonth,today.month],
-//                string:"Last 3 Months",
-//                update:function(target,value){
-//                    $(target).datepicker("update",value);
-//                }
-//            },
-//            quarter:{
-//                date:[nearQuarter,today.month],
-//                string:"Last 4 Quarters",
-//                update:function(target,value){
-//                    $(target).datepicker("update",value);
-//                }
-//            },
-//            year:{
-//                date:[nearYear,today.year],
-//                string:"Last 3 Years",
-//                update:function(target,value){
-//                    $(target).datepicker("update",value);
-//                }
-//            }
-//        }
-//    }()
-//);
+
 //the interval between different time unit
-DATE_PICKER.shortcut_model_index=[24,7,4,3,3];
-DATE_PICKER.shortcut_model=function(startIndex,endIndex,gap_count,lastIndexName){
-    var gap_array=DATE_PICKER.shortcut_model_index.slice(startIndex,endIndex),
-        i,gap=1;
-    for(i=0;i<gap_array.length;i++){
-        gap*=gap_array[i];
-    }
-    var d=new Date(),
-        today=d.toWayneString(),
-        nearHour=new Date(d.setHours(d.getHours()-(gap*gap_count))).toWayneString().hour,
-        nearDay=new Date(d.setDate(d.getDate()-(gap*gap_count))).toWayneString().day,
-        nearWeek=new Date(d.setDate(d.getDate()-(gap*gap_count*6))).toWayneString().day,
-        nearMonth=new Date(d.setMonth(d.getMonth()-(gap*gap_count))).toWayneString().month,
-        nearQuarter=new Date(d.setMonth(d.getMonth()-(gap*gap_count*2))).toWayneString().month,
-        nearYear=new Date(d.setFullYear(d.getFullYear()-(gap*gap_count))).toWayneString().year;
+//DATE_PICKER.shortcut_model_index=[24,7,4,3,3];
+DATE_PICKER.shortcut_model=function(endIndex,gap_count,lastIndexName){
+//    var gap_array=DATE_PICKER.shortcut_model_index.slice(startIndex,endIndex),
+//        i,gap=1;
+//    for(i=0;i<gap_array.length;i++){
+//        gap*=gap_array[i];
+//    }
+    var today=new Date().toWayneString(),
+        nearHour=new Date(new Date().setHours(new Date().getHours()-gap_count)).toWayneString().hour,
+        nearDay=new Date(new Date().setDate(new Date().getDate()-gap_count)).toWayneString().day,
+        nearWeek=new Date(new Date().setDate(new Date().getDate()-gap_count*7)).toWayneString().day,
+        nearMonth=new Date(new Date().setMonth(new Date().getMonth()-gap_count)).toWayneString().month,
+        nearQuarter=new Date(new Date().setMonth(new Date().getMonth()-gap_count*3)).toWayneString().month,
+        nearYear=new Date(new Date().setFullYear(new Date().getFullYear()-gap_count)).toWayneString().year;
     return {
-            hour:{
+            "0":{
                 date:[nearHour,today.hour],
+                datePost:function(currentName){
+                    var postBegin=standardParse(this.date[0]).date.toWayneString()[currentName],
+                        postEnd=standardParse(this.date[1]).date.toWayneString()[currentName];
+                    return [postBegin,postEnd,"90"];
+                },
                 string:"Last "+gap_count+" "+lastIndexName,
                 update:function(target,value){
-                     $(target).datetimepicker("update",value);
+                    if($(".datetimepicker").length==0){
+                        $(target).datepicker("update",value);
+                    }
+                    else{
+                        $(target).datetimepicker("update",value);
+                    }
                 }
             },
-            day:{
+            "1":{
                 date:[nearDay,today.day],
+                datePost:function(currentName){
+                    var postBegin=standardParse(this.date[0]).date.toWayneString()[currentName],
+                        postEnd=standardParse(this.date[1]).date.toWayneString()[currentName];
+                    return [postBegin,postEnd,"100"];
+                },
                 string:"Last "+gap_count+" "+lastIndexName,
                 update:function(target,value){
-                    $(target).datepicker("update",value);
+                    if($(".datetimepicker").length==0){
+                        $(target).datepicker("update",value);
+                    }
+                    else{
+                        $(target).datetimepicker("update",value);
+                    }
                 }
             },
-            week:{
+            "2":{
                 date:[nearWeek,today.day],
+                datePost:function(currentName){
+                    var postBegin=standardParse(this.date[0]).date.toWayneString()[currentName],
+                        postEnd=standardParse(this.date[1]).date.toWayneString()[currentName];
+                    return [postBegin,postEnd,"200"];
+                },
                 string:"Last "+gap_count+" "+lastIndexName,
                 update:function(target,value){
-                    $(target).datepicker("update",value);
+                    if($(".datetimepicker").length==0){
+                        $(target).datepicker("update",value);
+                    }
+                    else{
+                        $(target).datetimepicker("update",value);
+                    }
                 }
             },
-            month:{
+            "3":{
                 date:[nearMonth,today.month],
+                datePost:function(currentName){
+                    var postBegin=standardParse(this.date[0]).date.toWayneString()[currentName],
+                        postEnd=standardParse(this.date[1]).date.toWayneString()[currentName];
+                    return [postBegin,postEnd,"300"];
+                },
                 string:"Last "+gap_count+" "+lastIndexName,
                 update:function(target,value){
-                    $(target).datepicker("update",value);
+                    if($(".datetimepicker").length==0){
+                        $(target).datepicker("update",value);
+                    }
+                    else{
+                        $(target).datetimepicker("update",value);
+                    }
                 }
             },
-            quarter:{
+            "4":{
                 date:[nearQuarter,today.month],
+                datePost:function(currentName){
+                    var postBegin=standardParse(this.date[0]).date.toWayneString()[currentName],
+                        postEnd=standardParse(this.date[1]).date.toWayneString()[currentName];
+                    return [postBegin,postEnd,"400"];
+                },
                 string:"Last "+gap_count+" "+lastIndexName,
                 update:function(target,value){
-                    $(target).datepicker("update",value);
+                    if($(".datetimepicker").length==0){
+                        $(target).datepicker("update",value);
+                    }
+                    else{
+                        $(target).datetimepicker("update",value);
+                    }
                 }
             },
-            year:{
+            "5":{
                 date:[nearYear,today.year],
+                datePost:function(currentName){
+                    var postBegin=standardParse(this.date[0]).date.toWayneString()[currentName],
+                        postEnd=standardParse(this.date[1]).date.toWayneString()[currentName];
+                    return [postBegin,postEnd,"500"];
+                },
                 string:"Last "+gap_count+" "+lastIndexName,
                 update:function(target,value){
-                    $(target).datepicker("update",value);
+                    if($(".datetimepicker").length==0){
+                        $(target).datepicker("update",value);
+                    }
+                    else{
+                        $(target).datetimepicker("update",value);
+                    }
                 }
             }
         }
