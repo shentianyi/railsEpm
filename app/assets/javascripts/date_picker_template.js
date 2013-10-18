@@ -12,7 +12,7 @@ DATE_PICKER.date_picker_template.prototype={
     constructor: DATE_PICKER.date_picker_template,
     weekStart: 1,
     autoclose: true,
-    todayBtn: true,
+    todayBtn: false,
     clearBtn: false,
     todayHighlight: true,
     language: 'en',
@@ -224,6 +224,12 @@ DATE_PICKER["500"].prototype.constructor=DATE_PICKER["500"];
 
 DATE_PICKER.shortcut_form=function(column,name,target,shortcut,index,dynamic_input,select_name){
     $(".table-condensed").attr("already-have-shortcut","yes").find("tfoot")
+        .append(
+            $("<tr />").addClass("date-pick-dynamic-today").attr("id","date-pick-dynamic-today")
+                .append($("<th />").attr("colSpan",column).text("Today"))
+                .hover(function(){$(this).css("backgroundColor","#eee")},function(){$(this).css("backgroundColor","white")})
+                .on("click",function(){date_shortcut_today(target,shortcut,name)})
+        )
         .append($("<tr />").addClass("relative")
             .append($("<th />").attr("colSpan",column).addClass("date-picker-shortcut").attr("interval",name))
             .hover(function(){
@@ -254,16 +260,59 @@ DATE_PICKER.shortcut_form=function(column,name,target,shortcut,index,dynamic_inp
                 .append($("<a />").addClass("btn btn-primary").text("OK").attr("id","date-pick-dynamic-button")
                     .on("click",function(){date_shortcut(name,target,shortcut,index)})
                 )
-        );
+        )
+    $("#date-pick-dynamic-today:visible").prevAll().remove();
     $("#date-pick-dynamic-div>input").val(dynamic_input);
     $("#date-pick-dynamic-div>select").find("option[value='"+select_name+"']").prop("selected",true).prevAll().remove();
     $("body").on("keyup","#date-pick-dynamic-div>input",function(event){
         var object=adapt_event(event).target;
         clearNoNum(object);
-    })
+    });
 };
 
-
+function date_shortcut_today(target,shortcut,name){
+    var targetSplit=target.replace(",","").split("#"),
+        i,effect_target=target,d=new Date().toWayneString().day,hour_today_array=[new Date(new Date().setHours(0)).toWayneString().hour,new Date().toWayneString().hour];
+    if(shortcut=="date"){
+        for(i=1;i<targetSplit.length;i++){
+            var target="#"+targetSplit[i];
+            if($(".datepicker").length>0){
+                $(target).datepicker("update",new Date().toWayneString()[name]);
+            }
+            else{
+                $(target).datetimepicker("update",hour_today_array[i-1]);
+                $(target).attr("hide_value",hour_today_array[i-1]);
+                $(target).attr("hide_post",hour_today_array[i-1]);
+            }
+            $(target).val(d);
+        }
+        $(effect_target).attr("string_model","yes").attr("interval","100")
+        DATE_PICKER.shortcut_count=targetSplit.length-1;
+    }
+    else if(shortcut=="string"){
+        for(i=1;i<targetSplit.length;i++){
+            var target="#"+targetSplit[i];
+            if($(".datepicker").length>0){
+                $(target).datepicker("update",new Date().toWayneString()[name]);
+            }
+            else{
+                $(target).datetimepicker("update",hour_today_array[i-1]);
+                $(target).attr("hide_value",hour_today_array[i-1]);
+                $(target).attr("hide_post",hour_today_array[i-1]);
+            }
+            $(target).val("TODAY");
+        }
+        $(effect_target).attr("string_model","yes").attr("interval","100")
+        DATE_PICKER.shortcut_count=targetSplit.length-1;
+    }
+    $(".date-pick-dynamic").css("display","none");
+    if(name=="hour"){
+        $(effect_target).datetimepicker("hide");
+    }
+    else{
+        $(effect_target).datepicker("hide");
+    }
+}
 function date_shortcut(name,target,shortcut,index){
     var lastIndex=parseInt($("#date-pick-dynamic-div:visible :selected").attr("index")),
         gap_count=$("#date-pick-dynamic-div:visible>input").val(),
@@ -282,9 +331,10 @@ function date_shortcut(name,target,shortcut,index){
                     date=object[lastIndex].date[i-1],
                     datePost=object[lastIndex].datePost(name)[i-1];
                 object[lastIndex].update(target,datePost);
-                $(target).val(date);
+                $(target).val(date).attr("string_model","yes");
             }
             $(effect_target).attr("interval",object[lastIndex].datePost(name)[2]);
+            DATE_PICKER.shortcut_count=targetSplit.length-1;
         }
         else if(shortcut=="string"){
             for(i=1;i<targetSplit.length;i++){
@@ -316,7 +366,7 @@ DATE_PICKER.shortcut_supervise=function(target){
     if(DATE_PICKER.shortcut_count==1){
         var target=target.split(","),i;
         for(i=0;i<target.length;i++){
-            $(target[i]).val($(target[i]).attr("hide_value"));
+            $(target[i]).val($(target[i]).attr("hide_value")).attr("interval","");
             $(target[i]).attr("hide_post",$(target[i]).attr("hide_value"));
         }
     }
