@@ -94,31 +94,11 @@ DASHBOARD.add.init=function(){
         });
     });
 
-
-    $("body").on("click","#dashboard-name",function(){
-            $("#dashboard-name-edit").css("display","inline-block").val($(this).find("p:first-of-type").text());
-            $(this).css("display","none");
-    });
-    $("body").on("keyup","#dashboard-name-edit",function(event){
-        var e=adapt_event(event).event;
-        if(e.keyCode==13){
-            $("#dashboard-name").css("display","inline-block").find("p:first-of-type").text($("#dashboard-name-edit").val());
-            $("#dashboard-name-edit").val("").css("display","none");
-        }
-        else if(e.keyCode==27){
-            $("#dashboard-name").css("display","inline-block");
-            $("#dashboard-name-edit").val("").css("display","none");
-        }
-    });
-
-
-
-
     $("body").on("click","#db-add-chart",DASHBOARD.add.prepare_form_chart);
     $("body").on("click","#add-dashboard",function(){
-        if($("#dashboard-name p:first-of-type").text().length>0){
+        if($("#dashboard-name-input").val().length>0){
             var post={},i;
-            post.dashboard_name=$("#dashboard-name p:first-of-type").text();
+            post.dashboard_name=$("#dashboard-name-input").val();
             post.type=$("#db-chart-type-alternate li.active").attr("type");
             post.interval=$("#db-chart-interval-alternate li.active").attr("interval");
             post.dashboard_id = $("#manage-left-menu>.active").attr("number");
@@ -149,13 +129,8 @@ DASHBOARD.add.init=function(){
 
         }
         else{
-            MessageBox("please give the dashboard a name (edit in up left)" , "top", "warning") ;
-            $("#dashboard-name>i").css("color","#f5a133");
-            $("#dashboard-name>i~p").css("color","#f5a133");
-            setTimeout(function(){
-               $("#dashboard-name>i").css("color","rgba(0,0,0,0.5)");
-                $("#dashboard-name>i~p").css("color","rgba(0,0,0,0.5)");
-            },3000);
+            MessageBox("please give the dashboard a name " , "top", "warning") ;
+            $("#dashboard-name-input").focus();
         }
     });
 
@@ -179,7 +154,7 @@ DASHBOARD.add.prepare_form_chart=function() {
     }
     else {
         chart_body_close_validate = true;
-        interval = $("#analy-begin-time").attr("interval").length==0?$("#chart-kpi :selected").attr("interval"):$("#analy-begin-time").attr("interval");
+        interval =  $("#analy-begin-time").attr("interval")==undefined || $("#analy-begin-time").attr("interval").length==0?$("#chart-kpi :selected").attr("interval"):$("#analy-begin-time").attr("interval");
         type = "line";
     }
     var begin_time = $("#analy-begin-time").attr("hide_value"), end_time = $("#analy-end-time").attr("hide_value"),
@@ -397,7 +372,7 @@ DASHBOARD.add.show_chart_body=function(option){
     $("#db-chart-body").css("display","block");
     $("#add-dashboard").css("display","block");
     $("#db-chart-type-alternate").css("display","block");
-//    $("#dashboard-name").css("display","inline-block");
+    $("#dashboard-name-input").css("display","inline-block");
 
 
     $("#db-chart-type-alternate li[type='" + option.type + "']").addClass("active");

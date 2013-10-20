@@ -6,6 +6,15 @@
  * To change this template use File | Settings | File Templates.
  */
 var MANAGE=MANAGE || {} ;
+MANAGE.left_count=$("#manage-left-menu").children().length-2;
+MANAGE.left_count_observable=function(){
+    if(MANAGE.left_count==0){
+        $("#manage-right-content").css("display","none");
+    }
+    else{
+        $("#manage-right-content").css("display","block");
+    }
+};
 MANAGE.init=function(){
     MANAGE.type=MANAGE.type || $("#manage-left-menu").attr("type");
     MANAGE.left.manage_left_add_init();
@@ -15,6 +24,7 @@ MANAGE.init=function(){
     MANAGE.sort_init();
     MANAGE.resize_sort_table();
     MANAGE.judge_kpi_count();
+    MANAGE.left_count_observable();
     $("#manage-sort-list li").on("resize",function(){
         MANAGE.resize_sort_table()
     });

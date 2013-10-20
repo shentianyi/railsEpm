@@ -22,21 +22,21 @@ MANAGE.totalChecked = 0;
 MANAGE.item_remove.prototype = {
      constructor : MANAGE.item_remove,
      remove_complete : function(id) {
-          //        $("#manage-sort-list").find("#"+id).remove();
-          $.ajax({
-               url : this.url + id,
-               type : 'DELETE',
-               success : function(data) {
-                    if(data.result) {
-                         $("#manage-sort-list").find("#" + id).remove();
-                         MANAGE.totalChecked -= 1;
-                         total_check_listener();
-                         MANAGE.judge_kpi_count();
-                    } else {
-                         MessageBox(data.content, "top", "warning");
-                    }
-               }
-          });
+                  $("#manage-sort-list").find("#"+id).remove();
+//          $.ajax({
+//               url : this.url + id,
+//               type : 'DELETE',
+//               success : function(data) {
+//                    if(data.result) {
+//                         $("#manage-sort-list").find("#" + id).remove();
+//                         MANAGE.totalChecked -= 1;
+//                         total_check_listener();
+//                         MANAGE.judge_kpi_count();
+//                    } else {
+//                         MessageBox(data.content, "top", "warning");
+//                    }
+//               }
+//          });
      }
 }
 function category_item_remove() {
@@ -57,19 +57,25 @@ group_item_remove.prototype.constructor = group_item_remove;
 MANAGE.group.item_remove = new group_item_remove();
 
 function manage_item_remove() {
+//    I18n.t
      if(confirm(I18n.t('view.manage.base.delete_confirm'))) {
           $("#manage-sort-list :checked").each(function() {
                var id = $(this).parent().parent().attr("id");
                MANAGE[MANAGE.type].item_remove.remove_complete(id);
-               //            MANAGE.totalChecked-=1;
-               //            total_check_listener();
+//                           MANAGE.totalChecked-=1;
+//                           total_check_listener();
                if(MANAGE.type == "group" && $("#user-edit").css("left") != "-50px") {
                     $("#user-edit").css("left", "-50px");
                     $("#manage-right-content").css("left", "150px");
                     MANAGE.user.user_add_clear();
                }
+               if(MANAGE.type == 'category' && $(this).attr("is_calculated")=="false"){
+                    $("#is-calcu-relate").find("[value='"+id+"']").remove();
+                    $("#is-calcu-relate").val('').trigger('chosen:updated');
+               }
+
           });
-          //        MANAGE.judge_kpi_count();
+//                  MANAGE.judge_kpi_count();
      }
 }
 

@@ -179,6 +179,7 @@
 .manage-right-list{
     position:relative;
     top:58px;
+    padding-bottom:40px;
 }
 .right-list-top-control{
     height:39px;

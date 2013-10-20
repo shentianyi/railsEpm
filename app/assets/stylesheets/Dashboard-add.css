@@ -30,9 +30,9 @@
 .dashboard-add-left-menu>li:first-of-type{
     text-align:center;
     font-weight:lighter;
-    font-size:21px;
+    font-size:24px;
     color:#5FA9DA;
-    padding:20px 0 10px;
+    padding:13px 0 11px;
 }
 .dashboard-add-left-menu>.select-div:first-of-type{
     margin-top:20px;
@@ -113,56 +113,7 @@
     top:-1px;
     left:0px;
 }
-.dashboard-name{
-    display:inline-block;
-    position:relative;
-    color:rgba(0,0,0,0.35);
-    cursor:pointer;
-    margin:29px 0 31px;
-    transition:color 0.25s ease-out;
-    font-size:12px;
-    width:130px;
-    height:38px;
-    padding-left:15px;
-}
-.dashboard-name:hover p:first-of-type,.dashboard-name:hover i{
-    color:rgba(0,0,0,0.7);
-}
-.dashboard-name>p:first-of-type{
-    float:left;
-    margin:0 8px 0 0;
-    cursor:pointer;
-    font-size:20px;
-    transition:color 0.25s ease-out;
-    color:rgba(0,0,0,0.5);
-    max-width:130px;
-    display:block;
-    text-overflow:ellipsis;
-    overflow:hidden;
-    white-space:nowrap;
-}
-.dashboard-name>p:nth-of-type(2){
-    position:absolute;
-    left:15px;
-    top:25px;
-    margin:0;
-    transition:color 0.25s ease-out;
-}
-.dashboard-name>i{
-    float:left;
-    pointer-events:auto;
-    margin-top:6px;
-    transition:color 0.25s ease-out;
-    color:rgba(0,0,0,0.5);
-    position:absolute;
-}
-.dashboard-name+input[type='text']{
-    position:relative;
-    width:108px;
-    display:none;
-    top:9px;
-    margin:21px 0 46px 15px;
-}
+
 /********************************************************************************************************* 右边的草稿图
 *******************************************************************************************************************/
 .db-chart-body{
@@ -190,9 +141,9 @@
     width:90px;
     height:44px;
     border:1px solid #ddd;
-    margin-left:6px;
-    /*background-image:url("../images/db-chart-type.png");*/
-    background-image:url("/assets/db-chart-type.png");
+    margin-left:-2px;
+    background-image:url("../images/db-chart-type.png");
+    /*background-image:url("/assets/db-chart-type.png");*/
     background-repeat:no-repeat;
     cursor:pointer;
 }
@@ -223,6 +174,15 @@
 .dash-add-condition>ul>li.scatter:hover,.dash-add-condition>ul>li.scatter.active{
     background-position:9px -312px;
     border:1px solid #f5a133;
+}
+.dash-add-condition>input[type="text"]{
+    padding:6px 8px;
+    width:120px;
+    margin-top:13px;
+    margin-left:-5px;
+    border:1px solid #5FA9DA !important;
+    display:none;
+    font-family:"open-sans";
 }
 /***************************************************** 切换时间
 *****************************************************************/
