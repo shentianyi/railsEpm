@@ -94,41 +94,46 @@ MANAGE.user.add_new = function() {
      var authority = $("input[name='user-role']:checked").data("name");
      if(name.length > 0 && mail.length > 0 && password.length > 0 && password_confirm.length > 0) {
           if($("#manage-user-add>div>input").filter("[red='true']").length == 0) {
-               //           $("#manage-sort-list").prepend($("<li />").attr("id","21")
-               //               .append($("<p />").addClass("sort-handle").text(":"))
-               //               .append($("<input type='checkbox'/>"))
-               //               .append($("<table />").addClass("group")
-               //                   .append($("<tr />")
-               //                       .append($("<td />").text(name).addClass("user-manage-name"))
-               //                       .append($("<td />").text(authority).addClass("user-manage-authority").attr("value","400"))
-               //                   )
-               //                   .append($("<tr />")
-               //                       .append($("<td />").text(mail).addClass("user-manage-mail"))
-               //                       .append($("<td />").text("Authority"))
-               //                   )
-               //               )
-               //           );
-               //           $("#manage-sort-list input[type='checkbox']").iCheck({
-               //               checkboxClass: 'icheckbox_minimal-aero'
-               //           });
-               //           $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
-               //               if(!$(this).parent().hasClass("checked")){
-               //                   MANAGE.totalChecked+=1;
-               //                   total_check_listener();
-               //               }
-               //               else{
-               //                   MANAGE.totalChecked-=1;
-               //                   total_check_listener();
-               //               }
-               //           });
-               //           $("#manage-sort-list li").on("resize",function(){
-               //               MANAGE.resize_sort_table()
-               //           });
-               //           MANAGE.judge_kpi_count();
-               //           MANAGE.sort_init();
-               //           MANAGE.resize_sort_table();
-               //           MANAGE.user.icheck.init();
-               //           MANAGE.user.user_add_close();
+
+
+
+//                          $("#manage-sort-list").prepend($("<li />").attr("id","21")
+//                              .append($("<p />").addClass("sort-handle").text(":"))
+//                              .append($("<input type='checkbox'/>"))
+//                              .append($("<table />").addClass("group")
+//                                  .append($("<tr />")
+//                                      .append($("<td />").text(name).addClass("user-manage-name"))
+//                                      .append($("<td />").text(authority).addClass("user-manage-authority").attr("value",role))
+//                                  )
+//                                  .append($("<tr />")
+//                                      .append($("<td />").text(mail).addClass("user-manage-mail"))
+//                                      .append($("<td />").text("Authority"))
+//                                  )
+//                              )
+//                          );
+//                          $("#manage-sort-list input[type='checkbox']").iCheck({
+//                              checkboxClass: 'icheckbox_minimal-aero'
+//                          });
+//                          $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
+//                              if(!$(this).parent().hasClass("checked")){
+//                                  MANAGE.totalChecked+=1;
+//                                  total_check_listener();
+//                              }
+//                              else{
+//                                  MANAGE.totalChecked-=1;
+//                                  total_check_listener();
+//                              }
+//                          });
+//                          $("#manage-sort-list li").on("resize",function(){
+//                              MANAGE.resize_sort_table()
+//                          });
+//                          MANAGE.judge_kpi_count();
+//                          MANAGE.sort_init();
+//                          MANAGE.resize_sort_table();
+//                          MANAGE.user.icheck.init();
+//                          MANAGE.user.user_add_close();
+
+
 
                $.ajax({
                     url : '/users',
@@ -146,7 +151,16 @@ MANAGE.user.add_new = function() {
                     dataType : 'json',
                     success : function(data) {
                          if(data.result) {
-                              $("#manage-sort-list").prepend($("<li />").attr("id", data.id).append($("<p />").addClass("sort-handle").text(":")).append($("<input type='checkbox'/>")).append($("<table />").addClass("group").append($("<tr />").append($("<td />").text(name).addClass("user-manage-name")).append($("<td />").text(authority).addClass("user-manage-authority").attr("value", "400"))).append($("<tr />").append($("<td />").text(mail).addClass("user-manage-mail")).append($("<td />").text("Authority")))));
+                              $("#manage-sort-list").prepend($("<li />").attr("id", data.id)
+                                  .append($("<p />").addClass("sort-handle").text(":"))
+                                  .append($("<input type='checkbox'/>"))
+                                  .append($("<table />").addClass("group")
+                                      .append($("<tr />")
+                                          .append($("<td />").text(name).addClass("user-manage-name"))
+                                          .append($("<td />").text(authority).addClass("user-manage-authority").attr("value", role)))
+                                      .append($("<tr />")
+                                          .append($("<td />").text(mail).addClass("user-manage-mail"))
+                                          .append($("<td />").text("Authority")))));
                               $("#manage-sort-list input[type='checkbox']").iCheck({
                                    checkboxClass : 'icheckbox_minimal-aero'
                               });
@@ -172,6 +186,9 @@ MANAGE.user.add_new = function() {
                          }
                     }
                });
+
+
+
           } else {
                MessageBox("Please fix the input with red border", "top", "danger");
           }
@@ -182,7 +199,10 @@ MANAGE.user.add_new = function() {
 //////////////////////////////////////////////////////////////////////////         User 编辑那一块的
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.user.user_edit_box_bind = function() {
-     var $target = $("#manage-sort-list .icheckbox_minimal-aero.checked"), name = $target.next().find(".user-manage-name").text(), mail = $target.next().find(".user-manage-mail").text(), authority = $target.next().find(".user-manage-authority").attr("value");
+     var $target = $("#manage-sort-list .icheckbox_minimal-aero.checked"),
+         name = $target.next().find(".user-manage-name").text(),
+         mail = $target.next().find(".user-manage-mail").text(),
+         authority = $target.next().find(".user-manage-authority").attr("value");
      $("#user-edit #edit-user-name").val(name);
      $("#user-edit #edit-user-mail").val(mail);
      $("#user-edit input[type='radio'][value='" + authority + "']").iCheck("check");
@@ -247,8 +267,8 @@ MANAGE.user.assign.init = function() {
                }
           });
 
-          $("#assign-kpi-wrap").css("display", "block");
-          $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+//          $("#assign-kpi-wrap").css("display", "block");
+//          $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
      });
      //assign kpi category 初始化
      $("#assign-kpi-pick").on("click", function() {
@@ -265,7 +285,7 @@ MANAGE.user.assign.init = function() {
                }
           });
 
-          //         $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
+//        $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
      });
 
      $("body").on("click", "#close-assign-kpi-options", function() {
@@ -274,7 +294,7 @@ MANAGE.user.assign.init = function() {
           $("#kpi-category").children().first().remove();
      });
      //右边的KPI列出来
-     $("#kpi-category").chosen().change(function(event) {
+     $("body").on("change","#kpi-category",function(event){
           var id = $(adapt_event(event).target).attr("value");
           $.ajax({
                url : '/kpis/get_by_category',
