@@ -142,8 +142,8 @@
     height:44px;
     border:1px solid #ddd;
     margin-left:-2px;
-    background-image:url("../images/db-chart-type.png");
-    /*background-image:url("/assets/db-chart-type.png");*/
+    /*background-image:url("../images/db-chart-type.png");*/
+    background-image:url("/assets/db-chart-type.png");
     background-repeat:no-repeat;
     cursor:pointer;
 }
