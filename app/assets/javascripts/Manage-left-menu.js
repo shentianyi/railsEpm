@@ -37,6 +37,9 @@ MANAGE.manage_menu_left_add.prototype={
 //                  .append($("<i />").addClass("icon-trash icon-item")).append($("<a />").text(name)));
 //              $("#manage-menu-add input").val("");
 //              this.add_hide();
+//              MANAGE.left_count++;
+//              MANAGE.left_count_observable();
+
               var href=this.href;
               $.post(this.postHref, {
                   data : {
@@ -48,6 +51,8 @@ MANAGE.manage_menu_left_add.prototype={
                         .append($("<i />").addClass("icon-trash icon-item")).append($("<a href='"+href + data.object + "'/>").text(name)));
                       $("#manage-menu-add input").val("");
                       MANAGE.manage_menu_left_add.prototype.add_hide();
+                      MANAGE.left_count++;
+                      MANAGE.left_count_observable();
                   } else {
                       MessageBox(data.content,"top","warning");
                   }
@@ -82,7 +87,7 @@ function group_add(){
 group_add.prototype=MANAGE.manage_menu_left_add.prototype;
 group_add.prototype.constructor=group_add;
 function entity_add(){
-    this.name="entity";
+    this.name="view";
     this.href="../entity_groups?p=";
     this.postHref='../entity_groups';
 }
@@ -122,6 +127,10 @@ MANAGE.left.manage_left_add_init=function(){
 MANAGE.manage_menu_left_delete.prototype={
     delete_complete:function(e){
 //        $(e.target).parent().remove();
+//        MANAGE.left_count--;
+//        MANAGE.left_count_observable();
+
+
         var number = $(e.target).parent().attr("number");
         var local=this.local
         $.ajax({
@@ -130,6 +139,8 @@ MANAGE.manage_menu_left_delete.prototype={
             success : function(data) {
               if(data.result){
                    window.location.href = local;
+                   MANAGE.left_count--;
+                  MANAGE.left_count_observable();
               }
               else{
                    MessageBox(data.content,"top","warning");
@@ -214,9 +225,12 @@ MANAGE.manage_menu_left_edit.prototype={
     edit_update:function(){
         var id=$("#manage-left-menu li.active").attr("number");
         var name=$("#manage-btn-group>input").val();
+
 //        $("#manage-left-menu li.active>a").text(name);
 //        this.edit_hide();
-//        $("#manage-edit-target").text(name);
+
+
+        $("#manage-edit-target").text(name);
         $.ajax({
             url : this.url,
             type : 'PUT',

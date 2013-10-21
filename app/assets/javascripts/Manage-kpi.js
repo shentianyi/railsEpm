@@ -184,7 +184,7 @@ function post_kpi(option){
             var formula_string= option.is_calculated ? option.formula_string : "No";
             $("#manage-sort-list").prepend($("<li />").attr("id",id)
                 .append($("<p />").addClass("sort-handle").text(":"))
-                .append($("<input type='checkbox'/>"))
+                .append($("<input type='checkbox'/>").attr("is_calculated",option.is_calculated))
                 .append($("<table />").addClass("category")
                     .append($("<tr />")
                         .append($("<td />").text(option.name).attr("title",option.name))
@@ -204,6 +204,7 @@ function post_kpi(option){
             );
             if(!option.is_calculated){
                 $("#is-calcu-relate").append($("<option />").attr("value",id).text(option.name));
+                $("#is-calcu-relate").val('').trigger('chosen:updated');
             }
             MANAGE.judge_kpi_count();
             $("#manage-sort-list input[type='checkbox']").iCheck({
@@ -233,11 +234,14 @@ function post_kpi(option){
         }
     });
 
+
+
+
 //    var id="21";
 //    var formula_string= option.is_calculated ? option.formula_string : "No";
 //    $("#manage-sort-list").prepend($("<li />").attr("id",id)
 //        .append($("<p />").addClass("sort-handle").text(":"))
-//        .append($("<input/>").attr("type","checkbox"))
+//        .append($("<input/>").attr("type","checkbox").attr("is_calculated",option.is_calculated))
 //        .append($("<table />").addClass("category")
 //            .append($("<tr />")
 //                .append($("<td />").text(option.name).attr("title",option.name))
@@ -255,6 +259,10 @@ function post_kpi(option){
 //            )
 //        )
 //    );
+//    if(!option.is_calculated){
+//        $("#is-calcu-relate").append($("<option />").attr("value",id).text(option.name));
+//        $("#is-calcu-relate").val('').trigger('chosen:updated');
+//    }
 //    MANAGE.judge_kpi_count();
 //    $("#manage-sort-list input[type='checkbox']").iCheck({
 //        checkboxClass: 'icheckbox_minimal-aero'

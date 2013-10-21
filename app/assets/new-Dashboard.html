@@ -115,13 +115,9 @@
 
     <div id="dashboard-add-page" class="dashboard-add-page">
         <ul class="dashboard-add-left-menu"  id="dashboard-add-left-menu">
-            <div class="dashboard-name clearfix" id="dashboard-name">
-                <p>Dashboard</p>
-                <i class="icon-pencil"></i>
-                <br />
-                <p>Name</p>
-            </div>
-            <input id="dashboard-name-edit" type="text" />
+            <li>
+                Add Dashboard
+            </li>
             <div class="select-div">
                 <select data-placeholder="Entity *" style="width:120px;" class="chosen-select"
                         title="analy-entity-select" id="chart-group">
@@ -176,6 +172,7 @@
             <div class="dash-add-condition">
                 <a class="btn" id="add-back-db"><i class="icon-arrow-left"></i> Back</a>
                 <a class="btn btn-primary" style="display:none" id="add-dashboard"><i class="icon-plus"></i> Add DashBoard</a>
+                <input placeholder="Dashboard Name *" type="text" id="dashboard-name-input"/>
                 <ul id="db-chart-type-alternate">
                     <li class="line" type="line"></li>
                     <li class="column" type="column"></li>

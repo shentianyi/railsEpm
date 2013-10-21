@@ -35,7 +35,7 @@ DASHBOARD.init=function(){
                 $("#db-chart-body").css("display","none");
                 $("#add-dashboard").css("display","none");
                 $("#db-chart-type-alternate").css("display","none");
-//            $("#dashboard-name").css("display","none");
+                $("#dashboard-name-input").css("display","none");
 //            $("#dashboard-name-edit").css("display","none");
                 $("#db-chart-type-alternate li").removeClass("active");
                 $("#db-chart-interval-alternate li").removeClass("active");
