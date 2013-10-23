@@ -182,7 +182,7 @@ function post_kpi(option){
         if(data.result){
             var object=data.object
             var id=object.id;
-            var formula_string= object.is_calculated ? object.formula_string : "No";
+            var formula_string= object.is_calculated ? object.formula_string : I18n.t('view.manage.kpi.not_calculate_type');
             $("#manage-sort-list").prepend($("<li />").attr("id",id)
                 .append($("<p />").addClass("sort-handle").text(":"))
                 .append($("<input type='checkbox'/>").attr("is_calculated",object.is_calculated))
@@ -200,10 +200,10 @@ function post_kpi(option){
                     )
                     .append($("<tr />")
                         .append($("<td />").text(object.desc).attr("title",object.desc))
-                        .append($("<td />").text("Frequency"))
-                        .append($("<td />").text("Trend"))
-                        .append($("<td />").text("Target"))
-                        .append($("<td />").text("Is Calcu Type"))
+                        .append($("<td />").text(I18n.t('view.manage.kpi.frequency')))
+                        .append($("<td />").text(I18n.t('view.manage.kpi.trend')))
+                        .append($("<td />").text(I18n.t('view.manage.kpi.target')))
+                        .append($("<td />").text(I18n.t('view.manage.kpi.calculate_type')))
                     )
                 )
             );
@@ -316,7 +316,7 @@ MANAGE.kpi.library.init=function(){
                                     .append($("<p />").attr("title",data[i].description).text(data[i].description))
                                 );
                                 if(data[i].is_calculated){
-                                    header.next(".accordion-body li").append($("<i />").addClass("icon-lightbulb").attr("title",data[i].formula_string))
+                                    header.next(".accordion-body").find("#"+data[i].id).parent().append($("<i />").addClass("icon-lightbulb").attr("title",data[i].formula_string))
                                 }
                             }
                             $("input[type='checkbox']").iCheck({

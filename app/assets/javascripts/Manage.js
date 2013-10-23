@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 var MANAGE=MANAGE || {} ;
-MANAGE.left_count=$("#manage-left-menu").children().length-2;
+MANAGE.left_count;
 MANAGE.left_count_observable=function(){
     if(MANAGE.left_count==0){
         $("#manage-right-content").css("display","none");
@@ -16,6 +16,7 @@ MANAGE.left_count_observable=function(){
     }
 };
 MANAGE.init=function(){
+    MANAGE.left_count=$("#manage-left-menu").children().length-2;
     MANAGE.type=MANAGE.type || $("#manage-left-menu").attr("type");
     MANAGE.left.manage_left_add_init();
     MANAGE.left.manage_left_delete_init();
