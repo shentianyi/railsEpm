@@ -314,7 +314,7 @@ MANAGE.kpi.library.init=function(){
                                     .append($("<p />").attr("title",data[i].description).text(data[i].description))
                                 );
                                 if(data[i].is_calculated){
-                                    header.find("#"+data[i].id).parent().parent().append($("<i />").addClass("icon-lightbulb").attr("title",data[i].formula_string))
+                                    header.next(".accordion-body").find("#"+data[i].id).parent().append($("<i />").addClass("icon-lightbulb").attr("title",data[i].formula_string))
                                 }
                             }
                             $("input[type='checkbox']").iCheck({
