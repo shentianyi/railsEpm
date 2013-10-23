@@ -180,23 +180,24 @@ function post_kpi(option){
             }
         }, function(data) {
         if(data.result){
-            var id=data.object;
-            var formula_string= data.is_calculated ? data.formula_string : "No";
+            var object=data.object
+            var id=object.id;
+            var formula_string= object.is_calculated ? object.formula_string : "No";
             $("#manage-sort-list").prepend($("<li />").attr("id",id)
                 .append($("<p />").addClass("sort-handle").text(":"))
-                .append($("<input type='checkbox'/>").attr("is_calculated",data.is_calculated))
+                .append($("<input type='checkbox'/>").attr("is_calculated",object.is_calculated))
                 .append($("<table />").addClass("category")
                     .append($("<tr />")
-                        .append($("<td />").text(data.name).attr("title",data.name))
-                        .append($("<td />").text(data.interval))
-                        .append($("<td />").text(data.trend))
+                        .append($("<td />").text(object.name).attr("title",object.name))
+                        .append($("<td />").text(object.interval))
+                        .append($("<td />").text(object.trend))
                         .append($("<td />").addClass("manage-kpi-target")
-                            .append($("<span />").addClass("can-change").text(data.target).attr("title",data.target))
-                            .append($("<span />").text(data.section)).append($("<input type='text'/>").attr("effect_on",id)))
+                            .append($("<span />").addClass("can-change").text(object.target).attr("title",object.target))
+                            .append($("<span />").text(object.section)).append($("<input type='text'/>").attr("effect_on",id)))
                         .append($("<td />").text(formula_string).attr("title",formula_string))
                     )
                     .append($("<tr />")
-                        .append($("<td />").text(data.desc).attr("title",data.desc))
+                        .append($("<td />").text(object.desc).attr("title",object.desc))
                         .append($("<td />").text("Frequency"))
                         .append($("<td />").text("Trend"))
                         .append($("<td />").text("Target"))
@@ -204,8 +205,8 @@ function post_kpi(option){
                     )
                 )
             );
-            if(!data.is_calculated){
-                $("#is-calcu-relate").append($("<option />").attr("value",id).text(data.name));
+            if(!object.is_calculated){
+                $("#is-calcu-relate").append($("<option />").attr("value",id).text(object.name));
                 $("#is-calcu-relate").val('').trigger('chosen:updated');
             }
             MANAGE.judge_kpi_count();
