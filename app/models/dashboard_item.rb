@@ -92,8 +92,9 @@ class DashboardItem < ActiveRecord::Base
 
                time_arr= str.split('|')
 
+
                result[:start]=Time.parse(time_arr[0])
-               result[:end]=Time.parse(time_arr[1])
+               result[:end]= Time.parse(time_arr[1])
 
                result
              }},
