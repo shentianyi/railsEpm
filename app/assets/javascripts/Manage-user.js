@@ -156,10 +156,10 @@ MANAGE.user.add_new = function() {
                                   .append($("<input type='checkbox'/>"))
                                   .append($("<table />").addClass("group")
                                       .append($("<tr />")
-                                          .append($("<td />").text(name).addClass("user-manage-name"))
-                                          .append($("<td />").text(authority).addClass("user-manage-authority").attr("value", role)))
+                                          .append($("<td />").text(data.first_name).addClass("user-manage-name"))
+                                          .append($("<td />").text(data.role).addClass("user-manage-authority").attr("value", data.role_id)))
                                       .append($("<tr />")
-                                          .append($("<td />").text(mail).addClass("user-manage-mail"))
+                                          .append($("<td />").text(data.email).addClass("user-manage-mail"))
                                           .append($("<td />").text("Authority")))));
                               $("#manage-sort-list input[type='checkbox']").iCheck({
                                    checkboxClass : 'icheckbox_minimal-aero'
@@ -227,10 +227,10 @@ MANAGE.user.edit = function() {
                     success : function(data) {
                          if(data.result) {
                               console.log(edit_name);
-                              $target.find(".user-manage-name").text(edit_name);
-                              $target.find(".user-manage-mail").text(edit_mail);
+                              $target.find(".user-manage-name").text(data.first_name);
+                              $target.find(".user-manage-mail").text(data.email);
                               if($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant")=="false")
-                              $target.find(".user-manage-authority").text(edit_role).attr("value", edit_authority);
+                              $target.find(".user-manage-authority").text(data.role).attr("value", data.role_id);
                          } else {
                               MessageBox("Something get wrong", "top", "wrong");
                          }
@@ -253,7 +253,9 @@ MANAGE.user.assign = {};
 MANAGE.user.assign.init = function() {
      //assign kpi初始化
      $("body").on("click", "#manage-user-delivery", function() {
-          var $target = $("#manage-sort-list").find(":checked"), id = $target.parent().parent().attr("id"), user_name = $target.parent().next().find(".user-manage-name").text();
+          var $target = $("#manage-sort-list").find(":checked"),
+              id = $target.parent().parent().attr("id"),
+              user_name = $target.parent().next().find(".user-manage-name").text();
           $.ajax({
                url : '/kpis/user_kpis',
                data : {
