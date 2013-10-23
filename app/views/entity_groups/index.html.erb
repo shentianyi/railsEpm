@@ -2,7 +2,7 @@
 <div class="manage-user-add" id="manage-entity-add" special="entity">
      <i class="icon-remove" id="close-add-entity" ></i>
      <p>
-          UserGroup List
+          Entity List
      </p>
      <ul>
           <%@entities.each do |entity|%>
@@ -14,7 +14,7 @@
 </div>
 <div class="manage-right-content" id="manage-right-content">
      <div class="manage-btn-group" id="manage-btn-group" special="view">
-          <a class="btn btn-primary" id="entity-add-show"><i class="icon-plus"></i> User Group</a>
+          <a class="btn btn-primary" id="entity-add-show"><i class="icon-plus"></i>Choose Entity</a>
           <p id="manage-edit-target" ></p>
           <i class="icon-pencil"></i>
           <input type="text"/>
@@ -25,8 +25,8 @@
                <%if @user_group_entities
                @user_group_entities.each_with_index do |entity,i|%>
                <li>
-                    <h3 entity_id="<%= entity.entity_group_item_id%>"><%= entity.name%></h3>
-                    <i class="icon-trash"></i>
+                    <h3><%= entity.name%></h3>
+                    <i class="icon-trash"  entity_id="<%= entity.entity_group_item_id%>"></i>
                </li>
                <% end;end%>
           </ul>
