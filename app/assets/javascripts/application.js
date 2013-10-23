@@ -48,4 +48,4 @@
 //=require Log
 //=require Entry
 //=require i18n
-//=require i18n/translations
+//= require i18n/translations

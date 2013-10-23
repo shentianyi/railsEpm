@@ -22,21 +22,21 @@ MANAGE.totalChecked = 0;
 MANAGE.item_remove.prototype = {
      constructor : MANAGE.item_remove,
      remove_complete : function(id) {
-                  $("#manage-sort-list").find("#"+id).remove();
-//          $.ajax({
-//               url : this.url + id,
-//               type : 'DELETE',
-//               success : function(data) {
-//                    if(data.result) {
-//                         $("#manage-sort-list").find("#" + id).remove();
-//                         MANAGE.totalChecked -= 1;
-//                         total_check_listener();
-//                         MANAGE.judge_kpi_count();
-//                    } else {
-//                         MessageBox(data.content, "top", "warning");
-//                    }
-//               }
-//          });
+//                  $("#manage-sort-list").find("#"+id).remove();
+          $.ajax({
+               url : this.url + id,
+               type : 'DELETE',
+               success : function(data) {
+                    if(data.result) {
+                         $("#manage-sort-list").find("#" + id).remove();
+                         MANAGE.totalChecked -= 1;
+                         total_check_listener();
+                         MANAGE.judge_kpi_count();
+                    } else {
+                         MessageBox(data.content, "top", "warning");
+                    }
+               }
+          });
      }
 }
 function category_item_remove() {

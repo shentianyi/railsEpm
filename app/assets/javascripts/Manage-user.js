@@ -151,15 +151,16 @@ MANAGE.user.add_new = function() {
                     dataType : 'json',
                     success : function(data) {
                          if(data.result) {
-                              $("#manage-sort-list").prepend($("<li />").attr("id", data.id)
+                              var object=data.object;
+                              $("#manage-sort-list").prepend($("<li />").attr("id", object.id)
                                   .append($("<p />").addClass("sort-handle").text(":"))
                                   .append($("<input type='checkbox'/>"))
                                   .append($("<table />").addClass("group")
                                       .append($("<tr />")
-                                          .append($("<td />").text(data.first_name).addClass("user-manage-name"))
-                                          .append($("<td />").text(data.role).addClass("user-manage-authority").attr("value", data.role_id)))
+                                          .append($("<td />").text(object.first_name).addClass("user-manage-name"))
+                                          .append($("<td />").text(object.role).addClass("user-manage-authority").attr("value", object.role_id)))
                                       .append($("<tr />")
-                                          .append($("<td />").text(data.email).addClass("user-manage-mail"))
+                                          .append($("<td />").text(object.email).addClass("user-manage-mail"))
                                           .append($("<td />").text("Authority")))));
                               $("#manage-sort-list input[type='checkbox']").iCheck({
                                    checkboxClass : 'icheckbox_minimal-aero'
@@ -226,11 +227,11 @@ MANAGE.user.edit = function() {
                     dataType : 'json',
                     success : function(data) {
                          if(data.result) {
-                              console.log(edit_name);
-                              $target.find(".user-manage-name").text(data.first_name);
-                              $target.find(".user-manage-mail").text(data.email);
+                              var object=data.object;
+                              $target.find(".user-manage-name").text(object.first_name);
+                              $target.find(".user-manage-mail").text(object.email);
                               if($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant")=="false")
-                              $target.find(".user-manage-authority").text(data.role).attr("value", data.role_id);
+                              $target.find(".user-manage-authority").text(object.role).attr("value", object.role_id);
                          } else {
                               MessageBox("Something get wrong", "top", "wrong");
                          }

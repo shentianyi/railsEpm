@@ -142,8 +142,8 @@
     height:44px;
     border:1px solid #ddd;
     margin-left:-2px;
-    /*background-image:url("../images/db-chart-type.png");*/
-    background-image:url("/assets/db-chart-type.png");
+    background-image:url("../images/db-chart-type.png");
+    /*background-image:url("/assets/db-chart-type.png");*/
     background-repeat:no-repeat;
     cursor:pointer;
 }
@@ -183,7 +183,6 @@
     border:1px solid #5FA9DA !important;
     display:none;
     font-family:"open-sans";
-    font-size:13px;
 }
 /***************************************************** 切换时间
 *****************************************************************/

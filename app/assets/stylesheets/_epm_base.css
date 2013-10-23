@@ -86,7 +86,7 @@ header{
     background:url("/assets/logo.png") no-repeat center bottom;
     /*background:url("../images/logo.png") no-repeat center bottom;*/
     width:150px;
-    height:117px;
+    height:132px;
     padding-top:0px;
 }
 /*.user-portrait-name{*/
@@ -408,14 +408,4 @@ nav ul li a:hover .nav-entry-kpi{
 .language-select .chosen-container-single .chosen-single div{
     background:white !important;
     border-left:none !important;
-}
-/********************************************************************************************************* get start
-*******************************************************************************************************************/
-.get-start-middle{
-    position:absolute;
-    top:135px;
-    left:0px;
-    right:0px;
-    bottom:0px;
-    overflow-y:auto;
 }
