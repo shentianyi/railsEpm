@@ -18,8 +18,18 @@ class KpisController < ApplicationController
     @kpi=Kpi.new(params[:kpi])
     @kpi.creator=current_user
     if @kpi.save
-    msg.result=true
-    msg.object=@kpi.id
+      temp = {}
+      msg.result=true
+      temp[:id] = @kpi.id
+      temp[:name]=@kpi.name
+      temp[:is_calculated] = @kpi.is_calculated
+      temp[:formula_string] = @kpi.formula_string
+      temp[:interval] = KpiFrequency.get_desc_by_value(@kpi.frequency)
+      temp[:trend] = KpiFrequency.get_desc_by_value(@kpi.direction)
+      temp[:target] = KpiUnit.parse_entry_value(@kpi.unit, @kpi.target)
+      temp[:section] = KpiUnit.get_entry_unit_sym(@kpi.unit)
+      temp[:desc] = @kpi.description
+      msg.object=temp.as_json
     else
       @kpi.errors.messages[:result]="添加失败"
       msg.content=@kpi.errors.messages.values.join('; ')

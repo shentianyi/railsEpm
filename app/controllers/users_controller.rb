@@ -29,11 +29,19 @@ class UsersController < ApplicationController
 
   def create
     @user=User.new(params[:user])
+
     msg=Message.new
     if  @user.save
-    msg.result=true
+      msg.result=true
+      temp = {}
+      temp[:id] = @user.id
+      temp[:first_name] = @user.first_name
+      temp[:role] = UsersHelper.get_user_role_display(@user.role_id)
+      temp[:role_id] = @user.role_id
+      temp[:email] = @user.email
+      msg.object = temp.as_json
     else
-    msg.content=@user.errors
+      msg.content=@user.errors
     end
     render :json=>msg
   end
