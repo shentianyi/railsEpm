@@ -92,7 +92,7 @@ MANAGE.user.add_new = function() {
      var password_confirm = $("#new-user-password-confirm").val();
      var role = $("input[name='user-role']:checked").attr("value");
      var authority = $("input[name='user-role']:checked").data("name");
-     if(name.length > 0 && mail.length > 0 && password.length > 0 && password_confirm.length > 0) {
+     if($.trim(name).length > 0 && mail.length > 0 && password.length > 0 && password_confirm.length > 0) {
           if($("#manage-user-add>div>input").filter("[red='true']").length == 0) {
 
 
@@ -211,7 +211,7 @@ MANAGE.user.user_edit_box_bind = function() {
 }
 MANAGE.user.edit = function() {
      var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(), edit_role = $("#user-edit input[name='edit-user-role']:checked").data("name"), edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"), edit_id = $("#manage-user-edit-old").attr("effect_on"), $target = $("#manage-sort-list").find("#" + edit_id);
-     if(edit_name.length > 0 && edit_mail.length > 0) {
+     if($.trim(edit_name).length > 0 && edit_mail.length > 0) {
           if($("#user-edit>div>input").filter("[red='true']").length == 0) {
                $.ajax({
                     url : '/users',

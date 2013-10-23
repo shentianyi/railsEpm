@@ -29,31 +29,44 @@ MANAGE.init=function(){
         MANAGE.resize_sort_table()
     });
     $("body").on("click","#manage-item-remove",manage_item_remove).on("click","#manage-item-edit",manage_item_edit);
+    $("input[type='radio']").iCheck({
+        radioClass: 'iradio_minimal-aero'
+    });
     if($("#manage-item-edit").length>0){
-        $("#manage-sort-list table").find("input[type='text']").on("keydown",function(event){
+        $("body").on("keydown","#manage-sort-list li table input[type='text']",function(event){
             var e = adapt_event(event).event;
-            if(e.keyCode==13){
-                var option={
-                    id:$(e.target).attr("effect_on"),
-                    belong:$("#manage-left-menu li.active").attr("number"),
-                    target:$(e.target).val(),
-                    edit_input:$(e.target)
+            if(e.keyCode==13 || e.keyCode==9){
+                if($(e.target).val().length==0){
+                    MessageBox("Give it a Value , please",'top',"warning");
                 }
-                MANAGE[MANAGE.type].item_edit.complete(option)
+                else{
+                    var option={
+                        id:$(e.target).attr("effect_on"),
+                        belong:$("#manage-left-menu li.active").attr("number"),
+                        target:$(e.target).val(),
+                        edit_input:$(e.target)
+                    }
+
+                    MANAGE[MANAGE.type].item_edit.complete(option);
+                }
             }
             else if(e.keyCode==27){
-                $(e.target).css("display","none");
+                $(e.target).css("left","-999em");
+                var id=$(e.target).attr("effect_on");
+                var index=MANAGE.edit_array.indexOf(id);
+                MANAGE.edit_array.splice(index,1);
+                var targetId=MANAGE.edit_array.length==0?false:MANAGE.edit_array[0];
+                if(targetId){
+                    $("#manage-sort-list>#"+targetId).find("table input[type='text']").focus();
+                }
             }
-        }).on("keyup",function(event){
+        }).on("keyup","#manage-sort-list li table input[type='text']",function(event){
                 var e = adapt_event(event).event;
                 if(MANAGE[MANAGE.type].item_edit.edit_check){
                     MANAGE[MANAGE.type].item_edit.edit_check(e.target);
                 }
-         });
+        });
     }
-    $("input[type='radio']").iCheck({
-        radioClass: 'iradio_minimal-aero'
-    });
 }
 
 

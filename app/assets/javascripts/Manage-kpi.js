@@ -148,7 +148,7 @@ MANAGE.kpi.add_new_kpi=function(){
         formula_string: $("#calcuType-input").val()
     }
     if(option.is_calculated) {
-        if(option.name.length>0 && option.interval!=false && option.target.length>0 && option.unit!=false && option.formula_string.length>0) {
+        if($.trim(option.name).length>0 && option.interval!=false && option.target.length>0 && option.unit!=false && option.formula_string.length>0) {
             post_kpi(option);
         }
         else {
@@ -156,7 +156,7 @@ MANAGE.kpi.add_new_kpi=function(){
         }
     }
     else {
-        if(option.name.length>0 && option.interval!=false && option.target.length>0 && option.unit!=false ) {
+        if($.trim(option.name).length>0 && option.interval!=false && option.target.length>0 && option.unit!=false ) {
             post_kpi(option);
         } else {
             MessageBox("Please fill all the blanket taking *","top","warning");
@@ -192,8 +192,10 @@ function post_kpi(option){
                         .append($("<td />").text(object.interval))
                         .append($("<td />").text(object.trend))
                         .append($("<td />").addClass("manage-kpi-target")
-                            .append($("<span />").addClass("can-change").text(object.target).attr("title",object.target))
-                            .append($("<span />").text(object.section)).append($("<input type='text'/>").attr("effect_on",id)))
+                            .append($("<div />")
+                                .append($("<span />").addClass("can-change").text(object.target).attr("title",object.target))
+                                .append($("<span />").text(object.section)).append($("<input type='text'/>").attr("effect_on",id)))
+                            )
                         .append($("<td />").text(formula_string).attr("title",formula_string))
                     )
                     .append($("<tr />")

@@ -53,10 +53,10 @@
     left:-999em;
 
 }
-.manage-left-menu li:nth-of-type(2) input:focus ~ .manage-add-tooltip{
-    color:rgba(0,0,0,0.4);
-    display:block;
-}
+/*.manage-left-menu li:nth-of-type(2) input:focus ~ .manage-add-tooltip{*/
+    /*color:rgba(0,0,0,0.4);*/
+    /*display:block;*/
+/*}*/
 .manage-left-menu li:nth-of-type(2) .manage-add-tooltip{
     position:absolute;
     text-align:left;
@@ -163,9 +163,9 @@
     font-size:13px;
     display:none;
 }
-.manage-btn-group>input:focus + span{
-    display:inherit;
-}
+/*.manage-btn-group>input:focus + span{*/
+    /*display:inherit;*/
+/*}*/
 .manage-btn-group>span{
     font-size:13px;
     position:absolute;

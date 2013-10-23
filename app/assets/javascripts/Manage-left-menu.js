@@ -23,50 +23,65 @@ MANAGE.manage_menu_left_add.prototype={
       add_complete:function(){
           var validate=false;
           var name=$("#manage-menu-add input").val();
-          $("#manage-left-menu li").each(function(){
-              if($("#manage-menu-add input").val()!=$(this).attr("title") && name.length>0){
-                  validate=true;
-              }
-              else{
-                  validate=false;
-                  return false
-              }
-          });
-          if(validate){
-//              $("#manage-left-menu").append($("<li />").attr("title",name)
-//                  .append($("<i />").addClass("icon-trash icon-item")).append($("<a />").text(name)));
-//              $("#manage-menu-add input").val("");
-//              this.add_hide();
-//              MANAGE.left_count++;
-//              MANAGE.left_count_observable();
-
-              var href=this.href;
-              $.post(this.postHref, {
-                  data : {
-                      name : name
-                  }
-              }, function(data) {
-                  if(data.result) {
-                      $("#manage-left-menu").append($("<li />").attr("title",name).attr("number", data.object)
-                        .append($("<i />").addClass("icon-trash icon-item")).append($("<a href='"+href + data.object + "'/>").text(name)));
-                      $("#manage-menu-add input").val("");
-                      MANAGE.manage_menu_left_add.prototype.add_hide();
-                      MANAGE.left_count++;
-                      MANAGE.left_count_observable();
-                  } else {
-                      MessageBox(data.content,"top","warning");
-                  }
-              });
+          if($.trim(name).length==0){
+              MANAGE.manage_menu_left_add.prototype.add_hide();
           }
           else{
-              if(name.length>0){
-                  MessageBox("Same name exist yet","top","warning");
+              $("#manage-left-menu li").each(function(){
+                  if($("#manage-menu-add input").val()!=$(this).attr("title") ){
+                      validate=true;
+                  }
+                  else{
+                      validate=false;
+                      return false
+                  }
+              });
+              if(validate){
+
+
+//                  $("#manage-left-menu").append($("<li />").attr("title",name)
+//                      .append($("<i />").addClass("icon-trash icon-item")).append($("<a />").text(name)));
+//                  $("#manage-menu-add input").val("");
+//                  MANAGE.manage_menu_left_add.prototype.add_hide();
+//                  MANAGE.left_count++;
+//                  MANAGE.left_count_observable();
+
+
+
+                  var href=this.href;
+                  $.post(this.postHref, {
+                      data : {
+                          name : name
+                      }
+                  }, function(data) {
+                      if(data.result) {
+                          $("#manage-left-menu").append($("<li />").attr("title",name).attr("number", data.object)
+                              .append($("<i />").addClass("icon-trash icon-item")).append($("<a href='"+href + data.object + "'/>").text(name)));
+                          $("#manage-menu-add input").val("");
+                          MANAGE.manage_menu_left_add.prototype.add_hide();
+                          MANAGE.left_count++;
+                          MANAGE.left_count_observable();
+                      } else {
+                          MessageBox(data.content,"top","warning");
+                      }
+                  });
+
+
+
+
+
               }
+              else{
+                      MessageBox("Same name exist yet","top","warning");
+              }
+
+
           }
+
       },
       add_hide:function(){
           $("#manage-left-menu li:nth-of-type(2) span").css("left","0px");
-          $("#manage-left-menu li:nth-of-type(2) input").val("").blur().css("left","-999em");
+          $("#manage-left-menu li:nth-of-type(2) input").val("").css("left","-999em");
       },
       constructor:MANAGE.manage_menu_left_add
 
@@ -80,7 +95,7 @@ function category_add(){
 category_add.prototype=MANAGE.manage_menu_left_add.prototype;
 category_add.prototype.constructor=category_add;
 function group_add(){
-    this.name="entity";
+    this.name="部门";
     this.href="../users?p=";
     this.postHref='../entities';
 }
@@ -114,11 +129,19 @@ MANAGE.left.manage_left_add_init=function(){
     });
     $("#manage-menu-add input").on("keydown",function(event){
         if(adapt_event(event).event.keyCode==13){
-            MANAGE[MANAGE.type].add.add_complete();
+            if($.trim($(adapt_event(event).target).val())==0){
+                MessageBox("it needs a name","top","warning");
+            }
+            else{
+                MANAGE[MANAGE.type].add.add_complete();
+            }
         }
         else if(adapt_event(event).event.keyCode==27){
-            MANAGE[MANAGE.type].add.add_hide();
+            MANAGE[MANAGE.type].add.add_complete();
         }
+    });
+    $("#manage-menu-add input").blur(function(){
+        MANAGE[MANAGE.type].add.add_complete();
     });
 };
 
@@ -202,23 +225,25 @@ MANAGE.manage_menu_left_edit.prototype={
         $("#manage-btn-group>input").val(name).css("display","inherit").focus();
     },
     edit_check:function(e){
-        if($(e.target).val().length>0){
+        if($.trim($(e.target).val()).length>0){
             var validate=true;
             if($(e.target).val()==$("#manage-left-menu li.active>a").text()){
                   this.edit_hide();
+                  return false;
             }
             else{
                 $("#manage-left-menu li>a").each(function(){
                     if($(this).text()==$(e.target).val()){
                         validate=false;
                         MessageBox("Same name exist yet","top","warning");
-                        return false
+                        return false;
                     }
                 });
                 return validate;
             }
         }
         else{
+            MessageBox("give it a name","top","warning");
             return false;
         }
     },
@@ -226,32 +251,34 @@ MANAGE.manage_menu_left_edit.prototype={
         var id=$("#manage-left-menu li.active").attr("number");
         var name=$("#manage-btn-group>input").val();
 
-//        $("#manage-left-menu li.active>a").text(name);
-//        this.edit_hide();
+//            $("#manage-left-menu li.active>a").text(name);
+//            $("#manage-edit-target").text(name);
+//            this.edit_hide();
 
 
-        $("#manage-edit-target").text(name);
-        $.ajax({
-            url : this.url,
-            type : 'PUT',
-            data : {
-                id:id,
-                data:{
-                    name:name
+            $("#manage-edit-target").text(name);
+            $.ajax({
+                url : this.url,
+                type : 'PUT',
+                data : {
+                    id:id,
+                    data:{
+                        name:name
+                    }
+                },
+                success : function(data) {
+                    if(data){
+                        $("#manage-left-menu li.active>a").text(name);
+                        $("#manage-edit-target").text(name);
+                    }
                 }
-            },
-            success : function(data) {
-                if(data){
-                    $("#manage-left-menu li.active>a").text(name);
-                    $("#manage-edit-target").text(name);
-                }
-            }
-        });
-        this.edit_hide();
+            });
+            this.edit_hide();
+
     },
     edit_hide:function(){
         $("#manage-edit-target").css("display","inline-block");
-        $("#manage-btn-group>input").blur().css("display","none");
+        $("#manage-btn-group>input").css("display","none");
     },
     constructor:MANAGE.manage_menu_left_edit
 }
@@ -292,14 +319,27 @@ MANAGE.left.manage_left_edit_init=function(){
     $("#manage-btn-group").on("keydown","input",function(event){
         var e=adapt_event(event).event;
         if(e.keyCode==13){
+            if($.trim($(e.target).val())==0){
+                MessageBox("give it a name","top","warning");
+            }
+            else{
+                if(MANAGE[MANAGE.type].edit.edit_check(e)){
+                    MANAGE[MANAGE.type].edit.edit_update()
+                }
+            }
+        }
+        else if(e.keyCode==27){
             if(MANAGE[MANAGE.type].edit.edit_check(e)){
                 MANAGE[MANAGE.type].edit.edit_update()
             }
         }
-        else if(e.keyCode==27){
-            MANAGE[MANAGE.type].edit.edit_hide();
+    });
+    $("#manage-btn-group>input").blur(function(event){
+        var e=adapt_event(event).event;
+        if(MANAGE[MANAGE.type].edit.edit_check(e)){
+            MANAGE[MANAGE.type].edit.edit_update()
         }
-    })
+    });
 }
 
 

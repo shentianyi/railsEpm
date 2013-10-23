@@ -63,13 +63,17 @@
     color:rgba(0,0,0,0.3);
     font-size:13px;
 }
+.manage-kpi-target>div{
+    width:100%;
+    position:relative;
+    height:100%;
+}
 .manage-kpi-target input{
     position:absolute;
     z-index:10;
-    left:auto;
-    width:14%;
-    top:3px;
-    display:none;
+    left:-999em;
+    width:90%;
+    top:-9px;
 }
 /********************************************************************************************************* 添加 KPI
 *******************************************************************************************************************/
