@@ -80,7 +80,7 @@ function category_add(){
 category_add.prototype=MANAGE.manage_menu_left_add.prototype;
 category_add.prototype.constructor=category_add;
 function group_add(){
-    this.name="group";
+    this.name="entity";
     this.href="../users?p=";
     this.postHref='../entities';
 }
