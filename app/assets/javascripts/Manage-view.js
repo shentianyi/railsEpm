@@ -54,9 +54,10 @@ MANAGE.view.init=function(){
             MessageBox("Same User Group has already been assigned","top","warning");
         }
     });
-    $("body").on("click","#assign-entity-wrap li>h3,#assign-entity-wrap li>i",function(){
+    $("body").on("click","#assign-entity-wrap li>i",function(){
         var id=$(this).attr("entity_id"),
-            $this=$(this);
+     
+            $this=$(this); 
         if(confirm("Unassign this user group ?")){
             $.ajax({
                 url:'../entity_group_items/'+id,
@@ -69,7 +70,7 @@ MANAGE.view.init=function(){
                     }
                 }
             });
-            $(this).parent().remove();
+            //$(this).parent().remove();
         }
     });
 };
