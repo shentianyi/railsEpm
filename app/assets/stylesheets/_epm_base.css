@@ -419,3 +419,7 @@ nav ul li a:hover .nav-entry-kpi{
     bottom:0px;
     overflow-y:auto;
 }
+#highcharts-0 {
+    overflow:visible!important;
+    z-index:1!important;
+}
