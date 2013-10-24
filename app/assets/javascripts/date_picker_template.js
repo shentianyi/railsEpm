@@ -351,7 +351,6 @@ function date_shortcut(name,target,shortcut,index){
                     count=parseInt(count)*3;
                     unit="MONTH"
                 }
-                alert("LAST"+count+unit)
                 $(target).attr("hide_post","LAST"+count+unit);
             }
             $(effect_target).attr("interval",object[lastIndex].datePost(name)[2]);
