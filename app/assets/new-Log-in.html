@@ -35,7 +35,7 @@
         </div>
     </div>
 </div>
-<div class="signIn-block signShow-block clearfix" id="signIn-block" style="display:none">
+<form action="/user_sessions/"  method="post" class="signIn-block signShow-block clearfix" id="signIn-block" style="display:none">
     <h3 class="text-center">Sign in</h3>
     <dl>
         <dt>
@@ -53,9 +53,9 @@
         </dd>
     </dl>
     <br />
-    <a class="login-btn log-btn">Go</a>
-</div>
-<div class="signIn-block signShow-block clearfix" id="signUp-block" style="display:none" special="sign-up">
+    <a class="login-btn log-btn" onclick="document.forms[0].submit();">Go</a>
+</form>
+<form action="/subscriptions" method="post" class="signIn-block signShow-block clearfix" id="signUp-block" style="display:none" special="sign-up">
     <h3 class="text-center">Sign up</h3>
     <dl>
         <dt>
@@ -87,8 +87,8 @@
         </dd>
     </dl>
     <br />
-    <a class="login-btn log-btn">Ok</a>
-</div>
+    <a class="login-btn log-btn" onclick="document.forms[0].submit();">Ok</a>
+</form>
 
 
 
