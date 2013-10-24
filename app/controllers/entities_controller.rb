@@ -24,10 +24,10 @@ class EntitiesController < ApplicationController
 
   def destroy
     msg=Message.new
-    if @entity 
+    if @entity and @entity.users.count==0
      msg.result=@entity.destroy
      else
-       msg.content="删除失败"
+       msg.content="不可以删除"
     end
     render :json=>msg
   end

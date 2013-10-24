@@ -43,7 +43,7 @@ DASHBOARD.add.init=function(){
         $(".index-date-extra-info").text("");
         DATE_PICKER.shortcut_count=0;
 
-        new DATE_PICKER[interval](target,"date").datePicker();
+        new DATE_PICKER[interval](target,"string").datePicker();
     });
     $("#chart-group").chosen().change(function(){
         $("#analy-begin-time,#analy-end-time").datepicker("remove");

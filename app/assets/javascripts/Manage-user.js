@@ -92,7 +92,7 @@ MANAGE.user.add_new = function() {
      var password_confirm = $("#new-user-password-confirm").val();
      var role = $("input[name='user-role']:checked").attr("value");
      var authority = $("input[name='user-role']:checked").data("name");
-     if(name.length > 0 && mail.length > 0 && password.length > 0 && password_confirm.length > 0) {
+     if($.trim(name).length > 0 && mail.length > 0 && password.length > 0 && password_confirm.length > 0) {
           if($("#manage-user-add>div>input").filter("[red='true']").length == 0) {
 
 
@@ -151,15 +151,16 @@ MANAGE.user.add_new = function() {
                     dataType : 'json',
                     success : function(data) {
                          if(data.result) {
-                              $("#manage-sort-list").prepend($("<li />").attr("id", data.id)
+                              var object=data.object;
+                              $("#manage-sort-list").prepend($("<li />").attr("id", object.id)
                                   .append($("<p />").addClass("sort-handle").text(":"))
                                   .append($("<input type='checkbox'/>"))
                                   .append($("<table />").addClass("group")
                                       .append($("<tr />")
-                                          .append($("<td />").text(name).addClass("user-manage-name"))
-                                          .append($("<td />").text(authority).addClass("user-manage-authority").attr("value", role)))
+                                          .append($("<td />").text(object.first_name).addClass("user-manage-name"))
+                                          .append($("<td />").text(object.role).addClass("user-manage-authority").attr("value", object.role_id)))
                                       .append($("<tr />")
-                                          .append($("<td />").text(mail).addClass("user-manage-mail"))
+                                          .append($("<td />").text(object.email).addClass("user-manage-mail"))
                                           .append($("<td />").text("Authority")))));
                               $("#manage-sort-list input[type='checkbox']").iCheck({
                                    checkboxClass : 'icheckbox_minimal-aero'
@@ -210,7 +211,7 @@ MANAGE.user.user_edit_box_bind = function() {
 }
 MANAGE.user.edit = function() {
      var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(), edit_role = $("#user-edit input[name='edit-user-role']:checked").data("name"), edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"), edit_id = $("#manage-user-edit-old").attr("effect_on"), $target = $("#manage-sort-list").find("#" + edit_id);
-     if(edit_name.length > 0 && edit_mail.length > 0) {
+     if($.trim(edit_name).length > 0 && edit_mail.length > 0) {
           if($("#user-edit>div>input").filter("[red='true']").length == 0) {
                $.ajax({
                     url : '/users',
@@ -226,11 +227,11 @@ MANAGE.user.edit = function() {
                     dataType : 'json',
                     success : function(data) {
                          if(data.result) {
-                              console.log(edit_name);
-                              $target.find(".user-manage-name").text(edit_name);
-                              $target.find(".user-manage-mail").text(edit_mail);
+                              var object=data.object;
+                              $target.find(".user-manage-name").text(object.first_name);
+                              $target.find(".user-manage-mail").text(object.email);
                               if($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant")=="false")
-                              $target.find(".user-manage-authority").text(edit_role).attr("value", edit_authority);
+                              $target.find(".user-manage-authority").text(object.role).attr("value", object.role_id);
                          } else {
                               MessageBox("Something get wrong", "top", "wrong");
                          }
@@ -253,7 +254,9 @@ MANAGE.user.assign = {};
 MANAGE.user.assign.init = function() {
      //assign kpi初始化
      $("body").on("click", "#manage-user-delivery", function() {
-          var $target = $("#manage-sort-list").find(":checked"), id = $target.parent().parent().attr("id"), user_name = $target.parent().next().find(".user-manage-name").text();
+          var $target = $("#manage-sort-list").find(":checked"),
+              id = $target.parent().parent().attr("id"),
+              user_name = $target.parent().next().find(".user-manage-name").text();
           $.ajax({
                url : '/kpis/user_kpis',
                data : {

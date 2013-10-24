@@ -15,14 +15,14 @@
     width:150px;
     margin-left:20px;
 }
-.log-logo:after{
+/*.log-logo:after{*/
     /*content:url('../images/logo-after.png');*/
-    content:url('/assets/logo-after.png');
-    position:relative;
-    left:145px;
-    top:8px;
+    /*content:url('/assets/logo-after.png');*/
+    /*position:relative;*/
+    /*left:145px;*/
+    /*top:8px;*/
 
-}
+/*}*/
 .log-header-image{
     /*background:url("../images/log.png") right 0 no-repeat;*/
     background:url("/assets/log.png") right 0 no-repeat;

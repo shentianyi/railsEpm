@@ -22,21 +22,21 @@ MANAGE.totalChecked = 0;
 MANAGE.item_remove.prototype = {
      constructor : MANAGE.item_remove,
      remove_complete : function(id) {
-                  $("#manage-sort-list").find("#"+id).remove();
-//          $.ajax({
-//               url : this.url + id,
-//               type : 'DELETE',
-//               success : function(data) {
-//                    if(data.result) {
-//                         $("#manage-sort-list").find("#" + id).remove();
-//                         MANAGE.totalChecked -= 1;
-//                         total_check_listener();
-//                         MANAGE.judge_kpi_count();
-//                    } else {
-//                         MessageBox(data.content, "top", "warning");
-//                    }
-//               }
-//          });
+//                  $("#manage-sort-list").find("#"+id).remove();
+          $.ajax({
+               url : this.url + id,
+               type : 'DELETE',
+               success : function(data) {
+                    if(data.result) {
+                         $("#manage-sort-list").find("#" + id).remove();
+                         MANAGE.totalChecked -= 1;
+                         total_check_listener();
+                         MANAGE.judge_kpi_count();
+                    } else {
+                         MessageBox(data.content, "top", "warning");
+                    }
+               }
+          });
      }
 }
 function category_item_remove() {
@@ -86,12 +86,15 @@ MANAGE.item_edit.prototype = {
      edit_show : function() {
           var text;
           var target = this.edit_target;
+         MANAGE.edit_array=[];
           $("#manage-sort-list :checked").each(function() {
-               text = $(this).parent().next().find("." + target + ">.can-change").text();
-               $(this).parent().next().find("input[type='text']").css("display", "block").val(text);
+               text = $(this).parent().next().find("." + target + " .can-change").text();
+               $(this).parent().next().find("input[type='text']").css("left", "0px").val(text);
+              MANAGE.edit_array.push($(this).parent().next().find("input[type='text']").attr("effect_on"));
           });
      }
 }
+MANAGE.edit_array=[];
 function category_item_edit() {
      this.edit_target = "manage-kpi-target";
      this.url = '/kpis';
@@ -107,12 +110,24 @@ function category_item_edit() {
                },
                success : function(data) {
                     option.edit_input.prevAll(".can-change").text(option.target).attr("title", option.target);
-                    option.edit_input.css("display", "none");
+                    option.edit_input.css("left",'-999em');
+                    var id=option.id;
+                    var index=MANAGE.edit_array.indexOf(id);
+                    MANAGE.edit_array.splice(index,1);
+                    var targetId=MANAGE.edit_array.length==0?false:MANAGE.edit_array[0];
+                    if(targetId){
+                       $("#manage-sort-list>#"+targetId).find("table input[type='text']").focus();
+                    }
                }
           });
-          //        option.edit_input.prevAll(".can-change").text( option.target );
-          //        option.edit_input.css("display","none");
-     }, this.edit_check = function(object) {
+
+
+//                  option.edit_input.prevAll(".can-change").text( option.target );
+//                  option.edit_input.css("left",'-999em');
+
+
+     };
+     this.edit_check = function(object) {
           clearNoNumZero(object);
      };
 }

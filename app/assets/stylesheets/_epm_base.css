@@ -86,7 +86,7 @@ header{
     background:url("/assets/logo.png") no-repeat center bottom;
     /*background:url("../images/logo.png") no-repeat center bottom;*/
     width:150px;
-    height:117px;
+    height:135px;
     padding-top:0px;
 }
 /*.user-portrait-name{*/
@@ -418,4 +418,8 @@ nav ul li a:hover .nav-entry-kpi{
     right:0px;
     bottom:0px;
     overflow-y:auto;
+}
+#highcharts-0 {
+    overflow:visible!important;
+    z-index:1!important;
 }
