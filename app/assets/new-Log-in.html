@@ -19,36 +19,76 @@
 
 
 
-<article class="wrap-main">
-    <div class="log-general">
-        <header>
-            <div class="log-header-image">
-                <div class="log-logo"></div>
-                <a><span class="blue-green">S</span>ign Up</a>
-                <div class="language-select">
-                    <select class="chosen-select">
-                        <option>English</option>
-                        <option>Chinese</option>
-                    </select>
-                </div>
-            </div>
-        </header>
-        <div class="log-body">
-            <div class="log-btn-group">
-                <div class="log-input">
-                    <span><i class="icon-user"></i></span>
-                    <input type="text" placeholder="mail"/>
-                </div>
-                <div class="log-input">
-                    <span><i class="icon-lock"></i></span>
-                    <input type="password" placeholder="password"/>
-                </div>
-                <a class="login-in-btn"></a>
-                <a>Forgot Password ?</a>
-            </div>
+
+<div>
+    <div class="login-bg">
+        <div class="login-caption">
+            <h3>IntelligentFactory <span style="color:#5496C2">EPM</span></h3>
+            <p>Secure, quick and accurate, EPM uncovers the potential of data</p>
+            <a class="log-btn login-recommend" id="sign-up-now">Sign up Now</a>
         </div>
     </div>
-</article>
+    <div class="login-block">
+        <div class="login-operate clearfix">
+            <a class="log-btn pull-left" id="sign-in" state="close">Sign in</a>
+            <a class="log-btn pull-right" id="sign-up"  state="close">Sign up</a>
+        </div>
+    </div>
+</div>
+<div class="signIn-block signShow-block clearfix" id="signIn-block" style="display:none">
+    <h3 class="text-center">Sign in</h3>
+    <dl>
+        <dt>
+            E-mail:
+        </dt>
+        <dd>
+            <input type="text" />
+        </dd>
+        <br />
+        <dt>
+            Password:
+        </dt>
+        <dd>
+            <input type="password" />
+        </dd>
+    </dl>
+    <br />
+    <a class="login-btn log-btn">Go</a>
+</div>
+<div class="signIn-block signShow-block clearfix" id="signUp-block" style="display:none" special="sign-up">
+    <h3 class="text-center">Sign up</h3>
+    <dl>
+        <dt>
+            E-mail:
+        </dt>
+        <dd>
+            <input type="text" />
+        </dd>
+        <br />
+        <dt>
+            Password:
+        </dt>
+        <dd>
+            <input type="password" />
+        </dd>
+        <br />
+        <dt>
+            <span>Confirm</span> Password:
+        </dt>
+        <dd>
+            <input type="password" />
+        </dd>
+        <br />
+        <dt>
+            Company:
+        </dt>
+        <dd>
+            <input type="text" />
+        </dd>
+    </dl>
+    <br />
+    <a class="login-btn log-btn">Ok</a>
+</div>
 
 
 
@@ -72,10 +112,42 @@
 <script src="javascripts/jquery.icheck.min.js"></script>
 <script src="javascripts/jquery.sortable.min.js"></script>
 <script src="javascripts/Log.js"></script>
-<!--<script>-->
-    <!--$(document).ready(function(){-->
-        <!--LOG.init();-->
-    <!--})-->
-<!--</script>-->
+
+<script>
+    $(document).ready(function(){
+        $("#sign-in").on("click",function(){
+            if($(this).attr('state')=="close"){
+                if($("#sign-up").attr("state")=="open"){
+                    $('#signUp-block').slideUp('500');
+                    $("#sign-up").attr('state','close');
+                }
+                $('#signIn-block').slideDown('500');
+                $(this).attr('state','open');
+            }
+            else{
+                $('#signIn-block').slideUp('500');
+                $(this).attr('state','close');
+            }
+
+        });
+        $("#sign-up,#sign-up-now").on("click",function(){
+            if($("#sign-up").attr('state')=="close"){
+                if($("#sign-in").attr("state")=="open"){
+                    $('#signIn-block').slideUp('500');
+                    $("#sign-in").attr('state','close');
+                }
+                $('#signUp-block').slideDown('500');
+                $("#sign-up").attr('state','open');
+
+            }
+            else{
+                $('#signUp-block').slideUp('500');
+                $("#sign-up").attr('state','close');
+            }
+
+        });
+    })
+</script>
+
 </body>
 </html>

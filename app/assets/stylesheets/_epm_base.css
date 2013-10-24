@@ -20,6 +20,13 @@
     /*src:url("font/helveticaneueultralight.ttf"),*/
     /*url("font/helveticaneueultralight.eot");*/
 }
+@font-face {
+    font-family:maven;
+    /*src:url("/assets/mavenprolight300.ttf"),*/
+    /*url("/assets/mavenprolight300.eot");*/
+    src:url("font/mavenprolight300.ttf"),
+    url("font/mavenprolight300.eot");
+}
 html{
     height:100%;
 }
