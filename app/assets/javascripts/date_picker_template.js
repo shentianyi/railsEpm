@@ -347,6 +347,11 @@ function date_shortcut(name,target,shortcut,index){
 //                var count=gap_count>=10?gap_count:"0"+gap_count;
                 var count=gap_count,
                     unit=lastIndexName.toUpperCase().slice(0,-1);
+                if(unit=="QUARTER"){
+                    count=parseInt(count)*3;
+                    unit="MONTH"
+                }
+                alert("LAST"+count+unit)
                 $(target).attr("hide_post","LAST"+count+unit);
             }
             $(effect_target).attr("interval",object[lastIndex].datePost(name)[2]);
