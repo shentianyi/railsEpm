@@ -1,3 +1,4 @@
+<!--
 <% if @user_session && @user_session.errors.any? %>
 <div id="error_explanation" class="error_explanation ">
      <ul>
@@ -20,3 +21,153 @@
 </div> 
 </form>
 <a class="login-in-btn" onclick="document.forms[0].submit();"></a>
+-->
+<div>
+    <div class="login-bg">
+        <div class="login-caption">
+            <h3>IntelligentFactory <span style="color:#5496C2">EPM</span></h3>
+            <p>Secure, quick and accurate, EPM uncovers the potential of data</p>
+            <a class="log-btn login-recommend" id="sign-up-now">Sign up Now
+
+                  </a>
+        </div>
+    </div>
+    <div class="login-block">
+        <div class="login-operate clearfix">
+            <a class="log-btn pull-left" id="sign-in" state="close">Sign in</a>
+            <a class="log-btn pull-right" id="sign-up"  state="close">Sign up</a>
+        </div>
+    </div>
+</div>
+
+<!--User Session-Login in-->
+
+<% if @user_session && @user_session.errors.any? %>
+    <p id="session_error_msg" style="display: false"><% @user_session.errors.full_messages.each do |msg| %>
+          <%= msg %><br />
+      <% end %></p>
+    <script>
+        (
+                function(){
+                    var errmsg="";
+                    errmsg = $("#session_error_msg").text();
+                    console.log(errmsg.length);
+                    console.log(errmsg);
+                    if(errmsg != " "){
+                        MessageBox(errmsg,"top","warning");
+                    }
+                }
+                )();
+    </script>
+<% end%>
+
+<form action="/user_sessions/"  method="post" class="signIn-block signShow-block clearfix" id="signIn-block" style="display:none">
+    <h3 class="text-center">Sign in</h3>
+    <dl>
+        <dt>
+            E-mail:
+        </dt>
+        <dd>
+            <input id="user_session_email" name="user_session[email]"type="text" placeholder="<%= t 'auth.view.email'%>"/>
+        </dd>
+        <br />
+        <dt>
+            Password:
+        </dt>
+        <dd>
+            <input id="user_session_password" name="user_session[password]"type="password" placeholder="<%= t 'auth.view.pwd'%>"/>
+        </dd>
+    </dl>
+    <br />
+    <a class="login-btn log-btn" onclick="document.forms[0].submit();">Go</a>
+</form>
+
+<!--Sign up-->
+
+    <p id="signup_error_msg" style="display: false"><% flash.each do |key, msg| %>
+          <%= msg %><br />
+      <% end %></p>
+    <script>
+        (
+                function(){
+                    var errmsg=$("#signup_error_msg").text();
+                    if(errmsg.length > 0){
+                        MessageBox(errmsg,"top","warning");
+                    }
+                    console.log("Msg:" + errmsg);
+                    console.log("Length:" + errmsg.length)
+                    //
+                }
+                )();
+    </script>
+
+<form action="/subscriptions" method="post" class="signIn-block signShow-block clearfix" id="signUp-block" style="display:none" special="sign-up">
+    <h3 class="text-center">Sign up</h3>
+    <dl>
+        <dt>
+            E-mail:
+        </dt>
+        <dd>
+            <input type="text" id="email" name="email" placeholder="<%= t 'auth.view.email'%>"/>
+        </dd>
+        <br />
+        <dt>
+            Password:
+        </dt>
+        <dd>
+            <input type="password" id="password" name="password" placeholder="<%= t 'auth.view.pwd'%>"/>
+        </dd>
+        <br />
+        <dt>
+            <span>Confirm</span> Password:
+        </dt>
+        <dd>
+            <input type="password" id="password_confirmation" name="password_confirmation" placeholder="<%= t 'auth.view.pwd'%>"/>
+        </dd>
+        <br />
+        <dt>
+            Company:
+        </dt>
+        <dd>
+            <input type="text" id="company_name" name="company_name" placeholder="<%= t 'auth.view.company'%>"/>
+        </dd>
+    </dl>
+    <br />
+    <a class="login-btn log-btn" onclick="document.forms[1].submit();">Ok</a>
+</form>
+
+<script>
+  $(document).ready(function(){
+        $("#sign-in").on("click",function(){
+            if($(this).attr('state')=="close"){
+                if($("#sign-up").attr("state")=="open"){
+                    $('#signUp-block').slideUp('500');
+                    $("#sign-up").attr('state','close');
+                }
+                $('#signIn-block').slideDown('500');
+                $(this).attr('state','open');
+            }
+            else{
+                $('#signIn-block').slideUp('500');
+                $(this).attr('state','close');
+            }
+
+        });
+        $("#sign-up,#sign-up-now").on("click",function(){
+            if($("#sign-up").attr('state')=="close"){
+                if($("#sign-in").attr("state")=="open"){
+                    $('#signIn-block').slideUp('500');
+                    $("#sign-in").attr('state','close');
+                }
+                $('#signUp-block').slideDown('500');
+                $("#sign-up").attr('state','open');
+
+            }
+            else{
+                $('#signUp-block').slideUp('500');
+                $("#sign-up").attr('state','close');
+            }
+
+        });
+    })
+</script>
