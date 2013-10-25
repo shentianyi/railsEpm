@@ -37,16 +37,18 @@ ifepm.dashboard_widget.init = function(){
         draggable:{
             stop: on_dragstop,
         },
-        /*
-        collision:{
-            on_overlap:function(){console.log("on_overlap")},
-            on_overlap_start:function(){console.log("on_overlap_start")},
-            on_overlap_stop:function(){console.log("on_overlap_stop")},
-        },
-        */
     }).data("gridster");
 };
 
+//change this functiont to data independent
+ifepm.dashboard_widget.add_w = function(option){
+    
+}
+
+//get dashboard style
+ifepm.dashboard_widget.get_s = function(type){
+    
+}
 //add widget by a new added dashboard_item
 ifepm.dashboard_widget.add = function(data){
     //create chart
