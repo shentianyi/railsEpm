@@ -15,17 +15,24 @@
 }
 @font-face {
     font-family:"helve";
-    /*src:url("/assets/helveticaneueultralight.ttf"),*/
-    /*url("/assets/helveticaneueultralight.eot");*/
-    src:url("font/helveticaneueultralight.ttf"),
-    url("font/helveticaneueultralight.eot");
+    src:url("/assets/helveticaneueultralight.ttf"),
+    url("/assets/helveticaneueultralight.eot");
+    /*src:url("font/helveticaneueultralight.ttf"),*/
+    /*url("font/helveticaneueultralight.eot");*/
 }
 @font-face {
     font-family:maven;
-    src:url("/assets/mavenprolight300.ttf"),
-    url("/assets/mavenprolight300.eot");
-    /*src:url("font/mavenprolight300.ttf"),*/
-    /*url("font/mavenprolight300.eot");*/
+    /*src:url("/assets/mavenprolight300.ttf"),*/
+    /*url("/assets/mavenprolight300.eot");*/
+    src:url("font/mavenprolight300.ttf"),
+    url("font/mavenprolight300.eot");
+}
+@font-face {
+    font-family:maven;
+    /*src:url("/assets/Avenir-Roman.ttf"),*/
+    /*url("/assets/Avenir-Roman.eot");*/
+    src:url("font/Avenir-Roman.ttf"),
+    url("font/Avenir-Roman.eot");
 }
 html{
     height:100%;
@@ -75,34 +82,28 @@ body{
 /*********************************************************************************************************头部
 *******************************************************************************************************************/
 header{
-    height:135px;
+    height:70px;
     background-color:#f2f2f2;
     z-index:10;
     position:relative;
+    background-color:#5fa9da;
 }
 .user-portrait-background{
-    background:rgba(69,159,210,0.8);
-    background:-moz-radial-gradient(rgba(69,159,210,0.5),rgba(69,159,210,0.8));
-    background:-webkit-radial-gradient(rgba(69,159,210,0.5),rgba(69,159,210,0.8));
+    /*background:rgba(69,159,210,0.8);*/
+    /*background:-moz-radial-gradient(rgba(69,159,210,0.5),rgba(69,159,210,0.8));*/
+    /*background:-webkit-radial-gradient(rgba(69,159,210,0.5),rgba(69,159,210,0.8));*/
     position:relative;
     height:100%;
-    width:150px;
+    width:72px;
     cursor:pointer;
 }
 .user-portrait-brand{
     /*background:url("/assets/logo.png") no-repeat center bottom;*/
     background:url("../images/logo.png") no-repeat center bottom;
-    width:150px;
-    height:135px;
+    width:80px;
+    height:63px;
     padding-top:0px;
 }
-/*.user-portrait-name{*/
-    /*color:white;*/
-    /*font-family:"Brush Script std";*/
-    /*padding-left:31px;*/
-    /*font-size:18px;*/
-    /*margin-top:5px;*/
-/*}*/
 nav{
     height:100%;
 }
@@ -115,68 +116,93 @@ nav ul{
 nav>ul>li{
     float:left;
     line-height:21px;
+    margin-right:5px;
+}
+nav>ul>li.active a span{
+    background-color:#5595bf;
 }
 nav>ul>li>a{
     display:block;
-    width:135px;
-    color:#959595;
-    font-size:16px;
-    height:105px;
+
+    color:white;
+    font-size:15px;
+    height:46px;
     text-align:center;
     cursor:pointer;
     text-decoration:none;
 }
-nav ul li a:hover{
-    color:#f5a133;
+nav ul li a:hover span{
+    background-color:#5595bf;
+}
+nav ul li:nth-last-of-type(2) span{
+    border-left:2px solid #5595bf;
+    padding:3px 0px !important;
 }
 nav ul li a span:nth-of-type(1){
     display:block;
-    margin-top:30px;
-    margin-bottom:10px;
+    margin-top:24px;
+    margin-bottom:20px;
+    padding:3px 13px;
 }
-nav ul li a span:nth-of-type(2){
+nav ul li:last-of-type a span{
+
+    width:98px;
+    text-align:right;
+    position:relative;
+    padding-left:3px;
+}
+nav ul li:last-of-type a span:before{
+    content:url('../images/entry-kpi.png');
     display:block;
-    width:100%;
-    height:52px;
-    /*background-image:url("/assets/nav-btn.png");*/
-    background-image:url("../images/nav-btn.png");
-    background-repeat:no-repeat;
+    width:30px;
+    height:1px;
+    position:absolute;
+    bottom:29px;
+    left:1px;
 }
+/*nav ul li a span:nth-of-type(2){*/
+    /*display:block;*/
+    /*width:100%;*/
+    /*height:52px;*/
+    /*background-image:url("/assets/nav-btn.png");*/
+    /*background-image:url("../images/nav-btn.png");*/
+    /*background-repeat:no-repeat;*/
+/*}*/
 /********************************************************* get start
 **************************************************************/
-.nav-get-started{
-    background-position:center 0px;
-}
-nav ul li a:hover .nav-get-started{
-    background-position:center -50px;
-}
+/*.nav-get-started{*/
+    /*background-position:center 0px;*/
+/*}*/
+/*nav ul li a:hover .nav-get-started{*/
+    /*background-position:center -50px;*/
+/*}*/
 /********************************************************* dash board
 **************************************************************/
-.nav-dash-board{
-    background-position:center -100px;
-}
-nav ul li a:hover .nav-dash-board{
-    background-position:center -148px;
-}
+/*.nav-dash-board{*/
+    /*background-position:center -100px;*/
+/*}*/
+/*nav ul li a:hover .nav-dash-board{*/
+    /*background-position:center -148px;*/
+/*}*/
 /********************************************************* analytics
 **************************************************************/
-.nav-analytics{
-    background-position:center -195px;
-}
-nav ul li a:hover .nav-analytics{
-    background-position:center -238px;
-}
+/*.nav-analytics{*/
+    /*background-position:center -195px;*/
+/*}*/
+/*nav ul li a:hover .nav-analytics{*/
+    /*background-position:center -238px;*/
+/*}*/
 /********************************************************* manage
 **************************************************************/
-.nav-manage{
-    background-position:center -515px;
-}
-nav ul li a:hover .nav-manage{
-    background-position:center -561px;
-}
-nav ul li a:hover ~ .nav-manage-sub{
-    left:auto;
-}
+/*.nav-manage{*/
+    /*background-position:center -515px;*/
+/*}*/
+/*nav ul li a:hover .nav-manage{*/
+    /*background-position:center -561px;*/
+/*}*/
+/*nav ul li a:hover ~ .nav-manage-sub{*/
+    /*left:auto;*/
+/*}*/
 .nav-manage-sub{
     position:absolute;
     width:135px;
@@ -185,25 +211,25 @@ nav ul li a:hover ~ .nav-manage-sub{
     z-index:100;
     left:-999em;
 }
-.nav-manage-sub:hover{
-    left:auto;
-}
-.nav-manage-sub>li>a{
-    text-align:center;
-    display:block;
-    color:#959595;
-    padding:7px 0;
-    cursor:pointer;
-    text-decoration:none;
-}
+/*.nav-manage-sub:hover{*/
+    /*left:auto;*/
+/*}*/
+/*.nav-manage-sub>li>a{*/
+    /*text-align:center;*/
+    /*display:block;*/
+    /*color:#959595;*/
+    /*padding:7px 0;*/
+    /*cursor:pointer;*/
+    /*text-decoration:none;*/
+/*}*/
 /********************************************************* reports
 **************************************************************/
-.nav-report{
-    background-position:center -299px;
-}
-nav ul li a:hover .nav-report{
-    background-position:center -353px;
-}
+/*.nav-report{*/
+    /*background-position:center -299px;*/
+/*}*/
+/*nav ul li a:hover .nav-report{*/
+    /*background-position:center -353px;*/
+/*}*/
 /********************************************************* entry kpi
 **************************************************************/
 .nav-entry-kpi{
