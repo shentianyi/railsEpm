@@ -26,3 +26,37 @@ function show_left_user_setting(){
         $("#user-portrait-background").attr("state","close");
     }
 }
+(function($) {
+    $.fn.getCursorPosition = function() {
+        var input = this.get(0);
+        if (!input) return; // No (input) element found
+        if ('selectionStart' in input) {
+            // Standard-compliant browsers
+            return input.selectionStart;
+        } else if (document.selection) {
+            // IE
+            input.focus();
+            var sel = document.selection.createRange();
+            var selLen = document.selection.createRange().text.length;
+            sel.moveStart('character', -input.value.length);
+            return sel.text.length - selLen;
+        }
+    }
+})(jQuery);
+function setSelectionRange(input, selectionStart, selectionEnd) {
+    if (input.setSelectionRange) {
+        input.focus();
+        input.setSelectionRange(selectionStart, selectionEnd);
+    }
+    else if (input.createTextRange) {
+        var range = input.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', selectionEnd);
+        range.moveStart('character', selectionStart);
+        range.select();
+    }
+}
+
+function setCaretToPos (input, pos) {
+    setSelectionRange(input, pos, pos);
+}

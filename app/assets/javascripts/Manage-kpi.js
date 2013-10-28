@@ -37,7 +37,16 @@ MANAGE.kpi.init=function(){
         );
     });
     MANAGE.kpi.library.init();
+    $("body").on("keydown","#manage-sort-list>li>table input[type='text']",function(){
+        var $this=$(this),
+            number=$this.getCursorPosition();
+            $this.data('cursor-position',number);
+    }).on('keyup',"#manage-sort-list>li>table input[type='text']",function(event){
+            var keyCode=adapt_event(event).event.keyCode>=39?(adapt_event(event).event.keyCode==40?40:39):adapt_event(event).event.keyCode,
+                number=keyCode-38==0?0:(keyCode-40==0?$(adapt_event(event).target).val().length:parseInt($(this).data('cursor-position'))+(keyCode-38));
+            setCaretToPos ($(this).get(0),number);
 
+    });
 }
 MANAGE.kpi.kpi_for_calculate=[];
 
