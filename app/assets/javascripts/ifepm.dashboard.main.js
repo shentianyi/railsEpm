@@ -192,11 +192,12 @@ function reload(id){
             return;
         }
         var current_graph = ifepm.dashboard.graphs[id];
+        var last_update = Date();
         $.ajax(
             {
                 before_send: function(){},
                 url:ifepm.config.get_item_data_url.url,
-                data:{"id":id},
+                data:{"id":id,"last_update":last_update},
                 dataType:ifepm.config.get_item_data_url.dataType,
                 crossDomain:ifepm.config.get_item_data_url.crossDomain,
                 success: function(data){
@@ -232,7 +233,7 @@ ifepm.dashboard.getInteral = function(interval){
     var min = 1000*60;
     var hour = 1000*60*60;
 
-    intvl = min * 5;
+    intvl = sec * 30;
 
     /*switch (interval){
         case "90":
@@ -412,6 +413,9 @@ function Graph(){
     this.sizex = null;
     this.sizey = null;
 
+    /*@field 上次更新时间*/
+    this.last_update = null;
+
     /**/
     this.chart_type = null;
 
@@ -454,6 +458,7 @@ ifepm.dashboard.update_item_sequence= function(container_selector){
 ifepm.dashboard.create_dashboard=function(){
     var container_selector=ifepm.config.container_selector;
     ifepm.dashboard_widget.remove_all_widgets();
+    ifepm.dashboard.clear_all_timer();
     $(container_selector).children().remove();
     if (Object.keys(ifepm.dashboard.graphs).length>0){
 
@@ -463,12 +468,15 @@ ifepm.dashboard.create_dashboard=function(){
                         ifepm.dashboard.graphs[graph_id].container(ifepm.dashboard.graphs[graph_id]));
 
                     var option = {};
+                    option.isnew = false;
+                    option.container_selector  =container_selector;
                     option.id = graph_id;
                     option.row = ifepm.dashboard.graphs[graph_id].row;
                     option.col = ifepm.dashboard.graphs[graph_id].col;
                     option.sizex = ifepm.dashboard.graphs[graph_id].sizex;
                     option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
-                    ifepm.dashboard_widget.setSize(option);
+                    ifepm.dashboard_widget.add_w(option);
+                    ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
                 }
                 //configure the sortable
                 $(container_selector).sortable(
@@ -517,6 +525,7 @@ ifepm.dashboard.init=function(id){
                     graph_item.col = data[i].col;
                     graph_item.sizex = data[i].sizex;
                     graph_item.sizey = data[i].sizey;
+                    graph_item.last_update = data[i].last_update;
                     ifepm.dashboard.graphs[data[i].id]=graph_item;
                     ifepm.dashboard.setTimer(ifepm.dashboard.graphs[data[i].id]);
                     ifepm.dashboard.graph_sequence.push(data[i].id)
@@ -529,9 +538,83 @@ ifepm.dashboard.init=function(id){
     );
 };
 
-ifepm.dashboard.on_view_added = function(graph){
-    ifepm.dashboard.graphs[graph.id] = graph;
-    ifepm.dashboard.graph_sequence.push(graph.id);
+ifepm.dashboard.on_view_added = function(data){
+    var graph_item = new Graph();
+    graph_item.id = data.id;
+    graph_item.name = data.name;
+    graph_item.title = data.title;
+    graph_item.calculate_type = data.calculate_type;
+    graph_item.from =data.start;
+    graph_item.end = data.end;
+    graph_item.chart_type = data.chart_type;
+    graph_item.entity_group = data.entity_group;
+    graph_item.kpi_id = data.kpi_id;
+    graph_item.kpi_name = data.kpi_name;
+    graph_item.interval = data.interval;
+    graph_item.sequence = data.sequence;
+    graph_item.dashboard_id = data.dashboard_id;
+    graph_item.last_update = data.last_update;
+    var container_selector=ifepm.config.container_selector;
+    var option = {};
+    option.isnew = true;
+    option.id = data.id;
+    option.container_selector = container_selector;
+    option.chart_type = data.chart_type;
+
+    ifepm.dashboard.graphs[graph_item.id] = graph_item;
+    ifepm.dashboard.graph_sequence.push(graph_item.id);
+
+    //create chart
+    $(container_selector).append(graph_item.container(graph_item));
+
+    //add widget,return size and pos
+    var result = ifepm.dashboard_widget.add_w(option);
+    graph_item.sizex = result.sizex;
+    graph_item.sizey = result.sizey;
+    graph_item.col = result.col;
+    graph_item.row = result.row;
+
+    ifepm.dashboard.graphs[graph_item.id] = graph_item;
+    ifepm.dashboard.setTimer(graph_item);
+    //save position
+    var options = [];
+    var opt = {};
+    opt.id = graph_item.id;
+    opt.sizex = graph_item.sizex;
+    opt.sizey = graph_item.sizey;
+    opt.col = graph_item.col;
+    opt.row = graph_item.row;
+    options.push(opt);
+    ifepm.dashboard.save_grid_pos(options,{success:function(){}});
+}
+
+ifepm.dashboard.on_drag_stop  = function(){
+    //get all the new position
+    var result = {};
+    var options = [];
+    for(var i in ifepm.dashboard.graph_sequence){
+        var id = ifepm.dashboard.graph_sequence[i];
+        if(id == null){continue;}
+        var opt={};
+        var filter = "#"+id;
+        result = ifepm.dashboard_widget.get_pos(filter);
+        if((ifepm.dashboard.graphs[id].row == result.row )&&( ifepm.dashboard.graphs[id].col == result.col) ){
+            continue;
+        }
+        ifepm.dashboard.graphs[id].row = result.row;
+        ifepm.dashboard.graphs[id].col = result.col;
+
+        opt.id = id;
+        opt.row = result.row;
+        opt.col = result.col;
+        opt.sizex = ifepm.dashboard.graphs[id].size_x;
+        opt.sizey = ifepm.dashboard.graphs[id].size_y;
+        options.push(opt);
+    }
+    //
+    if(options.length > 0){
+        ifepm.dashboard.save_grid_pos(options,{success:function(){}});
+    }
 }
 
 ifepm.dashboard.on_view_deleted = function(id){

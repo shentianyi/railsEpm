@@ -67,8 +67,6 @@ class DashboardItemsController < ApplicationController
     end
   end
 
-
-
   def items_by_dashboard_id
     formatted_items = DashboardItem::get_formatted_items_by_dashboard_id(params[:id])
     respond_to do |t|
@@ -81,6 +79,10 @@ class DashboardItemsController < ApplicationController
 
   def get_data
     datas = DashboardCondition::get_item_formatted_data(params[:id])
+
+    @item = DashboardItem.find(params[:id])
+    @item.update_attribute("last_update",params[:last_update])
+
     respond_to do |t|
       t.json {render :json=>datas.to_json}
       t.js {render :js=>jsonp_str(datas)}
@@ -102,6 +104,5 @@ class DashboardItemsController < ApplicationController
       t.js {render :js=>jsonp_str(true)}
     end
   end
-
 end
 

@@ -215,4 +215,11 @@ en:
     login: Login
     sign: Sign Up
    msg:
-    login_success: Login successful!
+    login_success: Login successfully!
+    login_require: Please Login!
+    logout_success: Logout successfully!
+    logout_require: Please Sign up!
+    email_token: Email has been Signed up!
+    sign_success: Sign up successfully!
+    sign_close: Registration is not open!
+    sign_fail: Sign up failed!
