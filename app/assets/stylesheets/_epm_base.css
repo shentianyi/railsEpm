@@ -15,34 +15,32 @@
 }
 @font-face {
     font-family:"helve";
-    src:url("/assets/helveticaneueultralight.ttf"),
-    url("/assets/helveticaneueultralight.eot");
-    /*src:url("font/helveticaneueultralight.ttf"),*/
-    /*url("font/helveticaneueultralight.eot");*/
+    /*src:url("/assets/helveticaneueultralight.ttf"),*/
+    /*url("/assets/helveticaneueultralight.eot");*/
+    src:url("font/helveticaneueultralight.ttf"),
+    url("font/helveticaneueultralight.eot");
 }
 @font-face {
-    font-family:maven;
+    font-family:'maven';
     /*src:url("/assets/mavenprolight300.ttf"),*/
     /*url("/assets/mavenprolight300.eot");*/
     src:url("font/mavenprolight300.ttf"),
     url("font/mavenprolight300.eot");
 }
 @font-face {
-    font-family:maven;
+    font-family:'avenir';
     /*src:url("/assets/Avenir-Roman.ttf"),*/
     /*url("/assets/Avenir-Roman.eot");*/
     src:url("font/Avenir-Roman.ttf"),
     url("font/Avenir-Roman.eot");
 }
 html{
-    height:100%;
+    height:auto;
 }
 body{
     margin:0;
-    height:100%;
     font-weight:500;
     font-family:"open-sans";
-    overflow-y:hidden;
 }
 /*********************************************************************************************************左边用户设置部分
 *******************************************************************************************************************/
@@ -71,13 +69,11 @@ body{
 *******************************************************************************************************************/
 .wrap-main{
     min-width:1024px;
-    height:100%;
     position:absolute;
     transition:left 0.25s ease-out;
     right:0;
     left:0;
-    overflow-y:hidden;
-    overflow-x:hidden;
+
 }
 /*********************************************************************************************************头部
 *******************************************************************************************************************/
@@ -87,6 +83,9 @@ header{
     z-index:10;
     position:relative;
     background-color:#5fa9da;
+    box-shadow:0px 2px 2px #c9c9c9;
+    -moz-shadow:0px 2px 2px #c9c9c9;
+    -webki-shadow:0px 2px 2px #c9c9c9;
 }
 .user-portrait-background{
     /*background:rgba(69,159,210,0.8);*/
@@ -116,7 +115,7 @@ nav ul{
 nav>ul>li{
     float:left;
     line-height:21px;
-    margin-right:5px;
+    margin-right:10px;
 }
 nav>ul>li.active a span{
     background-color:#5595bf;
@@ -137,6 +136,10 @@ nav ul li a:hover span{
 nav ul li:nth-last-of-type(2) span{
     border-left:2px solid #5595bf;
     padding:3px 0px !important;
+    cursor:default !important;
+}
+nav ul li:nth-last-of-type(2) a:hover span{
+    background-color:inherit;
 }
 nav ul li a span:nth-of-type(1){
     display:block;
@@ -153,6 +156,7 @@ nav ul li:last-of-type a span{
 }
 nav ul li:last-of-type a span:before{
     content:url('../images/entry-kpi.png');
+    /*content:url('/assets/images/entry-kpi.png');*/
     display:block;
     width:30px;
     height:1px;
@@ -200,28 +204,35 @@ nav ul li:last-of-type a span:before{
 /*nav ul li a:hover .nav-manage{*/
     /*background-position:center -561px;*/
 /*}*/
-/*nav ul li a:hover ~ .nav-manage-sub{*/
-    /*left:auto;*/
-/*}*/
+nav ul li a:hover ~ .nav-manage-sub{
+    left:-10px;
+}
 .nav-manage-sub{
     position:absolute;
-    width:135px;
+    width:100px;
     padding:0;
-    background:#f2f2f2;
+    background:#5FA9DA;
     z-index:100;
     left:-999em;
+    box-shadow:-2px 3px 3px rgba(0,0,0,0.3);
+    -moz-shadow:-2px 3px 3px rgba(0,0,0,0.3);
+    -webki-shadow:-2px 3px 3px rgba(0,0,0,0.3);
 }
-/*.nav-manage-sub:hover{*/
-    /*left:auto;*/
-/*}*/
-/*.nav-manage-sub>li>a{*/
-    /*text-align:center;*/
-    /*display:block;*/
-    /*color:#959595;*/
-    /*padding:7px 0;*/
-    /*cursor:pointer;*/
-    /*text-decoration:none;*/
-/*}*/
+.nav-manage-sub:hover{
+    left:-10px;
+}
+.nav-manage-sub>li>a{
+    text-align:center;
+    display:block;
+    color:white;
+    padding:7px 0;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:13px;
+}
+.nav-manage-sub>li>a:hover{
+    background-color:#5595bf;
+}
 /********************************************************* reports
 **************************************************************/
 /*.nav-report{*/
@@ -232,19 +243,60 @@ nav ul li:last-of-type a span:before{
 /*}*/
 /********************************************************* entry kpi
 **************************************************************/
-.nav-entry-kpi{
-    background-position:center -413px;
+/*.nav-entry-kpi{*/
+    /*background-position:center -413px;*/
+/*}*/
+/*nav ul li a:hover .nav-entry-kpi{*/
+    /*background-position:center -466px;*/
+/*}*/
+/*.manage-nav-table{*/
+    /*height:100%;*/
+/*}*/
+/*.manage-nav-table td a{*/
+    /*text-decoration:none;*/
+    /*color:#959595;*/
+/*}*/
+/********************************************************* nav right part
+**************************************************************/
+.nav-user-part{
+    list-style-type: none;
+    display:block;
+    float:right;
+    color:white;
+    font-size:15px;
+    padding-right:6px;
+    margin-bottom:0px;
+    margin-top:17px;
 }
-nav ul li a:hover .nav-entry-kpi{
-    background-position:center -466px;
+.nav-user-part>li{
+    display:inline-block;
+    margin:6px 0;
+    padding:0px 3px;
+    cursor:pointer;
 }
-.manage-nav-table{
-    height:100%;
+.nav-user-part>li.empty{
+    border-left:2px solid #5595bf;
+    padding:3px 0px !important;
+    cursor:default !important;
+    margin-right:-5px;
+    margin-left:5px;
 }
-.manage-nav-table td a{
-    text-decoration:none;
-    color:#959595;
+.nav-user-part li .icon-user{
+    font-size:18px;
+    position:relative;
+    top:1px;
+    pointer-events:auto;
 }
+.nav-user-part li .icon-user:hover{
+    color:rgba(0,0,0,0.5);
+}
+.nav-user-part>li:last-of-type a{
+    padding:2px 6px;
+}
+.nav-user-part>li:last-of-type a:hover{
+    background-color:#5595bf;
+}
+
 /********************************************************************************************************* Message
 *******************************************************************************************************************/
 .message-box{

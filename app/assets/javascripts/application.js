@@ -43,6 +43,7 @@
 //=require Manage-kpi
 //=require Manage-user
 //=require Manage-view
+//=require 2_column_right_nav
 //=require Dashboard-add
 //=require Dashboard-init
 //=require Log

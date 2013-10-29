@@ -130,7 +130,9 @@ label,p,h1,h2,h3,h4,h5{
 .btn{
     display:block;
     text-align:center;
-    background:#EEEEEE;
+    background:#eee;
+    background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(238,238,238, 0.2) 55%) #eee;
+    background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(238,238,238, 0.2) 55%) #eee;
     transition: background-color 0.25s ease 0s,color 0.25s ease 0s;
     -moz-transition: background-color 0.25s ease 0s;
     -webkit-transition: background-color 0.25s ease 0s;
@@ -139,7 +141,9 @@ label,p,h1,h2,h3,h4,h5{
     margin:0 20px;
     /*text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);*/
     border:none;
-    border-radius:2px;
+    border-radius:4px;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
     vertical-align:middle;
     color:rgba(0, 0, 0, 0.5);
     font-weight:lighter;
@@ -164,10 +168,14 @@ label,p,h1,h2,h3,h4,h5{
 }
 .btn.btn-primary{
     background:#5fa9da;
+    background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
+    background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
     color:white;
 }
 .btn.btn-primary:hover{
-    background:#69aef5
+    background:#69aef5;
+    background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
+    background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
 }
 .btn.btn-success{
     background:#2fcc76;

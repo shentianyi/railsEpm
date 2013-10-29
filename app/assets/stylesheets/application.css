@@ -17,6 +17,7 @@
 *= require Analytic-main
 *= require font-awesome
 *= require aero
+*= require 2_column_right_nav
 *= require jquery.gridster
 *= require Manage
 *= require Manage-kpi
