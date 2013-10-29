@@ -193,6 +193,7 @@ function reload(id){
         }
         var current_graph = ifepm.dashboard.graphs[id];
         var last_update = Date();
+        current_graph.last_update = last_update;
         $.ajax(
             {
                 before_send: function(){},
