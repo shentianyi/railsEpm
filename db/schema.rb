@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131011094335) do
+ActiveRecord::Schema.define(:version => 20131029033819) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20131011094335) do
     t.integer  "col"
     t.integer  "sizex"
     t.integer  "sizey"
+    t.string   "last_update"
   end
 
   create_table "dashboards", :force => true do |t|

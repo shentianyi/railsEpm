@@ -108,7 +108,7 @@ function prepare_to_create_db_view(post){
     dashboard_item.db.title = post.dashboard_name;
     dashboard_item.db.chart_type = post.type;
     dashboard_item.db.dashboard_id= post.dashboard_id;
-
+    dashboard_item.db.last_update = Date();
     /*
     * Test
     * */
@@ -235,7 +235,8 @@ function db_view_create_callback(data){
         $("#dashboard-add-page").css("display","none");
         MessageBox("Create dashboard item success","top","success");
         //close_dash();
-        ifepm.dashboard_widget.add(data);
+        //ifepm.dashboard_widget.add(data);
+        ifepm.dashboard.on_view_added(data);
     }
     else{
         MessageBox("Delete dashboard item failed","top","warning");
@@ -252,7 +253,7 @@ function db_view_delete(id){
 function db_view_delete_callback(data){
     MessageBox("Delete dashboard item success","top","success");
     ifepm.dashboard.on_view_deleted(data.id);
-    ifepm.dashboard_widget.remove_widget(ifepm.config.container_selector + " "+config.view_id_filter(data.id));
+    ifepm.dashboard_widget.remove_w(ifepm.config.container_selector + " "+config.view_id_filter(data.id));
     /*
     var to_delete_view = menu_selector.get_first_in_container(
         ifepm.config.container_selector,
