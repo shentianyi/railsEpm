@@ -214,9 +214,9 @@ nav ul li a:hover ~ .nav-manage-sub{
     background:#5FA9DA;
     z-index:100;
     left:-999em;
-    box-shadow:-2px 3px 3px rgba(0,0,0,0.3);
-    -moz-shadow:-2px 3px 3px rgba(0,0,0,0.3);
-    -webki-shadow:-2px 3px 3px rgba(0,0,0,0.3);
+    box-shadow:-2px 3px 3px rgba(0, 0, 0, 0.5);
+    -moz-shadow:-2px 3px 3px rgba(0, 0, 0, 0.5);
+    -webki-shadow:-2px 3px 3px rgba(0, 0, 0, 0.5);
 }
 .nav-manage-sub:hover{
     left:-12px;

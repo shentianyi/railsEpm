@@ -44,6 +44,15 @@ DASHBOARD.add.initial.height=function(){
         $("#content-right-nav").css("height",height);
     });
 }
+DASHBOARD.add.initial.width=function(){
+    $("#left-content-title").width($(document).width()-$("#content-right-nav").width()-5);
+    var width;
+    $(window).resize(function(){
+        width=$(document).width()-$("#content-right-nav").width()-5;
+        $("#left-content-title").width(width);
+    });
+}
+
 DASHBOARD.add.init=function(){
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
@@ -51,6 +60,7 @@ DASHBOARD.add.init=function(){
     $("header").css("box-shadow","0 2px 5px rgba(71,71,71,0.3)");
 
     DASHBOARD.add.initial.height();
+    DASHBOARD.add.initial.width();
 
     $("#chart-kpi").chosen().change(function(){
         var interval = $("#chart-kpi").find(":selected").attr("interval");

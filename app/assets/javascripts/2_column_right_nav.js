@@ -46,7 +46,7 @@ right_nav_main.initial.width=function(){
     $("#current-group-item").css("max-width",$(document).width()-$("#content-right-nav").width()-1-120);
     var width;
     $(window).resize(function(){
-        width=$(document).width()-$("#content-right-nav").width()-1;
+        width=$(document).width()-$("#content-right-nav").width()-2;
         $("#left-content-title").width(width);
         $("#current-group-item").css("max-width",width-120);
     });
