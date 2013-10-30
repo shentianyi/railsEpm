@@ -1,300 +1,52 @@
-
-<div class="sub-middle db-sub-middle">
-
-</div>
-
-<!--
-<div class="dashBlock " id="addBlock" data-state="off" style="display:none">
-  <h4 class="text-center light-gray">创建视图</h4>
-  <table class="dashBoard-condition">
-    <tr>
-      <td>*视图名称</td>
-      <td><input type="text" id="view_name_input"/></td>
-    </tr>
-    <tr>
-      <td>视图描述</td>
-      <td><input type="text" id="view_title_input" class="db-photoDesc"/></td>
-    </tr>
-    <tr>
-      <td>KPI类别</td>
-      <td>
-        <%= select_tag :category_id,options_from_collection_for_select(@categories,'id','name'),
-                       {:id=>'chart-group',:class=>"pull-left conditionPart-group",:onchange=>"get_kpis_by_category(this);"}%>
-~
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td>*KPI名称</td>
-      <td>
-
-    <div id="kpi-select">
-        <select class="pull-left" id="chart-kpi">
-          <%@kpis.each do |kpi|%>
-              <option value="<%= kpi.id%>" interval="<%= kpi.frequency%>"><%= kpi.name%></option>
-          <%end%>
-        </select>
-</div>
-      </td>
-    </tr>
-    <tr>
-      <td>*观察点</td>
-      <td>
-
-        <%= select_tag :entity_group,options_from_collection_for_select(@entity_groups,'id','name'),{:id=>'chart-view',:class=>'pull-left conditionPart-entity'}%>
-
-      </td>
-    </tr>
-    <tr>
-      <td>*开始时间</td>
-      <td>
-        <input type="text" readonly="true" id="from" class="analytics-date"/>
-
-        <input placeholder="时间" type="text" readonly="true" id="fromTime" class="analytics-time"/>
-
-</td>
-</tr>
-<tr>
-  <td>*结束时间</td>
-  <td>
-    <input  type="text" readonly="true" id="to" class="analytics-date"/>
-    <input placeholder="时间" type="text" readonly="true" id="toTime" class="analytics-time"/>
-  </td>
-</tr>
-<tr>
-  <td>*分析方式</td>
-  <td>
-    <input type="radio" name="chartRadios" checked><span class="analyticType-radio">以综合值分析</span>
-    <br />
-    <input type="radio" name="chartRadios" ><span class="analyticType-radio">以平均值分析</span>
-  </td>
-</tr>
-</table>
-<div class="chooseChart-wrap clearfix" id="view-chart-type">
-  <div class="choose-db-item db-chart-line pull-left"  onclick="dashNew_chooseType(event)" style="background: #002a80"><label>折线图</label></div>
-  <div class="choose-db-item db-chart-column pull-left"onclick="dashNew_chooseType(event)" style="background: #002a80"><label>直方图</label></div>
-  <div class="choose-db-item db-chart-pie pull-left" onclick="dashNew_chooseType(event)" style="background: #002a80"><label>饼图</label></div>
-</div>
-
-<div class="chooseBtn-wrap clearfix">
-  <a class="btn dashboard-condition-btn pull-left" onclick="close_dash()">取消</a>
-  <a class="btn btn-primary dashboard-condition-btn pull-left" onclick="db_view_create(prepare_to_create_db_view())">添加</a>
-</div>
-</div>
--->
-
-<div class="middle clearfix" style="height:80%; overflow-x: hidden;overflow-y: auto;">
-
-  <!--左边的categories-->
- <!-- 
-<div class="left-category pull-left">
-    <ul class="manage-group" id="sty-dashboards">
-      <li><h3 class="no-margin">视角</h3></li>
-      <%@dashboards.each do |dashboard| %>
-          <li class="sty-db-node" obj_id=<%=dashboard.id%>  >
-            <i class="icon-remove hide pull-left"  onclick="dashboard_delete(<%=dashboard.id%>)"></i>
-            <a href="#" onclick="select_dashboard(<%=dashboard.id%>)"><%=dashboard.name%></a>
-           </li>
-
-      <%end%>
-      </ul>
-    <ul class="manage-group">
-      <li><button class="btn btn-primary" onclick="create_entityBlock()">创建新视角</button></li>
-      <div class="absolute creat-entity-block hide" id="creatEntity-block">
-        <p>创建新视角</p>
-        <i class="icon-remove pull-right" onclick="close_createEntity()"></i>
-        <input type="text" id="creat-newEntity" onkeyup="if(event.keyCode==13){dashboard_create({name:$(this).val()})}"/>
-      </div>
-     <div class="absolute creat-entity-block hide" id="edit-block">
-        <p>修改视角</p>
-        <i class="icon-remove pull-right" onclick="close_editBlock()"></i>
-        <input type="text" id="change-leftNavi" onkeyup="change_leftNavi(event)"/>
-      </div>
-    </ul>
-  </div>
--->
-
-  <!--新的Dashboard类别-->
+<aside class="content-right-nav" name='dashboard' id="content-right-nav">
+        <section class="adaptable">
+            <h3>DashBoard Group</h3>
+            <i class="icon-plus" id="content-right-nav-add-button"></i>
+            <ul id="content-right-nav-group">
+                <%@dashboards.each do |dashboard| %>
+                  <li class="sty-db-node" number=<%=dashboard.id%>  >
+                  <i class="icon-remove"  onclick="dashboard_delete(<%=dashboard.id%>)"></i>
+                  <a href="#" onclick="select_dashboard(<%=dashboard.id%>)"><%=dashboard.name%></a>
+                  </li>
+                <%end%> 
+            </ul>
+            <div class="content-right-nav-add-block" id="content-right-nav-add-block">
+                <p>give it a name</p>
+                <input type='text' />
+            </div>
+        </section>
+        <section class="solid">
+            <h3>Add DashBoard</h3>
+            <p>Creating a dashboard of your favourite type,then put it
+            to one of the dashboard group item for long-term observation</p>
+            <a class="btn btn-primary">Add Now</a>
+        </section>
+        <section class="solid">
+            <h3>Full Size</h3>
+            <p>Resize the dashboard in the left to full screen so that you
+            can demonstrate it to your colleagues or leaders ,use Esc to
+            bring it back</p>
+            <a class="btn btn-primary">Full Now</a>
+        </section>
+    </aside>
 
 
-  <div class="left-category pull-left">
-    <ul class="manage-left-menu " id="manage-left-menu" type="dashboard">
-      <li>DashBoard</li>
-      <li id="manage-menu-add">
-        <input type="text" />
-        <span><i class="icon-plus"></i> Category</span>
-        <p class="manage-add-tooltip">Enter: confirm <br />Esc: cancel</p>
-      </li>
-
-      <%@dashboards.each do |dashboard| %>
-          <li class="sty-db-node" number=<%=dashboard.id%>  >
-            <i class="icon-trash icon-item"  onclick="dashboard_delete(<%=dashboard.id%>)"></i>
-            <a href="#" onclick="select_dashboard(<%=dashboard.id%>)"><%=dashboard.name%></a>
-          </li>
-      <%end%>
-    </ul>
-  </div>
-
-  <!--<!doctype html>
-    <html lang="en-US">
-    <head>
-      <meta charset="UTF-8">
-      <title></title>
-    </head>
-    <body>
-
-    </body>
-    </html>--<div class="pull-left dashboard-block">
-    <a class="btn btn-wzx btn-primary dashboard-addNew-btn" onclick="showDash_new()"><i class="icon-plus icon-white"></i> 视图</a>
-    <ul class="dashBoard-show" id="dashBoard-show">
-      <li>
-        <div class="dashboard-eachDetail relative">
-          <table class="table table-bordered table-striped db-itemInfo">
-            <tr>
-              <td>视图名称</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>KPI名称</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>观察点</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>开始时间</td>
-              <td>2013-03-03 23:00:00</td>
-            </tr>
-            <tr>
-              <td>结束时间</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>计算方式</td>
-              <td></td>
-            </tr>
-          </table>
+    <div class="content-left-main" name="dashboard" id="content-left-main">
+        <div class="left-content-title" id="left-content-title">
+              <p id="current-group-item" class="current-group-item"></p>
+              <i class="icon-edit current-group-item-edit" id="current-group-item-edit"></i>
+              <div class="content-right-nav-add-block" name="left-content" id="content-left-content-edit-block">
+                <p>edit the name</p>
+                <input type='text' />
+              </div>
         </div>
-        <div class="db-placeHolder">
-          <h2>请选择一个仪表盘开始</h2>
-        </div>
-      </li>
-    </ul>                     视图
-
-  </div>
-  -->
-  <!--<a class="btn btn-wzx btn-primary dashboard-addNew-btn" onclick="showDash_new()"><i class="icon-plus icon-white"></i> 视图</a>-->
-  <div class="manage-right-content" id="manage-right-content">
-
-    <!--
-    <div class="manage-btn-group" id="manage-btn-group">
-      <%= link_to raw("<i class=\"icon-plus\">Dashboard</i>"), new_dashboard_item_path ,class: "btn btn-primary" %>
-
-      <p id="manage-edit-target" ></p>
-      <i class="icon-pencil"></i>
-      <input type="text"/>
-      <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
     </div>
-    -->
-    <div class="manage-btn-group" id="manage-btn-group">
-      <a class="btn btn-primary db-add-show" id="db-add-show"><i class="icon-plus"></i> Dashboard</a>
-      <p id="manage-edit-target" ></p>
-      <i class="icon-pencil"></i>
-      <input type="text"/>
-      <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
-    </div>
-
-    <div class="dashboard-block gridster manage-btn-group">
-      <ul class="dashBoard-show" id="dashBoard-show">
-
-      </ul>
-    </div>
-  </div>
-
-<div id="dashboard-add-page" class="dashboard-add-page">
-  <ul class="dashboard-add-left-menu" id="dashboard-add-left-menu">
-    <li>
-        Add Dashboard
-    </li>
-    <div class="select-div">
-      <select data-placeholder="<%= t 'analytics.kpi_category'%> *" style="width:120px;" class="chosen-select"   title="analy-entity-select" id="chart-group">
-        <%@categories.each_with_index do |catetory,i|%>
-            <option value="<%= catetory.id%>"><%= catetory.name%></option>
-        <%end %>
-      </select>
-    </div>
-    <div class="select-div">
-      <select data-placeholder="<%= t 'analytics.kpi'%> *" style="width:120px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
-        <option value=""></option>
-      </select>
-    </div>
-    <div class="select-div">
-      <select data-placeholder="<%= t 'analytics.view'%> *" style="width:120px;" class="chosen-select" title="analy-view-select"  id="chart-view">
-        <%@entity_groups.each_with_index do |entity_group,i|%>
-            <option value="<%= entity_group.id%>" ><%= entity_group.name%></option>
-        <%end %>
-      </select>
-    </div>
-    <div class="time-select" id="time-select">
-      <input type="text" placeholder="Begin Time *" id="analy-begin-time" readonly=true />
-      <label class="index-date-extra-info"></label>
-      <input type="text" placeholder="End Time" id="analy-end-time" readonly=true />
-      <label class="index-date-extra-info"></label>
-    </div>
-    <div class="method-select">
-      <label class="analytics-radio-label">
-        <input type="radio" name="chartRadios" value="1" checked>
-        Total
-      </label>
-      <label class="analytics-radio-label">
-        <input type="radio" name="chartRadios" value="2">
-        Average
-      </label>
-    </div>
-    <a class="btn btn-primary" id="db-add-chart">add chart</a>
-  </ul>
-
-
-
-  <div class="manage-right-content">
-    <div class="dash-add-condition">
-      <a class="btn" href="#" id="add-back-db"><i class="icon-arrow-left"></i> Back</a>
-      <a class="btn btn-primary" style="display:none" id="add-dashboard"><i class="icon-plus"></i> Add DashBoard</a>
-      <input placeholder="Dashboard Name *" type="text" id="dashboard-name-input"/>
-      <ul id="db-chart-type-alternate">
-        <li class="line" type="line"></li>
-        <li class="column" type="column"></li>
-        <li class="pie" type="pie"></li>
-        <li class="scatter" type="scatter"></li>
-      </ul>
-    </div>
-
-    <div class="db-chart-body" id="db-chart-body" >
-      <div class="clearfix" id="db-chart-interval-alternate" my_height="28">
-        <ul class="pull-right db-control-chart-interval-group">
-          <li interval="90"><a>Hr</a></li>
-          <li interval="100"><a>D</a></li>
-          <li interval="200"><a>W</a></li>
-          <li interval="300"><a>M</a></li>
-          <li interval="400"><a>Qr</a></li>
-          <li interval="500"><a>Y</a></li>
-        </ul>
-      </div>
-      <div class="db-chart-container" id="chart-container">
-      </div>
-    </div>
-  </div>
-
-
-</div>
-</div>
 
 
 <script type="text/javascript">
     $(document).ready(function (){
         init_component();
         DASHBOARD.init();
-        DASHBOARD.add.init();
+        right_nav_main.init();
     });
 </script>

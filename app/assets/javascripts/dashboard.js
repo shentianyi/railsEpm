@@ -38,7 +38,7 @@ if (!Date.prototype.toISOString) {
 
 var config1={
     //Container of the dashboards
-  db_container_selector:'#manage-left-menu',
+  db_container_selector:'#content-right-nav-group',
     //a selector to select a dashboard node from the container
   db_item_filter:".sty-db-node",
   db_single_item_filter:function(id){
@@ -81,7 +81,8 @@ function select_dashboard(id){
         config.db_item_filter,
         config.db_single_item_filter(id));
 
-    MANAGE.left.manage_left_edit_init();
+    //MANAGE.left.manage_left_edit_init();
+    right_nav_main.initial.name();
     ifepm.dashboard.init(id);
 }
 
@@ -328,7 +329,7 @@ var date_picker_option =  {
 
 /*function init_time_picker(){
     $("#fromTime,#toTime").datepicker({
-        step:60
+        step:60       x
     });
 }*/
 
@@ -347,19 +348,19 @@ function init_date_picker(){
 
 //grid view
 function init_grid(){
-    ifepm.dashboard_widget.init();
+    ifepm.dashboard_widget.init($("div .dashboard-block").width(),$("div .manage-right-content").height());
 }
 
 function init_component(){
     //init_time_picker();
-    var lenght = $("ul.manage-left-menu").children().length;
-    if(lenght > 2){
+    var lenght = $("ul#content-right-nav-group").children().length;
+    if(lenght > 0){
         //$("ul.manage-left-menu").children("[number]:first").addClass("active");
-        var id = $("ul.manage-left-menu").children("[number]:first").attr("number");
+        var id = $("ul#content-right-nav-group").children("[number]:first").attr("number");
         select_dashboard(id);
     }
 
-    init_date_picker();
+    //init_date_picker();
     init_grid();
 }
 

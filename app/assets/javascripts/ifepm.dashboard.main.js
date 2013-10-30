@@ -96,7 +96,8 @@ ifepm.dashboard.form_graph = function(datas,id){
 
             data[j] = {};
             data[j].y = datas[i].current[j];
-            data[j].target = datas[i].target[j];
+            data[j].target_max = datas[i].target_max[j];
+            data[j].target_min = datas[i].target_min[j];
             data[j].unit = datas[i].unit[j];
         }
         option = {
@@ -143,25 +144,42 @@ ifepm.dashboard.form_graph = function(datas,id){
     if(chart){
         //targen line
         if(datas.length == 1 && type !="pie"){
-            var data = [];
-            for(var j = 0;j<datas[0].target.length;++j){
-                data[j] = {};
-                data[j].y = datas[0].target[j];
+            var data_max = [];
+            var data_min = [];
+            for(var j = 0;j<datas[0].target_max.length;++j){
+                data_max[j] = {};
+                data_min[j] = {};
+                data_max[j].y = datas[0].target_max[j];
+                data_min[j].y = datas[0].target_min[j];
             }
 
-            option = {
-                kpi:"target",
-                id:"target",
+            option_max = {
+                kpi:"target_max",
+                id:"target_max",
                 target:container,
                 begin_time:datas[0].startTime,
                 type:type,
                 interval:datas[0].interval,
-                data:data,
+                data:data_max,
                 count:datas[0].count,
             }
 
-            add_series(option);
-            proper_type_for_chart(option);
+            option_min = {
+                kpi:"target_min",
+                id:"target_min",
+                target:container,
+                begin_time:datas[0].startTime,
+                type:type,
+                interval:datas[0].interval,
+                data:data_min,
+                count:datas[0].count,
+            }
+
+            add_series(option_max);
+            proper_type_for_chart(option_max);
+
+            add_series(option_min);
+            proper_type_for_chart(option_min);
         }
         var defsize = ifepm.dashboard_widget.initsize(type);
         chart.setSize(ifepm.dashboard_widget.width*defsize.sizex,ifepm.dashboard_widget.height*defsize.sizey -40);

@@ -1,21 +1,11 @@
 <header>
      <div class="user-portrait-background pull-left" state="close" id="user-portrait-background">
-          <div class="user-portrait-brand"></div>
-
+            <div class="user-portrait-brand"></div>
      </div>
      <nav class="pull-left">
           <ul>
                <li>
                     <a href="/"> <span><%= t 'menu.start'%></span> <span class="nav-get-started"></span> </a>
-               </li>
-               <li>
-                    <a  href="<%= dashboards_path%>"> <span><%= t 'menu.dashboard'%></span> <span class="nav-dash-board"></span> </a>
-               </li>
-               <li>
-                    <a   href="<%= analyse_kpi_entries_path%>"> <span><%= t 'menu.analytics'%></span> <span class="nav-analytics"></span> </a>
-               </li>
-               <li>
-                    <a> <span><%= t 'menu.reports'%></span> <span class='nav-report'></span> </a>
                </li>
                <li class="relative">
                     <a> <span><%= t 'menu.manage'%></span> <span class='nav-manage'></span> </a>
@@ -35,8 +25,22 @@
                     </ul>
                </li>
                <li>
+                    <a  href="<%= dashboards_path%>"> <span><%= t 'menu.dashboard'%></span> <span class="nav-dash-board"></span> </a>
+               </li>
+               <li>
+                    <a   href="<%= analyse_kpi_entries_path%>"> <span><%= t 'menu.analytics'%></span> <span class="nav-analytics"></span> </a>
+               </li>
+               <li>
+                    <a> <span><%= t 'menu.reports'%></span> <span class='nav-report'></span> </a>
+               </li>
+               
+               <li>
                     <a href="<%= new_kpi_entry_path%>"> <span><%= t 'menu.entry_kpi'%></span> <span class="nav-entry-kpi"></span> </a>
                </li>
           </ul>
      </nav>
+
+     <script type="text/javascript">
+          
+     </script>
 </header>
