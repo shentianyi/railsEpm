@@ -88,9 +88,6 @@ header{
     -webki-shadow:0px 2px 2px #c9c9c9;
 }
 .user-portrait-background{
-    /*background:rgba(69,159,210,0.8);*/
-    /*background:-moz-radial-gradient(rgba(69,159,210,0.5),rgba(69,159,210,0.8));*/
-    /*background:-webkit-radial-gradient(rgba(69,159,210,0.5),rgba(69,159,210,0.8));*/
     position:relative;
     height:100%;
     width:72px;
@@ -164,46 +161,6 @@ nav ul li:last-of-type a span:before{
     bottom:29px;
     left:1px;
 }
-/*nav ul li a span:nth-of-type(2){*/
-    /*display:block;*/
-    /*width:100%;*/
-    /*height:52px;*/
-    /*background-image:url("/assets/nav-btn.png");*/
-    /*background-image:url("../images/nav-btn.png");*/
-    /*background-repeat:no-repeat;*/
-/*}*/
-/********************************************************* get start
-**************************************************************/
-/*.nav-get-started{*/
-    /*background-position:center 0px;*/
-/*}*/
-/*nav ul li a:hover .nav-get-started{*/
-    /*background-position:center -50px;*/
-/*}*/
-/********************************************************* dash board
-**************************************************************/
-/*.nav-dash-board{*/
-    /*background-position:center -100px;*/
-/*}*/
-/*nav ul li a:hover .nav-dash-board{*/
-    /*background-position:center -148px;*/
-/*}*/
-/********************************************************* analytics
-**************************************************************/
-/*.nav-analytics{*/
-    /*background-position:center -195px;*/
-/*}*/
-/*nav ul li a:hover .nav-analytics{*/
-    /*background-position:center -238px;*/
-/*}*/
-/********************************************************* manage
-**************************************************************/
-/*.nav-manage{*/
-    /*background-position:center -515px;*/
-/*}*/
-/*nav ul li a:hover .nav-manage{*/
-    /*background-position:center -561px;*/
-/*}*/
 nav ul li a:hover ~ .nav-manage-sub{
     left:-12px;
 }
@@ -214,9 +171,9 @@ nav ul li a:hover ~ .nav-manage-sub{
     background:#5FA9DA;
     z-index:100;
     left:-999em;
-    box-shadow:-2px 3px 3px rgba(0, 0, 0, 0.5);
-    -moz-shadow:-2px 3px 3px rgba(0, 0, 0, 0.5);
-    -webki-shadow:-2px 3px 3px rgba(0, 0, 0, 0.5);
+    box-shadow:-2px 3px 3px rgba(0, 0, 0, 0.4);
+    -moz-shadow:-2px 3px 3px rgba(0, 0, 0, 0.4);
+    -webki-shadow:-2px 3px 3px rgba(0, 0, 0, 0.4);
 }
 .nav-manage-sub:hover{
     left:-12px;
@@ -233,31 +190,6 @@ nav ul li a:hover ~ .nav-manage-sub{
 .nav-manage-sub>li>a:hover{
     background-color:#5595bf;
 }
-/********************************************************* reports
-**************************************************************/
-/*.nav-report{*/
-    /*background-position:center -299px;*/
-/*}*/
-/*nav ul li a:hover .nav-report{*/
-    /*background-position:center -353px;*/
-/*}*/
-/********************************************************* entry kpi
-**************************************************************/
-/*.nav-entry-kpi{*/
-    /*background-position:center -413px;*/
-/*}*/
-/*nav ul li a:hover .nav-entry-kpi{*/
-    /*background-position:center -466px;*/
-/*}*/
-/*.manage-nav-table{*/
-    /*height:100%;*/
-/*}*/
-/*.manage-nav-table td a{*/
-    /*text-decoration:none;*/
-    /*color:#959595;*/
-/*}*/
-/********************************************************* nav right part
-**************************************************************/
 .nav-user-part{
     list-style-type: none;
     display:block;
@@ -351,24 +283,6 @@ nav ul li a:hover ~ .nav-manage-sub{
 .date-picker-shortcut:after{
    content:'Dynamic Date Pick';
 }
-/*.date-picker-shortcut[interval='hour']:after{*/
-    /*content:'last 24 hours';*/
-/*}*/
-/*.date-picker-shortcut[interval='day']:after{*/
-    /*content:'last 7 days';*/
-/*}*/
-/*.date-picker-shortcut[interval='week']:after{*/
-    /*content:'last 4 weeks';*/
-/*}*/
-/*.date-picker-shortcut[interval='month']:after{*/
-    /*content:'last 3 months';*/
-/*}*/
-/*.date-picker-shortcut[interval='quarter']:after{*/
-    /*content:'last 4 quarters';*/
-/*}*/
-/*.date-picker-shortcut[interval='year']:after{*/
-    /*content:'last 3 years';*/
-/*}*/
 .date-picker-shortcut+i{
     float:right;
     position:absolute;
