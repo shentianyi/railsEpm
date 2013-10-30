@@ -12,9 +12,10 @@ module KpiEntryAnalyseHelper
       entity_ids=entity_group.entities.collect{|entity| entity.id}
       start_time,end_time=DateTimeHelper.get_utc_time_by_str(start_time),DateTimeHelper.get_utc_time_by_str(end_time)
       target_relation=UserKpiItem.where(:kpi_id=>kpi_id,:entity_id=>entity_ids)
-      target= average ? target_relation.average(:target).to_i : target_relation.sum(:target)
-      current_data={};current_data_count={};target_data={};unit_data={}; frequency_condition={}
-      params={:current_data=>current_data,:current_data_count=>current_data_count,:target_data=>target_data,:unit_data=>unit_data,:kpi=>kpi,:target=>target,:fre_condi=>frequency_condition}
+      target_max= average ? target_relation.average(:target_max).to_i : target_relation.sum(:target_max)
+      target_min= average ? target_relation.average(:target_min).to_i : target_relation.sum(:target_min)
+      current_data={};current_data_count={};target_max_data={};target_min_data={};unit_data={}; frequency_condition={}
+      params={:current_data=>current_data,:current_data_count=>current_data_count,:target_max_data=>target_max_data,:target_min_data=>target_min_data,:unit_data=>unit_data,:kpi=>kpi,:target_max=>target_max,:target_min=>target_min,:fre_condi=>frequency_condition}
       case  kpi.frequency
       when KpiFrequency::Hourly,KpiFrequency::Daily,KpiFrequency::Weekly
         case kpi.frequency
@@ -53,7 +54,7 @@ module KpiEntryAnalyseHelper
           current_data[k]=(v/count).round(2)
         end
       end
-      return {:current=>current_data.values,:target=>target_data.values,:unit=>unit_data.values}
+      return {:current=>current_data.values,:target_max=>target_max_data.values,:target_min=>target_min_data.values,:unit=>unit_data.values}
     end
     return nil
   end
@@ -112,7 +113,8 @@ module KpiEntryAnalyseHelper
       params[:fre_condi][key]=[start_time,next_time]
       params[:current_data][key]=0
       params[:current_data_count][key]=0
-      params[:target_data][key]=params[:target]
+      params[:target_max_data][key]=params[:target_max]
+      params[:target_min_data][key]=params[:target_min]
       params[:unit_data][key]=KpiUnit.get_entry_unit_sym params[:kpi].unit 
     end
 end

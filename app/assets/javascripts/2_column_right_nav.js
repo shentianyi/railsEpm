@@ -14,9 +14,10 @@ right_nav_main.init=function(){
     right_nav_main.item_prototype.delete_init();
     right_nav_main.item_prototype.edit_init();
     right_nav_main.observe_count.count=$("#content-right-nav-group").children().length;
+    right_nav_main.current_section=$("#content-right-nav").attr("name");
     right_nav_main.observe_count.observe();
 };
-right_nav_main.current_section=$("#content-right-nav").attr("name");
+
 right_nav_main.item_prototype={};
 right_nav_main.observe_count={
     observe:function(){

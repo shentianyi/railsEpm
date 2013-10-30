@@ -26,7 +26,8 @@ class KpisController < ApplicationController
       temp[:formula_string] = @kpi.formula_string
       temp[:interval] = KpiFrequency.get_desc_by_value(@kpi.frequency)
       temp[:trend] = KpiFrequency.get_desc_by_value(@kpi.direction)
-      temp[:target] = KpiUnit.parse_entry_value(@kpi.unit, @kpi.target)
+      temp[:target_max] = KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max)
+      temp[:target_min] = KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min)
       temp[:section] = KpiUnit.get_entry_unit_sym(@kpi.unit)
       temp[:desc] = @kpi.description
       msg.object=temp.as_json
@@ -137,7 +138,7 @@ class KpisController < ApplicationController
 
   def generate_kpi_by_template t,category,formula
     kpi=Kpi.new(:name=>t.name,:description=>t.description,:frequency=>t.frequency,
-    :direction=>t.direction,:target=>t.target,:unit=>t.unit,
+    :direction=>t.direction,:target_max=>t.target_max,:target_min=>t.target_min,:unit=>t.unit,
     :is_calculated=>t.is_calculated,:formula_string=>t.formula_string,:formula=>formula,
     :kpi_category_id=>category.id)
     kpi.creator=current_user
