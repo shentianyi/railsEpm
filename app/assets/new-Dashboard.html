@@ -141,115 +141,6 @@
 
 
 
-
-
-
-
-
-
-    <div id="dashboard-add-page" class="dashboard-add-page">
-        <ul class="dashboard-add-left-menu"  id="dashboard-add-left-menu">
-            <li>
-                Add Dashboard
-            </li>
-            <div class="select-div">
-                <select data-placeholder="Entity *" style="width:120px;" class="chosen-select"
-                        title="analy-entity-select" id="chart-group">
-                    <option value="group1">entity1</option>
-                    <option value="group2">entity2</option>
-                    <option value="group3">entity3</option>
-                </select>
-            </div>
-            <div class="select-div">
-                <select data-placeholder="Kpi *" style="width:120px;" class="chosen-select" title="analy-kpi-select"
-                        id="chart-kpi" date-pick=false>
-                    <option value=""> </option>
-                    <option value="kpi1" interval="200" type="">week</option>
-                    <option value="kpi1" interval="90">hour</option>
-                    <option value="kpi1" interval="100">day</option>
-                    <option value="kpi2" interval="400">quarter</option>
-                    <option value="kpi3" interval="300">month</option>
-                    <option value="kpi3" interval="500">year</option>
-                    <option value="kpi3" interval="">empty</option>
-                </select>
-            </div>
-            <div class="select-div">
-                <select data-placeholder="View *" style="width:120px;" class="chosen-select" title="analy-view-select"
-                        id="chart-view">
-                    <option value="entity1">view1</option>
-                    <option value="entity2">view2</option>
-                    <option value="entity3">view3</option>
-                </select>
-            </div>
-            <div class="time-select" id="time-select">
-                <input type="text" placeholder="Begin Time *" id="analy-begin-time" readonly=true />
-                <label class="index-date-extra-info"></label>
-                <input type="text" placeholder="End Time" id="analy-end-time" readonly=true />
-                <label class="index-date-extra-info"></label>
-            </div>
-            <div class="method-select">
-                <label class="analytics-radio-label">
-                    <input type="radio" name="chartRadios" value="1" checked>
-                    Total
-                </label>
-                <label class="analytics-radio-label">
-                    <input type="radio" name="chartRadios" value="2">
-                    Average
-                </label>
-            </div>
-            <a class="btn btn-primary" id="db-add-chart">add chart</a>
-        </ul>
-
-
-
-        <div class="manage-right-content">
-            <div class="dash-add-condition">
-                <a class="btn" id="add-back-db"><i class="icon-arrow-left"></i> Back</a>
-                <a class="btn btn-primary" style="display:none" id="add-dashboard"><i class="icon-plus"></i> Add DashBoard</a>
-                <input placeholder="Dashboard Name *" type="text" id="dashboard-name-input"/>
-                <ul id="db-chart-type-alternate">
-                    <li class="line" type="line"></li>
-                    <li class="column" type="column"></li>
-                    <li class="pie" type="pie"></li>
-                    <li class="scatter" type="scatter"></li>
-                </ul>
-            </div>
-
-            <div class="db-chart-body" id="db-chart-body" >
-                <div class="clearfix" id="db-chart-interval-alternate" my_height="28">
-                    <ul class="pull-right db-control-chart-interval-group">
-                        <li interval="90"><a>Hr</a></li>
-                        <li interval="100"><a>D</a></li>
-                        <li interval="200"><a>W</a></li>
-                        <li interval="300"><a>M</a></li>
-                        <li interval="400"><a>Qr</a></li>
-                        <li interval="500"><a>Y</a></li>
-                    </ul>
-                </div>
-                <div class="db-chart-container" id="chart-container">
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </article>
 
 <div class="message-box" id="MessageBox">
@@ -278,7 +169,7 @@
 <script>
     $(document).ready(function(){
         DASHBOARD.init();
-        DASHBOARD.add.init();
+
         right_nav_main.init();
     })
 </script>

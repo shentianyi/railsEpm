@@ -8,89 +8,55 @@
     display:none;
     z-index:30;
 }
-/********************************************************************************************************* 左边添加
+/********************************************************************************************************* 子菜单
 *******************************************************************************************************************/
-.dashboard-add-left-menu{
-    background-color:#FBFBFB;
-    position:absolute;
-    top:0px;
-    left:0;
-    bottom:0;
-    width:150px;
-    margin:0;
-    padding:0;
+.dashboard-add-sub-menu{
+    width:100%;
+    height:40px;
+    background-color:#5688a9;
+    box-shadow:0px -2px 2px #5FA9DA;
+}
+.dashboard-add-sub-menu ul{
     list-style-type: none;
-    overflow-y:auto;
-    overflow-x:hidden;
-    z-index:20;
-}
-.dashboard-add-left-menu+.manage-right-content{
-    top:0px!important;
-}
-.dashboard-add-left-menu>li:first-of-type{
-    text-align:center;
-    font-weight:lighter;
-    font-size:24px;
-    color:#5FA9DA;
-    padding:13px 0 11px;
-}
-.dashboard-add-left-menu>.select-div:first-of-type{
-    margin-top:20px;
-}
-.dashboard-add-left-menu>.select-div{
-    width:120px;
-    margin-left:15px;
-    margin-bottom:10px;
-    height:30px;
-}
-.dashboard-add-left-menu>.select-div>div[title="analy-view-select"]{
-    margin-top:0px;
-}
-.dashboard-add-left-menu>div .chosen-container-single .chosen-single{
-    background:white !important;
-    border:1px solid #ddd;
-    box-shadow:none !important;
-}
-.dashboard-add-left-menu>div .chosen-container-single .chosen-single div{
-    background:white !important;
-    border-left:none !important;
-}
-.dashboard-add-left-menu>.time-select>input{
-    margin-left:15px;
-    width:108px;
-    background-color: #FFFFFF;
-    cursor: default;
-    font-family: 'open-sans';
-    font-size: 13px;
-    height: 20px;
-    margin-bottom:10px;
-    padding: 4px 5px;
-}
-.dashboard-add-left-menu>.method-select{
-    margin-top:10px;
-    margin-left:15px;
-    width:120px;
-    margin-bottom:40px;
-}
-.dashboard-add-left-menu>.method-select>label{
-    width:100px;
     display:block;
-    margin-bottom:10px;
-    font-size:14px;
-    color:rgba(0,0,0,0.4);
-    position:relative;
+    padding:8px 0 0 13px;
+    margin:0px;
 }
-.dashboard-add-left-menu>.method-select>label>div{
-    position:relative;
-    top:4px;
+.dashboard-add-sub-menu ul>li{
+    display:inline-block;
+    cursor:pointer;
+    margin-right:4px;
 }
-.time-select>.index-date-extra-info{
+.dashboard-add-sub-menu ul>li:first-of-type{
+    margin-right:10px;
+}
+.dashboard-add-sub-menu ul>li:first-of-type:hover a{
+    color:rgba(0,0,0,0.6);
+}
+.dashboard-add-sub-menu ul>li:not(:first-of-type):hover{
+    background-color:#3b627c
+}
+.dashboard-add-sub-menu ul>li.active{
+    background-color:#3b627c
+}
+.dashboard-add-sub-menu ul>li:first-of-type a{
+    padding:4px 5px;
+}
+
+.dashboard-add-sub-menu ul>li a{
+    display:block;
+    padding:4px 10px;
     font-size:13px;
-    color:rgba(0,0,0,0.3);
-    position:relative;
-    top:-8px;
-    float:right;
-    padding-right:15px;
+    color:white;
+}
+/********************************************************************************************************* 左边aside
+*******************************************************************************************************************/
+.content-right-nav[name='dashboard-add']{
+    background-color:#eff2f6;
+    width:260px;
+    float:left;
+    height:auto;
+    border-right:1px solid #dcdcdc;
 }
 /********************************************************************************************************* 右边的添加按钮
 *******************************************************************************************************************/
