@@ -124,7 +124,7 @@ nav>ul>li>a{
     display:block;
 
     color:white;
-    font-size:15px;
+    font-size:14px;
     height:46px;
     text-align:center;
     cursor:pointer;
@@ -219,7 +219,7 @@ nav ul li a:hover ~ .nav-manage-sub{
     -webki-shadow:-2px 3px 3px rgba(0,0,0,0.3);
 }
 .nav-manage-sub:hover{
-    left:-10px;
+    left:-12px;
 }
 .nav-manage-sub>li>a{
     text-align:center;

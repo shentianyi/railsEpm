@@ -23,6 +23,10 @@
 
 /******************************************************* adaptable
 *******************************************************************/
+.content-right-nav>section.adaptable{
+    position:relative;
+}
+
 .content-right-nav>section.adaptable>h3{
     margin:20px 0 10px 7px;
 }
@@ -33,7 +37,7 @@
     pointer-events:auto;
     cursor:pointer;
     float:right;
-    margin-right:9px;
+    margin-right:14px;
     margin-top:24px;
     transition:color 0.25s ease-out;
 }
@@ -90,6 +94,48 @@
     color:black;
     display:inline-block;
 }
+.content-right-nav-add-block{
+    position:absolute;
+    top:48px;
+    right:10px;
+    width:150px;
+    height:59px;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    background-color:#282828;
+    box-shadow:3px 4px 4px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow:3px 4px 4px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow:3px 4px 4px rgba(0, 0, 0, 0.6);
+    left:-999em;
+}
+.content-right-nav-add-block:before{
+    content:'';
+    position:absolute;
+    top:-9px;
+    right:20px;
+    width:0px;
+    height:0px;
+    border-left:9px solid rgba(0,0,0,0);
+    border-right:0px solid rgba(0,0,0,0);
+    border-bottom:9px solid #282828;
+}
+.content-right-nav-add-block>p{
+    padding-left:12px;
+    padding-top:5px;
+    font-size:11px;
+    color:#d1d1d1;
+}
+.content-right-nav-add-block>input[type='text']{
+    width:118px;
+    padding:2px 3px;
+    position:absolute;
+    left:50%;
+    margin-left:-62px;
+    top:25px;
+    color:rgba(0,0,0,0.8);
+}
+
 /******************************************************* solid
 *******************************************************************/
 .content-right-nav>section.solid>h3{
@@ -120,6 +166,7 @@
 .left-content-title{
     height:49px;
     background-color:#f7f7f7;
+    position:relative;
 }
 .current-group-item{
     display:inline-block;
@@ -148,4 +195,25 @@
 .current-group-item-edit:after{
     content:'edit name';
     padding-left:2px;
+}
+.content-right-nav-add-block[name='left-content']{
+    position:absolute;
+    width:150px;
+    height:59px;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    background-color:#282828;
+    left:-999em
+}
+.content-right-nav-add-block[name='left-content']:before{
+    content:'';
+    position:absolute;
+    top:-9px;
+    left:20px;
+    width:0px;
+    height:0px;
+    border-left:0px solid rgba(0,0,0,0);
+    border-right:9px solid rgba(0,0,0,0);
+    border-bottom:9px solid #282828;
 }
