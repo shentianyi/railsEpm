@@ -70,15 +70,20 @@ right_nav_main.item_prototype.add.prototype={
             right_nav_main.item_prototype.add.prototype.add_hide();
         }
         else{
-            $("#content-right-nav-group>li").each(function(){
-                if(name!=$(this).attr("title") ){
-                    validate=true;
-                }
-                else{
-                    validate=false;
-                    return false;
-                }
-            });
+            if($("#content-right-nav-group>li").length>0){
+                $("#content-right-nav-group>li").each(function(){
+                    if(name!=$(this).attr("title") ){
+                        validate=true;
+                    }
+                    else{
+                        validate=false;
+                        return false;
+                    }
+                });
+            }
+            else{
+                validate=true;
+            }
             if(validate){
 
 //                  $("#content-right-nav-group").append($("<li />").attr("title",name)
@@ -122,7 +127,6 @@ right_nav_main.item_prototype.add.prototype={
     },
     add_hide:function(){
         $("#content-right-nav-add-block").css("left","-999em");
-        $("#content-right-nav-add-block>input").blur();
     },
     constructor:right_nav_main.item_prototype.add
 
@@ -154,6 +158,8 @@ right_nav_main.item_prototype.add_init=function(){
         else if(adapt_event(event).event.keyCode==27){
             right_nav_main[right_nav_main.current_section].add.add_hide();
         }
+    }).on("blur",function(){
+            right_nav_main[right_nav_main.current_section].add.add_hide();
     });
 
 };
@@ -266,7 +272,6 @@ right_nav_main.item_prototype.edit.prototype={
     },
     edit_hide:function(){
         $("#content-left-content-edit-block").css("left","-999em");
-        $("#content-left-content-edit-block>input").val("").blur();
     },
     constructor:right_nav_main.item_prototype.edit
 }
@@ -300,6 +305,8 @@ right_nav_main.item_prototype.edit_init=function(){
         else if(e.keyCode==27){
             right_nav_main[right_nav_main.current_section].edit.edit_hide();
         }
+    }).on("blur","input",function(){
+            right_nav_main[right_nav_main.current_section].edit.edit_hide();
     });
 }
 

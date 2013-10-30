@@ -31,11 +31,27 @@ var db_chartSeries = {
 };
 
 
-
+DASHBOARD.add.initial={};
+DASHBOARD.add.initial.height=function(){
+    $("#content-right-nav").attr("min-height", $("#content-right-nav").height());
+    var min_height=$("#content-right-nav").attr("min-height"),
+        height=$(window).height()-$('header').height()-$("#dashboard-add-sub-menu").height()>min_height ?
+            $(window).height()-$('header').height()-$("#dashboard-add-sub-menu").height()+'px':min_height+'px';
+    $("#content-right-nav").css("height",height);
+    $(window).resize(function(){
+        height=$(window).height()-$('header').height()-$("#dashboard-add-sub-menu").height()>min_height ?
+            $(window).height()-$('header').height()-$("#dashboard-add-sub-menu").height()+'px':min_height+'px';
+        $("#content-right-nav").css("height",height);
+    });
+}
 DASHBOARD.add.init=function(){
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
     });
+    $("header").css("box-shadow","0 2px 5px rgba(71,71,71,0.3)");
+
+    DASHBOARD.add.initial.height();
+
     $("#chart-kpi").chosen().change(function(){
         var interval = $("#chart-kpi").find(":selected").attr("interval");
         var target="#analy-begin-time,#analy-end-time";
