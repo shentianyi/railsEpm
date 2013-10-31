@@ -33,7 +33,12 @@ DASHBOARD.special_type={
 }
 DASHBOARD.special_template={
     line:function(){
-
+        high_chart.legend.enabled=false;
+        high_chart.plotOptions.series.point.events={};
+        high_chart.plotOptions.line.marker.enabled=false;
+        high_chart.plotOptions.series.marker.enabled=false;
+        high_chart.yAxis.labels.enabled=false;
+        high_chart.xAxis.offset=0;
     }
 }
 

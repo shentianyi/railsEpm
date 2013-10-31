@@ -16,7 +16,15 @@ var high_chart = {
         enabled: false
     },
     tooltip:{
-        enabled: false
+        enabled: true,
+//        formatter:function(){
+//            var s = '<b>'+ this.x +'</b>';
+//            $.each(this.points, function(i, point) {
+//                s += '<br/>'+ point.series.name +': '+
+//                    point.y +'m';
+//            });
+//            return s;
+//        }
     },
     legend: {
         enabled: true,
@@ -70,9 +78,19 @@ var high_chart = {
             }
         },
         arearange:{
-            fillOpacity:0.1
+            fillOpacity:0.1,
+            fillColor:"rgba(177,211,221,0.2)",
+            lineColor:"rgba(177,211,221,0.2)",
+            color:"rgba(177,211,221,0.2)",
+            stickyTracking:false,
+            trackByArea:false,
+            zIndex:-1,
+            tooltip:{
+                enabled:false
+            }
         },
         line: {
+            lineWidth:3,
             marker: {
                 lineWidth: 2,
                 radius: 4,
@@ -226,7 +244,7 @@ function add_series(option) {
     var chart_container = option.target;
     var type = option.type;
     var data = deal_data(option);
-    var color=series_colors[series_id % series_colors.length];
+    var color=option.color?option.color:series_colors[series_id % series_colors.length];
     $("#" + chart_container).highcharts().addSeries({
         name: series_name,
         id: series_id,
