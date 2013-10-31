@@ -4,8 +4,10 @@
     background-color:#eff2f6;
     width:260px;
     float:right;
-    height:auto;
+    height:100%;
     border-left:1px solid #dcdcdc;
+    margin-top:-110px;
+    display:table;
 }
 .content-right-nav>section{
     padding-bottom:12px;

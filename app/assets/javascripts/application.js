@@ -15,6 +15,8 @@
 //=require jquery.gridster.with-extras
 //= require jquery_ujs
 //=require highcharts
+//=require highcharts-more
+//=require dashboard_type_special
 //=require exporting
 //=require exporting.extend.src.js
 //=require brilliantech.base

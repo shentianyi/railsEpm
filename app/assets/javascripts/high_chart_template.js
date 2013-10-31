@@ -2,7 +2,6 @@ var url = 'http://42.121.111.38:9002/HighChartsFileService/';
 
 var high_chart = {
     chart: {
-        zoomType: 'xy',
         spacingLeft: 5,
         spacingRight: 10,
         marginTop: 30,
@@ -22,7 +21,7 @@ var high_chart = {
     legend: {
         enabled: true,
         borderRadius: 2,
-        borderColor: "rgba(0,0,0,0.15)",
+        borderColor: "rgba(0,0,0,0)",
         itemStyle: {
             color: 'rgba(0,0,0,0.25)'
         },
@@ -70,6 +69,9 @@ var high_chart = {
 
             }
         },
+        arearange:{
+            fillOpacity:0.1
+        },
         line: {
             marker: {
                 lineWidth: 2,
@@ -111,6 +113,16 @@ var high_chart = {
                 'rgba(103,116,210,0.7)',
                 'rgba(205,123,173,0.7)',
                 'rgba(53,200,209,0.7)'
+//                '#2f7ed8',
+//                '#0d233a',
+//                '#8bbc21',
+//                '#910000',
+//                '#1aadce',
+//                '#492970',
+//                '#f28f43',
+//                '#77a1e5',
+//                '#c42525',
+//                '#a6c96a'
             ]
         },
         scatter: {
@@ -123,7 +135,7 @@ var high_chart = {
     xAxis: {
         lineWidth: 0,
         tickWidth: 0,
-        offset: 10,
+        offset: 5,
         ordinal: true,
         labels: {
             style: {
@@ -189,7 +201,7 @@ function render_to(option) {
 var series_colors=[
     'rgba(245,161,51,0.7)',
     'rgba(52,152,219,0.7)',
-    'rgba(205,208,164,0.7)',
+    'rgba(163,166,162,0.7)',
     'rgba(231,76,60,0.7)',
     'rgba(26,188,156,0.7)',
     'rgba(241,196,15,0.7)',
@@ -197,6 +209,16 @@ var series_colors=[
     'rgba(103,116,210,0.7)',
     'rgba(205,123,173,0.7)',
     'rgba(53,200,209,0.7)'
+//    '#2f7ed8',
+//    '#0d233a',
+//    '#8bbc21',
+//    '#910000',
+//    '#1aadce',
+//    '#492970',
+//    '#f28f43',
+//    '#77a1e5',
+//    '#c42525',
+//    '#a6c96a'
 ]
 function add_series(option) {
     var series_name = option.kpi;

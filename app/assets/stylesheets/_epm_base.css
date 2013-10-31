@@ -35,9 +35,10 @@
     url("font/Avenir-Roman.eot");
 }
 html{
-    height:auto;
+    height:100%;
 }
 body{
+    height:100%;
     margin:0;
     font-weight:500;
     font-family:"open-sans";
@@ -73,7 +74,7 @@ body{
     transition:left 0.25s ease-out;
     right:0;
     left:0;
-
+    height:100%;
 }
 /*********************************************************************************************************头部
 *******************************************************************************************************************/
@@ -159,7 +160,8 @@ nav ul li:last-of-type a span:before{
     height:1px;
     position:absolute;
     bottom:29px;
-    left:1px;
+    left:0px;
+    top:4px;
 }
 nav ul li a:hover ~ .nav-manage-sub{
     left:-12px;
