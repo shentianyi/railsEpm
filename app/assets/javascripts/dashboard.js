@@ -348,7 +348,12 @@ function init_date_picker(){
 
 //grid view
 function init_grid(){
-    ifepm.dashboard_widget.init($("div .dashboard-block").width(),$("div .manage-right-content").height());
+    var option = {};
+    option.width = $("div .dashboard-block").width();
+    option.height = $("div .manage-right-content").height();
+    option.max_col = 4;
+    option.max_row = 2;
+    ifepm.dashboard_widget.init(option);
 }
 
 function init_component(){
@@ -368,3 +373,15 @@ function init_component(){
 function on_dragstop(event,ui){
     ifepm.dashboard_widget.drag_stop();
 };
+
+/*
+* @function onwindow_resize
+* @params event
+* */
+function onwindow_resize(event){
+    var option = {};
+    option.width = $("div .dashboard-block").width();
+    option.height = $("div .manage-right-content").height();
+    console.log("resize====width = "+option.width+" height = "+ option.height);
+    ifepm.dashboard_widget.windowresize(option);
+}

@@ -182,7 +182,7 @@ ifepm.dashboard.form_graph = function(datas,id){
             proper_type_for_chart(option_min);
         }
         var defsize = ifepm.dashboard_widget.initsize(type);
-        chart.setSize(ifepm.dashboard_widget.width*defsize.sizex,ifepm.dashboard_widget.height*defsize.sizey -40);
+        chart.setSize(ifepm.dashboard_widget.widget_config.width*defsize.sizex,ifepm.dashboard_widget.widget_config.height*defsize.sizey -40);
         if(type == "pie"){
             for(var i = 0;i<chart.series.length;++i){
                 chart.series[i].update({showInLegend:false});
