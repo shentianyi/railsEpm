@@ -21,7 +21,7 @@ ifepm.template.view = '<li !attr!=!id!><div>' +
     '</div>' +
     //'<i class="icon-list db-infoMark"></i>' +
 
-    '<table class="table table-bordered table-striped db-itemInfo">' +
+    //'<table class="table table-bordered table-striped db-itemInfo">' +
     //'<tr>' +
     //'<td>视图名称</td>' +
     //'<td>!name!</td>' +
@@ -46,9 +46,30 @@ ifepm.template.view = '<li !attr!=!id!><div>' +
     //'<td>计算方式</td>' +
     //'<td>!calculate_type!</td>' +
     //'</tr>' +
-    '</table>'+
+    //'</table>'+
     '</div>' +
-    '<div id=!item_container_id! class="db-placeHolder">' +
+    '<div class="put-db-chart">' +
+    '<div class="chart-container-top" id="chart-container-top">'+
+    '<table>'+
+    '<tr><td>$1000</td><td>Max</td></tr>'+
+    '<tr><td>$10</td><td>Min</td></tr>'+
+    '</table>'+
+    '</div>'+
+    '<div class="db-chart-container" id=!item_container_id!></div>'+
+    '<div id="chart-container-right" class="chart-container-right">'+
+    '<p>12%</p><p>monthly sales</p>'+
+    '<table>'+
+        '<tr><td>$123</td><td>Selected</td></tr>'+
+        '<tr><td>$1234</td><td>Total</td> </tr>'+
+    '</table>'+
+    '</div>'+
+    '<div id="chart-container-right-scatter" class="chart-container-right"></div>'+
+    '<div class="chart-container-bottom" id="chart-container-bottom">'+
+    '<table>'+
+    '<tr><td>21</td><td>109</td><td>$34</td><td>$190</td></tr>'+
+    '<tr><td>Out of Target</td><td>Total Amount</td><td>Average Value</td><td>Total Value</td></tr>'+
+    '</table>'+
+    '</div>'+
     '</div>' +
     '</div></li>' +
     '<script type="text/javascript">ifepm.dashboard.load_graph("!id!")</script>'
