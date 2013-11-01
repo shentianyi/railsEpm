@@ -349,8 +349,8 @@ function init_date_picker(){
 //grid view
 function init_grid(){
     var option = {};
-    option.width = $("div .dashboard-block").width();
-    option.height = $("div .manage-right-content").height();
+    option.width = $("div .dashboard-content").width();
+    option.height = $("div .dashboard-content").height();
     option.max_col = 4;
     option.max_row = 2;
     ifepm.dashboard_widget.init(option);
