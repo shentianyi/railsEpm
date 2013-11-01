@@ -6,6 +6,8 @@ class DashboardItemsController < ApplicationController
   def new
     @new_item = DashboardItem.new
 
+    @dashboards = Dashboard.find_all_by_user_id(current_user.id)
+
     get_ability_category
 
     get_kpis_by_category

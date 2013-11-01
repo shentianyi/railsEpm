@@ -42,7 +42,8 @@
                 <h3>Add DashBoard</h3>
                 <p>Creating a dashboard of your favourite type,then put it
                     to one of the dashboard group item for long-term observation</p>
-                <a class="btn btn-primary">Add Now</a>
+
+                <%= link_to raw("Add Now"), new_dashboard_item_path ,class: "btn btn-primary"%>
             </section>
             <section class="solid">
                 <h3>Full Size</h3>
@@ -56,12 +57,6 @@
 
 
     </div>
-
-
-
-
-
-
 <script type="text/javascript">
     $(document).ready(function (){
         init_component();
