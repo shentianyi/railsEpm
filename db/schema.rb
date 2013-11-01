@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131029061938) do
+ActiveRecord::Schema.define(:version => 20131101015803) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(:version => 20131029061938) do
     t.integer  "user_id"
     t.integer  "entity_id"
     t.float    "target_max"
-    t.float    "target_min"
+    t.float    "target_min",       :default => 0.0
   end
 
   add_index "kpi_entries", ["entity_id"], :name => "index_kpi_entries_on_entity_id"
@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(:version => 20131029061938) do
     t.integer  "tenant_id"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
-    t.float    "target_min"
+    t.float    "target_min",      :default => 0.0
   end
 
   add_index "kpis", ["kpi_category_id"], :name => "index_kpis_on_kpi_category_id"
@@ -194,9 +194,9 @@ ActiveRecord::Schema.define(:version => 20131029061938) do
     t.integer  "user_id"
     t.integer  "kpi_id"
     t.float    "target_max"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.float    "target_min"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.float    "target_min", :default => 0.0
   end
 
   add_index "user_kpi_items", ["entity_id"], :name => "index_user_kpi_items_on_entity_id"

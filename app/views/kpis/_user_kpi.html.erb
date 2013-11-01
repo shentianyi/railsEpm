@@ -3,12 +3,14 @@
      <li id="<%= kpi.user_kpi_item_id%>" kpi_id="<%=kpi.id%>">
           <table>
               <tr>
-                  <td title="<%= kpi.name%>"><%= kpi.name%></td>
-                  <td><input type="text" value="<%= kpi.user_kpi_item_target%>" id="<%= kpi.user_kpi_item_id%>"/></td>
+                <td title="<%= kpi.name%>"><%= kpi.name%></td>
+                <td><input type="text" value="<%= kpi.user_kpi_item_target_max%>" id="<%= kpi.user_kpi_item_id%>"/></td>
+                <td><input type="text" value="<%= kpi.user_kpi_item_target_min%>" id="<%= kpi.user_kpi_item_id%>"/></td>
               </tr>
               <tr>
-                  <td title="<%= kpi.description%>"><%= kpi.description%></td>
-                  <td>Target</td>
+                <td title="<%= kpi.description%>"><%= kpi.description%></td>
+                <td>Target_Max</td>
+                <td>Target_Min</td>
               </tr>
           </table>
           <i class="icon-trash"></i>

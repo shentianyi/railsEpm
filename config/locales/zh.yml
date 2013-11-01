@@ -271,7 +271,8 @@ zh:
         name: 名称
         description: 描述
         frequency: 周期
-        target: 目标值
+        target: 目标值上限
+        target_min: 目标值下限
         unit: 单位
         trend: 趋势
         calculate_type: 计算型

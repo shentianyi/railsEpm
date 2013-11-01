@@ -10,28 +10,34 @@
       end
      %>
      <li id="<%= kpi.user_kpi_item_id%>">
-          <table>
-                  <tr>
-                      <td ><%= kpi.name%></td>
-                      <td ><%= kpi.category_name%></td>
+       <table>
+         <tr>
+           <td ><%= kpi.name%></td>
+           <td ><%= kpi.category_name%></td>
 
-                      <td ><%=KpiDirection.get_desc_by_value(kpi.direction)%></td>
-                      <td >
-                        <span class="entry-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target)%></span>
-                       </td>
-                      <td ><input type="text" class="entry-actual"  kpi_id="<%=kpi.id%>" user_kpi_item_id="<%= kpi.user_kpi_item_id%>"  value="<%=value%>" /></td>
+           <td ><%=KpiDirection.get_desc_by_value(kpi.direction)%></td>
+           <td >
+             <span class="entry-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target_max)%></span>
+           </td>
 
-                      <td ><%=percent%></td>
-                  </tr>
-                  <tr>
-                      <td><%= kpi.description%></td>
-                      <td>Category</td>
-                      <td>Trend</td>
-                      <td>Target</td>
-                      <td>Actual</td>
-                      <td>TCR</td>
-                  </tr>
-          </table>
+           <td >
+             <span class="entry-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target_min)%></span>
+           </td>
+
+           <td ><input type="text" class="entry-actual"  kpi_id="<%=kpi.id%>" user_kpi_item_id="<%= kpi.user_kpi_item_id%>"  value="<%=value%>" /></td>
+
+           <td ><%=percent%></td>
+         </tr>
+         <tr>
+           <td><%= kpi.description%></td>
+           <td>Category</td>
+           <td>Trend</td>
+           <td>Target_Max</td>
+           <td>Target_Min</td>
+           <td>Actual</td>
+           <td>TCR</td>
+         </tr>
+       </table>
      </li>
 <%end%>
 

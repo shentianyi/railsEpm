@@ -28,30 +28,37 @@
                     </p>
                     <input type="checkbox" />
                     <table class="category">
-                         <tr>
-                              <td title='<%= kpi.name%>'><%= kpi.name%></td>
-                              <td ><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
-                              <td ><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
-                              <td class="manage-kpi-target">
-                                   <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
-                              <input type='text' effect_on="<%= kpi.id%>"/>
-                              </td>
-                              <%if kpi.is_calculated%>
-                              <td title="<%= kpi.formula_string%>"><%= kpi.formula_string%></td>
-                              <%else%>
-                              <td><%= t 'manage.kpi.not_calculate_type'%></td>
-                              <%end%>
-                         </tr>
-                         <tr>
-                              <td title='<%= kpi.description%>'><%= kpi.description%></td>
-                              <td><%= t 'manage.kpi.frequency'%></td>
-                              <td><%= t 'manage.kpi.trend'%></td>
-                              <td><%= t 'manage.kpi.target'%></td>
-                              <td><%= t 'manage.kpi.calculate_type'%></td>
-                         </tr>
+                      <tr>
+                        <td title='<%= kpi.name%>'><%= kpi.name%></td>
+                        <td ><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
+                        <td ><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
+                        <td class="manage-kpi-target">
+                          <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target_max)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
+                          <input type='text' effect_on="<%= kpi.id%>"/>
+                        </td>
+
+                        <td class="manage-kpi-target">
+                          <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target_min)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
+                          <input type='text' effect_on="<%= kpi.id%>"/>
+                        </td>
+
+                        <%if kpi.is_calculated%>
+                            <td title="<%= kpi.formula_string%>"><%= kpi.formula_string%></td>
+                        <%else%>
+                            <td><%= t 'manage.kpi.not_calculate_type'%></td>
+                        <%end%>
+                      </tr>
+                      <tr>
+                        <td title='<%= kpi.description%>'><%= kpi.description%></td>
+                        <td><%= t 'manage.kpi.frequency'%></td>
+                        <td><%= t 'manage.kpi.trend'%></td>
+                        <td><%= t 'manage.kpi.target'%></td>
+                        <td><%= t 'manage.kpi.target_min'%></td>
+                        <td><%= t 'manage.kpi.calculate_type'%></td>
+                      </tr>
                     </table>
                </li>
-               <%end%>
+            <%end%>
           </ul>
 
      </div>
