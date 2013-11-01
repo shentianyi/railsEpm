@@ -65,14 +65,14 @@ DASHBOARD.special_template={
     column:function(){
         high_chart.legend.enabled=true;
         high_chart.plotOptions.series.point.events={};
-        high_chart.plotOptions.series.marker.enabled=false;
+        high_chart.plotOptions.series.marker.enabled=true;
         high_chart.yAxis.labels.enabled=false;
         high_chart.xAxis.offset=0;
     },
     pie:function(){
         high_chart.legend.enabled=true;
         high_chart.plotOptions.series.point.events={};
-
+        high_chart.plotOptions.series.marker.enabled=true;
     },
     scatter:function(){
         high_chart.legend.enabled=true;

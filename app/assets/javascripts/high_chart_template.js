@@ -106,7 +106,8 @@ var high_chart = {
                         this.graph.attr('zIndex', this.index);
                     }
                 }
-            }
+            },
+            showInLegend: false
         },
 
         pie: {
@@ -506,6 +507,11 @@ function proper_type_for_chart(){
               data: this.chart.get(this.id).options.data
         },c;
         var new_series=deepCopy(p,c);
+        if(this.type=="column"){
+            for(var i=0;i<new_series.data.length;i++){
+                new_series.data[i].low=0
+            }
+        }
         new_series.type=this.type;
         this.chart.get(this.id).remove(false);
         this.chart.addSeries(new_series,false);
