@@ -85,148 +85,164 @@
         </ul>
     </div>
 
-    <aside class="content-right-nav" name='dashboard-add' id="content-right-nav">
-        <div style="height:110px"></div>
-        <section class="solid dashboard-add-name">
-            <h3>Add DashBoard Name</h3>
-            <p>Give the dashboard being created a proper name</p>
-            <input type='text' placeholder="Dashboard name"/>
-        </section>
-        <section class="solid dashboard-add-type">
-            <h3>Choose A Type</h3>
-            <ul id="db-add-type">
-                <li class="active" type="line"></li>
-                <li type="column"></li>
-                <li type="pie"></li>
-                <li type="scatter"></li>
-            </ul>
-        </section>
-        <section class="solid">
-            <h3>Create Content</h3>
-                <p>Add one or more series to form
-                your special dashboard</p>
-            <ul class="db-add-kpi-list" id="db-add-kpi-list">
-            </ul>
-            <a class="btn btn-primary" id="add-one-series">Add one series</a>
-        </section>
-        <section class="solid">
-            <h3>Select DashBoard Group</h3>
-            <p>Select a dashboard group to put your dashboard</p>
-            <select data-placehoder="Group" style="width:120px;" class="chosen-select">
-                <option ></option>
-                <option value="group1">entity1</option>
-                <option value="group2">entity2</option>
-                <option value="group3">entity3</option>
-            </select>
-        </section>
-        <section class="solid">
-            <h3>Finish</h3>
-            <p>Publish your dashboard since you have done</p>
-            <a class="btn btn-primary">Publish Now</a>
-        </section>
-    </aside>
-
-    <div class="content-left-main" name="dashboard-add" id="content-left-main">
-
-        <div class="left-content-title" name="dashboard-add" id="left-content-title">
-            <div class="pull-left analytics-condition-choose" name="dashboard-add">
-                <div class="index-condition-group">
-                    <select data-placeholder="Entity *" style="width:120px;" class="chosen-select"
-                            title="analy-entity-select" id="chart-group">
-                        <option value="group1">entity1</option>
-                        <option value="group2">entity2</option>
-                        <option value="group3">entity3</option>
-                    </select>
-                    <select data-placeholder="Kpi *" style="width:150px;" class="chosen-select" title="analy-kpi-select"
-                            id="chart-kpi" date-pick=false>
-                        <option value=""> </option>
-                        <option value="kpi1" interval="200" type="">week</option>
-                        <option value="kpi1" interval="90">hour</option>
-                        <option value="kpi1" interval="100">day</option>
-                        <option value="kpi2" interval="400">quarter</option>
-                        <option value="kpi3" interval="300">month</option>
-                        <option value="kpi3" interval="500">year</option>
-                        <option value="kpi3" interval="">empty</option>
-                    </select>
-                    <select data-placeholder="View *" style="width:150px;" class="chosen-select" title="analy-view-select"
-                            id="chart-view">
-                        <option value="entity1">view1</option>
-                        <option value="entity2">view2</option>
-                        <option value="entity3">view3</option>
-                    </select>
-                </div>
-                <div class="index-condition-group">
-                    <input type="text" class="index-pick-date" placeholder="Begin Time *" id="analy-begin-time"
-                           readonly=true/>
-                    <label class="index-date-extra-info"></label>
-                    <input type="text" class="index-pick-date" placeholder="End Time" id="analy-end-time"
-                           readonly=true/>
-                    <label class="index-date-extra-info"></label>
-                </div>
-                <div class="index-condition-group" style="width:120px">
-                    <label class="analytics-radio-label">
-                        <input type="radio" name="chartRadios" value="1" checked>
-                        Total
-                    </label>
-                    <label class="analytics-radio-label">
-                        <input type="radio" name="chartRadios" value="2">
-                        Average
-                    </label>
-                </div>
-                <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px" id="db-add-chart">Add</a>
-            </div>
-            <i class="icon-chevron-down analytic-control-condition-visible" id="analytic-control-condition-visible" state="close"> </i>
-        </div>
-
-        <div class="db-chart-body" id="db-chart-body">
-            <div class="clearfix" id="db-chart-interval-alternate" my_height="28">
-                <ul class="pull-right db-control-chart-interval-group">
-                    <li interval="90"><a>Hr</a></li>
-                    <li interval="100"><a>D</a></li>
-                    <li interval="200"><a>W</a></li>
-                    <li interval="300"><a>M</a></li>
-                    <li interval="400"><a>Qr</a></li>
-                    <li interval="500"><a>Y</a></li>
+    <div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-111px;">
+        <aside class="content-right-nav" name='dashboard-add' id="content-right-nav">
+            <div style="height:111px;width:auto"></div>
+            <section class="solid dashboard-add-name">
+                <h3>Add DashBoard Name</h3>
+                <p>Give the dashboard being created a proper name</p>
+                <input type='text' placeholder="Dashboard name"/>
+            </section>
+            <section class="solid dashboard-add-type">
+                <h3>Choose A Type</h3>
+                <ul id="db-add-type">
+                    <li class="active" type="line"></li>
+                    <li type="column"></li>
+                    <li type="pie"></li>
+                    <li type="scatter"></li>
                 </ul>
-            </div>
-            <div class="put-db-chart">
-                <div class="chart-container-top" id="chart-container-top">
-                    <table>
-                        <tr>
-                            <td></td>
-                            <td>Max</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Min</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="db-chart-container" id="chart-container"></div>
-                <div id="chart-container-right" class="chart-container-right">
-                    <div class="chart-container-right-top" id="chart-container-right-top"></div>
-                    <div class="chart-container-right-bottom" id="chart-container-right-bottom"></div>
-                </div>
-                <div class="chart-container-bottom" id="chart-container-bottom">
-                    <table>
-                        <tr>
-                            <td>21</td>
-                            <td>109</td>
-                            <td>$34</td>
-                            <td>$190</td>
-                        </tr>
-                        <tr>
-                            <td>Out of Target</td>
-                            <td>Total Amount</td>
-                            <td>Average Value</td>
-                            <td>Total Value</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
+            </section>
+            <section class="solid">
+                <h3>Create Content</h3>
+                <p>Add one or more series to form
+                    your special dashboard</p>
+                <ul class="db-add-kpi-list" id="db-add-kpi-list">
+                </ul>
+                <a class="btn btn-primary" id="add-one-series">Add one series</a>
+            </section>
+            <section class="solid">
+                <h3>Select DashBoard Group</h3>
+                <p>Select a dashboard group to put your dashboard</p>
+                <select data-placehoder="Group" style="width:120px;" class="chosen-select">
+                    <option ></option>
+                    <option value="group1">entity1</option>
+                    <option value="group2">entity2</option>
+                    <option value="group3">entity3</option>
+                </select>
+            </section>
+            <section class="solid">
+                <h3>Finish</h3>
+                <p>Publish your dashboard since you have done</p>
+                <a class="btn btn-primary">Publish Now</a>
+            </section>
+        </aside>
 
+        <div class="content-left-main" name="dashboard-add" id="content-left-main">
+            <div style="height:110px;width:auto"></div>
+            <div class="left-content-title" name="dashboard-add" id="left-content-title">
+                <div class="pull-left analytics-condition-choose" name="dashboard-add">
+                    <div class="index-condition-group">
+                        <select data-placeholder="Entity *" style="width:120px;" class="chosen-select"
+                                title="analy-entity-select" id="chart-group">
+                            <option value="group1">entity1</option>
+                            <option value="group2">entity2</option>
+                            <option value="group3">entity3</option>
+                        </select>
+                        <select data-placeholder="Kpi *" style="width:150px;" class="chosen-select" title="analy-kpi-select"
+                                id="chart-kpi" date-pick=false>
+                            <option value=""> </option>
+                            <option value="kpi1" interval="200">week</option>
+                            <option value="kpi1" interval="90">hour</option>
+                            <option value="kpi1" interval="100">day</option>
+                            <option value="kpi2" interval="400">quarter</option>
+                            <option value="kpi3" interval="300">month</option>
+                            <option value="kpi3" interval="500">year</option>
+                            <option value="kpi3" interval="">empty</option>
+                        </select>
+                        <select data-placeholder="View *" style="width:150px;" class="chosen-select" title="analy-view-select"
+                                id="chart-view">
+                            <option value="entity1">view1</option>
+                            <option value="entity2">view2</option>
+                            <option value="entity3">view3</option>
+                        </select>
+                    </div>
+                    <div class="index-condition-group">
+                        <input type="text" class="index-pick-date" placeholder="Begin Time *" id="analy-begin-time"
+                               readonly=true/>
+                        <label class="index-date-extra-info"></label>
+                        <input type="text" class="index-pick-date" placeholder="End Time" id="analy-end-time"
+                               readonly=true/>
+                        <label class="index-date-extra-info"></label>
+                    </div>
+                    <div class="index-condition-group" style="width:120px">
+                        <label class="analytics-radio-label">
+                            <input type="radio" name="chartRadios" value="1" checked>
+                            Total
+                        </label>
+                        <label class="analytics-radio-label">
+                            <input type="radio" name="chartRadios" value="2">
+                            Average
+                        </label>
+                    </div>
+                    <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px" id="db-add-chart">Add</a>
+                </div>
+                <i class="icon-chevron-down analytic-control-condition-visible" id="analytic-control-condition-visible" state="close"> </i>
+            </div>
+
+            <div class="db-chart-body" id="db-chart-body">
+                <div class="clearfix" id="db-chart-interval-alternate" my_height="28">
+                    <ul class="pull-right db-control-chart-interval-group">
+                        <li interval="90"><a>Hr</a></li>
+                        <li interval="100"><a>D</a></li>
+                        <li interval="200"><a>W</a></li>
+                        <li interval="300"><a>M</a></li>
+                        <li interval="400"><a>Qr</a></li>
+                        <li interval="500"><a>Y</a></li>
+                    </ul>
+                </div>
+                <div class="put-db-chart">
+                    <div class="chart-container-top" id="chart-container-top">
+                        <table>
+                            <tr>
+                                <td>$1000</td>
+                                <td>Max</td>
+                            </tr>
+                            <tr>
+                                <td>$10</td>
+                                <td>Min</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="db-chart-container" id="chart-container"></div>
+                    <div id="chart-container-right" class="chart-container-right">
+                        <p>12%</p>
+                        <p>monthly sales</p>
+                        <table>
+                            <tr>
+                                <td>$123</td>
+                                <td>Selected</td>
+                            </tr>
+                            <tr>
+                                <td>$1234</td>
+                                <td>Total</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="chart-container-right-scatter" class="chart-container-right">
+
+                    </div>
+                    <div class="chart-container-bottom" id="chart-container-bottom">
+                        <table>
+                            <tr>
+                                <td>21</td>
+                                <td>109</td>
+                                <td>$34</td>
+                                <td>$190</td>
+                            </tr>
+                            <tr>
+                                <td>Out of Target</td>
+                                <td>Total Amount</td>
+                                <td>Average Value</td>
+                                <td>Total Value</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
+
 
 </article>
 

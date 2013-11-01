@@ -3,7 +3,7 @@ var url = 'http://42.121.111.38:9002/HighChartsFileService/';
 var high_chart = {
     chart: {
         spacingLeft: 5,
-        spacingRight: 10,
+        spacingRight: 5,
         marginTop: 30,
         animation: {
             duration: 800
@@ -17,14 +17,11 @@ var high_chart = {
     },
     tooltip:{
         enabled: true,
-//        formatter:function(){
-//            var s = '<b>'+ this.x +'</b>';
-//            $.each(this.points, function(i, point) {
-//                s += '<br/>'+ point.series.name +': '+
-//                    point.y +'m';
-//            });
-//            return s;
-//        }
+        xDateFormat: '%Y-%m-%d',
+        formatter:function(){
+            var s="<b>"+this.x+"</b><br />"+this.y
+            return s;
+        }
     },
     legend: {
         enabled: true,
@@ -86,7 +83,9 @@ var high_chart = {
             trackByArea:false,
             zIndex:-1,
             tooltip:{
-                enabled:false
+                tooltip:function(){
+                    return false
+                }
             }
         },
         line: {
@@ -109,6 +108,7 @@ var high_chart = {
                 }
             }
         },
+
         pie: {
             size: '70%',
             allowPointSelect: true,
