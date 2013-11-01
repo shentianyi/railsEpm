@@ -69,8 +69,64 @@ DASHBOARD.add.init=function(){
             DASHBOARD.add.alternate_chart_type(event);
         }
     });
-
     DASHBOARD.highchart_template_init();
+//    $("body").on("click","#db-add-kpi-list li i",function(){
+//         var id=$(this).attr("kpi_id");
+//         $("#chart-container").highcharts().get(id).remove(false);
+//    });
+//
+//        high_chart.plotOptions.series.events.legendItemClick=function(){
+//        var index=this.index;
+//        db_chartSeries.series.splice(index,1);
+//        this.remove(false);
+//        db_chartSeries.minusCount();
+//        $('#chart-container').highcharts().destroy();
+//        if(db_chartSeries.count==0){
+//            $("#db-chart-body").css("display","none");
+//            $("#add-dashboard").css("display","none");
+//            $("#db-chart-type-alternate").css("display","none");
+//            $("#dashboard-name-input").css("display","none");
+////            $("#dashboard-name-edit").css("display","none");
+//            $("#db-chart-type-alternate li").removeClass("active");
+//            $("#db-chart-interval-alternate li").removeClass("active");
+//            return;
+//        }
+//        else{
+//            var item, i,option, p,c;
+//            for(i=0;i<db_chartSeries.count;i++){
+//                p=db_chartSeries.series[i];
+//                c={};
+//                item=deepCopy(p,c);
+//                option = {
+//                    kpi: item.kpi,
+//                    id: item.id,
+//                    target: "chart-container",
+//                    begin_time: item.begin_time,
+//                    type: $("#db-chart-type-alternate li.active").attr("type"),
+//                    interval: $("#db-chart-interval-alternate li.active").attr("interval"),
+//                    data:item[$("#db-chart-interval-alternate li.active").attr("interval")],
+//                    count: i
+//                }
+//
+//                if(i==0){
+//                    render_to(option);
+//                    create_environment_for_data(option);
+//                    new Highcharts.Chart(high_chart);
+//                }
+//                add_series(option);
+//                proper_type_for_chart(option);
+//            }
+//
+//        }
+//    };
+
+
+
+
+
+
+
+
 
     $("#chart-kpi").chosen().change(function(){
         var interval = $("#chart-kpi").find(":selected").attr("interval");
@@ -133,101 +189,47 @@ DASHBOARD.add.init=function(){
     $("body").on("click","#db-add-chart",DASHBOARD.add.prepare_form_chart);
 
     $("body").on("click","#add-dashboard",function(){
-//        if($("#dashboard-name-input").val().length>0){
-            var post={},i;
-            post.dashboard_name=$("#dashboard-name-input").val();
-            post.type=$("#db-add-type li.active").attr("type");
-            post.interval=$("#db-chart-interval-alternate li.active").attr("interval");
-            post.dashboard_id = $("#dashboard-group-name :selected").attr("value");
-            post.series=[];
-            for(i=0;i<db_chartSeries.series.length;i++){
-                post.series[i]={};
-                post.series[i].kpi=db_chartSeries.series[i].kpi_id;
-                post.series[i].view=db_chartSeries.series[i].view;
-                post.series[i].average=db_chartSeries.series[i].method;
-                post.series[i].begin_time=db_chartSeries.series[i].begin_post ;
-                post.series[i].end_time=db_chartSeries.series[i].end_post;
-                post.series[i].count=i+1;
-            }
-            console.log(post)
-            DASHBOARD.init_high_chart();
-            prepare_to_create_db_view(post);
-            /*
-            $.post(
-                "",
-                {
-
-                },
-                function(data){
-
+        if($("#dashboard-name-input").val().length>0){
+            if($("#db-add-kpi-list").children().length>0){
+                if($("#dashboard-group-name :selected").text().length>0){
+                    var post={},i;
+                    post.dashboard_name=$("#dashboard-name-input").val();
+                    post.type=$("#db-add-type li.active").attr("type");
+                    post.interval=$("#db-chart-interval-alternate li.active").attr("interval");
+                    post.dashboard_id = $("#dashboard-group-name :selected").attr("value");
+                    post.series=[];
+                    for(i=0;i<db_chartSeries.series.length;i++){
+                        post.series[i]={};
+                        post.series[i].kpi=db_chartSeries.series[i].kpi_id;
+                        post.series[i].view=db_chartSeries.series[i].view;
+                        post.series[i].average=db_chartSeries.series[i].method;
+                        post.series[i].begin_time=db_chartSeries.series[i].begin_post ;
+                        post.series[i].end_time=db_chartSeries.series[i].end_post;
+                        post.series[i].count=i+1;
+                    }
+                    DASHBOARD.init_high_chart();
+                    prepare_to_create_db_view(post);
                 }
-            )
-            */
-
-//        }
-//        else{
-//            MessageBox("please give the dashboard a name " , "top", "warning") ;
-//            $("#dashboard-name-input").focus();
-//        }
+                else{
+                    MessageBox("please choose a dashboard group" , "top", "warning") ;
+                }
+            }
+            else{
+                MessageBox("please add one series at least" , "top", "warning") ;
+            }
+        }
+        else{
+            MessageBox("please give the dashboard a name " , "top", "warning") ;
+            $("#dashboard-name-input").focus();
+        }
     });
 
 };
 DASHBOARD.highchart_template_init=function(){
-    high_chart.plotOptions.series.events.legendItemClick=function(){
-        var index=this.index;
-        db_chartSeries.series.splice(index,1);
-        this.remove(false);
-        db_chartSeries.minusCount();
-        $('#chart-container').highcharts().destroy();
-        if(db_chartSeries.count==0){
-            $("#db-chart-body").css("display","none");
-            $("#add-dashboard").css("display","none");
-            $("#db-chart-type-alternate").css("display","none");
-            $("#dashboard-name-input").css("display","none");
-//            $("#dashboard-name-edit").css("display","none");
-            $("#db-chart-type-alternate li").removeClass("active");
-            $("#db-chart-interval-alternate li").removeClass("active");
-            return;
-        }
-        else{
-            var item, i,option, p,c;
-            for(i=0;i<db_chartSeries.count;i++){
-                p=db_chartSeries.series[i];
-                c={};
-                item=deepCopy(p,c);
-                option = {
-                    kpi: item.kpi,
-                    id: item.id,
-                    target: "chart-container",
-                    begin_time: item.begin_time,
-                    type: $("#db-chart-type-alternate li.active").attr("type"),
-                    interval: $("#db-chart-interval-alternate li.active").attr("interval"),
-                    data:item[$("#db-chart-interval-alternate li.active").attr("interval")],
-                    count: i
-                }
-
-                if(i==0){
-                    render_to(option);
-                    create_environment_for_data(option);
-                    new Highcharts.Chart(high_chart);
-                }
-                add_series(option);
-                proper_type_for_chart(option);
-            }
-
-        }
-    };
-    high_chart.plotOptions.pie.dataLabels={
-        enabled: true,
-        color: 'rgba(0,0,0,0.25)',
-        connectorColor: 'rgba(0,0,0,0.15)',
-        connectorWidth: 1,
-        format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
-    };
-    high_chart.plotOptions.pie.size="70%";
-    high_chart.tooltip={
-        enabled: false
-    };
+    high_chart.plotOptions.series.point.events={};
+    high_chart.plotOptions.line.marker.enabled=false;
+    high_chart.xAxis.offset=0;
+    high_chart.yAxis.labels.enabled=false;
 };
 
 DASHBOARD.add.prepare_form_chart=function() {
@@ -406,7 +408,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                 $("<li />")
                     .append($("<span />").css("backgroundColor",color))
                     .append($("<p />").text(kpi))
-                    .append($("<i />").addClass("icon-remove").attr("kpi_id","1"))
+                    .append($("<i />").addClass("icon-remove").attr("kpi_id",option.id))
             )
             if (chart_body_close_validate) {
 

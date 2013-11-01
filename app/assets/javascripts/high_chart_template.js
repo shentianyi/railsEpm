@@ -53,17 +53,17 @@ var high_chart = {
                     }
                 }
             },
-            marker: {
-                enabled: true,
-                fillColor: null,
-                lineColor: "white",
-                states: {
-                    select: {
-                        fillColor: null,
-                        lineColor: "white"
-                    }
-                }
-            },
+//            marker: {
+//                enabled: true,
+//                fillColor: null,
+//                lineColor: "white",
+//                states: {
+//                    select: {
+//                        fillColor: null,
+//                        lineColor: "white"
+//                    }
+//                }
+//            },
             states: {
                 select: {
                     color: null,
@@ -86,7 +86,8 @@ var high_chart = {
                 tooltip:function(){
                     return false
                 }
-            }
+            },
+            showInLegend: false
         },
         line: {
             lineWidth:3,
