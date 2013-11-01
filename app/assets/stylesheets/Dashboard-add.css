@@ -99,8 +99,8 @@
     width:40px;
     margin-right:2px;
     height:40px;
-    /*background-image:url("../images/dashboard-add-type.png");*/
-    background-image:url("/assets/dashboard-add-type.png");
+    background-image:url("../images/dashboard-add-type.png");
+    /*background-image:url("/assets/dashboard-add-type.png");*/
     background-repeat:no-repeat;
     border-radius:7px;
     -moz-border-radius:7px;

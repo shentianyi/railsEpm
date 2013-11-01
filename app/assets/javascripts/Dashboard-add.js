@@ -282,218 +282,227 @@ DASHBOARD.add.prepare_form_chart=function() {
             DASHBOARD.special_type[type]();
             DASHBOARD.special_template[type]();
 
-//       show_loading(232,0,0,150);
-//       $.post('/kpi_entries/analyse',{
-//           kpi : kpi,
-//           average:method=="0",
-//           entity_group: view,
-//           startTime : standardParse(begin_time).date.toISOString() ,
-//           endTime : standardParse(end_time).date.toISOString(),
-//           interval:interval
-//       },function(msg){
-//           remove_loading()
-//           if(msg.result){
-//               var option={
-//                   kpi:$("#chart-kpi :selected").text(),
-//                   id:db_chartSeries.id_count,
-//                   target:"chart-container",
-//                   begin_time:begin_time,
-//                   type:type,
-//                   interval:interval,
-//                   count:db_chartSeries.getCount()+1
-//               }
+
+       show_loading(232,0,0,150);
+       $.post('/kpi_entries/analyse',{
+           kpi : kpi,
+           average:method=="0",
+           entity_group: view,
+           startTime : standardParse(begin_time).date.toISOString() ,
+           endTime : standardParse(end_time).date.toISOString(),
+           interval:interval
+       },function(msg){
+           remove_loading()
+           if(msg.result){
+               var option={
+                   kpi:$("#chart-kpi :selected").text(),
+                   id:db_chartSeries.id_count,
+                   target:"chart-container",
+                   begin_time:begin_time,
+                   type:type,
+                   interval:interval,
+                   count:db_chartSeries.getCount()+1
+               }
+
+               var addSeriesOption={
+                   kpi:$("#chart-kpi :selected").text(),
+                   kpi_id:kpi,
+                   id:db_chartSeries.id_count,
+                   interval:interval,
+                   view:view,
+                   method:method,
+                   begin_time:begin_time,
+                   end_time:end_time,
+                   begin_post:begin_post,
+                   end_post:end_post
+               }
+        var color=series_colors[option.id% series_colors.length];
+        $("#db-add-kpi-list").append(
+            $("<li />")
+                .append($("<span />").css("backgroundColor",color))
+                .append($("<p />").text(kpi))
+                .append($("<i />").addClass("icon-remove").attr("kpi_id","1"))
+        )
+               var length=msg.object.current.length;
+               var data_array=[];
+               for(var i=0;i<length;i++){
+                   data_array[i]={};
+                   data_array[i].y=msg.object.current[i];
+                   data_array[i].low=option.type=="column"?0:msg.object.target_min[i];
+                   data_array[i].high=msg.object.target_max[i];
+                   data_array[i].unit=msg.object.unit[i];
+               }
+               if(chart_body_close_validate){
+
+                   option.data=data_array;
+                   addSeriesOption[interval]=data_array;
+                   db_chartSeries.addSeries(addSeriesOption);
+                   DASHBOARD.add.show_chart_body(option);
+
+
+                   render_to(option);
+                   create_environment_for_data(option);
+                   new Highcharts.Chart(high_chart);
+                   add_series(option);
+                   proper_type_for_chart(option);
+
+                   db_chartSeries.addCount();
+                   db_chartSeries.id_count++;
+                   if(option.type=="line"&&db_chartSeries.getCount()==1){
+                       option.type="arearange";
+                       option.id=db_chartSeries.id_count;
+                       option.count=db_chartSeries.getCount() + 1;
+                       add_series(option);
+                       proper_type_for_chart(option);
+                   }
+               }
+               else{
+                   option.data=data_array;
+                   addSeriesOption[interval]=data_array;
+                   db_chartSeries.addSeries(addSeriesOption);
+
+                   add_series(option);
+                   proper_type_for_chart(option);
+
+                   db_chartSeries.addCount();
+                   db_chartSeries.id_count++;
+               }
+               limit_pointer_number(option);
+//               clear_chart_condition();
+           }
+           else{
+               MessageBox("sorry , something wrong" , "top", "warning") ;
+           }
+       });
+        $("#chart-container").resize(function(){
+            if ($("#db-chart-type-alternate li.active").attr("type") == "pie") {
+                for (var k = 0; k < $("#chart-container").highcharts().series.length; k++) {
+                    $("#chart-container").highcharts().series[k].update({
+                        showInLegend: false
+                    })
+                }
+            }
+        });
+
+
+
+
+
+//            var option = {
+//                kpi: $("#chart-kpi :selected").text(),
+//                id: db_chartSeries.id_count,
+//                target: "chart-container",
+//                begin_time: begin_time,
+//                type: type,
+//                interval: interval,
+//                count: db_chartSeries.getCount() + 1
+//            }
+//            var addSeriesOption = {
+//                kpi: $("#chart-kpi :selected").text(),
+//                kpi_id: kpi,
+//                id: db_chartSeries.id_count,
+//                interval: interval,
+//                view: view,
+//                method: method,
+//                begin_time: begin_time,
+//                end_time: end_time,
+//                begin_post: begin_post,
+//                end_post: end_post
+//            }
 //
-//               var addSeriesOption={
-//                   kpi:$("#chart-kpi :selected").text(),
-//                   kpi_id:kpi,
-//                   id:db_chartSeries.id_count,
-//                   interval:interval,
-//                   view:view,
-//                   method:method,
-//                   begin_time:begin_time,
-//                   end_time:end_time,
-//                   begin_post:begin_post,
-//                   end_post:end_post
-//               }
-//        var color=series_colors[option.id% series_colors.length];
-//        $("#db-add-kpi-list").append(
-//            $("<li />")
-//                .append($("<span />").css("backgroundColor",color))
-//                .append($("<p />").text(kpi))
-//                .append($("<i />").addClass("icon-remove").attr("kpi_id","1"))
-//        )
-//               var length=msg.object.current.length;
-//               var data_array=[];
-//               for(var i=0;i<length;i++){
-//                   data_array[i]={};
-//                   data_array[i].y=msg.object.current[i];
-//                   data_array[i].target=msg.object.target[i];
-//                   data_array[i].unit=msg.object.unit[i];
-//               }
-//               if(chart_body_close_validate){
+//            var color=series_colors[option.id% series_colors.length];
+//            $("#db-add-kpi-list").append(
+//                $("<li />")
+//                    .append($("<span />").css("backgroundColor",color))
+//                    .append($("<p />").text(kpi))
+//                    .append($("<i />").addClass("icon-remove").attr("kpi_id","1"))
+//            )
+//            if (chart_body_close_validate) {
 //
-//                   option.data=data_array;
-//                   addSeriesOption[interval]=data_array;
-//                   db_chartSeries.addSeries(addSeriesOption);
-//                   DASHBOARD.add.show_chart_body(option);
+//                option.data = [
+//                    {y: 2,low: 1,high:3, target: 10, unit: "$"},
+//                    {y: 3,low: 2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
+//                    {y: 3,low: 2,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low: 1,high:43,  target: 10, unit: "$"}
+////                    {y: 2,target: 10, unit: "$"},
+////                    {y: 3,target: 10, unit: "$"},
+////                    {y: 21,target: 10, unit: "$"},
+////                    {y: 3,target: 10, unit: "$"},
+////                    {y: 10,target: 10, unit: "$"},
+////                    {y: 7,target: 10, unit: "$"}
+//                ];
+//                addSeriesOption[interval] = [
+//                    {y: 2,low: 1,high:3, target: 10, unit: "$"},
+//                    {y: 3,low: 2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
+//                    {y: 3,low: 2,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low: 1,high:43,  target: 10, unit: "$"}
+//                ];
 //
+//                db_chartSeries.addSeries(addSeriesOption);
+//                DASHBOARD.add.show_chart_body(option);
 //
-//                   render_to(option);
-//                   create_environment_for_data(option);
-//                   new Highcharts.Chart(high_chart);
-//                   add_series(option);
-//                   proper_type_for_chart(option);
+//                render_to(option);
+//                create_environment_for_data(option);
+//                new Highcharts.Chart(high_chart);
+//                add_series(option);
+//                proper_type_for_chart(option);
 //
-//                   db_chartSeries.addCount();
-//                   db_chartSeries.id_count++;
-//               }
-//               else{
-//                   option.data=data_array;
-//                   addSeriesOption[interval]=data_array;
-//                   db_chartSeries.addSeries(addSeriesOption);
+//                db_chartSeries.addCount();
+//                db_chartSeries.id_count++;
 //
-//                   add_series(option);
-//                   proper_type_for_chart(option);
-//
-//                   db_chartSeries.addCount();
-//                   db_chartSeries.id_count++;
-//               }
-//               limit_pointer_number(option);
-////               clear_chart_condition();
-//           }
-//           else{
-//               MessageBox("sorry , something wrong" , "top", "warning") ;
-//           }
-//       });
-//        $("#chart-container").resize(function(){
-//            if ($("#db-chart-type-alternate li.active").attr("type") == "pie") {
-//                for (var k = 0; k < $("#chart-container").highcharts().series.length; k++) {
-//                    $("#chart-container").highcharts().series[k].update({
-//                        showInLegend: false
-//                    })
+//                if(option.type=="line"&&db_chartSeries.getCount()==1){
+//                    option.type="arearange";
+//                    option.id=db_chartSeries.id_count;
+//                    option.count=db_chartSeries.getCount() + 1;
+//                    add_series(option);
+//                    proper_type_for_chart(option);
 //                }
 //            }
-//        });
-
-
-
-
-
-            var option = {
-                kpi: $("#chart-kpi :selected").text(),
-                id: db_chartSeries.id_count,
-                target: "chart-container",
-                begin_time: begin_time,
-                type: type,
-                interval: interval,
-                count: db_chartSeries.getCount() + 1
-            }
-            var addSeriesOption = {
-                kpi: $("#chart-kpi :selected").text(),
-                kpi_id: kpi,
-                id: db_chartSeries.id_count,
-                interval: interval,
-                view: view,
-                method: method,
-                begin_time: begin_time,
-                end_time: end_time,
-                begin_post: begin_post,
-                end_post: end_post
-            }
-
-            var color=series_colors[option.id% series_colors.length];
-            $("#db-add-kpi-list").append(
-                $("<li />")
-                    .append($("<span />").css("backgroundColor",color))
-                    .append($("<p />").text(kpi))
-                    .append($("<i />").addClass("icon-remove").attr("kpi_id","1"))
-            )
-            if (chart_body_close_validate) {
-
-                option.data = [
-//                    {y: 2,low: 1,high:3, target: 10, unit: "$"},
-//                    {y: 3,low: 2,high:20,  target: 10, unit: "$"},
-//                    {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
-//                    {y: 3,low: 2,high:32, target: 10, unit: "$"},
-//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//                    {y: 7,low: 1,high:43,  target: 10, unit: "$"}
-                    {y: 2,target: 10, unit: "$"},
-                    {y: 3,target: 10, unit: "$"},
-                    {y: 21,target: 10, unit: "$"},
-                    {y: 3,target: 10, unit: "$"},
-                    {y: 10,target: 10, unit: "$"},
-                    {y: 7,target: 10, unit: "$"}
-                ];
-                addSeriesOption[interval] = [
-                    {y: 2,low: 1,high:3, target: 10, unit: "$"},
-                    {y: 3,low: 2,high:20,  target: 10, unit: "$"},
-                    {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
-                    {y: 3,low: 2,high:32, target: 10, unit: "$"},
-                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                    {y: 7,low: 1,high:43,  target: 10, unit: "$"}
-                ];
-
-                db_chartSeries.addSeries(addSeriesOption);
-                DASHBOARD.add.show_chart_body(option);
-
-                render_to(option);
-                create_environment_for_data(option);
-                new Highcharts.Chart(high_chart);
-                add_series(option);
-                proper_type_for_chart(option);
-
-                db_chartSeries.addCount();
-                db_chartSeries.id_count++;
-
-                if(option.type=="line"&&db_chartSeries.getCount()==1){
-                    option.type="arearange";
-                    option.id=db_chartSeries.id_count;
-                    option.count=db_chartSeries.getCount() + 1;
-                    add_series(option);
-                    proper_type_for_chart(option);
-                }
-            }
-            else {
-                option.data = [
-//                    {y: 2,low: 1,high:3, target: 10, unit: "$"},
-//                    {y: 3,low: 2,high:20,  target: 10, unit: "$"},
-//                    {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
-//                    {y: 3,low: 2,high:32, target: 10, unit: "$"},
-//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//                    {y: 7,low: 1,high:43,  target: 10, unit: "$"}
-                    {y: 2,target: 10, unit: "$"},
-                    {y: 3,target: 10, unit: "$"},
-                    {y: 21,target: 10, unit: "$"},
-                    {y: 3,target: 10, unit: "$"},
-                    {y: 10,target: 10, unit: "$"},
-                    {y: 7,target: 10, unit: "$"}
-                ];
-                addSeriesOption[interval] = [
-                    {y: 2,target: 10, unit: "$"},
-                    {y: 3,target: 10, unit: "$"},
-                    {y: 21,target: 10, unit: "$"},
-                    {y: 3,target: 10, unit: "$"},
-                    {y: 10,target: 10, unit: "$"},
-                    {y: 7,target: 10, unit: "$"}
-                ];
-                db_chartSeries.addSeries(addSeriesOption);
-
-                add_series(option);
-                proper_type_for_chart(option);
-                db_chartSeries.addCount();
-                db_chartSeries.id_count++;
-            }
-//        limit_pointer_number(option);
-//        clear_chart_condition();
-            $("#chart-container").resize(function(){
-                if ($("#db-chart-type-alternate li.active").attr("type") == "pie") {
-                    for (var k = 0; k < $("#chart-container").highcharts().series.length; k++) {
-                        $("#chart-container").highcharts().series[k].update({
-                            showInLegend: false
-                        })
-                    }
-                }
-            });
+//            else {
+//                option.data = [
+////                    {y: 2,low: 1,high:3, target: 10, unit: "$"},
+////                    {y: 3,low: 2,high:20,  target: 10, unit: "$"},
+////                    {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
+////                    {y: 3,low: 2,high:32, target: 10, unit: "$"},
+////                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+////                    {y: 7,low: 1,high:43,  target: 10, unit: "$"}
+//                    {y: 2,target: 10, unit: "$"},
+//                    {y: 3,target: 10, unit: "$"},
+//                    {y: 21,target: 10, unit: "$"},
+//                    {y: 3,target: 10, unit: "$"},
+//                    {y: 10,target: 10, unit: "$"},
+//                    {y: 7,target: 10, unit: "$"}
+//                ];
+//                addSeriesOption[interval] = [
+//                    {y: 2,target: 10, unit: "$"},
+//                    {y: 3,target: 10, unit: "$"},
+//                    {y: 21,target: 10, unit: "$"},
+//                    {y: 3,target: 10, unit: "$"},
+//                    {y: 10,target: 10, unit: "$"},
+//                    {y: 7,target: 10, unit: "$"}
+//                ];
+//                db_chartSeries.addSeries(addSeriesOption);
+//
+//                add_series(option);
+//                proper_type_for_chart(option);
+//                db_chartSeries.addCount();
+//                db_chartSeries.id_count++;
+//            }
+////        limit_pointer_number(option);
+////        clear_chart_condition();
+//            $("#chart-container").resize(function(){
+//                if ($("#db-chart-type-alternate li.active").attr("type") == "pie") {
+//                    for (var k = 0; k < $("#chart-container").highcharts().series.length; k++) {
+//                        $("#chart-container").highcharts().series[k].update({
+//                            showInLegend: false
+//                        })
+//                    }
+//                }
+//            });
 
 
 
@@ -544,6 +553,13 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 option.id = db_chartSeries.series[i].id;
                 proper_type_for_chart(option)
             }
+        if(option.type=="line"&&db_chartSeries.getCount()==1){
+            option.type="arearange";
+            option.id=db_chartSeries.id_count;
+            option.count=db_chartSeries.getCount() + 1;
+            add_series(option);
+            proper_type_for_chart(option);
+        }
             limit_pointer_number(option);
     }
 }
