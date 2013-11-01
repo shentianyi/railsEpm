@@ -76,56 +76,58 @@
         </ul>
     </header>
 
-
-
-    <aside class="content-right-nav" name='dashboard' id="content-right-nav">
-        <section class="adaptable">
-            <h3>DashBoard Group</h3>
-            <i class="icon-plus" id="content-right-nav-add-button"></i>
-            <ul id="content-right-nav-group">
-                <li class="active" title="DashBoard1" number="1" >
-                    <a >DashBoard1</a>
-                    <i class="icon-remove"></i>
-                </li>
-                <li title="DashBoard2" number="2">
-                    <a>DashBoard2</a>
-                    <i class="icon-remove"></i>
-                </li>
-                <li title="DashBoard3" number="3">
-                    <a>DashBoard3</a>
-                    <i class="icon-remove"></i>
-                </li>
-            </ul>
-            <div class="content-right-nav-add-block" id="content-right-nav-add-block">
-                <p>give it a name</p>
-                <input type='text' />
+    <div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;">
+        <div class="content-left-main" name="dashboard" id="content-left-main">
+            <div style="width:auto;height:71px;"></div>
+            <div class="left-content-title" id="left-content-title">
+                <p id="current-group-item" class="current-group-item"></p>
+                <i class="icon-edit current-group-item-edit" id="current-group-item-edit"></i>
+                <div class="content-right-nav-add-block" name="left-content" id="content-left-content-edit-block">
+                    <p>edit the name</p>
+                    <input type='text' />
+                </div>
             </div>
-        </section>
-        <section class="solid">
-            <h3>Add DashBoard</h3>
-            <p>Creating a dashboard of your favourite type,then put it
-            to one of the dashboard group item for long-term observation</p>
-            <a class="btn btn-primary">Add Now</a>
-        </section>
-        <section class="solid">
-            <h3>Full Size</h3>
-            <p>Resize the dashboard in the left to full screen so that you
-            can demonstrate it to your colleagues or leaders ,use Esc to
-            bring it back</p>
-            <a class="btn btn-primary">Full Now</a>
-        </section>
-    </aside>
-
-
-    <div class="content-left-main" name="dashboard" id="content-left-main">
-        <div class="left-content-title" id="left-content-title">
-              <p id="current-group-item" class="current-group-item"></p>
-              <i class="icon-edit current-group-item-edit" id="current-group-item-edit"></i>
-              <div class="content-right-nav-add-block" name="left-content" id="content-left-content-edit-block">
-                <p>edit the name</p>
-                <input type='text' />
-              </div>
         </div>
+
+        <aside class="content-right-nav" name='dashboard' id="content-right-nav">
+            <div style="width:auto;height:71px;"></div>
+            <section class="adaptable">
+                <h3>DashBoard Group</h3>
+                <i class="icon-plus" id="content-right-nav-add-button"></i>
+                <ul id="content-right-nav-group">
+                    <li class="active" title="DashBoard1" number="1" >
+                        <a >DashBoard1</a>
+                        <i class="icon-remove"></i>
+                    </li>
+                    <li title="DashBoard2" number="2">
+                        <a>DashBoard2</a>
+                        <i class="icon-remove"></i>
+                    </li>
+                    <li title="DashBoard3" number="3">
+                        <a>DashBoard3</a>
+                        <i class="icon-remove"></i>
+                    </li>
+                </ul>
+                <div class="content-right-nav-add-block" id="content-right-nav-add-block">
+                    <p>give it a name</p>
+                    <input type='text' />
+                </div>
+            </section>
+            <section class="solid">
+                <h3>Add DashBoard</h3>
+                <p>Creating a dashboard of your favourite type,then put it
+                    to one of the dashboard group item for long-term observation</p>
+                <a class="btn btn-primary">Add Now</a>
+            </section>
+            <section class="solid">
+                <h3>Full Size</h3>
+                <p>Resize the dashboard in the left to full screen so that you
+                    can demonstrate it to your colleagues or leaders ,use Esc to
+                    bring it back</p>
+                <a class="btn btn-primary">Full Now</a>
+            </section>
+        </aside>
+
     </div>
 
 

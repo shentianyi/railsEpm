@@ -399,19 +399,19 @@ DASHBOARD.add.prepare_form_chart=function() {
         if (chart_body_close_validate) {
 
             option.data = [
-                {y: 2,low: 0,high:3, target: 10, unit: "$"},
-                {y: 3,low: 0,high:20,  target: 10, unit: "$"},
-                {y: 21,low: 0,high:54 ,target: 10, unit: "$"},
-                {y: 3,low: 1,high:32, target: 10, unit: "$"},
-                {y: 10, low: 0,high:43, target: 10, unit: "$"},
+                {y: 2,low: 1,high:3, target: 10, unit: "$"},
+                {y: 3,low: 2,high:20,  target: 10, unit: "$"},
+                {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
+                {y: 3,low: 2,high:32, target: 10, unit: "$"},
+                {y: 10, low: 2,high:43, target: 10, unit: "$"},
                 {y: 7,low: 1,high:43,  target: 10, unit: "$"}
             ];
             addSeriesOption[interval] = [
-                {y: 2,low: 0,high:3, target: 10, unit: "$"},
-                {y: 3,low: 0,high:20,  target: 10, unit: "$"},
-                {y: 21,low: 0,high:54 ,target: 10, unit: "$"},
-                {y: 3,low: 1,high:32, target: 10, unit: "$"},
-                {y: 10, low: 0,high:43, target: 10, unit: "$"},
+                {y: 2,low: 1,high:3, target: 10, unit: "$"},
+                {y: 3,low: 2,high:20,  target: 10, unit: "$"},
+                {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
+                {y: 3,low: 2,high:32, target: 10, unit: "$"},
+                {y: 10, low: 2,high:43, target: 10, unit: "$"},
                 {y: 7,low: 1,high:43,  target: 10, unit: "$"}
             ];
             db_chartSeries.addSeries(addSeriesOption);
