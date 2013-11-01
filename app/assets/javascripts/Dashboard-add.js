@@ -193,12 +193,12 @@ DASHBOARD.add.init=function(){
     $("body").on("click","#db-add-chart",DASHBOARD.add.prepare_form_chart);
 
     $("body").on("click","#add-dashboard",function(){
-        if($("#dashboard-name-input").val().length>0){
+//        if($("#dashboard-name-input").val().length>0){
             var post={},i;
             post.dashboard_name=$("#dashboard-name-input").val();
-            post.type=$("#db-chart-type-alternate li.active").attr("type");
+            post.type=$("#db-add-type li.active").attr("type");
             post.interval=$("#db-chart-interval-alternate li.active").attr("interval");
-            post.dashboard_id = $("#manage-left-menu>.active").attr("number");
+            post.dashboard_id = $("#dashboard-group-name :selected").attr("value");
             post.series=[];
             for(i=0;i<db_chartSeries.series.length;i++){
                 post.series[i]={};
@@ -224,11 +224,11 @@ DASHBOARD.add.init=function(){
             )
             */
 
-        }
-        else{
-            MessageBox("please give the dashboard a name " , "top", "warning") ;
-            $("#dashboard-name-input").focus();
-        }
+//        }
+//        else{
+//            MessageBox("please give the dashboard a name " , "top", "warning") ;
+//            $("#dashboard-name-input").focus();
+//        }
     });
 
     $("body").on("click","#add-back-db",function(){
@@ -420,26 +420,20 @@ DASHBOARD.add.prepare_form_chart=function() {
 //            if (chart_body_close_validate) {
 //
 //                option.data = [
-//                    {y: 2,low: 1,high:3, target: 10, unit: "$"},
-//                    {y: 3,low: 2,high:20,  target: 10, unit: "$"},
-//                    {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
-//                    {y: 3,low: 2,high:32, target: 10, unit: "$"},
-//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//                    {y: 7,low: 1,high:43,  target: 10, unit: "$"}
-////                    {y: 2,target: 10, unit: "$"},
-////                    {y: 3,target: 10, unit: "$"},
-////                    {y: 21,target: 10, unit: "$"},
-////                    {y: 3,target: 10, unit: "$"},
-////                    {y: 10,target: 10, unit: "$"},
-////                    {y: 7,target: 10, unit: "$"}
+//                    {y: 2,low: option.type=='column'?0:1,high:3, target: 10, unit: "$"},
+//                    {y: 3,low: option.type=='column'?0:2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low: option.type=='column'?0:33,high:54 ,target: 10, unit: "$"},
+//                    {y: 3,low: option.type=='column'?0:2,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: option.type=='column'?0:2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low: option.type=='column'?0:1,high:43,  target: 10, unit: "$"}
 //                ];
 //                addSeriesOption[interval] = [
-//                    {y: 2,low: 1,high:3, target: 10, unit: "$"},
-//                    {y: 3,low: 2,high:20,  target: 10, unit: "$"},
-//                    {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
-//                    {y: 3,low: 2,high:32, target: 10, unit: "$"},
-//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//                    {y: 7,low: 1,high:43,  target: 10, unit: "$"}
+//                    {y: 2,low: option.type=='column'?0:1,high:3, target: 10, unit: "$"},
+//                    {y: 3,low: option.type=='column'?0:2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low: option.type=='column'?0:33,high:54 ,target: 10, unit: "$"},
+//                    {y: 3,low: option.type=='column'?0:2,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: option.type=='column'?0:2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low: option.type=='column'?0:1,high:43,  target: 10, unit: "$"}
 //                ];
 //
 //                db_chartSeries.addSeries(addSeriesOption);
@@ -464,26 +458,20 @@ DASHBOARD.add.prepare_form_chart=function() {
 //            }
 //            else {
 //                option.data = [
-////                    {y: 2,low: 1,high:3, target: 10, unit: "$"},
-////                    {y: 3,low: 2,high:20,  target: 10, unit: "$"},
-////                    {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
-////                    {y: 3,low: 2,high:32, target: 10, unit: "$"},
-////                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
-////                    {y: 7,low: 1,high:43,  target: 10, unit: "$"}
-//                    {y: 2,target: 10, unit: "$"},
-//                    {y: 3,target: 10, unit: "$"},
-//                    {y: 21,target: 10, unit: "$"},
-//                    {y: 3,target: 10, unit: "$"},
-//                    {y: 10,target: 10, unit: "$"},
-//                    {y: 7,target: 10, unit: "$"}
+//                    {y: 2,low: option.type=='column'?0:1,high:3, target: 10, unit: "$"},
+//                    {y: 3,low: option.type=='column'?0:2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low: option.type=='column'?0:33,high:54 ,target: 10, unit: "$"},
+//                    {y: 3,low: option.type=='column'?0:2,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: option.type=='column'?0:2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low: option.type=='column'?0:1,high:43,  target: 10, unit: "$"}
 //                ];
 //                addSeriesOption[interval] = [
-//                    {y: 2,target: 10, unit: "$"},
-//                    {y: 3,target: 10, unit: "$"},
-//                    {y: 21,target: 10, unit: "$"},
-//                    {y: 3,target: 10, unit: "$"},
-//                    {y: 10,target: 10, unit: "$"},
-//                    {y: 7,target: 10, unit: "$"}
+//                    {y: 2,low: option.type=='column'?0:1,high:3, target: 10, unit: "$"},
+//                    {y: 3,low: option.type=='column'?0:2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low: option.type=='column'?0:33,high:54 ,target: 10, unit: "$"},
+//                    {y: 3,low: option.type=='column'?0:2,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: option.type=='column'?0:2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low: option.type=='column'?0:1,high:43,  target: 10, unit: "$"}
 //                ];
 //                db_chartSeries.addSeries(addSeriesOption);
 //
@@ -554,6 +542,15 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 proper_type_for_chart(option)
             }
         if(option.type=="line"&&db_chartSeries.getCount()==1){
+            var option = {
+                kpi: $("#chart-kpi :selected").text(),
+                id: db_chartSeries.id_count,
+                target: "chart-container",
+                begin_time: begin_time,
+                type: type,
+                interval: interval,
+                count: db_chartSeries.getCount() + 1
+            }
             option.type="arearange";
             option.id=db_chartSeries.id_count;
             option.count=db_chartSeries.getCount() + 1;
