@@ -23,7 +23,7 @@ ifepm.dashboard_widget.widget_config = {
     max_col:4,
     max_row:2,
     min_width:(1024 - 150)/4 -20 ,
-    min_height:(800 - 150)/2 -20 ,
+    min_height:(800 - 150)/2 -20
 };
 
 var gridster;
