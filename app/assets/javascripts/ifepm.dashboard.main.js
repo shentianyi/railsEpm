@@ -486,15 +486,37 @@ ifepm.dashboard.create_dashboard=function(){
                     $(container_selector).append(
                         ifepm.dashboard.graphs[graph_id].container(ifepm.dashboard.graphs[graph_id]));
 
-                    var option = {};
-                    option.isnew = false;
-                    option.container_selector  =container_selector;
-                    option.id = graph_id;
-                    option.row = ifepm.dashboard.graphs[graph_id].row;
-                    option.col = ifepm.dashboard.graphs[graph_id].col;
-                    option.sizex = ifepm.dashboard.graphs[graph_id].sizex;
-                    option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
-                    ifepm.dashboard_widget.add_w(option);
+                        var option={};
+                        option.container_selector=container_selector;
+                        option.id= graph_id;
+                        if(isNaN(ifepm.dashboard.graphs[graph_id].sizex)){
+                            option.isnew=false;
+                            option.row=ifepm.dashboard.graphs[graph_id].row;
+                            option.col=ifepm.dashboard.graphs[graph_id].col;
+                            option.sizex=ifepm.dashboard.graphs[graph_id].sizex;
+                            option.sizey=ifepm.dashboard.graphs[graph_id].sizey;
+                            ifepm.dashboard_widget.add_w(option);
+                        }
+                        else{
+                            option.isnew=true;
+                            option.chart_type=ifepm.dashboard.graphs[graph_id].chart_type;
+                            var result = ifepm.dashboard_widget.add_w(option);
+
+                            ifepm.dashboard.graphs[graph_id].col = result.col;
+                            ifepm.dashboard.graphs[graph_id].row = result.row;
+                            ifepm.dashboard.graphs[graph_id].sizex = result.sizex;
+                            ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
+
+                            var options = [];
+                            var opt = {};
+                            opt.id = graph_id.id;
+                            opt.sizex = result.sizex;
+                            opt.sizey = result.sizey;
+                            opt.col = result.col;
+                            opt.row = result.row;
+                            options.push(opt);
+                            ifepm.dashboard.save_grid_pos(options,{success:function(){}});
+                        }
                     ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
                 }
                 //configure the sortable
