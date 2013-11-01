@@ -7,8 +7,8 @@
     padding: 0;
     width: 18px;
     height: 18px;
-    /*background: url(../images/aero.png) no-repeat;*/
-    background: url(/assets/aero.png) no-repeat;
+    background: url(../images/aero.png) no-repeat;
+    /*background: url(/assets/aero.png) no-repeat;*/
     border: none;
     cursor: pointer;
 }
