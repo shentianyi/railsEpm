@@ -25,65 +25,6 @@ DASHBOARD.init=function(){
             MessageBox("Please Select One Dashboard","top","warning");
         }
 
-        high_chart.plotOptions.series.events.legendItemClick=function(){
-            var index=this.index;
-            db_chartSeries.series.splice(index,1);
-            this.remove(false);
-            db_chartSeries.minusCount();
-            $('#chart-container').highcharts().destroy();
-            if(db_chartSeries.count==0){
-                $("#db-chart-body").css("display","none");
-                $("#add-dashboard").css("display","none");
-                $("#db-chart-type-alternate").css("display","none");
-                $("#dashboard-name-input").css("display","none");
-//            $("#dashboard-name-edit").css("display","none");
-                $("#db-chart-type-alternate li").removeClass("active");
-                $("#db-chart-interval-alternate li").removeClass("active");
-                return;
-            }
-            else{
-                var item, i,option, p,c;
-                for(i=0;i<db_chartSeries.count;i++){
-                    p=db_chartSeries.series[i];
-                    c={};
-                    item=deepCopy(p,c);
-                    option = {
-                        kpi: item.kpi,
-                        id: item.id,
-                        target: "chart-container",
-                        begin_time: item.begin_time,
-                        type: $("#db-chart-type-alternate li.active").attr("type"),
-                        interval: $("#db-chart-interval-alternate li.active").attr("interval"),
-                        data:item[$("#db-chart-interval-alternate li.active").attr("interval")],
-                        count: i
-                    }
-
-                    if(i==0){
-                        render_to(option);
-                        create_environment_for_data(option);
-                        new Highcharts.Chart(high_chart);
-                    }
-                    add_series(option);
-                    proper_type_for_chart(option);
-                }
-
-            }
-        };
-        high_chart.chart.zoomType="xy";
-        high_chart.plotOptions.pie.dataLabels={
-            enabled: true,
-            color: 'rgba(0,0,0,0.25)',
-            connectorColor: 'rgba(0,0,0,0.15)',
-            connectorWidth: 1,
-            format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
-        };
-        high_chart.plotOptions.pie.size="70%";
-        high_chart.tooltip={
-            enabled: false
-        };
-
-
-
     });
     $("body").on("click",".dashboard-moreDetail>i",function(){
         var id=$(this).attr("effect_on");

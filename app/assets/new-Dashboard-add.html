@@ -113,12 +113,14 @@
             <section class="solid">
                 <h3>Select DashBoard Group</h3>
                 <p>Select a dashboard group to put your dashboard</p>
-                <select data-placehoder="Group" style="width:120px;" class="chosen-select" id="dashboard-group-name">
-                    <option ></option>
-                    <option value="group1">entity1</option>
-                    <option value="group2">entity2</option>
-                    <option value="group3">entity3</option>
-                </select>
+                <div class="dashboard-add-select-div">
+                    <select data-placehoder="Group" style="width:140px;" class="chosen-select" id="dashboard-group-name">
+                        <option ></option>
+                        <option value="group1">entity1</option>
+                        <option value="group2">entity2</option>
+                        <option value="group3">entity3</option>
+                    </select>
+                </div>
             </section>
             <section class="solid">
                 <h3>Finish</h3>
@@ -190,7 +192,8 @@
                         <li interval="500"><a>Y</a></li>
                     </ul>
                 </div>
-                <div class="put-db-chart">
+
+                <div class="put-db-chart" name="dashboard-add">
                     <div class="chart-container-top" id="chart-container-top">
                         <table>
                             <tr>

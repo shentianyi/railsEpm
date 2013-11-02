@@ -40,12 +40,14 @@
     <section class="solid">
       <h3>Select DashBoard Group</h3>
       <p>Select a dashboard group to put your dashboard</p>
-      <select data-placehoder="Group" style="width:120px;" class="chosen-select" id="dashboard-group-name">
-        <option ></option>
-        <%@dashboards.each do |dashboard| %>
-            <option value="<%= dashboard.id%>"><%= dashboard.name%></option>
-        <%end%>
-      </select>
+      <div class="dashboard-add-select-div">
+        <select data-placehoder="Group" style="width:140px;" class="chosen-select" id="dashboard-group-name">
+            <option ></option>
+            <%@dashboards.each do |dashboard| %>
+                <option value="<%= dashboard.id%>"><%= dashboard.name%></option>
+            <%end%>
+        </select>
+      </div>
     </section>
     <section class="solid">
       <h3>Finish</h3>

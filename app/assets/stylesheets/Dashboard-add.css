@@ -199,6 +199,10 @@
     color:rgba(0,0,0,0.8);
     display:block;
 }
+/*group name*/
+.dashboard-add-select-div{
+    margin-left:31px;
+}
 /********************************************************************************************************* 右边的草稿图
 *******************************************************************************************************************/
 .content-left-main[name='dashboard-add']{
@@ -207,6 +211,7 @@
     right:0px;
     bottom:0px;
     top:110px;
+    overflow-y:hidden;
 }
 .left-content-title[name='dashboard-add']{
     height:103px;
@@ -283,6 +288,9 @@
     left:0px;
     right:0px;
 }
+.put-db-chart[name="dashboard-add"]{
+    overflow-y:hidden;
+}
 
 /***************************** top
 *******************************/
@@ -322,7 +330,7 @@
     top:150px;
     bottom:100px;
     right:300px;
-
+    transition:top 0.25s linear 1s,bottom 0.35s linear 1s,right 0.35s linear 1s
 }
 /***************************** right
 *******************************/
