@@ -5,10 +5,10 @@
      <nav class="pull-left">
           <ul>
                <li>
-                    <a href="/"> <span><%= t 'menu.start'%></span> <span class="nav-get-started"></span> </a>
+                    <a href="/"> <span><%= t 'menu.start'%></span>  </a>
                </li>
                <li class="relative">
-                    <a> <span><%= t 'menu.manage'%></span> <span class='nav-manage'></span> </a>
+                    <a> <span><%= t 'menu.manage'%></span></a>
                     <ul class="nav-manage-sub">
                          <li>
                               <a href="<%= kpis_path%>"><%= t 'menu.kpi'%></a>
@@ -25,19 +25,32 @@
                     </ul>
                </li>
                <li>
-                    <a  href="<%= dashboards_path%>"> <span><%= t 'menu.dashboard'%></span> <span class="nav-dash-board"></span> </a>
+                    <a  href="<%= dashboards_path%>"> <span><%= t 'menu.dashboard'%></span>  </a>
                </li>
                <li>
-                    <a   href="<%= analyse_kpi_entries_path%>"> <span><%= t 'menu.analytics'%></span> <span class="nav-analytics"></span> </a>
+                    <a   href="<%= analyse_kpi_entries_path%>"> <span><%= t 'menu.analytics'%></span> </a>
                </li>
                <li>
-                    <a> <span><%= t 'menu.reports'%></span> <span class='nav-report'></span> </a>
+                    <a> <span><%= t 'menu.reports'%></span></a>
                </li>
-               
+               <li><a>
+                     <span>&nbsp;</span>
+               </a></li>
                <li>
-                    <a href="<%= new_kpi_entry_path%>"> <span><%= t 'menu.entry_kpi'%></span> <span class="nav-entry-kpi"></span> </a>
+                    <a href="<%= new_kpi_entry_path%>"> <span><%= t 'menu.entry_kpi'%></span>  </a>
                </li>
           </ul>
+          <ul class="nav-user-part">
+                      <li>
+                          <i class="icon-user"></i>
+                      </li>
+                      <li class='empty'>
+                          <span>&nbsp;</span>
+                      </li>
+                      <li>
+                          <a>Log Out</a>
+                      </li>
+         </ul>
      </nav>
 
      <script type="text/javascript">
