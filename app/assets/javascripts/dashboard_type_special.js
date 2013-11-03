@@ -92,7 +92,7 @@ function sortNumber(a, b)
 {
     return a - b
 }
-
+DASHBOARD.add=DASHBOARD.add || {};
 DASHBOARD.add.generate=function(option){
     var type=option.type,
         outer_target=option.outer_target

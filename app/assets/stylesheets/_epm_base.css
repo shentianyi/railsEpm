@@ -154,7 +154,7 @@ nav ul li:last-of-type a span{
 }
 nav ul li:last-of-type a span:before{
     /*content:url('../images/entry-kpi.png');*/
-    content:url('/assets/images/entry-kpi.png');
+    content:url('/assets/entry-kpi.png');
     display:block;
     width:30px;
     height:1px;
