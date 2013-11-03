@@ -257,21 +257,21 @@ MANAGE.user.assign.init = function() {
           var $target = $("#manage-sort-list").find(":checked"),
               id = $target.parent().parent().attr("id"),
               user_name = $target.parent().next().find(".user-manage-name").text();
-          $.ajax({
-               url : '/kpis/user_kpis',
-               data : {
-                    id : id
-               },
-               dataType : 'html',
-               success : function(kpis) {
-                    $('#assign-kpi-inner').html(kpis);
-                    $("#assign-kpi-wrap").css("display", "block");
-                    $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
-               }
-          });
+//          $.ajax({
+//               url : '/kpis/user_kpis',
+//               data : {
+//                    id : id
+//               },
+//               dataType : 'html',
+//               success : function(kpis) {
+//                    $('#assign-kpi-inner').html(kpis);
+//                    $("#assign-kpi-wrap").css("display", "block");
+//                    $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+//               }
+//          });
 
-//          $("#assign-kpi-wrap").css("display", "block");
-//          $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+          $("#assign-kpi-wrap").css("display", "block");
+          $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
      });
      //assign kpi category 初始化
      $("#assign-kpi-pick").on("click", function() {
@@ -381,15 +381,17 @@ MANAGE.user.assign.close = function() {
 };
 MANAGE.user.assign.input = function(event) {
      var target = adapt_event(event).target;
-     var id = $(target).attr("id");
-     var value = $(target).val();
+     var id = $(target).attr("kpi_id");
+     var target_max=$("#"+id).find(".target_max").val();
+     var target_min=$("#"+id).find(".target_min").val();
      $.ajax({
           url : "/user_kpi_items",
           type : 'PUT',
           data : {
                id : id,
                user_kpi_item : {
-                    target : value
+                    target_max : target_max,
+                    target_min:  target_min
                }
           },
           success : function(data) {
