@@ -12,7 +12,6 @@ DASHBOARD.init=function(){
     MANAGE.left.manage_left_add_init();
     MANAGE.left.manage_left_delete_init();
     MANAGE.left.manage_left_edit_init();
-    DASHBOARD.init_high_chart();
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
     });
@@ -31,11 +30,6 @@ DASHBOARD.init=function(){
         db_view_delete(id);
         //$("#dashBoard-show").find("#"+id).remove();
     });
-}
-DASHBOARD.init_high_chart=function(){
-    high_chart.plotOptions.series.events.legendItemClick=function(){
-    };
-    high_chart.plotOptions.series.point.events={};
-    high_chart.chart.zoomType="";
+    DASHBOARD.highchart_template_init();
 }
 

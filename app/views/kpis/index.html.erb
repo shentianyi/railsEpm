@@ -32,15 +32,15 @@
                         <td title='<%= kpi.name%>'><%= kpi.name%></td>
                         <td ><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
                         <td ><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
-                        <td class="manage-kpi-target">
+                        <td class="manage-kpi-target"><div>
                           <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target_max)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
                           <input type='text' effect_on="<%= kpi.id%>"/>
-                        </td>
+                        </div></td>
 
-                        <td class="manage-kpi-target">
+                        <td class="manage-kpi-target"><div>
                           <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target_min)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
                           <input type='text' effect_on="<%= kpi.id%>"/>
-                        </td>
+                        </div></td>
 
                         <%if kpi.is_calculated%>
                             <td title="<%= kpi.formula_string%>"><%= kpi.formula_string%></td>

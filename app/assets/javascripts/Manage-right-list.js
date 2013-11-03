@@ -87,10 +87,15 @@ MANAGE.item_edit.prototype = {
           var text;
           var target = this.edit_target;
          MANAGE.edit_array=[];
-          $("#manage-sort-list :checked").each(function() {
-               text = $(this).parent().next().find("." + target + " .can-change").text();
-               $(this).parent().next().find("input[type='text']").css("left", "0px").val(text);
-              MANAGE.edit_array.push($(this).parent().next().find("input[type='text']").attr("effect_on"));
+          $("#manage-sort-list :checked").each(
+              function() {
+                  var length=$(this).parent().next().find("." + target).length,i;
+                  for(i=0;i<length;i++){
+                      text = $(this).parent().next().find("." + target).eq(i).find(".can-change").text();
+                      $(this).parent().next().find("input[type='text']").eq(i).css("left", "0px").val(text);
+//                      MANAGE.edit_array.push($(this).parent().next().find("input[type='text']").attr("effect_on"));
+                  }
+
           });
      }
 }

@@ -57,7 +57,7 @@ MANAGE.kpi.kpi_add_box_bind=function(){
         $("#manage-kpi-add").css("left","-50px");
         $("#manage-right-content").css("left","150px");
         MANAGE.kpi.kpi_add_clear();
-    }).on("keyup","#new-kpi-target",function(event){
+    }).on("keyup","#new-kpi-target,#new-kpi-target-low",function(event){
             var e = adapt_event(event).event;
             clearNoNumZero(e.target);
     });
@@ -149,7 +149,8 @@ MANAGE.kpi.add_new_kpi=function(){
         interval : $("#add-interval :selected").text(),
         direction :  $("#add-trend :selected").text()==false ? $("#add-trend :eq(1)").attr("value") : $("#add-trend :selected").attr("value"),
         trend : $("#add-trend :selected").text()==false ? $("#add-trend :eq(1)").text() : $("#add-trend :selected").text() ,
-        target : $("#new-kpi-target").val(),
+        target_max : $("#new-kpi-target").val(),
+        target_min : $("#new-kpi-target-low").val(),
         unit : $("#add-unit :selected").attr("value"),
         section : $("#add-unit :selected").attr("sym"),
         is_calculated : $("#is-calcu-check").prop("checked"),
@@ -157,7 +158,7 @@ MANAGE.kpi.add_new_kpi=function(){
         formula_string: $("#calcuType-input").val()
     }
     if(option.is_calculated) {
-        if($.trim(option.name).length>0 && option.interval!=false && option.target.length>0 && option.unit!=false && option.formula_string.length>0) {
+        if($.trim(option.name).length>0 && option.interval!=false && option.target_max.length>0 && option.target_min.length>0 && option.unit!=false && option.formula_string.length>0) {
             post_kpi(option);
         }
         else {
@@ -165,7 +166,7 @@ MANAGE.kpi.add_new_kpi=function(){
         }
     }
     else {
-        if($.trim(option.name).length>0 && option.interval!=false && option.target.length>0 && option.unit!=false ) {
+        if($.trim(option.name).length>0 && option.interval!=false && option.target_max.length>0 && option.target_min.length>0 && option.unit!=false ) {
             post_kpi(option);
         } else {
             MessageBox("Please fill all the blanket taking *","top","warning");
@@ -181,7 +182,8 @@ function post_kpi(option){
                 description:option.desc,
                 frequency:option.frequency,
                 direction:option.direction,
-                target:option.target,
+                target_max:option.target_max,
+                target_min:option.target_min,
                 unit:option.unit,
                 is_calculated:option.is_calculated,
                 formula:option.formula,
@@ -205,6 +207,11 @@ function post_kpi(option){
                                 .append($("<span />").addClass("can-change").text(object.target).attr("title",object.target))
                                 .append($("<span />").text(object.section)).append($("<input type='text'/>").attr("effect_on",id)))
                             )
+                        .append($("<td />").addClass("manage-kpi-target")
+                            .append($("<div />")
+                                .append($("<span />").addClass("can-change").text(object.target).attr("title",object.target))
+                                .append($("<span />").text(object.section)).append($("<input type='text'/>").attr("effect_on",id)))
+                        )
                         .append($("<td />").text(formula_string).attr("title",formula_string))
                     )
                     .append($("<tr />")
@@ -261,14 +268,24 @@ function post_kpi(option){
 //                .append($("<td />").text(option.name).attr("title",option.name))
 //                .append($("<td />").text(option.interval))
 //                .append($("<td />").text(option.trend))
-//                .append($("<td />").addClass("manage-kpi-target").append($("<span />").addClass("can-change").text(option.target).attr("title",option.target)).append($("<span />").text(option.section)).append($("<input />").attr("type","text").attr("effect_on",id)))
+//                .append($("<td />").addClass("manage-kpi-target")
+//                    .append($("<div />")
+//                        .append($("<span />").addClass("can-change").text(option.target_max).attr("title",option.target_max))
+//                        .append($("<span />").text(option.section)).append($("<input />").attr("type","text").attr("effect_on",id)))
+//                )
+//                .append($("<td />").addClass("manage-kpi-target")
+//                    .append($("<div />")
+//                        .append($("<span />").addClass("can-change").text(option.target_min).attr("title",option.target_min))
+//                        .append($("<span />").text(option.section)).append($("<input />").attr("type","text").attr("effect_on",id)))
+//                )
 //                .append($("<td />").text(formula_string).attr("title",formula_string))
 //            )
 //            .append($("<tr />")
 //                .append($("<td />").text(option.desc).attr("title",option.desc))
 //                .append($("<td />").text("Frequency"))
 //                .append($("<td />").text("Trend"))
-//                .append($("<td />").text("Target"))
+//                .append($("<td />").text("Target Max"))
+//                .append($("<td />").text("Target Min"))
 //                .append($("<td />").text("Is Calcu Type"))
 //            )
 //        )

@@ -121,4 +121,32 @@ DASHBOARD.special_deal=function(addSeriesOption,option){
     addSeriesOption[option.interval+"_info"].min_value=min_value;
 }
 
-
+DASHBOARD.generate_special_point=function(option){
+    var out_of_target= 0, i,total_value= 0,max_value,min_value;
+    for(i=0;i<option.data.length;i++){
+        var data=option.data[i];
+        if(data.y<data.low || data.y>data.high){
+            out_of_target++
+        }
+        if(i==0){
+            max_value=min_value=data.y
+        }
+        else{
+            if(data.y>max_value){
+                max_value=data.y
+            }
+            else if(data.y<min_value){
+                min_value=data.y
+            }
+        }
+        total_value+=data.y
+    }
+    return{
+        out_of_target:out_of_target,
+        total_record:option.data.length,
+        total_value:total_value+option.data[0].unit,
+        average_value:(total_value/option.data.length).toFixed(1)+option.data[0].unit,
+        max:max_value,
+        min:min_value
+    }
+}

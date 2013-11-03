@@ -31,9 +31,9 @@ ENTRY.init=function(){
    }).on("blur",".entry-actual",function(event){
            var e=adapt_event(event).event,
                actual= $(e.target).val(),
-               target= $(e.target).parent().prev().find(".entry-target").text(),
-               tcr= (parseFloat(actual) / parseFloat(target))*100,
-               color_style=tcr>100 ? "#55cd5e" : (tcr==100 ? "#5FA9DA" : "#ed5959"),
+//               target= $(e.target).parent().prev().find(".entry-target").text(),
+//               tcr= (parseFloat(actual) / parseFloat(target))*100,
+//               color_style=tcr>100 ? "#55cd5e" : (tcr==100 ? "#5FA9DA" : "#ed5959"),
                interval=$("#entry-left-menu li.active").attr("interval"),
                date=$("#entry-date-picker").val(),entry_at,d=standardParse(date).date;
            if(interval=="200"){
@@ -59,7 +59,7 @@ ENTRY.init=function(){
                   },
                   success:function(data){
                       if(data.result){
-                          $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
+//                          $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
                       }
                       else{
                           MessageBox(data.content,"top","warning");
