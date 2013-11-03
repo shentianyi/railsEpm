@@ -23,7 +23,7 @@ DASHBOARD.special_type={
     },
     right_show:function(id){
         $("#"+id+" "+".chart-container-right").css("display","block");
-        $("#"+id+" "+".db-chart-container").css("right","200px");
+        $("#"+id+" "+".db-chart-container").css("right","278px");
     },
     bottom_show:function(id){
         $("#"+id+" "+".chart-container-bottom").css("display","block");
@@ -92,6 +92,33 @@ DASHBOARD.special_grab={
 
     }
 }
-
+DASHBOARD.special_deal=function(addSeriesOption,option){
+    var out_of_target= 0, i,total_value= 0,max_value,min_value;
+    for(i=0;i<option.data.length;i++){
+        var data=option.data[i];
+        if(data.y<data.low || data.y>data.high){
+            out_of_target++
+        }
+        if(i==0){
+            max_value=min_value=data.y
+        }
+        else{
+            if(data.y>max_value){
+                max_value=data.y
+            }
+            else if(data.y<min_value){
+                min_value=data.y
+            }
+        }
+        total_value+=data.y
+    }
+    addSeriesOption[option.interval+"_info"]={};
+    addSeriesOption[option.interval+"_info"].out_of_target=out_of_target;
+    addSeriesOption[option.interval+"_info"].total_record=option.data.length;
+    addSeriesOption[option.interval+"_info"].total_value=total_value+option.data[0].unit;
+    addSeriesOption[option.interval+"_info"].average_value=(total_value/option.data.length).toFixed(1)+option.data[0].unit;
+    addSeriesOption[option.interval+"_info"].max_value=max_value;
+    addSeriesOption[option.interval+"_info"].min_value=min_value;
+}
 
 

@@ -344,7 +344,7 @@
     /*top:0px;*/
     bottom:80px;
     /*bottom:0px;*/
-    right:200px;
+    right:278px;
     /*right:0px;*/
     transition:top 0.25s linear 1s,bottom 0.35s linear 1s,right 0.35s linear 1s
 }
@@ -357,7 +357,7 @@
     bottom:80px;
     /*top:0px;*/
     /*bottom:00px;*/
-    width:200px;
+    width:278px;
     /*display:none;*/
 }
 .chart-container-right>p{
