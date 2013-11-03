@@ -489,7 +489,7 @@ ifepm.dashboard.create_dashboard=function(){
                         var option={};
                         option.container_selector=container_selector;
                         option.id= graph_id;
-                        if(isNaN(ifepm.dashboard.graphs[graph_id].sizex)){
+                        if(ifepm.dashboard.graphs[graph_id].sizex){
                             option.isnew=false;
                             option.row=ifepm.dashboard.graphs[graph_id].row;
                             option.col=ifepm.dashboard.graphs[graph_id].col;
@@ -509,7 +509,7 @@ ifepm.dashboard.create_dashboard=function(){
 
                             var options = [];
                             var opt = {};
-                            opt.id = graph_id.id;
+                            opt.id = graph_id;
                             opt.sizex = result.sizex;
                             opt.sizey = result.sizey;
                             opt.col = result.col;
