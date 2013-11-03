@@ -48,7 +48,7 @@ ifepm.template.view = '<li !attr!=!id!><div>' +
     //'</tr>' +
     //'</table>'+
     '</div>' +
-    '<div id="put-db-chart" class="put-db-chart">' +
+    '<div id=!item_container_id!'+'_outer'+' class="put-db-chart">' +
     '<div class="chart-container-top">'+
     '<table>'+
     '<tr><td></td><td></td></tr>'+

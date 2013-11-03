@@ -94,7 +94,6 @@ function sortNumber(a, b)
 }
 
 DASHBOARD.add.generate=function(option){
-    console.log(option);
     var type=option.type,
         outer_target=option.outer_target
     DASHBOARD.special_type[type](outer_target);

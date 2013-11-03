@@ -203,6 +203,7 @@ var isformchart = false;
 
 ifepm.dashboard.form_graph = function(datas,id){
     var container = ifepm.dashboard.make_item_container_id(id);
+    var outer=ifepm.dashboard.make_item_outer_id(id);
     var type = ifepm.dashboard.graphs[id].chart_type;
     var chart = null;
     var data,series_id,option;
@@ -222,6 +223,7 @@ ifepm.dashboard.form_graph = function(datas,id){
             kpi:datas[i].kpi_name,
             id:series_id,
             target:container,
+            outer_target:outer,
             begin_time:datas[i].startTime,
             type:type,
             interval:datas[i].interval,
@@ -469,6 +471,9 @@ ifepm.dashboard.load_graph=function(id){
 
 ifepm.dashboard.make_item_container_id=function(item_id){
   return "container_" + item_id;
+};
+ifepm.dashboard.make_item_outer_id=function(item_id){
+    return item_id+"_outer";
 };
 
 /*
