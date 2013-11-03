@@ -3,7 +3,7 @@
 .entry-left-menu{
     background-color:#FBFBFB;
     position:absolute;
-    top:135px;
+    top:70px;
     left:0;
     bottom:0;
     width:150px;
@@ -47,7 +47,7 @@
 *******************************************************************************************************************/
 .entry-right-content{
     position:absolute;
-    top:135px;
+    top:70px;
     left:150px;
     bottom:0px;
     right:0px;
