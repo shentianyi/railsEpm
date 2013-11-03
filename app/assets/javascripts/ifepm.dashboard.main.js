@@ -81,6 +81,14 @@ var db_chartSeries = {
 };
 
 /*
+* @function setLastUptateTime
+* @params container,time
+* */
+ifepm.dashboard.set_last_update_time = function(id,lastupdate_time){
+    var $p = $("li#"+id+" #last_update").text(lastupdate_time);
+}
+
+/*
 * @function cal_key_value
 * @params options,key_value
 * */
@@ -328,6 +336,7 @@ function reload(id){
         var current_graph = ifepm.dashboard.graphs[id];
         var last_update = Date();
         current_graph.last_update = last_update;
+        ifepm.dashboard.set_last_update_time(id,last_update);
         $.ajax(
             {
                 before_send: function(){},
@@ -634,6 +643,7 @@ ifepm.dashboard.create_dashboard=function(){
                             ifepm.dashboard.save_grid_pos(options,{success:function(){}});
                         }
                     ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
+                    ifepm.dashboard.set_last_update_time(ifepm.dashboard.graphs[graph_id].id,ifepm.dashboard.graphs[graph_id].last_update);
                 }
                 //configure the sortable
                 $(container_selector).sortable(
