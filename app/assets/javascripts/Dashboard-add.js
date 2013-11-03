@@ -129,6 +129,7 @@ DASHBOARD.add.init=function(){
                         kpi: item.kpi,
                         id: item.id,
                         target: "chart-container",
+                        outer_target:"put-db-chart",
                         begin_time: item.begin_time,
                         type: $("#db-add-type>li.active").attr("type"),
                         interval: $("#db-chart-interval-alternate li.active").attr("interval"),
@@ -142,6 +143,7 @@ DASHBOARD.add.init=function(){
                     }
                     add_series(option);
                     proper_type_for_chart(option);
+                    DASHBOARD.add.generate(option);
                     limit_pointer_number(option);
                 }
             }
@@ -315,7 +317,6 @@ DASHBOARD.add.prepare_form_chart=function() {
             }
 
 
-        DASHBOARD.special_type[type]("put-db-chart");
 
 
 
@@ -332,7 +333,8 @@ DASHBOARD.add.prepare_form_chart=function() {
            if(msg.result){
                var option={
                    kpi:$("#chart-kpi :selected").text(),
-                   target:"chart-container",
+                   target: "chart-container",
+                   outer_target:"put-db-chart",
                    begin_time:begin_time,
                    type:type,
                    interval:interval,
@@ -342,6 +344,8 @@ DASHBOARD.add.prepare_form_chart=function() {
                var addSeriesOption={
                    kpi:$("#chart-kpi :selected").text(),
                    kpi_id:kpi,
+                   target: "chart-container",
+                   outer_target:"put-db-chart",
                    interval:interval,
                    view:view,
                    method:method,
@@ -368,7 +372,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                for(var i=0;i<length;i++){
                    data_array[i]={};
                    data_array[i].y=msg.object.current[i];
-                   data_array[i].low=option.type=="column"?0:msg.object.target_min[i];
+                   data_array[i].low=msg.object.target_min[i];
                    data_array[i].high=msg.object.target_max[i];
                    data_array[i].unit=msg.object.unit[i];
                    data_array[i].id=option.id
@@ -377,9 +381,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                if(chart_body_close_validate){
                    option.data=data_array;
                    addSeriesOption[interval]=data_array;
-                   DASHBOARD.special_deal(addSeriesOption,option);
                    db_chartSeries.addSeries(addSeriesOption);
-                   DASHBOARD.special_grab[option.type](option.id,option.interval,"put-db-chart");
 
                    DASHBOARD.add.show_chart_body(option);
                    render_to(option);
@@ -398,13 +400,12 @@ DASHBOARD.add.prepare_form_chart=function() {
                else{
                    option.data=data_array;
                    addSeriesOption[interval]=data_array;
-                   DASHBOARD.special_deal(addSeriesOption,option);
                    db_chartSeries.addSeries(addSeriesOption);
-                   DASHBOARD.special_grab[option.type](option.id,option.interval,"put-db-chart");
                    add_series(option);
                    proper_type_for_chart(option);
                }
                limit_pointer_number(option);
+               DASHBOARD.add.generate(option);
            }
            else{
                MessageBox("sorry , something wrong" , "top", "warning") ;
@@ -427,6 +428,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 //            var option = {
 //                kpi: $("#chart-kpi :selected").text(),
 //                target: "chart-container",
+//                outer_target:"put-db-chart",
 //                begin_time: begin_time,
 //                type: type,
 //                interval: interval,
@@ -434,6 +436,8 @@ DASHBOARD.add.prepare_form_chart=function() {
 //            }
 //            var addSeriesOption = {
 //                kpi: $("#chart-kpi :selected").text(),
+//                target: "chart-container",
+//                outer_target:"put-db-chart",
 //                kpi_id: kpi,
 //                interval: interval,
 //                view: view,
@@ -443,6 +447,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                begin_post: begin_post,
 //                end_post: end_post
 //            }
+//
 //            db_chartSeries.addCount();
 //            db_chartSeries.id_give();
 //            option.id=db_chartSeries.id;
@@ -454,6 +459,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                    .append($("<p />").text(kpi))
 //                    .append($("<i />").addClass("icon-remove").attr("kpi_id",option.id))
 //            );
+//
 //            if (chart_body_close_validate) {
 //                option.data = [
 //                    {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
@@ -471,12 +477,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
 //                    {y: 7,low:1,high:43,  target: 10, unit: "$"}
 //                ];
-//
-//                DASHBOARD.special_deal(addSeriesOption,option);
-//
-//
 //                db_chartSeries.addSeries(addSeriesOption);
-//                DASHBOARD.special_grab[option.type](option.id,option.interval,"put-db-chart");
 //
 //                DASHBOARD.add.show_chart_body(option);
 //                render_to(option);
@@ -486,11 +487,13 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                proper_type_for_chart(option);
 //
 //                if(option.type=="line"&&db_chartSeries.getCount()==1){
-//                    option.type="arearange";
-//                    option.id="line-target";
-//                    option.count=db_chartSeries.getCount() + 1;
-//                    add_series(option);
-//                    proper_type_for_chart(option);
+//                    var option_area={};
+//                    option_area=deepCopy(option,option_area);
+//                    option_area.type="arearange";
+//                    option_area.id="line-target";
+//                    option_area.count=db_chartSeries.getCount() + 1;
+//                    add_series(option_area);
+//                    proper_type_for_chart(option_area);
 //                }
 //            }
 //            else {
@@ -510,16 +513,15 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                    {y: 20, low:2,high:423, target: 10, unit: "$"},
 //                    {y: 27,low:1,high:403,  target: 10, unit: "$"}
 //                ];
-//
-//                DASHBOARD.special_deal(addSeriesOption,option);
-//
 //                db_chartSeries.addSeries(addSeriesOption);
-//                DASHBOARD.special_grab[option.type](option.id,option.interval,"put-db-chart");
 //
 //                add_series(option);
 //                proper_type_for_chart(option);
 //            }
 //            limit_pointer_number(option);
+////          new function
+//            DASHBOARD.add.generate(option);
+//
 //            $("#chart-container").resize(function(){
 //                if ($("#db-chart-type-alternate li.active").attr("type") == "pie") {
 //                    for (var k = 0; k < $("#chart-container").highcharts().series.length; k++) {
@@ -551,7 +553,7 @@ DASHBOARD.add.show_chart_body=function(option){
                 var option = {
                     interval: $(target).attr("interval"),
                     target: 'chart-container',
-                    type: $("#db-chart-type-alternate").find(".active").attr("type")
+                    type: $("#db-add-type").find(".active").attr("type")
                 }
                 DASHBOARD.add.change_interval(option);
                 $("#db-chart-interval-alternate").find("li").removeClass("active");
@@ -566,11 +568,11 @@ DASHBOARD.add.alternate_chart_type=function(event) {
         var target = adapt_event(event).target;
             var option = {
                 target: "chart-container",
+                outer_target:"put-db-chart",
                 type: $(target).attr("type"),
                 count: db_chartSeries.getCount(),
                 interval: $("#db-chart-interval-alternate li.active").attr("interval")
             }
-            DASHBOARD.special_type[option.type]("put-db-chart");
 
             if($("#"+option.target).highcharts().get("line-target")!=undefined){
                 $("#"+option.target).highcharts().get("line-target").remove();
@@ -581,8 +583,9 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 }
                 else{
                     option.id = db_chartSeries.series[i].id;
-                    DASHBOARD.special_grab[option.type](option.id,option.type,"put-db-chart")
-                    proper_type_for_chart(option)
+                    option.data=db_chartSeries.series[i][option.interval];
+                    proper_type_for_chart(option);
+                    DASHBOARD.add.generate(option);
                 }
             }
             if(option.type=="line"&&db_chartSeries.getCount()==1){
@@ -599,15 +602,21 @@ DASHBOARD.add.alternate_chart_type=function(event) {
 }
 
 DASHBOARD.add.change_interval=function(option) {
-    var series_object, new_data_wrapper = [];
+    var series_object, new_data_wrapper = [],count= 0,id_array=[];
     var chart = $("#" + option.target).highcharts();
-    for (var i = 0; i < db_chartSeries.getCount(); i++) {
-        series_object = db_chartSeries.getSeries()[i];
-        if (series_object[option.interval]) {
-            new_data_wrapper.push(series_object[option.interval])
+    for (var i = 0; i < db_chartSeries.series.length; i++) {
+        if(db_chartSeries.series[i]===undefined){
+            continue;
         }
-        else {
-
+        else{
+            var post_id=i;
+            count++;
+            id_array.push(i);
+            series_object = db_chartSeries.series[i];
+            if (series_object[option.interval]) {
+                new_data_wrapper.push(series_object[option.interval])
+            }
+            else {
 
             show_loading(232,0,0,150);;
             $.ajax({url:'/kpi_entries/analyse',
@@ -629,7 +638,9 @@ DASHBOARD.add.change_interval=function(option) {
                         for(var i=0;i<length;i++){
                             data_array[i]={};
                             data_array[i].y=msg.object.current[i];
-                            data_array[i].target=msg.object.target[i];
+                            data_array[i].id=post_id;
+                            data_array[i].low=msg.object.target_min[i];
+                            data_array[i].high=msg.object.target_max[i];
                             data_array[i].unit=msg.object.unit[i];
                         }
                         new_data_wrapper.push(data_array);
@@ -640,42 +651,35 @@ DASHBOARD.add.change_interval=function(option) {
                     }
                 }});
 
+//                var data_array=[
+//                    {y: 22,low:1,high:30, target: 10, unit: "$",id:post_id},
+//                    {y: 23,low:2,high:200,  target: 10, unit: "$"},
+//                    {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
+//                    {y: 23,low:2,high:320, target: 10, unit: "$"},
+//                    {y: 20, low:2,high:423, target: 10, unit: "$"},
+//                    {y: 27,low:1,high:403,  target: 10, unit: "$"}
+//                ];
+//                new_data_wrapper.push(data_array);
+//                series_object[option.interval] = data_array;
 
-//            var data_array=[{y:10,target:20,unit:"$"},{y:15,target:20,unit:"$"},{y:20,target:11,unit:"$"},{y:30,target:12,unit:"$"},{y:25,target:5,unit:"$"}];
-//            new_data_wrapper.push(data_array);
-//            series_object[option.interval] = data_array;
-
-
+            }
         }
     }
-    if (new_data_wrapper.length == db_chartSeries.getCount()) {
+    if (new_data_wrapper.length == count) {
         chart.destroy();
         var option = {
             target: "chart-container",
+            outer_target:"put-db-chart",
             type: option.type,
             interval: option.interval,
             count: db_chartSeries.getCount()
         };
         if (option.type == "pie") {
-            for (var j = 0; j < db_chartSeries.getCount(); j++) {
-                option.kpi = db_chartSeries.getSeries()[j]["kpi"];
-                option.id = db_chartSeries.getSeries()[j]["id"];
-                option.begin_time = db_chartSeries.getSeries()[j]["begin_time"];
-                option.data = new_data_wrapper[j];
-                if (j == 0) {
-                    render_to(option);
-                    create_environment_for_data(option);
-                    new Highcharts.Chart(high_chart);
-                }
-                add_series(option);
-            }
-            proper_type_for_chart(option);
-        }
-        else {
-            for (var j = 0; j < db_chartSeries.getCount(); j++) {
-                option.kpi = db_chartSeries.getSeries()[j]["kpi"];
-                option.id = db_chartSeries.getSeries()[j]["id"];
-                option.begin_time = db_chartSeries.getSeries()[j]["begin_time"];
+            for (var j = 0; j < id_array.length; j++) {
+                var index=id_array[j];
+                option.kpi = db_chartSeries.getSeries()[index]["kpi"];
+                option.id = db_chartSeries.getSeries()[index]["id"];
+                option.begin_time = db_chartSeries.getSeries()[index]["begin_time"];
                 option.data = new_data_wrapper[j];
                 if (j == 0) {
                     render_to(option);
@@ -684,6 +688,34 @@ DASHBOARD.add.change_interval=function(option) {
                 }
                 add_series(option);
                 proper_type_for_chart(option);
+                DASHBOARD.add.generate(option);
+            }
+
+        }
+        else {
+            for (var j = 0; j < id_array.length; j++) {
+                var index=id_array[j];
+                option.kpi = db_chartSeries.getSeries()[index]["kpi"];
+                option.id = db_chartSeries.getSeries()[index]["id"];
+                option.begin_time = db_chartSeries.getSeries()[index]["begin_time"];
+                option.data = new_data_wrapper[j];
+                if (j == 0) {
+                    render_to(option);
+                    create_environment_for_data(option);
+                    new Highcharts.Chart(high_chart);
+                }
+                add_series(option);
+                proper_type_for_chart(option);
+                DASHBOARD.add.generate(option);
+                if(option.type=="line"&&db_chartSeries.getCount()==1){
+                    var id=$("#chart-container").highcharts().series[0].data[0].id;
+                    option.type="arearange";
+                    option.id="line-target";
+                    option.begin_time=db_chartSeries.series[id].begin_time;
+                    option.data=db_chartSeries.series[id][option.interval];
+                    add_series(option);
+                    proper_type_for_chart(option);
+                }
             }
         }
         limit_pointer_number(option);
