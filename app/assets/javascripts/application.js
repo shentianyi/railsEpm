@@ -24,9 +24,6 @@
 //=require ifepm.activeSelector.js
 //=require ifepm.text.js
 //=require ifepm.config.js
-//=require ifepm.grid.main.js
-//=require ifepm.dashboard.template.js
-//=require ifepm.dashboard.main.js
 //=require Template
 //=require dashboard.js
 //=require bootstrap-datepicker
@@ -48,6 +45,9 @@
 //=require 2_column_right_nav
 //=require Dashboard-add
 //=require Dashboard-init
+//=require ifepm.grid.main.js
+//=require ifepm.dashboard.template.js
+//=require ifepm.dashboard.main.js
 //=require Log
 //=require Entry
 //=require i18n
