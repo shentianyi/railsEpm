@@ -313,9 +313,11 @@ DASHBOARD.add.prepare_form_chart=function() {
                 begin_post=standardParse(begin_time).date.toISOString();
                 end_post=standardParse(end_time).date.toISOString();
             }
-            DASHBOARD.special_type[type]("put-db-chart");
 
-
+/////////////////////////////////////////////////////////////////////////////
+//        参数：type，chart外面div的id  用来隐藏相应div放大数据用
+        DASHBOARD.special_type[type]("put-db-chart");
+/////////////////////////////////////////////////////////////////////////////
        show_loading(232,0,0,150);
        $.post('/kpi_entries/analyse',{
            kpi : kpi,
@@ -349,23 +351,31 @@ DASHBOARD.add.prepare_form_chart=function() {
                }
 
                db_chartSeries.addCount();
+/////////////////////////////////////////////////////////////////////////////
+//             用来生成chart的id的
                db_chartSeries.id_give();
                option.id=db_chartSeries.id;
                addSeriesOption.id=db_chartSeries.id;
+//             用来生成颜色的，以前没有
                var color=series_colors[option.id% series_colors.length];
+//////////////////////////////////////////////////////////////////////////////
                $("#db-add-kpi-list").append(
                     $("<li />")
                         .append($("<span />").css("backgroundColor",color))
                         .append($("<p />").text(kpi))
                         .append($("<i />").addClass("icon-remove").attr("kpi_id","1"))
                );
+
                var length=msg.object.current.length;
                var data_array=[];
                for(var i=0;i<length;i++){
                    data_array[i]={};
                    data_array[i].y=msg.object.current[i];
+/////////////////////////////////////////////////////////////////////////////
+//                   以前处理target，现在变范围了
                    data_array[i].low=option.type=="column"?0:msg.object.target_min[i];
                    data_array[i].high=msg.object.target_max[i];
+/////////////////////////////////////////////////////////////////////////////
                    data_array[i].unit=msg.object.unit[i];
                    data_array[i].id=option.id
                }
@@ -373,13 +383,16 @@ DASHBOARD.add.prepare_form_chart=function() {
                if(chart_body_close_validate){
                    option.data=data_array;
                    addSeriesOption[interval]=data_array;
+/////////////////////////////////////////////////////////////////////////////
+//                前端拿到数据后对数据进行处理，生成关键数据保存起来，addseriesoption在前面几行，是个对象，我用它保存了每个kpi对应interval的大数据
                    DASHBOARD.special_deal(addSeriesOption,option);
-
-
+/////////////////////////////////////////////////////////////////////////////
                    db_chartSeries.addSeries(addSeriesOption);
+/////////////////////////////////////////////////////////////////////////////
+//                  把关键数据显示出来，put-db-chart是外面大的id
                    DASHBOARD.special_grab[option.type](option.id,option.interval,"put-db-chart");
+/////////////////////////////////////////////////////////////////////////////
                    DASHBOARD.add.show_chart_body(option);
-
                    render_to(option);
                    create_environment_for_data(option);
                    new Highcharts.Chart(high_chart);
@@ -396,12 +409,15 @@ DASHBOARD.add.prepare_form_chart=function() {
                else{
                    option.data=data_array;
                    addSeriesOption[interval]=data_array;
-
+/////////////////////////////////////////////////////////////////////////////
+//                   同387
                        DASHBOARD.special_deal(addSeriesOption,option);
-
+/////////////////////////////////////////////////////////////////////////////
                    db_chartSeries.addSeries(addSeriesOption);
+/////////////////////////////////////////////////////////////////////////////
+//                   同391
                    DASHBOARD.special_grab[option.type](option.id,option.interval,"put-db-chart");
-
+/////////////////////////////////////////////////////////////////////////////
                    add_series(option);
                    proper_type_for_chart(option);
                }
@@ -424,7 +440,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 
 
 
-
+//
 //            var option = {
 //                kpi: $("#chart-kpi :selected").text(),
 //                target: "chart-container",
