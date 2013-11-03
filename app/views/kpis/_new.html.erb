@@ -7,8 +7,8 @@
                <%= select_tag :frequency,options_from_collection_for_select(@frequencies,'value','desc'),{:id=>'add-interval',"data-placeholder"=>"* #{ t 'manage.kpi.frequency'}",:class=>"chosen-select" }%>
           </div>
 
-          <input type="text" placeholder="* <%= t 'manage.kpi.target'%>" id="new-kpi-target"/>
-
+          <input type="text" placeholder="* 目标上限值" id="new-kpi-target"/>
+          <input type="text" placeholder="* 目标下限值" id="new-kpi-target-low"/>
           <div class="select-div">
                <select class="chosen-select" data-placeholder="* Unit" id="add-unit">
                     <%@units.each do |unit|%>
