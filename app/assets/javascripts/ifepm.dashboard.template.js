@@ -48,25 +48,25 @@ ifepm.template.view = '<li !attr!=!id!><div>' +
     //'</tr>' +
     //'</table>'+
     '</div>' +
-    '<div class="put-db-chart">' +
+    '<div id="put-db-chart" class="put-db-chart">' +
     '<div class="chart-container-top">'+
     '<table>'+
-    '<tr><td>$1000</td><td>$10</td></tr>'+
+    '<tr><td></td><td></td></tr>'+
     '<tr><td>Max Value</td><td>Min Value</td></tr>'+
     '</table>'+
     '</div>'+
     '<div class="db-chart-container" id=!item_container_id!></div>'+
     '<div class="chart-container-right">'+
-    '<p>12%</p><p>monthly sales</p>'+
+    '<p></p><p></p>'+
     '<table>'+
-        '<tr><td>$123</td><td>Selected</td></tr>'+
-        '<tr><td>$1234</td><td>Total</td> </tr>'+
+        '<tr><td></td><td>Selected</td></tr>'+
+        '<tr><td></td><td>Total</td> </tr>'+
     '</table>'+
     '</div>'+
-    '<div class="chart-container-right"></div>'+
+    '<div class="chart-container-right chart-container-right-scatter"></div>'+
     '<div class="chart-container-bottom" >'+
     '<table>'+
-    '<tr><td>21</td><td>109</td><td>$34</td><td>$190</td></tr>'+
+    '<tr><td></td><td></td><td></td><td></td></tr>'+
     '<tr><td>Out of Target</td><td>Total Amount</td><td>Average Value</td><td>Total Value</td></tr>'+
     '</table>'+
     '</div>'+
