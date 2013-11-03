@@ -47,10 +47,10 @@
                                <i class="icon-user"></i>
                            </li>
                            <li class='empty'>
-                               <span>&nbsp;</span>
+                               <span><%= current_user.first_name%></span>
                            </li>
                            <li>
-                               <a>Log Out</a>
+                             <a href="/user_sessions/destroy"><%= t 'auth.view.signout_btn'%></a>
                            </li>
               </ul>
      <script type="text/javascript">
