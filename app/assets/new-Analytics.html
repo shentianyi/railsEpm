@@ -123,13 +123,13 @@
                     chart</a>
             </div>
             <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible"
-               open=true onclick="analytic_control_condition_visible()"> </i>
+               state="open" onclick="analytic_control_condition_visible()"> </i>
 
             <p class="analytics-condition-invisible-mark pointer" id="analytics-condition-invisible-mark"
                style="display:none" onclick="analytic_control_condition_visible()">Analytics</p>
         </div>
 
-        <div class="chart-body" id="chart-body" style="display:none">
+        <div class="chart-body" id="chart-body" >
             <div class="clearfix" id="chart-interval-alternate" my_height="28">
                 <ul class="pull-right control-chart-interval-group">
                     <li interval="90"><a>Hr</a></li>
@@ -175,8 +175,12 @@
                                 <td id="sum-value" align="left"></td>
                             </tr>
                             <tr>
-                                <td width="80px"  align="right">Target:</td>
-                                <td id="target" align="left"></td>
+                                <td width="80px"  align="right">Target Max:</td>
+                                <td id="target-max" align="left"></td>
+                            </tr>
+                            <tr>
+                                <td width="80px"  align="right">Target Min:</td>
+                                <td id="target-min" align="left"></td>
                             </tr>
                             <tr>
                                 <td width="80px"  align="right">Value:</td>

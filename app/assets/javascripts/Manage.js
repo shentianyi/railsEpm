@@ -12,7 +12,7 @@ MANAGE.left_count_observable=function(){
         $("#manage-right-content").css("display","none");
     }
     else{
-        $("#manage-right-content").css("display","block");
+        $("#manage-right-content").css("display","table-cell");
     }
 };
 MANAGE.init=function(){

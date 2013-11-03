@@ -14,8 +14,11 @@
     position: absolute;
     right: 0;
     left: 0;
-    top: 135px;
+    top: 70px;
     transition: top 0.35s ease-out;
+    box-shadow:0px 2px 3px rgba(0,0,0,0.3);
+    -moz-box-shadow:0px 2px 3px rgba(0,0,0,0.3);
+    -webkit-box-shadow:0px 2px 3px rgba(0,0,0,0.3);
 }
 
 .index-condition-group {
@@ -151,6 +154,7 @@ div[title='analy-view-select'] {
     transition: top 0.35s ease-out;
     width: 100%;
     border-top: 1px dotted #ddd;
+    display:none
 }
 
 .chart-type-alternate {

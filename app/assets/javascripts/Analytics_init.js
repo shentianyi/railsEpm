@@ -83,24 +83,24 @@ function init_analytics() {
     });
 }
 function analytic_control_condition_visible() {
-    var open_state = $("#analytic-control-condition-visible").attr("open");
-    if (open_state) {
-        $("#analytics-condition").css("top", "48px");
+    var open_state = $("#analytic-control-condition-visible").attr("state");
+    if (open_state=="open") {
+        $("#analytics-condition").css("top", "-16px");
         $("#chart-body").css("top", "23px").height(parseInt($("#chart-body").height()) + 87);
         $("#analytics-condition-invisible-mark").css("display", "block");
-        $("#analytic-control-condition-visible").attr("open", false).removeClass("icon-chevron-up").addClass("icon-chevron-down");
-        if ($("#loading").length > 0) {
-            $("#loading").css("top", parseInt($("#analytics-condition").height()) + 48);
-        }
+        $("#analytic-control-condition-visible").attr("state", "close").removeClass("icon-chevron-up").addClass("icon-chevron-down");
+//        if ($("#loading").length > 0) {
+//            $("#loading").css("top", parseInt($("#analytics-condition").height()) + 48);
+//        }
     }
     else {
-        $("#analytics-condition").css("top", "135px");
+        $("#analytics-condition").css("top", "70px");
         $("#chart-body").css("top", "110px").height(parseInt($("#chart-body").height()) - 87);
         $("#analytics-condition-invisible-mark").css("display", "none");
-        $("#analytic-control-condition-visible").attr("open", true).removeClass("icon-chevron-down").addClass("icon-chevron-up");
-        if ($("#loading").length > 0) {
-            $("#loading").css("top", parseInt($("#analytics-condition").height()) + 135);
-        }
+        $("#analytic-control-condition-visible").attr("state", "open").removeClass("icon-chevron-down").addClass("icon-chevron-up");
+//        if ($("#loading").length > 0) {
+//            $("#loading").css("top", parseInt($("#analytics-condition").height()) + 135);
+//        }
     }
 
     resize_chart.container();
@@ -168,8 +168,10 @@ function prepare_form_chart() {
                for(var i=0;i<length;i++){
                    data_array[i]={};
                    data_array[i].y=msg.object.current[i];
-                   data_array[i].target=msg.object.target[i];
+                   data_array[i].high=msg.object.target_max[i];
+                   data_array[i].low=msg.object.target_min[i];
                    data_array[i].unit=msg.object.unit[i];
+                   data_array[i].id=option.id
                }
                if(chart_body_close_validate){
 
@@ -230,20 +232,20 @@ function prepare_form_chart() {
 //        if (chart_body_close_validate) {
 //
 //            option.data = [
-//                {y: 2, target: 10, unit: "$"},
-//                {y: 3, target: 10, unit: "$"},
-//                {y: 21, target: 10, unit: "$"},
-//                {y: 3, target: 10, unit: "$"},
-//                {y: 10, target: 10, unit: "$"},
-//                {y: 7, target: 10, unit: "$"}
+//                    {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+//                    {y: 3,low:2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+//                    {y: 3,low:2,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"}
 //            ];
 //            addSeriesOption[interval] = [
-//                {y: 2, target: 10, unit: "$"},
-//                {y: 3, target: 10, unit: "$"},
-//                {y: 21, target: 10, unit: "$"},
-//                {y: 3, target: 10, unit: "$"},
-//                {y: 10, target: 10, unit: "$"},
-//                {y: 7, target: 10, unit: "$"}
+//                    {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+//                    {y: 3,low:2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+//                    {y: 3,low:2,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"}
 //            ];
 //            chartSeries.addSeries(addSeriesOption);
 //            show_chart_body(option);
@@ -259,20 +261,20 @@ function prepare_form_chart() {
 //        }
 //        else {
 //            option.data = [
-//                {y: 12, target: 15, unit: "$"},
-//                {y: 3, target: 15, unit: "$"},
-//                {y: 1, target: 15, unit: "$"},
-//                {y: 13, target: 15, unit: "$"},
-//                {y: 10, target: 15, unit: "$"},
-//                {y: 17, target: 15, unit: "$"}
+//                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+//                {y: 3,low:2,high:20,  target: 10, unit: "$"},
+//                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+//                {y: 3,low:2,high:32, target: 10, unit: "$"},
+//                {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                {y: 7,low:1,high:43,  target: 10, unit: "$"}
 //            ];
 //            addSeriesOption[interval] = [
-//                {y: 12, target: 15, unit: "$"},
-//                {y: 3, target: 15, unit: "$"},
-//                {y: 1, target: 15, unit: "$"},
-//                {y: 13, target: 15, unit: "$"},
-//                {y: 10, target: 15, unit: "$"},
-//                {y: 17, target: 15, unit: "$"}
+//                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+//                {y: 3,low:2,high:20,  target: 10, unit: "$"},
+//                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+//                {y: 3,low:2,high:32, target: 10, unit: "$"},
+//                {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                {y: 7,low:1,high:43,  target: 10, unit: "$"}
 //            ];
 //            chartSeries.addSeries(addSeriesOption);
 //
@@ -385,7 +387,8 @@ function change_interval(option) {
                      for(var i=0;i<length;i++){
                          data_array[i]={};
                          data_array[i].y=msg.object.current[i];
-                         data_array[i].target=msg.object.target[i];
+                         data_array[i].high=msg.object.target_max[i];
+                         data_array[i].low=msg.object.target_min[i];
                          data_array[i].unit=msg.object.unit[i];
                      }
                     new_data_wrapper.push(data_array);
@@ -397,7 +400,14 @@ function change_interval(option) {
             }});
 
 
-//            var data_array=[{y:10,target:20,unit:"$"},{y:15,target:20,unit:"$"},{y:20,target:11,unit:"$"},{y:30,target:12,unit:"$"},{y:25,target:5,unit:"$"}];
+//            var data_array=[
+//                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+//                {y: 3,low:2,high:20,  target: 10, unit: "$"},
+//                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+//                {y: 3,low:2,high:32, target: 10, unit: "$"},
+//                {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                {y: 7,low:1,high:43,  target: 10, unit: "$"}
+//            ];
 //            new_data_wrapper.push(data_array);
 //            series_object[option.interval] = data_array;
 
@@ -490,22 +500,23 @@ function chart_point_click(object) {
             $("#chart-point-detail tbody>tr").addClass("hide");
             $("#from").text(object.time_from).parent().removeClass("hide");
             $("#to").text(object.time_to).parent().removeClass("hide");
-            $("#sum-target").text(object.target + object.unit).parent().removeClass("hide");
-            $("#aver-target").text(object.average_target + " " + object.unit).parent().removeClass("hide");
+//            $("#sum-target").text(object.target + object.unit).parent().removeClass("hide");
+//            $("#aver-target").text(object.average_target + " " + object.unit).parent().removeClass("hide");
             $("#sum-value").text(object.y + object.unit).parent().removeClass("hide");
             $("#aver-value").text(object.average_y + object.unit).parent().removeClass("hide");
-            $("#tcr").text(TCR(object.y, object.target).value).parent().removeClass("hide");
-            tcr_trend(TCR(object.y, object.target).judge);
+//            $("#tcr").text(TCR(object.y, object.target).value).parent().removeClass("hide");
+//            tcr_trend(TCR(object.y, object.target).judge);
             $("#percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
         }
         else {
             $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
             $("#chart-point-detail tbody>tr").addClass("hide");
             $("#date").text(object.name).parent().removeClass("hide");
-            $("#target").text(object.target + object.unit).parent().removeClass("hide");
+            $("#target-max").text(object.high + object.unit).parent().removeClass("hide");
+            $("#target-min").text(object.low + object.unit).parent().removeClass("hide");
             $("#value").text(object.y + object.unit).parent().removeClass("hide");
-            $("#tcr").text(TCR(object.y, object.target).value).parent().removeClass("hide");
-            tcr_trend(TCR(object.y, object.target).judge);
+//            $("#tcr").text(TCR(object.y, object.target).value).parent().removeClass("hide");
+//            tcr_trend(TCR(object.y, object.target).judge);
             $("#percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
         }
 
@@ -514,10 +525,11 @@ function chart_point_click(object) {
         $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
         $("#chart-point-detail tbody>tr").addClass("hide");
         $("#date").text(object.name).parent().removeClass("hide");
-        $("#target").text(object.target + object.unit).parent().removeClass("hide");
+        $("#target-max").text(object.high + object.unit).parent().removeClass("hide");
+        $("#target-min").text((object.series.type=="column"?object.target_min:object.low) + object.unit).parent().removeClass("hide");
         $("#value").text(object.y + object.unit).parent().removeClass("hide");
-        $("#tcr").text(TCR(object.y, object.target).value).parent().removeClass("hide");
-        tcr_trend(TCR(object.y, object.target).judge);
+//        $("#tcr").text(TCR(object.y, object.target).value).parent().removeClass("hide");
+//        tcr_trend(TCR(object.y, object.target).judge);
     }
 }
 function close_chart_detail() {

@@ -18,9 +18,16 @@ var high_chart = {
     tooltip:{
         formatter: function() {
             if(this.series.type!="pie"){
-                return '<b>'+this.point.name+'</b>'
-                    +'<br />Value: '+this.y
-                    +"<br />Target Range: "+this.point.low+"-"+this.point.high
+                if(this.series.type=="column"){
+                    return '<b>'+this.point.name+'</b>'
+                        +'<br />Value: '+this.y
+                        +"<br />Target Range: "+this.point.target_min+"-"+this.point.high
+                }
+                else{
+                    return '<b>'+this.point.name+'</b>'
+                        +'<br />Value: '+this.y
+                        +"<br />Target Range: "+this.point.low+"-"+this.point.high
+                }
             }
             else{
                 return '<b>'+this.point.name+'</b>'
@@ -451,7 +458,8 @@ function proper_type_for_chart(){
                 dataItem={};
                 dataItem.name=this.chart.series[0].data[i].name;
                 dataItem.y=this.chart.series[0].processedYData[i];
-                dataItem.target=this.chart.series[0].data[i].target;
+                dataItem.high=this.chart.series[0].data[i].high;
+                dataItem.low=this.chart.series[0].data[i].low;
                 dataItem.unit=this.chart.series[0].data[i].unit;
 //                if(i==0){
 //                    dataItem.sliced=true;
@@ -473,15 +481,15 @@ function proper_type_for_chart(){
                 dataItem.name=this.chart.series[i].name+"<br />From:"+this.chart.series[i].data[0].name+"<br />To:"+this.chart.series[i].data[this.chart.series[i].data.length-1].name;
                 for(var j=0;j<this.chart.series[i].processedYData.length;j++){
                     dataItemValue+=this.chart.series[i].processedYData[j];
-                    dataItemTarget+=parseFloat(this.chart.series[i].data[j].target);
+//                    dataItemTarget+=parseFloat(this.chart.series[i].data[j].target);
                 }
                 dataItem.kpi_name=this.chart.series[i].name;
                 dataItem.y=dataItemValue;
                 dataItem.seriesId=this.chart.series[i].data[0].id;
                 chart_name.push(this.chart.series[i].name);
                 dataItem.average_y=(dataItemValue/this.chart.series[i].processedYData.length).toFixed(2);
-                dataItem.target=dataItemTarget.toFixed(2);
-                dataItem.average_target=(dataItemTarget/this.chart.series[i].processedYData.length).toFixed(2);
+//                dataItem.target=dataItemTarget.toFixed(2);
+//                dataItem.average_target=(dataItemTarget/this.chart.series[i].processedYData.length).toFixed(2);
                 dataItem.time_from=this.chart.series[i].data[0].name;
                 dataItem.time_to=this.chart.series[i].data[this.chart.series[i].data.length-1].name;
                 dataItem.unit=this.chart.series[i].data[0].unit;
@@ -529,7 +537,15 @@ function proper_type_for_chart(){
         var new_series=deepCopy(p,c);
         if(this.type=="column"){
             for(var i=0;i<new_series.data.length;i++){
+                new_series.data[i].target_min=new_series.data[i].low;
                 new_series.data[i].low=0
+            }
+        }
+        else{
+            if(new_series.data[0].target_min!==undefined){
+                for(var i=0;i<new_series.data.length;i++){
+                    new_series.data[i].low=new_series.data[i].target_min;
+                }
             }
         }
         new_series.type=this.type;

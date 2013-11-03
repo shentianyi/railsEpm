@@ -79,9 +79,10 @@
 
 
 
-
+<div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
 
     <ul class="manage-left-menu" id="manage-left-menu" type="category">
+       <div style="width:auto;height:71px;"></div>
        <li>Manage KPI</li>
        <li id="manage-menu-add">
            <input type="text" />
@@ -102,64 +103,64 @@
        </li>
     </ul>
 
-    <div class="manage-kpi-add" id="manage-kpi-add">
-       <i class="icon-remove" id="close-add-kpi"></i>
-       <div>
-           <input type="text" placeholder="* Name" id="new-kpi-name"/>
-           <textarea placeholder="   Description" id="new-kpi-desc"></textarea>
-           <div class="select-div">
-               <select class="chosen-select" data-placeholder="* Frequency" id="add-interval">
-                   <option value=""> </option>
-                   <option value="90">Hour</option>
-                   <option value="100">Day</option>
-                   <option value="200">Week</option>
-                   <option value="300">Month</option>
-                   <option value="400">Quarter</option>
-                   <option value="500">Year</option>
-               </select>
-           </div>
+    <!--<div class="manage-kpi-add" id="manage-kpi-add">-->
+       <!--<i class="icon-remove" id="close-add-kpi"></i>-->
+       <!--<div>-->
+           <!--<input type="text" placeholder="* Name" id="new-kpi-name"/>-->
+           <!--<textarea placeholder="   Description" id="new-kpi-desc"></textarea>-->
+           <!--<div class="select-div">-->
+               <!--<select class="chosen-select" data-placeholder="* Frequency" id="add-interval">-->
+                   <!--<option value=""> </option>-->
+                   <!--<option value="90">Hour</option>-->
+                   <!--<option value="100">Day</option>-->
+                   <!--<option value="200">Week</option>-->
+                   <!--<option value="300">Month</option>-->
+                   <!--<option value="400">Quarter</option>-->
+                   <!--<option value="500">Year</option>-->
+               <!--</select>-->
+           <!--</div>-->
 
-           <input type="text" placeholder="* 目标上限值" id="new-kpi-target"/>
-           <input type="text" placeholder="* 目标下限值" id="new-kpi-target-low"/>
-           <div class="select-div">
-               <select class="chosen-select" data-placeholder="* Unit" id="add-unit">
-                   <option sym="M">Meter</option>
-                   <option sym="$">Dollar</option>
-                   <option sym="KM">Kilogram</option>
-               </select>
-           </div>
+           <!--<input type="text" placeholder="* 目标上限值" id="new-kpi-target"/>-->
+           <!--<input type="text" placeholder="* 目标下限值" id="new-kpi-target-low"/>-->
+           <!--<div class="select-div">-->
+               <!--<select class="chosen-select" data-placeholder="* Unit" id="add-unit">-->
+                   <!--<option sym="M">Meter</option>-->
+                   <!--<option sym="$">Dollar</option>-->
+                   <!--<option sym="KM">Kilogram</option>-->
+               <!--</select>-->
+           <!--</div>-->
 
-           <div class="select-div">
-               <select class="chosen-select"  data-placeholder="&nbsp;&nbsp;&nbsp;Trend" id="add-trend">
-                   <option value=""> </option>
-                   <option value="200">Up</option>
-                   <option value="100">None</option>
-                   <option value="300">Down</option>
-               </select>
-           </div>
+           <!--<div class="select-div">-->
+               <!--<select class="chosen-select"  data-placeholder="&nbsp;&nbsp;&nbsp;Trend" id="add-trend">-->
+                   <!--<option value=""> </option>-->
+                   <!--<option value="200">Up</option>-->
+                   <!--<option value="100">None</option>-->
+                   <!--<option value="300">Down</option>-->
+               <!--</select>-->
+           <!--</div>-->
 
-           <input type="checkbox" id="is-calcu-check"/>
-           <label>Calculate Type</label>
+           <!--<input type="checkbox" id="is-calcu-check"/>-->
+           <!--<label>Calculate Type</label>-->
 
-           <div class="calculate-type-box" id="calculate-type-box">
-               <div class="select-div">
-                   <select class="chosen-select"  data-placeholder="KPI You Have" id="is-calcu-relate">
-                       <option value="1" id="k1">KPI1</option>
-                       <option value="2" id="k2">KPI2</option>
-                   </select>
-               </div>
-               <label sign="+">+</label>
-               <label sign="-">-</label>
-               <label sign="*">x</label>
-               <label sign="/">/</label>
-               <label sign="(">(</label>
-               <label sign=")">)</label>
-               <input type="text" placeholder="* KPI Equation" id="calcuType-input"/>
-               <div style="display:none" id="takeCal" cal></div>
-           </div>
-           <a class="btn btn-primary" id="manage-kpi-add-new">Add</a>
-       </div>
-    </div>
+           <!--<div class="calculate-type-box" id="calculate-type-box">-->
+               <!--<div class="select-div">-->
+                   <!--<select class="chosen-select"  data-placeholder="KPI You Have" id="is-calcu-relate">-->
+                       <!--<option value="1" id="k1">KPI1</option>-->
+                       <!--<option value="2" id="k2">KPI2</option>-->
+                   <!--</select>-->
+               <!--</div>-->
+               <!--<label sign="+">+</label>-->
+               <!--<label sign="-">-</label>-->
+               <!--<label sign="*">x</label>-->
+               <!--<label sign="/">/</label>-->
+               <!--<label sign="(">(</label>-->
+               <!--<label sign=")">)</label>-->
+               <!--<input type="text" placeholder="* KPI Equation" id="calcuType-input"/>-->
+               <!--<div style="display:none" id="takeCal" cal></div>-->
+           <!--</div>-->
+           <!--<a class="btn btn-primary" id="manage-kpi-add-new">Add</a>-->
+       <!--</div>-->
+    <!--</div>-->
 
 
 
@@ -171,6 +172,7 @@
 
 
     <div class="manage-right-content" id="manage-right-content">
+
         <div class="manage-btn-group" id="manage-btn-group">
             <a class="btn btn-primary" id="kpi-add-show"><i class="icon-plus"></i> KPI</a>
             <a class="btn btn-primary kpi-library-btn" id="kpi-library-btn"><i class="icon-th-list"></i> KPI Library</a>
@@ -210,13 +212,349 @@
                         </tr>
                     </table>
                 </li>
-
+                <li id="1">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="category">
+                        <tr>
+                            <td >KPI1</td>
+                            <td >Hour</td>
+                            <td >Up</td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td >No</td>
+                        </tr>
+                        <tr>
+                            <td>all the description here</td>
+                            <td>Frequency</td>
+                            <td>Trend</td>
+                            <td>Target Max</td>
+                            <td>Target Min</td>
+                            <td>Is Calcu Type</td>
+                        </tr>
+                    </table>
+                </li><li id="1">
+                <p class="sort-handle">:</p>
+                <input type="checkbox" />
+                <table class="category">
+                    <tr>
+                        <td >KPI1</td>
+                        <td >Hour</td>
+                        <td >Up</td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td >No</td>
+                    </tr>
+                    <tr>
+                        <td>all the description here</td>
+                        <td>Frequency</td>
+                        <td>Trend</td>
+                        <td>Target Max</td>
+                        <td>Target Min</td>
+                        <td>Is Calcu Type</td>
+                    </tr>
+                </table>
+            </li><li id="1">
+                <p class="sort-handle">:</p>
+                <input type="checkbox" />
+                <table class="category">
+                    <tr>
+                        <td >KPI1</td>
+                        <td >Hour</td>
+                        <td >Up</td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td >No</td>
+                    </tr>
+                    <tr>
+                        <td>all the description here</td>
+                        <td>Frequency</td>
+                        <td>Trend</td>
+                        <td>Target Max</td>
+                        <td>Target Min</td>
+                        <td>Is Calcu Type</td>
+                    </tr>
+                </table>
+            </li><li id="1">
+                <p class="sort-handle">:</p>
+                <input type="checkbox" />
+                <table class="category">
+                    <tr>
+                        <td >KPI1</td>
+                        <td >Hour</td>
+                        <td >Up</td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td >No</td>
+                    </tr>
+                    <tr>
+                        <td>all the description here</td>
+                        <td>Frequency</td>
+                        <td>Trend</td>
+                        <td>Target Max</td>
+                        <td>Target Min</td>
+                        <td>Is Calcu Type</td>
+                    </tr>
+                </table>
+            </li><li id="1">
+                <p class="sort-handle">:</p>
+                <input type="checkbox" />
+                <table class="category">
+                    <tr>
+                        <td >KPI1</td>
+                        <td >Hour</td>
+                        <td >Up</td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td >No</td>
+                    </tr>
+                    <tr>
+                        <td>all the description here</td>
+                        <td>Frequency</td>
+                        <td>Trend</td>
+                        <td>Target Max</td>
+                        <td>Target Min</td>
+                        <td>Is Calcu Type</td>
+                    </tr>
+                </table>
+            </li><li id="1">
+                <p class="sort-handle">:</p>
+                <input type="checkbox" />
+                <table class="category">
+                    <tr>
+                        <td >KPI1</td>
+                        <td >Hour</td>
+                        <td >Up</td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td >No</td>
+                    </tr>
+                    <tr>
+                        <td>all the description here</td>
+                        <td>Frequency</td>
+                        <td>Trend</td>
+                        <td>Target Max</td>
+                        <td>Target Min</td>
+                        <td>Is Calcu Type</td>
+                    </tr>
+                </table>
+            </li><li id="1">
+                <p class="sort-handle">:</p>
+                <input type="checkbox" />
+                <table class="category">
+                    <tr>
+                        <td >KPI1</td>
+                        <td >Hour</td>
+                        <td >Up</td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td >No</td>
+                    </tr>
+                    <tr>
+                        <td>all the description here</td>
+                        <td>Frequency</td>
+                        <td>Trend</td>
+                        <td>Target Max</td>
+                        <td>Target Min</td>
+                        <td>Is Calcu Type</td>
+                    </tr>
+                </table>
+            </li><li id="1">
+                <p class="sort-handle">:</p>
+                <input type="checkbox" />
+                <table class="category">
+                    <tr>
+                        <td >KPI1</td>
+                        <td >Hour</td>
+                        <td >Up</td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                        <td >No</td>
+                    </tr>
+                    <tr>
+                        <td>all the description here</td>
+                        <td>Frequency</td>
+                        <td>Trend</td>
+                        <td>Target Max</td>
+                        <td>Target Min</td>
+                        <td>Is Calcu Type</td>
+                    </tr>
+                </table>
+            </li><li id="1">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="category">
+                        <tr>
+                            <td >KPI1</td>
+                            <td >Hour</td>
+                            <td >Up</td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td >No</td>
+                        </tr>
+                        <tr>
+                            <td>all the description here</td>
+                            <td>Frequency</td>
+                            <td>Trend</td>
+                            <td>Target Max</td>
+                            <td>Target Min</td>
+                            <td>Is Calcu Type</td>
+                        </tr>
+                    </table>
+                </li><li id="1">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="category">
+                        <tr>
+                            <td >KPI1</td>
+                            <td >Hour</td>
+                            <td >Up</td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td >No</td>
+                        </tr>
+                        <tr>
+                            <td>all the description here</td>
+                            <td>Frequency</td>
+                            <td>Trend</td>
+                            <td>Target Max</td>
+                            <td>Target Min</td>
+                            <td>Is Calcu Type</td>
+                        </tr>
+                    </table>
+                </li><li id="1">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="category">
+                        <tr>
+                            <td >KPI1</td>
+                            <td >Hour</td>
+                            <td >Up</td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td >No</td>
+                        </tr>
+                        <tr>
+                            <td>all the description here</td>
+                            <td>Frequency</td>
+                            <td>Trend</td>
+                            <td>Target Max</td>
+                            <td>Target Min</td>
+                            <td>Is Calcu Type</td>
+                        </tr>
+                    </table>
+                </li><li id="1">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="category">
+                        <tr>
+                            <td >KPI1</td>
+                            <td >Hour</td>
+                            <td >Up</td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td >No</td>
+                        </tr>
+                        <tr>
+                            <td>all the description here</td>
+                            <td>Frequency</td>
+                            <td>Trend</td>
+                            <td>Target Max</td>
+                            <td>Target Min</td>
+                            <td>Is Calcu Type</td>
+                        </tr>
+                    </table>
+                </li><li id="1">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="category">
+                        <tr>
+                            <td >KPI1</td>
+                            <td >Hour</td>
+                            <td >Up</td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td >No</td>
+                        </tr>
+                        <tr>
+                            <td>all the description here</td>
+                            <td>Frequency</td>
+                            <td>Trend</td>
+                            <td>Target Max</td>
+                            <td>Target Min</td>
+                            <td>Is Calcu Type</td>
+                        </tr>
+                    </table>
+                </li><li id="1">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="category">
+                        <tr>
+                            <td >KPI1</td>
+                            <td >Hour</td>
+                            <td >Up</td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td >No</td>
+                        </tr>
+                        <tr>
+                            <td>all the description here</td>
+                            <td>Frequency</td>
+                            <td>Trend</td>
+                            <td>Target Max</td>
+                            <td>Target Min</td>
+                            <td>Is Calcu Type</td>
+                        </tr>
+                    </table>
+                </li><li id="1">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="category">
+                        <tr>
+                            <td >KPI1</td>
+                            <td >Hour</td>
+                            <td >Up</td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td >No</td>
+                        </tr>
+                        <tr>
+                            <td>all the description here</td>
+                            <td>Frequency</td>
+                            <td>Trend</td>
+                            <td>Target Max</td>
+                            <td>Target Min</td>
+                            <td>Is Calcu Type</td>
+                        </tr>
+                    </table>
+                </li><li id="1">
+                    <p class="sort-handle">:</p>
+                    <input type="checkbox" />
+                    <table class="category">
+                        <tr>
+                            <td >KPI1</td>
+                            <td >Hour</td>
+                            <td >Up</td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                            <td >No</td>
+                        </tr>
+                        <tr>
+                            <td>all the description here</td>
+                            <td>Frequency</td>
+                            <td>Trend</td>
+                            <td>Target Max</td>
+                            <td>Target Min</td>
+                            <td>Is Calcu Type</td>
+                        </tr>
+                    </table>
+                </li>
             </ul>
         </div>
     </div>
 
 
-
+</div>
 
 
     <div class="kpi-library" id="kpi-library">

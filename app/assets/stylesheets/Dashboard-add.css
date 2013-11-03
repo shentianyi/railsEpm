@@ -60,9 +60,9 @@
     min-width:200px;
     max-width:200px;
     border-right:1px solid #dcdcdc;
-    box-shadow:1px 0 4px rgba(68,68,68, 0.2);
-    -webkit-box-shadow:1px 0 4px rgba(68,68,68, 0.2);
-    -moz-box-shadow:1px 0 4px rgba(68,68,68, 0.2);
+    box-shadow:2px 0px 3px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow:2px 0px 3px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow:2px 0px 3px rgba(0, 0, 0, 0.2);
 }
 
 .content-right-nav[name='dashboard-add']>section.solid>h3{
@@ -99,8 +99,8 @@
     width:40px;
     margin-right:2px;
     height:40px;
-    background-image:url("../images/dashboard-add-type.png");
-    /*background-image:url("/assets/dashboard-add-type.png");*/
+    /*background-image:url("../images/dashboard-add-type.png");*/
+    background-image:url("/assets/dashboard-add-type.png");
     background-repeat:no-repeat;
     border-radius:7px;
     -moz-border-radius:7px;
@@ -224,6 +224,11 @@
 /*添加*/
 .analytics-condition-choose[name='dashboard-add']{
     padding:12px 0 0 25px
+}
+.left-content-title[name='dashboard-add']{
+    box-shadow:0px 2px 3px rgba(0,0,0,0.3);
+    -moz-box-shadow:0px 2px 3px rgba(0,0,0,0.3);
+    -webkit-box-shadow:0px 2px 3px rgba(0,0,0,0.3);
 }
 .left-content-title[name='dashboard-add'] .analytic-control-condition-visible{
     font-size:13px;
