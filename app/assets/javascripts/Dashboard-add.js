@@ -150,15 +150,6 @@ DASHBOARD.add.init=function(){
         $(this).parent().remove();
     });
 
-
-
-
-
-
-
-
-
-
     $("#chart-kpi").chosen().change(function(){
         var interval = $("#chart-kpi").find(":selected").attr("interval");
         var target="#analy-begin-time,#analy-end-time";
@@ -216,11 +207,9 @@ DASHBOARD.add.init=function(){
             }
         });
     });
-
     $("body").on("click","#db-add-chart",DASHBOARD.add.prepare_form_chart);
-
     $("body").on("click","#add-dashboard",function(){
-        if($("#dashboard-name-input").val().length>0){
+        if($.trim($("#dashboard-name-input").val()).length>0){
             if($("#db-add-kpi-list").children().length>0){
                 if($("#dashboard-group-name :selected").text().length>0){
                     var post={},i;
@@ -264,6 +253,7 @@ DASHBOARD.highchart_template_init=function(){
     high_chart.xAxis.offset=0;
     high_chart.plotOptions.pie.dataLabels.enabled=false;
     high_chart.yAxis.labels.enabled=false;
+    high_chart.xAxis.labels.style.color="rgba(0,0,0,0.2)";
 };
 
 DASHBOARD.add.prepare_form_chart=function() {
@@ -307,7 +297,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                 begin_post=standardParse(begin_time).date.toISOString();
                 end_post=standardParse(end_time).date.toISOString();
             }
-            DASHBOARD.special_type[type]();
+            DASHBOARD.special_type[type]("put-db-chart");
 
 
 //       show_loading(232,0,0,150);
@@ -363,10 +353,37 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                   data_array[i].unit=msg.object.unit[i];
 //                   data_array[i].id=option.id
 //               }
+//               var out_of_target= 0,total_value=0,max_value,min_value;
 //               if(chart_body_close_validate){
 //                   option.data=data_array;
 //                   addSeriesOption[interval]=data_array;
+//                   for(i=0;i<option.data.length;i++){
+//                       var data=option.data[i];
+//                       if(data.y<data.low || data.y>data.high){
+//                           out_of_target++
+//                       }
+//            if(i==0){
+//                max_value=min_value=data.y
+//            }
+//            else{
+//                if(data.y>max_value){
+//                    max_value=data.y
+//                }
+//                else if(data.y<min_value){
+//                    min_value=data.y
+//                }
+//            }
+//                       total_value+=data.y
+//                   }
+//            addSeriesOption[option.interval+"_info"]={};
+//                   addSeriesOption[option.interval+"_info"].out_of_target=out_of_target;
+//                   addSeriesOption[option.interval+"_info"].total_record=option.data.length;
+//                   addSeriesOption[option.interval+"_info"].total_value=total_value+option.data[0].unit;
+//                   addSeriesOption[option.interval+"_info"].average_value=(total_value/option.data.length).toFixed(1)+option.data[0].unit;
+//            addSeriesOption[option.interval+"_info"].max_value=max_value;
+//            addSeriesOption[option.interval+"_info"].min_value=min_value;
 //                   db_chartSeries.addSeries(addSeriesOption);
+//                   DASHBOARD.special_grab[option.type](option.id,option.interval,"put-db-chart");
 //                   DASHBOARD.add.show_chart_body(option);
 //
 //                   render_to(option);
@@ -385,7 +402,33 @@ DASHBOARD.add.prepare_form_chart=function() {
 //               else{
 //                   option.data=data_array;
 //                   addSeriesOption[interval]=data_array;
+//                   for(i=0;i<option.data.length;i++){
+//                       var data=option.data[i];
+//                       if(data.y<data.low || data.y>data.high){
+//                           out_of_target++
+//                       }
+//            if(i==0){
+//                max_value=min_value=data.y
+//            }
+//            else{
+//                if(data.y>max_value){
+//                    max_value=data.y
+//                }
+//                else if(data.y<min_value){
+//                    min_value=data.y
+//                }
+//            }
+//                       total_value+=data.y
+//                   }
+//                   addSeriesOption[option.interval+"_info"]={};
+//                   addSeriesOption[option.interval+"_info"].out_of_target=out_of_target;
+//                   addSeriesOption[option.interval+"_info"].total_record=option.data.length;
+//                   addSeriesOption[option.interval+"_info"].total_value=total_value+option.data[0].unit;
+//                   addSeriesOption[option.interval+"_info"].average_value=(total_value/option.data.length).toFixed(1)+option.data[0].unit;
+//                   addSeriesOption[option.interval+"_info"].max_value=max_value;
+//                   addSeriesOption[option.interval+"_info"].min_value=min_value;
 //                   db_chartSeries.addSeries(addSeriesOption);
+//                   DASHBOARD.special_grab[option.type](option.id,option.interval,"put-db-chart");
 //
 //                   add_series(option);
 //                   proper_type_for_chart(option);
@@ -430,7 +473,6 @@ DASHBOARD.add.prepare_form_chart=function() {
                 end_post: end_post
             }
 
-
             db_chartSeries.addCount();
             db_chartSeries.id_give();
             option.id=db_chartSeries.id;
@@ -441,7 +483,8 @@ DASHBOARD.add.prepare_form_chart=function() {
                     .append($("<span />").css("backgroundColor",color))
                     .append($("<p />").text(kpi))
                     .append($("<i />").addClass("icon-remove").attr("kpi_id",option.id))
-            )
+            );
+            var out_of_target= 0, i,total_value= 0,max_value,min_value;
             if (chart_body_close_validate) {
                 option.data = [
                     {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
@@ -459,9 +502,35 @@ DASHBOARD.add.prepare_form_chart=function() {
                     {y: 10, low: 2,high:43, target: 10, unit: "$"},
                     {y: 7,low:1,high:43,  target: 10, unit: "$"}
                 ];
+                for(i=0;i<option.data.length;i++){
+                    var data=option.data[i];
+                    if(data.y<data.low || data.y>data.high){
+                        out_of_target++
+                    }
+                    if(i==0){
+                        max_value=min_value=data.y
+                    }
+                    else{
+                        if(data.y>max_value){
+                            max_value=data.y
+                        }
+                        else if(data.y<min_value){
+                            min_value=data.y
+                        }
+                    }
+                    total_value+=data.y
+                }
+                addSeriesOption[option.interval+"_info"]={};
+                addSeriesOption[option.interval+"_info"].out_of_target=out_of_target;
+                addSeriesOption[option.interval+"_info"].total_record=option.data.length;
+                addSeriesOption[option.interval+"_info"].total_value=total_value+option.data[0].unit;
+                addSeriesOption[option.interval+"_info"].average_value=(total_value/option.data.length).toFixed(1)+option.data[0].unit;
+                addSeriesOption[option.interval+"_info"].max_value=max_value;
+                addSeriesOption[option.interval+"_info"].min_value=min_value;
                 db_chartSeries.addSeries(addSeriesOption);
-                DASHBOARD.add.show_chart_body(option);
+                DASHBOARD.special_grab[option.type](option.id,option.interval,"put-db-chart");
 
+                DASHBOARD.add.show_chart_body(option);
                 render_to(option);
                 create_environment_for_data(option);
                 new Highcharts.Chart(high_chart);
@@ -493,13 +562,38 @@ DASHBOARD.add.prepare_form_chart=function() {
                     {y: 20, low:2,high:423, target: 10, unit: "$"},
                     {y: 27,low:1,high:403,  target: 10, unit: "$"}
                 ];
+                for(i=0;i<option.data.length;i++){
+                    var data=option.data[i];
+                    if(data.y<data.low || data.y>data.high){
+                        out_of_target++
+                    }
+                    if(i==0){
+                        max_value=min_value=data.y
+                    }
+                    else{
+                        if(data.y>max_value){
+                            max_value=data.y
+                        }
+                        else if(data.y<min_value){
+                            min_value=data.y
+                        }
+                    }
+                    total_value+=data.y
+                }
+                addSeriesOption[option.interval+"_info"]={};
+                addSeriesOption[option.interval+"_info"].out_of_target=out_of_target;
+                addSeriesOption[option.interval+"_info"].total_record=option.data.length;
+                addSeriesOption[option.interval+"_info"].total_value=total_value+option.data[0].unit;
+                addSeriesOption[option.interval+"_info"].average_value=(total_value/option.data.length).toFixed(1)+option.data[0].unit;
+                addSeriesOption[option.interval+"_info"].max_value=max_value;
+                addSeriesOption[option.interval+"_info"].min_value=min_value;
                 db_chartSeries.addSeries(addSeriesOption);
+                DASHBOARD.special_grab[option.type](option.id,option.interval,"put-db-chart");
 
                 add_series(option);
                 proper_type_for_chart(option);
-
             }
-        limit_pointer_number(option);
+            limit_pointer_number(option);
             $("#chart-container").resize(function(){
                 if ($("#db-chart-type-alternate li.active").attr("type") == "pie") {
                     for (var k = 0; k < $("#chart-container").highcharts().series.length; k++) {
@@ -523,11 +617,7 @@ DASHBOARD.add.show_chart_body=function(option){
     $("#db-chart-body").css("display","block");
     $("#add-dashboard").css("display","block");
     $("#dashboard-name-input").css("display","inline-block");
-
-
     $("#db-chart-type-alternate li[type='" + option.type + "']").addClass("active");
-
-
     $("#db-chart-interval-alternate").find("li").each(function () {
         $(this).bind("click", function (event) {
             var target = adapt_event(event).target;
@@ -554,7 +644,7 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 count: db_chartSeries.getCount(),
                 interval: $("#db-chart-interval-alternate li.active").attr("interval")
             }
-            DASHBOARD.special_type[option.type]();
+            DASHBOARD.special_type[option.type]("put-db-chart");
 
             if($("#"+option.target).highcharts().get("line-target")!=undefined){
                 $("#"+option.target).highcharts().get("line-target").remove();

@@ -131,8 +131,8 @@ var high_chart = {
                 format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
             },
             colors:[
-                'rgba(245,161,51,0.7)',
                 'rgba(52,152,219,0.7)',
+                'rgba(245,161,51,0.7)',
                 'rgba(205,208,164,0.7)',
                 'rgba(231,76,60,0.7)',
                 'rgba(26,188,156,0.7)',
@@ -227,8 +227,8 @@ function render_to(option) {
 }
 
 var series_colors=[
-    'rgba(245,161,51,0.7)',
     'rgba(52,152,219,0.7)',
+    'rgba(245,161,51,0.7)',
     'rgba(163,166,162,0.7)',
     'rgba(231,76,60,0.7)',
     'rgba(26,188,156,0.7)',
@@ -453,10 +453,14 @@ function proper_type_for_chart(){
                 dataItem.y=this.chart.series[0].processedYData[i];
                 dataItem.target=this.chart.series[0].data[i].target;
                 dataItem.unit=this.chart.series[0].data[i].unit;
+                if(i==0){
+                    dataItem.sliced=true;
+                    dataItem.selected=true;
+                }
                 data.push(dataItem);
             }
             chart_name=this.chart.series[0].name;
-            chart_color=this.chart.series[0].color;
+//            chart_color=this.chart.series[0].color;
             this.chart.series[0].hide();
         }
         else{
@@ -480,7 +484,11 @@ function proper_type_for_chart(){
                 dataItem.time_from=this.chart.series[i].data[0].name;
                 dataItem.time_to=this.chart.series[i].data[this.chart.series[i].data.length-1].name;
                 dataItem.unit=this.chart.series[i].data[0].unit;
-                dataItem.color= series_colors[dataItem.seriesId % series_colors.length];;
+                dataItem.color= series_colors[dataItem.seriesId % series_colors.length];
+                if(i==0){
+                    dataItem.sliced=true;
+                    dataItem.selected=true;
+                }
                 data.push(dataItem);
                 this.chart.series[i].hide();
             };
