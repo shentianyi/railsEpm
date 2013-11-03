@@ -15,7 +15,7 @@ MANAGE.kpi.init=function(){
     MANAGE.kpi.kpi_add_clear();
     $("body").on("click","#kpi-add-show",function(){
         $("#manage-kpi-add").css("left","150px");
-        $("#manage-right-content").css("left","350px");
+        $("#manage-right-content").css("padding-left","200px");
     });
     $("#kpi-library-btn").on("click",function(){
         $("#kpi-library").css("display","block");
@@ -54,8 +54,8 @@ MANAGE.kpi.kpi_for_calculate=[];
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.kpi.kpi_add_box_bind=function(){
     $("body").on("click","#close-add-kpi",function(){
-        $("#manage-kpi-add").css("left","-50px");
-        $("#manage-right-content").css("left","150px");
+        $("#manage-kpi-add").css("left","-150px");
+        $("#manage-right-content").css("padding-left","0px");
         MANAGE.kpi.kpi_add_clear();
     }).on("keyup","#new-kpi-target,#new-kpi-target-low",function(event){
             var e = adapt_event(event).event;

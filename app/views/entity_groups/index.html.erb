@@ -1,17 +1,6 @@
+<div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
 <%= render :partial=>'entity_groups/left_menu'%>
-<div class="manage-user-add" id="manage-entity-add" special="entity">
-     <i class="icon-remove" id="close-add-entity" ></i>
-     <p>
-          部门列表
-     </p>
-     <ul>
-          <%@entities.each do |entity|%>
-          <li>
-               <h3 id="<%=entity.id%>"><%=entity.name%></h3>
-          </li>
-          <%end%>
-     </ul>
-</div>
+
 <div class="manage-right-content" id="manage-right-content">
      <div class="manage-btn-group" id="manage-btn-group" special="view">
           <a class="btn btn-primary" id="entity-add-show"><i class="icon-plus"></i>选择部门</a>
@@ -31,6 +20,21 @@
                <% end;end%>
           </ul>
      </div>
+</div>
+</div>
+<div class="manage-user-add" id="manage-entity-add" special="entity">
+     <div style="width:auto;height:71px;"></div>
+     <i class="icon-remove" id="close-add-entity" ></i>
+     <p>
+          部门列表
+     </p>
+     <ul>
+          <%@entities.each do |entity|%>
+          <li>
+               <h3 id="<%=entity.id%>"><%=entity.name%></h3>
+          </li>
+          <%end%>
+     </ul>
 </div>
 <input type="hidden" value="<%= @active_entity_group_id%>" id="entity_group_id" />
 <script>

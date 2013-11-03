@@ -17,12 +17,12 @@ MANAGE.user.init = function() {
      MANAGE.user.assign.init();
      $("body").on("click", "#add-user-show", function() {
           $("#manage-user-add").css("left", "150px");
-          $("#user-edit").css("left", "-50px");
-          $("#manage-right-content").css("left", "350px");
+          $("#user-edit").css("left", "-250px");
+          $("#manage-right-content").css("padding-left", "200px");
      }).on("click", "#manage-user-edit", function() {
-          $("#manage-user-add").css("left", "-50px");
-          $("#user-edit").css("left", "150px");
-          $("#manage-right-content").css("left", "350px");
+          $("#manage-user-add").css("left", "-350px");
+          $("#user-edit").css("left", "-50px");
+          $("#manage-right-content").css("padding-left", "200px");
           MANAGE.user.user_edit_box_bind();
      });
      $("#manage-user-edit-old").on("click", function() {
@@ -38,9 +38,9 @@ MANAGE.user.icheck.init = function() {
           }).iCheck("uncheck");
      });
      $("#manage-sort-list input[type='checkbox']").on("ifUnchecked", function() {
-          if($("#manage-sort-list .icheckbox_minimal-aero.checked").length == 1 && $("#user-edit").css("left") != "-50px") {
-               $("#user-edit").css("left", "-50px");
-               $("#manage-right-content").css("left", "150px");
+          if($("#manage-sort-list .icheckbox_minimal-aero.checked").length == 1 && $("#user-edit").css("left") != "-250px") {
+               $("#user-edit").css("left", "-250px");
+               $("#manage-right-content").css("padding-left", "0px");
                MANAGE.user.user_add_clear();
           }
      })
@@ -48,9 +48,12 @@ MANAGE.user.icheck.init = function() {
 //////////////////////////////////////////////////////////////////////////         User 添加那一块的
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.user.user_add_box_bind = function() {
-     $("body").on("click", "[general='close-user']", function() {
+     $("body").on("click", "#close-add-user[general='close-user']", function() {
           MANAGE.user.user_add_close();
      });
+    $("body").on("click", "#close-user-edit[general='close-user']", function() {
+        MANAGE.user.user_edit_close();
+    });
      $("#manage-user-add-new").on("click", function() {
           MANAGE.user.add_new();
      });
@@ -70,9 +73,14 @@ MANAGE.user.user_add_box_bind = function() {
      });
 };
 MANAGE.user.user_add_close = function() {
-     $("[general='manage-user-add']").css("left", "-50px");
-     $("#manage-right-content").css("left", "150px");
+     $("#manage-user-add").css("left", "-350px");
+     $("#manage-right-content").css("padding-left", "0px");
      MANAGE.user.user_add_clear();
+};
+MANAGE.user.user_edit_close = function() {
+    $("#user-edit").css("left", "-250px");
+    $("#manage-right-content").css("padding-left", "0px");
+    MANAGE.user.user_add_clear();
 };
 MANAGE.user.user_add_clear = function() {
      $("[general='manage-user-add'] input[type='text']").val("");

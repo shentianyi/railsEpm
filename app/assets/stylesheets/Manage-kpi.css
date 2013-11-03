@@ -79,15 +79,19 @@
 /********************************************************************************************************* 添加 KPI
 *******************************************************************************************************************/
 .manage-kpi-add{
-    position:absolute;
-    top:70px;
-    bottom:0px;
-    left:-50px;
+    position:relative;
+    z-index:10;
+    top:0px;
+    height:100%;
+    margin-top:-71px;
+    left:-200px;
     width:200px;
+    min-width:200px;
+    max-width:200px;
     overflow-y:auto;
     overflow-x:hidden;
     background:rgba(251,251,251,0.8);
-    transition:left 0.35s ease-out;
+    transition:left 0.2s ease-out;
 }
 .manage-kpi-add>i{
     pointer-events:auto;
