@@ -244,7 +244,7 @@ function post_kpi(option){
             MANAGE.sort_init();
             MANAGE.resize_sort_table();
             $("#manage-kpi-add").css("left","-50px");
-            $("#manage-right-content").css("left","150px");
+            $("#manage-right-content").css("padding-left","0px");
             MANAGE.kpi.kpi_add_clear();
             $("#manage-sort-list li").on("resize",function(){
                 MANAGE.resize_sort_table()

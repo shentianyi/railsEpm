@@ -86,7 +86,7 @@ function analytic_control_condition_visible() {
     var open_state = $("#analytic-control-condition-visible").attr("state");
     if (open_state=="open") {
         $("#analytics-condition").css("top", "-16px");
-        $("#chart-body").css("top", "23px").height(parseInt($("#chart-body").height()) + 87);
+        $("#chart-body").css("top", "26px").height(parseInt($("#chart-body").height()) + 86);
         $("#analytics-condition-invisible-mark").css("display", "block");
         $("#analytic-control-condition-visible").attr("state", "close").removeClass("icon-chevron-up").addClass("icon-chevron-down");
 //        if ($("#loading").length > 0) {
@@ -95,14 +95,13 @@ function analytic_control_condition_visible() {
     }
     else {
         $("#analytics-condition").css("top", "70px");
-        $("#chart-body").css("top", "110px").height(parseInt($("#chart-body").height()) - 87);
+        $("#chart-body").css("top", "112px").height(parseInt($("#chart-body").height()) - 87);
         $("#analytics-condition-invisible-mark").css("display", "none");
         $("#analytic-control-condition-visible").attr("state", "open").removeClass("icon-chevron-down").addClass("icon-chevron-up");
 //        if ($("#loading").length > 0) {
 //            $("#loading").css("top", parseInt($("#analytics-condition").height()) + 135);
 //        }
     }
-
     resize_chart.container();
 }
 function prepare_form_chart() {
@@ -297,29 +296,8 @@ function prepare_form_chart() {
 }
 function show_chart_body(option) {
     $("#chart-body").css("display", "block");
-    $("#chart-type-alternate td").hover(function () {
-        $("#chart-type-alternate td").each(function () {
-            $(this).css("width", '10%').removeClass("image").find("p").css("display", "block");
-        });
-        $(this).css("width", "70%").addClass("image").find("p").css("display", "none");
-    }, function () {
-        $("#chart-type-alternate td").each(function () {
-            $(this).css("width", '10%').removeClass("image").find("p").css("display", "block");
-        });
-        $("#chart-type-alternate td.active").css("width", "70%").addClass("image").find("p").css("display", "none");
-    });
-    $("body").on("click", "#chart-type-alternate td", function () {
-        $("#chart-type-alternate td").each(function () {
-            $(this).removeClass("active image").find("p").css("display", "block");
-        });
-        $(this).addClass("active image").find("p").css("display", "none");
-    });
-    $("#chart-type-alternate td").each(function () {
-        $(this).css("width", '10%').removeClass("image").find("p").css("display", "block");
-    });
-    $("#chart-type-alternate td[type='" + option.type + "']").css("width", "70%").addClass("image active").find("p").css("display", "none");
-    $("#chart-type-alternate").find("td").each(function () {
-        $(this).bind("click", alternate_chart_type)
+    $("body").on("click","#chart-type-alternate td",function(event){
+        alternate_chart_type(event)
     });
 
     $("#chart-interval-alternate").find("li").each(function () {
@@ -341,7 +319,7 @@ function show_chart_body(option) {
 }
 function alternate_chart_type(event) {
     var target = adapt_event(event).target;
-    if (!$(target).hasClass("active")) {
+    if (!$(target).hasClass("image")) {
         var option = {
             target: "chart-container",
             type: $(target).attr("type"),
@@ -352,6 +330,9 @@ function alternate_chart_type(event) {
             option.id = chartSeries.series[i].id;
             proper_type_for_chart(option)
         }
+        $(target).siblings().removeClass("image");
+        $("#chart-type-alternate td").find("p").css("display","block")
+        $(target).addClass("image").find("p").css("display","none");
         limit_pointer_number(option);
     }
 }
@@ -458,8 +439,8 @@ function change_interval(option) {
 }
 var resize_chart = {
     body: function () {
-        $("#chart-body").height(parseInt($(window).height()) - parseInt($("#analytics-condition").height()) - parseInt($("#analytics-condition").css("top")) - 1 >= 0 ?
-            parseInt($(window).height()) - parseInt($("#analytics-condition").height()) - parseInt($("#analytics-condition").css("top")) - 1 : 0);
+        $("#chart-body").height(parseInt($(window).height()) - parseInt($("#analytics-condition").height()) - parseInt($("#analytics-condition").css("top")) - 3 >= 0 ?
+            parseInt($(window).height()) - parseInt($("#analytics-condition").height()) - parseInt($("#analytics-condition").css("top")) - 3 : 0);
     },
     container: function () {
         $("#chart-main-middle").height(parseInt($("#chart-body").height()) - parseInt($("#chart-interval-alternate").attr("my_height")) - parseInt($("#chart-type-alternate").attr("my_height")) - 1);

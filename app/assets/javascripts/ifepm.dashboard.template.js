@@ -67,7 +67,7 @@ ifepm.template.view = '<li !attr!=!id!><div>' +
     '<div class="chart-container-bottom" >'+
     '<table>'+
     '<tr><td></td><td></td><td></td><td></td></tr>'+
-    '<tr><td>Out of Target</td><td>Total Amount</td><td>Average Value</td><td>Total Value</td></tr>'+
+    '<tr><td>Out of Target</td><td>Total Amount</td><td>Total Value</td><td>Average Value</td></tr>'+
     '</table>'+
     '</div>'+
     '</div>' +

@@ -148,7 +148,7 @@ div[title='analy-view-select'] {
 .chart-body {
     padding: 0;
     position: relative;
-    top: 110px;
+    top: 112px;
     right: 0;
     overflow-x: hidden;
     transition: top 0.35s ease-out;
@@ -185,7 +185,7 @@ div[title='analy-view-select'] {
     color: rgba(0, 0, 0, 0.3);
     pointer-events: none;
 }
-.chart-type-alternate td p:hover {
+.chart-type-alternate td:hover p{
     color: black;
 }
 

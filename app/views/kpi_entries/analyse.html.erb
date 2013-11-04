@@ -38,7 +38,7 @@
                <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px" onclick="prepare_form_chart()"><%= t 'analytics.add_chart'%></a>
           </div>
           <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible"
-          open=true onclick="analytic_control_condition_visible()"> </i>
+          state="open" onclick="analytic_control_condition_visible()"> </i>
 
           <p class="analytics-condition-invisible-mark pointer" id="analytics-condition-invisible-mark"
           style="display:none" onclick="analytic_control_condition_visible()">
@@ -135,7 +135,7 @@
           </div>
           <table class="chart-type-alternate" id="chart-type-alternate"  my_height="70">
                <tr>
-                    <td class="analytics-chart-line" type="line">
+                    <td class="analytics-chart-line image" type="line">
                     <p style="display:none">
                          Line
                     </p></td>
