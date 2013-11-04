@@ -30,6 +30,21 @@ DASHBOARD.init=function(){
         db_view_delete(id);
         //$("#dashBoard-show").find("#"+id).remove();
     });
+    $("body").on("click","#dashboard-full-size",function(){
+        $("#content-right-nav").css("display","none");
+        $("#content-left-main").css("display","table-cell");
+        $("#dashboard-content").css("position","relative").css("z-index",99);
+        $(".gridster").css("top","10px");
+    });
+    $("body").on("keyup",function(event){
+       var e=adapt_event(event).event;
+       if(e.keyCode==27 && $("#content-left-main").css("display")=="table-cell"){
+           $("#content-right-nav").css("display","table-cell");
+           $("#content-left-main").css("display","block");
+           $("#dashboard-content").css("position","static").css("z-index",0);
+           $(".gridster").css("top","120px");
+       }
+    });
     DASHBOARD.highchart_template_init();
 }
 
