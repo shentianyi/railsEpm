@@ -473,7 +473,7 @@ ifepm.dashboard.make_item_container_id=function(item_id){
   return "container_" + item_id;
 };
 ifepm.dashboard.make_item_outer_id=function(item_id){
-    return item_id+"_outer";
+    return "container_"+item_id+"_outer";
 };
 
 /*
