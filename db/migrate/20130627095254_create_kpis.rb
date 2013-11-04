@@ -6,7 +6,7 @@ class CreateKpis < ActiveRecord::Migration
       t.references :kpi_category
       t.integer :unit
       t.integer :frequency
-      t.float :target
+      t.float :target,:default=>0
       t.boolean :is_calculated,:default=>false
       t.integer :direction
       t.integer :period

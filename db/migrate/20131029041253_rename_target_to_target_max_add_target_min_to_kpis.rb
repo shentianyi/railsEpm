@@ -7,6 +7,6 @@ class RenameTargetToTargetMaxAddTargetMinToKpis < ActiveRecord::Migration
 
   def change
     rename_column :kpis,:target,:target_max
-    add_column :kpis,:target_min,:float
+    add_column :kpis,:target_min,:float,:default=>0
   end
 end
