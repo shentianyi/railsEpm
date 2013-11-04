@@ -16,7 +16,6 @@
 //= require jquery_ujs
 //=require highcharts
 //=require highcharts-more
-//=require dashboard_type_special
 //=require exporting
 //=require exporting.extend.src.js
 //=require brilliantech.base
@@ -48,6 +47,7 @@
 //=require ifepm.grid.main.js
 //=require ifepm.dashboard.template.js
 //=require ifepm.dashboard.main.js
+//=require dashboard_type_special
 //=require Log
 //=require Entry
 //=require i18n

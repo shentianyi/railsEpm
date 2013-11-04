@@ -390,12 +390,14 @@ DASHBOARD.add.prepare_form_chart=function() {
                    add_series(option);
                    proper_type_for_chart(option);
                    if(option.type=="line"&&db_chartSeries.getCount()==1){
-                       option.type="arearange";
-                       option.id=db_chartSeries.id_count;
-                       option.count=db_chartSeries.getCount() + 1;
-                       add_series(option);
-                       proper_type_for_chart(option);
-                   }
+                    var option_area={};
+                    option_area=deepCopy(option,option_area);
+                    option_area.type="arearange";
+                    option_area.id="line-target";
+                    option_area.count=db_chartSeries.getCount() + 1;
+                    add_series(option_area);
+                    proper_type_for_chart(option_area);
+//                }
                }
                else{
                    option.data=data_array;
