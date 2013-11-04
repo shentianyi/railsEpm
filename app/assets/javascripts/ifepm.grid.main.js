@@ -121,7 +121,7 @@ ifepm.dashboard_widget.initsize = function(type){
             break;
         case "pie":
             defsize.sizex = 3;
-            defsize.sizey = 3;
+            defsize.sizey = 2;
             break;
         case "column":
             defsize.sizex = ifepm.dashboard_widget.widget_config.max_col-1;
