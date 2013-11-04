@@ -375,13 +375,13 @@ function on_dragstop(event,ui){
 };
 
 /*
-* @function onwindow_resize
-* @params event
+* @function on_full_size
 * */
-function onwindow_resize(event){
+function on_full_size(){
     var option = {};
-    option.width = $("div .dashboard-block").width();
-    option.height = $("div .manage-right-content").height();
-    console.log("resize====width = "+option.width+" height = "+ option.height);
-    ifepm.dashboard_widget.windowresize(option);
-}
+    option.width = $("div .dashboard-content").width();
+    option.height = $("div .dashboard-content").height();
+    option.max_col = 4;
+    option.max_row = 3;
+    ifepm.dashboard_widget.resize(option);
+};

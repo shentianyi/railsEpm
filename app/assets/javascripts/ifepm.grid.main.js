@@ -44,7 +44,6 @@ ifepm.dashboard_widget.init = function(option){
         ifepm.dashboard_widget.widget_config.width < ifepm.dashboard_widget.widget_config.min_width ? ifepm.dashboard_widget.widget_config.min_width:ifepm.dashboard_widget.widget_config.width;
     ifepm.dashboard_widget.widget_config.height =
         ifepm.dashboard_widget.widget_config.height < ifepm.dashboard_widget.widget_config.min_height ? ifepm.dashboard_widget.widget_config.min_height:ifepm.dashboard_widget.widget_config.height;
-
     gridster = $(".gridster ul").gridster({
         widget_margins: [10, 10],
         widget_base_dimensions: [ifepm.dashboard_widget.widget_config.width, ifepm.dashboard_widget.widget_config.height],
@@ -62,7 +61,7 @@ ifepm.dashboard_widget.add_w = function(option){
 
     if(option.isnew){
         var default_size = ifepm.dashboard_widget.initsize(option.chart_type);
-        gridster.add_widget(option.container_selector+" li#"+option.id,default_size.sizex,default_size.sizey);
+        gridster.add_widget(option.container_selector+" li#"+option.id,default_size.sizex,default_size.sizey)
     }else{
         gridster.add_widget(option.container_selector+" li#"+option.id,option.sizex,option.sizey,option.col,option.row)
     }
@@ -156,6 +155,21 @@ ifepm.dashboard_widget.windowresize = function(option){
 
     var opt = {widget_base_dimensions:[height,width]};
     gridster.resize_widget_dimensions(opt);
+};
+
+/*
+* @function resize
+* @params option
+* */
+ifepm.dashboard_widget.resize = function(option){
+    //set config
+    //ifepm.dashboard_widget.widget_config["width"] = (option.width - 50)/option.max_col - 20;
+    //ifepm.dashboard_widget.widget_config["height"] = (option.height - 40)/option.max_row - 30;
+    //ifepm.dashboard_widget.widget_config["max_col"] = option.max_col;
+    //ifepm.dashboard_widget.widget_config["max_row"] = option.max_row;
+    //set gridster dimensions
+    //var options = {widget_base_dimensions:[ifepm.dashboard_widget.widget_config["width"],ifepm.dashboard_widget.widget_config["height"]]};
+    //gridster.resize_widget_dimensions(options);
 };
 
 /*

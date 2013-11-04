@@ -25,7 +25,7 @@ class KpisController < ApplicationController
       temp[:is_calculated] = @kpi.is_calculated
       temp[:formula_string] = @kpi.formula_string
       temp[:interval] = KpiFrequency.get_desc_by_value(@kpi.frequency)
-      temp[:trend] = KpiFrequency.get_desc_by_value(@kpi.direction)
+      temp[:trend] = KpiDirection.get_desc_by_value(@kpi.direction)
       temp[:target_max] = KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max)
       temp[:target_min] = KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min)
       temp[:section] = KpiUnit.get_entry_unit_sym(@kpi.unit)

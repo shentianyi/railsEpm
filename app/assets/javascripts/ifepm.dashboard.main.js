@@ -237,7 +237,7 @@ ifepm.dashboard.form_graph = function(datas,id){
 
         if(i==0){
             if(option.type=="pie"){
-                high_chart.plotOptions.pie.size="60%";
+                high_chart.plotOptions.pie.size="70%";
             }
             render_to(option);
             create_environment_for_data(option);
@@ -288,14 +288,16 @@ ifepm.dashboard.form_graph = function(datas,id){
             add_series(option_min);
             proper_type_for_chart(option_min);
         }
-        var width = $("#"+outer).width();
-        var height = $("#"+outer).height();
-        chart.setSize(width,height);
+
         if(type == "pie"){
             for(var i = 0;i<chart.series.length;++i){
                 chart.series[i].update({showInLegend:false});
             }
         }
+
+        //var width = $("#"+container).width();
+        //var height = $("#"+container).height();
+        //chart.setSize(width,height);
     }
 }
 

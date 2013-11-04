@@ -165,8 +165,8 @@ function category_item_drag() {
      this.drag_complete_post = function(id, belong) {
           var option = {
                id : id,
-               belong : belong,
-               target : $("#" + id).find(".can-change").text()
+               belong : belong
+               //target : $("#" + id).find(".can-change").text()
           }
           $.ajax({
                url : this.url,
@@ -174,8 +174,8 @@ function category_item_drag() {
                data : {
                     kpi : {
                          id : option.id,
-                         kpi_category_id : option.belong,
-                         target : option.target
+                         kpi_category_id : option.belong
+                         //target : option.target
                     }
                },
                success : function(data) {

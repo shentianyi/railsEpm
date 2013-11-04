@@ -35,6 +35,7 @@ DASHBOARD.init=function(){
         $("#content-left-main").css("display","table-cell");
         $("#dashboard-content").css("position","relative").css("z-index",99);
         $(".gridster").css("top","10px");
+        on_full_size();
     });
     $("body").on("keyup",function(event){
        var e=adapt_event(event).event;
