@@ -265,21 +265,21 @@ MANAGE.user.assign.init = function() {
           var $target = $("#manage-sort-list").find(":checked"),
               id = $target.parent().parent().attr("id"),
               user_name = $target.parent().next().find(".user-manage-name").text();
-//          $.ajax({
-//               url : '/kpis/user_kpis',
-//               data : {
-//                    id : id
-//               },
-//               dataType : 'html',
-//               success : function(kpis) {
-//                    $('#assign-kpi-inner').html(kpis);
-//                    $("#assign-kpi-wrap").css("display", "block");
-//                    $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
-//               }
-//          });
+          $.ajax({
+               url : '/kpis/user_kpis',
+               data : {
+                    id : id
+               },
+               dataType : 'html',
+               success : function(kpis) {
+                    $('#assign-kpi-inner').html(kpis);
+                    $("#assign-kpi-wrap").css("display", "block");
+                    $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+               }
+          });
 
-          $("#assign-kpi-wrap").css("display", "block");
-          $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
+//          $("#assign-kpi-wrap").css("display", "block");
+//          $("#assign-kpi>.assign-kpi-top>p>span:first-of-type").text(user_name);
      });
      //assign kpi category 初始化
      $("#assign-kpi-pick").on("click", function() {
