@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 var DASHBOARD=DASHBOARD || {} ;
-DASHBOARD.add={};
+DASHBOARD.add=DASHBOARD.add || {};
 
 
 var db_chartSeries = {
