@@ -397,7 +397,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                     option_area.count=db_chartSeries.getCount() + 1;
                     add_series(option_area);
                     proper_type_for_chart(option_area);
-//                }
+                }
                }
                else{
                    option.data=data_array;
