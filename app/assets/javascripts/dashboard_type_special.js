@@ -95,7 +95,8 @@ function sortNumber(a, b)
 DASHBOARD.add=DASHBOARD.add || {};
 DASHBOARD.add.generate=function(option){
     var type=option.type,
-        outer_target=option.outer_target
+        target=option.target,
+        outer_target=option.outer_target;
     DASHBOARD.special_type[type](outer_target);
     var out_of_target= 0, i,total_value= 0;
     for(i=0;i<option.data.length;i++){
@@ -112,5 +113,13 @@ DASHBOARD.add.generate=function(option){
         average_value:(total_value/option.data.length).toFixed(1)+option.data[0].unit
     }
     option.special_data=special_data;
-    DASHBOARD.special_grab[type](option)
+    DASHBOARD.special_grab[type](option);
+    var t=setTimeout(function(){
+       var width=parseInt($("#"+target).width());
+       var height=parseInt($("#"+target).height());
+       $("#"+target).highcharts().setSize(width,height);
+    },"1500")
+//    alert($("#"+target).height());
+//    alert($("#"+target).width());
+//    $("#"+target).highcharts()
 }
