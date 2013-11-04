@@ -198,7 +198,7 @@ class ApplicationController < ActionController::Base
   
   # I18n
   def set_locale
-    I18n.locale=cookies[:locale] || extract_locale_from_accept_language_header || I18n.default_locale
+    #I18n.locale=cookies[:locale] || extract_locale_from_accept_language_header || I18n.default_locale
   end
   
   private
@@ -213,7 +213,7 @@ end
   # EXPIRED = 2
   # LOCKED =3
 # end
-# 
+#
 # module UserStatus
   # ACTIVE=0
   # LOCKED=1
