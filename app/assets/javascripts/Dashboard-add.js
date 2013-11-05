@@ -251,6 +251,7 @@ DASHBOARD.highchart_template_init=function(){
     high_chart.plotOptions.series.point.events={};
     high_chart.plotOptions.series.marker.lineColor=null;
     high_chart.plotOptions.line.marker.lineWidth=0;
+    high_chart.plotOptions.line.showInLegend=false;
     high_chart.plotOptions.line.marker.radius=1;
     high_chart.xAxis.offset=0;
     high_chart.plotOptions.pie.dataLabels.enabled=false;
