@@ -13,7 +13,7 @@ MANAGE.left_count_observable=function(){
     }
     else{
         $("#manage-right-content #manage-btn-group").css("display","inline-block");
-        $("#manage-right-content").children().css("display","block");
+        $("#manage-right-content .manage-right-list").css("display","block");
     }
 };
 MANAGE.init=function(){

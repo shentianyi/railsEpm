@@ -16,7 +16,7 @@
 *******************************************************************************************************************/
 .assign-entity-wrap{
     position:relative;
-    top:26px;
+    top:31px;
 }
 .assign-entity-wrap>ul{
     list-style-type:none;
@@ -28,6 +28,9 @@
     border-bottom:1px solid #ddd;
     width:50%;
     position:relative;
+}
+.assign-entity-wrap>ul>li:first-of-type{
+    padding:6px 0 15px;
 }
 .assign-entity-wrap>ul>li>h3{
     font-weight:lighter;
