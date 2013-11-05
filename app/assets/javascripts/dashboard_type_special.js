@@ -61,6 +61,7 @@ DASHBOARD.special_grab={
         $tr.find("td:nth-of-type(2)").text(data.total_record);
         $tr.find("td:nth-of-type(3)").text(data.total_value);
         $tr.find("td:nth-of-type(4)").text(data.average_value);
+        $tr.find("td:nth-of-type(5)").text(option.kpi);
     },
     column:function(option){
         var max=$("#"+option.target).highcharts().yAxis[0].getExtremes().dataMax,

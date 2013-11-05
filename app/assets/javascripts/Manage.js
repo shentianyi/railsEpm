@@ -10,10 +10,9 @@ MANAGE.left_count;
 MANAGE.left_count_observable=function(){
     if(MANAGE.left_count==0){
         $("#manage-right-content").children().css("display","none");
-        $("#manage-right-content").children().css("display","none");
     }
     else{
-        $("#manage-right-content").children().css("display","block");
+        $("#manage-right-content #manage-btn-group").css("display","inline-block");
         $("#manage-right-content").children().css("display","block");
     }
 };
