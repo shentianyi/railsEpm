@@ -230,7 +230,6 @@ ifepm.dashboard.form_graph = function(datas,id){
             data:data,
             count:datas[i].count
         };
-
 //        var key_value = {};
 //        ifepm.dashboard.cal_key_value(option,key_value);
 //        ifepm.dashboard.key_value.show(option,key_value);
@@ -246,49 +245,19 @@ ifepm.dashboard.form_graph = function(datas,id){
         add_series(option);
         proper_type_for_chart(option);
         DASHBOARD.add.generate(option);
+
+        if(datas.length == 1 && type =="line"){
+            var option_area={};
+            option_area=deepCopy(option,option_area);
+            option_area.type="arearange";
+            option_area.id="line-target";
+            option_area.count=datas[i].count;
+            add_series(option_area);
+            proper_type_for_chart(option_area);
+        }
     }
 
     if(chart){
-        //targen line
-        if(datas.length == 1 && type !="pie"){
-            var data_max = [];
-            var data_min = [];
-            for(var j = 0;j<datas[0].target_max.length;++j){
-                data_max[j] = {};
-                data_min[j] = {};
-                data_max[j].y = datas[0].target_max[j];
-                data_min[j].y = datas[0].target_min[j];
-            }
-
-            option_max = {
-                kpi:"target_max",
-                id:"target_max",
-                target:container,
-                begin_time:datas[0].startTime,
-                type:type,
-                interval:datas[0].interval,
-                data:data_max,
-                count:datas[0].count,
-            }
-
-            option_min = {
-                kpi:"target_min",
-                id:"target_min",
-                target:container,
-                begin_time:datas[0].startTime,
-                type:type,
-                interval:datas[0].interval,
-                data:data_min,
-                count:datas[0].count,
-            }
-
-            add_series(option_max);
-            proper_type_for_chart(option_max);
-
-            add_series(option_min);
-            proper_type_for_chart(option_min);
-        }
-
         if(type == "pie"){
             for(var i = 0;i<chart.series.length;++i){
                 chart.series[i].update({showInLegend:false});
