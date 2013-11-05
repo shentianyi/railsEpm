@@ -109,7 +109,7 @@ function prepare_to_create_db_view(post){
     dashboard_item.db.title = post.dashboard_name;
     dashboard_item.db.chart_type = post.type;
     dashboard_item.db.dashboard_id= post.dashboard_id;
-    dashboard_item.db.last_update = Date();
+    dashboard_item.db.last_update = new Date().toWayneString().second;
     /*
     * Test
     * */
