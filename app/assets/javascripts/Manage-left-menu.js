@@ -222,7 +222,7 @@ MANAGE.left.manage_left_delete_init=function(){
 MANAGE.manage_menu_left_edit.prototype={
     edit_show:function(name){
         $("#manage-edit-target").blur().css("display","none");
-        $("#manage-btn-group>input").val(name).css("display","inherit").focus();
+        $("#manage-btn-group>input").val(name).css("display","inline-block").focus();
     },
     edit_check:function(e){
         if($.trim($(e.target).val()).length>0){
