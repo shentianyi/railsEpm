@@ -44,7 +44,6 @@ MANAGE.manage_menu_left_add.prototype={
 //                  $("#manage-menu-add input").val("");
 //                  MANAGE.manage_menu_left_add.prototype.add_hide();
 //                  MANAGE.left_count++;
-//                  MANAGE.left_count_observable();
 
 
 
@@ -60,7 +59,6 @@ MANAGE.manage_menu_left_add.prototype={
                           $("#manage-menu-add input").val("");
                           MANAGE.manage_menu_left_add.prototype.add_hide();
                           MANAGE.left_count++;
-                          MANAGE.left_count_observable();
                       } else {
                           MessageBox(data.content,"top","warning");
                       }
@@ -151,7 +149,6 @@ MANAGE.manage_menu_left_delete.prototype={
     delete_complete:function(e){
 //        $(e.target).parent().remove();
 //        MANAGE.left_count--;
-//        MANAGE.left_count_observable();
 
 
         var number = $(e.target).parent().attr("number");
@@ -163,7 +160,6 @@ MANAGE.manage_menu_left_delete.prototype={
               if(data.result){
                    window.location.href = local;
                    MANAGE.left_count--;
-                   MANAGE.left_count_observable();
               }
               else{
                    MessageBox(data.content,"top","warning");

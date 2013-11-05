@@ -26,7 +26,7 @@ DASHBOARD.init=function(){
 
         $("#left-content-title").css("display","block");
         $("#dashboard-content").css("display","block").css("position","relative").css("z-index",99).css("background-color","black");
-        $(".gridster").css("top","10px");
+        $(".ggttyyhh").css("top","10px");
         on_full_size();
     });
     $("body").on("keyup",function(event){

@@ -114,11 +114,16 @@ DASHBOARD.add.generate=function(option){
     }
     option.special_data=special_data;
     DASHBOARD.special_grab[type](option);
-    var t=setTimeout(function(){
-       var width=parseInt($("#"+target).width());
-       var height=parseInt($("#"+target).height());
-       $("#"+target).highcharts().setSize(width,height);
-    },"1500")
+
+    if(option.outer_target!="put-db-chart"){
+        var t=setTimeout(function(){
+            var width=parseInt($("#"+target).width());
+            var height=parseInt($("#"+target).height());
+            $("#"+target).highcharts().setSize(width,height);
+        },"1500");
+    }
+
+
 //    alert($("#"+target).height());
 //    alert($("#"+target).width());
 //    $("#"+target).highcharts()
