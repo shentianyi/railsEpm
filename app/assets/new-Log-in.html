@@ -53,7 +53,7 @@
         </dd>
     </dl>
     <br />
-    <a id="sign-in-btn" class="login-btn log-btn" onclick="document.forms[0].submit();">Go</a>
+    <a id="sign-in-btn" class="login-btn log-btn" onclick="alert('sign-in')">Go</a>
 </form>
 <form action="/subscriptions" method="post" class="signIn-block signShow-block clearfix" id="signUp-block" style="display:none" special="sign-up">
     <h3 class="text-center">Sign up</h3>
@@ -87,7 +87,7 @@
         </dd>
     </dl>
     <br />
-    <a id="sign-up-btn" class="login-btn log-btn" onclick="document.forms[0].submit();">Ok</a>
+    <a id="sign-up-btn" class="login-btn log-btn" onclick="alert('sign-up')">Ok</a>
 </form>
 
 
@@ -145,8 +145,8 @@
                 $("#sign-up").attr('state','close');
             }
         });
-        $("body").on("click",function(event){
-           var e=adapt_event(event);
+        $("body").on("keyup",function(event){
+           var e=adapt_event(event).event;
            if(e.keyCode==13){
                if($("#sign-in").attr("state")=="open"){
                    $("#sign-in-btn").click();
