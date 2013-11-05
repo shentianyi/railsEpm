@@ -20,7 +20,8 @@ right_nav_main.item_prototype={};
 right_nav_main.observe_count={
     observe:function(){
         if(this.count==0){
-            $("#left-content-title>p,#left-content-title>i").css("display","none");
+            $("#current-group-item").text("choose a dashboard in right");
+            $("#left-content-title>i").css("display","none");
         }
         else{
             $("#left-content-title>p,#left-content-title>i").css("display","inline-block");
@@ -33,6 +34,10 @@ right_nav_main.initial={}
 right_nav_main.initial.name=function(){
     var name=$("#content-right-nav-group>li.active").find("a").text();
     $("#current-group-item").text(name);
+    if(name.length==0){
+        $("#current-group-item").text("Please choose a dashboard in DashBoard Group");
+        $("#left-content-title>i").css("display","none");
+    }
 }
 ////////////////////////////////////////////////// add item
 right_nav_main.item_prototype.add=function(){};

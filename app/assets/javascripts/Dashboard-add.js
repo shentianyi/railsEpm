@@ -363,7 +363,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                $("#db-add-kpi-list").append(
                     $("<li />")
                         .append($("<span />").css("backgroundColor",color))
-                        .append($("<p />").text(kpi))
+                        .append($("<p />").text(option.kpi))
                         .append($("<i />").addClass("icon-remove").attr("kpi_id","1"))
                );
 
