@@ -454,6 +454,7 @@ function proper_type_for_chart(){
         var data=[],dataItem,dataItemValue,dataItemTarget,chart_name,chart_color;
         if(this.count==1){
             this.chart.series[0].show();
+            var max_data,index;
             for(var i=0;i<this.chart.series[0].processedYData.length;i++){
                 dataItem={};
                 dataItem.name=this.chart.series[0].data[i].name;
@@ -461,18 +462,27 @@ function proper_type_for_chart(){
                 dataItem.high=this.chart.series[0].data[i].high;
                 dataItem.low=this.chart.series[0].data[i].low;
                 dataItem.unit=this.chart.series[0].data[i].unit;
-//                if(i==0){
-//                    dataItem.sliced=true;
-//                    dataItem.selected=true;
-//                }
+                if(i==0){
+                    max_data=dataItem.y;
+                    index=0;
+                }
+                else{
+                    if(dataItem.y>max_data){
+                        max_data=dataItem.y;
+                        index=i
+                    }
+                }
                 data.push(dataItem);
             }
+            data[index].sliced=true;
+            data[index].selected=true;
             chart_name=this.chart.series[0].name;
 //            chart_color=this.chart.series[0].color;
             this.chart.series[0].hide();
         }
         else{
             chart_name=[];
+            var max_data,index;
             for(var i=0;i<this.count;i++){
                 this.chart.series[i].show();
                 dataItem={};
@@ -494,11 +504,20 @@ function proper_type_for_chart(){
                 dataItem.time_to=this.chart.series[i].data[this.chart.series[i].data.length-1].name;
                 dataItem.unit=this.chart.series[i].data[0].unit;
                 dataItem.color= series_colors[dataItem.seriesId % series_colors.length];
-//                if(i==0){
-//                    dataItem.sliced=true;
-//                    dataItem.selected=true;
-//                }
+                if(i==0){
+                    max_data=dataItem.y;
+                    index=0;
+                }
+                else{
+                    if(dataItem.y>max_data){
+                        max_data=dataItem.y;
+                        index=i
+                    }
+                }
+
                 data.push(dataItem);
+                data[index].sliced=true;
+                data[index].selected=true;
                 this.chart.series[i].hide();
             };
         }

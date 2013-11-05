@@ -112,7 +112,7 @@ function prepare_form_chart() {
     if ($("#chart-body").css("display") == "block") {
         chart_body_close_validate = false;
         interval = $("#chart-interval-alternate").find(".active").attr("interval");
-        type = $("#chart-type-alternate").find(".active").attr("type");
+        type = $("#chart-type-alternate").find(".image").attr("type");
     }
     else {
         chart_body_close_validate = true;

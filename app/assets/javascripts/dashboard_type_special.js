@@ -81,10 +81,23 @@ DASHBOARD.special_grab={
         $tr.find("td:nth-of-type(1)").text(max);
         $tr.find("td:nth-of-type(2)").text(min);
     },
-    pie:function(id,interval){
-
+    pie:function(option){
+        var pie_data=$("#"+option.target).highcharts().get("pie_extra_series").data, i,max,percent,name,total=0;
+        for(i=0;i<pie_data.length;i++){
+            total+=pie_data[i].y;
+            if(pie_data[i].selected==true){
+                max=pie_data[i].y;
+                percent=(pie_data[i].percentage).toFixed(1);
+                name=parseInt(option.count)>1?pie_data[i].kpi_name:pie_data[i].name;
+            }
+        }
+        $data_target=$("#"+option.outer_target+" "+".chart-container-right");
+        $data_target.find("p:first-of-type").text(percent+"%");
+        $data_target.find("p:nth-of-type(2)").text(name);
+        $data_target.find("table tr:first-of-type td:first-of-type").text(max);
+        $data_target.find("table tr:nth-of-type(2) td:first-of-type").text(total);
     },
-    scatter:function(id,interval){
+    scatter:function(option){
 
     }
 }
