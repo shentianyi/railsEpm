@@ -242,19 +242,22 @@ ifepm.dashboard.form_graph = function(datas,id){
             create_environment_for_data(option);
             chart = new Highcharts.Chart(high_chart);
         }
+
+
+
         add_series(option);
         proper_type_for_chart(option);
         DASHBOARD.add.generate(option);
+    }
 
-        if(datas.length == 1 && type =="line"){
-            var option_area={};
-            option_area=deepCopy(option,option_area);
-            option_area.type="arearange";
-            option_area.id="line-target";
-            option_area.count=datas[i].count;
-            add_series(option_area);
-            proper_type_for_chart(option_area);
-        }
+    if(datas.length == 1 && type =="line"){
+        var option_area={};
+        option_area=deepCopy(option,option_area);
+        option_area.type="arearange";
+        option_area.id="line-target";
+        option_area.count=1;
+        add_series(option_area);
+        proper_type_for_chart(option_area);
     }
 
     if(chart){
