@@ -179,7 +179,6 @@ function prepare_form_chart() {
                    chartSeries.addSeries(addSeriesOption);
                    show_chart_body(option);
 
-
                    render_to(option);
                    create_environment_for_data(option);
                    new Highcharts.Chart(high_chart);

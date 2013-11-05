@@ -79,7 +79,7 @@
         </dd>
     </dl>
     <br />
-    <a class="login-btn log-btn" onclick="document.forms[0].submit();">Go</a>
+    <a id="sign-in-btn" class="login-btn log-btn" onclick="document.forms[0].submit();">Go</a>
 </form>
 
 <!--Sign up-->
@@ -133,7 +133,7 @@
         </dd>
     </dl>
     <br />
-    <a class="login-btn log-btn" onclick="document.forms[1].submit();">Ok</a>
+    <a id="sign-up-btn" class="login-btn log-btn" onclick="document.forms[1].submit();">Ok</a>
 </form>
 
 <script>
@@ -167,7 +167,17 @@
                 $('#signUp-block').slideUp('500');
                 $("#sign-up").attr('state','close');
             }
-
+        });
+        $("body").on("click",function(event){
+               var e=adapt_event(event);
+               if(e.keyCode==13){
+                   if($("#sign-in").attr("state")=="open"){
+                       $("#sign-in-btn").click();
+                   }
+                   else if($("#sign-up").attr("state")=="open"){
+                       $("#sign-up-btn").click();
+                   }
+               }
         });
     })
 </script>
