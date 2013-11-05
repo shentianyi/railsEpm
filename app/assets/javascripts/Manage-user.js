@@ -191,7 +191,8 @@ MANAGE.user.add_new = function() {
                               MANAGE.user.icheck.init();
                               MANAGE.user.user_add_close();
                          } else {
-                              MessageBox(data.content, "top", "warning")
+                              var errmsg = "";
+                              MessageBox("Error, "top", "warning")
                          }
                     }
                });
