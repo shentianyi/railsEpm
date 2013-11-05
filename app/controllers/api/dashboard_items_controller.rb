@@ -11,10 +11,20 @@ class Api::DashboardItemsController < ApplicationController
 
 
   def get_data
-    data = DashboardItem::get_item_formatted_data(params[:id])
+    #data = DashboardItem::get_item_formatted_data(params[:id])
+    #respond_to do |t|
+    #  t.json {render :json=>data.to_json}
+    #  t.js {render :js=>jsonp_str(data)}
+    #end
+
+    datas = DashboardCondition::get_item_formatted_data(params[:id])
+
+    @item = DashboardItem.find(params[:id])
+    @item.update_attribute("last_update",params[:last_update])
+
     respond_to do |t|
-      t.json {render :json=>data.to_json}
-      t.js {render :js=>jsonp_str(data)}
+      t.json {render :json=>datas.to_json}
+      t.js {render :js=>jsonp_str(datas)}
     end
   end
 
