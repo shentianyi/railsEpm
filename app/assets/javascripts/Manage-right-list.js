@@ -65,8 +65,8 @@ function manage_item_remove() {
 //                           MANAGE.totalChecked-=1;
 //                           total_check_listener();
                if(MANAGE.type == "group" && $("#user-edit").css("left") != "-50px") {
-                    $("#user-edit").css("left", "-50px");
-                    $("#manage-right-content").css("left", "150px");
+                    $("#user-edit").css("left", "-250px");
+                    $("#manage-right-content").css("padding-left", "0px");
                     MANAGE.user.user_add_clear();
                }
                if(MANAGE.type == 'category' && $(this).attr("is_calculated")=="false"){
