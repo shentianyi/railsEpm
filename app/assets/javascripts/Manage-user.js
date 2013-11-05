@@ -259,7 +259,7 @@ MANAGE.user.edit = function() {
                //                           $target.find(".user-manage-name").text(edit_name);
                //                           $target.find(".user-manage-mail").text(edit_mail);
                //                           $target.find(".user-manage-authority").text(edit_role).attr("value",edit_authority);
-               MANAGE.user.user_add_close();
+               MANAGE.user.user_edit_close();
           } else {
                MessageBox("Please fix the input with red border", "top", "danger");
           }
@@ -308,12 +308,19 @@ MANAGE.user.assign.init = function() {
           });
 
 //        $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
+//         for(var i = 0; i < 2; i++) {
+//               $("#kpi-category").append($("<option />").attr("value", i).text(i))
+//         }
+//         $("#kpi-category").prepend($("<option />").attr("value", ""));
+//         $("#kpi-category").val('').trigger('chosen:updated');
+
      });
 
      $("body").on("click", "#close-assign-kpi-options", function() {
           $("#assign-kpi-options[special='user']").hide("1000");
           $("#assign-kpi-list").empty();
-          $("#kpi-category").children().first().remove();
+          $("#kpi-category option").remove();
+          $("#kpi-category").val('').trigger('chosen:updated');
      });
      //右边的KPI列出来
      $("body").on("change","#kpi-category",function(event){
@@ -382,19 +389,18 @@ MANAGE.user.assign.init = function() {
      //左边input的js
      $("body").on("keyup", "#assign-kpi-inner>ul>li input[type='text']", function(event) {
           clearNoNumZero(adapt_event(event).target);
-     }).on("keydown", "#assign-kpi-inner>ul>li input[type='text']", function(event) {
-          if(adapt_event(event).event.keyCode == 13) {
-               $(adapt_event(event).target).blur();
-          }
-     });
-     $("#assign-kpi-wrap").on("blur", "#assign-kpi-inner>ul>li input[type='text']", MANAGE.user.assign.input);
+     })
+     $("body").on("blur", "#assign-kpi-inner>ul>li input[type='text']", MANAGE.user.assign.input);
      $("body").on("click", "#assign-kpi-cancel", MANAGE.user.assign.close);
 };
 
 MANAGE.user.assign.close = function() {
      $("#assign-kpi-inner>.left").empty();
      if($("#assign-kpi-options[special='user']").css("display") == "block") {
-          $("#assign-kpi-options[special='user']").hide("1000")
+          $("#assign-kpi-options[special='user']").hide("1000");
+          $("#assign-kpi-list").empty();
+          $("#kpi-category option").remove();
+          $("#kpi-category").val('').trigger('chosen:updated');
      }
      $("#assign-kpi-wrap").css("display", "none");
 };
@@ -408,10 +414,9 @@ MANAGE.user.assign.input = function(event) {
           type : 'PUT',
           data : {
                id : id,
-               user_kpi_item : {
-                    target_max : target_max,
-                    target_min:  target_min
-               }
+               target_max: target_max,
+               target_min: target_min
+
           },
           success : function(data) {
                if(!data.result)
