@@ -252,6 +252,7 @@ right_nav_main.item_prototype.edit.prototype={
             success : function(data) {
                 if(data){
                     $("#content-right-nav-group>li.active>a").text(name);
+                    $("#current-group-item").text(name);
                     $("#content-right-nav-group>li.active").attr("title",name);
                 }
             }
@@ -297,6 +298,9 @@ right_nav_main.item_prototype.edit_init=function(){
     }).on("blur","input",function(){
             right_nav_main[right_nav_main.current_section].edit.edit_hide();
     });
+    $("#content-left-content-edit-block").on("click","input",function(event){
+            stop_propagation(event);
+    })
 }
 
 
