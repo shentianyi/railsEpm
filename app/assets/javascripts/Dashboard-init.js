@@ -24,7 +24,7 @@ DASHBOARD.init=function(){
     $("body").on("click","#dashboard-full-size",function(){
         $("#content-right-nav").css("display","none");
         $("#content-left-main").css("display","table-cell");
-        $("#dashboard-content").css("position","relative").css("z-index",99);
+        $("#dashboard-content").css("position","relative").css("z-index",99).css("background-color","black");
         $(".gridster").css("top","10px");
         on_full_size();
     });
@@ -33,7 +33,7 @@ DASHBOARD.init=function(){
        if(e.keyCode==27 && $("#content-left-main").css("display")=="table-cell"){
            $("#content-right-nav").css("display","table-cell");
            $("#content-left-main").css("display","block");
-           $("#dashboard-content").css("position","static").css("z-index",0);
+           $("#dashboard-content").css("position","static").css("z-index",0).css("background-color","white");
            $(".gridster").css("top","120px");
        }
     });
