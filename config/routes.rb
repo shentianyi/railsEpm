@@ -1,6 +1,6 @@
 IFEpm::Application.routes.draw do
 
-  root :to => 'user_sessions#new'
+  root :to => 'welcome#index'
   # get "welcome/navigate"
 
   resources :entities  do
