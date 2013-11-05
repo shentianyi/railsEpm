@@ -24,7 +24,7 @@ DASHBOARD.init=function(){
     $("body").on("click","#dashboard-full-size",function(){
         $("#content-right-nav").css("display","none");
         $("#left-content-title").css("display","block");
-        $("#dashboard-content").css("display","block").css("position","relative").css("z-index",99).css("background-color","black");
+        $("#dashboard-content").css("display","block").css("position","relative").css("z-index",99).css("background-color","#222");
         $(".ggttyyhh").css("top","10px");
         on_full_size();
     });
