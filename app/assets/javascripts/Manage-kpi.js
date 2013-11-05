@@ -224,6 +224,7 @@ function post_kpi(option){
                         .append($("<td />").text(I18n.t('view.manage.kpi.frequency')))
                         .append($("<td />").text(I18n.t('view.manage.kpi.trend')))
                         .append($("<td />").text(I18n.t('view.manage.kpi.target')))
+                        .append($("<td />").text(I18n.t('view.manage.kpi.target_min')))
                         .append($("<td />").text(I18n.t('view.manage.kpi.calculate_type')))
                     )
                 )

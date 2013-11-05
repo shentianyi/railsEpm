@@ -248,6 +248,7 @@ DASHBOARD.add.init=function(){
 
 };
 DASHBOARD.highchart_template_init=function(){
+    high_chart.borderRadius=0;
     high_chart.plotOptions.series.point.events={};
     high_chart.plotOptions.series.marker.lineColor=null;
     high_chart.plotOptions.line.marker.lineWidth=0;
@@ -390,15 +391,16 @@ DASHBOARD.add.prepare_form_chart=function() {
                    new Highcharts.Chart(high_chart);
                    add_series(option);
                    proper_type_for_chart(option);
+
                    if(option.type=="line"&&db_chartSeries.getCount()==1){
-                    var option_area={};
-                    option_area=deepCopy(option,option_area);
-                    option_area.type="arearange";
-                    option_area.id="line-target";
-                    option_area.count=db_chartSeries.getCount() + 1;
-                    add_series(option_area);
-                    proper_type_for_chart(option_area);
-                }
+                        var option_area={};
+                        option_area=deepCopy(option,option_area);
+                        option_area.type="arearange";
+                        option_area.id="line-target";
+                        option_area.count=db_chartSeries.getCount() + 1;
+                        add_series(option_area);
+                        proper_type_for_chart(option_area);
+                    }
                }
                else{
                    option.data=data_array;

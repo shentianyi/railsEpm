@@ -27,7 +27,6 @@ DASHBOARD.init=function(){
         $("#left-content-title").css("display","block");
         $("#dashboard-content").css("display","block").css("position","relative").css("z-index",99).css("background-color","black");
         $(".ggttyyhh").css("top","10px");
-        //full screen
         on_full_size();
     });
     $("body").on("keyup",function(event){
@@ -42,8 +41,6 @@ DASHBOARD.init=function(){
                $("#dashboard-content").css("display","none").css("position","static").css("z-index",0).css("background-color","white");
            }
            $(".gridster").css("top","120px");
-           //restore size
-          on_restore_screen();
        }
     });
     DASHBOARD.highchart_template_init();
