@@ -40,8 +40,8 @@ MANAGE.view.init=function(){
               success:function(data){
                   if(data.result){
                       $("#assign-entity-wrap>ul").append($("<li />")
-                          .append($("<h3 />").attr("entity_id",data.object).text(text))
-                          .append($("<i />").addClass("icon-trash"))
+                          .append($("<h3 />").text(text))
+                          .append($("<i />").addClass("icon-trash").attr("entity_id",data.object))
                       );
                   }
                   else{
