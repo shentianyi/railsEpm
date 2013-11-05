@@ -163,7 +163,7 @@ MANAGE.manage_menu_left_delete.prototype={
               if(data.result){
                    window.location.href = local;
                    MANAGE.left_count--;
-                  MANAGE.left_count_observable();
+                   MANAGE.left_count_observable();
               }
               else{
                    MessageBox(data.content,"top","warning");
