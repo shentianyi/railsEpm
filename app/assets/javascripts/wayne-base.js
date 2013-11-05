@@ -40,8 +40,8 @@ if(!Date.prototype.monthToQuarter){
 //化为标准格式显示用
 if(!Date.prototype.toWayneString){
     Date.prototype.toWayneString=function(){
-       var second=this.getSeconds()<10?"0"+this.getHours():this.getHours();
-       var minute=this.getMinutes()<10?"0"+this.getHours():this.getHours();
+       var second=this.getSeconds()<10?"0"+this.getSeconds():this.getSeconds();
+       var minute=this.getMinutes()<10?"0"+this.getMinutes():this.getMinutes();
        var hour=this.getHours()<10?"0"+this.getHours():this.getHours();
        var day=this.getDate()<10?"0"+this.getDate():this.getDate();
        var month=this.getMonth()+1<10?"0"+(this.getMonth()+1):this.getMonth()+1;
