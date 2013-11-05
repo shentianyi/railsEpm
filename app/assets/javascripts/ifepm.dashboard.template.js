@@ -17,7 +17,7 @@ ifepm.template.view = '<li !attr!=!id!><div>' +
     //'<p class="text-center">!name!</p>' +
     '<div class="dashboard-moreDetail">' +
     '<p>!title!</p>'+
-    '<i class="icon-remove" effect_on=!id!></i>' +
+    '<i class="icon-remove" effect_on=!id!></i><span class="update-time">!last_update!</span>' +
     '</div>' +
     //'<i class="icon-list db-infoMark"></i>' +
 

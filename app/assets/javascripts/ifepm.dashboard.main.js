@@ -289,7 +289,7 @@ function reload(id){
             return;
         }
         var current_graph = ifepm.dashboard.graphs[id];
-        var last_update = Date();
+        var last_update = new Date().toWayneString().second;
         current_graph.last_update = last_update;
         ifepm.dashboard.set_last_update_time(id,last_update);
         $.ajax(
@@ -529,6 +529,7 @@ function Graph(){
             .replace(/!title!/g,graph_item.title)
             .replace(/!item_container_id!/g,ifepm.dashboard.make_item_container_id(graph_item.id))
             .replace(/!attr!/g,ifepm.config.graph_indicator)
+            .replace(/!last_update!/g,graph_item.last_update)
             //.replace(/!name!/g,graph_item.name)
             //.replace(/!kpi_name!/g,graph_item.kpi_name)
             //.replace(/!entity_group!/g,graph_item.entity_group)
@@ -566,6 +567,10 @@ ifepm.dashboard.create_dashboard=function(){
 
                 for(index in ifepm.dashboard.graph_sequence){
                     var graph_id = ifepm.dashboard.graph_sequence[index];
+                    if( ifepm.dashboard.graphs[graph_id].last_update == null){
+                        ifepm.dashboard.graphs[graph_id].last_update =  new Date().toWayneString().second;
+                    }
+
                     $(container_selector).append(
                         ifepm.dashboard.graphs[graph_id].container(ifepm.dashboard.graphs[graph_id]));
 
@@ -601,7 +606,7 @@ ifepm.dashboard.create_dashboard=function(){
                             ifepm.dashboard.save_grid_pos(options,{success:function(){}});
                         }
                     ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
-                    ifepm.dashboard.set_last_update_time(ifepm.dashboard.graphs[graph_id].id,ifepm.dashboard.graphs[graph_id].last_update);
+                    //ifepm.dashboard.set_last_update_time(ifepm.dashboard.graphs[graph_id].id,ifepm.dashboard.graphs[graph_id].last_update);
                 }
                 //configure the sortable
                 $(container_selector).sortable(
