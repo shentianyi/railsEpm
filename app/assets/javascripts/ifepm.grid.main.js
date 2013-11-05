@@ -22,8 +22,8 @@ ifepm.dashboard_widget.widget_config = {
     width:0,
     max_col:4,
     max_row:2,
-    min_width:(1024 - 150)/4 -20 ,
-    min_height:(800 - 150)/2 -20
+    min_width:1024/4 -20 ,
+    min_height:(800 - 110)/2 -20
 };
 
 var gridster;
@@ -35,10 +35,10 @@ var min_height =  min_width;
 ifepm.dashboard_widget.init = function(option){
     ifepm.dashboard_widget.widget_config.max_col = option.max_col;
     ifepm.dashboard_widget.widget_config.max_row = option.max_row;
-    ifepm.dashboard_widget.widget_config.min_width = (1024 - 150)/option.max_col - 20;
-    ifepm.dashboard_widget.widget_config.min_height = (800 - 150)/option.max_row - 20;
-    ifepm.dashboard_widget.widget_config.width = (option.width - 50)/option.max_col - 20;
-    ifepm.dashboard_widget.widget_config.height = (option.height - 40)/option.max_row - 30;
+    ifepm.dashboard_widget.widget_config.min_width = 1024 /option.max_col - 20;
+    ifepm.dashboard_widget.widget_config.min_height = (800 - 110)/option.max_row - 20;
+    ifepm.dashboard_widget.widget_config.width = option.width/option.max_col - 20;
+    ifepm.dashboard_widget.widget_config.height = (option.height - 120)/option.max_row - 30;
 
     ifepm.dashboard_widget.widget_config.width =
         ifepm.dashboard_widget.widget_config.width < ifepm.dashboard_widget.widget_config.min_width ? ifepm.dashboard_widget.widget_config.min_width:ifepm.dashboard_widget.widget_config.width;
