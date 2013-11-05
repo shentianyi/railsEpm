@@ -9,12 +9,12 @@ var MANAGE=MANAGE || {} ;
 MANAGE.left_count;
 MANAGE.left_count_observable=function(){
     if(MANAGE.left_count==0){
-        $("#manage-right-content #manage-btn-group").css("display","none");
-        $("#manage-right-content .manage-right-list").css("display","none");
+        $("#manage-right-content").children().css("display","none");
+        $("#manage-right-content").children().css("display","none");
     }
     else{
-        $("#manage-right-content #manage-btn-group").css("display","block");
-        $("#manage-right-content .manage-right-list").css("display","block");
+        $("#manage-right-content").children().css("display","block");
+        $("#manage-right-content").children().css("display","block");
     }
 };
 MANAGE.init=function(){
