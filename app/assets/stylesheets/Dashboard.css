@@ -1,15 +1,15 @@
 /********************************************************************************************************* 分类系列
 *******************************************************************************************************************/
-.manage-left-menu[type="dashboard"] li:first-of-type{
-    text-align:center;
-    font-weight:lighter;
-    font-size:25px;
-    color:#5FA9DA;
-    padding:28px 0 10px;
-}
-.manage-btn-group>a{
-    padding:8px 15px;
-}
+/*.manage-left-menu[type="dashboard"] li:first-of-type{*/
+    /*text-align:center;*/
+    /*font-weight:lighter;*/
+    /*font-size:25px;*/
+    /*color:#5FA9DA;*/
+    /*padding:28px 0 10px;*/
+/*}*/
+/*.manage-btn-group>a{*/
+    /*padding:8px 15px;*/
+/*}*/
 /********************************************************************************************************* main content
 *******************************************************************************************************************/
 .dashboard-content{
