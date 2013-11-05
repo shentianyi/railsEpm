@@ -236,6 +236,7 @@ MANAGE.user.edit = function() {
                     dataType : 'json',
                     success : function(data) {
                          if(data.result) {
+                             console.log(data);
                               var object=data.object;
                               $target.find(".user-manage-name").text(object.first_name);
                               $target.find(".user-manage-mail").text(object.email);
