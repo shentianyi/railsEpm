@@ -21,7 +21,7 @@
     position:relative;
     text-align:center;
     font-size:13px;
-    color:rgba(103,103,103,0.4);
+    color:rgba(103,103,103,1);
     background-color:rgba(209,209,209,0.1);
     padding:0px;
     width:123px;
@@ -125,14 +125,17 @@
     height:70px;
     position:relative;
     display:inline-block;
-    top:42px;
+    top:2px;
     left:33px;
 }
 .manage-btn-group>a{
     width:100px;
     margin-right:20px;
     margin-left:0;
-
+    position:absolute;
+    top:35px;
+    padding:7px 6px;
+    font-size:13px;
 }
 .manage-btn-group>p{
     margin-top:6px;
@@ -140,6 +143,7 @@
     cursor:pointer;
     display:inline-block;
     transition:color 0.35s ease-out;
+    font-size:21px;
 }
 .manage-btn-group>p:hover{
     color:rgba(0, 0, 0, 0.65);
@@ -154,12 +158,9 @@
     display:inline-block;
 }
 .manage-btn-group>input{
-    position:absolute;
-    padding:1px 5px;
-    height:19px;
+    padding:3px 5px;
+    height:26px;
     width:120px;
-    top:41px;
-    left:0px;
     font-size:13px;
     display:none;
 }
@@ -177,7 +178,7 @@
 /**************************************************** 下角的列表
 *****************************************************************/
 .manage-right-list{
-    margin-top:66px;
+    margin-top:27px;
     padding-bottom:40px;
 }
 .right-list-top-control{
