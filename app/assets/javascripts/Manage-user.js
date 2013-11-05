@@ -245,7 +245,6 @@ MANAGE.user.edit = function() {
                     dataType : 'json',
                     success : function(data) {
                          if(data.result) {
-                             console.log(data);
                               var object=data.object;
                               $target.find(".user-manage-name").text(object.first_name);
                               $target.find(".user-manage-mail").text(object.email);
@@ -294,26 +293,32 @@ MANAGE.user.assign.init = function() {
      });
      //assign kpi category 初始化
      $("#assign-kpi-pick").on("click", function() {
-          $.ajax({
-               url : 'kpi_categories/list',
-               dataType : 'json',
-               success : function(data) {
-                    for(var i = 0; i < data.length; i++) {
+         if($(this).attr("state")=="close"){
+
+             $.ajax({
+                 url : 'kpi_categories/list',
+                 dataType : 'json',
+                 success : function(data) {
+                     for(var i = 0; i < data.length; i++) {
                          $("#kpi-category").append($("<option />").attr("value", data[i].id).text(data[i].name))
-                    }
-                    $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
-                    $("#kpi-category").prepend($("<option />").attr("value", ""));
-                    $("#kpi-category").val('').trigger('chosen:updated');
-               }
-          });
+                     }
+                     $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
+                     $("#kpi-category").prepend($("<option />").attr("value", ""));
+                     $("#kpi-category").val('').trigger('chosen:updated');
+                     $(this).attr("state","open");
+                 }
+             });
 
-//        $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
-//         for(var i = 0; i < 2; i++) {
-//               $("#kpi-category").append($("<option />").attr("value", i).text(i))
-//         }
-//         $("#kpi-category").prepend($("<option />").attr("value", ""));
-//         $("#kpi-category").val('').trigger('chosen:updated');
+//             $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
+//             for(var i = 0; i < 2; i++) {
+//                 $("#kpi-category").append($("<option />").attr("value", i).text(i))
+//             }
+//             $("#kpi-category").prepend($("<option />").attr("value", ""));
+//             $("#kpi-category").val('').trigger('chosen:updated');
+//             $(this).attr("state","open");
 
+
+         }
      });
 
      $("body").on("click", "#close-assign-kpi-options", function() {
@@ -321,6 +326,7 @@ MANAGE.user.assign.init = function() {
           $("#assign-kpi-list").empty();
           $("#kpi-category option").remove();
           $("#kpi-category").val('').trigger('chosen:updated');
+          $("#assign-kpi-pick").attr("state","close");
      });
      //右边的KPI列出来
      $("body").on("change","#kpi-category",function(event){
@@ -334,7 +340,8 @@ MANAGE.user.assign.init = function() {
                success : function(data) {
                     $("#assign-kpi-list").empty();
                     for(var i = 0; i < data.length; i++) {
-                         $("#assign-kpi-list").append($("<li />").append($("<h3 />").attr("kpi_id", data[i].id).text(data[i].name)).append($("<p />").attr("title", data[i].description).text(data[i].description)));
+                         $("#assign-kpi-list").append($("<li />")
+                             .append($("<h3 />").attr("kpi_id", data[i].id).text(data[i].name)).append($("<p />").attr("title", data[i].description).text(data[i].description)));
                     }
                }
           });
@@ -359,7 +366,19 @@ MANAGE.user.assign.init = function() {
                     type : 'post',
                     success : function(data) {
                          if(data[0]) {
-                              $("#assign-kpi-inner>.left").append($("<li />").attr("id", data[0].id).attr("kpi_id", data[1].id).append($("<table />").append($("<tr />").append($("<td />").text(data[1].name)).append($("<td />").append($("<input type='text'/>").val(data[1].target).attr("id", data[0].id)))).append($("<tr />").append($("<td />").text(data[1].description)).append($("<td />").text("target")))).append($("<i />").addClass("icon-trash")));
+                              $("#assign-kpi-inner>.left").append($("<li />").attr("id", data[0].id).attr("kpi_id", data[1].id)
+                                  .append($("<table />").append($("<tr />")
+                                        .append($("<td />").text(data[1].name))
+                                        .append($("<td />").append($("<input type='text'/>").val(data[1].target_max).attr("id", data[0].id)))
+                                         .append($("<td />").append($("<input type='text'/>").val(data[1].target_min).attr("id", data[0].id)))
+                                      )
+                                      .append($("<tr />")
+                                          .append($("<td />").text(data[1].description))
+                                          .append($("<td />").text("Target Max"))
+                                          .append($("<td />").text("Target Min"))
+                                      )
+                                  )
+                                  .append($("<i />").addClass("icon-trash")));
                          } else {
                               MessageBox("Same KPI has already been assigned", "top", "warning");
                          }
@@ -398,6 +417,7 @@ MANAGE.user.assign.close = function() {
      $("#assign-kpi-inner>.left").empty();
      if($("#assign-kpi-options[special='user']").css("display") == "block") {
           $("#assign-kpi-options[special='user']").hide("1000");
+          $("#assign-kpi-pick").attr("state","close");
           $("#assign-kpi-list").empty();
           $("#kpi-category option").remove();
           $("#kpi-category").val('').trigger('chosen:updated');
