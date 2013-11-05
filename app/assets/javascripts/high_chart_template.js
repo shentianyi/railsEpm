@@ -122,8 +122,8 @@ var high_chart = {
                         this.graph.attr('zIndex', this.index);
                     }
                 }
-            },
-            showInLegend: false
+            }
+
         },
 
         pie: {
