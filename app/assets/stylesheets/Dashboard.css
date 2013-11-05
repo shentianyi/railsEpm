@@ -28,28 +28,33 @@
 }
 .dashBoard-show>li{
     border:1px solid #ddd;
-    padding:2px 0;
-    border-radius:3px;
-    -webkit-border-radius:3px;
-    -moz-border-radius:3px;
+    padding:0;
+    border-radius:6px;
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    box-shadow:1px 1px 2px rgba(0,0,0,0.3);
+    -moz-box-shadow:1px 1px 2px rgba(0,0,0,0.3);
+    -webkit-box-shadow:1px 1px 2px rgba(0,0,0,0.3);
 }
 .dashboard-moreDetail{
     padding:6px 7px;
     position:relative;
     border-bottom:1px solid #ddd;
+    background-color:#EFF2F6;
+    cursor:move;
 }
 .dashboard-moreDetail>p{
-    margin:0px;
-    width:250px;
+    margin:-3px 0 0;
+    width:450px;
     text-overflow:ellipsis;
     overflow:hidden;
     white-space:nowrap;
     font-size:16px;
-    color:rgba(0,0,0,0.5);
+    color:rgba(0,0,0,0.7);
 }
 .dashboard-moreDetail>i{
     position:absolute;
-    top:8px;
+    top:5px;
     right:6px;
     pointer-events:auto;
     color:rgba(0,0,0,0.15);
@@ -60,9 +65,9 @@
     color:rgba(0,0,0,0.9);
 }
 .update-time{
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.7);
     font-size: 12px;
     position: absolute;
     right: 42px;
-    top: 8px;
+    top:6px;
 }

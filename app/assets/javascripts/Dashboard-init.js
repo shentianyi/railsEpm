@@ -23,7 +23,6 @@ DASHBOARD.init=function(){
     });
     $("body").on("click","#dashboard-full-size",function(){
         $("#content-right-nav").css("display","none");
-
         $("#left-content-title").css("display","block");
         $("#dashboard-content").css("display","block").css("position","relative").css("z-index",99).css("background-color","black");
         $(".ggttyyhh").css("top","10px");
@@ -41,6 +40,7 @@ DASHBOARD.init=function(){
                $("#dashboard-content").css("display","none").css("position","static").css("z-index",0).css("background-color","white");
            }
            $(".gridster").css("top","120px");
+
        }
     });
     DASHBOARD.highchart_template_init();
