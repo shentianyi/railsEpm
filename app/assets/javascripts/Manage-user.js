@@ -191,7 +191,17 @@ MANAGE.user.add_new = function() {
                               MANAGE.user.icheck.init();
                               MANAGE.user.user_add_close();
                          } else {
-                              MessageBox(data.content, "top", "warning")
+                              var errmsg = "";
+                              if(data.content.hasOwnProperty("email")){
+                                   errmsg = errmsg + "邮箱："+data.content.email[0] + ";";
+                              }
+                              if(data.content.hasOwnProperty("password")){
+                                   errmsg = errmsg + "  密码："+data.content.password[0] + ";";
+                              }
+                              if(data.content.hasOwnProperty("password_confirmation")){
+                                   errmsg = errmsg + "  密码确认："+data.content.password_confirmation[0] + ";";
+                              }
+                              MessageBox(errmsg, "top", "warning")
                          }
                     }
                });

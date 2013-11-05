@@ -13,8 +13,8 @@ class DashboardsController < ApplicationController
        msg[:errors]= @new_dashboard.errors.full_messages
      else
        msg[:result]=true
-       msg[:id]=@new_dashboard.id
-       msg[:object] = @new_dashboard
+       #msg[:id]=@new_dashboard.id
+       msg[:object] = @new_dashboard.id
      end
      respond_to do |t|
        t.json {render :json=>msg}
