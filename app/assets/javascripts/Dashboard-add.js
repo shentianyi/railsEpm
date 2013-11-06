@@ -380,7 +380,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                     $("<li />")
                         .append($("<span />").css("backgroundColor",color))
                         .append($("<p />").text(option.kpi))
-                        .append($("<i />").addClass("icon-remove").attr("kpi_id","1"))
+                        .append($("<i />").addClass("icon-remove").attr("kpi_id",option.id))
                );
 
                var length=msg.object.current.length;
