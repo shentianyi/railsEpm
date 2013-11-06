@@ -349,8 +349,8 @@ function init_date_picker(){
 //grid view
 function init_grid(){
     var option = {};
-    option.width = $("div .dashboard-content").width();
-    option.height = $("div .dashboard-content").height();
+    option.width = $("div.gridster").width();
+    option.height = $(document).height()-$("header").height()-$("#left-content-title").height()-1;
     option.max_col = 4;
     option.max_row = 2;
     ifepm.dashboard_widget.init(option);
@@ -379,8 +379,8 @@ function on_dragstop(event,ui){
 * */
 function on_full_size(){
     var option = {};
-    option.width = $("div .dashboard-content").width();
-    option.height = $("div .dashboard-content").height();
+    option.width = $("div .gridster").width();
+    option.height = 0;
     option.max_col = 4;
     option.max_row = 3;
     ifepm.dashboard_widget.resize(option);
