@@ -58,147 +58,10 @@ ifepm.dashboard.graphs=ifepm.dashboard.graphs || {};
 
 ifepm.dashboard.graph_sequence =[];
 
-//
-//var db_chartSeries = {
-//    count: 0,
-//    id_count:0,
-//    series: [],
-//    getCount: function () {
-//        return this.count
-//    },
-//    addCount: function () {
-//        this.count += 1
-//    },
-//    minusCount: function () {
-//        this.count -= 1
-//    },
-//    getSeries: function () {
-//        return this.series
-//    },
-//    addSeries: function (series) {
-//        this.series.push(series)
-//    }
-//};
-
-/*
-* @function setLastUptateTime
-* @params container,time
-* */
 ifepm.dashboard.set_last_update_time = function(id,lastupdate_time){
     var $p = $("li#"+id+" #last_update").text(lastupdate_time);
 }
 
-/*
-* @function cal_key_value
-* @params options,key_value
-* */
-//ifepm.dashboard.cal_key_value = function(option,key_value){
-//    var out_of_target= 0, i,total_value= 0,max_value = 0,min_value = 0;
-//    for(i=0;i<option.data.length;i++){
-//        var data=option.data[i];
-//        if(data.y<data.low || data.y>data.high){
-//            out_of_target++
-//        }
-//        if(i==0){
-//            max_value=min_value=data.y
-//        }
-//        else{
-//            if(data.y>max_value){
-//                max_value=data.y
-//            }
-//            else if(data.y<min_value){
-//                min_value=data.y
-//            }
-//        }
-//        total_value+=data.y
-//    }
-//    key_value[option.interval+"_info"]={};
-//    key_value[option.interval+"_info"].out_of_target=out_of_target;
-//    key_value[option.interval+"_info"].total_record=option.data.length;
-//    key_value[option.interval+"_info"].total_value=total_value+option.data[0].unit;
-//    key_value[option.interval+"_info"].average_value=(total_value/option.data.length).toFixed(1)+option.data[0].unit;
-//    key_value[option.interval+"_info"].max_value=max_value;
-//    key_value[option.interval+"_info"].min_value=min_value;
-//}
-
-/*
-* @function key_value_show
-* @params id,key_value
-* */
-//ifepm.dashboard.key_value = {
-//    top_hide:function(id){
-//        $("li #"+id+" "+".chart-container-top").css("display","none");
-//        $("li #"+id+" "+".db-chart-container").css("top","0px");
-//        $("li #"+id+" "+".chart-container-right").css("top","0px");
-//    },
-//    right_hide:function(id){
-//        $("li #"+id+" "+".chart-container-right").css("display","none");
-//        $("li #"+id+" "+".db-chart-container").css("right","0px");
-//    },
-//    bottom_hide:function(id){
-//        $("li #"+id+" "+".chart-container-bottom").css("display","none");
-//        $("li #"+id+" "+".db-chart-container").css("bottom","0px");
-//        $("li #"+id+" "+".chart-container-right").css("bottom","0px");
-//    },
-//    top_show:function(id){
-//        $("li #"+id+" "+".chart-container-top").css("display","block");
-//        $("li #"+id+" "+".db-chart-container").css("top","85px");
-//        $("li #"+id+" "+".chart-container-right").css("top","85px");
-//    },
-//    right_show:function(id){
-//        $("li #"+id+" "+".chart-container-right").css("display","block");
-//        $("li #"+id+" "+".db-chart-container").css("right","278px");
-//    },
-//    bottom_show:function(id){
-//        $("li #"+id+" "+".chart-container-bottom").css("display","block");
-//        $("li #"+id+" "+".db-chart-container").css("bottom","80px");
-//        $("li #"+id+" "+".chart-container-right").css("bottom","80px");
-//    },
-//
-//    show:function(option,key_value){
-//        var data = key_value[option.interval+"_info"];
-//
-//        switch(option.type){
-//            case "line":
-//                this.top_hide(option.id);
-//                this.right_hide(option.id);
-//                this.bottom_show(option.id);
-//                //Set Key Value
-//                var $tr=$("li#"+option.id+" #put-db-chart .chart-container-bottom table tr:first");
-//                $tr.find("td:nth-of-type(1)").text(data.out_of_target);
-//                $tr.find("td:nth-of-type(2)").text(data.total_record);
-//                $tr.find("td:nth-of-type(3)").text(data.total_value);
-//                $tr.find("td:nth-of-type(4)").text(data.average_value);
-//                break;
-//            case "column":
-//                this.right_hide(option.id);
-//                this.bottom_hide(option.id);
-//                this.top_show(option.id);
-//                //Set Key Value
-//
-//                break;
-//            case "pie":
-//                this.top_hide(option.id);
-//                this.bottom_hide(option.id);
-//                this.right_show(option.id);
-//                $("li #"+option.id+" "+".chart-container-right-scatter").css("display","none");
-//                break;
-//            case "scatter":
-//                this.top_hide(option.id);
-//                this.bottom_hide(option.id);
-//                this.right_hide(option.id);
-//                break;
-//            default:
-//                break;
-//        }
-//        //Set Key_Value
-//    }
-//}
-
-/*
-* @ function n form_graph a new function to render chart
-* @ params data
-* */
 var isformchart = false;
 
 ifepm.dashboard.form_graph = function(datas,id){
@@ -230,10 +93,6 @@ ifepm.dashboard.form_graph = function(datas,id){
             data:data,
             count:datas[i].count
         };
-//        var key_value = {};
-//        ifepm.dashboard.cal_key_value(option,key_value);
-//        ifepm.dashboard.key_value.show(option,key_value);
-
         if(i==0){
             if(option.type=="pie"){
                 high_chart.plotOptions.pie.size="70%";
@@ -242,9 +101,6 @@ ifepm.dashboard.form_graph = function(datas,id){
             create_environment_for_data(option);
             chart = new Highcharts.Chart(high_chart);
         }
-
-
-
         add_series(option);
         proper_type_for_chart(option);
         DASHBOARD.add.generate(option);
@@ -259,7 +115,7 @@ ifepm.dashboard.form_graph = function(datas,id){
         add_series(option_area);
         proper_type_for_chart(option_area);
     }
-
+    limit_pointer_number(option);
     if(chart){
         if(type == "pie"){
             for(var i = 0;i<chart.series.length;++i){

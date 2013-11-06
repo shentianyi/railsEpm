@@ -249,15 +249,29 @@ DASHBOARD.add.init=function(){
 };
 DASHBOARD.highchart_template_init=function(){
     high_chart.borderRadius=0;
+    high_chart.chart.marginTop=0;
+    high_chart.chart.spacingBottom=0;
+//    high_chart.legend.align="left";
+//    high_chart.legend.verticalAlign="top";
+//    high_chart.legend.x=-10;
+//    high_chart.legend.y=5;
+//    high_chart.legend.floating=true;
+//    high_chart.legend.maxHeight=100;
+//    high_chart.legend.layout="vertical";
+//    high_chart.legend.itemStyle.fontSize="10px";
+//    high_chart.legend.itemStyle.color="rgba(0,0,0,0.6)";
+//    high_chart.legend.itemMarginBottom=2;
+    high_chart.legend.margin=0;
     high_chart.plotOptions.series.point.events={};
     high_chart.plotOptions.series.marker.lineColor=null;
     high_chart.plotOptions.line.marker.lineWidth=0;
     high_chart.plotOptions.line.showInLegend=false;
     high_chart.plotOptions.line.marker.radius=1;
     high_chart.xAxis.offset=0;
+    high_chart.xAxis.labels.style.fontSize="9px";
+    high_chart.xAxis.labels.style.color="rgba(0,0,0,0.5)";
     high_chart.plotOptions.pie.dataLabels.enabled=false;
     high_chart.yAxis.labels.enabled=false;
-    high_chart.xAxis.labels.style.color="rgba(0,0,0,0.2)";
     high_chart.plotOptions.pie.point={};
     high_chart.plotOptions.pie.events={};
     high_chart.plotOptions.pie.events.click=function(){
@@ -366,7 +380,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                     $("<li />")
                         .append($("<span />").css("backgroundColor",color))
                         .append($("<p />").text(option.kpi))
-                        .append($("<i />").addClass("icon-remove").attr("kpi_id","1"))
+                        .append($("<i />").addClass("icon-remove").attr("kpi_id",option.id))
                );
 
                var length=msg.object.current.length;
