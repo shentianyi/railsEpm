@@ -307,26 +307,33 @@
     top:0px;
     left:0px;
     right:0px;
-    height:85px;
+    height:50px;
     display:none;
 }
 .chart-container-top>table{
     width:100%;
+    table-layout:fixed;
 }
 .chart-container-top>table td{
     text-align:center;
     padding:0px;
+    max-width:50%;
+    min-width:50%;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
 }
 .chart-container-top>table tr:first-of-type td:first-of-type{
-    color:rgba(245,161,51,0.7)
+    color:rgba(245,161,51,0.9);
 }
 .chart-container-top>table tr:first-of-type td:last-of-type{
-    color:rgba(52,152,219,0.7)
+    color:rgba(52,152,219,0.9);
 }
 .chart-container-top>table tr:first-of-type{
-    font-size:55px;
+    font-size:37px;
     font-family:"Arial";
     font-weight:600;
+    line-height:30px;
 }
 .chart-container-top>table tr:first-of-type td:first-of-type{
     width:50%;
@@ -342,9 +349,9 @@
 .db-chart-container{
     position:absolute;
     left:0px;
-    top:85px;
+    top:50px;
     /*top:0px;*/
-    bottom:80px;
+    bottom:57px;
     /*bottom:0px;*/
     right:278px;
     /*right:0px;*/
@@ -355,8 +362,8 @@
 .chart-container-right{
     position:absolute;
     right:0px;
-    top:85px;
-    bottom:80px;
+    top:50px;
+    bottom:57px;
     /*top:0px;*/
     /*bottom:00px;*/
     width:278px;
@@ -369,7 +376,7 @@
    font-size:80px;
    font-family:"Arial";
    font-weight:bolder;
-   color:rgba(245,161,51,0.7);
+   color:rgba(245,161,51,0.9);
    position:absolute;
    height:78px;
    top:50%;
@@ -418,12 +425,13 @@
     position:absolute;
     bottom:0px;
     left:0px;
-    height:80px;
+    height:57px;
     right:0px;
     display:none
 }
 .chart-container-bottom>table{
     width:100%;
+    table-layout:fixed;
 }
 .chart-container-bottom>table td{
     text-align:center;
@@ -433,15 +441,21 @@
     font-size:30px;
     font-weight:lighter;
     font-family:"Arial";
-    color:rgba(0,0,0,0.4);
-    line-height:54px;
+    color:rgba(0,0,0,0.7);
+    line-height:39px;
+    width:20%;
+    max-width:20%;
+    min-width:20%;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
 }
 .chart-container-bottom>table tr:first-of-type>td:first-of-type{
-    font-size:70px;
     font-weight:bold;
-    color:rgba(245,161,51,0.7);
+    font-size:50px;
+    color:rgba(245,161,51,0.9);
 }
 .chart-container-bottom>table tr:nth-of-type(2)>td{
     font-size:14px;
-    color:rgba(0,0,0,0.3)
+    color:rgba(0,0,0,0.6)
 }
