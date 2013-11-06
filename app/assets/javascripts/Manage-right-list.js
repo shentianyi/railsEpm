@@ -115,28 +115,24 @@ function category_item_edit() {
                     }
                },
                success : function(data) {
-                    option.edit_input.prevAll(".can-change").text(option.target).attr("title", option.target);
-                   $("#"+option.id+" .manage-kpi-target:first-of-type").find(".can-change")
+                   $("#"+option.id+" .manage-kpi-target").eq(0).find(".can-change")
                        .text(option.target_max).attr("title", option.target_max);
-                   $("#"+option.id+" .manage-kpi-target:nth-of-type").find(".can-change")
+                   $("#"+option.id+" .manage-kpi-target").eq(1).find(".can-change")
                        .text(option.target_min).attr("title", option.target_min);
                     $("#"+option.id+" .manage-kpi-target").each(function(){
                         $(this).find("input").css("left",'-999em');
                     })
-//                    var id=option.id;
-//                    var index=MANAGE.edit_array.indexOf(id);
-//                    MANAGE.edit_array.splice(index,1);
-//                    var targetId=MANAGE.edit_array.length==0?false:MANAGE.edit_array[0];
-//                    if(targetId){
-//                       $("#manage-sort-list>#"+targetId).find("table input[type='text']").focus();
-//                    }
                }
           });
 
 
-//                  option.edit_input.prevAll(".can-change").text( option.target );
-//                  option.edit_input.css("left",'-999em');
-
+//         $("#"+option.id+" .manage-kpi-target").eq(0).find(".can-change")
+//             .text(option.target_max).attr("title", option.target_max);
+//         $("#"+option.id+" .manage-kpi-target").eq(1).find(".can-change")
+//             .text(option.target_min).attr("title", option.target_min);
+//         $("#"+option.id+" .manage-kpi-target").each(function(){
+//             $(this).find("input").css("left",'-999em');
+//         })
 
      };
      this.edit_check = function(object) {
