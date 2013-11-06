@@ -305,7 +305,7 @@ MANAGE.user.assign.init = function() {
                      $("#assign-kpi-options[special='user']").show("1000").find(".select-div>.chosen-container").css("width", "180px");
                      $("#kpi-category").prepend($("<option />").attr("value", ""));
                      $("#kpi-category").val('').trigger('chosen:updated');
-                     $(this).attr("state","open");
+                     $("#assign-kpi-pick").attr("state","open");
                  }
              });
 
