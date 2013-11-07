@@ -43,7 +43,7 @@ module KpiEntriesHelper
             else
               user_kpi_item= kpi.user_kpi_items.where(:entity_id=>entry.entity_id,:user_id=>entry.user_id).first
               KpiEntry.new(:original_value=>value,:user_kpi_item_id=>user_kpi_item.id,:kpi_id=>kpi.id,:entry_at=>kpi_entry_at,:parsed_entry_at=>kpi_parsed_entry_at,
-              :user_id=>user_kpi_item.user_id,:entity_id=>user_kpi_item.entity_id,:target=>user_kpi_item.target).save
+              :user_id=>user_kpi_item.user_id,:entity_id=>user_kpi_item.entity_id,:target_max=>user_kpi_item.target_max,:target_min=>user_kpi_item.target_min).save
             end
           end
         end
