@@ -168,7 +168,7 @@
                 $("#sign-up").attr('state','close');
             }
         });
-        $("body").on("click",function(event){
+        $("body").on("keyup","input[type='text'],input[type='password']",function(event){
                var e=adapt_event(event).event;
                if(e.keyCode==13){
                    if($("#sign-in").attr("state")=="open"){
