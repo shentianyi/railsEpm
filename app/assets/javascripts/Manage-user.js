@@ -16,18 +16,21 @@ MANAGE.user.init = function() {
      MANAGE.user.icheck.init();
      MANAGE.user.assign.init();
      $("body").on("click", "#add-user-show", function() {
-          $("#manage-user-add").css("left", "150px");
+          $("#manage-user-add").css("left", "200px");
           $("#user-edit").css("left", "-250px");
           $("#manage-right-content").css("padding-left", "200px");
      }).on("click", "#manage-user-edit", function() {
           $("#manage-user-add").css("left", "-350px");
-          $("#user-edit").css("left", "-50px");
+          $("#user-edit").css("left", "0px");
           $("#manage-right-content").css("padding-left", "200px");
           MANAGE.user.user_edit_box_bind();
      });
      $("#manage-user-edit-old").on("click", function() {
           MANAGE.user.edit()
      });
+    $("#manage-user-add").height($(document).height());
+    $("#user-edit").height($(document).height());
+
 }
 //////////////////////////////////////////////////////////////////////////         list 那一块
 //////////////////////////////////////////////////////////////////////////////////////////////////

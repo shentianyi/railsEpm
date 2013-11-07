@@ -25,6 +25,7 @@
 *= require Manage-view
 *= require Dashboard
 *= require Dashboard-add
+*= require tipsy
 *= require Entry
 *= require Log
 *= require_self
