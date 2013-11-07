@@ -18,8 +18,8 @@ DASHBOARD.special_type={
     },
     top_show:function(id){
         $("#"+id+" "+".chart-container-top").css("display","block");
-        $("#"+id+" "+".db-chart-container").css("top","85px");
-        $("#"+id+" "+".chart-container-right").css("top","85px");
+        $("#"+id+" "+".db-chart-container").css("top","50px");
+        $("#"+id+" "+".chart-container-right").css("top","50px");
     },
     right_show:function(id){
         $("#"+id+" "+".chart-container-right").css("display","block");
@@ -27,8 +27,8 @@ DASHBOARD.special_type={
     },
     bottom_show:function(id){
         $("#"+id+" "+".chart-container-bottom").css("display","block");
-        $("#"+id+" "+".db-chart-container").css("bottom","80px");
-        $("#"+id+" "+".chart-container-right").css("bottom","80px");
+        $("#"+id+" "+".db-chart-container").css("bottom","57px");
+        $("#"+id+" "+".chart-container-right").css("bottom","57px");
     },
     line:function(id){
        this.top_hide(id);

@@ -46,8 +46,8 @@ MANAGE.init=function(){
                     var option={
                         id:id,
                         belong:$("#manage-left-menu li.active").attr("number"),
-                        target_max:$("#"+id+" .manage-kpi-target").eq(0).find("input").val(),
-                        target_min:$("#"+id+" .manage-kpi-target").eq(1).find("input").val(),
+                        target_max:$("#"+id+" .manage-kpi-target").eq(0).find("input").val()?$("#"+id+" .manage-kpi-target").eq(0).find("input").val():$("#"+id+" .manage-kpi-target").eq(0).find(".can-change").text(),
+                        target_min:$("#"+id+" .manage-kpi-target").eq(1).find("input").val()?$("#"+id+" .manage-kpi-target").eq(1).find("input").val():$("#"+id+" .manage-kpi-target").eq(1).find(".can-change").text(),
                         edit_input:$(e.target)
                     }
 

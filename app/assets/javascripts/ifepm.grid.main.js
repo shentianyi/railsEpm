@@ -37,7 +37,7 @@ ifepm.dashboard_widget.init = function(option){
     ifepm.dashboard_widget.widget_config.max_row = option.max_row;
     //ifepm.dashboard_widget.widget_config.min_width = 1024 /option.max_col - 20;
     //ifepm.dashboard_widget.widget_config.min_height = (800 - 110)/option.max_row - 20;
-    ifepm.dashboard_widget.widget_config.width = option.width/option.max_col - 20;
+    ifepm.dashboard_widget.widget_config.width = option.width/option.max_col - 30;
     ifepm.dashboard_widget.widget_config.height = (option.height)/option.max_row - 30;
 
     /*
@@ -118,19 +118,19 @@ ifepm.dashboard_widget.initsize = function(type){
     switch (type)
     {
         case "line":
-            defsize.sizex = ifepm.dashboard_widget.widget_config.max_col;
+            defsize.sizex = 2;
             defsize.sizey = 1;
             break;
         case "pie":
-            defsize.sizex = 3;
-            defsize.sizey = 2;
+            defsize.sizex = 1;
+            defsize.sizey = 1;
             break;
         case "column":
-            defsize.sizex = ifepm.dashboard_widget.widget_config.max_col-1;
+            defsize.sizex = 2;
             defsize.sizey = 1;
             break;
         case "scatter":
-            defsize.sizex = ifepm.dashboard_widget.widget_config.max_col-1;
+            defsize.sizex = 2;
             defsize.sizey = 1;
             break;
         default:
@@ -165,20 +165,12 @@ ifepm.dashboard_widget.windowresize = function(option){
 * @params option
 * */
 ifepm.dashboard_widget.resize = function(option){
-    /*ifepm.dashboard_widget.widget_config.max_col = option.max_col;
-    ifepm.dashboard_widget.widget_config.max_row = option.max_row;
-    ifepm.dashboard_widget.widget_config.min_width = 1024 /option.max_col - 20;
-    ifepm.dashboard_widget.widget_config.min_height = (800 - 110)/option.max_row - 20;
-    ifepm.dashboard_widget.widget_config.width = option.width/option.max_col - 20;
-    ifepm.dashboard_widget.widget_config.height = (option.height - 120)/option.max_row - 30;
-
-    ifepm.dashboard_widget.widget_config.width =
-        ifepm.dashboard_widget.widget_config.width < ifepm.dashboard_widget.widget_config.min_width ? ifepm.dashboard_widget.widget_config.min_width:ifepm.dashboard_widget.widget_config.width;
-    ifepm.dashboard_widget.widget_config.height =
-        ifepm.dashboard_widget.widget_config.height < ifepm.dashboard_widget.widget_config.min_height ? ifepm.dashboard_widget.widget_config.min_height:ifepm.dashboard_widget.widget_config.height;
+    //ifepm.dashboard_widget.widget_config.max_col = option.max_col;
+    //ifepm.dashboard_widget.widget_config.max_row = option.max_row;
+    ifepm.dashboard_widget.widget_config.width = option.width/ifepm.dashboard_widget.widget_config.max_col - 20;
+    //ifepm.dashboard_widget.widget_config.height = (option.height - 120)/option.max_row - 30;
     var options = {widget_margins:[15,15],widget_base_dimensions:[ifepm.dashboard_widget.widget_config.width,ifepm.dashboard_widget.widget_config.height]};    
     gridster.resize_widget_dimensions(options);
-    */
 };
 
 /*

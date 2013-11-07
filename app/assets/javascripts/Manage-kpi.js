@@ -14,7 +14,7 @@ MANAGE.kpi.init=function(){
     MANAGE.kpi.kpi_add_box_bind();
     MANAGE.kpi.kpi_add_clear();
     $("body").on("click","#kpi-add-show",function(){
-        $("#manage-kpi-add").css("left","150px");
+        $("#manage-kpi-add").css("left","200px");
         $("#manage-right-content").css("padding-left","200px");
     });
     $("#kpi-library-btn").on("click",function(){
@@ -52,6 +52,10 @@ MANAGE.kpi.init=function(){
             setCaretToPos ($(this).get(0),number);
 
     });
+    $("#manage-sort-list li").each(function(){
+        $(this).find("table tr:first-of-type td:last-of-type").tipsy({gravity: 'se'});
+    });
+    $("#manage-kpi-add").height($(document).height());
 }
 MANAGE.kpi.kpi_for_calculate=[];
 
@@ -59,7 +63,7 @@ MANAGE.kpi.kpi_for_calculate=[];
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.kpi.kpi_add_box_bind=function(){
     $("body").on("click","#close-add-kpi",function(){
-        $("#manage-kpi-add").css("left","-150px");
+        $("#manage-kpi-add").css("left","-200px");
         $("#manage-right-content").css("padding-left","0px");
         MANAGE.kpi.kpi_add_clear();
     }).on("keyup","#new-kpi-target,#new-kpi-target-low",function(event){
@@ -217,7 +221,7 @@ function post_kpi(option){
                                 .append($("<span />").addClass("can-change").text(object.target_min).attr("title",object.target_min))
                                 .append($("<span />").text(object.section)).append($("<input type='text'/>").attr("effect_on",id)))
                         )
-                        .append($("<td />").text(formula_string).attr("title",formula_string))
+                        .append($("<td />").text(option.is_calculated ? "Yes": "No").attr("title",formula_string))
                     )
                     .append($("<tr />")
                         .append($("<td />").text(object.desc).attr("title",object.desc))
@@ -229,6 +233,9 @@ function post_kpi(option){
                     )
                 )
             );
+            $("#manage-sort-list li").each(function(){
+                $(this).find("table tr:first-of-type td:last-of-type").tipsy({gravity: 'se'});
+            });
             if(!object.is_calculated){
                 $("#is-calcu-relate").append($("<option />").attr("value",id).text(object.name));
                 $("#is-calcu-relate").val('').trigger('chosen:updated');
@@ -249,7 +256,7 @@ function post_kpi(option){
             });
             MANAGE.sort_init();
             MANAGE.resize_sort_table();
-            $("#manage-kpi-add").css("left","-50px");
+            $("#manage-kpi-add").css("left","-200px");
             $("#manage-right-content").css("padding-left","0px");
             MANAGE.kpi.kpi_add_clear();
             $("#manage-sort-list li").on("resize",function(){
@@ -284,7 +291,7 @@ function post_kpi(option){
 //                        .append($("<span />").addClass("can-change").text(option.target_min).attr("title",option.target_min))
 //                        .append($("<span />").text(option.section)).append($("<input />").attr("type","text").attr("effect_on",id)))
 //                )
-//                .append($("<td />").text(formula_string).attr("title",formula_string))
+//                .append($("<td />").text(option.is_calculated ? "Yes": "No").attr("title",formula_string))
 //            )
 //            .append($("<tr />")
 //                .append($("<td />").text(option.desc).attr("title",option.desc))
@@ -296,6 +303,9 @@ function post_kpi(option){
 //            )
 //        )
 //    );
+//    $("#manage-sort-list li").each(function(){
+//        $(this).find("table tr:first-of-type td:last-of-type").tipsy({gravity: 'se'});
+//    });
 //    if(!option.is_calculated){
 //        $("#is-calcu-relate").append($("<option />").attr("value",id).text(option.name));
 //        $("#is-calcu-relate").val('').trigger('chosen:updated');
@@ -316,8 +326,8 @@ function post_kpi(option){
 //    });
 //    MANAGE.sort_init();
 //    MANAGE.resize_sort_table();
-//    $("#manage-kpi-add").css("left","-50px");
-//    $("#manage-right-content").css("left","150px");
+//    $("#manage-kpi-add").css("left","-200px");
+//    $("#manage-right-content").css("padding-left","0px");
 //    MANAGE.kpi.kpi_add_clear();
 //    $("#manage-sort-list li").on("resize",function(){
 //        MANAGE.resize_sort_table()

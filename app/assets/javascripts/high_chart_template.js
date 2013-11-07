@@ -601,34 +601,7 @@ var limit_pointer_condition={
         limitAction:function(chart){
             chart.xAxis[0].update({
                 tickPositioner:function(){
-                    var extreme=[];
-                    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
-                        var i= 0,
-                            length=chart.series[i].processedXData.length,
-                            half=Math.floor(length/2),
-                            first_half=Math.floor(length/4),
-                            last_half =Math.floor((length-1+half)/2),
-                            first_half_quarter_first=Math.floor(first_half/2),
-                            first_half_quarter_second=Math.floor((first_half+half)/2),
-                            last_half_quarter_first=Math.floor((half+last_half)/2),
-                            last_half_quarter_second=Math.floor((last_half+length)/2);
-                        extreme.push(chart.series[i].processedXData[0]);
-                        extreme.push(chart.series[i].processedXData[first_half_quarter_first]);
-                        extreme.push(chart.series[i].processedXData[first_half]);
-                        extreme.push(chart.series[i].processedXData[first_half_quarter_second]);
-                        extreme.push(chart.series[i].processedXData[half]);
-                        extreme.push(chart.series[i].processedXData[last_half_quarter_first]);
-                        extreme.push(chart.series[i].processedXData[last_half]);
-                        extreme.push(chart.series[i].processedXData[last_half_quarter_second]);
-                        extreme.push(chart.series[i].processedXData[length-1]);
-                    }
-                    else{
-                        for(var i=0;i<chart.series.length;i++){
-                            var length=chart.series[i].processedXData.length
-                            extreme.push(chart.series[i].processedXData[0]);
-                            extreme.push(chart.series[i].processedXData[length-1]);
-                        }
-                    }
+                    var extreme=deal_extreme(chart);
                     extreme.info={
                         unitName:"hour",
                         higherRanks:{}
@@ -643,34 +616,7 @@ var limit_pointer_condition={
         limitAction:function(chart){
             chart.xAxis[0].update({
                 tickPositioner:function(){
-                    var extreme=[];
-                    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
-                        var i= 0,
-                            length=chart.series[i].processedXData.length,
-                            half=Math.floor(length/2),
-                            first_half=Math.floor(length/4),
-                            last_half =Math.floor((length-1+half)/2),
-                            first_half_quarter_first=Math.floor(first_half/2),
-                            first_half_quarter_second=Math.floor((first_half+half)/2),
-                            last_half_quarter_first=Math.floor((half+last_half)/2),
-                            last_half_quarter_second=Math.floor((last_half+length)/2);
-                        extreme.push(chart.series[i].processedXData[0]);
-                        extreme.push(chart.series[i].processedXData[first_half_quarter_first]);
-                        extreme.push(chart.series[i].processedXData[first_half]);
-                        extreme.push(chart.series[i].processedXData[first_half_quarter_second]);
-                        extreme.push(chart.series[i].processedXData[half]);
-                        extreme.push(chart.series[i].processedXData[last_half_quarter_first]);
-                        extreme.push(chart.series[i].processedXData[last_half]);
-                        extreme.push(chart.series[i].processedXData[last_half_quarter_second]);
-                        extreme.push(chart.series[i].processedXData[length-1]);
-                    }
-                    else{
-                        for(var i=0;i<chart.series.length;i++){
-                            var length=chart.series[i].processedXData.length
-                            extreme.push(chart.series[i].processedXData[0]);
-                            extreme.push(chart.series[i].processedXData[length-1]);
-                        }
-                    }
+                    var extreme=deal_extreme(chart);
                     extreme.info={
                         unitName:"day",
                         higherRanks:{}
@@ -685,34 +631,7 @@ var limit_pointer_condition={
         limitAction:function(chart){
             chart.xAxis[0].update({
                 tickPositioner:function(){
-                    var extreme=[];
-                    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
-                        var i= 0,
-                            length=chart.series[i].processedXData.length,
-                            half=Math.floor(length/2),
-                            first_half=Math.floor(length/4),
-                            last_half =Math.floor((length-1+half)/2),
-                            first_half_quarter_first=Math.floor(first_half/2),
-                            first_half_quarter_second=Math.floor((first_half+half)/2),
-                            last_half_quarter_first=Math.floor((half+last_half)/2),
-                            last_half_quarter_second=Math.floor((last_half+length)/2);
-                        extreme.push(chart.series[i].processedXData[0]);
-                        extreme.push(chart.series[i].processedXData[first_half_quarter_first]);
-                        extreme.push(chart.series[i].processedXData[first_half]);
-                        extreme.push(chart.series[i].processedXData[first_half_quarter_second]);
-                        extreme.push(chart.series[i].processedXData[half]);
-                        extreme.push(chart.series[i].processedXData[last_half_quarter_first]);
-                        extreme.push(chart.series[i].processedXData[last_half]);
-                        extreme.push(chart.series[i].processedXData[last_half_quarter_second]);
-                        extreme.push(chart.series[i].processedXData[length-1]);
-                    }
-                    else{
-                        for(var i=0;i<chart.series.length;i++){
-                            var length=chart.series[i].processedXData.length
-                            extreme.push(chart.series[i].processedXData[0]);
-                            extreme.push(chart.series[i].processedXData[length-1]);
-                        }
-                    }
+                    var extreme=deal_extreme(chart);
                     extreme.info={
                         unitName:"week",
                         higherRanks:{}
@@ -727,34 +646,7 @@ var limit_pointer_condition={
         limitAction:function(chart){
             chart.xAxis[0].update({
                 tickPositioner:function(){
-                    var extreme=[];
-                    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
-                        var i= 0,
-                            length=chart.series[i].processedXData.length,
-                            half=Math.floor(length/2),
-                            first_half=Math.floor(length/4),
-                            last_half =Math.floor((length-1+half)/2),
-                            first_half_quarter_first=Math.floor(first_half/2),
-                            first_half_quarter_second=Math.floor((first_half+half)/2),
-                            last_half_quarter_first=Math.floor((half+last_half)/2),
-                            last_half_quarter_second=Math.floor((last_half+length)/2);
-                        extreme.push(chart.series[i].processedXData[0]);
-                        extreme.push(chart.series[i].processedXData[first_half_quarter_first]);
-                        extreme.push(chart.series[i].processedXData[first_half]);
-                        extreme.push(chart.series[i].processedXData[first_half_quarter_second]);
-                        extreme.push(chart.series[i].processedXData[half]);
-                        extreme.push(chart.series[i].processedXData[last_half_quarter_first]);
-                        extreme.push(chart.series[i].processedXData[last_half]);
-                        extreme.push(chart.series[i].processedXData[last_half_quarter_second]);
-                        extreme.push(chart.series[i].processedXData[length-1]);
-                    }
-                    else{
-                        for(var i=0;i<chart.series.length;i++){
-                            var length=chart.series[i].processedXData.length
-                            extreme.push(chart.series[i].processedXData[0]);
-                            extreme.push(chart.series[i].processedXData[length-1]);
-                        }
-                    }
+                    var extreme=deal_extreme(chart);
                     extreme.info={
                         unitName:"month",
                         higherRanks:{}
@@ -769,34 +661,7 @@ var limit_pointer_condition={
         limitAction:function(chart){
             chart.xAxis[0].update({
                 tickPositioner:function(){
-                    var extreme=[];
-                    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
-                        var i= 0,
-                            length=chart.series[i].processedXData.length,
-                            half=Math.floor(length/2),
-                            first_half=Math.floor(length/4),
-                            last_half =Math.floor((length-1+half)/2),
-                            first_half_quarter_first=Math.floor(first_half/2),
-                            first_half_quarter_second=Math.floor((first_half+half)/2),
-                            last_half_quarter_first=Math.floor((half+last_half)/2),
-                            last_half_quarter_second=Math.floor((last_half+length)/2);
-                        extreme.push(chart.series[i].processedXData[0]);
-                        extreme.push(chart.series[i].processedXData[first_half_quarter_first]);
-                        extreme.push(chart.series[i].processedXData[first_half]);
-                        extreme.push(chart.series[i].processedXData[first_half_quarter_second]);
-                        extreme.push(chart.series[i].processedXData[half]);
-                        extreme.push(chart.series[i].processedXData[last_half_quarter_first]);
-                        extreme.push(chart.series[i].processedXData[last_half]);
-                        extreme.push(chart.series[i].processedXData[last_half_quarter_second]);
-                        extreme.push(chart.series[i].processedXData[length-1]);
-                    }
-                    else{
-                        for(var i=0;i<chart.series.length;i++){
-                            var length=chart.series[i].processedXData.length
-                            extreme.push(chart.series[i].processedXData[0]);
-                            extreme.push(chart.series[i].processedXData[length-1]);
-                        }
-                    }
+                    var extreme=deal_extreme(chart);
                     extreme.info={
                         unitName:"millisecond",
                         higherRanks:{}
@@ -811,34 +676,7 @@ var limit_pointer_condition={
         limitAction:function(chart){
             chart.xAxis[0].update({
                 tickPositioner:function(){
-                    var extreme=[];
-                    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
-                        var i= 0,
-                            length=chart.series[i].processedXData.length,
-                            half=Math.floor(length/2),
-                            first_half=Math.floor(length/4),
-                            last_half =Math.floor((length-1+half)/2),
-                            first_half_quarter_first=Math.floor(first_half/2),
-                            first_half_quarter_second=Math.floor((first_half+half)/2),
-                            last_half_quarter_first=Math.floor((half+last_half)/2),
-                            last_half_quarter_second=Math.floor((last_half+length)/2);
-                        extreme.push(chart.series[i].processedXData[0]);
-                        extreme.push(chart.series[i].processedXData[first_half_quarter_first]);
-                        extreme.push(chart.series[i].processedXData[first_half]);
-                        extreme.push(chart.series[i].processedXData[first_half_quarter_second]);
-                        extreme.push(chart.series[i].processedXData[half]);
-                        extreme.push(chart.series[i].processedXData[last_half_quarter_first]);
-                        extreme.push(chart.series[i].processedXData[last_half]);
-                        extreme.push(chart.series[i].processedXData[last_half_quarter_second]);
-                        extreme.push(chart.series[i].processedXData[length-1]);
-                    }
-                    else{
-                        for(var i=0;i<chart.series.length;i++){
-                            var length=chart.series[i].processedXData.length
-                            extreme.push(chart.series[i].processedXData[0]);
-                            extreme.push(chart.series[i].processedXData[length-1]);
-                        }
-                    }
+                    var extreme=deal_extreme(chart);
                     extreme.info={
                         unitName:"year",
                         higherRanks:{}
@@ -849,7 +687,37 @@ var limit_pointer_condition={
         }
     }
 }
-
+function deal_extreme(chart){
+    var extreme=[]
+    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
+        var i= 0,
+            length=chart.series[i].processedXData.length,
+            half=Math.floor(length/2),
+            first_half=Math.floor(length/4),
+            last_half =Math.floor((length-1+half)/2),
+            first_half_quarter_first=Math.floor(first_half/2),
+            first_half_quarter_second=Math.floor((first_half+half)/2),
+            last_half_quarter_first=Math.floor((half+last_half)/2),
+            last_half_quarter_second=Math.floor((last_half+length)/2);
+        extreme.push(chart.series[i].processedXData[0]);
+        extreme.push(chart.series[i].processedXData[first_half_quarter_first]);
+        extreme.push(chart.series[i].processedXData[first_half]);
+        extreme.push(chart.series[i].processedXData[first_half_quarter_second]);
+        extreme.push(chart.series[i].processedXData[half]);
+        extreme.push(chart.series[i].processedXData[last_half_quarter_first]);
+        extreme.push(chart.series[i].processedXData[last_half]);
+        extreme.push(chart.series[i].processedXData[last_half_quarter_second]);
+        extreme.push(chart.series[i].processedXData[length-1]);
+    }
+    else{
+        for(var i=0;i<chart.series.length;i++){
+            var length=chart.series[i].processedXData.length
+            extreme.push(chart.series[i].processedXData[0]);
+            extreme.push(chart.series[i].processedXData[length-1]);
+        }
+    }
+    return extreme
+}
 
 var HIGH_CHART=HIGH_CHART || {} ;
 HIGH_CHART.postPrepare=function(begin_time,interval){
