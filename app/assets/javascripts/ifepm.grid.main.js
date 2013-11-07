@@ -118,19 +118,19 @@ ifepm.dashboard_widget.initsize = function(type){
     switch (type)
     {
         case "line":
-            defsize.sizex = ifepm.dashboard_widget.widget_config.max_col;
+            defsize.sizex = 2;
             defsize.sizey = 1;
             break;
         case "pie":
-            defsize.sizex = 3;
-            defsize.sizey = 2;
+            defsize.sizex = 1;
+            defsize.sizey = 1;
             break;
         case "column":
-            defsize.sizex = ifepm.dashboard_widget.widget_config.max_col-1;
+            defsize.sizex = 2;
             defsize.sizey = 1;
             break;
         case "scatter":
-            defsize.sizex = ifepm.dashboard_widget.widget_config.max_col-1;
+            defsize.sizex = 2;
             defsize.sizey = 1;
             break;
         default:
