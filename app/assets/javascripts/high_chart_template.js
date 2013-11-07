@@ -197,6 +197,7 @@ var high_chart = {
         gridLineDashStyle: 'Dot',
         offset: -25,
         showFirstLabel: false,
+        min:0,
         title: {
             enabled: false
         },
@@ -234,8 +235,8 @@ function render_to(option) {
 }
 
 var series_colors=[
-    'rgba(52,152,219,0.7)',
-    'rgba(245,161,51,0.7)',
+    'rgba(151,203,228,1)',
+    'rgba(219,171,197,1)',
     'rgba(163,166,162,0.7)',
     'rgba(231,76,60,0.7)',
     'rgba(26,188,156,0.7)',
@@ -596,8 +597,9 @@ function limit_pointer_number(){
 }
 
 var limit_pointer_condition={
+    limit:9,
     _90:{
-        limit:15,
+        limit:this.limit,
         limitAction:function(chart){
             chart.xAxis[0].update({
                 tickPositioner:function(){
@@ -612,7 +614,7 @@ var limit_pointer_condition={
         }
     },
     _100:{
-        limit:15,
+        limit:this.limit,
         limitAction:function(chart){
             chart.xAxis[0].update({
                 tickPositioner:function(){
@@ -627,7 +629,7 @@ var limit_pointer_condition={
         }
     },
     _200:{
-        limit:15,
+        limit:this.limit,
         limitAction:function(chart){
             chart.xAxis[0].update({
                 tickPositioner:function(){
@@ -642,7 +644,7 @@ var limit_pointer_condition={
         }
     },
     _300:{
-        limit:15,
+        limit:this.limit,
         limitAction:function(chart){
             chart.xAxis[0].update({
                 tickPositioner:function(){
@@ -657,7 +659,7 @@ var limit_pointer_condition={
         }
     },
     _400:{
-        limit:15,
+        limit:this.limit,
         limitAction:function(chart){
             chart.xAxis[0].update({
                 tickPositioner:function(){
@@ -672,7 +674,7 @@ var limit_pointer_condition={
         }
     },
     _500:{
-        limit:15,
+        limit:this.limit,
         limitAction:function(chart){
             chart.xAxis[0].update({
                 tickPositioner:function(){

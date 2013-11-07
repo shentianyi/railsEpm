@@ -2,66 +2,102 @@ var DASHBOARD=DASHBOARD||{};
 DASHBOARD.special_type={};
 
 DASHBOARD.special_type={
-    top_hide:function(id){
-        $("#"+id+" "+".chart-container-top").css("display","none");
-        $("#"+id+" "+".db-chart-container").css("top","0px");
-        $("#"+id+" "+".chart-container-right").css("top","0px");
-    },
-    right_hide:function(id){
-        $("#"+id+" "+".chart-container-right").css("display","none");
-        $("#"+id+" "+".db-chart-container").css("right","0px");
-    },
-    bottom_hide:function(id){
-        $("#"+id+" "+".chart-container-bottom").css("display","none");
-        $("#"+id+" "+".db-chart-container").css("bottom","0px");
-        $("#"+id+" "+".chart-container-right").css("bottom","0px");
-    },
-    top_show:function(id){
-        $("#"+id+" "+".chart-container-top").css("display","block");
-        $("#"+id+" "+".db-chart-container").css("top","50px");
-        $("#"+id+" "+".chart-container-right").css("top","50px");
-    },
-    right_show:function(id){
-        $("#"+id+" "+".chart-container-right").css("display","block");
-        $("#"+id+" "+".db-chart-container").css("right","278px");
-    },
-    bottom_show:function(id){
-        $("#"+id+" "+".chart-container-bottom").css("display","block");
-        $("#"+id+" "+".db-chart-container").css("bottom","57px");
-        $("#"+id+" "+".chart-container-right").css("bottom","57px");
+//    top_hide:function(id){
+//        $("#"+id+" "+".chart-container-top").css("display","none");
+//        $("#"+id+" "+".db-chart-container").css("top","0px");
+//        $("#"+id+" "+".chart-container-right").css("top","0px");
+//    },
+//    right_hide:function(id){
+//        $("#"+id+" "+".chart-container-right").css("display","none");
+//        $("#"+id+" "+".db-chart-container").css("right","0px");
+//    },
+//    bottom_hide:function(id){
+//        $("#"+id+" "+".chart-container-bottom").css("display","none");
+//        $("#"+id+" "+".db-chart-container").css("bottom","0px");
+//        $("#"+id+" "+".chart-container-right").css("bottom","0px");
+//    },
+//    top_show:function(id){
+//        $("#"+id+" "+".chart-container-top").css("display","block");
+//        $("#"+id+" "+".db-chart-container").css("top","50px");
+//        $("#"+id+" "+".chart-container-right").css("top","50px");
+//    },
+//    right_show:function(id){
+//        $("#"+id+" "+".chart-container-right").css("display","block");
+//        $("#"+id+" "+".db-chart-container").css("right","278px");
+//    },
+//    bottom_show:function(id){
+//        $("#"+id+" "+".chart-container-bottom").css("display","block");
+//        $("#"+id+" "+".db-chart-container").css("bottom","57px");
+//        $("#"+id+" "+".chart-container-right").css("bottom","57px");
+//    },
+//    line:function(id){
+//       this.top_hide(id);
+//       this.right_hide(id);
+//       this.bottom_show(id);
+//    },
+//    column:function(id){
+//       this.right_hide(id);
+//       this.bottom_hide(id);
+//       this.top_show(id);
+//    },
+//    pie:function(id){
+//       this.top_hide(id);
+//       this.bottom_hide(id);
+//       this.right_show(id);
+//       $("#"+id+" "+".chart-container-right-scatter").css("display","none");
+//    },
+//    scatter:function(id){
+//       this.top_hide(id);
+//       this.bottom_hide(id);
+//       this.right_hide(id);
+//
+//    }
+    empty:function(id){
+        $("#"+id+" "+"dashboard-item-extra-info").empty();
     },
     line:function(id){
-       this.top_hide(id);
-       this.right_hide(id);
-       this.bottom_show(id);
-    },
-    column:function(id){
-       this.right_hide(id);
-       this.bottom_hide(id);
-       this.top_show(id);
-    },
-    pie:function(id){
-       this.top_hide(id);
-       this.bottom_hide(id);
-       this.right_show(id);
-       $("#"+id+" "+".chart-container-right-scatter").css("display","none");
-    },
-    scatter:function(id){
-       this.top_hide(id);
-       this.bottom_hide(id);
-       this.right_hide(id);
-
+        this.empty(id);
+        $table=$("#"+id+" "+".dashboard-item-extra-info");
+        $table
+            .append($("<tr />")
+                .append($("<td rowspan='4' style='width:60%;min-width:60%;max-width:60%'/>")
+                    .append($("<span />").addClass("out-target"))
+                    .append($("<span />").text("out of target"))
+                )
+                .append($("<td />")
+                    .append($("<span style='display:inline-block;width:120px'/>").text("Total Amount: "))
+                    .append($("<span />").addClass("total-amount"))
+                )
+            )
+            .append($("<tr />")
+                .append($("<td />")
+                    .append($("<span style='display:inline-block;width:120px'/>").text("Total Value: "))
+                    .append($("<span />").addClass("total-value"))
+                )
+            )
+            .append($("<tr />")
+                .append($("<td />")
+                    .append($("<span style='display:inline-block;width:120px'/>").text("Average Value: "))
+                    .append($("<span />").addClass("average-value"))
+                )
+            )
+//            .append($("<tr />")
+//                .append($("<td />")
+//                    .append($("<span style='display:inline-block;width:120px'/>").text("KPI Name: "))
+//                    .append($("<span />").addClass("kpi-name"))
+//                )
+//            )
     }
 }
 DASHBOARD.special_grab={
     line:function(option){
         var data=option.special_data,
-            $tr=$("#"+option.outer_target+" "+".chart-container-bottom table tr:first-of-type");
-        $tr.find("td:nth-of-type(1)").text(data.out_of_target);
-        $tr.find("td:nth-of-type(2)").text(data.total_record);
-        $tr.find("td:nth-of-type(3)").text(data.total_value);
-        $tr.find("td:nth-of-type(4)").text(data.average_value);
-        $tr.find("td:nth-of-type(5)").text(option.kpi);
+            $table=$("#"+option.outer_target+" "+".dashboard-item-extra-info");
+        $table.find(".out-target").text(+data.out_of_target);
+        $table.find(".total-amount").text(""+data.total_record);
+        $table.find(".total-value").text(data.total_value);
+        $table.find(".average-value").text(data.average_value);
+//        $table.find(".kpi-name").text(option.kpi);
     },
     column:function(option){
         var max=$("#"+option.target).highcharts().yAxis[0].getExtremes().dataMax,
@@ -111,7 +147,9 @@ DASHBOARD.add.generate=function(option){
     var type=option.type,
         target=option.target,
         outer_target=option.outer_target;
+
     DASHBOARD.special_type[type](outer_target);
+
     var out_of_target= 0, i,total_value= 0;
     for(i=0;i<option.data.length;i++){
         var data=option.data[i];
@@ -127,6 +165,7 @@ DASHBOARD.add.generate=function(option){
         average_value:(total_value/option.data.length).toFixed(1)+option.data[0].unit
     }
     option.special_data=special_data;
+
     DASHBOARD.special_grab[type](option);
 
     if(option.outer_target!="put-db-chart"){
@@ -136,9 +175,4 @@ DASHBOARD.add.generate=function(option){
             $("#"+target).highcharts().setSize(width,height);
         },"1500");
     }
-
-
-//    alert($("#"+target).height());
-//    alert($("#"+target).width());
-//    $("#"+target).highcharts()
 }

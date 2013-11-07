@@ -267,9 +267,11 @@ DASHBOARD.highchart_template_init=function(){
     high_chart.plotOptions.line.marker.lineWidth=0;
     high_chart.plotOptions.line.showInLegend=false;
     high_chart.plotOptions.line.marker.radius=1;
-    high_chart.xAxis.offset=0;
+    high_chart.xAxis.offset=-30;
     high_chart.xAxis.labels.style.fontSize="10px";
-    high_chart.xAxis.labels.style.color="rgba(0,0,0,0.3)";
+    high_chart.xAxis.labels.style.color="rgba(0,0,0,0.5)";
+    high_chart.yAxis.gridLineColor="rgba(0,0,0,0)";
+    high_chart.yAxis.gridLineDashStyle="dash";
     high_chart.plotOptions.pie.dataLabels.enabled=false;
     high_chart.yAxis.labels.enabled=false;
     high_chart.plotOptions.pie.point={};
@@ -481,10 +483,10 @@ DASHBOARD.add.prepare_form_chart=function() {
 
             if (chart_body_close_validate) {
                 option.data = [
-                    {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+                    {y: 2,low:0,high:3, target: 10, unit: "$",id:option.id},
                     {y: 3,low:2,high:20,  target: 10, unit: "$"},
                     {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                    {y: 3,low:2,high:32, target: 10, unit: "$"},
+                    {y: 0,low:0,high:32, target: 10, unit: "$"},
                     {y: 10, low: 2,high:43, target: 10, unit: "$"},
                     {y: 7,low:1,high:43,  target: 10, unit: "$"}
                 ];
