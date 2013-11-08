@@ -40,7 +40,7 @@
 //=require Manage-right-list
 //=require Manage
 //=require Manage-kpi
-//=require Manage-user-group
+//=require Manage-department
 //=require Manage-user
 //=require Manage-view
 //=require 2_column_right_nav

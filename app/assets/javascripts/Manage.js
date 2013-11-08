@@ -71,8 +71,17 @@ MANAGE.init=function(){
                 }
         });
     }
-}
+    MANAGE.manage_left_height();
 
+}
+MANAGE.manage_left_height=function(){
+    var height=$(document).height()-$("header").height()-$("#left-content-title").height()-1;
+    $("#manage-left-content").height(height);
+    $("body").on("resize",function(){
+        height=$(document).height()-$("header").height()-$("#left-content-title").height()-1;
+        $("#manage-left-content").height(height);
+    });
+}
 
 MANAGE.iCheck_init=function(){
     $("input[type='checkbox']").iCheck({

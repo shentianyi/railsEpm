@@ -178,7 +178,8 @@
     height:49px;
     background-color:#f7f7f7;
     position:relative;
-
+    border-bottom:1px solid #DCDCDC;
+    z-index:20;
 }
 .current-group-item{
     display:inline-block;

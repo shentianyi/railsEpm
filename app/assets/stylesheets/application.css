@@ -22,7 +22,7 @@
 *= require Manage
 *= require Manage-kpi
 *= require Manage-user
-*= require Manage-user-group
+*= require Manage-department
 *= require Manage-view
 *= require Dashboard
 *= require Dashboard-add

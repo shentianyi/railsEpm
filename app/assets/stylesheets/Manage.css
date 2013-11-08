@@ -2,18 +2,15 @@
 *******************************************************************************************************************/
 .manage-left-menu{
     background-color:#EFF2F6;
-    display:table-cell;
-    width:200px;
-    min-width:200px;
-    max-width:200px;
+    width:150px;
     margin:0;
     padding:0 0 10px;
     list-style-type: none;
-    overflow-y:auto;
-    overflow-x:hidden;
     z-index:20;
     border-right:1px solid #DCDCDC;
-    position:relative;
+    position:absolute;
+    top:0px;
+    bottom:0px;
 }
 .manage-left-menu li:nth-of-type(2){
     position:relative;
@@ -90,14 +87,15 @@
     background-color:#e2e7ef
 }
 .manage-left-menu li.active a{
-    color:rgba(0,0,0,0.4);
+    color:rgba(0,0,0,0.65);
 }
 .manage-left-menu li a{
-    width:152px;
+    width:104px;
     display:block;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
+    font-size:13px;
 }
 .manage-left-menu li i.icon-item{
     position:absolute;
@@ -108,7 +106,7 @@
     transition:color 0.2s ease;
 }
 .manage-left-menu li:hover i.icon-item:hover{
-    color:rgba(0,0,0,0.65);
+    color:#f05c5c;
 }
 .manage-left-menu li .icon-trash{
     left:6px;
@@ -119,18 +117,20 @@
 *******************************************************************************************************************/
 .manage-right-content{
     padding-left:0px;
-    height:100%;
-    overflow-x:hidden;
-    transition:padding-left 0.4s ease-out;
-    display:table-cell;
+    position:absolute;
+    left:150px;
+    top:0px;
+    bottom:0px;
+    right:0px;
+    transition:padding-left 0.4s ease-out,padding-right 0.4s ease-out;
+
 }
 /**************************************************** 上角的按钮
 *****************************************************************/
 .manage-btn-group{
-    height:70px;
     position:relative;
     display:inline-block;
-    top:2px;
+    top:23px;
     left:33px;
 }
 .manage-btn-group>a{
@@ -144,16 +144,14 @@
 }
 .manage-btn-group>p{
     margin-top:6px;
-    color:rgba(0, 0, 0, 0.35);
+    color:rgba(0, 0, 0, 0.5);
     cursor:pointer;
     display:inline-block;
     transition:color 0.35s ease-out;
     font-size:21px;
     /*display:none;*/
 }
-.manage-btn-group>p:hover{
-    color:rgba(0, 0, 0, 0.65);
-}
+
 .manage-btn-group>i{
     color:rgba(0, 0, 0, 0.65);
     position:relative;
@@ -188,7 +186,7 @@
 /**************************************************** 下角的列表
 *****************************************************************/
 .manage-right-list{
-    margin-top:30px;
+    margin-top:20px;
     padding-bottom:40px;
 }
 .right-list-top-control{
@@ -271,7 +269,9 @@
 /********************************************************************************************************* 针对右边有导航的
 *******************************************************************************************************************/
 .manage-left-content{
-    padding-top:20px;
     background-color:white;
-    position:relative
+    position:relative;
+}
+.manage-left-content[name='department']{
+    padding-top:20px;
 }
