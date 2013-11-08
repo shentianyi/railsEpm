@@ -131,8 +131,8 @@ label,p,h1,h2,h3,h4,h5{
     display:block;
     text-align:center;
     background:#eee;
-    background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(238,238,238, 0.2) 55%) #eee;
-    background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(238,238,238, 0.2) 55%) #eee;
+    /*background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(238,238,238, 0.2) 55%) #e2e2e2;*/
+    /*background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(238,238,238, 0.2) 55%) #e2e2e2;*/
     transition: background-color 0.25s ease 0s,color 0.25s ease 0s;
     -moz-transition: background-color 0.25s ease 0s;
     -webkit-transition: background-color 0.25s ease 0s;
@@ -254,8 +254,10 @@ label,p,h1,h2,h3,h4,h5{
     vertical-align:middle;
     font-size:35px;
     font-family:"helve";
-    position:relative;
+    position:absolute;
     top:40%;
+    left:0px;
+    right:0px;
     color:rgba(0,0,0,0.5)
 }
 .loading p:after{

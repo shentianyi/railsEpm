@@ -15,6 +15,7 @@
     <link href="stylesheets/Dashboard-add.css" rel="stylesheet">
     <link href="stylesheets/2_column_right_nav.css" rel="stylesheet">
     <link href="stylesheets/Analytic-main.css" rel="stylesheet">
+    <link href="stylesheets/tipsy.css" rel="stylesheet">
     <title>if kpi</title>
 </head>
 <body>
@@ -195,54 +196,8 @@
                 </div>
 
                 <div class="put-db-chart" name="dashboard-add" id="put-db-chart">
-                    <div class="chart-container-top" id="chart-container-top">
-                        <table>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Max value</td>
-                                <td>Min value</td>
-                            </tr>
-                        </table>
-                    </div>
+                    <table class="dashboard-item-extra-info"></table>
                     <div class="db-chart-container" id="chart-container"></div>
-                    <div id="chart-container-right" class="chart-container-right">
-                        <p></p>
-                        <p></p>
-                        <table>
-                            <tr>
-                                <td></td>
-                                <td>Selected</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>Total</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div id="chart-container-right-scatter" class="chart-container-right chart-container-right-scatter">
-
-                    </div>
-                    <div class="chart-container-bottom" id="chart-container-bottom">
-                        <table>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Out of Target</td>
-                                <td>Total Record</td>
-                                <td>Total Value</td>
-                                <td>Average Value</td>
-                                <td>KPI</td>
-                            </tr>
-                        </table>
-                    </div>
                 </div>
             </div>
 
@@ -278,6 +233,7 @@
 <script src="javascripts/Dashboard-add.js"></script>
 <script src="javascripts/2_column_right_nav.js"></script>
 <script src="javascripts/dashboard_type_special.js"></script>
+<script src="javascripts/jquery.tipsy.js"></script>
 <script>
     $(document).ready(function(){
         DASHBOARD.add.init();

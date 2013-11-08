@@ -19,57 +19,10 @@ ifepm.template.view = '<li !attr!=!id!><div>' +
     '<p>!title!</p>'+
     '<i class="icon-remove" effect_on=!id!></i><span class="update-time">!last_update!</span>' +
     '</div>' +
-    //'<i class="icon-list db-infoMark"></i>' +
-
-    //'<table class="table table-bordered table-striped db-itemInfo">' +
-    //'<tr>' +
-    //'<td>视图名称</td>' +
-    //'<td>!name!</td>' +
-    //'</tr>' +
-    //'<tr>'  +
-    //'<td>KPI名称</td>' +
-    //'<td>!kpi_name!</td>' +
-    //'</tr>' +
-    //'<tr>'+
-    ///'<td>观察点</td>' +
-    //'<td>!entity_group!</td>'+
-    //'</tr>'+
-    //'<tr>'+
-    //'<td>开始时间</td>'+
-    //'<td>!from!</td>' +
-    //'</tr>' +
-    //'<tr>' +
-    //'<td>结束时间</td>' +
-    //'<td>!to!</td>'+
-    //'</tr>'+
-    //'<tr>' +
-    //'<td>计算方式</td>' +
-    //'<td>!calculate_type!</td>' +
-    //'</tr>' +
-    //'</table>'+
     '</div>' +
     '<div id=!item_container_id!'+'_outer'+' class="put-db-chart">' +
-    '<div class="chart-container-top">'+
-    '<table>'+
-    '<tr><td></td><td></td></tr>'+
-    '<tr><td>Max Value</td><td>Min Value</td></tr>'+
-    '</table>'+
-    '</div>'+
+    '<table class="dashboard-item-extra-info"></table>'+
     '<div class="db-chart-container" id=!item_container_id!></div>'+
-    '<div class="chart-container-right">'+
-    '<p></p><p></p>'+
-    '<table>'+
-        '<tr><td></td><td>Selected</td></tr>'+
-        '<tr><td></td><td>Total</td> </tr>'+
-    '</table>'+
-    '</div>'+
-    '<div class="chart-container-right chart-container-right-scatter"></div>'+
-    '<div class="chart-container-bottom" >'+
-    '<table>'+
-    '<tr><td></td><td></td><td></td><td></td><td></td></tr>'+
-    '<tr><td>Out of Target</td><td>Total Amount</td><td>Total Value</td><td>Average Value</td><td>KPI</td></tr>'+
-    '</table>'+
-    '</div>'+
     '</div>' +
     '</div></li>' +
     '<script type="text/javascript">ifepm.dashboard.load_graph("!id!")</script>'

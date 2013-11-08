@@ -13,7 +13,8 @@
 //=require jquery-1.8.2.min
 //=require jquery.gridster
 //=require jquery.gridster.with-extras
-//= require jquery_ujs
+//=require jquery_ujs
+//=require jquery.tipsy
 //=require highcharts
 //=require highcharts-more
 //=require exporting
@@ -39,6 +40,7 @@
 //=require Manage-right-list
 //=require Manage
 //=require Manage-kpi
+//=require Manage-user-group
 //=require Manage-user
 //=require Manage-view
 //=require 2_column_right_nav
