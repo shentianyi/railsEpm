@@ -17,10 +17,12 @@ development:
  pool: 5
  username: epmer
  password: epmer@
- socket: /var/run/mysqld/mysqld.sock
- #socket: /tmp/mysql.sock
+ socket: /var/run/mysqld/mysqld.socket
+##socket: /tmp/mysql.sock
 #
-#
+
+
+
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
@@ -33,6 +35,8 @@ test:
  username: epmer
  password: epmer@
  socket: /var/run/mysqld/mysqld.sock
+ #socket: /tmp/mysql.sock
+
 ##
 production:
  adapter: mysql2
@@ -44,13 +48,13 @@ production:
  password: epmer@
  socket: /var/run/mysqld/mysqld.sock
 
+
 # development:
-  # adapter: sqlite3
-  # database: db/development.sqlite3
-  # pool: 5
-  # timeout: 5000
-# 
-# test:
+    # adapter: sqlite3
+    # database: db/development.sqlite3
+    # pool: 5
+    # timeout: 5000
+ #test:
   # adapter: sqlite3
   # database: db/test.sqlite3
   # pool: 5

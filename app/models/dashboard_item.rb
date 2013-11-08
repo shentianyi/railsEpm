@@ -1,7 +1,7 @@
 class DashboardItem < ActiveRecord::Base
   belongs_to :dashboard
   has_many :dashboard_conditions, :dependent => :destroy
-  attr_accessible :dashboard_id,:sequence,:interval,:name,:title,:chart_type
+  attr_accessible :dashboard_id,:sequence,:interval,:name,:title,:chart_type,:dashboard_conditions
   attr_accessible :row, :col, :sizex, :sizey ,:last_update
 
   #validates_with TimeStringValidator
