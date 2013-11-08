@@ -235,6 +235,7 @@ zh:
       view: 观察点
       billing: 账户
       entry_kpi: KPI输入
+      department: 部门
   analytics:
       title: 分析
       kpi_category: KPI类别

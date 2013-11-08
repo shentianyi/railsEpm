@@ -12,5 +12,6 @@ class DashboardsTest < ActionDispatch::PerformanceTest
 
   def select_dashboard
     post '/dashboards'
+    post '/DashboardItems/items_by_dashboard_id'
   end
 end
