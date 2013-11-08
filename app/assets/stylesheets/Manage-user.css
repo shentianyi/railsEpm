@@ -174,8 +174,21 @@
 .assign-kpi-top{
     position:absolute;
     right:0px;
-    top:35px;
+    top:12px;
     left:32px;
+}
+.assign-kpi-top>i{
+    position:absolute;
+    top:2px;
+    left:-20px;
+    font-size:15px;
+    color:rgba(0,0,0,0.4);
+    cursor:pointer;
+    pointer-events:auto;
+    transition:color 0.25s ease-out;
+}
+.assign-kpi-top>i:hover{
+    color:rgba(0,0,0,1);
 }
 .assign-kpi-top>a{
     display:inline-block;
@@ -183,15 +196,14 @@
     margin:0px 10px 0 0;
     font-size:13px;
 }
-.assign-kpi-top>p{
-    margin:6px 0 0;
-    color:rgba(0, 0, 0, 0.35);
-    position:relative;
-    padding-left:1px;
-    font-size:18px;
+.assign-kpi-top>a.assign-kpi-pick{
+    position:absolute;
+    top:27px;
+    left:164px;
 }
-.assign-kpi-top>p>span:nth-of-type(2){
-    font-size:14px;
+.assign-kpi-top>.select-div{
+    position:absolute;
+    top:30px;
 }
 /****************************  (left part)
 *********************************/
