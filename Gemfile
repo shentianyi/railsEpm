@@ -49,3 +49,5 @@ gem 'authlogic'
 
 # To use debugger
 # gem 'debugger'
+# To use profile and benchmark test
+gem 'ruby-prof', '~> 0.11.2' if RUBY_VERSION < '2.0'
