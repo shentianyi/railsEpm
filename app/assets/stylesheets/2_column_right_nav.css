@@ -168,7 +168,8 @@
 /********************************************************************************************************* left-content-main
 *******************************************************************************************************************/
 .content-left-main{
-    display:table-cell
+    display:table-cell;
+    height:100%;
 }
 .content-left-main[name="dashboard"]{
     height:100%;
@@ -177,7 +178,8 @@
     height:49px;
     background-color:#f7f7f7;
     position:relative;
-
+    border-bottom:1px solid #DCDCDC;
+    z-index:20;
 }
 .current-group-item{
     display:inline-block;

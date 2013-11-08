@@ -2,20 +2,15 @@
 *******************************************************************************************************************/
 .manage-left-menu{
     background-color:#EFF2F6;
-    display:table-cell;
     width:150px;
-    min-width:150px;
-    max-width:150px;
     margin:0;
     padding:0 0 10px;
     list-style-type: none;
-    overflow-y:auto;
-    overflow-x:hidden;
     z-index:20;
-    box-shadow:2px 0px 3px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow:2px 0px 3px rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow:2px 0px 3px rgba(0, 0, 0, 0.2);
-    position:relative;
+    border-right:1px solid #DCDCDC;
+    position:absolute;
+    top:0px;
+    bottom:0px;
 }
 .manage-left-menu li:nth-of-type(2){
     position:relative;
@@ -26,7 +21,7 @@
     padding:0px;
     width:123px;
     height:30px;
-    margin:0 12px 30px;
+    margin:0 37px 30px;
     border-radius:3px;
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
@@ -92,14 +87,15 @@
     background-color:#e2e7ef
 }
 .manage-left-menu li.active a{
-    color:rgba(0,0,0,0.5);
+    color:rgba(0,0,0,0.65);
 }
 .manage-left-menu li a{
-    width:103px;
+    width:104px;
     display:block;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
+    font-size:13px;
 }
 .manage-left-menu li i.icon-item{
     position:absolute;
@@ -110,7 +106,7 @@
     transition:color 0.2s ease;
 }
 .manage-left-menu li:hover i.icon-item:hover{
-    color:rgba(0,0,0,0.65);
+    color:#f05c5c;
 }
 .manage-left-menu li .icon-trash{
     left:6px;
@@ -121,18 +117,20 @@
 *******************************************************************************************************************/
 .manage-right-content{
     padding-left:0px;
-    height:100%;
-    overflow-x:hidden;
-    transition:padding-left 0.4s ease-out;
-    display:table-cell;
+    position:absolute;
+    left:150px;
+    top:0px;
+    bottom:0px;
+    right:0px;
+    transition:padding-left 0.4s ease-out,padding-right 0.4s ease-out;
+
 }
 /**************************************************** 上角的按钮
 *****************************************************************/
 .manage-btn-group{
-    height:70px;
     position:relative;
     display:inline-block;
-    top:2px;
+    top:23px;
     left:33px;
 }
 .manage-btn-group>a{
@@ -140,21 +138,20 @@
     margin-right:20px;
     margin-left:0;
     position:absolute;
-    top:35px;
+    bottom:2px;
     padding:7px 6px;
     font-size:13px;
 }
 .manage-btn-group>p{
     margin-top:6px;
-    color:rgba(0, 0, 0, 0.35);
+    color:rgba(0, 0, 0, 0.5);
     cursor:pointer;
     display:inline-block;
     transition:color 0.35s ease-out;
     font-size:21px;
+    /*display:none;*/
 }
-.manage-btn-group>p:hover{
-    color:rgba(0, 0, 0, 0.65);
-}
+
 .manage-btn-group>i{
     color:rgba(0, 0, 0, 0.65);
     position:relative;
@@ -166,10 +163,14 @@
 }
 .manage-btn-group>input{
     padding:3px 5px;
-    height:26px;
-    width:120px;
+    height:22px;
+    width:150px;
     font-size:13px;
+    position:relative;
+    top:0px;
+    margin-top:2px;
     display:none;
+
 }
 /*.manage-btn-group>input:focus + span{*/
     /*display:inherit;*/
@@ -185,7 +186,7 @@
 /**************************************************** 下角的列表
 *****************************************************************/
 .manage-right-list{
-    margin-top:21px;
+    margin-top:20px;
     padding-bottom:40px;
 }
 .right-list-top-control{
@@ -264,4 +265,13 @@
     bottom:5px;
     width:inherit;
     transition:width 0.45s ease-out 0.1s;
+}
+/********************************************************************************************************* 针对右边有导航的
+*******************************************************************************************************************/
+.manage-left-content{
+    background-color:white;
+    position:relative;
+}
+.manage-left-content[name='department']{
+    padding-top:20px;
 }

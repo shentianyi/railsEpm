@@ -16,18 +16,24 @@ MANAGE.user.init = function() {
      MANAGE.user.icheck.init();
      MANAGE.user.assign.init();
      $("body").on("click", "#add-user-show", function() {
-          $("#manage-user-add").css("left", "150px");
-          $("#user-edit").css("left", "-250px");
-          $("#manage-right-content").css("padding-left", "200px");
+          $("#manage-user-add").slideDown("slow");
+          $("#manage-user-add.create-user> div >.div-select>div").css("width","150px")
      }).on("click", "#manage-user-edit", function() {
-          $("#manage-user-add").css("left", "-350px");
-          $("#user-edit").css("left", "-50px");
+          $("#user-edit").css("left", "0px");
           $("#manage-right-content").css("padding-left", "200px");
           MANAGE.user.user_edit_box_bind();
      });
      $("#manage-user-edit-old").on("click", function() {
           MANAGE.user.edit()
      });
+    for(var i=2;i++;i<$("#manage-left-menu").children().length){
+        var name=$("#manage-left-menu").children().eq(i).attr("title"),
+            id=$("#manage-left-menu").children().eq(i).attr("number");
+        $("#department-for-kpi").append(
+            $("<option />").attr("value",id).text(name)
+        )
+    }
+
 }
 //////////////////////////////////////////////////////////////////////////         list 那一块
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,7 +44,7 @@ MANAGE.user.icheck.init = function() {
           }).iCheck("uncheck");
      });
      $("#manage-sort-list input[type='checkbox']").on("ifUnchecked", function() {
-          if($("#manage-sort-list .icheckbox_minimal-aero.checked").length == 1 && $("#user-edit").css("left") != "-250px") {
+          if($("#manage-sort-list .icheckbox_minimal-aero.checked").length == 1 && $("#user-edit").css("left") != "-200px") {
                $("#user-edit").css("left", "-250px");
                $("#manage-right-content").css("padding-left", "0px");
                MANAGE.user.user_add_clear();
@@ -73,7 +79,7 @@ MANAGE.user.user_add_box_bind = function() {
      });
 };
 MANAGE.user.user_add_close = function() {
-     $("#manage-user-add").css("left", "-350px");
+     $("#manage-user-add").slideUp("slow");
      $("#manage-right-content").css("padding-left", "0px");
      MANAGE.user.user_add_clear();
 };

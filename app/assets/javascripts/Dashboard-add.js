@@ -267,27 +267,29 @@ DASHBOARD.highchart_template_init=function(){
     high_chart.plotOptions.line.marker.lineWidth=0;
     high_chart.plotOptions.line.showInLegend=false;
     high_chart.plotOptions.line.marker.radius=1;
-    high_chart.xAxis.offset=0;
+    high_chart.xAxis.offset=-30;
     high_chart.xAxis.labels.style.fontSize="10px";
-    high_chart.xAxis.labels.style.color="rgba(0,0,0,0.3)";
+    high_chart.xAxis.labels.style.color="rgba(0,0,0,0.5)";
+    high_chart.yAxis.gridLineColor="rgba(0,0,0,0.1)";
+    high_chart.yAxis.gridLineDashStyle="dash";
     high_chart.plotOptions.pie.dataLabels.enabled=false;
     high_chart.yAxis.labels.enabled=false;
     high_chart.plotOptions.pie.point={};
     high_chart.plotOptions.pie.events={};
     high_chart.plotOptions.pie.events.click=function(){
-        var $target=$("#"+this.chart.renderTo.id+"+.chart-container-right"), i,data,total=0,validate=true,name;
+        var $table=$("#"+this.chart.renderTo.id).prev(".dashboard-item-extra-info"), i,data,total=0,validate=true,name;
         for(i=0;i<this.data.length;i++){
             total+=this.data[i].y;
         }
-        $target.find("table tr:nth-of-type(2) td:first-of-type").text(total+this.data[0].unit);
+        $table.find(".pie-total-value").text(total+this.data[0].unit);
     };
     high_chart.plotOptions.pie.point.events={};
     high_chart.plotOptions.pie.point.events.select=function(){
-        var $target=$("#"+this.series.chart.renderTo.id+"+.chart-container-right"), i,data,total=0,validate=true,name;
-            $target.find("p:first-of-type").text((this.percentage).toFixed(1)+"%");
-            name=this.series.chart.series.length>2?this.kpi_name:this.name;
-            $target.find("p:nth-of-type(2)").text(name);
-            $target.find("table tr:first-of-type td:first-of-type").text(this.y+this.unit);
+        var $table=$("#"+this.series.chart.renderTo.id).prev(".dashboard-item-extra-info"), i,data,total=0,validate=true,name;
+        $table.find(".percentage").text((this.percentage).toFixed(1)+"%");
+        name=this.series.chart.series.length>2?this.kpi_name:this.name;
+        $table.find(".pie-selected-name").text(name);
+        $table.find(".selected-value").text(this.y+this.unit);
     }
 };
 
@@ -336,7 +338,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 
 
 
-       show_loading(232,0,0,150);
+       show_loading(215,0,0,204);
        $.post('/kpi_entries/analyse',{
            kpi : kpi,
            average:method=="0",
@@ -481,10 +483,10 @@ DASHBOARD.add.prepare_form_chart=function() {
 //
 //            if (chart_body_close_validate) {
 //                option.data = [
-//                    {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+//                    {y: 2,low:0,high:3, target: 10, unit: "$",id:option.id},
 //                    {y: 3,low:2,high:20,  target: 10, unit: "$"},
 //                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//                    {y: 3,low:2,high:32, target: 10, unit: "$"},
+//                    {y: 0,low:0,high:32, target: 10, unit: "$"},
 //                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
 //                    {y: 7,low:1,high:43,  target: 10, unit: "$"}
 //                ];
@@ -602,6 +604,7 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 }
                 else{
                     option.id = db_chartSeries.series[i].id;
+                    option.kpi = db_chartSeries.series[i].kpi;
                     option.data=db_chartSeries.series[i][option.interval];
                     proper_type_for_chart(option);
                     DASHBOARD.add.generate(option);
@@ -637,7 +640,7 @@ DASHBOARD.add.change_interval=function(option) {
             }
             else {
 
-            show_loading(232,0,0,150);;
+            show_loading(215,0,0,204);;
             $.ajax({url:'/kpi_entries/analyse',
                 data:{
                     kpi : series_object.kpi_id,

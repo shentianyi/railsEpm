@@ -4,7 +4,7 @@
     text-align:center;
     font-weight:lighter;
     font-size:22px;
-    color:#5FA9DA;
+    color:#45ACFB;
     padding:32px 0 10px;
 }
 /********************************************************************************************************* 右边的内容部分
@@ -51,30 +51,44 @@
 /*forth column*/
 .manage-sort-list li>table.category tr:first-of-type td:nth-of-type(4){
     width:15%;
-    color:#55c8b4;
+    color:#5FA9DA;
+    padding-right:15px;
+}
+/*fifth column*/
+.manage-sort-list li>table.category tr:first-of-type td:nth-of-type(5){
+    width:15%;
+    color:#47BBB3;
     padding-right:15px;
 }
 /*last column*/
 .manage-sort-list li>table.category tr:first-of-type td:last-of-type{
-    width:26%;
-
+    width:13%;
+    text-align:center;
+    cursor:help;
+}
+.manage-sort-list li>table.category tr:nth-of-type(2) td:last-of-type{
+    text-align:center;
 }
 .manage-sort-list li>table.category tr:nth-of-type(2){
     color:rgba(0,0,0,0.3);
     font-size:13px;
 }
 .manage-kpi-target>div{
-    width:100%;
     position:relative;
+    overflow-x:hidden;
+    overflow-y:visible;
+    text-overflow:ellipsis;
+    white-space:nowrap;
     height:100%;
 }
 .manage-kpi-target input{
     position:absolute;
-    z-index:10;
+    height:11px;
     left:-999em;
-    width:90%;
-    top:-7px;
+    width:87%;
+    top:0px;
     padding:7px 5px 5px;
+    border:1px solid #f06b1b;
 }
 /********************************************************************************************************* 添加 KPI
 *******************************************************************************************************************/
@@ -91,7 +105,7 @@
     overflow-y:auto;
     overflow-x:hidden;
     background:rgba(251,251,251,0.8);
-    transition:left 0.2s ease-out;
+    transition:left 0.35s ease-out;
 }
 .manage-kpi-add>i{
     pointer-events:auto;
