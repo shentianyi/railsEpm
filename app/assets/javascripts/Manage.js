@@ -18,7 +18,7 @@ MANAGE.left_count_observable=function(){
 };
 MANAGE.init=function(){
     MANAGE.left_count=$("#manage-left-menu").children().length-3;
-    MANAGE.type=MANAGE.type || $("#manage-left-menu").attr("type");
+    MANAGE.type=$("#content-right-nav").attr("name") || $("#manage-left-menu").attr("type");
     MANAGE.left.manage_left_add_init();
     MANAGE.left.manage_left_delete_init();
     MANAGE.left.manage_left_edit_init();

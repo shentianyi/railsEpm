@@ -640,7 +640,7 @@ DASHBOARD.add.change_interval=function(option) {
             }
             else {
 
-            show_loading(232,0,0,150);;
+            show_loading(215,0,0,204);;
             $.ajax({url:'/kpi_entries/analyse',
                 data:{
                     kpi : series_object.kpi_id,

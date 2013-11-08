@@ -211,11 +211,11 @@ DASHBOARD.add.generate=function(option){
 
     DASHBOARD.special_grab[type](option);
 
-    if(option.outer_target!="put-db-chart"){
-        var t=setTimeout(function(){
-            var width=parseInt($("#"+target).width());
-            var height=parseInt($("#"+target).height());
-            $("#"+target).highcharts().setSize(width,height);
-        },"1500");
-    }
+//    if(option.outer_target!="put-db-chart"){
+//        var t=setTimeout(function(){
+//            var width=parseInt($("#"+target).width());
+//            var height=parseInt($("#"+target).height());
+//            $("#"+target).highcharts().setSize(width,height);
+//        },"1500");
+//    }
 }

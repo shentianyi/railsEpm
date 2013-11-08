@@ -23,6 +23,10 @@ MANAGE.item_remove.prototype = {
      constructor : MANAGE.item_remove,
      remove_complete : function(id) {
 //                  $("#manage-sort-list").find("#"+id).remove();
+//                  MANAGE.totalChecked-=1;
+//                  total_check_listener();
+//                  MANAGE.judge_kpi_count();
+
           $.ajax({
                url : this.url + id,
                type : 'DELETE',
@@ -53,17 +57,14 @@ function group_item_remove() {
 
 group_item_remove.prototype = MANAGE.item_remove.prototype;
 group_item_remove.prototype.constructor = group_item_remove;
-
 MANAGE.group.item_remove = new group_item_remove();
 
 function manage_item_remove() {
-//    I18n.t
-     if(confirm(I18n.t('view.manage.base.delete_confirm'))) {
+     if(confirm('view.manage.base.delete_confirm')) {
+//     if(confirm(I18n.t('view.manage.base.delete_confirm'))) {
           $("#manage-sort-list :checked").each(function() {
                var id = $(this).parent().parent().attr("id");
                MANAGE[MANAGE.type].item_remove.remove_complete(id);
-//                           MANAGE.totalChecked-=1;
-//                           total_check_listener();
                if(MANAGE.type == "group" && $("#user-edit").css("left") != "0px") {
                     $("#user-edit").css("left", "-250px");
                     $("#manage-right-content").css("padding-left", "0px");
@@ -75,7 +76,6 @@ function manage_item_remove() {
                }
 
           });
-//                  MANAGE.judge_kpi_count();
      }
 }
 

@@ -1,0 +1,12 @@
+.content-right-nav-add-block[name="department"]{
+    top:145px;
+}
+.right-list-top-control[name="department"]>.icheckbox_minimal-aero{
+    left:18px;
+}
+.right-list-top-control[name="department"] > a:first-of-type{
+    margin-left:40px;
+}
+.manage-sort-list[name="department"]{
+    padding-left:18px;
+}
