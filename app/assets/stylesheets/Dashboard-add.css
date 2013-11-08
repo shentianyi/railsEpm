@@ -448,36 +448,71 @@
     /*color:rgba(0,0,0,0.6)*/
 /*}*/
 .dashboard-item-extra-info{
-    height:65px;
+    height:50px;
     width:100%;
     table-layout:fixed
 }
 .dashboard-item-extra-info td{
     color:rgba(0,0,0,0.6);
     font-size:13px;
-    line-height:17px;
+    line-height:19px;
     padding:0px;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
+    cursor:default;
 }
 .dashboard-item-extra-info .out-target{
     color:rgba(245,161,51,0.9);
-    font-size:68px;
+    font-size:60px;
     font-family:"Arial";
     font-weight:bolder;
-    lin-height:10px;
     vertical-align:bottom;
 }
 .dashboard-item-extra-info .out-target+span{
     position:relative;
-    bottom:-15px;
+    bottom:-12px;
+}
+.dashboard-item-extra-info .max-value{
+    color:rgba(245,161,51,0.9);
+    font-size:60px;
+    font-family:"Arial";
+    font-weight:bolder;
+    vertical-align:bottom;
+}
+.dashboard-item-extra-info .max-value+span{
+    position:relative;
+    bottom:-12px;
+}
+.dashboard-item-extra-info .min-value{
+    color:rgba(52,152,219,0.9);
+    font-size:60px;
+    font-family:"Arial";
+    font-weight:bolder;
+    vertical-align:bottom;
+}
+.dashboard-item-extra-info .min-value+span{
+    position:relative;
+    bottom:-12px;
+}
+.dashboard-item-extra-info .percentage{
+    color:rgba(245,161,51,0.9);
+    font-size:40px;
+    font-family:"Arial";
+    font-weight:bolder;
+    display:block;
+    text-align:center;
+    line-height:33px;
+}
+.dashboard-item-extra-info .pie-selected-name{
+    display:block;
+    text-align:center;
 }
 /***************************** container
 *******************************/
 .db-chart-container{
     position:absolute;
-    top:65px;
+    top:50px;
     left:0px;
     bottom:0px;
     right:0px;

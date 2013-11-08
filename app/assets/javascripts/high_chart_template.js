@@ -138,8 +138,8 @@ var high_chart = {
                 format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
             },
             colors:[
-                'rgba(52,152,219,0.7)',
-                'rgba(245,161,51,0.7)',
+                'rgba(151,203,228,1)',
+                'rgba(219,171,197,1)',
                 'rgba(205,208,164,0.7)',
                 'rgba(231,76,60,0.7)',
                 'rgba(26,188,156,0.7)',

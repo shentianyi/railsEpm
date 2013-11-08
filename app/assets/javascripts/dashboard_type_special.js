@@ -52,57 +52,94 @@ DASHBOARD.special_type={
 //       this.right_hide(id);
 //
 //    }
-    empty:function(id){
-        $("#"+id+" "+"dashboard-item-extra-info").empty();
-    },
     line:function(id){
-        this.empty(id);
+        $("#"+id+" "+".dashboard-item-extra-info").empty();
         $table=$("#"+id+" "+".dashboard-item-extra-info");
         $table
             .append($("<tr />")
-                .append($("<td rowspan='4' style='width:60%;min-width:60%;max-width:60%'/>")
-                    .append($("<span />").addClass("out-target"))
+                .append($("<td rowspan='2' style='width:60%;min-width:60%;max-width:60%'/>")
+                    .append($("<span style='padding-left:5px'/>").addClass("out-target"))
                     .append($("<span />").text("out of target"))
                 )
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:120px'/>").text("Total Amount: "))
+                    .append($("<span style='display:inline-block;width:80px'/>").text("KPI Name: "))
+                    .append($("<span style='color:rgba(245, 161, 51, 0.9)'/>").addClass("kpi-name"))
+                )
+                .append($("<td />")
+                    .append($("<span style='display:inline-block;width:100px'/>").text("Total Amount: "))
                     .append($("<span />").addClass("total-amount"))
                 )
             )
             .append($("<tr />")
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:120px'/>").text("Total Value: "))
+                    .append($("<span style='display:inline-block;width:80px'/>").text("Total Value: "))
                     .append($("<span />").addClass("total-value"))
                 )
-            )
-            .append($("<tr />")
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:120px'/>").text("Average Value: "))
+                    .append($("<span style='display:inline-block;width:100px'/>").text("Average Value: "))
                     .append($("<span />").addClass("average-value"))
                 )
             )
-//            .append($("<tr />")
-//                .append($("<td />")
-//                    .append($("<span style='display:inline-block;width:120px'/>").text("KPI Name: "))
-//                    .append($("<span />").addClass("kpi-name"))
-//                )
-//            )
+
+    },
+    column:function(id){
+        $("#"+id+" "+".dashboard-item-extra-info").empty();
+        $table=$("#"+id+" "+".dashboard-item-extra-info");
+        $table
+            .append(
+                $("<tr />")
+                    .append($("<td style='text-align:center;max-width:50%;min-width:50%;width:50%;'/>")
+                        .append($("<span />").addClass("max-value"))
+                        .append($("<span />").text("Max Value"))
+                    )
+                    .append($("<td style='text-align:center'/>")
+                        .append($("<span />").addClass("min-value"))
+                        .append($("<span />").text("Min Value"))
+                    )
+            )
+
+    },
+    pie:function(id){
+        $("#"+id+" "+".dashboard-item-extra-info").empty();
+        $table=$("#"+id+" "+".dashboard-item-extra-info");
+        $table
+            .append(
+                $("<tr />")
+                    .append($("<td rowspan='2' style='text-align:center;max-width:50%;min-width:50%;width:50%;'/>")
+                        .append($("<span />").addClass("percentage"))
+                        .append($("<span />").addClass("pie-selected-name"))
+                    )
+                    .append($("<td style='text-align:center;'/>")
+                        .append($("<span style='display:inline-block;width:100px;text-align:left;'/>").text("Selected Value: "))
+                        .append($("<span />").addClass("selected-value"))
+                    )
+            )
+            .append(
+                $("<tr />")
+                    .append($("<td style='text-align:center;'/>")
+                        .append($("<span style='display:inline-block;width:100px;text-align:left;'/>").text("Total Value: "))
+                        .append($("<span />").addClass("pie-total-value"))
+                    )
+            )
     }
 }
 DASHBOARD.special_grab={
     line:function(option){
         var data=option.special_data,
             $table=$("#"+option.outer_target+" "+".dashboard-item-extra-info");
-        $table.find(".out-target").text(+data.out_of_target);
-        $table.find(".total-amount").text(""+data.total_record);
-        $table.find(".total-value").text(data.total_value);
-        $table.find(".average-value").text(data.average_value);
-//        $table.find(".kpi-name").text(option.kpi);
+        $table.find(".out-target").text(data.out_of_target).attr("title",data.out_of_target);
+        $table.find(".total-amount").text(data.total_record).attr("title",data.total_record);
+        $table.find(".total-value").text(data.total_value).attr("title",data.total_value);
+        $table.find(".average-value").text(data.average_value).attr("title",data.average_value);
+        $table.find(".kpi-name").text(option.kpi).attr("title",option.kpi);
+        $table.find("tr td span").each(function(){
+            $(this).tipsy({gravity: 'se'});
+        });
     },
     column:function(option){
         var max=$("#"+option.target).highcharts().yAxis[0].getExtremes().dataMax,
             min,series=$("#"+option.target).highcharts().series,min_template,i,
-            $tr=$("#"+option.outer_target+" "+".chart-container-top table tr:first-of-type");
+            $table=$("#"+option.outer_target+" "+".dashboard-item-extra-info");
         for(i=0;i<series.length;i++){
             if(i==0){
                 min_template=[];
@@ -115,8 +152,11 @@ DASHBOARD.special_grab={
                 min=min_template.sort(sortNumber)[0]<min?min_template.sort(sortNumber)[0]:min;
             }
         }
-        $tr.find("td:nth-of-type(1)").text(max);
-        $tr.find("td:nth-of-type(2)").text(min);
+        $table.find(".max-value").text(max).attr("title",max);
+        $table.find(".min-value").text(min).attr("title",min);
+        $table.find("tr td span").each(function(){
+            $(this).tipsy({gravity: 'se'});
+        });
     },
     pie:function(option){
         var pie_data=$("#"+option.target).highcharts().get("pie_extra_series").data, i,max,percent,name,total=0;
@@ -128,11 +168,14 @@ DASHBOARD.special_grab={
                 name=parseInt(option.count)>1?pie_data[i].kpi_name:pie_data[i].name;
             }
         }
-        $data_target=$("#"+option.outer_target+" "+".chart-container-right");
-        $data_target.find("p:first-of-type").text(percent+"%");
-        $data_target.find("p:nth-of-type(2)").text(name);
-        $data_target.find("table tr:first-of-type td:first-of-type").text(max);
-        $data_target.find("table tr:nth-of-type(2) td:first-of-type").text(total);
+        $table=$("#"+option.outer_target+" "+".dashboard-item-extra-info");
+        $table.find(".percentage").text(percent+"%");
+        $table.find(".pie-selected-name").text(name).attr("title",name);
+        $table.find(".selected-value").text(max).attr("title",max);
+        $table.find(".pie-total-value").text(total).attr("title",total);
+        $table.find("tr td span").each(function(){
+            $(this).tipsy({gravity: 'se'});
+        });
     },
     scatter:function(option){
 
