@@ -17,7 +17,7 @@ MANAGE.left={};
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.manage_menu_left_add.prototype={
       add_show:function(){
-          $("#manage-left-menu li:nth-of-type(2) span").css("left","999em");
+          $("#manage-left-menu li:nth-of-type(2) span").css("left","-999em");
           $("#manage-left-menu li:nth-of-type(2) input").val("").css("left","8px").attr("placeholder",this.name).focus();
       },
       add_complete:function(){
@@ -44,6 +44,10 @@ MANAGE.manage_menu_left_add.prototype={
 //                  $("#manage-menu-add input").val("");
 //                  MANAGE.manage_menu_left_add.prototype.add_hide();
 //                  MANAGE.left_count++;
+//                  if(MANAGE.type=="category"){
+//                      $("#new-kpi-category").append($("<option />").attr("value",21).text(name));
+//                      $("#new-kpi-category").val('').trigger('chosen:updated');
+//                  }
 
 
 
@@ -59,6 +63,10 @@ MANAGE.manage_menu_left_add.prototype={
                           $("#manage-menu-add input").val("");
                           MANAGE.manage_menu_left_add.prototype.add_hide();
                           MANAGE.left_count++;
+                          if(MANAGE.type=="category"){
+                              $("#new-kpi-category").append($("<option />").attr("value",data.object).text(name));
+                              $("#new-kpi-category").val('').trigger('chosen:updated');
+                          }
                       } else {
                           MessageBox(data.content,"top","warning");
                       }
@@ -147,17 +155,37 @@ MANAGE.left.manage_left_add_init=function(){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.manage_menu_left_delete.prototype={
     delete_complete:function(e){
+        var number = $(e.target).parent().attr("number");
+
+//        if(MANAGE.type=="category"){
+//            $("#new-kpi-category option").each(function(){
+//                if($(this).attr('value')==number){
+//                    $(this).remove();
+//                    return false;
+//                }
+//            })
+//            $("#new-kpi-category").val('').trigger('chosen:updated');
+//        }
 //        $(e.target).parent().remove();
 //        MANAGE.left_count--;
 
 
-        var number = $(e.target).parent().attr("number");
+
         var local=this.local
         $.ajax({
             url : this.url+number,
             type : 'DELETE',
             success : function(data) {
               if(data.result){
+                  if(MANAGE.type=="category"){
+                      $("#new-kpi-category option").each(function(){
+                          if($(this).attr('value')==number){
+                              $(this).remove();
+                              return false;
+                          }
+                      })
+                      $("#new-kpi-category").val('').trigger('chosen:updated');
+                  }
                    window.location.href = local;
                    MANAGE.left_count--;
               }
@@ -250,6 +278,15 @@ MANAGE.manage_menu_left_edit.prototype={
 //            $("#manage-left-menu li.active>a").text(name);
 //            $("#manage-edit-target").text(name);
 //            this.edit_hide();
+//            if(MANAGE.type=="category"){
+//            $("#new-kpi-category option").each(function(){
+//                if($(this).attr('value')==id){
+//                    $(this).text(name);
+//                    return false;
+//                }
+//            })
+//            $("#new-kpi-category").val('').trigger('chosen:updated');
+//            }
 
 
             $("#manage-edit-target").text(name);
@@ -266,6 +303,15 @@ MANAGE.manage_menu_left_edit.prototype={
                     if(data){
                         $("#manage-left-menu li.active>a").text(name);
                         $("#manage-edit-target").text(name);
+                        if(MANAGE.type=="category"){
+                            $("#new-kpi-category option").each(function(){
+                                if($(this).attr('value')==id){
+                                    $(this).text(name);
+                                    return false;
+                                }
+                            })
+                            $("#new-kpi-category").val('').trigger('chosen:updated');
+                        }
                     }
                 }
             });

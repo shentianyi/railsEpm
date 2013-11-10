@@ -1,16 +1,15 @@
-<ul class="manage-left-menu" id="manage-left-menu" type="category">
-       <div style="width:auto;height:71px;"></div>
-       <li><%= t 'manage.kpi.title'%></li>
-       <li id="manage-menu-add">
-           <input type="text" />
-           <span><i class="icon-plus"></i> <%= t 'manage.kpi.category'%></span>
-           <p class="manage-add-tooltip"><%= t 'manage.base.enter_confirm'%><br /><%= t 'manage.base.esc_cancel'%></p>
-       </li>
 
-       <%@categories.each do |category|%>
-                 <li class="<%= category.id==@active_category_id ? 'active' : ''%>" number="<%= category.id%>" title="<%= category.name %>">
-                        <i class="icon-trash icon-item"></i>
-                        <a href="../kpis?p=<%= category.id%>"><%= category.name %></a>
-                 </li>
-       <%end%>
+<ul class="manage-left-menu" id="manage-left-menu" type="category">
+                <li><%= t 'manage.kpi.title'%></li>
+                <li id="manage-menu-add">
+                    <input type="text" />
+                    <span><i class="icon-plus"></i> Category</span>
+                    <p class="manage-add-tooltip">Enter: confirm <br />Esc: cancel</p>
+                </li>
+                <%@categories.each do |category|%>
+                                 <li class="<%= category.id==@active_category_id ? 'active' : ''%>" number="<%= category.id%>" title="<%= category.name %>">
+                                        <i class="icon-trash icon-item"></i>
+                                        <a href="../kpis?p=<%= category.id%>"><%= category.name %></a>
+                                 </li>
+                       <%end%>
 </ul>

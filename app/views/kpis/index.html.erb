@@ -1,70 +1,92 @@
+
 <div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
-<%= render :partial=>'kpi_categories/left_menu'%>
+    <div class="content-left-main" name="category" id="content-left-main">
+        <div style="width:auto;height:71px;"></div>
+        <div class="left-content-title" id="left-content-title">
+            <p class="current-group-item">Manage Kpi</p>
+        </div>
 
-<div class="manage-right-content" id="manage-right-content">
+        <div class="manage-left-content" id="manage-left-content">
+            <%= render :partial=>'kpi_categories/left_menu'%>
 
-     <div class="manage-btn-group" id="manage-btn-group">
+            <div class="manage-right-content" id="manage-right-content">
+                <div class="manage-btn-group" id="manage-btn-group">
+                    <p id="manage-edit-target" ></p>
+                    <i class="icon-pencil"></i>
+                    <input type="text"/>
+                </div>
+                <div class="manage-right-list">
+                    <div class="right-list-top-control" id="right-list-top-control">
+                        <input type="checkbox" id="manage-total-check"/>
+                         <a class="btn" id="manage-item-remove"><%= t 'manage.base.delete_btn'%></a>
+                         <a class="btn" id="manage-item-edit"><%= t 'manage.base.edit_btn'%></a>
+                    </div>
+                     <ul id="manage-sort-list" class="manage-sort-list">
+                                   <%@kpis.each_with_index do |kpi,i|%>
+                                   <li id="<%= kpi.id%>">
+                                        <p class="sort-handle">
+                                             :
+                                        </p>
+                                        <input type="checkbox" />
+                                        <table class="category">
+                                          <tr>
+                                            <td title='<%= kpi.name%>'><%= kpi.name%></td>
+                                            <td ><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
+                                            <td ><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
+                                            <td class="manage-kpi-target"><div>
+                                              <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target_max)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
+                                              <input type='text' effect_on="<%= kpi.id%>"/>
+                                            </div></td>
 
-          <p id="manage-edit-target" >
+                                            <td class="manage-kpi-target"><div>
+                                              <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target_min)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
+                                              <input type='text' effect_on="<%= kpi.id%>"/>
+                                            </div></td>
 
-          </p>
-          <i class="icon-pencil"></i>
-          <input type="text"/>
-          <a class="btn btn-primary" id="kpi-add-show"><i class="icon-plus"></i> KPI</a>
-          <a class="btn btn-primary kpi-library-btn" id="kpi-library-btn"><i class="icon-th-list"></i><%= t 'manage.kpi.kpi_library'%></a>
+                                            <%if kpi.is_calculated%>
+                                                <td title="<%= kpi.formula_string%>"><%= kpi.formula_string%></td>
+                                            <%else%>
+                                                <td><%= t 'manage.kpi.not_calculate_type'%></td>
+                                            <%end%>
+                                          </tr>
+                                          <tr>
+                                            <td title='<%= kpi.description%>'><%= kpi.description%></td>
+                                            <td><%= t 'manage.kpi.frequency'%></td>
+                                            <td><%= t 'manage.kpi.trend'%></td>
+                                            <td><%= t 'manage.kpi.target'%></td>
+                                            <td><%= t 'manage.kpi.target_min'%></td>
+                                            <td><%= t 'manage.kpi.calculate_type'%></td>
+                                          </tr>
+                                        </table>
+                                   </li>
+                                <%end%>
+                              </ul>
+                </div>
 
-     </div>
+            </div>
+        </div>
+    </div>
 
-     <div class="manage-right-list">
-          <div class="right-list-top-control" id="right-list-top-control">
-               <input type="checkbox" id="manage-total-check"/>
-               <a class="btn" id="manage-item-remove"><%= t 'manage.base.delete_btn'%></a>
-               <a class="btn" id="manage-item-edit"><%= t 'manage.base.edit_btn'%></a>
-          </div>
-
-          <ul id="manage-sort-list" class="manage-sort-list">
-               <%@kpis.each_with_index do |kpi,i|%>
-               <li id="<%= kpi.id%>">
-                    <p class="sort-handle">
-                         :
-                    </p>
-                    <input type="checkbox" />
-                    <table class="category">
-                      <tr>
-                        <td title='<%= kpi.name%>'><%= kpi.name%></td>
-                        <td ><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
-                        <td ><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
-                        <td class="manage-kpi-target"><div>
-                          <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target_max)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
-                          <input type='text' effect_on="<%= kpi.id%>"/>
-                        </div></td>
-
-                        <td class="manage-kpi-target"><div>
-                          <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target_min)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
-                          <input type='text' effect_on="<%= kpi.id%>"/>
-                        </div></td>
-
-                        <%if kpi.is_calculated%>
-                            <td title="<%= kpi.formula_string%>"><%= kpi.formula_string%></td>
-                        <%else%>
-                            <td><%= t 'manage.kpi.not_calculate_type'%></td>
-                        <%end%>
-                      </tr>
-                      <tr>
-                        <td title='<%= kpi.description%>'><%= kpi.description%></td>
-                        <td><%= t 'manage.kpi.frequency'%></td>
-                        <td><%= t 'manage.kpi.trend'%></td>
-                        <td><%= t 'manage.kpi.target'%></td>
-                        <td><%= t 'manage.kpi.target_min'%></td>
-                        <td><%= t 'manage.kpi.calculate_type'%></td>
-                      </tr>
-                    </table>
-               </li>
-            <%end%>
-          </ul>
-
-     </div>
-</div>
+    <aside class="content-right-nav" name='category' id="content-right-nav">
+        <section class="solid">
+            <h3>Create KPI</h3>
+            <p>Create kpi in different category , then you can edit it's
+            max target and min target</p>
+            <a class="btn btn-primary" id="kpi-add-show">Create Now</a>
+        </section>
+        <section class="solid">
+            <h3><%= t 'manage.kpi.kpi_library'%></h3>
+            <p>If you need some general kpi,you can choose it from the kpi
+            library for convenient</p>
+            <a class="btn btn-primary" id="kpi-library-btn">Choose now</a>
+        </section>
+        <section class="solid">
+            <h3>Next Step</h3>
+            <p>After creating kpi,you should create department and user,
+                then assign kpis to user in department</p>
+            <a class="btn btn-primary next-manage-department-btn" >Manage Department</a>
+        </section>
+    </aside>
 </div>
 
 <%= render :partial=>'kpis/new'%>
@@ -73,7 +95,7 @@
      <div>
           <div class="kpi-library-inner">
                <div class="left Accordion" id="kpi-library-inner-left">
-                    
+
                </div>
                <div class="right">
                     <ul class="library-chosen-kpi" id="library-chosen-kpi">
@@ -87,6 +109,33 @@
           </div>
      </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script type="text/javascript">
      $(document).ready(function() {

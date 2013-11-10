@@ -10,6 +10,9 @@
     <link href="stylesheets/Manage.css" rel="stylesheet">
     <link href="stylesheets/Manage-kpi.css" rel="stylesheet">
     <link href="stylesheets/tipsy.css" rel="stylesheet">
+    <link href="stylesheets/Manage-user.css" rel="stylesheet">
+    <link href="stylesheets/2_column_right_nav.css" rel="stylesheet">
+    <link href="stylesheets/Dashboard.css" rel="stylesheet">
     <title>if kpi</title>
 </head>
 <body>
@@ -73,91 +76,112 @@
 
 
 
-
-
-
-
-
-
 <div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
-
-    <ul class="manage-left-menu" id="manage-left-menu" type="category">
-       <div style="width:auto;height:71px;"></div>
-       <li>Manage KPI</li>
-       <li id="manage-menu-add">
-           <input type="text" />
-           <span><i class="icon-plus"></i> Category</span>
-           <p class="manage-add-tooltip">Enter: confirm <br />Esc: cancel</p>
-       </li>
-       <li class="active" title="Category1" number="1">
-           <i class="icon-trash icon-item"></i>
-           <a>Category1</a>
-       </li>
-       <li title="Category2" number="2">
-           <i class="icon-trash icon-item"></i>
-           <a >Category2</a>
-       </li>
-       <li title="Category3" number="3">
-           <i class="icon-trash icon-item"></i>
-           <a>Category3</a>
-       </li>
-
-    </ul>
-
-    <div class="manage-right-content" id="manage-right-content">
-
-        <div class="manage-btn-group" id="manage-btn-group">
-
-            <p id="manage-edit-target" ></p>
-            <i class="icon-pencil"></i>
-            <input type="text"/>
-            <a class="btn btn-primary" id="kpi-add-show"><i class="icon-plus"></i> KPI</a>
-            <a class="btn btn-primary kpi-library-btn" id="kpi-library-btn"><i class="icon-th-list"></i> KPI Library</a>
+    <div class="content-left-main" name="category" id="content-left-main">
+        <div style="width:auto;height:71px;"></div>
+        <div class="left-content-title" id="left-content-title">
+            <p class="current-group-item">Manage Kpi</p>
         </div>
-        <div class="manage-right-list">
-            <div class="right-list-top-control" id="right-list-top-control">
-                <input type="checkbox" id="manage-total-check"/>
-                <a class="btn" id="manage-item-remove">Delete</a>
-                <a class="btn" id="manage-item-edit">Edit</a>
-            </div>
 
-
-            <ul id="manage-sort-list" class="manage-sort-list" >
-                <li id="1">
-                    <p class="sort-handle">:</p>
-                    <input type="checkbox" />
-                    <table class="category">
-                        <tr>
-                            <td >KPI1</td>
-                            <td >Hour</td>
-                            <td >Up</td>
-                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
-                            <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
-                            <td title="dasdasd">No</td>
-                        </tr>
-                        <tr>
-                            <td>all the description here</td>
-                            <td>Frequency</td>
-                            <td>Trend</td>
-                            <td>Target Max</td>
-                            <td>Target Min</td>
-                            <td>Is Calcu Type</td>
-                        </tr>
-                    </table>
+        <div class="manage-left-content" id="manage-left-content">
+            <ul class="manage-left-menu" id="manage-left-menu" type="category">
+                <li>Manage KPI</li>
+                <li id="manage-menu-add">
+                    <input type="text" />
+                    <span><i class="icon-plus"></i> Category</span>
+                    <p class="manage-add-tooltip">Enter: confirm <br />Esc: cancel</p>
                 </li>
-
+                <li class="active" title="Category1" number="1">
+                    <i class="icon-trash icon-item"></i>
+                    <a>Category1</a>
+                </li>
+                <li title="Category2" number="2">
+                    <i class="icon-trash icon-item"></i>
+                    <a >Category2</a>
+                </li>
+                <li title="Category3" number="3">
+                    <i class="icon-trash icon-item"></i>
+                    <a>Category3</a>
+                </li>
             </ul>
+
+            <div class="manage-right-content" id="manage-right-content">
+                <div class="manage-btn-group" id="manage-btn-group">
+                    <p id="manage-edit-target" ></p>
+                    <i class="icon-pencil"></i>
+                    <input type="text"/>
+                </div>
+                <div class="manage-right-list">
+                    <div class="right-list-top-control" id="right-list-top-control">
+                        <input type="checkbox" id="manage-total-check"/>
+                        <a class="btn" id="manage-item-remove">Delete</a>
+                        <a class="btn" id="manage-item-edit">Edit</a>
+                    </div>
+                    <ul id="manage-sort-list" class="manage-sort-list" >
+                        <li id="1">
+                            <p class="sort-handle">:</p>
+                            <input type="checkbox" />
+                            <table class="category">
+                                <tr>
+                                    <td >KPI1</td>
+                                    <td >Hour</td>
+                                    <td >Up</td>
+                                    <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                                    <td class="manage-kpi-target"><div><span class="can-change">200</span><span>$</span><input  type='text' effect_on="1"/></div></td>
+                                    <td title="dasdasd">No</td>
+                                </tr>
+                                <tr>
+                                    <td>all the description here</td>
+                                    <td>Frequency</td>
+                                    <td>Trend</td>
+                                    <td>Target Max</td>
+                                    <td>Target Min</td>
+                                    <td>Is Calcu Type</td>
+                                </tr>
+                            </table>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
         </div>
     </div>
 
+    <aside class="content-right-nav" name='category' id="content-right-nav">
+        <section class="solid">
+            <h3>Create KPI</h3>
+            <p>Create kpi in different category , then you can edit it's
+            max target and min target</p>
+            <a class="btn btn-primary" id="kpi-add-show">Create Now</a>
+        </section>
+        <section class="solid">
+            <h3>KPI Library</h3>
+            <p>If you need some general kpi,you can choose it from the kpi
+            library for convenient</p>
+            <a class="btn btn-primary" id="kpi-library-btn">Choose now</a>
+        </section>
+        <section class="solid">
+            <h3>Next Step</h3>
+            <p>After creating kpi,you should create department and user,
+                then assign kpis to user in department</p>
+            <a class="btn btn-primary next-manage-department-btn" >Manage Department</a>
+        </section>
+    </aside>
 </div>
+
+
 
 <div class="manage-kpi-add" id="manage-kpi-add">
     <div style="width:auto;height:71px;"></div>
     <i class="icon-remove" id="close-add-kpi"></i>
     <div>
+        <div class="select-div">
+            <select data-placeholder="* Category" class="chosen-select"  id="new-kpi-category">
+            </select>
+        </div>
         <input type="text" placeholder="* Name" id="new-kpi-name"/>
-        <textarea placeholder="   Description" id="new-kpi-desc"></textarea>
+        <textarea placeholder="Description" id="new-kpi-desc"></textarea>
         <div class="select-div">
             <select class="chosen-select" data-placeholder="* Frequency" id="add-interval">
                 <option value=""> </option>
