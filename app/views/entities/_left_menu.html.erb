@@ -1,21 +1,11 @@
-
 <ul class="manage-left-menu" id="manage-left-menu" type="group">
-<div style="width:auto;height:71px;"></div>
-    <li>管理用户</li>
-    <li id="manage-menu-add">
-        <input type="text"/>
+     <li>Department</li>
+     <li id="manage-menu-add" style="background-color:rgba(0,0,0,0)"></li>
 
-        <span><i class="icon-plus"></i> 部门</span>
-
-
-        <p class="manage-add-tooltip">Enter: confirm <br/>Esc: cancel</p>
-    </li>
-
-
-    <%@entities.each do |entity|%>
-    <li class="<%= entity.id==@active_entity_id ? 'active' : ''%>" title="<%= entity.name %>" number="<%= entity.id%>">
-        <i class="icon-trash icon-item"></i>
-        <a href="../users?p=<%=entity.id%>"><%= entity.name %></a>
-    </li>
-    <%end%>
+     <%@entities.each do |entity|%>
+         <li class="<%= entity.id==@active_entity_id ? 'active' : ''%>" title="<%= entity.name %>" number="<%= entity.id%>">
+             <i class="icon-trash icon-item"></i>
+             <a href="../users?p=<%=entity.id%>"><%= entity.name %></a>
+         </li>
+     <%end%>
 </ul>

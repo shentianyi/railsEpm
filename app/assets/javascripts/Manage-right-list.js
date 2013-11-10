@@ -60,8 +60,8 @@ group_item_remove.prototype.constructor = group_item_remove;
 MANAGE.group.item_remove = new group_item_remove();
 
 function manage_item_remove() {
-     if(confirm('view.manage.base.delete_confirm')) {
-//     if(confirm(I18n.t('view.manage.base.delete_confirm'))) {
+//     if(confirm('view.manage.base.delete_confirm')) {
+     if(confirm(I18n.t('view.manage.base.delete_confirm'))) {
           $("#manage-sort-list :checked").each(function() {
                var id = $(this).parent().parent().attr("id");
                MANAGE[MANAGE.type].item_remove.remove_complete(id);

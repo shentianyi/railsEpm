@@ -193,37 +193,6 @@
             then entry the kpi assigned</p>
             <a class="btn btn-primary" id="add-user-show">Create Now</a>
         </section>
-        <section id="manage-user-add" class="create-user manage-user-add"  general="manage-user-add">
-            <i class="icon-remove" id="close-add-user" general="close-user"></i>
-            <div>
-                <input type="text" placeholder="* Name" id="new-user-name" general="user-name"/>
-                <input type="text" placeholder="* Email" id="new-user-mail" general="user-mail"/>
-                <input type="password" placeholder="* Password" id="new-user-password"/>
-                <input type="password" placeholder="* Password Confirm" id="new-user-password-confirm"/>
-                <div class="div-select">
-                    <select data-placeholder="* Department" class="chosen-select"  id="department-for-kpi">
-                        <option value=""></option>
-                    </select>
-                </div>
-                <label>
-                    <input type="radio" name="user-role" data-name="General" data-role="1" value="100" checked>
-                    General
-                </label>
-                <label>
-                    <input type="radio" name="user-role" data-name="Department Manager" data-role="2" value="200">
-                    Department Manager
-                </label>
-                <label>
-                    <input type="radio" name="user-role" data-name="General Manager" data-role="3" value="300">
-                    General Manager
-                </label>
-                <label>
-                    <input type="radio" name="user-role" data-name="Administrator" data-role="4" value="400">
-                    Administrator
-                </label>
-                <input type="submit" value="Add" class="btn btn-primary" id="manage-user-add-new"/>
-            </div>
-        </section>
         <section class="solid">
             <h3>Assign KPI</h3>
             <p>You can assign different kpi to your user just
@@ -237,56 +206,48 @@
             <a class="btn btn-primary" >Manage View</a>
         </section>
     </aside>
-
-
 </div>
 
-
+<div class="manage-user-add create-user" id="manage-user-add" general="manage-user-add">
+    <i class="icon-remove" id="close-add-user" general="close-user"></i>
+    <div>
+        <input type="text" placeholder="* Name" id="new-user-name" general="user-name"/>
+        <input type="text" placeholder="* Email" id="new-user-mail" general="user-mail"/>
+        <input type="password" placeholder="* Password" id="new-user-password"/>
+        <input type="password" placeholder="* Password Confirm" id="new-user-password-confirm"/>
+        <div class="div-select">
+            <select data-placeholder="* Department" class="chosen-select"  id="department-for-kpi">
+                <option value=""></option>
+            </select>
+        </div>
+        <label>
+            <input type="radio" name="user-role" data-name="General" data-role="1" value="100" checked>
+            General
+        </label>
+        <label>
+            <input type="radio" name="user-role" data-name="Department Manager" data-role="2" value="200">
+            Department Manager
+        </label>
+        <label>
+            <input type="radio" name="user-role" data-name="General Manager" data-role="3" value="300">
+            General Manager
+        </label>
+        <label>
+            <input type="radio" name="user-role" data-name="Administrator" data-role="4" value="400">
+            Administrator
+        </label>
+        <input type="submit" value="Add" class="btn btn-primary" id="manage-user-add-new"/>
+    </div>
+</div>
 
 
 
 <div class="assign-kpi-wrap" id="assign-kpi-wrap">
     <div id="assign-kpi" class="assign-kpi" special="user">
-        <div class="assign-kpi-top" id="assign-kpi-top">
-            <i class="icon-remove" id="assign-kpi-cancel"></i>
-            <div class="select-div">
-                <select data-placeholder="* User" class="chosen-select">
-                    <option value=""></option>
-                    <option value="sad">12</option>
-                    <option value="asd">13</option>
-                    <option value="asd">14</option>
-                </select>
-            </div>
-            <a class="btn btn-primary assign-kpi-pick" id="assign-kpi-pick"  state="close"><i class="icon-key"></i> All KPIs</a>
-        </div>
-        <div class="assign-kpi-inner" id="assign-kpi-inner">
-            <ul class="left">
-                <li id="kpi1">
-                    <table>
-                        <tr>
-                            <td>KPI 1</td>
-                            <td><input type="text" kpi_id="kpi1" class="target_max"/></td>
-                            <td><input type="text" kpi_id="kpi1" class="target_min"/></td>
-                        </tr>
-                        <tr>
-                            <td>some description here</td>
-                            <td>Target Max</td>
-                            <td>Target Min</td>
-                        </tr>
-                    </table>
-                    <i class="icon-trash"></i>
-                </li>
-            </ul>
-        </div>
 
-        <div class="assign-kpi-options" special="user" id="assign-kpi-options">
-            <i class="icon-remove" id="close-assign-kpi-options"></i>
-
+        <div class="assign-kpi-left"  special="user" id="assign-kpi-options">
             <div class="select-div">
                 <select class="chosen-select" data-placeholder="KPI Category" id="kpi-category">
-                    <option value="200">Up</option>
-                    <option value="100">None</option>
-                    <option value="300">Down</option>
                 </select>
             </div>
             <ul id="assign-kpi-list">
@@ -304,9 +265,41 @@
                 </li>
             </ul>
         </div>
+        <div class="assign-kpi-right" id="assign-kpi-right">
+            <div class="select-div">
+                <select data-placeholder="* User" class="chosen-select" style="width:180px;" id="assign-kpi-user">
+                    <option value=""></option>
+                    <option value="sad">12</option>
+                    <option value="asd">13</option>
+                    <option value="asd">14</option>
+                </select>
+            </div>
+            <div id="assign-kpi-inner" class="assign-kpi-inner">
+                <ul class="left" id="assign-kpi-user-kpis">
+                    <li id="kpi1">
+                        <table>
+                            <tr>
+                                <td>KPI 1</td>
+                                <td><input type="text" kpi_id="kpi1" class="target_max"/></td>
+                                <td><input type="text" kpi_id="kpi1" class="target_min"/></td>
+                            </tr>
+                            <tr>
+                                <td>some description here</td>
+                                <td>Target Max</td>
+                                <td>Target Min</td>
+                            </tr>
+                        </table>
+                        <i class="icon-trash"></i>
+                    </li>
 
+                </ul>
+            </div>
+        </div>
+        <div class="assign-kpi-bottom">
+            <p>Assign KPI</p>
+            <a class="btn btn-primary" id="assign-kpi-cancel">Finish</a>
+        </div>
     </div>
-
 </div>
 
 </article>
