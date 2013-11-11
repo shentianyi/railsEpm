@@ -278,6 +278,13 @@ function post_kpi(option){
                     MANAGE.resize_sort_table()
                 });
             }
+            else{
+                $("#manage-kpi-add").css("right","999em");
+                $("#manage-right-content").css("padding-right","0px");
+                $("#left-content-title").css("margin-right","0px");
+                MANAGE.kpi.kpi_add_clear();
+                MessageBox("Add success","top","success");
+            }
         }
         else{
             MessageBox(data.content,"top","warning");

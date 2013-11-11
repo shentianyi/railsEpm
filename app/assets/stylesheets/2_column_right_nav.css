@@ -179,10 +179,22 @@
 }
 .left-content-title{
     height:49px;
-    background-color:#f7f7f7;
+    background-color:#5688A9;
     position:relative;
     border-bottom:1px solid #DCDCDC;
     z-index:20;
+    box-shadow:0 -1px 1px rgba(0, 0, 0, 0.35) inset;
+    -moz-box-shadow:0 -1px 1px rgba(0, 0, 0, 0.35) inset;
+    -webkit-box-shadow:0 -1px 1px rgba(0, 0, 0, 0.35) inset;
+}
+.left-content-title[name="dashboard"]{
+    background-color:#F7F7F7;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+}
+.left-content-title[name="dashboard"] .current-group-item{
+    color:#757373
 }
 .current-group-item{
     display:inline-block;
@@ -193,7 +205,7 @@
     margin:11px 0 0 18px;
     font-family:"maven";
     font-size:25px;
-    color:#757373;
+    color:white;
 }
 .current-group-item-edit{
     display:inline-block;
