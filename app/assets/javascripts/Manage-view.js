@@ -9,12 +9,16 @@ var MANAGE=MANAGE || {};
 MANAGE.view={};
 MANAGE.view.init=function(){
     $("#entity-add-show").on("click",function(){
-         $("#manage-entity-add").css("left","200px");
+         $("#manage-entity-add").css("left","150px");
          $("#manage-right-content").css("padding-left","200px");
     });
     $("#close-add-entity").on("click",function(){
-        $("#manage-entity-add").css("left","-50px");
+        $("#manage-entity-add").css("left","-200px");
         $("#manage-right-content").css("padding-left","0px");
+    });
+    $("#manage-entity-add").height($(document).height()-$("header").height()-$("#left-content-title").height()-1);
+    $("body").resize(function(){
+        $("#manage-entity-add").height($(document).height()-$("header").height()-$("#left-content-title").height()-1);
     });
     $("body").on("click","#manage-entity-add ul h3",function(){
         var id=$(this).attr("id"),

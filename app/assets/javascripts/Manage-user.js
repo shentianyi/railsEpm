@@ -19,11 +19,16 @@ MANAGE.user.init = function() {
           $("#manage-user-add").css("right","261px");
           $("#manage-right-content").css("padding-right","200px");
           $("#left-content-title").css("margin-right","201px");
+         $("#user-edit").css("left", "-250px");
+         $("#manage-right-content").css("padding-left", "0px");
 
           $("#manage-user-add.create-user> div >.div-select>div").css("width","150px")
      }).on("click", "#manage-user-edit", function() {
           $("#user-edit").css("left", "0px");
           $("#manage-right-content").css("padding-left", "200px");
+          $("#manage-user-add").css("right","999em");
+          $("#manage-right-content").css("padding-right","0px");
+          $("#left-content-title").css("margin-right","0px");
           MANAGE.user.user_edit_box_bind();
      });
      $("#manage-user-edit-old").on("click", function() {

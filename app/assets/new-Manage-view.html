@@ -11,6 +11,9 @@
     <link href="stylesheets/Manage-kpi.css" rel="stylesheet">
     <link href="stylesheets/Manage-user.css" rel="stylesheet">
     <link href="stylesheets/Manage-view.css" rel="stylesheet">
+    <link href="stylesheets/Manage-user.css" rel="stylesheet">
+    <link href="stylesheets/2_column_right_nav.css" rel="stylesheet">
+    <link href="stylesheets/Dashboard.css" rel="stylesheet">
     <title>if kpi</title>
 </head>
 <body>
@@ -74,112 +77,102 @@
 
 
 
-
-
-
-
-
-
-
-
     <div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
-<ul class="manage-left-menu" id="manage-left-menu" type="entity">
-    <div style="width:auto;height:71px;"></div>
-    <li>Manage View</li>
-    <li id="manage-menu-add">
-        <input type="text"/>
-        <span><i class="icon-plus"></i> View</span>
+        <div class="content-left-main" name="view" id="content-left-main">
+            <div style="width:auto;height:71px;"></div>
+            <div class="left-content-title" id="left-content-title">
+                <p class="current-group-item">Manage View</p>
+            </div>
 
-        <p class="manage-add-tooltip">Enter: confirm <br/>Esc: cancel</p>
-    </li>
-    <li class="active" title="View1" number="1">
-        <i class="icon-trash icon-item"></i>
-        <a>View1</a>
-    </li>
-    <li title="View2" number="2">
-        <i class="icon-trash icon-item"></i>
-        <a>View2</a>
-    </li>
-    <li title="View3" number="3">
-        <i class="icon-trash icon-item"></i>
-        <a>View3</a>
-    </li>
-</ul>
+            <div class="manage-left-content" id="manage-left-content">
+                <ul class="manage-left-menu" id="manage-left-menu" type="entity">
+                    <li>View</li>
+                    <li id="manage-menu-add">
+                        <input type="text"/>
+                        <span><i class="icon-plus"></i> View</span>
 
+                        <p class="manage-add-tooltip">Enter: confirm <br/>Esc: cancel</p>
+                    </li>
+                    <li class="active" title="View1" number="1">
+                        <i class="icon-trash icon-item"></i>
+                        <a>View1</a>
+                    </li>
+                    <li title="View2" number="2">
+                        <i class="icon-trash icon-item"></i>
+                        <a>View2</a>
+                    </li>
+                    <li title="View3" number="3">
+                        <i class="icon-trash icon-item"></i>
+                        <a>View3</a>
+                    </li>
+                </ul>
 
+                <div class="manage-right-content" id="manage-right-content">
+                    <div class="manage-btn-group" id="manage-btn-group" special="view">
+                        <p id="manage-edit-target" ></p>
+                        <i class="icon-pencil"></i>
+                        <input type="text"/>
+                        <a class="btn btn-primary assign-department-btn" id="entity-add-show">Assign Department</a>
+                    </div>
+                    <div class="assign-entity-wrap" id="assign-entity-wrap">
+                        <ul>
+                            <li>
+                                <h3 entity_id="1">User Group1</h3>
+                                <i class="icon-trash"></i>
+                            </li>
+                            <li>
+                                <h3 entity_id="2">User Group2</h3>
+                                <i class="icon-trash"></i>
+                            </li>
+                            <li>
+                                <h3 entity_id="3">User Group3</h3>
+                                <i class="icon-trash"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
+                <div class="manage-user-add" id="manage-entity-add" special="entity">
+                    <i class="icon-remove" id="close-add-entity" ></i>
+                    <p>UserGroup List</p>
+                    <ul>
+                        <li>
+                            <h3 id="11">User Group11</h3>
+                        </li>
+                        <li>
+                            <h3 id="21">User Group21</h3>
+                        </li>
+                        <li>
+                            <h3 id="31">User Group31</h3>
+                        </li>
+                        <li>
+                            <h3 id="41">User Group41</h3>
+                        </li>
+                    </ul>
+                </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="manage-right-content" id="manage-right-content">
-        <div class="manage-btn-group" id="manage-btn-group" special="view">
-
-            <p id="manage-edit-target" ></p>
-            <i class="icon-pencil"></i>
-            <input type="text"/>
-            <a class="btn btn-primary" id="entity-add-show"><i class="icon-plus"></i> User Group</a>
-            <span>Enter:Confirm&nbsp;&nbsp;&nbsp;&nbsp;Esc:Cancel</span>
+            </div>
         </div>
-        <div class="assign-entity-wrap" id="assign-entity-wrap">
-            <ul>
-                <li>
-                    <h3 entity_id="1">User Group1</h3>
-                    <i class="icon-trash"></i>
-                </li>
-                <li>
-                    <h3 entity_id="2">User Group2</h3>
-                    <i class="icon-trash"></i>
-                </li>
-                <li>
-                    <h3 entity_id="3">User Group3</h3>
-                    <i class="icon-trash"></i>
-                </li>
-            </ul>
-        </div>
-</div>
+
+        <aside class="content-right-nav" name='entity' id="content-right-nav">
+            <section class="solid">
+                <h3>Assign Department</h3>
+                <p>Creating view first , then assign department to the view ,
+                view is the base condition in analytics</p>
+            </section>
+            <section class="solid">
+                <h3>Next Step</h3>
+                <p>After taking care of everything in manage part,you should let your
+                user(staff) go to 'Entry KPIs' to entry their kpi state</p>
+                <a class="btn btn-primary" >Entry KPIs</a>
+            </section>
+        </aside>
     </div>
 
 
 
 
 
-        <div class="manage-user-add" id="manage-entity-add" special="entity">
-            <div style="width:auto;height:71px;"></div>
-            <i class="icon-remove" id="close-add-entity" ></i>
-            <p>UserGroup List</p>
-            <ul>
-                <li>
-                    <h3 id="11">User Group11</h3>
-                </li>
-                <li>
-                    <h3 id="21">User Group21</h3>
-                </li>
-                <li>
-                    <h3 id="31">User Group31</h3>
-                </li>
-                <li>
-                    <h3 id="41">User Group41</h3>
-                </li>
-            </ul>
-        </div>
 
 
 </article>

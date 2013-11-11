@@ -3,34 +3,40 @@
 .manage-left-menu[type="entity"] li:first-of-type{
     text-align:center;
     font-weight:lighter;
-    font-size:22px;
-    color:#45ACFB;
-    padding:32px 0 10px;
+    font-size:15px;
+    color:rgba(0, 0, 0, 0.65);
+    padding:29px 0 1px;
 }
 /********************************************************************************************************* 右边的头部
 *******************************************************************************************************************/
+.manage-btn-group[special='view']{
+    top:18px;
+}
 .manage-btn-group[special='view']>a{
     width:120px;
+    bottom:-30px;
+    left:-2px;
 }
+
 /********************************************************************************************************* 右边的内容部分
 *******************************************************************************************************************/
 .assign-entity-wrap{
     position:relative;
-    top:31px;
+    top:75px;
 }
 .assign-entity-wrap>ul{
     list-style-type:none;
-    padding:0 0 0 31px;
+    padding:0 0 0 60px;
     margin:0px;
 }
 .assign-entity-wrap>ul>li{
-    padding:15px 0;
+    padding:8px 0;
     border-bottom:1px solid #ddd;
     width:50%;
     position:relative;
 }
 .assign-entity-wrap>ul>li:first-of-type{
-    padding:6px 0 15px;
+    padding:6px 0 8px;
 }
 .assign-entity-wrap>ul>li>h3{
     font-weight:lighter;
@@ -48,10 +54,10 @@
 }
 .assign-entity-wrap>ul>li>i{
     position:absolute;
-    right:20px;
-    top:20px;
+    left:-29px;
+    top:11px;
     color:rgba(0,0,0,0.3);
-    display:none;
+    /*display:none;*/
     pointer-events:auto;
     cursor:pointer;
 }
@@ -64,6 +70,9 @@
 .manage-user-add[special="entity"]{
     background-color:#333;
     transition:left 0.35s ease-out;
+    position:relative;
+    left:-200px;
+    width:200px;
 
 }
 .manage-user-add[special="entity"]>i{
