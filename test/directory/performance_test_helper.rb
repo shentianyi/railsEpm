@@ -4,7 +4,7 @@
 # START : HAX HAX HAX
 # Load Rails environment in 'test' mode
 RAILS_ENV = "test"
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../../../config/environment', __FILE__)
 
 # Re-establish db connection for 'performance' mode
 silence_warnings { RAILS_ENV = "performance" }

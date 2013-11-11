@@ -1,5 +1,4 @@
-require 'test_helper'
-require 'rails/performance_test_help'
+require 'directory/performance_test_helper'
 
 class DashboardsTest < ActionDispatch::PerformanceTest
   # Refer to the documentation for all available options
@@ -10,8 +9,7 @@ class DashboardsTest < ActionDispatch::PerformanceTest
 
   end
 
-  def select_dashboard
-    post '/dashboards'
-    post '/DashboardItems/items_by_dashboard_id'
+  def crash_dashboard_select
+    post "/dashboards"
   end
 end
