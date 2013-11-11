@@ -31,9 +31,6 @@ ENTRY.init=function(){
    }).on("blur",".entry-actual",function(event){
            var e=adapt_event(event).event,
                actual= $(e.target).val(),
-//               target= $(e.target).parent().prev().find(".entry-target").text(),
-//               tcr= (parseFloat(actual) / parseFloat(target))*100,
-//               color_style=tcr>100 ? "#55cd5e" : (tcr==100 ? "#5FA9DA" : "#ed5959"),
                interval=$("#entry-left-menu li.active").attr("interval"),
                date=$("#entry-date-picker").val(),entry_at,d=standardParse(date).date;
            if(interval=="200"){
@@ -45,34 +42,37 @@ ENTRY.init=function(){
            else{
                entry_at=standardParse(date).date.toISOString()
            }
-           if(actual.length>0){
-//               $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
+           var kpi_id=$(e.target).attr("user_kpi_item_id"),value=$(e.target).val();
                $.ajax({
                   url:"/kpi_entries/entry",
                   type:'POST',
                   data:{
-                      user_kpi_item_id:$(e.target).attr("user_kpi_item_id"),
+                      user_kpi_item_id:kpi_id,
                       entry_at:entry_at,
-                      value:$(e.target).val(),
+                      value:value,
                       kpi_id:$(e.target).attr("kpi_id")
                   },
                   success:function(data){
                       if(data.result){
-//                          $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
+                          ENTRY.recent_entry[kpi_id][4]=value;
+                          $target=$("#"+id).find(".kpi-entry-trend");
+                          $target.sparkline(ENTRY.recent_entry[kpi_id], { type: 'bar',chartRangeMin:0,colorMap:["#5FA9DA","#5FA9DA","#5FA9DA","#5FA9DA","#F5A133"],barWidth:"6px"});
                       }
                       else{
                           MessageBox(data.content,"top","warning");
                       }
                   }
                });
-           }
-           else{
-               $(e.target).parent().next().text("");
-           }
+
+
+//           ENTRY.recent_entry[kpi_id][4]=value;
+//           $target=$("#"+kpi_id).find(".kpi-entry-trend");
+//           $target.sparkline(ENTRY.recent_entry[kpi_id], { type: 'bar',chartRangeMin:0,colorMap:["#5FA9DA","#5FA9DA","#5FA9DA","#5FA9DA","#F5A133"],barWidth:"6px"});
 
    });
-    ENTRY.trend($("#entry-date-picker").val());
-    $('.kpi-entry-trend').sparkline([19,20,21,19,20], { type: 'bar',chartRangeMin:0,colorMap:["#5FA9DA","#5FA9DA","#5FA9DA","#5FA9DA","#F5A133"],barWidth:"6px"});
+
+
+
 }
 
 
@@ -131,7 +131,7 @@ ENTRY.datepicker.init=function(){
                 $("#entry-date-picker").datepicker("update",entry.plus(target));
             }
             ENTRY.datepicker.extra_convert(interval);
-            ENTRY.datepicker.post()
+            ENTRY.datepicker.post();
         }
     });
 }
@@ -222,6 +222,7 @@ ENTRY.datepicker.post=function(){
     var interval=$("#entry-left-menu li.active").attr("interval");
     var date_original=$("#entry-date-picker").val();
     var post_date=HIGH_CHART.postPrepare(date_original,interval);
+
     $.ajax({
         url:'../kpi_entries/refresh_entry',
         type:'post',
@@ -232,18 +233,25 @@ ENTRY.datepicker.post=function(){
         dataType:"html",
         success:function(data){
             $("#entry-sort-list").html(data);
-            $(".entry-actual").each(function(){
-               var percent=parseFloat($(this).parent().next().text());
-               var color_style=percent>100 ? "#55cd5e" : (percent==100 ? "#5FA9DA" : "#ed5959");
-               $(this).parent().next().css("color",color_style);
-            });
             ENTRY.resize_sort_table();
             $("#entry-sort-list li").on("resize",function(){
                 ENTRY.resize_sort_table()
             });
             $("#entry-sort-list td").tipsy({gravity: 'se'});
+            var i,date=$("#entry-date-picker").val();
+            for(i=0;i<$("#entry-sort-list").children().length;i++){
+                var id=$("#entry-sort-list").children().eq(i).attr("id");
+                ENTRY.trend(date,id);
+            }
+
         }
     });
+
+//    var i,date=$("#entry-date-picker").val();
+//    for(i=0;i<$("#entry-sort-list").children().length;i++){
+//        var id=$("#entry-sort-list").children().eq(i).attr("id");
+//        ENTRY.trend(date,id);
+//    }
 }
 
 
@@ -251,22 +259,56 @@ ENTRY.resize_sort_table=function(){
     var table_size=$("#entry-sort-list li").width()*0.97;
     $("#entry-sort-list table").width(table_size)
 }
-ENTRY.trend=function(datetime){
+ENTRY.trend=function(datetime,id){
     var interval=$("#entry-left-menu li.active").attr("interval");
-    var post_date=HIGH_CHART.postPrepare(datetime,interval);
-    $.ajax({
-        url:'',
-        type:'get'
-    })
+    var post_date=HIGH_CHART.postPrepare(datetime,interval), i,recent_entry=[];
+    for(i=0;i<5;i++){
+
+        $.ajax({
+            url:'',
+            type:'get',
+            data:{
+                date:post_date.toISOString()
+            },
+            success:function(data){
+                recent_entry.unshift(data.object);
+                post_date=ENTRY.recent_entry[interval](post_date);
+
+            }
+        })
+
+//        recent_entry.unshift(i);
+//        post_date=ENTRY.recent_entry[interval](post_date);
+
+    }
+    $target=$("#"+id).find(".kpi-entry-trend");
+    $target.sparkline(recent_entry, { type: 'bar',chartRangeMin:0,colorMap:["#5FA9DA","#5FA9DA","#5FA9DA","#5FA9DA","#F5A133"],barWidth:"6px"});
+    ENTRY.recent_entry[id]=recent_entry
 }
+ENTRY.recent_entry={};
 ENTRY.recent_entry={
     "90":function(date){
-        var new_date=new Date(date.setHours(date.getHours-1)).toISOString();
+        var new_date=new Date(date.setHours(date.getHours()-1));
         return new_date;
     },
-    "100":function(date){},
-    "200":function(date){},
-    "300":function(date){},
-    "400":function(date){},
-    "500":function(date){}
+    "100":function(date){
+        var new_date=new Date(date.setDate(date.getDate()-1));
+        return new_date;
+    },
+    "200":function(date){
+        var new_date=new Date(date.setDate(date.getDate()-7));
+        return new_date;
+    },
+    "300":function(date){
+        var new_date=new Date(date.setMonth(date.getMonth()-1));
+        return new_date;
+    },
+    "400":function(date){
+        var new_date=new Date(date.setMonth(date.getMonth()-3));
+        return new_date;
+    },
+    "500":function(date){
+        var new_date=new Date(date.setFullYear(date.getFullYear()-1));
+        return new_date;
+    }
 }
