@@ -71,6 +71,8 @@ ENTRY.init=function(){
            }
 
    });
+    ENTRY.trend($("#entry-date-picker").val());
+    $('.kpi-entry-trend').sparkline([19,20,21,19,20], { type: 'bar',chartRangeMin:0,colorMap:["#5FA9DA","#5FA9DA","#5FA9DA","#5FA9DA","#F5A133"],barWidth:"6px"});
 }
 
 
@@ -225,7 +227,7 @@ ENTRY.datepicker.post=function(){
         type:'post',
         data:{
             f:$('#kpi-type-hidden').val(),
-            date:post_date
+            date:post_date.toISOString()
         },
         dataType:"html",
         success:function(data){
@@ -239,6 +241,7 @@ ENTRY.datepicker.post=function(){
             $("#entry-sort-list li").on("resize",function(){
                 ENTRY.resize_sort_table()
             });
+            $("#entry-sort-list td").tipsy({gravity: 'se'});
         }
     });
 }
@@ -249,11 +252,21 @@ ENTRY.resize_sort_table=function(){
     $("#entry-sort-list table").width(table_size)
 }
 ENTRY.trend=function(datetime){
-    if(arguments.length==2){
-
-    }
-    else{
-
-    }
-
+    var interval=$("#entry-left-menu li.active").attr("interval");
+    var post_date=HIGH_CHART.postPrepare(datetime,interval);
+    $.ajax({
+        url:'',
+        type:'get'
+    })
+}
+ENTRY.recent_entry={
+    "90":function(date){
+        var new_date=new Date(date.setHours(date.getHours-1)).toISOString();
+        return new_date;
+    },
+    "100":function(date){},
+    "200":function(date){},
+    "300":function(date){},
+    "400":function(date){},
+    "500":function(date){}
 }
