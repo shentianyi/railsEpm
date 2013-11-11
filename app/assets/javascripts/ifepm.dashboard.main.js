@@ -148,10 +148,11 @@ function reload(id){
         if(!ifepm.dashboard.graphs[id]){
             return;
         }
-        var current_graph = ifepm.dashboard.graphs[id];
+        //var current_graph = ifepm.dashboard.graphs[id];
         var last_update = new Date().toWayneString().second;
-        current_graph.last_update = last_update;
-        ifepm.dashboard.set_last_update_time(id,last_update);
+        ifepm.dashboard.graphs[id].last_update = last_update;
+        //current_graph.last_update = last_update;
+        ifepm.dashboard.set_last_update_time(id,ifepm.dashboard.graphs[id].last_update);
         $.ajax(
             {
                 before_send: function(){},
