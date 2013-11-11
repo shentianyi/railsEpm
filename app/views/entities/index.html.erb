@@ -1,0 +1,62 @@
+<div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
+  <div class="content-left-main" id="content-left-main">
+    <div style="width:auto;height:71px;"></div>
+    <div class="left-content-title" id="left-content-title">
+      <p class="current-group-item">Mange Department</p>
+    </div>
+
+    <div class="manage-left-content" id="dashboard-content" name="department">
+      <div class="right-list-top-control" id="right-list-top-control" name="department">
+        <input type="checkbox" id="manage-total-check"/>
+        <a class="btn" id="manage-item-remove">Delete</a>
+      </div>
+      <ul id="manage-sort-list" class="manage-sort-list">
+        <%@users.each_with_index do |user,i|%>
+            <li id="<%= user.id%>" is_tenant="<%= user.is_tenant%>">
+              <p class="sort-handle">:</p>
+              <input type="checkbox"/>
+              <table class="group">
+                <tr>
+                  <td class="user-manage-name"><%= user.first_name%></td>
+                  <td class="user-manage-authority" value="<%=user.role_id%>"><%= UsersHelper.get_user_role_display(user.role_id)%></td>
+                </tr>
+                <tr>
+                  <td class="user-manage-mail"><%= user.email%></td>
+                  <td>Authority</td>
+                </tr>
+              </table>
+            </li>
+        <%end%>
+      </ul>
+    </div>
+
+  </div>
+
+  <aside class="content-right-nav" name='group' id="content-right-nav">
+    <div style="width:auto;height:71px;"></div>
+    <section class="solid" style="position:relative">
+      <h3>Create Department</h3>
+      <p>Department is the place to put your staff and the view is
+        made up of departments</p>
+      <a class="btn btn-primary" id="add-department">Create Now</a>
+      <%@entities.each do |entity|%>
+          <li class="<%= entity.id==@active_entity_id ? 'active' : ''%>" title="<%= entity.name %>" number="<%= entity.id%>">
+            <i class="icon-trash icon-item"></i>
+            <a href="../entities?p=<%=entity.id%>"><%= entity.name %></a>
+          </li>
+      <%end%>
+      <div class="content-right-nav-add-block" id="content-right-nav-add-block" name="department">
+        <p>give it a name</p>
+        <input type='text' />
+      </div>
+    </section>
+    <section class="solid">
+      <h3>Next Step</h3>
+      <p>After creating department , it's time to create user(staff) to your
+        department so that they can contribute to their department's KPI </p>
+      <a class="btn btn-primary" id="dashboard-full-size">Manage User</a>
+    </section>
+
+  </aside>
+
+</div>
