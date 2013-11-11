@@ -167,3 +167,10 @@ function remove_loading(){
     var loading=document.getElementById("loading");
     body.removeChild(loading);
 }
+//dashboard-add show loading
+function dashboard_show_loading(out_id){
+    $("#"+out_id).add("class","dashboard-loading");
+}
+function dashboard_remove_loading(out_id){
+    $("#"+out_id).remove("class","dashboard-loading");
+}

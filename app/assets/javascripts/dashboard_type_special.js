@@ -2,81 +2,31 @@ var DASHBOARD=DASHBOARD||{};
 DASHBOARD.special_type={};
 
 DASHBOARD.special_type={
-//    top_hide:function(id){
-//        $("#"+id+" "+".chart-container-top").css("display","none");
-//        $("#"+id+" "+".db-chart-container").css("top","0px");
-//        $("#"+id+" "+".chart-container-right").css("top","0px");
-//    },
-//    right_hide:function(id){
-//        $("#"+id+" "+".chart-container-right").css("display","none");
-//        $("#"+id+" "+".db-chart-container").css("right","0px");
-//    },
-//    bottom_hide:function(id){
-//        $("#"+id+" "+".chart-container-bottom").css("display","none");
-//        $("#"+id+" "+".db-chart-container").css("bottom","0px");
-//        $("#"+id+" "+".chart-container-right").css("bottom","0px");
-//    },
-//    top_show:function(id){
-//        $("#"+id+" "+".chart-container-top").css("display","block");
-//        $("#"+id+" "+".db-chart-container").css("top","50px");
-//        $("#"+id+" "+".chart-container-right").css("top","50px");
-//    },
-//    right_show:function(id){
-//        $("#"+id+" "+".chart-container-right").css("display","block");
-//        $("#"+id+" "+".db-chart-container").css("right","278px");
-//    },
-//    bottom_show:function(id){
-//        $("#"+id+" "+".chart-container-bottom").css("display","block");
-//        $("#"+id+" "+".db-chart-container").css("bottom","57px");
-//        $("#"+id+" "+".chart-container-right").css("bottom","57px");
-//    },
-//    line:function(id){
-//       this.top_hide(id);
-//       this.right_hide(id);
-//       this.bottom_show(id);
-//    },
-//    column:function(id){
-//       this.right_hide(id);
-//       this.bottom_hide(id);
-//       this.top_show(id);
-//    },
-//    pie:function(id){
-//       this.top_hide(id);
-//       this.bottom_hide(id);
-//       this.right_show(id);
-//       $("#"+id+" "+".chart-container-right-scatter").css("display","none");
-//    },
-//    scatter:function(id){
-//       this.top_hide(id);
-//       this.bottom_hide(id);
-//       this.right_hide(id);
-//
-//    }
     line:function(id){
         $("#"+id+" "+".dashboard-item-extra-info").empty();
         $table=$("#"+id+" "+".dashboard-item-extra-info");
         $table
             .append($("<tr />")
-                .append($("<td rowspan='2' style='width:60%;min-width:60%;max-width:60%'/>")
+                .append($("<td rowspan='2' style='width:40%;min-width:40%;max-width:40%'/>")
                     .append($("<span style='padding-left:5px'/>").addClass("out-target"))
                     .append($("<span />").text("out of target"))
                 )
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:80px'/>").text("KPI Name: "))
+                    .append($("<span style='display:inline-block;width:73px'/>").text("KPI Name: "))
                     .append($("<span style='color:rgba(245, 161, 51, 0.9)'/>").addClass("kpi-name"))
                 )
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:100px'/>").text("Total Amount: "))
+                    .append($("<span style='display:inline-block;width:91px'/>").text("Total Amount: "))
                     .append($("<span />").addClass("total-amount"))
                 )
             )
             .append($("<tr />")
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:80px'/>").text("Total Value: "))
+                    .append($("<span style='display:inline-block;width:73px'/>").text("Total Value: "))
                     .append($("<span />").addClass("total-value"))
                 )
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:100px'/>").text("Average Value: "))
+                    .append($("<span style='display:inline-block;width:91px'/>").text("Average Value: "))
                     .append($("<span />").addClass("average-value"))
                 )
             )
@@ -105,19 +55,19 @@ DASHBOARD.special_type={
         $table
             .append(
                 $("<tr />")
-                    .append($("<td rowspan='2' style='text-align:center;max-width:50%;min-width:50%;width:50%;'/>")
+                    .append($("<td rowspan='2' style='text-align:center;max-width:60%;min-width:60%;width:60%;'/>")
                         .append($("<span />").addClass("percentage"))
                         .append($("<span />").addClass("pie-selected-name"))
                     )
-                    .append($("<td style='text-align:center;'/>")
-                        .append($("<span style='display:inline-block;width:100px;text-align:left;'/>").text("Selected Value: "))
+                    .append($("<td style='text-align:left;'/>")
+                        .append($("<span style='display:inline-block;width:60px;text-align:left;'/>").text("Selected: "))
                         .append($("<span />").addClass("selected-value"))
                     )
             )
             .append(
                 $("<tr />")
-                    .append($("<td style='text-align:center;'/>")
-                        .append($("<span style='display:inline-block;width:100px;text-align:left;'/>").text("Total Value: "))
+                    .append($("<td style='text-align:left;'/>")
+                        .append($("<span style='display:inline-block;width:60px;text-align:left;'/>").text("Total: "))
                         .append($("<span />").addClass("pie-total-value"))
                     )
             )
