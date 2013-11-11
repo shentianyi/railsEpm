@@ -2,7 +2,7 @@
   <div class="content-left-main" id="content-left-main">
     <div style="width:auto;height:71px;"></div>
     <div class="left-content-title" id="left-content-title">
-      <p class="current-group-item">Mange Department</p>
+      <p class="current-group-item">管理部门</p>
     </div>
 
     <div class="manage-left-content" id="dashboard-content" name="department">
@@ -11,24 +11,31 @@
         <a class="btn" id="manage-item-remove">Delete</a>
       </div>
       <ul id="manage-sort-list" class="manage-sort-list">
-        <%@users.each_with_index do |user,i|%>
-            <li id="<%= user.id%>" is_tenant="<%= user.is_tenant%>">
+        <%@entities.each do |entity|%>
+            <li id="<%= entity.id%>" >
               <p class="sort-handle">:</p>
               <input type="checkbox"/>
               <table class="group">
                 <tr>
-                  <td class="user-manage-name"><%= user.first_name%></td>
-                  <td class="user-manage-authority" value="<%=user.role_id%>"><%= UsersHelper.get_user_role_display(user.role_id)%></td>
+                  <td class="user-manage-name"><%= entity.name %></td>
                 </tr>
                 <tr>
-                  <td class="user-manage-mail"><%= user.email%></td>
-                  <td>Authority</td>
+                  <td>部门名称</td>
                 </tr>
               </table>
             </li>
         <%end%>
       </ul>
     </div>
+
+
+
+
+
+
+
+
+
 
   </div>
 

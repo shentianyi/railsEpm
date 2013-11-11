@@ -3,7 +3,7 @@
     <div class="content-left-main" name="dashboard" id="content-left-main">
         <div style="width:auto;height:71px;"></div>
         <div class="left-content-title" id="left-content-title">
-            <p class="current-group-item">Manage User</p>
+            <p class="current-group-item">管理用户</p>
         </div>
 
         <div class="manage-left-content" id="manage-left-content">
@@ -137,14 +137,12 @@
         </div>
         <div class="assign-kpi-right" id="assign-kpi-right">
             <div class="select-div">
-/////////////////////////////////////////////////////////////////////////////////////////////////////// 改成ruby的select 所有用户
                 <select data-placeholder="* User" class="chosen-select" style="width:180px;" id="assign-kpi-user">
                     <option ></option>
                     <%@users.each_with_index do |user,i|%>
                         <option value="<%= user.id%>"><%= user.email%></option>
                     <%end%>
                 </select>
-///////////////////////////////////////////////////////////////////////////////////////////////////////
             </div>
             <div id="assign-kpi-inner" class="assign-kpi-inner">
             </div>
