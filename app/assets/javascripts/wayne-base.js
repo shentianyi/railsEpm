@@ -175,5 +175,5 @@ function dashboard_show_loading(out_id){
     )
 }
 function dashboard_remove_loading(out_id){
-    $("#"+out_id).find("dashboard-show-loading").remove();
+    $("#"+out_id).find(".dashboard-show-loading").remove();
 }
