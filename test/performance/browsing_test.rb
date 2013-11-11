@@ -1,4 +1,4 @@
-require 'performance_test_help'
+require 'directory/performance_test_helper'
 
 class BrowsingTest < ActionDispatch::PerformanceTest
   # Refer to the documentation for all available options
