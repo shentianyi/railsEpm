@@ -72,13 +72,20 @@
     top:6px;
 }
 /*dashboard loading*/
-.dashboard-loading{
-    background:rgba(238, 238, 238, 0.75);
+.dashboard-show-loading{
+    position:absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+    background-color:#eaedec;
 }
-.dashboard-loading:after{
-    content:"Wait a minute , it's coming";
-    color: rgba(0, 0, 0, 0.5);
-    font-size: 20px;
-    text-align:center;
-    top:30px;
+.dashboard-show-loading>i{
+    position:absolute;
+    width:28px;
+    height:28px;
+    left:50%;
+    top:50%;
+    margin-top:-14px;
+    margin-left:-14px;
 }
