@@ -105,6 +105,7 @@ ifepm.dashboard.form_graph = function(datas,id){
         add_series(option);
         proper_type_for_chart(option);
         DASHBOARD.add.generate(option);
+        limit_pointer_number(option);
     }
 
     if(datas.length == 1 && type =="line"){
@@ -116,8 +117,7 @@ ifepm.dashboard.form_graph = function(datas,id){
         add_series(option_area);
         proper_type_for_chart(option_area);
     }
-    if(datas.length > 1){
-        limit_pointer_number(option);
+
     if(chart){
         if(type == "pie"){
             for(var i = 0;i<chart.series.length;++i){
@@ -129,7 +129,7 @@ ifepm.dashboard.form_graph = function(datas,id){
         //var height = $("#"+container).height();
         //chart.setSize(width,height);
         }
-    }
+
     
     dashboard_remove_loading(outer);
     ifepm.dashboard.on_finish_load();
