@@ -305,7 +305,6 @@ MANAGE.user.assign.init = function() {
 
      $("body").on("change", "#assign-kpi-user", function() {
           var id = $(this).find(":selected").attr("value")
-          alert(id)
           $.ajax({
                url : '/kpis/user_kpis',
                data : {
@@ -362,8 +361,8 @@ MANAGE.user.assign.init = function() {
                               $("#assign-kpi-inner>.left").append($("<li />").attr("id", data[0].id).attr("kpi_id", data[1].id)
                                   .append($("<table />").append($("<tr />")
                                         .append($("<td />").text(data[1].name))
-                                        .append($("<td />").append($("<input type='text'/>").val(data[1].target_max).attr("id", data[0].id)))
-                                         .append($("<td />").append($("<input type='text'/>").val(data[1].target_min).attr("id", data[0].id)))
+                                        .append($("<td />").append($("<input type='text'/>").val(data[1].target_max).attr("kpi_id", data[0].id)))
+                                         .append($("<td />").append($("<input type='text'/>").val(data[1].target_min).attr("kpi_id", data[0].id)))
                                       )
                                       .append($("<tr />")
                                           .append($("<td />").text(data[1].description))
