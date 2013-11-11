@@ -6,6 +6,7 @@ require File.expand_path('../config/application', __FILE__)
 
 IFEpm::Application.load_tasks
 
+# don't drop the test database; migrate it back to 0
 Rake::TaskManager.class_eval do
   def delete_task(task_name)
     @tasks.delete(task_name.to_s)
