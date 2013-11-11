@@ -49,10 +49,15 @@ var high_chart = {
         itemMarginBottom: -2
     },
     exporting : {
-                    url : url,
-                    filename : 'MyChart',
-                    width : 700, // chart width
-                    exportTypes : ['chart', 'png', 'jpeg', 'pdf', 'svg', 'doc', 'docx', 'pptx', 'xls', 'xlsx'] // set download file type
+        buttons:{
+           contextButton:{
+               symbol:'url(images/down.png)'
+           }
+        },
+        url : url,
+        filename : 'MyChart',
+        width : 700, // chart width
+        exportTypes : ['chart', 'png', 'jpeg', 'pdf', 'svg', 'doc', 'docx', 'pptx', 'xls', 'xlsx'] // set download file type
                },
     plotOptions: {
         series: {

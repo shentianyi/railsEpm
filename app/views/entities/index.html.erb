@@ -35,7 +35,7 @@
   <aside class="content-right-nav" name='group' id="content-right-nav">
     <div style="width:auto;height:71px;"></div>
     <section class="solid" style="position:relative">
-      <h3>Create Department</h3>
+      <h3>创建部门</h3>
       <p>Department is the place to put your staff and the view is
         made up of departments</p>
       <a class="btn btn-primary" id="add-department">Create Now</a>
@@ -51,12 +51,18 @@
       </div>
     </section>
     <section class="solid">
-      <h3>Next Step</h3>
+      <h3>下一步</h3>
       <p>After creating department , it's time to create user(staff) to your
         department so that they can contribute to their department's KPI </p>
-      <a class="btn btn-primary" id="dashboard-full-size">Manage User</a>
+      <a class="btn btn-primary" id="dashboard-full-size" href="<%= users_path%>">管理用户</a>
     </section>
 
   </aside>
 
 </div>
+<script>
+    $(document).ready(function () {
+        MANAGE.init();
+        MANAGE.department.init();
+    })
+</script>

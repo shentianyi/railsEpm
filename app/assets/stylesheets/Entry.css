@@ -13,6 +13,7 @@
     overflow-y:auto;
     overflow-x:hidden;
     z-index:20;
+    border-right:1px solid #DCDCDC
 }
 .entry-left-menu li:first-of-type{
     text-align:center;
@@ -149,13 +150,13 @@
 }
 /*forth column*/
 .entry-sort-list li>table tr:first-of-type td:nth-of-type(4){
-    color:#55c8b4;
+    color:#5FA9DA;
     padding-right:15px;
     width:100px;
 }
 /*fifth column*/
 .entry-sort-list li>table tr:first-of-type td:nth-of-type(5){
-    /*position:relative;*/
+    color:#55c8b4;
     width:14%;
 }
 .entry-sort-list li>table tr:first-of-type td:nth-of-type(5) input{

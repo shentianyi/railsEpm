@@ -70,6 +70,7 @@ ifepm.dashboard.form_graph = function(datas,id){
     var type = ifepm.dashboard.graphs[id].chart_type;
     var chart = null;
     var data,series_id,option;
+    dashboard_remove_loading(outer)
     for(var i = 0;i<datas.length;++i){
         data = [];
 //      id改掉了
@@ -283,6 +284,8 @@ ifepm.dashboard.load_graph=function(id){
     }
 
     var current_graph = ifepm.dashboard.graphs[id];
+    var outer=ifepm.dashboard.make_item_outer_id(id);
+    dashboard_show_loading(outer);
     $.ajax(
         {
           before_send: function(){},
