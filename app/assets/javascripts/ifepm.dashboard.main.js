@@ -70,7 +70,7 @@ ifepm.dashboard.form_graph = function(datas,id){
     var type = ifepm.dashboard.graphs[id].chart_type;
     var chart = null;
     var data,series_id,option;
-    dashboard_remove_loading(outer)
+
     for(var i = 0;i<datas.length;++i){
         data = [];
 //      id改掉了
@@ -128,6 +128,7 @@ ifepm.dashboard.form_graph = function(datas,id){
         //var height = $("#"+container).height();
         //chart.setSize(width,height);
     }
+    dashboard_remove_loading(outer);
 }
 
 
