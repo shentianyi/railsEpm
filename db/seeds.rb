@@ -302,7 +302,7 @@ while index<= current_mode[:tenant] do
       to_insert.sequence=1
       to_insert.interval=1
       to_insert.title='test'
-      to_insert.chart_type='PIE'
+      to_insert.chart_type='pie'
       to_insert.save!
 
       to_insert_condition = DashboardCondition.new
