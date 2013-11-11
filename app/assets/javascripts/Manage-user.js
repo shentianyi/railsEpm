@@ -447,10 +447,8 @@ MANAGE.user.assign.initial=function(){
 
 } ;
 MANAGE.user.assign.close = function() {
-    $("#assign-kpi-user option").remove();
-    $("#assign-kpi-user").val('').trigger('chosen:updated');
-    $("#assign-kpi-user-kpis").empty();
     $("#assign-kpi-list").empty();
+    $("#assign-kpi-inner").empty();
     $("#kpi-category option").remove();
     $("#kpi-category").val('').trigger('chosen:updated');
     $("#assign-kpi-wrap").css("display", "none");

@@ -74,6 +74,12 @@
     position:relative;
 
 }
+.manage-left-menu li:nth-of-type(1){
+    cursor:default !important;
+}
+.manage-left-menu li:nth-of-type(1):hover{
+    background-color:rgba(0,0,0,0);
+}
 .manage-left-menu li:hover{
     background-color:#e2e7ef;
 }
