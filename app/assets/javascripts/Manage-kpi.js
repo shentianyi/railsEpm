@@ -164,7 +164,7 @@ MANAGE.kpi.calculate_input=function(object){
 } ;
 MANAGE.kpi.add_new_kpi=function(){
     var option={
-        entity : $("#kpi_category_id :selected").attr("value"),
+        entity : $("#new-kpi-category :selected").attr("value"),
         name : $("#new-kpi-name").val(),
         desc : $("#new-kpi-desc").val().length>0 ? $("#new-kpi-desc").val() : $("#new-kpi-name").val(),
         frequency :  $("#add-interval :selected").attr("value"),

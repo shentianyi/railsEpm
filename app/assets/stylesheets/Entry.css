@@ -152,14 +152,15 @@
 .entry-sort-list li>table tr:first-of-type td:nth-of-type(4){
     color:#5FA9DA;
     padding-right:15px;
-    width:100px;
+    width:120px;
 }
 /*fifth column*/
 .entry-sort-list li>table tr:first-of-type td:nth-of-type(5){
     color:#55c8b4;
-    width:14%;
+    width:120px;
 }
-.entry-sort-list li>table tr:first-of-type td:nth-of-type(5) input{
+
+.entry-sort-list li>table tr:first-of-type td:nth-of-type(6) input{
     position:absolute;
     left:auto;
     top:-2px;
@@ -167,6 +168,9 @@
     padding:5px;
     height:20px;
 }
-
+.entry-sort-list li>table tr:first-of-type td:nth-of-type(6){
+    color:#55c8b4;
+    width:14%;
+}
 
 

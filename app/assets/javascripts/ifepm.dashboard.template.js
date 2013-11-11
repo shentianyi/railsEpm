@@ -17,7 +17,7 @@ ifepm.template.view = '<li !attr!=!id!><div>' +
     //'<p class="text-center">!name!</p>' +
     '<div class="dashboard-moreDetail">' +
     '<p>!title!</p>'+
-    '<i class="icon-remove" effect_on=!id!></i><span class="update-time">'+'更新时间：'+'!last_update!</span>' +
+    '<i class="icon-remove" effect_on=!id!></i><span class="update-time">'+'!last_update!</span>' +
     '</div>' +
     '</div>' +
     '<div id=!item_container_id!'+'_outer'+' class="put-db-chart">' +

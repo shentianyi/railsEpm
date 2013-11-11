@@ -45,7 +45,6 @@ ENTRY.init=function(){
            else{
                entry_at=standardParse(date).date.toISOString()
            }
-           console.log(entry_at)
            if(actual.length>0){
 //               $(e.target).parent().next().text(tcr.toFixed(1)+"%").css("color",color_style);
                $.ajax({
@@ -245,17 +244,16 @@ ENTRY.datepicker.post=function(){
 }
 
 
-
-
-
-
-
-
-
-
-
-
 ENTRY.resize_sort_table=function(){
     var table_size=$("#entry-sort-list li").width()*0.97;
     $("#entry-sort-list table").width(table_size)
+}
+ENTRY.trend=function(datetime){
+    if(arguments.length==2){
+
+    }
+    else{
+
+    }
+
 }

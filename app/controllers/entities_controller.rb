@@ -5,10 +5,6 @@ class EntitiesController < ApplicationController
   #index
   def index
     @entities = Entity.all
-    #find the all the users of active entity
-    #if not find active ,first default
-    @active_entity_id=params[:p].nil? ? @entities[0].id : params[:p].to_i
-    @users=User.accessible_by(current_ability).where(:entity_id=>@active_entity_id).all
   end
 
   # create tenant
