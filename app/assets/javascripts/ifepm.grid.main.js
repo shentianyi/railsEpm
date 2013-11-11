@@ -54,7 +54,20 @@ ifepm.dashboard_widget.init = function(option){
             stop: on_dragstop,
         },
     }).data("gridster");
+    //gridster.disable();
 };
+
+/*
+* @function enable(bool)
+* */
+ifepm.dashboard_widget.enable = function(enable){
+    if(enable){
+        gridster.enable();
+    }
+    else{
+        gridster.disable();
+    }
+}
 
 /*
 * @function add_w

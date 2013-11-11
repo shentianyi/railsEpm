@@ -116,7 +116,8 @@ ifepm.dashboard.form_graph = function(datas,id){
         add_series(option_area);
         proper_type_for_chart(option_area);
     }
-    limit_pointer_number(option);
+    if(datas.length > 1){
+        limit_pointer_number(option);
     if(chart){
         if(type == "pie"){
             for(var i = 0;i<chart.series.length;++i){
@@ -127,8 +128,11 @@ ifepm.dashboard.form_graph = function(datas,id){
         //var width = $("#"+container).width();
         //var height = $("#"+container).height();
         //chart.setSize(width,height);
+        }
     }
+    
     dashboard_remove_loading(outer);
+    ifepm.dashboard.on_finish_load();
 }
 
 
@@ -421,6 +425,59 @@ ifepm.dashboard.update_item_sequence= function(container_selector){
     })
 };
 
+var current_index = 0;
+/*
+* @function on_finish_load
+* */
+ifepm.dashboard.on_finish_load = function(){
+    var container_selector=ifepm.config.container_selector;
+    ++current_index;
+    if(current_index >= ifepm.dashboard.graph_sequence.length){
+        ifepm.dashboard_widget.enable(true);
+        return;
+    }
+    var graph_id = ifepm.dashboard.graph_sequence[current_index];
+    if( ifepm.dashboard.graphs[graph_id].last_update == null){
+        ifepm.dashboard.graphs[graph_id].last_update =  new Date().toWayneString().second;
+    }
+
+    $(container_selector).append(
+        ifepm.dashboard.graphs[graph_id].container(ifepm.dashboard.graphs[graph_id]));
+
+    var option={};
+    option.container_selector=container_selector;
+    option.id= graph_id;
+    if(ifepm.dashboard.graphs[graph_id].sizex){
+        option.isnew=false;
+        option.row=ifepm.dashboard.graphs[graph_id].row;
+        option.col=ifepm.dashboard.graphs[graph_id].col;
+        option.sizex=ifepm.dashboard.graphs[graph_id].sizex;
+        option.sizey=ifepm.dashboard.graphs[graph_id].sizey;
+        ifepm.dashboard_widget.add_w(option);
+    }
+    else{
+        option.isnew=true;
+        option.chart_type=ifepm.dashboard.graphs[graph_id].chart_type;
+        var result = ifepm.dashboard_widget.add_w(option);
+
+        ifepm.dashboard.graphs[graph_id].col = result.col;
+        ifepm.dashboard.graphs[graph_id].row = result.row;
+        ifepm.dashboard.graphs[graph_id].sizex = result.sizex;
+        ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
+
+        var options = [];
+        var opt = {};
+        opt.id = graph_id;
+        opt.sizex = result.sizex;
+        opt.sizey = result.sizey;
+        opt.col = result.col;
+        opt.row = result.row;
+        options.push(opt);
+        ifepm.dashboard.save_grid_pos(options,{success:function(){}});
+    }
+    ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
+}
+
 //append a new dashboard item to the main dashboard container
 ifepm.dashboard.create_dashboard=function(){
     var container_selector=ifepm.config.container_selector;
@@ -428,8 +485,48 @@ ifepm.dashboard.create_dashboard=function(){
     ifepm.dashboard.clear_all_timer();
     $(container_selector).children().remove();
     if (Object.keys(ifepm.dashboard.graphs).length>0){
+        current_index = 0;
+        var graph_id = ifepm.dashboard.graph_sequence[current_index];
+        if( ifepm.dashboard.graphs[graph_id].last_update == null){
+            ifepm.dashboard.graphs[graph_id].last_update =  new Date().toWayneString().second;
+        }
 
-                for(index in ifepm.dashboard.graph_sequence){
+        $(container_selector).append(
+            ifepm.dashboard.graphs[graph_id].container(ifepm.dashboard.graphs[graph_id]));
+
+        var option={};
+        option.container_selector=container_selector;
+        option.id= graph_id;
+        if(ifepm.dashboard.graphs[graph_id].sizex){
+            option.isnew=false;
+            option.row=ifepm.dashboard.graphs[graph_id].row;
+            option.col=ifepm.dashboard.graphs[graph_id].col;
+            option.sizex=ifepm.dashboard.graphs[graph_id].sizex;
+            option.sizey=ifepm.dashboard.graphs[graph_id].sizey;
+            ifepm.dashboard_widget.add_w(option);
+        }
+        else{
+            option.isnew=true;
+            option.chart_type=ifepm.dashboard.graphs[graph_id].chart_type;
+            var result = ifepm.dashboard_widget.add_w(option);
+
+            ifepm.dashboard.graphs[graph_id].col = result.col;
+            ifepm.dashboard.graphs[graph_id].row = result.row;
+            ifepm.dashboard.graphs[graph_id].sizex = result.sizex;
+            ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
+
+            var options = [];
+            var opt = {};
+            opt.id = graph_id;
+            opt.sizex = result.sizex;
+            opt.sizey = result.sizey;
+            opt.col = result.col;
+            opt.row = result.row;
+            options.push(opt);
+            ifepm.dashboard.save_grid_pos(options,{success:function(){}});
+        }
+        /*
+        for(index in ifepm.dashboard.graph_sequence){
                     var graph_id = ifepm.dashboard.graph_sequence[index];
                     if( ifepm.dashboard.graphs[graph_id].last_update == null){
                         ifepm.dashboard.graphs[graph_id].last_update =  new Date().toWayneString().second;
@@ -470,16 +567,17 @@ ifepm.dashboard.create_dashboard=function(){
                             ifepm.dashboard.save_grid_pos(options,{success:function(){}});
                         }
                     ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
+                    */
                     //ifepm.dashboard.set_last_update_time(ifepm.dashboard.graphs[graph_id].id,ifepm.dashboard.graphs[graph_id].last_update);
-                }
+                //}
                 //configure the sortable
-                $(container_selector).sortable(
-                    {
-                        placeholder: ifepm.template.move_placeholder,
-                        //update the sequence when the layout is changed
-                        stop:function(){ifepm.dashboard.update_item_sequence(container_selector)}
-                    }
-                );
+                //$(container_selector).sortable(
+                //    {
+                //        placeholder: ifepm.template.move_placeholder,
+                //        //update the sequence when the layout is changed
+                //        stop:function(){ifepm.dashboard.update_item_sequence(container_selector)}
+                //    }
+                //);
                 //$(container_selector).disableSelection();
     }
     else {
@@ -499,6 +597,7 @@ ifepm.dashboard.init=function(id){
             url:ifepm.config.get_dashboard_items_url.url,
             data:{id:id},
             success:function(data){
+                ifepm.dashboard_widget.enable(false);
                 ifepm.dashboard.clear_all_timer();
                 for(var i in data){
                     var graph_item = new Graph();
@@ -521,7 +620,7 @@ ifepm.dashboard.init=function(id){
                     graph_item.sizey = data[i].sizey;
                     graph_item.last_update = data[i].last_update;
                     ifepm.dashboard.graphs[data[i].id]=graph_item;
-                    ifepm.dashboard.setTimer(ifepm.dashboard.graphs[data[i].id]);
+                    //ifepm.dashboard.setTimer(ifepm.dashboard.graphs[data[i].id]);
                     ifepm.dashboard.graph_sequence.push(data[i].id)
 
                 }
