@@ -139,6 +139,10 @@
             <div class="select-div">
 /////////////////////////////////////////////////////////////////////////////////////////////////////// 改成ruby的select 所有用户
                 <select data-placeholder="* User" class="chosen-select" style="width:180px;" id="assign-kpi-user">
+                    <option ></option>
+                    <%@users.each_with_index do |user,i|%>
+                        <option value="<%= user.id%>"><%= user.email%></option>
+                    <%end%>
                 </select>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
             </div>
