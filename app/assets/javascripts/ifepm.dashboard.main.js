@@ -59,7 +59,7 @@ ifepm.dashboard.graphs=ifepm.dashboard.graphs || {};
 ifepm.dashboard.graph_sequence =[];
 
 ifepm.dashboard.set_last_update_time = function(id,lastupdate_time){
-    var $p = $("li#"+id+" #last_update").text(lastupdate_time);
+    var $p = $("li#"+id+" .update-time").text(lastupdate_time);
 }
 
 var isformchart = false;
