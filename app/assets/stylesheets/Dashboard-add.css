@@ -44,11 +44,7 @@
     background-color:#3b627c
 }
 .dashboard-add-sub-menu ul>li:first-of-type a{
-    padding:4px 5px;
-}
-.dashboard-add-sub-menu ul>li:first-of-type .icon-arrow-left:after{
-    content:"Back";
-    padding-left:5px;
+    padding:4px 14px 4px 5px;
 }
 .dashboard-add-sub-menu ul>li a{
     display:block;
