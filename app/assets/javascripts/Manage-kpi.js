@@ -250,10 +250,6 @@ function post_kpi(option){
                 $("#manage-sort-list li").each(function(){
                     $(this).find("table tr:first-of-type td:last-of-type").tipsy({gravity: 'se'});
                 });
-                if(!object.is_calculated){
-                    $("#is-calcu-relate").append($("<option />").attr("value",id).text(object.name));
-                    $("#is-calcu-relate").val('').trigger('chosen:updated');
-                }
                 MANAGE.judge_kpi_count();
                 $("#manage-sort-list input[type='checkbox']").iCheck({
                     checkboxClass: 'icheckbox_minimal-aero'
@@ -284,6 +280,10 @@ function post_kpi(option){
                 $("#left-content-title").css("margin-right","0px");
                 MANAGE.kpi.kpi_add_clear();
                 MessageBox("Add success","top","success");
+            }
+            if(!object.is_calculated){
+                $("#is-calcu-relate").append($("<option />").attr("value",id).text(object.name));
+                $("#is-calcu-relate").val('').trigger('chosen:updated');
             }
         }
         else{
