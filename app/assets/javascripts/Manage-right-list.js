@@ -86,7 +86,7 @@ MANAGE.item_edit.prototype = {
      edit_show : function() {
           var text;
           var target = this.edit_target;
-         MANAGE.edit_array=[];
+          MANAGE.edit_array=[];
           $("#manage-sort-list :checked").each(
               function() {
                   var length=$(this).parent().next().find("." + target).length,i;
@@ -115,33 +115,26 @@ function category_item_edit() {
                     }
                },
                success : function(data) {
-                   if($("#"+option.id+" .manage-kpi-target").eq(0).find("input").css("left")!="-999em"){
-                       $("#"+option.id+" .manage-kpi-target").eq(0).find(".can-change")
-                           .text(option.target_max).attr("title", option.target_max);
-                   }
-                   else if($("#"+option.id+" .manage-kpi-target").eq(1).find("input").css("left")!="-999em"){
-                       $("#"+option.id+" .manage-kpi-target").eq(1).find(".can-change")
-                           .text(option.target_min).attr("title", option.target_min);
-                   }
+                   $("#"+option.id+" .manage-kpi-target").eq(0).find(".can-change")
+                       .text(option.target_max).attr("title", option.target_max);
+                   $("#"+option.id+" .manage-kpi-target").eq(1).find(".can-change")
+                       .text(option.target_min).attr("title", option.target_min);
                    $("#"+option.id+" .manage-kpi-target").each(function(){
-                        $(this).find("input").css("left",'-999em');
+                       $(this).find("input").css("left",'-999em');
                    });
                }
           });
 
-
-//         if($("#"+option.id+" .manage-kpi-target").eq(0).find("input").css("left")!="-999em"){
-//             $("#"+option.id+" .manage-kpi-target").eq(0).find(".can-change")
-//                 .text(option.target_max).attr("title", option.target_max);
-//         }
-//         else if($("#"+option.id+" .manage-kpi-target").eq(1).find("input").css("left")!="-999em"){
-//             $("#"+option.id+" .manage-kpi-target").eq(1).find(".can-change")
-//                 .text(option.target_min).attr("title", option.target_min);
-//         }
+//         $("#"+option.id+" .manage-kpi-target").eq(0).find(".can-change")
+//             .text(option.target_max).attr("title", option.target_max);
+//         $("#"+option.id+" .manage-kpi-target").eq(1).find(".can-change")
+//             .text(option.target_min).attr("title", option.target_min);
 //         $("#"+option.id+" .manage-kpi-target").each(function(){
 //             $(this).find("input").css("left",'-999em');
 //         });
 
+
+         $("#manage-sort-list").find(".can-change").tipsy({gravity: 'se'})
      };
      this.edit_check = function(object) {
           clearNoNumZero(object);

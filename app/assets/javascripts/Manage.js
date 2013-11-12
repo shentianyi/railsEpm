@@ -37,7 +37,7 @@ MANAGE.init=function(){
     if($("#manage-item-edit").length>0){
         $("body").on("keydown","#manage-sort-list li table input[type='text']",function(event){
             var e = adapt_event(event).event;
-            if(e.keyCode==13 || e.keyCode==9){
+            if(e.keyCode==13 ){
                 if($(e.target).val().length==0){
                     MessageBox("Give it a Value , please",'top',"warning");
                 }
@@ -55,14 +55,16 @@ MANAGE.init=function(){
                 }
             }
             else if(e.keyCode==27){
-                $(e.target).css("left","-999em");
                 var id=$(e.target).attr("effect_on");
-                var index=MANAGE.edit_array.indexOf(id);
-                MANAGE.edit_array.splice(index,1);
-                var targetId=MANAGE.edit_array.length==0?false:MANAGE.edit_array[0];
-                if(targetId){
-                    $("#manage-sort-list>#"+targetId).find("table input[type='text']").focus();
-                }
+                $("#manage-sort-list>#"+id).find(".manage-kpi-target input").css("left","-999em");
+
+//                var id=$(e.target).attr("effect_on");
+//                var index=MANAGE.edit_array.indexOf(id);
+//                MANAGE.edit_array.splice(index,1);
+//                var targetId=MANAGE.edit_array.length==0?false:MANAGE.edit_array[0];
+//                if(targetId){
+//                    $("#manage-sort-list>#"+targetId).find("table input[type='text']").focus();
+//                }
             }
         }).on("keyup","#manage-sort-list li table input[type='text']",function(event){
                 var e = adapt_event(event).event;

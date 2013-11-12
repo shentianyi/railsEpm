@@ -230,7 +230,7 @@ function prepare_form_chart() {
 //        if (chart_body_close_validate) {
 //
 //            option.data = [
-//                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+//                {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
 //                {y: 3,low:2,high:20,  target: 10, unit: "$"},
 //                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
 //                {y: 3,low:2,high:32, target: 10, unit: "$"},

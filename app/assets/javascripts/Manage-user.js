@@ -463,8 +463,10 @@ MANAGE.user.assign.input = function(event) {
           type : 'PUT',
           data : {
                id : id,
-               target_max: target_max,
-               target_min: target_min
+               user_kpi_item:{
+                   target_max:target_max,
+                   target_min:target_min
+               }
 
           },
           success : function(data) {
