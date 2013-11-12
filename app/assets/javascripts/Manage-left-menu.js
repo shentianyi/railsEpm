@@ -95,7 +95,7 @@ MANAGE.manage_menu_left_add.prototype={
 
 function category_add(){
     this.name="category";
-    this.href="../kpis?p=";
+    this.href="/kpis/";
     this.postHref='../kpi_categories';
 }
 category_add.prototype=MANAGE.manage_menu_left_add.prototype;

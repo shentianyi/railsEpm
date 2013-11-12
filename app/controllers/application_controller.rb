@@ -2,6 +2,7 @@
 class ApplicationController < ActionController::Base
   # begin includes
   include ApplicationHelper
+  
   # end includes
   protect_from_forgery
   helper :all

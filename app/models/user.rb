@@ -13,10 +13,8 @@ class User < ActiveRecord::Base
   attr_accessible :tenant_id,:role_id,:entity_id,:is_sys
 
   acts_as_authentic do |c|
-    c.validate_email_field  :message=>'ddd'
     c.login_field = :email
   end
-
   # acts as tenant
   acts_as_tenant(:tenant)
 

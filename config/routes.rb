@@ -23,6 +23,7 @@ IFEpm::Application.routes.draw do
 
   resources :kpis do
     collection do
+      get '/:id' =>:index
       put :update
       post :assign
       get :get_by_category

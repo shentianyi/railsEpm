@@ -12,6 +12,8 @@ class TenantObserver<ActiveRecord::Observer
     tenant.super_user.entity = entity
     tenant.super_user.role_id=400
     tenant.entities<<entity
+    entity_group=tenant.super_user.entity_groups.build(:name=>'Default Group')
+    entity_group.entities<<entity
   #
   end
 

@@ -3,7 +3,7 @@ class KpisController < ApplicationController
   before_filter :get_ability_category,:only=>[:index,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
   before_filter :get_kpis_by_category,:only=>[:get_by_category,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
   def index
-    @active_category_id=params[:p].nil? ? @categories[0].id : params[:p].to_i
+    @active_category_id=params[:id].nil? ? @categories[0].id : params[:id].to_i
     @kpis=get_kpis_by_category @active_category_id
 
     @units=KpiUnit.all
