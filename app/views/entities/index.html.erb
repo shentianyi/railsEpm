@@ -10,7 +10,7 @@
         <input type="checkbox" id="manage-total-check"/>
         <a class="btn" id="manage-item-remove">Delete</a>
       </div>
-      <ul id="manage-sort-list" class="manage-sort-list">
+      <ul id="manage-sort-list" class="manage-sort-list" name="department">
         <%@entities.each do |entity|%>
             <li id="<%= entity.id%>" >
               <p class="sort-handle">:</p>
@@ -39,7 +39,7 @@
 
   </div>
 
-  <aside class="content-right-nav" name='group' id="content-right-nav">
+  <aside class="content-right-nav" name='department' id="content-right-nav">
     <div style="width:auto;height:71px;"></div>
     <section class="solid" style="position:relative">
       <h3>创建部门</h3>

@@ -54,10 +54,16 @@ MANAGE.category.item_remove = new category_item_remove();
 function group_item_remove() {
      this.url = '/users/';
 }
-
 group_item_remove.prototype = MANAGE.item_remove.prototype;
 group_item_remove.prototype.constructor = group_item_remove;
 MANAGE.group.item_remove = new group_item_remove();
+
+function department_item_remove() {
+    this.url = "../entities/";;
+}
+department_item_remove.prototype = MANAGE.item_remove.prototype;
+department_item_remove.prototype.constructor = department_item_remove;
+MANAGE.department.item_remove = new department_item_remove();
 
 function manage_item_remove() {
 //     if(confirm('view.manage.base.delete_confirm')) {
