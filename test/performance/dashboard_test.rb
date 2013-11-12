@@ -10,10 +10,14 @@ class DashboardTest < ActionDispatch::PerformanceTest
 	end
 
 	def test_select_dashboard
-		put '/dashboards'
+		get '/dashboards'
 	end
 
 	def test_create_dashboard
 		post '/dashboards', :data=>{:name=>'ssh'}
 	end	
+
+	def test_get_dashboarditems
+		post '/DashboardItems/items_by_dashboard_id', :id=>'2'
+	end
 end

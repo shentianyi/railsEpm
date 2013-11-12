@@ -32,6 +32,6 @@ class KpiEntriesController < ApplicationController
       end
       render :json=>msg
     end
-  end 
-  
+  end
+
 end
