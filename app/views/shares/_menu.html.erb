@@ -47,11 +47,11 @@
      </nav>
      <ul class="nav-user-part">
                            <li>
-                               <i class="icon-user" title="<%= current_user.first_name%>"></i>
+                               <i class="icon-user" title="<%= current_user.first_name%>">  <%= current_user.first_name%></i>
                            </li>
-                           <li class='empty'>
+                           <li class='empty'><a>
                                <span>&nbsp;</span>
-                           </li>
+                           </a></li>
                            <li>
                              <a href="/user_sessions/destroy"><%= t 'auth.view.signout_btn'%></a>
                            </li>

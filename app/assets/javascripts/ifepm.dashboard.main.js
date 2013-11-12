@@ -200,15 +200,15 @@ ifepm.dashboard.getInteral = function(interval){
 
     intvl = sec * 30;
 
-    /*switch (interval){
+    switch (interval){
         case "90":
             intvl = sec * 60;
             break;
         case "100":
-            intvl = min * 60;
+            intvl = sec * 60;
             break;
         case "200":
-            intvl = hour * 24;
+            intvl = hour * 1;
             break;
         case "300":
             intvl = hour * 24;
@@ -223,7 +223,7 @@ ifepm.dashboard.getInteral = function(interval){
             intvl = hour;
             break;
     }
-    */
+    
     return intvl;
 }
 

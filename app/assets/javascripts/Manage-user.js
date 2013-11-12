@@ -419,7 +419,13 @@ MANAGE.user.assign.init = function() {
      //左边input的js
      $("body").on("keyup", "#assign-kpi-inner>ul>li input[type='text']", function(event) {
           clearNoNumZero(adapt_event(event).target);
-     })
+     });
+     $("body").on("keyup", "#assign-kpi-inner>ul>li input[type='text']", function(event){
+        var e=adapt_event(event).event;
+        if(e.keyCode ==13){
+            $(this).blur();
+        }
+     });
      $("body").on("blur", "#assign-kpi-inner>ul>li input[type='text']", MANAGE.user.assign.input);
      $("body").on("click", "#assign-kpi-cancel", MANAGE.user.assign.close);
 };
@@ -449,6 +455,7 @@ MANAGE.user.assign.initial=function(){
 MANAGE.user.assign.close = function() {
     $("#assign-kpi-list").empty();
     $("#assign-kpi-inner").empty();
+    $("#assign-kpi-user").val('').trigger('chosen:updated');
     $("#kpi-category option").remove();
     $("#kpi-category").val('').trigger('chosen:updated');
     $("#assign-kpi-wrap").css("display", "none");
@@ -463,8 +470,10 @@ MANAGE.user.assign.input = function(event) {
           type : 'PUT',
           data : {
                id : id,
-               target_max: target_max,
-               target_min: target_min
+               user_kpi_item:{
+                   target_max:target_max,
+                   target_min:target_min
+               }
 
           },
           success : function(data) {
