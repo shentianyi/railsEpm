@@ -49,9 +49,9 @@
                            <li>
                                <i class="icon-user" title="<%= current_user.first_name%>">  <%= current_user.first_name%></i>
                            </li>
-                           <li class='empty'>
-                               <span></span>
-                           </li>
+                           <li class='empty'><a>
+                               <span>&nbsp;</span>
+                           </a></li>
                            <li>
                              <a href="/user_sessions/destroy"><%= t 'auth.view.signout_btn'%></a>
                            </li>
