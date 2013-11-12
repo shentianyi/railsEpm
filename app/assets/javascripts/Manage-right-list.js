@@ -9,6 +9,7 @@ MANAGE = MANAGE || {};
 MANAGE.category = MANAGE.category || {};
 MANAGE.group = MANAGE.group || {};
 MANAGE.entity = MANAGE.entity || {};
+MANAGE.department = MANAGE.department  || {};
 MANAGE.item_remove = function() {
 };
 MANAGE.item_edit = function() {
