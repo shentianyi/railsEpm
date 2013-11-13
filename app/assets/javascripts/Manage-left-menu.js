@@ -63,7 +63,7 @@ MANAGE.manage_menu_left_add.prototype={
                           MANAGE.left_count++;
                           if(MANAGE.type=="category"){
                                  $("#manage-left-menu").append($("<li />").attr("title",name).attr("number", data.object)
-                              .append($("<i />").addClass("icon-trash icon-item")).append($("<a href='#'/>").text(name)));
+                              .append($("<i />").addClass("icon-trash icon-item")).append($("<a/>").text(name)));
                               $("#new-kpi-category").append($("<option />").attr("value",data.object).text(name));
                               $("#new-kpi-category").val('').trigger('chosen:updated');
                           }else{

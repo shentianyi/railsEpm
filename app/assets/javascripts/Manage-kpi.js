@@ -29,9 +29,8 @@ MANAGE.kpi.init = function() {
                     $("#manage-edit-target").text(li.attr('title'));
                     $('#kpi-item-container').html(data);
                     // check box css function
-                    window.location.hash="/eee";
-                    // window.location.="baidu.com";
-                    console.log(window.location.hash);
+                    // window.location.hash=id;
+                    window.history.pushState(id, null, "/kpis/" + id);
                });
           }
      });
