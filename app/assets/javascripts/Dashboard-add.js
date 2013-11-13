@@ -86,6 +86,9 @@ DASHBOARD.add.init=function(){
     $("#add-dashboard-show").on("click",function(){
        $("#dashboard-add-wrap").css("display","block");
        $("#dashboard-group-name+div").css("width","140px");
+       $("#chart-group+div").css("width","120px");
+       $("#chart-kpi+div").css("width","120px");
+       $("#chart-view+div").css("width","120px");
     });
     $("#close-add-dashboard").on("click",function(){
         $("#dashboard-add-wrap").css("display","none");
