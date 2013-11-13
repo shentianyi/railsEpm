@@ -66,11 +66,8 @@ function init_analytics() {
     $("#chart-group").on("change", function (event) {
         var id = $(adapt_event(event).target).attr("value");
         $.ajax({
-            url: '/kpis/get_by_category',
+            url: '/kpis/categoried/'+id,
             dataType: "json",
-            data: {
-                id: id
-            },
             success: function (data) {
                 $("#chart-kpi").empty().trigger('chosen:updated');
                 for (var i = 0; i < data.length; i++) {

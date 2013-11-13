@@ -1,11 +1,11 @@
 #encoding: utf-8
 class KpisController < ApplicationController
-  before_filter :get_ability_category,:only=>[:index,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
-  before_filter :get_kpis_by_category,:only=>[:get_by_category,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
+  # before_filter :get_ability_category,:only=>[:index,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
+  before_filter :get_ability_category,:only=>:index
+  before_filter :get_kpis_by_category,:only=>:categoried
   def index
-    @active_category_id=params[:id].nil? ? @categories[0].id : params[:id].to_i
-    @kpis=get_kpis_by_category @active_category_id
-
+    @active_category_id= params[:id].nil? ? ( @categories.length>0 ? @categories[0].id : nil ) : params[:id].to_i
+    (get_kpis_by_category @active_category_id) if @active_category_id
     @units=KpiUnit.all
     @frequencies=KpiFrequency.all
     @directions=KpiDirection.all
@@ -30,7 +30,7 @@ class KpisController < ApplicationController
       temp[:target_min] = KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min)
       temp[:section] = KpiUnit.get_entry_unit_sym(@kpi.unit)
       temp[:desc] = @kpi.description
-      msg.object=temp.as_json
+    msg.object=temp.as_json
     else
       @kpi.errors.messages[:result]="添加失败"
       msg.content=@kpi.errors.messages.values.join('; ')
@@ -64,26 +64,21 @@ class KpisController < ApplicationController
   end
 
   def assign
-    # @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
-    if request.get?
-      @user_id=params[:id]
-    else
-    # if params[:kpi] and params[:kpi].length>0
-      @item =  KpisHelper.assign_kpi_to_user_by_id params[:kpi],params[:user],current_ability
-      # elsif params[:category] and params[:category].length>0
-      # KpisHelper.assign_kpi_to_user_by_category params[:category],params[:id],current_ability
-      # end
-      render :json=>@item
-    end
+    render :json=> KpisHelper.assign_kpi_to_user_by_id( params[:kpi],params[:user],current_ability)
   end
 
-  def get_by_category
-    render :json=>@kpis
+  def categoried
+    render :json=>get_kpis_by_category(params[:id])
   end
 
-  def user_kpis
+  def user
     @user_kpis=KpisHelper.get_kpis_by_user_id params[:id],current_ability
-    render :partial=>'user_kpi'
+    render :partial=>'user'
+  end
+
+  def list
+    get_kpis_by_category  params[:id]
+    render :partial=>'list'
   end
 
   def import

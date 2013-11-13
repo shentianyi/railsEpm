@@ -58,14 +58,17 @@ MANAGE.manage_menu_left_add.prototype={
                       }
                   }, function(data) {
                       if(data.result) {
-                          $("#manage-left-menu").append($("<li />").attr("title",name).attr("number", data.object)
-                              .append($("<i />").addClass("icon-trash icon-item")).append($("<a href='"+href + data.object + "'/>").text(name)));
                           $("#manage-menu-add input").val("");
                           MANAGE.manage_menu_left_add.prototype.add_hide();
                           MANAGE.left_count++;
                           if(MANAGE.type=="category"){
+                                 $("#manage-left-menu").append($("<li />").attr("title",name).attr("number", data.object)
+                              .append($("<i />").addClass("icon-trash icon-item")).append($("<a href='#'/>").text(name)));
                               $("#new-kpi-category").append($("<option />").attr("value",data.object).text(name));
                               $("#new-kpi-category").val('').trigger('chosen:updated');
+                          }else{
+                                 $("#manage-left-menu").append($("<li />").attr("title",name).attr("number", data.object)
+                              .append($("<i />").addClass("icon-trash icon-item")).append($("<a href='"+href + data.object + "'/>").text(name)));
                           }
                       } else {
                           MessageBox(data.content,"top","warning");
@@ -96,28 +99,28 @@ MANAGE.manage_menu_left_add.prototype={
 function category_add(){
     this.name="category";
     this.href="/kpis/";
-    this.postHref='../kpi_categories';
+    this.postHref='/kpi_categories';
 }
 category_add.prototype=MANAGE.manage_menu_left_add.prototype;
 category_add.prototype.constructor=category_add;
 function group_add(){
     this.name="部门";
-    this.href="../users?p=";
-    this.postHref='../entities';
+    this.href="/users?p=";
+    this.postHref='/entities';
 }
 group_add.prototype=MANAGE.manage_menu_left_add.prototype;
 group_add.prototype.constructor=group_add;
 function entity_add(){
     this.name="view";
-    this.href="../entity_groups?p=";
-    this.postHref='../entity_groups';
+    this.href="/entity_groups?p=";
+    this.postHref='/entity_groups';
 }
 entity_add.prototype=MANAGE.manage_menu_left_add.prototype;
 entity_add.prototype.constructor=entity_add;
 function dashboard_add(){
     this.name="dashboard";
-    this.href="../dashboards?p=";
-    this.postHref='../dashboards';
+    this.href="/dashboards?p=";
+    this.postHref='/dashboards';
 }
 dashboard_add.prototype=MANAGE.manage_menu_left_add.prototype;
 dashboard_add.prototype.constructor=dashboard_add;
@@ -200,29 +203,29 @@ MANAGE.manage_menu_left_delete.prototype={
 
 
 function category_delete(){
-    this.url="../kpi_categories/";
-    this.local="../kpis";
+    this.url="/kpi_categories/";
+    this.local="/kpis";
     this.name="category";
 }
 category_delete.prototype=MANAGE.manage_menu_left_delete.prototype;
 category_delete.prototype.constructor=category_delete;
 function group_delete(){
-    this.url="../entities/";
-    this.local="../users";
+    this.url="/entities/";
+    this.local="/users";
     this.name="group";
 }
 group_delete.prototype=MANAGE.manage_menu_left_delete.prototype;
 group_delete.prototype.constructor=group_delete;
 function entity_delete(){
-    this.url="../entity_groups/";
-    this.local= "../entity_groups/";
+    this.url="/entity_groups/";
+    this.local= "/entity_groups/";
     this.name="entity";
 }
 entity_delete.prototype=MANAGE.manage_menu_left_delete.prototype;
 entity_delete.prototype.constructor=entity_delete;
 function dashboard_delete(){
-    this.url="../dashboards/";
-    this.local= "../dashboards";
+    this.url="/dashboards/";
+    this.local= "/dashboards";
     this.name="dashboard";
 }
 dashboard_delete.prototype=MANAGE.manage_menu_left_delete.prototype;
@@ -327,22 +330,22 @@ MANAGE.manage_menu_left_edit.prototype={
 
 
 function category_edit(){
-    this.url = "../kpi_categories";
+    this.url = "/kpi_categories";
 }
 category_edit.prototype=MANAGE.manage_menu_left_edit.prototype;
 category_edit.prototype.constructor=category_edit;
 function group_edit(){
-    this.url = "../entities";
+    this.url = "/entities";
 }
 group_edit.prototype=MANAGE.manage_menu_left_edit.prototype;
 group_edit.prototype.constructor=group_edit;
 function entity_edit(){
-    this.url = "../entity_groups";
+    this.url = "/entity_groups";
 }
 entity_edit.prototype=MANAGE.manage_menu_left_edit.prototype;
 entity_edit.prototype.constructor=entity_edit;
 function dashboard_edit(){
-    this.url = "../dashboards";
+    this.url = "/dashboards";
 }
 dashboard_edit.prototype=MANAGE.manage_menu_left_edit.prototype;
 dashboard_edit.prototype.constructor=dashboard_edit;

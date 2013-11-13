@@ -26,13 +26,11 @@ IFEpm::Application.routes.draw do
       get '/:id' =>:index
       put :update
       post :assign
-      get :get_by_category
       post :import
       get :template
-      get :user_kpis
-    end
-    member do
-      get :assign
+      [:categoried,:user,:list].each do |a|
+        get "#{a}/:id"=>a
+      end
     end
   end
 
@@ -49,7 +47,6 @@ IFEpm::Application.routes.draw do
       post :entry
       post :refresh_entry
       match :analyse
-    # post :kpi_option
     end
   end
 
