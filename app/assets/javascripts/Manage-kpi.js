@@ -28,7 +28,7 @@ MANAGE.kpi.init = function() {
                $.get('/kpis/list/' + id, function(data) {
                     $("#manage-edit-target").text(li.attr('title'));
                     $('#kpi-item-container').html(data);
-                    // check box css function
+                    MANAGE.widget_init();
                     window.location.hash="/eee";
                     // window.location.="baidu.com";
                     console.log(window.location.hash);
@@ -70,11 +70,7 @@ MANAGE.kpi.init = function() {
           setCaretToPos($(this).get(0), number);
 
      });
-     $("#manage-sort-list li").each(function() {
-          $(this).find("table tr:first-of-type td:last-of-type").tipsy({
-               gravity : 'se'
-          });
-     });
+
      $("#manage-kpi-add").height($(document).height());
      $(window).resize(function() {
           $("#manage-kpi-add").height($(document).height());

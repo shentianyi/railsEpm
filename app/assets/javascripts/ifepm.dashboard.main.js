@@ -92,7 +92,7 @@ ifepm.dashboard.form_graph = function(datas,id){
             type:type,
             interval:datas[i].interval,
             data:data,
-            count:datas[i].count
+            count:i
         };
         if(i==0){
             if(option.type=="pie"){
@@ -105,9 +105,9 @@ ifepm.dashboard.form_graph = function(datas,id){
         add_series(option);
         proper_type_for_chart(option);
         DASHBOARD.add.generate(option);
-        limit_pointer_number(option);
-    }
 
+    }
+    limit_pointer_number(option);
     if(datas.length == 1 && type =="line"){
         var option_area={};
         option_area=deepCopy(option,option_area);
