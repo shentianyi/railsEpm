@@ -92,7 +92,7 @@ ifepm.dashboard.form_graph = function(datas,id){
             type:type,
             interval:datas[i].interval,
             data:data,
-            count:i
+            count:i+1
         };
         if(i==0){
             if(option.type=="pie"){
