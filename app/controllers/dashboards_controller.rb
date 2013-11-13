@@ -2,7 +2,7 @@
 class DashboardsController < ApplicationController
 
   def new
-    render
+    #render
   end
 
   def create
