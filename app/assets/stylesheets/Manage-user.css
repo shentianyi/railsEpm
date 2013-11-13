@@ -282,6 +282,8 @@
     margin:0px;
     position:relative;
     top:32px;
+    height:462px;
+    overflow-y:auto;
 }
 .assign-kpi-left>ul li{
     padding-top:8px;
@@ -299,7 +301,7 @@
     cursor:pointer;
     color:#5194cd;
     transition:color 0.25s ease-out;
-    line-height:16px;
+    line-height:24px;
 }
 .assign-kpi-left>ul li h3:hover{
     color:#cda351
@@ -314,6 +316,7 @@
     color:rgba(0,0,0,0.3);
     font-size:13px;
     transition:color 0.25s ease-out;
+    line-height:8px;
 }
 /************************************************  user assign kpi(special)
 *************************************************************/
@@ -348,6 +351,7 @@
     overflow-y:auto;
     width:96%;
     margin-top:18px;
+    height:462px;
 }
 .assign-kpi[special="user"] ul.left li{
     border-top:1px solid rgba(0, 0, 0, 0.1);
