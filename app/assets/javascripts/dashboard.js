@@ -234,6 +234,7 @@ function db_view_create_callback(data){
     }*/
     if(data){
        // $("#dashboard-add-page").css("display","none");
+       $("#dashboard-add-wrap").css("display","none");
         MessageBox("Create dashboard item success","top","success");
         //close_dash();
         if(current_dashboard_id == data.dashboard_id){

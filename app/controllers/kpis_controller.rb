@@ -6,10 +6,10 @@ class KpisController < ApplicationController
   def index
     @active_category_id= params[:id].nil? ? ( @categories.length>0 ? @categories[0].id : nil ) : params[:id].to_i
     (get_kpis_by_category @active_category_id) if @active_category_id
-    @units=KpiUnit.all
-    @frequencies=KpiFrequency.all
-    @directions=KpiDirection.all
-    @base_kpis=Kpi.base_kpis  current_ability
+    # @units=KpiUnit.all
+    # @frequencies=KpiFrequency.all
+    # @directions=KpiDirection.all
+    # @base_kpis=Kpi.base_kpis  current_ability
   end
 
   # create kpi
@@ -79,6 +79,10 @@ class KpisController < ApplicationController
   def list
     get_kpis_by_category  params[:id]
     render :partial=>'list'
+  end
+
+  def condition
+    render :json=>{:unit=>KpiUnit.all,:frequency=>KpiFrequency.all,:direction=>KpiDirection.all,:base=>Kpi.base_kpis(current_ability)}
   end
 
   def import

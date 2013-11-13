@@ -22,14 +22,9 @@ MANAGE.init=function(){
     MANAGE.left.manage_left_add_init();
     MANAGE.left.manage_left_delete_init();
     MANAGE.left.manage_left_edit_init();
-    MANAGE.iCheck_init();
-    MANAGE.sort_init();
-    MANAGE.resize_sort_table();
     MANAGE.judge_kpi_count();
     MANAGE.left_count_observable();
-    $("#manage-sort-list li").on("resize",function(){
-        MANAGE.resize_sort_table()
-    });
+    MANAGE.widget_init();
     $("body").on("click","#manage-item-remove",manage_item_remove).on("click","#manage-item-edit",manage_item_edit);
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
@@ -76,6 +71,19 @@ MANAGE.init=function(){
     MANAGE.manage_left_height();
 
 }
+MANAGE.widget_init=function(){
+    MANAGE.iCheck_init();
+    MANAGE.sort_init();
+    MANAGE.resize_sort_table();
+    $("#manage-sort-list li").on("resize",function(){
+        MANAGE.resize_sort_table()
+    });
+    $("#manage-sort-list li").each(function() {
+        $(this).find("table tr td").tipsy({
+            gravity : 'se'
+        });
+    });
+};
 MANAGE.manage_left_height=function(){
     var height=$(document).height()-$("header").height()-$("#left-content-title").height()-1;
     $("#manage-left-content").height(height);
