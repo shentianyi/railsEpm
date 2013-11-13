@@ -81,7 +81,23 @@ DASHBOARD.add.initial.analytic_control_condition_visible=function(){
 //
 //    resize_chart.container();
 }
-
+DASHBOARD.add.close=function(){
+    $("#dashboard-name-input").val("");
+    $("#db-add-type li").removeClass("active");
+    $("#db-add-type li").eq(0).addClass("active");
+    $("#db-add-kpi-list").empty();
+    $("#dashboard-group-name").val('').trigger('chosen:updated');
+    $("#db-chart-body").css("display","none");
+    $(".index-condition-group input").val("");
+    $(".index-condition-group select").val('').trigger('chosen:updated');
+    $("[name='chartRadios']").eq(0).iCheck("check");
+    $(".index-date-extra-info").text("");
+    DASHBOARD.add.initial.analytic_control_condition_visible();
+    if($("#chart-container").highcharts()!=undefined){
+        $("#chart-container").highcharts().destroy();
+    }
+    $("#dashboard-add-wrap").css("display","none");
+}
 DASHBOARD.add.init=function(){
     $("#add-dashboard-show").on("click",function(){
        $("#dashboard-add-wrap").css("display","block");
@@ -91,7 +107,7 @@ DASHBOARD.add.init=function(){
        $("#chart-view+div").css("width","120px");
     });
     $("#close-add-dashboard").on("click",function(){
-        $("#dashboard-add-wrap").css("display","none");
+        DASHBOARD.add.close();
     });
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
@@ -254,16 +270,6 @@ DASHBOARD.highchart_template_init=function(){
     high_chart.borderRadius=0;
     high_chart.chart.marginTop=0;
     high_chart.chart.spacingBottom=1;
-//    high_chart.legend.align="left";
-//    high_chart.legend.verticalAlign="top";
-//    high_chart.legend.x=-10;
-//    high_chart.legend.y=5;
-//    high_chart.legend.floating=true;
-//    high_chart.legend.maxHeight=100;
-//    high_chart.legend.layout="vertical";
-//    high_chart.legend.itemStyle.fontSize="10px";
-//    high_chart.legend.itemStyle.color="rgba(0,0,0,0.6)";
-//    high_chart.legend.itemMarginBottom=2;
     high_chart.legend.margin=0;
     high_chart.plotOptions.series.point.events={};
     high_chart.plotOptions.series.marker.lineColor=null;
@@ -278,7 +284,9 @@ DASHBOARD.highchart_template_init=function(){
     high_chart.yAxis.labels.enabled=false;
     high_chart.plotOptions.pie.dataLabels.enabled=true;
     high_chart.plotOptions.pie.dataLabels.distance=10;
-    high_chart.plotOptions.pie.dataLabels.color="rgba(0,0,0,0.6)"
+    high_chart.plotOptions.pie.dataLabels.color="rgba(0,0,0,0.6)";
+    high_chart.plotOptions.pie.dataLabels.connectorColor="rgba(0,0,0,0.1)";
+    high_chart.plotOptions.pie.dataLabels.style.fontSize="9px";
     high_chart.plotOptions.pie.point={};
     high_chart.plotOptions.pie.events={};
     high_chart.plotOptions.pie.events.click=function(){
@@ -492,6 +500,25 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
 //                    {y: 0,low:0,high:32, target: 10, unit: "$"},
 //                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
+//                    {y: 3,low:2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+//                    {y: 0,low:0,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
+//                    {y: 3,low:2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+//                    {y: 0,low:0,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
+//                    {y: 3,low:2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+//                    {y: 0,low:0,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
 //                    {y: 7,low:1,high:43,  target: 10, unit: "$"}
 //                ];
 //                addSeriesOption[interval] = [

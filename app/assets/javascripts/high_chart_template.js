@@ -51,8 +51,8 @@ var high_chart = {
     exporting : {
         buttons:{
            contextButton:{
-//               symbol:'url(images/down.png)'
-               symbol:'url(/assets/down.png)'
+               symbol:'url(images/down.png)'
+//               symbol:'url(/assets/down.png)'
            }
         },
         url : url,
@@ -141,6 +141,7 @@ var high_chart = {
                 color: 'rgba(0,0,0,0.25)',
                 connectorColor: 'rgba(0,0,0,0.15)',
                 connectorWidth: 1,
+                style:{},
                 format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
             },
             colors:[
@@ -595,9 +596,7 @@ function pie_for_dashboard(container){
 
 function limit_pointer_number(){
     set_data.apply(this,arguments);
-    var maxDate=this.chart.xAxis[0].getExtremes().max;
-    var minDate=this.chart.xAxis[0].getExtremes().min;
-    if( Math.ceil((maxDate-minDate)/this.chart.xAxis[0].closestPointRange) >= limit_pointer_condition["_"+this.interval].limit ){
+    if( this.chart.xAxis[0].tickPositions.length>9 ){
         limit_pointer_condition["_"+this.interval].limitAction(this.chart)
     }
 }
