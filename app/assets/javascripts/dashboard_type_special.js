@@ -3,7 +3,8 @@ DASHBOARD.special_type={};
 
 DASHBOARD.special_type={
     line:function(id){
-        $("#"+id+" "+".dashboard-item-extra-info").empty();
+        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px");
+        $("#"+id+" "+".db-chart-container").css("top","50px");
         $table=$("#"+id+" "+".dashboard-item-extra-info");
         $table
             .append($("<tr />")
@@ -33,7 +34,8 @@ DASHBOARD.special_type={
 
     },
     column:function(id){
-        $("#"+id+" "+".dashboard-item-extra-info").empty();
+        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px");
+        $("#"+id+" "+".db-chart-container").css("top","50px");
         $table=$("#"+id+" "+".dashboard-item-extra-info");
         $table
             .append(
@@ -50,7 +52,8 @@ DASHBOARD.special_type={
 
     },
     pie:function(id){
-        $("#"+id+" "+".dashboard-item-extra-info").empty();
+        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px");
+        $("#"+id+" "+".db-chart-container").css("top","50px");
         $table=$("#"+id+" "+".dashboard-item-extra-info");
         $table
             .append(
@@ -71,6 +74,11 @@ DASHBOARD.special_type={
                         .append($("<span />").addClass("pie-total-value"))
                     )
             )
+    },
+    scatter:function(id){
+        $("#"+id+" "+".dashboard-item-extra-info").css("height","0px");
+        $("#"+id+" "+".db-chart-container").css("top","0px");
+
     }
 }
 DASHBOARD.special_grab={
