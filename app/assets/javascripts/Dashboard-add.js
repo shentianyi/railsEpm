@@ -105,6 +105,58 @@ DASHBOARD.add.init=function(){
        $("#chart-group+div").css("width","120px");
        $("#chart-kpi+div").css("width","120px");
        $("#chart-view+div").css("width","120px");
+       db_chartSeries = {
+            count: 0,
+            id_count:0,
+            id:0,
+            series: [],
+            id_array:[],
+            id_give:function(){
+                if(this.count>this.id_array.length){
+                    this.id=this.id_count;
+                    this.id_array.push(this.id_count);
+                    this.id_count++;
+                }
+                else{
+                    var array=this.id_array, i,index;
+                    for(i=0;i<array.length;i++){
+                        if(array[i]===undefined){
+                            array[i]=i;
+                            index=i;
+                            break
+                        }
+                    }
+                    this.id=index;
+                }
+            },
+            getCount: function () {
+                return this.count
+            },
+            addCount: function () {
+                this.count += 1
+            },
+            minusCount: function () {
+                this.count -= 1
+            },
+            getSeries: function () {
+                return this.series
+            },
+            addSeries: function (series) {
+                if(this.count>this.series.length){
+                    this.series.push(series)
+                }
+                else{
+                    var series_array=this.series,i;
+                    for(i=0;i<series_array.length;i++){
+                        if(series_array[i]===undefined){
+                            series_array[i]=series;
+                            break;
+                        }
+                    }
+                }
+
+            }
+        };
     });
     $("#close-add-dashboard").on("click",function(){
         DASHBOARD.add.close();

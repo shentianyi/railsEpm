@@ -99,6 +99,10 @@ right_nav_main.item_prototype.add.prototype={
                         $("#content-right-nav-add-block>input").val("");
                         right_nav_main.item_prototype.add.prototype.add_hide();
                         right_nav_main.observe_count.count++;
+                        if(right_nav_main.current_section=="dashboard"){
+                            $("#dashboard-group-name").append($("<option />").attr("value",data.object).text(name));
+                            $("#dashboard-group-name").val('').trigger('chosen:updated');
+                        }
 
                     } else {
                         MessageBox(data.content,"top","warning");
