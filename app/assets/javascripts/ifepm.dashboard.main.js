@@ -298,7 +298,7 @@ ifepm.dashboard.load_graph=function(id){
         {
           before_send: function(){},
           url:ifepm.config.get_item_data_url.url,
-          data:{"id":id},
+          data:{"id":id,"last_update":current_graph.last_update},
           dataType:ifepm.config.get_item_data_url.dataType,
           crossDomain:ifepm.config.get_item_data_url.crossDomain,
           success: function(data){
