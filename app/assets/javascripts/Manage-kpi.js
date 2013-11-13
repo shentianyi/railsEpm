@@ -28,15 +28,28 @@ MANAGE.kpi.init = function() {
                $.get('/kpis/list/' + id, function(data) {
                     $("#manage-edit-target").text(li.attr('title'));
                     $('#kpi-item-container').html(data);
+                    window.history.pushState(id, null, "/kpis/c/" + id);
                     MANAGE.widget_init();
-                    window.location.hash="/eee";
-                    // window.location.="baidu.com";
-                    console.log(window.location.hash);
                });
           }
      });
      $("#new-kpi-category").val('').trigger('chosen:updated');
      $("body").on("click", "#kpi-add-show", function() {
+          var show_button = $("#kpi-add-show");
+          if(!show_button.attr('showed')) {
+               $.get("/kpis/condition", function(data) {
+                    $.each(data, function(key, data) {
+                         var select = $("select[name='" + key + "']");
+                         select.empty().trigger('chosen:updated');
+                         for(var i = 0; i < data.length; i++) {
+                              select.append($("<option />").attr("value", (data[i].value == null ? data[i].id : data[i].value)).text((data[i].desc == null ? data[i].name : data[i].desc)));
+                         }
+                         select.prepend($("<option />").attr("value", ""));
+                         select.val('').trigger('chosen:updated');
+                    });
+                    show_button.attr('showed', true);
+               }, 'json');
+          }
           $("#manage-kpi-add").css("right", "261px");
           $("#manage-right-content").css("padding-right", "200px");
           $("#left-content-title").css("margin-right", "201px");

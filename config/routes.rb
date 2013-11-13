@@ -23,11 +23,12 @@ IFEpm::Application.routes.draw do
 
   resources :kpis do
     collection do
-      get '/:id' =>:index
+      get '/c/:id'=>:index
       put :update
       post :assign
       post :import
       get :template
+      get :condition
       [:categoried,:user,:list].each do |a|
         get "#{a}/:id"=>a
       end
