@@ -141,6 +141,7 @@ var high_chart = {
                 color: 'rgba(0,0,0,0.25)',
                 connectorColor: 'rgba(0,0,0,0.15)',
                 connectorWidth: 1,
+                style:{},
                 format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
             },
             colors:[
