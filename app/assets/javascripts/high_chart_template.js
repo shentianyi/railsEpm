@@ -595,9 +595,7 @@ function pie_for_dashboard(container){
 
 function limit_pointer_number(){
     set_data.apply(this,arguments);
-    var maxDate=this.chart.xAxis[0].getExtremes().max;
-    var minDate=this.chart.xAxis[0].getExtremes().min;
-    if( Math.ceil((maxDate-minDate)/this.chart.xAxis[0].closestPointRange) >= limit_pointer_condition["_"+this.interval].limit ){
+    if( this.chart.xAxis[0].tickPositions.length>9 ){
         limit_pointer_condition["_"+this.interval].limitAction(this.chart)
     }
 }

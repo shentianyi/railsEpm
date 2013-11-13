@@ -81,7 +81,23 @@ DASHBOARD.add.initial.analytic_control_condition_visible=function(){
 //
 //    resize_chart.container();
 }
-
+DASHBOARD.add.close=function(){
+    $("#dashboard-name-input").val("");
+    $("#db-add-type li").removeClass("active");
+    $("#db-add-type li").eq(0).addClass("active");
+    $("#db-add-kpi-list").empty();
+    $("#dashboard-group-name").val('').trigger('chosen:updated');
+    $("#db-chart-body").css("display","none");
+    $(".index-condition-group input").val("");
+    $(".index-condition-group select").val('').trigger('chosen:updated');
+    $("[name='chartRadios']").eq(0).iCheck("check");
+    $(".index-date-extra-info").text("");
+    DASHBOARD.add.initial.analytic_control_condition_visible();
+    if($("#chart-container").highcharts()!=undefined){
+        $("#chart-container").highcharts().destroy();
+    }
+    $("#dashboard-add-wrap").css("display","none");
+}
 DASHBOARD.add.init=function(){
     $("#add-dashboard-show").on("click",function(){
        $("#dashboard-add-wrap").css("display","block");
@@ -91,7 +107,7 @@ DASHBOARD.add.init=function(){
        $("#chart-view+div").css("width","120px");
     });
     $("#close-add-dashboard").on("click",function(){
-        $("#dashboard-add-wrap").css("display","none");
+        DASHBOARD.add.close();
     });
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
@@ -492,6 +508,25 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
 //                    {y: 0,low:0,high:32, target: 10, unit: "$"},
 //                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
+//                    {y: 3,low:2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+//                    {y: 0,low:0,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
+//                    {y: 3,low:2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+//                    {y: 0,low:0,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
+//                    {y: 3,low:2,high:20,  target: 10, unit: "$"},
+//                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+//                    {y: 0,low:0,high:32, target: 10, unit: "$"},
+//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
+//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
 //                    {y: 7,low:1,high:43,  target: 10, unit: "$"}
 //                ];
 //                addSeriesOption[interval] = [
