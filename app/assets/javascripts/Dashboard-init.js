@@ -44,6 +44,5 @@ DASHBOARD.init=function(){
            //on_restore_screen();
        }
     });
-    DASHBOARD.highchart_template_init();
 }
 

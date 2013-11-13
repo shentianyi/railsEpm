@@ -124,11 +124,7 @@ ifepm.dashboard.form_graph = function(datas,id){
                 chart.series[i].update({showInLegend:false});
             }
         }
-
-        //var width = $("#"+container).width();
-        //var height = $("#"+container).height();
-        //chart.setSize(width,height);
-        }
+    }
 
     
     dashboard_remove_loading(outer);

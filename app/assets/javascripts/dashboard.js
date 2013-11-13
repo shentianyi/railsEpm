@@ -236,8 +236,9 @@ function db_view_create_callback(data){
        // $("#dashboard-add-page").css("display","none");
         MessageBox("Create dashboard item success","top","success");
         //close_dash();
-        //ifepm.dashboard_widget.add(data);
-        //ifepm.dashboard.on_view_added(data);
+        if(current_dashboard_id == data.dashboard_id){
+            ifepm.dashboard.on_view_added(data);
+        }
     }
     else{
         MessageBox("Delete dashboard item failed","top","warning");
