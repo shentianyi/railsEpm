@@ -51,8 +51,8 @@ var high_chart = {
     exporting : {
         buttons:{
            contextButton:{
-//               symbol:'url(images/down.png)'
-               symbol:'url(/assets/down.png)'
+               symbol:'url(images/down.png)'
+//               symbol:'url(/assets/down.png)'
            }
         },
         url : url,
