@@ -276,8 +276,9 @@ zh:
         target_min: 目标值下限
         unit: 单位
         trend: 趋势
-        calculate_type: 计算型
+        is_calculate_type: 计算型
         not_calculate_type: 否
+        calculate_type: 是
         list: 选择KPI
         formula: 计算公式
         invalid: 公式不合法

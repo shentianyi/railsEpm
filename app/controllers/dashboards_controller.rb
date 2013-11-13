@@ -2,7 +2,7 @@
 class DashboardsController < ApplicationController
 
   def new
-    render
+    #render
   end
 
   def create
@@ -39,7 +39,10 @@ class DashboardsController < ApplicationController
     if @dashboard && @dashboard.update_attributes(params[:data])
       msg[:result]=true
     else
-      msg[:errors]=@dashboard.errors.full_messages
+      msg[:result]=false
+      if @dashboard
+        msg[:errors]=@dashboard.errors.full_messages
+      end
     end
     msg[:id]=params[:id]
     respond_to do |t|
@@ -49,11 +52,11 @@ class DashboardsController < ApplicationController
   end
 
   def index
-    get_ability_category
+    #get_ability_category
 
-    get_kpis_by_category
+    #get_kpis_by_category
 
-    get_user_entity_groups
+    #get_user_entity_groups
 
     @dashboards = Dashboard.find_all_by_user_id(current_user.id)
 

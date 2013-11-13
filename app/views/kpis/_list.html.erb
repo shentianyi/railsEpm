@@ -23,7 +23,7 @@
                     </div></td>
 
                     <%if kpi.is_calculated%>
-                    <td title="<%= kpi.formula_string%>"><%= kpi.formula_string%></td>
+                    <td title="<%= kpi.formula_string%>"><%= t 'manage.kpi.calculate_type'%></td>
                     <%else%>
                     <td><%= t 'manage.kpi.not_calculate_type'%></td>
                     <%end%>
@@ -34,7 +34,7 @@
                     <td><%= t 'manage.kpi.trend'%></td>
                     <td><%= t 'manage.kpi.target'%></td>
                     <td><%= t 'manage.kpi.target_min'%></td>
-                    <td><%= t 'manage.kpi.calculate_type'%></td>
+                    <td><%= t 'manage.kpi.is_calculate_type'%></td>
                </tr>
           </table>
      </li>

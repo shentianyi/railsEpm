@@ -4,7 +4,7 @@ require 'time'
 class DashboardItemsController < ApplicationController
 
   def new
-    @new_item = DashboardItem.new
+    #@new_item = DashboardItem.new
 
     @dashboards = Dashboard.find_all_by_user_id(current_user.id)
 
@@ -19,7 +19,7 @@ class DashboardItemsController < ApplicationController
   def create
     @new_item = DashboardItem.new(params[:dashboard_item])
     msg = new_message
-    if @new_item.save
+    if @new_item && @new_item.save
       msg[:result]=true
       #
       # add condition to store serials
@@ -28,15 +28,24 @@ class DashboardItemsController < ApplicationController
       id = @new_item.id
       @conditions.each{|condition|
         @new_condition = DashboardCondition.new(condition[1])
-        @new_condition.dashboard_item_id = id
+        if @new_condition
+          @new_condition.dashboard_item_id = id 
+        else
+          msg[:resule]=false
+        end
+        
         if @new_condition.save
+
         else
           msg[:result]=false
         end
       }
 
     else
-      msg[:errors]= @new_item.errors.full_messages
+      msg[:result]=false
+      if @new_item
+        msg[:errors]= @new_item.errors.full_messages
+      end
     end
     respond_to do |t|
       t.json {render :json=> @new_item }
