@@ -85,6 +85,7 @@ DASHBOARD.add.initial.analytic_control_condition_visible=function(){
 DASHBOARD.add.init=function(){
     $("#add-dashboard-show").on("click",function(){
        $("#dashboard-add-wrap").css("display","block");
+       $("#dashboard-group-name+div").css("width","140px");
     });
     $("#close-add-dashboard").on("click",function(){
         $("#dashboard-add-wrap").css("display","none");
