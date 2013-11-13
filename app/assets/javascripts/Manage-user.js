@@ -214,6 +214,8 @@ MANAGE.user.add_new = function() {
                                     MANAGE.sort_init();
                                     MANAGE.resize_sort_table();
                                     MANAGE.user.icheck.init();
+                                    $("#assign-kpi-user").append($("<oprion />").attr("value",object.id).text(object.email));
+                                    $("#assign-kpi-user").val('').trigger('chosen:updated');
                                 }
                                 MANAGE.user.user_add_close();
                             }
