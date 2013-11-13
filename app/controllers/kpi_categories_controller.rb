@@ -1,6 +1,6 @@
 #encoding: utf-8
 class KpiCategoriesController < ApplicationController
-  before_filter :get_ability_category, :only=>[:destroy]
+  # before_filter :get_ability_category, :only=>[:destroy]
   before_filter :get_ability_category_by_id,:only=>[:update,:destroy]
   def new
     render :partial=>'new'
@@ -27,16 +27,15 @@ class KpiCategoriesController < ApplicationController
 
   def destroy
     msg=Message.new
-    #can't destroy the last category
-    if @categories.length > 1
+    # if @categories.length > 1
       if @category and @category.kpi_quantity==0
         msg.result=@category.destroy
       else
         msg.content="类别不可删除，包含KPI"
       end
-    else
-      msg.content="必须保留一个类别"
-    end
+    # else
+      # msg.content="必须保留一个类别"
+    # end
     render :json=>msg
   end
 

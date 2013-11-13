@@ -306,10 +306,7 @@ MANAGE.user.assign.init = function() {
      $("body").on("change", "#assign-kpi-user", function() {
           var id = $(this).find(":selected").attr("value")
           $.ajax({
-               url : '/kpis/user_kpis',
-               data : {
-                    id : id
-               },
+               url : '/kpis/user/'+id,
                dataType : 'html',
                success : function(kpis) {
                     $('#assign-kpi-inner').html(kpis);
@@ -324,11 +321,8 @@ MANAGE.user.assign.init = function() {
      $("body").on("change","#kpi-category",function(event){
           var id = $(adapt_event(event).target).attr("value");
           $.ajax({
-               url : '/kpis/get_by_category',
+               url : '/kpis/categoried/'+id,
                dataType : 'json',
-               data : {
-                    id : id
-               },
                success : function(data) {
                     $("#assign-kpi-list").empty();
                     for(var i = 0; i < data.length; i++) {

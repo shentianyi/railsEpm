@@ -14,7 +14,7 @@
      <%@categories.each do |category|%>
      <li class="<%= category.id==@active_category_id ? 'active' : ''%>" number="<%= category.id%>" title="<%= category.name %>">
           <i class="icon-trash icon-item"></i>
-          <a href="../kpis/<%= category.id%>"><%= category.name %></a>
+          <a href="#" category="<%=category.id%>"><%= category.name %></a>
      </li>
      <%end%>
 </ul>

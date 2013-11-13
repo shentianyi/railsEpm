@@ -1,0 +1,20 @@
+<ul class="left">
+     <%@user_kpis.each_with_index do |kpi,i|%>
+     <li id="<%= kpi.user_kpi_item_id%>">
+          <table>
+              <tr>
+                <td title="<%= kpi.name%>"><%= kpi.name%></td>
+                <td><input type="text" value="<%= kpi.user_kpi_item_target_max%>" kpi_id="<%= kpi.user_kpi_item_id%>" class="target_max"/></td>
+                <td><input type="text" value="<%= kpi.user_kpi_item_target_min%>" kpi_id="<%= kpi.user_kpi_item_id%>" class="target_min"/></td>
+              </tr>
+              <tr>
+                <td title="<%= kpi.description%>"><%= kpi.description%></td>
+                <td>Target_Max</td>
+                <td>Target_Min</td>
+              </tr>
+          </table>
+          <i class="icon-trash"></i>
+     </li>
+     <%end%>
+</ul>
+

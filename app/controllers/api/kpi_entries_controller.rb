@@ -23,12 +23,10 @@ module Api
     end
 
     def analyse
-
       # @ent
       @entity_groups=current_user.entity_groups.accessible_by(current_ability)
       get_ability_category
       get_kpis_by_category
-
       msg=Message.new
       if data=KpiEntryAnalyseHelper.get_kpi_entry_analysis_data(params[:kpi],params[:entity_group],params[:startTime],params[:endTime],params[:average]=="true")
       msg.result=true
