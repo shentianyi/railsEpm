@@ -44,7 +44,7 @@
                                             </div></td>
 
                                             <%if kpi.is_calculated%>
-                                                <td title="<%= kpi.formula_string%>"><%= kpi.formula_string%></td>
+                                                <td title="<%= kpi.formula_string%>"><%= t 'manage.kpi.calculate_type'%></td>
                                             <%else%>
                                                 <td><%= t 'manage.kpi.not_calculate_type'%></td>
                                             <%end%>

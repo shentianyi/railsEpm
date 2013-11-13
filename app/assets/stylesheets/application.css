@@ -14,6 +14,7 @@
 *= require wayne_sunny
 *= require _epm_base
 *= require chosen
+*= require index
 *= require Analytic-main
 *= require font-awesome
 *= require aero
