@@ -67,26 +67,28 @@ DASHBOARD.add.initial={};
 DASHBOARD.add.initial.analytic_control_condition_visible=function(){
     var open_state = $("#analytic-control-condition-visible").attr("state");
     if (open_state=="open") {
-        $("#left-content-title").css("top", "-80px");
+        $("#left-content-title-add").css("top", "-80px");
         $("#db-chart-body").css("top", "23px");
         $("#analytic-control-condition-visible").attr("state", "close").removeClass("icon-chevron-up").addClass("icon-chevron-down");
-//        if ($("#loading").length > 0) {
-//            $("#loading").css("top", parseInt($("#left-content-title").height()) + 48);
-//        }
+
     }
     else {
-        $("#left-content-title").css("top", "0");
+        $("#left-content-title-add").css("top", "0");
         $("#db-chart-body").css("top", "101px");
         $("#analytic-control-condition-visible").attr("state","open").removeClass("icon-chevron-down").addClass("icon-chevron-up");
-//        if ($("#loading").length > 0) {
-//            $("#loading").css("top", parseInt($("#left-content-title").height()) + 135);
-//        }
+
     }
 //
 //    resize_chart.container();
 }
 
 DASHBOARD.add.init=function(){
+    $("#add-dashboard-show").on("click",function(){
+       $("#dashboard-add-wrap").css("display","block");
+    });
+    $("#close-add-dashboard").on("click",function(){
+        $("#dashboard-add-wrap").css("display","none");
+    });
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
     });
@@ -340,7 +342,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 
 
 
-       show_loading(215,0,0,204);
+
        $.post('/kpi_entries/analyse',{
            kpi : kpi,
            average:method=="0",
@@ -349,7 +351,6 @@ DASHBOARD.add.prepare_form_chart=function() {
            endTime : standardParse(end_time).date.toISOString(),
            interval:interval
        },function(msg){
-           remove_loading()
            if(msg.result){
                var option={
                    kpi:$("#chart-kpi :selected").text(),

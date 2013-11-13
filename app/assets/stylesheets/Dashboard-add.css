@@ -1,12 +1,28 @@
-.dashboard-add-page{
+.dashboard-add-wrap{
     position:absolute;
-    top:135px;
+    top:0px;
     left:0px;
     right:0px;
     bottom:0px;
-    background-color:white;
+    background-color:rgba(0,0,0,0.5);
     display:none;
     z-index:30;
+}
+.dashboard-add-inner{
+    width:1000px;
+    height:700px;
+    position:absolute;
+    left:50%;
+    margin-left:-500px;
+    top:50%;
+    margin-top:-350px;
+    background-color:white;
+    box-shadow:4px 4px 4px rgba(0,0,0,0.7);
+    -moz-box-shadow:4px 4px 4px rgba(0,0,0,0.7);
+    -webkit-box-shadow:4px 4px 4px rgba(0,0,0,0.7);
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
 }
 /********************************************************************************************************* 子菜单
 *******************************************************************************************************************/
@@ -23,7 +39,7 @@
 .dashboard-add-sub-menu ul{
     list-style-type: none;
     display:block;
-    padding:8px 0 0 13px;
+    padding:8px 0 0 5px;
     margin:0px;
 }
 .dashboard-add-sub-menu ul>li{
@@ -52,12 +68,30 @@
     font-size:13px;
     color:white;
 }
+.dashboard-add-sub-menu>.icon-remove{
+    float:right;
+    position:relative;
+    top:-21px;
+    color:white;
+    right:11px;
+    cursor:pointer;
+}
+.dashboard-add-sub-menu>.icon-remove:hover{
+    color:#3b627c
+}
 /********************************************************************************************************* 左边aside
 *******************************************************************************************************************/
 .content-right-nav[name='dashboard-add']{
     width:200px;
     min-width:200px;
     max-width:200px;
+    position:absolute;
+    top:40px;
+    bottom:0px;
+    left:0px;
+    height:auto;
+    overflow-y:auto;
+    margin-top:0px;
     border-right:1px solid #dcdcdc;
     box-shadow:2px 0px 3px rgba(0, 0, 0, 0.2);
     -moz-box-shadow:2px 0px 3px rgba(0, 0, 0, 0.2);
@@ -75,6 +109,7 @@
 .content-right-nav[name='dashboard-add']>section.solid>a{
     margin-left:-62px;
 }
+
 /***************************************************** 左边aside
 ***************************************************************/
 /*name*/
@@ -209,8 +244,9 @@
     left:205px;
     right:0px;
     bottom:0px;
-    top:110px;
+    top:40px;
     overflow-y:hidden;
+    display:block;
 }
 .left-content-title[name='dashboard-add']{
     height:103px;
