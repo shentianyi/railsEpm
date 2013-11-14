@@ -24,14 +24,14 @@ DASHBOARD.init=function(){
 
     $("body").on("click","#dashboard-full-size",function(){
         $("#dashboard-content-full").css("display","block");
-        //on_full_size();
+        ifepm.dashboard_widget.init_fullsize();
+        on_full_size();
     });
     $("body").on("keyup",function(event){
        var e=adapt_event(event).event;
        if(e.keyCode==27 ){
            $("#dashboard-content-full").css("display","none");
-           //on_restore_screen();
-
+           on_restore_size();
        }
     });
 }
