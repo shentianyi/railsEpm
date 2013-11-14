@@ -37,6 +37,7 @@ ifepm.config={
 
     container_selector:"#dashBoard-show",
 
+    container_selector_full:"#dashBoard-show-full",
 
     graph_indicator:"id",
 

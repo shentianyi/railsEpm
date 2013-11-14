@@ -8,55 +8,115 @@
 
 /**
  * define the grid view model and functions
+ * @gridster represents the normal size Grdster
+ * @gridster_full represents the full size Gridster
+ * @ifepm.dashboard_widge.config represent the config of grid
  */
 
-//load or initialize the ifepm object
+/*
+* base variable
+* */
 var ifepm = ifepm || {};
 
-//dashboard widget
 ifepm.dashboard_widget = ifepm.dashboard_widget || {};
 
-//config
-ifepm.dashboard_widget.widget_config = {
-    height:0,
-    width:0,
-    max_col:4,
-    max_row:2,
-    //min_width:1024/4 -20 ,
-    //min_height:(800 - 110)/2 -20
+ifepm.dashboard_widget.config = {
+    normal:{
+        height:0,
+        width:0,
+        max_col:5,
+        max_row:3,
+    },
+    full:{
+        height:0,
+        width:0,
+        max_col:5,
+        max_row:3,
+    }
 };
 
+/*
+* @gridster,normal size Gridster
+* @gridster_full,full size Gridster
+* */
 var gridster;
+var gridster_full;
+var current_gridster;
+/*
+* initialize the grid size
+* */
 ifepm.dashboard_widget.height = 0,ifepm.dashboard_widget.width = 0;
-//minimum size of grid
-var min_width = (1024 - 150) / 4 - 20;
-var min_height =  min_width;
-//init
-ifepm.dashboard_widget.init = function(option){
-    ifepm.dashboard_widget.widget_config.max_col = option.max_col;
-    ifepm.dashboard_widget.widget_config.max_row = option.max_row;
-    //ifepm.dashboard_widget.widget_config.min_width = 1024 /option.max_col - 20;
-    //ifepm.dashboard_widget.widget_config.min_height = (800 - 110)/option.max_row - 20;
-    ifepm.dashboard_widget.widget_config.width = option.width/option.max_col - 30;
-    ifepm.dashboard_widget.widget_config.height = (option.height)/option.max_row - 30;
 
-    /*
-    ifepm.dashboard_widget.widget_config.width =
-        ifepm.dashboard_widget.widget_config.width < ifepm.dashboard_widget.widget_config.min_width ? ifepm.dashboard_widget.widget_config.min_width:ifepm.dashboard_widget.widget_config.width;
-    ifepm.dashboard_widget.widget_config.height =
-        ifepm.dashboard_widget.widget_config.height < ifepm.dashboard_widget.widget_config.min_height ? ifepm.dashboard_widget.widget_config.min_height:ifepm.dashboard_widget.widget_config.height;
-        */
-    console.log(ifepm.dashboard_widget.widget_config);
-    gridster = $(".gridster ul").gridster({
+/*
+* @function init
+* --init gridster
+* @params option
+* option = {
+* normal:{height,width,max_col,max_row},
+* full:{height,width,max_col,max_row}}
+* */
+ifepm.dashboard_widget.init = function(option){
+
+    ifepm.dashboard_widget.setconfig(option);
+    //====log====//
+    console.log(ifepm.dashboard_widget.config);
+
+    gridster = $("#dash-normalsize ul").gridster({
+        namespace: '#dash-normalsize',
         widget_margins: [10, 10],
-        widget_base_dimensions: [ifepm.dashboard_widget.widget_config.width, ifepm.dashboard_widget.widget_config.height],
+        widget_base_dimensions: [ifepm.dashboard_widget.config.normal.width, ifepm.dashboard_widget.config.normal.height],
         draggable:{
-            stop: on_dragstop,
+            stop: ifepm.dashboard_widget.drag_stop,
         },
-    }).data("gridster");
-    //gridster.disable();
+    }).data('gridster');
+    current_gridster = gridster;
+    /*
+    gridster_full = $("#dash-fullsize ul").gridster({
+        namespace:'#dash-fullsize',
+        widget_margins: [10,10],
+        widget_base_dimensions: [200,200],
+    }).data('gridster');
+    */
 };
 
+/*
+* @function init full size gridster
+* */
+var isinit_fullsize = true;
+
+ifepm.dashboard_widget.init_fullsize = function(){
+     if(isinit_fullsize){
+         var width = ifepm.dashboard_widget.config.full.width;
+         var height = ifepm.dashboard_widget.config.full.height;
+         gridster_full = $("#dash-fullsize ul").gridster({
+             namespace:'#dash-fullsize',
+             widget_margins: [10,10],
+             widget_base_dimensions: [width,height],
+         }).data('gridster');
+         isinit_fullsize = false;
+     }
+}
+
+/*
+* @function setconfig
+* @params option
+* option = {
+* normal:{height,width,max_col,max_row},
+* full:{height,width,max_col,max_row}}
+* */
+ifepm.dashboard_widget.setconfig = function(option){
+    //normal size config
+    ifepm.dashboard_widget.config.normal.max_col = option.normal.max_col;
+    ifepm.dashboard_widget.config.normal.max_row = option.normal.max_row;
+    ifepm.dashboard_widget.config.normal.height = option.normal.height / option.normal.max_row - 20;
+    ifepm.dashboard_widget.config.normal.width = option.normal.width / option.normal.max_col - 20;
+
+    //full size config
+    ifepm.dashboard_widget.config.full.max_col = option.full.max_col;
+    ifepm.dashboard_widget.config.full.max_row = option.full.max_row;
+    ifepm.dashboard_widget.config.full.height = option.full.height / option.full.max_row - 20;
+    ifepm.dashboard_widget.config.full.width = option.full.width / option.full.max_col - 20;
+}
 /*
 * @function enable(bool)
 * */
@@ -70,20 +130,43 @@ ifepm.dashboard_widget.enable = function(enable){
 }
 
 /*
+* @function full_size
+* */
+var isfullsize = false;
+
+ ifepm.dashboard_widget.full_size = function(option){
+    if(option){
+        isfullsize = true;
+        current_gridster = gridster_full;
+    }else{
+        isfullsize = false;
+        current_gridster = gridster;
+    }
+}
+
+/*
 * @function add_w
 * @params option = {id,container_selector,chart_type}
 * */
 ifepm.dashboard_widget.add_w = function(option){
 
+    var selector = "";
+    if(isfullsize){
+        selector =" li#full_"+option.id ;
+    }
+    else{
+        selector=" li#"+option.id;
+    }
+
     if(option.isnew){
         var default_size = ifepm.dashboard_widget.initsize(option.chart_type);
-        gridster.add_widget(option.container_selector+" li#"+option.id,default_size.sizex,default_size.sizey)
+        current_gridster.add_widget(option.container_selector+selector,default_size.sizex,default_size.sizey)
     }else{
-        gridster.add_widget(option.container_selector+" li#"+option.id,option.sizex,option.sizey,option.col,option.row)
+        current_gridster.add_widget(option.container_selector+selector,option.sizex,option.sizey,option.col,option.row)
     }
 
     var pos={};
-    pos = gridster.serialize($("#"+option.id));
+    pos = current_gridster.serialize($("#"+option.id));
 
     pos[0].col = pos[0].col == NaN ? 1:pos[0].col;
     pos[0].row = pos[0].col == NaN ? 1:pos[0].row;
@@ -100,17 +183,22 @@ ifepm.dashboard_widget.add_w = function(option){
 * @function remove_w
 * */
 ifepm.dashboard_widget.remove_w = function(filter){
-    if(gridster){
-        gridster.remove_widget($(filter));
+    if(current_gridster){
+        current_gridster.remove_widget($(filter));
         $(filter).remove();
-        ifepm.dashboard_widget.drag_stop();
+        if(!isfullsize){
+            ifepm.dashboard_widget.drag_stop();
+        }
     }
 }
 
-//get dashboard style
+/*
+* @function get_pos
+* return the gridster position depend on the html filter
+* */
 ifepm.dashboard_widget.get_pos = function(filter){
     var pos = {};
-    pos = gridster.serialize($(filter));
+    pos = current_gridster.serialize($(filter));
 
     pos[0].col = pos[0].col == NaN ? 1:pos[0].col;
     pos[0].row = pos[0].col == NaN ? 1:pos[0].row;
@@ -122,7 +210,10 @@ ifepm.dashboard_widget.get_pos = function(filter){
     return result;
 }
 
-//get widget size and position by type
+/*
+* @function initsize
+* return the default size from specific chart type
+* */
 ifepm.dashboard_widget.initsize = function(type){
     var defsize = {
         sizex:2,
@@ -152,100 +243,18 @@ ifepm.dashboard_widget.initsize = function(type){
     return defsize;
 };
 
-//remove widget
+/*
+* @function remove_all_widgets
+* remove all the grids
+* */
 ifepm.dashboard_widget.remove_all_widgets =function(callback){
-    gridster.remove_all_widgets(callback);
+    current_gridster.remove_all_widgets(callback);
 };
 
-//drag stop
-ifepm.dashboard_widget.drag_stop = function(){
+/*
+* @function drag_stop
+* callback after drag stop
+* */
+ifepm.dashboard_widget.drag_stop = function(event,ui){
     ifepm.dashboard.on_drag_stop();
 };
-
-/*
-* @function ifepm.dashboard_widget.windowresize
-* */
-ifepm.dashboard_widget.windowresize = function(option){
-    var width = (option.width - 50)/ifepm.dashboard_widget.widget_config.max_col - 30;
-    var height = (option.height - 40)/ifepm.dashboard_widget.widget_config.max_row - 20;
-
-    var opt = {widget_base_dimensions:[height,width]};
-    gridster.resize_widget_dimensions(opt);
-};
-
-/*
-* @function resize
-* @params option
-* */
-ifepm.dashboard_widget.resize = function(option){
-    console.log(option)
-    ifepm.dashboard_widget.widget_config.max_col = option.max_col;
-    ifepm.dashboard_widget.widget_config.max_row = option.max_row;
-    ifepm.dashboard_widget.widget_config.width = option.width/ifepm.dashboard_widget.widget_config.max_col - 20;
-    ifepm.dashboard_widget.widget_config.height = (option.height - 120)/option.max_row - 30;
-    console.log(ifepm.dashboard_widget.widget_config);
-    var options = {widget_margins:[15,15],widget_base_dimensions:[ifepm.dashboard_widget.widget_config.width,ifepm.dashboard_widget.widget_config.height]};    
-    gridster.resize_widget_dimensions(options);
-};
-
-/*
-* patch from github OwlyCode/gridster.resize-patch.js
-* @function resize_widget_dimensions()
-* @params options = {widget_margins:[x,y],widget_base_dimensions:[x,y]}
-* **resize base_dimensions for screen size changed
-*/
-(function($) {
-    /*
-    $.Gridster.resize_widget_dimensions = function(options) {
-        if (options.widget_margins) {
-            this.options.widget_margins = options.widget_margins;
-        }
-
-        if (options.widget_base_dimensions) {
-             this.options.widget_base_dimensions = options.widget_base_dimensions;
-        }
-
-        this.min_widget_width  = (this.options.widget_margins[0] * 2) + this.options.widget_base_dimensions[0];
-        this.min_widget_height = (this.options.widget_margins[1] * 2) + this.options.widget_base_dimensions[1];
-
-        var serializedGrid = this.serialize();
-        this.$widgets.each($.proxy(function(i, widget) {
-            var $widget = $(widget);
-            this.resize_widget($widget);
-        }, this));
-
-        this.generate_grid_and_stylesheet();
-        this.get_widgets_from_DOM();
-        this.set_dom_grid_height();
-
-        return false;
-    };
-    */
-    var extensions = {
-    resize_widget_dimensions: function(options) {
-      if (options.widget_margins) {
-        this.options.widget_margins = options.widget_margins;
-      }
-
-      if (options.widget_base_dimensions) {
-        this.options.widget_base_dimensions = options.widget_base_dimensions;
-      }
-
-      this.min_widget_width = (this.options.widget_margins[0] * 2) + this.options.widget_base_dimensions[0];
-      this.min_widget_height = (this.options.widget_margins[1] * 2) + this.options.widget_base_dimensions[1];
-
-      var serializedGrid = this.serialize();
-      this.$widgets.each($.proxy(function(i, widget) {
-        var $widget = $(widget);
-        var data = serializedGrid[i];
-        this.resize_widget($widget, data.sizex, data.sizey);
-      }, this));
-
-      this.generate_grid_and_stylesheet();
-      this.get_widgets_from_DOM();
-      this.set_dom_grid_height();
-      return false;
-    }
-  };
-  $.extend($.Gridster, extensions);
-})(jQuery);

@@ -232,13 +232,13 @@ function db_view_create_callback(data){
             //ifepm.dashboard.init(current_dashboard_id)
         }
     }*/
-    if(data){
+    if(data.result){
        // $("#dashboard-add-page").css("display","none");
         DASHBOARD.add.close();
         MessageBox("Create dashboard item success","top","success");
         //close_dash();
-        if(current_dashboard_id == data.dashboard_id){
-            ifepm.dashboard.on_view_added(data);
+        if(current_dashboard_id == data.content.dashboard_id){
+            ifepm.dashboard.on_view_added(data.content);
         }
     }
     else{
@@ -351,10 +351,18 @@ function init_date_picker(){
 //grid view
 function init_grid(){
     var option = {};
-    option.width = $("div.gridster").width();
-    option.height = $(document).height()-$("header").height()-$("#left-content-title").height()-1;
-    option.max_col = 4;
-    option.max_row = 2;
+    option.normal = {};
+    option.normal.width = $("div#dash-normalsize").width();
+    option.normal.height = $(document).height()-$("header").height()-$("#left-content-title").height()-1;
+    option.normal.max_col = 4;
+    option.normal.max_row = 2;
+
+    option.full = {};
+    option.full.width = $("div#dashboard-content-full").width();
+    option.full.height = $("div#dashboard-content-full").height();
+    option.full.max_col = 4;
+    option.full.max_row = 2;
+
     ifepm.dashboard_widget.init(option);
 }
 
@@ -371,33 +379,18 @@ function init_component(){
     init_grid();
 }
 
-//save all the pos and size after move
-function on_dragstop(event,ui){
-    ifepm.dashboard_widget.drag_stop();
-};
-
 /*
 * @function on_full_size
 * */
 function on_full_size(){
-    var option = {};
-    option.width = $("div .dashboard-content").width();
-    option.height = $("div .dashboard-content").height();
-    option.max_col = 4;
-    option.max_row = 3;
-    ifepm.dashboard_widget.resize(option);
-    select_dashboard(current_dashboard_id);
+    ifepm.dashboard_widget.full_size(true);
+    ifepm.dashboard.full_size(true);
 };
 
 /*
-* 
-* @function on_restore_size()
+* @function on_restore_size
 * */
-function on_restore_screen(){
-    var option = {};
-    option.width = $("div.gridster").width();
-    option.height = $(document).height()-$("header").height()-$("#left-content-title").height()-1;
-    option.max_col = 4;
-    option.max_row = 2;
-    ifepm.dashboard_widget.resize(option);
+function on_restore_size(){
+    ifepm.dashboard_widget.full_size(false);
+    ifepm.dashboard.full_size(false);
 }
