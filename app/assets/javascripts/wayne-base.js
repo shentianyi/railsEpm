@@ -172,7 +172,11 @@ function dashboard_show_loading(out_id){
     $("#"+out_id).prepend(
         $("<div />").addClass("dashboard-show-loading")
             .append($("<i />").addClass("icon-spinner icon-spin icon-2x"))
-    )
+    );
+    if(arguments.length>1){
+        var top=arguments[1],right=arguments[2],bottom=arguments[3],left=arguments[4];
+        $("#"+out_id).find(".dashboard-show-loading").css("top",top).css("right",right).css("bottom",bottom).css("left",left);
+    }
 }
 function dashboard_remove_loading(out_id){
     $("#"+out_id).find(".dashboard-show-loading").remove();

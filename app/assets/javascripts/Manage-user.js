@@ -336,12 +336,17 @@ MANAGE.user.assign.init = function() {
      });
      $("body").on("click", "#assign-kpi-list>li>h3", function() {
           var id = $(this).attr("kpi_id"), h3 = $(this).text(), p = $(this).next().text(), validate = true;
-          $("#assign-kpi-inner>.left>li").each(function() {
-               if($(this).attr("kpi_id") == id) {
-                    validate = false;
-                    return false
-               }
-          });
+          if($("#assign-kpi-inner>.left").children().length>0){
+              $("#assign-kpi-inner>.left>li").each(function() {
+                  if($(this).attr("kpi_id") == id) {
+                      validate = false;
+                      return false
+                  }
+              });
+          }
+          else{
+              return;
+          }
           if(validate) {
                var user_id = $("#assign-kpi-user :selected").attr("value");
                $.ajax({
@@ -390,7 +395,8 @@ MANAGE.user.assign.init = function() {
 
 
 
-          } else {
+          }
+          else {
                MessageBox("Same KPI has already been assigned", "top", "warning");
           }
      });

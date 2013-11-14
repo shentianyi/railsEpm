@@ -71,6 +71,12 @@ ifepm.dashboard.form_graph = function(datas,id){
     var chart = null;
     var data,series_id,option;
 
+    if(datas.length < 1){
+        dashboard_remove_loading(outer);
+        ifepm.dashboard.on_finish_load();
+        return;
+    }
+
     for(var i = 0;i<datas.length;++i){
         data = [];
 //      id改掉了
@@ -216,7 +222,7 @@ ifepm.dashboard.getInteral = function(interval){
             intvl = hour * 24;
             break;
         default :
-            intvl = hour;
+            intvl = min;
             break;
     }
     
@@ -292,7 +298,7 @@ ifepm.dashboard.load_graph=function(id){
         {
           before_send: function(){},
           url:ifepm.config.get_item_data_url.url,
-          data:{"id":id},
+          data:{"id":id,"last_update":current_graph.last_update},
           dataType:ifepm.config.get_item_data_url.dataType,
           crossDomain:ifepm.config.get_item_data_url.crossDomain,
           success: function(data){

@@ -5,15 +5,15 @@
           </div>
           <div class="pull-left analytics-condition-choose">
                <div class="index-condition-group">
-                    <select data-placeholder="<%= t 'analytics.kpi_category'%> *" style="width:120px;" class="chosen-select"   title="analy-entity-select" id="chart-group">
+                    <select data-placeholder="<%= t 'analytics.kpi_category'%> *" style="width:130px;" class="chosen-select"   title="analy-entity-select" id="chart-group">
                          <%@categories.each_with_index do |catetory,i|%>
                          <option value="<%= catetory.id%>"><%= catetory.name%></option>
                          <%end %>
                     </select>
-                    <select data-placeholder="<%= t 'analytics.kpi'%> *" style="width:150px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
+                    <select data-placeholder="<%= t 'analytics.kpi'%> *" style="width:130px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
                          <option value=""></option>
                     </select>
-                    <select data-placeholder="<%= t 'analytics.view'%> *" style="width:150px;" class="chosen-select" title="analy-view-select"  id="chart-view">
+                    <select data-placeholder="<%= t 'analytics.view'%> *" style="width:130px;" class="chosen-select" title="analy-view-select"  id="chart-view">
                          <%@entity_groups.each_with_index do |entity_group,i|%>
                          <option value="<%= entity_group.id%>" ><%= entity_group.name%></option>
                          <%end %>

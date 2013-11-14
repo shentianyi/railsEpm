@@ -4,7 +4,7 @@ class DashboardCondition < ActiveRecord::Base
   attr_accessible :dashboard_item_id,:entity_group,:kpi_id,:calculate_type,:time_string,:count
 
   validates_with TimeStringValidator
-  validates :dashboard_item_id,:presence => true
+  #validates :dashboard_item_id,:presence => true
   validates :entity_group,:presence => true
   validates :kpi_id,:presence => true
   validates :calculate_type,:presence => true
@@ -14,7 +14,6 @@ class DashboardCondition < ActiveRecord::Base
   # return the array of conditions
   #
   def self.get_item_formatted_data(id)
-
     datas = []
     conditions = DashboardCondition.where('dashboard_item_id=?',id)
 
@@ -29,6 +28,7 @@ class DashboardCondition < ActiveRecord::Base
             time_span[:start].iso8601.to_s,
             time_span[:end].iso8601.to_s,
             condition.calculate_type=='AVERAGE')
+
         if data
           data[:result]=true
 

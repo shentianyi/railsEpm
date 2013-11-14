@@ -46,7 +46,7 @@ ifepm.dashboard_widget.init = function(option){
     ifepm.dashboard_widget.widget_config.height =
         ifepm.dashboard_widget.widget_config.height < ifepm.dashboard_widget.widget_config.min_height ? ifepm.dashboard_widget.widget_config.min_height:ifepm.dashboard_widget.widget_config.height;
         */
-        console.log(ifepm.dashboard_widget.widget_config);
+    console.log(ifepm.dashboard_widget.widget_config);
     gridster = $(".gridster ul").gridster({
         widget_margins: [10, 10],
         widget_base_dimensions: [ifepm.dashboard_widget.widget_config.width, ifepm.dashboard_widget.widget_config.height],
@@ -178,10 +178,12 @@ ifepm.dashboard_widget.windowresize = function(option){
 * @params option
 * */
 ifepm.dashboard_widget.resize = function(option){
-    //ifepm.dashboard_widget.widget_config.max_col = option.max_col;
-    //ifepm.dashboard_widget.widget_config.max_row = option.max_row;
+    console.log(option)
+    ifepm.dashboard_widget.widget_config.max_col = option.max_col;
+    ifepm.dashboard_widget.widget_config.max_row = option.max_row;
     ifepm.dashboard_widget.widget_config.width = option.width/ifepm.dashboard_widget.widget_config.max_col - 20;
-    //ifepm.dashboard_widget.widget_config.height = (option.height - 120)/option.max_row - 30;
+    ifepm.dashboard_widget.widget_config.height = (option.height - 120)/option.max_row - 30;
+    console.log(ifepm.dashboard_widget.widget_config);
     var options = {widget_margins:[15,15],widget_base_dimensions:[ifepm.dashboard_widget.widget_config.width,ifepm.dashboard_widget.widget_config.height]};    
     gridster.resize_widget_dimensions(options);
 };
@@ -193,6 +195,7 @@ ifepm.dashboard_widget.resize = function(option){
 * **resize base_dimensions for screen size changed
 */
 (function($) {
+    /*
     $.Gridster.resize_widget_dimensions = function(options) {
         if (options.widget_margins) {
             this.options.widget_margins = options.widget_margins;
@@ -217,4 +220,32 @@ ifepm.dashboard_widget.resize = function(option){
 
         return false;
     };
+    */
+    var extensions = {
+    resize_widget_dimensions: function(options) {
+      if (options.widget_margins) {
+        this.options.widget_margins = options.widget_margins;
+      }
+
+      if (options.widget_base_dimensions) {
+        this.options.widget_base_dimensions = options.widget_base_dimensions;
+      }
+
+      this.min_widget_width = (this.options.widget_margins[0] * 2) + this.options.widget_base_dimensions[0];
+      this.min_widget_height = (this.options.widget_margins[1] * 2) + this.options.widget_base_dimensions[1];
+
+      var serializedGrid = this.serialize();
+      this.$widgets.each($.proxy(function(i, widget) {
+        var $widget = $(widget);
+        var data = serializedGrid[i];
+        this.resize_widget($widget, data.sizex, data.sizey);
+      }, this));
+
+      this.generate_grid_and_stylesheet();
+      this.get_widgets_from_DOM();
+      this.set_dom_grid_height();
+      return false;
+    }
+  };
+  $.extend($.Gridster, extensions);
 })(jQuery);

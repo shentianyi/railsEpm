@@ -21,27 +21,17 @@ DASHBOARD.init=function(){
         db_view_delete(id);
         //$("#dashBoard-show").find("#"+id).remove();
     });
-    $("body").on("click","#dashboard-full-size",function(){
-        $("#content-right-nav").css("display","none");
 
-        $("#left-content-title").css("display","block");
-        $("#dashboard-content").css("display","block").css("position","relative").css("z-index",99).css("background-color","black");
-        $(".ggttyyhh").css("top","10px");
+    $("body").on("click","#dashboard-full-size",function(){
+        $("#dashboard-content-full").css("display","block");
         //on_full_size();
     });
     $("body").on("keyup",function(event){
        var e=adapt_event(event).event;
-       if(e.keyCode==27 && $("#content-left-main").css("display")=="table-cell"){
-           $("#content-right-nav").css("display","table-cell");
-           if($("#content-right-nav-group li").length>0){
-               $("#dashboard-content").css("position","static").css("z-index",0).css("background-color","white");
-           }
-           else{
-               $("#left-content-title").css("display","none");
-               $("#dashboard-content").css("display","none").css("position","static").css("z-index",0).css("background-color","white");
-           }
-           $(".gridster").css("top","120px");
+       if(e.keyCode==27 ){
+           $("#dashboard-content-full").css("display","none");
            //on_restore_screen();
+
        }
     });
 }

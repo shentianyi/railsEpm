@@ -19,34 +19,13 @@ class DashboardItemsController < ApplicationController
   def create
     @new_item = DashboardItem.new(params[:dashboard_item])
     msg = new_message
-    if @new_item && @new_item.save
-      msg[:result]=true
-      #
-      # add condition to store serials
-      #
-      @conditions = params[:conditions]
-      id = @new_item.id
-      @conditions.each{|condition|
-        @new_condition = DashboardCondition.new(condition[1])
-        if @new_condition
-          @new_condition.dashboard_item_id = id 
-        else
-          msg[:resule]=false
-        end
-        
-        if @new_condition.save
-
-        else
-          msg[:result]=false
-        end
-      }
-
-    else
-      msg[:result]=false
-      if @new_item
-        msg[:errors]= @new_item.errors.full_messages
-      end
-    end
+    @conditions = params[:conditions]
+    @conditions.each{|condition|
+    @new_condition = DashboardCondition.new(condition[1])
+    @new_item.dashboard_conditions<<@new_condition
+    }
+    msg[:result]=@new_item.save
+     
     respond_to do |t|
       t.json {render :json=> @new_item }
       t.js {render :js=> jsonp_str(msg)}
@@ -91,7 +70,9 @@ class DashboardItemsController < ApplicationController
     datas = DashboardCondition::get_item_formatted_data(params[:id])
 
     @item = DashboardItem.find(params[:id])
-    @item.update_attribute("last_update",params[:last_update])
+    if @item
+      @item.update_attribute("last_update",params[:last_update])
+    end
 
     respond_to do |t|
       t.json {render :json=>datas.to_json}
