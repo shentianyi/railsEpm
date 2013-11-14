@@ -381,10 +381,10 @@ function on_dragstop(event,ui){
 * */
 function on_full_size(){
     var option = {};
-    option.width = $("div .gridster").width();
-    //option.height = 0;
-    //option.max_col = 4;
-    //option.max_row = 3;
+    option.width = $("div .dashboard-content").width();
+    option.height = $("div .dashboard-content").height();
+    option.max_col = 4;
+    option.max_row = 3;
     ifepm.dashboard_widget.resize(option);
     select_dashboard(current_dashboard_id);
 };
