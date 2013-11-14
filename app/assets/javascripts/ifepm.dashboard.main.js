@@ -58,15 +58,30 @@ ifepm.dashboard.graphs=ifepm.dashboard.graphs || {};
 
 ifepm.dashboard.graph_sequence =[];
 
-ifepm.dashboard.set_last_update_time = function(id,lastupdate_time){
+ifepm.dashboard.set_last_update_time = function(item_id,lastupdate_time){
+    var id = item_id;
+    if(isfullsize){
+        id = "full_"+item_id;
+    }
     var $p = $("li#"+id+" .update-time").text(lastupdate_time);
 }
 
 var isformchart = false;
 
+/*
+* @function form_graph
+* form highchart
+* */
 ifepm.dashboard.form_graph = function(datas,id){
-    var container = ifepm.dashboard.make_item_container_id(id);
-    var outer=ifepm.dashboard.make_item_outer_id(id);
+    var container,outer;
+    if(isfullsize){
+        container = ifepm.dashboard.make_item_container_id_full(id);
+        outer=ifepm.dashboard.make_item_outer_id_full(id);
+    }
+    else{
+        container = ifepm.dashboard.make_item_container_id(id);
+        outer=ifepm.dashboard.make_item_outer_id(id);
+    }
     var type = ifepm.dashboard.graphs[id].chart_type;
     var chart = null;
     var data,series_id,option;
@@ -150,6 +165,10 @@ ifepm.dashboard.setTimer = function(graph){
     interval = setInterval(reload(graph.id),intv);
     intervals.push(interval);
 }
+/*
+* @function reload
+* reload dashboard item data
+* */
 function reload(id){
     return function(){
         if(!ifepm.dashboard.graphs[id]){
@@ -230,38 +249,19 @@ ifepm.dashboard.getInteral = function(interval){
 }
 
 /*
-* @function reloadGraph
-* @param id id of the dashboard item
-* */
-ifepm.dashboard.reload_graph = function(id){
-    if(!ifepm.dashboard.graphs[id]){
-        return;
-    }
-    var current_graph = ifepm.dashboard.graphs[id];
-    $.ajax(
-        {
-            before_send: function(){},
-            url:ifepm.config.get_item_data_url.url,
-            data:{"id":id},
-            dataType:ifepm.config.get_item_data_url.dataType,
-            crossDomain:ifepm.config.get_item_data_url.crossDomain,
-            success: function(data){
-                if(data){
-                    ifepm.dashboard.update_graph(data,id);
-                }
-            }
-        }
-    );
-}
-
-/*
 * @function update_graph
 * reload data and update series of high_charts
 * @param data
 * @param id
 * */
  ifepm.dashboard.update_graph = function(datas,id){
-    var container = ifepm.dashboard.make_item_container_id(id);
+     var container;
+     if(isfullsize){
+         container = ifepm.dashboard.make_item_container_id_full(id);
+     } else
+     {
+         container = ifepm.dashboard.make_item_container_id(id);
+     }
     var type = ifepm.dashboard.graphs[id].chart_type;
     var chart = $('#'+container).highcharts();
     if(chart){
@@ -285,6 +285,10 @@ ifepm.dashboard.reload_graph = function(id){
     }
 }
 
+/*
+* @function load_graoh
+* load dashboard item data
+* */
 ifepm.dashboard.load_graph=function(id){
     if (!ifepm.dashboard.graphs[id])
     {
@@ -317,6 +321,12 @@ ifepm.dashboard.make_item_container_id=function(item_id){
 ifepm.dashboard.make_item_outer_id=function(item_id){
     return "container_"+item_id+"_outer";
 };
+ifepm.dashboard.make_item_container_id_full = function(item_id){
+    return "container_full_"+item_id;
+}
+ifepm.dashboard.make_item_outer_id_full = function(item_id){
+    return "container_full_"+item_id+"_outer";
+}
 
 /*
 * @class 代表一个图标的搜索条件
@@ -393,11 +403,22 @@ function Graph(){
 
     this.placeholder = ifepm.template.view_placeholder;
     this.container=  function(graph_item){
+        var id,item_container_id;
+        if(isfullsize){
+            id = "full_"+graph_item.id;
+            item_container_id = ifepm.dashboard.make_item_container_id_full(graph_item.id)
+        }
+        else{
+            id = graph_item.id;
+            item_container_id = ifepm.dashboard.make_item_container_id(graph_item.id)
+        }
+
         return ifepm.template.view
             .replace(/custom_handler/g,ifepm.config.remove_view_function)
+            .replace(/!item_id!/g,id)
             .replace(/!id!/g,graph_item.id)
             .replace(/!title!/g,graph_item.title)
-            .replace(/!item_container_id!/g,ifepm.dashboard.make_item_container_id(graph_item.id))
+            .replace(/!item_container_id!/g,item_container_id)
             .replace(/!attr!/g,ifepm.config.graph_indicator)
             .replace(/!last_update!/g,graph_item.last_update)
             //.replace(/!name!/g,graph_item.name)
@@ -410,6 +431,9 @@ function Graph(){
 }
 
 //when user sorts the dashboard layout, the sequence should be updated in the server side
+/*
+* @deprecated
+* */
 ifepm.dashboard.update_item_sequence= function(container_selector){
 
     ifepm.dashboard.graph_sequence = [];
@@ -430,6 +454,7 @@ ifepm.dashboard.update_item_sequence= function(container_selector){
 var current_index = 0;
 /*
 * @function on_finish_load
+* called after the previous dashboard item finish loading
 * */
 ifepm.dashboard.on_finish_load = function(){
     var container_selector=ifepm.config.container_selector;
@@ -480,7 +505,10 @@ ifepm.dashboard.on_finish_load = function(){
     ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
 }
 
-//append a new dashboard item to the main dashboard container
+/*
+* @function create_dashboard
+* append dashboard item to the container_selector
+* */
 ifepm.dashboard.create_dashboard=function(){
     var container_selector=ifepm.config.container_selector;
     ifepm.dashboard_widget.remove_all_widgets();
@@ -527,6 +555,7 @@ ifepm.dashboard.create_dashboard=function(){
             options.push(opt);
             ifepm.dashboard.save_grid_pos(options,{success:function(){}});
         }
+        ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
         /*
         for(index in ifepm.dashboard.graph_sequence){
                     var graph_id = ifepm.dashboard.graph_sequence[index];
@@ -589,6 +618,10 @@ ifepm.dashboard.create_dashboard=function(){
     //ifepm.dashboard_widget.init();
 };
 
+/*
+* @function init
+* init graph array after select a dashboard group
+* */
 ifepm.dashboard.init=function(id){
     ifepm.dashboard.graphs = {};
     ifepm.dashboard.graph_sequence = [];
@@ -633,6 +666,10 @@ ifepm.dashboard.init=function(id){
     );
 };
 
+/*
+* @function on_view_added
+* called after a dashboard item added successfully
+* */
 ifepm.dashboard.on_view_added = function(data){
     var graph_item = new Graph();
     graph_item.id = data.id;
@@ -683,6 +720,10 @@ ifepm.dashboard.on_view_added = function(data){
     ifepm.dashboard.save_grid_pos(options,{success:function(){}});
 }
 
+/*
+* @function on_drag_stop
+* called after drag widget stop
+* */
 ifepm.dashboard.on_drag_stop  = function(){
     //get all the new position
     var result = {};
@@ -712,6 +753,10 @@ ifepm.dashboard.on_drag_stop  = function(){
     }
 }
 
+/*
+* @function on_view_deleted
+* called after a dashboard_item deleted
+* */
 ifepm.dashboard.on_view_deleted = function(id){
     delete ifepm.dashboard.graphs[id];
 
@@ -720,8 +765,21 @@ ifepm.dashboard.on_view_deleted = function(id){
     if(index >= 0){
         ifepm.dashboard.graph_sequence.splice(index,1);
     }
+
+    var filter = "";
+    if(isfullsize){
+        filter = ifepm.config.container_selector_full+ " #full_"+id;
+    }else
+    {
+        filter = ifepm.config.container_selector + " #"+id;
+    }
+    ifepm.dashboard_widget.remove_w(filter);
 }
 
+/*
+* @function delete
+* delete a dashboard [group]
+* */
 ifepm.dashboard.delete=function(id,options){
     $.ajax({
        url:ifepm.config.dashboard_delete_url.url,
@@ -733,7 +791,10 @@ ifepm.dashboard.delete=function(id,options){
         complete:options.complete
     })
 };
-
+/*
+* @function add
+* add a dashboard [group]
+* */
 ifepm.dashboard.add=function(dashboard,options){
     $.ajax({
         url:ifepm.config.dashboard_create_url.url,
@@ -747,6 +808,10 @@ ifepm.dashboard.add=function(dashboard,options){
     })
 };
 
+/*
+* @function delete_item
+* delete a dashboard item
+* */
 ifepm.dashboard.delete_item=function(item_id,options){
     $.ajax({
         url:ifepm.config.dashboard_item_delete_url.url,
@@ -759,7 +824,10 @@ ifepm.dashboard.delete_item=function(item_id,options){
     })
 };
 
-
+/*
+* @function add_item
+* add a dashboard item
+* */
 ifepm.dashboard.add_item=function(dashboard_item,options){
     $.ajax({
         url:ifepm.config.dashboard_item_create_url.url,
@@ -775,6 +843,10 @@ ifepm.dashboard.add_item=function(dashboard_item,options){
     })
 };
 
+/*
+* @function save_grid_pos
+* save widget position
+* */
 ifepm.dashboard.save_grid_pos=function(sequence,options){
     $.ajax({
         url:ifepm.config.dashboard_item_save_grid_url.url,
@@ -787,15 +859,37 @@ ifepm.dashboard.save_grid_pos=function(sequence,options){
     })
 }
 
+/*
+* @full_size
+* for full size,fill graph data into gridster
+* */
+var isfullsize = false;
 
+ifepm.dashboard.full_size = function(fullsize){
+    isfullsize = fullsize;
 
+    if(isfullsize){
+        var container_selector = ifepm.config.container_selector_full;
+        ifepm.dashboard_widget.remove_all_widgets();
+        $(container_selector).children().remove();
 
+        if (Object.keys(ifepm.dashboard.graphs).length>0){
+            current_index = 0;
+            var graph_id = ifepm.dashboard.graph_sequence[current_index];
 
+            $(container_selector).append(
+                ifepm.dashboard.graphs[graph_id].container(ifepm.dashboard.graphs[graph_id]));
 
+            var option={};
+            option.container_selector=container_selector;
+            option.id= graph_id;
 
-
-
-
-
-
-
+            option.isnew=true;
+            option.chart_type=ifepm.dashboard.graphs[graph_id].chart_type;
+            ifepm.dashboard_widget.add_w(option);
+        }
+        else {
+            $(container_selector).append((new Graph()).placeholder)
+        }
+    }
+}

@@ -24,10 +24,16 @@ class DashboardItemsController < ApplicationController
     @new_condition = DashboardCondition.new(condition[1])
     @new_item.dashboard_conditions<<@new_condition
     }
-    msg[:result]=@new_item.save
+    if @new_item.save
+      msg[:result] = true
+      msg[:content] = @new_item.as_json
+    else
+      msg[:result] =false
+      msg[:errors] =@new_item.errors.full_messages
+    end
      
     respond_to do |t|
-      t.json {render :json=> @new_item }
+      t.json {render :json=> msg }
       t.js {render :js=> jsonp_str(msg)}
     end
   end
