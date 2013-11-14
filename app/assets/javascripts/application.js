@@ -13,7 +13,6 @@
 //=require jquery-1.8.2.min
 //=require jquery.gridster
 //=require jquery.gridster.with-extras
-//=require jquery.gridster.extras
 //=require jquery_ujs
 //=require jquery.tipsy
 //=require jquery.sparkline.min
