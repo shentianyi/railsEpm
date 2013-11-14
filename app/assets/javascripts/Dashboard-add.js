@@ -403,7 +403,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 
 
 
-
+       dashboard_show_loading("dashboard-add-inner","40px","0px","0px","200px");
        $.post('/kpi_entries/analyse',{
            kpi : kpi,
            average:method=="0",
@@ -412,6 +412,7 @@ DASHBOARD.add.prepare_form_chart=function() {
            endTime : standardParse(end_time).date.toISOString(),
            interval:interval
        },function(msg){
+           dashboard_remove_loading("dashboard-add-inner");
            if(msg.result){
                var option={
                    kpi:$("#chart-kpi :selected").text(),
@@ -552,25 +553,6 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
 //                    {y: 0,low:0,high:32, target: 10, unit: "$"},
 //                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
-//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
-//                    {y: 3,low:2,high:20,  target: 10, unit: "$"},
-//                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//                    {y: 0,low:0,high:32, target: 10, unit: "$"},
-//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
-//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
-//                    {y: 3,low:2,high:20,  target: 10, unit: "$"},
-//                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//                    {y: 0,low:0,high:32, target: 10, unit: "$"},
-//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
-//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
-//                    {y: 3,low:2,high:20,  target: 10, unit: "$"},
-//                    {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//                    {y: 0,low:0,high:32, target: 10, unit: "$"},
-//                    {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//                    {y: 7,low:1,high:43,  target: 10, unit: "$"},
 //                    {y: 7,low:1,high:43,  target: 10, unit: "$"}
 //                ];
 //                addSeriesOption[interval] = [
