@@ -145,16 +145,16 @@ var high_chart = {
                 format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
             },
             colors:[
-                'rgba(151,203,228,1)',
-                'rgba(219,171,197,1)',
-                'rgba(123,226,203,1)',
-                'rgba(225,115,104,1)',
-                'rgba(106,175,207,1)',
-                'rgba(224,210,90,1)',
-                'rgba(149,165,166,1)',
-                'rgba(103,116,210,1)',
-                'rgba(148,205,123,1)',
-                'rgba(53,200,209,1)'
+                '#97cbe4',
+                '#f99c92',
+                '#81dfcd',
+                '#ffdb6d',
+                '#82d9e7',
+                '#dabeea',
+                '#6485a7',
+                '#f9b360',
+                '#94cd7b',
+                '#69b0bd'
             ]
         },
         scatter: {
@@ -228,20 +228,20 @@ function render_to(option) {
             d.setDate(d.getDate() + 4 - (d.getDay() || 7));
             return d.getFullYear();
         }
-    }
+    };
 }
 
 var series_colors=[
-    'rgba(151,203,228,1)',
-    'rgba(219,171,197,1)',
-    'rgba(123,226,203,1)',
-    'rgba(225,115,104,1)',
-    'rgba(106,175,207,1)',
-    'rgba(224,210,90,1)',
-    'rgba(149,165,166,1)',
-    'rgba(103,116,210,1)',
-    'rgba(148,205,123,1)',
-    'rgba(53,200,209,1)'
+    '#97cbe4',
+    '#f99c92',
+    '#81dfcd',
+    '#ffdb6d',
+    '#82d9e7',
+    '#dabeea',
+    '#6485a7',
+    '#f9b360',
+    '#94cd7b',
+    '#69b0bd'
 ]
 function add_series(option) {
     var series_name = option.kpi;
