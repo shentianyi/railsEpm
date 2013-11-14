@@ -335,8 +335,8 @@ DASHBOARD.highchart_template_init=function(){
     high_chart.yAxis.gridLineDashStyle="dash";
     high_chart.yAxis.labels.enabled=false;
     high_chart.plotOptions.pie.dataLabels.enabled=true;
-    high_chart.plotOptions.pie.dataLabels.distance=0;
-    high_chart.plotOptions.pie.dataLabels.color="rgba(0,0,0,0.3)";
+    high_chart.plotOptions.pie.dataLabels.distance=-1;
+    high_chart.plotOptions.pie.dataLabels.color="rgba(0,0,0,0.5)";
     high_chart.plotOptions.pie.dataLabels.connectorColor="rgba(0,0,0,0.1)";
     high_chart.plotOptions.pie.dataLabels.style.fontSize="9px";
     high_chart.plotOptions.pie.point={};
@@ -510,7 +510,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 
 
 
-//
+
 //            var option = {
 //                kpi: $("#chart-kpi :selected").text(),
 //                target: "chart-container",
