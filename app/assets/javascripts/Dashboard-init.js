@@ -40,7 +40,7 @@ DASHBOARD.init=function(){
                $("#left-content-title").css("display","none");
                $("#dashboard-content").css("display","none").css("position","static").css("z-index",0).css("background-color","white");
            }
-           $(".gridster").css("top","120px");
+           $(".dash-content").css("top","120px");
            //on_restore_screen();
        }
     });
