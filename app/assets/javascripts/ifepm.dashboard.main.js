@@ -765,6 +765,15 @@ ifepm.dashboard.on_view_deleted = function(id){
     if(index >= 0){
         ifepm.dashboard.graph_sequence.splice(index,1);
     }
+
+    var filter = "";
+    if(isfullsize){
+        filter = ifepm.config.container_selector_full+ " #full_"+id;
+    }else
+    {
+        filter = ifepm.config.container_selector + " #"+id;
+    }
+    ifepm.dashboard_widget.remove_w(filter);
 }
 
 /*

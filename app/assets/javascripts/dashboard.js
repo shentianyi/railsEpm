@@ -242,7 +242,7 @@ function db_view_create_callback(data){
         }
     }
     else{
-        MessageBox("Delete dashboard item failed","top","warning");
+        MessageBox("Create dashboard item failed","top","warning");
     }
 
 }
@@ -256,7 +256,7 @@ function db_view_delete(id){
 function db_view_delete_callback(data){
     MessageBox("Delete dashboard item success","top","success");
     ifepm.dashboard.on_view_deleted(data.id);
-    ifepm.dashboard_widget.remove_w(ifepm.config.container_selector + " "+config.view_id_filter(data.id));
+    //ifepm.dashboard_widget.remove_w(ifepm.config.container_selector + " "+config.view_id_filter(data.id));
     /*
     var to_delete_view = menu_selector.get_first_in_container(
         ifepm.config.container_selector,
