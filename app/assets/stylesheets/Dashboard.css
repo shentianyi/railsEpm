@@ -93,3 +93,14 @@
     top:120px;
     position:relative;
 }
+/*full size dashboard*/
+.dashboard-content-full{
+    position:absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+    z-index:99;
+    background-color:#222;
+    display:none;
+}

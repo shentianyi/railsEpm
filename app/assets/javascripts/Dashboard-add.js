@@ -510,7 +510,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 
 
 
-
+//
 //            var option = {
 //                kpi: $("#chart-kpi :selected").text(),
 //                target: "chart-container",
