@@ -5,7 +5,7 @@ class KpisController < ApplicationController
   before_filter :get_kpis_by_category,:only=>:categoried
   def index
     @active_category_id= params[:id].nil? ? ( @categories.length>0 ? @categories[0].id : nil ) : params[:id].to_i
-    (get_kpis_by_category @active_category_id) if @active_category_id
+    get_kpis_by_category(@active_category_id) if @active_category_id
     # @units=KpiUnit.all
     # @frequencies=KpiFrequency.all
     # @directions=KpiDirection.all
