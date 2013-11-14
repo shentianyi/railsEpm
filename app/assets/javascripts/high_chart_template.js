@@ -228,7 +228,7 @@ function render_to(option) {
             d.setDate(d.getDate() + 4 - (d.getDay() || 7));
             return d.getFullYear();
         }
-    }
+    };
 }
 
 var series_colors=[
