@@ -102,9 +102,9 @@ DASHBOARD.add.init=function(){
     $("#add-dashboard-show").on("click",function(){
        $("#dashboard-add-wrap").css("display","block");
        $("#dashboard-group-name+div").css("width","140px");
-       $("#chart-group+div").css("width","120px");
-       $("#chart-kpi+div").css("width","120px");
-       $("#chart-view+div").css("width","120px");
+       $("#chart-group+div").css("width","130px");
+       $("#chart-kpi+div").css("width","130px");
+       $("#chart-view+div").css("width","130px");
        db_chartSeries = {
             count: 0,
             id_count:0,
@@ -335,7 +335,7 @@ DASHBOARD.highchart_template_init=function(){
     high_chart.yAxis.gridLineDashStyle="dash";
     high_chart.yAxis.labels.enabled=false;
     high_chart.plotOptions.pie.dataLabels.enabled=true;
-    high_chart.plotOptions.pie.dataLabels.distance=10;
+    high_chart.plotOptions.pie.dataLabels.distance=-10;
     high_chart.plotOptions.pie.dataLabels.color="rgba(0,0,0,0.6)";
     high_chart.plotOptions.pie.dataLabels.connectorColor="rgba(0,0,0,0.1)";
     high_chart.plotOptions.pie.dataLabels.style.fontSize="9px";

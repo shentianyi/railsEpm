@@ -27,6 +27,8 @@
 }
 .index-condition-group:first-of-type{
     width:280px;
+    height:66px;
+    position:relative;
 }
 .index-condition-group:nth-of-type(2) {
     width: 260px;
@@ -66,16 +68,21 @@
 }
 
 div[title='analy-entity-select'] {
-    float: left;
+    position:absolute;
+    left:0px;
+    top:0px;
 }
 
 div[title='analy-kpi-select'] {
-    float: right;
+    position:absolute;
+    left:0px;
+    bottom:0px;
 }
 
 div[title='analy-view-select'] {
-    float: right;
-    margin-top: 8px;
+    position:absolute;
+    top:18px;
+    right:0px;
 }
 
 .index-date-extra-info {
