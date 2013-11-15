@@ -14,8 +14,9 @@ function init() {
 
 function create_highstock() {
      bar_fix_from = Date.parse(from_date.toISOString());
-     bar_fix_to = (from_date.addHours(length) <= to_date) ? Date.parse(from_date.addHours(length).toISOString()) : Date.parse(to_date.toISOString());
-     l(bar_fix_to);
+     bar_fix_to = (from_date.addHours(length) <= to_date) ?
+         Date.parse(from_date.addHours(length).toISOString()) : Date.parse(to_date.toISOString());
+
      var callback = (from_date.addHours(length) < to_date) ? add_data : null;
      init_data(Date.parse(from_date.toISOString()), bar_fix_to, init_highstock, callback);
 }
@@ -75,7 +76,7 @@ function init_highstock(data, callback) {
 function add_data() {
      from_date = from_date.addHours(length);
      var next_date = (from_date.addHours(length) > to_date) ? to_date : from_date.addHours(length);
-     $.getJSON('http://localhost:3000/api/kpi_entries/test_data?from=' + Date.parse(from_date.toISOString()) + '&to=' + Date.parse(next_date.toISOString()) + '&callback=?', function(data) {
+     $.getJSON('http://192.168.0.138:3000/api/kpi_entries/test_data?from=' + Date.parse(from_date.toISOString()) + '&to=' + Date.parse(next_date.toISOString()) + '&callback=?', function(data) {
           if(data) {
                // for(var i = 0; i < data.length; i++) {
                // chart.series[0].addPoint(data[i], false, false);
@@ -97,7 +98,7 @@ function add_data() {
 
 var init_data = function(from, to, callback) {
      var cb = arguments[3];
-     $.getJSON('http://localhost:3000/api/kpi_entries/test_data?from=' + from + '&to=' + to + '&callback=?', function(data) {
+     $.getJSON('http://192.168.0.138:3000/api/kpi_entries/test_data?from=' + from + '&to=' + to + '&callback=?', function(data) {
           if(data) {
                callback(data, cb);
           }

@@ -8,6 +8,9 @@ ANALYTICS.form_chart=function(option){
             marginTop: 30,
             animation: {
                 duration: 800
+            },
+            events : {
+
             }
         },
         title: {
@@ -19,9 +22,17 @@ ANALYTICS.form_chart=function(option){
         rangeSelector:{
             enabled:false
         },
+        scrollbar : {
+            liveRedraw : false
+        },
+        navigator : {
+            enabled : true,
+            series : {
+                id : 'navigator'
+            }
+        },
         tooltip:{
 //            formatter: function() {
-//                console.log(this)
 //                    if(this.series.type=="column"){
 //                        return '<b>'+this.point.name+'</b>'
 //                            +'<br />Value: '+this.y
@@ -32,7 +43,6 @@ ANALYTICS.form_chart=function(option){
 //                            +'<br />Value: '+this.y
 //                            +"<br />Target Range: "+this.point.low+"-"+this.point.high
 //                    }
-
 //            }
         },
         legend: {
@@ -151,14 +161,20 @@ ANALYTICS.form_chart=function(option){
             minRange: 36e5,
             type: 'datetime',
             dateTimeLabelFormats: {
-                millisecond: "quarter " + '%Q' + '<br />' + '%Y',
                 hour: '%H:%M' + "<br />" + '%e/%b',
                 day: '%e' + "<br />" + "%b",
                 week: "Week" + '<br />' + "%W",
                 month: '%b' + '<br />' + '%Y',
                 year: '%Y'
+            },
+            events : {
+                setExtremes : function(e) {
+                    if(e.trigger == 'navigator' || e.trigger=='pan') {
+                        bar_fix_from = e.min;
+                        bar_fix_to = e.max;
+                    }
+                }
             }
-
         },
         yAxis: {
             gridLineColor: '#ddd',
@@ -212,10 +228,6 @@ ANALYTICS.form_chart=function(option){
                 var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1) / 7);
                 return  weekNo;
             },
-            Q: function (timestamp) {
-                var d = new Date(timestamp);
-                return  d.monthToQuarter();
-            },
             YW: function (timestamp) {
                 var d = new Date(timestamp);
                 d.setHours(0, 0, 0);
@@ -223,102 +235,6 @@ ANALYTICS.form_chart=function(option){
                 return d.getFullYear();
             }
         };
-    };
-    function create_environment_for_data() {
-        set_data.apply(this, arguments);
-        var i,j;
-        switch (this.interval) {
-            case "90":
-                high_chart.xAxis.tickPositioner = function () {
-                    var extreme = [];
-                    for( i=0;i<this.chart.series.length-1;i++){
-                        for( j=0;j<this.chart.series[i].processedXData.length;j++){
-                            extreme.push(this.chart.series[i].processedXData[j]);
-                        }
-                    }
-                    extreme.info = {
-                        unitName: "hour",
-                        higherRanks: {}
-                    };
-                    return extreme
-                }
-                break;
-            case "100":
-                high_chart.xAxis.tickPositioner = function () {
-                    var extreme = [];
-                    for( i=0;i<this.chart.series.length-1;i++){
-                        for( j=0;j<this.chart.series[i].processedXData.length;j++){
-                            extreme.push(this.chart.series[i].processedXData[j]);
-                        }
-                    }
-                    extreme.info = {
-                        unitName: "day",
-                        higherRanks: {}
-                    };
-                    return extreme
-                }
-                break;
-            case "200":
-                high_chart.xAxis.tickPositioner = function () {
-                    var extreme = [];
-                    for( i=0;i<this.chart.series.length-1;i++){
-                        for( j=0;j<this.chart.series[i].processedXData.length;j++){
-                            extreme.push(this.chart.series[i].processedXData[j]);
-                        }
-                    }
-                    extreme.info = {
-                        unitName: "week",
-                        higherRanks: {}
-                    };
-                    return extreme
-                }
-                break;
-            case "300":
-                high_chart.xAxis.tickPositioner = function () {
-                    var extreme = [];
-                    for( i=0;i<this.chart.series.length-1;i++){
-                        for( j=0;j<this.chart.series[i].processedXData.length;j++){
-                            extreme.push(this.chart.series[i].processedXData[j]);
-                        }
-                    }
-                    extreme.info = {
-                        unitName: "month",
-                        higherRanks: {}
-                    };
-                    return extreme
-                }
-                break;
-            case "400":
-                high_chart.xAxis.tickPositioner = function () {
-                    var extreme = [];
-                    for( i=0;i<this.chart.series.length-1;i++){
-                        for( j=0;j<this.chart.series[i].processedXData.length;j++){
-                            extreme.push(this.chart.series[i].processedXData[j]);
-                        }
-                    }
-                    extreme.info = {
-                        unitName: "millisecond",
-                        higherRanks: {}
-                    };
-                    return extreme
-                }
-                break;
-            case "500":
-                high_chart.xAxis.tickPositioner = function () {
-                    var extreme = [];
-                    for( i=0;i<this.chart.series.length-1;i++){
-                        for( j=0;j<this.chart.series[i].processedXData.length;j++){
-                            extreme.push(this.chart.series[i].processedXData[j]);
-                        }
-                    }
-                    extreme.info = {
-                        unitName: "year",
-                        higherRanks: {}
-                    };
-                    return extreme
-                }
-                break;
-        }
     };
     function add_series(option) {
         var series_name = option.kpi;
@@ -413,15 +329,60 @@ ANALYTICS.form_chart=function(option){
             this.chart.addSeries(new_series,false);
             this.chart.redraw();
     };
-    if(option.chart_body_close_validate){
-        show_chart_body(option);
-        render_to(option);
-//        create_environment_for_data(option);
-        new Highcharts.StockChart(high_chart);
-    }
-    add_series(option);
-    proper_type_for_chart(option);
+
+    var begin_time_utc=standardParse(option.begin_time).date,
+        end_time_utc=standardParse(option.end_time).date,
+        bar_fix_from,
+        bar_fix_to,
+        length=24,
+        data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
+    bar_fix_from=begin_time_utc;
+    bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,length) <= end_time_utc ?
+                           ANALYTICS.add_observe[option.interval](begin_time_utc,length) : end_time_utc ;
+
+    $.getJSON('http://192.168.0.138:3000/api/kpi_entries/test_data?from=' + Date.parse(bar_fix_from) + '&to=' + Date.parse(bar_fix_to) + '&callback=?', function(data) {
+        if(data) {
+
+            if(option.chart_body_close_validate){
+                show_chart_body(option);
+                render_to(option);
+                new Highcharts.StockChart(high_chart);
+            }
+            add_series(option);
+            proper_type_for_chart(option);
+            if(data_too_long){
+                add_data();
+            }
+        }
+    });
+
+    function add_data() {
+        begin_time_utc = ANALYTICS.add_observe[option.interval](begin_time_utc,length);
+        var next_date =  begin_time_utc > end_time_utc ? end_time_utc :  begin_time_utc;
+        $.getJSON('http://192.168.0.138:3000/api/kpi_entries/test_data?from=' + begin_time_utc + '&to=' + next_date + '&callback=?', function(data) {
+            if(data) {
+
+                for(var i = 0; i < 2; i++) {
+                    var point = chart.series[i].options.data;
+                    point = point.concat(data[i]);
+                    chart.series[i].setData(point, true);
+                    chart.redraw();
+                }
+                l(chart.xAxis.length);
+                chart.xAxis[0].setExtremes(bar_fix_from, bar_fix_to);
+                if(next_date < to_date) {
+                    add_data();
+                }
+            }
+        });
+    };
+
+
 }
+
+
+
+
 ANALYTICS.chartSeries = {
     count: 0,
     id_count:0,
@@ -474,4 +435,29 @@ ANALYTICS.chartSeries = {
 
     }
 };
-
+ANALYTICS.add_observe={
+    "90":function(UTCTime,addTime){
+        var date=UTCTime.setHours(UTCTime.getHours() +  parseInt(addTime));
+        return date;
+    },
+    "100":function(UTCTime,addTime){
+        var date=UTCTime.setDate(UTCTime.getDate() +  parseInt(addTime));
+        return date;
+    },
+    "200":function(UTCTime,addTime){
+        var date=UTCTime.setDate(UTCTime.getDate() + parseInt(addTime)*7);
+        return date;
+    },
+    "300":function(UTCTime,addTime){
+        var date=UTCTime.setMonth(UTCTime.getMonth() +  parseInt(addTime));
+        return date;
+    },
+    "400":function(UTCTime,addTime){
+        var date=UTCTime.setMonth(UTCTime.getMonth() + parseInt(addTime)*3);
+        return date;
+    },
+    "500":function(UTCTime,addTime){
+        var date=UTCTime.setFullYear(UTCTime.getFullYear() +  parseInt(addTime));
+        return date;
+    }
+}
