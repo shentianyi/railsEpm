@@ -1,12 +1,12 @@
 #encoding: utf-8
 module Api
   class KpiEntriesController < ApplicationController
-    before_filter :require_no_user, :only=>:entry
-    skip_before_filter :require_user,:only=>:entry
-    skip_before_filter :require_active_user,:only=>:entry
-    skip_before_filter :find_current_user_tenant,:only=>:entry
-    skip_before_filter :check_tenant_status,:only=>:entry
-    skip_authorize_resource :only=>:entry
+    before_filter :require_no_user, :only=>[:entry,:test_data]
+    skip_before_filter :require_user,:only=>[:entry,:test_data]
+    skip_before_filter :require_active_user,:only=>[:entry,:test_data]
+    skip_before_filter :find_current_user_tenant,:only=>[:entry,:test_data]
+    skip_before_filter :check_tenant_status,:only=>[:entry,:test_data]
+    skip_authorize_resource :only=>[:entry,:test_data]
     # create or update kpi entry
     def entry
       if request.post?
