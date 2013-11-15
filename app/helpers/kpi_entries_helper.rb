@@ -1,9 +1,9 @@
 #encoding: utf-8
 module KpiEntriesHelper
   # create or update kpi entry
-  def self.create_update_kpi_entry params
+  def self.create_update_kpi_entry params,current_ability=nil
     # begin
-    if   kpi=Kpi.find_by_id(params[:kpi_id])
+    if   kpi= (current_ability.nil? ? Kpi.find_by_id(params[:kpi_id]) : Kpi.accessible_by(current_ability).find_by_id(params[:kpi_id]))
       parsed_entry_at=DateTimeHelper.get_utc_time_by_str(params[:entry_at])
       if kpi_entry=get_kpi_entry_for_entry(params[:user_kpi_item_id],parsed_entry_at)
         kpi_entry.update_attributes(:original_value=>params[:value])
