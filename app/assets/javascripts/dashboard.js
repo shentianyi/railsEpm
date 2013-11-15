@@ -93,7 +93,46 @@ var dashboard_list_item_template =
         '</li>';
 
 
+/*
+* @function count_time_range
+* @params start,end,interval
+* */
+function is_datetime_outrange(start,end,interval){
+    var starttime = Date.parse(start);
+    var endtime = Date.parse(end);
+    var count = 0;
+    switch(interval){
+        case "90":
+            count = (endtime - starttime)/(1000*60*60)
+            break;  
+        case "100":
+            count = (endtime - starttime)/(1000*60*60*24)
+            break;
+        case "200":
+            count = (endtime - starttime)/(1000*60*60*24*7)
+            break;
+        case "300":
+            count = (endtime - starttime)/(1000*60*60*24*30)
+            break;
+        case "400":
+            count = (endtime - starttime)/(1000*60*60*24*30*4)
+            break;
+        case "500":
+            count = (endtime - starttime)/(1000*60*60*24*365)
+            break;
+        default:
+            break;
+    }
+    if(count > 150){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 function prepare_to_create_db_view(post){
+    console.log(post);
     var dashboard_item = {};
     dashboard_item.conditions = [];
 

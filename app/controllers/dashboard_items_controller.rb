@@ -45,10 +45,10 @@ class DashboardItemsController < ApplicationController
       end
     else
       msg[:result] = false
-      msg[:errors] = "时间范围太大了！"
+      msg[:errors] = "对不起，时间范围太大了！"
     end
 
-     
+
     respond_to do |t|
       t.json {render :json=> msg }
       t.js {render :js=> jsonp_str(msg)}
