@@ -19,18 +19,35 @@ class DashboardItemsController < ApplicationController
   def create
     @new_item = DashboardItem.new(params[:dashboard_item])
     msg = new_message
+    cansave = true
     @conditions = params[:conditions]
     @conditions.each{|condition|
     @new_condition = DashboardCondition.new(condition[1])
+
+    ##check if time out of range
+    time_span = DashboardItem.time_string_to_time_span @new_condition.time_string
+    count = DashboardCondition.time_range_count(time_span[:start].iso8601.to_s,time_span[:end].iso8601.to_s,@new_item.interval)
+    if count > 150
+      cansave = false
+      break
+    end
+    ##
+
     @new_item.dashboard_conditions<<@new_condition
     }
-    if @new_item.save
-      msg[:result] = true
-      msg[:content] = @new_item.as_json
+    if cansave
+      if @new_item.save
+        msg[:result] = true
+        msg[:content] = @new_item.as_json
+      else
+        msg[:result] =false
+        msg[:errors] =@new_item.errors.full_messages
+      end
     else
-      msg[:result] =false
-      msg[:errors] =@new_item.errors.full_messages
+      msg[:result] = false
+      msg[:errors] = "时间范围太大了！"
     end
+
      
     respond_to do |t|
       t.json {render :json=> msg }

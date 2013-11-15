@@ -15,12 +15,18 @@ class DashboardCondition < ActiveRecord::Base
   #
   def self.get_item_formatted_data(id)
     datas = []
+    dashboard_itme = DashboardItem.find(id)
     conditions = DashboardCondition.where('dashboard_item_id=?',id)
 
     if conditions
       conditions.each { |condition|
 
         time_span = DashboardItem.time_string_to_time_span condition.time_string
+
+        count = time_range_count(time_span[:start].iso8601.to_s,time_span[:end].iso8601.to_s,dashboard_itme.interval)
+        if count > 150
+          return datas
+        end
 
         data = KpiEntryAnalyseHelper::get_kpi_entry_analysis_data(
             condition.kpi_id,
@@ -83,6 +89,22 @@ class DashboardCondition < ActiveRecord::Base
   end
 
   def self.time_range_count(starttime,endtime,interval)
-
+    startt = Time.parse(starttime).to_i
+    endt = Time.parse(endtime).to_i
+    case interval
+      when KpiFrequency::Hourly
+        count = (endt - startt)/(60*60)
+      when KpiFrequency::Daily
+        count = (endt - startt)/(60*60*24)
+      when KpiFrequency::Weekly
+        count = (endt -startt)/(60*60*24*7)
+      when KpiFrequency::Monthly
+        count = (endt - startt)/(60*60*24*30)
+      when KpiFrequency::Quarterly
+        count = (endt - startt)/(60*60*24*30*4)
+      when KpiFrequency::Yearly
+        count = (endt - startt)/(60*60*24*365)
+    end
+  return count
   end
 end
