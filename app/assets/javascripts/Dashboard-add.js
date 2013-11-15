@@ -423,7 +423,6 @@ DASHBOARD.add.prepare_form_chart=function() {
                    interval:interval,
                    count:db_chartSeries.getCount()+1
                }
-
                var addSeriesOption={
                    kpi:$("#chart-kpi :selected").text(),
                    kpi_id:kpi,

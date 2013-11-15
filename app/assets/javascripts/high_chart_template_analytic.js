@@ -261,7 +261,6 @@ ANALYTICS.form_chart=function(option){
             case "200":
                 high_chart.xAxis.tickPositioner = function () {
                     var extreme = [];
-                    console.log(this.chart.series)
                     for( i=0;i<this.chart.series.length-1;i++){
                         for( j=0;j<this.chart.series[i].processedXData.length;j++){
                             extreme.push(this.chart.series[i].processedXData[j]);
@@ -325,7 +324,6 @@ ANALYTICS.form_chart=function(option){
         var series_name = option.kpi;
         var series_id = option.id;
         var chart_container = option.target;
-        var type = option.type;
         var data = deal_data(option);
         var color=option.color?option.color:series_colors[series_id % series_colors.length];
         $("#" + chart_container).highcharts().addSeries({
@@ -415,178 +413,65 @@ ANALYTICS.form_chart=function(option){
             this.chart.addSeries(new_series,false);
             this.chart.redraw();
     };
-    render_to(option);
-    create_environment_for_data(option);
-    new Highcharts.StockChart(high_chart);
+    if(option.chart_body_close_validate){
+        show_chart_body(option);
+        render_to(option);
+//        create_environment_for_data(option);
+        new Highcharts.StockChart(high_chart);
+    }
     add_series(option);
     proper_type_for_chart(option);
 }
+ANALYTICS.chartSeries = {
+    count: 0,
+    id_count:0,
+    id:0,
+    series: [],
+    id_array:[],
+    id_give:function(){
+        if(this.count>this.id_array.length){
+            this.id=this.id_count;
+            this.id_array.push(this.id_count);
+            this.id_count++;
+        }
+        else{
+            var array=this.id_array, i,index;
+            for(i=0;i<array.length;i++){
+                if(array[i]===undefined){
+                    array[i]=i;
+                    index=i;
+                    break
+                }
+            }
+            this.id=index;
+        }
+    },
+    getCount: function () {
+        return this.count
+    },
+    addCount: function () {
+        this.count += 1
+    },
+    minusCount: function () {
+        this.count -= 1
+    },
+    getSeries: function () {
+        return this.series
+    },
+    addSeries: function (series) {
+        if(this.count>this.series.length){
+            this.series.push(series)
+        }
+        else{
+            var series_array=this.series,i;
+            for(i=0;i<series_array.length;i++){
+                if(series_array[i]===undefined){
+                    series_array[i]=series;
+                    break;
+                }
+            }
+        }
 
+    }
+};
 
-
-
-//function limit_pointer_number(){
-//    set_data.apply(this,arguments);
-//    if( this.chart.xAxis[0].tickPositions.length>9 ){
-//        limit_pointer_condition["_"+this.interval].limitAction(this.chart)
-//    }
-//}
-//
-//var limit_pointer_condition={
-//    limit:9,
-//    _90:{
-//        limit:9,
-//        limitAction:function(chart){
-//            chart.xAxis[0].update({
-//                tickPositioner:function(){
-//                    var extreme=deal_extreme(chart);
-//                    extreme.info={
-//                        unitName:"hour",
-//                        higherRanks:{}
-//                    }
-//                    return extreme
-//                }
-//            });
-//        }
-//    },
-//    _100:{
-//        limit:9,
-//        limitAction:function(chart){
-//            chart.xAxis[0].update({
-//                tickPositioner:function(){
-//                    var extreme=deal_extreme(chart);
-//                    extreme.info={
-//                        unitName:"day",
-//                        higherRanks:{}
-//                    }
-//                    return extreme
-//                }
-//            });
-//        }
-//    },
-//    _200:{
-//        limit:9,
-//        limitAction:function(chart){
-//            chart.xAxis[0].update({
-//                tickPositioner:function(){
-//                    var extreme=deal_extreme(chart);
-//                    extreme.info={
-//                        unitName:"week",
-//                        higherRanks:{}
-//                    }
-//                    return extreme
-//                }
-//            });
-//        }
-//    },
-//    _300:{
-//        limit:9,
-//        limitAction:function(chart){
-//            chart.xAxis[0].update({
-//                tickPositioner:function(){
-//                    var extreme=deal_extreme(chart);
-//                    extreme.info={
-//                        unitName:"month",
-//                        higherRanks:{}
-//                    }
-//                    return extreme
-//                }
-//            });
-//        }
-//    },
-//    _400:{
-//        limit:9,
-//        limitAction:function(chart){
-//            chart.xAxis[0].update({
-//                tickPositioner:function(){
-//                    var extreme=deal_extreme(chart);
-//                    extreme.info={
-//                        unitName:"millisecond",
-//                        higherRanks:{}
-//                    }
-//                    return extreme
-//                }
-//            });
-//        }
-//    },
-//    _500:{
-//        limit:9,
-//        limitAction:function(chart){
-//            chart.xAxis[0].update({
-//                tickPositioner:function(){
-//                    var extreme=deal_extreme(chart);
-//                    extreme.info={
-//                        unitName:"year",
-//                        higherRanks:{}
-//                    }
-//                    return extreme
-//                }
-//            });
-//        }
-//    }
-//}
-//function deal_extreme(chart){
-//    var extreme=[]
-//    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
-//        var i= 0,
-//            length=chart.series[i].processedXData.length,
-//            half=Math.floor(length/2),
-//            first_half=Math.floor(length/4),
-//            last_half =Math.floor((length-1+half)/2),
-//            first_half_quarter_first=Math.floor(first_half/2),
-//            first_half_quarter_second=Math.floor((first_half+half)/2),
-//            last_half_quarter_first=Math.floor((half+last_half)/2),
-//            last_half_quarter_second=Math.floor((last_half+length)/2);
-//        extreme.push(chart.series[i].processedXData[0]);
-//        extreme.push(chart.series[i].processedXData[first_half_quarter_first]);
-//        extreme.push(chart.series[i].processedXData[first_half]);
-//        extreme.push(chart.series[i].processedXData[first_half_quarter_second]);
-//        extreme.push(chart.series[i].processedXData[half]);
-//        extreme.push(chart.series[i].processedXData[last_half_quarter_first]);
-//        extreme.push(chart.series[i].processedXData[last_half]);
-//        extreme.push(chart.series[i].processedXData[last_half_quarter_second]);
-//        extreme.push(chart.series[i].processedXData[length-1]);
-//    }
-//    else{
-//        for(var i=0;i<chart.series.length;i++){
-//            var length=chart.series[i].processedXData.length
-//            extreme.push(chart.series[i].processedXData[0]);
-//            extreme.push(chart.series[i].processedXData[length-1]);
-//        }
-//    }
-//    return extreme
-//}
-//
-//var HIGH_CHART=HIGH_CHART || {} ;
-//HIGH_CHART.postPrepare=function(begin_time,interval){
-//    var template=standardParse(begin_time).template;
-//    switch(interval){
-//        case "90":
-//            return new Date(template[0],template[1],template[2],template[3]);
-//            break;
-//        case "100":
-//            return new Date(template[0],template[1],template[2]);
-//            break;
-//        case "200":
-//            if(standardParse(begin_time).date.getDay()==0){
-//                return new Date(template[0],template[1],+template[2]-6);
-//            }
-//            else{
-//                return new Date(template[0],template[1],+template[2]-standardParse(begin_time).date.getDay()+1);
-//            }
-//            break;
-//        case "300":
-//            return new Date(template[0],template[1]);
-//            break;
-//        case "400":
-//            return new Date(template[0],Math.floor(+template[1]/3)*3);
-//            break;
-//        case "500":
-//            return new Date(template[0],0);
-//            break;
-//    }
-//
-//}
-//
-//
-//

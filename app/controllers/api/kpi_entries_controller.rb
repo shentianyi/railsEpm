@@ -37,7 +37,21 @@ module Api
         t.json {render :json=>msg}
         t.js {render :js=>jsonp_str(msg)}
       end
-
     end
+
+    def test_data
+      from_date=Time.at((params[:from].to_i)/1000).utc
+      to_date=Time.at((params[:to].to_i)/1000).utc
+      data=[[],[]]
+      
+      while((next_date=from_date+60*60)<=to_date) do
+        data[0]<<[(from_date.to_f*1000).to_i,Random.rand(100.0).round(2),0,0]
+        data[1]<<[(from_date.to_f*1000).to_i,Random.rand(100.0).round(2),0,0]
+        from_date=next_date
+      end
+      sleep(3);
+      render :json=>jsonp_str(data)
+    end
+
   end
 end
