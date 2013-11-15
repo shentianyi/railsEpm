@@ -355,14 +355,14 @@ function init_grid(){
     option.normal = {};
     option.normal.width = $("div#dash-normalsize").width();
     option.normal.height = $(document).height()-$("header").height()-$("#left-content-title").height()-1;
-    option.normal.max_col = 4;
-    option.normal.max_row = 2;
+    option.normal.max_col = 5;
+    option.normal.max_row = 3;
 
     option.full = {};
     option.full.width = $("div#dashboard-content-full").width();
     option.full.height = $("div#dashboard-content-full").height();
-    option.full.max_col = 4;
-    option.full.max_row = 2;
+    option.full.max_col = 5;
+    option.full.max_row = 3;
 
     ifepm.dashboard_widget.init(option);
 }
