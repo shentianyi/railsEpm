@@ -20,26 +20,20 @@ ANALYTICS.form_chart=function(option){
             enabled:false
         },
         tooltip:{
-            formatter: function() {
-                if(this.series.type!="pie"){
-                    if(this.series.type=="column"){
-                        return '<b>'+this.point.name+'</b>'
-                            +'<br />Value: '+this.y
-                            +"<br />Target Range: "+this.point.target_min+"-"+this.point.high
-                    }
-                    else{
-                        return '<b>'+this.point.name+'</b>'
-                            +'<br />Value: '+this.y
-                            +"<br />Target Range: "+this.point.low+"-"+this.point.high
-                    }
-                }
-                else{
-                    return '<b>'+this.point.name+'</b>'
-                        +'<br />Value: '+this.y
-                        +"<br />Percentage: "+this.percentage.toFixed(1)+"%"
-                }
+//            formatter: function() {
+//                console.log(this)
+//                    if(this.series.type=="column"){
+//                        return '<b>'+this.point.name+'</b>'
+//                            +'<br />Value: '+this.y
+//                            +"<br />Target Range: "+this.point.target_min+"-"+this.point.high
+//                    }
+//                    else{
+//                        return '<b>'+this.point.name+'</b>'
+//                            +'<br />Value: '+this.y
+//                            +"<br />Target Range: "+this.point.low+"-"+this.point.high
+//                    }
 
-            }
+//            }
         },
         legend: {
             enabled: true,
@@ -237,7 +231,7 @@ ANALYTICS.form_chart=function(option){
             case "90":
                 high_chart.xAxis.tickPositioner = function () {
                     var extreme = [];
-                    for( i=0;i<this.chart.series.length;i++){
+                    for( i=0;i<this.chart.series.length-1;i++){
                         for( j=0;j<this.chart.series[i].processedXData.length;j++){
                             extreme.push(this.chart.series[i].processedXData[j]);
                         }
@@ -252,7 +246,7 @@ ANALYTICS.form_chart=function(option){
             case "100":
                 high_chart.xAxis.tickPositioner = function () {
                     var extreme = [];
-                    for( i=0;i<this.chart.series.length;i++){
+                    for( i=0;i<this.chart.series.length-1;i++){
                         for( j=0;j<this.chart.series[i].processedXData.length;j++){
                             extreme.push(this.chart.series[i].processedXData[j]);
                         }
@@ -267,7 +261,8 @@ ANALYTICS.form_chart=function(option){
             case "200":
                 high_chart.xAxis.tickPositioner = function () {
                     var extreme = [];
-                    for( i=0;i<this.chart.series.length;i++){
+                    console.log(this.chart.series)
+                    for( i=0;i<this.chart.series.length-1;i++){
                         for( j=0;j<this.chart.series[i].processedXData.length;j++){
                             extreme.push(this.chart.series[i].processedXData[j]);
                         }
@@ -282,7 +277,7 @@ ANALYTICS.form_chart=function(option){
             case "300":
                 high_chart.xAxis.tickPositioner = function () {
                     var extreme = [];
-                    for( i=0;i<this.chart.series.length;i++){
+                    for( i=0;i<this.chart.series.length-1;i++){
                         for( j=0;j<this.chart.series[i].processedXData.length;j++){
                             extreme.push(this.chart.series[i].processedXData[j]);
                         }
@@ -297,7 +292,7 @@ ANALYTICS.form_chart=function(option){
             case "400":
                 high_chart.xAxis.tickPositioner = function () {
                     var extreme = [];
-                    for( i=0;i<this.chart.series.length;i++){
+                    for( i=0;i<this.chart.series.length-1;i++){
                         for( j=0;j<this.chart.series[i].processedXData.length;j++){
                             extreme.push(this.chart.series[i].processedXData[j]);
                         }
@@ -312,7 +307,7 @@ ANALYTICS.form_chart=function(option){
             case "500":
                 high_chart.xAxis.tickPositioner = function () {
                     var extreme = [];
-                    for( i=0;i<this.chart.series.length;i++){
+                    for( i=0;i<this.chart.series.length-1;i++){
                         for( j=0;j<this.chart.series[i].processedXData.length;j++){
                             extreme.push(this.chart.series[i].processedXData[j]);
                         }
@@ -395,114 +390,6 @@ ANALYTICS.form_chart=function(option){
     };
     function proper_type_for_chart(){
         set_data.apply(this,arguments);
-        if(this.type=="pie"){
-            if(this.chart.get('pie_extra_series')){
-                this.chart.get('pie_extra_series').remove();
-                for(var k=0;k<this.chart.series.length;k++){
-                    this.chart.series[k].update({
-                        showInLegend:true
-                    },false)
-                }
-                this.chart.legend.group.show();
-                this.chart.legend.box.show();
-                this.chart.legend.display = true;
-            }
-            var data=[],dataItem,dataItemValue,dataItemTarget,chart_name,chart_color;
-            if(this.count==1){
-                this.chart.series[0].show();
-                var max_data,index;
-                for(var i=0;i<this.chart.series[0].processedYData.length;i++){
-                    dataItem={};
-                    dataItem.name=this.chart.series[0].data[i].name;
-                    dataItem.y=this.chart.series[0].processedYData[i];
-                    dataItem.high=this.chart.series[0].data[i].high;
-                    dataItem.low=this.chart.series[0].data[i].low;
-                    dataItem.unit=this.chart.series[0].data[i].unit;
-                    if(i==0){
-                        max_data=dataItem.y;
-                        index=0;
-                    }
-                    else{
-                        if(dataItem.y>max_data){
-                            max_data=dataItem.y;
-                            index=i
-                        }
-                    }
-                    data.push(dataItem);
-                }
-                data[index].sliced=true;
-                data[index].selected=true;
-                chart_name=this.chart.series[0].name;
-//            chart_color=this.chart.series[0].color;
-                this.chart.series[0].hide();
-            }
-            else{
-                chart_name=[];
-                var max_data,index;
-                for(var i=0;i<this.count;i++){
-                    this.chart.series[i].show();
-                    dataItem={};
-                    dataItemValue=0;
-                    dataItemTarget=0;
-                    dataItem.name=this.chart.series[i].name+"<br />From:"+this.chart.series[i].data[0].name+"<br />To:"+this.chart.series[i].data[this.chart.series[i].data.length-1].name;
-                    for(var j=0;j<this.chart.series[i].processedYData.length;j++){
-                        dataItemValue+=this.chart.series[i].processedYData[j];
-//                    dataItemTarget+=parseFloat(this.chart.series[i].data[j].target);
-                    }
-                    dataItem.kpi_name=this.chart.series[i].name;
-                    dataItem.y=dataItemValue;
-                    dataItem.seriesId=this.chart.series[i].data[0].id;
-                    chart_name.push(this.chart.series[i].name);
-                    dataItem.average_y=(dataItemValue/this.chart.series[i].processedYData.length).toFixed(2);
-//                dataItem.target=dataItemTarget.toFixed(2);
-//                dataItem.average_target=(dataItemTarget/this.chart.series[i].processedYData.length).toFixed(2);
-                    dataItem.time_from=this.chart.series[i].data[0].name;
-                    dataItem.time_to=this.chart.series[i].data[this.chart.series[i].data.length-1].name;
-                    dataItem.unit=this.chart.series[i].data[0].unit;
-                    dataItem.color= series_colors[dataItem.seriesId % series_colors.length];
-                    if(i==0){
-                        max_data=dataItem.y;
-                        index=0;
-                    }
-                    else{
-                        if(dataItem.y>max_data){
-                            max_data=dataItem.y;
-                            index=i
-                        }
-                    }
-
-                    data.push(dataItem);
-                    data[index].sliced=true;
-                    data[index].selected=true;
-                    this.chart.series[i].hide();
-                };
-            }
-
-            this.chart.addSeries({
-                name:chart_name,
-                id:'pie_extra_series',
-                color:chart_color,
-                data:data,
-                type:"pie"
-            },true);
-            this.chart.redraw();
-            this.chart.legend.group.hide();
-            this.chart.legend.box.hide();
-            this.chart.legend.display = false;
-        }
-
-        else{
-            if(this.chart.get('pie_extra_series')){
-                this.chart.get('pie_extra_series').remove();
-                for(var k=0;k<this.chart.series.length;k++){
-                    this.chart.series[k].update({
-                        showInLegend:true
-                    },false)
-                }
-                this.chart.legend.group.show();
-                this.chart.legend.box.show();
-                this.chart.legend.display = true;
-            }
             var p={
                 name: this.chart.get(this.id).options.name,
                 id: this.chart.get(this.id).options.id,
@@ -527,10 +414,9 @@ ANALYTICS.form_chart=function(option){
             this.chart.get(this.id).remove(false);
             this.chart.addSeries(new_series,false);
             this.chart.redraw();
-        }
     };
     render_to(option);
-//    create_environment_for_data(option);
+    create_environment_for_data(option);
     new Highcharts.StockChart(high_chart);
     add_series(option);
     proper_type_for_chart(option);
