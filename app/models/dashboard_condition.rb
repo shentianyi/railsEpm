@@ -81,4 +81,8 @@ class DashboardCondition < ActiveRecord::Base
 
     return result
   end
+
+  def self.time_range_count(starttime,endtime,interval)
+
+  end
 end

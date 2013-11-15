@@ -285,6 +285,7 @@ function dashboard_delete_callback(data){
           config.db_container_selector,
           config.db_single_item_filter(data.id)) ;
 
+    ifepm.dashboard.on_dashboard_deleted(current_dashboard_id);
       if ( item_obj){
           item_obj.remove();
          current_dashboard_id=null;
@@ -354,14 +355,14 @@ function init_grid(){
     option.normal = {};
     option.normal.width = $("div#dash-normalsize").width();
     option.normal.height = $(document).height()-$("header").height()-$("#left-content-title").height()-1;
-    option.normal.max_col = 4;
-    option.normal.max_row = 2;
+    option.normal.max_col = 5;
+    option.normal.max_row = 3;
 
     option.full = {};
     option.full.width = $("div#dashboard-content-full").width();
     option.full.height = $("div#dashboard-content-full").height();
-    option.full.max_col = 4;
-    option.full.max_row = 2;
+    option.full.max_col = 5;
+    option.full.max_row = 3;
 
     ifepm.dashboard_widget.init(option);
 }
@@ -384,7 +385,7 @@ function init_component(){
 * */
 function on_full_size(){
     ifepm.dashboard_widget.full_size(true);
-    ifepm.dashboard.full_size(true);
+    ifepm.dashboard.full_size({fullsize:true,id:current_dashboard_id});
 };
 
 /*
@@ -392,5 +393,5 @@ function on_full_size(){
 * */
 function on_restore_size(){
     ifepm.dashboard_widget.full_size(false);
-    ifepm.dashboard.full_size(false);
+    ifepm.dashboard.full_size({fullsize:false,id:current_dashboard_id});
 }

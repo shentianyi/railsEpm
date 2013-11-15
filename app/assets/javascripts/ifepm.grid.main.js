@@ -182,9 +182,16 @@ ifepm.dashboard_widget.add_w = function(option){
 /*
 * @function remove_w
 * */
-ifepm.dashboard_widget.remove_w = function(filter){
-    if(current_gridster){
-        current_gridster.remove_widget($(filter));
+ifepm.dashboard_widget.remove_w = function(filter,fullsize){
+    var grid;
+    if(fullsize){
+        grid = gridster_full;
+    }
+    else{
+        grid = gridster;
+    }
+    if(grid){
+        grid.remove_widget($(filter));
         $(filter).remove();
         if(!isfullsize){
             ifepm.dashboard_widget.drag_stop();
@@ -247,8 +254,16 @@ ifepm.dashboard_widget.initsize = function(type){
 * @function remove_all_widgets
 * remove all the grids
 * */
-ifepm.dashboard_widget.remove_all_widgets =function(callback){
-    current_gridster.remove_all_widgets(callback);
+ifepm.dashboard_widget.remove_all_widgets =function(fullsize){
+    var grid;
+    if(fullsize){
+         grid = gridster_full;
+    }
+    else{
+        grid = gridster;
+    }
+
+    grid.remove_all_widgets(fullsize);
 };
 
 /*
@@ -256,5 +271,8 @@ ifepm.dashboard_widget.remove_all_widgets =function(callback){
 * callback after drag stop
 * */
 ifepm.dashboard_widget.drag_stop = function(event,ui){
+    if(isfullsize){
+        return;
+    }
     ifepm.dashboard.on_drag_stop();
 };

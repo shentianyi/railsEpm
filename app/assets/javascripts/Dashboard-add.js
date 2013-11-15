@@ -88,7 +88,7 @@ DASHBOARD.add.close=function(){
     $("#db-add-kpi-list").empty();
     $("#dashboard-group-name").val('').trigger('chosen:updated');
     $("#db-chart-body").css("display","none");
-    $(".index-condition-group input").val("");
+    $(".index-condition-group input:not([type='radio'])").val("");
     $(".index-condition-group select").val('').trigger('chosen:updated');
     $("[name='chartRadios']").eq(0).iCheck("check");
     $(".index-date-extra-info").text("");

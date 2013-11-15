@@ -336,7 +336,7 @@ MANAGE.user.assign.init = function() {
      });
      $("body").on("click", "#assign-kpi-list>li>h3", function() {
           var id = $(this).attr("kpi_id"), h3 = $(this).text(), p = $(this).next().text(), validate = true;
-          if($("#assign-kpi-inner>.left").children().length>0){
+          if($("#assign-kpi-user :selected").text().length>0){
               $("#assign-kpi-inner>.left>li").each(function() {
                   if($(this).attr("kpi_id") == id) {
                       validate = false;
