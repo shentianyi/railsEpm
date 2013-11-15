@@ -296,7 +296,14 @@ ifepm.dashboard.load_graph=function(id){
     }
 
     var current_graph = ifepm.dashboard.graphs[id];
-    var outer=ifepm.dashboard.make_item_outer_id(id);
+    var outer;
+    if(isfullsize){
+        outer=ifepm.dashboard.make_item_outer_id_full(id);
+    }
+    else{
+        outer=ifepm.dashboard.make_item_outer_id(id);
+    }
+
     dashboard_show_loading(outer);
     $.ajax(
         {
