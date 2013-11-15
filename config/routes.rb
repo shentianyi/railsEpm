@@ -80,6 +80,7 @@ IFEpm::Application.routes.draw do
     controller :kpi_entries do
       match 'kpi_entries/entry'=>:entry
       match 'kpi_entries/analyse'=>:analyse
+       match 'kpi_entries/test_data'=>:test_data
     end
     resources :dashboards
     controller :dashboard_items do
