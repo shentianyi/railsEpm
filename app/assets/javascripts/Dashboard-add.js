@@ -399,7 +399,10 @@ DASHBOARD.add.prepare_form_chart=function() {
                 end_post=standardParse(end_time).date.toISOString();
             }
 
-
+        if(is_datetime_outrange(begin_time,end_time,interval)){
+            MessageBox("对不起，时间范围太大了！","top","warning")
+            return;
+        }
 
 
 

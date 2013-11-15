@@ -4,7 +4,7 @@ class KpiEntriesController < ApplicationController
   before_filter :get_ability_category,:only=>[:analyse],:if=>lambda{|c|  request.get?}
   def entry
     if request.post?
-      @kpi_entry=KpiEntriesHelper.create_update_kpi_entry params
+      @kpi_entry=KpiEntriesHelper.create_update_kpi_entry params,current_ability
       render :json=>{:result=>true}
     end
   end
