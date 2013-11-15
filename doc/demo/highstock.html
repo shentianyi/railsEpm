@@ -1,22 +1,46 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-     <head>
-          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-          <title>New Web Project</title>
-          <script type="text/javascript" src="../../app/assets/javascripts/jquery-1.8.2.min.js"></script>
-          <script type="text/javascript" src="highstock.src.js"></script>
-          <script type="text/javascript" src="highstock.init.js"></script>
-     </head>
-     <body>
-          <div id="container" style="height: 500px; min-width: 500px;border: 2px solid grey;"></div>
-          <input type="button" value="init chart"  onclick="init_highstock();"/>
-             <input type="button" value="init chart"  onclick="add_data();"/>
-          <script type="text/javascript">
-               $(function(){
-                    get_data();
-               });
-          </script>
-     </body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>New Web Project</title>
+		<script type="text/javascript" src="../../app/assets/javascripts/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="highstock.src.js"></script>
+		<script type="text/javascript" src="highstock.init.js"></script>
+		<style type="text/css">
+			button {
+				background: #2ae;
+				width: 100px;
+				height: 30px;
+				cursor: pointer;
+			}
+			.choosen {
+				background: orange;
+			}
+			.date-input {
+				width: 200px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<button onclick="create_highstock();">
+				【 GO 】
+			</button>
+		</div>
+		<div>
+			FROM:
+			<input id="from" class="date-input"/>
+			TO:
+			<input id="to"  class="date-input"/>
+		</div>
+		<div id="container" style="height: 500px; min-width: 500px;border: 2px solid grey;"></div>
+		<div id="info">INFO</div>
+		<script type="text/javascript">
+			$(function() {
+				init();
+			});
+		</script>
+	</body>
 </html>
 
