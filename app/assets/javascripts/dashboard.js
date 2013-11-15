@@ -285,6 +285,7 @@ function dashboard_delete_callback(data){
           config.db_container_selector,
           config.db_single_item_filter(data.id)) ;
 
+    ifepm.dashboard.on_dashboard_deleted(current_dashboard_id);
       if ( item_obj){
           item_obj.remove();
          current_dashboard_id=null;
@@ -384,7 +385,7 @@ function init_component(){
 * */
 function on_full_size(){
     ifepm.dashboard_widget.full_size(true);
-    ifepm.dashboard.full_size(true);
+    ifepm.dashboard.full_size({fullsize:true,id:current_dashboard_id});
 };
 
 /*
@@ -392,5 +393,5 @@ function on_full_size(){
 * */
 function on_restore_size(){
     ifepm.dashboard_widget.full_size(false);
-    ifepm.dashboard.full_size(false);
+    ifepm.dashboard.full_size({fullsize:false,id:current_dashboard_id});
 }
