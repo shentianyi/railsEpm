@@ -255,6 +255,7 @@ ifepm.dashboard.getInteral = function(interval){
 * @param id
 * */
  ifepm.dashboard.update_graph = function(datas,id){
+
      var container;
      if(isfullsize){
          container = ifepm.dashboard.make_item_container_id_full(id);
@@ -262,6 +263,7 @@ ifepm.dashboard.getInteral = function(interval){
      {
          container = ifepm.dashboard.make_item_container_id(id);
      }
+     //console.log("update dashboard id: "+id+" "+container);
     var type = ifepm.dashboard.graphs[id].chart_type;
     var chart = $('#'+container).highcharts();
     if(chart){
@@ -296,7 +298,14 @@ ifepm.dashboard.load_graph=function(id){
     }
 
     var current_graph = ifepm.dashboard.graphs[id];
-    var outer=ifepm.dashboard.make_item_outer_id(id);
+    var outer;
+    if(isfullsize){
+        outer=ifepm.dashboard.make_item_outer_id_full(id);
+    }
+    else{
+        outer=ifepm.dashboard.make_item_outer_id(id);
+    }
+
     dashboard_show_loading(outer);
     $.ajax(
         {
@@ -758,6 +767,10 @@ ifepm.dashboard.on_drag_stop  = function(){
 * called after a dashboard_item deleted
 * */
 ifepm.dashboard.on_view_deleted = function(id){
+    var need_delete_full_size = false;
+    if(current_select_id == ifepm.dashboard.graphs[id].dashboard_id){
+        need_delete_full_size = true;
+    }
     delete ifepm.dashboard.graphs[id];
 
     var value = Number(id);
@@ -765,15 +778,13 @@ ifepm.dashboard.on_view_deleted = function(id){
     if(index >= 0){
         ifepm.dashboard.graph_sequence.splice(index,1);
     }
-
-    var filter = "";
-    if(isfullsize){
-        filter = ifepm.config.container_selector_full+ " #full_"+id;
-    }else
-    {
-        filter = ifepm.config.container_selector + " #"+id;
+    var filter;
+    if(need_delete_full_size){
+        filter = ifepm.config.container_selector_full+" #full_"+id;
+        ifepm.dashboard_widget.remove_w(filter,true);
     }
-    ifepm.dashboard_widget.remove_w(filter);
+    filter = ifepm.config.container_selector+" #"+id;
+    ifepm.dashboard_widget.remove_w(filter,false);
 }
 
 /*
@@ -860,13 +871,30 @@ ifepm.dashboard.save_grid_pos=function(sequence,options){
 }
 
 /*
+* @function on_dashboard_deleted
+* need to delete the full size grid if same
+* */
+ifepm.dashboard.on_dashboard_deleted = function(id){
+    if(currnet_dashboard_id == id){
+        var container_selector = ifepm.config.container_selector_full;
+        ifepm.dashboard_widget.remove_all_widgets(true);
+        $(container_selector).children().remove();
+    }
+}
+
+/*
 * @full_size
 * for full size,fill graph data into gridster
 * */
 var isfullsize = false;
+var current_select_id = -1;
 
-ifepm.dashboard.full_size = function(fullsize){
-    isfullsize = fullsize;
+ifepm.dashboard.full_size = function(option){
+    isfullsize = option.fullsize;
+    if(isfullsize && (current_select_id == option.id)){
+        return;
+    }
+    current_select_id = option.id
 
     if(isfullsize){
         var container_selector = ifepm.config.container_selector_full;
