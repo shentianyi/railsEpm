@@ -147,7 +147,7 @@ ifepm.dashboard.form_graph = function(datas,id){
         }
     }
 
-    
+
     dashboard_remove_loading(outer);
     ifepm.dashboard.on_finish_load();
 }
@@ -244,7 +244,7 @@ ifepm.dashboard.getInteral = function(interval){
             intvl = min;
             break;
     }
-    
+
     return intvl;
 }
 
@@ -897,6 +897,9 @@ ifepm.dashboard.full_size = function(option){
     current_select_id = option.id
 
     if(isfullsize){
+        /*
+        * match the position of normal size
+        * */
         var container_selector = ifepm.config.container_selector_full;
         ifepm.dashboard_widget.remove_all_widgets();
         $(container_selector).children().remove();
@@ -912,7 +915,11 @@ ifepm.dashboard.full_size = function(option){
             option.container_selector=container_selector;
             option.id= graph_id;
 
-            option.isnew=true;
+            option.isnew=false;
+            option.col = ifepm.dashboard.graphs[graph_id].col;
+            option.row = ifepm.dashboard.graphs[graph_id].row;
+            option.sizex = ifepm.dashboard.graphs[graph_id].sizex;
+            option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
             option.chart_type=ifepm.dashboard.graphs[graph_id].chart_type;
             ifepm.dashboard_widget.add_w(option);
         }
