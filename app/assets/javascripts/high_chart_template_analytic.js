@@ -1,5 +1,5 @@
-ANALYTICS=ANALYTICS||{};
-ANALYTICS.form_chart=function(){
+var ANALYTICS=ANALYTICS||{};
+ANALYTICS.form_chart=function(option){
     var url = 'http://42.121.111.38:9002/HighChartsFileService/';
     var high_chart = {
         chart: {
@@ -15,6 +15,9 @@ ANALYTICS.form_chart=function(){
         },
         credits: {
             enabled: false
+        },
+        rangeSelector:{
+            enabled:false
         },
         tooltip:{
             formatter: function() {
@@ -132,32 +135,6 @@ ANALYTICS.form_chart=function(){
                 }
 
             },
-
-            pie: {
-                size: '70%',
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    color: 'rgba(0,0,0,0.25)',
-                    connectorColor: 'rgba(0,0,0,0.15)',
-                    connectorWidth: 1,
-                    style:{},
-                    format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
-                },
-                colors:[
-                    '#97cbe4',
-                    '#f99c92',
-                    '#81dfcd',
-                    '#ffdb6d',
-                    '#82d9e7',
-                    '#dabeea',
-                    '#6485a7',
-                    '#f9b360',
-                    '#94cd7b',
-                    '#69b0bd'
-                ]
-            },
             scatter: {
                 marker: {
                     radius: 4,
@@ -183,7 +160,6 @@ ANALYTICS.form_chart=function(){
                 millisecond: "quarter " + '%Q' + '<br />' + '%Y',
                 hour: '%H:%M' + "<br />" + '%e/%b',
                 day: '%e' + "<br />" + "%b",
-//            week: '%e/%b' + "<br />" + "W" + "%W",
                 week: "Week" + '<br />' + "%W",
                 month: '%b' + '<br />' + '%Y',
                 year: '%Y'
@@ -206,539 +182,525 @@ ANALYTICS.form_chart=function(){
                 y: -2
             }
         }
-    }
-}
-
-
-function render_to(option) {
-    high_chart.chart.renderTo = option.target;
-    Highcharts.dateFormats = {
-        W: function (timestamp) {
-            var d = new Date(timestamp);
-            d.setHours(0, 0, 0);
-            d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-            var yearStart = new Date(d.getFullYear(), 0, 1);
-            var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1) / 7);
-            return  weekNo;
-        },
-        Q: function (timestamp) {
-            var d = new Date(timestamp);
-            return  d.monthToQuarter();
-        },
-        YW: function (timestamp) {
-            var d = new Date(timestamp);
-            d.setHours(0, 0, 0);
-            d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-            return d.getFullYear();
+    };
+    var series_colors=[
+        '#97cbe4',
+        '#f99c92',
+        '#81dfcd',
+        '#ffdb6d',
+        '#82d9e7',
+        '#dabeea',
+        '#6485a7',
+        '#f9b360',
+        '#94cd7b',
+        '#69b0bd'
+    ];
+    function set_data(option) {
+        this.date = option.begin_time ? standardParse(option.begin_time).date : null;
+        this.template = option.begin_time ? standardParse(option.begin_time).template : null;
+        this.data = option.data ? option.data:null;
+        this.chart_container = option.target ? option.target:null;
+        this.chart = option.target ? $("#" + option.target).highcharts() : null;
+        this.series_id = option.id!==null ? option.id:null;
+        this.type = option.type ? option.type:null;
+        this.interval = option.interval ? option.interval:null;
+        this.id=option.id!==null ? option.id : null;
+        this.count=option.count ? option.count:null;
+    };
+    function render_to(option) {
+        high_chart.chart.renderTo = option.target;
+        Highcharts.dateFormats = {
+            W: function (timestamp) {
+                var d = new Date(timestamp);
+                d.setHours(0, 0, 0);
+                d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+                var yearStart = new Date(d.getFullYear(), 0, 1);
+                var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1) / 7);
+                return  weekNo;
+            },
+            Q: function (timestamp) {
+                var d = new Date(timestamp);
+                return  d.monthToQuarter();
+            },
+            YW: function (timestamp) {
+                var d = new Date(timestamp);
+                d.setHours(0, 0, 0);
+                d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+                return d.getFullYear();
+            }
+        };
+    };
+    function create_environment_for_data() {
+        set_data.apply(this, arguments);
+        var i,j;
+        switch (this.interval) {
+            case "90":
+                high_chart.xAxis.tickPositioner = function () {
+                    var extreme = [];
+                    for( i=0;i<this.chart.series.length;i++){
+                        for( j=0;j<this.chart.series[i].processedXData.length;j++){
+                            extreme.push(this.chart.series[i].processedXData[j]);
+                        }
+                    }
+                    extreme.info = {
+                        unitName: "hour",
+                        higherRanks: {}
+                    };
+                    return extreme
+                }
+                break;
+            case "100":
+                high_chart.xAxis.tickPositioner = function () {
+                    var extreme = [];
+                    for( i=0;i<this.chart.series.length;i++){
+                        for( j=0;j<this.chart.series[i].processedXData.length;j++){
+                            extreme.push(this.chart.series[i].processedXData[j]);
+                        }
+                    }
+                    extreme.info = {
+                        unitName: "day",
+                        higherRanks: {}
+                    };
+                    return extreme
+                }
+                break;
+            case "200":
+                high_chart.xAxis.tickPositioner = function () {
+                    var extreme = [];
+                    for( i=0;i<this.chart.series.length;i++){
+                        for( j=0;j<this.chart.series[i].processedXData.length;j++){
+                            extreme.push(this.chart.series[i].processedXData[j]);
+                        }
+                    }
+                    extreme.info = {
+                        unitName: "week",
+                        higherRanks: {}
+                    };
+                    return extreme
+                }
+                break;
+            case "300":
+                high_chart.xAxis.tickPositioner = function () {
+                    var extreme = [];
+                    for( i=0;i<this.chart.series.length;i++){
+                        for( j=0;j<this.chart.series[i].processedXData.length;j++){
+                            extreme.push(this.chart.series[i].processedXData[j]);
+                        }
+                    }
+                    extreme.info = {
+                        unitName: "month",
+                        higherRanks: {}
+                    };
+                    return extreme
+                }
+                break;
+            case "400":
+                high_chart.xAxis.tickPositioner = function () {
+                    var extreme = [];
+                    for( i=0;i<this.chart.series.length;i++){
+                        for( j=0;j<this.chart.series[i].processedXData.length;j++){
+                            extreme.push(this.chart.series[i].processedXData[j]);
+                        }
+                    }
+                    extreme.info = {
+                        unitName: "millisecond",
+                        higherRanks: {}
+                    };
+                    return extreme
+                }
+                break;
+            case "500":
+                high_chart.xAxis.tickPositioner = function () {
+                    var extreme = [];
+                    for( i=0;i<this.chart.series.length;i++){
+                        for( j=0;j<this.chart.series[i].processedXData.length;j++){
+                            extreme.push(this.chart.series[i].processedXData[j]);
+                        }
+                    }
+                    extreme.info = {
+                        unitName: "year",
+                        higherRanks: {}
+                    };
+                    return extreme
+                }
+                break;
         }
     };
-}
-
-var series_colors=[
-    '#97cbe4',
-    '#f99c92',
-    '#81dfcd',
-    '#ffdb6d',
-    '#82d9e7',
-    '#dabeea',
-    '#6485a7',
-    '#f9b360',
-    '#94cd7b',
-    '#69b0bd'
-]
-function add_series(option) {
-    var series_name = option.kpi;
-    var series_id = option.id;
-    var chart_container = option.target;
-    var type = option.type;
-    var data = deal_data(option);
-    var color=option.color?option.color:series_colors[series_id % series_colors.length];
-    $("#" + chart_container).highcharts().addSeries({
-        name: series_name,
-        id: series_id,
-        color:color,
-        data: data
-    })
-}
-
-
-function set_data(option) {
-    this.date = option.begin_time ? standardParse(option.begin_time).date : null;
-    this.template = option.begin_time ? standardParse(option.begin_time).template : null;
-    this.data = option.data ? option.data:null;
-    this.chart_container = option.target ? option.target:null;
-    this.chart = option.target ? $("#" + option.target).highcharts() : null;
-    this.series_id = option.id!==null ? option.id:null;
-    this.type = option.type ? option.type:null;
-    this.interval = option.interval ? option.interval:null;
-    this.id=option.id!==null ? option.id : null;
-    this.count=option.count ? option.count:null;
-}
-
-function deal_data() {
-    set_data.apply(this, arguments);
-    var i;
-    var data = this.data;
-    switch (this.interval) {
-        case "90":
-            for (i = 0; i < data.length; i++) {
-                data[i].x = Date.UTC(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i);
-                data[i].name = new Date(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i).toWayneString().hour;
-            }
-            return data;
-            break;
-        case "100":
-            for (i = 0; i < this.data.length; i++) {
-                this.data[i].x = Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + i);
-                this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + i).toWayneString().day;
-                ;
-            }
-            return data;
-            break;
-        case "200":
-            for (i = 0; i < this.data.length; i++) {
-                var week_template=standardParse(last_date_of_week(Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i)).date.toWayneString().day).template;
-                this.data[i].x = Date.UTC(week_template[0], week_template[1], week_template[2]);
-                this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWayneString().day
-                    + " week" + new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWeekNumber();
-            }
-            return data;
-            break;
-        case "300":
-            for (i = 0; i < this.data.length; i++) {
-                this.data[i].x = Date.UTC(this.template[0], parseInt(this.template[1]) + i);
-                this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + i).toWayneString().month;
-            }
-            return data;
-            break;
-        case "400":
-            for (i = 0; i < this.data.length; i++) {
-                var first_month_of_quarter=Math.floor(parseInt(this.template[1])/3)*3
-                this.data[i].x = Date.UTC(this.template[0], first_month_of_quarter + 3 * i);
-                this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + 3 * i).getFullYear()+" quarter " + new Date(this.template[0], parseInt(this.template[1]) + 3 * i).monthToQuarter();
-            }
-            return data;
-            break;
-        case "500":
-            for (i = 0; i < this.data.length; i++) {
-                this.data[i].x = Date.UTC(parseInt(this.template[0]) + i, 0);
-                this.data[i].name = new Date(parseInt(this.template[0]) + i, 0).toWayneString().year;
-            }
-            return data;
-            break;
-    }
-}
-function create_environment_for_data() {
-    set_data.apply(this, arguments);
-    var i,j;
-    switch (this.interval) {
-        case "90":
-            high_chart.xAxis.tickPositioner = function () {
-                var extreme = [];
-                for( i=0;i<this.chart.series.length;i++){
-                    for( j=0;j<this.chart.series[i].processedXData.length;j++){
-                        extreme.push(this.chart.series[i].processedXData[j]);
-                    }
+    function add_series(option) {
+        var series_name = option.kpi;
+        var series_id = option.id;
+        var chart_container = option.target;
+        var type = option.type;
+        var data = deal_data(option);
+        var color=option.color?option.color:series_colors[series_id % series_colors.length];
+        $("#" + chart_container).highcharts().addSeries({
+            name: series_name,
+            id: series_id,
+            color:color,
+            data: data
+        })
+    };
+    function deal_data() {
+        set_data.apply(this, arguments);
+        var i;
+        var data = this.data;
+        switch (this.interval) {
+            case "90":
+                for (i = 0; i < data.length; i++) {
+                    data[i].x = Date.UTC(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i);
+                    data[i].name = new Date(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i).toWayneString().hour;
                 }
-                extreme.info = {
-                    unitName: "hour",
-                    higherRanks: {}
-                };
-                return extreme
-            }
-            break;
-        case "100":
-            high_chart.xAxis.tickPositioner = function () {
-                var extreme = [];
-                for( i=0;i<this.chart.series.length;i++){
-                    for( j=0;j<this.chart.series[i].processedXData.length;j++){
-                        extreme.push(this.chart.series[i].processedXData[j]);
-                    }
+                return data;
+                break;
+            case "100":
+                for (i = 0; i < this.data.length; i++) {
+                    this.data[i].x = Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + i);
+                    this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + i).toWayneString().day;
+                    ;
                 }
-                extreme.info = {
-                    unitName: "day",
-                    higherRanks: {}
-                };
-                return extreme
-            }
-            break;
-        case "200":
-            high_chart.xAxis.tickPositioner = function () {
-                var extreme = [];
-                for( i=0;i<this.chart.series.length;i++){
-                    for( j=0;j<this.chart.series[i].processedXData.length;j++){
-                        extreme.push(this.chart.series[i].processedXData[j]);
-                    }
+                return data;
+                break;
+            case "200":
+                for (i = 0; i < this.data.length; i++) {
+                    var week_template=standardParse(last_date_of_week(Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i)).date.toWayneString().day).template;
+                    this.data[i].x = Date.UTC(week_template[0], week_template[1], week_template[2]);
+                    this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWayneString().day
+                        + " week" + new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWeekNumber();
                 }
-                extreme.info = {
-                    unitName: "week",
-                    higherRanks: {}
-                };
-                return extreme
-            }
-            break;
-        case "300":
-            high_chart.xAxis.tickPositioner = function () {
-                var extreme = [];
-                for( i=0;i<this.chart.series.length;i++){
-                    for( j=0;j<this.chart.series[i].processedXData.length;j++){
-                        extreme.push(this.chart.series[i].processedXData[j]);
-                    }
+                return data;
+                break;
+            case "300":
+                for (i = 0; i < this.data.length; i++) {
+                    this.data[i].x = Date.UTC(this.template[0], parseInt(this.template[1]) + i);
+                    this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + i).toWayneString().month;
                 }
-                extreme.info = {
-                    unitName: "month",
-                    higherRanks: {}
-                };
-                return extreme
-            }
-            break;
-        case "400":
-            high_chart.xAxis.tickPositioner = function () {
-                var extreme = [];
-                for( i=0;i<this.chart.series.length;i++){
-                    for( j=0;j<this.chart.series[i].processedXData.length;j++){
-                        extreme.push(this.chart.series[i].processedXData[j]);
-                    }
+                return data;
+                break;
+            case "400":
+                for (i = 0; i < this.data.length; i++) {
+                    var first_month_of_quarter=Math.floor(parseInt(this.template[1])/3)*3
+                    this.data[i].x = Date.UTC(this.template[0], first_month_of_quarter + 3 * i);
+                    this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + 3 * i).getFullYear()+" quarter " + new Date(this.template[0], parseInt(this.template[1]) + 3 * i).monthToQuarter();
                 }
-                extreme.info = {
-                    unitName: "millisecond",
-                    higherRanks: {}
-                };
-                return extreme
-            }
-            break;
-        case "500":
-            high_chart.xAxis.tickPositioner = function () {
-                var extreme = [];
-                for( i=0;i<this.chart.series.length;i++){
-                    for( j=0;j<this.chart.series[i].processedXData.length;j++){
-                        extreme.push(this.chart.series[i].processedXData[j]);
-                    }
+                return data;
+                break;
+            case "500":
+                for (i = 0; i < this.data.length; i++) {
+                    this.data[i].x = Date.UTC(parseInt(this.template[0]) + i, 0);
+                    this.data[i].name = new Date(parseInt(this.template[0]) + i, 0).toWayneString().year;
                 }
-                extreme.info = {
-                    unitName: "year",
-                    higherRanks: {}
-                };
-                return extreme
-            }
-            break;
-    }
-}
-
-
-
-
-function proper_type_for_chart(){
-    set_data.apply(this,arguments);
-    if(this.type=="pie"){
-        if(this.chart.get('pie_extra_series')){
-            this.chart.get('pie_extra_series').remove();
-            for(var k=0;k<this.chart.series.length;k++){
-                this.chart.series[k].update({
-                    showInLegend:true
-                },false)
-            }
-            this.chart.legend.group.show();
-            this.chart.legend.box.show();
-            this.chart.legend.display = true;
+                return data;
+                break;
         }
-        var data=[],dataItem,dataItemValue,dataItemTarget,chart_name,chart_color;
-        if(this.count==1){
-            this.chart.series[0].show();
-            var max_data,index;
-            for(var i=0;i<this.chart.series[0].processedYData.length;i++){
-                dataItem={};
-                dataItem.name=this.chart.series[0].data[i].name;
-                dataItem.y=this.chart.series[0].processedYData[i];
-                dataItem.high=this.chart.series[0].data[i].high;
-                dataItem.low=this.chart.series[0].data[i].low;
-                dataItem.unit=this.chart.series[0].data[i].unit;
-                if(i==0){
-                    max_data=dataItem.y;
-                    index=0;
+    };
+    function proper_type_for_chart(){
+        set_data.apply(this,arguments);
+        if(this.type=="pie"){
+            if(this.chart.get('pie_extra_series')){
+                this.chart.get('pie_extra_series').remove();
+                for(var k=0;k<this.chart.series.length;k++){
+                    this.chart.series[k].update({
+                        showInLegend:true
+                    },false)
                 }
-                else{
-                    if(dataItem.y>max_data){
-                        max_data=dataItem.y;
-                        index=i
-                    }
-                }
-                data.push(dataItem);
+                this.chart.legend.group.show();
+                this.chart.legend.box.show();
+                this.chart.legend.display = true;
             }
-            data[index].sliced=true;
-            data[index].selected=true;
-            chart_name=this.chart.series[0].name;
-//            chart_color=this.chart.series[0].color;
-            this.chart.series[0].hide();
-        }
-        else{
-            chart_name=[];
-            var max_data,index;
-            for(var i=0;i<this.count;i++){
-                this.chart.series[i].show();
-                dataItem={};
-                dataItemValue=0;
-                dataItemTarget=0;
-                dataItem.name=this.chart.series[i].name+"<br />From:"+this.chart.series[i].data[0].name+"<br />To:"+this.chart.series[i].data[this.chart.series[i].data.length-1].name;
-                for(var j=0;j<this.chart.series[i].processedYData.length;j++){
-                    dataItemValue+=this.chart.series[i].processedYData[j];
-//                    dataItemTarget+=parseFloat(this.chart.series[i].data[j].target);
-                }
-                dataItem.kpi_name=this.chart.series[i].name;
-                dataItem.y=dataItemValue;
-                dataItem.seriesId=this.chart.series[i].data[0].id;
-                chart_name.push(this.chart.series[i].name);
-                dataItem.average_y=(dataItemValue/this.chart.series[i].processedYData.length).toFixed(2);
-//                dataItem.target=dataItemTarget.toFixed(2);
-//                dataItem.average_target=(dataItemTarget/this.chart.series[i].processedYData.length).toFixed(2);
-                dataItem.time_from=this.chart.series[i].data[0].name;
-                dataItem.time_to=this.chart.series[i].data[this.chart.series[i].data.length-1].name;
-                dataItem.unit=this.chart.series[i].data[0].unit;
-                dataItem.color= series_colors[dataItem.seriesId % series_colors.length];
-                if(i==0){
-                    max_data=dataItem.y;
-                    index=0;
-                }
-                else{
-                    if(dataItem.y>max_data){
+            var data=[],dataItem,dataItemValue,dataItemTarget,chart_name,chart_color;
+            if(this.count==1){
+                this.chart.series[0].show();
+                var max_data,index;
+                for(var i=0;i<this.chart.series[0].processedYData.length;i++){
+                    dataItem={};
+                    dataItem.name=this.chart.series[0].data[i].name;
+                    dataItem.y=this.chart.series[0].processedYData[i];
+                    dataItem.high=this.chart.series[0].data[i].high;
+                    dataItem.low=this.chart.series[0].data[i].low;
+                    dataItem.unit=this.chart.series[0].data[i].unit;
+                    if(i==0){
                         max_data=dataItem.y;
-                        index=i
+                        index=0;
                     }
+                    else{
+                        if(dataItem.y>max_data){
+                            max_data=dataItem.y;
+                            index=i
+                        }
+                    }
+                    data.push(dataItem);
                 }
-
-                data.push(dataItem);
                 data[index].sliced=true;
                 data[index].selected=true;
-                this.chart.series[i].hide();
-            };
-        }
-
-        this.chart.addSeries({
-            name:chart_name,
-            id:'pie_extra_series',
-            color:chart_color,
-            data:data,
-            type:"pie"
-        },true);
-        this.chart.redraw();
-        this.chart.legend.group.hide();
-        this.chart.legend.box.hide();
-        this.chart.legend.display = false;
-    }
-
-    else{
-        if(this.chart.get('pie_extra_series')){
-            this.chart.get('pie_extra_series').remove();
-            for(var k=0;k<this.chart.series.length;k++){
-                this.chart.series[k].update({
-                    showInLegend:true
-                },false)
-            }
-            this.chart.legend.group.show();
-            this.chart.legend.box.show();
-            this.chart.legend.display = true;
-        }
-        var p={
-            name: this.chart.get(this.id).options.name,
-            id: this.chart.get(this.id).options.id,
-            color:this.chart.get(this.id).color,
-            data: this.chart.get(this.id).options.data
-        },c;
-        var new_series=deepCopy(p,c);
-        if(this.type=="column"){
-            for(var i=0;i<new_series.data.length;i++){
-                new_series.data[i].target_min=new_series.data[i].low;
-                new_series.data[i].low=0
-            }
-        }
-        else{
-            if(new_series.data[0].target_min!==undefined){
-                for(var i=0;i<new_series.data.length;i++){
-                    new_series.data[i].low=new_series.data[i].target_min;
-                }
-            }
-        }
-        new_series.type=this.type;
-        this.chart.get(this.id).remove(false);
-        this.chart.addSeries(new_series,false);
-        this.chart.redraw();
-    }
-}
-//为dashboard专门做的PIE
-function pie_for_dashboard(container){
-    var option={
-        target:container,
-        type:'pie',
-        count:$("#"+container).highcharts().series.length-1
-    }
-    proper_type_for_chart(option)
-}
-
-
-
-
-function limit_pointer_number(){
-    set_data.apply(this,arguments);
-    if( this.chart.xAxis[0].tickPositions.length>9 ){
-        limit_pointer_condition["_"+this.interval].limitAction(this.chart)
-    }
-}
-
-var limit_pointer_condition={
-    limit:9,
-    _90:{
-        limit:9,
-        limitAction:function(chart){
-            chart.xAxis[0].update({
-                tickPositioner:function(){
-                    var extreme=deal_extreme(chart);
-                    extreme.info={
-                        unitName:"hour",
-                        higherRanks:{}
-                    }
-                    return extreme
-                }
-            });
-        }
-    },
-    _100:{
-        limit:9,
-        limitAction:function(chart){
-            chart.xAxis[0].update({
-                tickPositioner:function(){
-                    var extreme=deal_extreme(chart);
-                    extreme.info={
-                        unitName:"day",
-                        higherRanks:{}
-                    }
-                    return extreme
-                }
-            });
-        }
-    },
-    _200:{
-        limit:9,
-        limitAction:function(chart){
-            chart.xAxis[0].update({
-                tickPositioner:function(){
-                    var extreme=deal_extreme(chart);
-                    extreme.info={
-                        unitName:"week",
-                        higherRanks:{}
-                    }
-                    return extreme
-                }
-            });
-        }
-    },
-    _300:{
-        limit:9,
-        limitAction:function(chart){
-            chart.xAxis[0].update({
-                tickPositioner:function(){
-                    var extreme=deal_extreme(chart);
-                    extreme.info={
-                        unitName:"month",
-                        higherRanks:{}
-                    }
-                    return extreme
-                }
-            });
-        }
-    },
-    _400:{
-        limit:9,
-        limitAction:function(chart){
-            chart.xAxis[0].update({
-                tickPositioner:function(){
-                    var extreme=deal_extreme(chart);
-                    extreme.info={
-                        unitName:"millisecond",
-                        higherRanks:{}
-                    }
-                    return extreme
-                }
-            });
-        }
-    },
-    _500:{
-        limit:9,
-        limitAction:function(chart){
-            chart.xAxis[0].update({
-                tickPositioner:function(){
-                    var extreme=deal_extreme(chart);
-                    extreme.info={
-                        unitName:"year",
-                        higherRanks:{}
-                    }
-                    return extreme
-                }
-            });
-        }
-    }
-}
-function deal_extreme(chart){
-    var extreme=[]
-    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
-        var i= 0,
-            length=chart.series[i].processedXData.length,
-            half=Math.floor(length/2),
-            first_half=Math.floor(length/4),
-            last_half =Math.floor((length-1+half)/2),
-            first_half_quarter_first=Math.floor(first_half/2),
-            first_half_quarter_second=Math.floor((first_half+half)/2),
-            last_half_quarter_first=Math.floor((half+last_half)/2),
-            last_half_quarter_second=Math.floor((last_half+length)/2);
-        extreme.push(chart.series[i].processedXData[0]);
-        extreme.push(chart.series[i].processedXData[first_half_quarter_first]);
-        extreme.push(chart.series[i].processedXData[first_half]);
-        extreme.push(chart.series[i].processedXData[first_half_quarter_second]);
-        extreme.push(chart.series[i].processedXData[half]);
-        extreme.push(chart.series[i].processedXData[last_half_quarter_first]);
-        extreme.push(chart.series[i].processedXData[last_half]);
-        extreme.push(chart.series[i].processedXData[last_half_quarter_second]);
-        extreme.push(chart.series[i].processedXData[length-1]);
-    }
-    else{
-        for(var i=0;i<chart.series.length;i++){
-            var length=chart.series[i].processedXData.length
-            extreme.push(chart.series[i].processedXData[0]);
-            extreme.push(chart.series[i].processedXData[length-1]);
-        }
-    }
-    return extreme
-}
-
-var HIGH_CHART=HIGH_CHART || {} ;
-HIGH_CHART.postPrepare=function(begin_time,interval){
-    var template=standardParse(begin_time).template;
-    switch(interval){
-        case "90":
-            return new Date(template[0],template[1],template[2],template[3]);
-            break;
-        case "100":
-            return new Date(template[0],template[1],template[2]);
-            break;
-        case "200":
-            if(standardParse(begin_time).date.getDay()==0){
-                return new Date(template[0],template[1],+template[2]-6);
+                chart_name=this.chart.series[0].name;
+//            chart_color=this.chart.series[0].color;
+                this.chart.series[0].hide();
             }
             else{
-                return new Date(template[0],template[1],+template[2]-standardParse(begin_time).date.getDay()+1);
-            }
-            break;
-        case "300":
-            return new Date(template[0],template[1]);
-            break;
-        case "400":
-            return new Date(template[0],Math.floor(+template[1]/3)*3);
-            break;
-        case "500":
-            return new Date(template[0],0);
-            break;
-    }
+                chart_name=[];
+                var max_data,index;
+                for(var i=0;i<this.count;i++){
+                    this.chart.series[i].show();
+                    dataItem={};
+                    dataItemValue=0;
+                    dataItemTarget=0;
+                    dataItem.name=this.chart.series[i].name+"<br />From:"+this.chart.series[i].data[0].name+"<br />To:"+this.chart.series[i].data[this.chart.series[i].data.length-1].name;
+                    for(var j=0;j<this.chart.series[i].processedYData.length;j++){
+                        dataItemValue+=this.chart.series[i].processedYData[j];
+//                    dataItemTarget+=parseFloat(this.chart.series[i].data[j].target);
+                    }
+                    dataItem.kpi_name=this.chart.series[i].name;
+                    dataItem.y=dataItemValue;
+                    dataItem.seriesId=this.chart.series[i].data[0].id;
+                    chart_name.push(this.chart.series[i].name);
+                    dataItem.average_y=(dataItemValue/this.chart.series[i].processedYData.length).toFixed(2);
+//                dataItem.target=dataItemTarget.toFixed(2);
+//                dataItem.average_target=(dataItemTarget/this.chart.series[i].processedYData.length).toFixed(2);
+                    dataItem.time_from=this.chart.series[i].data[0].name;
+                    dataItem.time_to=this.chart.series[i].data[this.chart.series[i].data.length-1].name;
+                    dataItem.unit=this.chart.series[i].data[0].unit;
+                    dataItem.color= series_colors[dataItem.seriesId % series_colors.length];
+                    if(i==0){
+                        max_data=dataItem.y;
+                        index=0;
+                    }
+                    else{
+                        if(dataItem.y>max_data){
+                            max_data=dataItem.y;
+                            index=i
+                        }
+                    }
 
+                    data.push(dataItem);
+                    data[index].sliced=true;
+                    data[index].selected=true;
+                    this.chart.series[i].hide();
+                };
+            }
+
+            this.chart.addSeries({
+                name:chart_name,
+                id:'pie_extra_series',
+                color:chart_color,
+                data:data,
+                type:"pie"
+            },true);
+            this.chart.redraw();
+            this.chart.legend.group.hide();
+            this.chart.legend.box.hide();
+            this.chart.legend.display = false;
+        }
+
+        else{
+            if(this.chart.get('pie_extra_series')){
+                this.chart.get('pie_extra_series').remove();
+                for(var k=0;k<this.chart.series.length;k++){
+                    this.chart.series[k].update({
+                        showInLegend:true
+                    },false)
+                }
+                this.chart.legend.group.show();
+                this.chart.legend.box.show();
+                this.chart.legend.display = true;
+            }
+            var p={
+                name: this.chart.get(this.id).options.name,
+                id: this.chart.get(this.id).options.id,
+                color:this.chart.get(this.id).color,
+                data: this.chart.get(this.id).options.data
+            },c;
+            var new_series=deepCopy(p,c);
+            if(this.type=="column"){
+                for(var i=0;i<new_series.data.length;i++){
+                    new_series.data[i].target_min=new_series.data[i].low;
+                    new_series.data[i].low=0
+                }
+            }
+            else{
+                if(new_series.data[0].target_min!==undefined){
+                    for(var i=0;i<new_series.data.length;i++){
+                        new_series.data[i].low=new_series.data[i].target_min;
+                    }
+                }
+            }
+            new_series.type=this.type;
+            this.chart.get(this.id).remove(false);
+            this.chart.addSeries(new_series,false);
+            this.chart.redraw();
+        }
+    };
+    render_to(option);
+//    create_environment_for_data(option);
+    new Highcharts.StockChart(high_chart);
+    add_series(option);
+    proper_type_for_chart(option);
 }
 
 
 
+
+//function limit_pointer_number(){
+//    set_data.apply(this,arguments);
+//    if( this.chart.xAxis[0].tickPositions.length>9 ){
+//        limit_pointer_condition["_"+this.interval].limitAction(this.chart)
+//    }
+//}
+//
+//var limit_pointer_condition={
+//    limit:9,
+//    _90:{
+//        limit:9,
+//        limitAction:function(chart){
+//            chart.xAxis[0].update({
+//                tickPositioner:function(){
+//                    var extreme=deal_extreme(chart);
+//                    extreme.info={
+//                        unitName:"hour",
+//                        higherRanks:{}
+//                    }
+//                    return extreme
+//                }
+//            });
+//        }
+//    },
+//    _100:{
+//        limit:9,
+//        limitAction:function(chart){
+//            chart.xAxis[0].update({
+//                tickPositioner:function(){
+//                    var extreme=deal_extreme(chart);
+//                    extreme.info={
+//                        unitName:"day",
+//                        higherRanks:{}
+//                    }
+//                    return extreme
+//                }
+//            });
+//        }
+//    },
+//    _200:{
+//        limit:9,
+//        limitAction:function(chart){
+//            chart.xAxis[0].update({
+//                tickPositioner:function(){
+//                    var extreme=deal_extreme(chart);
+//                    extreme.info={
+//                        unitName:"week",
+//                        higherRanks:{}
+//                    }
+//                    return extreme
+//                }
+//            });
+//        }
+//    },
+//    _300:{
+//        limit:9,
+//        limitAction:function(chart){
+//            chart.xAxis[0].update({
+//                tickPositioner:function(){
+//                    var extreme=deal_extreme(chart);
+//                    extreme.info={
+//                        unitName:"month",
+//                        higherRanks:{}
+//                    }
+//                    return extreme
+//                }
+//            });
+//        }
+//    },
+//    _400:{
+//        limit:9,
+//        limitAction:function(chart){
+//            chart.xAxis[0].update({
+//                tickPositioner:function(){
+//                    var extreme=deal_extreme(chart);
+//                    extreme.info={
+//                        unitName:"millisecond",
+//                        higherRanks:{}
+//                    }
+//                    return extreme
+//                }
+//            });
+//        }
+//    },
+//    _500:{
+//        limit:9,
+//        limitAction:function(chart){
+//            chart.xAxis[0].update({
+//                tickPositioner:function(){
+//                    var extreme=deal_extreme(chart);
+//                    extreme.info={
+//                        unitName:"year",
+//                        higherRanks:{}
+//                    }
+//                    return extreme
+//                }
+//            });
+//        }
+//    }
+//}
+//function deal_extreme(chart){
+//    var extreme=[]
+//    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
+//        var i= 0,
+//            length=chart.series[i].processedXData.length,
+//            half=Math.floor(length/2),
+//            first_half=Math.floor(length/4),
+//            last_half =Math.floor((length-1+half)/2),
+//            first_half_quarter_first=Math.floor(first_half/2),
+//            first_half_quarter_second=Math.floor((first_half+half)/2),
+//            last_half_quarter_first=Math.floor((half+last_half)/2),
+//            last_half_quarter_second=Math.floor((last_half+length)/2);
+//        extreme.push(chart.series[i].processedXData[0]);
+//        extreme.push(chart.series[i].processedXData[first_half_quarter_first]);
+//        extreme.push(chart.series[i].processedXData[first_half]);
+//        extreme.push(chart.series[i].processedXData[first_half_quarter_second]);
+//        extreme.push(chart.series[i].processedXData[half]);
+//        extreme.push(chart.series[i].processedXData[last_half_quarter_first]);
+//        extreme.push(chart.series[i].processedXData[last_half]);
+//        extreme.push(chart.series[i].processedXData[last_half_quarter_second]);
+//        extreme.push(chart.series[i].processedXData[length-1]);
+//    }
+//    else{
+//        for(var i=0;i<chart.series.length;i++){
+//            var length=chart.series[i].processedXData.length
+//            extreme.push(chart.series[i].processedXData[0]);
+//            extreme.push(chart.series[i].processedXData[length-1]);
+//        }
+//    }
+//    return extreme
+//}
+//
+//var HIGH_CHART=HIGH_CHART || {} ;
+//HIGH_CHART.postPrepare=function(begin_time,interval){
+//    var template=standardParse(begin_time).template;
+//    switch(interval){
+//        case "90":
+//            return new Date(template[0],template[1],template[2],template[3]);
+//            break;
+//        case "100":
+//            return new Date(template[0],template[1],template[2]);
+//            break;
+//        case "200":
+//            if(standardParse(begin_time).date.getDay()==0){
+//                return new Date(template[0],template[1],+template[2]-6);
+//            }
+//            else{
+//                return new Date(template[0],template[1],+template[2]-standardParse(begin_time).date.getDay()+1);
+//            }
+//            break;
+//        case "300":
+//            return new Date(template[0],template[1]);
+//            break;
+//        case "400":
+//            return new Date(template[0],Math.floor(+template[1]/3)*3);
+//            break;
+//        case "500":
+//            return new Date(template[0],0);
+//            break;
+//    }
+//
+//}
+//
+//
+//

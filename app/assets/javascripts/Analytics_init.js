@@ -309,12 +309,12 @@ function prepare_form_chart() {
             chartSeries.addSeries(addSeriesOption);
             show_chart_body(option);
 
-
-            render_to(option);
-            create_environment_for_data(option);
-            new Highcharts.Chart(high_chart);
-            add_series(option);
-            proper_type_for_chart(option);
+            ANALYTICS.form_chart(option);
+//            render_to(option);
+//            create_environment_for_data(option);
+//            new Highcharts.StockChart(high_chart);
+//            add_series(option);
+//            proper_type_for_chart(option);
 
             chartSeries.addCount();
         }
@@ -412,8 +412,8 @@ function prepare_form_chart() {
 
             chartSeries.addCount();
         }
-        limit_pointer_number(option);
-        clear_chart_condition();
+//        limit_pointer_number(option);
+//        clear_chart_condition();
 
 
 

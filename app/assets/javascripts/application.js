@@ -17,6 +17,7 @@
 //=require jquery.tipsy
 //=require jquery.sparkline.min
 //=require highcharts
+//=require highstock
 //=require highcharts-more
 //=require exporting
 //=require exporting.extend.src.js
