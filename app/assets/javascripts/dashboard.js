@@ -242,7 +242,7 @@ function db_view_create_callback(data){
         }
     }
     else{
-        MessageBox("Create dashboard item failed","top","warning");
+        MessageBox(data.errors,"top","warning");
     }
 
 }

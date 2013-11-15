@@ -135,23 +135,17 @@ function prepare_form_chart() {
 //           remove_loading()
 //           if(msg.result){
 //               var option={
-//                   kpi:$("#chart-kpi :selected").text(),
-//                   id:chartSeries.getCount(),
-//                   target:"chart-container",
-//                   begin_time:begin_time,
-//                   type:type,
-//                   interval:interval,
-//                   count:chartSeries.getCount()+1
-//               }
-//               var addSeriesOption={
-//                   kpi:$("#chart-kpi :selected").text(),
-//                   kpi_id:kpi,
-//                   id:chartSeries.getCount(),
-//                   interval:interval,
-//                   view:view,
-//                   method:method,
-//                   begin_time:begin_time,
-//                   end_time:end_time
+//                   kpi: $("#chart-kpi :selected").text(),
+//                   kpi_id: kpi,
+//                   target: "chart-container",
+//                   begin_time: begin_time,
+//                   end_time: end_time,
+//                   type: type,
+//                   interval: interval,
+//                   count: chartSeries.getCount() + 1,
+//                   view: view,
+//                   method: method,
+//                   chart_body_close_validate:chart_body_close_validate
 //               }
 //               var length=msg.object.current.length;
 //               var data_array=[];
@@ -163,33 +157,10 @@ function prepare_form_chart() {
 //                   data_array[i].unit=msg.object.unit[i];
 //                   data_array[i].id=option.id
 //               }
-//               if(chart_body_close_validate){
-//
-//                   option.data=data_array;
-//                   addSeriesOption[interval]=data_array;
-//                   chartSeries.addSeries(addSeriesOption);
-//                   show_chart_body(option);
-//
-//                   render_to(option);
-//                   create_environment_for_data(option);
-//                   new Highcharts.Chart(high_chart);
-//                   add_series(option);
-//                   proper_type_for_chart(option);
-//
-//                   chartSeries.addCount();
-//               }
-//               else{
-//                   option.data=data_array;
-//                   addSeriesOption[interval]=data_array;
-//                   chartSeries.addSeries(addSeriesOption);
-//
-//                   add_series(option);
-//                   proper_type_for_chart(option);
-//
-//                   chartSeries.addCount();
-//               }
-//               limit_pointer_number(option);
-////               clear_chart_condition();
+//               option.data=data_array;
+//               var c={},p=option.data;
+//               ANALYTICS.chartSeries.series[option.id][interval]=deepCopy(c,p);
+//               ANALYTICS.form_chart(option);
 //           }
 //           else{
 //               MessageBox("sorry , something wrong" , "top", "warning") ;
@@ -201,223 +172,67 @@ function prepare_form_chart() {
 
         var option = {
             kpi: $("#chart-kpi :selected").text(),
-            id: chartSeries.getCount(),
+            kpi_id: kpi,
             target: "chart-container",
             begin_time: begin_time,
+            end_time: end_time,
             type: type,
             interval: interval,
-            count: chartSeries.getCount() + 1
-        }
-        var addSeriesOption = {
-            kpi: $("#chart-kpi :selected").text(),
-            kpi_id: kpi,
-            id: chartSeries.getCount(),
-            interval: interval,
+            count: chartSeries.getCount() + 1,
             view: view,
             method: method,
-            begin_time: begin_time,
-            end_time: end_time
-        }
-        if (chart_body_close_validate) {
-
-            option.data = [
-                {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},{y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"}
-            ];
-            addSeriesOption[interval] = [
-                {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},{y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"}
-            ];
-            chartSeries.addSeries(addSeriesOption);
-            show_chart_body(option);
-
-            ANALYTICS.form_chart(option);
-//            render_to(option);
-//            create_environment_for_data(option);
-//            new Highcharts.StockChart(high_chart);
-//            add_series(option);
-//            proper_type_for_chart(option);
-
-            chartSeries.addCount();
-        }
-        else {
-            option.data = [
-                {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},{y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"}
-            ];
-            addSeriesOption[interval] = [
-                {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},
-                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"},{y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-                {y: 3,low:2,high:32, target: 10, unit: "$"},
-                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-                {y: 7,low:1,high:43,  target: 10, unit: "$"}
-            ];
-            chartSeries.addSeries(addSeriesOption);
-
-            add_series(option);
-            proper_type_for_chart(option);
-
-            chartSeries.addCount();
-        }
-//        limit_pointer_number(option);
-//        clear_chart_condition();
-
-
-
-
+            chart_body_close_validate:chart_body_close_validate
+        };
+        ANALYTICS.chartSeries.addCount();
+        ANALYTICS.chartSeries.id_give();
+        option.id=ANALYTICS.chartSeries.id;
+        ANALYTICS.chartSeries.addSeries(option);
+        option.data = [
+            {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
+            {y: 3,low:2,high:20,  target: 10, unit: "$"},
+            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+            {y: 3,low:2,high:32, target: 10, unit: "$"},
+            {y: 10, low: 2,high:43, target: 10, unit: "$"},
+            {y: 7,low:1,high:43,  target: 10, unit: "$"},
+            {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+            {y: 3,low:2,high:20,  target: 10, unit: "$"},
+            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+            {y: 3,low:2,high:32, target: 10, unit: "$"},
+            {y: 10, low: 2,high:43, target: 10, unit: "$"},
+            {y: 7,low:1,high:43,  target: 10, unit: "$"},
+            {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+            {y: 3,low:2,high:20,  target: 10, unit: "$"},
+            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+            {y: 3,low:2,high:32, target: 10, unit: "$"},
+            {y: 10, low: 2,high:43, target: 10, unit: "$"},
+            {y: 7,low:1,high:43,  target: 10, unit: "$"},
+            {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+            {y: 3,low:2,high:20,  target: 10, unit: "$"},
+            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+            {y: 3,low:2,high:32, target: 10, unit: "$"},
+            {y: 10, low: 2,high:43, target: 10, unit: "$"},
+            {y: 7,low:1,high:43,  target: 10, unit: "$"},
+            {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+            {y: 3,low:2,high:20,  target: 10, unit: "$"},
+            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+            {y: 3,low:2,high:32, target: 10, unit: "$"},
+            {y: 10, low: 2,high:43, target: 10, unit: "$"},
+            {y: 7,low:1,high:43,  target: 10, unit: "$"},
+            {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+            {y: 3,low:2,high:20,  target: 10, unit: "$"},
+            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+            {y: 3,low:2,high:32, target: 10, unit: "$"},
+            {y: 10, low: 2,high:43, target: 10, unit: "$"},
+            {y: 7,low:1,high:43,  target: 10, unit: "$"},{y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
+            {y: 3,low:2,high:20,  target: 10, unit: "$"},
+            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
+            {y: 3,low:2,high:32, target: 10, unit: "$"},
+            {y: 10, low: 2,high:43, target: 10, unit: "$"},
+            {y: 7,low:1,high:43,  target: 10, unit: "$"}
+        ];
+        var c={},p=option.data;
+        ANALYTICS.chartSeries.series[option.id][interval]=deepCopy(c,p);
+        ANALYTICS.form_chart(option);
 
     }
     else {

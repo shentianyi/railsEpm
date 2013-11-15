@@ -901,7 +901,7 @@ ifepm.dashboard.full_size = function(option){
         * match the position of normal size
         * */
         var container_selector = ifepm.config.container_selector_full;
-        ifepm.dashboard_widget.remove_all_widgets();
+        ifepm.dashboard_widget.remove_all_widgets(isfullsize);
         $(container_selector).children().remove();
 
         if (Object.keys(ifepm.dashboard.graphs).length>0){
