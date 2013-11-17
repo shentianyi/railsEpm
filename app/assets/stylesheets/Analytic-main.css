@@ -180,8 +180,8 @@ div[title='analy-view-select'] {
 }
 
 .chart-type-alternate td.image {
-    background-image: url("../images/analytics-chart-type.png");
-    /*background-image: url("/assets/analytics-chart-type.png");*/
+    /*background-image: url("../images/analytics-chart-type.png");*/
+    background-image: url("/assets/analytics-chart-type.png");
     background-repeat: no-repeat;
 }
 .chart-type-alternate td p {

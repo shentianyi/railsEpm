@@ -1,22 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////init select
 
-//where to record series
-var chartSeries = {
-    count: 0,
-    series: [],
-    getCount: function () {
-        return this.count
-    },
-    addCount: function () {
-        this.count += 1
-    },
-    getSeries: function () {
-        return this.series
-    },
-    addSeries: function (series) {
-        this.series.push(series)
-    }
-}
+
 function init_analytics() {
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
@@ -120,55 +104,6 @@ function prepare_form_chart() {
         else {
             end_time = begin_time
         }
-        var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
-
-
-//       show_loading(top,0,0,0);
-//       $.post('/kpi_entries/analyse',{
-//           kpi : kpi,
-//           average:method=="0",
-//           entity_group: view,
-//           startTime : standardParse(begin_time).date.toISOString() ,
-//           endTime : standardParse(end_time).date.toISOString(),
-//           interval:interval
-//       },function(msg){
-//           remove_loading()
-//           if(msg.result){
-//               var option={
-//                   kpi: $("#chart-kpi :selected").text(),
-//                   kpi_id: kpi,
-//                   target: "chart-container",
-//                   begin_time: begin_time,
-//                   end_time: end_time,
-//                   type: type,
-//                   interval: interval,
-//                   count: chartSeries.getCount() + 1,
-//                   view: view,
-//                   method: method,
-//                   chart_body_close_validate:chart_body_close_validate
-//               }
-//               var length=msg.object.current.length;
-//               var data_array=[];
-//               for(var i=0;i<length;i++){
-//                   data_array[i]={};
-//                   data_array[i].y=msg.object.current[i];
-//                   data_array[i].high=msg.object.target_max[i];
-//                   data_array[i].low=msg.object.target_min[i];
-//                   data_array[i].unit=msg.object.unit[i];
-//                   data_array[i].id=option.id
-//               }
-//               option.data=data_array;
-//               var c={},p=option.data;
-//               ANALYTICS.chartSeries.series[option.id][interval]=deepCopy(c,p);
-//               ANALYTICS.form_chart(option);
-//           }
-//           else{
-//               MessageBox("sorry , something wrong" , "top", "warning") ;
-//           }
-//       });
-
-
-
 
         var option = {
             kpi: $("#chart-kpi :selected").text(),
@@ -178,7 +113,7 @@ function prepare_form_chart() {
             end_time: end_time,
             type: type,
             interval: interval,
-            count: chartSeries.getCount() + 1,
+            count: ANALYTICS.chartSeries.count + 1,
             view: view,
             method: method,
             chart_body_close_validate:chart_body_close_validate
@@ -187,55 +122,10 @@ function prepare_form_chart() {
         ANALYTICS.chartSeries.id_give();
         option.id=ANALYTICS.chartSeries.id;
         ANALYTICS.chartSeries.addSeries(option);
-
-//        option.data = [
-//            {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
-//            {y: 3,low:2,high:20,  target: 10, unit: "$"},
-//            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//            {y: 3,low:2,high:32, target: 10, unit: "$"},
-//            {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//            {y: 7,low:1,high:43,  target: 10, unit: "$"},
-//            {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-//            {y: 3,low:2,high:20,  target: 10, unit: "$"},
-//            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//            {y: 3,low:2,high:32, target: 10, unit: "$"},
-//            {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//            {y: 7,low:1,high:43,  target: 10, unit: "$"},
-//            {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-//            {y: 3,low:2,high:20,  target: 10, unit: "$"},
-//            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//            {y: 3,low:2,high:32, target: 10, unit: "$"},
-//            {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//            {y: 7,low:1,high:43,  target: 10, unit: "$"},
-//            {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-//            {y: 3,low:2,high:20,  target: 10, unit: "$"},
-//            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//            {y: 3,low:2,high:32, target: 10, unit: "$"},
-//            {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//            {y: 7,low:1,high:43,  target: 10, unit: "$"},
-//            {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-//            {y: 3,low:2,high:20,  target: 10, unit: "$"},
-//            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//            {y: 3,low:2,high:32, target: 10, unit: "$"},
-//            {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//            {y: 7,low:1,high:43,  target: 10, unit: "$"},
-//            {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-//            {y: 3,low:2,high:20,  target: 10, unit: "$"},
-//            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//            {y: 3,low:2,high:32, target: 10, unit: "$"},
-//            {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//            {y: 7,low:1,high:43,  target: 10, unit: "$"},{y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-//            {y: 3,low:2,high:20,  target: 10, unit: "$"},
-//            {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//            {y: 3,low:2,high:32, target: 10, unit: "$"},
-//            {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//            {y: 7,low:1,high:43,  target: 10, unit: "$"}
-//        ];
-//
-//        var c={},p=option.data;
-//        ANALYTICS.chartSeries.series[option.id][interval]=deepCopy(c,p);
+        if(option.chart_body_close_validate){
+            show_chart_body(option);
+        }
         ANALYTICS.form_chart(option);
-
     }
     else {
         MessageBox("please fill all blanks in *", "top", "warning")
@@ -265,123 +155,93 @@ function show_chart_body(option) {
     $("#chart-interval-alternate").find("li[interval='" + option.interval + "']").addClass("active");
 }
 function alternate_chart_type(event) {
-    var target = adapt_event(event).target;
-    if (!$(target).hasClass("image")) {
-        var option = {
-            target: "chart-container",
-            type: $(target).attr("type"),
-            count: chartSeries.getCount(),
-            interval: $("#chart-interval-alternate li.active").attr("interval")
+    if(ANALYTICS.loading_data==true){
+        MessageBox("Can't do it during loading","top","warning");
+    }
+    else{
+        var target = adapt_event(event).target;
+        if (!$(target).hasClass("image")) {
+            var option = {
+                target: "chart-container",
+                type: $(target).attr("type"),
+                count: ANALYTICS.chartSeries.getCount(),
+                interval: $("#chart-interval-alternate li.active").attr("interval")
+            }
+            for (var i = 0; i < ANALYTICS.chartSeries.series.length; i++) {
+                if(ANALYTICS.chartSeries.series[i]===undefined){
+                    continue
+                }
+                else{
+                    option.id = i;
+                    ANALYTICS.proper_type_for_chart(option)
+                }
+            }
+            $(target).siblings().removeClass("image");
+            $("#chart-type-alternate td").find("p").css("display","block")
+            $(target).addClass("image").find("p").css("display","none");
         }
-        for (var i = 0; i < chartSeries.series.length; i++) {
-            option.id = chartSeries.series[i].id;
-            proper_type_for_chart(option)
-        }
-        $(target).siblings().removeClass("image");
-        $("#chart-type-alternate td").find("p").css("display","block")
-        $(target).addClass("image").find("p").css("display","none");
-        limit_pointer_number(option);
     }
 }
 
 function change_interval(option) {
-    var series_object, new_data_wrapper = [];
-    var chart = $("#" + option.target).highcharts();
-    for (var i = 0; i < chartSeries.getCount(); i++) {
-        series_object = chartSeries.getSeries()[i];
-        if (series_object[option.interval]) {
-            new_data_wrapper.push(series_object[option.interval])
-        }
-        else {
-            var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
-
-            show_loading(top,0,0,0);
-            $.ajax({url:'/kpi_entries/analyse',
-            data:{
-                kpi : series_object.kpi_id,
-                average:series_object.method=="0",
-                entity_group: series_object.view,
-                startTime : standardParse(series_object.begin_time).date.toISOString() ,
-                endTime : standardParse(series_object.end_time).date.toISOString(),
-                interval: option.interval
-            },
-            type:'POST',
-            async:false,
-            success:function(msg){
-                remove_loading();
-                if(msg.result){
-                     var length=msg.object.current.length;
-                     var data_array=[];
-                     for(var i=0;i<length;i++){
-                         data_array[i]={};
-                         data_array[i].y=msg.object.current[i];
-                         data_array[i].high=msg.object.target_max[i];
-                         data_array[i].low=msg.object.target_min[i];
-                         data_array[i].unit=msg.object.unit[i];
-                     }
-                    new_data_wrapper.push(data_array);
-                    series_object[option.interval] = data_array;
-                }
-                else{
-                    MessageBox("sorry , something wrong" , "top", "warning");
-                }
-            }});
-
-
-//            var data_array=[
-//                {y: 2,low:1,high:3, target: 10, unit: "$",id:option.id},
-//                {y: 3,low:2,high:20,  target: 10, unit: "$"},
-//                {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//                {y: 3,low:2,high:32, target: 10, unit: "$"},
-//                {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//                {y: 7,low:1,high:43,  target: 10, unit: "$"}
-//            ];
-//            new_data_wrapper.push(data_array);
-//            series_object[option.interval] = data_array;
-
-
-        }
+    if(ANALYTICS.loading_data==true){
+        MessageBox("Can't do it during loading","top","warning");
     }
-    if (new_data_wrapper.length == chartSeries.getCount()) {
+    else{
+        var series_object, have_data=[],not_have_data=[];
+        var chart = $("#" + option.target).highcharts();
+        for (var i = 0; i < ANALYTICS.chartSeries.id_count; i++) {
+            if(ANALYTICS.chartSeries.series[i]===undefined){
+                continue
+            }
+            else{
+                series_object = ANALYTICS.chartSeries.series[i];
+                if (series_object[option.interval]) {
+                    have_data.push(i);
+                }
+                else {
+                    not_have_data.push(i);
+                }
+            }
+        }
+
         chart.destroy();
         var option = {
             target: "chart-container",
             type: option.type,
             interval: option.interval,
-            count: chartSeries.getCount()
-        };
-        if (option.type == "pie") {
-            for (var j = 0; j < chartSeries.getCount(); j++) {
-                option.kpi = chartSeries.getSeries()[j]["kpi"];
-                option.id = chartSeries.getSeries()[j]["id"];
-                option.begin_time = chartSeries.getSeries()[j]["begin_time"];
-                option.data = new_data_wrapper[j];
-                if (j == 0) {
-                    render_to(option);
-                    create_environment_for_data(option);
-                    new Highcharts.Chart(high_chart);
-                }
-                add_series(option);
-            }
-            proper_type_for_chart(option);
-        }
-        else {
-            for (var j = 0; j < chartSeries.getCount(); j++) {
-                option.kpi = chartSeries.getSeries()[j]["kpi"];
-                option.id = chartSeries.getSeries()[j]["id"];
-                option.begin_time = chartSeries.getSeries()[j]["begin_time"];
-                option.data = new_data_wrapper[j];
-                if (j == 0) {
-                    render_to(option);
-                    create_environment_for_data(option);
-                    new Highcharts.Chart(high_chart);
-                }
-                add_series(option);
-                proper_type_for_chart(option);
-            }
-        }
-        limit_pointer_number(option);
+            count: ANALYTICS.chartSeries.getCount(),
 
+        },j;
+        for(j=0;j< have_data.length;j++){
+            option.kpi = ANALYTICS.chartSeries.series[j].kpi;
+            option.id = j;
+            option.begin_time = ANALYTICS.chartSeries.series[j].begin_time;
+            option.data=ANALYTICS.chartSeries.series[j][option.interval]
+            if (j == 0) {
+                ANALYTICS.render_to(option);
+                new Highcharts.StockChart(ANALYTICS.high_chart);
+            }
+            ANALYTICS.add_series(option);
+            ANALYTICS.proper_type_for_chart(option);
+        }
+        for (j = 0; j < not_have_data.length; j++) {
+            option.kpi = ANALYTICS.chartSeries.series[j].kpi;
+            option.kpi_id = ANALYTICS.chartSeries.series[j].kpi_id;
+            option.method = ANALYTICS.chartSeries.series[j].method;
+            option.view = ANALYTICS.chartSeries.series[j].view;
+            option.id = j;
+            option.begin_time = ANALYTICS.chartSeries.series[j].begin_time;
+            option.end_time = ANALYTICS.chartSeries.series[j].end_time;
+            if(have_data.length==0 && j==0){
+                option.chart_body_close_validate=true;
+                ANALYTICS.form_chart(option);
+            }
+            else{
+                option.chart_body_close_validate=false;
+                ANALYTICS.form_chart(option);
+            }
+        }
     }
 }
 var resize_chart = {
@@ -428,12 +288,10 @@ function chart_point_click(object) {
             $("#chart-point-detail tbody>tr").addClass("hide");
             $("#from").text(object.time_from).parent().removeClass("hide");
             $("#to").text(object.time_to).parent().removeClass("hide");
-//            $("#sum-target").text(object.target + object.unit).parent().removeClass("hide");
-//            $("#aver-target").text(object.average_target + " " + object.unit).parent().removeClass("hide");
+
             $("#sum-value").text(object.y + object.unit).parent().removeClass("hide");
             $("#aver-value").text(object.average_y + object.unit).parent().removeClass("hide");
-//            $("#tcr").text(TCR(object.y, object.target).value).parent().removeClass("hide");
-//            tcr_trend(TCR(object.y, object.target).judge);
+
             $("#percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
         }
         else {
@@ -443,8 +301,7 @@ function chart_point_click(object) {
             $("#target-max").text(object.high + object.unit).parent().removeClass("hide");
             $("#target-min").text(object.low + object.unit).parent().removeClass("hide");
             $("#value").text(object.y + object.unit).parent().removeClass("hide");
-//            $("#tcr").text(TCR(object.y, object.target).value).parent().removeClass("hide");
-//            tcr_trend(TCR(object.y, object.target).judge);
+
             $("#percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
         }
 
@@ -456,8 +313,6 @@ function chart_point_click(object) {
         $("#target-max").text(object.high + object.unit).parent().removeClass("hide");
         $("#target-min").text((object.series.type=="column"?object.target_min:object.low) + object.unit).parent().removeClass("hide");
         $("#value").text(object.y + object.unit).parent().removeClass("hide");
-//        $("#tcr").text(TCR(object.y, object.target).value).parent().removeClass("hide");
-//        tcr_trend(TCR(object.y, object.target).judge);
     }
 }
 function close_chart_detail() {

@@ -34,6 +34,7 @@
 //=require wayne-base
 //=require date_picker_template
 //=require high_chart_template
+//=require high_chart_template_analytic
 //=require Analytics_init
 //=require jquery.ba-resize.min
 //=require jquery.icheck.min
