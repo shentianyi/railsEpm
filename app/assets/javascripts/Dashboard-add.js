@@ -673,7 +673,7 @@ DASHBOARD.add.change_interval=function(option) {
             }
             else {
 
-            show_loading(215,0,0,204);;
+            dashboard_show_loading("dashboard-add-inner",0,0,0,"200px");
             $.ajax({url:'/kpi_entries/analyse',
                 data:{
                     kpi : series_object.kpi_id,
@@ -686,7 +686,7 @@ DASHBOARD.add.change_interval=function(option) {
                 type:'POST',
                 async:false,
                 success:function(msg){
-                    remove_loading();
+                    dashboard_remove_loading("dashboard-add-inner");
                     if(msg.result){
                         var length=msg.object.current.length;
                         var data_array=[];
