@@ -484,7 +484,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                begin_time: begin_time,
 //                type: type,
 //                interval: interval,
-//                count: db_chartSeries.getCount() + 1
+//                count: db_chartSeries.getCount() + 1,
 //            }
 //            var addSeriesOption = {
 //                kpi: $("#chart-kpi :selected").text(),

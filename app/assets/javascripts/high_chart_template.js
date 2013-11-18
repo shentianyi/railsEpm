@@ -160,7 +160,6 @@ var high_chart = {
     xAxis: {
         lineWidth: 0,
         tickWidth: 0,
-        offset: -30,
         ordinal: true,
         minPadding: 0.02,
         maxPadding: 0.02,

@@ -61,7 +61,8 @@ HIGH_CHART.theme={
                         fontSize:"10px",
                         fontWeight:"light"
                     }
-                }
+                },
+                offset: -30
             },
             yAxis: {
                 labels: {
@@ -87,11 +88,11 @@ HIGH_CHART.theme={
             xAxis: {
                 labels: {
                     style: {
-                        color: 'white',
-                        fontSize:"10px",
+                        color: '#999',
                         fontWeight:"bold"
                     }
-                }
+                },
+                offset: 0
             },
             yAxis: {
                 labels: {

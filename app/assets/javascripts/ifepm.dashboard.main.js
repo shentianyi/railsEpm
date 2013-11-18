@@ -122,6 +122,9 @@ ifepm.dashboard.form_graph = function(datas,id){
             $target.find(".dashboard-eachDetail").css("backgroundColor","rgba(96,96,96,1)");
             $target.find(".dashboard-eachDetail p").css("color","white");
             $target.find(".dashboard-eachDetail i").css("color","white");
+            $target.find(".dashboard-eachDetail i").hover(function(){
+                $(this).css("color","black");
+            });
             $target.find(".dashboard-eachDetail span").css("color","white");
         }
         if(i==0){
