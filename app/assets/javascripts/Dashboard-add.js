@@ -485,6 +485,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                type: type,
 //                interval: interval,
 //                count: db_chartSeries.getCount() + 1,
+//                theme:"dark"
 //            }
 //            var addSeriesOption = {
 //                kpi: $("#chart-kpi :selected").text(),

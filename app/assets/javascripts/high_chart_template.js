@@ -120,6 +120,9 @@ var high_chart = {
             }
 
         },
+        column:{
+            borderColor:null
+        },
         pie: {
             size: '70%',
             allowPointSelect: true,
@@ -177,8 +180,6 @@ var high_chart = {
 
     },
     yAxis: {
-
-        gridLineDashStyle: 'dash',
         offset: -25,
         showFirstLabel: false,
         min:0,
