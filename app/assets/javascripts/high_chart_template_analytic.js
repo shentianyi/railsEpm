@@ -253,7 +253,6 @@ ANALYTICS.form_chart=function(option){
         }
     });
 
-
 //    option.data = [
 //            {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
 //            {y: 3,low:2,high:20,  target: 10, unit: "$"}
