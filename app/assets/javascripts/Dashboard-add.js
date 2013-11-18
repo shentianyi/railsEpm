@@ -583,7 +583,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                        })
 //                    }
 //                }
-            });
+//            });
 
 
 
