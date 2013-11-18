@@ -56,18 +56,18 @@ ANALYTICS.high_chart={
         maxHeight: 40,
         itemMarginBottom: -2
     },
-    exporting : {
-        buttons:{
-            contextButton:{
-//               symbol:'ANALYTICS.url(images/down.png)'
-                symbol:'ANALYTICS.url(/assets/down.png)'
-            }
-        },
-        url : ANALYTICS.url,
-        filename : 'MyChart',
-        width : 700, // chart width
-        exportTypes : ['chart', 'png', 'jpeg', 'pdf', 'svg', 'doc', 'docx', 'pptx', 'xls', 'xlsx'] // set download file type
-    },
+//    exporting : {
+//        buttons:{
+//            contextButton:{
+////               symbol:'ANALYTICS.url(images/down.png)'
+//                symbol:'ANALYTICS.url(/assets/down.png)'
+//            }
+//        },
+//        url : ANALYTICS.url,
+//        filename : 'MyChart',
+//        width : 700, // chart width
+//        exportTypes : ['chart', 'png', 'jpeg', 'pdf', 'svg', 'doc', 'docx', 'pptx', 'xls', 'xlsx'] // set download file type
+//    },
     plotOptions: {
         series: {
             animation: {
@@ -197,7 +197,6 @@ ANALYTICS.high_chart={
 
 ANALYTICS.form_chart=function(option){
     ANALYTICS.loading_data=true;
-
     var begin_time_utc=standardParse(option.begin_time).date,
         end_time_utc=standardParse(option.end_time).date,
         bar_fix_from,
@@ -234,7 +233,6 @@ ANALYTICS.form_chart=function(option){
             var c={},p=option.data;
             ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
             if(option.chart_body_close_validate){
-                show_chart_body(option);
                 ANALYTICS.render_to(option);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
             }
@@ -288,7 +286,6 @@ ANALYTICS.add_data=function(option){
     var next_date =  ANALYTICS.add_observe[option.interval](begin_time_utc,length) > option.end_time_utc ?
                      option.end_time_utc :  ANALYTICS.add_observe[option.interval](begin_time_utc,length);
     option.data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < option.end_time_utc?true:false;
-
 
     $.post('/kpi_entries/analyse',{
         kpi : option.kpi_id,
