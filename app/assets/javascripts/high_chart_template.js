@@ -52,7 +52,8 @@ var high_chart = {
         buttons:{
            contextButton:{
 //               symbol:'url(images/down.png)'
-               symbol:'url(/assets/down.png)'
+               symbol:'url(/assets/down.png)',
+               y:0
            }
         },
         url : url,
@@ -120,6 +121,9 @@ var high_chart = {
             }
 
         },
+        column:{
+            borderColor:null
+        },
         pie: {
             size: '70%',
             allowPointSelect: true,
@@ -160,7 +164,6 @@ var high_chart = {
     xAxis: {
         lineWidth: 0,
         tickWidth: 0,
-        offset: -30,
         ordinal: true,
         minPadding: 0.02,
         maxPadding: 0.02,
@@ -178,8 +181,6 @@ var high_chart = {
 
     },
     yAxis: {
-
-        gridLineDashStyle: 'dash',
         offset: -25,
         showFirstLabel: false,
         min:0,
@@ -252,6 +253,7 @@ function set_data(option) {
     this.interval = option.interval ? option.interval:null;
     this.id=option.id!==null ? option.id : null;
     this.count=option.count ? option.count:null;
+    this.theme=option.theme ? option.theme:null;
 }
 
 function deal_data() {
@@ -473,7 +475,9 @@ function proper_type_for_chart(){
                 dataItem.time_from=this.chart.series[i].data[0].name;
                 dataItem.time_to=this.chart.series[i].data[this.chart.series[i].data.length-1].name;
                 dataItem.unit=this.chart.series[i].data[0].unit;
-                dataItem.color= series_colors[dataItem.seriesId % series_colors.length];
+                dataItem.color=  this.theme ?
+                    HIGH_CHART.chart_color[this.theme][dataItem.seriesId % HIGH_CHART.chart_color[this.theme].length]
+                    :HIGH_CHART.chart_color["default"][dataItem.seriesId % HIGH_CHART.chart_color["default"].length];;
                 if(i==0){
                     max_data=dataItem.y;
                     index=0;

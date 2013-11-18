@@ -117,7 +117,15 @@ ifepm.dashboard.form_graph = function(datas,id){
         };
         if(isfullsize){
             option.theme="dark";
-            $("#"+option.outer_target).find(".dashboard-eachDetail").css("backgroundColor","rgba(96,96,96,1)");
+            var $target=$("#"+option.outer_target).parent().parent();
+            $target.css("background-color","rgba(16,16,16,1)");
+            $target.find(".dashboard-eachDetail").css("backgroundColor","rgba(96,96,96,1)");
+            $target.find(".dashboard-eachDetail p").css("color","white");
+            $target.find(".dashboard-eachDetail i").css("color","white");
+            $target.find(".dashboard-eachDetail i").hover(function(){
+                $(this).css("color","black");
+            });
+            $target.find(".dashboard-eachDetail span").css("color","white");
         }
         if(i==0){
             if(option.type=="pie"){

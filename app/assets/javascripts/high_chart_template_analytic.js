@@ -243,7 +243,7 @@ ANALYTICS.form_chart=function(option){
                 option.end_time_utc=end_time_utc;
                 option.bar_fix_from=bar_fix_from;
                 option.bar_fix_to=bar_fix_to;
-                option.add_length=length;
+                option.add_length=100;
                 ANALYTICS.add_data(option);
             }
             ANALYTICS.loading_data=false;

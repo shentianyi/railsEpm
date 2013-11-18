@@ -48,6 +48,10 @@ IFEpm::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w(Manage-kpi.js high_chart_template_analytic.js Analytics_init.js highstock.js exporting.js exporting.extend.src.js)
 
+  # Dashbaord
+  config.assets.precompile += %w(highcharts.js highcharts-more.js jquery.gridster.js jquery.gridster.with-extras.js ifepm.activeSelector.js ifepm.text.js
+   ifepm.config.js dashboard.js ifepm.grid.main.js ifepm.dashboard.template.js ifepm.dashboard.main.js high_chart_template.js high_chart_theme.js Dashboard-add.js Dashboard-init.js dashboard_type_special.js)
+
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 

@@ -61,15 +61,19 @@ HIGH_CHART.theme={
                         fontSize:"10px",
                         fontWeight:"light"
                     }
-                }
+                },
+                offset: -30
             },
             yAxis: {
                 labels: {
-                    enabled:false,
+//                    enabled:false,
                     style: {
                         color: "rgba(0,0,0,0.25)"
                     }
-                }
+                },
+                gridLineDashStyle: 'dash',
+                gridLineWidth:1,
+                gridLineColor:"#ddd"
             }
         });
     },
@@ -80,7 +84,7 @@ HIGH_CHART.theme={
                     linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
                     stops: [
                         [0, 'rgb(96, 96, 96)'],
-                        [1, 'rgb(16, 16, 16)']
+                        [0.6, 'rgb(16, 16, 16)']
                     ]
                 }
             },
@@ -88,10 +92,10 @@ HIGH_CHART.theme={
                 labels: {
                     style: {
                         color: '#999',
-                        fontSize:"10px",
                         fontWeight:"bold"
                     }
-                }
+                },
+                offset: 0
             },
             yAxis: {
                 labels: {
@@ -99,7 +103,10 @@ HIGH_CHART.theme={
                         color: '#999',
                         fontWeight: 'bold'
                     }
-                }
+                },
+                gridLineDashStyle: 'solid',
+                gridLineWidth:1,
+                gridLineColor: 'rgba(255, 255, 255, .1)'
             },
             exporting:{
                 enabled:false
@@ -145,7 +152,16 @@ HIGH_CHART.theme={
                         "#DF5353",
                         "#7798BF",
                         "#aaeeee"
-                    ]
+                    ],
+                    dataLabels:{
+                        enabled:true,
+                        distance:-1,
+                        color:"white",
+                        connectorColor:"rgba(0,0,0,0.1)",
+                        style:{
+                            fontSize:"9px"
+                        }
+                    }
                 }
             }
         });
