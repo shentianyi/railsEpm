@@ -895,9 +895,9 @@ var current_select_id = -1;
 
 ifepm.dashboard.full_size = function(option){
     isfullsize = option.fullsize;
-    if(isfullsize && (current_select_id == option.id)){
-        return;
-    }
+    //if(isfullsize && (current_select_id == option.id)){
+    //    return;
+    //}
     current_select_id = option.id
 
     if(isfullsize){
