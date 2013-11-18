@@ -33,5 +33,9 @@ class KpiEntriesController < ApplicationController
       render :json=>msg
     end
   end
+  
+  def recents
+    render :json =>KpiEntry.recent_input(current_user.id,params[:ids],params[:time])
+  end
 
 end

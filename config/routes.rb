@@ -48,6 +48,7 @@ IFEpm::Application.routes.draw do
       post :entry
       post :refresh_entry
       match :analyse
+      get :recents
     end
   end
 
