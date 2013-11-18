@@ -22,8 +22,6 @@
 //=require chosen.jquery.min
 //=require wayne-base
 //=require date_picker_template
-//=require high_chart_template
-//=require high_chart_theme
 //=require high_chart_template_analytic
 //=require Analytics_init
 //=require jquery.ba-resize.min
@@ -36,9 +34,6 @@
 //=require Manage-user
 //=require Manage-view
 //=require 2_column_right_nav
-//=require Dashboard-add
-//=require Dashboard-init
-//=require dashboard_type_special
 //=require Log
 //=require Entry
 //=require i18n
