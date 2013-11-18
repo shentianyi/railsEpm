@@ -87,7 +87,7 @@ HIGH_CHART.theme={
             xAxis: {
                 labels: {
                     style: {
-                        color: '#999',
+                        color: 'white',
                         fontSize:"10px",
                         fontWeight:"bold"
                     }
@@ -145,7 +145,16 @@ HIGH_CHART.theme={
                         "#DF5353",
                         "#7798BF",
                         "#aaeeee"
-                    ]
+                    ],
+                    dataLabels:{
+                        enabled:true,
+                        distance:-1,
+                        color:"white",
+                        connectorColor:"rgba(0,0,0,0.1)",
+                        style:{
+                            fontSize:"9px"
+                        }
+                    }
                 }
             }
         });
