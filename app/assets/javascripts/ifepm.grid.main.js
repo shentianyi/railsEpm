@@ -91,7 +91,7 @@ ifepm.dashboard_widget.init_fullsize = function(){
          gridster_full = $("#dash-fullsize ul").gridster({
              namespace:'#dash-fullsize',
              widget_margins: [10,10],
-             widget_base_dimensions: [width,height],
+             widget_base_dimensions: [width,height]
          }).data('gridster');
          isinit_fullsize = false;
      }

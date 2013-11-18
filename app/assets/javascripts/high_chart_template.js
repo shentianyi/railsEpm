@@ -1,10 +1,12 @@
+var HIGH_CHART=HIGH_CHART || {} ;
 var url = 'http://42.121.111.38:9002/HighChartsFileService/';
-
 var high_chart = {
     chart: {
         spacingLeft: 5,
         spacingRight: 5,
-        marginTop: 30,
+        spacingBottom:1,
+        marginTop: 0,
+        borderRadius:0,
         animation: {
             duration: 800
         }
@@ -41,18 +43,16 @@ var high_chart = {
         enabled: true,
         borderRadius: 2,
         borderColor: "rgba(0,0,0,0)",
-        itemStyle: {
-            color: 'rgba(0,0,0,0.25)'
-        },
         animation: true,
         maxHeight: 40,
+        margin:0,
         itemMarginBottom: -2
     },
     exporting : {
         buttons:{
            contextButton:{
-//               symbol:'url(images/down.png)'
-               symbol:'url(/assets/down.png)'
+               symbol:'url(images/down.png)'
+//               symbol:'url(/assets/down.png)'
            }
         },
         url : url,
@@ -66,17 +66,10 @@ var high_chart = {
                 duration: 1000
             },
             cursor:'pointer',
-            point:{
-                events:{
-                    click:function(){
-                        chart_point_click(this);
-                    }
-                }
-            },
             marker: {
                 enabled: true,
                 fillColor: null,
-                lineColor: "white",
+                lineColor: null,
                 states: {
                     select: {
                         fillColor: null,
@@ -112,9 +105,10 @@ var high_chart = {
         },
         line: {
             lineWidth:3,
+            showInLegend:false,
             marker: {
                 lineWidth: 2,
-                radius: 4,
+                radius: 1,
                 symbol: "diamond"
             },
             events: {
@@ -131,31 +125,35 @@ var high_chart = {
             }
 
         },
-
         pie: {
             size: '70%',
             allowPointSelect: true,
             cursor: 'pointer',
             dataLabels: {
-                enabled: true,
-                color: 'rgba(0,0,0,0.25)',
-                connectorColor: 'rgba(0,0,0,0.15)',
                 connectorWidth: 1,
-                style:{},
                 format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
             },
-            colors:[
-                '#97cbe4',
-                '#f99c92',
-                '#81dfcd',
-                '#ffdb6d',
-                '#82d9e7',
-                '#dabeea',
-                '#6485a7',
-                '#f9b360',
-                '#94cd7b',
-                '#69b0bd'
-            ]
+            point:{
+                events:{
+                    select:function(){
+                        var $table=$("#"+this.series.chart.renderTo.id).prev(".dashboard-item-extra-info"), i,data,total=0,validate=true,name;
+                        $table.find(".percentage").text((this.percentage).toFixed(1)+"%");
+                        name=this.series.chart.series.length>2?this.kpi_name:this.name;
+                        $table.find(".pie-selected-name").text(name);
+                        $table.find(".selected-value").text(this.y+this.unit);
+                    }
+                }
+            },
+            events:{
+                click:function(){
+                    var $table=$("#"+this.chart.renderTo.id).prev(".dashboard-item-extra-info"), i,data,total=0,validate=true,name;
+                    for(i=0;i<this.data.length;i++){
+                        total+=this.data[i].y;
+                    }
+                    $table.find(".pie-total-value").text(total+this.data[0].unit);
+                }
+            }
+
         },
         scatter: {
             marker: {
@@ -167,13 +165,8 @@ var high_chart = {
     xAxis: {
         lineWidth: 0,
         tickWidth: 0,
-        offset: 5,
+        offset: -30,
         ordinal: true,
-        labels: {
-            style: {
-                color: "rgba(0,0,0,0.4)"
-            }
-        },
         minPadding: 0.02,
         maxPadding: 0.02,
         minRange: 36e5,
@@ -190,8 +183,8 @@ var high_chart = {
 
     },
     yAxis: {
-        gridLineColor: '#ddd',
-        gridLineDashStyle: 'Dot',
+
+        gridLineDashStyle: 'dash',
         offset: -25,
         showFirstLabel: false,
         min:0,
@@ -199,9 +192,7 @@ var high_chart = {
             enabled: false
         },
         labels: {
-            style: {
-                color: "rgba(0,0,0,0.25)"
-            },
+
             y: -2
         }
     }
@@ -229,27 +220,23 @@ function render_to(option) {
             return d.getFullYear();
         }
     };
+    if(option.theme!=null){
+        HIGH_CHART.theme[option.theme]();
+    }
+    else{
+        HIGH_CHART.theme["default"]();
+    }
 }
 
-var series_colors=[
-    '#97cbe4',
-    '#f99c92',
-    '#81dfcd',
-    '#ffdb6d',
-    '#82d9e7',
-    '#dabeea',
-    '#6485a7',
-    '#f9b360',
-    '#94cd7b',
-    '#69b0bd'
-]
 function add_series(option) {
     var series_name = option.kpi;
     var series_id = option.id;
     var chart_container = option.target;
     var type = option.type;
     var data = deal_data(option);
-    var color=option.color?option.color:series_colors[series_id % series_colors.length];
+    var color=option.color?
+              option.color:(option.theme ?
+                            HIGH_CHART.chart_color[option.theme][series_id % HIGH_CHART.chart_color[option.theme].length]:HIGH_CHART.chart_color["default"][series_id % HIGH_CHART.chart_color["default"].length]);
     $("#" + chart_container).highcharts().addSeries({
         name: series_name,
         id: series_id,
@@ -706,7 +693,7 @@ function deal_extreme(chart){
     return extreme
 }
 
-var HIGH_CHART=HIGH_CHART || {} ;
+
 HIGH_CHART.postPrepare=function(begin_time,interval){
     var template=standardParse(begin_time).template;
     switch(interval){

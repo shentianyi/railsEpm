@@ -115,6 +115,9 @@ ifepm.dashboard.form_graph = function(datas,id){
             data:data,
             count:i+1
         };
+        if(isfullsize){
+            option.theme="dark";
+        }
         if(i==0){
             if(option.type=="pie"){
                 high_chart.plotOptions.pie.size="70%";

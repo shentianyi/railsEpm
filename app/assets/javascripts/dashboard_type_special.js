@@ -9,15 +9,15 @@ DASHBOARD.special_type={
         $table
             .append($("<tr />")
                 .append($("<td rowspan='2' style='width:40%;min-width:40%;max-width:40%'/>")
-                    .append($("<span style='padding-left:5px'/>").addClass("out-target"))
+                    .append($("<span style='padding-left:5px'/>").addClass("out-target primary-value"))
                     .append($("<span />").text("out of target"))
                 )
                 .append($("<td />")
                     .append($("<span style='display:inline-block;width:73px'/>").text("KPI名称: "))
-                    .append($("<span style='color:rgba(245, 161, 51, 0.9)'/>").addClass("kpi-name"))
+                    .append($("<span style='color:rgba(245, 161, 51, 0.9)'/>").addClass("kpi-name primary-value"))
                 )
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:91px'/>").text("记录数: "))
+                    .append($("<span style='display:inline-block;width:51px'/>").text("记录数: "))
                     .append($("<span />").addClass("total-amount"))
                 )
             )
@@ -27,7 +27,7 @@ DASHBOARD.special_type={
                     .append($("<span />").addClass("total-value"))
                 )
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:91px'/>").text("平均值: "))
+                    .append($("<span style='display:inline-block;width:51px'/>").text("平均值: "))
                     .append($("<span />").addClass("average-value"))
                 )
             )
@@ -41,11 +41,11 @@ DASHBOARD.special_type={
             .append(
                 $("<tr />")
                     .append($("<td style='text-align:center;max-width:50%;min-width:50%;width:50%;'/>")
-                        .append($("<span />").addClass("max-value"))
+                        .append($("<span />").addClass("max-value primary-value"))
                         .append($("<span />").text("最大值"))
                     )
                     .append($("<td style='text-align:center'/>")
-                        .append($("<span />").addClass("min-value"))
+                        .append($("<span />").addClass("min-value secondary-value"))
                         .append($("<span />").text("最小值"))
                     )
             )
@@ -59,7 +59,7 @@ DASHBOARD.special_type={
             .append(
                 $("<tr />")
                     .append($("<td rowspan='2' style='text-align:center;max-width:60%;min-width:60%;width:60%;'/>")
-                        .append($("<span />").addClass("percentage"))
+                        .append($("<span />").addClass("percentage primary-value"))
                         .append($("<span />").addClass("pie-selected-name"))
                     )
                     .append($("<td style='text-align:left;'/>")
@@ -148,9 +148,7 @@ DASHBOARD.add.generate=function(option){
     var type=option.type,
         target=option.target,
         outer_target=option.outer_target;
-
     DASHBOARD.special_type[type](outer_target);
-
     var out_of_target= 0, i,total_value= 0;
     for(i=0;i<option.data.length;i++){
         var data=option.data[i];
@@ -166,7 +164,12 @@ DASHBOARD.add.generate=function(option){
         average_value:(total_value/option.data.length).toFixed(1)+option.data[0].unit
     }
     option.special_data=special_data;
-
     DASHBOARD.special_grab[type](option);
-
+    if(option.theme!=null){
+        var $target=$("#"+outer_target);
+        $target.find(".dashboard-item-extra-info").css("backgroundColor","rgba(96,96,96,1)");
+        $target.find(".dashboard-item-extra-info td").css("color","white");
+        $target.find(".dashboard-item-extra-info .primary-value").css("color","#DDDF0D");
+        $target.find(".dashboard-item-extra-info .secondary-value").css("color","#7798BF");
+    }
 }

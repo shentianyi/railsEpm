@@ -330,7 +330,7 @@
     right:0px;
 }
 .put-db-chart[name="dashboard-add"]{
-    overflow-y:hidden;
+    overflow:hidden;
 }
 
 
