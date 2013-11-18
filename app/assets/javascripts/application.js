@@ -16,7 +16,6 @@
 //=require jquery_ujs
 //=require jquery.tipsy
 //=require jquery.sparkline.min
-
 //=require highcharts-more
 //=require exporting
 //=require exporting.extend.src.js
@@ -34,6 +33,8 @@
 //=require date_picker_template
 //=require high_chart_template
 //=require high_chart_theme
+//=require high_chart_template_analytic
+//=require Analytics_init
 //=require jquery.ba-resize.min
 //=require jquery.icheck.min
 //=require jquery.sortable.min
