@@ -162,3 +162,12 @@
      }); 
 </script>
 
+</script> 
+<% content_for :javascript_includes do%>
+  <%= javascript_include_tag "high_chart_template_analytic.js"%>
+  <%= javascript_include_tag "Analytics_init.js"%>
+  <%= javascript_include_tag "highstock.js"%>  
+  <%= javascript_include_tag "exporting.js"%>
+  <%= javascript_include_tag "exporting.extend.src.js"%>
+<%end%>
+
