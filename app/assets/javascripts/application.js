@@ -19,7 +19,7 @@
 
 //=require highcharts-more
 //=require exporting
-//=require exporting.extend.src
+//=require exporting.extend.src.js
 //=require brilliantech.base
 //=require brilliantech.railsepm
 //=require ifepm.activeSelector.js
