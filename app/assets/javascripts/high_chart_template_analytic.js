@@ -197,7 +197,6 @@ ANALYTICS.high_chart={
 
 ANALYTICS.form_chart=function(option){
     ANALYTICS.loading_data=true;
-
     var begin_time_utc=standardParse(option.begin_time).date,
         end_time_utc=standardParse(option.end_time).date,
         bar_fix_from,
@@ -234,7 +233,6 @@ ANALYTICS.form_chart=function(option){
             var c={},p=option.data;
             ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
             if(option.chart_body_close_validate){
-                show_chart_body(option);
                 ANALYTICS.render_to(option);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
             }
