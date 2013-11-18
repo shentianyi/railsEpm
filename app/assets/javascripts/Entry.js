@@ -54,40 +54,25 @@ ENTRY.init=function(){
                   },
                   success:function(data){
                       if(data.result){
-                          ENTRY.recent_entry[kpi_id][4]=value;
-                          $target=$("#"+id).find(".kpi-entry-trend");
-                          $target.sparkline(ENTRY.recent_entry[kpi_id], { type: 'bar',chartRangeMin:0,colorMap:["#5FA9DA","#5FA9DA","#5FA9DA","#5FA9DA","#F5A133"],barWidth:"6px"});
+                          var length=ENTRY.recent_array[kpi_id].length,colorMap=[],i;
+                          ENTRY.recent_array[kpi_id][length-1]=value;
+                          $target=$("#"+kpi_id).find(".kpi-entry-trend");
+                          for(i=0;i<length;i++){
+                              colorMap.push("#5FA9DA");
+                          }
+                          colorMap[length-1]="#F5A133";
+                          $target.sparkline(ENTRY.recent_array[kpi_id], { type: 'bar',chartRangeMin:0,colorMap:colorMap,barWidth:"6px"});
                       }
                       else{
                           MessageBox(data.content,"top","warning");
                       }
                   }
                });
-
-
-//           ENTRY.recent_entry[kpi_id][4]=value;
-//           $target=$("#"+kpi_id).find(".kpi-entry-trend");
-//           $target.sparkline(ENTRY.recent_entry[kpi_id], { type: 'bar',chartRangeMin:0,colorMap:["#5FA9DA","#5FA9DA","#5FA9DA","#5FA9DA","#F5A133"],barWidth:"6px"});
-
    });
 
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ENTRY.datepicker.init=function(){
     var interval=$("#entry-left-menu li.active").attr("interval");
@@ -238,54 +223,46 @@ ENTRY.datepicker.post=function(){
                 ENTRY.resize_sort_table()
             });
             $("#entry-sort-list td").tipsy({gravity: 'se'});
-            var i,date=$("#entry-date-picker").val();
-            for(i=0;i<$("#entry-sort-list").children().length;i++){
-                var id=$("#entry-sort-list").children().eq(i).attr("id");
-                ENTRY.trend(date,id);
-            }
-
+            ENTRY.trend(post_date);
         }
     });
 
-//    var i,date=$("#entry-date-picker").val();
-//    for(i=0;i<$("#entry-sort-list").children().length;i++){
-//        var id=$("#entry-sort-list").children().eq(i).attr("id");
-//        ENTRY.trend(date,id);
-//    }
 }
-
-
+ENTRY.trend=function(post_date){
+    var i,kpi_count=$("#entry-sort-list").children().length,kpi_id,ids=[];
+    for(i=0;i<kpi_count;i++){
+        kpi_id=$("#entry-sort-list").children().eq(i).attr("id");
+        ids.push(kpi_id);
+    }
+    if(kpi_count>0){
+        $.get(
+            "../kpi_entries/recents",
+            {
+                ids:ids,
+                time:Date.parse(post_date)
+            },
+            function(data){
+                for(var j=0;j<data.length;j++){
+                    ENTRY.trend_form(data[i].id,data[i].values)
+                }
+            }
+        )
+    }
+}
+ENTRY.trend_form=function(id,values){
+    var colorMap=[], i,length=values.length;
+    $target=$("#"+id).find(".kpi-entry-trend");
+    for(i=0;i<length;i++){
+        colorMap.push("#5FA9DA");
+    }
+    colorMap[length-1]="#F5A133";
+    $target.sparkline(values, { type: 'bar',chartRangeMin:0,colorMap:colorMap,barWidth:"6px"});
+    ENTRY.recent_array[id]=values;
+};
 ENTRY.resize_sort_table=function(){
     var table_size=$("#entry-sort-list li").width()*0.97;
     $("#entry-sort-list table").width(table_size)
 }
-ENTRY.trend=function(datetime,id){
-    var interval=$("#entry-left-menu li.active").attr("interval");
-    var post_date=HIGH_CHART.postPrepare(datetime,interval), i,recent_entry=[];
-    for(i=0;i<5;i++){
-
-        $.ajax({
-            url:'',
-            type:'get',
-            data:{
-                date:post_date.toISOString()
-            },
-            success:function(data){
-                recent_entry.unshift(data.object);
-                post_date=ENTRY.recent_entry[interval](post_date);
-
-            }
-        })
-
-//        recent_entry.unshift(i);
-//        post_date=ENTRY.recent_entry[interval](post_date);
-
-    }
-    $target=$("#"+id).find(".kpi-entry-trend");
-    $target.sparkline(recent_entry, { type: 'bar',chartRangeMin:0,colorMap:["#5FA9DA","#5FA9DA","#5FA9DA","#5FA9DA","#F5A133"],barWidth:"6px"});
-    ENTRY.recent_entry[id]=recent_entry
-}
-ENTRY.recent_entry={};
 ENTRY.recent_entry={
     "90":function(date){
         var new_date=new Date(date.setHours(date.getHours()-1));
@@ -312,3 +289,4 @@ ENTRY.recent_entry={
         return new_date;
     }
 }
+ENTRY.recent_array={};
