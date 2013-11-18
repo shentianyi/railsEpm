@@ -214,8 +214,8 @@ ANALYTICS.form_chart=function(option){
         kpi : option.kpi_id,
         average:option.method=="0",
         entity_group: option.view,
-        startTime : bar_fix_from.toISOString() ,
-        endTime : bar_fix_to.toISOString(),
+        startTime : new Date(bar_fix_from).toISOString() ,
+        endTime : new Date(bar_fix_to).toISOString(),
         interval:option.interval
     },function(msg){
         remove_loading()
@@ -285,7 +285,7 @@ ANALYTICS.add_data=function(option){
     var begin_time_utc = new Date(ANALYTICS.add_observe[option.interval](option.begin_time_utc,option.add_length)),
         length=option.add_length;
     var next_date =  ANALYTICS.add_observe[option.interval](begin_time_utc,length) > option.end_time_utc ?
-                     option.end_time_utc :  ANALYTICS.add_observe[option.interval](begin_time_utc,length);
+                     Date.parse(option.end_time_utc) :  ANALYTICS.add_observe[option.interval](begin_time_utc,length);
     option.data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < option.end_time_utc?true:false;
 
 
@@ -293,8 +293,8 @@ ANALYTICS.add_data=function(option){
         kpi : option.kpi_id,
         average:option.method=="0",
         entity_group: option.view,
-        startTime : begin_time_utc.toISOString() ,
-        endTime : next_date.toISOString(),
+        startTime : new Date(begin_time_utc).toISOString() ,
+        endTime : new Date(next_date).toISOString(),
         interval:option.interval
     },function(msg){
         if(msg.result){

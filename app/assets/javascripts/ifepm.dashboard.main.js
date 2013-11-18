@@ -117,7 +117,7 @@ ifepm.dashboard.form_graph = function(datas,id){
         };
         if(isfullsize){
             option.theme="dark";
-            $("#"+option.outer_target).find()
+            $("#"+option.outer_target).find(".dashboard-eachDetail").css("backgroundColor","rgba(96,96,96,1)");
         }
         if(i==0){
             if(option.type=="pie"){
