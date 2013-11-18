@@ -52,7 +52,8 @@ var high_chart = {
         buttons:{
            contextButton:{
 //               symbol:'url(images/down.png)'
-               symbol:'url(/assets/down.png)'
+               symbol:'url(/assets/down.png)',
+               y:0
            }
         },
         url : url,
