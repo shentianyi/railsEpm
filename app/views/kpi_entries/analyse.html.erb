@@ -152,6 +152,15 @@
           </table>
      </div>
 </div>
+
+<% content_for :javascript_includes do%>
+  <%= javascript_include_tag "highstock.js"%>  
+  <%= javascript_include_tag "exporting.js"%>
+  <%= javascript_include_tag "exporting.extend.src.js"%>
+  <%= javascript_include_tag "high_chart_template_analytic.js"%>
+  <%= javascript_include_tag "Analytics_init.js"%>
+<%end%>
+
 <script>
      $(document).ready(function() {
           init_analytics();
@@ -159,15 +168,5 @@
      $(window).resize(function() {
           resize_chart.body();
           resize_chart.container();
-     }); 
+     });
 </script>
-
-</script> 
-<% content_for :javascript_includes do%>
-  <%= javascript_include_tag "high_chart_template_analytic.js"%>
-  <%= javascript_include_tag "Analytics_init.js"%>
-  <%= javascript_include_tag "highstock.js"%>  
-  <%= javascript_include_tag "exporting.js"%>
-  <%= javascript_include_tag "exporting.extend.src.js"%>
-<%end%>
-
