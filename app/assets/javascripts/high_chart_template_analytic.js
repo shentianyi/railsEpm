@@ -56,18 +56,18 @@ ANALYTICS.high_chart={
         maxHeight: 40,
         itemMarginBottom: -2
     },
-    exporting : {
-        buttons:{
-            contextButton:{
-//               symbol:'ANALYTICS.url(images/down.png)'
-                symbol:'ANALYTICS.url(/assets/down.png)'
-            }
-        },
-        url : ANALYTICS.url,
-        filename : 'MyChart',
-        width : 700, // chart width
-        exportTypes : ['chart', 'png', 'jpeg', 'pdf', 'svg', 'doc', 'docx', 'pptx', 'xls', 'xlsx'] // set download file type
-    },
+//    exporting : {
+//        buttons:{
+//            contextButton:{
+////               symbol:'ANALYTICS.url(images/down.png)'
+//                symbol:'ANALYTICS.url(/assets/down.png)'
+//            }
+//        },
+//        url : ANALYTICS.url,
+//        filename : 'MyChart',
+//        width : 700, // chart width
+//        exportTypes : ['chart', 'png', 'jpeg', 'pdf', 'svg', 'doc', 'docx', 'pptx', 'xls', 'xlsx'] // set download file type
+//    },
     plotOptions: {
         series: {
             animation: {
@@ -286,7 +286,6 @@ ANALYTICS.add_data=function(option){
     var next_date =  ANALYTICS.add_observe[option.interval](begin_time_utc,length) > option.end_time_utc ?
                      option.end_time_utc :  ANALYTICS.add_observe[option.interval](begin_time_utc,length);
     option.data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < option.end_time_utc?true:false;
-
 
     $.post('/kpi_entries/analyse',{
         kpi : option.kpi_id,
