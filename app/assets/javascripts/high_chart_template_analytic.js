@@ -197,6 +197,7 @@ ANALYTICS.high_chart={
 
 ANALYTICS.form_chart=function(option){
     ANALYTICS.loading_data=true;
+
     var begin_time_utc=standardParse(option.begin_time).date,
         end_time_utc=standardParse(option.end_time).date,
         bar_fix_from,
@@ -205,8 +206,7 @@ ANALYTICS.form_chart=function(option){
         data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
     bar_fix_from=Date.parse(begin_time_utc);
     bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,length) <= end_time_utc ?
-                           ANALYTICS.add_observe[option.interval](begin_time_utc,length) : Date.parse(end_time_utc) ;
-
+                           Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,length)) : Date.parse(end_time_utc) ;
 
     var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
     show_loading(top,0,0,0);
@@ -274,18 +274,19 @@ ANALYTICS.form_chart=function(option){
 //        option.bar_fix_from=bar_fix_from;
 //        option.bar_fix_to=bar_fix_to;
 //        option.add_length=length;
-////        ANALYTICS.add_data(option);
 //        window.setTimeout(function(){
 //            ANALYTICS.add_data(option)
 //        },1000)
 //    }
 //    ANALYTICS.loading_data=false;
+
 }
 ANALYTICS.add_data=function(option){
-    var begin_time_utc = new Date(ANALYTICS.add_observe[option.interval](option.begin_time_utc,option.add_length)),
+    var begin_time_utc = ANALYTICS.add_observe[option.interval](option.begin_time_utc,option.add_length),
         length=option.add_length;
+
     var next_date =  ANALYTICS.add_observe[option.interval](begin_time_utc,length) > option.end_time_utc ?
-                     Date.parse(option.end_time_utc) :  ANALYTICS.add_observe[option.interval](begin_time_utc,length);
+                     option.end_time_utc :  ANALYTICS.add_observe[option.interval](begin_time_utc,length);
     option.data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < option.end_time_utc?true:false;
 
 
@@ -293,8 +294,8 @@ ANALYTICS.add_data=function(option){
         kpi : option.kpi_id,
         average:option.method=="0",
         entity_group: option.view,
-        startTime : new Date(begin_time_utc).toISOString() ,
-        endTime : new Date(next_date).toISOString(),
+        startTime : begin_time_utc.toISOString() ,
+        endTime : next_date.toISOString(),
         interval:option.interval
     },function(msg){
         if(msg.result){
@@ -323,7 +324,7 @@ ANALYTICS.add_data=function(option){
 //            chart.xAxis[0].setExtremes(option.bar_fix_from, option.bar_fix_to);
             if(option.data_too_long) {
                 option.begin_time_utc=begin_time_utc;
-                add_data(option);
+                ANALYTICS.add_data(option);
             }
         }
         else{
@@ -355,7 +356,7 @@ ANALYTICS.add_data=function(option){
 ////    chart.xAxis[0].setExtremes(option.bar_fix_from, option.bar_fix_to);
 //    if(option.data_too_long) {
 //        option.begin_time_utc=begin_time_utc;
-//        add_data(option);
+//        ANALYTICS.add_data(option);
 //    }
 };
 
@@ -554,27 +555,39 @@ ANALYTICS.chartSeries = {
 };
 ANALYTICS.add_observe={
     "90":function(UTCTime,addTime){
-        var date=UTCTime.setHours(UTCTime.getHours() +  parseInt(addTime));
-        return date;
+        var parse_date=Date.parse(UTCTime);
+        var old_date=new Date(parse_date);
+        var date=old_date.setHours(old_date.getHours() +  parseInt(addTime));
+        return new Date(date);
     },
     "100":function(UTCTime,addTime){
-        var date=UTCTime.setDate(UTCTime.getDate() +  parseInt(addTime));
-        return date;
+        var parse_date=Date.parse(UTCTime);
+        var old_date=new Date(parse_date);
+        var date=old_date.setDate(old_date.getDate() +  parseInt(addTime));
+        return new Date(date);
     },
     "200":function(UTCTime,addTime){
-        var date=UTCTime.setDate(UTCTime.getDate() + parseInt(addTime)*7);
-        return date;
+        var parse_date=Date.parse(UTCTime);
+        var old_date=new Date(parse_date);
+        var date=old_date.setDate(old_date.getDate() + parseInt(addTime)*7);
+        return new Date(date);
     },
     "300":function(UTCTime,addTime){
-        var date=UTCTime.setMonth(UTCTime.getMonth() +  parseInt(addTime));
-        return date;
+        var parse_date=Date.parse(UTCTime);
+        var old_date=new Date(parse_date);
+        var date=old_date.setMonth(old_date.getMonth() +  parseInt(addTime));
+        return new Date(date);
     },
     "400":function(UTCTime,addTime){
-        var date=UTCTime.setMonth(UTCTime.getMonth() + parseInt(addTime)*3);
-        return date;
+        var parse_date=Date.parse(UTCTime);
+        var old_date=new Date(parse_date);
+        var date=old_date.setMonth(old_date.getMonth() + parseInt(addTime)*3);
+        return new Date(date);
     },
     "500":function(UTCTime,addTime){
-        var date=UTCTime.setFullYear(UTCTime.getFullYear() +  parseInt(addTime));
-        return date;
+        var parse_date=Date.parse(UTCTime);
+        var old_date=new Date(parse_date);
+        var date=old_date.setFullYear(old_date.getFullYear() +  parseInt(addTime));
+        return new Date(date);
     }
 }
