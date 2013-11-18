@@ -117,6 +117,7 @@ ifepm.dashboard.form_graph = function(datas,id){
         };
         if(isfullsize){
             option.theme="dark";
+            $("#"+option.outer_target).find()
         }
         if(i==0){
             if(option.type=="pie"){

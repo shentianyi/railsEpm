@@ -50,7 +50,7 @@ ANALYTICS.high_chart={
         borderRadius: 2,
         borderColor: "rgba(0,0,0,0)",
         itemStyle: {
-            color: 'rgba(0,0,0,0.25)'
+            color: 'rgba(0,0,0,0.8)'
         },
         animation: true,
         maxHeight: 40,

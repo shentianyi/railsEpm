@@ -16,7 +16,7 @@
 //=require jquery_ujs
 //=require jquery.tipsy
 //=require jquery.sparkline.min
-//=require highcharts
+
 //=require highstock
 //=require highcharts-more
 //=require exporting

@@ -2,12 +2,31 @@ var HIGH_CHART=HIGH_CHART || {} ;
 HIGH_CHART.theme={
     default:function(){
         Highcharts.setOptions({
+            chart: {
+                backgroundColor:"white"
+            },
             legend: {
                 itemStyle: {
-                    color: 'rgba(0,0,0,0.25)'
+                    color: 'rgba(0,0,0,0.8)'
+                },
+                itemHoverStyle: {
+                    color: 'rgba(0,0,0,1)'
+                },
+                itemHiddenStyle: {
+                    color: 'rgba(0,0,0,0.1)'
+                }
+            },
+            tooltip: {
+                backgroundColor:"rgba(255,255,255,0.7)",
+                borderWidth: 0.5,
+                style: {
+                    color: 'rgba(0,0,0,1)'
                 }
             },
             plotOptions:{
+                series:{
+                    shadow:false
+                },
                 pie:{
                     colors:[
                         '#97cbe4',
@@ -32,18 +51,19 @@ HIGH_CHART.theme={
                     }
                 }
             },
+            exporting:{
+                enabled:true
+            },
             xAxis: {
                 labels: {
                     style: {
                         color: "rgba(0,0,0,0.3)",
-                        fontSize:"10px"
+                        fontSize:"10px",
+                        fontWeight:"light"
                     }
                 }
             },
             yAxis: {
-                gridLineColor: "rgba(0,0,0,0.1)",
-                lineWidth: 1,
-                tickWidth: 1,
                 labels: {
                     enabled:false,
                     style: {
@@ -65,9 +85,6 @@ HIGH_CHART.theme={
                 }
             },
             xAxis: {
-                gridLineWidth: 0,
-                lineColor: '#999',
-                tickColor: '#999',
                 labels: {
                     style: {
                         color: '#999',
@@ -77,12 +94,6 @@ HIGH_CHART.theme={
                 }
             },
             yAxis: {
-                alternateGridColor: null,
-                minorTickInterval: null,
-                gridLineColor: 'rgba(255, 255, 255, .1)',
-                minorGridLineColor: 'rgba(255,255,255,0.07)',
-                lineWidth: 0,
-                tickWidth: 0,
                 labels: {
                     style: {
                         color: '#999',
@@ -104,11 +115,6 @@ HIGH_CHART.theme={
                     color: '#333'
                 }
             },
-            labels: {
-                style: {
-                    color: '#CCC'
-                }
-            },
             tooltip: {
                 backgroundColor: {
                     linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
@@ -126,24 +132,6 @@ HIGH_CHART.theme={
                 series: {
                     shadow: true
                 },
-                line: {
-                    dataLabels: {
-                        color: '#CCC'
-                    },
-                    marker: {
-                        lineColor: '#333'
-                    }
-                },
-                spline: {
-                    marker: {
-                        lineColor: '#333'
-                    }
-                },
-                scatter: {
-                    marker: {
-                        lineColor: '#333'
-                    }
-                },
                 pie:{
                     colors:[
                         "#DDDF0D",
@@ -158,11 +146,6 @@ HIGH_CHART.theme={
                         "#7798BF",
                         "#aaeeee"
                     ]
-                }
-            },
-            toolbar: {
-                itemStyle: {
-                    color: '#CCC'
                 }
             }
         });

@@ -51,8 +51,8 @@ var high_chart = {
     exporting : {
         buttons:{
            contextButton:{
-               symbol:'url(images/down.png)'
-//               symbol:'url(/assets/down.png)'
+//               symbol:'url(images/down.png)'
+               symbol:'url(/assets/down.png)'
            }
         },
         url : url,
@@ -96,11 +96,6 @@ var high_chart = {
             stickyTracking:false,
             trackByArea:false,
             zIndex:-1,
-            tooltip:{
-                tooltip:function(){
-                    return false
-                }
-            },
             showInLegend: false
         },
         line: {
