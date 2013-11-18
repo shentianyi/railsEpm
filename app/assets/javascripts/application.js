@@ -11,22 +11,12 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //=require jquery-1.8.2.min
-//=require jquery.gridster
-//=require jquery.gridster.with-extras
 //=require jquery_ujs
 //=require jquery.tipsy
 //=require jquery.sparkline.min
-
-//=require highcharts-more
-//=require exporting
-//=require exporting.extend.src.js
 //=require brilliantech.base
 //=require brilliantech.railsepm
-//=require ifepm.activeSelector.js
-//=require ifepm.text.js
-//=require ifepm.config.js
 //=require Template
-//=require dashboard.js
 //=require bootstrap-datepicker
 //=require bootstrap-datetimepicker.min
 //=require chosen.jquery.min
@@ -46,9 +36,6 @@
 //=require 2_column_right_nav
 //=require Dashboard-add
 //=require Dashboard-init
-//=require ifepm.grid.main.js
-//=require ifepm.dashboard.template.js
-//=require ifepm.dashboard.main.js
 //=require dashboard_type_special
 //=require Log
 //=require Entry

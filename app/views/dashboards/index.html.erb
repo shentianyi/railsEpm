@@ -180,6 +180,23 @@
    </div>
  </div>
 
+<% content_for :javascript_includes do%>
+  <%= javascript_include_tag "highcharts.js"%>
+  <%= javascript_include_tag "highcharts-more.js"%>
+  <%= javascript_include_tag "exporting.js"%>
+  <%= javascript_include_tag "exporting.extend.src.js"%>
+  <%= javascript_include_tag "jquery.gridster.js"%>
+  <%= javascript_include_tag "jquery.gridster.with-extras.js"%>
+  
+  <%= javascript_include_tag "ifepm.activeSelector.js"%>  
+  <%= javascript_include_tag "ifepm.text.js"%>
+  <%= javascript_include_tag "ifepm.config.js"%>
+  <%= javascript_include_tag "dashboard.js"%>
+  <%= javascript_include_tag "ifepm.grid.main.js"%>
+  <%= javascript_include_tag "ifepm.dashboard.template.js"%>
+  <%= javascript_include_tag "ifepm.dashboard.main.js"%>
+<%end%>
+
 <script type="text/javascript">
     $(document).ready(function (){
         init_component();
