@@ -144,7 +144,7 @@ function show_chart_body(option) {
                 var option = {
                     interval: $(target).attr("interval"),
                     target: 'chart-container',
-                    type: $("#chart-type-alternate").find(".active").attr("type")
+                    type: $("#chart-type-alternate").find(".image").attr("type")
                 }
                 change_interval(option);
                 $("#chart-interval-alternate").find("li").removeClass("active");
@@ -210,7 +210,7 @@ function change_interval(option) {
             target: "chart-container",
             type: option.type,
             interval: option.interval,
-            count: ANALYTICS.chartSeries.getCount(),
+            count: ANALYTICS.chartSeries.getCount()
 
         },j;
         for(j=0;j< have_data.length;j++){
