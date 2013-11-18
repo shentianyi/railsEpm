@@ -15,7 +15,7 @@ class KpiEntry < ActiveRecord::Base
     values=[]
     user_kpi_item_ids.each do |user_kpi_item_id|
       time_key=gen_recent_time_zscore_key(user_id,user_kpi_item_id)
-      uuids= $redis.zrevrangebyscore(time_key,time,0,:limit=>RECENT_INPUT_NUM)
+      uuids= $redis.zrevrangebyscore(time_key,time,0,:limit=>[0,RECENT_INPUT_NUM])
       v=[]
       if uuids
         value_key=gen_recent_value_zscore_key user_id,user_kpi_item_id
