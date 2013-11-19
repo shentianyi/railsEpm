@@ -69,9 +69,6 @@ ENTRY.init=function(){
                   }
                });
    });
-
-
-
 }
 
 ENTRY.datepicker.init=function(){
@@ -250,14 +247,17 @@ ENTRY.trend=function(post_date){
     }
 }
 ENTRY.trend_form=function(id,values){
-    var colorMap=[], i,length=values.length;
+    var colorMap=[], i,length=values.length+1,complete_value=[],
+        current_value=$("#"+id).find(".entry-actual").val().length>0?$("#"+id).find(".entry-actual").val():0;
     $target=$("#"+id).find(".kpi-entry-trend");
     for(i=0;i<length;i++){
         colorMap.push("#5FA9DA");
     }
     colorMap[length-1]="#F5A133";
-    $target.sparkline(values, { type: 'bar',chartRangeMin:0,colorMap:colorMap,barWidth:"6px"});
-    ENTRY.recent_array[id]=values;
+    complete_value=deepCopy(complete_value,values);
+    complete_value.push(current_value);
+    $target.sparkline(complete_value, { type: 'bar',chartRangeMin:0,colorMap:colorMap,barWidth:"6px"});
+    ENTRY.recent_array[id]=complete_value;
 };
 ENTRY.resize_sort_table=function(){
     var table_size=$("#entry-sort-list li").width()*0.97;
