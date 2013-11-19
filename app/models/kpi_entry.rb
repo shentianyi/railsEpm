@@ -6,7 +6,7 @@ class KpiEntry < ActiveRecord::Base
   attr_accessible :entry_at, :frequency,:value,:original_value,:parsed_entry_at,:abnormal
   attr_accessible :user_kpi_item_id,:kpi_id,:entity_id,:user_id,:target_max,:target_min
 
-  RECENT_INPUT_NUM=4
+  RECENT_INPUT_NUM=5
 
   after_save :set_recent_input
   after_destroy :rem_recent_input
@@ -16,13 +16,14 @@ class KpiEntry < ActiveRecord::Base
       time_key=gen_recent_time_zscore_key(user_id,user_kpi_item_id)
       uuids= $redis.zrevrangebyscore(time_key,time,0,:limit=>[0,RECENT_INPUT_NUM])
       v=[]
+      f=false
       if uuids
         value_key=gen_recent_value_zscore_key user_id,user_kpi_item_id
         uuids.each do |uuid|
-          v<<$redis.zscore(value_key,uuid) unless $redis.zscore(time_key,uuid)==time
+          v<<$redis.zscore(value_key,uuid) unless (f=($redis.zscore(time_key,uuid)==time))
         end
       end
-      values<<{:id=>user_kpi_item_id,:values=>v.reverse}
+      values<<{:id=>user_kpi_item_id,:values=> f ? v.reverse : v[0..3].reverse}
     end
     return values
   end
