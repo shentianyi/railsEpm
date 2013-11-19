@@ -1,0 +1,16 @@
+
+1. 在redis中存储所有需要引导的页面
+2. 调取REDIS对象，检查SET里面是否存在该用户的ID，如果不存在不做处理
+如果存在纪录，则检查当前ACTION是否已经播放介绍，如果否，RENDER时加载INTRO处理模块，并且将之改为已介绍。
+
+3.当系统升级时，可以通过添加REDIS中用户－controller/action SET来设定用户播放INTRO的必要性
+
+4. VIEW中根据HELPER返回的布尔决定是否加载GUID模块
+
+开发计划：
+REDIS-NAMESPACE和全局变量设定 OK
+REDIS键－值结构设计 OK
+修改USER_OBSERVER，保存后加载模版 OK
+用户创建时的REDIS纪录创建模版  OK
+创建HELPER判断是否要加载GUIDE模块 OK
+修改VIEW，判断是否要加载用户指导

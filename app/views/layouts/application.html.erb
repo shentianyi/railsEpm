@@ -8,12 +8,24 @@
      </head>
      <body>
 
+
+          <%=render :partial=>'shares/user_guide_env'%>
           <article class="wrap-main" id="wrap-main">
                <%= render :partial=>'shares/menu'%>
                <%= yield %>
           </article>
+
+
+
           <%= render :partial=>'shares/message_box'%>
            <%= render :partial=>'shares/slide_box'%>
+
+
+
+          <% if need_guide %>
+         <%= render :partial=>'shares/user_guide'%>
+     <% end %>
+
      </body>
      <script type="text/javascript">
            I18n.defaultLocale = "<%= I18n.default_locale %>";

@@ -21,4 +21,8 @@ module ApplicationHelper
   def get_ability_entity
     @entity=Entity.ability_find_by_id(params[:id],current_ability)
   end
+
+  def need_guide
+     return current_user.has_guide_item(self.controller_name,self.action_name)
+  end
 end
