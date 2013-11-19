@@ -243,7 +243,7 @@ ENTRY.trend=function(post_date){
             },
             function(data){
                 for(var j=0;j<data.length;j++){
-                    ENTRY.trend_form(data[i].id,data[i].values)
+                    ENTRY.trend_form(data[j].id,data[j].values)
                 }
             }
         )
