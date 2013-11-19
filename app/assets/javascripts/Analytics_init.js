@@ -279,43 +279,43 @@ function clear_chart_condition() {
 }
 
 
-function chart_point_click(object) {
-    console.log(object)
-    $("#chart-point-detail").css("left", "0");
-    $("#chart-container").css("left", "320px");
-    if (object.series.type == "pie") {
-        if (object.time_from != null) {
-            $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
-            $("#chart-point-detail tbody>tr").addClass("hide");
-            $("#from").text(object.time_from).parent().removeClass("hide");
-            $("#to").text(object.time_to).parent().removeClass("hide");
-
-            $("#sum-value").text(object.y + object.unit).parent().removeClass("hide");
-            $("#aver-value").text(object.average_y + object.unit).parent().removeClass("hide");
-
-            $("#percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
-        }
-        else {
-            $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
-            $("#chart-point-detail tbody>tr").addClass("hide");
-            $("#date").text(object.name).parent().removeClass("hide");
-            $("#target-max").text(object.high + object.unit).parent().removeClass("hide");
-            $("#target-min").text(object.low + object.unit).parent().removeClass("hide");
-            $("#value").text(object.y + object.unit).parent().removeClass("hide");
-
-            $("#percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
-        }
-
-    }
-    else {
-        $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
-        $("#chart-point-detail tbody>tr").addClass("hide");
-        $("#date").text(object.name).parent().removeClass("hide");
-        $("#target-max").text(object.high + object.unit).parent().removeClass("hide");
-        $("#target-min").text((object.series.type=="column"?object.target_min:object.low) + object.unit).parent().removeClass("hide");
-        $("#value").text(object.y + object.unit).parent().removeClass("hide");
-    }
-}
+//function chart_point_click(object) {
+//    console.log(object)
+//    $("#chart-point-detail").css("left", "0");
+//    $("#chart-container").css("left", "320px");
+//    if (object.series.type == "pie") {
+//        if (object.time_from != null) {
+//            $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
+//            $("#chart-point-detail tbody>tr").addClass("hide");
+//            $("#from").text(object.time_from).parent().removeClass("hide");
+//            $("#to").text(object.time_to).parent().removeClass("hide");
+//
+//            $("#sum-value").text(object.y + object.unit).parent().removeClass("hide");
+//            $("#aver-value").text(object.average_y + object.unit).parent().removeClass("hide");
+//
+//            $("#percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
+//        }
+//        else {
+//            $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
+//            $("#chart-point-detail tbody>tr").addClass("hide");
+//            $("#date").text(object.name).parent().removeClass("hide");
+//            $("#target-max").text(object.high + object.unit).parent().removeClass("hide");
+//            $("#target-min").text(object.low + object.unit).parent().removeClass("hide");
+//            $("#value").text(object.y + object.unit).parent().removeClass("hide");
+//
+//            $("#percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
+//        }
+//
+//    }
+//    else {
+//        $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
+//        $("#chart-point-detail tbody>tr").addClass("hide");
+//        $("#date").text(object.name).parent().removeClass("hide");
+//        $("#target-max").text(object.high + object.unit).parent().removeClass("hide");
+//        $("#target-min").text((object.series.type=="column"?object.target_min:object.low) + object.unit).parent().removeClass("hide");
+//        $("#value").text(object.y + object.unit).parent().removeClass("hide");
+//    }
+//}
 function close_chart_detail() {
     $("#chart-point-detail").css("left", "-300px");
     $("#chart-container").css("left", "0px");
