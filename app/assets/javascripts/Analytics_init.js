@@ -280,6 +280,7 @@ function clear_chart_condition() {
 
 
 function chart_point_click(object) {
+    console.log(object)
     $("#chart-point-detail").css("left", "0");
     $("#chart-container").css("left", "320px");
     if (object.series.type == "pie") {
