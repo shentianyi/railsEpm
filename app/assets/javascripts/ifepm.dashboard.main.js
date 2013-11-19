@@ -176,6 +176,7 @@ ifepm.dashboard.setTimer = function(graph){
     var intv = ifepm.dashboard.getInteral(graph.sequence);
     interval = setInterval(reload(graph.id),intv);
     intervals.push(interval);
+    console.log("ID:"+graph.id + " Interval:"+interval);
 }
 /*
 * @function reload
@@ -523,7 +524,9 @@ ifepm.dashboard.on_finish_load = function(){
         options.push(opt);
         ifepm.dashboard.save_grid_pos(options,{success:function(){}});
     }
-    ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
+    if(!isfullsize){
+        ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
+    }
 }
 
 /*
