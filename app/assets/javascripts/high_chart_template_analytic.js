@@ -76,9 +76,9 @@ ANALYTICS.high_chart={
             cursor:'pointer',
             point:{
                 events:{
-                    click:function(){
-                        chart_point_click(this);
-                    }
+//                    click:function(){
+//                        chart_point_click(this);
+//                    }
                 }
             },
             marker: {
