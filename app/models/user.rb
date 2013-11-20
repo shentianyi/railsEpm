@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
   end
 
   def has_guide_item(controller_name,action_name)
-    return $redis_guid.hexists(self.id,controller_name,action_name)
+    return $redis_guid.hexists(self.id,make_guide_key(controller_name,action_name))
   end
 
   def make_guide_key(controller_name,action_name)

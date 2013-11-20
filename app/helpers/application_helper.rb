@@ -25,4 +25,12 @@ module ApplicationHelper
   def need_guide
      return current_user.has_guide_item(self.controller_name,self.action_name)
   end
+
+  def current_controller_name
+    return self.controller_name
+  end
+
+  def current_action_name
+    return self.action_name
+  end
 end

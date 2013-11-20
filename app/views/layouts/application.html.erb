@@ -9,7 +9,7 @@
      <body>
 
 
-          <%=render :partial=>'shares/user_guide_env'%>
+          <%=render :partial=> 'shares/user_guide_env'%>
           <article class="wrap-main" id="wrap-main">
                <%= render :partial=>'shares/menu'%>
                <%= yield %>
@@ -23,7 +23,7 @@
 
 
           <% if need_guide %>
-         <%= render :partial=>'shares/user_guide'%>
+         <%= render :partial=> 'shares/user_guide'%>
      <% end %>
 
      </body>
