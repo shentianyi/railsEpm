@@ -1,0 +1,64 @@
+后台原理：
+在redis中保存一个用户ID和一个HASH表，HASH表内保存了用户需要被引导的页面的CONTROLLER和ACTION组合。
+当页面加载时，ApplicationHelper内的need_guide函数检查当前用户是否需要在当前页面被引导，如果需要则引用引导相关的CSS和JS文件，
+并且插入一个存放在PARTIAL VIEW _USER_GUIDE.ERB中的JAVASCRIPT片段开始初始化JS对象。
+在用户完成引导后调用USER_SESSION_CONTROLLER中的FINISH_GUIDE，删除REDIS中的相应纪录。
+
+JS原理：
+1.在需要标亮的元素标签中加入guide-name="[唯一的名称]"
+2.在需要显示用户指导的页面底部加入如下片段
+<script type="text/javascript">
+  step = [
+      {
+          element:$('[guide-name="mange_menu"]').get(0),
+          intro: "在开始输入和查看KPI前，您首先需要在这里设定一些关于您的企业的基础数据。"
+      },
+      {
+
+          element:$('[guide-name="entry_menu"]').get(0),
+          intro: "在简单地设置了基础信息后，您和您的同事或员工就可以在这里输入属于您企业需要分析的数据。"
+      },
+      {
+          element:$('[guide-name="dashboard_menu"]').get(0),
+          intro: "布置您的仪表盘，将枯燥的企业数据变成简单易懂，又实时更新的图表。"
+      },
+      {
+          element:$('[guide-name="analyze_menu"]').get(0),
+          intro: "在这里您可以使用分析工具分析您企业数据的现况，趋势。简单的点击即可获得可视化的结果。"
+      }
+
+  ];
+
+ SETP数组存放了需要播放的引导和顺序，其中ELEMENT是一个JQUERY的任意SELECTOR返回的原生DOM元素
+ INTRO可以使用HTML标签
+
+
+
+修改日志：
+controller: user_session_controller: add finish_guide
+model: user: add redis function
+helper: add guide function in application_helper
+observer: user_observer: add after_create function
+view:change layout/application.html.erb add shares/_user_guide.erb; shares/_user_guide_env.erb
+initializer: add a redis namespace in redis.rb; add user_guide_template.rb
+
+
+
+
+
+---------------------------开发备忘－－－－－－－－－－－－－－－－－－－－－
+1. 在redis中存储所有需要引导的页面
+2. 调取REDIS对象，检查SET里面是否存在该用户的ID，如果不存在不做处理
+如果存在纪录，则检查当前ACTION是否已经播放介绍，如果否，RENDER时加载INTRO处理模块，并且将之改为已介绍。
+
+3.当系统升级时，可以通过添加REDIS中用户－controller/action SET来设定用户播放INTRO的必要性
+
+4. VIEW中根据HELPER返回的布尔决定是否加载GUID模块
+
+开发计划：
+REDIS-NAMESPACE和全局变量设定 OK
+REDIS键－值结构设计 OK
+修改USER_OBSERVER，保存后加载模版 OK
+用户创建时的REDIS纪录创建模版  OK
+创建HELPER判断是否要加载GUIDE模块 OK
+修改VIEW，判断是否要加载用户指导

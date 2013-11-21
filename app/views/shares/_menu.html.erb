@@ -7,8 +7,8 @@
                <li>
                     <a href="/"> <span><%= t 'menu.start'%></span>  </a>
                </li>
-               <li class="relative">
-                    <a> <span><%= t 'menu.manage'%></span></a>
+               <li class="relative" >
+                    <a> <span guide-name="mange_menu"><%= t 'menu.manage'%></span></a>
                     <ul class="nav-manage-sub">
                          <li>
                               <a href="<%= kpis_path%>"><%= t 'menu.kpi'%></a>
@@ -28,19 +28,19 @@
                     </ul>
                </li>
                <li>
-                    <a  href="<%= dashboards_path%>"> <span><%= t 'menu.dashboard'%></span>  </a>
+                    <a  href="<%= dashboards_path%>" guide-name="dashboard_menu"> <span><%= t 'menu.dashboard'%></span>  </a>
                </li>
                <li>
-                    <a   href="<%= analyse_kpi_entries_path%>"> <span><%= t 'menu.analytics'%></span> </a>
+                    <a   href="<%= analyse_kpi_entries_path%>" guide-name="analyze_menu"> <span><%= t 'menu.analytics'%></span> </a>
                </li>
                <li>
-                    <a> <span><%= t 'menu.reports'%></span></a>
+                    <a guide-name="report_menu"> <span><%= t 'menu.reports'%></span></a>
                </li>
                <li><a>
                      <span>&nbsp;</span>
                </a></li>
                <li>
-                    <a href="<%= new_kpi_entry_path%>"> <span><%= t 'menu.entry_kpi'%></span>  </a>
+                    <a href="<%= new_kpi_entry_path%>" guide-name="entry_menu"> <span><%= t 'menu.entry_kpi'%></span>  </a>
                </li>
           </ul>
 

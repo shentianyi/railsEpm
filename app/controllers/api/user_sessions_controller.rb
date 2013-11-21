@@ -27,6 +27,6 @@ class Api::UserSessionsController < ApplicationController
       t.json {render :json=>result}
       t.js {render :js=>jsonp_str(result)}
     end
-
   end
+
 end

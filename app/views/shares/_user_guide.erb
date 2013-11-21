@@ -1,0 +1,27 @@
+<link rel="stylesheet" type="text/css" href="/assets/introjs.css">
+<script type="text/javascript" src="/assets/intro.min.js"></script>
+<script type="text/javascript">
+    function startIntro(){
+        var intro = introJs();
+
+        var register = function(){
+            $.ajax(
+                    {
+                        url:"/user_sessions/finish_guide",
+                        data:{"cname":"<%= current_controller_name %>","aname":"<%= current_action_name %>"}
+                    }
+            );
+
+        };
+        guide_option.steps=step
+        intro.setOptions(guide_option);
+
+        intro.oncomplete(register);
+
+        intro.onexit(register);
+
+
+        intro.start();
+    }
+    startIntro();
+</script>

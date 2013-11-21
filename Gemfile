@@ -1,13 +1,13 @@
 #source 'https://rubygems.org'
 source 'http://ruby.taobao.org'
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.13'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2'
-#gem 'sqlite3'
+#gem 'mysql2'
+gem 'sqlite3'
  
 gem 'acts_as_tenant'
 gem 'cancan'
@@ -51,3 +51,4 @@ gem 'authlogic'
 # gem 'debugger'
 # To use profile and benchmark test
 gem 'ruby-prof', '~> 0.11.2' if RUBY_VERSION < '2.0'
+

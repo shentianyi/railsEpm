@@ -73,4 +73,31 @@ class User < ActiveRecord::Base
     self.entity_groups.accessible_by(current_ability)
   end
 
+  #待测试
+  def insert_guide_template
+    if self.id
+      $redis_guid.hmset(self.id,$user_guide_template)
+    end
+  end
+
+  def remove_guide_item(controller_name,action_name)
+     $redis_guid.hdel(self.id,make_guide_key(controller_name,action_name))
+
+  end
+
+  def add_guide_item (controller_name,action_name)
+    if !has_guide_item(controller_name,action_name)
+        $redis_guid.hset(self.id,make_guide_key(controller_name,action_name),nil)
+    end
+  end
+
+  def has_guide_item(controller_name,action_name)
+    return $redis_guid.hexists(self.id,make_guide_key(controller_name,action_name))
+  end
+
+  def make_guide_key(controller_name,action_name)
+    return controller_name.downcase  + '/' + action_name.downcase
+  end
+
+
 end

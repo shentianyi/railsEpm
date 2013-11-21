@@ -36,4 +36,14 @@ class UserSessionsController < ApplicationController
     flash[:notice] = I18n.t 'auth.msg.logout_success'
     redirect_to new_user_sessions_url
   end
+
+
+  def finish_guide
+    result = {:result=>true}
+    current_user.remove_guide_item(params[:cname],params[:aname])
+    respond_to do |t|
+      t.json {render :json=>result}
+      t.js {render :js=>jsonp_str(result)}
+    end
+  end
 end
