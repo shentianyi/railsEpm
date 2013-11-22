@@ -194,7 +194,8 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-     render :json=>{:access=>false}
+     render :json=>{:access=>false},:status => 403
+      # render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
   end
   
   # I18n

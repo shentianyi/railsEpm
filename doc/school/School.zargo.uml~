@@ -26,7 +26,7 @@
       <fontname>Dialog</fontname>
       <fontsize>12</fontsize>
       <defaultstereotypeview>0</defaultstereotypeview>
-      <activediagram>类图 </activediagram>
+      <activediagram>教务用例图</activediagram>
     </settings>
     <searchpath href="PROJECT_DIR" />
     <members>
@@ -73,7 +73,7 @@
   </argo>
 <profile>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Thu Nov 21 10:28:47 CST 2013'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Thu Nov 21 11:41:04 CST 2013'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.34(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -580,6 +580,9 @@
                 <UML:UseCase xmi.id = '-64--88-0--118--5f6a2bdd:142742966b9:-8000:0000000000000D45'
                   name = '视图管理' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
                   isAbstract = 'false'>
+                  <UML:ModelElement.comment>
+                    <UML:Comment xmi.idref = '-64--88-0--118--787122ed:14278661291:-8000:0000000000000C31'/>
+                  </UML:ModelElement.comment>
                   <UML:UseCase.extend>
                     <UML:Extend xmi.idref = '-64--88-0--118--5f6a2bdd:142742966b9:-8000:0000000000000D6A'/>
                   </UML:UseCase.extend>
@@ -1256,6 +1259,12 @@
                 <UML:UseCase xmi.id = '-64--88-0--118--5f6a2bdd:142742966b9:-8000:0000000000000DA3'
                   name = '新建\删除\编辑计划' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
                   isAbstract = 'false'/>
+                <UML:Comment xmi.id = '-64--88-0--118--787122ed:14278661291:-8000:0000000000000C31'
+                  isSpecification = 'false' body = 'Tianyishen'>
+                  <UML:Comment.annotatedElement>
+                    <UML:UseCase xmi.idref = '-64--88-0--118--5f6a2bdd:142742966b9:-8000:0000000000000D45'/>
+                  </UML:Comment.annotatedElement>
+                </UML:Comment>
               </UML:Namespace.ownedElement>
             </UML:Package>
             <UML:Package xmi.id = '127-0-1-1-78b15cd8:1427396b9e6:-8000:0000000000000C1C'
@@ -10851,6 +10860,126 @@
               y="964" />
       <lineto x="672"
               y="964" />
+    </path>
+  </group>
+  <group name="Fig57"
+       description="org.argouml.uml.diagram.static_structure.ui.FigComment[128, 72, 79, 59]pathVisible=false;stereotypeView=0;"
+       href="-64--88-0--118--787122ed:14278661291:-8000:0000000000000C31"
+       fill="1"
+       fillcolor="128 128 128"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+    </private>
+    
+    <rectangle name="Fig57.0"
+      x="128"
+      y="72"
+      width="79"
+      height="59"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+    />
+    <path name="Fig57.1"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="1"
+      fillcolor="128 128 128"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="128"
+              y="72" />
+      <lineto x="196"
+              y="72" />
+      <lineto x="206"
+              y="82" />
+      <lineto x="206"
+              y="130" />
+      <lineto x="128"
+              y="130" />
+      <lineto x="128"
+              y="72" />
+    </path>
+    <path name="Fig57.2"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="1"
+      fillcolor="128 128 128"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="196"
+              y="72" />
+      <lineto x="206"
+              y="82" />
+      <lineto x="196"
+              y="82" />
+      <lineto x="196"
+              y="72" />
+    </path>
+    <group name="Fig57.3"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[130, 74, 65, 0]"
+         href="-64--88-0--118--787122ed:14278661291:-8000:0000000000000C31"
+         fill="0"
+         fillcolor="white"
+         stroke="0"
+         strokecolor="black"
+    >
+      <private>
+      </private>
+      
+      <rectangle name="Fig57.3.0"
+        x="130"
+        y="74"
+        width="65"
+        height="0"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+      />
+    </group>
+    <text name="Fig57.4"
+      x="130"
+      y="74"
+      width="65"
+      height="55"
+      fill="0"
+      fillcolor="white"
+      stroke="0"
+      strokecolor="black"
+      textcolor="black"
+      font="Dialog"
+      italic="false"
+      bold="false"
+      textsize="12"
+      justification="Left"
+    >Tianyishen</text>
+  </group>
+  <group name="Fig58"
+       description="org.argouml.uml.diagram.static_structure.ui.FigEdgeNote"
+       stroke="1"
+       strokecolor="black"
+  >
+    <private>
+      sourcePortFig="Fig57"
+      destPortFig="Fig12"
+      sourceFigNode="Fig57"
+      destFigNode="Fig12"
+    </private>
+    <path name="Fig58.0"
+      description="org.tigris.gef.presentation.FigPoly"
+      fill="0"
+      fillcolor="white"
+      stroke="1"
+      strokecolor="black"
+    >
+      <moveto x="207"
+              y="115" />
+      <lineto x="304"
+              y="115" />
     </path>
   </group>
 </pgml>
