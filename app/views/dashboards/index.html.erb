@@ -5,7 +5,7 @@
                 <p id="current-group-item" class="current-group-item"></p>
                 <i class="icon-edit current-group-item-edit" id="current-group-item-edit"></i>
                 <div class="content-right-nav-add-block" name="left-content" id="content-left-content-edit-block">
-                    <p>edit the name</p>
+                    <p>编辑名字</p>
                     <input type='text' />
                 </div>
             </div>
@@ -22,7 +22,7 @@
         <aside class="content-right-nav" name='dashboard' id="content-right-nav">
             <div style="width:auto;height:71px;"></div>
             <section class="adaptable">
-                <h3>DashBoard Group</h3>
+                <h3>仪表盘组</h3>
                 <i class="icon-plus" id="content-right-nav-add-button"></i>
                 <ul id="content-right-nav-group">
                     <%@dashboards.each do |dashboard| %>
@@ -33,22 +33,19 @@
                     <%end%>
                 </ul>
                 <div class="content-right-nav-add-block" id="content-right-nav-add-block">
-                    <p>give it a name</p>
+                    <p>给它一个名字</p>
                     <input type='text' />
                 </div>
             </section>
             <section class="solid">
-                <h3>Add DashBoard</h3>
-                <p>Creating a dashboard of your favourite type,then put it
-                    to one of the dashboard group item for long-term observation</p>
-                <a class="btn btn-primary" id="add-dashboard-show">Add Now</a>
+                <h3>添加仪表盘</h3>
+                <p>选择一款你喜欢的图标样式进行创建，将其添加到仪表盘组中，方便您日后的产看</p>
+                <a class="btn btn-primary" id="add-dashboard-show">现在添加</a>
             </section>
             <section class="solid">
-                <h3>Full Size</h3>
-                <p>Resize the dashboard in the left to full screen so that you
-                    can demonstrate it to your colleagues or leaders ,use Esc to
-                    bring it back</p>
-                <a class="btn btn-primary" id="dashboard-full-size">Full Now</a>
+                <h3>全屏显示</h3>
+                <p>将左侧的仪表板全屏显示，通过双击或者ESC来退出全屏模式</p>
+                <a class="btn btn-primary" id="dashboard-full-size">进入全屏</a>
             </section>
 
         </aside>
@@ -64,22 +61,22 @@
 
           </li>
           <li class="active">
-                <a>Custom Add</a>
+                <a>自定义添加</a>
           </li>
           <li>
-                <a>Template Add</a>
+                <a>模板添加</a>
           </li>
         </ul>
         <a class="icon-remove" id="close-add-dashboard"> Close</a>
       </div>
       <aside class="content-right-nav" name='dashboard-add'>
             <section class="solid dashboard-add-name">
-                  <h3>Add DashBoard Name</h3>
-                  <p>Give the dashboard being created a proper name</p>
+                  <h3>仪表盘名字</h3>
+                  <p>给你的仪表盘一个合适的名字</p>
                   <input type='text' placeholder="Dashboard name" id="dashboard-name-input"/>
             </section>
             <section class="solid dashboard-add-type">
-                  <h3>Choose A Type</h3>
+                  <h3>选择一种仪表盘类型</h3>
                   <ul id="db-add-type">
                         <li class="active" type="line"></li>
                         <li type="column"></li>
@@ -88,15 +85,14 @@
                   </ul>
             </section>
             <section class="solid">
-                  <h3>Create Content</h3>
-                  <p>Add one or more series to form
-                     your special dashboard</p>
+                  <h3>创建仪表盘内容</h3>
+                  <p>添加一个系列或者多个系列的数据给你的仪表盘</p>
                   <ul class="db-add-kpi-list" id="db-add-kpi-list"></ul>
-                  <a class="btn btn-primary" id="add-one-series">Add one series</a>
+                  <a class="btn btn-primary" id="add-one-series">添加一个系列数据</a>
             </section>
             <section class="solid">
-                  <h3>Select DashBoard Group</h3>
-                  <p>Select a dashboard group to put your dashboard</p>
+                  <h3>选择仪表盘所在组</h3>
+                  <p>选择一个仪表盘组来放置你的仪表盘</p>
                   <div class="dashboard-add-select-div">
                     <select data-placehoder="Group" style="width:140px;" class="chosen-select" id="dashboard-group-name">
                       <option ></option>
@@ -107,9 +103,9 @@
                   </div>
             </section>
             <section class="solid">
-                  <h3>Finish</h3>
-                  <p>Publish your dashboard since you have done</p>
-                  <a class="btn btn-primary" id="add-dashboard">Publish Now</a>
+                  <h3>完成</h3>
+                  <p>发布你刚才创建的仪表盘</p>
+                  <a class="btn btn-primary" id="add-dashboard">现在发布</a>
             </section>
       </aside>
       <div class="content-left-main" name="dashboard-add">

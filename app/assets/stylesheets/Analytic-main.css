@@ -181,8 +181,10 @@ div[title='analy-view-select'] {
 
 .chart-type-alternate td.image {
     /*background-image: url("../images/analytics-chart-type.png");*/
-    background-image: url("/assets/analytics-chart-type.png");
-    background-repeat: no-repeat;
+    /*background-image: url("/assets/analytics-chart-type.png");*/
+    /*background-repeat: no-repeat;*/
+    color:#5fa9da;
+    font-weight:bold;
 }
 .chart-type-alternate td p {
     text-align:center;
@@ -197,20 +199,20 @@ div[title='analy-view-select'] {
 }
 
 
-td.analytics-chart-line {
-    background-position: center 2px;
-}
-td.analytics-chart-column {
-    background-position: center -103px;
-}
+/*td.analytics-chart-line {*/
+    /*background-position: center 2px;*/
+/*}*/
+/*td.analytics-chart-column {*/
+    /*background-position: center -103px;*/
+/*}*/
 
-td.analytics-chart-pie {
-    background-position: center -207px;
-}
+/*td.analytics-chart-pie {*/
+    /*background-position: center -207px;*/
+/*}*/
 
-td.analytics-chart-scatter {
-    background-position: center -313px;
-}
+/*td.analytics-chart-scatter {*/
+    /*background-position: center -313px;*/
+/*}*/
 
 .chart-container{
     position:relative;
