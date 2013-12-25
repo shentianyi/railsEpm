@@ -178,7 +178,7 @@ function alternate_chart_type(event) {
             }
             $(target).siblings().removeClass("image");
             $("#chart-type-alternate td").find("p").css("display","block")
-            $(target).addClass("image").find("p").css("display","none");
+            $(target).addClass("image").find("p").css("display","block");
         }
     }
 }
