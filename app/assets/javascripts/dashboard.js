@@ -69,6 +69,7 @@ var menu_selector = menu_selector || new ActiveSelect(config.selected_class)
 var dashboards=[];
 
 var current_dashboard_id = null;
+var current_dashboard_name = "";
 
 function page_load(){
     var first_node =  menu_selector.select_first_node(config.db_container_selector,config.db_item_filter,true)
@@ -77,6 +78,8 @@ function page_load(){
 
 function select_dashboard(id){
     current_dashboard_id=id;
+    var selector =  "#content-right-nav-group>li[number="+id+"] a";
+    current_dashboard_name = $(selector).text();
     menu_selector.select_single_node(config.db_container_selector,
         config.db_item_filter,
         config.db_single_item_filter(id));

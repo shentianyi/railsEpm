@@ -59,7 +59,7 @@ ifepm.dashboard_widget.init = function(option){
 
     ifepm.dashboard_widget.setconfig(option);
     //====log====//
-    console.log(ifepm.dashboard_widget.config);
+    //console.log(ifepm.dashboard_widget.config);
 
     gridster = $("#dash-normalsize ul").gridster({
         namespace: '#dash-normalsize',
@@ -158,6 +158,11 @@ ifepm.dashboard_widget.add_w = function(option){
         selector=" li#"+option.id;
     }
 
+    if(isfullsize && option.chart_type == "pie"){
+        option.sizex = 2;
+        option.sizey = 2;
+    }
+
     if(option.isnew){
         var default_size = ifepm.dashboard_widget.initsize(option.chart_type);
         current_gridster.add_widget(option.container_selector+selector,default_size.sizex,default_size.sizey)
@@ -166,7 +171,7 @@ ifepm.dashboard_widget.add_w = function(option){
     }
 
     var pos={};
-    pos = current_gridster.serialize($("#"+option.id));
+    pos = current_gridster.serialize($(selector));
 
     pos[0].col = pos[0].col == NaN ? 1:pos[0].col;
     pos[0].row = pos[0].col == NaN ? 1:pos[0].row;
@@ -223,8 +228,8 @@ ifepm.dashboard_widget.get_pos = function(filter){
 * */
 ifepm.dashboard_widget.initsize = function(type){
     var defsize = {
-        sizex:2,
-        sizey:2,
+        sizex:1,
+        sizey:1,
     };
     switch (type)
     {

@@ -502,6 +502,7 @@ ifepm.dashboard.on_finish_load = function(){
         option.col=ifepm.dashboard.graphs[graph_id].col;
         option.sizex=ifepm.dashboard.graphs[graph_id].sizex;
         option.sizey=ifepm.dashboard.graphs[graph_id].sizey;
+        option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
         ifepm.dashboard_widget.add_w(option);
     }
     else{
@@ -939,7 +940,15 @@ ifepm.dashboard.full_size = function(option){
             ifepm.dashboard_widget.add_w(option);
         }
         else {
-            $(container_selector).append((new Graph()).placeholder)
+            //$(container_selector).append((new Graph()).placeholder)
         }
+        //add a full size title
+        $(container_selector).append(ifepm.template.title);
+        var option = {};
+        option.container_selector=container_selector;
+        option.isnew= true;
+        option.chart_type = "unknow";
+        option.id = ifepm.template.titleid;
+        ifepm.dashboard_widget.add_w(option);
     }
 }
