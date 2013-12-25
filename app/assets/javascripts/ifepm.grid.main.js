@@ -223,8 +223,8 @@ ifepm.dashboard_widget.get_pos = function(filter){
 * */
 ifepm.dashboard_widget.initsize = function(type){
     var defsize = {
-        sizex:2,
-        sizey:2,
+        sizex:1,
+        sizey:1,
     };
     switch (type)
     {
