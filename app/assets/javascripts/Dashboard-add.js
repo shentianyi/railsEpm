@@ -182,8 +182,8 @@ DASHBOARD.add.init=function(){
     });
     $("body").on("click","#db-add-kpi-list li i",function(){
         var id=parseInt($(this).attr("kpi_id"));
-        delete db_chartSeries.id_array[id];
-        delete db_chartSeries.series[id];
+        db_chartSeries.id_array.splice(id,1);
+        db_chartSeries.series.splice(id,1);
         db_chartSeries.minusCount();
         $("#chart-container").highcharts().get(id).remove(false);
         $('#chart-container').highcharts().destroy();
@@ -476,7 +476,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 
 
 
-
+//
 //            var option = {
 //                kpi: $("#chart-kpi :selected").text(),
 //                target: "chart-container",
