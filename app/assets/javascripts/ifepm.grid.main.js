@@ -158,6 +158,11 @@ ifepm.dashboard_widget.add_w = function(option){
         selector=" li#"+option.id;
     }
 
+    if(isfullsize && option.chart_type == "pie"){
+        option.sizex = 2;
+        option.sizey = 2;
+    }
+
     if(option.isnew){
         var default_size = ifepm.dashboard_widget.initsize(option.chart_type);
         current_gridster.add_widget(option.container_selector+selector,default_size.sizex,default_size.sizey)
@@ -166,7 +171,7 @@ ifepm.dashboard_widget.add_w = function(option){
     }
 
     var pos={};
-    pos = current_gridster.serialize($("#"+option.id));
+    pos = current_gridster.serialize($(selector));
 
     pos[0].col = pos[0].col == NaN ? 1:pos[0].col;
     pos[0].row = pos[0].col == NaN ? 1:pos[0].row;
