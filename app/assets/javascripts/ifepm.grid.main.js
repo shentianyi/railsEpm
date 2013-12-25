@@ -59,7 +59,7 @@ ifepm.dashboard_widget.init = function(option){
 
     ifepm.dashboard_widget.setconfig(option);
     //====log====//
-    console.log(ifepm.dashboard_widget.config);
+    //console.log(ifepm.dashboard_widget.config);
 
     gridster = $("#dash-normalsize ul").gridster({
         namespace: '#dash-normalsize',
