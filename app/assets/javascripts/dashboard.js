@@ -394,8 +394,8 @@ function init_grid(){
     option.normal = {};
     option.normal.width = $("div#dash-normalsize").width();
     option.normal.height = $(document).height()-$("header").height()-$("#left-content-title").height()-1;
-    option.normal.max_col = 5;
-    option.normal.max_row = 3;
+    option.normal.max_col = 3;
+    option.normal.max_row = 2;
 
     option.full = {};
     option.full.width = $("div#dashboard-content-full").width();
