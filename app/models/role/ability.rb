@@ -13,7 +13,7 @@ class Ability
       can :read, KpiCategory,:tenant_id=>user.tenant_id
       can :read,:all
     elsif Role.user?(user.role_id)
-      can :manage,User,:id=>user.entity_id
+      can :manage,User,:id=>user.id
       can :manage,[KpiEntry,UserSession]
       # can :read,:all
     end
