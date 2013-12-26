@@ -1,14 +1,14 @@
 <ul class="manage-left-menu" id="manage-left-menu" type="category">
      <li>
-          Kpi类别
+       <%= t 'manage.kpi.category'%>
      </li>
      <li id="manage-menu-add">
           <input type="text" />
           <span><i class="icon-plus"></i> Category</span>
           <p class="manage-add-tooltip">
-               Enter: confirm
+            <%= t 'manage.base.enter_confirm '%>
                <br />
-               Esc: cancel
+            <%= t 'manage.base.esc_cancel '%>
           </p>
      </li>
      <%@categories.each do |category|%>

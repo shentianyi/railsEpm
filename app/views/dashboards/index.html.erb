@@ -22,7 +22,7 @@
         <aside class="content-right-nav" name='dashboard' id="content-right-nav">
             <div style="width:auto;height:71px;"></div>
             <section class="adaptable">
-                <h3>仪表盘组</h3>
+                <h3><%= t 'dashboard_group.group.name' %></h3>
                 <i class="icon-plus" id="content-right-nav-add-button"></i>
                 <ul id="content-right-nav-group">
                     <%@dashboards.each do |dashboard| %>
@@ -33,19 +33,19 @@
                     <%end%>
                 </ul>
                 <div class="content-right-nav-add-block" id="content-right-nav-add-block">
-                    <p>给它一个名字</p>
+                    <p><%= t 'dashboard_group.group.give_name'%> </p>
                     <input type='text' />
                 </div>
             </section>
             <section class="solid">
-                <h3>添加仪表盘</h3>
-                <p>选择一款你喜欢的图标样式进行创建，将其添加到仪表盘组中，方便您日后的产看</p>
-                <a class="btn btn-primary" id="add-dashboard-show">现在添加</a>
+                <h3><%= t 'dashboard_group.dashboard.add' %></h3>
+                <p><%= t 'dashboard_group.dashboard.add_desc' %></p>
+                <a class="btn btn-primary" id="add-dashboard-show"><%= t 'dashboard_group.dashboard.add_now' %></a>
             </section>
             <section class="solid">
-                <h3>全屏显示</h3>
-                <p>将左侧的仪表板全屏显示，通过双击或者ESC来退出全屏模式</p>
-                <a class="btn btn-primary" id="dashboard-full-size">进入全屏</a>
+                <h3><%= t 'dashboard_group.dashboard.full' %></h3>
+                <p><%= t 'dashboard_group.dashboard.full_desc' %></p>
+                <a class="btn btn-primary" id="dashboard-full-size"><%= t 'dashboard_group.dashboard.full_now' %></a>
             </section>
 
         </aside>
@@ -61,22 +61,22 @@
 
           </li>
           <li class="active">
-                <a>自定义添加</a>
+                <a><%= t 'dashboard_group.dashboard.add_type.cus' %></a>
           </li>
           <li>
-                <a>模板添加</a>
+                <a><%= t 'dashboard_group.dashboard.add_type.temp' %></a>
           </li>
         </ul>
-        <a class="icon-remove" id="close-add-dashboard"> Close</a>
+        <a class="icon-remove" id="close-add-dashboard"> <%= t 'dashboard_group.dashboard.close' %></a>
       </div>
       <aside class="content-right-nav" name='dashboard-add'>
             <section class="solid dashboard-add-name">
-                  <h3>仪表盘名字</h3>
-                  <p>给你的仪表盘一个合适的名字</p>
-                  <input type='text' placeholder="Dashboard name" id="dashboard-name-input"/>
+                  <h3><%= t 'dashboard_group.dashboard.name' %></h3>
+                  <p><%= t 'dashboard_group.dashboard.name_desc' %></p>
+                  <input type='text' placeholder="<%= t 'dashboard_group.dashboard.name' %>" id="dashboard-name-input"/>
             </section>
             <section class="solid dashboard-add-type">
-                  <h3>选择一种仪表盘类型</h3>
+                  <h3><%= t 'dashboard_group.dashboard.choose_type' %></h3>
                   <ul id="db-add-type">
                         <li class="active" type="line"></li>
                         <li type="column"></li>
@@ -85,16 +85,16 @@
                   </ul>
             </section>
             <section class="solid">
-                  <h3>创建仪表盘内容</h3>
-                  <p>添加一个系列或者多个系列的数据给你的仪表盘</p>
+                  <h3><%= t 'dashboard_group.dashboard.content' %></h3>
+                  <p><%= t 'dashboard_group.dashboard.content_desc' %></p>
                   <ul class="db-add-kpi-list" id="db-add-kpi-list"></ul>
-                  <a class="btn btn-primary" id="add-one-series">添加一个系列数据</a>
+                  <a class="btn btn-primary" id="add-one-series"><%= t 'dashboard_group.dashboard.add_series' %></a>
             </section>
             <section class="solid">
-                  <h3>选择仪表盘所在组</h3>
-                  <p>选择一个仪表盘组来放置你的仪表盘</p>
+                  <h3><%= t 'dashboard_group.dashboard.group' %></h3>
+                  <p><%= t 'dashboard_group.dashboard.group_desc' %></p>
                   <div class="dashboard-add-select-div">
-                    <select data-placehoder="Group" style="width:140px;" class="chosen-select" id="dashboard-group-name">
+                    <select data-placeholder="<%= t 'dashboard_group.group.name'%>" style="width:140px;" class="chosen-select" id="dashboard-group-name">
                       <option ></option>
                       <%@dashboards.each do |dashboard| %>
                           <option value="<%= dashboard.id%>"><%= dashboard.name%></option>
@@ -103,9 +103,9 @@
                   </div>
             </section>
             <section class="solid">
-                  <h3>完成</h3>
-                  <p>发布你刚才创建的仪表盘</p>
-                  <a class="btn btn-primary" id="add-dashboard">现在发布</a>
+                  <h3><%= t 'dashboard_group.dashboard.finish' %></h3>
+                  <p><%= t 'dashboard_group.dashboard.finish_desc' %></p>
+                  <a class="btn btn-primary" id="add-dashboard"><%= t 'dashboard_group.dashboard.create' %></a>
             </section>
       </aside>
       <div class="content-left-main" name="dashboard-add">
@@ -127,21 +127,21 @@
                         </select>
                       </div>
                       <div class="index-condition-group">
-                        <input type="text" class="index-pick-date" placeholder="Begin Time *" id="analy-begin-time"
+                        <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.start_time' %> *" id="analy-begin-time"
                                readonly=true/>
                         <label class="index-date-extra-info"></label>
-                        <input type="text" class="index-pick-date" placeholder="End Time" id="analy-end-time"
+                        <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.end_time' %>" id="analy-end-time"
                                readonly=true/>
                         <label class="index-date-extra-info"></label>
                       </div>
                       <div class="index-condition-group" style="width:120px">
                         <label class="analytics-radio-label">
                           <input type="radio" name="chartRadios" value="1" checked>
-                          Total
+                          <%= t 'dashboard_group.dashboard.serie.total' %>
                         </label>
                         <label class="analytics-radio-label">
                           <input type="radio" name="chartRadios" value="2">
-                          Average
+                          <%= t 'dashboard_group.dashboard.serie.average' %>
                         </label>
                       </div>
                       <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px" id="db-add-chart">Add</a>

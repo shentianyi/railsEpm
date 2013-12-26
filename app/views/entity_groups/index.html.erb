@@ -4,7 +4,7 @@
         <div class="content-left-main" name="view" id="content-left-main">
             <div style="width:auto;height:71px;"></div>
             <div class="left-content-title" id="left-content-title">
-                <p class="current-group-item">管理观察点</p>
+                <p class="current-group-item"><%= t 'manage.view.desc.manage'%></p>
             </div>
 
             <div class="manage-left-content" id="manage-left-content">
@@ -15,7 +15,7 @@
                         <p id="manage-edit-target" ></p>
                         <i class="icon-pencil"></i>
                         <input type="text"/>
-                        <a class="btn btn-primary assign-department-btn" id="entity-add-show">分配部门</a>
+                        <a class="btn btn-primary assign-department-btn" id="entity-add-show"><%= t 'manage.view.desc.assign_dep'%></a>
                     </div>
                     <div class="assign-entity-wrap" id="assign-entity-wrap">
                         <ul>
@@ -34,7 +34,7 @@
                 <div class="manage-user-add" id="manage-entity-add" special="entity">
                     <i class="icon-remove" id="close-add-entity" ></i>
                     <p>
-                     部门列表
+                     <%= t 'manage.view.desc.dep_list'%>
                     </p>
                     <ul>
                        <%@entities.each do |entity|%>
@@ -50,15 +50,13 @@
 
         <aside class="content-right-nav" name='entity' id="content-right-nav">
             <section class="solid">
-                <h3>分配部门</h3>
-                <p>Creating view first , then assign department to the view ,
-                view is the base condition in analytics</p>
+                <h3><%= t 'manage.view.desc.assign_dep'%></h3>
+                <p><%= t 'manage.view.desc.assign_desc'%></p>
             </section>
             <section class="solid">
-                <h3>下一步</h3>
-                <p>After taking care of everything in manage part,you should let your
-                user(staff) go to 'Entry KPIs' to entry their kpi state</p>
-                <a class="btn btn-primary" href="<%= new_kpi_entry_path%>">Entry KPIs</a>
+              <h3><%= t 'manage.base.next'%></h3>
+                <p><%= t 'manage.view.desc.next_desc'%></p>
+                <a class="btn btn-primary" href="<%= new_kpi_entry_path%>"><%= t 'entry.desc.entry'%></a>
             </section>
         </aside>
     </div>

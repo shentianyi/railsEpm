@@ -210,6 +210,11 @@ en:
     errors:
       <<: *errors
   # brilliantech project
+  epm:
+    base:
+      title: EPM
+      name: IntelligentFactory
+      desc: Secure, quick and accurate, EPM uncovers the potential of data
   auth:
    view:
     login: Login
@@ -223,3 +228,4 @@ en:
     sign_success: Sign up successfully!
     sign_close: Registration is not open!
     sign_fail: Sign up failed!
+    local_account: We're sorry, but we could not locate your account.If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process.

@@ -1,157 +1,158 @@
-
 <div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
-    <div class="content-left-main" name="dashboard" id="content-left-main">
-        <div style="width:auto;height:71px;"></div>
-        <div class="left-content-title" id="left-content-title">
-            <p class="current-group-item">管理用户</p>
-        </div>
-
-        <div class="manage-left-content" id="manage-left-content">
-            <%= render :partial=>'entities/left_menu'%>
-
-            <div class="manage-right-content" id="manage-right-content">
-                <div class="manage-btn-group" id="manage-btn-group">
-                    <p id="manage-edit-target"></p>
-                </div>
-                <div class="manage-right-list">
-                    <div class="right-list-top-control" id="right-list-top-control" name="group">
-                        <input type="checkbox" id="manage-total-check"/>
-                        <a class="btn" id="manage-item-remove">Delete</a>
-                        <a class="btn" id="manage-user-edit">Edit</a>
-                    </div>
-                    <ul id="manage-sort-list" class="manage-sort-list">
-                        <%@users.each_with_index do |user,i|%>
-                            <li id="<%= user.id%>" is_tenant="<%= user.is_tenant%>">
-                                <p class="sort-handle">:</p>
-                                <input type="checkbox"/>
-                                <table class="group">
-                                    <tr>
-                                        <td class="user-manage-name"><%= user.first_name%></td>
-                                        <td class="user-manage-authority" value="<%=user.role_id%>"><%= UsersHelper.get_user_role_display(user.role_id)%></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="user-manage-mail"><%= user.email%></td>
-                                        <td>Authority</td>
-                                    </tr>
-                                </table>
-                            </li>
-                        <%end%>
-                    </ul>
-                </div>
-                <div class="manage-user-add" id="user-edit" general="manage-user-add">
-                    <i class="icon-remove" id="close-user-edit" general="close-user"></i>
-
-                    <div>
-                        <input type="text" placeholder="* Name" id="edit-user-name" general="user-name"/>
-                        <input type="text" placeholder="* Email" id="edit-user-mail" general="user-mail"/>
-                        <label>
-                            <input type="radio" name="edit-user-role" data-name="General" data-role="1" value="100" checked>
-                            General
-                        </label>
-                        <label>
-                            <input type="radio" name="edit-user-role" data-name="Department Manager" data-role="2" value="200">
-                            Department Manager
-                        </label>
-                        <label>
-                            <input type="radio" name="edit-user-role" data-name="General Manager" data-role="3" value="300">
-                            General Manager
-                        </label>
-                        <label>
-                            <input type="radio" name="edit-user-role" data-name="Administrator" data-role="4" value="400">
-                            Administrator
-                        </label>
-                        <input type="submit" value="Ok" class="btn btn-primary" id="manage-user-edit-old"/>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="content-left-main" name="dashboard" id="content-left-main">
+    <div style="width:auto;height:71px;"></div>
+    <div class="left-content-title" id="left-content-title">
+      <p class="current-group-item"><%= t 'manage.user.desc.manage' %></p>
     </div>
 
-    <aside class="content-right-nav" name='group' id="content-right-nav">
-        <section class="solid">
-            <h3>创建用户</h3>
-            <p>User as well as your staff in different department who created by you and
-            then entry the kpi assigned</p>
-            <a class="btn btn-primary" id="add-user-show">Create Now</a>
-        </section>
-        <section class="solid">
-            <h3>分配KPI</h3>
-            <p>You can assign different kpi to your user just
-            like assigning task</p>
-            <a class="btn btn-primary" id="manage-user-delivery">Assign KPI</a>
-        </section>
-        <section class="solid">
-            <h3>下一步</h3>
-            <p>After assigning kpi to your staff,you should put departments together
-            to your view as your viewpoint to analytics or dashboard</p>
-            <a class="btn btn-primary" href="<%= entity_groups_path%>">管理观察点</a>
-        </section>
-    </aside>
+    <div class="manage-left-content" id="manage-left-content">
+      <%= render :partial => 'entities/left_menu' %>
+
+      <div class="manage-right-content" id="manage-right-content">
+        <div class="manage-btn-group" id="manage-btn-group">
+          <p id="manage-edit-target"></p>
+        </div>
+        <div class="manage-right-list">
+          <div class="right-list-top-control" id="right-list-top-control" name="group">
+            <input type="checkbox" id="manage-total-check"/>
+            <a class="btn" id="manage-item-remove"><%= t 'manage.base.delete_btn' %></a>
+            <a class="btn" id="manage-user-edit"><%= t 'manage.base.edit_btn' %></a>
+          </div>
+          <ul id="manage-sort-list" class="manage-sort-list">
+            <% @users.each_with_index do |user, i| %>
+                <li id="<%= user.id %>" is_tenant="<%= user.is_tenant %>">
+                  <p class="sort-handle">:</p>
+                  <input type="checkbox"/>
+                  <table class="group">
+                    <tr>
+                      <td class="user-manage-name"><%= user.first_name %></td>
+                      <td class="user-manage-authority" value="<%= user.role_id %>"><%= UsersHelper.get_user_role_display(user.role_id) %></td>
+                    </tr>
+                    <tr>
+                      <td class="user-manage-mail"><%= user.email %></td>
+                      <td><%= t 'manage.user.desc.authority' %></td>
+                    </tr>
+                  </table>
+                </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="manage-user-add" id="user-edit" general="manage-user-add">
+          <i class="icon-remove" id="close-user-edit" general="close-user"></i>
+
+          <div>
+            <input type="text" placeholder="* Name" id="edit-user-name" general="user-name"/>
+            <input type="text" placeholder="* Email" id="edit-user-mail" general="user-mail"/>
+            <label>
+              <input type="radio" name="edit-user-role" data-name="General" data-role="1" value="100" checked>
+              General
+            </label>
+            <label>
+              <input type="radio" name="edit-user-role" data-name="Department Manager" data-role="2" value="200">
+              Department Manager
+            </label>
+            <label>
+              <input type="radio" name="edit-user-role" data-name="General Manager" data-role="3" value="300">
+              General Manager
+            </label>
+            <label>
+              <input type="radio" name="edit-user-role" data-name="Administrator" data-role="4" value="400">
+              Administrator
+            </label>
+            <input type="submit" value="Ok" class="btn btn-primary" id="manage-user-edit-old"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="content-right-nav" name='group' id="content-right-nav">
+    <section class="solid">
+      <h3><%= t 'manage.user.desc.create' %></h3>
+
+      <p><%= t 'manage.user.desc.create_desc' %></p>
+      <a class="btn btn-primary" id="add-user-show"><%= t 'manage.user.desc.create_now'%></a>
+    </section>
+    <section class="solid">
+      <h3><%= t 'manage.user.desc.assign' %></h3>
+
+      <p><%= t 'manage.user.desc.assign_desc' %></p>
+      <a class="btn btn-primary" id="manage-user-delivery"><%= t 'manage.user.desc.assign_now'%></a>
+    </section>
+    <section class="solid">
+      <h3><%= t 'manage.base.next' %></h3>
+
+      <p><%= t 'manage.user.desc.next_desc' %></p>
+      <a class="btn btn-primary" href="<%= entity_groups_path %>"><%= t 'manage.view.desc.manage' %></a>
+    </section>
+  </aside>
 </div>
 
 <div class="manage-user-add create-user" id="manage-user-add" general="manage-user-add">
-    <i class="icon-remove" id="close-add-user" general="close-user"></i>
-    <div>
-        <input type="text" placeholder="* Name" id="new-user-name" general="user-name"/>
-        <input type="text" placeholder="* Email" id="new-user-mail" general="user-mail"/>
-        <input type="password" placeholder="* Password" id="new-user-password"/>
-        <input type="password" placeholder="* Password Confirm" id="new-user-password-confirm"/>
-        <div class="div-select">
-            <select data-placeholder="* Department" class="chosen-select"  id="department-for-kpi">
-                <option value=""></option>
-            </select>
-        </div>
-        <label>
-            <input type="radio" name="user-role" data-name="General" data-role="1" value="100" checked>
-            General
-        </label>
-        <label>
-            <input type="radio" name="user-role" data-name="Department Manager" data-role="2" value="200">
-            Department Manager
-        </label>
-        <label>
-            <input type="radio" name="user-role" data-name="General Manager" data-role="3" value="300">
-            General Manager
-        </label>
-        <label>
-            <input type="radio" name="user-role" data-name="Administrator" data-role="4" value="400">
-            Administrator
-        </label>
-        <input type="submit" value="Add" class="btn btn-primary" id="manage-user-add-new"/>
+  <i class="icon-remove" id="close-add-user" general="close-user"></i>
+
+  <div>
+    <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="new-user-name" general="user-name"/>
+    <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="new-user-mail" general="user-mail"/>
+    <input type="password" placeholder="* <%= t 'manage.user.new.pwd' %>" id="new-user-password"/>
+    <input type="password" placeholder="* <%= t 'manage.user.new.pwd_con' %>" id="new-user-password-confirm"/>
+
+    <div class="div-select">
+      <select data-placeholder="* <%= t 'manage.user.new.dep' %>" class="chosen-select" id="department-for-kpi">
+        <option value=""></option>
+      </select>
     </div>
+    <label>
+      <input type="radio" name="user-role" data-name="General" data-role="1" value="100" checked>
+      <%= t 'manage.user.role.user' %>
+    </label>
+    <label>
+      <input type="radio" name="user-role" data-name="Department Manager" data-role="2" value="200">
+      <%= t 'manage.user.role.manager' %>
+    </label>
+    <label>
+      <input type="radio" name="user-role" data-name="General Manager" data-role="3" value="300">
+      <%= t 'manage.user.role.director' %>
+    </label>
+    <label>
+      <input type="radio" name="user-role" data-name="Administrator" data-role="4" value="400">
+      <%= t 'manage.user.role.admin' %>
+    </label>
+    <input type="submit" value="<%= t 'manage.base.add_btn' %>" class="btn btn-primary" id="manage-user-add-new"/>
+  </div>
 </div>
 
 
 
 <div class="assign-kpi-wrap" id="assign-kpi-wrap">
-    <div id="assign-kpi" class="assign-kpi" special="user">
+  <div id="assign-kpi" class="assign-kpi" special="user">
 
-        <div class="assign-kpi-left"  special="user" id="assign-kpi-options">
-            <div class="select-div">
-                <select class="chosen-select" data-placeholder="KPI Category" id="kpi-category">
-                </select>
-            </div>
-            <ul id="assign-kpi-list">
+    <div class="assign-kpi-left" special="user" id="assign-kpi-options">
+      <div class="select-div">
+        <select class="chosen-select" data-placeholder="<%= t 'manage.kpi.category' %>" id="kpi-category">
+        </select>
+      </div>
+      <ul id="assign-kpi-list">
 
-            </ul>
-        </div>
-        <div class="assign-kpi-right" id="assign-kpi-right">
-            <div class="select-div">
-                <select data-placeholder="* User" class="chosen-select" style="width:180px;" id="assign-kpi-user">
-                    <option ></option>
-                    <%@users.each_with_index do |user,i|%>
-                        <option value="<%= user.id%>"><%= user.email%></option>
-                    <%end%>
-                </select>
-            </div>
-            <div id="assign-kpi-inner" class="assign-kpi-inner">
-            </div>
-        </div>
-        <div class="assign-kpi-bottom">
-            <p>Assign KPI</p>
-            <a class="btn btn-primary" id="assign-kpi-cancel">Finish</a>
-        </div>
+      </ul>
     </div>
+    <div class="assign-kpi-right" id="assign-kpi-right">
+      <div class="select-div">
+        <select data-placeholder="* <%= t 'manage.user.desc.name'%>"  class="chosen-select" style="width:180px;" id="assign-kpi-user">
+          <option></option>
+          <% @users.each_with_index do |user, i| %>
+              <option value="<%= user.id %>"><%= user.email %></option>
+          <% end %>
+        </select>
+      </div>
+      <div id="assign-kpi-inner" class="assign-kpi-inner">
+      </div>
+    </div>
+    <div class="assign-kpi-bottom">
+      <p><%= t 'manage.user.desc.assign'%></p>
+      <a class="btn btn-primary" id="assign-kpi-cancel"><%= t 'manage.base.finish'%></a>
+    </div>
+  </div>
 </div>
 
 <script>

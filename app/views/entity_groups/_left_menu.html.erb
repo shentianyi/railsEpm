@@ -1,11 +1,11 @@
 
 <ul class="manage-left-menu" id="manage-left-menu" type="entity">
-                    <li>观察点</li>
+                    <li><%= t 'manage.view.desc.name'%></li>
                     <li id="manage-menu-add">
                         <input type="text"/>
-                        <span><i class="icon-plus"></i> 观察点</span>
+                        <span><i class="icon-plus"></i> <%= t 'manage.view.desc.name'%></span>
 
-                        <p class="manage-add-tooltip">Enter: confirm <br/>Esc: cancel</p>
+                        <p class="manage-add-tooltip"><%= t 'manage.base.enter_confirm'%> <br/><%= t 'manage.base.esc_cancel'%></p>
                     </li>
       <%@entity_groups.each do |entity_group|%>
           <li  class="<%= entity_group.id==@active_entity_group_id ? 'active' : ''%>" title="<%= entity_group.name %>" number="<%= entity_group.id%>">
