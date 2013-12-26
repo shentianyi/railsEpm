@@ -1,9 +1,9 @@
 class UserSessionsController < ApplicationController
-  skip_before_filter :require_user,:only=>[:new,:create]
-  skip_before_filter :require_active_user,:only=>[:new,:create]
+  skip_before_filter :require_user,:only=>[:new,:create,:locale]
+  skip_before_filter :require_active_user,:only=>[:new,:create,:locale]
   skip_before_filter :check_tenant_status
-  skip_before_filter :find_current_user_tenant,:only=>[:new,:create]
-  skip_authorize_resource :only=>[:new,:create]
+  skip_before_filter :find_current_user_tenant,:only=>[:new,:create,:locale]
+  skip_authorize_resource :only=>[:new,:create,:locale]
   before_filter :require_no_user, :only => [:new, :create]
 
   layout 'non_authorized'
@@ -41,6 +41,9 @@ class UserSessionsController < ApplicationController
   end
 
   def locale
-    cookies
+    msg = Message.new
+    msg.result = true
+    cookies[:locale] = params[:locale]
+    render :json => msg
   end
 end

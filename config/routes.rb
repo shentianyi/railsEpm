@@ -17,7 +17,11 @@ IFEpm::Application.routes.draw do
     end
   end
 
-  resource :user_sessions
+  resource :user_sessions do
+    collection do
+      post :locale
+    end
+  end
   resource :user_confirmations
   resource :subscriptions
 

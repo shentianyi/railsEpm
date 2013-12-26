@@ -1,6 +1,26 @@
 <div>
-  <select data-placeholder="<%= t 'epm.base.language'%>" style="width:140px;" class="chosen-select" id="dashboard-group-name">
+  <select id="locale" data-placeholder="<%= t 'epm.base.language'%>" style="width:140px;" class="chosen-select" id="dashboard-group-name" onchange="changelocale(this.options[this.options.selectedIndex].value)">
+    <option></option>
     <option value="en" >English</option>
     <option value="zh" >中文（简体）</option>
   </select>
 </div>
+
+<script type="text/javascript">
+  function changelocale(value){
+      var data = {
+          locale: value
+      }
+
+      $.ajax({
+          url : '/user_sessions/locale',
+          data :data,
+          type: 'POST',
+          success: function(data){
+              if(data.result){
+                  MessageBox("SSSSSS","top","success");
+              }
+          }
+      });
+  }
+</script>
