@@ -483,6 +483,21 @@ ifepm.dashboard.on_finish_load = function(){
     ++current_index;
     if(current_index >= ifepm.dashboard.graph_sequence.length){
         ifepm.dashboard_widget.enable(true);
+
+        //add a full size title
+        if(isfullsize){
+            $(container_selector).append(ifepm.template.title);
+            var option = {};
+            option.container_selector=container_selector;
+            option.isnew= false;
+            option.id = ifepm.template.titleid;
+            option.col = 1;
+            option.row = 1;
+            option.sizex = 1;
+            option.sizey = 1;
+            ifepm.dashboard_widget.add_w(option);
+        }
+
         return;
     }
     var graph_id = ifepm.dashboard.graph_sequence[current_index];
@@ -942,13 +957,6 @@ ifepm.dashboard.full_size = function(option){
         else {
             //$(container_selector).append((new Graph()).placeholder)
         }
-        //add a full size title
-        $(container_selector).append(ifepm.template.title);
-        var option = {};
-        option.container_selector=container_selector;
-        option.isnew= true;
-        option.chart_type = "unknow";
-        option.id = ifepm.template.titleid;
-        ifepm.dashboard_widget.add_w(option);
+
     }
 }
