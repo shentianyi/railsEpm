@@ -76,16 +76,62 @@
     </header>
 
     <section class="index-welcome">
-       <div class="left-image"></div>
+       <!--<div class="left-image"></div>-->
        <div class="right-info">
            <h2>WELCOME </h2>
            <p>欢迎使用EPM</p>
-           <p><i class="icon-user"></i> superxiao21@sina.com</p>
-           <p><i class="icon-time"></i> 2013-04-15 20:00</p>
+           <div class="user-info">
+               <p><i class="icon-user"></i><span id="user-email"></span></p>
+               <p><i class="icon-time"></i><span id="login-time"></span></p>
+           </div>
+
        </div>
     </section>
 
+    <section class="choose-role">
+        <p>针对您角色的快速入口</p>
+        <div class="roles">
+            <div class="item">
+                <a><i class="icon-upload-alt"></i></a>
+                <p>部门职员</p>
+                <a href="">输入KPI</a>
+            </div>
+            <div class="item">
+                <a><i class="icon-bar-chart"></i></a>
+                <p>部门经理</p>
+                <a href="">分析</a>
+            </div>
+            <div class="item">
+                <a><i class="icon-dashboard"></i></a>
+                <p>总经理</p>
+                <a href="">仪表盘</a>
+            </div>
+            <div class="item">
+                <a><i class="icon-sitemap"></i></a>
+                <p>管理员</p>
+                <a href="">管理KPI</a>
+            </div>
+        </div>
+    </section>
 
+    <section class="index-statistics">
+        <p>当前数据统计</p>
+        <div class="inner">
+            <div class="item" id="chart-pie-wrap">
+                <label>人员构成</label>
+                <p><span>部门职员:</span><span id="count-general">21</span></p>
+                <p><span>部门经理:</span><span id="count-department-manager">6</span></p>
+                <p><span>总经理:</span><span id="count-general-manager">1</span></p>
+                <p><span>管理员:</span><span id="count-admin">3</span></p>
+                <canvas name="pie_chart" ></canvas>
+            </div>
+
+            <div class="item" id="chart-column-wrap">
+                <label>管理统计</label>
+                <canvas name="column_chart" ></canvas>
+            </div>
+        </div>
+    </section>
 
 
 
@@ -109,6 +155,10 @@
 <script src="javascripts/Manage-user.js"></script>
 <script src="javascripts/Manage-department.js"></script>
 <script src="javascripts/2_column_right_nav.js"></script>
+
+<script src="javascripts/Index.js"></script>
+<script src="javascripts/Chart.min.js"></script>
+<script src="javascripts/Chart_generate.js"></script>
 <script>
 
 </script>

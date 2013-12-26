@@ -13,6 +13,8 @@
 //=require jquery-1.8.2.min
 //=require jquery_ujs
 //=require jquery.tipsy
+//=require Chart.min
+//=require Chart_generate
 //=require jquery.sparkline.min
 //=require brilliantech.base
 //=require brilliantech.railsepm
@@ -33,6 +35,7 @@
 //=require Manage-department
 //=require Manage-user
 //=require Manage-view
+//=require Index
 //=require 2_column_right_nav
 //=require Log
 //=require Entry
