@@ -1,9 +1,9 @@
 #encoding: utf-8
 class Role
-  @@roles={:'100'=>{:name=>'user',:display=>'普通用户'},
-                    :'200'=>{:name=>'manager',:display=>'部门经理'},
-                    :'300'=>{:name=>'director',:display=>'总经理'},
-                    :'400'=>{:name=>'admin',:display=>'管理员'}}
+  @@roles={:'100'=>{:name=>'user',:display=>(I18n.t 'manage.user.role.user')},
+                    :'200'=>{:name=>'manager',:display=>(I18n.t 'manage.user.role.manager')},
+                    :'300'=>{:name=>'director',:display=>(I18n.t 'manage.user.role.director')},
+                    :'400'=>{:name=>'admin',:display=>(I18n.t 'manage.user.role.admin')}}
 
   class<<self
     [:admin?,:manager?,:director?,:user?].each do |m|

@@ -8,27 +8,20 @@ class UserSessionsController < ApplicationController
 
   layout 'non_authorized'
   def new
-    #@title= I18n.t 'auth.view.sign_title'
-    #@href='/subscriptions/new'
     @user_session = UserSession.new
   end
 
   def create
     msg=Message.new
-    #@title= I18n.t 'auth.view.sign_title'
-    #@href='/subscriptions/new'
+    msg.result = false
     @user_session = UserSession.new(params[:user_session])
-    if @user_session.save
-      flash[:notice] = I18n.t 'auth.msg.login_success'
-      redirect_to root_path
+    if msg.result =  @user_session.save
+      msg.result = true
+      msg.content = I18n.t 'auth.msg.login_success'
     else
-      render :action => :new
-      #msg.result=false
-      #respond_to do |t|
-      # t.json {render :json=>msg}
-      # t.js {render :js=> jsonp_str(msg)}
-      #end
+      msg.content = @user_session.errors.full_messages
     end
+    render :json=>msg
   end
 
   def destroy

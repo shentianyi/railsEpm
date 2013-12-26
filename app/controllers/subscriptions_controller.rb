@@ -25,6 +25,8 @@ class SubscriptionsController < ApplicationController
   def create  
     #@title=I18n.t 'auth.view.login_title'
     #@href= '/user_sessions/new'
+    msg = Message.new
+    msg.result = false
     begin
       raise(ArgumentError, I18n.t('auth.msg.email_token'))  if $invalid_emails.include?(params[:email])
       @user=User.new
@@ -35,15 +37,21 @@ class SubscriptionsController < ApplicationController
 
       @user.deliver_user_confirmation!
       # flash[:notice] = 'Your account has been created.Please finish the process with the mail confirmation'
-      flash[:notice] = I18n.t 'auth.msg.sign_success'
-      redirect_to new_user_sessions_url#new_user_confirmations_url
+      msg.result = true
+      msg.content = flash[:notice] = I18n.t 'auth.msg.sign_success'
+
+      #redirect_to root_url#new_user_confirmations_url
     rescue ArgumentError=>invalid
-      flash[:notice]=I18n.t 'auth.msg.email_token'
-      redirect_to new_user_sessions_url
+      msg.content = invalid.record.errors.full_messages
+      #flash[:alert]=I18n.t 'auth.msg.email_token'
+      #redirect_to new_user_sessions_url
     rescue ActiveRecord::RecordInvalid => invalid
-      flash[:notice]=I18n.t 'auth.msg.sign_fail'
-      redirect_to new_user_sessions_url
+      msg.content = invalid.record.errors.full_messages
+      #flash[:alert]=I18n.t 'auth.msg.sign_fail'
+      #redirect_to new_user_sessions_url
     end
+
+    render :json=>msg
   end
 
 end

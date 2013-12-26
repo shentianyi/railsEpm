@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
 
   acts_as_authentic do |c|
     c.login_field = :email
+    c.validate_email_field = false
+    c.merge_validates_format_of_email_field_options :message => 'My message'
   end
   # acts as tenant
   acts_as_tenant(:tenant)

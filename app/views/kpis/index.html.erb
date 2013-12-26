@@ -3,7 +3,7 @@
           <div style="width:auto;height:71px;"></div>
           <div class="left-content-title" id="left-content-title">
                <p class="current-group-item">
-                    管理KPI
+                    <%= t 'manage.kpi.title'%>
                </p>
           </div>
           <div class="manage-left-content" id="manage-left-content">
@@ -30,28 +30,25 @@
 
      <aside class="content-right-nav" name='category' id="content-right-nav">
           <section class="solid">
-               <h3>创建KPI</h3>
+               <h3><%= t 'manage.kpi.desc.create'%></h3>
                <p>
-                    Create kpi in different category , then you can edit it's
-                    max target and min target
+                 <%= t 'manage.kpi.desc.create_desc'%>
                </p>
-               <a class="btn btn-primary" id="kpi-add-show">Create Now</a>
+               <a class="btn btn-primary" id="kpi-add-show"><%= t 'manage.kpi.desc.create_now'%></a>
           </section>
           <section class="solid">
                <h3><%= t 'manage.kpi.kpi_library'%></h3>
                <p>
-                    If you need some general kpi,you can choose it from the kpi
-                    library for convenient
+                 <%= t 'manage.kpi.desc.kpi_library_desc'%>
                </p>
-               <a class="btn btn-primary" id="kpi-library-btn">Choose now</a>
+               <a class="btn btn-primary" id="kpi-library-btn"><%= t 'manage.kpi.desc.choose_now'%></a>
           </section>
           <section class="solid">
-               <h3>下一步</h3>
+               <h3><%= t 'manage.base.next'%></h3>
                <p>
-                    After creating kpi,you should create department and user,
-                    then assign kpis to user in department
+                 <%= t 'manage.kpi.desc.next_desc'%>
                </p>
-               <a class="btn btn-primary " href="<%= entities_path%>">管理部门</a>
+               <a class="btn btn-primary " href="<%= entities_path%>"><%= t 'manage.department.desc.manage'%></a>
           </section>
      </aside>
 </div>
