@@ -215,6 +215,7 @@ en:
       title: EPM
       name: IntelligentFactory
       desc: Secure, quick and accurate, EPM uncovers the potential of data
+      language: Choose Language
   auth:
    view:
     login: Login

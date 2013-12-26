@@ -39,4 +39,8 @@ class UserSessionsController < ApplicationController
       t.js {render :js=>jsonp_str(result)}
     end
   end
+
+  def locale
+    cookies
+  end
 end
