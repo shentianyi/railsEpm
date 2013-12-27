@@ -241,18 +241,18 @@
     top:20px;
 }
 .index-statistics>.inner>.item:first-of-type{
-    width:250px;
-    margin-left:40px;
+    width:150px;
+    margin-left:150px;
 }
 .index-statistics>.inner>.item:first-of-type>canvas{
-    left:60px;
+    left:80px;
 }
 .index-statistics>.inner>.item:nth-of-type(2){
-    width:280px;
+    width:200px;
     margin-left:160px;
 }
 .index-statistics>.inner>.item:nth-of-type(2)>canvas{
-    left:0px;
+    left:21px;
 }
 .index-statistics>.inner>.item>label{
     font-size:14px;
