@@ -2,8 +2,9 @@
   <span lan="<%= I18n.locale %>"><%= t 'epm.base.language'%></span>
   <i class="icon-caret-down"></i>
   <ul class="menu-select-language" id="menu-select-language">
-    <li lan="zh" >中文</li>
-    <li lan="en" >English</li>
+    <li lan="zh">中文</li>
+    <li lan="en">English</li>
+    <li lan="de">Deutsch</li>
   </ul>
 </li>
 
@@ -20,21 +21,4 @@
           });
       }
   });
-  function changelocale(value,callback){
-      var data = {
-          locale: value
-      }
-
-      $.ajax({
-          url  : '/user_sessions/locale',
-          data :data,
-          type :'POST',
-          async:false,
-          success: function(data){
-              if(callback){
-                  callback(data);
-              }
-          }
-      });
-  }
 </script>

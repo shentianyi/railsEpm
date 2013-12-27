@@ -39,16 +39,22 @@
       <h3><%= t 'epm.base.name' %> <span style="color:#5496C2"><%= t 'epm.base.title' %></span></h3>
 
       <p><%= t 'epm.base.desc' %></p>
-      <a class="log-btn login-recommend" id="sign-up-now"><%= t 'auth.view.login_title' %>
+      <a class="log-btn login-recommend" id="sign-up-now" state="close"><%= t 'auth.view.login_title' %>
       </a>
 
     </div>
   </div>
   <div class="login-block">
-    <div class="login-operate clearfix">
+    <div id="login-operate" class="login-operate clearfix">
 
+      <!--
       <a class="log-btn pull-left" id="sign-in" state="close"><%= t 'auth.view.login_btn' %> </a>
       <a class="log-btn pull-right" id="sign-up" state="close"><%= t 'auth.view.sign_btn' %> </a>
+      -->
+      <a class="log-btn language-btn" lan="zh">中文</a>
+      <a class="log-btn language-btn" lan="en">English</a>
+      <a class="log-btn language-btn" lan="de">Deutsch</a>
+      <p id="default_lan" lan="<%= I18n.locale%>" style="display: none"></p>
     </div>
   </div>
 </div>
@@ -128,14 +134,15 @@
             }
 
         });
+
         $("#sign-up,#sign-up-now").on("click", function () {
-            if($("#sign-in").attr('state') == "close"){
+            if($("#sign-up-now").attr('state') == "close"){
                 $('#signIn-block').slideDown('500');
-                $("#sign-in").attr('state', 'open');
+                $("#sign-up-now").attr('state', 'open');
             }
             else{
                 $('#signIn-block').slideUp('500');
-                $("#sign-in").attr('state', 'close');
+                $("#sign-up-now").attr('state', 'close');
             }
 
             /*
