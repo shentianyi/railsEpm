@@ -24,6 +24,8 @@ DASHBOARD.init=function(){
 
     $("body").on("click","#dashboard-full-size",function(){
         $("#dashboard-content-full").css("display","block");
+        var height=$(document).height();
+        $("#dashboard-content-full").css("height",height+"px");
         ifepm.dashboard_widget.init_fullsize();
         on_full_size();
     });
