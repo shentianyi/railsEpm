@@ -236,7 +236,7 @@ zh:
       title: EPM
       name: 智能工厂
       desc: 安全，迅速，快捷，EPM帮您挖掘隐藏的数据
-      language: 选择语言
+      language: 语言
       welcome: 欢迎
   auth:
     view:

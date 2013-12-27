@@ -1,62 +1,63 @@
 <header>
-     <div class="user-portrait-background pull-left" state="close" id="user-portrait-background">
-            <div class="user-portrait-brand"></div>
-     </div>
-     <nav class="pull-left">
-          <ul>
-               <li>
-                    <a href="/"> <span><%= t 'menu.start'%></span>  </a>
-               </li>
-               <li class="relative" >
-                    <a> <span guide-name="mange_menu"><%= t 'menu.manage'%></span></a>
-                    <ul class="nav-manage-sub">
-                         <li>
-                              <a href="<%= kpis_path%>"><%= t 'menu.kpi'%></a>
-                         </li>
-                      <li>
-                        <a href="<%= entities_path%>"><%= t 'menu.department'%></a>
-                      </li>
-                         <li>
-                              <a  href="<%= users_path%>"><%= t 'menu.user'%></a>
-                         </li>
-                         <li>
-                              <a  href="<%= entity_groups_path%>"><%= t 'menu.view'%></a>
-                         </li>
-                         <li>
-                              <a><%= t 'menu.billing'%></a>
-                         </li>
-                    </ul>
-               </li>
-               <li>
-                    <a  href="<%= dashboards_path%>" guide-name="dashboard_menu"> <span><%= t 'menu.dashboard'%></span>  </a>
-               </li>
-               <li>
-                    <a   href="<%= analyse_kpi_entries_path%>" guide-name="analyze_menu"> <span><%= t 'menu.analytics'%></span> </a>
-               </li>
-               <li>
-                    <a guide-name="report_menu"> <span><%= t 'menu.reports'%></span></a>
-               </li>
-               <li><a>
-                     <span>&nbsp;</span>
-               </a></li>
-               <li>
-                    <a href="<%= new_kpi_entry_path%>" guide-name="entry_menu"> <span><%= t 'menu.entry_kpi'%></span>  </a>
-               </li>
-          </ul>
+  <div class="user-portrait-background pull-left" state="close" id="user-portrait-background">
+    <div class="user-portrait-brand"></div>
+  </div>
+  <nav class="pull-left">
+    <ul>
+      <li>
+        <a href="/"> <span><%= t 'menu.start' %></span> </a>
+      </li>
+      <li class="relative">
+        <a> <span guide-name="mange_menu"><%= t 'menu.manage' %></span></a>
+        <ul class="nav-manage-sub">
+          <li>
+            <a href="<%= kpis_path %>"><%= t 'menu.kpi' %></a>
+          </li>
+          <li>
+            <a href="<%= entities_path %>"><%= t 'menu.department' %></a>
+          </li>
+          <li>
+            <a href="<%= users_path %>"><%= t 'menu.user' %></a>
+          </li>
+          <li>
+            <a href="<%= entity_groups_path %>"><%= t 'menu.view' %></a>
+          </li>
+          <li>
+            <a><%= t 'menu.billing' %></a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="<%= dashboards_path %>" guide-name="dashboard_menu"> <span><%= t 'menu.dashboard' %></span> </a>
+      </li>
+      <li>
+        <a href="<%= analyse_kpi_entries_path %>" guide-name="analyze_menu"> <span><%= t 'menu.analytics' %></span> </a>
+      </li>
+      <li>
+        <a guide-name="report_menu"> <span><%= t 'menu.reports' %></span></a>
+      </li>
+      <li><a>
+        <span>&nbsp;</span>
+      </a></li>
+      <li>
+        <a href="<%= new_kpi_entry_path %>" guide-name="entry_menu"> <span><%= t 'menu.entry_kpi' %></span> </a>
+      </li>
+    </ul>
 
-     </nav>
-     <ul class="nav-user-part">
-                           <li>
-                               <i class="icon-user" title="<%= current_user.first_name%>">  <%= current_user.first_name%></i>
-                           </li>
-                           <li class='empty'><a>
-                               <span>&nbsp;</span>
-                           </a></li>
-                           <li>
-                             <a href="/user_sessions/destroy"><%= t 'auth.view.signout_btn'%></a>
-                           </li>
-              </ul>
-     <script type="text/javascript">
-          
-     </script>
+  </nav>
+  <ul class="nav-user-part">
+    <li>
+      <i class="icon-user" title="<%= current_user.first_name %>">  <%= current_user.first_name %></i>
+    </li>
+    <%= render partial: 'shares/locale' %>
+    <li class='empty'><a>
+      <span>&nbsp;</span>
+    </a></li>
+    <li>
+      <a href="/user_sessions/destroy"><%= t 'auth.view.signout_btn' %></a>
+    </li>
+  </ul>
+  <script type="text/javascript">
+
+  </script>
 </header>

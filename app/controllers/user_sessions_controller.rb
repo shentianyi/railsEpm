@@ -44,6 +44,7 @@ class UserSessionsController < ApplicationController
     msg = Message.new
     msg.result = true
     cookies[:locale] = params[:locale]
+    msg.content = session[:return_to]
     render :json => msg
   end
 end
