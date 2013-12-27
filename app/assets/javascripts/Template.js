@@ -20,6 +20,9 @@ $(document).ready(function(){
             $(".nav-user-part>li.select-language .menu-select-language").css("left","-999em");
         }
     });
+    var lan=$("#select-language>span").attr("lan");
+    var text=$("#menu-select-language").find("[lan='"+lan+"']").text();
+    $("#select-language>span").text(text);
 })
 //左边的用户设置
 function show_left_user_setting(){
