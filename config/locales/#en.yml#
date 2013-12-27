@@ -1,0 +1,272 @@
+    en:
+      date:
+        abbr_day_names:
+          - Sun
+          - Mon
+          - Tue
+          - Wed
+          - Thu
+          - Fri
+          - Sat
+          abbr_month_names:
+            -
+            - Jan
+            - Feb
+            - Mar
+            - Apr
+            - May
+            - Jun
+            - Jul
+            - Aug
+            - Sep
+            - Oct
+            - Nov
+            - Dec
+            day_names:
+              - Sunday
+              - Monday
+              - Tuesday
+              - Wednesday
+              - Thursday
+              - Friday
+              - Saturday
+              formats:
+                default: ! '%Y-%m-%d'
+                long: ! '%B %d, %Y'
+                short: ! '%b %d'
+                month_names:
+                  -
+                  - January
+                  - February
+                  - March
+                  - April
+                  - May
+                  - June
+                  - July
+                  - August
+                  - September
+                  - October
+                  - November
+                  - December
+                  order:
+                    - :year
+                    - :month
+                    - :day
+                    datetime:
+                      distance_in_words:
+                        about_x_hours:
+                          one: about 1 hour
+                          other: about %{count} hours
+                          about_x_months:
+                            one: about 1 month
+                            other: about %{count} months
+                            about_x_years:
+                              one: about 1 year
+                              other: about %{count} years
+                              almost_x_years:
+                                one: almost 1 year
+                                other: almost %{count} years
+                                half_a_minute: half a minute
+                                less_than_x_minutes:
+                                  one: less than a minute
+                                  other: less than %{count} minutes
+                                  less_than_x_seconds:
+                                    one: less than 1 second
+                                    other: less than %{count} seconds
+                                    over_x_years:
+                                      one: over 1 year
+                                      other: over %{count} years
+                                      x_days:
+                                        one: 1 day
+                                        other: ! '%{count} days'
+                                        x_minutes:
+                                          one: 1 minute
+                                          other: ! '%{count} minutes'
+                                          x_months:
+                                            one: 1 month
+                                            other: ! '%{count} months'
+                                            x_seconds:
+                                              one: 1 second
+                                              other: ! '%{count} seconds'
+                                              prompts:
+                                                day: Day
+                                                hour: Hour
+                                                minute: Minute
+                                                month: Month
+                                                second: Seconds
+                                                year: Year
+                                                errors: &errors
+                                                  format: ! '%{attribute} %{message}'
+                                                  messages:
+                                                    accepted: must be accepted
+                                                    blank: can't be blank
+                                                    present: must be blank
+                                                    confirmation: ! "doesn't match %{attribute}"
+                                                    empty: can't be empty
+                                                    equal_to: must be equal to %{count}
+                                                    even: must be even
+                                                    exclusion: is reserved
+                                                    greater_than: must be greater than %{count}
+                                                    greater_than_or_equal_to: must be greater than or equal to %{count}
+                                                    inclusion: is not included in the list
+                                                    invalid: is invalid
+                                                    less_than: must be less than %{count}
+                                                    less_than_or_equal_to: must be less than or equal to %{count}
+                                                    not_a_number: is not a number
+                                                    not_an_integer: must be an integer
+                                                    odd: must be odd
+                                                    record_invalid: ! 'Validation failed: %{errors}'
+                                                    restrict_dependent_destroy:
+                                                      one: "Cannot delete record because a dependent %{record} exists"
+                                                      many: "Cannot delete record because dependent %{record} exist"
+                                                      taken: has already been taken
+                                                      too_long:
+                                                        one: is too long (maximum is 1 character)
+                                                        other: is too long (maximum is %{count} characters)
+                                                        too_short:
+                                                          one: is too short (minimum is 1 character)
+                                                          other: is too short (minimum is %{count} characters)
+                                                          wrong_length:
+                                                            one: is the wrong length (should be 1 character)
+                                                            other: is the wrong length (should be %{count} characters)
+                                                            other_than: "must be other than %{count}"
+                                                            template:
+                                                              body: ! 'There were problems with the following fields:'
+                                                              header:
+                                                                one: 1 error prohibited this %{model} from being saved
+                                                                other: ! '%{count} errors prohibited this %{model} from being saved'
+                                                                helpers:
+                                                                  select:
+                                                                    prompt: Please select
+                                                                    submit:
+                                                                      create: Create %{model}
+                                                                      submit: Save %{model}
+                                                                      update: Update %{model}
+                                                                      number:
+                                                                        currency:
+                                                                          format:
+                                                                            delimiter: ! ','
+                                                                            format: ! '%u%n'
+                                                                            precision: 2
+                                                                            separator: .
+                                                                            significant: false
+                                                                            strip_insignificant_zeros: false
+                                                                            unit: $
+                                                                            format:
+                                                                              delimiter: ! ','
+                                                                              precision: 3
+                                                                              separator: .
+                                                                              significant: false
+                                                                              strip_insignificant_zeros: false
+                                                                              human:
+                                                                                decimal_units:
+                                                                                  format: ! '%n %u'
+                                                                                  units:
+                                                                                    billion: Billion
+                                                                                    million: Million
+                                                                                    quadrillion: Quadrillion
+                                                                                    thousand: Thousand
+                                                                                    trillion: Trillion
+                                                                                    unit: ''
+                                                                                    format:
+                                                                                      delimiter: ''
+                                                                                      precision: 3
+                                                                                      significant: true
+                                                                                      strip_insignificant_zeros: true
+                                                                                      storage_units:
+                                                                                        format: ! '%n %u'
+                                                                                        units:
+                                                                                          byte:
+                                                                                            one: Byte
+                                                                                            other: Bytes
+                                                                                            gb: GB
+                                                                                            kb: KB
+                                                                                            mb: MB
+                                                                                            tb: TB
+                                                                                            percentage:
+                                                                                              format:
+                                                                                                delimiter: ''
+                                                                                                format: "%n%"
+                                                                                                precision:
+                                                                                                  format:
+                                                                                                    delimiter: ''
+                                                                                                    support:
+                                                                                                      array:
+                                                                                                        last_word_connector: ! ', and '
+                                                                                                        two_words_connector: ! ' and '
+                                                                                                        words_connector: ! ', '
+                                                                                                        time:
+                                                                                                          am: am
+                                                                                                          formats:
+                                                                                                            default: ! '%a, %d %b %Y %H:%M:%S %z'
+                                                                                                            long: ! '%B %d, %Y %H:%M'
+                                                                                                            short: ! '%d %b %H:%M'
+                                                                                                            pm: pm
+                                                                                                            # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
+                                                                                                            activemodel:
+                                                                                                              errors:
+                                                                                                                <<: *errors
+                                                                                                                activerecord:
+                                                                                                                  errors:
+                                                                                                                    <<: *errors
+                                                                                                                    # brilliantech project
+                                                                                                                    welcome:
+                                                                                                                      title: Welcome
+                                                                                                                      sub_title: Welcome EPM
+                                                                                                                      entrys:
+                                                                                                                        title: Entrance of your role
+                                                                                                                        kpi_entry: Entry KPI
+                                                                                                                        analyse: Analytics
+                                                                                                                        dashboard: Dashboard
+                                                                                                                        manage_kpi: Manage KPI
+                                                                                                                        statistics:
+                                                                                                                          title: Current statistics
+                                                                                                                          staff: Staff structure
+                                                                                                                          table: Statistics
+                                                                                                                          item:
+                                                                                                                            kpi: KPI
+                                                                                                                            entity: Entity
+                                                                                                                            user: User
+                                                                                                                            view: Entity Group
+                                                                                                                            epm:
+                                                                                                                              base:
+                                                                                                                                title: EPM
+                                                                                                                                name: IntelligentFactory
+                                                                                                                                desc: Secure, quick and accurate, EPM uncovers the potential of data
+                                                                                                                                language: Language
+                                                                                                                                welcome: Welcome
+                                                                                                                                auth:
+                                                                                                                                  view:
+                                                                                                                                    login_title: Sign In
+                                                                                                                                    login_btn: Sign in
+                                                                                                                                    sign_title: Sign up Now
+                                                                                                                                    sign_btn: Sign up
+                                                                                                                                    signout_btn: Logout
+                                                                                                                                    submit_btn: Ok
+                                                                                                                                    email: Email
+                                                                                                                                    pwd: Password
+                                                                                                                                    confirm: Ok
+                                                                                                                                    con_pwd: Password Confirmation
+                                                                                                                                    company: Company Name
+                                                                                                                                    msg:
+                                                                                                                                      login_success: Login successfully!
+                                                                                                                                      login_require: Please Login!
+                                                                                                                                      logout_success: Logout successfully!
+                                                                                                                                      logout_require: Please Sign up!
+                                                                                                                                      email_token: Email has been Signed up!
+                                                                                                                                      sign_success: Sign up successfully!
+                                                                                                                                      sign_close: Registration is not open!
+                                                                                                                                      sign_fail: Sign up failed!
+                                                                                                                                      local_account: We're sorry, but we could not locate your account.If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process.
+                                                                                                                                      menu:
+                                                                                                                                        start: Start
+                                                                                                                                        dashboard: Dashboard
+                                                                                                                                        analytics: Analytics
+                                                                                                                                        reports: Report
+                                                                                                                                        manage: Manage
+                                                                                                                                        kpi: KPI
+                                                                                                                                        user: User
+                                                                                                                                        view: Entity Group
+                                                                                                                                        billing: Account
+                                                                                                                                        entry_kpi: KPI Entry
+                                                                                                                                        department: Entity

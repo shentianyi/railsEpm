@@ -257,7 +257,7 @@ ifepm.dashboard.getInteral = function (interval) {
             break;
     }
 
-    return intvl;
+    return sec * 15;
 }
 
 /*
