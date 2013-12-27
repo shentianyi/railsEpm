@@ -445,3 +445,15 @@ en:
     value: Value
     target_range: Target Range
     percent: Percentage
+    line:
+      out_of_target: Out of Target
+      kpi_name: KPI Name
+      total: Total
+      record: Record
+      average: Average
+    pie:
+       select: Select
+       total: Total
+    column:
+       max: Max Value
+       min: Min Value

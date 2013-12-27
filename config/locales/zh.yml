@@ -452,3 +452,16 @@ zh:
     value: 值
     target_range: 目标值范围
     percent: 百分比
+    line:
+      out_of_target: 超出目标值
+      kpi_name: KPI 名称
+      total: 总值
+      record: 记录数
+      average: 平均值
+    pie:
+      select: 选中值
+      total: 总值
+    column:
+      max: 最大值
+      min: 最小值
+
