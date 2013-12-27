@@ -7,8 +7,18 @@
  */
 (function(){
     $(document).ready(function(){
-        CHARTBOOT.pie.scores=[10,20,30,40];
-        CHARTBOOT.column.scores=[30,20,30,40];
+        $.get("/welcome/users",{},function(data){
+            if(data.result){
+                CHARTBOOT.pie.scores=[data.content.user,data.content.manager,data.content.directors,data.content.admin];
+            }
+        });
+        $.get("/welcome/statistics",{},function(data){
+            if(data.result){
+                CHARTBOOT.column.scores=[data.content.kpi,data.content.entity,data.content.user,data.content.view];
+            }
+        });
+//        CHARTBOOT.pie.scores=[10,20,30,40];
+//        CHARTBOOT.column.scores=[30,20,30,40];
         CHARTBOOT.generatePie(CHARTBOOT.pie.scores,"chart-pie-wrap");
         CHARTBOOT.generateColumn(CHARTBOOT.column.scores,"chart-column-wrap");
         $("#count-general").text(CHARTBOOT.pie.scores[0]);

@@ -6,25 +6,30 @@
  * To change this template use File | Settings | File Templates.
  */
 (function(){
-    $("body").on("click","#login-select-language",function(event){
-        $("#login-select-language-menu").css("left","-7px");
-        stop_propagation(event);
-    });
-    $("body").on("click",function(event){
-        var target=adapt_event(event).target;
-        if(!$(target).hasClass("login-select-language") || !$(target).parent().hasClass("login-select-language")){
-            $("#login-select-language-menu").css("left","-999em");
-        }
-    });
-    $("body").on("click","#login-select-language-menu li",function(event){
-        var value=$(this).attr("value"),text=$(this).text();
-        if(value!=$("#select-language>span").attr("value")){
-            if(changelocale(value)){
-                $("#select-language>span").text(text).attr("value",value);
-            }
-        }
-        $("#login-select-language-menu").css("left","-999em");
-        stop_propagation(event);
+//    $("body").on("click","#login-select-language",function(event){
+//        $("#login-select-language-menu").css("left","-7px");
+//        stop_propagation(event);
+//    });
+//    $("body").on("click",function(event){
+//        var target=adapt_event(event).target;
+//        if(!$(target).hasClass("login-select-language") || !$(target).parent().hasClass("login-select-language")){
+//            $("#login-select-language-menu").css("left","-999em");
+//        }
+//    });
+//    $("body").on("click","#login-select-language-menu li",function(event){
+//        var value=$(this).attr("value"),text=$(this).text();
+//        if(value!=$("#select-language>span").attr("value")){
+//            if(changelocale(value)){
+//                $("#select-language>span").text(text).attr("value",value);
+//            }
+//        }
+//        $("#login-select-language-menu").css("left","-999em");
+//        stop_propagation(event);
+//    });
+    $("body").on("click","#login-operate .language-btn",function(){
+        var value=$(this).attr("lan");
+        changelocale(value);
+
     });
 })()
 function changelocale(value){

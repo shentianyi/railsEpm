@@ -5,8 +5,8 @@
     bottom:0;
     left:0;
     right:0;
-    /*background:url("../images/login-bg2.jpg")no-repeat center black;*/
-    background:url("/assets/login-bg2.jpg")no-repeat center black;
+    background:url("../images/login-bg2.jpg")no-repeat center black;
+    /*background:url("/assets/login-bg2.jpg")no-repeat center black;*/
 }
 .log-btn{
     background: none repeat scroll 0 0 rgba(255, 255, 255, 0.35);
@@ -73,11 +73,21 @@
     background:rgba(0,0,0,0.85)
 }
 .login-operate{
-    width:223px;
+    /*width:223px;*/
+    width:332px;
     margin:30px auto 0px;
 }
 .login-operate a{
     margin-right:-11px;
+}
+.login-operate .language-btn{
+    float:left;
+    width:50px;
+    text-align:center;
+    margin-left:4px;
+}
+.login-operate .language-btn:not(:last-of-type){
+    margin-right:15px;
 }
 .signShow-block{
     width:350px;
