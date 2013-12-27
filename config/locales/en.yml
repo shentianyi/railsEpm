@@ -441,3 +441,7 @@ en:
 
     item:
       out_of_target: Out of Target
+  chart:
+    value: Value
+    target_range: Target Range
+    percent: Percentage
