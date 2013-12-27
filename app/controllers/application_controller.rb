@@ -62,6 +62,8 @@ class ApplicationController < ActionController::Base
 
   def store_location
     session[:return_to] = request.fullpath
+    puts '========================'
+    puts session[:return_to]
   end
 
 
