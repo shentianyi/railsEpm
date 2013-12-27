@@ -37,7 +37,7 @@ ifepm.template.move_placeholder = 'empty-placeHolder';
 
 ifepm.template.titleid = "dashboard-fullsize-title";
 ifepm.template.title = "<li class='grister-logo' id=full_"+ifepm.template.titleid+">" +
-    "<p class='full-size-label'></p>" +
+    "<p class='full-size-label'>!title!</p>" +
     "<a class='btn full-size-btn' id='full-size-btn'>退出全屏</a>" +
     "</li>";
 

@@ -39,7 +39,7 @@
       <h3><%= t 'epm.base.name' %> <span style="color:#5496C2"><%= t 'epm.base.title' %></span></h3>
 
       <p><%= t 'epm.base.desc' %></p>
-      <a class="log-btn login-recommend" id="sign-up-now"><%= t 'auth.view.sign_title' %>
+      <a class="log-btn login-recommend" id="sign-up-now"><%= t 'auth.view.login_title' %>
       </a>
 
     </div>
@@ -129,6 +129,16 @@
 
         });
         $("#sign-up,#sign-up-now").on("click", function () {
+            if($("#sign-in").attr('state') == "close"){
+                $('#signIn-block').slideDown('500');
+                $("#sign-in").attr('state', 'open');
+            }
+            else{
+                $('#signIn-block').slideUp('500');
+                $("#sign-in").attr('state', 'close');
+            }
+
+            /*
             if ($("#sign-up").attr('state') == "close") {
                 if ($("#sign-in").attr("state") == "open") {
                     $('#signIn-block').slideUp('500');
@@ -139,9 +149,10 @@
 
             }
             else {
-                $('#signUp-block').slideUp('500');
+                $('#signIn-block').slideUp('500');
                 $("#sign-up").attr('state', 'close');
             }
+            */
         });
         $("body").on("keyup", "input[type='text'],input[type='password']", function (event) {
             var e = adapt_event(event).event;
