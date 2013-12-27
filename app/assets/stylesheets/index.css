@@ -256,8 +256,10 @@
 }
 .index-statistics>.inner>.item>label{
     font-size:14px;
-    color:#222;
+    color:#7392B1;
     font-weight:bold;
+    position:relative;
+    top:-5px;
 }
 .index-statistics>.inner>.item:first-of-type p{
     text-align:left;

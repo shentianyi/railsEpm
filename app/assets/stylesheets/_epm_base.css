@@ -162,8 +162,8 @@ nav ul li:last-of-type a span{
     padding-left:3px;
 }
 nav ul li:last-of-type a span:before{
-    /*content:url('../images/entry-kpi.png');*/
-    content:url('/assets/entry-kpi.png');
+    content:url('../images/entry-kpi.png');
+    /*content:url('/assets/entry-kpi.png');*/
     display:block;
     width:20px;
     height:1px;
@@ -209,13 +209,17 @@ nav ul li a:hover ~ .nav-manage-sub{
     font-size:15px;
     padding-right:6px;
     margin-bottom:0px;
-    margin-top:17px;
+    margin-top:18px;
 }
 .nav-user-part>li{
     display:inline-block;
     margin:6px 0;
     padding:0px 3px;
     cursor:pointer;
+    font-size:13px;
+}
+.nav-user-part>li:first-of-type{
+    margin-right:5px;
 }
 .nav-user-part>li.empty{
     border-left:2px solid #5595bf;
@@ -223,6 +227,31 @@ nav ul li a:hover ~ .nav-manage-sub{
     cursor:default !important;
     margin-right:-5px;
     margin-left:5px;
+}
+.nav-user-part>li.select-language{
+    position:relative;
+    font-size:13px;
+}
+.nav-user-part>li.select-language .menu-select-language{
+    position:absolute;
+    width:100px;
+    padding:5px 0px;
+    font-size:13px;
+    background:#5FA9DA;
+    z-index:100;
+    left:-999em;
+    top:40px;
+    box-shadow:-2px 3px 3px rgba(0, 0, 0, 0.4);
+    -moz-shadow:-2px 3px 3px rgba(0, 0, 0, 0.4);
+    -webki-shadow:-2px 3px 3px rgba(0, 0, 0, 0.4);
+    list-style-type: none;
+    text-align:left;
+}
+.nav-user-part>li.select-language .menu-select-language li{
+    padding:4px 3px;
+}
+.nav-user-part>li.select-language .menu-select-language li:hover{
+    background-color:#5595bf;
 }
 .nav-user-part li .icon-user{
     font-size:18px;
