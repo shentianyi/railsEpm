@@ -244,7 +244,7 @@
 .index-statistics>.inner>.item:first-of-type{
     width:200px;
     margin-bottom:20px;
-    margin-left:35px;
+    margin-left:0px;
 }
 .index-statistics>.inner>.item:first-of-type>canvas{
     left:10px;
