@@ -27,7 +27,7 @@
     margin:0px;
 }
 .dashBoard-show>li{
-    border:1px solid #ddd;
+    /*border:1px solid #ddd;*/
     padding:0;
     border-radius:6px;
     -webkit-border-radius:6px;
@@ -96,7 +96,7 @@
 /*full size dashboard*/
 .dashboard-content-full{
     position:absolute;
-    /*padding-top:10px;*/
+    padding-top:10px;
     top:0px;
     right:0px;
     left:0px;
@@ -111,7 +111,8 @@
     position:relative;
 }
 .gridster.black{
-    background:#222;
+    background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
+    background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
 }
 .full-size-label{
     text-align:center;
@@ -119,7 +120,7 @@
     margin-top:45%;
     word-break:break-all;
     word-wrap:break-word;
-    color:#DDDF0D
+    color:#9cdd00
 }
 .full-size-btn{
     margin-top:25%;
