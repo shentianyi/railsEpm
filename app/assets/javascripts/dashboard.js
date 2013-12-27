@@ -402,7 +402,7 @@ function init_grid(){
 
     option.full = {};
     option.full.width = $("div#dashboard-content-full").width();
-    option.full.height = $("div#dashboard-content-full").height();
+    option.full.height = $("div#dashboard-content-full").height() - 20;
     option.full.max_col = 5;
     option.full.max_row = 3;
 

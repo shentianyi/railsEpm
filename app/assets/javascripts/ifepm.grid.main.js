@@ -108,14 +108,14 @@ ifepm.dashboard_widget.setconfig = function(option){
     //normal size config
     ifepm.dashboard_widget.config.normal.max_col = option.normal.max_col;
     ifepm.dashboard_widget.config.normal.max_row = option.normal.max_row;
-    ifepm.dashboard_widget.config.normal.height = option.normal.height / option.normal.max_row - 20;
-    ifepm.dashboard_widget.config.normal.width = option.normal.width / option.normal.max_col - 20;
+    ifepm.dashboard_widget.config.normal.height = option.normal.height / option.normal.max_row - 25;
+    ifepm.dashboard_widget.config.normal.width = option.normal.width / option.normal.max_col - 25;
 
     //full size config
     ifepm.dashboard_widget.config.full.max_col = option.full.max_col;
     ifepm.dashboard_widget.config.full.max_row = option.full.max_row;
-    ifepm.dashboard_widget.config.full.height = option.full.height / option.full.max_row - 20;
-    ifepm.dashboard_widget.config.full.width = option.full.width / option.full.max_col - 20;
+    ifepm.dashboard_widget.config.full.height = option.full.height / option.full.max_row - 30;
+    ifepm.dashboard_widget.config.full.width = option.full.width / option.full.max_col - 30;
 }
 /*
 * @function enable(bool)
