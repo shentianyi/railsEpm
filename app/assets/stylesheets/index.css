@@ -247,12 +247,12 @@
     margin-left:20px;
 }
 .index-statistics>.inner>.item:first-of-type>canvas{
-    left:20px;
+    left:10px;
 }
 .index-statistics>.inner>.item:nth-of-type(2){
     width:170px;
     margin-bottom:20px;
-    margin-left:65px;
+    margin-left:85px;
 }
 .index-statistics>.inner>.item:nth-of-type(2)>canvas{
     left:00px;
