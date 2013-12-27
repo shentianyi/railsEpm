@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_tenant_status
   
   # I18n
+  before_filter :store_location
   before_filter  :set_locale
   #
   #
@@ -62,8 +63,6 @@ class ApplicationController < ActionController::Base
 
   def store_location
     session[:return_to] = request.fullpath
-    puts '========================'
-    puts session[:return_to]
   end
 
 
