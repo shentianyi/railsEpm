@@ -113,8 +113,9 @@ class ApplicationController < ActionController::Base
   def require_no_user
     if current_user
       store_location
-      lash[:alert] =  I18n.t 'auth.msg.logout_require'
-      redirect_to root_url
+      flash[:alert] =  I18n.t 'auth.msg.logout_require'
+      #redirect_to root_url
+      redirect_to welcome_url
       return false
     end
   end

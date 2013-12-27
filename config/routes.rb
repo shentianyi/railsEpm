@@ -1,6 +1,6 @@
 IFEpm::Application.routes.draw do
 
-  root :to => 'welcome#index'
+  root :to => 'user_sessions#new'
   # get "welcome/navigate"
 
 
@@ -78,6 +78,7 @@ IFEpm::Application.routes.draw do
   end
 
   controller :welcome do
+    match 'welcome' => :index
     match 'welcome/users' => :users
     match 'welcome/statistics' => :statistics
   end
