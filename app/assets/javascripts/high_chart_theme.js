@@ -80,13 +80,7 @@ HIGH_CHART.theme={
     dark:function(){
         Highcharts.setOptions({
             chart: {
-//                backgroundColor: {
-//                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-//                    stops: [
-//                        [0, 'rgb(96, 96, 96)'],
-//                        [0.6, 'rgb(16, 16, 16)']
-//                    ]
-//                }
+                backgroundColor:"rgba(255,255,255,0.0)"
             },
             xAxis: {
                 labels: {
