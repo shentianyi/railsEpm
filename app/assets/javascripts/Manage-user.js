@@ -194,7 +194,7 @@ MANAGE.user.add_new = function() {
                                                 .append($("<td />").text(object.role).addClass("user-manage-authority").attr("value", object.role_id)))
                                             .append($("<tr />")
                                                 .append($("<td />").text(object.email).addClass("user-manage-mail"))
-                                                .append($("<td />").text("Authority")))));
+                                                .append($("<td />").text(I18n.t('manage.user.desc.authority'))))));
                                     $("#manage-sort-list input[type='checkbox']").iCheck({
                                         checkboxClass : 'icheckbox_minimal-aero'
                                     });

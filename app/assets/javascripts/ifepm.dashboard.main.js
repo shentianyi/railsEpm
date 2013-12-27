@@ -257,7 +257,7 @@ ifepm.dashboard.getInteral = function (interval) {
             break;
     }
 
-    return sec * 15;
+    return intvl;
 }
 
 /*
@@ -279,7 +279,7 @@ ifepm.dashboard.update_graph = function (datas, id) {
     var chart = $('#' + container).highcharts();
     if (chart) {
         for (var i = 0; i < datas.length; i++) {
-            var series = chart.get(datas[i].id);
+            var series = chart.get(i);
             if (!series) {
                 continue;
             }
