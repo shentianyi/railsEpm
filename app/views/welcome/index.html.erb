@@ -1,28 +1,82 @@
+<!--
 <div class="get-start-middle  clearfix startup-middle">
     <div style="width:880px;position:relative;margin-left:-440px;left:50%;padding:30px 0;">
-          <%= image_tag "naviPage.png"%>
+          <%= image_tag "naviPage.png" %>
     </div>
 </div>
+-->
+  <section class="index-welcome">
+    <!--<div class="left-image"></div>-->
+    <div class="right-info">
+      <h2><%= t 'welcome.title'%></h2>
 
-<script type="text/javascript">
-  step = [
-      {
-          element:$('[guide-name="mange_menu"]').get(0),
-          intro: "在开始输入和查看KPI前，您首先需要在这里设定一些关于您的企业的基础数据。"
-      },
-      {
+      <p><%= t 'welcome.sub_title'%></p>
 
-          element:$('[guide-name="entry_menu"]').get(0),
-          intro: "在简单地设置了基础信息后，您和您的同事或员工就可以在这里输入属于您企业需要分析的数据。"
-      },
-      {
-          element:$('[guide-name="dashboard_menu"]').get(0),
-          intro: "布置您的仪表盘，将枯燥的企业数据变成简单易懂，又实时更新的图表。"
-      },
-      {
-          element:$('[guide-name="analyze_menu"]').get(0),
-          intro: "在这里您可以使用分析工具分析您企业数据的现况，趋势。简单的点击即可获得可视化的结果。"
-      }
+      <div class="user-info">
+        <p><i class="icon-user"></i><span id="user-email"><%= current_user.email%></span></p>
 
-  ];
-</script>
+        <p><i class="icon-time"></i><span id="login-time"></span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="choose-role">
+    <p><%= t 'welcome.entrys.title'%></p>
+
+    <div class="roles">
+      <div class="item">
+        <a><i class="icon-upload-alt"></i></a>
+
+        <p><%= t 'manage.user.role.user'%></p>
+        <a href="<%= new_kpi_entry_path%>"><%= t 'welcome.entrys.kpi_entry'%></a>
+      </div>
+      <div class="item">
+        <a><i class="icon-bar-chart"></i></a>
+
+        <p><%= t 'manage.user.role.manager'%></p>
+        <a href="<%= analyse_kpi_entries_path %>"><%= t 'welcome.entrys.analyse'%></a>
+      </div>
+      <div class="item">
+        <a><i class="icon-dashboard"></i></a>
+
+        <p><%= t 'manage.user.role.director'%></p>
+        <a href="<%= dashboards_path %>"><%= t 'welcome.entrys.dashboard'%></a>
+      </div>
+      <div class="item">
+        <a><i class="icon-sitemap"></i></a>
+
+        <p><%= t 'manage.user.role.admin'%></p>
+        <a href="/kpis"><%= t 'welcome.entrys.manage_kpi'%></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="index-statistics">
+    <p><%= t 'welcome.statistics.title'%></p>
+
+    <div class="inner">
+      <div class="item" id="chart-pie-wrap">
+        <label><%= t 'welcome.statistics.staff'%></label>
+
+        <p><span><%= t 'manage.user.role.user'%>:</span><span id="count-general">21</span></p>
+
+        <p><span><%= t 'manage.user.role.manager'%>:</span><span id="count-department-manager">6</span></p>
+
+        <p><span><%= t 'manage.user.role.director'%>:</span><span id="count-general-manager">1</span></p>
+
+        <p><span><%= t 'manage.user.role.admin'%>:</span><span id="count-admin">3</span></p>
+        <canvas name="pie_chart"></canvas>
+      </div>
+
+      <div class="item" id="chart-column-wrap">
+        <label><%= t 'welcome.statistics.table'%></label>
+        <canvas name="column_chart"></canvas>
+      </div>
+    </div>
+  </section>
+<% content_for :javascript_includes do%>
+    <%= javascript_include_tag "Chart.min.js"%>
+    <%= javascript_include_tag "Chart_generate.js"%>
+    <%= javascript_include_tag "Index.js"%>
+<% end %>
