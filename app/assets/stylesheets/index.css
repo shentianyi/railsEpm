@@ -236,23 +236,40 @@
     position:relative;
     margin-left:120px;
 }
+
 .index-statistics>.inner>.item>canvas{
     position:absolute;
     top:20px;
 }
 .index-statistics>.inner>.item:first-of-type{
-    width:150px;
-    margin-left:150px;
+    width:250px;
+    margin-left:40px;
 }
 .index-statistics>.inner>.item:first-of-type>canvas{
-    left:80px;
+    left:60px;
 }
 .index-statistics>.inner>.item:nth-of-type(2){
-    width:200px;
+    width:280px;
     margin-left:160px;
 }
 .index-statistics>.inner>.item:nth-of-type(2)>canvas{
-    left:21px;
+    left:0px;
+}
+@media screen and (max-width:600px) {
+    .index-statistics>.inner>.item:first-of-type{
+        width:80px;
+        margin-left:180px;
+    }
+    .index-statistics>.inner>.item:first-of-type>canvas{
+        left:80px;
+    }
+    .index-statistics>.inner>.item:nth-of-type(2){
+        width:140px;
+        margin-left:160px;
+    }
+    .index-statistics>.inner>.item:nth-of-type(2)>canvas{
+        left:0px;
+    }
 }
 .index-statistics>.inner>.item>label{
     font-size:14px;
