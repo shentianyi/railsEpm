@@ -32,8 +32,8 @@
 //        $("#count-general-manager").text(CHARTBOOT.pie.scores[2]);
 //        $("#count-admin").text(CHARTBOOT.pie.scores[3]);
 //        CHARTBOOT.generateColumn(CHARTBOOT.column.scores,"chart-column-wrap");
-
-        var login_time=new Date().toWayneString().minute;
-        $("#login-time").text(" "+login_time);
+//
+//        var login_time=new Date().toWayneString().minute;
+//        $("#login-time").text(" "+login_time);
     })
 })()

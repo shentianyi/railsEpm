@@ -229,12 +229,12 @@
 }
 .index-statistics>.inner>.item{
     width:220px;
-    /*float:left;*/
+    float:left;
     height:120px;
-    left:50%;
+
 
     position:relative;
-    margin-left:100px;
+
 }
 
 .index-statistics>.inner>.item>canvas{
@@ -243,21 +243,19 @@
 }
 .index-statistics>.inner>.item:first-of-type{
     width:200px;
-    margin-left:-200px;
     margin-bottom:100px;
-    /*margin-left:40px;*/
+    margin-left:40px;
 }
 .index-statistics>.inner>.item:first-of-type>canvas{
-    left:70px;
+    left:30px;
 }
 .index-statistics>.inner>.item:nth-of-type(2){
     width:200px;
-    margin-left:-200px;
     margin-bottom:10px;
-    /*margin-left:160px;*/
+    margin-left:40px;
 }
 .index-statistics>.inner>.item:nth-of-type(2)>canvas{
-    left:60px;
+    left:00px;
 }
 
 .index-statistics>.inner>.item>label{
