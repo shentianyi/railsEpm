@@ -34,7 +34,7 @@ DASHBOARD.init=function(){
            on_restore_size();
        }
     });
-    $("body").on("dblclick","#dashboard-content-full",function(event){
+    $("body").on("click","#full-size-btn",function(event){
         stop_propagation(event);
         $("#dashboard-content-full").css("display","none");
         on_restore_size();

@@ -104,3 +104,21 @@
     background-color:#222;
     display:none;
 }
+.grister-logo{
+    position:relative;
+}
+.grister.black{
+    background:#222;
+}
+.full-size-label{
+    text-align:center;
+    font-size:21px;
+    margin-top:45%;
+    word-break:break-all;
+    word-wrap:break-word;
+    color:#DDDF0D
+}
+.full-size-btn{
+    margin-top:25%;
+
+}
