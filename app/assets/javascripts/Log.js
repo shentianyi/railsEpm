@@ -5,7 +5,7 @@
  * Time: 下午4:18
  * To change this template use File | Settings | File Templates.
  */
-(function(){
+(function () {
 //    $("body").on("click","#login-select-language",function(event){
 //        $("#login-select-language-menu").css("left","-7px");
 //        stop_propagation(event);
@@ -26,25 +26,34 @@
 //        $("#login-select-language-menu").css("left","-999em");
 //        stop_propagation(event);
 //    });
-    $("body").on("click","#login-operate .language-btn",function(){
-        var value=$(this).attr("lan");
-        changelocale(value);
-
+    $(document).ready(function(){
+        $("body").on("click", "#login-operate .language-btn", function () {
+            if ($("#default_lan").attr("lan") != $(this).attr("lan")) {
+                var value = $(this).attr("lan");
+                changelocale(value, function (data) {
+                    if (data.result) {
+                        window.location = '/user_sessions/new';
+                    }
+                });
+            }
+        });
     });
 })()
-function changelocale(value){
+
+
+function changelocale(value, callback) {
     var data = {
         locale: value
     }
 
     $.ajax({
-        url  : '/user_sessions/locale',
-        data :data,
-        type :'POST',
-        async:false,
-        success: function(data){
-            if(data.result){
-                return true;
+        url: '/user_sessions/locale',
+        data: data,
+        type: 'POST',
+        async: false,
+        success: function (data) {
+            if (callback) {
+                callback(data);
             }
         }
     });
