@@ -100,8 +100,11 @@
     top:0px;
     right:0px;
     left:0px;
+    bottom:0px;
     z-index:99;
-    background-color:#222;
+    /*background-color:#222;*/
+    background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
+    background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
     display:none;
 }
 .grister-logo{

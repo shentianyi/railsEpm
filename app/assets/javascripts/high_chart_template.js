@@ -92,7 +92,8 @@ var high_chart = {
         arearange:{
             fillOpacity:0.1,
             fillColor:"rgba(177,211,221,0.2)",
-            lineColor:"rgba(177,211,221,0.2)",
+            lineColor:"rgba(177,211,221,0)",
+            lineWidth:0,
             color:"rgba(177,211,221,0.2)",
             stickyTracking:false,
             trackByArea:false,

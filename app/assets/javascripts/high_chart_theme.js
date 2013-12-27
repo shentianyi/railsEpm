@@ -80,13 +80,13 @@ HIGH_CHART.theme={
     dark:function(){
         Highcharts.setOptions({
             chart: {
-                backgroundColor: {
-                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                    stops: [
-                        [0, 'rgb(96, 96, 96)'],
-                        [0.6, 'rgb(16, 16, 16)']
-                    ]
-                }
+//                backgroundColor: {
+//                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+//                    stops: [
+//                        [0, 'rgb(96, 96, 96)'],
+//                        [0.6, 'rgb(16, 16, 16)']
+//                    ]
+//                }
             },
             xAxis: {
                 labels: {
@@ -181,16 +181,16 @@ HIGH_CHART.chart_color={
         '#69b0bd'
     ],
     dark:[
-        "#DDDF0D",
-        "#7798BF",
-        "#55BF3B",
-        "#DF5353",
-        "#aaeeee",
-        "#ff0066",
-        "#eeaaee",
-        "#55BF3B",
-        "#DF5353",
-        "#7798BF",
-        "#aaeeee"
+        "#9cdd00",
+        "#fe7005",
+        "#fecd00",
+        "#00e3fe",
+        "#e300fe",
+        "#fe0024",
+        "#6600fe",
+        "#00fe95",
+        "#18fe00",
+        "#f000ff",
+        "#0600ff"
     ]
 }
