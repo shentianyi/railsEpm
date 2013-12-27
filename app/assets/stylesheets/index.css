@@ -218,8 +218,8 @@
     padding-top:20px;
 }
 .index-statistics>.inner{
-    /*width:580px;*/
-    /*margin:0 auto;*/
+    width:580px;
+    margin:0 auto;
 
 }
 .index-statistics>.inner:after{
