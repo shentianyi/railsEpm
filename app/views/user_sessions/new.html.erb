@@ -122,6 +122,7 @@
         $("#sign-in").on("click", function () {
             if ($(this).attr('state') == "close") {
                 if ($("#sign-up").attr("state") == "open") {
+
                     $('#signUp-block').slideUp('500');
                     $("#sign-up").attr('state', 'close');
                 }
