@@ -15,7 +15,7 @@
         $("#count-department-manager").text(CHARTBOOT.pie.scores[1]);
         $("#count-general-manager").text(CHARTBOOT.pie.scores[2]);
         $("#count-admin").text(CHARTBOOT.pie.scores[3]);
-        $("#user-email").text(" "+"superxiao21@sina.com");
+        //$("#user-email").text(" "+"superxiao21@sina.com");
         var login_time=new Date().toWayneString().minute;
         $("#login-time").text(" "+login_time);
     })

@@ -245,7 +245,7 @@ right_nav_main.item_prototype.edit.prototype={
 
 
         $.ajax({
-            url : this.url,
+            url : this.url+id,
             type : 'PUT',
             data : {
                 id:id,
@@ -271,7 +271,7 @@ right_nav_main.item_prototype.edit.prototype={
 }
 
 function dashboard_edit(){
-    this.url = "../dashboards";
+    this.url = "../dashboards/";
 }
 dashboard_edit.prototype=right_nav_main.item_prototype.edit.prototype;
 dashboard_edit.prototype.constructor=dashboard_edit;

@@ -203,6 +203,25 @@ zh:
    #   email_invalid: should look like an email address.
    #   password_blank: 密码不可为空
    #  password_invalid: 密码最短长度为4
+  welcome:
+    title: 欢迎
+    sub_title: 欢迎使用EPM
+    entrys:
+      title: 针对您角色的入口
+      kpi_entry: 输入KPI
+      analyse: 分析
+      dashboard: 仪表盘
+      manage_kpi: 管理KPI
+    statistics:
+      title: 当前数据统计
+      staff: 人员结构
+      table: 数据统计
+      item:
+        kpi: KPI
+        entity: 部门
+        user: 用户
+        view: 观察点
+
   authlogic:
     error_messages:
       login_blank: 不能为空
@@ -218,6 +237,7 @@ zh:
       name: 智能工厂
       desc: 安全，迅速，快捷，EPM帮您挖掘隐藏的数据
       language: 选择语言
+      welcome: 欢迎
   auth:
     view:
       login_title: 登 录
@@ -385,7 +405,7 @@ zh:
       edit: 修改组名
     dashboard:
       add: 添加仪表盘
-      add_desc: 选择一款你喜欢的图标样式进行创建，将其添加到仪表盘组中，方便您日后的查看
+      add_desc: 选择一款你喜欢的图表样式进行创建，将其添加到仪表盘组中，方便您日后的查看
       add_now: 现在添加
 
       full: 全屏显示
