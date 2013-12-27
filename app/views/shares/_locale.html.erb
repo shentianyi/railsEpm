@@ -1,30 +1,26 @@
-<div>
-  <select id="locale" data-placeholder="<%= t 'epm.base.language'%>" style="width:140px;" class="chosen-select" id="dashboard-group-name" onchange="changelocale(this.options[this.options.selectedIndex].value)">
-    <option></option>
-    <option value="en" >English</option>
-    <option value="zh" >中文（简体）</option>
-  </select>
-</div>
-
 <li class="select-language" id="select-language">
-  <span>中文</span>
+  <span lan="<%= I18n.locale %>"><%= t 'epm.base.language'%></span>
   <i class="icon-caret-down"></i>
   <ul class="menu-select-language" id="menu-select-language">
-    <li>中文</li>
-    <li>English</li>
+    <li lan="zh" >中文</li>
+    <li lan="en" >English</li>
   </ul>
 </li>
 
 <script type="text/javascript">
   $("body").on("click","#menu-select-language li",function(){
-      var value=$(this).attr("value"),text=$(this).text();
-      if(value!=$("#select-language>span").attr("value")){
-          if(changelocale(value)){
-               $("#select-language>span").text(text).attr("value",value);
-          }
+      var value=$(this).attr("lan"),text=$(this).text();
+      if(value!=$("#select-language>span").attr("lan")){
+          changelocale(value,function(data){
+              if(data.result){
+                  $("#select-language>span").attr("lan",value);
+                  $("#select-language>span").text(text).attr("value",value);
+                  window.location = data.content;
+              }
+          });
       }
   });
-  function changelocale(value){
+  function changelocale(value,callback){
       var data = {
           locale: value
       }
@@ -35,8 +31,8 @@
           type :'POST',
           async:false,
           success: function(data){
-              if(data.result){
-                  return true;
+              if(callback){
+                  callback(data);
               }
           }
       });
