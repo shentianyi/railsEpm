@@ -362,31 +362,82 @@ en:
         authority: Authority
 
         create: Create User
-        create_desc: 用户，即你在不同部门创建的员工，完成创建后，你可以给他们分配KPI
-        create_now: 现在创建
+        create_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
+        create_now: Create Now
 
-        assign: 分配KPI
-        assign_desc: 想分配任务一样给你的员工分配不同的KPI
-        assign_now: 现在分配
+        assign: Assign KPI
+        assign_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
+        assign_now: Assign Now
 
-        next_desc: 在分配完KPI后，你应该将你的部门放到你的观察点中，以观察点为基础，我们为你生成分析数据和仪表盘
+        next_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
 
       role:
-        admin: 管理员
-        director: 总经理
-        manager: 经理
-        user: 普通用户
+        admin: Administrator
+        director: Director
+        manager: Manager
+        user: User
       new:
-        name: 用户名
-        email: 邮箱
-        pwd: 密码
-        pwd_con: 确认密码
-        dep: 部门
+        name: Name
+        email: Email
+        pwd: Password
+        pwd_con: Password Confirmation
+        dep: Entity
     view:
       desc:
-        name: 观察点
-        manage: 管理观察点
-        dep_list: 部门列表
-        assign_dep: 分配部门
-        assign_desc: 首先创建一个观察点，然后将部门加入到观察点中，一个观察点是查看分析数据的基础
-        next_desc: 完成管理中的所有部分后， 你可以让你的员工（用户）通过‘KPI输入’来输入KPI
+        name: Entity Group
+        manage: Manage Entity Group
+        dep_list: Entity List
+        assign_dep: Assign Entity
+        assign_desc: Creating view first , then assign department to the view ,view is the base condition in analytics
+        next_desc: Creating view first , then assign department to the view,view is the base condition in analytics
+  #dashboard
+  dashboard_group:
+    group:
+      name: Dashboard Group
+      add: Add
+      give_name: Give it a name
+      edit: Edit Group Name
+    dashboard:
+      add: Add Dashboard
+      add_desc: Choose and create a dashboard ,add it to a dashboard group, so that you can look it over
+      add_now: Add Now
+
+      full: Full Screen
+      full_desc: Show dashboards on the left in full screen mode, Press 'ESC' to quit
+      full_now: Enter Full Screen
+
+      name: Dashboard Name
+      name_desc: Give your dashboard a name
+      choose_type: Choose dashboard type
+      type:
+        line: Line
+        column: Column
+        pie: Pie
+        Scatter: Scatter
+      content: Create Dashboard Content
+      content_desc: Add one or more series of data to your dashboard
+      add_series: Add one series of data
+      select_group: Choose Dashboard Group
+      create: Create Now
+      serie:
+        category: KPI Category
+        view: Entity Group
+        start_time: Start Time
+        end_time: End Time
+        total: Total
+        average: Average
+        add: Add
+      close: Close
+
+      add_type:
+        cus: Custom
+        temp: Template
+
+      group: Choose Dashboard Group
+      group_desc: Choose the dashboard group you want to put your dashboard
+
+      finish: Finish
+      finish_desc: Publish the dashboard you just created
+
+    item:
+      out_of_target: Out of Target
