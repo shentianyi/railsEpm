@@ -85,7 +85,8 @@ HIGH_CHART.theme={
             xAxis: {
                 labels: {
                     style: {
-                        color: '#999',
+//                        color: '#999',
+                        color:'#fff',
                         fontWeight:"bold"
                     }
                 },
@@ -94,13 +95,14 @@ HIGH_CHART.theme={
             yAxis: {
                 labels: {
                     style: {
-                        color: '#999',
+//                        color: '#999',
+                        color:'#fff',
                         fontWeight: 'bold'
                     }
                 },
                 gridLineDashStyle: 'solid',
                 gridLineWidth:1,
-                gridLineColor: 'rgba(255, 255, 255, .1)'
+                gridLineColor: 'rgba(255,255,255,0.6)'
             },
             exporting:{
                 enabled:false
@@ -134,23 +136,37 @@ HIGH_CHART.theme={
                     shadow: true
                 },
                 pie:{
+//                    colors:[
+//                        "#DDDF0D",
+//                        "#7798BF",
+//                        "#55BF3B",
+//                        "#DF5353",
+//                        "#aaeeee",
+//                        "#ff0066",
+//                        "#eeaaee",
+//                        "#55BF3B",
+//                        "#DF5353",
+//                        "#7798BF",
+//                        "#aaeeee"
+//                    ],
                     colors:[
-                        "#DDDF0D",
-                        "#7798BF",
-                        "#55BF3B",
-                        "#DF5353",
-                        "#aaeeee",
-                        "#ff0066",
-                        "#eeaaee",
-                        "#55BF3B",
-                        "#DF5353",
-                        "#7798BF",
-                        "#aaeeee"
+                        "#9cdd00",
+                        "#fe7005",
+                        "#f6d742",
+                        "#00e3fe",
+                        "#eb68fb",
+                        "#f86c80",
+                        "#5a6d8f",
+                        "#51d69f",
+                        "#dca96c",
+                        "#298eed",
+                        "#ac1010"
                     ],
                     dataLabels:{
                         enabled:true,
                         distance:-1,
-                        color:"white",
+//                        color:"white",
+                        color:"#000",
                         connectorColor:"rgba(0,0,0,0.1)",
                         style:{
                             fontSize:"9px"
@@ -177,14 +193,14 @@ HIGH_CHART.chart_color={
     dark:[
         "#9cdd00",
         "#fe7005",
-        "#fecd00",
+        "#f6d742",
         "#00e3fe",
-        "#e300fe",
-        "#fe0024",
-        "#6600fe",
-        "#00fe95",
-        "#18fe00",
-        "#f000ff",
-        "#0600ff"
+        "#eb68fb",
+        "#f86c80",
+        "#5a6d8f",
+        "#51d69f",
+        "#dca96c",
+        "#298eed",
+        "#ac1010"
     ]
 }

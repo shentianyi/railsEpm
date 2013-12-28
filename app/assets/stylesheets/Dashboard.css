@@ -103,8 +103,9 @@
     bottom:0px;
     z-index:99;
     /*background-color:#222;*/
-    background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
-    background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
+    /*应该注释掉下面这两个background*/
+    /*background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
+    /*background: -webkit-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
     display:none;
 }
 .grister-logo{
@@ -112,7 +113,7 @@
 }
 .gridster.black{
     background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
-    background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
+    background: -webkit-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
 }
 .full-size-label{
     text-align:center;
