@@ -64,10 +64,11 @@ ifepm.dashboard_widget.init = function(option){
     gridster = $("#dash-normalsize ul").gridster({
         namespace: '#dash-normalsize',
         widget_margins: [10, 10],
-        widget_base_dimensions: [ifepm.dashboard_widget.config.normal.width, ifepm.dashboard_widget.config.normal.height],
-        draggable:{
-            stop: ifepm.dashboard_widget.drag_stop,
-        },
+        widget_base_dimensions: [ifepm.dashboard_widget.config.normal.width, ifepm.dashboard_widget.config.normal.height]
+
+        //draggable:{
+        //    stop: ifepm.dashboard_widget.drag_stop,
+        //},
     }).data('gridster');
     current_gridster = gridster;
     /*
@@ -91,7 +92,10 @@ ifepm.dashboard_widget.init_fullsize = function(){
          gridster_full = $("#dash-fullsize ul").gridster({
              namespace:'#dash-fullsize',
              widget_margins: [10,10],
-             widget_base_dimensions: [width,height]
+             widget_base_dimensions: [width,height] ,
+             draggable:{
+                 stop: ifepm.dashboard_widget.drag_stop,
+             },
          }).data('gridster');
          isinit_fullsize = false;
      }
@@ -276,8 +280,8 @@ ifepm.dashboard_widget.remove_all_widgets =function(fullsize){
 * callback after drag stop
 * */
 ifepm.dashboard_widget.drag_stop = function(event,ui){
-    if(isfullsize){
-        return;
-    }
+    //if(isfullsize){
+    //    return;
+    //}
     ifepm.dashboard.on_drag_stop();
 };

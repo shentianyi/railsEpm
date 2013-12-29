@@ -481,7 +481,9 @@ ifepm.dashboard.on_finish_load = function () {
     ++current_index;
     if (current_index >= ifepm.dashboard.graph_sequence.length) {
         ifepm.dashboard_widget.enable(true);
+        if(isinit_fullsize){
 
+        }
 
         return;
     }
@@ -553,6 +555,14 @@ ifepm.dashboard.create_dashboard = function () {
         var option = {};
         option.container_selector = container_selector;
         option.id = graph_id;
+        //
+        option.isnew = true;
+        option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
+        var result = ifepm.dashboard_widget.add_w(option);
+        ifepm.dashboard.graphs[graph_id].sizex = result.sizex;
+        ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
+        // change to not save position
+        /*
         if (ifepm.dashboard.graphs[graph_id].sizex) {
             option.isnew = false;
             option.row = ifepm.dashboard.graphs[graph_id].row;
@@ -582,6 +592,7 @@ ifepm.dashboard.create_dashboard = function () {
             ifepm.dashboard.save_grid_pos(options, {success: function () {
             }});
         }
+        *?
         ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
         /*
          for(index in ifepm.dashboard.graph_sequence){
@@ -732,8 +743,8 @@ ifepm.dashboard.on_view_added = function (data) {
     var result = ifepm.dashboard_widget.add_w(option);
     graph_item.sizex = result.sizex;
     graph_item.sizey = result.sizey;
-    graph_item.col = result.col;
-    graph_item.row = result.row;
+    //graph_item.col = result.col;
+    //graph_item.row = result.row;
 
     ifepm.dashboard.graphs[graph_item.id] = graph_item;
     ifepm.dashboard.setTimer(graph_item);
@@ -764,7 +775,7 @@ ifepm.dashboard.on_drag_stop = function () {
             continue;
         }
         var opt = {};
-        var filter = "#" + id;
+        var filter = "#full_" + id;
         result = ifepm.dashboard_widget.get_pos(filter);
         if ((ifepm.dashboard.graphs[id].row == result.row ) && ( ifepm.dashboard.graphs[id].col == result.col)) {
             continue;
@@ -939,13 +950,26 @@ ifepm.dashboard.full_size = function (option) {
             option.container_selector = container_selector;
             option.id = graph_id;
 
-            option.isnew = false;
-            option.col = ifepm.dashboard.graphs[graph_id].col;
-            option.row = ifepm.dashboard.graphs[graph_id].row;
-            option.sizex = ifepm.dashboard.graphs[graph_id].sizex;
-            option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
-            option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
-            ifepm.dashboard_widget.add_w(option);
+            if(ifepm.dashboard.graphs[graph_id].col){
+                option.isnew = false;
+                option.col = ifepm.dashboard.graphs[graph_id].col;
+                option.row = ifepm.dashboard.graphs[graph_id].row;
+                option.sizex = ifepm.dashboard.graphs[graph_id].sizex;
+                option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
+                option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
+            }
+            else{
+                option.isnew = true;
+                option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
+            }
+
+            var result = ifepm.dashboard_widget.add_w(option);
+            if(option.isnew){
+                ifepm.dashboard.graphs[graph_id].col = result.col;
+                ifepm.dashboard.graphs[graph_id].row = result.row;
+                ifepm.dashboard.graphs[graph_id].sizex = result.sizex;
+                ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
+            }
         }
         else {
             //$(container_selector).append((new Graph()).placeholder)
