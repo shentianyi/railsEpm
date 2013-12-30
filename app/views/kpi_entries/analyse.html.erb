@@ -19,15 +19,15 @@
                          <%end %>
                     </select>
                </div>
-               <div class="index-condition-group">
-                    <input type="text" class="index-pick-date" placeholder="<%= t 'analytics.begin_time'%> *" id="analy-begin-time"
+               <div class="index-condition-group" style="width:222px">
+                    <input style="margin-left:13px;width:120px !important;" type="text" class="index-pick-date" placeholder="<%= t 'analytics.begin_time'%> *" id="analy-begin-time"
                     readonly=true/>
                     <label class="index-date-extra-info"></label>
-                    <input type="text" class="index-pick-date" placeholder="<%= t 'analytics.end_time'%>" id="analy-end-time"
+                    <input style="margin-left:13px;width:120px !important;" type="text" class="index-pick-date" placeholder="<%= t 'analytics.end_time'%>" id="analy-end-time"
                     readonly=true/>
                     <label class="index-date-extra-info"></label>
                </div>
-               <div class="index-condition-group" style="width:120px">
+               <div class="index-condition-group" style="width:77px;margin-left:-66px;">
                     <label class="analytics-radio-label">
                          <input type="radio" name="chartRadios" value="1" checked>
                          <%= t 'analytics.sum'%> </label>
@@ -35,7 +35,7 @@
                          <input type="radio" name="chartRadios" value="2">
                          <%= t 'analytics.average'%> </label>
                </div>
-               <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px" onclick="prepare_form_chart()"><%= t 'analytics.add_chart'%></a>
+               <a class="btn btn-primary btn-normal pull-left" style="margin:14px 0 0 3px" onclick="prepare_form_chart()"><%= t 'analytics.add_chart'%></a>
           </div>
           <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible"
           state="open" onclick="analytic_control_condition_visible()"> </i>
