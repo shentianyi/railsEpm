@@ -372,7 +372,7 @@ en:
         next_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
 
       role:
-        admin: Administrator
+        admin: Admin
         director: Director
         manager: Manager
         user: User
