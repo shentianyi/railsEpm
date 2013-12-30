@@ -372,7 +372,7 @@ en:
         next_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
 
       role:
-        admin: Administrator
+        admin: Admin
         director: Director
         manager: Manager
         user: User
@@ -392,6 +392,8 @@ en:
         next_desc: Creating view first , then assign department to the view,view is the base condition in analytics
   #dashboard
   dashboard_group:
+    base:
+      restore: Restore
     group:
       name: Dashboard Group
       add: Add
