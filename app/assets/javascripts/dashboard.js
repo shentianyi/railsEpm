@@ -426,6 +426,7 @@ function init_component(){
 * @function on_full_size
 * */
 function on_full_size(){
+    $("#full-size-title p").text(current_dashboard_name);
     ifepm.dashboard_widget.full_size(true);
     ifepm.dashboard.full_size({fullsize:true,id:current_dashboard_id});
 };

@@ -483,7 +483,7 @@ ifepm.dashboard.on_finish_load = function () {
         ifepm.dashboard_widget.enable(true);
         if(isfullsize){
             //add a full size title
-            $(container_selector).append(ifepm.template.title.replace(/!title!/g, current_dashboard_name));
+            /*$(container_selector).append(ifepm.template.title.replace(/!title!/g, current_dashboard_name));
             var option = {};
             option.container_selector = container_selector;
             option.isnew = false;
@@ -493,6 +493,7 @@ ifepm.dashboard.on_finish_load = function () {
             option.sizex = 1;
             option.sizey = 1;
             ifepm.dashboard_widget.add_w(option);
+            */
             ifepm.dashboard.on_drag_stop();
         }
         return;
