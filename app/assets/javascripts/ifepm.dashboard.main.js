@@ -482,6 +482,17 @@ ifepm.dashboard.on_finish_load = function () {
     if (current_index >= ifepm.dashboard.graph_sequence.length) {
         ifepm.dashboard_widget.enable(true);
         if(isfullsize){
+            //add a full size title
+            $(container_selector).append(ifepm.template.title.replace(/!title!/g, current_dashboard_name));
+            var option = {};
+            option.container_selector = container_selector;
+            option.isnew = false;
+            option.id = ifepm.template.titleid;
+            //option.col = 1;
+            //option.row = 1;
+            option.sizex = 1;
+            option.sizey = 1;
+            ifepm.dashboard_widget.add_w(option);
             ifepm.dashboard.on_drag_stop();
         }
         return;
@@ -1005,16 +1016,6 @@ ifepm.dashboard.full_size = function (option) {
         else {
             //$(container_selector).append((new Graph()).placeholder)
         }
-        //add a full size title
-        $(container_selector).append(ifepm.template.title.replace(/!title!/g, current_dashboard_name));
-        var option = {};
-        option.container_selector = container_selector;
-        option.isnew = false;
-        option.id = ifepm.template.titleid;
-        option.col = 1;
-        option.row = 1;
-        option.sizex = 1;
-        option.sizey = 1;
-        ifepm.dashboard_widget.add_w(option);
+
     }
 }
