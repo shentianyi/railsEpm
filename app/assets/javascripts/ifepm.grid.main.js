@@ -162,9 +162,10 @@ ifepm.dashboard_widget.add_w = function(option){
         selector=" li#"+option.id;
     }
 
-    if(isfullsize && option.chart_type == "pie"){
+    if(isfullsize && option.chart_type == "pie" ){
         option.sizex = 2;
         option.sizey = 2;
+        option.isnew = false;
     }
 
     if(option.isnew){
