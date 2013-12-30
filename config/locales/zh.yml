@@ -398,6 +398,8 @@ zh:
           next_desc: 完成管理中的所有部分后， 你可以让你的员工（用户）通过‘KPI输入’来输入KPI
   #dashboard
   dashboard_group:
+    base:
+      restore: 退出全屏
     group:
       name: 仪表盘组
       add: 添加

@@ -392,6 +392,8 @@ en:
         next_desc: Creating view first , then assign department to the view,view is the base condition in analytics
   #dashboard
   dashboard_group:
+    base:
+      restore: Restore
     group:
       name: Dashboard Group
       add: Add
