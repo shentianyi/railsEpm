@@ -133,7 +133,7 @@ nav>ul>li>a{
     display:block;
 
     color:white;
-    font-size:14px;
+    font-size:13px;
     height:46px;
     text-align:center;
     cursor:pointer;
@@ -154,26 +154,26 @@ nav ul li a span:nth-of-type(1){
     display:block;
     margin-top:22px;
     margin-bottom:20px;
-    padding:3px 13px;
+    padding:3px 1px;
 }
 nav ul li:last-of-type a span{
 
-    width:88px;
+    width:65px;
     text-align:right;
     position:relative;
     padding-left:3px;
 }
-nav ul li:last-of-type a span:before{
+/*nav ul li:last-of-type a span:before{*/
     /*content:url('../images/entry-kpi.png');*/
-    content:url('/assets/entry-kpi.png');
-    display:block;
-    width:20px;
-    height:1px;
-    position:absolute;
-    bottom:29px;
-    left:0px;
-    top:4px;
-}
+    /*content:url('/assets/entry-kpi.png');*/
+    /*display:block;*/
+    /*width:20px;*/
+    /*height:1px;*/
+    /*position:absolute;*/
+    /*bottom:29px;*/
+    /*left:0px;*/
+    /*top:4px;*/
+/*}*/
 nav ul li a:hover ~ .nav-manage-sub{
     left:-12px;
 }
