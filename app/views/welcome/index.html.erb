@@ -26,25 +26,25 @@
 
     <div class="roles">
       <div class="item">
-        <a><i class="icon-upload-alt"></i></a>
+        <a href="<%= new_kpi_entry_path%>"><i class="icon-upload-alt"></i></a>
 
         <p><%= t 'manage.user.role.user'%></p>
         <a href="<%= new_kpi_entry_path%>"><%= t 'welcome.entrys.kpi_entry'%></a>
       </div>
       <div class="item">
-        <a><i class="icon-bar-chart"></i></a>
+        <a href="<%= analyse_kpi_entries_path %>"><i class="icon-bar-chart"></i></a>
 
         <p><%= t 'manage.user.role.manager'%></p>
         <a href="<%= analyse_kpi_entries_path %>"><%= t 'welcome.entrys.analyse'%></a>
       </div>
       <div class="item">
-        <a><i class="icon-dashboard"></i></a>
+        <a href="<%= dashboards_path %>"><i class="icon-dashboard"></i></a>
 
         <p><%= t 'manage.user.role.director'%></p>
         <a href="<%= dashboards_path %>"><%= t 'welcome.entrys.dashboard'%></a>
       </div>
       <div class="item">
-        <a><i class="icon-sitemap"></i></a>
+        <a href="/kpis"><i class="icon-sitemap"></i></a>
 
         <p><%= t 'manage.user.role.admin'%></p>
         <a href="/kpis"><%= t 'welcome.entrys.manage_kpi'%></a>
