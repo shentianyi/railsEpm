@@ -284,5 +284,11 @@ ifepm.dashboard_widget.drag_stop = function(event,ui){
     //if(isfullsize){
     //    return;
     //}
+    if($("#dash-fullsize").height()>$("#dashboard-content-full").height()){
+        $("#dashboard-content-full").height($("#dash-fullsize").height());
+    }
+    else{
+        $("#dashboard-content-full").height($(document).height());
+    }
     ifepm.dashboard.on_drag_stop();
 };
