@@ -152,7 +152,7 @@ nav ul li:nth-last-of-type(2) a:hover span{
 }
 nav ul li a span:nth-of-type(1){
     display:block;
-    margin-top:22px;
+    margin-top:24px;
     margin-bottom:20px;
     padding:3px 4px;
 }
@@ -211,7 +211,7 @@ nav ul li a:hover ~ .nav-manage-sub{
     font-size:15px;
     padding-right:6px;
     margin-bottom:0px;
-    margin-top:18px;
+    margin-top:20px;
 }
 .nav-user-part>li{
     display:inline-block;
