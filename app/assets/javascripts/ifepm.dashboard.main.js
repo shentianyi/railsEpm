@@ -481,10 +481,9 @@ ifepm.dashboard.on_finish_load = function () {
     ++current_index;
     if (current_index >= ifepm.dashboard.graph_sequence.length) {
         ifepm.dashboard_widget.enable(true);
-        if(isinit_fullsize){
-
+        if(isfullsize){
+            ifepm.dashboard.on_drag_stop();
         }
-
         return;
     }
     var graph_id = ifepm.dashboard.graph_sequence[current_index];
@@ -498,7 +497,38 @@ ifepm.dashboard.on_finish_load = function () {
     var option = {};
     option.container_selector = container_selector;
     option.id = graph_id;
-    if (ifepm.dashboard.graphs[graph_id].sizex) {
+
+    if(isfullsize){
+        if (ifepm.dashboard.graphs[graph_id].col){
+            option.isnew = false;
+            option.row = ifepm.dashboard.graphs[graph_id].row;
+            option.col = ifepm.dashboard.graphs[graph_id].col;
+            option.sizex = ifepm.dashboard.graphs[graph_id].sizex;
+            option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
+            option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
+            ifepm.dashboard_widget.add_w(option);
+        }
+        else
+        {
+            option.isnew = true;
+            option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
+            var result = ifepm.dashboard_widget.add_w(option);
+
+            ifepm.dashboard.graphs[graph_id].col = result.col;
+            ifepm.dashboard.graphs[graph_id].row = result.row;
+            ifepm.dashboard.graphs[graph_id].sizex = result.sizex;
+            ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
+        }
+    }
+    else{
+        option.isnew = true;
+        option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
+        ifepm.dashboard_widget.add_w(option);
+    }
+
+
+
+    /*if (ifepm.dashboard.graphs[graph_id].col) {
         option.isnew = false;
         option.row = ifepm.dashboard.graphs[graph_id].row;
         option.col = ifepm.dashboard.graphs[graph_id].col;
@@ -527,7 +557,8 @@ ifepm.dashboard.on_finish_load = function () {
         options.push(opt);
         ifepm.dashboard.save_grid_pos(options, {success: function () {
         }});
-    }
+    } */
+
     if (!isfullsize) {
         ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
     }
