@@ -118,12 +118,24 @@
 .full-size-label{
     text-align:center;
     font-size:21px;
-    margin-top:5%;
+    position:absolute;
+    top:5%;
+    left:0px;
+    right:0px;
     word-break:break-all;
     word-wrap:break-word;
     color:#9cdd00
 }
 .full-size-btn{
-    margin-top:10%;
-
+    height: 18px;
+    margin-top: -9px;
+    position: absolute;
+    top: 50%;
+    left:10px;
+    right:10px;
+    background:#222;
+    color:#fff;
+}
+.full-size-btn:hover{
+    background:#505050
 }
