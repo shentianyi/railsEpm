@@ -104,26 +104,26 @@
     z-index:99;
     /*background-color:#222;*/
     /*应该注释掉下面这两个background*/
-    /*background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
-    /*background: -webkit-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
+    background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
+    background: -webkit-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
     display:none;
 }
 .grister-logo{
     position:relative;
 }
 .gridster.black{
-    background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
-    background: -webkit-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
+    /*background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
+    /*background: -webkit-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
 }
 .full-size-label{
     text-align:center;
     font-size:21px;
-    margin-top:45%;
+    margin-top:5%;
     word-break:break-all;
     word-wrap:break-word;
     color:#9cdd00
 }
 .full-size-btn{
-    margin-top:25%;
+    margin-top:10%;
 
 }
