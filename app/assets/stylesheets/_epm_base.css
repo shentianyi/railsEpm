@@ -154,14 +154,14 @@ nav ul li a span:nth-of-type(1){
     display:block;
     margin-top:22px;
     margin-bottom:20px;
-    padding:3px 1px;
+    padding:3px 4px;
 }
 nav ul li:last-of-type a span{
 
-    width:65px;
-    text-align:right;
+    /*width:65px;*/
+    text-align:center;
     position:relative;
-    padding-left:3px;
+    /*padding-left:3px;*/
 }
 /*nav ul li:last-of-type a span:before{*/
     /*content:url('../images/entry-kpi.png');*/
