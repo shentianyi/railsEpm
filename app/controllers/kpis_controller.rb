@@ -137,7 +137,7 @@ class KpisController < ApplicationController
 
   def generate_kpi_by_template t,category,formula
     kpi=Kpi.new(:name=>t.name,:description=>t.description,:frequency=>t.frequency,
-    :direction=>t.direction,:target_max=>t.target_max,:target_min=>t.target_min,:unit=>t.unit,
+    :direction=>t.direction,:target_max=>t.target,:target_min=>t.target,:unit=>t.unit,
     :is_calculated=>t.is_calculated,:formula_string=>t.formula_string,:formula=>formula,
     :kpi_category_id=>category.id)
     kpi.creator=current_user
