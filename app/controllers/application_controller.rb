@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_tenant_status
   
   # I18n
+  before_filter :store_location
   before_filter  :set_locale
   #
   #
@@ -103,7 +104,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       store_location
-      #flash[:alert] = I18n.t 'auth.msg.login_require'
+      flash[:alert] = I18n.t 'auth.msg.login_require'
       redirect_to new_user_sessions_url
       return false
     end
@@ -113,8 +114,9 @@ class ApplicationController < ActionController::Base
   def require_no_user
     if current_user
       store_location
-      #flash[:alert] =  I18n.t 'auth.msg.logout_require'
-      redirect_to root_url
+      flash[:alert] =  I18n.t 'auth.msg.logout_require'
+      #redirect_to root_url
+      redirect_to welcome_url
       return false
     end
   end
@@ -122,10 +124,9 @@ class ApplicationController < ActionController::Base
   #must be login and active
   def require_active_user
     unless current_user && current_user.status == UserStatus::ACTIVE
-      flash[:alert]="Your user account is locked, if it's your new account, " +
-          "please finish your registration with our confirmation letter"
+      flash[:alert]= I18n.t 'auth.msg.lock_account'
       current_user_session.destroy
-      redirect_to root_url
+      redirect_to new_user_sessions_url
       return false
     end
   end
@@ -200,7 +201,7 @@ class ApplicationController < ActionController::Base
   
   # I18n
   def set_locale
-    #I18n.locale=cookies[:locale] || extract_locale_from_accept_language_header || I18n.default_locale
+    I18n.locale=cookies[:locale] || extract_locale_from_accept_language_header || I18n.default_locale
   end
   
   private

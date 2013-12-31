@@ -4,13 +4,25 @@ var config = {
     '.chosen-select-no-single': {disable_search_threshold: 10},
     '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
     '.chosen-select-width': {width: "95%"}
-}
+};
 $(document).ready(function(){
     $("#user-portrait-background").on("click",show_left_user_setting);
     $(".chosen-select").chosen({
         disable_search_threshold: 7
     });
     $(".chosen-select:first-of-type").val('').trigger('chosen:updated');
+    $("body").on("click",".nav-user-part>li.select-language",function(){
+       $(".nav-user-part>li.select-language .menu-select-language").css("left","2px");
+    });
+    $("body").on("click",function(event){
+        var target=adapt_event(event).target;
+        if(!$(target).hasClass("select-language") && !$(target).parent().hasClass("select-language") ){
+            $(".nav-user-part>li.select-language .menu-select-language").css("left","-999em");
+        }
+    });
+    var lan=$("#select-language>span").attr("lan");
+    var text=$("#menu-select-language").find("[lan='"+lan+"']").text();
+    $("#select-language>span").text(text);
 })
 //左边的用户设置
 function show_left_user_setting(){

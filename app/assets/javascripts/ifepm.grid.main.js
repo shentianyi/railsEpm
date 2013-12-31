@@ -59,15 +59,16 @@ ifepm.dashboard_widget.init = function(option){
 
     ifepm.dashboard_widget.setconfig(option);
     //====log====//
-    console.log(ifepm.dashboard_widget.config);
+    //console.log(ifepm.dashboard_widget.config);
 
     gridster = $("#dash-normalsize ul").gridster({
         namespace: '#dash-normalsize',
         widget_margins: [10, 10],
-        widget_base_dimensions: [ifepm.dashboard_widget.config.normal.width, ifepm.dashboard_widget.config.normal.height],
-        draggable:{
-            stop: ifepm.dashboard_widget.drag_stop,
-        },
+        widget_base_dimensions: [ifepm.dashboard_widget.config.normal.width, ifepm.dashboard_widget.config.normal.height]
+
+        //draggable:{
+        //    stop: ifepm.dashboard_widget.drag_stop,
+        //},
     }).data('gridster');
     current_gridster = gridster;
     /*
@@ -91,7 +92,10 @@ ifepm.dashboard_widget.init_fullsize = function(){
          gridster_full = $("#dash-fullsize ul").gridster({
              namespace:'#dash-fullsize',
              widget_margins: [10,10],
-             widget_base_dimensions: [width,height]
+             widget_base_dimensions: [width,height] ,
+             draggable:{
+                 stop: ifepm.dashboard_widget.drag_stop,
+             },
          }).data('gridster');
          isinit_fullsize = false;
      }
@@ -108,14 +112,14 @@ ifepm.dashboard_widget.setconfig = function(option){
     //normal size config
     ifepm.dashboard_widget.config.normal.max_col = option.normal.max_col;
     ifepm.dashboard_widget.config.normal.max_row = option.normal.max_row;
-    ifepm.dashboard_widget.config.normal.height = option.normal.height / option.normal.max_row - 20;
-    ifepm.dashboard_widget.config.normal.width = option.normal.width / option.normal.max_col - 20;
+    ifepm.dashboard_widget.config.normal.height = option.normal.height / option.normal.max_row - 26;
+    ifepm.dashboard_widget.config.normal.width = option.normal.width / option.normal.max_col - 26;
 
     //full size config
     ifepm.dashboard_widget.config.full.max_col = option.full.max_col;
     ifepm.dashboard_widget.config.full.max_row = option.full.max_row;
-    ifepm.dashboard_widget.config.full.height = option.full.height / option.full.max_row - 20;
-    ifepm.dashboard_widget.config.full.width = option.full.width / option.full.max_col - 20;
+    ifepm.dashboard_widget.config.full.height = option.full.height / option.full.max_row - 23;
+    ifepm.dashboard_widget.config.full.width = option.full.width / option.full.max_col - 23;
 }
 /*
 * @function enable(bool)
@@ -158,6 +162,12 @@ ifepm.dashboard_widget.add_w = function(option){
         selector=" li#"+option.id;
     }
 
+    if(isfullsize && option.chart_type == "pie" ){
+        option.sizex = 2;
+        option.sizey = 2;
+        option.isnew = false;
+    }
+
     if(option.isnew){
         var default_size = ifepm.dashboard_widget.initsize(option.chart_type);
         current_gridster.add_widget(option.container_selector+selector,default_size.sizex,default_size.sizey)
@@ -166,7 +176,7 @@ ifepm.dashboard_widget.add_w = function(option){
     }
 
     var pos={};
-    pos = current_gridster.serialize($("#"+option.id));
+    pos = current_gridster.serialize($(selector));
 
     pos[0].col = pos[0].col == NaN ? 1:pos[0].col;
     pos[0].row = pos[0].col == NaN ? 1:pos[0].row;
@@ -223,8 +233,8 @@ ifepm.dashboard_widget.get_pos = function(filter){
 * */
 ifepm.dashboard_widget.initsize = function(type){
     var defsize = {
-        sizex:2,
-        sizey:2,
+        sizex:1,
+        sizey:1,
     };
     switch (type)
     {
@@ -271,8 +281,14 @@ ifepm.dashboard_widget.remove_all_widgets =function(fullsize){
 * callback after drag stop
 * */
 ifepm.dashboard_widget.drag_stop = function(event,ui){
-    if(isfullsize){
-        return;
+    //if(isfullsize){
+    //    return;
+    //}
+    if($("#dash-fullsize").height()>$("#dashboard-content-full").height()){
+        $("#dashboard-content-full").height($("#dash-fullsize").height());
+    }
+    else{
+        $("#dashboard-content-full").height($(document).height());
     }
     ifepm.dashboard.on_drag_stop();
 };

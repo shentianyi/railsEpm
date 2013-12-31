@@ -3,38 +3,38 @@ DASHBOARD.special_type={};
 
 DASHBOARD.special_type={
     line:function(id){
-        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px");
+        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px").css("display","table");
         $("#"+id+" "+".db-chart-container").css("top","50px");
         $table=$("#"+id+" "+".dashboard-item-extra-info");
         $table
             .append($("<tr />")
                 .append($("<td rowspan='2' style='width:40%;min-width:40%;max-width:40%'/>")
                     .append($("<span style='padding-left:5px'/>").addClass("out-target primary-value"))
-                    .append($("<span />").text("out of target"))
+                    .append($("<span />").text(I18n.t('chart.line.out_of_target')))
                 )
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:59px'/>").text("KPI名称: "))
+                    .append($("<span style='display:inline-block;width:59px'/>").text(I18n.t('chart.line.kpi_name')+":"))
                     .append($("<span style='color:rgba(245, 161, 51, 0.9)'/>").addClass("kpi-name primary-value"))
                 )
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:51px'/>").text("记录数: "))
+                    .append($("<span style='display:inline-block;width:51px'/>").text(I18n.t('chart.line.record')+": "))
                     .append($("<span />").addClass("total-amount"))
                 )
             )
             .append($("<tr />")
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:59px'/>").text("总值: "))
+                    .append($("<span style='display:inline-block;width:59px'/>").text(I18n.t('chart.line.total')+": "))
                     .append($("<span />").addClass("total-value"))
                 )
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:51px'/>").text("平均值: "))
+                    .append($("<span style='display:inline-block;width:51px'/>").text(I18n.t('chart.line.average')+": "))
                     .append($("<span />").addClass("average-value"))
                 )
             )
 
     },
     column:function(id){
-        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px");
+        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px").css("display","table");
         $("#"+id+" "+".db-chart-container").css("top","50px");
         $table=$("#"+id+" "+".dashboard-item-extra-info");
         $table
@@ -42,17 +42,17 @@ DASHBOARD.special_type={
                 $("<tr />")
                     .append($("<td style='text-align:center;max-width:50%;min-width:50%;width:50%;'/>")
                         .append($("<span />").addClass("max-value primary-value"))
-                        .append($("<span />").text("最大值"))
+                        .append($("<span />").text(I18n.t('chart.column.max')))
                     )
                     .append($("<td style='text-align:center'/>")
                         .append($("<span />").addClass("min-value secondary-value"))
-                        .append($("<span />").text("最小值"))
+                        .append($("<span />").text(I18n.t('chart.column.min')))
                     )
             )
 
     },
     pie:function(id){
-        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px");
+        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px").css("display","table");
         $("#"+id+" "+".db-chart-container").css("top","50px");
         $table=$("#"+id+" "+".dashboard-item-extra-info");
         $table
@@ -63,20 +63,93 @@ DASHBOARD.special_type={
                         .append($("<span />").addClass("pie-selected-name"))
                     )
                     .append($("<td style='text-align:left;'/>")
-                        .append($("<span style='display:inline-block;width:60px;text-align:left;'/>").text("选中值: "))
+                        .append($("<span style='display:inline-block;width:60px;text-align:left;'/>").text(I18n.t('chart.pie.select')+": "))
                         .append($("<span />").addClass("selected-value"))
                     )
             )
             .append(
                 $("<tr />")
                     .append($("<td style='text-align:left;'/>")
-                        .append($("<span style='display:inline-block;width:60px;text-align:left;'/>").text("总值: "))
+                        .append($("<span style='display:inline-block;width:60px;text-align:left;'/>").text(I18n.t('chart.pie.total')+": "))
                         .append($("<span />").addClass("pie-total-value"))
                     )
             )
     },
+//    line:function(id){
+//        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px").css("display","table");
+//        $("#"+id+" "+".db-chart-container").css("top","50px");
+//        $table=$("#"+id+" "+".dashboard-item-extra-info");
+//        $table
+//            .append($("<tr />")
+//                .append($("<td rowspan='2' style='width:40%;min-width:40%;max-width:40%'/>")
+//                    .append($("<span style='padding-left:5px'/>").addClass("out-target primary-value"))
+//                    .append($("<span />").text("out of target"))
+//                )
+//                .append($("<td />")
+//                    .append($("<span style='display:inline-block;width:59px'/>").text("name:"))
+//                    .append($("<span style='color:rgba(245, 161, 51, 0.9)'/>").addClass("kpi-name primary-value"))
+//                )
+//                .append($("<td />")
+//                    .append($("<span style='display:inline-block;width:51px'/>").text("record: "))
+//                    .append($("<span />").addClass("total-amount"))
+//                )
+//            )
+//            .append($("<tr />")
+//                .append($("<td />")
+//                    .append($("<span style='display:inline-block;width:59px'/>").text("total: "))
+//                    .append($("<span />").addClass("total-value"))
+//                )
+//                .append($("<td />")
+//                    .append($("<span style='display:inline-block;width:51px'/>").text("average: "))
+//                    .append($("<span />").addClass("average-value"))
+//                )
+//            )
+//
+//    },
+//    column:function(id){
+//        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px").css("display","table");
+//        $("#"+id+" "+".db-chart-container").css("top","50px");
+//        $table=$("#"+id+" "+".dashboard-item-extra-info");
+//        $table
+//            .append(
+//                $("<tr />")
+//                    .append($("<td style='text-align:center;max-width:50%;min-width:50%;width:50%;'/>")
+//                        .append($("<span />").addClass("max-value primary-value"))
+//                        .append($("<span />").text("max value"))
+//                    )
+//                    .append($("<td style='text-align:center'/>")
+//                        .append($("<span />").addClass("min-value secondary-value"))
+//                        .append($("<span />").text("min value"))
+//                    )
+//            )
+//
+//    },
+//    pie:function(id){
+//        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px").css("display","table");
+//        $("#"+id+" "+".db-chart-container").css("top","50px");
+//        $table=$("#"+id+" "+".dashboard-item-extra-info");
+//        $table
+//            .append(
+//                $("<tr />")
+//                    .append($("<td rowspan='2' style='text-align:center;max-width:60%;min-width:60%;width:60%;'/>")
+//                        .append($("<span />").addClass("percentage primary-value"))
+//                        .append($("<span />").addClass("pie-selected-name"))
+//                    )
+//                    .append($("<td style='text-align:left;'/>")
+//                        .append($("<span style='display:inline-block;width:60px;text-align:left;'/>").text("selected: "))
+//                        .append($("<span />").addClass("selected-value"))
+//                    )
+//            )
+//            .append(
+//                $("<tr />")
+//                    .append($("<td style='text-align:left;'/>")
+//                        .append($("<span style='display:inline-block;width:60px;text-align:left;'/>").text("total: "))
+//                        .append($("<span />").addClass("pie-total-value"))
+//                    )
+//            )
+//    },
     scatter:function(id){
-        $("#"+id+" "+".dashboard-item-extra-info").css("height","0px");
+        $("#"+id+" "+".dashboard-item-extra-info").css("height","0px").css("display","none");
         $("#"+id+" "+".db-chart-container").css("top","0px");
 
     }
@@ -167,9 +240,10 @@ DASHBOARD.add.generate=function(option){
     DASHBOARD.special_grab[type](option);
     if(option.theme!=null){
         var $target=$("#"+outer_target);
-        $target.find(".dashboard-item-extra-info").css("backgroundColor","rgba(96,96,96,1)");
-        $target.find(".dashboard-item-extra-info td").css("color","white");
-        $target.find(".dashboard-item-extra-info .primary-value").css("color","#DDDF0D");
-        $target.find(".dashboard-item-extra-info .secondary-value").css("color","#7798BF");
+//        $target.find(".dashboard-item-extra-info").css("backgroundColor","rgba(96,96,96,1)");
+//        $target.find(".dashboard-item-extra-info td").css("color","black");
+        $target.find(".dashboard-item-extra-info td").css("color","#fff");
+        $target.find(".dashboard-item-extra-info .primary-value").css("color","#9cdd00");
+        $target.find(".dashboard-item-extra-info .secondary-value").css("color","#fe7005");
     }
 }

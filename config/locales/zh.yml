@@ -202,17 +202,53 @@ zh:
    # error_messages:
    #   email_invalid: should look like an email address.
    #   password_blank: 密码不可为空
-   #  password_invalid: 密码最短长度为4 
+   #  password_invalid: 密码最短长度为4
+  welcome:
+    title: 欢迎
+    sub_title: 欢迎使用EPM
+    entrys:
+      title: 针对您角色的入口
+      kpi_entry: 输入KPI
+      analyse: 分析
+      dashboard: 仪表盘
+      manage_kpi: 管理KPI
+    statistics:
+      title: 当前数据统计
+      staff: 人员结构
+      table: 数据统计
+      item:
+        kpi: KPI
+        entity: 部门
+        user: 用户
+        view: 观察点
+
+  authlogic:
+    error_messages:
+      login_blank: 不能为空
+      login_not_found: 是无效的
+      login_invalid: 只能包含字符，数字，空格和 .-_@
+      consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account is disabled.
+      email_invalid: 无效的邮箱格式.
+      password_blank: 不能为空
+      password_invalid: 是无效的
+  epm:
+    base:
+      title: EPM
+      name: 智能工厂
+      desc: 安全，迅速，快捷，EPM帮您挖掘隐藏的数据
+      language: 语言
+      welcome: 欢迎
   auth:
     view:
       login_title: 登 录
       login_btn: 登 录
-      sign_title: 注 册
+      sign_title: 现 在 注 册
       sign_btn: 注 册
       signout_btn: 注销
       submit_btn: 提 交
       email: 邮箱
       pwd: 密码
+      confirm: 确认
       con_pwd: 确认密码
       company: 公司
     msg:
@@ -224,6 +260,7 @@ zh:
       sign_success: 注册成功
       sign_close: 我们还没有开放注册
       sign_fail: 注册失败
+      lock_account: 您的账户已经过期或被锁定，请联系网站管理员
   menu:
       start: 开始
       dashboard: 仪表盘
@@ -256,6 +293,15 @@ zh:
       aver_value: 平均实际值
       tcr: TCR
       close_btn: 关闭
+  #kpi entry
+  entry:
+    desc:
+      entry: KPI输入
+      category: 类别
+      trend: 趋势
+      actual: 实际值
+      recent: 最近数据
+  #manage
   manage:
       base:
         delete_btn: 删除
@@ -265,9 +311,21 @@ zh:
         enter_confirm: Enter：  确定
         esc_cancel: ESC： 取消
         delete_confirm:  确定删除？
+        next: 下一步
+        finish: 完成
       kpi:
+        desc:
+          create: 创建KPI
+          create_desc: 为不同的KPI类别创建KPI，你可以对KPI做相应的编辑
+          create_now: 现在创建
+
+          kpi_library_desc: 如果你需要一些常用的KPI，你可以方便的在KPI库中选择
+          choose_now: 现在选择
+          next_desc: 创建完成KPI后，你应该创建部门和用户，然后将KPI分配给相应部门中的用户内
+
+
         title: 管理KPI
-        category: 类别
+        category: KPI类别
         kpi_library: KPI 库
         name: 名称
         description: 描述
@@ -283,3 +341,129 @@ zh:
         formula: 计算公式
         invalid: 公式不合法
         cannot_repeat: 同一类别KPI不可重复
+        freq_item:
+          hourly: 小时
+          daily: 天
+          weekly: 周
+          monthly: 月
+          quarterly: 季度
+          yearly: 年
+        trend_item:
+          none: 无
+          up: 上升
+          down: 下降
+      department:
+        desc:
+          dep: 部门
+          manage: 管理部门
+          name: 部门名称
+          create: 创建部门
+          create_desc: 部门是管理员工的地方，而观察点则建立在部门的基础上
+          give_name: 给它一个名字
+          next_desc: 完成部门创建后， 接下来你需要为你的部门创建员工这样他们为你的部门贡献KPI
+      user:
+        desc:
+          name: 用户
+          manage: 管理用户
+          authority: 权限
+
+          create: 创建用户
+          create_desc: 用户，即你在不同部门创建的员工，完成创建后，你可以给他们分配KPI
+          create_now: 现在创建
+
+          assign: 分配KPI
+          assign_desc: 想分配任务一样给你的员工分配不同的KPI
+          assign_now: 现在分配
+
+          next_desc: 在分配完KPI后，你应该将你的部门放到你的观察点中，以观察点为基础，我们为你生成分析数据和仪表盘
+
+        role:
+          admin: 管理员
+          director: 总经理
+          manager: 经理
+          user: 普通用户
+        new:
+          name: 用户名
+          email: 邮箱
+          pwd: 密码
+          pwd_con: 确认密码
+          dep: 部门
+      view:
+        desc:
+          name: 观察点
+          manage: 管理观察点
+          dep_list: 部门列表
+          assign_dep: 分配部门
+          assign_desc: 首先创建一个观察点，然后将部门加入到观察点中，一个观察点是查看分析数据的基础
+          next_desc: 完成管理中的所有部分后， 你可以让你的员工（用户）通过‘KPI输入’来输入KPI
+  #dashboard
+  dashboard_group:
+    base:
+      restore: 退出全屏
+    group:
+      name: 仪表盘组
+      add: 添加
+      give_name: 给它一个名字
+      edit: 修改组名
+    dashboard:
+      add: 添加仪表盘
+      add_desc: 选择一款你喜欢的图表样式进行创建，将其添加到仪表盘组中，方便您日后的查看
+      add_now: 现在添加
+
+      full: 全屏显示
+      full_desc: 将左侧的仪表板全屏显示，通过双击或者ESC来退出全屏模式
+      full_now: 进入全屏
+
+      name: 仪表盘名称
+      name_desc: 给你的仪表盘一个合适的名字
+      choose_type: 选择一种仪表盘类型
+      type:
+        line: 折线图
+        column: 柱状图
+        pie: 饼图
+        Scatter: 散点图
+
+      content: 创建仪表盘内容
+      content_desc: 添加一个系列或者多个系列的数据给你的仪表盘
+      add_series: 添加一个系列数据
+      select_group: 选择仪表盘组
+      create: 现在发布
+      serie:
+        category: KPI类别
+        view: 观察点
+        start_time: 开始时间
+        end_time: 结束时间
+        total: 总数
+        average: 平均
+        add: 添加
+      close: 关闭
+
+      add_type:
+        cus: 自定义添加
+        temp: 模板添加
+
+      group: 选择仪表盘所在组
+      group_desc: 选择一个仪表盘组来放置你的仪表盘
+
+      finish: 完成
+      finish_desc: 发布你刚才创建的仪表盘
+
+    item:
+      out_of_target: 在目标范围外
+  chart:
+    value: 值
+    target_range: 目标值范围
+    percent: 百分比
+    line:
+      out_of_target: 超出目标值
+      kpi_name: KPI 名称
+      total: 总值
+      record: 记录数
+      average: 平均值
+    pie:
+      select: 选中值
+      total: 总值
+    column:
+      max: 最大值
+      min: 最小值
+

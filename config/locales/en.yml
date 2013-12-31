@@ -210,16 +210,252 @@ en:
     errors:
       <<: *errors
   # brilliantech project
+  welcome:
+    title: Welcome
+    sub_title: Welcome EPM
+    entrys:
+      title: Entrance of your role
+      kpi_entry: Entry KPI
+      analyse: Analytics
+      dashboard: Dashboard
+      manage_kpi: Manage KPI
+    statistics:
+      title: Current statistics
+      staff: Staff structure
+      table: Statistics
+      item:
+        kpi: KPI
+        entity: Entity
+        user: User
+        view: Entity Group
+  epm:
+    base:
+      title: EPM
+      name: IntelligentFactory
+      desc: Secure, quick and accurate, EPM uncovers the potential of data
+      language: Language
+      welcome: Welcome
   auth:
-   view:
-    login: Login
-    sign: Sign Up
-   msg:
-    login_success: Login successfully!
-    login_require: Please Login!
-    logout_success: Logout successfully!
-    logout_require: Please Sign up!
-    email_token: Email has been Signed up!
-    sign_success: Sign up successfully!
-    sign_close: Registration is not open!
-    sign_fail: Sign up failed!
+    view:
+      login_title: Sign In
+      login_btn: Sign in
+      sign_title: Sign up Now
+      sign_btn: Sign up
+      signout_btn: Logout
+      submit_btn: Ok
+      email: Email
+      pwd: Password
+      confirm: Ok
+      con_pwd: Password Confirmation
+      company: Company Name
+    msg:
+      login_success: Login successfully!
+      login_require: Please Login!
+      logout_success: Logout successfully!
+      logout_require: Please Sign up!
+      email_token: Email has been Signed up!
+      sign_success: Sign up successfully!
+      sign_close: Registration is not open!
+      sign_fail: Sign up failed!
+      local_account: We're sorry, but we could not locate your account.If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process.
+  menu:
+    start: Start
+    dashboard: Dashboard
+    analytics: Analytics
+    reports: Report
+    manage: Manage
+    kpi: KPI
+    user: User
+    view: Entity Group
+    billing: Account
+    entry_kpi: KPI Entry
+    department: Entity
+  analytics:
+    title: Analytics
+    kpi_category: KPI Category
+    kpi: KPI
+    view: Entity Groups
+    begin_time: Start Time
+    end_time: End Time
+    sum: Total
+    average: Average
+    add_chart: Analyse
+    date: Data
+    percent: Percent
+    target: Target
+    sum_target: Target Total
+    aver_target: Target Average
+    value: Actual Value
+    sum_value: Actual Value Total
+    aver_value: Actual Value Average
+    tcr: TCR
+    close_btn: Close
+  #kpi entry
+  entry:
+    desc:
+      entry: KPI Entry
+      category: Category
+      trend: Trend
+      actual: Actual Value
+      recent: Recent Value
+  #manage
+  manage:
+    base:
+      delete_btn: Delete
+      edit_btn: Edit
+      add_btn: Add
+      cancel_btn: Cancel
+      enter_confirm: Enter：  Confirm
+      esc_cancel: ESC： Cancel
+      delete_confirm:  Are you sure to delete？
+      next: Next
+      finish: Finish
+    kpi:
+      desc:
+        create: Create KPI
+        create_desc: Create kpi in different category,then you can edit it's max target and min target
+        create_now: Create Now
+        kpi_library_desc: Create kpi in different category,then you can edit it's max target and min target
+        choose_now: Choose Now
+        next_desc: Create kpi in different category,then you can edit it's max target and min target
+      title: Manage KPI
+      category: KPI Category
+      kpi_library: KPI Library
+      name: Name
+      description: Description
+      frequency: Frequency
+      target: Target Max
+      target_min: Target Min
+      unit: Unit
+      trend: Trend
+      is_calculate_type: Is need calculate
+      not_calculate_type: No
+      calculate_type: Yes
+      list: Choose KPI
+      formula: Formula
+      invalid: Formula is not valid
+      cannot_repeat: Can not repeat
+      freq_item:
+        hourly: Houly
+        daily: Daily
+        weekly: Weekly
+        monthly: Monthly
+        quarterly: Quarterly
+        yearly: Yearly
+      trend_item:
+        none: None
+        up: Up
+        down: Down
+    department:
+      desc:
+        dep: Entity
+        manage: Manage Entity
+        name: Entity Name
+        create: Create Entity
+        create_desc: Department is the place to put your staff and the view is made up of departments
+        give_name: Give it a name
+        next_desc: After creating department , it's time to create user(staff) to your department so that they can contribute to their department's KPI
+    user:
+      desc:
+        name: User
+        manage: Manage User
+        authority: Authority
+
+        create: Create User
+        create_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
+        create_now: Create Now
+
+        assign: Assign KPI
+        assign_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
+        assign_now: Assign Now
+
+        next_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
+
+      role:
+        admin: Admin
+        director: Director
+        manager: Manager
+        user: User
+      new:
+        name: Name
+        email: Email
+        pwd: Password
+        pwd_con: Password Confirmation
+        dep: Entity
+    view:
+      desc:
+        name: Entity Group
+        manage: Manage Entity Group
+        dep_list: Entity List
+        assign_dep: Assign Entity
+        assign_desc: Creating view first , then assign department to the view ,view is the base condition in analytics
+        next_desc: Creating view first , then assign department to the view,view is the base condition in analytics
+  #dashboard
+  dashboard_group:
+    base:
+      restore: Restore
+    group:
+      name: Dashboard Group
+      add: Add
+      give_name: Give it a name
+      edit: Edit Group Name
+    dashboard:
+      add: Add Dashboard
+      add_desc: Choose and create a dashboard ,add it to a dashboard group, so that you can look it over
+      add_now: Add Now
+
+      full: Full Screen
+      full_desc: Show dashboards on the left in full screen mode, Press 'ESC' to quit
+      full_now: Enter Full Screen
+
+      name: Dashboard Name
+      name_desc: Give your dashboard a name
+      choose_type: Choose dashboard type
+      type:
+        line: Line
+        column: Column
+        pie: Pie
+        Scatter: Scatter
+      content: Create Dashboard Content
+      content_desc: Add one or more series of data to your dashboard
+      add_series: Add one series of data
+      select_group: Choose Dashboard Group
+      create: Create Now
+      serie:
+        category: KPI Category
+        view: Entity Group
+        start_time: Start Time
+        end_time: End Time
+        total: Total
+        average: Average
+        add: Add
+      close: Close
+
+      add_type:
+        cus: Custom
+        temp: Template
+
+      group: Choose Dashboard Group
+      group_desc: Choose the dashboard group you want to put your dashboard
+
+      finish: Finish
+      finish_desc: Publish the dashboard you just created
+
+    item:
+      out_of_target: Out of Target
+  chart:
+    value: Value
+    target_range: Target Range
+    percent: Percentage
+    line:
+      out_of_target: Out of Target
+      kpi_name: KPI Name
+      total: Total
+      record: Record
+      average: Average
+    pie:
+       select: Select
+       total: Total
+    column:
+       max: Max Value
+       min: Min Value

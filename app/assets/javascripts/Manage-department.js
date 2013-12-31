@@ -99,7 +99,7 @@ MANAGE.department.add_department_init=function(){
                                             .append($("<td />").text(name).attr("title",name))
                                         )
                                         .append($("<tr />")
-                                            .append($("<td />").text("Department Name"))
+                                            .append($("<td />").text(I18n.t('manage.department.desc.name')))
                                         )
                                     )
                                 );

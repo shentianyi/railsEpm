@@ -1,7 +1,9 @@
 IFEpm::Application.routes.draw do
 
-  root :to => 'welcome#index'
+  root :to => 'user_sessions#new'
   # get "welcome/navigate"
+
+
 
   resources :entities  do
     collection do
@@ -17,7 +19,11 @@ IFEpm::Application.routes.draw do
     end
   end
 
-  resource :user_sessions
+  resource :user_sessions do
+    collection do
+      post :locale
+    end
+  end
   resource :user_confirmations
   resource :subscriptions
 
@@ -63,16 +69,18 @@ IFEpm::Application.routes.draw do
     end
   end
 
-  resources :dashboards do
-    collection do
-      put :update
-    end
-  end
+  resources :dashboards
 
   resources :dashboard_items do
     collection do
       put :update
     end
+  end
+
+  controller :welcome do
+    match 'welcome' => :index
+    match 'welcome/users' => :users
+    match 'welcome/statistics' => :statistics
   end
 
   resources :entity_group_items

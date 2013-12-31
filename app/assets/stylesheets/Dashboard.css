@@ -27,7 +27,7 @@
     margin:0px;
 }
 .dashBoard-show>li{
-    border:1px solid #ddd;
+    /*border:1px solid #ddd;*/
     padding:0;
     border-radius:6px;
     -webkit-border-radius:6px;
@@ -96,11 +96,54 @@
 /*full size dashboard*/
 .dashboard-content-full{
     position:absolute;
+    padding-top:10px;
     top:0px;
     right:0px;
-    bottom:0px;
     left:0px;
+    bottom:0px;
     z-index:99;
-    background-color:#222;
+    /*background-color:#222;*/
+    /*应该注释掉下面这两个background*/
+    background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
+    background: -webkit-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
     display:none;
+}
+.grister-logo{
+    position:relative;
+}
+.gridster.black{
+    /*background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
+    /*background: -webkit-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
+}
+.full-size-title{
+    padding-left:20px;
+    padding-top:10px;
+    height:51px;
+}
+.full-size-title:after{
+    content:"";
+    display:"block";
+    clear:both;
+}
+.full-size-label{
+    text-align:center;
+    font-size:38px;
+    font-weight:lighter;
+    word-break:break-all;
+    word-wrap:break-word;
+    color:#fff;
+    font-family:"helve";
+    display:inline-block;
+    float:left;
+    max-width:80%;
+}
+.full-size-btn{
+    width:100px;
+    float:left;
+    background:#222;
+    color:#fff;
+}
+.full-size-btn:hover{
+    background:#505050;
+    color:#fff;
 }

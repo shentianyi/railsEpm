@@ -22,19 +22,19 @@ var high_chart = {
             if(this.series.type!="pie"){
                 if(this.series.type=="column"){
                     return '<b>'+this.point.name+'</b>'
-                        +'<br />Value: '+this.y
-                        +"<br />Target Range: "+this.point.target_min+"-"+this.point.high
+                        +'<br />'+I18n.t('chart.value')+' : '+this.y
+                        +"<br />"+I18n.t('chart.target_range')+": "+this.point.target_min+"-"+this.point.high
                 }
                 else{
                     return '<b>'+this.point.name+'</b>'
-                        +'<br />Value: '+this.y
-                        +"<br />Target Range: "+this.point.low+"-"+this.point.high
+                        +'<br />'+I18n.t('chart.value')+': '+this.y
+                        +"<br />"+I18n.t('chart.target_range')+": "+this.point.low+"-"+this.point.high
                 }
             }
             else{
                 return '<b>'+this.point.name+'</b>'
-                    +'<br />Value: '+this.y
-                    +"<br />Percentage: "+this.percentage.toFixed(1)+"%"
+                    +'<br />'+I18n.t('chart.value')+': '+this.y
+                    +"<br />"+I18n.t('chart.percent')+": "+this.percentage.toFixed(1)+"%"
             }
 
         }
@@ -92,7 +92,8 @@ var high_chart = {
         arearange:{
             fillOpacity:0.1,
             fillColor:"rgba(177,211,221,0.2)",
-            lineColor:"rgba(177,211,221,0.2)",
+            lineColor:"rgba(177,211,221,0)",
+            lineWidth:0,
             color:"rgba(177,211,221,0.2)",
             stickyTracking:false,
             trackByArea:false,

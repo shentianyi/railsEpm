@@ -20,6 +20,7 @@
 *= require aero
 *= require 2_column_right_nav
 *= require jquery.gridster
+*= require index
 *= require Manage
 *= require Manage-kpi
 *= require Manage-user

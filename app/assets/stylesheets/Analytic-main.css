@@ -179,7 +179,7 @@ div[title='analy-view-select'] {
     cursor:pointer;
 }
 
-.chart-type-alternate td.image {
+.chart-type-alternate td.image p{
     /*background-image: url("../images/analytics-chart-type.png");*/
     /*background-image: url("/assets/analytics-chart-type.png");*/
     /*background-repeat: no-repeat;*/

@@ -173,6 +173,9 @@
     height:100%;
 }
 .content-left-main[name="dashboard-add"]{
+    /*实验*/
+    /*background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
+    /*background: -webkit-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
     height:auto;
 }
 .left-content-title{

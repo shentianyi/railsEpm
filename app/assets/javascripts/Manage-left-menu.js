@@ -345,7 +345,7 @@ function entity_edit(){
 entity_edit.prototype=MANAGE.manage_menu_left_edit.prototype;
 entity_edit.prototype.constructor=entity_edit;
 function dashboard_edit(){
-    this.url = "/dashboards";
+    this.url = "/dashboard";
 }
 dashboard_edit.prototype=MANAGE.manage_menu_left_edit.prototype;
 dashboard_edit.prototype.constructor=dashboard_edit;
