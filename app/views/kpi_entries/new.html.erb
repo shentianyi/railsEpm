@@ -1,6 +1,7 @@
 
 <ul class="entry-left-menu" id="entry-left-menu">
         <li><%= t 'entry.desc.entry'%></li>
+        <div class="btn btn-primary upload-kpi-btn" id="upload-kpi-btn">上传KPI</div>
         <li class="<%= 'active' if @f==KpiFrequency::Hourly%>" interval="90" show_section="hour">
             <a  href="/kpi_entries/new?f=<%= KpiFrequency::Hourly%>"><%= t 'manage.kpi.freq_item.hourly'%></a>
         </li>
@@ -32,6 +33,18 @@
 
         </ul>
  </div>
+
+<div class="modal-outer" id="upload-kpi">
+  <div class="upload-kpi modal-inner">
+    <i class="icon-remove" id="upload-kpi-close"></i>
+    <a class="btn btn-primary download-btn">下载模板</a>
+    <hr />
+    <div class="content">
+        <%= render 'shares/file_upload'%>
+    </div>
+    <div class="btn upload-finish" id="upload-kpi-finish">完成</div>
+  </div>
+</div>
 
 <input type="hidden" value="<%=@f%>" id="kpi-type-hidden" />
 <script>
