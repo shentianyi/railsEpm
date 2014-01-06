@@ -15,12 +15,19 @@
     z-index:20;
     border-right:1px solid #DCDCDC
 }
+.entry-left-menu .upload-kpi-btn{
+    font-size:12px;
+    padding:6px 6px;
+    margin-top:3px;
+    margin-bottom:15px;
+    z-index:45;
+}
 .entry-left-menu li:first-of-type{
     text-align:center;
     font-weight:lighter;
     font-size:27px;
     color:#5FA9DA;
-    padding:22px 0 15px;
+    padding:22px 0 0px;
     cursor:default;
 }
 
@@ -28,7 +35,7 @@
 .entry-left-menu li{
     text-align:center;
     color:rgba(0,0,0,0.2);
-    padding:8px 24px;
+
     cursor:pointer;
     transition:color 0.2s ease-out;
     position:relative;
@@ -47,6 +54,10 @@
 .entry-left-menu li.active a{
     pointer-events:none;
     color:rgba(0,0,0,0.65);
+}
+.entry-left-menu li a{
+    padding:8px 24px;
+    display:block;
 }
 /********************************************************************************************************* 右边
 *******************************************************************************************************************/
@@ -181,6 +192,60 @@
 }
 .kpi-entry-trend{
 
+}
+/******************************************************************** modal
+**********************************************************************/
+.upload-kpi{
+    width:500px;
+    height:350px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-top:-175px;
+    margin-left:-250px;
+}
+.upload-kpi hr{
+    margin:15px 20px;
+    color:rgba(0,0,0,0.4);
+}
+.upload-kpi .upload-btn,
+.upload-kpi .download-btn{
+    width:120px;
+    font-weight:lighter;
+    font-size:13px;
+}
+.upload-kpi .download-btn{
+    margin-top:20px;
+}
+.upload-kpi .upload-btn{
+    width:150px;
+    margin:0px;
+}
+.upload-kpi .content .upload-file{
+    height:200px;
+    overflow-y:auto;
+    margin:0 20px;
+}
+.upload-kpi .content p{
+    margin-bottom:4px;
+}
+.upload-kpi .content p:first-of-type{
+    margin-top:5px;
+}
+.upload-kpi .upload-finish{
+    margin-top:15px;
+    width:100px;
+    float:right;
+}
+.upload-kpi .upload-parsing{
+    display:inline-block;
+    font-size:13px;
+    width:130px;
+    background:#E6F4F9;
+    color:#4D8796;
+    padding:6px 5px;
+    margin-left:20px;
+    margin-top:15px;
 }
 
 
