@@ -43,7 +43,7 @@ ANALYTICS.high_chart={
                             +'</span>'
                             +'<br />'+I18n.t('chart.view')+': '+view
                             +'<br />'+I18n.t('chart.value')+': '+target.y
-                            +"<br />'+I18n.t('chart.target_range')+': "+target.point.target_min+"-"+target.point.high
+                            +"<br />"+I18n.t('chart.target_range')+": "+target.point.target_min+"-"+target.point.high
                     }
                     else{
                         return '<b>'+target.key+'</b>'
@@ -51,7 +51,7 @@ ANALYTICS.high_chart={
                             +'</span>'
                             +'<br />'+I18n.t('chart.view')+': '+view
                             +'<br />'+I18n.t('chart.value')+': '+target.y
-                            +"<br />'+I18n.t('chart.target_range')+': "+target.point.low+"-"+target.point.high
+                            +"<br />"+I18n.t('chart.target_range')+": "+target.point.low+"-"+target.point.high
                     }
             }
     },
