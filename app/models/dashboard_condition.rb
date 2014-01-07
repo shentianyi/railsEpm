@@ -33,7 +33,8 @@ class DashboardCondition < ActiveRecord::Base
             condition.entity_group,
             time_span[:start].iso8601.to_s,
             time_span[:end].iso8601.to_s,
-            condition.calculate_type=='AVERAGE')
+            condition.calculate_type=='AVERAGE',
+            dashboard_itme.interval)
 
         if data
           data[:result]=true
@@ -51,7 +52,7 @@ class DashboardCondition < ActiveRecord::Base
           data[:startTime] = start_time
           data[:endTime] = end_time
 
-          data[:interval] = Kpi.find_by_id(condition.kpi_id).frequency.to_s
+          data[:interval] = dashboard_itme.interval.to_s
           data[:kpi_id] = condition.kpi_id
           data[:kpi_name] = Kpi.find(condition.kpi_id).name
           data[:count] = condition.count
