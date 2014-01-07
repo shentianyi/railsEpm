@@ -56,14 +56,13 @@ ActiveRecord::Base.transaction do
       puts "dashboard not founc with code:"+row["belongs_to"]
     end
 
-    if kpi = Kpi.find_by_name(row["kpi"]) && entity_group = EntityGroup.find(row["entity_group"])
+    if (kpi = Kpi.find_by_name(row["kpi"])) && (entity_group = EntityGroup.find(row["entity_group"]))
       params[:entity_group] = entity_group.id
       params[:kpi_id] = kpi.id
       params[:dashboard_item_id] = dashboarditems[row["belongs_to"]].id
       params[:calculate_type] = row["calculate_type"]
       params[:time_string] = row["time_string"]
       params[:count] = 1
-
       condition = DashboardCondition.new(params)
 
       if condition.save!
