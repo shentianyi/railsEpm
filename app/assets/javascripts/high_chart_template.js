@@ -22,6 +22,9 @@ var high_chart = {
             if(this.series.type!="pie"){
                 if(this.series.type=="column"){
                     return '<b>'+this.point.name+'</b>'
+                        +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+                        +'</span>'
+                        +'<br />观察点: '+view
                         +'<br />'+I18n.t('chart.value')+' : '+this.y
                         +"<br />"+I18n.t('chart.target_range')+": "+this.point.target_min+"-"+this.point.high
                 }
@@ -231,6 +234,7 @@ function add_series(option) {
     var chart_container = option.target;
     var type = option.type;
     var data = deal_data(option);
+    var view=option.view;
     var color=option.color?
               option.color:(option.theme ?
                             HIGH_CHART.chart_color[option.theme][series_id % HIGH_CHART.chart_color[option.theme].length]:HIGH_CHART.chart_color["default"][series_id % HIGH_CHART.chart_color["default"].length]);
@@ -238,7 +242,8 @@ function add_series(option) {
         name: series_name,
         id: series_id,
         color:color,
-        data: data
+        data: data,
+        view:view
     })
 }
 
@@ -255,6 +260,7 @@ function set_data(option) {
     this.id=option.id!==null ? option.id : null;
     this.count=option.count ? option.count:null;
     this.theme=option.theme ? option.theme:null;
+    this.view=option.view ? option.view:null;
 }
 
 function deal_data() {
