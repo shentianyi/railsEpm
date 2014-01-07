@@ -395,6 +395,7 @@ ANALYTICS.set_data=function(option) {
     this.id=option.id!==null ? option.id : null;
     this.count=option.count ? option.count:null;
     this.view=option.view ? option.view:null;
+    this.kpi_name=option.kpi ? option.kpi:null;
 };
 ANALYTICS.render_to=function(option) {
     ANALYTICS.high_chart.chart.renderTo = option.target;
@@ -484,8 +485,9 @@ ANALYTICS.deal_data=function() {
 ANALYTICS.proper_type_for_chart=function(){
     ANALYTICS.set_data.apply(this,arguments);
     var obj=this;
+    var name=obj.kpi_name===null?this.chart.get(this.id).options.name:obj.kpi_name+"("+obj.view+")";
     var p={
-        name: this.chart.get(this.id).options.name+"("+obj.view+")",
+        name:name ,
         id: this.chart.get(this.id).options.id,
         color:this.chart.get(this.id).color,
         data: this.chart.get(this.id).options.data
