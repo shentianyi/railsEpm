@@ -3,7 +3,7 @@
      <li id="<%= kpi.user_kpi_item_id%>">
           <table>
               <tr>
-                <td title="<%= kpi.name%>"><%= kpi.name%></td>
+                <td title="<%= kpi.name%>"><%=i+1%>. <%= kpi.name%></td>
                 <td><input type="text" value="<%= kpi.user_kpi_item_target_max%>" kpi_id="<%= kpi.user_kpi_item_id%>" class="target_max"/></td>
                 <td><input type="text" value="<%= kpi.user_kpi_item_target_min%>" kpi_id="<%= kpi.user_kpi_item_id%>" class="target_min"/></td>
               </tr>
