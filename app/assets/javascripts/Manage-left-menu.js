@@ -238,7 +238,7 @@ MANAGE.dashboard.delete=new dashboard_delete();
 
 MANAGE.left.manage_left_delete_init=function(){
     $("#manage-left-menu").on("click","i.icon-trash",function(event){
-        if(confirm(I18n.t('view.manage.base.delete_confirm'))){
+        if(confirm(I18n.t('manage.base.delete_confirm'))){
             var e = adapt_event(event).event;
             MANAGE[MANAGE.type].delete.delete_complete(e);
         }

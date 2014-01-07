@@ -68,7 +68,7 @@ MANAGE.department.item_remove = new department_item_remove();
 
 function manage_item_remove() {
 //     if(confirm('view.manage.base.delete_confirm')) {
-     if(confirm(I18n.t('view.manage.base.delete_confirm'))) {
+     if(confirm(I18n.t('manage.base.delete_confirm'))) {
           $("#manage-sort-list :checked").each(function() {
                var id = $(this).parent().parent().attr("id");
                MANAGE[MANAGE.type].item_remove.remove_complete(id);
