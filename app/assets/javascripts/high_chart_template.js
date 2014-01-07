@@ -295,6 +295,7 @@ function set_data(option) {
     this.id=option.id!==null ? option.id : null;
     this.count=option.count ? option.count:null;
     this.theme=option.theme ? option.theme:null;
+    this.view=option.view ? option.view:null;
 }
 
 function deal_data() {
