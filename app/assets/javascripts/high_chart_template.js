@@ -19,44 +19,22 @@ var high_chart = {
     },
     tooltip:{
         formatter: function() {
-//            if(this.series.type!="pie"){
-//                if(this.series.type=="column"){
-//                    return '<b>'+this.point.name+'</b>'
-//                        +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
-//                        +'</span>'
-//                        +'<br />观察点: '+view
-//                        +'<br />'+I18n.t('chart.value')+' : '+this.y
-//                        +"<br />"+I18n.t('chart.target_range')+": "+this.point.target_min+"-"+this.point.high
-//                }
-//                else{
-//                    return '<b>'+this.point.name+'</b>'
-//                        +'<br />'+I18n.t('chart.value')+': '+this.y
-//                        +"<br />"+I18n.t('chart.target_range')+": "+this.point.low+"-"+this.point.high
-//                }
-//            }
-//            else{
-//                return '<b>'+this.point.name+'</b>'
-//                    +'<br />'+I18n.t('chart.value')+': '+this.y
-//                    +"<br />"+I18n.t('chart.percent')+": "+this.percentage.toFixed(1)+"%"
-//            }
-
-
             if(this.series.type!="pie"){
                 if(this.series.type=="column"){
                     return '<b>'+this.point.name+'</b>'
                         +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                         +'</span>'
                         +'<br />观察点: '+this.point.view
-                        +'<br />'+"value"+' : '+this.y
-                        +"<br />"+"range"+": "+this.point.target_min+"-"+this.point.high
+                        +'<br />'+I18n.t('chart.value')+' : '+this.y
+                        +"<br />"+I18n.t('chart.target_range')+": "+this.point.target_min+"-"+this.point.high
                 }
                 else{
                     return '<b>'+this.point.name+'</b>'
                         +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                         +'</span>'
                         +'<br />观察点: '+this.point.view
-                        +'<br />'+"value"+': '+this.y
-                        +"<br />"+"range"+": "+this.point.low+"-"+this.point.high
+                        +'<br />'+I18n.t('chart.value')+': '+this.y
+                        +"<br />"+I18n.t('chart.target_range')+": "+this.point.low+"-"+this.point.high
                 }
             }
             else{
@@ -64,9 +42,37 @@ var high_chart = {
                     +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                     +'</span>'
                     +'<br />观察点: '+this.point.view
-                    +'<br />'+"value"+': '+this.y
-                    +"<br />"+"range"+": "+this.percentage.toFixed(1)+"%"
+                    +'<br />'+I18n.t('chart.value')+': '+this.y
+                    +"<br />"+I18n.t('chart.percent')+": "+this.percentage.toFixed(1)+"%"
             }
+
+
+//            if(this.series.type!="pie"){
+//                if(this.series.type=="column"){
+//                    return '<b>'+this.point.name+'</b>'
+//                        +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+//                        +'</span>'
+//                        +'<br />观察点: '+this.point.view
+//                        +'<br />'+"value"+' : '+this.y
+//                        +"<br />"+"range"+": "+this.point.target_min+"-"+this.point.high
+//                }
+//                else{
+//                    return '<b>'+this.point.name+'</b>'
+//                        +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+//                        +'</span>'
+//                        +'<br />观察点: '+this.point.view
+//                        +'<br />'+"value"+': '+this.y
+//                        +"<br />"+"range"+": "+this.point.low+"-"+this.point.high
+//                }
+//            }
+//            else{
+//                return '<b>'+this.point.name+'</b>'
+//                    +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+//                    +'</span>'
+//                    +'<br />观察点: '+this.point.view
+//                    +'<br />'+"value"+': '+this.y
+//                    +"<br />"+"range"+": "+this.percentage.toFixed(1)+"%"
+//            }
 
 
 
@@ -567,7 +573,7 @@ function proper_type_for_chart(){
               id: this.chart.get(this.id).options.id,
               color:this.chart.get(this.id).color,
               data: this.chart.get(this.id).options.data
-        },c;
+        },c={};
         var new_series=deepCopy(p,c);
         if(this.type=="column"){
             for(var i=0;i<new_series.data.length;i++){
