@@ -69,6 +69,19 @@ ENTRY.init=function(){
                   }
                });
    });
+   //上传kpi
+   $("body")
+       .on("click","#upload-kpi-btn",function(){
+           $("#upload-kpi").css("left","0px").css("right","0px");
+       })
+       .on("click","#upload-kpi-close",function(){
+           var $upload=$("#upload-kpi");
+           $upload.css("left","-999em").css("right","auto");
+           $upload.find(".upload-file p").remove();
+       })
+       .on("click","#upload-kpi-finish",function(){
+           $("#upload-kpi-close").click();
+       })
 }
 
 ENTRY.datepicker.init=function(){

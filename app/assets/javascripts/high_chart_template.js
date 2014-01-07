@@ -22,20 +22,59 @@ var high_chart = {
             if(this.series.type!="pie"){
                 if(this.series.type=="column"){
                     return '<b>'+this.point.name+'</b>'
+                        +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+                        +'</span>'
+                        +'<br />'+I18n.t('chart.view')+': '+this.point.view
                         +'<br />'+I18n.t('chart.value')+' : '+this.y
                         +"<br />"+I18n.t('chart.target_range')+": "+this.point.target_min+"-"+this.point.high
                 }
                 else{
                     return '<b>'+this.point.name+'</b>'
+                        +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+                        +'</span>'
+                        +'<br />'+I18n.t('chart.view')+': '+this.point.view
                         +'<br />'+I18n.t('chart.value')+': '+this.y
                         +"<br />"+I18n.t('chart.target_range')+": "+this.point.low+"-"+this.point.high
                 }
             }
             else{
                 return '<b>'+this.point.name+'</b>'
+                    +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+                    +'</span>'
+                    +'<br />'+I18n.t('chart.view')+': '+this.point.view
                     +'<br />'+I18n.t('chart.value')+': '+this.y
                     +"<br />"+I18n.t('chart.percent')+": "+this.percentage.toFixed(1)+"%"
             }
+
+
+//            if(this.series.type!="pie"){
+//                if(this.series.type=="column"){
+//                    return '<b>'+this.point.name+'</b>'
+//                        +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+//                        +'</span>'
+//                        +'<br />观察点: '+this.point.view
+//                        +'<br />'+"value"+' : '+this.y
+//                        +"<br />"+"range"+": "+this.point.target_min+"-"+this.point.high
+//                }
+//                else{
+//                    return '<b>'+this.point.name+'</b>'
+//                        +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+//                        +'</span>'
+//                        +'<br />观察点: '+this.point.view
+//                        +'<br />'+"value"+': '+this.y
+//                        +"<br />"+"range"+": "+this.point.low+"-"+this.point.high
+//                }
+//            }
+//            else{
+//                return '<b>'+this.point.name+'</b>'
+//                    +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+//                    +'</span>'
+//                    +'<br />观察点: '+this.point.view
+//                    +'<br />'+"value"+': '+this.y
+//                    +"<br />"+"range"+": "+this.percentage.toFixed(1)+"%"
+//            }
+
+
 
         }
     },
@@ -231,6 +270,7 @@ function add_series(option) {
     var chart_container = option.target;
     var type = option.type;
     var data = deal_data(option);
+    var view=option.view;
     var color=option.color?
               option.color:(option.theme ?
                             HIGH_CHART.chart_color[option.theme][series_id % HIGH_CHART.chart_color[option.theme].length]:HIGH_CHART.chart_color["default"][series_id % HIGH_CHART.chart_color["default"].length]);
@@ -255,6 +295,7 @@ function set_data(option) {
     this.id=option.id!==null ? option.id : null;
     this.count=option.count ? option.count:null;
     this.theme=option.theme ? option.theme:null;
+    this.view=option.view ? option.view:null;
 }
 
 function deal_data() {
@@ -266,6 +307,7 @@ function deal_data() {
             for (i = 0; i < data.length; i++) {
                 data[i].x = Date.UTC(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i);
                 data[i].name = new Date(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i).toWayneString().hour;
+                data[i].view=this.view;
             }
             return data;
             break;
@@ -273,7 +315,7 @@ function deal_data() {
             for (i = 0; i < this.data.length; i++) {
                 this.data[i].x = Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + i);
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + i).toWayneString().day;
-                ;
+                this.data[i].view=this.view;
             }
             return data;
             break;
@@ -283,6 +325,7 @@ function deal_data() {
                 this.data[i].x = Date.UTC(week_template[0], week_template[1], week_template[2]);
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWayneString().day
                     + " week" + new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWeekNumber();
+                this.data[i].view=this.view;
             }
             return data;
             break;
@@ -290,6 +333,7 @@ function deal_data() {
             for (i = 0; i < this.data.length; i++) {
                 this.data[i].x = Date.UTC(this.template[0], parseInt(this.template[1]) + i);
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + i).toWayneString().month;
+                this.data[i].view=this.view;
             }
             return data;
             break;
@@ -298,6 +342,7 @@ function deal_data() {
                 var first_month_of_quarter=Math.floor(parseInt(this.template[1])/3)*3
                 this.data[i].x = Date.UTC(this.template[0], first_month_of_quarter + 3 * i);
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + 3 * i).getFullYear()+" quarter " + new Date(this.template[0], parseInt(this.template[1]) + 3 * i).monthToQuarter();
+                this.data[i].view=this.view;
             }
             return data;
             break;
@@ -305,6 +350,7 @@ function deal_data() {
             for (i = 0; i < this.data.length; i++) {
                 this.data[i].x = Date.UTC(parseInt(this.template[0]) + i, 0);
                 this.data[i].name = new Date(parseInt(this.template[0]) + i, 0).toWayneString().year;
+                this.data[i].view=this.view;
             }
             return data;
             break;

@@ -386,6 +386,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                    begin_time:begin_time,
                    type:type,
                    interval:interval,
+                   view:view,
                    count:db_chartSeries.getCount()+1
                }
                var addSeriesOption={
@@ -484,6 +485,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                begin_time: begin_time,
 //                type: type,
 //                interval: interval,
+//                view: view,
 //                count: db_chartSeries.getCount() + 1
 ////                theme:"dark"
 //            }
@@ -639,6 +641,7 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 else{
                     option.id = db_chartSeries.series[i].id;
                     option.kpi = db_chartSeries.series[i].kpi;
+                    option.view = db_chartSeries.series[i].view;
                     option.data=db_chartSeries.series[i][option.interval];
                     proper_type_for_chart(option);
                     DASHBOARD.add.generate(option);

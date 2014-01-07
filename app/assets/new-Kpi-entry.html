@@ -76,6 +76,7 @@
 
     <ul class="entry-left-menu" id="entry-left-menu">
         <li>KPI Entry</li>
+        <div class="btn btn-primary upload-kpi-btn" id="upload-kpi-btn">上传KPI</div>
         <li class="active" interval="90" show_section="hour">
             <a>Hour</a>
         </li>
@@ -105,7 +106,6 @@
             <span id="entry-date-extra"></span>
         </div>
 
-
         <ul class="entry-sort-list" id="entry-sort-list">
             <li id="1">
                 <table>
@@ -129,25 +129,38 @@
                     </tr>
                 </table>
             </li>
-
         </ul>
-
-
 
     </div>
 
+    <div class="modal-outer" id="upload-kpi">
+        <div class="upload-kpi modal-inner">
+            <i class="icon-remove" id="upload-kpi-close"></i>
+            <a class="btn btn-primary download-btn">下载模板</a>
+            <hr />
+            <div class="content">
+                <div class="upload-file">
+                    <a class="btn btn-primary upload-btn" onclick="$('#task-attach-uploader').click()">上传模板(最大为20M)</a>
+                    <div id="task-attach-uploader-preview">
+                        <p class="upload-file-name">wzx.pdf<i class="icon remove icon-remove"></i></p>
+                        <p class="upload-file-name">wzx.pdf<i class="icon remove icon-remove"></i></p>
+                        <p class="upload-file-name">wzx.pdf<i class="icon remove icon-remove"></i></p>
+                    </div>
 
-
-
-
-
-
-
-
-
-
+                </div>
+            </div>
+            <p class="upload-parsing" id="parsing-load">正在解析文件...</p>
+            <div class="btn upload-finish" id="upload-kpi-finish">完成</div>
+        </div>
+    </div>
 
 </article>
+
+
+
+
+
+
 <div class="message-box" id="MessageBox">
     <p></p>
 </div>
