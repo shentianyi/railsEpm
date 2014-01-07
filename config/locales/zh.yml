@@ -451,7 +451,7 @@ zh:
     item:
       out_of_target: 在目标范围外
   chart:
-    value: 值
+    value: 当前值
     target_range: 目标值范围
     percent: 百分比
     line:
