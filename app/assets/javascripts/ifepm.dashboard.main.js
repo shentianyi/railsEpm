@@ -954,9 +954,9 @@ ifepm.dashboard.save_grid_pos = function (sequence, options) {
  * need to delete the full size grid if same
  * */
 ifepm.dashboard.on_dashboard_deleted = function (id) {
-    if (currnet_dashboard_id == id) {
-        var container_selector = ifepm.config.container_selector_full;
-        ifepm.dashboard_widget.remove_all_widgets(true);
+    if (current_dashboard_id == id) {
+        var container_selector = ifepm.config.container_selector;
+        ifepm.dashboard_widget.remove_all_widgets(isfullsize);
         $(container_selector).children().remove();
     }
 }

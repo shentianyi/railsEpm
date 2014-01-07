@@ -315,10 +315,7 @@ function db_view_delete_error_callback(jqXhr){
 
 
 function dashboard_delete(id){
-    if (confirm("you will delete a dashboard,are you sure?"))
-    {
-        ifepm.dashboard.delete(id,{success:dashboard_delete_callback})
-    }
+    ifepm.dashboard.delete(id,{success:dashboard_delete_callback});
 }
 
 function dashboard_delete_callback(data){

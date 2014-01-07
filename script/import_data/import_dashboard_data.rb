@@ -30,8 +30,6 @@ ActiveRecord::Base.transaction do
       params[:interval] = row["interval"]
       params[:title] = row["title"]
       params[:chart_type]=row["chart_type"]
-      params[:sizex] = row["sizex"]
-      params[:sizey] = row["sizey"]
 
       dashboard_item = DashboardItem.new(params)
       if dashboard_item.save!

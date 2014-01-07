@@ -200,7 +200,7 @@ right_nav_main.dashboard.delete=new dashboard_delete();
 
 right_nav_main.item_prototype.delete_init=function(){
     $("#content-right-nav-group").on("click","i.icon-remove",function(event){
-        if(confirm(I18n.t('view.manage.base.delete_confirm'))){
+        if(confirm(I18n.t('manage.base.delete_confirm'))){
             var e = adapt_event(event).event;
             right_nav_main[right_nav_main.current_section].delete.delete_complete(e);
         }
