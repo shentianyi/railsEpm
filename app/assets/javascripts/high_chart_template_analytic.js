@@ -54,6 +54,30 @@ ANALYTICS.high_chart={
                             +"<br />"+I18n.t('chart.target_range')+": "+target.point.low+"-"+target.point.high
                     }
             }
+
+//        formatter: function() {
+//            var target=this.points[0];
+//            var new_target=target.series.name.replace("(","#").replace(")","#").split("#");
+//            var name=new_target[0];
+//            var view=new_target[1];
+//            if(target.series.type=="column"){
+//                return '<b>'+target.key+'</b>'
+//                    +'<br />KPI: <span style="color:'+target.series.color+'">'+name
+//                    +'</span>'
+//                    +'<br />'+': '+view
+//                    +'<br />'+': '+target.y
+//                    +"<br />"+": "+target.point.target_min+"-"+target.point.high
+//            }
+//            else{
+//                return '<b>'+target.key+'</b>'
+//                    +'<br />KPI: <span style="color:'+target.series.color+'">'+name
+//                    +'</span>'
+//                    +'<br />'+': '+view
+//                    +'<br />'+': '+target.y
+//                    +"<br />"+": "+target.point.low+"-"+target.point.high
+//            }
+//        }
+
     },
     legend: {
         enabled: true,
@@ -395,6 +419,7 @@ ANALYTICS.set_data=function(option) {
     this.id=option.id!==null ? option.id : null;
     this.count=option.count ? option.count:null;
     this.view=option.view ? option.view:null;
+    this.view_text=option.view_text ? option.view_text:null;
     this.kpi_name=option.kpi ? option.kpi:null;
 };
 ANALYTICS.render_to=function(option) {
@@ -485,7 +510,7 @@ ANALYTICS.deal_data=function() {
 ANALYTICS.proper_type_for_chart=function(){
     ANALYTICS.set_data.apply(this,arguments);
     var obj=this;
-    var name=obj.kpi_name===null?this.chart.get(this.id).options.name:obj.kpi_name+"("+obj.view+")";
+    var name=obj.kpi_name===null?this.chart.get(this.id).options.name:obj.kpi_name+"("+obj.view_text+")";
     var p={
         name:name ,
         id: this.chart.get(this.id).options.id,

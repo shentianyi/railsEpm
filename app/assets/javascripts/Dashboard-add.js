@@ -321,6 +321,7 @@ DASHBOARD.add.init=function(){
 DASHBOARD.add.prepare_form_chart=function() {
     var kpi = $("#chart-kpi :selected").attr("value");
     var view = $("#chart-view :selected").attr("value");
+    var view_text = $("#chart-view :selected").text();
     var method = $("input[name='chartRadios']:checked").attr("value");
     var type=$("#db-add-type>.active").attr("type");
     var interval, chart_body_close_validate;
@@ -387,6 +388,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                    type:type,
                    interval:interval,
                    view:view,
+                   view_text:view_text,
                    count:db_chartSeries.getCount()+1
                }
                var addSeriesOption={
@@ -396,6 +398,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                    outer_target:"put-db-chart",
                    interval:interval,
                    view:view,
+                   view_text:view_text,
                    method:method,
                    begin_time:begin_time,
                    end_time:end_time,
@@ -486,6 +489,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                type: type,
 //                interval: interval,
 //                view: view,
+//                view_text:view_text,
 //                count: db_chartSeries.getCount() + 1
 ////                theme:"dark"
 //            }
@@ -641,7 +645,7 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 else{
                     option.id = db_chartSeries.series[i].id;
                     option.kpi = db_chartSeries.series[i].kpi;
-                    option.view = db_chartSeries.series[i].view;
+                    option.view_text = db_chartSeries.series[i].view_text;
                     option.data=db_chartSeries.series[i][option.interval];
                     proper_type_for_chart(option);
                     DASHBOARD.add.generate(option);
@@ -652,6 +656,7 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 option.type="arearange";
                 option.id="line-target";
                 option.begin_time=db_chartSeries.series[id].begin_time;
+                option.view_text = db_chartSeries.series[id].view_text;
                 option.data=db_chartSeries.series[id][option.interval];
                 add_series(option);
                 proper_type_for_chart(option);
