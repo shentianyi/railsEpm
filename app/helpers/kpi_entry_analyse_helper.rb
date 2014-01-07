@@ -39,7 +39,6 @@ module KpiEntryAnalyseHelper
       end
       entries=  KpiEntry.where(:kpi_id=>kpi_id,:entity_id=>entity_ids,:parsed_entry_at=>start_time..end_time).all
       generate_data start_time,end_time,frequency,params
-      puts frequency_condition.to_json
       entries.each do |entry|
         frequency_condition.each do |k,v|
           if entry.parsed_entry_at>=v[0] && entry.parsed_entry_at<v[1]
