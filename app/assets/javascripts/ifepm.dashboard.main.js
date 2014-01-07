@@ -111,7 +111,8 @@ ifepm.dashboard.form_graph = function (datas, id) {
             type: type,
             interval: datas[i].interval,
             data: data,
-            count: i + 1
+            count: i + 1,
+            view: datas[i].view
         };
         if (isfullsize) {
             option.theme = "dark";
