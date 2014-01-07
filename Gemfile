@@ -19,7 +19,7 @@ gem 'redis-namespace'
 
 gem 'will_paginate'
 gem 'i18n-js'
-#rake i18n:js:export tp export translate.js
+#rake i18n:js:export
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
