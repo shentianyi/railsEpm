@@ -313,6 +313,7 @@ zh:
         delete_confirm:  确定删除？
         next: 下一步
         finish: 完成
+        destroy_fail: 添加失败
       kpi:
         desc:
           create: 创建KPI
@@ -467,4 +468,9 @@ zh:
     column:
       max: 最大值
       min: 最小值
-
+  fix:
+    zone_too_large: 对不起，时间范围太大了！
+    cannot_destroy: 此项不可删除
+    add_fail: 添加失败
+    cannot_destroy_contain_kpi: 包含于计算型，不可删除！
+    not_exists: 此项不存在

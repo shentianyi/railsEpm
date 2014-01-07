@@ -32,7 +32,7 @@ class EntitiesController < ApplicationController
     if @entity and @entity.users.count==0
      msg.result=@entity.destroy
      else
-       msg.content="不可以删除"
+       msg.content=I18n.t "fix.cannot_destroy"
     end
     render :json=>msg
   end
