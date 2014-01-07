@@ -253,6 +253,7 @@ ANALYTICS.form_chart=function(option){
         }
     });
 
+
 //    option.data = [
 //            {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
 //            {y: 3,low:2,high:20,  target: 10, unit: "$"}
@@ -379,6 +380,7 @@ ANALYTICS.set_data=function(option) {
     this.interval = option.interval ? option.interval:null;
     this.id=option.id!==null ? option.id : null;
     this.count=option.count ? option.count:null;
+    this.view=option.view ? option.view:null;
 };
 ANALYTICS.render_to=function(option) {
     ANALYTICS.high_chart.chart.renderTo = option.target;
@@ -467,8 +469,9 @@ ANALYTICS.deal_data=function() {
 };
 ANALYTICS.proper_type_for_chart=function(){
     ANALYTICS.set_data.apply(this,arguments);
+    var obj=this;
     var p={
-        name: this.chart.get(this.id).options.name,
+        name: this.chart.get(this.id).options.name+"("+obj.view+")",
         id: this.chart.get(this.id).options.id,
         color:this.chart.get(this.id).color,
         data: this.chart.get(this.id).options.data
