@@ -454,6 +454,7 @@ zh:
     value: 当前值
     target_range: 目标值范围
     percent: 百分比
+    view: 观察点
     line:
       out_of_target: 超出目标值
       kpi_name: KPI 名称

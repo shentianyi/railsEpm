@@ -41,17 +41,17 @@ ANALYTICS.high_chart={
                         return '<b>'+target.key+'</b>'
                             +'<br />KPI: <span style="color:'+target.series.color+'">'+name
                             +'</span>'
-                            +'<br />观察点: '+view
-                            +'<br />当前值: '+target.y
-                            +"<br />目标范围: "+target.point.target_min+"-"+target.point.high
+                            +'<br />'+I18n.t('chart.view')+': '+view
+                            +'<br />'+I18n.t('chart.value')+': '+target.y
+                            +"<br />'+I18n.t('chart.target_range')+': "+target.point.target_min+"-"+target.point.high
                     }
                     else{
                         return '<b>'+target.key+'</b>'
                             +'<br />KPI: <span style="color:'+target.series.color+'">'+name
                             +'</span>'
-                            +'<br />观察点: '+view
-                            +'<br />当前值: '+target.y
-                            +"<br />目标范围: "+target.point.low+"-"+target.point.high
+                            +'<br />'+I18n.t('chart.view')+': '+view
+                            +'<br />'+I18n.t('chart.value')+': '+target.y
+                            +"<br />'+I18n.t('chart.target_range')+': "+target.point.low+"-"+target.point.high
                     }
             }
     },

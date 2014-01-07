@@ -24,7 +24,7 @@ var high_chart = {
                     return '<b>'+this.point.name+'</b>'
                         +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                         +'</span>'
-                        +'<br />观察点: '+this.point.view
+                        +'<br />'+I18n.t('chart.view')+': '+this.point.view
                         +'<br />'+I18n.t('chart.value')+' : '+this.y
                         +"<br />"+I18n.t('chart.target_range')+": "+this.point.target_min+"-"+this.point.high
                 }
@@ -32,7 +32,7 @@ var high_chart = {
                     return '<b>'+this.point.name+'</b>'
                         +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                         +'</span>'
-                        +'<br />观察点: '+this.point.view
+                        +'<br />'+I18n.t('chart.view')+': '+this.point.view
                         +'<br />'+I18n.t('chart.value')+': '+this.y
                         +"<br />"+I18n.t('chart.target_range')+": "+this.point.low+"-"+this.point.high
                 }
@@ -41,7 +41,7 @@ var high_chart = {
                 return '<b>'+this.point.name+'</b>'
                     +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                     +'</span>'
-                    +'<br />观察点: '+this.point.view
+                    +'<br />'+I18n.t('chart.view')+': '+this.point.view
                     +'<br />'+I18n.t('chart.value')+': '+this.y
                     +"<br />"+I18n.t('chart.percent')+": "+this.percentage.toFixed(1)+"%"
             }
