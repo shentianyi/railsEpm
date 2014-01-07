@@ -118,7 +118,7 @@ ifepm.dashboard_widget.setconfig = function(option){
     //full size config
     ifepm.dashboard_widget.config.full.max_col = option.full.max_col;
     ifepm.dashboard_widget.config.full.max_row = option.full.max_row;
-    ifepm.dashboard_widget.config.full.height = option.full.height / option.full.max_row - 23;
+    ifepm.dashboard_widget.config.full.height = option.full.height / option.full.max_row;
     ifepm.dashboard_widget.config.full.width = option.full.width / option.full.max_col - 23;
 }
 /*

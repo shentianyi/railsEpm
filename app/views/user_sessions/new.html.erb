@@ -9,7 +9,7 @@
           <% end %>
      </ul>
 </div>
-<% end %> 
+<% end %>                                                          on_finish
 <form action="/user_sessions/"  method="post">
 <div class="log-input">
      <span><i class="icon-user"></i></span>
@@ -41,7 +41,7 @@
       <p><%= t 'epm.base.desc' %></p>
       <a class="log-btn login-recommend" id="sign-up-now" state="close"><%= t 'auth.view.login_title' %>
       </a>
-
+      <!--<a class="log-btn login-recommend" onclick="show_signup()">注册</a>-->
     </div>
   </div>
   <div class="login-block">
@@ -138,7 +138,7 @@
         $("#sign-up,#sign-up-now").on("click", function () {
             if($("#sign-up-now").attr('state') == "close"){
                 $('#signIn-block').slideDown('500');
-                $("#sign-up-now").attr('state', 'open');
+                $("#sign-up").attr('state', 'open');
                 $("#user_session_email").focus();
             }
             else{
@@ -176,6 +176,14 @@
 
         error_dis();
     })
+
+    function show_signup(){
+        if ($("#sign-up-now").attr("state") == "open") {
+            $('#signIn-block').slideUp('500');
+            $("#sign-in").attr('state', 'close');
+        }
+        $('#signUp-block').slideDown('500');
+    }
 
     function error_dis() {
         if (errors != '') {
