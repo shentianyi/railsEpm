@@ -19,26 +19,56 @@ var high_chart = {
     },
     tooltip:{
         formatter: function() {
+//            if(this.series.type!="pie"){
+//                if(this.series.type=="column"){
+//                    return '<b>'+this.point.name+'</b>'
+//                        +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+//                        +'</span>'
+//                        +'<br />观察点: '+view
+//                        +'<br />'+I18n.t('chart.value')+' : '+this.y
+//                        +"<br />"+I18n.t('chart.target_range')+": "+this.point.target_min+"-"+this.point.high
+//                }
+//                else{
+//                    return '<b>'+this.point.name+'</b>'
+//                        +'<br />'+I18n.t('chart.value')+': '+this.y
+//                        +"<br />"+I18n.t('chart.target_range')+": "+this.point.low+"-"+this.point.high
+//                }
+//            }
+//            else{
+//                return '<b>'+this.point.name+'</b>'
+//                    +'<br />'+I18n.t('chart.value')+': '+this.y
+//                    +"<br />"+I18n.t('chart.percent')+": "+this.percentage.toFixed(1)+"%"
+//            }
+
+
             if(this.series.type!="pie"){
                 if(this.series.type=="column"){
                     return '<b>'+this.point.name+'</b>'
                         +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                         +'</span>'
-                        +'<br />观察点: '+view
-                        +'<br />'+I18n.t('chart.value')+' : '+this.y
-                        +"<br />"+I18n.t('chart.target_range')+": "+this.point.target_min+"-"+this.point.high
+                        +'<br />观察点: '+this.point.view
+                        +'<br />'+"value"+' : '+this.y
+                        +"<br />"+"range"+": "+this.point.target_min+"-"+this.point.high
                 }
                 else{
                     return '<b>'+this.point.name+'</b>'
-                        +'<br />'+I18n.t('chart.value')+': '+this.y
-                        +"<br />"+I18n.t('chart.target_range')+": "+this.point.low+"-"+this.point.high
+                        +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+                        +'</span>'
+                        +'<br />观察点: '+this.point.view
+                        +'<br />'+"value"+': '+this.y
+                        +"<br />"+"range"+": "+this.point.low+"-"+this.point.high
                 }
             }
             else{
                 return '<b>'+this.point.name+'</b>'
-                    +'<br />'+I18n.t('chart.value')+': '+this.y
-                    +"<br />"+I18n.t('chart.percent')+": "+this.percentage.toFixed(1)+"%"
+                    +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+                    +'</span>'
+                    +'<br />观察点: '+this.point.view
+                    +'<br />'+"value"+': '+this.y
+                    +"<br />"+"range"+": "+this.percentage.toFixed(1)+"%"
             }
+
+
 
         }
     },
@@ -242,8 +272,7 @@ function add_series(option) {
         name: series_name,
         id: series_id,
         color:color,
-        data: data,
-        view:view
+        data: data
     })
 }
 
@@ -272,6 +301,7 @@ function deal_data() {
             for (i = 0; i < data.length; i++) {
                 data[i].x = Date.UTC(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i);
                 data[i].name = new Date(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i).toWayneString().hour;
+                data[i].view=this.view;
             }
             return data;
             break;
@@ -279,7 +309,7 @@ function deal_data() {
             for (i = 0; i < this.data.length; i++) {
                 this.data[i].x = Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + i);
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + i).toWayneString().day;
-                ;
+                this.data[i].view=this.view;
             }
             return data;
             break;
@@ -289,6 +319,7 @@ function deal_data() {
                 this.data[i].x = Date.UTC(week_template[0], week_template[1], week_template[2]);
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWayneString().day
                     + " week" + new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWeekNumber();
+                this.data[i].view=this.view;
             }
             return data;
             break;
@@ -296,6 +327,7 @@ function deal_data() {
             for (i = 0; i < this.data.length; i++) {
                 this.data[i].x = Date.UTC(this.template[0], parseInt(this.template[1]) + i);
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + i).toWayneString().month;
+                this.data[i].view=this.view;
             }
             return data;
             break;
@@ -304,6 +336,7 @@ function deal_data() {
                 var first_month_of_quarter=Math.floor(parseInt(this.template[1])/3)*3
                 this.data[i].x = Date.UTC(this.template[0], first_month_of_quarter + 3 * i);
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + 3 * i).getFullYear()+" quarter " + new Date(this.template[0], parseInt(this.template[1]) + 3 * i).monthToQuarter();
+                this.data[i].view=this.view;
             }
             return data;
             break;
@@ -311,6 +344,7 @@ function deal_data() {
             for (i = 0; i < this.data.length; i++) {
                 this.data[i].x = Date.UTC(parseInt(this.template[0]) + i, 0);
                 this.data[i].name = new Date(parseInt(this.template[0]) + i, 0).toWayneString().year;
+                this.data[i].view=this.view;
             }
             return data;
             break;
