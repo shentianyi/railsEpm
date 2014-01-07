@@ -111,7 +111,8 @@ ifepm.dashboard.form_graph = function (datas, id) {
             type: type,
             interval: datas[i].interval,
             data: data,
-            count: i + 1
+            count: i + 1,
+            view: datas[i].view
         };
         if (isfullsize) {
             option.theme = "dark";
@@ -953,9 +954,9 @@ ifepm.dashboard.save_grid_pos = function (sequence, options) {
  * need to delete the full size grid if same
  * */
 ifepm.dashboard.on_dashboard_deleted = function (id) {
-    if (currnet_dashboard_id == id) {
-        var container_selector = ifepm.config.container_selector_full;
-        ifepm.dashboard_widget.remove_all_widgets(true);
+    if (current_dashboard_id == id) {
+        var container_selector = ifepm.config.container_selector;
+        ifepm.dashboard_widget.remove_all_widgets(isfullsize);
         $(container_selector).children().remove();
     }
 }

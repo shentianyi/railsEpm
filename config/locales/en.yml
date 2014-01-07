@@ -447,6 +447,7 @@ en:
     value: Value
     target_range: Target Range
     percent: Percentage
+    view: Entity Group
     line:
       out_of_target: Out of Target
       kpi_name: KPI Name

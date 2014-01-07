@@ -464,3 +464,58 @@ nav ul li a:hover ~ .nav-manage-sub{
     overflow:visible!important;
     z-index:1!important;
 }
+/********************************************************************************************************* modal
+*******************************************************************************************************************/
+.modal-outer{
+    position:fixed;
+    left:-999em;
+    right:auto;
+    top:0px;
+    bottom:0px;
+    z-index:99;
+    background:rgba(0,0,0,0.8);
+}
+.modal-outer>.modal-inner{
+    background:#fff;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+}
+.modal-outer>.modal-inner>i.icon-remove{
+    font-size:26px;
+    color:#fff;
+    position:absolute;
+    right:-21px;
+    top:-30px;
+    pointer-events:auto;
+    cursor:pointer;
+    transition:color 0.25s ease-out;
+}
+.modal-outer>.modal-inner>i.icon-remove:hover{
+    color:rgba(255,255,255,0.7);
+}
+/********************************************************************************************************* 上传
+*******************************************************************************************************************/
+.upload-file-name{
+    font-size:13px;
+    color:#222;
+    max-width:80%;
+    word-break:break-all;
+    word-wrap:break-word;
+}
+.upload-file-name>i{
+    display:none;
+    margin-left:4px;
+    color:rgba(0,0,0,0.7);
+    cursor:pointer;
+    pointer-events:auto;
+    position:absolute;
+}
+.upload-file-name:hover i,
+.upload-file-name>i:hover{
+    display:inline-block;
+    transition:color 0.25s ease-out;
+}
+.upload-file-name>i:hover{
+    color:#D95C5C;
+}

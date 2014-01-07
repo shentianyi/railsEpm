@@ -32,18 +32,28 @@ ANALYTICS.high_chart={
         }
     },
     tooltip:{
-//            formatter: function() {
-//                    if(this.series.type=="column"){
-//                        return '<b>'+this.point.name+'</b>'
-//                            +'<br />Value: '+this.y
-//                            +"<br />Target Range: "+this.point.target_min+"-"+this.point.high
-//                    }
-//                    else{
-//                        return '<b>'+this.point.name+'</b>'
-//                            +'<br />Value: '+this.y
-//                            +"<br />Target Range: "+this.point.low+"-"+this.point.high
-//                    }
-//            }
+            formatter: function() {
+                var target=this.points[0];
+                var new_target=target.series.name.replace("(","#").replace(")","#").split("#");
+                var name=new_target[0];
+                var view=new_target[1];
+                    if(target.series.type=="column"){
+                        return '<b>'+target.key+'</b>'
+                            +'<br />KPI: <span style="color:'+target.series.color+'">'+name
+                            +'</span>'
+                            +'<br />'+I18n.t('chart.view')+': '+view
+                            +'<br />'+I18n.t('chart.value')+': '+target.y
+                            +"<br />"+I18n.t('chart.target_range')+": "+target.point.target_min+"-"+target.point.high
+                    }
+                    else{
+                        return '<b>'+target.key+'</b>'
+                            +'<br />KPI: <span style="color:'+target.series.color+'">'+name
+                            +'</span>'
+                            +'<br />'+I18n.t('chart.view')+': '+view
+                            +'<br />'+I18n.t('chart.value')+': '+target.y
+                            +"<br />"+I18n.t('chart.target_range')+": "+target.point.low+"-"+target.point.high
+                    }
+            }
     },
     legend: {
         enabled: true,
@@ -253,9 +263,14 @@ ANALYTICS.form_chart=function(option){
         }
     });
 
+
 //    option.data = [
-//            {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
-//            {y: 3,low:2,high:20,  target: 10, unit: "$"}
+//        {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
+//        {y: 3,low:12,high:20,  target: 10, unit: "$"},
+//        {y: 13,low:22,high:20,  target: 10, unit: "$"},
+//        {y: 23,low:4,high:20,  target: 10, unit: "$"},
+//        {y: 33,low:30,high:20,  target: 10, unit: "$"},
+//        {y: 13,low:19,high:20,  target: 10, unit: "$"}
 //    ];
 //    var c={},p=option.data;
 //    ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
@@ -379,6 +394,8 @@ ANALYTICS.set_data=function(option) {
     this.interval = option.interval ? option.interval:null;
     this.id=option.id!==null ? option.id : null;
     this.count=option.count ? option.count:null;
+    this.view=option.view ? option.view:null;
+    this.kpi_name=option.kpi ? option.kpi:null;
 };
 ANALYTICS.render_to=function(option) {
     ANALYTICS.high_chart.chart.renderTo = option.target;
@@ -467,8 +484,10 @@ ANALYTICS.deal_data=function() {
 };
 ANALYTICS.proper_type_for_chart=function(){
     ANALYTICS.set_data.apply(this,arguments);
+    var obj=this;
+    var name=obj.kpi_name===null?this.chart.get(this.id).options.name:obj.kpi_name+"("+obj.view+")";
     var p={
-        name: this.chart.get(this.id).options.name,
+        name:name ,
         id: this.chart.get(this.id).options.id,
         color:this.chart.get(this.id).color,
         data: this.chart.get(this.id).options.data
