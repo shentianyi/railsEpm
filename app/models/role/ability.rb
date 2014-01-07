@@ -15,7 +15,7 @@ class Ability
     elsif Role.user?(user.role_id)
       can :manage,User,:id=>user.id
       can :manage,[KpiEntry,UserSession]
-      # can :read,:all
+      can :read,:all
     end
   end
 end
