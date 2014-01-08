@@ -577,6 +577,7 @@ function proper_type_for_chart(){
               color:this.chart.get(this.id).color,
               data: this.chart.get(this.id).options.data
         },c;
+
         var new_series=deepCopy(p,c);
         if(this.type=="column"){
             for(var i=0;i<new_series.data.length;i++){

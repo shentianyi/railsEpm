@@ -500,6 +500,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                kpi_id: kpi,
 //                interval: interval,
 //                view: view,
+//                view_text:view_text,
 //                method: method,
 //                begin_time: begin_time,
 //                end_time: end_time,

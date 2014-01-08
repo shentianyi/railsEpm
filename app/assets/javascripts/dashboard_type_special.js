@@ -34,8 +34,8 @@ DASHBOARD.special_type={
 
     },
     column:function(id){
-        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px").css("display","table");
-        $("#"+id+" "+".db-chart-container").css("top","50px");
+        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","35px").css("display","table");
+        $("#"+id+" "+".db-chart-container").css("top","35px");
         $table=$("#"+id+" "+".dashboard-item-extra-info");
         $table
             .append(
@@ -107,8 +107,8 @@ DASHBOARD.special_type={
 //
 //    },
 //    column:function(id){
-//        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px").css("display","table");
-//        $("#"+id+" "+".db-chart-container").css("top","50px");
+//        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","35px").css("display","table");
+//        $("#"+id+" "+".db-chart-container").css("top","35px");
 //        $table=$("#"+id+" "+".dashboard-item-extra-info");
 //        $table
 //            .append(

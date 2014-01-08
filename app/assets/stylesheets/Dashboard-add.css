@@ -363,25 +363,25 @@
 }
 .dashboard-item-extra-info .max-value{
     color:rgba(245, 161, 51, 0.9);
-    font-size:60px;
+    font-size:36px;
     font-family:"Arial";
     font-weight:bolder;
     vertical-align:bottom;
 }
 .dashboard-item-extra-info .max-value+span{
     position:relative;
-    bottom:-12px;
+    bottom:-8px;
 }
 .dashboard-item-extra-info .min-value{
     color:rgba(52, 152, 219, 0.9);
-    font-size:60px;
+    font-size:36px;
     font-family:"Arial";
     font-weight:bolder;
     vertical-align:bottom;
 }
 .dashboard-item-extra-info .min-value+span{
     position:relative;
-    bottom:-12px;
+    bottom:-8px;
 }
 .dashboard-item-extra-info .percentage{
     color:rgba(245, 161, 51, 0.9);
