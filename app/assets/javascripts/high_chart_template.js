@@ -296,6 +296,7 @@ function set_data(option) {
     this.count=option.count ? option.count:null;
     this.theme=option.theme ? option.theme:null;
     this.view=option.view ? option.view:null;
+    this.kpi_name=option.kpi ? option.kpi:null;
 }
 
 function deal_data() {
@@ -568,8 +569,10 @@ function proper_type_for_chart(){
             this.chart.legend.box.show();
             this.chart.legend.display = true;
         }
+        var obj=this;
+        var name=obj.kpi_name===null?this.chart.get(this.id).options.name:obj.kpi_name+"("+obj.view+")";
         var p={
-              name: this.chart.get(this.id).options.name,
+              name: name,
               id: this.chart.get(this.id).options.id,
               color:this.chart.get(this.id).color,
               data: this.chart.get(this.id).options.data
