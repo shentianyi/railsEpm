@@ -6,10 +6,10 @@ class KpisController < ApplicationController
   def index
     @active_category_id= params[:id].nil? ? ( @categories.length>0 ? @categories[0].id : nil ) : params[:id].to_i
     get_kpis_by_category(@active_category_id) if @active_category_id
-    # @units=KpiUnit.all
-    # @frequencies=KpiFrequency.all
-    # @directions=KpiDirection.all
-    # @base_kpis=Kpi.base_kpis  current_ability
+  # @units=KpiUnit.all
+  # @frequencies=KpiFrequency.all
+  # @directions=KpiDirection.all
+  # @base_kpis=Kpi.base_kpis  current_ability
   end
 
   # create kpi
@@ -32,7 +32,7 @@ class KpisController < ApplicationController
       temp[:desc] = @kpi.description
     msg.object=temp.as_json
     else
-      @kpi.errors.messages[:result]="添加失败"
+      @kpi.errors.messages[:result]= I18n.t "fix.add_fail"
       msg.content=@kpi.errors.messages.values.join('; ')
     end
     render :json=>msg
@@ -57,7 +57,7 @@ class KpisController < ApplicationController
       if @kpi.kpi_parent_items.count==0
       msg.result=@kpi.destroy
       else
-        msg.content='can not destroy, as basci kpi'
+        msg.content= I18n.t "fix.cannot_destroy_contain_kpi"
       end
     end
     render :json=>msg

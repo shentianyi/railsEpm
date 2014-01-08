@@ -31,7 +31,7 @@ class KpiCategoriesController < ApplicationController
       if @category and @category.kpi_quantity==0
         msg.result=@category.destroy
       else
-        msg.content="类别不可删除，包含KPI"
+           msg.content=I18n.t "fix.cannot_destroy"
       end
     # else
       # msg.content="必须保留一个类别"

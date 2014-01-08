@@ -20,7 +20,7 @@ class EntityGroupItemsController < ApplicationController
     @entity_group_item.destroy
     msg.result=true
     else
-      msg.content='can not destroy'
+        msg.content=I18n.t "fix.cannot_destroy"
     end
     render :json=>msg
   end

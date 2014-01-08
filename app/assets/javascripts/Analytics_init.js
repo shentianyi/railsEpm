@@ -82,6 +82,7 @@ function analytic_control_condition_visible() {
 function prepare_form_chart() {
     var kpi = $("#chart-kpi :selected").attr("value");
     var view = $("#chart-view :selected").attr("value");
+    var view_text = $("#chart-view :selected").text();
     var method = $("input[name='chartRadios']:checked").attr("value");
     var interval, type, chart_body_close_validate
     if ($("#chart-body").css("display") == "block") {
@@ -115,6 +116,7 @@ function prepare_form_chart() {
             interval: interval,
             count: ANALYTICS.chartSeries.count + 1,
             view: view,
+            view_text: view_text,
             method: method,
             chart_body_close_validate:chart_body_close_validate
         };

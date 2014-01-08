@@ -447,6 +447,7 @@ en:
     value: Value
     target_range: Target Range
     percent: Percentage
+    view: Entity Group
     line:
       out_of_target: Out of Target
       kpi_name: KPI Name
@@ -459,3 +460,9 @@ en:
     column:
        max: Max Value
        min: Min Value
+  fix:
+    zone_too_large: zone to large error!
+    cannot_destroy: can not delete
+    add_fail: add fail
+    cannot_destroy_contain_kpi: it is base kpi, cannot delete!
+    not_exists: not exists

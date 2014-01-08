@@ -64,7 +64,7 @@ class UsersController < ApplicationController
     if @user  and !@user.is_tenant
     msg.result=@user.destroy
     else
-      msg.content="用户不可删除"
+         msg.content=I18n.t "fix.cannot_destroy"
     end
     render :json=>msg
   end

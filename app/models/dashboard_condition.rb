@@ -21,6 +21,7 @@ class DashboardCondition < ActiveRecord::Base
     if conditions
       conditions.each { |condition|
 
+        entity_group = EntityGroup.find(condition.entity_group)
         time_span = DashboardItem.time_string_to_time_span condition.time_string
 
         count = time_range_count(time_span[:start].iso8601.to_s,time_span[:end].iso8601.to_s,dashboard_itme.interval)
@@ -57,6 +58,7 @@ class DashboardCondition < ActiveRecord::Base
           data[:kpi_name] = Kpi.find(condition.kpi_id).name
           data[:count] = condition.count
           data[:id] = condition.id
+          data[:view] = entity_group.name
           datas << data
         end
       }

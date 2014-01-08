@@ -273,7 +273,7 @@ ifepm.dashboard_widget.remove_all_widgets =function(fullsize){
         grid = gridster;
     }
 
-    grid.remove_all_widgets(fullsize);
+    grid.remove_all_widgets();
 };
 
 /*

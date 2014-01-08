@@ -47,7 +47,7 @@ class DashboardItemsController < ApplicationController
       end
     else
       msg[:result] = false
-      msg[:errors] = "对不起，时间范围太大了！"
+      msg[:errors] = I18n.t "fix.zone_too_large"
     end
 
 

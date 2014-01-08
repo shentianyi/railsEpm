@@ -24,7 +24,7 @@ var high_chart = {
                     return '<b>'+this.point.name+'</b>'
                         +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                         +'</span>'
-                        +'<br />观察点: '+this.point.view
+                        +'<br />'+I18n.t('chart.view')+': '+this.point.view
                         +'<br />'+I18n.t('chart.value')+' : '+this.y
                         +"<br />"+I18n.t('chart.target_range')+": "+this.point.target_min+"-"+this.point.high
                 }
@@ -32,7 +32,7 @@ var high_chart = {
                     return '<b>'+this.point.name+'</b>'
                         +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                         +'</span>'
-                        +'<br />观察点: '+this.point.view
+                        +'<br />'+I18n.t('chart.view')+': '+this.point.view
                         +'<br />'+I18n.t('chart.value')+': '+this.y
                         +"<br />"+I18n.t('chart.target_range')+": "+this.point.low+"-"+this.point.high
                 }
@@ -41,7 +41,7 @@ var high_chart = {
                 return '<b>'+this.point.name+'</b>'
                     +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                     +'</span>'
-                    +'<br />观察点: '+this.point.view
+                    +'<br />'+I18n.t('chart.view')+': '+this.point.view
                     +'<br />'+I18n.t('chart.value')+': '+this.y
                     +"<br />"+I18n.t('chart.percent')+": "+this.percentage.toFixed(1)+"%"
             }
@@ -270,7 +270,6 @@ function add_series(option) {
     var chart_container = option.target;
     var type = option.type;
     var data = deal_data(option);
-    var view=option.view;
     var color=option.color?
               option.color:(option.theme ?
                             HIGH_CHART.chart_color[option.theme][series_id % HIGH_CHART.chart_color[option.theme].length]:HIGH_CHART.chart_color["default"][series_id % HIGH_CHART.chart_color["default"].length]);
@@ -295,7 +294,8 @@ function set_data(option) {
     this.id=option.id!==null ? option.id : null;
     this.count=option.count ? option.count:null;
     this.theme=option.theme ? option.theme:null;
-    this.view=option.view ? option.view:null;
+
+    this.view=option.view_text ? option.view_text:null;
     this.kpi_name=option.kpi ? option.kpi:null;
 }
 
