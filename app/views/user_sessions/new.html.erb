@@ -138,7 +138,7 @@
         $("#sign-up,#sign-up-now").on("click", function () {
             if($("#sign-up-now").attr('state') == "close"){
                 $('#signIn-block').slideDown('500');
-                $("#sign-up").attr('state', 'open');
+                $("#sign-up-now").attr('state', 'open');
                 $("#user_session_email").focus();
             }
             else{
