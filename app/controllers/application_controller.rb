@@ -103,10 +103,10 @@ class ApplicationController < ActionController::Base
   #need login
   def require_user
     unless current_user
-      store_location
-      flash[:alert] = I18n.t 'auth.msg.login_require'
-      redirect_to new_user_sessions_url
-      return false
+      respond_to do |format|
+     format.json {     render json: {access:false,loginStatusCode:-3000,authStatusCode:-4000} ,status: 403}
+      format.html { redirect_to new_user_sessions_url }
+    end
     end
   end
 
@@ -195,10 +195,11 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-     render :json=>{:access=>false},:status => 403
+     # render :json=>{:access=>false},:status => 403
+     error_page_403
       # render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
   end
-  
+ 
   # I18n
   def set_locale
     I18n.locale=cookies[:locale] || extract_locale_from_accept_language_header || I18n.default_locale
@@ -206,8 +207,23 @@ class ApplicationController < ActionController::Base
   
   private
   def extract_locale_from_accept_language_header
-     request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+     request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first if request.env['HTTP_ACCEPT_LANGUAGE']
   end
+  
+    def error_page_403
+    respond_to do |format|
+      format.html {render :file => File.join(Rails.root, 'public/403.html'), :status => 403, :layout => false}
+      format.json { render json: {access:false,loginStatusCode:-2999,authStatusCode:-4000} ,status: 403}
+    end
+  end
+
+  def error_page_404
+    respond_to do |format|
+      format.html {render :file => File.join(Rails.root, 'public/404.html'), :status => 404, :layout => false}
+      format.json { render json: {access:false} ,status: 404 }
+    end
+  end
+  
 end
 
 # module SubscriptionStatus
