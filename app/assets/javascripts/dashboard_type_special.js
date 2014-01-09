@@ -13,7 +13,7 @@ DASHBOARD.special_type={
                     .append($("<span />").text(I18n.t('chart.line.out_of_target')))
                 )
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:59px'/>").text(I18n.t('chart.line.total')+":"))
+                    .append($("<span style='display:inline-block;width:51px'/>").text(I18n.t('chart.line.total')+":"))
                     .append($("<span />").addClass("total-value"))
                 )
                 .append($("<td />")
