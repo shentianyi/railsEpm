@@ -104,7 +104,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       respond_to do |format|
-     format.json {     render json: {access:false,loginStatusCode:-3000,authStatusCode:-4000} ,status: 403}
+     format.json {     render json: {access:false,errorCode:-3000} ,status: 403}
       format.html { redirect_to new_user_sessions_url }
     end
     end
@@ -213,7 +213,7 @@ class ApplicationController < ActionController::Base
     def error_page_403
     respond_to do |format|
       format.html {render :file => File.join(Rails.root, 'public/403.html'), :status => 403, :layout => false}
-      format.json { render json: {access:false,loginStatusCode:-2999,authStatusCode:-4000} ,status: 403}
+      format.json { render json: {access:false,errorCode:-4000} ,status: 403}
     end
   end
 
