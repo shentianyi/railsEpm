@@ -86,7 +86,7 @@ HIGH_CHART.theme={
                 labels: {
                     style: {
 //                        color: '#999',
-                        color:'#fff',
+                        color:'#eaedec',
                         fontWeight:"bold"
                     }
                 },
