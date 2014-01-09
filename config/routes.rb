@@ -69,7 +69,11 @@ IFEpm::Application.routes.draw do
     end
   end
 
-  resources :dashboards
+  resources :dashboards do
+    collection do
+      match '/fullsize/:id' => :fullsize
+    end
+  end
 
   resources :dashboard_items do
     collection do

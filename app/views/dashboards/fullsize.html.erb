@@ -1,0 +1,56 @@
+<div class="dashboard-content" id="dashboard-content">
+  <div id="dash-normalsize" class="gridster dash-content">
+    <ul class="dashBoard-show" id="dashBoard-show">
+    </ul>
+  </div>
+</div>
+
+<div class="dashboard-content-full" id="dashboard-content-full" dashboard-name="<%= @dashboard.name%>" dashboard-id="<%= @dashboard.id%>">
+  <div id="full-size-title" class="full-size-title">
+    <p class="full-size-label"></p>
+    <a id="full-size-btn" class="btn full-size-btn"><%= t 'dashboard_group.base.restore'%></a>
+  </div>
+  <div id="dash-fullsize" class="gridster black">
+    <ul class="dashBoard-show" id="dashBoard-show-full">
+
+    </ul>
+  </div>
+</div>
+
+<% content_for :javascript_includes do%>
+    <%= javascript_include_tag "highcharts.js"%>
+    <%= javascript_include_tag "highcharts-more.js"%>
+    <%= javascript_include_tag "exporting.js"%>
+    <%= javascript_include_tag "exporting.extend.src.js"%>
+    <%= javascript_include_tag "jquery.gridster.js"%>
+    <%= javascript_include_tag "jquery.gridster.with-extras.js"%>
+
+    <%= javascript_include_tag "ifepm.activeSelector.js"%>
+    <%= javascript_include_tag "ifepm.text.js"%>
+    <%= javascript_include_tag "ifepm.config.js"%>
+    <%= javascript_include_tag "dashboard.js"%>
+    <%= javascript_include_tag "ifepm.grid.main.js"%>
+    <%= javascript_include_tag "ifepm.dashboard.template.js"%>
+    <%= javascript_include_tag "ifepm.dashboard.main.js"%>
+
+    <%= javascript_include_tag "high_chart_template.js"%>
+    <%= javascript_include_tag "high_chart_theme.js"%>
+    <%= javascript_include_tag "Dashboard-add.js"%>
+    <%= javascript_include_tag "Dashboard-init.js"%>
+    <%= javascript_include_tag "dashboard_type_special.js"%>
+<%end%>
+
+<script type="text/javascript">
+  function fullsize(){
+      ifepm.dashboard_widget.init_fullsize();
+      on_full_size();
+      //console.log("fullsize");
+  }
+
+  $(document).ready(function (){
+      init_component();
+      current_dashboard_name = $("#dashboard-content-full").attr("dashboard-name");
+      current_dashboard_id = $("#dashboard-content-full").attr("dashboard-id");
+      select_dashboard(current_dashboard_id,fullsize);
+  });
+</script>
