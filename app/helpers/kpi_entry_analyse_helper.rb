@@ -55,7 +55,7 @@ module KpiEntryAnalyseHelper
           current_data[k]=(v/count).round(2)
         end
       end
-      return{ total:total,datas:{:current=>current_data.values,:target_max=>target_max_data.values,:target_min=>target_min_data.values,:unit=>unit_data.values}}
+      return {:current=>current_data.values,:target_max=>target_max_data.values,:target_min=>target_min_data.values,:unit=>unit_data.values,:total=>total}
     end
     return nil
   end
