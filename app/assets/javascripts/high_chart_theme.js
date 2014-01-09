@@ -90,16 +90,17 @@ HIGH_CHART.theme={
                         fontWeight:"bold"
                     }
                 },
-                offset: 0
+                offset: -30
             },
             yAxis: {
                 labels: {
                     style: {
 //                        color: '#999',
-                        color:'#fff',
+                        color:'rgba(255,255,255,0.6)',
                         fontWeight: 'bold'
                     }
                 },
+                tickPixelInterval: 30,
                 gridLineDashStyle: 'solid',
                 gridLineWidth:1,
                 gridLineColor: 'rgba(255,255,255,0.6)'

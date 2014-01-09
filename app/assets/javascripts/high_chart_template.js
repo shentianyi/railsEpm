@@ -713,7 +713,8 @@ var limit_pointer_condition={
 }
 function deal_extreme(chart){
     var extreme=[]
-    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
+//    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
+//    if(chart.series.length==1){
         var i= 0,
             length=chart.series[i].processedXData.length,
             half=Math.floor(length/2),
@@ -732,14 +733,14 @@ function deal_extreme(chart){
         extreme.push(chart.series[i].processedXData[last_half]);
         extreme.push(chart.series[i].processedXData[last_half_quarter_second]);
         extreme.push(chart.series[i].processedXData[length-1]);
-    }
-    else{
-        for(var i=0;i<chart.series.length;i++){
-            var length=chart.series[i].processedXData.length
-            extreme.push(chart.series[i].processedXData[0]);
-            extreme.push(chart.series[i].processedXData[length-1]);
-        }
-    }
+//    }
+//    else{
+//        for(var i=0;i<chart.series.length;i++){
+//            var length=chart.series[i].processedXData.length
+//            extreme.push(chart.series[i].processedXData[0]);
+//            extreme.push(chart.series[i].processedXData[length-1]);
+//        }
+//    }
     return extreme
 }
 

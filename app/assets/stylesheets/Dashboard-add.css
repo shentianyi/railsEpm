@@ -328,6 +328,8 @@
     bottom:10px;
     left:0px;
     right:0px;
+    /*background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
+    /*background: -webkit-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
 }
 .put-db-chart[name="dashboard-add"]{
     overflow:hidden;

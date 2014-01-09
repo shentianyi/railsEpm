@@ -9,12 +9,12 @@ DASHBOARD.special_type={
         $table
             .append($("<tr />")
                 .append($("<td rowspan='2' style='width:40%;min-width:40%;max-width:40%'/>")
-                    .append($("<span style='padding-left:5px'/>").addClass("out-target primary-value"))
+                    .append($("<span style='padding-left:5px'/>").addClass("out-target secondary-value"))
                     .append($("<span />").text(I18n.t('chart.line.out_of_target')))
                 )
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:59px'/>").text(I18n.t('chart.line.kpi_name')+":"))
-                    .append($("<span style='color:rgba(245, 161, 51, 0.9)'/>").addClass("kpi-name primary-value"))
+                    .append($("<span style='display:inline-block;width:59px'/>").text(I18n.t('chart.line.total')+":"))
+                    .append($("<span />").addClass("total-value"))
                 )
                 .append($("<td />")
                     .append($("<span style='display:inline-block;width:51px'/>").text(I18n.t('chart.line.record')+": "))
@@ -23,15 +23,14 @@ DASHBOARD.special_type={
             )
             .append($("<tr />")
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:59px'/>").text(I18n.t('chart.line.total')+": "))
-                    .append($("<span />").addClass("total-value"))
-                )
-                .append($("<td />")
                     .append($("<span style='display:inline-block;width:51px'/>").text(I18n.t('chart.line.average')+": "))
                     .append($("<span />").addClass("average-value"))
                 )
+                .append($("<td />")
+                    .append($("<span style='display:inline-block;width:51px'/>").text("max: "))
+                    .append($("<span />").addClass("max-data"))
+                )
             )
-
     },
     column:function(id){
         $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","35px").css("display","table");
@@ -75,6 +74,8 @@ DASHBOARD.special_type={
                     )
             )
     },
+
+
 //    line:function(id){
 //        $("#"+id+" "+".dashboard-item-extra-info").empty().css("height","50px").css("display","table");
 //        $("#"+id+" "+".db-chart-container").css("top","50px");
@@ -82,12 +83,12 @@ DASHBOARD.special_type={
 //        $table
 //            .append($("<tr />")
 //                .append($("<td rowspan='2' style='width:40%;min-width:40%;max-width:40%'/>")
-//                    .append($("<span style='padding-left:5px'/>").addClass("out-target primary-value"))
+//                    .append($("<span style='padding-left:5px'/>").addClass("out-target secondary-value"))
 //                    .append($("<span />").text("out of target"))
 //                )
 //                .append($("<td />")
-//                    .append($("<span style='display:inline-block;width:59px'/>").text("name:"))
-//                    .append($("<span style='color:rgba(245, 161, 51, 0.9)'/>").addClass("kpi-name primary-value"))
+//                    .append($("<span style='display:inline-block;width:59px'/>").text("total:"))
+//                    .append($("<span />").addClass("total-value"))
 //                )
 //                .append($("<td />")
 //                    .append($("<span style='display:inline-block;width:51px'/>").text("record: "))
@@ -96,12 +97,12 @@ DASHBOARD.special_type={
 //            )
 //            .append($("<tr />")
 //                .append($("<td />")
-//                    .append($("<span style='display:inline-block;width:59px'/>").text("total: "))
-//                    .append($("<span />").addClass("total-value"))
+//                    .append($("<span style='display:inline-block;width:59px'/>").text("average: "))
+//                    .append($("<span />").addClass("average-value"))
 //                )
 //                .append($("<td />")
-//                    .append($("<span style='display:inline-block;width:51px'/>").text("average: "))
-//                    .append($("<span />").addClass("average-value"))
+//                    .append($("<span style='display:inline-block;width:51px'/>").text("max: "))
+//                    .append($("<span />").addClass("max-data"))
 //                )
 //            )
 //
@@ -148,6 +149,8 @@ DASHBOARD.special_type={
 //                    )
 //            )
 //    },
+
+
     scatter:function(id){
         $("#"+id+" "+".dashboard-item-extra-info").css("height","0px").css("display","none");
         $("#"+id+" "+".db-chart-container").css("top","0px");
@@ -156,13 +159,18 @@ DASHBOARD.special_type={
 }
 DASHBOARD.special_grab={
     line:function(option){
+        var datas=option.data,max_data=0;
+        for(var i=0;i<datas.length;i++){
+            max_data=datas[i].y>max_data?datas[i].y:max_data;
+        }
         var data=option.special_data,
             $table=$("#"+option.outer_target+" "+".dashboard-item-extra-info");
         $table.find(".out-target").text(data.out_of_target).attr("title",data.out_of_target);
         $table.find(".total-amount").text(data.total_record).attr("title",data.total_record);
         $table.find(".total-value").text(data.total_value).attr("title",data.total_value);
         $table.find(".average-value").text(data.average_value).attr("title",data.average_value);
-        $table.find(".kpi-name").text(option.kpi).attr("title",option.kpi);
+//        $table.find(".kpi-name").text(option.kpi).attr("title",option.kpi);
+        $table.find(".max-data").text(max_data).attr("title",max_data);
         $table.find("tr td span").each(function(){
             $(this).tipsy({gravity: 'se'});
         });
@@ -236,6 +244,7 @@ DASHBOARD.add.generate=function(option){
         total_value:total_value+option.data[0].unit,
         average_value:(total_value/option.data.length).toFixed(1)+option.data[0].unit
     }
+
     option.special_data=special_data;
     DASHBOARD.special_grab[type](option);
     if(option.theme!=null){
