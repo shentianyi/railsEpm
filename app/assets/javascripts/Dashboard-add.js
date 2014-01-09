@@ -460,6 +460,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                    add_series(option);
                    proper_type_for_chart(option);
                }
+               option.total=msg.object.total;
                limit_pointer_number(option);
                DASHBOARD.add.generate(option);
            }
@@ -491,6 +492,7 @@ DASHBOARD.add.prepare_form_chart=function() {
 //                view: view,
 //                view_text:view_text,
 //                count: db_chartSeries.getCount() + 1,
+//                total:1000,
 //                theme:"dark"
 //            }
 //            var addSeriesOption = {

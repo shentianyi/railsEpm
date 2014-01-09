@@ -240,11 +240,12 @@ DASHBOARD.add.generate=function(option){
     }
     var special_data={
         out_of_target:out_of_target,
-        total_record:option.data.length,
-        total_value:total_value+option.data[0].unit,
-        average_value:(total_value/option.data.length).toFixed(1)+option.data[0].unit
+        total_record:option.data.length
+//        total_value:total_value+option.data[0].unit,
+//        average_value:(total_value/option.data.length).toFixed(1)+option.data[0].unit
     }
-
+    special_data.total_value=option.total;
+    special_data.average_value=(option.total/option.data.length).toFixed(1)
     option.special_data=special_data;
     DASHBOARD.special_grab[type](option);
     if(option.theme!=null){
