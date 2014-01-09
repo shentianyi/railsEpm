@@ -57,7 +57,7 @@ HIGH_CHART.theme={
             xAxis: {
                 labels: {
                     style: {
-                        color: "rgba(0,0,0,0.3)",
+                        color: "rgba(0,0,0,0.4)",
                         fontSize:"10px",
                         fontWeight:"light"
                     }
