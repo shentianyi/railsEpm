@@ -454,6 +454,7 @@ en:
       total: Total
       record: Record
       average: Average
+      max: Max
     pie:
        select: Select
        total: Total
