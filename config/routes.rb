@@ -1,5 +1,8 @@
 IFEpm::Application.routes.draw do
 
+  resources :contacts
+
+
   root :to => 'user_sessions#new'
   # get "welcome/navigate"
 

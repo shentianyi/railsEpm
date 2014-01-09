@@ -23,30 +23,30 @@
                     textKey : 'downloadPDF',
                     type : 'application/pdf'
                },
-               svg : {
-                    textKey : 'downloadSVG',
-                    type : 'image/svg+xml'
-               },
-               doc : {
-                    textKey : 'downloadDOC',
-                    type : 'application/msword'
-               },
+               // svg : {
+                    // textKey : 'downloadSVG',
+                    // type : 'image/svg+xml'
+               // },
+               // doc : {
+                    // textKey : 'downloadDOC',
+                    // type : 'application/msword'
+               // },
                docx : {
                     textKey : 'downloadDOCX',
                     type : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
                },
-               xls : {
-                    textKey : 'downloadXLS',
-                    type : 'application/vnd.ms-excel'
-               },
+               // xls : {
+                    // textKey : 'downloadXLS',
+                    // type : 'application/vnd.ms-excel'
+               // },
                xlsx : {
                     textKey : 'downloadXLSX',
                     type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                },
-               ppt : {
-                    textKey : 'downloadPPT',
-                    type : 'application/vnd.ms-powerpoint'
-               },
+               // ppt : {
+                    // textKey : 'downloadPPT',
+                    // type : 'application/vnd.ms-powerpoint'
+               // },
                pptx : {
                     textKey : 'downloadPPTX',
                     type : 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
