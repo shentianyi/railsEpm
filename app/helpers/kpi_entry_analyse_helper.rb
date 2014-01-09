@@ -38,12 +38,14 @@ module KpiEntryAnalyseHelper
         end_time=DateTimeHelper.get_utc_time_by_str(Date.new(end_time.year,1,1).to_s)
       end
       entries=  KpiEntry.where(:kpi_id=>kpi_id,:entity_id=>entity_ids,:parsed_entry_at=>start_time..end_time).all
+      total=0
       generate_data start_time,end_time,frequency,params
       entries.each do |entry|
         frequency_condition.each do |k,v|
           if entry.parsed_entry_at>=v[0] && entry.parsed_entry_at<v[1]
           current_data[k]+=entry.value
           current_data_count[k]+=1
+          total+=entry.value
           end
         end
       end 
@@ -53,7 +55,7 @@ module KpiEntryAnalyseHelper
           current_data[k]=(v/count).round(2)
         end
       end
-      return {:current=>current_data.values,:target_max=>target_max_data.values,:target_min=>target_min_data.values,:unit=>unit_data.values}
+      return{ total:total,datas:{:current=>current_data.values,:target_max=>target_max_data.values,:target_min=>target_min_data.values,:unit=>unit_data.values}}
     end
     return nil
   end

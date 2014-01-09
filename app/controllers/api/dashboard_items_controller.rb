@@ -20,7 +20,9 @@ class Api::DashboardItemsController < ApplicationController
     datas = DashboardCondition::get_item_formatted_data(params[:id])
 
     @item = DashboardItem.find(params[:id])
-    @item.update_attribute("last_update",params[:last_update])
+    if @item
+      @item.update_attribute("last_update",params[:last_update])
+    end
 
     respond_to do |t|
       t.json {render :json=>datas.to_json}
