@@ -43,7 +43,8 @@ module KpiEntryAnalyseHelper
       entries.each do |entry|
         frequency_condition.each do |k,v|
           if entry.parsed_entry_at>=v[0] && entry.parsed_entry_at<v[1]
-          current_data[k]+=entry.value
+           current_data[k]=0 if current_data[k]==nil
+          current_data[k]+=entry.value 
           current_data_count[k]+=1
           total+=entry.value
           end
@@ -55,7 +56,7 @@ module KpiEntryAnalyseHelper
           current_data[k]=(v/count).round(2)
         end
       end
-      return{ total:total,datas:{:current=>current_data.values,:target_max=>target_max_data.values,:target_min=>target_min_data.values,:unit=>unit_data.values}}
+      return {:current=>current_data.values,:target_max=>target_max_data.values,:target_min=>target_min_data.values,:unit=>unit_data.values,:total=>total}
     end
     return nil
   end

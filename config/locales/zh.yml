@@ -462,6 +462,7 @@ zh:
       total: 总值
       record: 记录数
       average: 平均值
+      max: 最大值
     pie:
       select: 选中值
       total: 总值

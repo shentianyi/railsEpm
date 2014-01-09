@@ -27,7 +27,7 @@ DASHBOARD.special_type={
                     .append($("<span />").addClass("average-value"))
                 )
                 .append($("<td />")
-                    .append($("<span style='display:inline-block;width:51px'/>").text("max: "))
+                    .append($("<span style='display:inline-block;width:51px'/>").text(I18n.t('chart.line.max')+": "))
                     .append($("<span />").addClass("max-data"))
                 )
             )
