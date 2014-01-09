@@ -8,7 +8,7 @@ class Entity < ActiveRecord::Base
   has_many :user_kpi_items,:dependent=>:destroy
   has_many :kpi_entries, :through=>:user_kpi_items
 
-  attr_accessible :name, :status, :user_quantity
+  attr_accessible :name, :status, :user_quantity,:description
 
   acts_as_tenant(:tenant)
 
