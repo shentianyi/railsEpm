@@ -25,7 +25,7 @@ var high_chart = {
                         +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                         +'</span>'
                         +'<br />'+I18n.t('chart.view')+': '+this.point.view
-                        +'<br />'+I18n.t('chart.value')+' : '+this.y
+                        +'<br />'+I18n.t('chart.value')+' : '+this.y+" "+this.point.unit
                         +"<br />"+I18n.t('chart.target_range')+": "+this.point.target_min+"-"+this.point.high
                 }
                 else{
@@ -33,7 +33,7 @@ var high_chart = {
                         +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                         +'</span>'
                         +'<br />'+I18n.t('chart.view')+': '+this.point.view
-                        +'<br />'+I18n.t('chart.value')+': '+this.y
+                        +'<br />'+I18n.t('chart.value')+': '+this.y+" "+this.point.unit
                         +"<br />"+I18n.t('chart.target_range')+": "+this.point.low+"-"+this.point.high
                 }
             }
@@ -42,7 +42,7 @@ var high_chart = {
                     +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                     +'</span>'
                     +'<br />'+I18n.t('chart.view')+': '+this.point.view
-                    +'<br />'+I18n.t('chart.value')+': '+this.y
+                    +'<br />'+I18n.t('chart.value')+': '+this.y+" "+this.point.unit
                     +"<br />"+I18n.t('chart.percent')+": "+this.percentage.toFixed(1)+"%"
             }
 
