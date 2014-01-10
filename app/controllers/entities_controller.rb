@@ -9,8 +9,11 @@ class EntitiesController < ApplicationController
 
   # create tenant
   def create
+    contacts=params[:data].slice(:contacts)[:contacts].values if params[:data].has_key?(:contacts)
     @entity=Entity.new(params[:data])
-    @entity.tenant=current_tenant
+    contacts.each do |contact|
+     @entity.entity_contacts<<contact
+    end if contacts
     msg=Message.new
     if @entity.save
       msg.result=true

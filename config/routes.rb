@@ -1,5 +1,8 @@
 IFEpm::Application.routes.draw do
 
+  resources :entity_contacts
+
+
   resources :contacts
 
 

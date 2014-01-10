@@ -17,4 +17,8 @@
 /tmp
 /.idea/*
 /.project
-/uploadfiles/*/*.csv
+/uploadfiles/data/*.csv
+/uploadfiles/download/*.csv
+.DS_Store
+*.swp
+*.MERGE_MSG

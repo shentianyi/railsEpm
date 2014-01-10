@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20140110090628) do
+=======
+ActiveRecord::Schema.define(:version => 20140110030857) do
+>>>>>>> 4fab6afeff49faad92b5266e971b37a49c39e002
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -95,9 +99,22 @@ ActiveRecord::Schema.define(:version => 20140110090628) do
     t.integer  "tenant_id"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
+    t.string   "description"
   end
 
   add_index "entities", ["tenant_id"], :name => "index_entities_on_tenant_id"
+
+  create_table "entity_contacts", :force => true do |t|
+    t.integer  "entity_id"
+    t.integer  "contact_id"
+    t.integer  "tenant_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "entity_contacts", ["contact_id"], :name => "index_entity_contacts_on_contact_id"
+  add_index "entity_contacts", ["entity_id"], :name => "index_entity_contacts_on_entity_id"
+  add_index "entity_contacts", ["tenant_id"], :name => "index_entity_contacts_on_tenant_id"
 
   create_table "entity_group_items", :force => true do |t|
     t.integer  "entity_id"
