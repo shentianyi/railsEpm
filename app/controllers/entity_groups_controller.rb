@@ -1,11 +1,11 @@
 #encoding: utf-8
 class EntityGroupsController < ApplicationController
   def index
-    @entity_groups=current_user.entity_groups.accessible_by(current_ability)
+    @entity_groups=get_user_entity_groups
     @group_entities=[]
     if @entity_groups.count>0
       @active_entity_group_id=params[:p].nil? ? @entity_groups[0].id : params[:p].to_i
-      if @entity_group=  current_user.entity_groups.accessible_by(current_ability).where("entity_groups.id=?",@active_entity_group_id).first
+      if @entity_group=  EntityGroup.where("id = ?",@active_entity_group_id).first#current_user.entity_groups.accessible_by(current_ability).where("entity_groups.id=?",@active_entity_group_id).first
         @user_group_entities=@entity_group.entities.select("entities.*,entity_group_items.id as 'entity_group_item_id'")
       end
     end
