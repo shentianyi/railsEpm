@@ -19,6 +19,9 @@
 /.project
 /uploadfiles/data/*.csv
 /uploadfiles/download/*.csv
+/uploadfiles/*
+!/uploadfiles/**/*.ignore
+!/uploadfiles/**/*.ignore
 .DS_Store
 *.swp
 *.MERGE_MSG

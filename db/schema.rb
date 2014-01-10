@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131115082833) do
+ActiveRecord::Schema.define(:version => 20140110030857) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -38,6 +38,21 @@ ActiveRecord::Schema.define(:version => 20131115082833) do
   end
 
   add_index "admin_kpi_templates", ["admin_kpi_category_template_id"], :name => "index_admin_kpi_templates_on_admin_kpi_category_template_id"
+
+  create_table "contacts", :force => true do |t|
+    t.string   "name"
+    t.string   "department"
+    t.string   "tel"
+    t.string   "phone"
+    t.string   "email"
+    t.string   "title"
+    t.integer  "tenant_id"
+    t.string   "image_url"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "contacts", ["tenant_id"], :name => "index_contacts_on_tenant_id"
 
   create_table "dashboard_conditions", :force => true do |t|
     t.integer  "dashboard_item_id"
@@ -80,9 +95,22 @@ ActiveRecord::Schema.define(:version => 20131115082833) do
     t.integer  "tenant_id"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
+    t.string   "description"
   end
 
   add_index "entities", ["tenant_id"], :name => "index_entities_on_tenant_id"
+
+  create_table "entity_contacts", :force => true do |t|
+    t.integer  "entity_id"
+    t.integer  "contact_id"
+    t.integer  "tenant_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "entity_contacts", ["contact_id"], :name => "index_entity_contacts_on_contact_id"
+  add_index "entity_contacts", ["entity_id"], :name => "index_entity_contacts_on_entity_id"
+  add_index "entity_contacts", ["tenant_id"], :name => "index_entity_contacts_on_tenant_id"
 
   create_table "entity_group_items", :force => true do |t|
     t.integer  "entity_id"
@@ -153,7 +181,7 @@ ActiveRecord::Schema.define(:version => 20131115082833) do
     t.integer  "kpi_category_id"
     t.integer  "unit"
     t.integer  "frequency"
-    t.float    "target_max",      :default => 0.0
+    t.float    "target_max"
     t.boolean  "is_calculated",   :default => false
     t.integer  "direction"
     t.integer  "period"

@@ -10,4 +10,5 @@ path_config=config['path']
 $UPDATAPATH=path_config[:updata_file_path]
 $DOWNLOADPATH=path_config[:download_file_path]
 $TEMPLATEPATH=path_config[:template_file_path]
+$AVATARPATH=path_config[:avatar_file_path]
 
