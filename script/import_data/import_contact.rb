@@ -23,8 +23,9 @@ Dir["#{ARGV[0]}/*.csv"].each do |f|
   puts "importing: #{f}, update contact:#{update_contact},#{ARGV[1]}"
   tenant=Tenant.first
   CSV.foreach(f,:headers=>true,:col_sep=>';') do |row|
-   if entity=Entity.find_by_id(row["EntityID"])
-     entity.update_attributes(:description=>row["Description"]) unless row["Description"].blank?
+   if contactable=row["Model"].constantize.find_by_id(row["ID"])
+     contactable.update_attributes(:description=>row["Description"]) unless row["Description"].blank?
+     contactable.update_attributes(:code=>row["Code"]) unless row["Code"].blank? if ["EntityGroup"].include?(row["Model"])
      params={name:row["Name"],email:row["Email"],phone:row["Phone"],tel:row["Tel"],title:row["Title"]}
      avatar_path=File.join(ARGV[0],"avatar",row["Avatar"])
      # check contact
@@ -44,13 +45,13 @@ Dir["#{ARGV[0]}/*.csv"].each do |f|
        contact.tenant=tenant
        contact.save
      end
-     # check entity contact
-     unless entity_contact=entity.entity_contacts.where(contact_id:contact.id).first
-       entity_contact=EntityContact.new
-       entity_contact.entity=entity
-       entity_contact.contact=contact
-       entity_contact.tenant=tenant
-       entity_contact.save
+     # check contactable contact
+     unless contactable_contact=contactable.entity_contacts.where(contact_id:contact.id).first
+       contactable_contact=contactable.entity_contacts.build
+       # contactable_contact.contactable=contactable
+       contactable_contact.contact=contact
+       contactable_contact.tenant=tenant
+       contactable_contact.save
      end
    end
   end

@@ -1,2 +1,3 @@
-EntityID;EntityNr;Name;Email;Tel;Phone;Title;Avatar;Description
-2;C-RBA;Jack;jack@jack.com;111111;111111;BOSS;jack.jpg;CRB-A is good!
+ID;Model;Nr;Name;Email;Tel;Phone;Title;Avatar;Description;Code
+2;Entity;C-RBA;Jack;jack@jack.com;111111;111111;BOSS;jack.jpg;CRB-A is good!;
+52;EntityGroup;Leoni;Leoni;tom@tom.com;1;2;BOSS HEADER;tom.jpg;Leoni is good!;LEONI
