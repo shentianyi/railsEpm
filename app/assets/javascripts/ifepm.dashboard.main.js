@@ -705,7 +705,7 @@ ifepm.dashboard.create_dashboard = function () {
  * @function init
  * init graph array after select a dashboard group
  * */
-ifepm.dashboard.init = function (id) {
+ifepm.dashboard.init = function (id,callback) {
     ifepm.dashboard.graphs = {};
     ifepm.dashboard.graph_sequence = [];
     $.ajax(
@@ -742,13 +742,16 @@ ifepm.dashboard.init = function (id) {
                     ifepm.dashboard.graph_sequence.push(data[i].id)
 
                 }
-                ifepm.dashboard.create_dashboard();
+                if(callback){
+                    callback.call();
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("Oops, something went wrong, please try again");
             }}
 
     );
+
 };
 
 /*

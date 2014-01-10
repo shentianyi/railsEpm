@@ -1,5 +1,6 @@
 #encoding: utf-8
 class DashboardsController < ApplicationController
+  layout "pure", :only => :fullsize
 
   def new
     #render
@@ -63,6 +64,8 @@ class DashboardsController < ApplicationController
     render
   end
 
-
-
+  def fullsize
+    @dashboard = Dashboard.find(params[:id])
+    render
+  end
 end
