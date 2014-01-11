@@ -83,7 +83,10 @@ IFEpm::Application.routes.draw do
 
   resources :dashboard_items do
     collection do
-      put :update
+      post :save_grid
+      get :items_by_dashboard_id
+      get :get_data
+      get :update_sequence
     end
   end
 
@@ -102,12 +105,17 @@ IFEpm::Application.routes.draw do
        match 'kpi_entries/test_data'=>:test_data
     end
     resources :dashboards
-    controller :dashboard_items do
-      match 'dashboard_items/get_data'=>:get_data
-      match 'dashboard_items/items_by_dashboard_id'=>:items_by_dashboard_id
-      match 'dashboard_items/update_sequence' => :update_sequence
+    resources :dashboard_items do
+      collection do
+        get 'dashboard_items/get_data'=>:get_data
+        get 'dashboard_items/items_by_dashboard_id'=>:items_by_dashboard_id
+        get 'dashboard_items/update_sequence' => :update_sequence
+      end
+      #match 'dashboard_items/get_data'=>:get_data
+      #match 'dashboard_items/items_by_dashboard_id'=>:items_by_dashboard_id
+      #match 'dashboard_items/update_sequence' => :update_sequence
     end
-    resources :user_sessions 
+    resources :user_sessions
 
     controller :kpis do
       match 'kpis/kpis_by_category'=>:kpis_by_category
@@ -128,7 +136,7 @@ IFEpm::Application.routes.draw do
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
-  match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
+  # match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
 
   namespace :admin do
     resources :sessions
