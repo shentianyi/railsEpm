@@ -102,10 +102,15 @@ IFEpm::Application.routes.draw do
        match 'kpi_entries/test_data'=>:test_data
     end
     resources :dashboards
-    controller :dashboard_items do
-      match 'dashboard_items/get_data'=>:get_data
-      match 'dashboard_items/items_by_dashboard_id'=>:items_by_dashboard_id
-      match 'dashboard_items/update_sequence' => :update_sequence
+    resources :dashboard_items do
+      collection do
+        get 'dashboard_items/get_data'=>:get_data
+        get 'dashboard_items/items_by_dashboard_id'=>:items_by_dashboard_id
+        get 'dashboard_items/update_sequence' => :update_sequence
+      end
+      #match 'dashboard_items/get_data'=>:get_data
+      #match 'dashboard_items/items_by_dashboard_id'=>:items_by_dashboard_id
+      #match 'dashboard_items/update_sequence' => :update_sequence
     end
     controller :user_sessions do
       match 'user_sessions/create' =>:create
