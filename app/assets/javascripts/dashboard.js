@@ -76,7 +76,7 @@ function page_load(){
     current_dashboard_id = first_node.filter(config.db_id_carrier_selector).attr(config.id_field)
 }
 
-function select_dashboard(id){
+function select_dashboard(id,callback){
     current_dashboard_id=id;
     var selector =  "#content-right-nav-group>li[number="+id+"] a";
     current_dashboard_name = $(selector).text();
@@ -86,7 +86,14 @@ function select_dashboard(id){
 
     //MANAGE.left.manage_left_edit_init();
     right_nav_main.initial.name();
-    ifepm.dashboard.init(id);
+    if(!callback){
+        callback =on_finish_init;
+    }
+    ifepm.dashboard.init(id,callback);
+}
+
+function on_finish_init(){
+    ifepm.dashboard.create_dashboard();
 }
 
 var dashboard_list_item_template =
@@ -407,7 +414,7 @@ function init_grid(){
 }
 
 function init_component(){
-    //init_time_picker();
+    init_grid();
     var lenght = $("ul#content-right-nav-group").children().length;
     if(lenght > 0){
         //$("ul.manage-left-menu").children("[number]:first").addClass("active");
@@ -415,8 +422,7 @@ function init_component(){
         select_dashboard(id);
     }
 
-    //init_date_picker();
-    init_grid();
+
 }
 
 /*

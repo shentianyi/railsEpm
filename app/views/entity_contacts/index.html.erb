@@ -1,0 +1,27 @@
+<h1>Listing entity_contacts</h1>
+
+<table>
+  <tr>
+    <th>Entity</th>
+    <th>Contact</th>
+    <th>Tenant</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @entity_contacts.each do |entity_contact| %>
+  <tr>
+    <td><%= entity_contact.entity %></td>
+    <td><%= entity_contact.contact %></td>
+    <td><%= entity_contact.tenant %></td>
+    <td><%= link_to 'Show', entity_contact %></td>
+    <td><%= link_to 'Edit', edit_entity_contact_path(entity_contact) %></td>
+    <td><%= link_to 'Destroy', entity_contact, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Entity contact', new_entity_contact_path %>

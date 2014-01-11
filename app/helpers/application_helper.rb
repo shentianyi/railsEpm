@@ -33,4 +33,9 @@ module ApplicationHelper
   def current_action_name
     return self.action_name
   end
+
+  def init_message
+      @msg=Msg.new
+  end
+
 end

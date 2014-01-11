@@ -7,21 +7,22 @@ class Entity < ActiveRecord::Base
 
   has_many :user_kpi_items,:dependent=>:destroy
   has_many :kpi_entries, :through=>:user_kpi_items
-
-  attr_accessible :name, :status, :user_quantity
+  # has_many :entity_contacts
+  has_many :entity_contacts,:as=>:contactable,:dependent=>:destroy
+  has_many :contacts,:through=>:entity_contacts
+  attr_accessible :name, :status, :user_quantity,:description,:code
 
   acts_as_tenant(:tenant)
 
   validate :validate_create_update
-  
-   def self.ability_find_by_id id,current_ability
+  def self.ability_find_by_id id,current_ability
     Entity.accessible_by(current_ability).find_by_id(id)
   end
-  
+
   private
-  
+
   def validate_create_update
-    errors.add(:name,'组织名不可重复') if Entity.where(:name=>self.name,:tenant_id=>self.tenant_id).first if new_record?
-    errors.add(:name,'组织名不可重复') if Entity.where(:name=>self.name,:tenant_id=>self.tenant_id).where('id<>?',self.id).first unless new_record?
+    errors.add(:name,I18n.t("fix.cannot_repeat")) if Entity.where(:name=>self.name,:tenant_id=>self.tenant_id).first if new_record?
+    errors.add(:name,I18n.t("fix.cannot_repeat")) if Entity.where(:name=>self.name,:tenant_id=>self.tenant_id).where('id<>?',self.id).first unless new_record?
   end
 end

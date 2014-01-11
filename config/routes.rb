@@ -1,7 +1,10 @@
 IFEpm::Application.routes.draw do
 
-  resources :contacts
+  resources :entity_contacts
 
+
+  resources :contacts
+  resources :avatars
 
   root :to => 'user_sessions#new'
   # get "welcome/navigate"
@@ -72,7 +75,11 @@ IFEpm::Application.routes.draw do
     end
   end
 
-  resources :dashboards
+  resources :dashboards do
+    collection do
+      match '/fullsize/:id' => :fullsize
+    end
+  end
 
   resources :dashboard_items do
     collection do
@@ -110,7 +117,12 @@ IFEpm::Application.routes.draw do
     end
 
     #resources :user_sessions
-    resources :entity_groups
+    resources :entity_groups do
+      member do
+        get :contacts
+        get :kpis
+      end
+    end
     resources :kpi_categories
 
   end

@@ -1,0 +1,2 @@
+module EntityContactsHelper
+end

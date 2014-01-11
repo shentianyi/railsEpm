@@ -467,3 +467,4 @@ en:
     add_fail: add fail
     cannot_destroy_contain_kpi: it is base kpi, cannot delete!
     not_exists: not exists
+    cannot_repeat: it is exists, cannot repeat
