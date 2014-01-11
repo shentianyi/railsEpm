@@ -41,9 +41,13 @@ class EntityGroupsController < ApplicationController
   # delete entity_group
   def destroy
     msg=Message.new
-    if @entity_group=EntityGroup.accessible_by(current_ability).find_by_id(params[:id]) && !@entity_group.is_public  || @entity_group.is_public && @entity_group.user_id = current_user.id
-    @entity_group.destroy
-    msg.result=true
+    if @entity_group=EntityGroup.accessible_by(current_ability).find_by_id(params[:id])
+      if (!@entity_group.is_public) || (@entity_group.is_public && @entity_group.user_id == current_user.id)
+        @entity_group.destroy
+        msg.result=true
+      else
+        msg.content = I18n.t "fix.cannot_destroy"
+      end
     else
          msg.content=I18n.t "fix.cannot_destroy"
     end
