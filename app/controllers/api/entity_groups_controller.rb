@@ -1,7 +1,7 @@
 class Api::EntityGroupsController < ApplicationController
   def index
     get_user_entity_groups
-    egs= @entity_groups.map{|e| {id:e.id,name:e.name,user_id:e.user_id,is_public:e.is_public}}
+    egs= @entity_groups.select('id,name,is_public,description,code,user_id').all
     respond_to do |t|
       t.json {render :json=>egs}
       t.js {render :js=>jsonp_str(egs)}
