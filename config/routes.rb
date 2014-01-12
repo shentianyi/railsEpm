@@ -77,7 +77,7 @@ IFEpm::Application.routes.draw do
 
   resources :dashboards do
     collection do
-      match '/fullsize/:id' => :fullsize
+      get '/fullsize/:id' => :fullsize
     end
   end
 
@@ -104,7 +104,11 @@ IFEpm::Application.routes.draw do
       match 'kpi_entries/analyse'=>:analyse
        match 'kpi_entries/test_data'=>:test_data
     end
-    resources :dashboards
+    resources :dashboards do
+      collection do
+        get '/fullsize/:id' => :fullsize
+      end
+    end
     resources :dashboard_items do
       collection do
         get 'dashboard_items/get_data'=>:get_data
