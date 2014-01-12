@@ -23,7 +23,8 @@ Dir["#{ARGV[0]}/*.csv"].each do |f|
   puts "importing: #{f}, update contact:#{update_contact},#{ARGV[1]}"
   tenant=Tenant.first
   CSV.foreach(f,:headers=>true,:col_sep=>';') do |row|
-   if contactable=row["Model"].constantize.find_by_id(row["ID"])
+    row["ID"].split(',').each do |id|
+   if contactable=row["Model"].constantize.find_by_id(id)
      contactable.update_attributes(:description=>row["Description"]) unless row["Description"].blank?
      contactable.update_attributes(:code=>row["Code"]) unless row["Code"].blank? if ["EntityGroup"].include?(row["Model"])
      params={name:row["Name"],email:row["Email"],phone:row["Phone"],tel:row["Tel"],title:row["Title"]}
@@ -53,6 +54,7 @@ Dir["#{ARGV[0]}/*.csv"].each do |f|
        contactable_contact.tenant=tenant
        contactable_contact.save
      end
+   end
    end
   end
   puts "imported: #{f}"
