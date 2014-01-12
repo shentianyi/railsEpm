@@ -128,9 +128,10 @@ ActiveRecord::Schema.define(:version => 20140110102739) do
   create_table "entity_groups", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.boolean  "is_public",  :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_public",   :default => false
+    t.string   "description"
     t.string   "code"
   end
 
