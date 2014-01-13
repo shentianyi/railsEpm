@@ -20,6 +20,9 @@
 </div>
 
 <% content_for :javascript_includes do%>
+    <%= stylesheet_link_tag "application", :media => "all"%>
+    <%= javascript_include_tag "application.js"%>
+
     <%= javascript_include_tag "highcharts.js"%>
     <%= javascript_include_tag "highcharts-more.js"%>
     <%= javascript_include_tag "exporting.js"%>
@@ -56,10 +59,10 @@
 
   $(document).ready(function (){
       init_component();
-      DASHBOARD.init();
+      //DASHBOARD.init();
       right_nav_main.init();
       $("#dashboard-content-full").css("display","block");
-      //DASHBOARD.add.init();
+      DASHBOARD.add.init();
       current_dashboard_id = $("#dashboard-content-full").attr("dashboard-id");
       select_dashboard(current_dashboard_id,fullsize);
       current_dashboard_name = $("#dashboard-content-full").attr("dashboard-name");
