@@ -187,9 +187,9 @@ ANALYTICS.high_chart={
                     x2: 0,
                     y2: 1
                 },
-                stops : [[0, "rgba(12,91,208,1)"], [1,  "rgba(12,91,208,0.55)"]]
+                stops : [[0, "rgba(70,174,240,1)"], [1,  "rgba(70,174,240,0.55)"]]
             },
-            lineColor:"rgba(12,91,208,1)",
+            lineColor:"rgba(70,174,240,1)",
             marker: {
                 lineWidth: 0,
                 radius: 0
