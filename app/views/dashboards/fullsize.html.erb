@@ -46,6 +46,11 @@
   function fullsize(){
       ifepm.dashboard_widget.init_fullsize();
       on_full_size();
+//      $("#dash-fullsize").height()
+//      window.setTimeout(function(){
+//          var height=$(document).height();
+//          $("#dashboard-content-full").css("height",height+"px");
+//      },1000)
       //console.log("fullsize");
   }
 
@@ -54,11 +59,10 @@
       DASHBOARD.init();
       right_nav_main.init();
       $("#dashboard-content-full").css("display","block");
-      var height=$(document).height();
-      $("#dashboard-content-full").css("height",height+"px");
       //DASHBOARD.add.init();
       current_dashboard_id = $("#dashboard-content-full").attr("dashboard-id");
       select_dashboard(current_dashboard_id,fullsize);
       current_dashboard_name = $("#dashboard-content-full").attr("dashboard-name");
+
   });
 </script>
