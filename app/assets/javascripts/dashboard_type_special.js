@@ -9,7 +9,7 @@ DASHBOARD.special_type={
         $table
             .append($("<tr />")
                 .append($("<td rowspan='2' style='width:40%;min-width:40%;max-width:40%'/>")
-                    .append($("<span style='padding-left:5px'/>").addClass("out-target secondary-value"))
+                    .append($("<span style='padding-left:5px'/>").addClass("out-target"))
                     .append($("<span />").text(I18n.t('chart.line.out_of_target')))
                 )
                 .append($("<td />")
@@ -83,7 +83,7 @@ DASHBOARD.special_type={
 //        $table
 //            .append($("<tr />")
 //                .append($("<td rowspan='2' style='width:40%;min-width:40%;max-width:40%'/>")
-//                    .append($("<span style='padding-left:5px'/>").addClass("out-target secondary-value"))
+//                    .append($("<span style='padding-left:5px'/>").addClass("out-target"))
 //                    .append($("<span />").text("out of target"))
 //                )
 //                .append($("<td />")
@@ -165,7 +165,7 @@ DASHBOARD.special_grab={
         }
         var data=option.special_data,
             $table=$("#"+option.outer_target+" "+".dashboard-item-extra-info");
-        $table.find(".out-target").text(data.out_of_target).attr("title",data.out_of_target);
+        $table.find(".out-target").text(data.out_of_target).attr("title",data.out_of_target).addClass(data.out_of_target_class);
         $table.find(".total-amount").text(data.total_record).attr("title",data.total_record);
         $table.find(".total-value").text(data.total_value).attr("title",data.total_value);
         $table.find(".average-value").text(data.average_value).attr("title",data.average_value);
@@ -244,6 +244,8 @@ DASHBOARD.add.generate=function(option){
 //        total_value:total_value+option.data[0].unit,
 //        average_value:(total_value/option.data.length).toFixed(1)+option.data[0].unit
     }
+//    out_of_target=0;
+    special_data.out_of_target_class=out_of_target==0?"normal-value":"danger-value";
     special_data.total_value=option.total;
     special_data.average_value=(option.total/option.data.length).toFixed(1)
     option.special_data=special_data;
@@ -255,5 +257,7 @@ DASHBOARD.add.generate=function(option){
         $target.find(".dashboard-item-extra-info td").css("color","#fff");
         $target.find(".dashboard-item-extra-info .primary-value").css("color","#9cdd00");
         $target.find(".dashboard-item-extra-info .secondary-value").css("color","#fe7005");
+        $target.find(".dashboard-item-extra-info .danger-value").css("color","#ff0202");
+        $target.find(".dashboard-item-extra-info .normal-value").css("color","#9CDD00");
     }
 }

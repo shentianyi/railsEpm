@@ -943,13 +943,15 @@ ifepm.dashboard.add_item = function (dashboard_item, options) {
  * */
 ifepm.dashboard.save_grid_pos = function (sequence, options) {
     $.ajax({
-        url: ifepm.config.dashboard_item_save_grid_url.url,
-        data: {sequence: sequence},
-        crossDomain: ifepm.config.dashboard_item_save_grid_url.crossDomain,
-        dataType: ifepm.config.dashboard_item_save_grid_url.dataType,
-        success: options.success,
-        error: options.error,
-        complete: options.complete
+        //url: ifepm.config.dashboard_item_save_grid_url.url,
+      url:'/dashboard_items/save_grid',
+      data: {sequence: sequence},
+      type:'POST',
+      //crossDomain: ifepm.config.dashboard_item_save_grid_url.crossDomain,
+      //dataType: ifepm.config.dashboard_item_save_grid_url.dataType,
+      success: options.success,
+      error: options.error,
+      complete: options.complete
     })
 }
 

@@ -8,7 +8,9 @@
 <div class="dashboard-content-full" id="dashboard-content-full" dashboard-name="<%= @dashboard.name%>" dashboard-id="<%= @dashboard.id%>">
   <div id="full-size-title" class="full-size-title">
     <p class="full-size-label"></p>
+    <!--
     <a id="full-size-btn" class="btn full-size-btn"><%= t 'dashboard_group.base.restore'%></a>
+    -->
   </div>
   <div id="dash-fullsize" class="gridster black">
     <ul class="dashBoard-show" id="dashBoard-show-full">
@@ -43,14 +45,20 @@
 <script type="text/javascript">
   function fullsize(){
       ifepm.dashboard_widget.init_fullsize();
-      //on_full_size();
+      on_full_size();
       //console.log("fullsize");
   }
 
   $(document).ready(function (){
       init_component();
-      current_dashboard_name = $("#dashboard-content-full").attr("dashboard-name");
+      DASHBOARD.init();
+      right_nav_main.init();
+      $("#dashboard-content-full").css("display","block");
+      var height=$(document).height();
+      $("#dashboard-content-full").css("height",height+"px");
+      //DASHBOARD.add.init();
       current_dashboard_id = $("#dashboard-content-full").attr("dashboard-id");
       select_dashboard(current_dashboard_id,fullsize);
+      current_dashboard_name = $("#dashboard-content-full").attr("dashboard-name");
   });
 </script>
