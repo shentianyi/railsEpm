@@ -11,7 +11,7 @@ module Api
       @end_time=params[:end_time]
       @frequency=params[:frequency]
       # @type=params[:type]
-      @type='line'
+      @type='area'
       @average= params[:average].nil? ? 'false' : params[:average]
     end
 
