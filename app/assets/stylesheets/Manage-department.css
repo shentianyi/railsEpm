@@ -10,3 +10,20 @@
 .manage-sort-list[name="department"]{
     padding-left:18px;
 }
+/********************************************************************************************************* 新建
+*******************************************************************************************************************/
+.modal-department{
+    width:600px;
+    height:450px;
+    position:absolute;
+    left:50%;
+    top:15%;
+    margin-left:-300px;
+}
+.modal-department .title{
+    text-align:center;
+    height:25px;
+    line-height:25px;
+    background:#5FA9DA;
+    color:#fff;
+}

@@ -56,7 +56,9 @@ module KpiEntryAnalyseHelper
           current_data[k]=(v/count).round(2)
         end
       end
-      return {:current=>current_data.values,:target_max=>target_max_data.values,:target_min=>target_min_data.values,:unit=>unit_data.values,:total=>total}
+      # puts "total:#{total}"
+      current=current_data.values.map{|value| KpiUnit.parse_entry_value( kpi.unit,value)}
+      return {:current=>current,:target_max=>target_max_data.values,:target_min=>target_min_data.values,:unit=>unit_data.values,:total=>KpiUnit.parse_entry_value( kpi.unit,total)}
     end
     return nil
   end
