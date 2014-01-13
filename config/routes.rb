@@ -102,6 +102,7 @@ IFEpm::Application.routes.draw do
     resources :kpi_entries do
      collection do
        get :analyse ,:defaults=>{:format=>'html'}
+       get :data
      end
     end
  
