@@ -497,6 +497,11 @@ ifepm.dashboard.on_finish_load = function () {
             ifepm.dashboard_widget.add_w(option);
             */
             ifepm.dashboard.on_drag_stop();
+            $("#dash-fullsize").height()
+            window.setTimeout(function(){
+                var height=$(document).height();
+                $("#dashboard-content-full").css("height",height+"px");
+            },100)
         }
         return;
     }
