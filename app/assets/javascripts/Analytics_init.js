@@ -93,7 +93,7 @@ function prepare_form_chart() {
     else {
         chart_body_close_validate = true;
         interval = $("#analy-begin-time").attr("interval")==undefined || $("#analy-begin-time").attr("interval").length==0?$("#chart-kpi :selected").attr("interval"):$("#analy-begin-time").attr("interval");
-        type = "area";
+        type = "line";
     }
     var begin_time = $("#analy-begin-time").attr("hide_value"), end_time = $("#analy-end-time").attr("hide_value");
     if (kpi && begin_time && view) {
