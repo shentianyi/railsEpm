@@ -3,9 +3,11 @@
 format:
  :csv_splitor: ';'
  :update_marker: 'DOUPDATE'
+ :file_max_size: 20971520
  
 path:
  :updata_file_path: 'uploadfiles/data'
  :download_file_path: 'uploadfiles/download'
  :template_file_path: 'uploadfiles/template'
+ :kpi_entry_file_path: 'uploadfiles/kpi_entry'
  :avatar_file_path: 'uploadfiles/avatar'

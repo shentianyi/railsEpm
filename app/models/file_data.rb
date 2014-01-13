@@ -7,10 +7,15 @@ class FileData<CZ::BaseClass
   end
 
   def saveFile
+    begin
     @extention=File.extname(@oriName).downcase
     @pathName=@uuidName+@extention if @pathName.nil?
     File.open(File.join(@path,@pathName),'wb') do |f|
       f.write(@data.read)
+    end
+    return true
+    rescue
+	return false
     end
   end
 end
