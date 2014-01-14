@@ -10,12 +10,15 @@ module Api
       @start_time=params[:start_time]
       @end_time=params[:end_time]
       @frequency=params[:frequency]
-      @type=params[:type]
-      @average= params[:average].nil? ? 'false' : params[:average]
+      # @type=params[:type]
+      @type='area'
+      # @average= params[:average].nil? ? 'true' : params[:average]
+           @average='true'
     end
 
     def data
-      average= params[:average].nil? ? false : params[:average]=="true"
+      # average= params[:average].nil? ? true : params[:average]=="true"
+          average=true
       frequency=params[:frequency].nil? ? nil : params[:frequency].to_i
       data=KpiEntryAnalyseHelper.get_kpi_entry_analysis_data params[:kpi_id],params[:entity_group_id],params[:start_time],params[:end_time],average,frequency,true
       data[:max]=data[:current].values.max
