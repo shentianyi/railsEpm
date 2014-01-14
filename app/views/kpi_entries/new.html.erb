@@ -59,6 +59,18 @@
      </div>
 </div>
 
+<div class="modal-outer false-alert" id="false-alert">
+  <div class="modal-inner false-alert-inner">
+    <i class="icon-remove" id="false-close"></i>
+    <label class="title">错误</label>
+    <p>您在上传中出现了错误，无法完成上传</p>
+    <p><a href="" id="error-report">点击这里</a>下载错误报告，帮助您正确上传</p>
+    <div class="btn false-close-btn" id="false-close-btn">
+      关闭
+    </div>
+  </div>
+</div>
+
 <input type="hidden" value="<%= @f%>" id="kpi-type-hidden" />
 <script>
      $(document).ready(function() {

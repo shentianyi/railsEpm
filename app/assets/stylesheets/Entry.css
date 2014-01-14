@@ -249,5 +249,44 @@
 }
 /******************************************************************** 上传失败跳出来的div
 ***************************************************************************************/
+.modal-outer.false-alert{
+    background:rgba(0,0,0,1);
+}
+.false-alert-inner{
+    width:350px;
+    height:140px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin-top:-70px;
+    margin-left:-175px;
+}
+.false-alert-inner>.title{
+    height:30px;
+    line-height:30px;
+    color:#fff;
+    background:#fa4444;
+    text-align:center;
+    font-size:13px;
+    display:block;
+}
+.false-alert-inner>p:first-of-type{
+    margin-top:15px;
+}
+.false-alert-inner>p{
+    font-size:13px;
+    color:#494949;
+    margin-left:15px;
+}
+.false-alert-inner>p>a{
+    text-decoration:underline;
+    color:#3378f8;
+    cursor:pointer
+}
+.false-alert-inner .false-close-btn{
+    width:80px;
+    float:right;
+    font-size:13px;
+}
 
 

@@ -1,4 +1,13 @@
 //init file upload page
+(function(){
+    $("body")
+        .on("click","#false-close",function(){
+            $("#false-alert").css("left","-999em").css("right","auto");
+        })
+        .on("click","#false-close-btn",function(){
+            $("#false-alert").css("left","-999em").css("right","auto");
+        })
+})()
 function kpi_entry_upload() {
      var vali = true;
      var lock = false;
@@ -37,6 +46,9 @@ function kpi_entry_upload() {
                     prev.find(".template").remove();
 
                } else {
+                   prev.find(".template").remove();
+                   $("#false-alert").css("left","0px").css("right","0px");
+                   $("#error-report").attr("href",data.content);
                     // window.location="/files/download?f="+data.object.url+"&n="+data.object.file;
                }
           }
