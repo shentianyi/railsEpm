@@ -39,12 +39,12 @@ class KpiEntriesController < ApplicationController
   end
 
   def import
-      @msg=Message.new
+      msg=Message.new
       params[:files].each do |file|
        if file.size<$FILE_MAX_SIZE
 	   f=FileData.new(data:file,oriName:file.original_filename,path:$KPI_ENTRY_PATH)
 	  if f.saveFile
-	    if error=KpiEntryImportHelper.import(f.fullPath,f.extention)
+	    if error=KpiEntryImportHelper.import(f.full_path,f.extention)
 	     msg.result=false
 	     msg.content=error
 	    end

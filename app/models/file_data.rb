@@ -1,21 +1,23 @@
 #encoding: utf-8
 require 'base_class'
-class FileData<CZ::BaseClass
-  attr_accessor :type,:oriName,:size,:path,:pathName,:data,:extention,:uuidName
+
+class  FileData<CZ::BaseClass
+  attr_accessor :type,:oriName,:size,:path,:pathName,:data,:extention,:uuidName,:full_path
   def default
     {:uuidName=>SecureRandom.uuid}
   end
 
   def saveFile
     begin
-    @extention=File.extname(@oriName).downcase
-    @pathName=@uuidName+@extention if @pathName.nil?
-    File.open(File.join(@path,@pathName),'wb') do |f|
-      f.write(@data.read)
-    end
-    return true
+      @extention=File.extname(@oriName).downcase
+      @pathName=@uuidName+@extention if @pathName.nil?
+      @full_path=File.join(@path,@pathName)
+      File.open(@full_path,'wb') do |f|
+        f.write(@data.read)
+      end
+      return true
     rescue
-	return false
+    return false
     end
   end
 end

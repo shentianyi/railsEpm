@@ -21,7 +21,7 @@ module DateTimeHelper
   def self.parse_time_to_week_string time
     date=Date.parse(parse_time_to_day_string(time))
     week=date.cweek
-    week= week>9 ?  week : "0#{week}" 
+    week= week>9 ?  week : "0#{week}"
     "#{date.year}-#{week}"
   end
 
@@ -33,7 +33,7 @@ module DateTimeHelper
 
   # parse time to month string
   def self.parse_time_to_month_string time
-    month=Time.at(time.to_i).month>9 ? Time.at(time.to_i).month : "0#{Time.at(time.to_i).month}" 
+    month=Time.at(time.to_i).month>9 ? Time.at(time.to_i).month : "0#{Time.at(time.to_i).month}"
     "#{time.year}-#{month}"
   end
 
@@ -65,8 +65,17 @@ module DateTimeHelper
   def self.parse_year_string_to_date_hour str
     parse_string_to_date_hour(Date.new(str.to_i).to_s)
   end
-  
+
   def self.get_utc_time_by_str str
     Time.parse(str).utc
+  end
+
+  def self.is_date? str
+    begin
+      Date.parse str
+    rescue ArgumentError
+    return true
+    end
+    true
   end
 end
