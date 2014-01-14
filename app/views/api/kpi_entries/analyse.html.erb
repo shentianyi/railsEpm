@@ -30,7 +30,7 @@
           var kpi_name= $("#kpi-name-hidden").val();
           var view = $("#entity-group-id-hidden").val();
           var view_text =$("#entity-group-name-hidden").val();
-          var method = $("#average-hidden").val()
+          var method = $("#average-hidden").val();
           var interval = $("#frequency-hidden").val(), type = $("#type-hidden").val(), chart_body_close_validate;
           var begin_time = $("#start-time-hidden").val(), end_time = $("#end-time-hidden").val();
 
@@ -60,7 +60,7 @@
                     count : ANALYTICS.chartSeries.count + 1,
                     view : view,
                     view_text : view_text,
-                    method : method,
+                    method : 0,
                     chart_body_close_validate : chart_body_close_validate
                };
                ANALYTICS.chartSeries.addCount();
