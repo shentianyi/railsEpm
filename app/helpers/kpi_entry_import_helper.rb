@@ -61,13 +61,17 @@ module KpiEntryImportHelper
     return params
   end
 
-  def self.validate params
+  def self.validate params,vali_cache
     valid_result={result:true,content:[]}
+    user_kpi_item=nil
+    cache_key="#{params[:email]}:#{params[:kpi_id]}:#{params[:name]}"
+    
     if user=User.find_by_email(params[:email])
       if kpi=Kpi.find_by_id_and_name(params[:kpi_id],params[:name])
         unless user_kpi_item=UserKpiItem.find_by_user_id_and_kpi_id(user.id,kpi.id)
           valid_result[:result]=false
           valid_result[:content]<<'kpi not assign to user'
+#	  valid_result[:object]={cache_key:user_kpi_item}
         end
       else
         valid_result[:result]=false
@@ -87,7 +91,11 @@ module KpiEntryImportHelper
       valid_result[:result]=false
       valid_result[:content]<<'invalid value'
     end
-
+     
     return valid_result
+  end
+
+  def self.entry params
+        
   end
 end

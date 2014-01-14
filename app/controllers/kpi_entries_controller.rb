@@ -39,7 +39,7 @@ class KpiEntriesController < ApplicationController
   end
 
   def import
-      msg=Message.new
+      msg=Message.new(result:true)
       params[:files].each do |file|
        if file.size<$FILE_MAX_SIZE
 	   f=FileData.new(data:file,oriName:file.original_filename,path:$KPI_ENTRY_PATH)
