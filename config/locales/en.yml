@@ -468,3 +468,19 @@ en:
     cannot_destroy_contain_kpi: it is base kpi, cannot delete!
     not_exists: not exists
     cannot_repeat: it is exists, cannot repeat
+    upload_kpi: Upload KPI
+    download_template: Download Template
+    upload_data_file: Upload Data File(Max is 20M)
+    upload_finish: Finish
+    kpi_upload_support_format: support Excel(.xls and .xlsx)
+    error_title: ERROR
+    upload_error: Some invalid values in your file.
+    click_download_error: Click the link to download the error file to help reset your values:)
+    close: Close
+    handing_file: handing the file, please wait a minute...
+  vali_msg:
+    invalid_date: invalid date format
+    invalid_value: invalid value
+    kpi_not_assign: KPI not assigned to user
+    invalid_kpi: invalid KPI info
+    invalid_user_email: invalid email

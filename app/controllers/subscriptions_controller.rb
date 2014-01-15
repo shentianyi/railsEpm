@@ -38,7 +38,7 @@ class SubscriptionsController < ApplicationController
       @user.deliver_user_confirmation!
       # flash[:notice] = 'Your account has been created.Please finish the process with the mail confirmation'
       msg.result = true
-      msg.content = flash[:notice] = I18n.t 'auth.msg.sign_success'
+      msg.content = flash[:notice] = I18n.t('auth.msg.sign_success')
 
       #redirect_to root_url#new_user_confirmations_url
     rescue ArgumentError=>invalid

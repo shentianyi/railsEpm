@@ -22,7 +22,7 @@ function kpi_entry_upload() {
                var prev = $("#" + id + '-preview');
                $.each(data.files, function(index, file) {
                     if(file.size < 20000000) {
-                         prev.append($("<p/>").addClass("upload-file-name template").text("正在解析文件..."));
+                         prev.append($("<p/>").addClass("upload-file-name template").text(I18n.t('fix.handing_file')));
                     } else {
                          vali = false;
                          prev.append($("<p/>").addClass("upload-file-name").text(file.name + "&nbsp;&nbsp;" + (file.size / 1000000).toFixed(2) + "MB,超出最大值").append($("<i />").addClass('icon remove').click(function() {

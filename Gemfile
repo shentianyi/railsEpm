@@ -19,9 +19,13 @@ gem 'redis-namespace'
 
 gem 'will_paginate'
 gem 'i18n-js'
-gem 'spreadsheet'
-gem 'roo'
 
+gem 'spreadsheet'
+gem 'roo' 
+gem 'axlsx','>2.0.0'
+# gem 'rubyzip'
+# gem 'nokogiri'
+# gem 'rubyzip', :require => 'zip/zip'
 gem 'aliyun-oss'
 #rake i18n:js:export
 # Gems used only for assets and not required

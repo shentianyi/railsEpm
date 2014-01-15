@@ -2,18 +2,19 @@
 module KpiEntriesHelper
   # create or update kpi entry
   def self.create_update_kpi_entry params,current_ability=nil
-    # begin
     if   kpi= (current_ability.nil? ? Kpi.find_by_id(params[:kpi_id]) : Kpi.accessible_by(current_ability).find_by_id(params[:kpi_id]))
       parsed_entry_at=DateTimeHelper.get_utc_time_by_str(params[:entry_at])
-      if kpi_entry=get_kpi_entry_for_entry(params[:user_kpi_item_id],parsed_entry_at)
-        kpi_entry.update_attributes(:original_value=>params[:value])
-      else
-        user_kpi_item=UserKpiItem.find_by_id(params[:user_kpi_item_id])
-        kpi_entry=KpiEntry.new(:original_value=>params[:value],:user_kpi_item_id=>user_kpi_item.id, :parsed_entry_at=>parsed_entry_at,:entity_id=>user_kpi_item.entity_id,:user_id=>user_kpi_item.user_id,:target_max=>user_kpi_item.target_max,:target_min=>user_kpi_item.target_min)
-      kpi_entry.kpi=kpi
-      kpi_entry.save
+      if user_kpi_item=UserKpiItem.find_by_id(params[:user_kpi_item_id])
+        if kpi_entry=KpiEntry.where( user_kpi_item_id:user_kpi_item.id,parsed_entry_at:parsed_entry_at,entity_id:user_kpi_item.entity_id).first
+          kpi_entry.update_attributes(:original_value=>params[:value])
+        else
+          kpi_entry=KpiEntry.new(original_value:params[:value],user_kpi_item_id:user_kpi_item.id, parsed_entry_at:parsed_entry_at,entity_id:user_kpi_item.entity_id,user_id:user_kpi_item.user_id,
+          target_max:user_kpi_item.target_max,target_min:user_kpi_item.target_min)
+        kpi_entry.kpi=kpi
+        kpi_entry.save
+        end
+      return kpi_entry
       end
-    return kpi_entry
     end
   end
 
@@ -41,14 +42,14 @@ module KpiEntriesHelper
             if calcualted_entry=get_kpi_entry_for_calculate(entry.user_id,entry.entity_id,kpi.id,kpi_parsed_entry_at)
               calcualted_entry.update_attributes(:original_value=>value)
             else
-               if user_kpi_item= kpi.user_kpi_items.where(:entity_id=>entry.entity_id,:user_id=>entry.user_id).first
-              KpiEntry.new(:original_value=>value,:user_kpi_item_id=>user_kpi_item.id,:kpi_id=>kpi.id,:entry_at=>kpi_entry_at,:parsed_entry_at=>kpi_parsed_entry_at,
-              :user_id=>user_kpi_item.user_id,:entity_id=>user_kpi_item.entity_id,:target_max=>user_kpi_item.target_max,:target_min=>user_kpi_item.target_min).save
+              if user_kpi_item= kpi.user_kpi_items.where(:entity_id=>entry.entity_id,:user_id=>entry.user_id).first
+                KpiEntry.new(:original_value=>value,:user_kpi_item_id=>user_kpi_item.id,:kpi_id=>kpi.id,:entry_at=>kpi_entry_at,:parsed_entry_at=>kpi_parsed_entry_at,
+                :user_id=>user_kpi_item.user_id,:entity_id=>user_kpi_item.entity_id,:target_max=>user_kpi_item.target_max,:target_min=>user_kpi_item.target_min).save
               else
-                # puts '------------'
-                # puts kpi.to_json
-                # puts entry.to_json
-                # puts '*************8'
+              # puts '------------'
+              # puts kpi.to_json
+              # puts entry.to_json
+              # puts '*************8'
               end
             end
           end

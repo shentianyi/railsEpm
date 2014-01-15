@@ -39,6 +39,10 @@ GEM
     authlogic (3.3.0)
       activerecord (>= 3.2)
       activesupport (>= 3.2)
+    axlsx (2.0.1)
+      htmlentities (~> 4.3.1)
+      nokogiri (>= 1.4.1)
+      rubyzip (~> 1.0.0)
     builder (3.0.4)
     cancan (1.6.10)
     coffee-rails (3.2.2)
@@ -51,6 +55,7 @@ GEM
     erubis (2.7.0)
     execjs (2.0.2)
     hike (1.2.3)
+    htmlentities (4.3.1)
     i18n (0.6.1)
     i18n-js (2.1.2)
       i18n
@@ -62,12 +67,11 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    mime-types (1.25)
+    mime-types (1.25.1)
     mini_portile (0.5.2)
     mono_logger (1.1.0)
     multi_json (1.8.2)
-    mysql2 (0.3.11)
-    mysql2 (0.3.11-x86-mingw32)
+    mysql2 (0.3.14)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     polyglot (0.3.3)
@@ -108,16 +112,14 @@ GEM
       redis-namespace (~> 1.2)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
-
     roo (1.13.2)
       nokogiri
       rubyzip
       spreadsheet (> 0.6.4)
     ruby-ole (1.2.11.7)
     ruby-prof (0.11.3)
-    rubyzip (1.1.0)
-
-    sass (3.2.12)
+    rubyzip (1.0.0)
+    sass (3.2.13)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -139,7 +141,7 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.38)
-    uglifier (2.3.1)
+    uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     vegas (0.1.11)
@@ -155,6 +157,7 @@ DEPENDENCIES
   acts_as_tenant
   aliyun-oss
   authlogic
+  axlsx (> 2.0.0)
   cancan
   coffee-rails (~> 3.2.1)
   i18n-js
@@ -164,10 +167,8 @@ DEPENDENCIES
   redis
   redis-namespace
   resque
-
   roo
   ruby-prof (~> 0.11.2)
-
   sass-rails (~> 3.2.3)
   spreadsheet
   uglifier (>= 1.0.3)
