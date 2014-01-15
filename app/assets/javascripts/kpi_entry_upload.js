@@ -41,9 +41,11 @@ function kpi_entry_upload() {
                if(data.result) {
                     //remove the previous attachments
 
-                    // remove_all_attachment(prev);
-
-                    prev.find(".template").remove();
+                    // remove_all_attachment(prev)
+                   prev.find(".template").remove();
+                   $("#upload-kpi-close").click();
+                   location.reload();
+                   MessageBox("上传成功","top","success");
 
                } else {
                    prev.find(".template").remove();
