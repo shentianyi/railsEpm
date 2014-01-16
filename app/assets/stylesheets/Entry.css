@@ -240,12 +240,21 @@
 .upload-kpi .upload-parsing{
     display:inline-block;
     font-size:13px;
-    width:130px;
+    width:250px;
     background:#E6F4F9;
     color:#4D8796;
+
     padding:6px 5px;
     margin-left:20px;
     margin-top:15px;
+}
+.upload-kpi .template-info{
+    color:#7f7f7f;
+    display:inline-block;
+    font-size:12px;
+    position:absolute;
+    top:37px;
+    left:170px;
 }
 /******************************************************************** 上传失败跳出来的div
 ***************************************************************************************/
