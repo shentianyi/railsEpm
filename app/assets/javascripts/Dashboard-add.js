@@ -87,6 +87,7 @@ DASHBOARD.add.close=function(){
     $("#db-add-type li").eq(0).addClass("active");
     $("#db-add-kpi-list").empty();
     $("#dashboard-group-name").val('').trigger('chosen:updated');
+    $("li","#db-chart-interval-alternate").removeClass("active");
     $("#db-chart-body").css("display","none");
     $(".index-condition-group input:not([type='radio'])").val("");
     $(".index-condition-group select").val('').trigger('chosen:updated');
