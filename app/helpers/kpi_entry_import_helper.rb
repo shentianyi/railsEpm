@@ -1,4 +1,5 @@
 #encoding: utf-8
+
 module KpiEntryImportHelper
   def self.import file,extention
     case extention
@@ -23,26 +24,63 @@ module KpiEntryImportHelper
     sheet=book.worksheet 0
     valid=true
     sheet.rows[1..-1].each_with_index do |row,i|
-      	params=excel_xls_param row
+      params=excel_xls_param row
       params.values.each{|v| error_sheet.row(i+1).push v}
-      valid_msg=validate params
-      unless valid_msg[:result]
-       valid=false
-       error_sheet.row(i+1).push valid_msg[:content].length
-       error_sheet.row(i+1).push valid_msg[:content].join('#')
-       error_sheet.row(i+1).set_format(error_header_length-1,error_format)
+      validator=KpiEntryValidator.new(params)
+      validator.validate
+      unless validator.valid
+        valid=false
+        error_sheet.row(i+1).push validator.content.length
+        error_sheet.row(i+1).push validator.content.join(' # ')
+      error_sheet.row(i+1).set_format(error_header_length-1,error_format)
       end
     end
-    return write_excel(error_book,SecureRandom.uuid+extention) unless valid
+    return write_excel(error_book,SecureRandom.uuid+extention,extention) unless valid
   end
 
   def self.import_xlsx file,extention
+    book=Roo::Excelx.new file
+
+    book.default_sheet=book.sheets.first
+
+    # error file
+    error_book=Axlsx::Package.new
+    error_sheet=error_book.workbook
+    error_header_length=error_header.length
+    error_format=error_sheet.styles.add_style excelx_error_format
+    valid=true
+    error_sheet.add_worksheet do |sheet|
+      sheet.add_row error_header
+      2.upto(book.last_row) do |line|
+        params={}
+        entry_param_keys.each_with_index do |key,i|
+          params[key]=book.cell(line,i+1)
+        end
+        row_values=params.values
+        validator=KpiEntryValidator.new(params)
+        validator.validate
+        unless validator.valid
+          valid=false
+          row_values<<validator.content.length
+          row_values<< validator.content.join(' # ')
+        end
+        sheet.add_row row_values
+        puts "line:#{line}"
+        sheet.rows[line-1].cells[error_header_length-1].style=error_format unless validator.valid
+      end
+    end
+    return write_excel(error_book,SecureRandom.uuid+extention,extention) unless valid
   end
 
-  def self.write_excel book,file
-      path="tmp/#{file}"
+  def self.write_excel book,file,extention=nil
+    path="tmp/#{file}"
+    case extention
+    when '.xls'
       book.write path
-      AliyunOssService.store_kpi_entry_file(file,path)
+    when '.xlsx'
+      book.serialize path
+    end
+    AliyunOssService.store_kpi_entry_file(file,path)
   end
 
   def self.error_header
@@ -53,49 +91,19 @@ module KpiEntryImportHelper
     Spreadsheet::Format.new :color=>:red,:weight=>:bold
   end
 
+  def self.excelx_error_format
+    {:style=>:bold,:color=>Axlsx::Color.new(:rgb => "FF0000"),:b=>true}
+  end
+
   def self.excel_xls_param row
     params={}
-    [:email,:kpi_id,:name,:date,:value].each_with_index do |key,i|
+    entry_param_keys.each_with_index do |key,i|
       params[key]=row[i]
     end
     return params
   end
 
-  def self.validate params,vali_cache
-    valid_result={result:true,content:[]}
-    user_kpi_item=nil
-    cache_key="#{params[:email]}:#{params[:kpi_id]}:#{params[:name]}"
-    
-    if user=User.find_by_email(params[:email])
-      if kpi=Kpi.find_by_id_and_name(params[:kpi_id],params[:name])
-        unless user_kpi_item=UserKpiItem.find_by_user_id_and_kpi_id(user.id,kpi.id)
-          valid_result[:result]=false
-          valid_result[:content]<<'kpi not assign to user'
-#	  valid_result[:object]={cache_key:user_kpi_item}
-        end
-      else
-        valid_result[:result]=false
-        valid_result[:content]<<'invalid kpi'
-      end
-    else
-      valid_result[:result]=false
-      valid_result[:content]<<'invalid user email'
-    end
-    
-    unless params[:date].to_s.is_date?
-      valid_result[:result]=false
-      valid_result[:content]<<'invalid date'
-    end
-
-    unless params[:value].to_s.is_number?
-      valid_result[:result]=false
-      valid_result[:content]<<'invalid value'
-    end
-     
-    return valid_result
-  end
-
-  def self.entry params
-        
+  def self.entry_param_keys
+    [:email,:kpi_id,:kpi_name,:date,:value]
   end
 end

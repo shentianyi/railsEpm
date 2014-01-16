@@ -5,6 +5,11 @@ IFEpm::Application.routes.draw do
 
   resources :contacts
   resources :avatars
+  resources :files do 
+    member do
+      get :template
+    end
+  end
 
   root :to => 'user_sessions#new'
   # get "welcome/navigate"

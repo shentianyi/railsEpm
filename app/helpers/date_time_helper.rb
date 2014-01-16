@@ -69,13 +69,4 @@ module DateTimeHelper
   def self.get_utc_time_by_str str
     Time.parse(str).utc
   end
-
-  def self.is_date? str
-    begin
-      Date.parse str
-    rescue ArgumentError
-    return true
-    end
-    true
-  end
 end
