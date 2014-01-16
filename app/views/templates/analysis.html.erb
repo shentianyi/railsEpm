@@ -5,17 +5,17 @@
     </div>
   </div>
 </div>
-<input type="hidden" value="<%= @kpi_id%>" id="kpi-id-hidden"/>
-<input type="hidden" value="<%= @kpi_name%>" id="kpi-name-hidden"/>
-<input type="hidden" value="<%= @entity_group_id%>" id="entity-group-id-hidden"/>
-<input type="hidden" value="<%= @entity_group_name%>" id="entity-group-name-hidden"/>
-<input type="hidden" value="<%= @kpi_name%>" id="kpi-name-hidden"/>
-<input type="hidden" value="<%= @start_time%>" id="start-time-hidden"/>
-<input type="hidden" value="<%= @end_time%>" id="end-time-hidden"/>
-<input type="hidden" value="<%= @frequency%>" id="frequency-hidden" />
-<input type="hidden" value="<%= @type%>" id="type-hidden" />
-<input type="hidden" value="<%= @average%>" id="average-hidden" />
-<input type="hidden" value="<%= @data%>" id="data-hidden" />
+<input type="hidden" value="<%= @datas.kpi_id%>" id="kpi-id-hidden"/>
+<input type="hidden" value="<%= @datas.kpi_name%>" id="kpi-name-hidden"/>
+<input type="hidden" value="<%= @datas.entity_group_id%>" id="entity-group-id-hidden"/>
+<input type="hidden" value="<%= @datas.entity_group_name%>" id="entity-group-name-hidden"/>
+<input type="hidden" value="<%= @datas.kpi_name%>" id="kpi-name-hidden"/>
+<input type="hidden" value="<%= @datas.start_time%>" id="start-time-hidden"/>
+<input type="hidden" value="<%= @datas.end_time%>" id="end-time-hidden"/>
+<input type="hidden" value="<%= @datas.frequency%>" id="frequency-hidden" />
+<input type="hidden" value="<%= @datas.type%>" id="type-hidden" />
+<input type="hidden" value="<%= @datas.average%>" id="average-hidden" />
+<input type="hidden" value="<%= @datas.data%>" id="data-hidden" />
 <% content_for :javascript_includes do%>
     <%= javascript_include_tag "highstock.js"%>
     <%= javascript_include_tag "high_chart_template_analytic.js"%>
