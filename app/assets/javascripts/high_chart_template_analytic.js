@@ -287,6 +287,50 @@ ANALYTICS.form_chart=function(option){
         }
     });
 
+    ANALYTICS.form_chart_without_ajax=function(option,data){
+        ANALYTICS.loading_data=true;
+        var begin_time_utc=standardParse(option.begin_time).date,
+            end_time_utc=standardParse(option.end_time).date,
+            bar_fix_from,
+            bar_fix_to,
+            length=24,
+            data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
+        bar_fix_from=Date.parse(begin_time_utc);
+        bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,length) <= end_time_utc ?
+            Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,length)) : Date.parse(end_time_utc) ;
+
+
+                var data_length=data.current.length;
+                var data_array=[];
+                for(var i=0;i<data_length;i++){
+                    data_array[i]={};
+                    data_array[i].y=data.current[i];
+                    data_array[i].high=data.target_max[i];
+                    data_array[i].low=data.target_min[i];
+                    data_array[i].unit=data.unit[i];
+                    data_array[i].id=option.id
+                }
+                option.data=data_array;
+                var c={},p=option.data;
+                ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
+                if(option.chart_body_close_validate){
+                    ANALYTICS.render_to(option);
+                    new Highcharts.StockChart(ANALYTICS.high_chart);
+                }
+                ANALYTICS.add_series(option);
+                ANALYTICS.proper_type_for_chart(option);
+                if(data_too_long){
+                    option.begin_time_utc=begin_time_utc;
+                    option.end_time_utc=end_time_utc;
+                    option.bar_fix_from=bar_fix_from;
+                    option.bar_fix_to=bar_fix_to;
+                    option.add_length=100;
+                    ANALYTICS.add_data(option);
+                }
+                ANALYTICS.loading_data=false;
+
+    }
+
 
 //    option.data = [
 //        {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
