@@ -304,6 +304,36 @@ ANALYTICS.form_chart=function(option){
             MessageBox("sorry , something wrong" , "top", "warning") ;
         }
     });
+//    option.data = [
+//        {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
+//        {y: 3,low:12,high:20,  target: 10, unit: "$"},
+//        {y: 13,low:22,high:20,  target: 10, unit: "$"},
+//        {y: 23,low:4,high:20,  target: 10, unit: "$"},
+//        {y: 33,low:30,high:20,  target: 10, unit: "$"},
+//        {y: 13,low:19,high:20,  target: 10, unit: "$"}
+//    ];
+//    var c={},p=option.data;
+//    ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
+//    if(option.chart_body_close_validate){
+//        ANALYTICS.render_to(option);
+//        new Highcharts.StockChart(ANALYTICS.high_chart);
+//    }
+//    ANALYTICS.add_series(option);
+//    ANALYTICS.proper_type_for_chart(option);
+//    if(data_too_long){
+//        option.begin_time_utc=begin_time_utc;
+//        option.end_time_utc=end_time_utc;
+//        option.bar_fix_from=bar_fix_from;
+//        option.bar_fix_to=bar_fix_to;
+//        option.add_length=length;
+//        window.setTimeout(function(){
+//            ANALYTICS.add_data(option)
+//        },1000)
+//    }
+//    ANALYTICS.loading_data=false;
+
+}
+
 
     ANALYTICS.form_chart_without_ajax=function(option,data){
         ANALYTICS.loading_data=true;
@@ -350,35 +380,6 @@ ANALYTICS.form_chart=function(option){
     }
 
 
-//    option.data = [
-//        {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
-//        {y: 3,low:12,high:20,  target: 10, unit: "$"},
-//        {y: 13,low:22,high:20,  target: 10, unit: "$"},
-//        {y: 23,low:4,high:20,  target: 10, unit: "$"},
-//        {y: 33,low:30,high:20,  target: 10, unit: "$"},
-//        {y: 13,low:19,high:20,  target: 10, unit: "$"}
-//    ];
-//    var c={},p=option.data;
-//    ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
-//    if(option.chart_body_close_validate){
-//        ANALYTICS.render_to(option);
-//        new Highcharts.StockChart(ANALYTICS.high_chart);
-//    }
-//    ANALYTICS.add_series(option);
-//    ANALYTICS.proper_type_for_chart(option);
-//    if(data_too_long){
-//        option.begin_time_utc=begin_time_utc;
-//        option.end_time_utc=end_time_utc;
-//        option.bar_fix_from=bar_fix_from;
-//        option.bar_fix_to=bar_fix_to;
-//        option.add_length=length;
-//        window.setTimeout(function(){
-//            ANALYTICS.add_data(option)
-//        },1000)
-//    }
-//    ANALYTICS.loading_data=false;
-
-}
 ANALYTICS.add_data=function(option){
     var begin_time_utc = ANALYTICS.add_observe[option.interval](option.begin_time_utc,option.add_length),
         length=option.add_length;

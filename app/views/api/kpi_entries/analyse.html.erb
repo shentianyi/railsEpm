@@ -14,7 +14,6 @@
 <input type="hidden" value="<%= @end_time%>" id="end-time-hidden"/>
 <input type="hidden" value="<%= @frequency%>" id="frequency-hidden" />
 <input type="hidden" value="<%= @type%>" id="type-hidden" />
-<input type="hidden" value="<%= @average%>" id="average-hidden" />
 <input type="hidden" value="<%= @data%>" id="data-hidden" />
 <% content_for :javascript_includes do%>
 <%= javascript_include_tag "highstock.js"%>
@@ -23,16 +22,15 @@
 <%end%>
 
 <script>
-var data=jQuery.parseJSON($("#data-hidden").val());
      $(document).ready(function() {
           prepare_form_cchart();
-     }); 
+     });
      function prepare_form_cchart() {
+          var data = jQuery.parseJSON($("#data-hidden").val());
           var kpi = $("#kpi-id-hidden").val();
-          var kpi_name= $("#kpi-name-hidden").val();
+          var kpi_name = $("#kpi-name-hidden").val();
           var view = $("#entity-group-id-hidden").val();
-          var view_text =$("#entity-group-name-hidden").val();
-          var method = $("#average-hidden").val();
+          var view_text = $("#entity-group-name-hidden").val();
           var interval = $("#frequency-hidden").val(), type = $("#type-hidden").val(), chart_body_close_validate;
           var begin_time = $("#start-time-hidden").val(), end_time = $("#end-time-hidden").val();
 
@@ -49,9 +47,8 @@ var data=jQuery.parseJSON($("#data-hidden").val());
                } else {
                     end_time = begin_time
                }
-
                var option = {
-                    show_loading:false,
+                    show_loading : false,
                     kpi : kpi_name,
                     kpi_id : kpi,
                     target : "chart-container",
@@ -62,7 +59,6 @@ var data=jQuery.parseJSON($("#data-hidden").val());
                     count : ANALYTICS.chartSeries.count + 1,
                     view : view,
                     view_text : view_text,
-                    method : 0,
                     chart_body_close_validate : chart_body_close_validate
                };
                ANALYTICS.chartSeries.addCount();
@@ -72,7 +68,7 @@ var data=jQuery.parseJSON($("#data-hidden").val());
                if(option.chart_body_close_validate) {
                     show_chart_body(option);
                }
-               ANALYTICS.form_chart(option);
+               ANALYTICS.form_chart_without_ajax(option, data);
           }
      }
 </script>
