@@ -15,6 +15,7 @@
 <input type="hidden" value="<%= @frequency%>" id="frequency-hidden" />
 <input type="hidden" value="<%= @type%>" id="type-hidden" />
 <input type="hidden" value="<%= @average%>" id="average-hidden" />
+<input type="hidden" value="<%= @data%>" id="data-hidden" />
 <% content_for :javascript_includes do%>
 <%= javascript_include_tag "highstock.js"%>
 <%= javascript_include_tag "high_chart_template_analytic.js"%>
@@ -22,6 +23,7 @@
 <%end%>
 
 <script>
+var data=jQuery.parseJSON($("#data-hidden").val());
      $(document).ready(function() {
           prepare_form_cchart();
      }); 
