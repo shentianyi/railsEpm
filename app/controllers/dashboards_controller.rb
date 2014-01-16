@@ -1,6 +1,6 @@
 #encoding: utf-8
 class DashboardsController < ApplicationController
-  layout "pure", :only => :fullsize
+  layout "fullsize", :only => :fullsize
 
   def new
     #render

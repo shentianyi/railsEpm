@@ -98,7 +98,7 @@ var high_chart = {
         url : url,
         filename : 'MyChart',
         width : 700, // chart width
-        exportTypes : ['chart', 'png', 'jpeg', 'pdf', 'svg', 'doc', 'docx', 'pptx', 'xls', 'xlsx'] // set download file type
+        exportTypes : ['chart', 'png', 'jpeg', 'pdf',  'docx', 'pptx',  'xlsx'] // set download file type
                },
     plotOptions: {
         series: {

@@ -178,6 +178,22 @@ ANALYTICS.high_chart={
                 radius: 4,
                 symbol: "circle"
             }
+        },
+        area:{
+            fillColor : {
+                linearGradient : {
+                    x1: 0,
+                    y1: 0,
+                    x2: 0,
+                    y2: 1
+                },
+                stops : [[0, "rgba(70,174,240,1)"], [1,  "rgba(70,174,240,0.55)"]]
+            },
+            lineColor:"rgba(70,174,240,1)",
+            marker: {
+                lineWidth: 0,
+                radius: 0
+            }
         }
     },
     xAxis: {
@@ -242,6 +258,7 @@ ANALYTICS.form_chart=function(option){
                            Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,length)) : Date.parse(end_time_utc) ;
 
     var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
+    if(option.show_loading==null || option.show_loading)
     show_loading(top,0,0,0);
     $.post('/kpi_entries/analyse',{
         kpi : option.kpi_id,
@@ -251,7 +268,8 @@ ANALYTICS.form_chart=function(option){
         endTime : new Date(bar_fix_to).toISOString(),
         interval:option.interval
     },function(msg){
-        remove_loading()
+          if(option.show_loading==null || option.show_loading)
+         remove_loading()
         if(msg.result){
             var data_length=msg.object.current.length;
             var data_array=[];
