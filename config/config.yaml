@@ -11,3 +11,4 @@ path:
  :template_file_path: 'uploadfiles/template'
  :kpi_entry_file_path: 'uploadfiles/kpi_entry'
  :avatar_file_path: 'uploadfiles/avatar'
+ :email_file_path: 'uploadfiles/emails'

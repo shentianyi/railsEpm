@@ -1,0 +1,27 @@
+<div>
+  <table style="border-collapse:collapse;border:1px solid rgba(0,0,0,0.8);width:100%">
+    <caption style="margin-bottom:10px;font-size:21px;color:#63A69F">
+      -- 课程表 --
+    </caption>
+    <thead>
+      <tr  style="border-bottom:1px solid rgba(0,0,0,0.8)">
+        <th style="padding:15px;">序号</th>
+        <th style="padding:15px;">课程所在机构</th>
+        <th style="padding:15px;">课程名称</th>
+        <th style="padding:15px;">课程时间</th>
+      </tr>
+    </thead>
+
+    <tbody style="color:rgba(0,0,0,0.7);font-size:14px">
+      <%schedules.each_with_index do |schedule,i|%>
+      <tr>
+        <td style="padding:15px;text-align:center"><%= i+1%></td>
+        <td style="padding:15px;"><%= schedule.institution_name%></td>
+        <td style="padding:15px;"><%= schedule.course_name%></td>
+        <td style="padding:15px;font-weight:bold;color:#4092CC"><%= schedule.local_time_string%></td>
+      </tr>
+      <%end%>
+    </tbody>
+
+  </table>
+</div>
