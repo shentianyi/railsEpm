@@ -483,7 +483,7 @@ zh:
     kpi_upload_support_format: 支持格式 Excel(.xls and .xlsx)
     error_title: 错误
     upload_error: 您在上传中出现了错误，无法完成上传
-    click_download_error: 点击这里下载错误文件，帮助您正确上传:)
+    click_download_error: 点击这里下载错误的文件，帮助您正确上传:)
     close: 关闭
     handing_file: 正在处理文件，请等待... 
   vali_msg:

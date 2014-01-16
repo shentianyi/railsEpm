@@ -108,11 +108,13 @@ IFEpm::Application.routes.draw do
   resources :entity_group_items
 
   namespace :api,defaults:{format:'json'} do
-    controller :kpi_entries do
-      match 'kpi_entries/entry'=>:entry
-      match 'kpi_entries/analyse'=>:analyse
-       match 'kpi_entries/test_data'=>:test_data
+    resources :kpi_entries do
+     collection do
+       get :analyse ,:defaults=>{:format=>'html'}
+       get :data
+     end
     end
+ 
     resources :dashboards do
       collection do
         get '/fullsize/:id' => :fullsize
@@ -124,9 +126,6 @@ IFEpm::Application.routes.draw do
         get 'dashboard_items/items_by_dashboard_id'=>:items_by_dashboard_id
         get 'dashboard_items/update_sequence' => :update_sequence
       end
-      #match 'dashboard_items/get_data'=>:get_data
-      #match 'dashboard_items/items_by_dashboard_id'=>:items_by_dashboard_id
-      #match 'dashboard_items/update_sequence' => :update_sequence
     end
     resources :user_sessions
 

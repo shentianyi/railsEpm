@@ -178,6 +178,22 @@ ANALYTICS.high_chart={
                 radius: 4,
                 symbol: "circle"
             }
+        },
+        area:{
+            fillColor : {
+                linearGradient : {
+                    x1: 0,
+                    y1: 0,
+                    x2: 0,
+                    y2: 1
+                },
+                stops : [[0, "rgba(70,174,240,1)"], [1,  "rgba(70,174,240,0.55)"]]
+            },
+            lineColor:"rgba(70,174,240,1)",
+            marker: {
+                lineWidth: 0,
+                radius: 0
+            }
         }
     },
     xAxis: {
@@ -242,6 +258,7 @@ ANALYTICS.form_chart=function(option){
                            Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,length)) : Date.parse(end_time_utc) ;
 
     var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
+    if(option.show_loading==null || option.show_loading)
     show_loading(top,0,0,0);
     $.post('/kpi_entries/analyse',{
         kpi : option.kpi_id,
@@ -251,7 +268,8 @@ ANALYTICS.form_chart=function(option){
         endTime : new Date(bar_fix_to).toISOString(),
         interval:option.interval
     },function(msg){
-        remove_loading()
+          if(option.show_loading==null || option.show_loading)
+         remove_loading()
         if(msg.result){
             var data_length=msg.object.current.length;
             var data_array=[];
@@ -286,6 +304,50 @@ ANALYTICS.form_chart=function(option){
             MessageBox("sorry , something wrong" , "top", "warning") ;
         }
     });
+
+    ANALYTICS.form_chart_without_ajax=function(option,data){
+        ANALYTICS.loading_data=true;
+        var begin_time_utc=standardParse(option.begin_time).date,
+            end_time_utc=standardParse(option.end_time).date,
+            bar_fix_from,
+            bar_fix_to,
+            length=24,
+            data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
+        bar_fix_from=Date.parse(begin_time_utc);
+        bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,length) <= end_time_utc ?
+            Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,length)) : Date.parse(end_time_utc) ;
+
+
+                var data_length=data.current.length;
+                var data_array=[];
+                for(var i=0;i<data_length;i++){
+                    data_array[i]={};
+                    data_array[i].y=data.current[i];
+                    data_array[i].high=data.target_max[i];
+                    data_array[i].low=data.target_min[i];
+                    data_array[i].unit=data.unit[i];
+                    data_array[i].id=option.id
+                }
+                option.data=data_array;
+                var c={},p=option.data;
+                ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
+                if(option.chart_body_close_validate){
+                    ANALYTICS.render_to(option);
+                    new Highcharts.StockChart(ANALYTICS.high_chart);
+                }
+                ANALYTICS.add_series(option);
+                ANALYTICS.proper_type_for_chart(option);
+                if(data_too_long){
+                    option.begin_time_utc=begin_time_utc;
+                    option.end_time_utc=end_time_utc;
+                    option.bar_fix_from=bar_fix_from;
+                    option.bar_fix_to=bar_fix_to;
+                    option.add_length=100;
+                    ANALYTICS.add_data(option);
+                }
+                ANALYTICS.loading_data=false;
+
+    }
 
 
 //    option.data = [
