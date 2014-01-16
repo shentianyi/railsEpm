@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140112062513) do
+ActiveRecord::Schema.define(:version => 20140116064750) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -88,6 +88,17 @@ ActiveRecord::Schema.define(:version => 20140112062513) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "emails", :force => true do |t|
+    t.string   "sender"
+    t.string   "reveivers"
+    t.string   "file_path"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "emails", ["user_id"], :name => "index_emails_on_user_id"
+
   create_table "entities", :force => true do |t|
     t.string   "name"
     t.integer  "status"
@@ -128,9 +139,10 @@ ActiveRecord::Schema.define(:version => 20140112062513) do
   create_table "entity_groups", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.boolean  "is_public",  :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_public",   :default => false
+    t.string   "description"
     t.string   "code"
   end
 
@@ -186,7 +198,7 @@ ActiveRecord::Schema.define(:version => 20140112062513) do
     t.integer  "kpi_category_id"
     t.integer  "unit"
     t.integer  "frequency"
-    t.float    "target_max",      :default => 0.0
+    t.float    "target_max"
     t.boolean  "is_calculated",   :default => false
     t.integer  "direction"
     t.integer  "period"

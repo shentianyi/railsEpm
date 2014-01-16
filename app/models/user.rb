@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :kpis,:through=>:user_kpi_items
   has_many :user_kpi_items,:dependent=>:destroy
   has_many :kpi_entries, :through=>:user_kpi_items
+  has_many :emails, :dependent=>:destroy
 
   attr_accessible :email, :password, :password_confirmation,:status,:perishable_token,:confirmed,:first_name,:last_name,:is_tenant
   attr_accessible :tenant_id,:role_id,:entity_id,:is_sys

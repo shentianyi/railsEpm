@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  sender: MyString
+  reveivers: MyString
+  file_path: MyString
+
+two:
+  sender: MyString
+  reveivers: MyString
+  file_path: MyString
