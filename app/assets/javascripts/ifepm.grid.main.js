@@ -33,30 +33,47 @@
             + this.options.widget_base_dimensions[1];
 
         var serializedGrid = this.serialize();
-        this.$widgets.each($.proxy(function(i, widget) {
-            var $widget = $(widget);
-            var data = serializedGrid[i];
-            this.resize_widget($widget, data.size_x, data.size_y);
-        }, this));
-
-        this.generate_grid_and_stylesheet();
-        this.get_widgets_from_DOM();
-        this.set_dom_grid_height();
-
         if(arguments[1]=="dashboard"){
-            var $this=this;
-            window.setTimeout(function(){
-                for(var i in $this.$widgets){
-                    var id = $this.$widgets.eq(i).attr("id");
+            this.$widgets.each($.proxy(function(i, widget) {
+                var $widget = $(widget);
+                var data = serializedGrid[i];
+                this.resize_widget($widget, data.size_x, data.size_y);
+                window.setTimeout(function(){
+                    var id = $widget.attr("id");
                     var container = "#container_"+id;
                     var chart = $(container).highcharts();
                     if(chart){
                         chart.setSize($(container).width(),$(container).height(),false);
                     }
-                }
-            },200)
-
+                },100)
+            }, this));
         }
+        else{
+            this.$widgets.each($.proxy(function(i, widget) {
+                var $widget = $(widget);
+                var data = serializedGrid[i];
+                this.resize_widget($widget, data.size_x, data.size_y);
+            }, this));
+        }
+
+        this.generate_grid_and_stylesheet();
+        this.get_widgets_from_DOM();
+        this.set_dom_grid_height();
+
+//        if(arguments[1]=="dashboard"){
+//            var $this=this;
+//            window.setTimeout(function(){
+//                for(var i in $this.$widgets){
+//                    var id = $this.$widgets.eq(i).attr("id");
+//                    var container = "#container_"+id;
+//                    var chart = $(container).highcharts();
+//                    if(chart){
+//                        chart.setSize($(container).width(),$(container).height(),false);
+//                    }
+//                }
+//            },200)
+//
+//        }
         return false;
     };
 })(jQuery);
