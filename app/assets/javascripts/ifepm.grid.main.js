@@ -182,6 +182,8 @@ ifepm.dashboard_widget.resize_window = function(option){
         option.widget_base_dimensions = [ifepm.dashboard_widget.config.normal.width,ifepm.dashboard_widget.config.normal.height];
         current_gridster.resize_widget_dimensions(option);
     }
+
+    return current_gridster;
 }
 
  ifepm.dashboard_widget.full_size = function(option){

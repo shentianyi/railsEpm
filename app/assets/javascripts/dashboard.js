@@ -400,13 +400,13 @@ function init_grid(){
     var option = {};
     option.normal = {};
     option.normal.width = $("div#dash-normalsize").width();
-    option.normal.height = $(document).height()-$("header").height()-$("#left-content-title").height()-1;
+    option.normal.height = $(window).height()-$("header").height()-$("#left-content-title").height()-1;
     option.normal.max_col = 2;
     option.normal.max_row = 2;
 
     option.full = {};
     option.full.width = $("div#dashboard-content-full").width();
-    option.full.height = $("div#dashboard-content-full").height() - 20;
+    option.full.height = $(window).height() -60;
     option.full.max_col = 2;
     option.full.max_row = 3;
 
@@ -422,7 +422,7 @@ function init_component(){
         select_dashboard(id);
     }
 
-    //$(window).resize(on_resize_window);
+    $(window).resize(on_resize_window);
 }
 
 /*
@@ -446,15 +446,22 @@ function on_resize_window(){
     var option = {};
     option.normal = {};
     option.normal.width = $("div#dash-normalsize").width();
-    option.normal.height = $(document).height()-$("header").height()-$("#left-content-title").height()-1;
+    option.normal.height = $(window).height()-$("header").height()-$("#left-content-title").height()-1;
     option.normal.max_col = 2;
     option.normal.max_row = 2;
 
     option.full = {};
     option.full.width = $("div#dashboard-content-full").width();
-    option.full.height = $("div#dashboard-content-full").height() - 20;
+    option.full.height = $(window).height() -60;
     option.full.max_col = 2;
     option.full.max_row = 3;
 
-    ifepm.dashboard_widget.resize_window(option);
+    var grid = ifepm.dashboard_widget.resize_window(option);
+
+    for(var i in grid.$widgets){
+        var id = grid.$widgets[i].getAttribute("id");
+        var container = "#container_"+id;
+        var chart = $(container).highcharts();
+        chart.setSize($(container).width(),$(container).height(),false);
+    }
 }
