@@ -66,7 +66,7 @@ class EmailsController < ApplicationController
       f.saveFile
       #send email here
       #save email in database
-      @email = Email.new(:user_id=>current_user.id,:sender=>current_user.email,:receivers=>params[:receivers],:file_path=>f.pathName,:content=>params[:content])
+      @email = Email.new(:title=>params[:title],:user_id=>current_user.id,:sender=>current_user.email,:receivers=>params[:receivers],:file_path=>f.pathName,:content=>params[:content])
       if msg.result = @email.save
       else
         msg.content = @email.errors.full_messages
