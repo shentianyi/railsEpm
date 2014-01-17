@@ -13,7 +13,7 @@ class  FileData<CZ::BaseClass
       @pathName=@uuidName+@extention if @pathName.nil?
       @full_path=File.join(@path,@pathName)
       File.open(@full_path,'wb') do |f|
-        f.write(@data.read)
+        f.write(@data)
       end
       return true
     rescue

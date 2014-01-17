@@ -58,7 +58,6 @@ class EmailsController < ApplicationController
       datas = {:data=>data,:kpi_id=>@kpi_id,:kpi_name=>@kpi_name,:entity_group=>@entity_group,:entity_group_name=>@entity_group_name,
         :start_time=>@start_time,:end_time=>@end_time,:frequency=>@frequency,:type =>@type, :average=>@average}
 
-
       attach_pdf = PdfService.generate_analysis_pdf(datas)
 
       f = FileData.new(:data=>attach_pdf,:oriName=>"analysis.pdf",:path=>$EMAILATTACHPATH)

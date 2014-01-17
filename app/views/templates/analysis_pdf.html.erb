@@ -1,7 +1,9 @@
 <div>
   <div class="chart-body" id="chart-body" style="display:none">
     <div class="relative" id="chart-main-middle">
-      <div class="chart-container " id="chart-container"></div>
+      <div class="chart-container " id="chart-container" onload="prepare_form_cchart()">
+
+      </div>
     </div>
   </div>
 </div>
@@ -16,63 +18,5 @@
 <input type="hidden" value="<%= datas[:type]%>" id="type-hidden" />
 <input type="hidden" value="<%= datas[:average]%>" id="average-hidden" />
 <input type="hidden" value="<%= datas[:data]%>" id="data-hidden" />
-<% content_for :javascript_includes do%>
-    <%= javascript_include_tag "highstock.js"%>
-    <%= javascript_include_tag "high_chart_template_analytic.js"%>
-    <%= javascript_include_tag "Analytics_init.js"%>
-<%end%>
 
-<script>
-    var data=jQuery.parseJSON($("#data-hidden").val());
-    $(document).ready(function() {
-        prepare_form_cchart();
-    });
-    function prepare_form_cchart() {
-        var kpi = $("#kpi-id-hidden").val();
-        var kpi_name= $("#kpi-name-hidden").val();
-        var view = $("#entity-group-id-hidden").val();
-        var view_text =$("#entity-group-name-hidden").val();
-        var method = $("#average-hidden").val();
-        var interval = $("#frequency-hidden").val(), type = $("#type-hidden").val(), chart_body_close_validate;
-        var begin_time = $("#start-time-hidden").val(), end_time = $("#end-time-hidden").val();
 
-        if($("#chart-body").css("display") == "block") {
-            chart_body_close_validate = false;
-        } else {
-            chart_body_close_validate = true;
-        }
-        if(kpi && begin_time && view) {
-            if(end_time) {
-                var compare_result = compare_time(begin_time, end_time);
-                begin_time = compare_result.begin;
-                end_time = compare_result.end;
-            } else {
-                end_time = begin_time
-            }
-
-            var option = {
-                show_loading:false,
-                kpi : kpi_name,
-                kpi_id : kpi,
-                target : "chart-container",
-                begin_time : begin_time,
-                end_time : end_time,
-                type : type,
-                interval : interval,
-                count : ANALYTICS.chartSeries.count + 1,
-                view : view,
-                view_text : view_text,
-                method : 0,
-                chart_body_close_validate : chart_body_close_validate
-            };
-            ANALYTICS.chartSeries.addCount();
-            ANALYTICS.chartSeries.id_give();
-            option.id = ANALYTICS.chartSeries.id;
-            ANALYTICS.chartSeries.addSeries(option);
-            if(option.chart_body_close_validate) {
-                show_chart_body(option);
-            }
-            ANALYTICS.form_chart(option);
-        }
-    }
-</script>
