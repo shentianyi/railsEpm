@@ -58,7 +58,7 @@ class KpiEntryValidator
         end
       else
         self.valid=false
-        self.content<<I18n.t('invalid_user_email')
+        self.content<<I18n.t('vali_msg.invalid_user_email')
       end
     end
     entry if self.valid
