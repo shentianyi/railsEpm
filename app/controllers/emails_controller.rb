@@ -45,10 +45,24 @@ class EmailsController < ApplicationController
     if data=KpiEntryAnalyseHelper.get_kpi_entry_analysis_data(params[:query][:kpi],params[:query][:entity_group],
                                                               params[:query][:startTime],params[:query][:endTime],
                                                               params[:query][:average]=="true",params[:query][:interval].to_i)
-      attach_pdf = PdfService.generate_schedile_pdf(data)
+      @kpi_id = params[:query][:kpi_id];
+      @kpi_name = params[:query][:kpi_name]
+      @entity_group = params[:query][:entity_group_id]
+      @entity_group_name = params[:query][:entity_group_name]
+      @start_time = params[:query][:start_time]
+      @ent_time = params[:query][:end_time]
+      @frequency = params[:query][:frequency]
+      @type = params[:query][:type]
+      @average=params[:query][:average].nil ? true : params[:query][:average]=="true"
+      datas<<{:data=>data,:kpi_id=>@kpi_id,:kpi_name=>@kpi_name,:entity_group=>@entity_group,:entity_group_name=>@entity_group_name,
+        :start_time=>@start_time,:end_time=>@end_time,:frequency=>@frequency,:type =>@type, :average=>@average}
+      attach_pdf = PdfService.generate_analysis_pdf(data)
 
       f = FileData.new(:data=>attach_pdf,:oriName=>"analysis",:path=>$EMAILATTACHPATH)
       if f.saveFile
+        #send email here
+
+        #save email in database
         @email = Email.new(:user_id=>current_user.id,:sender=>current_user.email,:receivers=>params[:receivers],:file_path=>f.pathName)
         if mgs.result = @email.save
         else
