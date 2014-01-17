@@ -849,6 +849,8 @@
 
     Gridster.generated_stylesheets = [];
 
+    Gridster.current_stylesheet = "";
+
     var fn = Gridster.prototype;
 
     fn.init = function() {
@@ -3343,11 +3345,21 @@
 
         // don't duplicate stylesheets for the same configuration
         var serialized_opts = $.param(opts);
+        /*
         if ($.inArray(serialized_opts, Gridster.generated_stylesheets) >= 0) {
             return false;
         }
 
         Gridster.generated_stylesheets.push(serialized_opts);
+        */
+        if (Gridster.current_stylesheet === serialized_opts /*|| $.inArray(serialized_opts, Gridster.generated_stylesheets) >= 0*/) {
+            return false;
+        }
+        else if ( $.inArray(serialized_opts, Gridster.generated_stylesheets) < 0){
+            Gridster.generated_stylesheets.push(serialized_opts);
+        }
+
+        Gridster.current_stylesheet = serialized_opts;
 
         /* generate CSS styles for cols */
         for (i = opts.cols; i >= 0; i--) {

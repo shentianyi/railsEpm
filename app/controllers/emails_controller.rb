@@ -42,7 +42,7 @@ class EmailsController < ApplicationController
   def create
     msg = Message.new
     # generate pdf attachment file first
-    if data=KpiEntryAnalyseHelper.get_kpi_entry_analysis_data(params[:query][:kpi],params[:query][:entity_group],
+    if data=KpiEntryAnalyseHelper.analysis_data(params[:query][:kpi],params[:query][:entity_group],
                                                               params[:query][:startTime],params[:query][:endTime],
                                                               params[:query][:average]=="true",params[:query][:interval].to_i)
       @kpi_id = params[:query][:kpi_id];

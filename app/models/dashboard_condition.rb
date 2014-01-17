@@ -29,7 +29,7 @@ class DashboardCondition < ActiveRecord::Base
           return datas
         end
 
-        data = KpiEntryAnalyseHelper::get_kpi_entry_analysis_data(
+        data = KpiEntryAnalyseHelper::analysis_data(
             condition.kpi_id,
             condition.entity_group,
             time_span[:start].iso8601.to_s,
