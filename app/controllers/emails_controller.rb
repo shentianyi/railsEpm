@@ -55,6 +55,7 @@ class EmailsController < ApplicationController
       @frequency = params[:frequency]
       @type = params[:type]
       @average=params[:average] ? true : params[:average]=="true"
+
       datas = {:data=>data,:kpi_id=>@kpi_id,:kpi_name=>@kpi_name,:entity_group=>@entity_group,:entity_group_name=>@entity_group_name,
         :start_time=>@start_time,:end_time=>@end_time,:frequency=>@frequency,:type =>@type, :average=>@average}
 
@@ -65,7 +66,7 @@ class EmailsController < ApplicationController
       f.saveFile
       #send email here
       #save email in database
-      @email = Email.new(:user_id=>current_user.id,:sender=>current_user.email,:receivers=>params[:receivers],:file_path=>f.pathName)
+      @email = Email.new(:user_id=>current_user.id,:sender=>current_user.email,:receivers=>params[:receivers],:file_path=>f.pathName,:content=>params[:content])
       if msg.result = @email.save
       else
         msg.content = @email.errors.full_messages
