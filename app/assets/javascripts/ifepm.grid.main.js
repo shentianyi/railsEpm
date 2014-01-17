@@ -171,6 +171,19 @@ ifepm.dashboard_widget.enable = function(enable){
 * */
 var isfullsize = false;
 
+ifepm.dashboard_widget.resize_window = function(option){
+    ifepm.dashboard_widget.setconfig(option);
+    var option = {};
+    if(isfullsize){
+        option.widget_base_dimensions = [ifepm.dashboard_widget.config.full.width,ifepm.dashboard_widget.config.full.height];
+        current_gridster.resize_widget_dimensions(option);
+    }
+    else{
+        option.widget_base_dimensions = [ifepm.dashboard_widget.config.normal.width,ifepm.dashboard_widget.config.normal.height];
+        current_gridster.resize_widget_dimensions(option);
+    }
+}
+
  ifepm.dashboard_widget.full_size = function(option){
     if(option){
         isfullsize = true;
