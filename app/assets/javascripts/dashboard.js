@@ -463,6 +463,8 @@ function on_resize_window(){
         var container = "#container_"+id;
 
         var chart = $(container).highcharts();
-        chart.setSize($(container).width(),$(container).height(),false);
+        if(chart){
+            chart.setSize($(container).width(),$(container).height(),false);
+        }
     }
 }
