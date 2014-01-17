@@ -26,7 +26,7 @@ class KpiEntriesController < ApplicationController
       @entity_groups=get_user_entity_groups
     else
       msg=Message.new
-      if data=KpiEntryAnalyseHelper.get_kpi_entry_analysis_data(params[:kpi],params[:entity_group],params[:startTime],params[:endTime],params[:average]=="true",params[:interval].to_i)
+      if data=KpiEntryAnalyseHelper.analysis_data(params[:kpi],params[:entity_group],params[:startTime],params[:endTime],params[:average]=="true",params[:interval].to_i)
       msg.result=true
       msg.object=data
       end

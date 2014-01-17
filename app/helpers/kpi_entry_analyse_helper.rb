@@ -6,7 +6,19 @@ class Fixnum
 end
 
 module KpiEntryAnalyseHelper
-  def self.get_kpi_entry_analysis_data kpi_id,entity_group_id,start_time,end_time,average,frequency=nil,data=false
+  def self.analysis_data  kpi_id,entity_group_id,start_time,end_time,average,frequency,table_flag=nil
+   table_data=get_kpi_entry_analysis_data(kpi_id,entity_group_id,start_time,end_time,average,frequency)
+   if table_flag
+       return table_data
+   else
+   chart_data={}
+   table_data.each{|k,v| chart_data[k]= v.kind_of?(Hash) ? v.values : v}
+   return chart_data if table_flag.nil?
+   return chart_data,table_data unless table_flag
+   end
+  end
+
+  def self.get_kpi_entry_analysis_data kpi_id,entity_group_id,start_time,end_time,average,frequency=nil
     if kpi=Kpi.find_by_id(kpi_id) and entity_group=EntityGroup.find_by_id(entity_group_id)
       frequency=kpi.frequency if frequency.nil?
       entity_ids=entity_group.entities.collect{|entity| entity.id}
@@ -57,12 +69,8 @@ module KpiEntryAnalyseHelper
         end
       end
       # puts "total:#{total}"
-      if data
+      current_data=current_data.each{|key,value| current_data[key]=KpiUnit.parse_entry_value( kpi.unit,value)}
          return {:current=>current_data,:target_max=>target_max_data,:target_min=>target_min_data,:unit=>unit_data,:total=>KpiUnit.parse_entry_value( kpi.unit,total)}
-      else
-          current=current_data.values.map{|value| KpiUnit.parse_entry_value( kpi.unit,value)}
-          return {:current=>current,:target_max=>target_max_data.values,:target_min=>target_min_data.values,:unit=>unit_data.values,:total=>KpiUnit.parse_entry_value( kpi.unit,total)}
-      end
     end
     return nil
   end

@@ -21,7 +21,7 @@
 /uploadfiles/download/*.csv
 /uploadfiles/*
 !/uploadfiles/**/*.ignore
-!/uploadfiles/**/*.ignore
+!/uploadfiles/template/*
 .DS_Store
 *.swp
 *.MERGE_MSG
