@@ -3,7 +3,7 @@
 <table>
   <tr>
     <th>Sender</th>
-    <th>Reveivers</th>
+    <th>receivers</th>
     <th>File path</th>
     <th></th>
     <th></th>
@@ -13,7 +13,7 @@
 <% @emails.each do |email| %>
   <tr>
     <td><%= email.sender %></td>
-    <td><%= email.reveivers %></td>
+    <td><%= email.receivers %></td>
     <td><%= email.file_path %></td>
     <td><%= link_to 'Show', email %></td>
     <td><%= link_to 'Edit', edit_email_path(email) %></td>
