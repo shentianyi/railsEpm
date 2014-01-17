@@ -459,9 +459,11 @@ function on_resize_window(){
     var grid = ifepm.dashboard_widget.resize_window(option);
 
     for(var i in grid.$widgets){
-        var id = grid.$widgets[i].getAttribute("id");
+        var id = grid.$widgets.eq(i).attr("id");
         var container = "#container_"+id;
         var chart = $(container).highcharts();
-        chart.setSize($(container).width(),$(container).height(),false);
+        if(chart){
+            chart.setSize($(container).width(),$(container).height(),false);
+        }
     }
 }

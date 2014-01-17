@@ -233,14 +233,14 @@ ifepm.dashboard.getInteral = function (interval) {
     var min = 1000 * 60;
     var hour = 1000 * 60 * 60;
 
-    intvl = sec * 30;
+    intvl = min * 30;
 
     switch (interval) {
         case "90":
-            intvl = sec * 60;
+            intvl = min * 30;
             break;
         case "100":
-            intvl = sec * 60;
+            intvl = hour * 60;
             break;
         case "200":
             intvl = hour * 1;
@@ -255,7 +255,7 @@ ifepm.dashboard.getInteral = function (interval) {
             intvl = hour * 24;
             break;
         default :
-            intvl = min;
+            intvl = min * 30;
             break;
     }
 
