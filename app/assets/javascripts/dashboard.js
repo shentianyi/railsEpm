@@ -422,7 +422,7 @@ function init_component(){
         select_dashboard(id);
     }
 
-
+    //$(window).resize(on_resize_window);
 }
 
 /*
@@ -440,4 +440,21 @@ function on_full_size(){
 function on_restore_size(){
     ifepm.dashboard_widget.full_size(false);
     ifepm.dashboard.full_size({fullsize:false,id:current_dashboard_id});
+}
+
+function on_resize_window(){
+    var option = {};
+    option.normal = {};
+    option.normal.width = $("div#dash-normalsize").width();
+    option.normal.height = $(document).height()-$("header").height()-$("#left-content-title").height()-1;
+    option.normal.max_col = 2;
+    option.normal.max_row = 2;
+
+    option.full = {};
+    option.full.width = $("div#dashboard-content-full").width();
+    option.full.height = $("div#dashboard-content-full").height() - 20;
+    option.full.max_col = 2;
+    option.full.max_row = 3;
+
+    ifepm.dashboard_widget.resize_window(option);
 }
