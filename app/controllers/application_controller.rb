@@ -104,7 +104,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       respond_to do |format|
-     format.json {     render json: {access:false,errorCode:-3000} ,status: 403}
+      format.json { render json: {access:false,errorCode:-3000} ,status: 401}
       format.html { redirect_to new_user_sessions_url }
     end
     end

@@ -33,27 +33,27 @@ class KpiEntriesController < ApplicationController
       render :json=>msg
     end
   end
-  
+
   def recents
     render :json =>KpiEntry.recent_input(current_user.id,params[:ids],params[:time].to_i)
   end
 
   def import
-      msg=Message.new(result:true)
-      params[:files].each do |file|
-       if file.size<$FILE_MAX_SIZE
-	   f=FileData.new(data:file,oriName:file.original_filename,path:$KPI_ENTRY_PATH)
-	  if f.saveFile
-	    if error=KpiEntryImportHelper.import(f.full_path,f.extention)
-	     msg.result=false
-	     msg.content=error
-	    end
-	  end
-        else
-	    msg.result=false
-	    msg.content="文件大小超过20M"
-       end
+    msg=Message.new(result:true)
+    params[:files].each do |file|
+      if file.size<$FILE_MAX_SIZE
+        f=FileData.new(data:file,oriName:file.original_filename,path:$KPI_ENTRY_PATH)
+        if f.saveFile
+          if error=KpiEntryImportHelper.import(f.full_path,f.extention)
+          msg.result=false
+          msg.content=error
+          end
+        end
+      else
+        msg.result=false
+        msg.content="文件大小超过20M"
       end
-      render json:msg
+    end
+    render json:msg
   end
 end
