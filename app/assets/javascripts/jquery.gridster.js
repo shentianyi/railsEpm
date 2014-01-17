@@ -1026,7 +1026,7 @@
     * @param {Function} [callback] Function executed when the widget is removed.
     * @return {HTMLElement} Returns $widget.
     */
-    fn.resize_widget = function($widget, size_x, size_y, reposition, callback) {
+    fn.resize_widget = function($widget, size_x, size_y, reposition, callback,dashboard) {
         var wgd = $widget.coords().grid;
         reposition !== false && (reposition = true);
         size_x || (size_x = wgd.size_x);
@@ -1065,6 +1065,9 @@
             callback.call(this, new_grid_data.size_x, new_grid_data.size_y);
         }
 
+        if(dashboard){
+            console.log("dsa")
+        }
         return $widget;
     };
 
