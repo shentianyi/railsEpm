@@ -14,7 +14,7 @@ class MailerService
   self.attachment=params[:attachment] if params.has_key?(:attachment)
  end
 
- def send_analyse 
+ def send_analyse
   data=Multimap.new
   data[:from]=self.from
   data[:to]=self.to
