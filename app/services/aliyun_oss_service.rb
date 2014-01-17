@@ -11,8 +11,4 @@ class AliyunOssService
     File.delete(path) if del && File.exists?(path)
     Aliyun::OSS::OSSObject.url_for(name,KPI_ENTRY_BUCKET ,expires:LINK_EXPIRES)
   end
-
-  # def self.delete_attachments name
-    # Aliyun::OSS::OSSObject.delete(name,KPI_ENTRY_BUCKET)
-  # end
 end

@@ -13,6 +13,7 @@ module KpiEntryAnalyseHelper
    else
    chart_data={}
    table_data.each{|k,v| chart_data[k]= v.kind_of?(Hash) ? v.values : v}
+   chart_data[:date]=table_data[:current].keys
    return chart_data if table_flag.nil?
    return chart_data,table_data unless table_flag
    end
@@ -70,7 +71,7 @@ module KpiEntryAnalyseHelper
       end
       # puts "total:#{total}"
       current_data=current_data.each{|key,value| current_data[key]=KpiUnit.parse_entry_value( kpi.unit,value)}
-         return {:current=>current_data,:target_max=>target_max_data,:target_min=>target_min_data,:unit=>unit_data,:total=>KpiUnit.parse_entry_value( kpi.unit,total)}
+         return {:current=>current_data,:target_max=>target_max_data,:target_min=>target_min_data,:unit=>unit_data,:total=>KpiUnit.parse_entry_value( kpi.unit,total),:avarage=>(total/entity_ids.count/current_data.size).round(2)}
     end
     return nil
   end
