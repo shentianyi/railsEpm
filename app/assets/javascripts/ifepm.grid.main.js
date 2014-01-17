@@ -16,6 +16,8 @@
 /*
 * Gridster extention
 * */
+var RESIZE=RESIZE||{};
+
 (function ($) {
 
     $.Gridster.resize_widget_dimensions = function(options) {
@@ -33,16 +35,50 @@
             + this.options.widget_base_dimensions[1];
 
         var serializedGrid = this.serialize();
-        this.$widgets.each($.proxy(function(i, widget) {
-            var $widget = $(widget);
-            var data = serializedGrid[i];
-            this.resize_widget($widget, data.size_x, data.size_y);
-        }, this));
+
+        if(arguments[1]=="dashboard"){
+            this.$widgets.each($.proxy(function(i, widget) {
+                var $widget = $(widget);
+                var data = serializedGrid[i];
+                this.resize_widget($widget, data.size_x, data.size_y,null,null,true);
+//                window.setTimeout(function(){
+//
+//                        var id = $widget.attr("id");
+//                        var container = "#container_"+id;
+//                        var chart = $(container).highcharts();
+//                        if(chart){
+//                            chart.setSize($(container).width(),$(container).height(),false);
+//                        }
+//
+//                },100)
+            }, this));
+        }
+        else{
+            this.$widgets.each($.proxy(function(i, widget) {
+                var $widget = $(widget);
+                var data = serializedGrid[i];
+                this.resize_widget($widget, data.size_x, data.size_y);
+            }, this));
+        }
 
         this.generate_grid_and_stylesheet();
         this.get_widgets_from_DOM();
         this.set_dom_grid_height();
 
+//        if(arguments[1]=="dashboard"){
+//            var $this=this;
+//            window.setTimeout(function(){
+//                for(var i in $this.$widgets){
+//                    var id = $this.$widgets.eq(i).attr("id");
+//                    var container = "#container_"+id;
+//                    var chart = $(container).highcharts();
+//                    if(chart){
+//                        chart.setSize($(container).width(),$(container).height(),false);
+//                    }
+//                }
+//            },200)
+//
+//        }
         return false;
     };
 })(jQuery);
@@ -170,6 +206,32 @@ ifepm.dashboard_widget.enable = function(enable){
 * @function full_size
 * */
 var isfullsize = false;
+
+ifepm.dashboard_widget.resize_window = function(option){
+    ifepm.dashboard_widget.setconfig(option);
+    var dashboard=arguments.length>1?true:false;
+    var option = {};
+    if(isfullsize){
+        option.widget_base_dimensions = [ifepm.dashboard_widget.config.full.width,ifepm.dashboard_widget.config.full.height];
+        if(dashboard){
+            current_gridster.resize_widget_dimensions(option,"dashboard");
+        }
+        else{
+            current_gridster.resize_widget_dimensions(option);
+        }
+    }
+    else{
+        option.widget_base_dimensions = [ifepm.dashboard_widget.config.normal.width,ifepm.dashboard_widget.config.normal.height];
+        if(dashboard){
+            current_gridster.resize_widget_dimensions(option,"dashboard");
+        }
+        else{
+            current_gridster.resize_widget_dimensions(option);
+        }
+    }
+
+    return current_gridster;
+}
 
  ifepm.dashboard_widget.full_size = function(option){
     if(option){
