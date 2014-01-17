@@ -43,6 +43,20 @@
         this.get_widgets_from_DOM();
         this.set_dom_grid_height();
 
+        if(arguments[1]=="dashboard"){
+            var $this=this;
+            window.setTimeout(function(){
+                for(var i in $this.$widgets){
+                    var id = $this.$widgets.eq(i).attr("id");
+                    var container = "#container_"+id;
+                    var chart = $(container).highcharts();
+                    if(chart){
+                        chart.setSize($(container).width(),$(container).height(),false);
+                    }
+                }
+            },200)
+
+        }
         return false;
     };
 })(jQuery);
@@ -173,14 +187,25 @@ var isfullsize = false;
 
 ifepm.dashboard_widget.resize_window = function(option){
     ifepm.dashboard_widget.setconfig(option);
+    var dashboard=arguments.length>1?true:false;
     var option = {};
     if(isfullsize){
         option.widget_base_dimensions = [ifepm.dashboard_widget.config.full.width,ifepm.dashboard_widget.config.full.height];
-        current_gridster.resize_widget_dimensions(option);
+        if(dashboard){
+            current_gridster.resize_widget_dimensions(option,"dashboard");
+        }
+        else{
+            current_gridster.resize_widget_dimensions(option);
+        }
     }
     else{
         option.widget_base_dimensions = [ifepm.dashboard_widget.config.normal.width,ifepm.dashboard_widget.config.normal.height];
-        current_gridster.resize_widget_dimensions(option);
+        if(dashboard){
+            current_gridster.resize_widget_dimensions(option,"dashboard");
+        }
+        else{
+            current_gridster.resize_widget_dimensions(option);
+        }
     }
 
     return current_gridster;

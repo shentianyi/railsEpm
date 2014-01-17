@@ -456,15 +456,7 @@ function on_resize_window(){
     option.full.max_col = 2;
     option.full.max_row = 3;
 
-    var grid = ifepm.dashboard_widget.resize_window(option);
+    var grid = ifepm.dashboard_widget.resize_window(option,"dashboard");
 
-    for(var i in grid.$widgets){
-        var id = grid.$widgets.eq(i).attr("id");
-        var container = "#container_"+id;
 
-        var chart = $(container).highcharts();
-        if(chart){
-            chart.setSize($(container).width(),$(container).height(),false);
-        }
-    }
 }
