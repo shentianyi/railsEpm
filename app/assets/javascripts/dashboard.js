@@ -421,10 +421,10 @@ function init_component(){
         var id = $("ul#content-right-nav-group").children("[number]:first").attr("number");
         select_dashboard(id);
     }
-
-    $(window).resize(on_resize_window);
+    $(window).resize(function(){
+        on_resize_window();
+    });
 }
-
 /*
 * @function on_full_size
 * */
@@ -459,8 +459,9 @@ function on_resize_window(){
     var grid = ifepm.dashboard_widget.resize_window(option);
 
     for(var i in grid.$widgets){
-        var id = grid.$widgets[i].getAttribute("id");
+        var id = grid.$widgets.eq(i).attr("id");
         var container = "#container_"+id;
+
         var chart = $(container).highcharts();
         chart.setSize($(container).width(),$(container).height(),false);
     }
