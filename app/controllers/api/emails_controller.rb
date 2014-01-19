@@ -1,8 +1,8 @@
-#encoding: utd-8
+#encoding: utf-8
 #RESTFUL api
 class Api::EmailsController < ApplicationController
   def index
-    @emails = Emails.find_by_user_id(current_user.id)
+    @emails = Email.find_by_user_id(current_user.id)
 
     respond_to do |t|
       t.json{render :json=>@emails}
