@@ -71,9 +71,18 @@ class EmailsController < ApplicationController
       else
         msg.content = @email.errors.full_messages
       end
+
     end
 
-    render :json => msg
+    respond_to do |format|
+      format.pdf do
+        render :pdf => f.pathName,
+               :template => "templates/demo_pdf.html.erb",
+               :show_as_html => true
+      end
+    end
+
+    #render :json => msg
   end
 
   # PUT /emails/1
