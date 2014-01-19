@@ -1,9 +1,11 @@
 <div>
+  <p>Template </p>
   <div class="chart-body" id="chart-body" style="display:none">
     <div class="relative" id="chart-main-middle">
       <div class="chart-container " id="chart-container"></div>
     </div>
   </div>
+  <p id="content">content</p>
 </div>
 <input type="hidden" value="<%= datas[:kpi_id]%>" id="kpi-id-hidden"/>
 <input type="hidden" value="<%= datas[:kpi_name]%>" id="kpi-name-hidden"/>
@@ -16,16 +18,15 @@
 <input type="hidden" value="<%= datas[:type]%>" id="type-hidden" />
 <input type="hidden" value="<%= datas[:average]%>" id="average-hidden" />
 <input type="hidden" value="<%= datas[:data]%>" id="data-hidden" />
-<% content_for :javascript_includes do%>
-    <%= javascript_include_tag "highstock.js"%>
-    <%= javascript_include_tag "high_chart_template_analytic.js"%>
-    <%= javascript_include_tag "Analytics_init.js"%>
-<%end%>
 
 <script>
+    (function(){
+        $("#content");.text("aaaaa");
+    })()
     var data=jQuery.parseJSON($("#data-hidden").val());
     $(document).ready(function() {
         prepare_form_cchart();
+        $("#content").text("aaaaaa");
     });
     function prepare_form_cchart() {
         var kpi = $("#kpi-id-hidden").val();
