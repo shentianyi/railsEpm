@@ -41,7 +41,7 @@ class EmailsController < ApplicationController
   # POST /emails.json
   def create
     msg = Message.new
-    msg.result = false
+    msg.result = true
     # generate pdf attachment file first
     if data=KpiEntryAnalyseHelper.analysis_data(params[:kpi_id],params[:entity_group_id],
                                                               params[:start_time],params[:end_time],
@@ -72,6 +72,7 @@ class EmailsController < ApplicationController
         msg.content = @email.errors.full_messages
       end
     end
+
     render :json => msg
   end
 

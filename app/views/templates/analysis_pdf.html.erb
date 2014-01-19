@@ -20,9 +20,6 @@
 <input type="hidden" value="<%= datas[:data]%>" id="data-hidden" />
 
 <script>
-    (function(){
-        $("#content");.text("aaaaa");
-    })()
     var data=jQuery.parseJSON($("#data-hidden").val());
     $(document).ready(function() {
         prepare_form_cchart();
