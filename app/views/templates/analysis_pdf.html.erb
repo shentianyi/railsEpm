@@ -5,6 +5,7 @@
     </div>
   </div>
 </div>
+<input id="jack" type="text" />
 <input type="hidden" value="<%= datas[:kpi_id]%>" id="kpi-id-hidden"/>
 <input type="hidden" value="<%= datas[:kpi_name]%>" id="kpi-name-hidden"/>
 <input type="hidden" value="<%= datas[:entity_group_id]%>" id="entity-group-id-hidden"/>
@@ -23,8 +24,10 @@
 <%end%>
 
 <script>
-    var data=jQuery.parseJSON($("#data-hidden").val());
+
+    // var data=jQuery.parseJSON($("#data-hidden").val());
     $(document).ready(function() {
+         $("#jack").val('dddd');
         prepare_form_cchart();
     });
     function prepare_form_cchart() {
@@ -72,7 +75,7 @@
             if(option.chart_body_close_validate) {
                 show_chart_body(option);
             }
-           ANALYTICS.form_chart_without_ajax(option, data);
+            ANALYTICS.form_chart(option);
         }
     }
 </script>
