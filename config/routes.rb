@@ -1,6 +1,10 @@
 IFEpm::Application.routes.draw do
 
-  resources :emails
+  resources :emails do
+    collection do
+      get '/analyse/:id' => :analyse
+    end
+  end
 
 
   resources :entity_contacts
@@ -132,7 +136,8 @@ IFEpm::Application.routes.draw do
 
   resources :emails do
     collection do
-      get 'attach/:id'=> :attach
+      get 'analyse/:id'=> :analyse , :defaults =>{:format => 'html'}
+      
     end
   end
 

@@ -1,4 +1,5 @@
 class EmailsController < ApplicationController
+  layout "pure"
   # GET /emails
   # GET /emails.json
   def index
@@ -43,9 +44,11 @@ class EmailsController < ApplicationController
     msg = Message.new
     msg.result = true
     # generate pdf attachment file first
-    if data=KpiEntryAnalyseHelper.analysis_data(params[:kpi_id],params[:entity_group_id],
+    if da=KpiEntryAnalyseHelper.analysis_data(params[:kpi_id],params[:entity_group_id],
                                                               params[:start_time],params[:end_time],
-                                                              params[:average]=="true",params[:frequency].to_i)
+                                                              params[:average]=="true",params[:frequency].to_i,false)
+      data = da[0]
+      table_data = da[1]
       @kpi_id = params[:kpi_id];
       @kpi_name = params[:kpi_name]
       @entity_group = params[:entity_group_id]
@@ -64,9 +67,15 @@ class EmailsController < ApplicationController
       f = FileData.new(:data=>attach_pdf,:oriName=>"analysis.pdf",:path=>$EMAILATTACHPATH)
       f.saveFile
       #send email here
+      ms=MailerService.new(from_name:current_user.first_name,from_mail:current_user.email,to:params[:receivers].split(';'),subject:params[:title],text:params[:content],attachment:f.full_path)
+      ms.send_analyse
+
       #save email in database
       @email = Email.new(:title=>params[:title],:user_id=>current_user.id,:sender=>current_user.email,:receivers=>params[:receivers],:file_path=>f.pathName,:content=>params[:content])
       if msg.result = @email.save
+        #save cache
+        cache=KpiEntryAnalyseCache.new(id:@email.id,cacheable_type: @email.class.name ,query:params.to_json,chart_data:data,table_data:table_data)
+        cache.save
       else
         msg.content = @email.errors.full_messages
       end
@@ -105,12 +114,16 @@ class EmailsController < ApplicationController
   # DELETE /emails/1
   # DELETE /emails/1.json
   def destroy
-    @email = Email.findparams[:id]
+    @email = Email.find params[:id]
     @email.destroy
 
     respond_to do |format|
       format.html { redirect_to emails_url }
       format.json { head :no_content }
     end
+  end
+
+  def analyse
+    render
   end
 end

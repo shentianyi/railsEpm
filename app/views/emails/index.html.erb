@@ -29,33 +29,3 @@
 <br />
 
 <%= link_to 'New Email', new_email_path %>
-
-<input value="create email" type="button" onclick="send_email()"></input>
-<script type="text/javascript">
-  function send_email(){
-      var data  = {};
-      data.kpi_id="54";
-      data.kpi_name = "E1-Normal";
-      data.entity_group_id = "1";
-      data.entity_group_name = "C-RBA";
-      data.start_time="2014-01-16T16:00:00.000Z";
-      data.end_time="2014-01-23T16:00:00.000Z";
-      data.average="true";
-      data.frequency="100";
-      data.type="line";
-      data.receivers="qi.li@cz-tek.com"
-      data.title="test"
-      data.content= "test"
-
-      $.ajax({
-          data: data,
-          url:"/emails",
-          type:"POST",
-          success:function(data){
-              if(data.result){
-                  //alert("Success Send!");
-              }
-          }
-      });
-  }
-</script>
