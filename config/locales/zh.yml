@@ -492,3 +492,8 @@ zh:
     kpi_not_assign: KPI未分配给此用户
     invalid_kpi: KPI错误
     invalid_user_email: 用户Email错误
+  epm_report:
+    title: EPM报告
+    current: 当前值
+    target_min: 目标值下限
+    target_max: 目标值上限

@@ -484,3 +484,8 @@ en:
     kpi_not_assign: KPI not assigned to user
     invalid_kpi: invalid KPI info
     invalid_user_email: invalid email
+  epm_report:
+    title: EPM Report
+    current: Current
+    target_min: Target Min
+    target_max: Target Max
