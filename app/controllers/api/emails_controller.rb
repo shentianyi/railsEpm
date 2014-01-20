@@ -75,8 +75,6 @@ class Api::EmailsController < ApplicationController
   def analyse
     cache =KpiEntryAnalyseCache.find_by_id(params[:id],'Email')
     query = JSON.parse(cache.query)
-    puts "============================="
-    puts query
     @kpi_id = query["kpi_id"]
     @kpi_name = query["kpi_name"]
     @entity_group_id=  query["entity_group_id"]
