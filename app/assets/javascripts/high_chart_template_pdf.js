@@ -80,7 +80,7 @@ ANALYTICS.high_chart={
 
     },
     legend: {
-        enabled: true,
+        enabled: false,
         borderRadius: 2,
         borderColor: "rgba(0,0,0,0)",
         itemStyle: {
