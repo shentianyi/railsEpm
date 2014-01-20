@@ -41,7 +41,7 @@ class EmailsController < ApplicationController
   # POST /emails.json
   def create
     msg = Message.new
-    msg.result = false
+    msg.result = true
     # generate pdf attachment file first
     if data=KpiEntryAnalyseHelper.analysis_data(params[:kpi_id],params[:entity_group_id],
                                                               params[:start_time],params[:end_time],
@@ -55,6 +55,7 @@ class EmailsController < ApplicationController
       @frequency = params[:frequency]
       @type = params[:type]
       @average=params[:average] ? true : params[:average]=="true"
+
       datas = {:data=>data,:kpi_id=>@kpi_id,:kpi_name=>@kpi_name,:entity_group=>@entity_group,:entity_group_name=>@entity_group_name,
         :start_time=>@start_time,:end_time=>@end_time,:frequency=>@frequency,:type =>@type, :average=>@average}
 
@@ -64,13 +65,23 @@ class EmailsController < ApplicationController
       f.saveFile
       #send email here
       #save email in database
-      @email = Email.new(:user_id=>current_user.id,:sender=>current_user.email,:receivers=>params[:receivers],:file_path=>f.pathName)
+      @email = Email.new(:title=>params[:title],:user_id=>current_user.id,:sender=>current_user.email,:receivers=>params[:receivers],:file_path=>f.pathName,:content=>params[:content])
       if msg.result = @email.save
       else
         msg.content = @email.errors.full_messages
       end
+
     end
-    render :json => msg
+
+    respond_to do |format|
+      format.pdf do
+        render :pdf => f.pathName,
+               :template => "templates/demo_pdf.html.erb",
+               :show_as_html => true
+      end
+    end
+
+    #render :json => msg
   end
 
   # PUT /emails/1
