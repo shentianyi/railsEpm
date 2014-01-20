@@ -25,9 +25,11 @@ class Api::EmailsController < ApplicationController
     msg = Message.new
     msg.result = true
     # generate pdf attachment file first
-    if data = KpiEntryAnalyseHelper.analysis_data(params[:kpi_id],params[:entity_group_id],
-                                                params[:start_time],params[:end_time],
-                                                params[:average]=="true",params[:frequency].to_i,false)
+    if da=KpiEntryAnalyseHelper.analysis_data(params[:kpi_id],params[:entity_group_id],
+                                              params[:start_time],params[:end_time],
+                                              params[:average]=="true",params[:frequency].to_i,false)
+      data = da[0]
+      table_data = da[1]
       @kpi_id = params[:kpi_id];
       @kpi_name = params[:kpi_name]
       @entity_group = params[:entity_group_id]
@@ -39,25 +41,28 @@ class Api::EmailsController < ApplicationController
       @average=params[:average] ? true : params[:average]=="true"
 
       datas = {:data=>data.to_json,:kpi_id=>@kpi_id,:kpi_name=>@kpi_name,:entity_group_id=>@entity_group,:entity_group_name=>@entity_group_name,
-               :start_time=>@start_time,:end_time=>@end_time,:frequency=>@frequency,:type =>@type, :average=>@average}
+               :start_time=>@start_time,:end_time=>@end_time,:frequency=>@frequency,:type =>@type, :average=>@average,:table_data => table_data}
 
       attach_pdf = PdfService.generate_analysis_pdf(datas)
 
       f = FileData.new(:data=>attach_pdf,:oriName=>"analysis.pdf",:path=>$EMAILATTACHPATH)
       f.saveFile
+      #send email here
+      ms=MailerService.new(from_name:current_user.first_name,from_mail:current_user.email,to:params[:receivers].split(';'),subject:params[:title],text:params[:content],attachment:f.full_path)
+      ms.send_analyse
+
       #save email in database
       @email = Email.new(:title=>params[:title],:user_id=>current_user.id,:sender=>current_user.email,:receivers=>params[:receivers],:file_path=>f.pathName,:content=>params[:content])
       if msg.result = @email.save
-        #send email here
-        ms=MailerService.new(from_name:current_user.first_name,from_mail:current_user.email,to:params[:receivers].split(';'),subject:params[:title],text:params[:content],attachment:f.full_path)
-        ms.send_analyse
         #save cache
         cache=KpiEntryAnalyseCache.new(id:@email.id,cacheable_type: @email.class.name ,query:params.to_json,chart_data:data,table_data:table_data)
         cache.save
       else
         msg.content = @email.errors.full_messages
       end
+
     end
+
     render :json => msg
   end
 
