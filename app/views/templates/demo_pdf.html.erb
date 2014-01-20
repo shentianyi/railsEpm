@@ -65,7 +65,7 @@
       for(var i in data.current){
           var row = $('<tr></tr>');
           var date = standardParse(data.date[i]).date;
-          row.append('<td style="padding:8px;border:1px solid #ddd;color:#000">'+date.toDateString()+'</td>').append('<td style="padding:8px;border:1px solid #ddd;">'+data.current[i]+data.unit[i]+'</td>').append('<td style="padding:8px;border:1px solid #ddd;">'+data.target_max[i]+data.unit[i]+'</td>').append('<td style="padding:8px;border:1px solid #ddd;">'+data.target_min[i]+data.unit[i]+'</td>');
+          row.append('<td style="padding:8px;border:1px solid #ddd;color:#000">'+date.toWayneString().day+'</td>').append('<td style="padding:8px;border:1px solid #ddd;">'+data.current[i]+data.unit[i]+'</td>').append('<td style="padding:8px;border:1px solid #ddd;">'+data.target_max[i]+data.unit[i]+'</td>').append('<td style="padding:8px;border:1px solid #ddd;">'+data.target_min[i]+data.unit[i]+'</td>');
           $("#table-data").append(row);
       }
   }
