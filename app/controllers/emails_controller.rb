@@ -56,7 +56,7 @@ class EmailsController < ApplicationController
       @type = params[:type]
       @average=params[:average] ? true : params[:average]=="true"
 
-      datas = {:data=>data,:kpi_id=>@kpi_id,:kpi_name=>@kpi_name,:entity_group=>@entity_group,:entity_group_name=>@entity_group_name,
+      datas = {:data=>data.to_json,:kpi_id=>@kpi_id,:kpi_name=>@kpi_name,:entity_group_id=>@entity_group,:entity_group_name=>@entity_group_name,
         :start_time=>@start_time,:end_time=>@end_time,:frequency=>@frequency,:type =>@type, :average=>@average}
 
       attach_pdf = PdfService.generate_analysis_pdf(datas)
@@ -72,16 +72,18 @@ class EmailsController < ApplicationController
       end
 
     end
-
+=begin
     respond_to do |format|
       format.pdf do
         render :pdf => f.pathName,
                :template => "templates/demo_pdf.html.erb",
-               :show_as_html => true
+               :show_as_html => true,
+               :locals => {:datas=> datas}
       end
     end
+=end
 
-    #render :json => msg
+    render :json => msg
   end
 
   # PUT /emails/1
