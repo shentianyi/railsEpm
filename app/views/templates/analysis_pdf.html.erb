@@ -1,14 +1,19 @@
 <div>
-  <p>Template </p>
-  <div class="chart-body" id="chart-body" style="display:none">
-    <div class="relative" id="chart-main-middle">
-      <div class="chart-container " id="chart-container" onload="prepare_form_cchart()">
+     <p>
+          Template
+     </p>
+     <div class="chart-body" id="chart-body" style="display:none">
+          <div class="relative" id="chart-main-middle">
+               <div class="chart-container " id="chart-container" onload="prepare_form_cchart()">
 
-      </div>
-    </div>
-  </div>
-  <p id="content">content</p>
+               </div>
+          </div>
+     </div>
+     <p id="content">
+          content
+     </p>
 </div>
+<input id="jack" type="text" />
 <input type="hidden" value="<%= datas[:kpi_id]%>" id="kpi-id-hidden"/>
 <input type="hidden" value="<%= datas[:kpi_name]%>" id="kpi-name-hidden"/>
 <input type="hidden" value="<%= datas[:entity_group_id]%>" id="entity-group-id-hidden"/>
@@ -21,45 +26,44 @@
 <input type="hidden" value="<%= datas[:average]%>" id="average-hidden" />
 <input type="hidden" value="<%= datas[:data]%>" id="data-hidden" />
 
-
 <script>
-    var data=jQuery.parseJSON($("#data-hidden").val());
-    $(document).ready(function() {
-        prepare_form_cchart();
-        $("#content").text("aaaaaa");
-    });
-    function prepare_form_cchart() {
-        var kpi = $("#kpi-id-hidden").val();
-        var kpi_name= $("#kpi-name-hidden").val();
-        var view = $("#entity-group-id-hidden").val();
-        var view_text =$("#entity-group-name-hidden").val();
-        var method = $("#average-hidden").val();
-        var interval = $("#frequency-hidden").val(), type = $("#type-hidden").val(), chart_body_close_validate;
-        var begin_time = $("#start-time-hidden").val(), end_time = $("#end-time-hidden").val();
+     $(document).ready(function() {
+          prepare_form_cchart();
+          $("#content").text("aaaaaa");
+     });
+     function prepare_form_cchart() {
 
-        var option = {
-            show_loading:false,
-            kpi : kpi_name,
-            kpi_id : kpi,
-            target : "chart-container",
-            begin_time : begin_time,
-            end_time : end_time,
-            type : type,
-            interval : interval,
-            count : ANALYTICS.chartSeries.count + 1,
-            view : view,
-            view_text : view_text,
-            method : 0,
-            chart_body_close_validate : chart_body_close_validate
-        };
-        ANALYTICS.chartSeries.addCount();
-        ANALYTICS.chartSeries.id_give();
-        option.id = ANALYTICS.chartSeries.id;
-        ANALYTICS.chartSeries.addSeries(option);
-        if(option.chart_body_close_validate) {
-            show_chart_body(option);
-        }
-        ANALYTICS.form_chart_without_ajax(option, data);
-    }
-    }
+          var data = jQuery.parseJSON($("#data-hidden").val());
+          var kpi = $("#kpi-id-hidden").val();
+          var kpi_name = $("#kpi-name-hidden").val();
+          var view = $("#entity-group-id-hidden").val();
+          var view_text = $("#entity-group-name-hidden").val();
+          var method = $("#average-hidden").val();
+          var interval = $("#frequency-hidden").val(), type = $("#type-hidden").val(), chart_body_close_validate;
+          var begin_time = $("#start-time-hidden").val(), end_time = $("#end-time-hidden").val();
+
+          var option = {
+               show_loading : false,
+               kpi : kpi_name,
+               kpi_id : kpi,
+               target : "chart-container",
+               begin_time : begin_time,
+               end_time : end_time,
+               type : type,
+               interval : interval,
+               count : ANALYTICS.chartSeries.count + 1,
+               view : view,
+               view_text : view_text,
+               method : 0,
+               chart_body_close_validate : chart_body_close_validate
+          };
+          ANALYTICS.chartSeries.addCount();
+          ANALYTICS.chartSeries.id_give();
+          option.id = ANALYTICS.chartSeries.id;
+          ANALYTICS.chartSeries.addSeries(option);
+          if(option.chart_body_close_validate) {
+               show_chart_body(option);
+          }
+          ANALYTICS.form_chart_without_ajax(option, data);
+     }
 </script>
