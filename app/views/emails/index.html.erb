@@ -2,6 +2,8 @@
 
 <table>
   <tr>
+    <th>Title</th>
+    <th>Content</th>
     <th>Sender</th>
     <th>receivers</th>
     <th>File path</th>
@@ -12,6 +14,8 @@
 
 <% @emails.each do |email| %>
   <tr>
+    <td><%= email.title%></td>
+    <td><%= email.content%></td>
     <td><%= email.sender %></td>
     <td><%= email.receivers %></td>
     <td><%= email.file_path %></td>
@@ -25,6 +29,7 @@
 <br />
 
 <%= link_to 'New Email', new_email_path %>
+
 <input value="create email" type="button" onclick="send_email()"></input>
 <script type="text/javascript">
   function send_email(){
@@ -39,6 +44,8 @@
       data.frequency="100";
       data.type="line";
       data.receivers="qi.li@cz-tek.com"
+      data.title="test"
+      data.content= "test"
 
       $.ajax({
           data: data,
@@ -46,7 +53,7 @@
           type:"POST",
           success:function(data){
               if(data.result){
-
+                  alert("Success Send!");
               }
           }
       });

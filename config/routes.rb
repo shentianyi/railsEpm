@@ -108,7 +108,7 @@ IFEpm::Application.routes.draw do
   resources :entity_group_items
 
   namespace :api,defaults:{format:'json'} do
-    resources :kpi_entries do
+   resources :kpi_entries do
      collection do
        get :analyse ,:defaults=>{:format=>'html'}
        get :data
@@ -129,6 +129,13 @@ IFEpm::Application.routes.draw do
       end
     end
     resources :user_sessions
+
+  resources :emails do
+    collection do
+      get 'attach/:id'=> :attach
+    end
+  end
+
 
     controller :kpis do
       match 'kpis/kpis_by_category'=>:kpis_by_category
