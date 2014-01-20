@@ -49,8 +49,8 @@ class Api::EmailsController < ApplicationController
       @email = Email.new(:title=>params[:title],:user_id=>current_user.id,:sender=>current_user.email,:receivers=>params[:receivers],:file_path=>f.pathName,:content=>params[:content])
       if msg.result = @email.save
         #send email here
-        #ms=MailerService.new(from_name:current_user.first_name,from_mail:current_user.email,to:params[:receivers].split(';'),subject:params[:title],text:params[:content],attachment:f.full_path)
-        #ms.send_analyse
+        ms=MailerService.new(from_name:current_user.first_name,from_mail:current_user.email,to:params[:receivers].split(';'),subject:params[:title],text:params[:content],attachment:f.full_path)
+        ms.send_analyse
         #save cache
         cache=KpiEntryAnalyseCache.new(id:@email.id,cacheable_type: @email.class.name ,query:params.to_json,chart_data:data,table_data:table_data)
         cache.save
