@@ -29,8 +29,8 @@ gem 'axlsx','>2.0.0'
 gem 'aliyun-oss'
 
 # send email
-gem 'rest-client'
-gem 'multimap'
+# gem 'rest-client'
+# gem 'multimap'
 
 #rake i18n:js:export
 # Gems used only for assets and not required
