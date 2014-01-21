@@ -27,11 +27,6 @@ gem 'axlsx','>2.0.0'
 # gem 'nokogiri'
 # gem 'rubyzip', :require => 'zip/zip'
 gem 'aliyun-oss'
-
-# send email
-gem 'rest-client'
-gem 'multimap'
-
 #rake i18n:js:export
 # Gems used only for assets and not required
 # in production environments by default.
