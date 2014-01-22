@@ -44,21 +44,20 @@
         data.average="true";
         data.frequency="100";
         data.type="line";
-        data.receivers="qi.li@cz-tek.com"
-        data.title="test"
-        data.content= "test"
+        data.receivers="qi.li@cz-tek.com";
+        data.title="test";
+        data.content= "test";
 
         $.ajax({
             data: data,
-            url:"/emails",
+            url:"api/emails",
             type:"POST",
             success:function(data){
                 if(data.result){
-                    //alert("Success Send!");
+                    alert("Success Send!");
                 }
             }
         });
     }
 </script>
-
 -->
