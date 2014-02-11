@@ -225,9 +225,9 @@ en:
       table: Statistics
       item:
         kpi: KPI
-        entity: Entity
+        entity: Data Point
         user: User
-        view: Entity Group
+        view: View
   epm:
     base:
       title: EPM
@@ -266,15 +266,18 @@ en:
     manage: Manage
     kpi: KPI
     user: User
-    view: Entity Group
+    view: View
+    my_view: My View
+    my_kpi: My KPI
     billing: Account
     entry_kpi: KPI Entry
-    department: Entity
+    department: Data Point
+    entity: Entity
   analytics:
     title: Analytics
     kpi_category: KPI Category
     kpi: KPI
-    view: Entity Groups
+    view: Views
     begin_time: Start Time
     end_time: End Time
     sum: Total
@@ -348,31 +351,31 @@ en:
         down: Down
     department:
       desc:
-        dep: Entity
-        manage: Manage Entity
-        name: Entity Name
-        create: Create Entity
-        create_desc: Department is the place to put your staff and the view is made up of departments
+        dep: Data Point
+        manage: Manage Data Point
+        name: Data Point Name
+        create: Create Data Point
+        create_desc: Department is the place to put your staff and the view is made up of data points
         give_name: Give it a name
-        next_desc: After creating department , it's time to create user(staff) to your department so that they can contribute to their department's KPI
+        next_desc: After creating data point , it's time to create user(staff) to your data point so that they can contribute to their data point KPI
     user:
       desc:
         name: User
         manage: Manage User
         authority: Authority
-
+        title: Title
         create: Create User
-        create_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
+        create_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
         create_now: Create Now
 
         assign: Assign KPI
-        assign_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
+        assign_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
         assign_now: Assign Now
 
-        next_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
+        next_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
 
       role:
-        admin: Admin
+        admin: System Admin
         director: Director
         manager: Manager
         user: User
@@ -381,15 +384,16 @@ en:
         email: Email
         pwd: Password
         pwd_con: Password Confirmation
-        dep: Entity
+        dep: Data Point
+        title: Title
     view:
       desc:
-        name: Entity Group
-        manage: Manage Entity Group
-        dep_list: Entity List
-        assign_dep: Assign Entity
-        assign_desc: Creating view first , then assign department to the view ,view is the base condition in analytics
-        next_desc: Creating view first , then assign department to the view,view is the base condition in analytics
+        name: View
+        manage: Manage View
+        dep_list: Data Point List
+        assign_dep: Assign Data Point
+        assign_desc: Creating view first , then assign data point to the view ,view is the base condition in analytics
+        next_desc: Creating view first , then assign data point to the view,view is the base condition in analytics
   #dashboard
   dashboard_group:
     base:
@@ -423,7 +427,7 @@ en:
       create: Create Now
       serie:
         category: KPI Category
-        view: Entity Group
+        view: View
         start_time: Start Time
         end_time: End Time
         total: Total
@@ -447,7 +451,7 @@ en:
     value: Value
     target_range: Target Range
     percent: Percentage
-    view: Entity Group
+    view: View
     line:
       out_of_target: Out of Target
       kpi_name: KPI Name

@@ -25,8 +25,8 @@ module KpiEntryAnalyseHelper
       entity_ids=entity_group.entities.collect{|entity| entity.id}
       start_time,end_time=DateTimeHelper.get_utc_time_by_str(start_time),DateTimeHelper.get_utc_time_by_str(end_time)
       target_relation=UserKpiItem.where(:kpi_id=>kpi_id,:entity_id=>entity_ids)
-      target_max= average ? target_relation.average(:target_max).to_i : target_relation.sum(:target_max)
-      target_min= average ? target_relation.average(:target_min).to_i : target_relation.sum(:target_min)
+      target_max= average ? target_relation.average(:target_max).round(2) : target_relation.sum(:target_max)
+      target_min= average ? target_relation.average(:target_min).round(2): target_relation.sum(:target_min)
       current_data={};current_data_count={};target_max_data={};target_min_data={};unit_data={}; frequency_condition={}
       params={:current_data=>current_data,:current_data_count=>current_data_count,:target_max_data=>target_max_data,:target_min_data=>target_min_data,:unit_data=>unit_data,:kpi=>kpi,:target_max=>target_max,:target_min=>target_min,:fre_condi=>frequency_condition}
       case  kpi.frequency

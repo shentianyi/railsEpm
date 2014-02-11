@@ -26,10 +26,12 @@
                   <table class="group">
                     <tr>
                       <td class="user-manage-name"><%= user.first_name %></td>
+                      <td class="user-manage-title"><%= user.title %></td>
                       <td class="user-manage-authority" value="<%= user.role_id %>"><%= UsersHelper.get_user_role_display(user.role_id) %></td>
                     </tr>
                     <tr>
                       <td class="user-manage-mail"><%= user.email %></td>
+                      <td><%= t 'manage.user.desc.title' %></td>
                       <td><%= t 'manage.user.desc.authority' %></td>
                     </tr>
                   </table>
@@ -41,23 +43,20 @@
           <i class="icon-remove" id="close-user-edit" general="close-user"></i>
 
           <div>
-            <input type="text" placeholder="* Name" id="edit-user-name" general="user-name"/>
-            <input type="text" placeholder="* Email" id="edit-user-mail" general="user-mail"/>
+            <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="edit-user-name" general="user-name"/>
+            <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="edit-user-mail" general="user-mail"/>
+             <input type="text" placeholder="* <%= t 'manage.user.new.title' %>" id="edit-user-title" general="user-title"/>
             <label>
               <input type="radio" name="edit-user-role" data-name="General" data-role="1" value="100" checked>
-              General
-            </label>
-            <label>
-              <input type="radio" name="edit-user-role" data-name="Department Manager" data-role="2" value="200">
-              Department Manager
+               <%= t 'manage.user.role.user' %>
             </label>
             <label>
               <input type="radio" name="edit-user-role" data-name="General Manager" data-role="3" value="300">
-              General Manager
+               <%= t 'manage.user.role.director' %>
             </label>
             <label>
               <input type="radio" name="edit-user-role" data-name="Administrator" data-role="4" value="400">
-              Administrator
+              <%= t 'manage.user.role.admin' %>
             </label>
             <input type="submit" value="Ok" class="btn btn-primary" id="manage-user-edit-old"/>
           </div>
@@ -81,7 +80,6 @@
     </section>
     <section class="solid">
       <h3><%= t 'manage.base.next' %></h3>
-
       <p><%= t 'manage.user.desc.next_desc' %></p>
       <a class="btn btn-primary" href="<%= entity_groups_path %>"><%= t 'manage.view.desc.manage' %></a>
     </section>
@@ -94,9 +92,9 @@
   <div>
     <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="new-user-name" general="user-name"/>
     <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="new-user-mail" general="user-mail"/>
+    <input type="text" placeholder="* <%= t 'manage.user.new.title' %>" id="new-user-title" general="user-title"/>
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd' %>" id="new-user-password"/>
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd_con' %>" id="new-user-password-confirm"/>
-
     <div class="div-select">
       <select data-placeholder="* <%= t 'manage.user.new.dep' %>" class="chosen-select" id="department-for-kpi">
         <option value=""></option>
@@ -105,10 +103,6 @@
     <label>
       <input type="radio" name="user-role" data-name="General" data-role="1" value="100" checked>
       <%= t 'manage.user.role.user' %>
-    </label>
-    <label>
-      <input type="radio" name="user-role" data-name="Department Manager" data-role="2" value="200">
-      <%= t 'manage.user.role.manager' %>
     </label>
     <label>
       <input type="radio" name="user-role" data-name="General Manager" data-role="3" value="300">
