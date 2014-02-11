@@ -31,5 +31,6 @@
 *= require tipsy
 *= require Entry
 *= require Log
+*= require treeview
 *= require_self
  */
