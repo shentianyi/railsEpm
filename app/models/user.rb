@@ -20,7 +20,14 @@ class User < ActiveRecord::Base
   end
   # acts as tenant
   acts_as_tenant(:tenant)
-
+  #
+  #def method_missing(method_name,*args,&block)
+  #  if Role::RoleMethods.include?(method_name)
+  #    Role.send(method_name,self.role_id)
+  #  else
+  #    super
+  #  end
+  #end
   def confirmed?
     return true #self.confirmed
   end
