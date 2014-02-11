@@ -67,3 +67,6 @@ gem 'ruby-prof', '~> 0.11.2' if RUBY_VERSION < '2.0'
 # gem for generate pdf
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
+
+# ancestry
+gem 'ancestry'
