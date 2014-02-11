@@ -27,10 +27,10 @@
           $(window).resize(function(){
               if ($("#chart-container").highcharts()) {
                   var chart = $("#chart-container").highcharts();
-                  var $div=$("#chart-body").parent();
+                  var $window=$(window);
                   chart.setSize(
-                          $div.width(),
-                          $div.height(),
+                          $window.width(),
+                          $window.height(),
                           false
                   );
               }

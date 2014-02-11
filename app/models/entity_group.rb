@@ -7,6 +7,5 @@ class EntityGroup < ActiveRecord::Base
   has_many :entities, :through=>:entity_group_items
   has_many :entity_contacts,:as=>:contactable,:dependent=>:destroy
   has_many :contacts,:through=>:entity_contacts
-
-  attr_accessible :name, :is_public,:description,:code ,:parent
+  attr_accessible :name, :is_public,:description,:code ,:parent,:ancestry
 end
