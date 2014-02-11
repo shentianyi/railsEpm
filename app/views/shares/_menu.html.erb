@@ -6,10 +6,14 @@
     <ul>
       <li>
         <a href="/"> <span><%= t 'menu.start' %></span> </a>
-      </li>
+	</li>
+	<% if Role.admin?(current_user.role_id)%>
       <li class="relative">
         <a> <span guide-name="mange_menu"><%= t 'menu.manage' %></span></a>
         <ul class="nav-manage-sub">
+           <li>
+            <a href="<%= kpis_path %>"><%= t 'menu.entity' %></a>
+          </li>
           <li>
             <a href="<%= kpis_path %>"><%= t 'menu.kpi' %></a>
           </li>
@@ -19,25 +23,21 @@
           <li>
             <a href="<%= users_path %>"><%= t 'menu.user' %></a>
           </li>
-          <li>
-            <a href="<%= entity_groups_path %>"><%= t 'menu.view' %></a>
-          </li>
-          <li>
-            <a><%= t 'menu.billing' %></a>
-          </li>
         </ul>
-      </li>
+	</li>
+    <%end%>
       <li>
         <a href="<%= dashboards_path %>" guide-name="dashboard_menu"> <span><%= t 'menu.dashboard' %></span> </a>
       </li>
       <li>
         <a href="<%= analyse_kpi_entries_path %>" guide-name="analyze_menu"> <span><%= t 'menu.analytics' %></span> </a>
       </li>
-      <!--
       <li>
-        <a guide-name="report_menu"> <span><%= t 'menu.reports' %></span></a>
+        <a guide-name="report_menu"  href="<%= entity_groups_path %>"> <span><%= t 'menu.my_view' %></span></a>
       </li>
-      -->
+      <li>
+        <a guide-name="report_menu"  href="<%= entity_groups_path %>"> <span><%= t 'menu.my_kpi' %></span></a>
+      </li>
       <li><a>
         <span>&nbsp;</span>
       </a></li>

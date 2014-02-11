@@ -5,10 +5,8 @@ IFEpm::Application.routes.draw do
       get '/analyse/:id' => :analyse
     end
   end
-
-
+  
   resources :entity_contacts
-
 
   resources :contacts
   resources :avatars
@@ -182,6 +180,13 @@ IFEpm::Application.routes.draw do
 
   end
 
+  controller :departments do
+    get 'departments'=>:index
+    post 'departments'=>:create
+    delete 'departments/:id'=>:destroy
+    post 'departments/add_entity'=>:add_entity
+  end
+  
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   match ':controller(/:action(/:id))(.:format)'

@@ -12,25 +12,33 @@
 
                 <div class="manage-right-content" id="manage-right-content">
                     <div class="manage-btn-group" id="manage-btn-group" special="view">
-                        <p id="manage-edit-target" ></p>
+			<%if @entity_group.is_public%>
+			    <p>
+			    <%=@entity_group.name%>
+			    </p>
+			<%else%>
+			<p id="manage-edit-target" ></p>
                         <i class="icon-pencil"></i>
                         <input type="text"/>
                         <a class="btn btn-primary assign-department-btn" id="entity-add-show"><%= t 'manage.view.desc.assign_dep'%></a>
-                    </div>
+		        <%end%>
+		    </div>
                     <div class="assign-entity-wrap" id="assign-entity-wrap">
                         <ul>
                            <%if @user_group_entities
                            @user_group_entities.each_with_index do |entity,i|%>
                               <li>
                                   <h3><%= entity.name%></h3>
-                                  <i class="icon-trash"  entity_id="<%= entity.entity_group_item_id%>"></i>
-                              </li>
+			          <%unless @entity_group.is_public%>
+				  <i class="icon-trash"  entity_id="<%= entity.entity_group_item_id%>"></i>
+			      <%end%>
+				  </li>
                            <% end;end%>
                         </ul>
                     </div>
                 </div>
 
-
+		<%unless @entity_group.is_public%>
                 <div class="manage-user-add" id="manage-entity-add" special="entity">
                     <i class="icon-remove" id="close-add-entity" ></i>
                     <p>
@@ -44,10 +52,10 @@
                        <%end%>
                     </ul>
                 </div>
-
+	    <%end%>
             </div>
         </div>
-
+       
         <aside class="content-right-nav" name='entity' id="content-right-nav">
             <section class="solid">
                 <h3><%= t 'manage.view.desc.assign_dep'%></h3>

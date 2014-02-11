@@ -118,6 +118,7 @@ MANAGE.user.add_new = function() {
      var group = $("#department-for-kpi :selected").text();
      var entity_id = $("#department-for-kpi :selected").attr("value");
      var mail = $("#new-user-mail").val();
+     var title=$('#new-user-title').val();
      var password = $("#new-user-password").val();
      var password_confirm = $("#new-user-password-confirm").val();
      var role = $("input[name='user-role']:checked").attr("value");
@@ -173,6 +174,7 @@ MANAGE.user.add_new = function() {
                             user : {
                                 first_name : name,
                                 email : mail,
+		                title: title,
                                 password : password,
                                 password_confirmation : password_confirm,
                                 entity_id : entity_id,
@@ -191,9 +193,11 @@ MANAGE.user.add_new = function() {
                                         .append($("<table />").addClass("group")
                                             .append($("<tr />")
                                                 .append($("<td />").text(object.first_name).addClass("user-manage-name"))
+                                                .append($("<td />").text(object.title).addClass("user-manage-title"))
                                                 .append($("<td />").text(object.role).addClass("user-manage-authority").attr("value", object.role_id)))
                                             .append($("<tr />")
                                                 .append($("<td />").text(object.email).addClass("user-manage-mail"))
+                                                .append($("<td />").text(I18n.t('manage.user.desc.title')))
                                                 .append($("<td />").text(I18n.t('manage.user.desc.authority'))))));
                                     $("#manage-sort-list input[type='checkbox']").iCheck({
                                         checkboxClass : 'icheckbox_minimal-aero'
@@ -253,14 +257,17 @@ MANAGE.user.user_edit_box_bind = function() {
      var $target = $("#manage-sort-list .icheckbox_minimal-aero.checked"),
          name = $target.next().find(".user-manage-name").text(),
          mail = $target.next().find(".user-manage-mail").text(),
+	 title=$target.next().find('.user-manage-title').text(),
          authority = $target.next().find(".user-manage-authority").attr("value");
      $("#user-edit #edit-user-name").val(name);
      $("#user-edit #edit-user-mail").val(mail);
+     $("#user-edit #edit-user-title").val(title);
      $("#user-edit input[type='radio'][value='" + authority + "']").iCheck("check");
      $("#manage-user-edit-old").attr("effect_on", $target.parent().attr("id"));
 }
 MANAGE.user.edit = function() {
      var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(), edit_role = $("#user-edit input[name='edit-user-role']:checked").data("name"), edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"), edit_id = $("#manage-user-edit-old").attr("effect_on"), $target = $("#manage-sort-list").find("#" + edit_id);
+     var title= $("#user-edit #edit-user-title").val();
      if($.trim(edit_name).length > 0 && edit_mail.length > 0) {
           if($("#user-edit>div>input").filter("[red='true']").length == 0) {
                $.ajax({
@@ -271,6 +278,7 @@ MANAGE.user.edit = function() {
                          user : {
                               first_name : edit_name,
                               email : edit_mail,
+                              title: title,
                               role_id : edit_authority
                          }
                     },
@@ -280,6 +288,7 @@ MANAGE.user.edit = function() {
                               var object=data.object;
                               $target.find(".user-manage-name").text(object.first_name);
                               $target.find(".user-manage-mail").text(object.email);
+                              $target.find(".user-manage-title").text(object.title);
                               if($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant")=="false")
                               $target.find(".user-manage-authority").text(object.role).attr("value", object.role_id);
                          } else {
