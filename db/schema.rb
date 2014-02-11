@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20140211043249) do
     t.boolean  "is_public",   :default => false
     t.string   "description"
     t.string   "code"
+    t.string   "ancestry"
   end
 
   add_index "entity_groups", ["user_id"], :name => "index_entity_groups_on_user_id"

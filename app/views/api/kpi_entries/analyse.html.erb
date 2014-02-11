@@ -24,6 +24,17 @@
 <script>
      $(document).ready(function() {
           prepare_form_cchart();
+          $(window).resize(function(){
+              if ($("#chart-container").highcharts()) {
+                  var chart = $("#chart-container").highcharts();
+                  var $div=$("#chart-body").parent();
+                  chart.setSize(
+                          $div.width(),
+                          $div.height(),
+                          false
+                  );
+              }
+          });
      });
      function prepare_form_cchart() {
           var data = jQuery.parseJSON($("#data-hidden").val());
