@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140117150116) do
+ActiveRecord::Schema.define(:version => 20140211064118) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20140117150116) do
     t.boolean  "is_public",   :default => false
     t.string   "description"
     t.string   "code"
+    t.string   "ancestry"
   end
 
   add_index "entity_groups", ["user_id"], :name => "index_entity_groups_on_user_id"
