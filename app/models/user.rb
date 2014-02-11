@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
       super
     end
   end
+
   def confirmed?
     return true #self.confirmed
   end
