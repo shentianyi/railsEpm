@@ -27,6 +27,7 @@ class UsersController < ApplicationController
       temp[:role] = UsersHelper.get_user_role_display(@user.role_id)
       temp[:role_id] = @user.role_id
       temp[:email] = @user.email
+      temp[:title]=@user.title
       msg.object = temp
     else
       msg.result=false
@@ -51,6 +52,7 @@ class UsersController < ApplicationController
       temp[:role] = UsersHelper.get_user_role_display(@user.role_id)
       temp[:role_id] = @user.role_id
       temp[:email] = @user.email
+      temp[:title]=@user.title
       msg.object = temp.as_json
     else
       msg.result = false;
