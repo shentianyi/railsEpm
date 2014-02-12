@@ -1,0 +1,10 @@
+<ul class="manage-left-menu" id="manage-left-menu" type="group">
+     <li><%= t 'manage.user.desc.authority' %></li>
+     <li id="manage-menu-add" style="background-color:rgba(0,0,0,0)"></li>
+
+     <%@roles.each do |role|%>
+         <li class="<%= role.id==@active_role_id ? 'active' : ''%>" title="<%= role.name %>" number="<%= role.id%>">
+             <a href="/users/index/<%=role.id%>"><%= role.name %></a>
+         </li>
+     <%end%>
+</ul>

@@ -29,6 +29,7 @@ IFEpm::Application.routes.draw do
 
   resources :users do
     collection do
+      get 'index/:id'=>:index
       match :login
       post :add
       put :update
@@ -59,7 +60,7 @@ IFEpm::Application.routes.draw do
 
   resources :kpi_categories do
     collection do
-      get 'index/:f'=>:index
+      get 'index/:id'=>:index
       put :update
       get :template
       get :list
@@ -78,6 +79,7 @@ IFEpm::Application.routes.draw do
 
   resources :entity_groups do
     collection do
+      get 'index/:id'=>:index
       put :update
     end
   end

@@ -3,11 +3,12 @@ class UsersController < ApplicationController
   before_filter :require_user_as_admin,:only=>:index
 
   # get ability entity
-  before_filter :get_ability_entity,:only=>[:index,:new,:edit]
+  before_filter :get_ability_entity,:only=>[:new,:edit]
   before_filter :get_ability_user,:only=>[:edit,:update,:destroy]
   def index
-    @active_entity_id=params[:p].nil? ? @entities[0].id : params[:p].to_i
-    @users=User.accessible_by(current_ability).where(:entity_id=>@active_entity_id).all
+    @roles=Role.role_items
+    @active_role_id=params[:id].nil? ? @roles[0].id : params[:id].to_i
+    @users=User.accessible_by(current_ability).by_role(@active_role_id).all
   end
 
   def edit

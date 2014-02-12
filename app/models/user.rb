@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 
   belongs_to :tenant
   belongs_to :entity
-
+  belongs_to :entity_group
   has_many :entity_groups,:dependent=>:destroy
   has_many :kpis,:through=>:user_kpi_items
   has_many :user_kpi_items,:dependent=>:destroy
@@ -80,10 +80,12 @@ class User < ActiveRecord::Base
     end
   end
 
-  #def ability_entity_groups current_ability
-  #  EntityGroup.where("user_id = ? or is_public = 1",self.id).accessible_by(current_ability)
-  #  #self.entity_groups.accessible_by(current_ability)
-  #end
+  def self.by_role role
+    self.joins('left join entities on users.entity_id=entities.id')
+    .joins('left join entity_groups on users.entity_group_id=entity_groups.id')
+    .where(role_id:role)
+    .select('users.*,entities.name as entity_name,entity_groups.name as entity_group_name')
+  end
 
   #待测试
   def insert_guide_template
