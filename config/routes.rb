@@ -115,7 +115,6 @@ IFEpm::Application.routes.draw do
      collection do
        get :analyse ,:defaults=>{:format=>'html'}
        get :data
-       get :mail_test ,:defaults=>{:format=>'html'}
      end
     end
  

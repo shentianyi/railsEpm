@@ -1,10 +1,11 @@
 #encoding: utf-8
-class Api::UserSessionsController < ApplicationController
+class Api::UserSessionsController < ApiController
  before_filter :require_no_user, :only=>:create
  skip_before_filter :require_user,:only=>:create
  skip_before_filter :require_active_user,:only=>:create
  skip_before_filter :find_current_user_tenant,:only=>:create
  skip_before_filter :check_tenant_status,:only=>:create
+ skip_before_filter :require_user_as_director
  skip_authorize_resource :only=>:create
 
   def create

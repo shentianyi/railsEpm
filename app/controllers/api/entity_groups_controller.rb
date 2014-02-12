@@ -1,4 +1,4 @@
-class Api::EntityGroupsController < ApplicationController
+class Api::EntityGroupsController < ApiController
   def index
     get_user_entity_groups
     egs= @entity_groups.select('id,name,is_public,description,code,user_id').all

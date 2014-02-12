@@ -1,4 +1,4 @@
-class Api::DashboardItemsController < ApplicationController
+class Api::DashboardItemsController < ApiController
 
   def items_by_dashboard_id
     formatted_items = DashboardItem::get_formatted_items_by_dashboard_id(params[:id])

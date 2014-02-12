@@ -1,2 +1,2 @@
-class Api::EntityGroupItemsController < ApplicationController
+class Api::EntityGroupItemsController < ApiController
 end

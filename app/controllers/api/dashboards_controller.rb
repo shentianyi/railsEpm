@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #RESTFUL api 专用的控制器，对仪表盘对象进行CRUD操作
-class Api::DashboardsController < ApplicationController
-
+class Api::DashboardsController < ApiController
   #
   #根据当前当前登陆的用户获得其用户名下所有的仪表盘
   def index

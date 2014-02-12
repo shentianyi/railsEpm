@@ -1,6 +1,6 @@
 #encoding: utf-8
 #RESTFUL api
-class Api::EmailsController < ApplicationController
+class Api::EmailsController < ApiController
   layout 'pure'
 
   def index
