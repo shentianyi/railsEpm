@@ -52,12 +52,12 @@ module KpisHelper
 
   # get user kpis by user
   def self.get_kpis_by_user user
-    user.kpis.joins(:kpi_category).select("kpis.*,user_kpi_items.target_max as 'user_kpi_item_target_max',user_kpi_items.target_min as 'user_kpi_item_target_min',user_kpi_items.id as 'user_kpi_item_id',kpi_categories.name as 'category_name'")
+    user.kpis.joins(:kpi_category).select(user_kpi_base_query_field)
   end
 
   # get user kpis by user and frequency
   def self.get_kpis_by_user_and_frequency user,frequency
-    user.kpis.joins(:kpi_category).where('kpis.frequency=? and kpis.is_calculated=?',frequency,false).select("kpis.*,user_kpi_items.target_max as 'user_kpi_item_target_max',user_kpi_items.target_min as 'user_kpi_item_target_min',user_kpi_items.id as 'user_kpi_item_id',kpi_categories.name as 'category_name'")
+    user.kpis.joins(:kpi_category).where('kpis.frequency=? and kpis.is_calculated=?',frequency,false).select(user_kpi_base_query_field)
   end
 
   # get user unassigned kpi
@@ -75,5 +75,11 @@ module KpisHelper
     return user.tenant.kpi_categories
     end
     return nil
+  end
+
+  private
+
+  def self.user_kpi_base_query_field
+    "kpis.*,user_kpi_items.target_max as 'user_kpi_item_target_max',user_kpi_items.target_min as 'user_kpi_item_target_min',user_kpi_items.id as 'user_kpi_item_id',kpi_categories.name as 'category_name'"
   end
 end

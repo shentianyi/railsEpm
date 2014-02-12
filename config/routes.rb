@@ -59,6 +59,7 @@ IFEpm::Application.routes.draw do
 
   resources :kpi_categories do
     collection do
+      get 'index/:f'=>:index
       put :update
       get :template
       get :list
@@ -67,8 +68,8 @@ IFEpm::Application.routes.draw do
 
   resources :kpi_entries do
     collection do
-      post :entry
-      post :refresh_entry
+      #post :entry
+     # get :refresh_entry
       match :analyse
       get :recents
       post :import
@@ -114,7 +115,6 @@ IFEpm::Application.routes.draw do
      collection do
        get :analyse ,:defaults=>{:format=>'html'}
        get :data
-       get :mail_test ,:defaults=>{:format=>'html'}
      end
     end
  

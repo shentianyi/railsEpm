@@ -1,15 +1,11 @@
 #encoding: utf-8
 class KpisController < ApplicationController
-  # before_filter :get_ability_category,:only=>[:index,:assign],:if=>lambda{|c|   action_name=="assign" ? request.get?  : true}
+  before_filter :require_user_as_admin,:only=>:index
   before_filter :get_ability_category,:only=>:index
   before_filter :get_kpis_by_category,:only=>:categoried
   def index
     @active_category_id= params[:id].nil? ? ( @categories.length>0 ? @categories[0].id : nil ) : params[:id].to_i
     get_kpis_by_category(@active_category_id) if @active_category_id
-  # @units=KpiUnit.all
-  # @frequencies=KpiFrequency.all
-  # @directions=KpiDirection.all
-  # @base_kpis=Kpi.base_kpis  current_ability
   end
 
   # create kpi

@@ -5,6 +5,6 @@ class EntityGroupItem < ActiveRecord::Base
   
    validate :validate_create_update
   def validate_create_update 
-    errors.add('','cannot assign') if self.class.where(:entity_id=>self.entity_id,:entity_group_id=>self.entity_group_id).first if new_record? # for create
+    errors.add('',I18n.t('manage.view.already_assigned')) if self.class.where(:entity_id=>self.entity_id,:entity_group_id=>self.entity_group_id).first if new_record? # for create
   end
 end

@@ -401,6 +401,8 @@ zh:
           assign_dep: 分配输入点
           assign_desc: 首先创建一个视图，然后将输入点加入到视图中，一个视图是查看分析数据的基础
           next_desc: 完成管理中的所有部分后， 你可以让你的员工（用户）通过‘KPI输入’来输入KPI
+        already_assigned: 输入点已经分配，不可重复
+        unassign_confirm: 确定取消分配此输入点？
   #dashboard
   dashboard_group:
     base:

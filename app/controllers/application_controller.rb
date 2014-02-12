@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user
   before_filter :require_user
   before_filter :require_active_user
+
   before_filter :find_current_user_tenant
   #
   before_filter :check_tenant_status
@@ -132,6 +133,13 @@ class ApplicationController < ActionController::Base
   end
 
 
+  #def require_user_as_admin
+  #  unless current_user.admin?
+  #    error_page_403
+  #  end
+  #end
+
+
   def load_user_using_perishable_token
     @user = User.find_using_perishable_token(params[:id])
     unless @user
@@ -205,24 +213,11 @@ class ApplicationController < ActionController::Base
     I18n.locale=cookies[:locale] || extract_locale_from_accept_language_header || I18n.default_locale
   end
   
-  private
   def extract_locale_from_accept_language_header
      request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first if request.env['HTTP_ACCEPT_LANGUAGE']
   end
   
-    def error_page_403
-    respond_to do |format|
-      format.html {render :file => File.join(Rails.root, 'public/403.html'), :status => 403, :layout => false}
-      format.json { render json: {access:false,errorCode:-4000} ,status: 403}
-    end
-  end
 
-  def error_page_404
-    respond_to do |format|
-      format.html {render :file => File.join(Rails.root, 'public/404.html'), :status => 404, :layout => false}
-      format.json { render json: {access:false} ,status: 404 }
-    end
-  end
   
 end
 

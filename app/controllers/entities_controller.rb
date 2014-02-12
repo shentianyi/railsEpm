@@ -1,5 +1,6 @@
 #encoding: utf-8
 class EntitiesController < ApplicationController
+  before_filter :require_user_as_admin,:only=>:index
     before_filter :get_ability_entity,:only=>[:update,:destroy]
 
   #index
