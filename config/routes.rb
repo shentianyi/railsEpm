@@ -150,6 +150,7 @@ IFEpm::Application.routes.draw do
       member do
         get :contacts
         get :kpis
+        get :detail
       end
     end
     resources :kpi_categories

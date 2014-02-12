@@ -1,6 +1,9 @@
+<% content_for :javascript_includes do%>
+<%= javascript_include_tag "dom-drag.js"%>
+<% end %>
 <div class="tree">
-  <ul>
-    <li>
+  <ul class="draggable">
+    <li id="a">
       <a href="#">President Director <br/>Tetsuo Nakai</a>
       <ul>
         <li>
@@ -8,20 +11,17 @@
             HR &amp; Administration<br/>
             Heli Neo<br/>Manager</a>
           <ul>
-            <li>
+            <li id="b">
               <a href="#">IT Administrator <br/>Ericson Ginting<br/>Assistant Manager</a>
-
               <ul>
                 <li>
                   <a href="#">IT Engineer <br/>I Wayan Purushottama<br/>Engineer</a>
-
                   <ul>
                     <li>
                       <a href="#">IT Support<br/>Juanda F Butar Butar<br/>Assistant Engineer</a>
                     </li>
                   </ul>
                 </li>
-
                 <li>
                   <a href="#" class="just-line"><br/><br/><br/></a>
                   <ul>
@@ -43,3 +43,18 @@
     </li>
   </ul>
 </div>
+<script type="text/javascript">
+  $(document).ready(function(){
+  //
+  var array = $("draggble > li");
+  var a = document.getElementById("a");
+  var b = document.getElementById("b");
+  //Drag.init(a);
+  Drag.init(b);
+
+  a.onDrag = function(x,y){
+  console.log(x+" "+y);
+  }
+
+  });
+</script>
