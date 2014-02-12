@@ -53,7 +53,7 @@
     <li>
       <a>e.name</a>
     </li>
-
+    
   </ul>
 </div>
 <% end %>

@@ -4,7 +4,8 @@ class DepartmentsController < ApplicationController
   layout "fullsize"
 
   def index
-    render
+    @entity_groups = EntityGroup.where('is_public = true AND ancestry is NULL')
+    render :json => @entity_groups
   end
 
   def create
@@ -45,21 +46,60 @@ class DepartmentsController < ApplicationController
     msg.result = true
     ActiveRecord::Base.transaction do
       @entity_group = EntityGroup.find(params[:id])
-      @entity_group_item = EntityGroupItem.new(:entity_id=>paarms[:entity_id],:entity_group_id=>params[:id])
+      @entity_group_item = EntityGroupItem.new(:entity_id=>params[:entity_id],:entity_group_id=>params[:id])
       if !@entity_group_item.save!
         msg.result = false
         msg.content = @entity_group_item.errors.full_messages
       end
       if @entity_group
         @entity_group.ancestor_ids.each do |id|
-          @e = EntityGroupItem.new(:entity_id=>paarms[:entity_id],:entity_group_id=>id)
+          @e = EntityGroupItem.new(:entity_id=>params[:entity_id],:entity_group_id=>id)
           if !@e.save!
             msg.result = false
           end
         end
       end
     end
+    msg.content =@entity_group_item
+    render :json=>msg
   end
-  msg.content =@entity_group_item
-  render :json=>msg
+
+  def remove_entity
+    #traversal all the parent node
+    #and remove all the entity of them
+    msg = Message.new
+    msg.result = true
+    ActiveRecord::Base.transaction do
+      EntityGroupItem.delete_all("entity_id = ?",params[:id])
+    end
+    render :json=>msg
+  end
+
+  def add_user
+    msg = Message.new
+    msg.result = false
+    @entity_group = EntityGroup.find_by_id(params[:entity_group_id])
+    @user = User.find_by_id(params[:user_id])
+
+    if @entity_group && @user
+      @user.entity_group_id = @entity_group.id
+      msg.result = @user.save!
+    else
+    end
+    render :json=>msg
+  end
+
+  def remove_user
+    msg = Message.new
+    msg.result = false
+    @entity_group = EntityGroup.find_by_id(params[:entity_group_id])
+    @user = User.find_by_id(params[:user_id])
+
+    if @entity_group && @user
+      @user.entity_group_id = nil
+      msg.result = @user.save!
+    else
+    end
+    render :json=>msg
+  end
 end
