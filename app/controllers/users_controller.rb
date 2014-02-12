@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def index
     @roles=Role.role_items
     @active_role_id=params[:id].nil? ? @roles[0].id : params[:id].to_i
-    @users=User.accessible_by(current_ability).by_role(:role_id=>@active_role_id).all
+    @users=User.accessible_by(current_ability).by_role(@active_role_id).all
   end
 
   def edit

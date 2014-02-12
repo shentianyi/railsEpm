@@ -391,7 +391,8 @@ zh:
           email: 邮箱
           pwd: 密码
           pwd_con: 确认密码
-          dep: 部门
+          dep: 输入点
+          entity_group: 部门
           title: 职位
       view:
         desc:

@@ -24,11 +24,15 @@
                     <tr>
                       <td class="user-manage-name"><%= user.first_name %></td>
                       <td class="user-manage-title"><%= user.title %></td>
+                      <td class="user-manage-title"><%= user.entity_name %></td>
+                      <td class="user-manage-title"><%= user.entity_group_name %></td>
                       <td class="user-manage-authority" value="<%= user.role_id %>"><%= UsersHelper.get_user_role_display(user.role_id) %></td>
                     </tr>
                     <tr>
                       <td class="user-manage-mail"><%= user.email %></td>
                       <td><%= t 'manage.user.desc.title' %></td>
+                      <td><%= t 'manage.user.new.dep' %></td>
+                      <td><%= t 'manage.user.new.entity_group' %></td>
                       <td><%= t 'manage.user.desc.authority' %></td>
                     </tr>
                   </table>
@@ -94,6 +98,11 @@
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd_con' %>" id="new-user-password-confirm"/>
     <div class="div-select">
       <select data-placeholder="* <%= t 'manage.user.new.dep' %>" class="chosen-select" id="department-for-kpi">
+        <option value=""></option>
+      </select>
+    </div>
+    <div class="div-select">
+      <select data-placeholder="* <%= t 'manage.user.new.entity_group' %>" class="chosen-select" id="entity_group-for-kpi">
         <option value=""></option>
       </select>
     </div>

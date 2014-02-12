@@ -385,6 +385,7 @@ en:
         pwd: Password
         pwd_con: Password Confirmation
         dep: Data Point
+        entity_group: Entity
         title: Title
     view:
       desc:

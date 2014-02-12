@@ -3,6 +3,7 @@ class EntityGroup < ActiveRecord::Base
   has_ancestry
 
   belongs_to :user
+  has_many :users
   has_many :entity_group_items,:dependent => :delete_all
   has_many :entities, :through=>:entity_group_items
   has_many :entity_contacts,:as=>:contactable,:dependent=>:destroy
