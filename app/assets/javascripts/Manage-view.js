@@ -55,16 +55,16 @@ MANAGE.view.init=function(){
            });
         }
         else{
-            MessageBox("Same User Group has already been assigned","top","warning");
+            MessageBox(I18n.t('manage.view.already_assigned'),"top","warning");
         }
     });
     $("body").on("click","#assign-entity-wrap li>i",function(){
         var id=$(this).attr("entity_id"),
      
             $this=$(this); 
-        if(confirm("Unassign this user group ?")){
+        if(confirm(I18n.t('manage.view.unassign_confirm'))){
             $.ajax({
-                url:'../entity_group_items/'+id,
+                url:'/entity_group_items/'+id,
                 type: 'DELETE',
                 success:function(data){
                     if(data.result){

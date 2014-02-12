@@ -2,19 +2,20 @@
 class KpiEntriesController < ApplicationController
   # create or update kpi entry
   before_filter :get_ability_category,:only=>[:analyse],:if=>lambda{|c|  request.get?}
-  def entry
-    if request.post?
+
+
+  def index
+    @f = params[:id].nil? ? KpiFrequency::Hourly : params[:id].to_i
+  end
+
+  def create
       @kpi_entry=KpiEntriesHelper.create_update_kpi_entry params,current_ability
       render :json=>{:result=>true}
-    end
   end
 
-  def new
-    @f = params[:f].nil? ? KpiFrequency::Hourly : params[:f].to_i
-  end
 
   #
-  def refresh_entry
+  def show
     @f = params[:f].nil? ? KpiFrequency::Hourly : params[:f].to_i
     @parsed_entry_at=DateTimeHelper.get_utc_time_by_str(params[:date])
     @user_kpis=KpisHelper.get_kpis_by_user_and_frequency current_user,@f

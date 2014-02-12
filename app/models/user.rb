@@ -80,10 +80,10 @@ class User < ActiveRecord::Base
     end
   end
 
-  def ability_entity_groups current_ability
-    EntityGroup.where("user_id = ? or is_public = 1",self.id).accessible_by(current_ability)
-    #self.entity_groups.accessible_by(current_ability)
-  end
+  #def ability_entity_groups current_ability
+  #  EntityGroup.where("user_id = ? or is_public = 1",self.id).accessible_by(current_ability)
+  #  #self.entity_groups.accessible_by(current_ability)
+  #end
 
   #待测试
   def insert_guide_template

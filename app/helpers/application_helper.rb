@@ -10,12 +10,11 @@ module ApplicationHelper
   end
 
   def get_kpis_by_category id=nil
-    # id=params[:id].nil? ? @categories[0].id : params[:id].to_i unless id
     @kpis=id.nil? ? []:Kpi.accessible_by(current_ability).joins(:kpi_category).where(:kpi_category_id=>id).select("kpis.*,kpi_categories.name as 'category_name'").all
   end
 
   def get_user_entity_groups
-    @entity_groups=current_user.ability_entity_groups(current_ability)
+    @entity_groups=current_user.entity_groups
   end
 
   def get_ability_entity

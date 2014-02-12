@@ -9,8 +9,8 @@
 
             <div class="manage-left-content" id="manage-left-content">
                 <%= render :partial=>'entity_groups/left_menu'%>
-
-                <div class="manage-right-content" id="manage-right-content">
+                 <% if @entity_group %>
+                 <div class="manage-right-content" id="manage-right-content">
                     <div class="manage-btn-group" id="manage-btn-group" special="view">
 			<%if @entity_group.is_public%>
 			    <p>
@@ -53,7 +53,8 @@
                     </ul>
                 </div>
 	    <%end%>
-            </div>
+                  <%end%>
+                  </div>
         </div>
        
         <aside class="content-right-nav" name='entity' id="content-right-nav">

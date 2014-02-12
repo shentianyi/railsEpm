@@ -394,6 +394,8 @@ en:
         assign_dep: Assign Data Point
         assign_desc: Creating view first , then assign data point to the view ,view is the base condition in analytics
         next_desc: Creating view first , then assign data point to the view,view is the base condition in analytics
+      already_assigned: Data point has been assigned!
+      unassign_confirm: Sure to unassign this data point?
   #dashboard
   dashboard_group:
     base:
