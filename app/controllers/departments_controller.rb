@@ -59,7 +59,8 @@ class DepartmentsController < ApplicationController
         end
       end
     end
+    msg.content =@entity_group_item
+    render :json=>msg
   end
-  msg.content =@entity_group_item
-  render :json=>msg
+
 end
