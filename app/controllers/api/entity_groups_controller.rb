@@ -25,4 +25,14 @@ class Api::EntityGroupsController < ApplicationController
       t.js {render :js=>jsonp_str(kpis)}
     end
  end
+
+  def detail
+    entity_group = EntityGroup.find(params[:id])
+    e = EntityGroup.where(id:params[:id]).select('id,name,is_public,description,code,user_id')
+    contacts = entity_group.contacts.select('contacts.id,contacts.name,tel,phone,email,title,image_url').all
+    respond_to do |t|
+      t.json {render :json=>{contact:contacts,entityGroup:e}}
+      t.js {render :js=>jsonp_str({contact:contacts,entityGroup:e})}
+    end
+  end
 end

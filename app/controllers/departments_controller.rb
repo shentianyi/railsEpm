@@ -1,6 +1,7 @@
 #encoding: utf-8
 class DepartmentsController < ApplicationController
   skip_load_and_authorize_resource
+  layout "fullsize"
 
   def index
     render

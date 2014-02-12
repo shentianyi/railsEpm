@@ -117,3 +117,11 @@ a.just-line + ul {
 a.just-line + ul:before {
         height: 74px;
 }
+
+.draggable {
+    position:relative;
+}
+
+.draggable li{
+    position:relative;
+}

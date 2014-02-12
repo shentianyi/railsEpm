@@ -1,4 +1,4 @@
-GEM
+roGEM
   remote: http://ruby.taobao.org/
   specs:
     actionmailer (3.2.13)
