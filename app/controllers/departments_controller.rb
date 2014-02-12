@@ -5,7 +5,7 @@ class DepartmentsController < ApplicationController
 
   def index
     @entity_groups = EntityGroup.where('is_public = true AND ancestry is NULL')
-    render :json => @entity_groups
+    render
   end
 
   def create

@@ -69,4 +69,4 @@ gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 
 # ancestry
-gem 'ancestry'
+gem 'ancestry',:git => "git://github.com/stefankroes/ancestry.git"
