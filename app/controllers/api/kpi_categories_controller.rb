@@ -1,4 +1,5 @@
-class Api::KpiCategoriesController < ApiController
+module Api
+class KpiCategoriesController < ApiController
   def index
      get_ability_category
      respond_to do |t|
@@ -7,3 +8,4 @@ class Api::KpiCategoriesController < ApiController
      end
   end
 end
+  end

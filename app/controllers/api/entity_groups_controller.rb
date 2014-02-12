@@ -1,4 +1,5 @@
-class Api::EntityGroupsController < ApiController
+module Api
+class EntityGroupsController < ApiController
   def index
     get_user_entity_groups
     egs= @entity_groups.select('id,name,is_public,description,code,user_id').all
@@ -36,3 +37,4 @@ class Api::EntityGroupsController < ApiController
     end
   end
 end
+  end

@@ -1,4 +1,5 @@
-class Api::KpisController < ApiController
+module Api
+class KpisController < ApiController
   def kpis_by_category
     get_kpis_by_category(params[:id])
     respond_to do |t|
@@ -6,4 +7,5 @@ class Api::KpisController < ApiController
       t.js {render :js=>jsonp_str(@kpis)}
     end
   end
+end
 end
