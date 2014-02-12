@@ -28,9 +28,7 @@ class Ability
       can :basic_modify,EntityGroup,:user_id=>user.id
 
       can :create,EntityGroupItem
-      can :basic_modify,EntityGroupItem do |item|
-        item.entity_group.user_id==user.id
-      end
+      can :basic_modify,EntityGroupItem,entity_group:{id:user.entity_id}
 
       can :read,KpiCategory,kpis:{user_kpi_items:{user_id:user.id}}
       can :read,Kpi,user_kpi_items:{user_id:user.id}
