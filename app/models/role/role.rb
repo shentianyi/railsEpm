@@ -21,4 +21,16 @@ class Role
   def self.id_sym id
     id.to_s.to_sym
   end
+
+  def self.role_items
+   role_items=[]
+   @@roles.each do |key,value|
+          role_items<<RoleItem.new(id:key.to_s.to_i,name:value[:display])
+   end
+    return role_items
+  end
+end
+
+class RoleItem<CZ::BaseClass
+  attr_accessor :id,:name
 end

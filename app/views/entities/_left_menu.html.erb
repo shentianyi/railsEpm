@@ -5,7 +5,7 @@
      <%@entities.each do |entity|%>
          <li class="<%= entity.id==@active_entity_id ? 'active' : ''%>" title="<%= entity.name %>" number="<%= entity.id%>">
              <i class="icon-trash icon-item"></i>
-             <a href="../users?p=<%=entity.id%>"><%= entity.name %></a>
+             <a href="/users/index/<%=entity.id%>"><%= entity.name %></a>
          </li>
      <%end%>
 </ul>

@@ -105,14 +105,14 @@ category_add.prototype=MANAGE.manage_menu_left_add.prototype;
 category_add.prototype.constructor=category_add;
 function group_add(){
     this.name="部门";
-    this.href="/users?p=";
+    this.href="/users/index/";
     this.postHref='/entities';
 }
 group_add.prototype=MANAGE.manage_menu_left_add.prototype;
 group_add.prototype.constructor=group_add;
 function entity_add(){
     this.name="view";
-    this.href="/entity_groups?p=";
+    this.href="/entity_groups/index/";
     this.postHref='/entity_groups';
 }
 entity_add.prototype=MANAGE.manage_menu_left_add.prototype;
