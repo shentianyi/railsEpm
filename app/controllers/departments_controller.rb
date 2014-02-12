@@ -4,8 +4,9 @@ class DepartmentsController < ApplicationController
   layout "fullsize"
 
   def index
-    @entity_groups = EntityGroup.where('is_public = true AND ancestry is NULL')
-    render
+    #@entity_groups = EntityGroup.where('is_public = true AND ancestry is NULL')
+    entity_groups = EntityGroup.arrange_serializable(:is_public => true)
+    render :json=>entity_groups
   end
 
   def create
