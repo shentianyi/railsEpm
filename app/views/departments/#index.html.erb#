@@ -4,7 +4,7 @@
 <% end %>
 <div class="tree">
   <ul class="draggable">
-    <li id="a">
+    <li>
       <a href="#">President Director <br/>Tetsuo Nakai</a>
       <ul>
         <li>
@@ -12,7 +12,7 @@
             HR &amp; Administration<br/>
             Heli Neo<br/>Manager</a>
           <ul>
-            <li id="b">
+            <li>
               <a href="#">IT Administrator <br/>Ericson Ginting<br/>Assistant Manager</a>
               <ul>
                 <li>
@@ -43,14 +43,23 @@
       </ul>
     </li>
   </ul>
+  <ul class="draggable">
+
+  </ul>
 </div>
-<div></div>
-<style>
-  .break {height:100px;width:100px;position:relative;background-color:#999}
-  .hit {background-color:#898}
-</style>
+<% @entity_groups.each do |e|%>
+<div class="tree">
+  <ul class="draggable">
+    <li>
+      <a>e.name</a>
+    </li>
+    
+  </ul>
+</div>
+<% end %>
 
 <script type="text/javascript">
+  /*
   $(document).ready(function(){
 
     $(".draggable a").addClass("collision");
@@ -73,4 +82,5 @@
     var col = $(this).children("a").collision(".collsion");
     col.addClass("hit");
   }
+*/
 </script>
