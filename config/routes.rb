@@ -186,6 +186,9 @@ IFEpm::Application.routes.draw do
     post 'departments'=>:create
     delete 'departments/:id'=>:destroy
     post 'departments/add_entity'=>:add_entity
+    delete 'departments/remove_entity'=>:remove_entity
+    post 'departments/add_user'=>:add_user
+    delete 'departments/remove_user'=>:remove_user
   end
   
   # This is a legacy wild controller route that's not recommended for RESTful applications.
