@@ -10,4 +10,8 @@ class EntityGroup < ActiveRecord::Base
   has_many :contacts,:through=>:entity_contacts
   attr_accessible :name, :is_public,:description,:code ,:parent,:ancestry,:is_department
 
+
+  def self.deparments
+    where(is_department:true)
+  end
 end

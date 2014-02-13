@@ -35,13 +35,7 @@ MANAGE.user.init = function() {
           MANAGE.user.edit()
      });
 
-    $("#manage-left-menu>li").each(function(){
-        if($(this).attr("number")!=undefined){
-            $("#department-for-kpi").append(
-                $("<option />").attr("value",$(this).attr("number")).text($(this).attr("title"))
-            )
-        }
-    });
+
     $("#department-for-kpi").val('').trigger('chosen:updated');
     $("#manage-user-add").height($(document).height()-$("header").height());
     $(window).resize(function(){
@@ -106,7 +100,7 @@ MANAGE.user.user_edit_close = function() {
 MANAGE.user.user_add_clear = function() {
      $("[general='manage-user-add'] input[type='text']").val("");
      $("[general='manage-user-add'] input[type='password']").val("");
-    $("[general='manage-user-add'] select").val('').trigger('chosen:updated');
+     $("[general='manage-user-add'] select").val('').trigger('chosen:updated');
      $("[general='manage-user-add'] input[type='radio']").iCheck("uncheck");
      $("[general='manage-user-add']>div>input").filter("[red='true']").css("borderColor", "#ddd").attr("red", "false");
      $("#manage-user-add input[type='radio']").first().iCheck("check");
@@ -117,6 +111,7 @@ MANAGE.user.add_new = function() {
      var name = $("#new-user-name").val();
      var group = $("#department-for-kpi :selected").text();
      var entity_id = $("#department-for-kpi :selected").attr("value");
+    var entity_group_id = $("#entity-group-for-kpi :selected").attr("value");
      var mail = $("#new-user-mail").val();
      var title=$('#new-user-title').val();
      var password = $("#new-user-password").val();
@@ -124,60 +119,17 @@ MANAGE.user.add_new = function() {
      var role = $("input[name='user-role']:checked").attr("value");
      var authority = $("input[name='user-role']:checked").data("name");
      if($.trim(name).length > 0 && mail.length > 0 && password.length > 0 && password_confirm.length > 0) {
-          if($("#manage-user-add>div>input").filter("[red='true']").length == 0) {
-                if(group.length>0){
-
-
-//                    $("#manage-sort-list").prepend($("<li />").attr("id","21")
-//                        .append($("<p />").addClass("sort-handle").text(":"))
-//                        .append($("<input type='checkbox'/>"))
-//                        .append($("<table />").addClass("group")
-//                            .append($("<tr />")
-//                                .append($("<td />").text(name).addClass("user-manage-name"))
-//                                .append($("<td />").text(authority).addClass("user-manage-authority").attr("value",role))
-//                            )
-//                            .append($("<tr />")
-//                                .append($("<td />").text(mail).addClass("user-manage-mail"))
-//                                .append($("<td />").text("Authority"))
-//                            )
-//                        )
-//                    );
-//                    $("#manage-sort-list input[type='checkbox']").iCheck({
-//                        checkboxClass: 'icheckbox_minimal-aero'
-//                    });
-//                    $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
-//                        if(!$(this).parent().hasClass("checked")){
-//                            MANAGE.totalChecked+=1;
-//                            total_check_listener();
-//                        }
-//                        else{
-//                            MANAGE.totalChecked-=1;
-//                            total_check_listener();
-//                        }
-//                    });
-//                    $("#manage-sort-list li").on("resize",function(){
-//                        MANAGE.resize_sort_table()
-//                    });
-//                    MANAGE.judge_kpi_count();
-//                    MANAGE.sort_init();
-//                    MANAGE.resize_sort_table();
-//                    MANAGE.user.icheck.init();
-//                    MANAGE.user.user_add_close();
-
-
-
-
-
                     $.ajax({
                         url : '/users',
                         data : {
                             user : {
                                 first_name : name,
                                 email : mail,
-		                title: title,
+		                        title: title,
                                 password : password,
                                 password_confirmation : password_confirm,
                                 entity_id : entity_id,
+                                entity_group_id:entity_group_id,
                                 role_id : role
                             }
                         },
@@ -238,15 +190,6 @@ MANAGE.user.add_new = function() {
                             }
                         }
                     });
-
-
-                }
-                else{
-                    MessageBox("Please choose a department to put your new user", "top", "danger");
-                }
-          } else {
-               MessageBox("Please fix the input with red border", "top", "danger");
-          }
      } else {
           MessageBox("Please fill all the blanket taking *", "top", "warning");
      }
@@ -257,7 +200,9 @@ MANAGE.user.user_edit_box_bind = function() {
      var $target = $("#manage-sort-list .icheckbox_minimal-aero.checked"),
          name = $target.next().find(".user-manage-name").text(),
          mail = $target.next().find(".user-manage-mail").text(),
-	 title=$target.next().find('.user-manage-title').text(),
+	     title=$target.next().find('.user-manage-title').text(),
+         entity_group=$target.next().find('.user-manage-entity-group').text(),
+         entity= $target.next().find('.user-manage-entity').text(),
          authority = $target.next().find(".user-manage-authority").attr("value");
      $("#user-edit #edit-user-name").val(name);
      $("#user-edit #edit-user-mail").val(mail);
@@ -266,8 +211,14 @@ MANAGE.user.user_edit_box_bind = function() {
      $("#manage-user-edit-old").attr("effect_on", $target.parent().attr("id"));
 }
 MANAGE.user.edit = function() {
-     var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(), edit_role = $("#user-edit input[name='edit-user-role']:checked").data("name"), edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"), edit_id = $("#manage-user-edit-old").attr("effect_on"), $target = $("#manage-sort-list").find("#" + edit_id);
-     var title= $("#user-edit #edit-user-title").val();
+     var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(),
+         edit_role = $("#user-edit input[name='edit-user-role']:checked").data("name"),
+         edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"),
+         edit_id = $("#manage-user-edit-old").attr("effect_on"),
+         $target = $("#manage-sort-list").find("#" + edit_id),
+         title= $("#user-edit #edit-user-title").val();
+
+
      if($.trim(edit_name).length > 0 && edit_mail.length > 0) {
           if($("#user-edit>div>input").filter("[red='true']").length == 0) {
                $.ajax({
