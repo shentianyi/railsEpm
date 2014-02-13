@@ -20,6 +20,7 @@ module IFEpm
     config.autoload_paths+=%W(#{config.root}/base)
     config.autoload_paths+=%W(#{config.root}/validators)
     config.autoload_paths+=Dir[Rails.root.join('app','models','{**}')]
+    config.autoload_paths+=Dir[Rails.root.join('app','presenters','{**}')]
     config.autoload_paths += %W(#{config.root}/app/services)
     config.autoload_paths += %W(#{config.root}/app/caches)
     # Only load the plugins named here, in the order given (default is alphabetical).

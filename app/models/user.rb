@@ -87,6 +87,10 @@ class User < ActiveRecord::Base
     .select('users.*,entities.name as entity_name,entity_groups.name as entity_group_name')
   end
 
+  def role
+    Role.display self.role_id
+  end
+
   #待测试
   def insert_guide_template
     if self.id

@@ -8,14 +8,22 @@ class UserObserver<ActiveRecord::Observer
 
   def after_update user
     if user.entity_id_changed?
-      user.user_kpi_items.update_all(:entity_id=>user.entity_id)
+
+       #if user.entity_id.blank?
+       #  user.user_kpi_items.delete_all
+       #else
+         user.user_kpi_items.update_all(:entity_id => user.entity_id)
+       #end
+
       user.entity.increment!(:user_quantity) if user.entity
-      user.entity_was.decrement!(:user_quantity) if user.entity_was
+      Entity.find_by_id(user.entity_id_was).decrement!(:user_quantity) unless user.entity_id_was.blank?
     end
   end
 
   def before_update user
-    user.role_id=user.role_id_was if user.is_tenant
+    if user.role_id_changed?
+      user.role_id=user.role_id_was if user.is_tenant
+    end
   end
 
   def after_create user
