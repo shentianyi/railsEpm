@@ -1,6 +1,3 @@
-
-
-
 var MANAGE= MANAGE || {};
 MANAGE.manage_menu_left_delete=function(){};
 MANAGE.manage_menu_left_edit=function(){};
@@ -37,20 +34,6 @@ MANAGE.manage_menu_left_add.prototype={
                   }
               });
               if(validate){
-
-
-//                  $("#manage-left-menu").append($("<li />").attr("title",name)
-//                      .append($("<i />").addClass("icon-trash icon-item")).append($("<a />").text(name)));
-//                  $("#manage-menu-add input").val("");
-//                  MANAGE.manage_menu_left_add.prototype.add_hide();
-//                  MANAGE.left_count++;
-//                  if(MANAGE.type=="category"){
-//                      $("#new-kpi-category").append($("<option />").attr("value",21).text(name));
-//                      $("#new-kpi-category").val('').trigger('chosen:updated');
-//                  }
-
-
-
                   var href=this.href;
                   $.post(this.postHref, {
                       data : {
@@ -74,19 +57,11 @@ MANAGE.manage_menu_left_add.prototype={
                           MessageBox(data.content,"top","warning");
                       }
                   });
-
-
-
-
-
               }
               else{
                       MessageBox("Same name exist yet","top","warning");
               }
-
-
           }
-
       },
       add_hide:function(){
           $("#manage-left-menu li:nth-of-type(2) span").css("left","0px");
@@ -159,21 +134,6 @@ MANAGE.left.manage_left_add_init=function(){
 MANAGE.manage_menu_left_delete.prototype={
     delete_complete:function(e){
         var number = $(e.target).parent().attr("number");
-
-//        if(MANAGE.type=="category"){
-//            $("#new-kpi-category option").each(function(){
-//                if($(this).attr('value')==number){
-//                    $(this).remove();
-//                    return false;
-//                }
-//            })
-//            $("#new-kpi-category").val('').trigger('chosen:updated');
-//        }
-//        $(e.target).parent().remove();
-//        MANAGE.left_count--;
-
-
-
         var local=this.local
         $.ajax({
             url : this.url+number,
@@ -277,21 +237,6 @@ MANAGE.manage_menu_left_edit.prototype={
     edit_update:function(){
         var id=$("#manage-left-menu li.active").attr("number");
         var name=$("#manage-btn-group>input").val();
-
-//            $("#manage-left-menu li.active>a").text(name);
-//            $("#manage-edit-target").text(name);
-//            this.edit_hide();
-//            if(MANAGE.type=="category"){
-//            $("#new-kpi-category option").each(function(){
-//                if($(this).attr('value')==id){
-//                    $(this).text(name);
-//                    return false;
-//                }
-//            })
-//            $("#new-kpi-category").val('').trigger('chosen:updated');
-//            }
-
-
             $("#manage-edit-target").text(name);
             $.ajax({
                 url : this.url,

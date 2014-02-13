@@ -216,14 +216,13 @@ function group_item_drag() {
                data : {
                     id : option.id,
                     user : {
-                         entity_id : option.belong
+                         role_id : option.belong
                     }
                },
                success : function(data) {
                     MANAGE.item_drag.prototype.drag_complete(option.id);
                }
           });
-          //        this.drag_complete(id);
      }
 }
 
