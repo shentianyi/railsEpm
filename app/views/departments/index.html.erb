@@ -3,39 +3,56 @@
 <%= javascript_include_tag "jquery.ui/jquery.draggable.js"%>
 <% end %>
 
-<% @entity_groups.each do |e|%>
+<% @roots.each do |e|%>
 <div class="tree">
   <ul class="draggable">
-    <li entity_group="<%= e.id %>">
+    <li entity_group="<%= e.id %>" class="entity_root">
       <a><%= e.name%></a>
     </li>
   </ul>
 </div>
 <% end %>
 
+<ul id="hidden-entity" style="display:none">
+  <% @roots.each do |e|%>
+  <li entity="<%= e.id%>"></li>
+  <%end%>
+</ul>
+
 <script type="text/javascript">
-  /*
   $(document).ready(function(){
-
-    $(".draggable a").addClass("collision");
-
-    $(".draggable a").on('mouseenter',function(){
-      $(this).removeClass("collision");
-      $(this).parent().draggable({handle: "a"});
-      //$(this).parent().bind("dragstart",Overlap);
-      $(this).parent().bind("dragstop",Overlap);
-      //$(this).parent().bind("drag",Overlap);
-    });
-
-    $(".draggable a").on('mouseleave',function(){
-      $(this).addClass("collision");
-    });
+    
+      var roots = $("#hidden-entity li");
+      for(var i = 0;i<roots.length;i++){
+        $.ajax({
+          url:'/departments/sub_departments',
+          type:'GET',
+          data:{id:roots.eq(i).attr("entity")},
+          dataType:'json',
+          success:appendChild
+        })
+      }
+    
   });
-
-  function Overlap(){
-    console.log("overlap");
-    var col = $(this).children("a").collision(".collsion");
-    col.addClass("hit");
+  
+  function getChild(id){
+    $.ajax({
+      url:'/departments/sub_departments',
+      type:'GET',
+      data:{id:id},
+      dataType:'json',
+      success:appendChild
+    })
   }
-*/
+  
+  function appendChild(data){
+    if(data.result){
+      var childs = data.content.subdeps;
+      var id = data.content.id;
+      $("li[entity_group="+id+"]").append("<ul />");
+      for(var i = 0;i<childs.length;i++){
+        $('<li entity_group="'+childs[i].id+'"><a>'+childs[i].name+'</li>').appendTo($("li[entity_group="+id+"] ul")).ready(getChild(childs[i].id));
+      }
+    }
+  }
 </script>

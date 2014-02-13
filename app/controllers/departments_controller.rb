@@ -5,8 +5,8 @@ class DepartmentsController < ApplicationController
 
   def index
     #@entity_groups = EntityGroup.where('is_public = true AND ancestry is NULL')
-    entity_groups = EntityGroup.arrange_serializable(:is_public => true)
-    render :json=>entity_groups
+    @roots = current_user.entity_groups.roots.where('is_public = true')
+    render
   end
 
   def create
@@ -101,6 +101,16 @@ class DepartmentsController < ApplicationController
       msg.result = @user.save!
     else
     end
+    render :json=>msg
+  end
+
+  def sub_departments
+    msg = Message.new
+    msg.result = false
+    @entity_group = EntityGroup.find_by_id(params[:id])
+    @sub_department = @entity_group.children
+    msg.result = @sub_department.count > 0 ? true:false
+    msg.content = {"id"=>params[:id],"subdeps"=>@sub_department}
     render :json=>msg
   end
 end
