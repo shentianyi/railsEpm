@@ -9,9 +9,8 @@ class UsersController < ApplicationController
     @roles=Role.role_items
     @active_role_id=params[:id].nil? ? @roles[0].id : params[:id].to_i
     @users=User.accessible_by(current_ability).by_role(@active_role_id).all
-    @departments=EntityGroup.deparments.all
+    @departments=EntityGroup.deparments
     @data_points=Entity.all
-
   end
 
   def edit
@@ -22,14 +21,7 @@ class UsersController < ApplicationController
     msg=Message.new 
     if @user.update_attributes(params[:user])
       msg.result=true
-      temp = {}
-      temp[:id] = @user.id
-      temp[:first_name] = @user.first_name
-      temp[:role] = UsersHelper.get_user_role_display(@user.role_id)
-      temp[:role_id] = @user.role_id
-      temp[:email] = @user.email
-      temp[:title]=@user.title
-      msg.object = temp
+      msg.object =  UserPresenter.new(@user).to_json
     else
       msg.result=false
       msg.content=@user.errors
@@ -47,16 +39,9 @@ class UsersController < ApplicationController
     msg=Message.new
     if  @user.save
       msg.result=true
-      temp = {}
-      temp[:id] = @user.id
-      temp[:first_name] = @user.first_name
-      temp[:role] = UsersHelper.get_user_role_display(@user.role_id)
-      temp[:role_id] = @user.role_id
-      temp[:email] = @user.email
-      temp[:title]=@user.title
-      msg.object = temp.as_json
+      msg.object =  UserPresenter.new(@user).to_json
     else
-      msg.result = false;
+      msg.result = false
       msg.content=@user.errors
     end
     render :json=>msg

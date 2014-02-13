@@ -13,6 +13,11 @@ class Role
         @@roles[id_sym(id)][:name]==m.to_s.sub(/\?/, '')
       }
     end
+    @@roles.each do |key,value|
+      define_method(value[:name]){
+        key
+      }
+    end
   end
 
   def self.display id
