@@ -117,9 +117,30 @@ class DepartmentsController < ApplicationController
   def sub_entities
     msg = Message.new
     msg.result = false
-    @entities = EntityGroupItem.where('entity_group_id = ? and is_visual = true',params[:id])
-    msg.result = true
-    msg.content = @entities
+    @entities = EntityGroup.find_by_id(params[:id]).entities.where('entity_group_items.is_visual = true')
+    if @entities.count > 0
+      msg.result = true
+    end
+
+    msg.content = {"id"=>params[:id],"subents"=>@entities}
     render :json=>msg
+  end
+
+  def users
+    msg = Message.new
+    msg.result = false
+    @users = User.find_by_entity_group_id(params[:id])
+    mgs.result = true
+    msg.content = @users
+    render :json
+  end
+
+  def entity_users
+    msg = Message.new
+    msg.result = false
+    @users = User.find_by_entity_id(params[:id])
+    msg.result = true
+    msg.content = @users
+    render :json=>@users
   end
 end
