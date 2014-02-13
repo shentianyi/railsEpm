@@ -1,11 +1,10 @@
 #encoding: utf-8
 class DepartmentsController < ApplicationController
   skip_load_and_authorize_resource
-  layout "fullsize"
 
   def index
     #@entity_groups = EntityGroup.where('is_public = true AND ancestry is NULL')
-    @roots = current_user.entity_groups.roots.where('is_public = true')
+    @roots = current_user.entity_groups.roots.where('is_public = true AND is_department = true')
     render
   end
 
@@ -15,6 +14,7 @@ class DepartmentsController < ApplicationController
     @department = EntityGroup.new(params[:department])
     @department.user = current_user
     @department.is_public = true
+    @department.is_department = true
 
     if !@department.save
       msg[:errors] = @department.errors.full_messages
