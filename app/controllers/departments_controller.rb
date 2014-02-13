@@ -122,4 +122,22 @@ class DepartmentsController < ApplicationController
     msg.content = @entities
     render :json=>msg
   end
+
+  def users
+    msg = Message.new
+    msg.result = false
+    @users = User.find_by_entity_group_id(params[:id])
+    mgs.result = true
+    msg.content = @users
+    render :json
+  end
+
+  def entity_users
+    msg = Message.new
+    msg.result = false
+    @users = User.find_by_entity_id(params[:id])
+    msg.result = true
+    msg.content = @users
+    render :json=>@users
+  end
 end
