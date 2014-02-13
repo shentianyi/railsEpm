@@ -54,7 +54,7 @@ class DepartmentsController < ApplicationController
       end
       if @entity_group
         @entity_group.ancestor_ids.each do |id|
-          @e = EntityGroupItem.new(:entity_id=>params[:entity_id],:entity_group_id=>id)
+          @e = EntityGroupItem.new(:entity_id=>params[:entity_id],:entity_group_id=>id,:is_visual=>false)
           if !@e.save!
             msg.result = false
           end
@@ -111,6 +111,15 @@ class DepartmentsController < ApplicationController
     @sub_department = @entity_group.children
     msg.result = @sub_department.count > 0 ? true:false
     msg.content = {"id"=>params[:id],"subdeps"=>@sub_department}
+    render :json=>msg
+  end
+
+  def sub_entities
+    msg = Message.new
+    msg.result = false
+    @entities = EntityGroupItem.where('entity_group_id = ? and is_visual = true',params[:id])
+    msg.result = true
+    msg.content = @entities
     render :json=>msg
   end
 end
