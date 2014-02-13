@@ -18,9 +18,15 @@
               <table class="group">
                 <tr>
                   <td class="user-manage-name"><%= entity.name %></td>
+                  <td class="user-manage-code"><%= entity.code %></td>
+                  <td class="user-manage-users"><%= entity.user_quantity %></td>
+                  <td class="user-manage-description"><%= entity.description %></td>
                 </tr>
                 <tr>
                   <td><%= t 'manage.department.desc.name'%></td>
+                  <td><%= t 'manage.department.desc.code'%></td>
+                  <td><%= t 'manage.department.desc.user_quantity'%></td>
+                  <td><%= t 'manage.department.desc.description'%></td>
                 </tr>
               </table>
             </li>

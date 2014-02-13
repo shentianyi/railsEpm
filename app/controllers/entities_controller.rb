@@ -5,7 +5,7 @@ class EntitiesController < ApplicationController
 
   #index
   def index
-    @entities = Entity.all
+    @entities = Entity.with_user_quantity.all
   end
 
   # create tenant
@@ -33,7 +33,7 @@ class EntitiesController < ApplicationController
 
   def destroy
     msg=Message.new
-    if @entity and @entity.users.count==0
+    if @entity # and @entity.users.count==0
      msg.result=@entity.destroy
      else
        msg.content=I18n.t "fix.cannot_destroy"
