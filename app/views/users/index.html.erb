@@ -24,15 +24,15 @@
                     <tr>
                       <td class="user-manage-name"><%= user.first_name %></td>
                       <td class="user-manage-title"><%= user.title %></td>
-                      <td class="user-manage-title"><%= user.entity_name %></td>
-                      <td class="user-manage-title"><%= user.entity_group_name %></td>
+                      <td class="user-manage-entity-group" value="<%=user.entity_group_id%>"><%= user.entity_group_name %></td>
+                      <td class="user-manage-entity"  value="<%=user.entity_id%>"><%= user.entity_name %></td>
                       <td class="user-manage-authority" value="<%= user.role_id %>"><%= UsersHelper.get_user_role_display(user.role_id) %></td>
                     </tr>
                     <tr>
                       <td class="user-manage-mail"><%= user.email %></td>
                       <td><%= t 'manage.user.desc.title' %></td>
-                      <td><%= t 'manage.user.new.dep' %></td>
                       <td><%= t 'manage.user.new.entity_group' %></td>
+                      <td><%= t 'manage.user.new.dep' %></td>
                       <td><%= t 'manage.user.desc.authority' %></td>
                     </tr>
                   </table>
@@ -46,7 +46,7 @@
           <div>
             <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="edit-user-name" general="user-name"/>
             <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="edit-user-mail" general="user-mail"/>
-             <input type="text" placeholder="* <%= t 'manage.user.new.title' %>" id="edit-user-title" general="user-title"/>
+             <input type="text" placeholder="<%= t 'manage.user.new.title' %>" id="edit-user-title" general="user-title"/>
             <label>
               <input type="radio" name="edit-user-role" data-name="General" data-role="1" value="100" checked>
                <%= t 'manage.user.role.user' %>
@@ -69,13 +69,11 @@
   <aside class="content-right-nav" name='group' id="content-right-nav">
     <section class="solid">
       <h3><%= t 'manage.user.desc.create' %></h3>
-
       <p><%= t 'manage.user.desc.create_desc' %></p>
       <a class="btn btn-primary" id="add-user-show"><%= t 'manage.user.desc.create_now'%></a>
     </section>
     <section class="solid">
       <h3><%= t 'manage.user.desc.assign' %></h3>
-
       <p><%= t 'manage.user.desc.assign_desc' %></p>
       <a class="btn btn-primary" id="manage-user-delivery"><%= t 'manage.user.desc.assign_now'%></a>
     </section>
@@ -93,17 +91,23 @@
   <div>
     <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="new-user-name" general="user-name"/>
     <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="new-user-mail" general="user-mail"/>
-    <input type="text" placeholder="* <%= t 'manage.user.new.title' %>" id="new-user-title" general="user-title"/>
+    <input type="text" placeholder="<%= t 'manage.user.new.title' %>" id="new-user-title" general="user-title"/>
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd' %>" id="new-user-password"/>
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd_con' %>" id="new-user-password-confirm"/>
     <div class="div-select">
-      <select data-placeholder="* <%= t 'manage.user.new.dep' %>" class="chosen-select" id="department-for-kpi">
+      <select data-placeholder="<%= t 'manage.user.new.entity_group' %>" class="chosen-select" id="entity-group-for-kpi">
         <option value=""></option>
+        <%@departments.each do |department|%>
+            <option value="<%= department.id%>" ><%= department.name%></option>
+        <%end %>
       </select>
     </div>
     <div class="div-select">
-      <select data-placeholder="* <%= t 'manage.user.new.entity_group' %>" class="chosen-select" id="entity_group-for-kpi">
+      <select data-placeholder="<%= t 'manage.user.new.dep' %>" class="chosen-select" id="department-for-kpi">
         <option value=""></option>
+        <%@data_points.each do |data_point|%>
+            <option value="<%= data_point.id%>" ><%= data_point.name%></option>
+        <%end %>
       </select>
     </div>
     <label>

@@ -1,4 +1,5 @@
 #encoding: utf-8
+require 'base_class'
 class Role
   RoleMethods=[:admin?, :manager?, :director?, :user?]
   @@roles={:'100' => {:name => 'user', :display => (I18n.t 'manage.user.role.user')},

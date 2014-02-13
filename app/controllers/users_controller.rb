@@ -9,6 +9,9 @@ class UsersController < ApplicationController
     @roles=Role.role_items
     @active_role_id=params[:id].nil? ? @roles[0].id : params[:id].to_i
     @users=User.accessible_by(current_ability).by_role(@active_role_id).all
+    @departments=EntityGroup.deparments.all
+    @data_points=Entity.all
+
   end
 
   def edit
