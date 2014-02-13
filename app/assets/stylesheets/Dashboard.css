@@ -122,15 +122,15 @@
 .full-size-title{
     padding-left:20px;
     padding-top:10px;
-    height:51px;
+    position:relative;
 }
 .full-size-title:after{
     content:"";
-    display:"block";
+    display:block;
     clear:both;
 }
 .full-size-label{
-    text-align:center;
+    text-align:left;
     font-size:38px;
     font-weight:lighter;
     word-break:break-all;
@@ -139,13 +139,17 @@
     font-family:"helve";
     display:inline-block;
     float:left;
-    max-width:80%;
+    max-width:70%;
 }
 .full-size-btn{
     width:100px;
-    float:left;
     background:#222;
     color:#fff;
+    position:absolute;
+    height:20px;
+    right:49px;
+    top:50%;
+    margin-top:-10px;
 }
 .full-size-btn:hover{
     background:#505050;
