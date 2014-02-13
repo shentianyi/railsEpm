@@ -12,7 +12,7 @@ class TenantObserver<ActiveRecord::Observer
     tenant.super_user.entity = entity
     tenant.super_user.role_id=400
     tenant.entities<<entity
-    entity_group=tenant.super_user.entity_groups.build(:name=>'Default Group')
+    entity_group=tenant.super_user.entity_groups.build(:name=>tenant.company_name.length==0 ? 'Default Entity' : tenant.company_name,:is_public=>true,:is_department=>true)
     entity_group.entities<<entity
   #
   end
