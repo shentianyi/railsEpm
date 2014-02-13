@@ -96,14 +96,38 @@ right connector from last child*/
 }
 
 .tree li p{
+    border: 1px solid #ccc;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    color: white;
+    font-family: arial, verdana, tahoma;
+    font-size: 11px;
+    display: inline-block;
+    padding-top:15px;
+    height:35px;
+    background-color:#3D6AA2;
 
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+
+.tree li p:hover, .tree li p:hover+ul li p {
+        background: #c8e4f8; color: #000; border: 1px solid #94a0b4;
 }
 
 /*Time for some hover effects*/
 /*We will apply the hover effect the the lineage of the element also*/
-.tree li a:hover, .tree li a:hover+ul li a {
+.tree li a:hover, .tree li a:hover+ul li a , .tree li a:hover+ul li p{
         background: #c8e4f8; color: #000; border: 1px solid #94a0b4;
 }
+
+
 /*Connector styles on hover*/
 .tree li a:hover+ul li::after,
 .tree li a:hover+ul li::before,
@@ -120,12 +144,4 @@ a.just-line + ul {
 }
 a.just-line + ul:before {
         height: 74px;
-}
-
-.draggable {
-    position:relative;
-}
-
-.draggable li{
-    position:relative;
 }

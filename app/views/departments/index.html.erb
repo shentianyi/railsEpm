@@ -2,7 +2,6 @@
 <%= javascript_include_tag "jquery-collision.min.js"%>
 <%= javascript_include_tag "jquery.ui/jquery.draggable.js"%>
 <% end %>
-
 <% @roots.each do |e|%>
 <div class="tree">
   <ul class="draggable">
@@ -38,6 +37,17 @@
       dataType:'json',
       success:function(data){
         //append a new entity to the entity group
+        if(data.result){
+          var childs = data.content.subents;
+          var id = data.content.id;
+         
+          if($("li[entity_group="+id+"]").has("ul").length < 1){
+             $("li[entity_group="+id+"]").append("<ul />");
+          }
+          for(var i = 0;i<childs.length;i++){
+            $('<li entities="'+childs[i].id+'"><p>'+childs[i].name+'</li>').appendTo($("li[entity_group="+id+"] ul"));
+          }
+        }
       }
     });
   }
@@ -48,18 +58,17 @@
       type:'GET',
       data:{id:id},
       dataType:'json',
-      success:appendChild
-    })
-  }
-  
-  function appendChild(data){
-    if(data.result){
-      var childs = data.content.subdeps;
-      var id = data.content.id;
-      $("li[entity_group="+id+"]").append("<ul />");
-      for(var i = 0;i<childs.length;i++){
-        $('<li entity_group="'+childs[i].id+'"><a>'+childs[i].name+'</li>').appendTo($("li[entity_group="+id+"] ul")).ready(function(){getChild(childs[i].id);getEntities(childs[i].id)});
+      success:function(data){
+        if(data.result){
+          var childs = data.content.subdeps;
+          var id = data.content.id;
+          if($("li[entity_group="+id+"]").has("ul").length < 1){
+             $("li[entity_group="+id+"]").append("<ul />");
+          }
+          for(var i = 0;i<childs.length;i++){
+            $('<li entity_group="'+childs[i].id+'"><a>'+childs[i].name+'</li>').appendTo($("li[entity_group="+id+"] ul")).ready(function(){getChild(childs[i].id);getEntities(childs[i].id)});
+          }
+        }
       }
-    }
-  }
-</script>
+    });
+  }</script>
