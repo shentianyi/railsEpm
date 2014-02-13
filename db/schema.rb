@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140212060729) do
+ActiveRecord::Schema.define(:version => 20140213022312) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -131,8 +131,9 @@ ActiveRecord::Schema.define(:version => 20140212060729) do
   create_table "entity_group_items", :force => true do |t|
     t.integer  "entity_id"
     t.integer  "entity_group_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "is_visual",       :default => true
   end
 
   add_index "entity_group_items", ["entity_group_id"], :name => "index_entity_group_items_on_entity_group_id"

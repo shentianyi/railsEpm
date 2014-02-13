@@ -5,7 +5,7 @@ class DepartmentsController < ApplicationController
 
   def index
     #@entity_groups = EntityGroup.where('is_public = true AND ancestry is NULL')
-    entity_groups = EntityGroup.arrange_serializable(:is_public => true)
+    entity_groups = EntityGroup.roots.arrange_serializable(:is_public => true)
     render :json=>entity_groups
   end
 

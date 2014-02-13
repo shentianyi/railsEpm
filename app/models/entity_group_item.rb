@@ -1,7 +1,7 @@
 class EntityGroupItem < ActiveRecord::Base
   belongs_to :entity
   belongs_to :entity_group
-  attr_accessible :entity_id, :entity_group_id
+  attr_accessible :entity_id, :entity_group_id, :is_visual
   
    validate :validate_create_update
   def validate_create_update 
