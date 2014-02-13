@@ -113,7 +113,7 @@ IFEpm::Application.routes.draw do
   resources :entity_group_items
 
   namespace :api,defaults:{format:'json'} do
-   resources :kpi_entries do
+    resources :kpi_entries do
      collection do
        get :analyse ,:defaults=>{:format=>'html'}
        get :data
@@ -191,6 +191,7 @@ IFEpm::Application.routes.draw do
     delete 'departments/remove_entity'=>:remove_entity
     post 'departments/add_user'=>:add_user
     delete 'departments/remove_user'=>:remove_user
+    get 'departments/sub_departments'=>:sub_departments
   end
   
   # This is a legacy wild controller route that's not recommended for RESTful applications.
