@@ -365,6 +365,7 @@ zh:
           description: 描述
           user_quantity: 用户数目
           create: 创建输入点
+          create_now: 现在创建
           create_desc: 输入点是管理员工的地方，而视图则建立在输入点的基础上
           give_name: 给它一个名字
           next_desc: 完成输入点创建后， 接下来你需要为你的输入点添加员工这样他们为你的输入点贡献KPI
