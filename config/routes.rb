@@ -5,12 +5,12 @@ IFEpm::Application.routes.draw do
       get '/analyse/:id' => :analyse
     end
   end
-  
+
   resources :entity_contacts
 
   resources :contacts
   resources :avatars
-  resources :files do 
+  resources :files do
     member do
       get :template
     end
@@ -20,8 +20,7 @@ IFEpm::Application.routes.draw do
   # get "welcome/navigate"
 
 
-
-  resources :entities  do
+  resources :entities do
     collection do
       put :update
     end
@@ -29,7 +28,7 @@ IFEpm::Application.routes.draw do
 
   resources :users do
     collection do
-      get 'index/:id'=>:index
+      get 'index/:id' => :index
       match :login
       post :add
       put :update
@@ -46,21 +45,21 @@ IFEpm::Application.routes.draw do
 
   resources :kpis do
     collection do
-      get '/c/:id'=>:index
+      get '/c/:id' => :index
       put :update
       post :assign
       post :import
       get :template
       get :condition
-      [:categoried,:user,:list].each do |a|
-        get "#{a}/:id"=>a
+      [:categoried, :user, :list].each do |a|
+        get "#{a}/:id" => a
       end
     end
   end
 
   resources :kpi_categories do
     collection do
-      get 'index/:id'=>:index
+      get 'index/:id' => :index
       put :update
       get :template
       get :list
@@ -70,7 +69,7 @@ IFEpm::Application.routes.draw do
   resources :kpi_entries do
     collection do
       #post :entry
-     # get :refresh_entry
+      # get :refresh_entry
       match :analyse
       get :recents
       post :import
@@ -79,7 +78,7 @@ IFEpm::Application.routes.draw do
 
   resources :entity_groups do
     collection do
-      get 'index/:id'=>:index
+      get 'index/:id' => :index
       put :update
     end
   end
@@ -112,14 +111,14 @@ IFEpm::Application.routes.draw do
 
   resources :entity_group_items
 
-  namespace :api,defaults:{format:'json'} do
+  namespace :api, :defaults => {:format => 'json'} do
     resources :kpi_entries do
-     collection do
-       get :analyse ,:defaults=>{:format=>'html'}
-       get :data
-     end
+      collection do
+        get :analyse, :defaults => {:format => 'html'}
+        get :data
+      end
     end
- 
+
     resources :dashboards do
       collection do
         get '/fullsize/:id' => :fullsize
@@ -127,23 +126,23 @@ IFEpm::Application.routes.draw do
     end
     resources :dashboard_items do
       collection do
-        get 'dashboard_items/get_data'=>:get_data
-        get 'dashboard_items/items_by_dashboard_id'=>:items_by_dashboard_id
+        get 'dashboard_items/get_data' => :get_data
+        get 'dashboard_items/items_by_dashboard_id' => :items_by_dashboard_id
         get 'dashboard_items/update_sequence' => :update_sequence
       end
     end
     resources :user_sessions
 
-  resources :emails do
-    collection do
-      get 'analyse/:id'=> :analyse , :defaults =>{:format => 'html'}
-      
+    resources :emails do
+      collection do
+        get 'analyse/:id' => :analyse, :defaults => {:format => 'html'}
+
+      end
     end
-  end
 
 
     controller :kpis do
-      match 'kpis/kpis_by_category'=>:kpis_by_category
+      match 'kpis/kpis_by_category' => :kpis_by_category
     end
 
     #resources :user_sessions
@@ -158,11 +157,11 @@ IFEpm::Application.routes.draw do
 
   end
 
-  mount Resque::Server.new, :at=>"/admin/resque"
+  mount Resque::Server.new, :at => "/admin/resque"
 
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-  # match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
+# The priority is based upon order of creation:
+# first created -> highest priority.
+# match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
 
   namespace :admin do
     resources :sessions
@@ -184,18 +183,20 @@ IFEpm::Application.routes.draw do
   end
 
   controller :departments do
-    get 'departments'=>:index
-    post 'departments'=>:create
-    delete 'departments/:id'=>:destroy
-    post 'departments/add_entity'=>:add_entity
-    delete 'departments/remove_entity'=>:remove_entity
-    post 'departments/add_user'=>:add_user
-    delete 'departments/remove_user'=>:remove_user
-    get 'departments/sub_departments'=>:sub_departments
-    get 'departments/sub_entities'=>:sub_entities
+    get 'departments' => :index
+    post 'departments' => :create
+    delete 'departments/:id' => :destroy
+    post 'departments/add_entity' => :add_entity
+    delete 'departments/remove_entity' => :remove_entity
+    post 'departments/add_user' => :add_user
+    delete 'departments/remove_user' => :remove_user
+    get 'departments/sub_departments' => :sub_departments
+    get 'departments/sub_entities' => :sub_entities
+    get 'departments/users' => :users
+    get 'departments/entity_users' => :entity_users
   end
-  
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
+
+# This is a legacy wild controller route that's not recommended for RESTful applications.
+# Note: This route will make all actions in every controller accessible via GET requests.
   match ':controller(/:action(/:id))(.:format)'
 end
