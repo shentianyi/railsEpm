@@ -2,63 +2,118 @@
   <div class="content-left-main" id="content-left-main">
     <div style="width:auto;height:71px;"></div>
     <div class="left-content-title" id="left-content-title">
-      <p class="current-group-item"><%= t 'manage.department.desc.manage'%></p>
+      <p class="current-group-item"><%= t 'manage.department.desc.manage' %></p>
     </div>
 
     <div class="manage-left-content" id="dashboard-content" name="department">
-      <div class="right-list-top-control" id="right-list-top-control" name="department">
-        <input type="checkbox" id="manage-total-check"/>
-        <a class="btn" id="manage-item-remove"><%= t 'manage.base.delete_btn'%></a>
+      <div class="manage-right-content" id="manage-right-content">
+        <div class="manage-right-list">
+          <div class="right-list-top-control" id="right-list-top-control" name="group">
+            <input type="checkbox" id="manage-total-check"/>
+            <a class="btn" id="manage-item-remove"><%= t 'manage.base.delete_btn' %></a>
+            <a class="btn" id="manage-entity-edit"><%= t 'manage.base.edit_btn' %></a>
+          </div>
+          <ul id="manage-sort-list" class="manage-sort-list" name="department">
+            <% @entities.each do |entity| %>
+                <li id="<%= entity.id %>">
+                  <p class="sort-handle">:</p>
+                  <input type="checkbox"/>
+                  <table class="group">
+                    <tr>
+                      <td class="entity-manage-name"><%= entity.name %></td>
+                      <td class="entity-manage-code"><%= entity.code %></td>
+                      <td class="entity-manage-users"><%= entity.user_quantity %></td>
+                      <td class="entity-manage-description"><%= entity.description %></td>
+                    </tr>
+                    <tr>
+                      <td><%= t 'manage.department.desc.name' %></td>
+                      <td><%= t 'manage.department.desc.code' %></td>
+                      <td><%= t 'manage.department.desc.user_quantity' %></td>
+                      <td><%= t 'manage.department.desc.description' %></td>
+                    </tr>
+                  </table>
+                </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="manage-user-add" id="user-edit" general="manage-user-add">
+          <i class="icon-remove" id="close-user-edit" general="close-user"></i>
+          <div>
+            <input type="text" placeholder="* <%= t 'manage.department.desc.name' %>" id="edit-entity-name" general="entity-name"/>
+            <input type="text" placeholder="<%= t 'manage.department.desc.code' %>" id="edit-entity-code" general="entity-code"/>
+            <input type="text" placeholder="<%= t 'manage.department.desc.description' %>" id="edit-entity-description" general="entity-description"/>
+            <input type="submit" value="Ok" class="btn btn-primary" id="manage-entity-edit-old"/>
+          </div>
+        </div>
+
       </div>
-      <ul id="manage-sort-list" class="manage-sort-list" name="department">
-        <%@entities.each do |entity|%>
-            <li id="<%= entity.id%>" >
-              <p class="sort-handle">:</p>
-              <input type="checkbox"/>
-              <table class="group">
-                <tr>
-                  <td class="user-manage-name"><%= entity.name %></td>
-                </tr>
-                <tr>
-                  <td><%= t 'manage.department.desc.name'%></td>
-                </tr>
-              </table>
-            </li>
-        <%end%>
-      </ul>
     </div>
-
-
-
-
-
-
-
-
-
 
   </div>
 
   <aside class="content-right-nav" name='department' id="content-right-nav">
     <div style="width:auto;height:71px;"></div>
     <section class="solid" style="position:relative">
-      <h3><%= t 'manage.department.desc.create'%></h3>
-      <p><%= t 'manage.department.desc.create_desc'%></p>
-      <a class="btn btn-primary" id="add-department">Create Now</a>
+      <h3><%= t 'manage.department.desc.create' %></h3>
+
+      <p><%= t 'manage.department.desc.create_desc' %></p>
+      <a class="btn btn-primary" id="add-department"><%= t 'manage.department.desc.create_now' %></a>
+
       <div class="content-right-nav-add-block" id="content-right-nav-add-block" name="department">
-        <p><%= t 'manage.department.desc.give_name'%></p>
-        <input type='text' />
+        <p><%= t 'manage.department.desc.give_name' %></p>
+        <input type='text'/>
       </div>
     </section>
     <section class="solid">
-      <h3><%= t 'manage.base.next'%></h3>
-      <p><%= t 'manage.department.desc.next_desc'%> </p>
-      <a class="btn btn-primary" id="dashboard-full-size" href="<%= users_path%>"><%= t 'manage.user.desc.manage'%></a>
+      <h3><%= t 'manage.base.next' %></h3>
+
+      <p><%= t 'manage.department.desc.next_desc' %> </p>
+      <a class="btn btn-primary" id="dashboard-full-size" href="<%= users_path %>"><%= t 'manage.user.desc.manage' %></a>
     </section>
 
   </aside>
-
 </div>
+
+
+<div class="manage-user-add create-user" id="manage-user-add" general="manage-user-add">
+  <i class="icon-remove" id="close-add-user" general="close-user"></i>
+
+  <div>
+    <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="new-user-name" general="user-name"/>
+    <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="new-user-mail" general="user-mail"/>
+    <input type="text" placeholder="<%= t 'manage.user.new.title' %>" id="new-user-title" general="user-title"/>
+    <input type="password" placeholder="* <%= t 'manage.user.new.pwd' %>" id="new-user-password"/>
+    <input type="password" placeholder="* <%= t 'manage.user.new.pwd_con' %>" id="new-user-password-confirm"/>
+
+    <div class="div-select">
+      <select data-placeholder="<%= t 'manage.user.new.entity_group' %>" id="entity-group-for-kpi"  class="single-select">
+        <option value=""></option>
+
+      </select>
+    </div>
+    <div class="div-select">
+      <select data-placeholder="<%= t 'manage.user.new.dep' %>" id="department-for-kpi"  class="single-select">
+        <option value=""></option>
+
+      </select>
+    </div>
+    <label>
+      <input type="radio" name="user-role" data-name="General" data-role="1" value="<%=Role.user%>" checked>
+      <%= t 'manage.user.role.user' %>
+    </label>
+    <label>
+      <input type="radio" name="user-role" data-name="General Manager" data-role="3" value="<%=Role.director%>">
+      <%= t 'manage.user.role.director' %>
+    </label>
+    <label>
+      <input type="radio" name="user-role" data-name="Administrator" data-role="4" value="<%=Role.admin%>">
+      <%= t 'manage.user.role.admin' %>
+    </label>
+    <input type="submit" value="<%= t 'manage.base.add_btn' %>" class="btn btn-primary" id="manage-user-add-new"/>
+  </div>
+</div>
+
 <script>
     $(document).ready(function () {
         MANAGE.init();

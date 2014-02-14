@@ -1,0 +1,64 @@
+<div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
+  <div class="content-left-main" id="content-left-main">
+    <div style="width:auto;height:71px;"></div>
+    <div class="left-content-title" id="left-content-title">
+      <p class="current-group-item"><%= t 'manage.department.desc.manage'%></p>
+    </div>
+
+    <div class="manage-left-content" id="dashboard-content" name="department">
+      <div class="right-list-top-control" id="right-list-top-control" name="department">
+        <input type="checkbox" id="manage-total-check"/>
+        <a class="btn" id="manage-item-remove"><%= t 'manage.base.delete_btn'%></a>
+      </div>
+      <ul id="manage-sort-list" class="manage-sort-list" name="department">
+        <%@entities.each do |entity|%>
+            <li id="<%= entity.id%>" >
+              <p class="sort-handle">:</p>
+              <input type="checkbox"/>
+              <table class="group">
+                <tr>
+                  <td class="user-manage-name"><%= entity.name %></td>
+                  <td class="user-manage-code"><%= entity.code %></td>
+                  <td class="user-manage-users"><%= entity.user_quantity %></td>
+                  <td class="user-manage-description"><%= entity.description %></td>
+                </tr>
+                <tr>
+                  <td><%= t 'manage.department.desc.name'%></td>
+                  <td><%= t 'manage.department.desc.code'%></td>
+                  <td><%= t 'manage.department.desc.user_quantity'%></td>
+                  <td><%= t 'manage.department.desc.description'%></td>
+                </tr>
+              </table>
+            </li>
+        <%end%>
+      </ul>
+    </div>
+
+  </div>
+
+  <aside class="content-right-nav" name='department' id="content-right-nav">
+    <div style="width:auto;height:71px;"></div>
+    <section class="solid" style="position:relative">
+      <h3><%= t 'manage.department.desc.create'%></h3>
+      <p><%= t 'manage.department.desc.create_desc'%></p>
+      <a class="btn btn-primary" id="add-department"><%= t 'manage.department.desc.create_now'%></a>
+      <div class="content-right-nav-add-block" id="content-right-nav-add-block" name="department">
+        <p><%= t 'manage.department.desc.give_name'%></p>
+        <input type='text' />
+      </div>
+    </section>
+    <section class="solid">
+      <h3><%= t 'manage.base.next'%></h3>
+      <p><%= t 'manage.department.desc.next_desc'%> </p>
+      <a class="btn btn-primary" id="dashboard-full-size" href="<%= users_path%>"><%= t 'manage.user.desc.manage'%></a>
+    </section>
+
+  </aside>
+
+</div>
+<script>
+    $(document).ready(function () {
+        MANAGE.init();
+        MANAGE.department.init();
+    })
+</script>

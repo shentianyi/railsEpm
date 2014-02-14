@@ -354,7 +354,11 @@ en:
         dep: Data Point
         manage: Manage Data Point
         name: Data Point Name
+        code: Code
+        description: Descripion
+        user_quanity: User Quantity
         create: Create Data Point
+        create_now: Create Now
         create_desc: Department is the place to put your staff and the view is made up of data points
         give_name: Give it a name
         next_desc: After creating data point , it's time to create user(staff) to your data point so that they can contribute to their data point KPI

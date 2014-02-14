@@ -45,7 +45,7 @@ MANAGE.user.init = function () {
         $("#manage-user-add").height($(document).height() - $("header").height());
     });
 
-}
+};
 //////////////////////////////////////////////////////////////////////////         list 那一块
 //////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.user.icheck.init = function () {
@@ -61,7 +61,7 @@ MANAGE.user.icheck.init = function () {
             MANAGE.user.user_add_clear();
         }
     })
-}
+};
 //////////////////////////////////////////////////////////////////////////         User 添加那一块的
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.user.user_add_box_bind = function () {
@@ -226,7 +226,7 @@ MANAGE.user.user_edit_box_bind = function () {
     $("#edit-entity-group-for-kpi").trigger('chosen:updated')
     $("#edit-department-for-kpi option[value='" + entity_id + "']").prop('selected', true);
     $("#edit-department-for-kpi").trigger('chosen:updated')
-}
+};
 MANAGE.user.edit = function () {
     var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(),
         edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"),
@@ -279,7 +279,7 @@ MANAGE.user.edit = function () {
     } else {
         MessageBox("Please fill all the blanket taking *", "top", "warning");
     }
-}
+};
 //////////////////////////////////////////////////////////////////////////         User assign kpi
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.user.assign = {};
@@ -439,6 +439,6 @@ MANAGE.user.assign.input = function (event) {
                 MessageBox(data.content, "top", "warning");
         }
     });
-}
+};
 
 
