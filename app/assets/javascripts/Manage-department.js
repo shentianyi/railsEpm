@@ -17,7 +17,24 @@ MANAGE.department.count_observe=function(){
     }
 };
 
+
+MANAGE.entity.icheck.init = function () {
+    $("#manage-sort-list input[type='checkbox']").on("ifChecked", function () {
+        $("#manage-sort-list input[type='checkbox']").filter(function () {
+            return $(this).parent().hasClass("checked")
+        }).iCheck("uncheck");
+    });
+    $("#manage-sort-list input[type='checkbox']").on("ifUnchecked", function () {
+        if ($("#manage-sort-list .icheckbox_minimal-aero.checked").length == 1 && $("#user-edit").css("left") != "-200px") {
+            $("#user-edit").css("left", "-250px");
+            $("#manage-right-content").css("padding-left", "0px");
+            MANAGE.entity.clean_input();
+        }
+    })
+};
+
 MANAGE.department.init=function(){
+    MANAGE.entity.icheck.init();
     $("#add-department").on("click",function(){
         $("#content-right-nav-add-block").css("left","50px").find("input").focus();
     });
@@ -50,7 +67,7 @@ MANAGE.entity.entity_edit_box_bind=function(){
 };
 
 MANAGE.entity.clean_input=function(){
-
+       $('.clear-input').val();
 };
 MANAGE.department.add_department_init=function(){
     $("#content-right-nav-add-block input").on("click",function(event){
@@ -132,3 +149,4 @@ MANAGE.department.add_department_init=function(){
             }
     });
 };
+
