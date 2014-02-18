@@ -132,10 +132,10 @@ MANAGE.department.add_department_init = function () {
                                         "<td class='entity-manage-description'>"+description+"</td>"+
                                     "</tr>"+
                                     "<tr>"+
-                                        "<td><%= t 'manage.department.desc.name' %></td>"+
-                                        "<td><%= t 'manage.department.desc.code' %></td>"+
-                                        "<td><%= t 'manage.department.desc.user_quantity' %></td>"+
-                                        "<td><%= t 'manage.department.desc.description' %></td>"+
+                                        "<td>"+I18n.t('manage.department.desc.name')+"</td>"+
+                                        "<td>"+I18n.t('manage.department.desc.code')+"</td>"+
+                                        "<td>"+I18n.t('manage.department.desc.user_quantity')+"</td>"+
+                                        "<td>"+I18n.t('manage.department.desc.description')+"</td>"+
                                     "</tr>"+
                                 "</table>"+
                             "</li>"

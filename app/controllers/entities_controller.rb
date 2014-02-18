@@ -8,21 +8,16 @@ class EntitiesController < ApplicationController
     @entities = Entity.all
   end
 
-  # create tenant
+  # create entity
   def create
-    contacts=params[:data].slice(:contacts)[:contacts].values if params[:data].has_key?(:contacts)
-    @entity=Entity.new(params[:data])
+    contacts=params[:entity].slice(:contacts)[:contacts].values if params[:entity].has_key?(:contacts)
+    @entity=Entity.new(params[:entity])
     contacts.each do |contact|
       @entity.entity_contacts<<contact
     end if contacts
-    msg=Message.new
-    if @entity.save
-      msg.result=true
-      msg.object=@entity.id
-    else
-      msg.content=@entity.errors.messages.values.join('; ')
-    end
-    render :json => msg
+    @msg=Message.new
+    @msg.content=(@msg.result=@entity.save) ? @entity.id : @entity.errors.messages.values.join('; ')
+    render :json => @msg
   end
 
   def update
@@ -33,7 +28,7 @@ class EntitiesController < ApplicationController
     else
       msg.content=I18n.t "fix.not_exists"
     end
-    render json:@msg
+    render json: @msg
   end
 
   def destroy
