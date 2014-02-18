@@ -1,7 +1,7 @@
 #encoding: utf-8
 class KpisController < ApplicationController
   before_filter :require_user_as_admin,:only=>:index
-  before_filter :get_ability_category,:only=>:index
+  before_filter :get_ability_category,:only=>[:index,:access]
   before_filter :get_kpis_by_category,:only=>:categoried
   def index
     @active_category_id= params[:id].nil? ? ( @categories.length>0 ? @categories[0].id : nil ) : params[:id].to_i
@@ -73,7 +73,8 @@ class KpisController < ApplicationController
   end
 
   def access
-    @kpis=current_user.own_kpis
+    @active_category_id= params[:id].nil? ? ( @categories.length>0 ? @categories[0].id : nil ) : params[:id].to_i
+    get_kpis_by_category(@active_category_id) if @active_category_id
   end
 
   def list
