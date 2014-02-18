@@ -5,7 +5,7 @@ class EntitiesController < ApplicationController
 
   #index
   def index
-    @entities = Entity.with_user_quantity.all
+    @entities = Entity.all
   end
 
   # create tenant

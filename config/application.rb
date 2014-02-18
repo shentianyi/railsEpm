@@ -28,7 +28,7 @@ module IFEpm
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
     # Activate observers that should always be running.
-    config.active_record.observers = :tenant_observer,:user_observer,:kpi_observer,:kpi_entry_observer
+    config.active_record.observers = :tenant_observer,:user_observer,:kpi_observer,:kpi_entry_observer,:entity_observer,:entity_group_observer
     config.active_record.observers+=['Admin::KpiTemplateObserver']
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.

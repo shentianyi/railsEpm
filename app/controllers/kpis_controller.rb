@@ -72,6 +72,10 @@ class KpisController < ApplicationController
     render :partial=>'user'
   end
 
+  def access
+    @kpis=current_user.own_kpis
+  end
+
   def list
     get_kpis_by_category  params[:id]
     render :partial=>'list'

@@ -8,7 +8,6 @@ class UserObserver<ActiveRecord::Observer
 
   def after_update user
     if user.entity_id_changed?
-
        #if user.entity_id.blank?
        #  user.user_kpi_items.delete_all
        #else

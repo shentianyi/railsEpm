@@ -51,6 +51,7 @@ IFEpm::Application.routes.draw do
       post :import
       get :template
       get :condition
+      get :access
       [:categoried, :user, :list].each do |a|
         get "#{a}/:id" => a
       end

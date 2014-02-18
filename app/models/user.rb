@@ -87,6 +87,10 @@ class User < ActiveRecord::Base
     .select('users.*,entities.name as entity_name,entity_groups.name as entity_group_name')
   end
 
+  def access_kpis
+
+  end
+
   def role
     Role.display self.role_id
   end
@@ -100,7 +104,6 @@ class User < ActiveRecord::Base
 
   def remove_guide_item(controller_name,action_name)
      $redis_guid.hdel(self.id,make_guide_key(controller_name,action_name))
-
   end
 
   def add_guide_item (controller_name,action_name)
