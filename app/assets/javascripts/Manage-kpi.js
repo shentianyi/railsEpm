@@ -54,6 +54,7 @@ MANAGE.kpi.init = function() {
           $("#manage-right-content").css("padding-right", "200px");
           $("#left-content-title").css("margin-right", "201px");
      });
+
      $("#kpi-library-btn").on("click", function() {
           $("#kpi-library").css("display", "block");
           $("#kpi-library>div").slideDown("3000");
