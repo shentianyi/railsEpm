@@ -100,7 +100,7 @@ MANAGE.department.add_department_init = function () {
         $("#manage-entity-add").css("right", "999em");
         $("#manage-right-content").css("padding-right", "0px");
         $("#left-content-title").css("margin-right", "0px");
-
+        MANAGE.department.add_clear();
     });
     //2014.2新加入添加观察点
     $("body").on("click","#add-entity-new",function(){
@@ -140,9 +140,30 @@ MANAGE.department.add_department_init = function () {
                                 "</table>"+
                             "</li>"
                         );
+                        $("#manage-sort-list input[type='checkbox']").iCheck({
+                            checkboxClass : 'icheckbox_minimal-aero'
+                        });
+                        $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
+                            if(!$(this).parent().hasClass("checked")){
+                                MANAGE.totalChecked+=1;
+                                total_check_listener();
+                            }
+                            else{
+                                MANAGE.totalChecked-=1;
+                                total_check_listener();
+                            }
+                        });
                         MANAGE.entity.icheck.init();
+                        MANAGE.department.add_clear();
+                        MANAGE.sort_init();
+                        MANAGE.resize_sort_table();
+                        $("#manage-sort-list li").on("resize", function () {
+                            MANAGE.resize_sort_table()
+                        });
+                        var height=$(document).height()-$("header").height()-$("#left-content-title").height()-1;
+                        $("#dashboard-content").height(height);
                     } else {
-                        MessageBox(data.content, "top", "wrong");
+                        MessageBox(data.content, "top", "warning");
                     }
                 }
             });
@@ -234,7 +255,10 @@ MANAGE.department.add_department_init = function () {
             }
         });
 };
-
+MANAGE.department.add_clear=function(){
+    $("#manage-entity-add input[type='text']").val("");
+    $("#manage-entity-add textarea").val("");
+}
 MANAGE.entity.edit = function () {
     var name = $('#edit-entity-name').val(),
         code = $('#edit-entity-code').val(),
