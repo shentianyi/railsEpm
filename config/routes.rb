@@ -69,8 +69,6 @@ IFEpm::Application.routes.draw do
 
   resources :kpi_entries do
     collection do
-      #post :entry
-      # get :refresh_entry
       match :analyse
       get :recents
       post :import
@@ -137,16 +135,19 @@ IFEpm::Application.routes.draw do
     resources :emails do
       collection do
         get 'analyse/:id' => :analyse, :defaults => {:format => 'html'}
-
       end
     end
 
+    resources :files do
+      collection do
+        match :upload
+      end
+    end
 
     controller :kpis do
       match 'kpis/kpis_by_category' => :kpis_by_category
     end
 
-    #resources :user_sessions
     resources :entity_groups do
       member do
         get :contacts
