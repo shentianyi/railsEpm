@@ -1,0 +1,7 @@
+chart_type;belongs_to;sizex;sizey;kpis;calculate_type;time_string;interval
+column;JG-6-L;2;1;Total Attendance Hours|Normal Attendance Time|PPM Module|Output|E1-Normal|E1-Total|Labor Cost Per Unit;AVERAGE;LAST7DAY;100
+column;JG-7-L;2;1;Total Attendance Hours|Normal Attendance Time|PPM Module|Output|E1-Normal|E1-Total|Labor Cost Per Unit;AVERAGE;LAST23DAY;100
+column;JG-8-L;2;1;Total Attendance Hours|Normal Attendance Time|PPM Module|Output|E1-Normal|E1-Total|Labor Cost Per Unit;AVERAGE;LAST12MONTH;300
+column;JG-6-LA;2;1;Total Attendance Hours|Normal Attendance Time|PPM Module|Output|E1-Normal|E1-Total|Labor Cost Per Unit;AVERAGE;LAST7DAY;100
+column;JG-7-LA;2;1;Total Attendance Hours|Normal Attendance Time|PPM Module|Output|E1-Normal|E1-Total|Labor Cost Per Unit;AVERAGE;LAST23DAY;100
+column;JG-8-LA;2;1;Total Attendance Hours|Normal Attendance Time|PPM Module|Output|E1-Normal|E1-Total|Labor Cost Per Unit;AVERAGE;LAST12MONTH;300
