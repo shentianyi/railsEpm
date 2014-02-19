@@ -14,4 +14,5 @@ $TEMPLATEPATH=path_config[:template_file_path]
 $KPI_ENTRY_PATH=path_config[:kpi_entry_file_path]
 $AVATARPATH=path_config[:avatar_file_path]
 $EMAILATTACHPATH=path_config[:email_file_path]
+$AttachTmpPath=path_config[:attach_tmp_path]
 
