@@ -1,16 +1,69 @@
-<% content_for :javascript_includes do%>
-<%= javascript_include_tag "jquery-collision.min.js"%>
-<%= javascript_include_tag "jquery.ui/jquery.draggable.js"%>
-<% end %>
-<% @roots.each do |e|%>
-<div class="tree">
-  <ul class="draggable">
-    <li entity_group="<%= e.id %>" class="entity_root">
-      <a><%= e.name%></a>
-    </li>
-  </ul>
+<div class="part-left">
+  <div class="inner" id="tree">
+    <% @roots.each do |e|%>
+        <div class="tree">
+          <ul class="draggable">
+            <li entity_group="<%= e.id %>" class="entity_root" >
+              <a entity_group="<%= e.id %>"><i class="icon-globe"></i> <%= e.name%></a>
+              <div class="add-block">
+                <label class="add-block-part"><i class="icon-plus-sign"></i> 添加部门</label>
+                <label class="add-block-entity"><i class="icon-plus-sign"></i> 添加观察点</label>
+              </div>
+            </li>
+          </ul>
+        </div>
+    <% end %>
+  </div>
+
 </div>
-<% end %>
+<div class="part-right" id="part-info">
+  <section class="title">
+    <div class="inner">
+      <p>管理部门</p>
+    </div>
+  </section>
+  <section class="basic">
+    <div class="inner">
+      <p>部门基础信息</p>
+      <dl>
+        <dt>名称:</dt>
+        <dd class='name' post='name'>Leoni-shanghai</dd>
+      </dl>
+      <a class="btn btn-danger">删除部门</a>
+    </div>
+  </section>
+  <section class="users">
+    <div class="inner">
+      <p>部门所含用户</p>
+      <ul class="users">
+        <li>qi.li</li>
+        <li>zixiao.wang</li>
+      </ul>
+      <a class="btn btn-primary">安排用户</a>
+    </div>
+  </section>
+</div>
+
+<div id="add-entity" class="add-entity">
+  <i class="icon-remove"></i>
+   <div class="inner">
+     <h4>添加输入点</h4>
+     <ul>
+       <li>S-BSD</li>
+       <li>SDF</li>
+       <li>SF</li>
+       <li>FSF</li>
+       <li>C</li>
+     </ul>
+   </div>
+</div>
+
+<div class="user-block" id="user-block">
+  <p>添加部门</p>
+  <input type='text' placeholder="部门名称"/>
+  <a class="cancel">取消</a>
+  <a class="add">添加</a>
+</div>
 
 <ul id="hidden-entity" style="display:none">
   <% @roots.each do |e|%>
@@ -18,57 +71,9 @@
   <%end%>
 </ul>
 
-<script type="text/javascript">
-  $(document).ready(function(){
-    
-      var roots = $("#hidden-entity li");
-      for(var i = 0;i<roots.length;i++){
-        getEntities(roots.eq(i).attr("entity"));
-        getChild(roots.eq(i).attr("entity"));
-      }
-    
-  });
 
-  function getEntities(id){
-    $.ajax({
-      url:'/departments/sub_entities',
-      type:'GET',
-      data:{id:id},
-      dataType:'json',
-      success:function(data){
-        //append a new entity to the entity group
-        if(data.result){
-          var childs = data.content.subents;
-          var id = data.content.id;
-         
-          if($("li[entity_group="+id+"]").has("ul").length < 1){
-             $("li[entity_group="+id+"]").append("<ul />");
-          }
-          for(var i = 0;i<childs.length;i++){
-            $('<li entities="'+childs[i].id+'"><p>'+childs[i].name+'</li>').appendTo($("li[entity_group="+id+"] ul"));
-          }
-        }
-      }
-    });
-  }
-  
-  function getChild(id){
-    $.ajax({
-      url:'/departments/sub_departments',
-      type:'GET',
-      data:{id:id},
-      dataType:'json',
-      success:function(data){
-        if(data.result){
-          var childs = data.content.subdeps;
-          var id = data.content.id;
-          if($("li[entity_group="+id+"]").has("ul").length < 1){
-             $("li[entity_group="+id+"]").append("<ul />");
-          }
-          for(var i = 0;i<childs.length;i++){
-            $('<li entity_group="'+childs[i].id+'"><a>'+childs[i].name+'</li>').appendTo($("li[entity_group="+id+"] ul")).ready(function(){getChild(childs[i].id);getEntities(childs[i].id)});
-          }
-        }
-      }
-    });
-  }</script>
+<% content_for :javascript_includes do%>
+    <%= javascript_include_tag "Manage-part.js"%>
+    <%= javascript_include_tag "jquery-collision.min.js"%>
+    <%= javascript_include_tag "jquery.ui/jquery.draggable.js"%>
+<%end%>
