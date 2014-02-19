@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140213022312) do
+ActiveRecord::Schema.define(:version => 20140217035745) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -207,8 +207,8 @@ ActiveRecord::Schema.define(:version => 20140213022312) do
     t.boolean  "is_calculated",   :default => false
     t.integer  "direction"
     t.integer  "period"
-    t.string   "formula"
-    t.string   "formula_string"
+    t.text     "formula"
+    t.text     "formula_string"
     t.integer  "user_id"
     t.integer  "tenant_id"
     t.datetime "created_at",                         :null => false
