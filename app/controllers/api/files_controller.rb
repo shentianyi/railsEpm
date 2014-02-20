@@ -10,7 +10,7 @@ module Api
        data.content_type =FileData.get_content_type(params[:name])
        f=FileData.new(:data=>data,:oriName=>params[:name],:path=>$AttachTmpPath)
        f.saveFile
-       render json:f.pathName
+       render json:{path_name:f.pathName}
      end
   end
 end
