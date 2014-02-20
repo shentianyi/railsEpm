@@ -10,6 +10,7 @@ class Ability
       can :manage,UserSession,:email=>user.email
       can :manage,EntityGroup,:is_public=>true
       can :manage,EntityGroup,:user_id=>user.id
+      can :manage,Department
       #can :read,:all
     elsif user.director?
       can :manage,[EntityGroupItem,KpiEntry,Dashboard,DashboardItem,DashboardCondition,Email]

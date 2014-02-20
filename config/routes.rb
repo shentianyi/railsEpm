@@ -1,8 +1,5 @@
 IFEpm::Application.routes.draw do
 
-  resources :departments
-
-
   resources :emails do
     collection do
       get '/analyse/:id' => :analyse

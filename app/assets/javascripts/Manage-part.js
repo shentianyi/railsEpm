@@ -70,7 +70,7 @@ TREE.current_entitygroup_id = -1;
             var $this=$(this),
                 x=$this.offset().left,
                 y=$this.offset().top;
-            TREE.current_entitygroup_id = $("a[chosen='one']").eq(0).attr("entity_group");
+            TREE.current_entitygroup_id = $("a[chosen='one']").parent().attr("entity_group");//$("a[chosen='one']").eq(0).attr("entity_group");
             TREE.getUserBlock(x,y);
             $("#user-block").find("input").focus();
         })
@@ -88,6 +88,11 @@ TREE.current_entitygroup_id = -1;
                 success:function(data){
                     if(data.result){
                         var entity_group = data.content;
+
+                        if($("li[entity_group="+TREE.current_entitygroup_id+"]").has("ul").length < 1){
+                            $("li[entity_group="+TREE.current_entitygroup_id+"]").append("<ul />");
+                        }
+
                         $('<li class="im-entities" entity_group="'+entity_group.id+'"><a><i class="icon-laptop"></i> '+
                             entity_group.name+'</a>'+
                             '<div class="add-block"><label class="add-block-part"><i class="icon-plus-sign"></i> 添加部门</label>'+
