@@ -113,12 +113,10 @@ MANAGE.user.user_add_clear = function () {
 MANAGE.user.add_new = function () {
     var name = $("#new-user-name").val();
     var group = $("#department-for-kpi :selected").text();
-    var entity_id = $("#department-for-kpi :selected").attr("value");
-    var entity_group_id = $("#entity-group-for-kpi :selected").attr("value");
-
-    var entity_name = $("#department-for-kpi :selected").text();
-    var entity_group_name = $("#entity-group-for-kpi :selected").text();
-
+    var entity_id = $("#entity-for-kpi :selected").attr("value");
+    var department_ids = $("#department-for-kpi").val() ;
+         console.log(department_id);
+    var entity_name = $("#entity-for-kpi :selected").text();
     var mail = $("#new-user-mail").val();
     var title = $('#new-user-title').val();
     var password = $("#new-user-password").val();
@@ -136,7 +134,7 @@ MANAGE.user.add_new = function () {
                     password: password,
                     password_confirmation: password_confirm,
                     entity_id: entity_id,
-                    entity_group_id: entity_group_id,
+                    department_ids: department_ids,
                     role_id: role
                 }
             },
@@ -153,15 +151,15 @@ MANAGE.user.add_new = function () {
                                 .append($("<tr />")
                                     .append($("<td />").text(object.first_name).addClass("user-manage-name"))
                                     .append($("<td />").text(object.title).addClass("user-manage-title"))
-                                    .append($("<td />").text(entity_group_name).addClass("user-manage-entity-group").attr("value", object.entity_group_id))
+                                    .append($("<td />").text(object.department_name_string).addClass("user-manage-department").attr("value", object.department_id_string))
                                     .append($("<td />").text(entity_name).addClass("user-manage-entity").attr("value", object.entity_id))
                                     .append($("<td />").text(object.role).addClass("user-manage-authority").attr("value", object.role_id)))
                                 .append($("<tr />")
                                     .append($("<td />").text(object.email).addClass("user-manage-mail"))
-                                    .append($("<td />").text(I18n.t('manage.user.desc.title')))
-                                    .append($("<td />").text(I18n.t('manage.user.new.entity_group')))
-                                    .append($("<td />").text(I18n.t('manage.user.new.dep')))
-                                    .append($("<td />").text(I18n.t('manage.user.desc.authority'))))
+                                    .append($("<td />").text(I18n.t('manage.user.new.title')))
+                                    .append($("<td />").text(I18n.t('manage.user.new.department')))
+                                    .append($("<td />").text(I18n.t('manage.user.new.entity')))
+                                    .append($("<td />").text(I18n.t('manage.user.new.authority'))))
                             ));
                         $("#manage-sort-list input[type='checkbox']").iCheck({
                             checkboxClass: 'icheckbox_minimal-aero'
@@ -213,7 +211,7 @@ MANAGE.user.user_edit_box_bind = function () {
         name = $target.next().find(".user-manage-name").text(),
         mail = $target.next().find(".user-manage-mail").text(),
         title = $target.next().find('.user-manage-title').text(),
-        entity_group_id = $target.next().find('.user-manage-entity-group').attr("value"),
+        department_id = $target.next().find('.user-manage-department').attr("value"),
         entity_id = $target.next().find('.user-manage-entity').attr("value"),
         authority = $target.next().find(".user-manage-authority").attr("value");
 
@@ -222,20 +220,20 @@ MANAGE.user.user_edit_box_bind = function () {
     $("#user-edit #edit-user-title").val(title);
     $("#user-edit input[type='radio'][value='" + authority + "']").iCheck("check");
     $("#manage-user-edit-old").attr("effect_on", $target.parent().attr("id"));
-    $("#edit-entity-group-for-kpi option[value='" + entity_group_id + "']").prop('selected', true);
-    $("#edit-entity-group-for-kpi").trigger('chosen:updated')
-    $("#edit-department-for-kpi option[value='" + entity_id + "']").prop('selected', true);
+    $("#edit-department-for-kpi option[value='" + department_id + "']").prop('selected', true);
     $("#edit-department-for-kpi").trigger('chosen:updated')
+    $("#edit-entity-for-kpi option[value='" + entity_id + "']").prop('selected', true);
+    $("#edit-entity-for-kpi").trigger('chosen:updated')
 };
 MANAGE.user.edit = function () {
     var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(),
         edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"),
         edit_id = $("#manage-user-edit-old").attr("effect_on"),
         $target = $("#manage-sort-list").find("#" + edit_id),
-        entity_id = $("#edit-department-for-kpi :selected").attr("value"),
-        entity_name = $("#edit-department-for-kpi :selected").text(),
-        entity_group_id = $("#edit-entity-group-for-kpi :selected").attr("value"),
-        entity_group_name = $("#edit-entity-group-for-kpi :selected").text(),
+        entity_id = $("#edit-entity-for-kpi :selected").attr("value"),
+        entity_name = $("#edit-entity-for-kpi :selected").text(),
+        department_id = $("#edit-department-for-kpi :selected").attr("value"),
+        department_name = $("#edit-department-for-kpi :selected").text(),
         title = $("#user-edit #edit-user-title").val();
     if ($.trim(edit_name).length > 0 && edit_mail.length > 0) {
         if ($("#user-edit>div>input").filter("[red='true']").length == 0) {
@@ -250,7 +248,7 @@ MANAGE.user.edit = function () {
                         title: title,
                         role_id: edit_authority,
                         entity_id: entity_id,
-                        entity_group_id: entity_group_id
+                        department_id: department_id
                     }
                 },
                 dataType: 'json',
@@ -261,8 +259,8 @@ MANAGE.user.edit = function () {
                         $target.find(".user-manage-mail").text(object.email);
                         $target.find(".user-manage-title").text(object.title);
                         $target.find('.user-manage-entity').attr("value", object.entity_id);
-                        $target.find('.user-manage-entity-group').attr("value", object.entity_group_id);
-                        $target.find('.user-manage-entity-group').text(entity_group_name);
+                        $target.find('.user-manage-department').attr("value", object.department_id);
+                        $target.find('.user-manage-department').text(department_name);
                         $target.find('.user-manage-entity').text(entity_name);
 
                         if ($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant") == "false")

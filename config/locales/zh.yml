@@ -371,32 +371,27 @@ zh:
           next_desc: 完成输入点创建后， 接下来你需要为你的输入点添加员工这样他们为你的输入点贡献KPI
       user:
         desc:
-          name: 用户
           manage: 管理用户
-          authority: 权限
-          title: 职位
           create: 创建用户
           create_desc: 用户，即你在不同部门创建的员工，完成创建后，你可以给他们分配KPI
           create_now: 现在创建
-
           assign: 分配KPI
           assign_desc: 想分配任务一样给你的员工分配不同的KPI
           assign_now: 现在分配
-
           next_desc: 在分配完KPI后，你应该将你的部门放到你的视图中，以视图为基础，我们为你生成分析数据和仪表盘
-
         role:
           admin: 系统管理员
           director: 管理者
           manager: 经理
           user: 普通用户
         new:
+          authority: 权限
           name: 用户名
           email: 邮箱
           pwd: 密码
           pwd_con: 确认密码
-          dep: 输入点
-          entity_group: 部门
+          entity: 输入点
+          department: 部门
           title: 职位
       view:
         desc:

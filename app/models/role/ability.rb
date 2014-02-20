@@ -5,7 +5,7 @@ class Ability
     alias_action :update,:destroy,:to=>:modify
 
     if user.admin?
-      can :manage,[User,Entity,EntityGroupItem,Kpi,KpiCategory,KpiEntry,KpiItem,UserKpiItem,UserSession,Dashboard,DashboardItem,DashboardCondition,Email]
+      can :manage,[User,Entity,Department,EntityGroupItem,Kpi,KpiCategory,KpiEntry,KpiItem,UserKpiItem,UserSession,Dashboard,DashboardItem,DashboardCondition,Email]
       #can :manage,User,:id=>user.id
       can :manage,UserSession,:email=>user.email
       can :manage,EntityGroup,:is_public=>true

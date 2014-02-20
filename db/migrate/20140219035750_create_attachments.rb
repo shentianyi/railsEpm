@@ -7,7 +7,7 @@ class CreateAttachments < ActiveRecord::Migration
       t.string :type
       t.string :pathname
       t.references :attachable, :polymorphic=>true
-      
+
       t.timestamps
     end
     add_index :attachments, :attachable_id

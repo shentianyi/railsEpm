@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   belongs_to :entity
   #belongs_to :entity_group
   belongs_to :department
+  has_many :user_departments,:dependent => :destroy
   has_many :departments,:through => :user_departments
   has_many :entity_groups, :dependent => :destroy
   has_many :kpis, :through => :user_kpi_items
@@ -83,14 +84,18 @@ class User < ActiveRecord::Base
   end
 
   def self.by_role role
-    self.joins('left join entities on users.entity_id=entities.id')
-    .joins('left join entity_groups on users.entity_group_id=entity_groups.id')
+    joins('left join entities on users.entity_id=entities.id')
+    .joins('left join departments on users.department_id=departments.id')
     .where(role_id: role)
-    .select('users.*,entities.name as entity_name,entity_groups.name as entity_group_name')
+    .select('users.*,entities.name as entity_name,departments.name as department_name')
   end
 
   def role
     Role.display self.role_id
+  end
+
+  def department_infos
+    departments.select('name,id')
   end
 
   #待测试
