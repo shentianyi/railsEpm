@@ -10,14 +10,15 @@ class Attachment < ActiveRecord::Base
   # this method can be used to add attachemts
   def self.add attachments,attachable
     unless attachments.blank?
-      attachments.each do |index,att|
+      attachments.each do |att|
+        att.symbolize_keys!
         path = File.join($AttachTmpPath,att[:pathName])
         size = FileData.get_size(path)
         type = FileData.get_type(path)
-        data = AttachService.generate_attachment path
-        url = AliyunOssService.store_attachments(att[:pathName],data)
-        File.delete(path)
-        attachable.attachments<<Attachment.new(:name=>att[:oriName],:path=>url,:size=>size,:type=>type,:pathname=>att[:pathName])
+        #data = AttachService.generate_attachment path
+        #url = AliyunOssService.store_attachments(path,data)
+        #File.delete(path)
+        attachable.attachments<<Attachment.new(:name=>att[:oriName],:path=>path,:size=>size,:type=>type,:pathname=>att[:pathName])
       end
     end
     return attachable.attachments
