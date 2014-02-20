@@ -45,8 +45,7 @@ class Email < ActiveRecord::Base
         @start_time = params[:start_time]
         @end_time = params[:end_time]
         @frequency = params[:frequency]
-        #@type = params[:type]
-        @type='area'
+        @type = params[:type]
         @average=true
         datas = {:data => data.to_json, :kpi_id => @kpi_id, :kpi_name => @kpi_name, :entity_group_id => @entity_group, :entity_group_name => @entity_group_name,
                  :start_time => @start_time, :end_time => @end_time, :frequency => @frequency, :type => @type, :average => @average, :table_data => table_data.to_json}
