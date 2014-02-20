@@ -3,10 +3,11 @@ class User < ActiveRecord::Base
 
   belongs_to :tenant
   belongs_to :entity
-  #belongs_to :entity_group
+
   belongs_to :department
   has_many :user_departments,:dependent => :destroy
   has_many :departments,:through => :user_departments
+
   has_many :entity_groups, :dependent => :destroy
   has_many :kpis, :through => :user_kpi_items
   has_many :user_kpi_items, :dependent => :destroy
