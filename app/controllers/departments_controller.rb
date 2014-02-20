@@ -27,9 +27,9 @@ class DepartmentsController < ApplicationController
 
   def destroy
     msg=Message.new
-    if @entity_group=EntityGroup.accessible_by(current_ability).find_by_id(params[:id])
-      if @entity_group.user_id == current_user.id
-        @entity_group.destroy
+    if @department=Department.accessible_by(current_ability).find_by_id(params[:id])
+      if @department.user_id == current_user.id
+        @department.destroy
         msg.result=true
       else
         msg.content = I18n.t "fix.cannot_destroy"
@@ -46,7 +46,7 @@ class DepartmentsController < ApplicationController
     msg = Message.new
     msg.result = true
     ActiveRecord::Base.transaction do
-      @entity_group = EntityGroup.find(params[:id])
+      @entity_group = Department.find_by_id(params[:id])
       @entity_group_item = EntityGroupItem.new(:entity_id=>params[:entity_id],:entity_group_id=>params[:id])
       if !@entity_group_item.save!
         msg.result = false
