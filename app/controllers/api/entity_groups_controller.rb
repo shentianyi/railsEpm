@@ -19,8 +19,7 @@ module Api
     end
 
     def kpis
-      kpis=Kpi.joins(:user_kpi_items).where(user_kpi_items: {entity_id: EntityGroupItem.where(entity_group_id: params[:id]).pluck(:entity_id)})
-      .uniq.select('kpis.id,name,description,kpis.target_max,kpis.target_min,kpi_category_id,kpis.frequency')
+      kpis=Kpi.by_entity_group params[:id]
       respond_to do |t|
         t.json { render :json => kpis }
         t.js { render :js => jsonp_str(kpis) }

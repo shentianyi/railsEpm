@@ -282,7 +282,6 @@ ActiveRecord::Schema.define(:version => 20140217035745) do
     t.integer  "entity_group_id"
   end
 
-  add_index "users", ["entity_group_id"], :name => "index_users_on_entity_group_id"
   add_index "users", ["entity_id"], :name => "index_users_on_entity_id"
   add_index "users", ["tenant_id"], :name => "index_users_on_tenant_id"
 

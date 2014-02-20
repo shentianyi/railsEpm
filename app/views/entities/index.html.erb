@@ -76,41 +76,16 @@
 </div>
 
 
-<div class="manage-user-add create-user" id="manage-user-add" general="manage-user-add">
-  <i class="icon-remove" id="close-add-user" general="close-user"></i>
+<div class="manage-user-add create-user" id="manage-entity-add">
+  <i class="icon-remove" id="close-add-entity" general="close-user"></i>
 
-  <div>
-    <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="new-user-name" general="user-name"/>
-    <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="new-user-mail" general="user-mail"/>
-    <input type="text" placeholder="<%= t 'manage.user.new.title' %>" id="new-user-title" general="user-title"/>
-    <input type="password" placeholder="* <%= t 'manage.user.new.pwd' %>" id="new-user-password"/>
-    <input type="password" placeholder="* <%= t 'manage.user.new.pwd_con' %>" id="new-user-password-confirm"/>
+  <div class="add-entity-block">
+    <input type="text" placeholder="* <%= t 'manage.department.desc.name' %>" id="entity-name" general="user-name"/>
+    <input type="text" placeholder="<%= t 'manage.department.desc.code' %>" id="entity-code" general="user-mail"/>
+    <!--<input type="text" placeholder="用户数目" id="new-user-title" general="user-title"/>-->
+    <textarea type="text" placeholder="<%= t 'manage.department.desc.description' %>" id="entity-description"></textarea>
 
-    <div class="div-select">
-      <select data-placeholder="<%= t 'manage.user.new.entity_group' %>" id="entity-group-for-kpi"  class="single-select">
-        <option value=""></option>
-
-      </select>
-    </div>
-    <div class="div-select">
-      <select data-placeholder="<%= t 'manage.user.new.dep' %>" id="department-for-kpi"  class="single-select">
-        <option value=""></option>
-
-      </select>
-    </div>
-    <label>
-      <input type="radio" name="user-role" data-name="General" data-role="1" value="<%=Role.user%>" checked>
-      <%= t 'manage.user.role.user' %>
-    </label>
-    <label>
-      <input type="radio" name="user-role" data-name="General Manager" data-role="3" value="<%=Role.director%>">
-      <%= t 'manage.user.role.director' %>
-    </label>
-    <label>
-      <input type="radio" name="user-role" data-name="Administrator" data-role="4" value="<%=Role.admin%>">
-      <%= t 'manage.user.role.admin' %>
-    </label>
-    <input type="submit" value="<%= t 'manage.base.add_btn' %>" class="btn btn-primary" id="manage-user-add-new"/>
+    <input type="submit" value="<%= t 'manage.base.add_btn' %>" class="btn btn-primary" id="add-entity-new"/>
   </div>
 </div>
 

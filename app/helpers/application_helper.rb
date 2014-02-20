@@ -14,7 +14,8 @@ module ApplicationHelper
   end
 
   def get_user_entity_groups
-    @entity_groups=current_user.entity_groups
+    #@entity_groups=current_user.entity_groups
+    @entity_groups=EntityGroup.accessible_by(current_ability)
   end
 
   def get_ability_entity

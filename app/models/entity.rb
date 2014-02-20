@@ -21,7 +21,7 @@ class Entity < ActiveRecord::Base
   end
 
   def self.with_user_quantity
-       joins(:users).select('entities.*,count(users.id) as user_quantity').group('entities.id')
+       joins('left join users on entities.id=users.entity_id').select('entities.*,count(users.id) as user_quantity').group('entities.id')
   end
 
 

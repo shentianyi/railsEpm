@@ -2,7 +2,8 @@
 require 'aliyun/oss'
 
 class AliyunOssService
-  KPI_ENTRY_BUCKET='epm-kpi-entry' 
+  KPI_ENTRY_BUCKET='epm-kpi-entry'
+  ATTACH_BUCKET='epm-attach'
   LINK_EXPIRES=Time.mktime(2555, 12, 12).to_i
  
 
@@ -11,4 +12,14 @@ class AliyunOssService
     File.delete(path) if del && File.exists?(path)
     Aliyun::OSS::OSSObject.url_for(name,KPI_ENTRY_BUCKET ,expires:LINK_EXPIRES)
   end
+
+  def self.store_attachments name,data
+    Aliyun::OSS::OSSObject.store(name,data,ATTACH_BUCKET)
+    Aliyun::OSS::OSSObject.url_for(name,ATTACH_BUCKET ,expires:LINK_EXPIRES)
+  end
+
+  def self.delete_attachments name
+    Aliyun::OSS::OSSObject.delete(name,ATTACH_BUCKET)
+  end
+
 end

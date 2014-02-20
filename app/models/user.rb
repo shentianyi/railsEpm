@@ -100,7 +100,6 @@ class User < ActiveRecord::Base
 
   def remove_guide_item(controller_name,action_name)
      $redis_guid.hdel(self.id,make_guide_key(controller_name,action_name))
-
   end
 
   def add_guide_item (controller_name,action_name)
