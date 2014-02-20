@@ -5,8 +5,6 @@ class Department < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :tenant
-  
-  has_many :entities, :dependent => :destroy
 
   acts_as_tenant(:tenant)
 end

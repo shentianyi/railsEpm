@@ -11,8 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 
 ActiveRecord::Schema.define(:version => 20140220033850) do
+=======
+ActiveRecord::Schema.define(:version => 20140219035750) do
+>>>>>>> parent of 4b7a5a3... department entity
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -103,19 +107,6 @@ ActiveRecord::Schema.define(:version => 20140220033850) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
-
-  create_table "departments", :force => true do |t|
-    t.string   "name"
-    t.string   "ancestry"
-    t.integer  "tenant_id"
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "departments", ["ancestry"], :name => "index_departments_on_ancestry"
-  add_index "departments", ["tenant_id"], :name => "index_departments_on_tenant_id"
-  add_index "departments", ["user_id"], :name => "index_departments_on_user_id"
 
   create_table "emails", :force => true do |t|
     t.string   "sender"
