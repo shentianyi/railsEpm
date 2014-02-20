@@ -43,17 +43,10 @@ class EmailsController < ApplicationController
   def create
     msg = Message.new
     msg.result = true
-    @email=Email.new(params[:email],current_user)
+    @email=Email.new(params[:email])
+    @email.init_user_info current_user
     if msg.result = @email.save
-      # generate pdf
-      attachments=params[:attachments]||[]
-      if pdf=@email.generate_analysis_pdf_and_cache params[:analysis]
-        attachments<<{oriName: 'Analysis_Pdf.pdf', pathName: pdf}
-      end
-      # save attachments
-      @email.save_attachments(attachments)
-      # send email
-      @email.send_mail
+      Resque.enqueue(EmailSender,@email.id,params)
     else
       msg.content = @email.errors.full_messages
     end
@@ -64,7 +57,6 @@ class EmailsController < ApplicationController
   # PUT /emails/1.json
   def update
     @email = Email.find(params[:id])
-
     respond_to do |format|
       if @email.update_attributes(params[:email])
         format.html { redirect_to @email, notice: 'Email was successfully updated.' }

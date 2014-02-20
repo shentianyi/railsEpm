@@ -20,7 +20,7 @@ class FileData<CZ::BaseClass
           f.write(@data.read)
         end
       end
-      return true
+      return @pathName
     rescue
       return false
     end
