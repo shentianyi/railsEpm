@@ -10,7 +10,6 @@ class Department < ActiveRecord::Base
   has_one :entity_group, :dependent => :destroy
 
   after_create :create_entity_group
-  after_destroy :destroy_entity_group
 
   has_ancestry
   acts_as_tenant(:tenant)

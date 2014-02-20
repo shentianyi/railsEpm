@@ -196,6 +196,7 @@ IFEpm::Application.routes.draw do
     get 'departments/sub_entities' => :sub_entities
     get 'departments/users' => :users
     get 'departments/entity_users' => :entity_users
+    get 'departments/new_entities' => :new_entities
   end
 
 # This is a legacy wild controller route that's not recommended for RESTful applications.

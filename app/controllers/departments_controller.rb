@@ -162,7 +162,7 @@ class DepartmentsController < ApplicationController
     #@users = User.find_by_entity_group_id(params[:id])
     mgs.result = true
     msg.content = @users
-    render :json
+    render :json=>@users
   end
 
   def entity_users
@@ -172,5 +172,12 @@ class DepartmentsController < ApplicationController
     msg.result = true
     msg.content = @users
     render :json=>@users
+  end
+
+  #get the entities not in this department
+  def new_entities
+    @entities = Entity.where("department_id NOT IN (?)",params[:id])
+
+    render :json=> "add_entity"
   end
 end

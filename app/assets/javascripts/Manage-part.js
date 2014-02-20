@@ -58,7 +58,22 @@ TREE.current_entitygroup_id = -1;
                 $(this).blur();
             }
         })
-        //点击观察点
+        //删除部门
+        .on("click","#part-info .basic .inner a",function(event){
+            var id = $(this).attr("entity-group");
+            $.ajax({
+                url:"/departments/"+id,
+                type:"DELETE",
+                success:function(data){
+                    if(data.result){
+                        $("li[entity_group="+id+"]").remove();
+                    }else{
+                        MessageBox(data.content,"top","warning");
+                    }
+                }
+            })
+        })
+        //点击输入点
         .on("click","#tree .entity_root>ul li p",function(){
             var id=$(this).parent().attr("entities");
             if(confirm("删除该观察点？")){
@@ -119,7 +134,7 @@ TREE.current_entitygroup_id = -1;
         })
         //添加观察点
         .on("click","#tree .add-block .add-block-entity",function(){
-            TREE.getEntity();
+            TREE.getEntity(this);
         })
         .on("click","#add-entity .icon-remove",function(){
             TREE.destroyEntity();
@@ -206,7 +221,8 @@ function getChild(id){
 TREE.part_show=function(object){
 //    $("#part-info section").filter(function(index){return index!==0?true:false}).css("display","block");
     var option={},
-        id=$(object).attr("entity_group");
+        id=$(object).parent().attr("entity_group");
+    $("#part-info .basic .inner a").attr("entity-group",id);
     var name=$(object).text();
 //    $.get("",{},function(data){
 //        if(data.result){
@@ -235,7 +251,16 @@ TREE.destroyUserBlock=function(){
         .find("input").val("");
 }
 
-TREE.getEntity=function(){
+TREE.getEntity=function(object){
+    $.ajax({
+        url:"/departments/new_entities",
+        data:{id:TREE.current_entitygroup_id},
+        type:"GET",
+        dataType:"html",
+        success:function(data){
+
+        }
+    })
     $("#add-entity").css("left","0px");
 }
 TREE.destroyEntity=function(){
