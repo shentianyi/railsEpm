@@ -4,23 +4,27 @@ class DepartmentsController < ApplicationController
 
   def index
     #@entity_groups = EntityGroup.where('is_public = true AND ancestry is NULL')
-    @roots = current_user.entity_groups.roots.where('is_public = true AND is_department = true')
+    @roots = current_user.entity_groups.roots.where('is_department = true')
     render
   end
 
   def create
     msg = Message.new
     msg.result = false
+    parent = EntityGroup.find_by_id(params[:parent]) if params.has_key?(:parent)
     @department = EntityGroup.new(params[:department])
     @department.user = current_user
-    @department.is_public = true
+    @department.is_public = false
     @department.is_department = true
-
+    if parent
+      puts parent
+      @department.parent = parent
+    end
     if !@department.save
-      msg[:errors] = @department.errors.full_messages
+      msg.content = @department.errors.full_messages
     else
-      msg[:result] = true
-      msg[:object] = @department
+      msg.result = true
+      msg.content = @department
     end
     render :json => msg
   end

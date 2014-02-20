@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140217035745) do
+ActiveRecord::Schema.define(:version => 20140219035750) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -38,6 +38,21 @@ ActiveRecord::Schema.define(:version => 20140217035745) do
   end
 
   add_index "admin_kpi_templates", ["admin_kpi_category_template_id"], :name => "index_admin_kpi_templates_on_admin_kpi_category_template_id"
+
+  create_table "attachments", :force => true do |t|
+    t.string   "name"
+    t.string   "path"
+    t.string   "size"
+    t.string   "type"
+    t.string   "pathname"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "attachments", ["attachable_id"], :name => "index_attachments_on_attachable_id"
+  add_index "attachments", ["attachable_type"], :name => "index_attachments_on_attachable_type"
 
   create_table "contacts", :force => true do |t|
     t.string   "name"
@@ -282,6 +297,7 @@ ActiveRecord::Schema.define(:version => 20140217035745) do
     t.integer  "entity_group_id"
   end
 
+  add_index "users", ["entity_group_id"], :name => "index_users_on_entity_group_id"
   add_index "users", ["entity_id"], :name => "index_users_on_entity_id"
   add_index "users", ["tenant_id"], :name => "index_users_on_tenant_id"
 

@@ -6,6 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 var TREE=TREE||{};
+//current_department_id
+TREE.current_entitygroup_id = -1;
 (function(){
     $("body")
         //点击部门
@@ -67,12 +69,36 @@ var TREE=TREE||{};
         .on("click","#tree .add-block .add-block-part",function(event){
             var $this=$(this),
                 x=$this.offset().left,
-                y=$this.offset().top;;
+                y=$this.offset().top;
+            TREE.current_entitygroup_id = $("a[chosen='one']").eq(0).attr("entity_group");
             TREE.getUserBlock(x,y);
             $("#user-block").find("input").focus();
         })
+        //添加部门中确定添加
         .on("click","#user-block .add",function(){
-
+            //
+            var department = {};
+            department.name = $("#user-block input").val();
+            parent = TREE.current_entitygroup_id;
+            $.ajax({
+                url:"/departments",
+                type:"POST",
+                data:{department:department,parent:parent},
+                dataType:"json",
+                success:function(data){
+                    if(data.result){
+                        var entity_group = data.content;
+                        $('<li class="im-entities" entity_group="'+entity_group.id+'"><a><i class="icon-laptop"></i> '+
+                            entity_group.name+'</a>'+
+                            '<div class="add-block"><label class="add-block-part"><i class="icon-plus-sign"></i> 添加部门</label>'+
+                            '<label class="add-block-entity"><i class="icon-plus-sign"></i> 添加观察点</label>'+
+                            '</div>'+
+                            '</li>').appendTo($("li[entity_group='"+TREE.current_entitygroup_id+"']>ul"));
+                    }else{
+                        MessageBox(msg.content,"top","warning");
+                    }
+                }
+            });
         })
         .on("click","#user-block .cancel",function(){
             TREE.destroyUserBlock();
@@ -149,7 +175,7 @@ function getChild(id){
                         '<div class="add-block"><label class="add-block-part"><i class="icon-plus-sign"></i> 添加部门</label>'+
                         '<label class="add-block-entity"><i class="icon-plus-sign"></i> 添加观察点</label>'+
                         '</div>'+
-                        '</li>').appendTo($("li[entity_group="+id+"] ul")).ready(function(){getChild(childs[i].id);getEntities(childs[i].id)});
+                        '</li>').appendTo($("li[entity_group="+id+"]>ul")).ready(function(){getChild(childs[i].id);getEntities(childs[i].id)});
                 }
 
             }
