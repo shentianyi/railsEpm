@@ -1,17 +1,21 @@
 #encoding: utf-8
 class DepartmentsController < ApplicationController
+  skip_load_and_authorize_resource
 
   def index
-    @roots = Department.all.roots
+    #@entity_groups = EntityGroup.where('is_public = true AND ancestry is NULL')
+    @roots = current_user.entity_groups.roots.where('is_department = true')
     render
   end
 
   def create
     msg = Message.new
     msg.result = false
-    parent = Department.find_by_id(params[:parent]) if params.has_key?(:parent)
-    @department = Department.new(params[:department])
+    parent = EntityGroup.find_by_id(params[:parent]) if params.has_key?(:parent)
+    @department = EntityGroup.new(params[:department])
     @department.user = current_user
+    @department.is_public = false
+    @department.is_department = true
     if parent
       puts parent
       @department.parent = parent

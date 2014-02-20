@@ -12,11 +12,15 @@
 # It's strongly recommended to check this file into your version control system.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 ActiveRecord::Schema.define(:version => 20140220033850) do
 =======
 ActiveRecord::Schema.define(:version => 20140219035750) do
 >>>>>>> parent of acf90d4... restructure
+=======
+ActiveRecord::Schema.define(:version => 20140219035750) do
+>>>>>>> parent of 4b7a5a3... department entity
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
