@@ -13,14 +13,19 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+ActiveRecord::Schema.define(:version => 20140220035544) do
+=======
+<<<<<<< HEAD
 
 ActiveRecord::Schema.define(:version => 20140220033850) do
 =======
 ActiveRecord::Schema.define(:version => 20140219035750) do
 >>>>>>> parent of acf90d4... restructure
+>>>>>>> parent of e1f3bb3... revert department entity
 =======
-ActiveRecord::Schema.define(:version => 20140219035750) do
->>>>>>> parent of 4b7a5a3... department entity
+
+ActiveRecord::Schema.define(:version => 20140220033850) do
+>>>>>>> parent of c52967a... revert charlot restrucure
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -112,6 +117,19 @@ ActiveRecord::Schema.define(:version => 20140219035750) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "departments", :force => true do |t|
+    t.string   "name"
+    t.string   "ancestry"
+    t.integer  "tenant_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "departments", ["ancestry"], :name => "index_departments_on_ancestry"
+  add_index "departments", ["tenant_id"], :name => "index_departments_on_tenant_id"
+  add_index "departments", ["user_id"], :name => "index_departments_on_user_id"
+
   create_table "emails", :force => true do |t|
     t.string   "sender"
     t.string   "receivers"
@@ -155,9 +173,8 @@ ActiveRecord::Schema.define(:version => 20140219035750) do
   create_table "entity_group_items", :force => true do |t|
     t.integer  "entity_id"
     t.integer  "entity_group_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.boolean  "is_visual",       :default => true
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   add_index "entity_group_items", ["entity_group_id"], :name => "index_entity_group_items_on_entity_group_id"
@@ -166,13 +183,11 @@ ActiveRecord::Schema.define(:version => 20140219035750) do
   create_table "entity_groups", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.boolean  "is_public",     :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_public",   :default => false
     t.string   "description"
     t.string   "code"
-    t.string   "ancestry"
-    t.boolean  "is_department", :default => false
   end
 
   add_index "entity_groups", ["user_id"], :name => "index_entity_groups_on_user_id"
@@ -263,6 +278,16 @@ ActiveRecord::Schema.define(:version => 20140219035750) do
 
   add_index "tenants", ["user_id"], :name => "index_tenants_on_user_id"
 
+  create_table "user_departments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "department_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "user_departments", ["department_id"], :name => "index_user_departments_on_department_id"
+  add_index "user_departments", ["user_id"], :name => "index_user_departments_on_user_id"
+
   create_table "user_kpi_items", :force => true do |t|
     t.integer  "entity_id"
     t.integer  "user_id"
@@ -303,10 +328,15 @@ ActiveRecord::Schema.define(:version => 20140219035750) do
     t.datetime "updated_at",                             :null => false
     t.boolean  "is_sys",              :default => false
     t.string   "title"
-    t.integer  "entity_group_id"
+<<<<<<< HEAD
+    t.integer  "department_id"
   end
 
-  add_index "users", ["entity_group_id"], :name => "index_users_on_entity_group_id"
+  add_index "users", ["department_id"], :name => "index_users_on_department_id"
+=======
+  end
+
+>>>>>>> parent of c52967a... revert charlot restrucure
   add_index "users", ["entity_id"], :name => "index_users_on_entity_id"
   add_index "users", ["tenant_id"], :name => "index_users_on_tenant_id"
 

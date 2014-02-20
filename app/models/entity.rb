@@ -10,7 +10,7 @@ class Entity < ActiveRecord::Base
   # has_many :entity_contacts
   has_many :entity_contacts,:as=>:contactable,:dependent=>:destroy
   has_many :contacts,:through=>:entity_contacts
-  attr_accessible :name, :status, :user_quantity,:description,:code
+  attr_accessible :name, :status, :user_quantity,:description,:code,:department_id
 
   acts_as_tenant(:tenant)
 
