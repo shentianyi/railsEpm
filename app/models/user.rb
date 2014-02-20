@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   belongs_to :entity
   #belongs_to :entity_group
   belongs_to :department
+  has_many :departments,:through => :user_departments
   has_many :entity_groups, :dependent => :destroy
   has_many :kpis, :through => :user_kpi_items
   has_many :user_kpi_items, :dependent => :destroy
@@ -12,7 +13,7 @@ class User < ActiveRecord::Base
   has_many :emails, :dependent => :destroy
 
   attr_accessible :email, :password, :password_confirmation, :status, :perishable_token, :confirmed, :first_name, :last_name, :is_tenant
-  attr_accessible :tenant_id, :role_id, :entity_id, :is_sys, :title, :entity_group_id
+  attr_accessible :tenant_id, :role_id, :entity_id,:department_id, :is_sys, :title#, :department_group_id
 
   acts_as_authentic do |c|
     c.login_field = :email
