@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20140220035544) do
+=======
+<<<<<<< HEAD
+
+ActiveRecord::Schema.define(:version => 20140220033850) do
+=======
+ActiveRecord::Schema.define(:version => 20140219035750) do
+>>>>>>> parent of acf90d4... restructure
+>>>>>>> parent of e1f3bb3... revert department entity
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
