@@ -27,7 +27,7 @@ class Email < ActiveRecord::Base
                       from_mail: self.sender,
                       to: self.receivers.split(';'),
                       subject: self.title,
-                      text: self.content,
+                      text: self.content.blank? ? 'From EPM' : self.content,
                       attachment: self.attachments.pluck(:path)).send
   end
 

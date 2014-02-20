@@ -8,6 +8,7 @@ end
 module KpiEntryAnalyseHelper
   def self.analysis_data  kpi_id,entity_group_id,start_time,end_time,average,frequency,table_flag=nil
    table_data=get_kpi_entry_analysis_data(kpi_id,entity_group_id,start_time,end_time,average,frequency)
+   return nil if table_data.nil?
    if table_flag
        return table_data
    else
