@@ -34,6 +34,8 @@ gem 'aliyun-oss'
 gem 'rest-client'
 gem 'multimap'
 
+gem 'colorize'
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'

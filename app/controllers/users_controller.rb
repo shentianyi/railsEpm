@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def index
     @roles=Role.role_items
     @active_role_id=params[:id].nil? ? @roles[0].id : params[:id].to_i
-    @users=User.accessible_by(current_ability).by_role(@active_role_id).all
+    @users= User.accessible_by(current_ability).by_role(@active_role_id).all
     @departments=Department.all
     @data_points=Entity.all
   end
@@ -38,9 +38,6 @@ class UsersController < ApplicationController
     @user=User.new(params[:user])
     msg=Message.new
     if  @user.save
-      params[:departments].each do |id|
-        @user.user_departments<<UserDepartment.new(department_id: id) if (department=Department.find_by_id(id))
-      end
       msg.result=true
       msg.object = UserPresenter.new(@user).to_json
     else

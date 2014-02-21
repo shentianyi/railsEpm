@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
   has_many :user_departments,:dependent => :destroy
   has_many :departments,:through => :user_departments
 
-  has_many :entity_groups, :dependent => :destroy
+  has_many :user_entity_groups,:dependent => :destroy
+  has_many :entity_groups, :through => :user_entity_groups,:dependent => :destroy
   has_many :kpis, :through => :user_kpi_items
   has_many :user_kpi_items, :dependent => :destroy
   has_many :kpi_entries, :through => :user_kpi_items
@@ -95,9 +96,10 @@ class User < ActiveRecord::Base
     Role.display self.role_id
   end
 
-  def department_infos
-    departments.select('name,id')
+  def department_names
+    self.departments.pluck(:name).join(',')
   end
+
 
   #待测试
   def insert_guide_template

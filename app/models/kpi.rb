@@ -6,6 +6,9 @@ class Kpi < ActiveRecord::Base
   has_many :user_kpi_items, :dependent => :destroy
   has_many :base_kpis, :through => :kpi_items, :source => 'base_kpi'
 
+  has_many :department_kpis, :dependent => :destroy
+  has_many :departments, :through => :department_kpis
+
   belongs_to :creator, :class_name => 'User', :foreign_key => 'user_id'
 
   has_many :kpi_entries, :through => :user_kpi_items

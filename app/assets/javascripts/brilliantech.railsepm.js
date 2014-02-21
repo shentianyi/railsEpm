@@ -1421,7 +1421,6 @@ function delivery_Kpi(){
     },function(data){
        $("#user-assigned-kpis").html(data);
     })
-
 }
 ///////////////  view  ///////////////////////////////////////
 function create_Viewentity(event) {

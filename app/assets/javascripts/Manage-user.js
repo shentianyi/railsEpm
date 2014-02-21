@@ -114,8 +114,9 @@ MANAGE.user.add_new = function () {
     var name = $("#new-user-name").val();
     var group = $("#department-for-kpi :selected").text();
     var entity_id = $("#entity-for-kpi :selected").attr("value");
-    var department_ids = $("#department-for-kpi").val() ;
-         console.log(department_id);
+    var department_id = $("#department-for-kpi :selected").attr("value");
+    var department_name = $("#department-for-kpi :selected").text();
+    console.log(department_id);
     var entity_name = $("#entity-for-kpi :selected").text();
     var mail = $("#new-user-mail").val();
     var title = $('#new-user-title').val();
@@ -134,7 +135,7 @@ MANAGE.user.add_new = function () {
                     password: password,
                     password_confirmation: password_confirm,
                     entity_id: entity_id,
-                    department_ids: department_ids,
+                    department_id: department_id,
                     role_id: role
                 }
             },
@@ -151,7 +152,7 @@ MANAGE.user.add_new = function () {
                                 .append($("<tr />")
                                     .append($("<td />").text(object.first_name).addClass("user-manage-name"))
                                     .append($("<td />").text(object.title).addClass("user-manage-title"))
-                                    .append($("<td />").text(object.department_name_string).addClass("user-manage-department").attr("value", object.department_id_string))
+                                    .append($("<td />").text(department_name).addClass("user-manage-department").attr("value", object.department_id))
                                     .append($("<td />").text(entity_name).addClass("user-manage-entity").attr("value", object.entity_id))
                                     .append($("<td />").text(object.role).addClass("user-manage-authority").attr("value", object.role_id)))
                                 .append($("<tr />")
@@ -159,6 +160,7 @@ MANAGE.user.add_new = function () {
                                     .append($("<td />").text(I18n.t('manage.user.new.title')))
                                     .append($("<td />").text(I18n.t('manage.user.new.department')))
                                     .append($("<td />").text(I18n.t('manage.user.new.entity')))
+                                    .append($("<td />").text(I18n.t('manage.user.new.departments')))
                                     .append($("<td />").text(I18n.t('manage.user.new.authority'))))
                             ));
                         $("#manage-sort-list input[type='checkbox']").iCheck({
@@ -336,8 +338,9 @@ MANAGE.user.assign.init = function () {
                     user: user_id
                 },
                 type: 'post',
-                success: function (data) {
-                    if (data[0]) {
+                success: function (msg) {
+                    if (msg.result) {
+                        var data = msg.content;
                         $("#assign-kpi-inner>.left").append($("<li />").attr("id", data[0].id).attr("kpi_id", data[1].id)
                             .append($("<table />").append($("<tr />")
                                     .append($("<td />").text(data[1].name))
@@ -352,13 +355,13 @@ MANAGE.user.assign.init = function () {
                             )
                             .append($("<i />").addClass("icon-trash")));
                     } else {
-                        MessageBox("Same KPI has already been assigned", "top", "warning");
+                        MessageBox(msg.content, "top", "warning");
                     }
                 }
             });
         }
         else {
-            MessageBox("Same KPI has already been assigned", "top", "warning");
+            MessageBox(I18n.t('fix.kpi_assign_fail'), "top", "warning");
         }
     });
 

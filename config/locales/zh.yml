@@ -392,6 +392,7 @@ zh:
           pwd_con: 确认密码
           entity: 输入点
           department: 部门
+          departments: 负责部门
           title: 职位
       view:
         desc:
@@ -491,7 +492,10 @@ zh:
     upload_error: 您在上传中出现了错误，无法完成上传
     click_download_error: 点击连接下载错误提示文件，帮助您正确上传:)
     close: 关闭
-    handing_file: 正在处理文件，请等待... 
+    handing_file: 正在处理文件，请等待...
+    user_entity_is_blank: 用户未分配输入点
+    kpi_assign_fail: 用户已分配此KPI
+    user_no_exists: 用户不存在
   vali_msg:
     invalid_date: 日期格式错误
     invalid_value: 数值错误

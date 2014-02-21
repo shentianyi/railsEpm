@@ -5,8 +5,8 @@ class EntityGroupsController < ApplicationController
     @group_entities=[]
     if @entity_groups.count>0
       @active_entity_group_id=params[:id].nil? ? @entity_groups[0].id : params[:id].to_i
-      puts @active_entity_group_id
       if @entity_group= EntityGroup.find_by_id(@active_entity_group_id) #current_user.entity_groups.accessible_by(current_ability).where("entity_groups.id=?",@active_entity_group_id).first
+        @entity_group.can_modify = @entity_group.can_modify_by_user(current_user)
         @user_group_entities=@entity_group.entities.select("entities.*,entity_group_items.id as 'entity_group_item_id'")
         @entities=Entity.accessible_by(current_ability) #unless @entity_group.is_public
       end
@@ -17,7 +17,7 @@ class EntityGroupsController < ApplicationController
   def create
     msg=Message.new
     @entity_group=EntityGroup.new(params[:data])
-    @entity_group.user=current_user
+    @entity_group.creator=current_user
     if @entity_group.save
       msg.result=true
       msg.object=@entity_group.id
@@ -43,7 +43,7 @@ class EntityGroupsController < ApplicationController
   def destroy
     msg=Message.new
     if @entity_group=EntityGroup.accessible_by(current_ability).find_by_id(params[:id])
-      if (!@entity_group.is_public) || (@entity_group.is_public && @entity_group.user_id == current_user.id)
+      if @entity_group.can_modify_by_user(current_user)
         @entity_group.destroy
         msg.result=true
       else

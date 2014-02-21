@@ -385,6 +385,7 @@ en:
         pwd_con: Password Confirmation
         entity: Data Point
         department: Department
+        departments: In Charge
         title: Title
     view:
       desc:
@@ -484,6 +485,9 @@ en:
     click_download_error: Click the link to download the error file to help reset your values:)
     close: Close
     handing_file: handing the file, please wait a minute...
+    user_entity_is_blank: User not in any Entity
+    kpi_assign_fail: Same KPI has been assigned
+    user_no_exists: User not exists
   vali_msg:
     invalid_date: invalid date format
     invalid_value: invalid value

@@ -7,7 +7,7 @@
   </li>
   <% @entity_groups.each do |entity_group| %>
       <li class="<%= entity_group.id==@active_entity_group_id ? 'active' : '' %>" title="<%= entity_group.name %>" number="<%= entity_group.id %>">
-        <% unless entity_group.is_public %>
+        <% if entity_group.can_modify_by_user(current_user) %>
             <i class="icon-trash icon-item"></i>
         <% end %>
         <a href="/entity_groups/index/<%= entity_group.id %>" public='<%= entity_group.is_public %>'><%= entity_group.name %></a>

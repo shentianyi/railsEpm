@@ -26,6 +26,7 @@
                       <td class="user-manage-title"><%= user.title %></td>
                       <td class="user-manage-department" value="<%= user.department_id %>"><%= user.department_name %></td>
                       <td class="user-manage-entity" value="<%= user.entity_id %>"><%= user.entity_name %></td>
+                      <td><%= user.department_names %></td>
                       <td class="user-manage-authority" value="<%= user.role_id %>"><%= UsersHelper.get_user_role_display(user.role_id) %></td>
                     </tr>
                     <tr>
@@ -33,6 +34,7 @@
                       <td><%= t 'manage.user.new.title' %></td>
                       <td><%= t 'manage.user.new.department' %></td>
                       <td><%= t 'manage.user.new.entity' %></td>
+                      <td><%= t 'manage.user.new.departments' %></td>
                       <td><%= t 'manage.user.new.authority' %></td>
                     </tr>
                   </table>
@@ -47,9 +49,8 @@
             <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="edit-user-name" general="user-name"/>
             <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="edit-user-mail" general="user-mail"/>
             <input type="text" placeholder="<%= t 'manage.user.new.title' %>" id="edit-user-title" general="user-title"/>
-
             <div>
-              <select data-placeholder="<%= t 'manage.user.new.department' %>" multiple  id="edit-department-for-kpi" class="single-select">
+              <select  data-placeholder="<%= t 'manage.user.new.department' %>"   id="edit-department-for-kpi" class="single-select">
                 <option value=""></option>
                 <% @departments.each do |department| %>
                     <option value="<%= department.id %>"><%= department.name %></option>
@@ -57,7 +58,7 @@
               </select>
             </div>
             <div>
-              <select data-placeholder="<%= t 'manage.user.new.entity' %>"  id="edit-enity-for-kpi"  class="single-select">
+              <select data-placeholder="<%= t 'manage.user.new.entity' %>"  id="edit-entity-for-kpi"  class="single-select">
                 <option value=""></option>
                 <% @data_points.each do |data_point| %>
                     <option value="<%= data_point.id %>"><%= data_point.name %></option>
@@ -110,9 +111,9 @@
     <input type="text" placeholder="<%= t 'manage.user.new.title' %>" id="new-user-title" general="user-title"/>
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd' %>" id="new-user-password"/>
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd_con' %>" id="new-user-password-confirm"/>
-
-    <div class="div-select">
-      <select data-placeholder="<%= t 'manage.user.new.department' %>" id="department-for-kpi" multiple class="single-select">
+    <div  class="div-select">
+      <select data-placeholder="<%= t 'manage.user.new.department' %>"  id="edit-department-for-kpi" class="single-select">
+        <option value=""></option>
         <% @departments.each do |department| %>
             <option value="<%= department.id %>"><%= department.name %></option>
         <% end %>
