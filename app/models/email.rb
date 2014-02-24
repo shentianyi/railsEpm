@@ -1,6 +1,7 @@
 #encoding: utf-8
 class Email < ActiveRecord::Base
   attr_accessible :file_path, :receivers, :sender, :user_id, :content, :title
+  attr_accessible :kpi_id, :entity_group_id
   has_many :attachments, :as => :attachable, :dependent => :destroy
   belongs_to :user
   attr_accessor :user_name
@@ -29,7 +30,7 @@ class Email < ActiveRecord::Base
                       subject: self.title,
                       text: self.content.blank? ? 'From EPM' : self.content,
                       attachment: self.attachments.pluck(:pathname),
-                      file_path:$AttachTmpPath).send
+                      file_path: $AttachTmpPath).send
   end
 
   def generate_analysis_pdf_and_cache analysis
@@ -58,12 +59,12 @@ class Email < ActiveRecord::Base
   end
 
   def update_analysis_conditon params
-    self.update_attributes(kpi_id:params[:kpi_id],entity_group_id:params[:entity_group_id])
+    self.update_attributes(kpi_id: params[:kpi_id], entity_group_id: params[:entity_group_id])
   end
 
   def self.search params
     q=self
-    params.each{|k,v| q=q.where(k=>v) unless v.blank?}
+    params.each { |k, v| q=q.where(k => v) unless v.blank? }
     return q
   end
 end

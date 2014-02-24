@@ -10,9 +10,10 @@ class EmailPresenter<Presenter
 
   def to_detail_json
     json=self.to_json
-    json[:attchments]=[]
+    json[:attachments]=[]
     @email.attachments.each do |att|
-      json[:attchments]<<{name: att.name, path: att.path}
+      json[:attachments]<<{name: att.name, path: att.path}
     end
+    return json
   end
 end
