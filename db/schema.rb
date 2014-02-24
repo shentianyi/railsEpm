@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140224025325) do
+ActiveRecord::Schema.define(:version => 20140224074806) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -132,12 +132,16 @@ ActiveRecord::Schema.define(:version => 20140224025325) do
     t.string   "receivers"
     t.string   "file_path"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "content"
     t.string   "title"
+    t.integer  "kpi_id"
+    t.integer  "entity_group_id"
   end
 
+  add_index "emails", ["entity_group_id"], :name => "index_emails_on_entity_group_id"
+  add_index "emails", ["kpi_id"], :name => "index_emails_on_kpi_id"
   add_index "emails", ["user_id"], :name => "index_emails_on_user_id"
 
   create_table "entities", :force => true do |t|

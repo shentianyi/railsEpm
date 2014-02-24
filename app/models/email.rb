@@ -33,6 +33,7 @@ class Email < ActiveRecord::Base
 
   def generate_analysis_pdf_and_cache analysis
     if analysis
+      analysis.symbolize_keys!
       if da=KpiEntryAnalyseHelper.analysis_data(analysis[:kpi_id], analysis[:entity_group_id],
                                                 analysis[:start_time], analysis[:end_time],
                                                 true, analysis[:frequency].to_i, false)
@@ -53,5 +54,15 @@ class Email < ActiveRecord::Base
         return FileData.new(:data => PdfService.generate_analysis_pdf(datas), :oriName => "analysis.pdf", :path => $AttachTmpPath).saveFile
       end
     end
+  end
+
+  def update_analysis_conditon params
+    self.update_attributes(kpi_id:params[:kpi_id],entity_group_id:params[:entity_group_id])
+  end
+
+  def self.search params
+    q=self
+    params.each{|k,v| q=q.where(k=>v) unless v.blank?}
+    return q
   end
 end
