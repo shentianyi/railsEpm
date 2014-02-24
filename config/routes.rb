@@ -184,20 +184,37 @@ IFEpm::Application.routes.draw do
 
   end
 
-  controller :departments do
-    get 'departments' => :index
-    post 'departments' => :create
-    delete 'departments/:id' => :destroy
-    post 'departments/add_entity' => :add_entity
-    delete 'departments/remove_entity' => :remove_entity
-    post 'departments/add_user' => :add_user
-    delete 'departments/remove_user' => :remove_user
-    get 'departments/sub_departments' => :sub_departments
-    get 'departments/sub_entities' => :sub_entities
-    get 'departments/users' => :users
-    get 'departments/entity_users' => :entity_users
-    get 'departments/new_entities' => :new_entities
+  resources :departments do
+    collection do
+      post 'add_entity' => :add_entity
+      delete 'remove_entity' => :remove_entity
+      post 'add_user' => :add_user
+      delete 'remove_user' => :remove_user
+      get 'sub_departments' => :sub_departments
+      get 'sub_entities' => :sub_entities
+      get 'users' => :users
+      get 'entity_users' => :entity_users
+      #get the valid entities can be added to the department
+      get 'valid_entities' => :valid_entities
+      #get the valid users can be added to the department
+      get 'valid_users' => :valid_users
+    end
   end
+
+  #controller :departments do
+  #  get 'departments' => :index
+  #  post 'departments' => :create
+  #  delete 'departments/:id' => :destroy
+  #  post 'departments/add_entity' => :add_entity
+  #  delete 'departments/remove_entity' => :remove_entity
+  #  post 'departments/add_user' => :add_user
+  #  delete 'departments/remove_user' => :remove_user
+  #  get 'departments/sub_departments' => :sub_departments
+  #  get 'departments/sub_entities' => :sub_entities
+  #  get 'departments/users' => :users
+  #  get 'departments/entity_users' => :entity_users
+  #  get 'departments/new_entities' => :new_entities
+  #end
 
 # This is a legacy wild controller route that's not recommended for RESTful applications.
 # Note: This route will make all actions in every controller accessible via GET requests.

@@ -12,7 +12,6 @@ TREE.current_entitygroup_id = -1;
     $("body")
         //点击部门
         .on("click","#tree .entity_root>a,#tree .im-entities>a",function(){
-            TREE.part_show(this);
             var $this=$(this);
             $this.toggleClass("open");
             if($this.hasClass("open")){
@@ -41,6 +40,7 @@ TREE.current_entitygroup_id = -1;
                 $this.attr("chosen","");
                 TREE.destroyUserBlock();
             }
+            TREE.part_show(this);
         })
         .on("dblclick","#part-info .basic dd",function(){
             var value=$(this).text();
@@ -50,6 +50,21 @@ TREE.current_entitygroup_id = -1;
         .on("blur","#part-info .basic dd input",function(){
             var value=$(this).val(),
                 post_name=$(this).parent().attr("post");
+
+            $.ajax({
+                url:"departments/"+TREE.current_entitygroup_id,
+                type:"PUT",
+                data:{department:{name:value}},
+                success:function(data){
+                    if(data.result){
+                        TREE.current_entityname = value;
+                        $("li[entity_group="+TREE.current_entitygroup_id+"]>a").text("").append("<i class='icon-laptop'></i>").append(TREE.current_entityname);
+                    }else{
+
+                    }
+                }
+            })
+
             $(this).parent().empty().text(value);
         })
         .on("keyup","#part-info .basic dd input",function(event){
@@ -71,13 +86,24 @@ TREE.current_entitygroup_id = -1;
                         MessageBox(data.content,"top","warning");
                     }
                 }
-            })
+            });
         })
         //点击输入点
         .on("click","#tree .entity_root>ul li p",function(){
             var id=$(this).parent().attr("entities");
+          var target = $(this).parent();
             if(confirm("删除该观察点？")){
-
+              $.ajax({
+                url:"/departments/remove_entity",
+                data:{entity_id:id},
+                dataType:"json",
+                type:"POST",
+                success:function(data){
+                  if(data.result){
+                    target.remove();
+                  }
+                }
+              });
             }
         })
         //点击添加部门
@@ -85,7 +111,6 @@ TREE.current_entitygroup_id = -1;
             var $this=$(this),
                 x=$this.offset().left,
                 y=$this.offset().top;
-            TREE.current_entitygroup_id = $("a[chosen='one']").parent().attr("entity_group");//$("a[chosen='one']").eq(0).attr("entity_group");
             TREE.getUserBlock(x,y);
             $("#user-block").find("input").focus();
         })
@@ -139,6 +164,57 @@ TREE.current_entitygroup_id = -1;
         .on("click","#add-entity .icon-remove",function(){
             TREE.destroyEntity();
         })
+        //Add user
+        .on("click","#btn-add-user",function(event){
+          TREE.getUser();
+        })
+        .on("click","#add-user .icon-remove",function(){
+            TREE.destroyUser();
+        })
+        //Click User
+  .on("click","#add-user .inner ul li",function(){
+    var target = $(this);
+    var user_id = $(this).attr("user_id");
+    var name = $(this).text();
+    var id = TREE.current_entitygroup_id;
+    $.ajax({
+      url:"/departments/add_user",
+      type:"POST",
+      data:{id:id,user_id:user_id},
+      dataType:"json",
+      success:function(data){
+        if(data.result){
+          target.remove();
+          $("#part-info .users .inner ul.users").append("<li user_id="+user_id+">"+name+"</li>");
+        }else{
+          
+        }
+      }
+    });
+  })
+  .on("click","#add-entity .inner ul li",function(){
+    var target = $(this);
+    var entity_id = target.attr("entity_id");
+    var name = target.text();
+    var id = TREE.current_entitygroup_id;
+    $.ajax({
+      url:"/departments/add_entity",
+      data:{id:id,entity_id:entity_id},
+      type:"POST",
+      dataType: "json",
+      success: function(data){
+        if(data.result){
+          target.remove();
+          if($("li[entity_group="+id+"]").has("ul").length < 1){
+            $("li[entity_group="+id+"]").append("<ul />");
+          }
+          $('<li style="display:block" entities="'+entity_id+'"><p>'+name+'</li>').appendTo($("li[entity_group="+id+"]>ul"));
+        }
+      }
+    });
+  })
+  
+  
     ;
     $(document).ready(function(){
         var roots = $("#hidden-entity li");
@@ -169,7 +245,7 @@ function getEntities(id){
                     $("li[entity_group="+id+"]").append("<ul />");
                 }
                 for(var i = 0;i<childs.length;i++){
-                    $('<li style="display:none" entities="'+childs[i].id+'"><p>'+childs[i].name+'</li>').appendTo($("li[entity_group="+id+"] ul"));
+                    $('<li style="display:none" entities="'+childs[i].id+'"><p>'+childs[i].name+'</li>').appendTo($("li[entity_group="+id+"]>ul"));
                 }
             }
         }
@@ -219,20 +295,27 @@ function getChild(id){
 //    );
 //}
 TREE.part_show=function(object){
-//    $("#part-info section").filter(function(index){return index!==0?true:false}).css("display","block");
-    var option={},
-        id=$(object).parent().attr("entity_group");
-    $("#part-info .basic .inner a").attr("entity-group",id);
-    var name=$(object).text();
-//    $.get("",{},function(data){
-//        if(data.result){
-//
-//        }
-//        else{
-//            MessageBox(data.content,"top","warning");
-//        }
-//    })
-    $("#part-info .basic .name").text(name);
+  //    $("#part-info section").filter(function(index){return index!==0?true:false}).css("display","block");
+
+  var option={},
+      id=$(object).parent().attr("entity_group");
+  $("#part-info .basic .inner a").attr("entity-group",id);
+  var name=$(object).text();
+  $.get("/departments/users",{id:id},function(data){
+    if(data.result){
+      var users = data.content;
+      $("#part-info .users .inner ul.users li").remove();
+      for(var i = 0;i<users.length;i++){
+        $("#part-info .users .inner ul.users").append("<li user_id="+users[i].id+">"+users[i].first_name+"</li>");
+      }
+    }
+    else{
+      MessageBox(data.content,"top","warning");
+    }
+  })
+  $("#part-info .basic .name").text(name);
+  TREE.current_entitygroup_id = id;
+  TREE.current_entityname = name;
 }
 TREE.part_hide=function(){
 //    $("#part-info section").filter(function(index){return index!==0?true:false}).css("display","none");
@@ -241,6 +324,7 @@ TREE.getInfoHeight=function(){
     var height=$(document).height()-$("header").height();
     $("#part-info").height(height);
     $("#add-entity").height(height);
+  $("#add-user").height(height);
 }
 
 TREE.getUserBlock=function(x,y){
@@ -253,12 +337,20 @@ TREE.destroyUserBlock=function(){
 
 TREE.getEntity=function(object){
     $.ajax({
-        url:"/departments/new_entities",
+        url:"/departments/valid_entities",
         data:{id:TREE.current_entitygroup_id},
         type:"GET",
-        dataType:"html",
+        dataType:"json",
         success:function(data){
-
+          if(data.result){
+            $("#add-entity .inner ul li").remove();
+            var entities = data.content;
+            for(var i = 0;i<entities.length;i++){
+              $("#add-entity .inner ul").append("<li entity_id="+ entities[i].id+">"+entities[i].name+"</li>");
+            }
+          }else{
+            
+          }
         }
     })
     $("#add-entity").css("left","0px");
@@ -267,5 +359,23 @@ TREE.destroyEntity=function(){
     $("#add-entity").css("left","-20%");
 }
 
+TREE.getUser = function(object){
+  $("#add-user").css("left","0px");
+  $.get("/departments/valid_users",{id:TREE.current_entitygroup_id},function(data){
+    if(data.result){
+      var users = data.content;
+      $("#add-user .inner ul li").remove();
+      for(var i = 0;i<users.length;i++){
+        $("#add-user .inner ul").append("<li user_id = "+users[i].id+">"+users[i].first_name+"</li>");
+      }
+    }else{
+      
+    }
+  });
+}
+
+TREE.destroyUser = function(object){
+  $("#add-user").css("left","-20%");
+}
 
 

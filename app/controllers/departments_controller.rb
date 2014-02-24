@@ -11,9 +11,8 @@ class DepartmentsController < ApplicationController
     msg.result = false
     parent = Department.find_by_id(params[:parent]) if params.has_key?(:parent)
     @department = Department.new(params[:department])
-    @department.user = current_user
+    @department.creator = current_user
     if parent
-      puts parent
       @department.parent = parent
     end
     if !@department.save
@@ -27,6 +26,15 @@ class DepartmentsController < ApplicationController
       msg.result = true
       msg.content = @department
     end
+    render :json => msg
+  end
+
+  def update
+    msg = Message.new
+    msg.result = true
+
+    @department = Department.find_by_id(params[:id])
+    msg.result = @department.update_attributes(params[:department])
     render :json => msg
   end
 
@@ -72,9 +80,26 @@ class DepartmentsController < ApplicationController
     department = Department.find_by_id(params[:id])
     #add entity to all the ancestors of this department
     if entity&&department
-      entity.department_id = department.id
+      previous_dept = entity.department
+
+      entity.update_attribute("department_id",department.id)
+      #delete all the entity_group_itmes
+      if !previous_dept.nil?
+        if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,previous_dept.entity_group.id)
+          entity_group_item.destroy
+        end
+
+        previous_dept.ancestors.each do |d|
+          if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,d.entity_group.id)
+            entity_group_item.destroy
+          end
+        end
+      end
+
+      #create all the entity_group_item for new
       entity_group_item = EntityGroupItem.new(:entity_id => entity.id,:entity_group_id=>department.entity_group.id)
       entity_group_item.save
+
       #create the entitygroupitem
       department.ancestors.each do |d|
         entity_group_item = EntityGroupItem.new(:entity_id => entity.id,:entity_group_id=>d.entity_group.id)
@@ -96,13 +121,20 @@ class DepartmentsController < ApplicationController
     msg = Message.new
     msg.result = true
     ActiveRecord::Base.transaction do
-      entity = Entity.find_by_id(prams[:entity_id])
-      entity.department_id = nil
-      department = Department.find_by_id(params[:id])
-      EntityGroupItem.delete_all("entity_id = ? AND entity_group_id = ?",entity.id,department.entity_group.id)
+      entity = Entity.find_by_id(params[:entity_id])
 
-      department.ancestors.each do |d|
-        EntityGroupItem.delete_all("entity_id = ? AND entity_group_id = ?",entity.id,d.entity_group.id)
+      previous_dept = entity.department
+
+      entity.department_id = nil
+
+      if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,previous_dept.entity_group.id)
+          entity_group_item.destroy
+      end
+
+      previous_dept.ancestors.each do |d|
+        if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,d.entity_group.id)
+          entity_group_item.destroy
+        end
       end
     end
     render :json=>msg
@@ -160,9 +192,10 @@ class DepartmentsController < ApplicationController
     msg = Message.new
     msg.result = false
     #@users = User.find_by_entity_group_id(params[:id])
-    mgs.result = true
+    @users = Department.find_by_id(params[:id]).users
+    msg.result = true
     msg.content = @users
-    render :json=>@users
+    render :json=>msg
   end
 
   def entity_users
@@ -175,9 +208,28 @@ class DepartmentsController < ApplicationController
   end
 
   #get the entities not in this department
-  def new_entities
-    @entities = Entity.where("department_id NOT IN (?)",params[:id])
+  def valid_entities
+    msg = Message.new
+    msg.result = false
+    @entities = Entity.where("department_id != ? OR department_id IS NULL",params[:id])
+    msg.result = true
+    msg.content = @entities
+    render :json=> msg
+  end
 
-    render :json=> "add_entity"
+  #get all the users not in this department
+  def valid_users
+    msg = Message.new
+    msg.result = false
+    ids = Department.find_by_id(params[:id]).users.pluck(:id)
+    if ids.count > 0
+
+    else
+      ids = 0
+    end
+    @users = User.where("role_id != ? AND id NOT IN (?)",100,ids)
+    msg.result = true
+    msg.content = @users
+    render :json => msg
   end
 end
