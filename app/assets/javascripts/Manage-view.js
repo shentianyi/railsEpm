@@ -55,7 +55,7 @@ MANAGE.view.init = function () {
 
     $("body").on("click", ".shared-user-list h3", function () {
         var id = $(this).attr('id'),
-            user_id = $('#entity_group_id').val(),
+            user_id = $(this).attr('user'),
             name = $(this).text();
 
         $('.unshared-user-list h3').each(function () {
@@ -65,7 +65,7 @@ MANAGE.view.init = function () {
         });
         $.ajax({
             url:'/user_entity_groups/'+id  ,
-            type:'DELETE' ,
+            type:'DELETE',
             dataType:'JSON',
             success:function(data){
                 if(data.result)
