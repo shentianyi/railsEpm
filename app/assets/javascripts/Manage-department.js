@@ -200,7 +200,7 @@ MANAGE.department.add_department_init = function () {
                         }
                     });
                     if (validate) {
-                        $.post('/entities', {
+                        $.post('manage-entity-edit-old/entities', {
                             data: {
                                 name: name
                             }
@@ -258,7 +258,7 @@ MANAGE.department.add_department_init = function () {
 MANAGE.department.add_clear=function(){
     $("#manage-entity-add input[type='text']").val("");
     $("#manage-entity-add textarea").val("");
-}
+};
 MANAGE.entity.edit = function () {
     var name = $('#edit-entity-name').val(),
         code = $('#edit-entity-code').val(),

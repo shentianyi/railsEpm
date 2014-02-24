@@ -392,9 +392,15 @@ en:
         name: View
         manage: Manage View
         dep_list: Data Point List
+        user_list: User List
         assign_dep: Assign Data Point
         assign_desc: Creating view first , then assign data point to the view ,view is the base condition in analytics
+        share: Share
+        share_desc: Share the view.......
+        share_now: Share Now
         next_desc: Creating view first , then assign data point to the view,view is the base condition in analytics
+      validate:
+        already_shared: Already shared to this user!
       already_assigned: Data point has been assigned!
       unassign_confirm: Sure to unassign this data point?
   #dashboard

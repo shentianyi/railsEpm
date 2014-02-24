@@ -4,6 +4,7 @@ class EntityGroupItemsController < ApplicationController
   def create
     msg=Message.new
     @entity_group_item=EntityGroupItem.new(params[:data])
+    @entity_group_item.user=current_user
     if @entity_group_item.save
     msg.result=true
     msg.object=@entity_group_item.id

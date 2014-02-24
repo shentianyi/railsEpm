@@ -9,6 +9,8 @@ class EntityGroupsController < ApplicationController
         @entity_group.can_modify = @entity_group.can_modify_by_user(current_user)
         @user_group_entities=@entity_group.entities.select("entities.*,entity_group_items.id as 'entity_group_item_id'")
         @entities=Entity.accessible_by(current_ability) #unless @entity_group.is_public
+        @shared_users=@entity_group.shared_user
+        @unshared_users=@entity_group.unshared_user
       end
     end
   end

@@ -7,6 +7,7 @@ puts %Q{
 ****select no. to execute, print Q to quit*******
 1. change user role from manager to director
 2. reindex user entity group
+3. add user to entity group item
      }.yellow
 
 while (m=gets.chomp)
@@ -15,6 +16,8 @@ while (m=gets.chomp)
       UpdateUserRole.execute
     when '2'
       ReindexUserEntityGroup.execute
+    when '3'
+      AddUserToEntityGroupItem.execute
     when 'Q'
       break
   end

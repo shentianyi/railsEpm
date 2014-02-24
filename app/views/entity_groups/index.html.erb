@@ -19,6 +19,7 @@
                   <i class="icon-pencil"></i>
                   <input type="text"/>
                   <a class="btn btn-primary assign-department-btn" id="entity-add-show"><%= t 'manage.view.desc.assign_dep' %></a>
+                  <button class="btn btn-primary share-entity-group-btn" id="user-share-show"><%= t 'manage.view.desc.share' %></button>
               <% end %>
             </div>
             <div class="assign-entity-wrap" id="assign-entity-wrap">
@@ -37,19 +38,45 @@
           </div>
 
           <% if @entity_group.can_modify %>
-              <div class="manage-user-add" id="manage-entity-add" special="entity">
-                <i class="icon-remove" id="close-add-entity"></i>
+              <div>
+                <div class="manage-user-add" id="manage-entity-add" special="entity">
+                  <i class="icon-remove" id="close-add-entity"></i>
 
-                <p>
-                  <%= t 'manage.view.desc.dep_list' %>
-                </p>
-                <ul>
-                  <% @entities.each do |entity| %>
-                      <li>
-                        <h3 id="<%= entity.id %>"><%= entity.name %></h3>
-                      </li>
-                  <% end %>
-                </ul>
+                  <p>
+                    <%= t 'manage.view.desc.dep_list' %>
+                  </p>
+                  <ul>
+                    <% @entities.each do |entity| %>
+                        <li>
+                          <h3 id="<%= entity.id %>"><%= entity.name %></h3>
+                        </li>
+                    <% end %>
+                  </ul>
+                </div>
+
+                <div class="manage-user-add" id="user-share-list" special="entity">
+                  <i class="icon-remove" id="close-user-share"></i>
+
+                  <p>
+                    <%= t 'manage.view.desc.user_list' %>
+                  </p>
+                  <h4>shared users:</h4>
+                  <ul class="shared-user-list">
+                    <% @shared_users.each do |user| %>
+                        <li>
+                          <h3 id="<%= user.user_entity_group_id %>" user="<%=user.id%>"><%= user.first_name %></h3>
+                        </li>
+                    <% end %>
+                  </ul>
+                  <h4>unshared users:</h4>
+                  <ul class="unshared-user-list">
+                    <% @unshared_users.each do |user| %>
+                        <li>
+                          <h3 id="<%= user.id %>"><%= user.first_name %></h3>
+                        </li>
+                    <% end %>
+                  </ul>
+                </div>
               </div>
           <% end %>
       <% end %>
@@ -57,6 +84,13 @@
   </div>
 
   <aside class="content-right-nav" name='entity' id="content-right-nav">
+    <section class="solid">
+      <h3><%= t 'manage.view.desc.share' %></h3>
+
+      <p><%= t 'manage.view.desc.share' %></p>
+      <a class="btn btn-primary" id="share-entity-group"><%= t 'manage.view.desc.share_now' %></a>
+    </section>
+
     <section class="solid">
       <h3><%= t 'manage.view.desc.assign_dep' %></h3>
 
@@ -66,7 +100,7 @@
       <h3><%= t 'manage.base.next' %></h3>
 
       <p><%= t 'manage.view.desc.next_desc' %></p>
-      <a class="btn btn-primary" href="<%= new_kpi_entry_path %>"><%= t 'entry.desc.entry' %></a>
+      <a class="btn btn-primary" href="<%= kpi_entries_path %>"><%= t 'entry.desc.entry' %></a>
     </section>
   </aside>
 </div>
