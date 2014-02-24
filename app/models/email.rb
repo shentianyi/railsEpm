@@ -1,6 +1,7 @@
 #encoding: utf-8
 class Email < ActiveRecord::Base
   attr_accessible :file_path, :receivers, :sender, :user_id, :content, :title
+  attr_accessible :kpi_id, :entity_group_id
   has_many :attachments, :as => :attachable, :dependent => :destroy
   belongs_to :user
   attr_accessor :user_name
@@ -28,11 +29,13 @@ class Email < ActiveRecord::Base
                       to: self.receivers.split(';'),
                       subject: self.title,
                       text: self.content.blank? ? 'From EPM' : self.content,
-                      attachment: self.attachments.pluck(:path)).send
+                      attachment: self.attachments.pluck(:pathname),
+                      file_path: $AttachTmpPath).send
   end
 
   def generate_analysis_pdf_and_cache analysis
     if analysis
+      analysis.symbolize_keys!
       if da=KpiEntryAnalyseHelper.analysis_data(analysis[:kpi_id], analysis[:entity_group_id],
                                                 analysis[:start_time], analysis[:end_time],
                                                 true, analysis[:frequency].to_i, false)
@@ -53,5 +56,15 @@ class Email < ActiveRecord::Base
         return FileData.new(:data => PdfService.generate_analysis_pdf(datas), :oriName => "analysis.pdf", :path => $AttachTmpPath).saveFile
       end
     end
+  end
+
+  def update_analysis_conditon params
+    self.update_attributes(kpi_id: params[:kpi_id], entity_group_id: params[:entity_group_id])
+  end
+
+  def self.search params
+    q=self
+    params.each { |k, v| q=q.where(k => v) unless v.blank? }
+    return q
   end
 end

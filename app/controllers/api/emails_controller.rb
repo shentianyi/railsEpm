@@ -5,8 +5,10 @@ module Api
     layout 'pure'
 
     def index
-      @emails = Email.find_by_user_id(current_user.id)
-
+      conditions=params[:conditoin]||{}
+      conditions[:user_id]=current_user.id
+      @emails = Email.search(conditions).all
+      @emails=EmailPresenter.init_detail_json_presenters(@emails)
       respond_to do |t|
         t.json { render :json => @emails }
         t.js { render :js => jsonp_str(@emails) }
@@ -28,7 +30,7 @@ module Api
       @email=Email.new(params[:email])
       @email.init_user_info current_user
       if msg.result = @email.save
-        Resque.enqueue(EmailSender,@email.id,params)
+        Resque.enqueue(EmailSender, @email.id, params)
       else
         msg.content = @email.errors.full_messages
       end

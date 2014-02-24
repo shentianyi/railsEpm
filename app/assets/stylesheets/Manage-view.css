@@ -70,7 +70,8 @@
 .manage-user-add[special="entity"]{
     background-color:#333;
     transition:left 0.35s ease-out;
-    position:relative;
+    /*position:relative;*/
+    position: absolute;
     left:-200px;
     width:200px;
 

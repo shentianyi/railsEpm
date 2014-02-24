@@ -1,7 +1,7 @@
 #encoding: utf-8
 
 class MailerService
-  attr_accessor :from_mail, :from_name, :from, :to, :subject, :text, :attachment
+  attr_accessor :from_mail, :from_name, :from, :to, :subject, :text, :attachment, :file_path, :delete_tmp_file
   ADDRESS= "https://api:key-815jqt0315prsi9k3pmz3n330kq5rbz3@api.mailgun.net/v2/sandbox1973.mailgun.org/messages"
 
   def initialize params
@@ -12,6 +12,8 @@ class MailerService
     self.subject=params[:subject]
     self.text=params[:text]
     self.attachment=params[:attachment] if params.has_key?(:attachment)
+    self.file_path =params[:file_path]
+    self.delete_tmp_file = params[:delete_tmp_file]||false
   end
 
   def send
@@ -23,14 +25,28 @@ class MailerService
 
     if self.attachment
       if self.attachment.is_a?(String)
-        data[:attachment]=File.new(self.attachment)
+        data[:attachment]=File.new(File.join(self.file_path, self.attachment))
       elsif self.attachment.is_a?(Array)
         self.attachment.each do |a|
-          data[:attachment]=File.new(a)
+          data[:attachment]=File.new(File.join(self.file_path, a))
         end
       end
     end
 
     RestClient.post ADDRESS, data
+    delete_local_file if self.delete_tmp_file
   end
+
+  def delete_local_file
+    if self.attachment
+      if self.attachment.is_a?(String)
+        File.delete(File.join(self.file_path, self.attachment))
+      elsif self.attachment.is_a?(Array)
+        self.attachment.each do |a|
+          File.delete(File.join(self.file_path, a))
+        end
+      end
+    end
+  end
+
 end

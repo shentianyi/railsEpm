@@ -11,6 +11,10 @@ class Presenter
     params.map{|param| self.new(param).to_json}
   end
 
+  def self.init_detail_json_presenters params
+    params.map{|param| self.new(param).to_detail_json}
+  end
+
   def to_json
     json={}
     self.delegators.each do |dele|

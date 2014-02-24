@@ -13,6 +13,8 @@ class EmailSender
       @email.save_attachments(attachments)
       # send email
       @email.send_mail
+
+      @email.update_analysis_conditon(params[:analysis])
     end
   end
 end

@@ -10,6 +10,7 @@ IFEpm::Application.routes.draw do
 
   resources :contacts
   resources :avatars
+  resources :user_entity_groups
   resources :files do
     member do
       get :template
