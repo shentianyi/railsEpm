@@ -8,11 +8,7 @@ class UserObserver<ActiveRecord::Observer
 
   def after_update user
     if user.entity_id_changed?
-      #if user.entity_id.blank?
-      #  user.user_kpi_items.delete_all
-      #else
       user.user_kpi_items.update_all(:entity_id => user.entity_id)
-      #end
       if entity=user.entity
         entity.increment!(:user_quantity)
         department_id=entity.department_id
@@ -23,6 +19,9 @@ class UserObserver<ActiveRecord::Observer
         department_id_was=entity.department_id
       end
       UserKpiItem.reinit_department_kpis(user, department_id, department_id_was)
+    end
+    if user.department_id_changed?
+      UserKpiItem.reinit_department_kpis(user, user.department_id, user.department_id_was)
     end
   end
 
