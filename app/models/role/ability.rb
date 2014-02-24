@@ -18,12 +18,16 @@ class Ability
       can :manage,User,:id=>user.id
 
       can :manage,UserSession,:email=>user.email
-      #can :read,EntityGroup,:is_public=>true
-      can :manage,EntityGroup,user_entity_groups:{user_id:user.id}
-      can :read,KpiCategory,kpis:{user_kpi_items:{entity_id:EntityGroupItem.where(:entity_group_id => user.entity_group).pluck(:id)}}
-      can [:read,:access,:categoried],Kpi,user_kpi_items:{entity_id:EntityGroupItem.where(:entity_group_id => user.user_entity_groups.pluck(:id)).pluck(:entity_id)}
-      can :read,KpiCategory
-      can :manage,Entity,entity_group_items:{entity_group_id:user.entity_group_id}
+      can :manage,EntityGroup,{user_id:user.id}
+      can :read,EntityGroup,user_entity_groups:{user_id:user.id}
+      can :manage,Entity,entity_group_items:{entity_group:{department:{id:user.user_departments.pluck(:id)}}}
+
+      can :read,KpiCategory,kpis:{department_kpis:{department_id:user.user_departments.pluck(:id)}}
+      can  [:read,:access,:categoried],Kpi,department_kpis:{department_id:user.user_departments.pluck(:id)}
+      #can :read,KpiCategory,kpis:{user_kpi_items:{entity_id:EntityGroupItem.where(:entity_group_id => user.entity_group).pluck(:id)}}
+      #can [:read,:access,:categoried],Kpi,user_kpi_items:{entity_id:EntityGroupItem.where(:entity_group_id => user.user_entity_groups.pluck(:id)).pluck(:entity_id)}
+      #can :read,KpiCategory
+
       #can :read,:all
     elsif user.user?
       can :manage,User,:id=>user.id
