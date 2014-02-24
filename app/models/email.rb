@@ -28,7 +28,8 @@ class Email < ActiveRecord::Base
                       to: self.receivers.split(';'),
                       subject: self.title,
                       text: self.content.blank? ? 'From EPM' : self.content,
-                      attachment: self.attachments.pluck(:path)).send
+                      attachment: self.attachments.pluck(:pathname),
+                      file_path:$AttachTmpPath).send
   end
 
   def generate_analysis_pdf_and_cache analysis
