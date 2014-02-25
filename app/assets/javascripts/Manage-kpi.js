@@ -431,7 +431,7 @@ MANAGE.kpi.library.add_post = function(category, kpis) {
           async : false,
           success : function(data) {
                if(data.result) {
-                    $("#manage-left-menu").append($("<li />").attr("title", data.content).attr("number", data.object).append($("<i />").addClass("icon-trash icon-item")).append($("<a href='../kpis?p=" + data.object + "'/>").text(data.content)));
+                    $("#manage-left-menu").append($("<li />").attr("title", data.content).attr("number", data.object).append($("<i />").addClass("icon-trash icon-item")).append($("<a href='/kpis/c/" + data.object + "'/>").text(data.content)));
                } else {
                     MessageBox(data.content, "top", "warning");
                }
