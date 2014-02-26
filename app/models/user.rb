@@ -67,6 +67,7 @@ class User < ActiveRecord::Base
                         :edition => $trial_edition,
                         :subscription_status => SubscriptionStatus::TRIAL,
                         :expire_at => 15.days.from_now)
+    @department = department.new(:name => company_name)
 
     begin
       ActiveRecord::Base.transaction do
@@ -76,6 +77,7 @@ class User < ActiveRecord::Base
         self.status = UserStatus::ACTIVE
         self.is_tenant=true
         @tenant.save!
+        @department.save!
         self.save!
         @tenant.update_attributes :user_id => self.id
         return self
