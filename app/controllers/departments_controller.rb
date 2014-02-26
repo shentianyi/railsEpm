@@ -126,7 +126,7 @@ class DepartmentsController < ApplicationController
       previous_dept = entity.department
 
       #entity.department_id = nil
-      if entity.update_attribute(:department_id => nil)
+      if entity.update_attribute("department_id",nil)
         if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,previous_dept.entity_group.id)
           entity_group_item.destroy
         end

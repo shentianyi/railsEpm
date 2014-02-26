@@ -89,7 +89,9 @@ TREE.current_entitygroup_id = -1;
                 type:"DELETE",
                 success:function(data){
                     if(data.result){
-                        $("li[entity_group="+id+"]").remove();
+                      var parent = $("li[entity_group="+id+"]").parent();
+                      $("li[entity_group="+id+"]").remove();
+                      TREE.li_remove(parent);
                     }else{
                         MessageBox(data.content,"top","warning");
                     }
@@ -108,7 +110,10 @@ TREE.current_entitygroup_id = -1;
                 type:"POST",
                 success:function(data){
                   if(data.result){
+                    var parent = target.parent();
                     target.remove();
+                    
+                    TREE.li_remove(parent);
                   }
                 }
               });
@@ -400,4 +405,8 @@ TREE.destroyUser = function(object){
   $("#add-user").css("left","-20%");
 }
 
-
+TREE.li_remove = function(target){
+  if (target.parent().children("ul").children("li").length < 1){
+    target.parent().children("ul").remove();
+  }
+}
