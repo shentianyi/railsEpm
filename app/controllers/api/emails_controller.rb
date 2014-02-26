@@ -5,10 +5,10 @@ module Api
     layout 'pure'
 
     def index
-      conditions=params[:conditoin]||{}
+      conditions=params[:conditions]||{}
       conditions[:user_id]=current_user.id
-      @emails = Email.search(conditions).all
-      @emails=EmailPresenter.init_detail_json_presenters(@emails)
+      @emails = Email.search(conditions).paginate(page:params[:page],per_page:30).order('created_at desc').all
+      @emails=EmailPresenter.group_by_time(EmailPresenter.init_presenters(@emails))
       respond_to do |t|
         t.json { render :json => @emails }
         t.js { render :js => jsonp_str(@emails) }

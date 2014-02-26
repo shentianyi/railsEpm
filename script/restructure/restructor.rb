@@ -5,18 +5,21 @@ end
 puts %Q{
 *************** steps of restruct ***************
 ****select no. to execute, print Q to quit*******
-1. change user role from manager to director
-2. reindex user entity group
-3. add user to entity group item
+1. create root department
+2. change user role from manager to director
+3. reindex user entity group
+4. add user to entity group item
      }.yellow
 
 while (m=gets.chomp)
   case m
     when '1'
-      UpdateUserRole.execute
+      CreateRootDepartment.execute
     when '2'
-      ReindexUserEntityGroup.execute
+      UpdateUserRole.execute
     when '3'
+      ReindexUserEntityGroup.execute
+    when '4'
       AddUserToEntityGroupItem.execute
     when 'Q'
       break
