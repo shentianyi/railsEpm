@@ -7,14 +7,20 @@ ActiveRecord::Base.transaction do
   CSV.foreach("#{ARGV[0]}/a.csv", :headers => true, :col_sep => ';') do |row|
     params= {}
     if user = User.find_by_email(row["email"])
-      params[:user_id] = user.id
-      params[:name] = row["name"]
-      dashboard = Dashboard.new(params)
-      if dashboard.save!
+      #if someone already has the same dashbaord?
+      if dashboard = Dashboard.where("user_id = ? AND name= ?",user.id,row["name"])
         dashboards[row["code"]] = dashboard
         entity_groups[row["code"]] = row["entitygroups"]
       else
-        puts "Dashboard with email:"+row["email"]+" name:"+row["name"] + "created failed!";
+        params[:user_id] = user.id
+        params[:name] = row["name"]
+        dashboard = Dashboard.new(params)
+        if dashboard.save!
+          dashboards[row["code"]] = dashboard
+          entity_groups[row["code"]] = row["entitygroups"]
+        else
+          puts "Dashboard with email:"+row["email"]+" name:"+row["name"] + "created failed!";
+        end
       end
     else
       puts "User with: "+row["email"] + "not found!"
@@ -39,6 +45,7 @@ ActiveRecord::Base.transaction do
           groups = entity_groups[row["belongs_to"]].split("+")
 
           if groups.last.include?("|")
+            # do not use this
             #if we have "|"
             list_groups = groups.last.split("|")
             groups.delete(groups.last)
