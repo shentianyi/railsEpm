@@ -49,17 +49,20 @@ module Api
     end
 
     def analyse
-      cache =KpiEntryAnalyseCache.find_by_id(params[:id], 'Email')
-      query = JSON.parse(cache.query)
-      @kpi_id = query["kpi_id"]
-      @kpi_name = query["kpi_name"]
-      @entity_group_id= query["entity_group_id"]
-      @entity_group_name = query["entity_group_name"]
-      @start_time = query["start_time"]
-      @end_time = query["end_time"]
-      @frequency = query["frequency"]
-      @type = query["type"]
-      @data = cache.chart_data
+      if cache =KpiEntryAnalyseCache.find_by_id(params[:id], 'Email')
+        query = JSON.parse(cache.query)
+        @kpi_id = query["kpi_id"]
+        @kpi_name = query["kpi_name"]
+        @entity_group_id= query["entity_group_id"]
+        @entity_group_name = query["entity_group_name"]
+        @start_time = query["start_time"]
+        @end_time = query["end_time"]
+        @frequency = query["frequency"]
+        @type = query["type"]
+        @data = cache.chart_data
+      else
+        error_page_404
+      end
     end
   end
 end

@@ -22,15 +22,15 @@ class Ability
       can :manage, UserSession, :email => user.email
       can :manage, EntityGroup, user_id: user.id
       can :read, EntityGroup, user_entity_groups: {user_id: user.id}
-      can :manage, Entity, entity_group_items: {entity_group: {department: {id: user.user_departments.pluck(:id)}}}
+      can :manage, Entity, entity_group_items: {entity_group: {department: {id: user.user_departments.pluck(:department_id)}}}
       can :create, EntityGroupItem
       can :basic_modify, EntityGroupItem, user_id: user.id
 
       can :create, UserEntityGroup
       can :basic_modify, UserEntityGroup, entity_group: {user_id: user.id}
 
-      can :read, KpiCategory, kpis: {department_kpis: {department_id: user.user_departments.pluck(:id)}}
-      can [:read, :access, :categoried], Kpi, department_kpis: {department_id: user.user_departments.pluck(:id)}
+      can :read, KpiCategory, kpis: {department_kpis: {department_id: user.user_departments.pluck(:department_id)}}
+      can [:read, :access, :categoried], Kpi, department_kpis: {department_id: user.user_departments.pluck(:department_id)}
 
       #can :read,:all
     elsif user.user?
