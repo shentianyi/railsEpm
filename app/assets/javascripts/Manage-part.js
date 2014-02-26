@@ -284,8 +284,8 @@ TREE.current_entitygroup_id = -1;
               for(var i = 0;i<childs.length;i++){
                 $('<li class="im-entities" entity_group="'+childs[i].id+'"><a><i class="icon-laptop"></i> '+
                   childs[i].name+'</a>'+
-                  '<div class="add-block"><label class="add-block-part"><i class="icon-plus-sign"></i> 添加部门</label>'+
-                  '<label class="add-block-entity"><i class="icon-plus-sign"></i> 添加观察点</label>'+
+                  '<div class="add-block"><label class="add-block-part"><i class="icon-plus-sign"></i>'+I18n.t('manage.departments.desc.add-department')+'</label>'+
+                  '<label class="add-block-entity"><i class="icon-plus-sign"></i>'+I18n.t('manage.departments.desc.add-entity')+'</label>'+
                   '</div>'+
                   '</li>').appendTo($("li[entity_group="+id+"]>ul")).ready(function(){getChild(childs[i].id);});
               }

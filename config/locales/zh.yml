@@ -410,6 +410,20 @@ zh:
           already_shared: 已共享，不可重复
         already_assigned: 输入点已经分配，不可重复
         unassign_confirm: 确定取消分配此输入点？
+      departments:
+        desc:
+          name: 部门
+          manage: 管理部门
+          basic: 基础信息
+          basic-name: 名称
+          users: 部门负责人
+          add-entity: 添加输入点
+          add-user: 添加负责人
+          add-department: 添加部门
+          delete-department: 删除部门
+          add-ok: 确定
+          add-cancle: 取消
+          delete-depart-confirm: "删除该输入点？"
   #dashboard
   dashboard_group:
     base:

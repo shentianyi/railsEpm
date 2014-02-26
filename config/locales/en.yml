@@ -272,7 +272,7 @@ en:
     billing: Account
     entry_kpi: KPI Entry
     department: Data Point
-    entity: Entity
+    entity: Department
   analytics:
     title: Analytics
     kpi_category: KPI Category
@@ -403,6 +403,19 @@ en:
         already_shared: Already shared to this user!
       already_assigned: Data point has been assigned!
       unassign_confirm: Sure to unassign this data point?
+    departments:
+      desc:
+        name: Department
+        manage: Manage Department
+        basic: Basic Information
+        basic-name: Name
+        users: Department Heads
+        add-entity: Add Data Point
+        add-user: Add Department Head
+        add-department: Add Department
+        delete-department: Delete Department
+        add-ok: Add
+        add-cancle: Cancle
   #dashboard
   dashboard_group:
     base:
