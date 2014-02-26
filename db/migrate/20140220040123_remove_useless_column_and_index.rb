@@ -5,7 +5,7 @@ class RemoveUselessColumnAndIndex < ActiveRecord::Migration
 
     remove_column :entity_group_items, :is_visual
 
+    remove_index :users, :entity_group_id	
     remove_column :users, :entity_group_id
-    remove_index :users, :entity_group_id
   end
 end
