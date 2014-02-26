@@ -41,11 +41,15 @@ class DepartmentsController < ApplicationController
   def destroy
     msg=Message.new
     if @department=Department.accessible_by(current_ability).find_by_id(params[:id])
-      if @department.user_id == current_user.id
-        @department.destroy
-        msg.result=true
+      if @department.root?
+        msg.content=I18n.t "fix.cannot_destroy"
       else
-        msg.content = I18n.t "fix.cannot_destroy"
+        if @department.user_id == current_user.id
+          @department.destroy
+          msg.result=true
+        else
+          msg.content = I18n.t "fix.cannot_destroy"
+        end
       end
     else
          msg.content=I18n.t "fix.cannot_destroy"
