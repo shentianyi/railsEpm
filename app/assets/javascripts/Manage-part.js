@@ -16,6 +16,7 @@ TREE.current_entitygroup_id = -1;
             $this.toggleClass("open");
             if($this.hasClass("open")){
                 $this.next().css("display","block");
+              /*
                 $this.nextAll("ul").children("li").filter(function(index){
                     if($(this).hasClass("im-entities")){
                          return false;
@@ -24,11 +25,15 @@ TREE.current_entitygroup_id = -1;
                         return true;
                     }
                 }).css("display","block");
+               */
                 $("[chosen=one]").click();
                 $this.attr("chosen","one");
+              //get entity
+              getEntities($this.parent().attr("entity_group"));
             }
             else{
                 $this.next().css("display","none");
+              /*
                 $this.nextAll("ul").children("li").filter(function(index){
                     if($(this).hasClass("im-entities")){
                         return false;
@@ -37,8 +42,11 @@ TREE.current_entitygroup_id = -1;
                         return true;
                     }
                 }).css("display","none");
+               */
                 $this.attr("chosen","");
                 TREE.destroyUserBlock();
+              //remove Entity
+              TREE.remove_entities($this.parent());
             }
             TREE.part_show(this);
         })
@@ -219,7 +227,7 @@ TREE.current_entitygroup_id = -1;
     $(document).ready(function(){
         var roots = $("#hidden-entity li");
         for(var i = 0;i<roots.length;i++){
-            getEntities(roots.eq(i).attr("entity"));
+            //getEntities(roots.eq(i).attr("entity"));
             getChild(roots.eq(i).attr("entity"));
         }
         TREE.part_show(".entity_root>a");
@@ -245,7 +253,7 @@ function getEntities(id){
                     $("li[entity_group="+id+"]").append("<ul />");
                 }
                 for(var i = 0;i<childs.length;i++){
-                    $('<li style="display:none" entities="'+childs[i].id+'"><p>'+childs[i].name+'</li>').appendTo($("li[entity_group="+id+"]>ul"));
+                    $('<li style="display:block" entities="'+childs[i].id+'"><p>'+childs[i].name+'</li>').appendTo($("li[entity_group="+id+"]>ul"));
                 }
             }
         }
@@ -271,7 +279,7 @@ function getChild(id){
                         '<div class="add-block"><label class="add-block-part"><i class="icon-plus-sign"></i> 添加部门</label>'+
                         '<label class="add-block-entity"><i class="icon-plus-sign"></i> 添加观察点</label>'+
                         '</div>'+
-                        '</li>').appendTo($("li[entity_group="+id+"]>ul")).ready(function(){getChild(childs[i].id);getEntities(childs[i].id)});
+                        '</li>').appendTo($("li[entity_group="+id+"]>ul")).ready(function(){getChild(childs[i].id);});
                 }
 
             }
@@ -317,6 +325,20 @@ TREE.part_show=function(object){
   TREE.current_entitygroup_id = id;
   TREE.current_entityname = name;
 }
+/*
+ =============
+ @function remove_entities
+ remove all the entity li
+ @target jquery selector string
+ =============
+ */
+TREE.remove_entities = function(target){
+  target.children("ul").children("li[entities]").remove();
+  if(target.children("ul").children("li").length < 1){
+    target.children("ul").remove();
+  }
+}
+//
 TREE.part_hide=function(){
 //    $("#part-info section").filter(function(index){return index!==0?true:false}).css("display","none");
 }
