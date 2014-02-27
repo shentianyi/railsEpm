@@ -100,13 +100,20 @@ function dashboard_add(){
 }
 dashboard_add.prototype=MANAGE.manage_menu_left_add.prototype;
 dashboard_add.prototype.constructor=dashboard_add;
-
+//22014.2
+function entity_groups_add(){
+    this.name="entity_groups";
+    this.href="/entity_groups?p=";
+    this.postHref='/entity_groups';
+}
+entity_groups_add.prototype=MANAGE.manage_menu_left_add.prototype;
+entity_groups_add.prototype.constructor=entity_groups_add;
 
 MANAGE.category.add=new category_add();
 MANAGE.group.add=new group_add();
 MANAGE.entity.add=new entity_add();
 MANAGE.dashboard.add=new dashboard_add();
-
+MANAGE.entity_groups.add=new entity_groups_add();
 
 MANAGE.left.manage_left_add_init=function(){
     $("#manage-menu-add").on("click",function(){
