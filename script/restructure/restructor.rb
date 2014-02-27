@@ -6,7 +6,7 @@ puts %Q{
 *************** steps of restruct ***************
 ****select no. to execute, print Q to quit*******
 1. change user role from manager to director
-2. build departmentStructure
+2. build department structure
  ## two params, first is method index, second is file path
  ## example: rails runner script/restructure/restructor.rb
  ##2,/root/data/build_departments.csv
@@ -16,10 +16,7 @@ puts %Q{
  ## 3,/root/data/add_entity_to_department.csv
 4. reindex user entity group
 5. add user to entity group item
-6. cancel user kpi assign
- ## two params, first is method index, second is file path
- ## example: rails runner script/restructure/restructor.rb
- ## 6,/root/data/cancel_kpi_assign.csv
+6, auto share department entity group to user
      }.yellow
 
 
@@ -37,6 +34,8 @@ while (m=gets.chomp)
     when '5'
       AddUserToEntityGroupItem.execute
     when '6'
+      AutoShareEntityGroup.execute
+    when '7'
       CancelUserKpiAssign.execute(args[1])
     when 'Q'
       break
