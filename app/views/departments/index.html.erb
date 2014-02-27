@@ -1,4 +1,4 @@
-<div class="part-left">
+<div class="part-right" id="part-graph">
   <div class="inner" id="tree">
     <% @roots.each do |e|%>
         <div class="tree">
@@ -16,7 +16,7 @@
   </div>
 
 </div>
-<div class="part-right" id="part-info">
+<div class="part-left" id="part-info">
   <section class="title">
     <div class="inner">
       <p><%= t 'manage.departments.desc.manage'%></p>
@@ -35,7 +35,8 @@
   <section class="users">
     <div class="inner">
       <p><%= t 'manage.departments.desc.users'%></p>
-      <ul class="users">
+      <ul class="users" id="charge-man">
+        <li>name <i class="icon icon-remove"></i></li>
       </ul>
       <a id="btn-add-user" class="btn btn-primary" href="#"><%= t 'manage.departments.desc.add-user'%></a>
     </div>
@@ -47,7 +48,9 @@
    <div class="inner">
      <h4>Add Department User</h4>
      <ul>
-       <li>Zhangsan</li>
+       <li>
+         Zhangsan
+       </li>
      </ul>
    </div>
 </div>

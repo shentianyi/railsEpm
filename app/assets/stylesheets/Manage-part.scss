@@ -1,7 +1,6 @@
 @import 'STYLE';
 
-$part-left:80%;
-$part-right:20%;
+$part-right:200px;
 $tree-blue:#3b7ccd;
 $tree-blue-hover:#c8e4f8;
 $border-gray:#ddd;
@@ -9,8 +8,8 @@ $pColor-1:#222;
 $pColor-2:#4f4f4f;
 $pColor-3:#9d9d9d;
 
-.part-left{
-  width:$part-left;
+.part-right{
+  min-width:600px - $part-right;
   float:left;
   padding-left:$part-right;
   @include transition(padding);
@@ -18,9 +17,7 @@ $pColor-3:#9d9d9d;
     padding:15px;
   }
 }
-.part-right{
-
-
+.part-left{
   overflow-y:auto;
   @include transition(right);
   width:$part-right;
@@ -51,31 +48,62 @@ $pColor-3:#9d9d9d;
         color:$pColor-3;
         font-size:16px;
         padding:0px 5px;
-        margin-bottom:8px;
+        margin-bottom:15px;
       }
       &>dl{
         margin-top:-5px;
         padding-left:$section-paddingH;
-        color:$pColor-2;
+
         cursor:default;
+        &:after{
+          content:"";
+          clear:both;
+          display:block;
+        }
+        dt{
+          float:left;
+          color:$pColor-3;
+        }
         dd{
-          padding-left:10px;
+          color:$pColor-2;
+          padding-left:5px;
+          float:left;
+          width:140px;
           cursor:pointer;
           input{
-            width:190px;
+            width:160px;
             padding:3px 3px;
             font-size:12px;
           }
         }
       }
       &>ul{
-        padding:0 15px;
+        padding:0 0px;
         li{
           margin-bottom:4px;
+          position:relative;
           color:$pColor-2;
           cursor:default;
+          padding:0px 29px 0px 19px;
           &:hover{
             color:$pColor-1;
+          }
+          &:hover i{
+            display:block;
+          }
+          i{
+            position:absolute;
+            right:18px;
+            top:1px;
+            cursor:pointer;
+            pointer-events:auto;
+            display:none;
+            color:#9d9d9d;
+            @include transition(color);
+            &:hover{
+              display:block;
+              color:#222;
+            }
           }
         }
       }
@@ -192,8 +220,8 @@ $pColor-3:#9d9d9d;
   }
 }
 .add-entity{
-  left:-20%;
-  width:20%;
+  left:-200px;
+  width:200px;
   position:absolute;
   z-index:99;
   background:#f4f4f4;
@@ -207,12 +235,13 @@ $pColor-3:#9d9d9d;
     width:1px;
     background-color:$border-gray;
   }
-  .icon-remove{
+  &>.icon-remove{
     position:absolute;
     pointer-events:auto;
     right:10px;
     top:5px;
     cursor:pointer;
+    color:rgba(0,0,0,0.3);
     &:hover{
        color:$tree-blue;
     }
@@ -220,10 +249,10 @@ $pColor-3:#9d9d9d;
   .inner{
     padding:5px 0px;
     h4{
-      font-size:21px;
+      font-size:19px;
       color:$tree-blue;
       font-weight:lighter;
-      padding:5px 16px;
+      padding:10px 25px 5px 16px;
     }
     ul{
       padding:5px 0px 3px;
@@ -231,6 +260,7 @@ $pColor-3:#9d9d9d;
         padding:6px 19px;
         font-size:12px;
         color:#222;
+        position:relative;
         cursor:pointer;
         text-align:left;
         @include word-break;
@@ -239,6 +269,7 @@ $pColor-3:#9d9d9d;
           background:$blue;
           color:#fff;
         }
+
       }
     }
   }
