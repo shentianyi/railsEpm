@@ -69,6 +69,7 @@ TREE.current_entitygroup_id = -1;
                 TREE.destroyUserBlock();
                 //remove Entity
                 TREE.remove_entities($this.parent());
+              TREE.destroyUser();
             }
             TREE.part_show(this);
         })

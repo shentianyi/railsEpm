@@ -103,7 +103,7 @@ dashboard_add.prototype.constructor=dashboard_add;
 //22014.2
 function entity_groups_add(){
     this.name="entity_groups";
-    this.href="/entity_groups?p=";
+    this.href="/entity_groups/index/";
     this.postHref='/entity_groups';
 }
 entity_groups_add.prototype=MANAGE.manage_menu_left_add.prototype;
@@ -268,6 +268,7 @@ MANAGE.manage_menu_left_edit.prototype={
                 async:false,
                 success : function(data) {
                     if(data){
+                        alert(data)    ;
                         $("#manage-left-menu li.active>a").text(name);
                         $("#manage-left-menu li.active").attr("title",name);
                         $("#manage-edit-target").text(name);
@@ -277,7 +278,7 @@ MANAGE.manage_menu_left_edit.prototype={
                                     $(this).text(name);
                                     return false;
                                 }
-                            })
+                            });
                             $("#new-kpi-category").val('').trigger('chosen:updated');
                         }
                     }
