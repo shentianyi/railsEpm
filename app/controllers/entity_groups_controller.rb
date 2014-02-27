@@ -38,9 +38,11 @@ class EntityGroupsController < ApplicationController
   def update
     msg=Message.new
     if @entity_group=EntityGroup.find_by_id(params[:id])
-      msg.result =@entity_group.update_attributes(params[:data])
+      if msg.result = @entity_group.can_modify_by_user(current_user)
+        msg.result =@entity_group.update_attributes(params[:data])
+      end
     end
-    render json:msg
+    render json: msg.result
   end
 
   # delete entity_group
