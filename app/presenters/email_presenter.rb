@@ -13,7 +13,7 @@ class EmailPresenter<Presenter
   def to_detail_json
     json=self.to_json
     json[:attachments]=[]
-    @email.attachments.each do |att|
+    @email.attachments.where(type:'image').each do |att|
       json[:attachments]<<{name: att.name, path: att.path}
     end
     return json

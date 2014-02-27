@@ -39,7 +39,7 @@ class FileData<CZ::BaseClass
 
   def self.get_type path
     case File.extname(path).downcase
-      when '.jpg', '.jpg', '.gif', '.bmp', '.png'
+      when '.jpg', '.jpeg', '.gif', '.bmp', '.png'
         return 'image'
       when '.doc', '.docx'
         return 'doc'
