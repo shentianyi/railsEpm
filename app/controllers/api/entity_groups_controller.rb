@@ -3,7 +3,7 @@ module Api
 
     def index
       get_user_entity_groups
-      egs= @entity_groups.select('id,name,is_public,description,code,user_id').all
+      egs= @entity_groups.select('id,name,description,code,user_id').all
       respond_to do |t|
         t.json { render :json => egs }
         t.js { render :js => jsonp_str(egs) }
