@@ -135,7 +135,7 @@ MANAGE.left.manage_left_add_init=function(){
 MANAGE.manage_menu_left_delete.prototype={
     delete_complete:function(e){
         var number = $(e.target).parent().attr("number");
-        var local=this.local
+        var local=this.local;
         $.ajax({
             url : this.url+number,
             type : 'DELETE',
