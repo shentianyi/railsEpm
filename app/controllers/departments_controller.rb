@@ -164,9 +164,10 @@ class DepartmentsController < ApplicationController
     msg = Message.new
     msg.result = false
 
-    if user_department = UserDepartment.where("user_id = ? AND department_id = ?",params[:user_id],params[:department_id])
+    if user_department = UserDepartment.where("user_id = ? AND department_id = ?",params[:user_id],params[:department_id]).first
       user_department.destroy
       msg.result = true
+      msg.content = params[:user_id]
     end
     render :json=>msg
   end

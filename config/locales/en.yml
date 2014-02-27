@@ -416,6 +416,8 @@ en:
         delete-department: Delete Department
         add-ok: Add
         add-cancle: Cancle
+        delete-depart-confirm: Delete this Data Point?
+        delete-user: Delete Department Head?
   #dashboard
   dashboard_group:
     base:
