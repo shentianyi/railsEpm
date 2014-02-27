@@ -150,10 +150,13 @@ class DepartmentsController < ApplicationController
   def add_user
     msg = Message.new
     msg.result = false
-    user_department = UserDepartment.new(:user_id => params[:user_id],:department_id => params[:id])
-    if !(msg.result = user_department.save)
-      msg.content = user_department.errors.full_messages
+    if User.find_by_id(params[:user_id]) && Department.find_by_id(params[:id])
+      user_department = UserDepartment.new(:user_id => params[:user_id],:department_id => params[:id])
+      if !(msg.result = user_department.save)
+        msg.content = user_department.errors.full_messages
+      end
     end
+
 
     render :json=>msg
   end
