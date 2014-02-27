@@ -66,6 +66,7 @@ class KpisController < ApplicationController
       if user.entity_id.blank?
         msg.content = I18n.t "fix.user_entity_is_blank"
       else
+        puts user.entity_id
         if result= KpisHelper.assign_kpi_to_user_by_id(params[:kpi], user) and result[0]
           msg.content =result
           msg.result =true

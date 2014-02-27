@@ -1,3 +1,4 @@
+# user_id of entity_group_items is creator id
 module AddUserToEntityGroupItem
   def self.execute
     EntityGroup.all.each do |ug|

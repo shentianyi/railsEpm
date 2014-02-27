@@ -14,9 +14,10 @@ class UserObserver<ActiveRecord::Observer
         department_id=entity.department_id
       end
       unless user.entity_id_was.blank?
-        entity=Entity.find_by_id(user.entity_id_was)
-        entity.decrement!(:user_quantity)
-        department_id_was=entity.department_id
+        if  entity=Entity.find_by_id(user.entity_id_was)
+          entity.decrement!(:user_quantity)
+          department_id_was=entity.department_id
+        end
       end
       UserKpiItem.reinit_department_kpis(user, department_id, department_id_was)
     end
