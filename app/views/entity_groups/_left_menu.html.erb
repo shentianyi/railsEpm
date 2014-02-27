@@ -7,6 +7,7 @@
   </li>
   <% @entity_groups.each do |entity_group| %>
       <li class="<%= entity_group.id==@active_entity_group_id ? 'active' : '' %>" title="<%= entity_group.name %>" number="<%= entity_group.id %>">
+        <i class="icon icon-columns" title="共享视图"></i>
         <% if entity_group.can_modify_by_user(current_user) %>
             <i class="icon-trash icon-item"></i>
         <% end %>
