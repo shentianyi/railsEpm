@@ -49,7 +49,7 @@
             <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="edit-user-name" general="user-name"/>
             <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="edit-user-mail" general="user-mail"/>
             <input type="text" placeholder="<%= t 'manage.user.new.title' %>" id="edit-user-title" general="user-title"/>
-            <div>
+            <div class="div-select">
               <select  data-placeholder="<%= t 'manage.user.new.department' %>"   id="edit-department-for-kpi" class="single-select">
                 <option value=""></option>
                 <% @departments.each do |department| %>
@@ -57,7 +57,7 @@
                 <% end %>
               </select>
             </div>
-            <div>
+            <div class="div-select">
               <select data-placeholder="<%= t 'manage.user.new.entity' %>"  id="edit-entity-for-kpi"  class="single-select">
                 <option value=""></option>
                 <% @data_points.each do |data_point| %>

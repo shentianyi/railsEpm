@@ -18,8 +18,8 @@
                   <p id="manage-edit-target"></p>
                   <i class="icon-pencil"></i>
                   <input type="text"/>
-                  <a class="btn btn-primary assign-department-btn" id="entity-add-show"><%= t 'manage.view.desc.assign_dep' %></a>
-                  <button class="btn btn-primary share-entity-group-btn" id="user-share-show"><%= t 'manage.view.desc.share' %></button>
+                  <a class="btn btn-primary assign-department-btn" style="width:90px;" id="entity-add-show"><%= t 'manage.view.desc.assign_dep' %></a>
+                  <a class="btn btn-success share-entity-group-btn" style="width:90px;left:110px" id="user-share-show"><%= t 'manage.view.desc.share' %></a>
               <% end %>
             </div>
             <div class="assign-entity-wrap" id="assign-entity-wrap">
@@ -39,7 +39,7 @@
 
           <% if @entity_group.can_modify %>
               <div>
-                <div class="manage-user-add" id="manage-entity-add" special="entity">
+                <div class="manage-user-add manage-entity-add" id="manage-entity-add" special="entity">
                   <i class="icon-remove" id="close-add-entity"></i>
 
                   <p>
@@ -54,13 +54,11 @@
                   </ul>
                 </div>
 
-                <div class="manage-user-add" id="user-share-list" special="entity">
+                <div class="manage-user-add user-share-list" id="user-share-list" special="entity">
                   <i class="icon-remove" id="close-user-share"></i>
 
-                  <p>
-                    <%= t 'manage.view.desc.user_list' %>
-                  </p>
-                  <h4>shared users:</h4>
+
+                  <h4>已共享用户</h4>
                   <ul class="shared-user-list">
                     <% @shared_users.each do |user| %>
                         <li>
@@ -68,7 +66,7 @@
                         </li>
                     <% end %>
                   </ul>
-                  <h4>unshared users:</h4>
+                  <h4>未共享用户</h4>
                   <ul class="unshared-user-list">
                     <% @unshared_users.each do |user| %>
                         <li>
@@ -83,7 +81,7 @@
     </div>
   </div>
 
-  <aside class="content-right-nav" name='entity' id="content-right-nav">
+  <aside class="content-right-nav" name='entity_groups' id="content-right-nav">
     <section class="solid">
       <h3><%= t 'manage.view.desc.assign_dep' %></h3>
 
