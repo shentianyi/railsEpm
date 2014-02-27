@@ -232,12 +232,14 @@ MANAGE.user.edit = function () {
     var edit_name = $("#user-edit #edit-user-name").val(), edit_mail = $("#user-edit #edit-user-mail").val(),
         edit_authority = $("#user-edit input[name='edit-user-role']:checked").attr("value"),
         edit_id = $("#manage-user-edit-old").attr("effect_on"),
+        password = $("#user-edit #edit-user-password").val(),
         $target = $("#manage-sort-list").find("#" + edit_id),
         entity_id = $("#edit-entity-for-kpi :selected").attr("value"),
         entity_name = $("#edit-entity-for-kpi :selected").text(),
         department_id = $("#edit-department-for-kpi :selected").attr("value"),
         department_name = $("#edit-department-for-kpi :selected").text(),
         title = $("#user-edit #edit-user-title").val();
+
     if ($.trim(edit_name).length > 0 && edit_mail.length > 0) {
         if ($("#user-edit>div>input").filter("[red='true']").length == 0) {
             $.ajax({
@@ -249,6 +251,7 @@ MANAGE.user.edit = function () {
                         first_name: edit_name,
                         email: edit_mail,
                         title: title,
+                        password:password,
                         role_id: edit_authority,
                         entity_id: entity_id,
                         department_id: department_id
