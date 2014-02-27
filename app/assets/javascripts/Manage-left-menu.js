@@ -5,6 +5,7 @@ MANAGE.manage_menu_left_add=function(){};
 MANAGE.category=MANAGE.category || {};
 MANAGE.group=MANAGE.group || {};
 MANAGE.entity=MANAGE.entity || {};
+MANAGE.entity_groups=MANAGE.entity_groups || {};
 MANAGE.dashboard=MANAGE.dashboard || {};
 MANAGE.left={};
 
@@ -247,9 +248,11 @@ MANAGE.manage_menu_left_edit.prototype={
                         name:name
                     }
                 },
+                async:false,
                 success : function(data) {
                     if(data){
                         $("#manage-left-menu li.active>a").text(name);
+                        $("#manage-left-menu li.active").attr("title",name);
                         $("#manage-edit-target").text(name);
                         if(MANAGE.type=="category"){
                             $("#new-kpi-category option").each(function(){
@@ -295,27 +298,39 @@ function dashboard_edit(){
 dashboard_edit.prototype=MANAGE.manage_menu_left_edit.prototype;
 dashboard_edit.prototype.constructor=dashboard_edit;
 
+function entity_groups_edit(){
+    this.url = "/entity_groups";
+}
+entity_groups_edit.prototype=MANAGE.manage_menu_left_edit.prototype;
+entity_groups_edit.prototype.constructor=entity_groups_edit;
+
 
 MANAGE.category.edit=new category_edit();
 MANAGE.group.edit=new group_edit();
 MANAGE.entity.edit=new entity_edit();
 MANAGE.dashboard.edit=new dashboard_edit();
+MANAGE.entity_groups.edit=new entity_groups_edit();
 
 MANAGE.left.manage_left_edit_init=function(){
-    $("#manage-edit-target").text($("#manage-left-menu li.active").find("a").text()).on("click",function(){
-        var name= $.trim($(this).text());
-        MANAGE[MANAGE.type].edit.edit_show(name);
+    $("#manage-edit-target")
+        .text($("#manage-left-menu li.active").find("a").text())
+        .on("click",function(){
+            var name= $.trim($(this).text());
+            MANAGE[MANAGE.type].edit.edit_show(name);
     });
-    $("#manage-btn-group").on("keydown","input",function(event){
+    $("#manage-btn-group").on("keyup","input",function(event){
         var e=adapt_event(event).event;
         if(e.keyCode==13){
+
             if($.trim($(e.target).val())==0){
                 MessageBox("give it a name","top","warning");
             }
             else{
-                if(MANAGE[MANAGE.type].edit.edit_check(e)){
-                    MANAGE[MANAGE.type].edit.edit_update()
-                }
+                $(this).blur();
+//                if(MANAGE[MANAGE.type].edit.edit_check(e)){
+//
+//                    MANAGE[MANAGE.type].edit.edit_update();
+//                }
             }
         }
         else if(e.keyCode==27){
@@ -327,7 +342,7 @@ MANAGE.left.manage_left_edit_init=function(){
     $("#manage-btn-group>input").blur(function(event){
         var e=adapt_event(event).event;
         if(MANAGE[MANAGE.type].edit.edit_check(e)){
-            MANAGE[MANAGE.type].edit.edit_update()
+                MANAGE[MANAGE.type].edit.edit_update();
         }
     });
 }

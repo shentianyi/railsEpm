@@ -33,6 +33,7 @@ MANAGE.user.init = function () {
             $("#manage-right-content").css("padding-right", "0px");
             $("#left-content-title").css("margin-right", "0px");
             MANAGE.user.user_edit_box_bind();
+            $("#user-edit> div >.div-select>div").css("width", "150px")
         });
     $("#manage-user-edit-old").on("click", function () {
         MANAGE.user.edit()

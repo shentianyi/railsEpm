@@ -11,8 +11,24 @@ TREE.current_entitygroup_id = -1;
 (function () {
     //部门负责人删除
     $("body").on("click","#charge-man>li>i",function(event){
-        stop_propagation(event);
-        alert("删除负责人");
+      stop_propagation(event);
+      var user_id  = $(this).parent().attr("user_id");
+      var department_id = TREE.current_entitygroup_id;
+      if (confirm(I18n.t('manage.departments.desc.delete-user'))){
+        $.ajax({
+          url:"/departments/remove_user",
+          type:"DELETE",
+          dataType:"json",
+          data:{user_id:user_id,department_id:department_id},
+          success:function(data){
+            if(data.result){
+              $("#part-info .users .inner ul.users li[user_id="+data.content+"]").remove();
+            }else{
+              
+            }
+          }
+        });
+      }
     });
     $("body")
         //点击部门
@@ -108,7 +124,7 @@ TREE.current_entitygroup_id = -1;
         .on("click", "#tree .entity_root>ul li p", function () {
             var id = $(this).parent().attr("entities");
             var target = $(this).parent();
-            if (confirm("删除该观察点？")) {
+            if (confirm(I18n.t('manage.departments.desc.delete-depart-confirm'))) {
                 $.ajax({
                     url: "/departments/remove_entity",
                     data: {entity_id: id},
@@ -160,7 +176,7 @@ TREE.current_entitygroup_id = -1;
                             '</div>' +
                             '</li>').appendTo($("li[entity_group='" + TREE.current_entitygroup_id + "']>ul"));
                     } else {
-                        MessageBox(msg.content, "top", "warning");
+                        MessageBox(data.content, "top", "warning");
                     }
                 }
             });
@@ -207,7 +223,7 @@ TREE.current_entitygroup_id = -1;
                 success: function (data) {
                     if (data.result) {
                         target.remove();
-                        $("#part-info .users .inner ul.users").append("<li user_id=" + user_id + ">" + name + "</li>");
+                        $("#part-info .users .inner ul.users").append("<li user_id=" + user_id + ">" + name + " <i class='icon icon-remove'></i></li>");
                     } else {
 
                     }
@@ -318,7 +334,7 @@ TREE.part_show = function (object) {
             var users = data.content;
             $("#part-info .users .inner ul.users li").remove();
             for (var i = 0; i < users.length; i++) {
-                $("#part-info .users .inner ul.users").append("<li user_id=" + users[i].id + ">" + users[i].first_name + "</li>");
+                $("#part-info .users .inner ul.users").append("<li user_id=" + users[i].id + ">" + users[i].first_name + " <i class='icon icon-remove'></i></li>");
             }
         }
         else {

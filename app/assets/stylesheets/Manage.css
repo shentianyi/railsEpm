@@ -164,7 +164,7 @@
     left:6px;
     display:none;
 }
-.manage-btn-group>p:hover + i{
+.manage-btn-group>p:hover ~ i{
     display:inline-block;
 }
 .manage-btn-group>input{
@@ -271,6 +271,9 @@
     bottom:5px;
     width:inherit;
     transition:width 0.45s ease-out 0.1s;
+}
+.manage-sort-list li>table[special='my-kpi']{
+    left:21px;
 }
 /********************************************************************************************************* 针对右边有导航的
 *******************************************************************************************************************/

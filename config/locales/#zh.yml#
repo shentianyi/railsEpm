@@ -424,7 +424,7 @@ zh:
           add-ok: 确定
           add-cancle: 取消
           delete-depart-confirm: "删除该输入点？"
-          delete-user: "删除负责人？"
+          delete-user: "Delete"
   #dashboard
   dashboard_group:
     base:

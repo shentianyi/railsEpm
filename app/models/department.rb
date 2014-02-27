@@ -19,11 +19,19 @@ class Department < ActiveRecord::Base
   has_ancestry
   acts_as_tenant(:tenant)
 
+  validate :validate_create_update
+  validates :name, presence: true
+
   private
   def create_entity_group
     #create the entity_group belongs to the department
     entity_group = EntityGroup.new(:name => self.name, :department_id => self.id)
     entity_group.creator = self.creator
     entity_group.save!
+  end
+
+  def validate_create_update
+    errors.add(:name,I18n.t("fix.cannot_repeat")) if Department.where(:name => self.name, :tenant_id => self.tenant_id).first if new_record?
+    errors.add(:name,I18n.t("fix.cannot_repeat")) if Department.where(:name => self.name, :tenant_id => self.tenant_id).where('id <> ?',self.id).first unless new_record?
   end
 end

@@ -19,10 +19,10 @@
             <ul id="manage-sort-list" class="manage-sort-list">
               <%@kpis.each do |kpi|%>
                   <li id="<%= kpi.id%>">
-                    <p class="sort-handle">
-                      :
-                    </p>
-                    <table class="category">
+                    <!--<p class="sort-handle">-->
+                      <!--:-->
+                    <!--</p>-->
+                    <table class="category" special="my-kpi">
                       <tr>
                         <td title='<%= kpi.name%>'><%= kpi.name%></td>
                         <td ><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
