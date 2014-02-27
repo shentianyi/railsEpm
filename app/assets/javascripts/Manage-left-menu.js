@@ -192,10 +192,20 @@ function dashboard_delete(){
 dashboard_delete.prototype=MANAGE.manage_menu_left_delete.prototype;
 dashboard_delete.prototype.constructor=dashboard_delete;
 
+//2014.2
+function entity_groups_delete(){
+    this.url="/entity_groups/";
+    this.local= "/entity_groups";
+    this.name="entity_groups";
+}
+entity_groups_delete.prototype=MANAGE.manage_menu_left_delete.prototype;
+entity_groups_delete.prototype.constructor=entity_groups_delete;
+
 MANAGE.category.delete=new category_delete();
 MANAGE.group.delete=new group_delete();
 MANAGE.entity.delete=new entity_delete();
 MANAGE.dashboard.delete=new dashboard_delete();
+MANAGE.entity_groups.delete=new entity_groups_delete();
 
 MANAGE.left.manage_left_delete_init=function(){
     $("#manage-left-menu").on("click","i.icon-trash",function(event){
