@@ -8,8 +8,9 @@ class Ability
     if user.admin?
       can :manage, [User, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem, UserKpiItem, UserSession, Dashboard, DashboardItem, DashboardCondition, Email]
       can :manage, UserSession, :email => user.email
-      can :manage, EntityGroup, user_id: user.id
+
       can :read, EntityGroup, user_entity_groups: {user_id: user.id}
+      can :manage, EntityGroup, user_id: user.id
 
       can :create, UserEntityGroup
       can :basic_modify, UserEntityGroup, entity_group: {user_id: user.id}

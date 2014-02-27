@@ -36,9 +36,11 @@ class EntityGroupsController < ApplicationController
 
   # update entity_group
   def update
-    if @entity_group=EntityGroup.accessible_by(current_ability).find_by_id(params[:id])
-      render :json => @entity_group.update_attributes(params[:data])
+    msg=Message.new
+    if @entity_group=EntityGroup.find_by_id(params[:id])
+      msg.result =@entity_group.update_attributes(params[:data])
     end
+    render json:msg
   end
 
   # delete entity_group
