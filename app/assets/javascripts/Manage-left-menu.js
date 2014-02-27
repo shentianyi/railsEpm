@@ -100,13 +100,20 @@ function dashboard_add(){
 }
 dashboard_add.prototype=MANAGE.manage_menu_left_add.prototype;
 dashboard_add.prototype.constructor=dashboard_add;
-
+//22014.2
+function entity_groups_add(){
+    this.name="entity_groups";
+    this.href="/entity_groups?p=";
+    this.postHref='/entity_groups';
+}
+entity_groups_add.prototype=MANAGE.manage_menu_left_add.prototype;
+entity_groups_add.prototype.constructor=entity_groups_add;
 
 MANAGE.category.add=new category_add();
 MANAGE.group.add=new group_add();
 MANAGE.entity.add=new entity_add();
 MANAGE.dashboard.add=new dashboard_add();
-
+MANAGE.entity_groups.add=new entity_groups_add();
 
 MANAGE.left.manage_left_add_init=function(){
     $("#manage-menu-add").on("click",function(){
@@ -135,7 +142,7 @@ MANAGE.left.manage_left_add_init=function(){
 MANAGE.manage_menu_left_delete.prototype={
     delete_complete:function(e){
         var number = $(e.target).parent().attr("number");
-        var local=this.local
+        var local=this.local;
         $.ajax({
             url : this.url+number,
             type : 'DELETE',
@@ -192,10 +199,20 @@ function dashboard_delete(){
 dashboard_delete.prototype=MANAGE.manage_menu_left_delete.prototype;
 dashboard_delete.prototype.constructor=dashboard_delete;
 
+//2014.2
+function entity_groups_delete(){
+    this.url="/entity_groups/";
+    this.local= "/entity_groups";
+    this.name="entity_groups";
+}
+entity_groups_delete.prototype=MANAGE.manage_menu_left_delete.prototype;
+entity_groups_delete.prototype.constructor=entity_groups_delete;
+
 MANAGE.category.delete=new category_delete();
 MANAGE.group.delete=new group_delete();
 MANAGE.entity.delete=new entity_delete();
 MANAGE.dashboard.delete=new dashboard_delete();
+MANAGE.entity_groups.delete=new entity_groups_delete();
 
 MANAGE.left.manage_left_delete_init=function(){
     $("#manage-left-menu").on("click","i.icon-trash",function(event){
