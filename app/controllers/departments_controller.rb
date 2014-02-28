@@ -88,27 +88,27 @@ class DepartmentsController < ApplicationController
 
       entity.update_attribute("department_id",department.id)
       #delete all the entity_group_itmes
-      if !previous_dept.nil?
-        if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,previous_dept.entity_group.id)
-          entity_group_item.destroy
-        end
-
-        previous_dept.ancestors.each do |d|
-          if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,d.entity_group.id)
-            entity_group_item.destroy
-          end
-        end
-      end
+      #if !previous_dept.nil?
+      #  if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,previous_dept.entity_group.id)
+      #    entity_group_item.destroy
+      #  end
+      #
+      #  previous_dept.ancestors.each do |d|
+      #    if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,d.entity_group.id)
+      #      entity_group_item.destroy
+      #    end
+      #  end
+      #end
 
       #create all the entity_group_item for new
-      entity_group_item = EntityGroupItem.new(:entity_id => entity.id,:entity_group_id=>department.entity_group.id)
-      entity_group_item.save
+      #entity_group_item = EntityGroupItem.new(:entity_id => entity.id,:entity_group_id=>department.entity_group.id)
+      #entity_group_item.save
 
       #create the entitygroupitem
-      department.ancestors.each do |d|
-        entity_group_item = EntityGroupItem.new(:entity_id => entity.id,:entity_group_id=>d.entity_group.id)
-        entity_group_item.save
-      end
+      #department.ancestors.each do |d|
+      #  entity_group_item = EntityGroupItem.new(:entity_id => entity.id,:entity_group_id=>d.entity_group.id)
+      #  entity_group_item.save
+      #end
       #end
       msg.result = entity.save
     else
@@ -127,20 +127,21 @@ class DepartmentsController < ApplicationController
     ActiveRecord::Base.transaction do
       entity = Entity.find_by_id(params[:entity_id])
 
-      previous_dept = entity.department
+      #previous_dept = entity.department
 
       #entity.department_id = nil
-      if entity.update_attribute("department_id",nil)
-        if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,previous_dept.entity_group.id)
-          entity_group_item.destroy
-        end
+      #if entity.update_attribute("department_id",nil)
+        #if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,previous_dept.entity_group.id)
+          #entity_group_item.destroy
+        #end
 
-        previous_dept.ancestors.each do |d|
-          if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,d.entity_group.id)
-            entity_group_item.destroy
-          end
-        end
-      end
+        #previous_dept.ancestors.each do |d|
+        #  if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,d.entity_group.id)
+         #   entity_group_item.destroy
+         # end
+        #end
+      #end
+      msg.result = entity.update_attribute("department_id",nil)
     end
     render :json=>msg
   end
