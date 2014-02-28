@@ -421,6 +421,7 @@ zh:
           add-user: 添加负责人
           add-department: 添加部门
           delete-department: 删除部门
+          del-department-confirm: 删除部门？
           add-ok: 确定
           add-cancle: 取消
           delete-depart-confirm: "删除该输入点？"

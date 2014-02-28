@@ -414,6 +414,7 @@ en:
         add-user: Add Department Head
         add-department: Add Department
         delete-department: Delete Department
+        del-department-confirm: Delete Department?
         add-ok: Add
         add-cancle: Cancle
         delete-depart-confirm: Delete this Data Point?

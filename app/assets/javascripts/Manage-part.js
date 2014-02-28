@@ -52,6 +52,7 @@ TREE.current_entitygroup_id = -1;
                 $this.attr("chosen", "one");
                 //get entity
                 getEntities($this.parent().attr("entity_group"));
+                TREE.part_show(this);
             }
             else {
                 $this.next().css("display", "none");
@@ -70,8 +71,9 @@ TREE.current_entitygroup_id = -1;
                 //remove Entity
                 TREE.remove_entities($this.parent());
               TREE.destroyUser();
+              TREE.destroyEntity();
             }
-            TREE.part_show(this);
+            
         })
         .on("dblclick", "#part-info .basic dd", function () {
             var value = $(this).text();
@@ -106,20 +108,22 @@ TREE.current_entitygroup_id = -1;
         })
         //删除部门
         .on("click", "#part-info .basic .inner a", function (event) {
-            var id = $(this).attr("entity-group");
-            $.ajax({
-                url: "/departments/" + id,
-                type: "DELETE",
-                success: function (data) {
-                    if (data.result) {
-                        var parent = $("li[entity_group=" + id + "]").parent();
-                        $("li[entity_group=" + id + "]").remove();
-                        TREE.li_remove(parent);
-                    } else {
-                        MessageBox(data.content, "top", "warning");
+            if(confirm(I18n.t('manage.departments.desc.del-department-confirm'))){
+                var id = $(this).attr("entity-group");
+                $.ajax({
+                    url: "/departments/" + id,
+                    type: "DELETE",
+                    success: function (data) {
+                        if (data.result) {
+                            var parent = $("li[entity_group=" + id + "]").parent();
+                            $("li[entity_group=" + id + "]").remove();
+                            TREE.li_remove(parent);
+                        } else {
+                            MessageBox(data.content, "top", "warning");
+                        }
                     }
-                }
-            });
+                });
+            }
         })
         //点击输入点
         .on("click", "#tree .entity_root>ul li p", function () {
