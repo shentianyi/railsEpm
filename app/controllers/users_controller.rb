@@ -20,6 +20,11 @@ class UsersController < ApplicationController
 
   def update
     msg=Message.new
+    if params[:user][:password].blank?
+      params[:user].except!(:password)
+    else
+       params[:user][:password_confirmation]=params[:user][:password]
+    end
     if @user.update_attributes(params[:user])
       msg.result=true
       msg.object = UserPresenter.new(@user).to_json

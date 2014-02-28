@@ -49,8 +49,10 @@
             <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="edit-user-name" general="user-name"/>
             <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="edit-user-mail" general="user-mail"/>
             <input type="text" placeholder="<%= t 'manage.user.new.title' %>" id="edit-user-title" general="user-title"/>
+            <input type="password" placeholder="<%= t 'manage.user.new.pwd' %>" id="edit-user-password" general="user-password"/>
+
             <div class="div-select">
-              <select  data-placeholder="<%= t 'manage.user.new.department' %>"   id="edit-department-for-kpi" class="single-select">
+              <select data-placeholder="<%= t 'manage.user.new.department' %>" id="edit-department-for-kpi" class="single-select">
                 <option value=""></option>
                 <% @departments.each do |department| %>
                     <option value="<%= department.id %>"><%= department.name %></option>
@@ -58,7 +60,7 @@
               </select>
             </div>
             <div class="div-select">
-              <select data-placeholder="<%= t 'manage.user.new.entity' %>"  id="edit-entity-for-kpi"  class="single-select">
+              <select data-placeholder="<%= t 'manage.user.new.entity' %>" id="edit-entity-for-kpi" class="single-select">
                 <option value=""></option>
                 <% @data_points.each do |data_point| %>
                     <option value="<%= data_point.id %>"><%= data_point.name %></option>
@@ -66,15 +68,15 @@
               </select>
             </div>
             <label>
-              <input type="radio" name="edit-user-role" data-name="General" data-role="1" value="<%=Role.user%>" checked>
+              <input type="radio" name="edit-user-role" data-name="General" data-role="1" value="<%= Role.user %>" checked>
               <%= t 'manage.user.role.user' %>
             </label>
             <label>
-              <input type="radio" name="edit-user-role" data-name="General Manager" data-role="3" value="<%=Role.director%>">
+              <input type="radio" name="edit-user-role" data-name="General Manager" data-role="3" value="<%= Role.director %>">
               <%= t 'manage.user.role.director' %>
             </label>
             <label>
-              <input type="radio" name="edit-user-role" data-name="Administrator" data-role="4" value="<%=Role.admin%>">
+              <input type="radio" name="edit-user-role" data-name="Administrator" data-role="4" value="<%= Role.admin %>">
               <%= t 'manage.user.role.admin' %>
             </label>
             <input type="submit" value="Ok" class="btn btn-primary" id="manage-user-edit-old"/>
@@ -87,16 +89,19 @@
   <aside class="content-right-nav" name='group' id="content-right-nav">
     <section class="solid">
       <h3><%= t 'manage.user.desc.create' %></h3>
+
       <p><%= t 'manage.user.desc.create_desc' %></p>
       <a class="btn btn-primary" id="add-user-show"><%= t 'manage.user.desc.create_now' %></a>
     </section>
     <section class="solid">
       <h3><%= t 'manage.user.desc.assign' %></h3>
+
       <p><%= t 'manage.user.desc.assign_desc' %></p>
       <a class="btn btn-primary" id="manage-user-delivery"><%= t 'manage.user.desc.assign_now' %></a>
     </section>
     <section class="solid">
       <h3><%= t 'manage.base.next' %></h3>
+
       <p><%= t 'manage.user.desc.next_desc' %></p>
       <a class="btn btn-primary" href="<%= entity_groups_path %>"><%= t 'manage.view.desc.manage' %></a>
     </section>
@@ -105,14 +110,16 @@
 
 <div class="manage-user-add create-user" id="manage-user-add" general="manage-user-add">
   <i class="icon-remove" id="close-add-user" general="close-user"></i>
+
   <div>
     <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="new-user-name" general="user-name"/>
     <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="new-user-mail" general="user-mail"/>
     <input type="text" placeholder="<%= t 'manage.user.new.title' %>" id="new-user-title" general="user-title"/>
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd' %>" id="new-user-password"/>
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd_con' %>" id="new-user-password-confirm"/>
-    <div  class="div-select">
-      <select data-placeholder="<%= t 'manage.user.new.department' %>"  id="edit-department-for-kpi" class="single-select">
+
+    <div class="div-select">
+      <select data-placeholder="<%= t 'manage.user.new.department' %>" id="edit-department-for-kpi" class="single-select">
         <option value=""></option>
         <% @departments.each do |department| %>
             <option value="<%= department.id %>"><%= department.name %></option>
@@ -120,7 +127,7 @@
       </select>
     </div>
     <div class="div-select">
-      <select data-placeholder="<%= t 'manage.user.new.entity' %>" id="entity-for-kpi"  class="single-select">
+      <select data-placeholder="<%= t 'manage.user.new.entity' %>" id="entity-for-kpi" class="single-select">
         <option value=""></option>
         <% @data_points.each do |data_point| %>
             <option value="<%= data_point.id %>"><%= data_point.name %></option>
@@ -128,15 +135,15 @@
       </select>
     </div>
     <label>
-      <input type="radio" name="user-role" data-name="General" data-role="1" value="<%=Role.user%>" checked>
+      <input type="radio" name="user-role" data-name="General" data-role="1" value="<%= Role.user %>" checked>
       <%= t 'manage.user.role.user' %>
     </label>
     <label>
-      <input type="radio" name="user-role" data-name="General Manager" data-role="3" value="<%=Role.director%>">
+      <input type="radio" name="user-role" data-name="General Manager" data-role="3" value="<%= Role.director %>">
       <%= t 'manage.user.role.director' %>
     </label>
     <label>
-      <input type="radio" name="user-role" data-name="Administrator" data-role="4" value="<%=Role.admin%>">
+      <input type="radio" name="user-role" data-name="Administrator" data-role="4" value="<%= Role.admin %>">
       <%= t 'manage.user.role.admin' %>
     </label>
     <input type="submit" value="<%= t 'manage.base.add_btn' %>" class="btn btn-primary" id="manage-user-add-new"/>
