@@ -4,6 +4,8 @@ module Api
     def index
       get_user_entity_groups
       egs= @entity_groups.select('entity_groups.*').all
+      egs=EntityGroupPresenter.init_detail_json_presenters(egs)
+      egs.each{|eg| eg[:contacts].each{|c| c.image_url=avatar_url+c.image_url}}
       respond_to do |t|
         t.json { render :json => egs }
         t.js { render :js => jsonp_str(egs) }
