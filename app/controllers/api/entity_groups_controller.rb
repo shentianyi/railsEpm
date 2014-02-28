@@ -5,7 +5,6 @@ module Api
       get_user_entity_groups
       egs= @entity_groups.select('entity_groups.*').all
       egs=EntityGroupPresenter.init_detail_json_presenters(egs)
-      egs.each{|eg| eg[:contacts].each{|c| c.image_url=avatar_url+c.image_url}}
       respond_to do |t|
         t.json { render :json => egs }
         t.js { render :js => jsonp_str(egs) }
@@ -13,7 +12,7 @@ module Api
     end
 
     def contacts
-      contacts=EntityGroup.find_by_id(params[:id]).contacts.select('contacts.id,contacts.name,tel,phone,email,title,image_url').each { |c| c.image_url=avatar_url+c.image_url }
+      contacts=EntityGroup.find_by_id(params[:id]).contacts.select('contacts.id,contacts.name,tel,phone,email,title,image_url')
       respond_to do |t|
         t.json { render :json => contacts }
         t.js { render :js => jsonp_str(contacts) }
@@ -30,7 +29,7 @@ module Api
 
     def detail
       entity_group = EntityGroup.find(params[:id])
-      contacts = entity_group.contacts.select('contacts.id,contacts.name,tel,phone,email,title,image_url').each { |c| c.image_url=avatar_url+c.image_url }
+      contacts = entity_group.contacts.select('contacts.id,contacts.name,tel,phone,email,title,image_url')
       respond_to do |t|
         t.json { render :json => {contact: contacts, entityGroup: entity_group} }
         t.js { render :js => jsonp_str({contact: contacts, entityGroup: entity_group}) }

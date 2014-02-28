@@ -11,7 +11,7 @@ module SavePhoto
       target=File.join(Rails.root, $AVATARPATH, uuidName)
       puts "photo:#{target}---------------------------------"
       FileUtils.cp(src, target)
-      return uuidName
+      return AliyunOssService.store_avatar(uuidName, target)
     end
   end
 end
