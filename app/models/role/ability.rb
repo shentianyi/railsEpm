@@ -17,7 +17,7 @@ class Ability
       can :manage, Department
       #can :read,:all
     elsif user.director?
-      can :manage, [EntityGroupItem, KpiEntry, Dashboard, DashboardItem, DashboardCondition, Email]
+      can :manage, [EntityGroupItem,UserKpiItem, KpiEntry, Dashboard, DashboardItem, DashboardCondition, Email]
       can :manage, User, :id => user.id
 
       can :manage, UserSession, :email => user.email
