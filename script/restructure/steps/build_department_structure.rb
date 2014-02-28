@@ -15,7 +15,7 @@ module BuildDepartmentStructure
       CSV.foreach(file_path, :headers => true, :col_sep => ';') do |row|
         puts "create department: #{row['Department']}, parent is #{row['Parent']}".yellow
         d=tenant.departments.build(name: row['Department'].strip)
-        if parent=tenant.departments.find_by_name(row['Parent'].strip)
+        if row['Parent'] && parent=tenant.departments.find_by_name(row['Parent'].strip)
           d.parent=parent
         end
 
