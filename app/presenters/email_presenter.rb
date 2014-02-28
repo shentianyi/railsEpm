@@ -29,7 +29,7 @@ class EmailPresenter<Presenter
         groupd_emails[email.time_group.key]=[email.to_detail_json]
       end
     end
-    return groupd_emails
+    return {titles:groupd_emails.keys,values:groupd_emails.values}
   end
 end
 
