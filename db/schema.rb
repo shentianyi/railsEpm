@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(:version => 20140116064750) do
     t.integer  "kpi_category_id"
     t.integer  "unit"
     t.integer  "frequency"
-    t.float    "target_max",      :default => 0.0
+    t.float    "target_max"
     t.boolean  "is_calculated",   :default => false
     t.integer  "direction"
     t.integer  "period"
