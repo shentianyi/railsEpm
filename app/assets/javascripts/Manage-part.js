@@ -37,6 +37,8 @@ TREE.current_entitygroup_id = -1;
             $this.toggleClass("open");
             if ($this.hasClass("open")) {
                 $this.next().css("display", "block");
+                TREE.expand($this.parent());
+                TREE.shrink($this.parent());
                 /*
                  $this.nextAll("ul").children("li").filter(function(index){
                  if($(this).hasClass("im-entities")){
@@ -169,10 +171,7 @@ TREE.current_entitygroup_id = -1;
                     if (data.result) {
                         TREE.destroyUserBlock();
                         var entity_group = data.content;
-
-                        if ($("li[entity_group=" + TREE.current_entitygroup_id + "]").has("ul").length < 1) {
-                            $("li[entity_group=" + TREE.current_entitygroup_id + "]").append("<ul />");
-                        }
+                        TREE.addul($("li[entity_group=" + TREE.current_entitygroup_id + "]"));
 
                         $('<li class="im-entities" entity_group="' + entity_group.id + '"><a><i class="icon-laptop"></i> ' +
                             entity_group.name + '</a>' +
@@ -249,9 +248,7 @@ TREE.current_entitygroup_id = -1;
                 success: function (data) {
                     if (data.result) {
                         target.remove();
-                        if ($("li[entity_group=" + id + "]").has("ul").length < 1) {
-                            $("li[entity_group=" + id + "]").append("<ul />");
-                        }
+                        TREE.addul($("li[entity_group=" + id + "]"));
                         $('<li style="display:block" entities="' + entity_id + '"><p>' + name + '</li>').appendTo($("li[entity_group=" + id + "]>ul"));
                     }
                 }
@@ -283,10 +280,7 @@ function getEntities(id) {
             if (data.result) {
                 var childs = data.content.subents;
                 var id = data.content.id;
-
-                if ($("li[entity_group=" + id + "]").has("ul").length < 1) {
-                    $("li[entity_group=" + id + "]").append("<ul />");
-                }
+                TREE.addul($("li[entity_group=" + id + "]"));
                 for (var i = 0; i < childs.length; i++) {
                     $('<li style="display:block" entities="' + childs[i].id + '"><p>' + childs[i].name + '</li>').appendTo($("li[entity_group=" + id + "]>ul"));
                 }
@@ -305,9 +299,7 @@ function getChild(id) {
             if (data.result) {
                 var childs = data.content.subdeps;
                 var id = data.content.id;
-                if ($("li[entity_group=" + id + "]").has("ul").length < 1) {
-                    $("li[entity_group=" + id + "]").append("<ul />");
-                }
+                TREE.addul($("li[entity_group=" + id + "]"));
                 for (var i = 0; i < childs.length; i++) {
                     $('<li class="im-entities" entity_group="' + childs[i].id + '"><a><i class="icon-laptop"></i> ' +
                         childs[i].name + '</a>' +
@@ -323,6 +315,25 @@ function getChild(id) {
         }
     });
 }
+TREE.addul =function(target){
+    if (target.has("ul").length < 1) {
+        if(target.hasClass("entity_root")){
+            target.append("<ul/>");
+        }
+        else{
+            if(target.attr("entity_group") == TREE.current_entitygroup_id)
+            {
+                 target.append("<ul/>");
+            }
+            else
+            {
+                target.append("<ul style='display:none'/>");
+            }
+            
+        }
+    }
+} 
+
 TREE.getRightWidth = function () {
     var width = parseInt($(window).width());
     $("#part-graph").width(width - 200);
@@ -431,3 +442,16 @@ TREE.li_remove = function (target) {
     }
 }
 
+TREE.expand = function(object){
+    object.addClass("selected");
+    object.children("ul").css("display","block");
+}
+    
+TREE.shrink = function(object){
+    var sibs = object.siblings(".selected");
+    if(sibs.length > 0)
+    {
+        sibs.removeClass("selected");
+        sibs.children("ul").css("display","none");
+    }
+}
