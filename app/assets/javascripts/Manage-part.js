@@ -431,3 +431,10 @@ TREE.li_remove = function (target) {
     }
 }
 
+TREE.expand = function(object){
+    object.children("ul").css("display","block");
+}
+
+TREE.shrink = function(){
+    $("li.selected>ul").css("display","none");
+}
