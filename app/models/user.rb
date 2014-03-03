@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   belongs_to :department
   has_many :user_departments,:dependent => :destroy
   has_many :departments,:through => :user_departments
+  has_many :create_departs,:class_name=>'Department'
 
   has_many :user_entity_groups,:dependent => :destroy
   has_many :entity_groups, :through => :user_entity_groups
@@ -67,17 +68,14 @@ class User < ActiveRecord::Base
                         :edition => $trial_edition,
                         :subscription_status => SubscriptionStatus::TRIAL,
                         :expire_at => 15.days.from_now)
-    @department = Department.new(:name => company_name)
 
     begin
       ActiveRecord::Base.transaction do
         @tenant.super_user=self
-
+        @tenant.save!
         self.tenant = @tenant
         self.status = UserStatus::ACTIVE
         self.is_tenant=true
-        @tenant.save!
-        @department.save!
         self.save!
         @tenant.update_attributes :user_id => self.id
         return self

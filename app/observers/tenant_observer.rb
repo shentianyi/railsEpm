@@ -11,9 +11,10 @@ class TenantObserver<ActiveRecord::Observer
     entity=Entity.new(:name=>tenant.company_name.length==0 ? 'Default Entity' : tenant.company_name)
     tenant.super_user.entity = entity
     tenant.super_user.role_id=400
-    tenant.entities<<entity
-    entity_group=tenant.super_user.entity_groups.build(:name=>tenant.company_name.length==0 ? 'Default Entity' : tenant.company_name,:is_public=>true,:is_department=>true)
-    entity_group.entities<<entity
+    #tenant.entities<<entity
+    department=tenant.super_user.create_departs.build(:name=>tenant.company_name.length==0 ? 'Default Entity Group' : tenant.company_name)
+    department.save
+    department.entity_group.entities << entity
   #
   end
 
