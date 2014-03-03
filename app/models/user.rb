@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
                         :edition => $trial_edition,
                         :subscription_status => SubscriptionStatus::TRIAL,
                         :expire_at => 15.days.from_now)
-    @department = department.new(:name => company_name)
+    @department = Department.new(:name => company_name)
 
     begin
       ActiveRecord::Base.transaction do
