@@ -16,6 +16,8 @@
 /*
 * Gridster extention
 * */
+var RESIZE=RESIZE||{};
+
 (function ($) {
 
     $.Gridster.resize_widget_dimensions = function(options) {
@@ -33,19 +35,22 @@
             + this.options.widget_base_dimensions[1];
 
         var serializedGrid = this.serialize();
+
         if(arguments[1]=="dashboard"){
             this.$widgets.each($.proxy(function(i, widget) {
                 var $widget = $(widget);
                 var data = serializedGrid[i];
-                this.resize_widget($widget, data.size_x, data.size_y);
-                window.setTimeout(function(){
-                    var id = $widget.attr("id");
-                    var container = "#container_"+id;
-                    var chart = $(container).highcharts();
-                    if(chart){
-                        chart.setSize($(container).width(),$(container).height(),false);
-                    }
-                },100)
+                this.resize_widget($widget, data.size_x, data.size_y,null,null,true);
+//                window.setTimeout(function(){
+//
+//                        var id = $widget.attr("id");
+//                        var container = "#container_"+id;
+//                        var chart = $(container).highcharts();
+//                        if(chart){
+//                            chart.setSize($(container).width(),$(container).height(),false);
+//                        }
+//
+//                },100)
             }, this));
         }
         else{

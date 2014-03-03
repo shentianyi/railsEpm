@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EPM Analysis</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  <%= wicked_pdf_javascript_include_tag "jquery-1.8.2.min" %>
+  <%= wicked_pdf_javascript_include_tag "wayne-base"%>
+  <%= wicked_pdf_javascript_include_tag "i18n"%>
+  <%= wicked_pdf_javascript_include_tag "i18n/translations"%>
+  <%= wicked_pdf_javascript_include_tag "highstock"%>
+  <%= wicked_pdf_javascript_include_tag "high_chart_template_pdf"%>
+  <%= wicked_pdf_javascript_include_tag "Analytics_init"%>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+        prepare_form_cchart();
+        generate_table();
+        //demo();
+    });
+  </script>
+</head>
+<body>
+
+<div style="width:1024px;margin:0 auto;">
+  <p id="title" style="text-align:center;font-size:31px;font-weight:300;margin-bottom:15px;margin-top:25px;"><%= t 'epm_report.title'%></p>
+  <div class="chart-container " id="chart-container" style="width:980px;height:400px;border:1px solid #9d9d9d;margin:10px auto 0;">
+
+  </div>
+
+  <table style="width:980px;border-collapse:collapse;border:1px solid #9d9d9d;margin:25px auto 20px;;font-size:14px;text-align:center">
+    <thead style="font-weight:300">
+    <tr>
+      <th rowspan="2" style="padding:0px 15px;border:1px solid #9d9d9d;text-align:center;font-weight:300;font-size:20px;color:#5FA9DA">
+        <%= datas[:kpi_name]%></th>
+      <th colspan="3" style="border:1px solid #9d9d9d;color:#ee6565;padding:9px 8px;font-weight:300"><%= datas[:entity_group_name]%></th>
+    </tr>
+    <tr>
+      <td style="border:1px solid #9d9d9d;padding:12px 10px;"><%= t 'epm_report.current'%></td>
+      <td style="border:1px solid #9d9d9d;padding:12px 10px;"><%= t 'epm_report.target_max'%></td>
+      <td style="border:1px solid #9d9d9d;padding:12px 10px;"><%= t 'epm_report.target_min'%></td>
+    </tr>
+    </thead>
+    <tbody style="color:#9d9d9d;font-weight:300" id="table-data">
+    </tbody>
+  </table>
+</div>
+
+<input type="hidden" value="<%= datas[:kpi_id]%>" id="kpi-id-hidden"/>
+<input type="hidden" value="<%= datas[:kpi_name]%>" id="kpi-name-hidden"/>
+<input type="hidden" value="<%= datas[:entity_group_id]%>" id="entity-group-id-hidden"/>
+<input type="hidden" value="<%= datas[:entity_group_name]%>" id="entity-group-name-hidden"/>
+<input type="hidden" value="<%= datas[:kpi_name]%>" id="kpi-name-hidden"/>
+<input type="hidden" value="<%= datas[:start_time]%>" id="start-time-hidden"/>
+<input type="hidden" value="<%= datas[:end_time]%>" id="end-time-hidden"/>
+<input type="hidden" value="<%= datas[:frequency]%>" id="frequency-hidden" />
+<input type="hidden" value="<%= datas[:type]%>" id="type-hidden" />
+<input type="hidden" value="<%= datas[:data]%>" id="data-hidden" />
+<input type="hidden" value="<%= datas[:table_data]%>" id="table-data-hidden" />
+
+<script>
+  function generate_table(){
+      var data = jQuery.parseJSON($("#data-hidden").val());
+
+      for(var i in data.current){
+          var row = $('<tr></tr>');
+          var date = standardParse(data.date[i]).date;
+          row.append('<td style="padding:8px;border:1px solid #9d9d9d;color:#000">'+date.toWayneString().day+'</td>')
+                  .append('<td style="padding:8px;border:1px solid #9d9d9d;">'+data.current[i]+data.unit[i]+'</td>')
+                  .append('<td style="padding:8px;border:1px solid #9d9d9d;">'+data.target_max[i]+data.unit[i]+'</td>')
+                  .append('<td style="padding:8px;border:1px solid #9d9d9d;">'+data.target_min[i]+data.unit[i]+'</td>');
+          $("#table-data").append(row);
+      }
+  }
+
+    function prepare_form_cchart() {
+        var data = jQuery.parseJSON($("#data-hidden").val());
+        var kpi = $("#kpi-id-hidden").val();
+        var kpi_name = $("#kpi-name-hidden").val();
+        var view = $("#entity-group-id-hidden").val();
+        var view_text = $("#entity-group-name-hidden").val();
+        var interval = $("#frequency-hidden").val(), type = $("#type-hidden").val(), chart_body_close_validate;
+        var begin_time = $("#start-time-hidden").val(), end_time = $("#end-time-hidden").val();
+
+        if(kpi && begin_time && view) {
+
+            if(end_time) {
+                var compare_result = compare_time(begin_time, end_time);
+                begin_time = compare_result.begin;
+                end_time = compare_result.end;
+            } else {
+                end_time = begin_time
+            }
+            var option = {
+                show_loading : false,
+                kpi : kpi_name,
+                kpi_id : kpi,
+                target : "chart-container",
+                begin_time : begin_time,
+                end_time : end_time,
+                type : type,
+                interval : interval,
+                count : ANALYTICS.chartSeries.count + 1,
+                view : view,
+                view_text : view_text,
+                chart_body_close_validate : true
+
+            };
+            ANALYTICS.chartSeries.addCount();
+            ANALYTICS.chartSeries.id_give();
+            option.id = ANALYTICS.chartSeries.id;
+            ANALYTICS.chartSeries.addSeries(option);
+            if(option.chart_body_close_validate) {
+                show_chart_body(option);
+            }
+            ANALYTICS.form_chart_without_ajax(option, data);
+        }
+    }
+
+        function demo(){
+            $('#chart-container').highcharts({
+                chart: {
+                    type: 'spline'
+                },
+                title: {
+                    text: 'Snow depth at Vikjafjellet, Norway'
+                },
+                subtitle: {
+                    text: 'Irregular time data in Highcharts JS'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    dateTimeLabelFormats: { // don't display the dummy year
+                        month: '%e. %b',
+                        year: '%b'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Snow depth (m)'
+                    },
+                    min: 0
+                },
+                tooltip: {
+                    formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                                Highcharts.dateFormat('%e. %b', this.x) +': '+ this.y +' m';
+                    }
+                },
+
+                series: [{
+                    animation: false,
+                    enableMouseTracking: false,
+                    shadow: false,
+                    name: 'Winter 2007-2008',
+                    // Define the data points. All series have a dummy year
+                    // of 1970/71 in order to be compared on the same x axis. Note
+                    // that in JavaScript, months start at 0 for January, 1 for February etc.
+                    data: [
+                        [Date.UTC(1970,  9, 27), 0   ],
+                        [Date.UTC(1970, 10, 10), 0.6 ],
+                        [Date.UTC(1970, 10, 18), 0.7 ],
+                        [Date.UTC(1970, 11,  2), 0.8 ],
+                        [Date.UTC(1970, 11,  9), 0.6 ],
+                        [Date.UTC(1970, 11, 16), 0.6 ],
+                        [Date.UTC(1970, 11, 28), 0.67],
+                        [Date.UTC(1971,  0,  1), 0.81],
+                        [Date.UTC(1971,  0,  8), 0.78],
+                        [Date.UTC(1971,  0, 12), 0.98],
+                        [Date.UTC(1971,  0, 27), 1.84],
+                        [Date.UTC(1971,  1, 10), 1.80],
+                        [Date.UTC(1971,  1, 18), 1.80],
+                        [Date.UTC(1971,  1, 24), 1.92],
+                        [Date.UTC(1971,  2,  4), 2.49],
+                        [Date.UTC(1971,  2, 11), 2.79],
+                        [Date.UTC(1971,  2, 15), 2.73],
+                        [Date.UTC(1971,  2, 25), 2.61],
+                        [Date.UTC(1971,  3,  2), 2.76],
+                        [Date.UTC(1971,  3,  6), 2.82],
+                        [Date.UTC(1971,  3, 13), 2.8 ],
+                        [Date.UTC(1971,  4,  3), 2.1 ],
+                        [Date.UTC(1971,  4, 26), 1.1 ],
+                        [Date.UTC(1971,  5,  9), 0.25],
+                        [Date.UTC(1971,  5, 12), 0   ]
+                    ]
+                }, {
+                    animation: false,
+                    enableMouseTracking: false,
+                    shadow: false,
+                    name: 'Winter 2008-2009',
+                    data: [
+                        [Date.UTC(1970,  9, 18), 0   ],
+                        [Date.UTC(1970,  9, 26), 0.2 ],
+                        [Date.UTC(1970, 11,  1), 0.47],
+                        [Date.UTC(1970, 11, 11), 0.55],
+                        [Date.UTC(1970, 11, 25), 1.38],
+                        [Date.UTC(1971,  0,  8), 1.38],
+                        [Date.UTC(1971,  0, 15), 1.38],
+                        [Date.UTC(1971,  1,  1), 1.38],
+                        [Date.UTC(1971,  1,  8), 1.48],
+                        [Date.UTC(1971,  1, 21), 1.5 ],
+                        [Date.UTC(1971,  2, 12), 1.89],
+                        [Date.UTC(1971,  2, 25), 2.0 ],
+                        [Date.UTC(1971,  3,  4), 1.94],
+                        [Date.UTC(1971,  3,  9), 1.91],
+                        [Date.UTC(1971,  3, 13), 1.75],
+                        [Date.UTC(1971,  3, 19), 1.6 ],
+                        [Date.UTC(1971,  4, 25), 0.6 ],
+                        [Date.UTC(1971,  4, 31), 0.35],
+                        [Date.UTC(1971,  5,  7), 0   ]
+                    ]
+                }, {
+                    animation: false,
+                    enableMouseTracking: false,
+                    shadow: false,
+                    name: 'Winter 2009-2010',
+                    data: [
+                        [Date.UTC(1970,  9,  9), 0   ],
+                        [Date.UTC(1970,  9, 14), 0.15],
+                        [Date.UTC(1970, 10, 28), 0.35],
+                        [Date.UTC(1970, 11, 12), 0.46],
+                        [Date.UTC(1971,  0,  1), 0.59],
+                        [Date.UTC(1971,  0, 24), 0.58],
+                        [Date.UTC(1971,  1,  1), 0.62],
+                        [Date.UTC(1971,  1,  7), 0.65],
+                        [Date.UTC(1971,  1, 23), 0.77],
+                        [Date.UTC(1971,  2,  8), 0.77],
+                        [Date.UTC(1971,  2, 14), 0.79],
+                        [Date.UTC(1971,  2, 24), 0.86],
+                        [Date.UTC(1971,  3,  4), 0.8 ],
+                        [Date.UTC(1971,  3, 18), 0.94],
+                        [Date.UTC(1971,  3, 24), 0.9 ],
+                        [Date.UTC(1971,  4, 16), 0.39],
+                        [Date.UTC(1971,  4, 21), 0   ]
+                    ]
+                }]
+            });
+        }
+</script>
+</body>
+
+</html>
+
+

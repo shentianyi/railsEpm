@@ -1,5 +1,6 @@
 #encoding: utf-8
 class DashboardsController < ApplicationController
+  before_filter :require_user_as_director,:only=>:index
   layout "fullsize", :only => :fullsize
 
   def new

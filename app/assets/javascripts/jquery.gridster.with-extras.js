@@ -724,6 +724,8 @@
 
 }(jQuery, window, document));
 
+var RESIZE=RESIZE||{};
+RESIZE.validate=true;
 ;(function($, window, document, undefined) {
 
     var defaults = {
@@ -1027,7 +1029,8 @@
     * @param {Function} [callback] Function executed when the widget is removed.
     * @return {HTMLElement} Returns $widget.
     */
-    fn.resize_widget = function($widget, size_x, size_y, reposition, callback) {
+    fn.resize_widget = function($widget, size_x, size_y, reposition, callback,dashboard) {
+        RESIZE.validate=true;
         var wgd = $widget.coords().grid;
         reposition !== false && (reposition = true);
         size_x || (size_x = wgd.size_x);
@@ -1064,6 +1067,17 @@
 
         if (callback) {
             callback.call(this, new_grid_data.size_x, new_grid_data.size_y);
+        }
+        if(dashboard){
+            window.setTimeout(function(){
+                var id = $widget.attr("id");
+                var container = "#container_"+id;
+                var chart = $(container).highcharts();
+                if(chart){
+                    chart.setSize($(container).width(),$(container).height(),false);
+                }
+
+            },130)
         }
 
         return $widget;

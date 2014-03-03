@@ -70,7 +70,8 @@
 .manage-user-add[special="entity"]{
     background-color:#333;
     transition:left 0.35s ease-out;
-    position:relative;
+    /*position:relative;*/
+    position: absolute;
     left:-200px;
     width:200px;
 
@@ -104,4 +105,36 @@
 }
 .manage-user-add[special="entity"]>ul h3:hover{
     color:#F5A133;
+}
+/*2014.2 new add(my view)*/
+.manage-left-menu[type="entity_groups"] li:first-of-type{
+    text-align:center;
+    font-weight:lighter;
+    font-size:15px;
+    color:rgba(0, 0, 0, 0.65);
+    padding:29px 0 1px;
+}
+
+.manage-entity-add>ul{
+    padding-top:5px !important;
+}
+
+.user-share-list>h4{
+    color:rgba(255,255,255,0.8);
+    text-align:center;
+    font-size:17px;
+    font-weight:200;
+}
+.user-share-list>h4:first-of-type{
+    margin-top:50px !important;
+}
+.user-share-list>h4:nth-of-type(2){
+    margin-top:25px !important;
+}
+.user-share-list>ul{
+    padding-top:5px !important;
+}
+.user-share-list>ul>li>h3{
+    padding:6px 5px !important;
+    font-size:14px !important;
 }

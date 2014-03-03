@@ -44,7 +44,7 @@ ENTRY.init=function(){
            }
            var kpi_id=$(e.target).attr("user_kpi_item_id"),value=$(e.target).val();
                $.ajax({
-                  url:"/kpi_entries/entry",
+                  url:"/kpi_entries",
                   type:'POST',
                   data:{
                       user_kpi_item_id:kpi_id,
@@ -219,8 +219,8 @@ ENTRY.datepicker.post=function(){
     var post_date=HIGH_CHART.postPrepare(date_original,interval);
 
     $.ajax({
-        url:'../kpi_entries/refresh_entry',
-        type:'post',
+        url:'/kpi_entries/show',
+        type:'get',
         data:{
             f:$('#kpi-type-hidden').val(),
             date:post_date.toISOString()
@@ -246,7 +246,7 @@ ENTRY.trend=function(post_date){
     }
     if(kpi_count>0){
         $.get(
-            "../kpi_entries/recents",
+            "/kpi_entries/recents",
             {
                 ids:ids,
                 time:Date.parse(post_date)

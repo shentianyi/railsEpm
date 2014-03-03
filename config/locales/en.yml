@@ -225,9 +225,9 @@ en:
       table: Statistics
       item:
         kpi: KPI
-        entity: Entity
+        entity: Data Point
         user: User
-        view: Entity Group
+        view: View
   epm:
     base:
       title: EPM
@@ -266,15 +266,18 @@ en:
     manage: Manage
     kpi: KPI
     user: User
-    view: Entity Group
+    view: View
+    my_view: My View
+    my_kpi: My KPI
     billing: Account
     entry_kpi: KPI Entry
-    department: Entity
+    department: Data Point
+    entity: Department
   analytics:
     title: Analytics
     kpi_category: KPI Category
     kpi: KPI
-    view: Entity Groups
+    view: Views
     begin_time: Start Time
     end_time: End Time
     sum: Total
@@ -348,48 +351,74 @@ en:
         down: Down
     department:
       desc:
-        dep: Entity
-        manage: Manage Entity
-        name: Entity Name
-        create: Create Entity
-        create_desc: Department is the place to put your staff and the view is made up of departments
+        dep: Data Point
+        manage: Manage Data Point
+        name: Data Point Name
+        code: Code
+        description: Descripion
+        user_quanity: User Quantity
+        create: Create Data Point
+        create_now: Create Now
+        create_desc: Department is the place to put your staff and the view is made up of data points
         give_name: Give it a name
-        next_desc: After creating department , it's time to create user(staff) to your department so that they can contribute to their department's KPI
+        next_desc: After creating data point , it's time to create user(staff) to your data point so that they can contribute to their data point KPI
     user:
       desc:
-        name: User
         manage: Manage User
-        authority: Authority
-
         create: Create User
-        create_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
+        create_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
         create_now: Create Now
-
         assign: Assign KPI
-        assign_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
+        assign_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
         assign_now: Assign Now
-
-        next_desc: User as well as your staff in different department who created by you and then entry the kpi assigned
-
+        next_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
       role:
-        admin: Admin
+        admin: System Admin
         director: Director
         manager: Manager
         user: User
       new:
+        authority: Authority
         name: Name
         email: Email
         pwd: Password
         pwd_con: Password Confirmation
-        dep: Entity
+        entity: Data Point
+        department: Department
+        departments: In Charge
+        title: Title
     view:
       desc:
-        name: Entity Group
-        manage: Manage Entity Group
-        dep_list: Entity List
-        assign_dep: Assign Entity
-        assign_desc: Creating view first , then assign department to the view ,view is the base condition in analytics
-        next_desc: Creating view first , then assign department to the view,view is the base condition in analytics
+        name: View
+        manage: Manage View
+        dep_list: Data Point List
+        user_list: User List
+        assign_dep: Assign Data Point
+        assign_desc: Creating view first , then assign data point to the view ,view is the base condition in analytics
+        share: Share
+        share_desc: Share the view.......
+        share_now: Share Now
+        next_desc: Creating view first , then assign data point to the view,view is the base condition in analytics
+      validate:
+        already_shared: Already shared to this user!
+      already_assigned: Data point has been assigned!
+      unassign_confirm: Sure to unassign this data point?
+    departments:
+      desc:
+        name: Department
+        manage: Manage Department
+        basic: Basic Information
+        basic-name: Name
+        users: Department Heads
+        add-entity: Add Data Point
+        add-user: Add Department Head
+        add-department: Add Department
+        delete-department: Delete Department
+        del-department-confirm: Delete Department?
+        add-ok: Add
+        add-cancle: Cancle
+        delete-depart-confirm: Delete this Data Point?
+        delete-user: Delete Department Head?
   #dashboard
   dashboard_group:
     base:
@@ -423,7 +452,7 @@ en:
       create: Create Now
       serie:
         category: KPI Category
-        view: Entity Group
+        view: View
         start_time: Start Time
         end_time: End Time
         total: Total
@@ -447,7 +476,7 @@ en:
     value: Value
     target_range: Target Range
     percent: Percentage
-    view: Entity Group
+    view: View
     line:
       out_of_target: Out of Target
       kpi_name: KPI Name
@@ -478,9 +507,17 @@ en:
     click_download_error: Click the link to download the error file to help reset your values:)
     close: Close
     handing_file: handing the file, please wait a minute...
+    user_entity_is_blank: User not in any Entity
+    kpi_assign_fail: Same KPI has been assigned
+    user_no_exists: User not exists
   vali_msg:
     invalid_date: invalid date format
     invalid_value: invalid value
     kpi_not_assign: KPI not assigned to user
     invalid_kpi: invalid KPI info
     invalid_user_email: invalid email
+  epm_report:
+    title: EPM Report
+    current: Current
+    target_min: Target Min
+    target_max: Target Max

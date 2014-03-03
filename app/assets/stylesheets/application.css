@@ -8,7 +8,9 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- 
+
+*= require STYLE
+
 *= require datepicker
 *= require datetimepicker
 *= require wayne_sunny
@@ -26,10 +28,12 @@
 *= require Manage-user
 *= require Manage-department
 *= require Manage-view
+*= require Manage-part
 *= require Dashboard
 *= require Dashboard-add
 *= require tipsy
 *= require Entry
 *= require Log
+*= require treeview
 *= require_self
  */

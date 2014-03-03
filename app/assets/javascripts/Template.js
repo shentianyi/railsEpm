@@ -6,7 +6,7 @@ var config = {
     '.chosen-select-width': {width: "95%"}
 };
 $(document).ready(function(){
-    $("#user-portrait-background").on("click",show_left_user_setting);
+//    $("#user-portrait-background").on("click",show_left_user_setting);
     $(".chosen-select").chosen({
         disable_search_threshold: 7
     });

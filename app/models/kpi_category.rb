@@ -10,7 +10,7 @@ class KpiCategory < ActiveRecord::Base
   validate :validate_create_update
   
   def self.ability_all current_ability
-    self.accessible_by(current_ability).all
+    self.accessible_by(current_ability).uniq.all
   end
   private
   def validate_create_update

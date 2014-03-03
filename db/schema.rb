@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140116064750) do
+ActiveRecord::Schema.define(:version => 20140224074806) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -38,6 +38,21 @@ ActiveRecord::Schema.define(:version => 20140116064750) do
   end
 
   add_index "admin_kpi_templates", ["admin_kpi_category_template_id"], :name => "index_admin_kpi_templates_on_admin_kpi_category_template_id"
+
+  create_table "attachments", :force => true do |t|
+    t.string   "name"
+    t.string   "path"
+    t.string   "size"
+    t.string   "type"
+    t.string   "pathname"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "attachments", ["attachable_id"], :name => "index_attachments_on_attachable_id"
+  add_index "attachments", ["attachable_type"], :name => "index_attachments_on_attachable_type"
 
   create_table "contacts", :force => true do |t|
     t.string   "name"
@@ -88,15 +103,45 @@ ActiveRecord::Schema.define(:version => 20140116064750) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "emails", :force => true do |t|
-    t.string   "sender"
-    t.string   "reveivers"
-    t.string   "file_path"
+  create_table "department_kpis", :force => true do |t|
+    t.integer  "department_id"
+    t.integer  "kpi_id"
+    t.integer  "kpi_quantity",  :default => 1
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  add_index "department_kpis", ["department_id"], :name => "index_department_kpis_on_department_id"
+  add_index "department_kpis", ["kpi_id"], :name => "index_department_kpis_on_kpi_id"
+
+  create_table "departments", :force => true do |t|
+    t.string   "name"
+    t.string   "ancestry"
+    t.integer  "tenant_id"
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
+  add_index "departments", ["ancestry"], :name => "index_departments_on_ancestry"
+  add_index "departments", ["tenant_id"], :name => "index_departments_on_tenant_id"
+  add_index "departments", ["user_id"], :name => "index_departments_on_user_id"
+
+  create_table "emails", :force => true do |t|
+    t.string   "sender"
+    t.string   "receivers"
+    t.string   "file_path"
+    t.integer  "user_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "content"
+    t.string   "title"
+    t.integer  "kpi_id"
+    t.integer  "entity_group_id"
+  end
+
+  add_index "emails", ["entity_group_id"], :name => "index_emails_on_entity_group_id"
+  add_index "emails", ["kpi_id"], :name => "index_emails_on_kpi_id"
   add_index "emails", ["user_id"], :name => "index_emails_on_user_id"
 
   create_table "entities", :force => true do |t|
@@ -108,8 +153,10 @@ ActiveRecord::Schema.define(:version => 20140116064750) do
     t.datetime "updated_at",                   :null => false
     t.string   "description"
     t.string   "code"
+    t.integer  "department_id"
   end
 
+  add_index "entities", ["department_id"], :name => "index_entities_on_department_id"
   add_index "entities", ["tenant_id"], :name => "index_entities_on_tenant_id"
 
   create_table "entity_contacts", :force => true do |t|
@@ -131,21 +178,25 @@ ActiveRecord::Schema.define(:version => 20140116064750) do
     t.integer  "entity_group_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "user_id"
   end
 
   add_index "entity_group_items", ["entity_group_id"], :name => "index_entity_group_items_on_entity_group_id"
   add_index "entity_group_items", ["entity_id"], :name => "index_entity_group_items_on_entity_id"
+  add_index "entity_group_items", ["user_id"], :name => "index_entity_group_items_on_user_id"
 
   create_table "entity_groups", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.boolean  "is_public",   :default => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "is_public",     :default => false
     t.string   "description"
     t.string   "code"
+    t.integer  "department_id"
   end
 
+  add_index "entity_groups", ["department_id"], :name => "index_entity_groups_on_department_id"
   add_index "entity_groups", ["user_id"], :name => "index_entity_groups_on_user_id"
 
   create_table "kpi_categories", :force => true do |t|
@@ -202,8 +253,8 @@ ActiveRecord::Schema.define(:version => 20140116064750) do
     t.boolean  "is_calculated",   :default => false
     t.integer  "direction"
     t.integer  "period"
-    t.string   "formula"
-    t.string   "formula_string"
+    t.text     "formula"
+    t.text     "formula_string"
     t.integer  "user_id"
     t.integer  "tenant_id"
     t.datetime "created_at",                         :null => false
@@ -233,6 +284,26 @@ ActiveRecord::Schema.define(:version => 20140116064750) do
   end
 
   add_index "tenants", ["user_id"], :name => "index_tenants_on_user_id"
+
+  create_table "user_departments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "department_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "user_departments", ["department_id"], :name => "index_user_departments_on_department_id"
+  add_index "user_departments", ["user_id"], :name => "index_user_departments_on_user_id"
+
+  create_table "user_entity_groups", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "entity_group_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "user_entity_groups", ["entity_group_id"], :name => "index_user_entity_groups_on_entity_group_id"
+  add_index "user_entity_groups", ["user_id"], :name => "index_user_entity_groups_on_user_id"
 
   create_table "user_kpi_items", :force => true do |t|
     t.integer  "entity_id"
@@ -273,8 +344,11 @@ ActiveRecord::Schema.define(:version => 20140116064750) do
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.boolean  "is_sys",              :default => false
+    t.string   "title"
+    t.integer  "department_id"
   end
 
+  add_index "users", ["department_id"], :name => "index_users_on_department_id"
   add_index "users", ["entity_id"], :name => "index_users_on_entity_id"
   add_index "users", ["tenant_id"], :name => "index_users_on_tenant_id"
 
