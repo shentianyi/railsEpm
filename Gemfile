@@ -19,7 +19,6 @@ gem 'redis-namespace'
 
 gem 'will_paginate'
 gem 'i18n-js'
-
 gem 'spreadsheet'
 gem 'roo' 
 gem 'axlsx','>2.0.0'
@@ -30,6 +29,13 @@ gem 'aliyun-oss'
 #rake i18n:js:export
 # Gems used only for assets and not required
 # in production environments by default.
+
+# send email
+gem 'rest-client'
+gem 'multimap'
+
+gem 'colorize'
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -63,3 +69,6 @@ gem 'ruby-prof', '~> 0.11.2' if RUBY_VERSION < '2.0'
 # gem for generate pdf
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
+
+# ancestry
+gem 'ancestry',:git => "git://github.com/stefankroes/ancestry.git"

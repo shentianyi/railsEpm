@@ -16,7 +16,6 @@
 //=require jquery.sparkline.min
 //=require _file_upload
 //=require brilliantech.base
-//=require brilliantech.railsepm
 //=require Template
 //=require bootstrap-datepicker
 //=require bootstrap-datetimepicker.min

@@ -1,0 +1,10 @@
+<ul class="manage-left-menu" id="manage-left-menu" type="category" special="my-kpi">
+  <li>
+    <%= t 'manage.kpi.category' %>
+  </li>
+  <% @categories.each do |category| %>
+      <li class="<%= category.id==@active_category_id ? 'active' : '' %>" number="<%= category.id %>" title="<%= category.name %>">
+        <a category="<%= category.id %>" href="/kpis/access/<%= category.id %>"><%= category.name %></a>
+      </li>
+  <% end %>
+</ul>

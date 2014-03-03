@@ -20,6 +20,7 @@ module IFEpm
     config.autoload_paths+=%W(#{config.root}/base)
     config.autoload_paths+=%W(#{config.root}/validators)
     config.autoload_paths+=Dir[Rails.root.join('app','models','{**}')]
+    config.autoload_paths+=Dir[Rails.root.join('app','presenters','{**}')]
     config.autoload_paths += %W(#{config.root}/app/services)
     config.autoload_paths += %W(#{config.root}/app/caches)
     # Only load the plugins named here, in the order given (default is alphabetical).
@@ -27,7 +28,7 @@ module IFEpm
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
     # Activate observers that should always be running.
-    config.active_record.observers = :tenant_observer,:user_observer,:kpi_observer,:kpi_entry_observer
+    config.active_record.observers = :tenant_observer,:user_observer,:kpi_observer,:kpi_entry_observer,:entity_observer,:entity_group_observer
     config.active_record.observers+=['Admin::KpiTemplateObserver']
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.

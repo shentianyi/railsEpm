@@ -4,14 +4,19 @@ class User < ActiveRecord::Base
   belongs_to :tenant
   belongs_to :entity
 
-  has_many :entity_groups,:dependent=>:destroy
-  has_many :kpis,:through=>:user_kpi_items
-  has_many :user_kpi_items,:dependent=>:destroy
-  has_many :kpi_entries, :through=>:user_kpi_items
-  has_many :emails, :dependent=>:destroy
+  belongs_to :department
+  has_many :user_departments,:dependent => :destroy
+  has_many :departments,:through => :user_departments
 
-  attr_accessible :email, :password, :password_confirmation,:status,:perishable_token,:confirmed,:first_name,:last_name,:is_tenant
-  attr_accessible :tenant_id,:role_id,:entity_id,:is_sys
+  has_many :user_entity_groups,:dependent => :destroy
+  has_many :entity_groups, :through => :user_entity_groups
+  has_many :kpis, :through => :user_kpi_items
+  has_many :user_kpi_items, :dependent => :destroy
+  has_many :kpi_entries, :through => :user_kpi_items
+  has_many :emails, :dependent => :destroy
+
+  attr_accessible :email, :password, :password_confirmation, :status, :perishable_token, :confirmed, :first_name, :last_name, :is_tenant
+  attr_accessible :tenant_id, :role_id, :entity_id,:department_id, :is_sys, :title#, :department_group_id
 
   acts_as_authentic do |c|
     c.login_field = :email
@@ -21,6 +26,14 @@ class User < ActiveRecord::Base
   # acts as tenant
   acts_as_tenant(:tenant)
 
+  def method_missing(method_name, *args, &block)
+    if Role::RoleMethods.include?(method_name)
+      Role.send(method_name, self.role_id)
+    else
+      super
+    end
+  end
+
   def confirmed?
     return true #self.confirmed
   end
@@ -29,9 +42,9 @@ class User < ActiveRecord::Base
     user = User.find_by_email(email)
     if user
       user.status = UserStatus::LOCKED
-    return user.save
+      return user.save
     else
-    return false
+      return false
     end
   end
 
@@ -45,15 +58,16 @@ class User < ActiveRecord::Base
     UserConfirmationMailer.deliver_password_reset(self).deliver
   end
 
-  def create_tenant_user!(email,password,password_confirmation,company_name)
+  def create_tenant_user!(email, password, password_confirmation, company_name)
     self.email=email
     self.password=password
     self.password_confirmation=password_confirmation
 
-    @tenant= Tenant.new(:company_name=>company_name,
-                        :edition=>$trial_edition,
-                        :subscription_status=>SubscriptionStatus::TRIAL,
-                        :expire_at=>15.days.from_now)
+    @tenant= Tenant.new(:company_name => company_name,
+                        :edition => $trial_edition,
+                        :subscription_status => SubscriptionStatus::TRIAL,
+                        :expire_at => 15.days.from_now)
+    @department = department.new(:name => company_name)
 
     begin
       ActiveRecord::Base.transaction do
@@ -63,8 +77,9 @@ class User < ActiveRecord::Base
         self.status = UserStatus::ACTIVE
         self.is_tenant=true
         @tenant.save!
+        @department.save!
         self.save!
-        @tenant.update_attributes :user_id=>self.id
+        @tenant.update_attributes :user_id => self.id
         return self
       end
     rescue ActiveRecord::RecordInvalid => invalid
@@ -72,35 +87,45 @@ class User < ActiveRecord::Base
     end
   end
 
-  def ability_entity_groups current_ability
-    EntityGroup.where("user_id = ? or is_public = 1",self.id).accessible_by(current_ability)
-    #self.entity_groups.accessible_by(current_ability)
+  def self.by_role role
+    joins('left join entities on users.entity_id=entities.id')
+    .joins('left join departments on users.department_id=departments.id')
+    .where(role_id: role)
+    .select('users.*,entities.name as entity_name,departments.name as department_name')
   end
+
+  def role
+    Role.display self.role_id
+  end
+
+  def department_names
+    self.departments.pluck(:name).join(',')
+  end
+
 
   #待测试
   def insert_guide_template
     if self.id
-      $redis_guid.hmset(self.id,$user_guide_template)
+      $redis_guid.hmset(self.id, $user_guide_template)
     end
   end
 
-  def remove_guide_item(controller_name,action_name)
-     $redis_guid.hdel(self.id,make_guide_key(controller_name,action_name))
-
+  def remove_guide_item(controller_name, action_name)
+    $redis_guid.hdel(self.id, make_guide_key(controller_name, action_name))
   end
 
-  def add_guide_item (controller_name,action_name)
-    if !has_guide_item(controller_name,action_name)
-        $redis_guid.hset(self.id,make_guide_key(controller_name,action_name),nil)
+  def add_guide_item (controller_name, action_name)
+    if !has_guide_item(controller_name, action_name)
+      $redis_guid.hset(self.id, make_guide_key(controller_name, action_name), nil)
     end
   end
 
-  def has_guide_item(controller_name,action_name)
-    return $redis_guid.hexists(self.id,make_guide_key(controller_name,action_name))
+  def has_guide_item(controller_name, action_name)
+    return $redis_guid.hexists(self.id, make_guide_key(controller_name, action_name))
   end
 
-  def make_guide_key(controller_name,action_name)
-    return controller_name.downcase  + '/' + action_name.downcase
+  def make_guide_key(controller_name, action_name)
+    return controller_name.downcase + '/' + action_name.downcase
   end
 
 

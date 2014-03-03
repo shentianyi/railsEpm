@@ -1,0 +1,530 @@
+zh:
+  date:
+    abbr_day_names:
+    - 日
+    - 一
+    - 二
+    - 三
+    - 四
+    - 五
+    - 六
+    abbr_month_names:
+    -
+    - 1月
+    - 2月
+    - 3月
+    - 4月
+    - 5月
+    - 6月
+    - 7月
+    - 8月
+    - 9月
+    - 10月
+    - 11月
+    - 12月
+    day_names:
+    - 星期日
+    - 星期一
+    - 星期二
+    - 星期三
+    - 星期四
+    - 星期五
+    - 星期六
+    formats:
+      default: ! '%Y-%m-%d'
+      long: ! '%Y年%b%d日'
+      short: ! '%b%d日'
+    month_names:
+    -
+    - 一月
+    - 二月
+    - 三月
+    - 四月
+    - 五月
+    - 六月
+    - 七月
+    - 八月
+    - 九月
+    - 十月
+    - 十一月
+    - 十二月
+    order:
+    - :year
+    - :month
+    - :day
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 大约一小时
+        other: 大约 %{count} 小时
+      about_x_months:
+        one: 大约一个月
+        other: 大约 %{count} 个月
+      about_x_years:
+        one: 大约一年
+        other: 大约 %{count} 年
+      almost_x_years:
+        one: 接近一年
+        other: 接近 %{count} 年
+      half_a_minute: 半分钟
+      less_than_x_minutes:
+        one: 不到一分钟
+        other: 不到 %{count} 分钟
+      less_than_x_seconds:
+        one: 不到一秒
+        other: 不到 %{count} 秒
+      over_x_years:
+        one: 一年多
+        other: ! '%{count} 年多'
+      x_days:
+        one: 一天
+        other: ! '%{count} 天'
+      x_minutes:
+        one: 一分钟
+        other: ! '%{count} 分钟'
+      x_months:
+        one: 一个月
+        other: ! '%{count} 个月'
+      x_seconds:
+        one: 一秒
+        other: ! '%{count} 秒'
+    prompts:
+      day: 日
+      hour: 时
+      minute: 分
+      month: 月
+      second: 秒
+      year: 年
+  errors: &errors
+    format: ! '%{attribute} %{message}'
+    messages:
+      accepted: 必须是可被接受的
+      blank: 不能为空字符
+      confirmation: 与确认值不匹配
+      empty: 不能留空
+      equal_to: 必须等于 %{count}
+      even: 必须为双数
+      exclusion: 是保留关键字
+      greater_than: 必须大于 %{count}
+      greater_than_or_equal_to: 必须大于或等于 %{count}
+      inclusion: 不包含于列表中
+      invalid: 是无效的
+      less_than: 必须小于 %{count}
+      less_than_or_equal_to: 必须小于或等于 %{count}
+      not_a_number: 不是数字
+      not_an_integer: 必须是整数
+      odd: 必须为单数
+      record_invalid: ! '验证失败: %{errors}'
+      taken: 已经被使用
+      too_long: 过长（最长为 %{count} 个字符）
+      too_short: 过短（最短为 %{count} 个字符）
+      wrong_length: 长度非法（必须为 %{count} 个字符）
+    template:
+      body: 如下字段出现错误：
+      header:
+        one: 有 1 个错误发生导致「%{model}」无法被保存。
+        other: 有 %{count} 个错误发生导致「%{model}」无法被保存。
+  helpers:
+    select:
+      prompt: 请选择
+    submit:
+      create: 新增%{model}
+      submit: 储存%{model}
+      update: 更新%{model}
+  number:
+    currency:
+      format:
+        delimiter: ! ','
+        format: ! '%u %n'
+        precision: 2
+        separator: .
+        significant: false
+        strip_insignificant_zeros: false
+        unit: CN¥
+    format:
+      delimiter: ! ','
+      precision: 3
+      separator: .
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: ! '%n %u'
+        units:
+          billion: 十亿
+          million: 百万
+          quadrillion: 千兆
+          thousand: 千
+          trillion: 兆
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 1
+        significant: false
+        strip_insignificant_zeros: false
+      storage_units:
+        format: ! '%n %u'
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: ! ', 和 '
+      two_words_connector: ! ' 和 '
+      words_connector: ! ', '
+  time:
+    am: 上午
+    formats:
+      default: ! '%Y年%b%d日 %A %H:%M:%S %Z'
+      long: ! '%Y年%b%d日 %H:%M'
+      short: ! '%b%d日 %H:%M'
+    pm: 下午
+  # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
+  activemodel:
+    errors:
+      <<: *errors
+  activerecord:
+    errors:
+      <<: *errors
+  # brilliantech project
+  #authlogic:
+   # error_messages:
+   #   email_invalid: should look like an email address.
+   #   password_blank: 密码不可为空
+   #  password_invalid: 密码最短长度为4
+  welcome:
+    title: 欢迎
+    sub_title: 欢迎使用EPM
+    entrys:
+      title: 针对您角色的入口
+      kpi_entry: 输入KPI
+      analyse: 分析
+      dashboard: 仪表盘
+      manage_kpi: 管理KPI
+    statistics:
+      title: 当前数据统计
+      staff: 人员结构
+      table: 数据统计
+      item:
+        kpi: KPI
+        entity: 输入点
+        user: 用户
+        view: 视图
+
+  authlogic:
+    error_messages:
+      login_blank: 不能为空
+      login_not_found: 是无效的
+      login_invalid: 只能包含字符，数字，空格和 .-_@
+      consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account is disabled.
+      email_invalid: 无效的邮箱格式.
+      password_blank: 不能为空
+      password_invalid: 是无效的
+  epm:
+    base:
+      title: EPM
+      name: 智能工厂
+      desc: 安全，迅速，快捷，EPM帮您挖掘隐藏的数据
+      language: 语言
+      welcome: 欢迎
+  auth:
+    view:
+      login_title: 登 录
+      login_btn: 登 录
+      sign_title: 现 在 注 册
+      sign_btn: 注 册
+      signout_btn: 注销
+      submit_btn: 提 交
+      email: 邮箱
+      pwd: 密码
+      confirm: 确认
+      con_pwd: 确认密码
+      company: 公司
+    msg:
+      login_success: 登录成功
+      login_require: 请先登录
+      logout_success: 注销成功
+      logout_require: 请先注册
+      email_token: 邮箱已被注册
+      sign_success: 注册成功
+      sign_close: 我们还没有开放注册
+      sign_fail: 注册失败
+      lock_account: 您的账户已经过期或被锁定，请联系网站管理员
+  menu:
+      start: 开始
+      dashboard: 仪表盘
+      analytics: 分析
+      reports: 报表
+      manage: 管理
+      kpi: KPI
+      user: 用户
+      view: 视图
+      my_view: 我的视图
+      my_kpi: 我的KPI
+      billing: 账户
+      entry_kpi: KPI输入
+      department: 输入点
+      entity: 部门
+  analytics:
+      title: 分析
+      kpi_category: KPI类别
+      kpi: KPI
+      view: 视图
+      begin_time: 开始时间
+      end_time: 结束时间
+      sum: 累计
+      average: 平均
+      add_chart: 分析           
+      date: 时间
+      percent: 比例
+      target: 目标值
+      sum_target: 累计目标值
+      aver_target: 平均目标值
+      value: 实际值
+      sum_value: 累计实际值
+      aver_value: 平均实际值
+      tcr: TCR
+      close_btn: 关闭
+  #kpi entry
+  entry:
+    desc:
+      entry: KPI输入
+      category: 类别
+      trend: 趋势
+      actual: 实际值
+      recent: 最近数据
+  #manage
+  manage:
+      base:
+        delete_btn: 删除
+        edit_btn: 编辑
+        add_btn: 添加
+        cancel_btn: 取消
+        enter_confirm: Enter：  确定
+        esc_cancel: ESC： 取消
+        delete_confirm:  确定删除？
+        next: 下一步
+        finish: 完成
+        destroy_fail: 添加失败
+      kpi:
+        desc:
+          create: 创建KPI
+          create_desc: 为不同的KPI类别创建KPI，你可以对KPI做相应的编辑
+          create_now: 现在创建
+
+          kpi_library_desc: 如果你需要一些常用的KPI，你可以方便的在KPI库中选择
+          choose_now: 现在选择
+          next_desc: 创建完成KPI后，你应该创建输入点和用户，然后将KPI分配给相应输入点中的用户内
+
+
+        title: 管理KPI
+        category: KPI类别
+        kpi_library: KPI 库
+        name: 名称
+        description: 描述
+        frequency: 周期
+        target: 目标值上限
+        target_min: 目标值下限
+        unit: 单位
+        trend: 趋势
+        is_calculate_type: 计算型
+        not_calculate_type: 否
+        calculate_type: 是
+        list: 选择KPI
+        formula: 计算公式
+        invalid: 公式不合法
+        cannot_repeat: 同一类别KPI不可重复
+        freq_item:
+          hourly: 小时
+          daily: 天
+          weekly: 周
+          monthly: 月
+          quarterly: 季度
+          yearly: 年
+        trend_item:
+          none: 无
+          up: 上升
+          down: 下降
+      department:
+        desc:
+          dep: 输入点
+          manage: 管理输入点
+          name: 输入点名称
+          code: 编码
+          description: 描述
+          user_quantity: 用户数目
+          create: 创建输入点
+          create_now: 现在创建
+          create_desc: 输入点是管理员工的地方，而视图则建立在输入点的基础上
+          give_name: 给它一个名字
+          next_desc: 完成输入点创建后， 接下来你需要为你的输入点添加员工这样他们为你的输入点贡献KPI
+      user:
+        desc:
+          manage: 管理用户
+          create: 创建用户
+          create_desc: 用户，即你在不同部门创建的员工，完成创建后，你可以给他们分配KPI
+          create_now: 现在创建
+          assign: 分配KPI
+          assign_desc: 想分配任务一样给你的员工分配不同的KPI
+          assign_now: 现在分配
+          next_desc: 在分配完KPI后，你应该将你的部门放到你的视图中，以视图为基础，我们为你生成分析数据和仪表盘
+        role:
+          admin: 系统管理员
+          director: 管理者
+          manager: 经理
+          user: 普通用户
+        new:
+          authority: 权限
+          name: 用户名
+          email: 邮箱
+          pwd: 密码
+          pwd_con: 确认密码
+          entity: 输入点
+          department: 部门
+          departments: 负责部门
+          title: 职位
+      view:
+        desc:
+          name: 视图
+          manage: 管理视图
+          dep_list: 输入点列表
+          user_list: 用户列表
+          assign_dep: 分配输入点
+          assign_desc: 首先创建一个视图，然后将输入点加入到视图中，一个视图是查看分析数据的基础
+          next_desc: 完成管理中的所有部分后， 你可以让你的员工（用户）通过‘KPI输入’来输入KPI
+          share: 共享
+          share_desc: 共享你的视图....
+          share_now: 开始共享
+        validate:
+          already_shared: 已共享，不可重复
+        already_assigned: 输入点已经分配，不可重复
+        unassign_confirm: 确定取消分配此输入点？
+      departments:
+        desc:
+          name: 部门
+          manage: 管理部门
+          basic: 基础信息
+          basic-name: 名称
+          users: 部门负责人
+          add-entity: 添加输入点
+          add-user: 添加负责人
+          add-department: 添加部门
+          delete-department: 删除部门
+          add-ok: 确定
+          add-cancle: 取消
+          delete-depart-confirm: "删除该输入点？"
+          delete-user: "Delete"
+  #dashboard
+  dashboard_group:
+    base:
+      restore: 退出全屏
+    group:
+      name: 仪表盘组
+      add: 添加
+      give_name: 给它一个名字
+      edit: 修改组名
+    dashboard:
+      add: 添加仪表盘
+      add_desc: 选择一款你喜欢的图表样式进行创建，将其添加到仪表盘组中，方便您日后的查看
+      add_now: 现在添加
+
+      full: 全屏显示
+      full_desc: 将左侧的仪表板全屏显示，通过双击或者ESC来退出全屏模式
+      full_now: 进入全屏
+
+      name: 仪表盘名称
+      name_desc: 给你的仪表盘一个合适的名字
+      choose_type: 选择一种仪表盘类型
+      type:
+        line: 折线图
+        column: 柱状图
+        pie: 饼图
+        Scatter: 散点图
+
+      content: 创建仪表盘内容
+      content_desc: 添加一个系列或者多个系列的数据给你的仪表盘
+      add_series: 添加一个系列数据
+      select_group: 选择仪表盘组
+      create: 现在发布
+      serie:
+        category: KPI类别
+        view: 视图
+        start_time: 开始时间
+        end_time: 结束时间
+        total: 总数
+        average: 平均
+        add: 添加
+      close: 关闭
+
+      add_type:
+        cus: 自定义添加
+        temp: 模板添加
+
+      group: 选择仪表盘所在组
+      group_desc: 选择一个仪表盘组来放置你的仪表盘
+
+      finish: 完成
+      finish_desc: 发布你刚才创建的仪表盘
+
+    item:
+      out_of_target: 在目标范围外
+  chart:
+    value: 当前值
+    target_range: 目标值范围
+    percent: 百分比
+    view: 视图
+    line:
+      out_of_target: 超出目标值
+      kpi_name: KPI 名称
+      total: 总值
+      record: 记录数
+      average: 平均值
+      max: 最大值
+    pie:
+      select: 选中值
+      total: 总值
+    column:
+      max: 最大值
+      min: 最小值
+  fix:
+    zone_too_large: 对不起，时间范围太大了！
+    cannot_destroy: 此项不可删除
+    add_fail: 添加失败
+    cannot_destroy_contain_kpi: 包含于计算型，不可删除！
+    not_exists: 此项不存在
+    cannot_repeat: 已存在此项，不可重复
+    upload_kpi: 上传KPI
+    download_template: 下载模板
+    upload_data_file: 上传数据文件(最大为20M)
+    upload_finish: 完成
+    kpi_upload_support_format: 支持格式 Excel(.xls and .xlsx)
+    error_title: 错误
+    upload_error: 您在上传中出现了错误，无法完成上传
+    click_download_error: 点击连接下载错误提示文件，帮助您正确上传:)
+    close: 关闭
+    handing_file: 正在处理文件，请等待...
+    user_entity_is_blank: 用户未分配输入点
+    kpi_assign_fail: 用户已分配此KPI
+    user_no_exists: 用户不存在
+  vali_msg:
+    invalid_date: 日期格式错误
+    invalid_value: 数值错误
+    kpi_not_assign: KPI未分配给此用户
+    invalid_kpi: KPI错误
+    invalid_user_email: 用户Email错误
+  epm_report:
+    title: EPM报告
+    current: 当前值
+    target_min: 目标值下限
+    target_max: 目标值上限

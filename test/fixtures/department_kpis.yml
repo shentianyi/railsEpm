@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  department: 
+  kpi: 
+  kpi_quantity: 1
+
+two:
+  department: 
+  kpi: 
+  kpi_quantity: 1

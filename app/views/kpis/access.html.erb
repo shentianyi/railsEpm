@@ -1,0 +1,66 @@
+<div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
+  <div class="content-left-main" name="category" id="content-left-main">
+    <div style="width:auto;height:71px;"></div>
+    <div class="left-content-title" id="left-content-title">
+      <p class="current-group-item">
+        <%= t 'menu.my_kpi'%>
+      </p>
+    </div>
+    <div class="manage-left-content" id="manage-left-content">
+      <%= render :partial=>'kpi_categories/left_readonly_menu'%>
+      <div class="manage-right-content" id="manage-right-content">
+        <div class="manage-btn-group" id="manage-btn-group">
+          <p id="manage-edit-target" ></p>
+          <i class="icon-pencil"></i>
+          <input type="text"/>
+        </div>
+        <div class="manage-right-list">
+          <div id="kpi-item-container">
+            <ul id="manage-sort-list" class="manage-sort-list">
+              <%@kpis.each do |kpi|%>
+                  <li id="<%= kpi.id%>">
+                    <!--<p class="sort-handle">-->
+                      <!--:-->
+                    <!--</p>-->
+                    <table class="category" special="my-kpi">
+                      <tr>
+                        <td title='<%= kpi.name%>'><%= kpi.name%></td>
+                        <td ><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
+                        <td ><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
+                        <td class="manage-kpi-target">
+                          <div>
+                            <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target_max)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
+                            <input type='text' effect_on="<%= kpi.id%>"/>
+                          </div></td>
+
+                        <td class="manage-kpi-target">
+                          <div>
+                            <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target_min)%></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit)%></span>
+                            <input type='text' effect_on="<%= kpi.id%>"/>
+                          </div></td>
+
+                        <%if kpi.is_calculated%>
+                            <td title="<%= kpi.formula_string%>"><%= t 'manage.kpi.calculate_type'%></td>
+                        <%else%>
+                            <td><%= t 'manage.kpi.not_calculate_type'%></td>
+                        <%end%>
+                      </tr>
+                      <tr>
+                        <td title='<%= kpi.description%>'><%= kpi.description%></td>
+                        <td><%= t 'manage.kpi.frequency'%></td>
+                        <td><%= t 'manage.kpi.trend'%></td>
+                        <td><%= t 'manage.kpi.target'%></td>
+                        <td><%= t 'manage.kpi.target_min'%></td>
+                        <td><%= t 'manage.kpi.is_calculate_type'%></td>
+                      </tr>
+                    </table>
+                  </li>
+              <%end if @kpis%>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -218,9 +218,9 @@ zh:
       table: 数据统计
       item:
         kpi: KPI
-        entity: 部门
+        entity: 输入点
         user: 用户
-        view: 观察点
+        view: 视图
 
   authlogic:
     error_messages:
@@ -269,15 +269,18 @@ zh:
       manage: 管理
       kpi: KPI
       user: 用户
-      view: 观察点
+      view: 视图
+      my_view: 我的视图
+      my_kpi: 我的KPI
       billing: 账户
       entry_kpi: KPI输入
-      department: 部门
+      department: 输入点
+      entity: 部门
   analytics:
       title: 分析
       kpi_category: KPI类别
       kpi: KPI
-      view: 观察点
+      view: 视图
       begin_time: 开始时间
       end_time: 结束时间
       sum: 累计
@@ -322,7 +325,7 @@ zh:
 
           kpi_library_desc: 如果你需要一些常用的KPI，你可以方便的在KPI库中选择
           choose_now: 现在选择
-          next_desc: 创建完成KPI后，你应该创建部门和用户，然后将KPI分配给相应部门中的用户内
+          next_desc: 创建完成KPI后，你应该创建输入点和用户，然后将KPI分配给相应输入点中的用户内
 
 
         title: 管理KPI
@@ -355,48 +358,74 @@ zh:
           down: 下降
       department:
         desc:
-          dep: 部门
-          manage: 管理部门
-          name: 部门名称
-          create: 创建部门
-          create_desc: 部门是管理员工的地方，而观察点则建立在部门的基础上
+          dep: 输入点
+          manage: 管理输入点
+          name: 输入点名称
+          code: 编码
+          description: 描述
+          user_quantity: 用户数目
+          create: 创建输入点
+          create_now: 现在创建
+          create_desc: 输入点是管理员工的地方，而视图则建立在输入点的基础上
           give_name: 给它一个名字
-          next_desc: 完成部门创建后， 接下来你需要为你的部门创建员工这样他们为你的部门贡献KPI
+          next_desc: 完成输入点创建后， 接下来你需要为你的输入点添加员工这样他们为你的输入点贡献KPI
       user:
         desc:
-          name: 用户
           manage: 管理用户
-          authority: 权限
-
           create: 创建用户
           create_desc: 用户，即你在不同部门创建的员工，完成创建后，你可以给他们分配KPI
           create_now: 现在创建
-
           assign: 分配KPI
           assign_desc: 想分配任务一样给你的员工分配不同的KPI
           assign_now: 现在分配
-
-          next_desc: 在分配完KPI后，你应该将你的部门放到你的观察点中，以观察点为基础，我们为你生成分析数据和仪表盘
-
+          next_desc: 在分配完KPI后，你应该将你的部门放到你的视图中，以视图为基础，我们为你生成分析数据和仪表盘
         role:
-          admin: 管理员
-          director: 总经理
+          admin: 系统管理员
+          director: 管理者
           manager: 经理
           user: 普通用户
         new:
+          authority: 权限
           name: 用户名
           email: 邮箱
           pwd: 密码
           pwd_con: 确认密码
-          dep: 部门
+          entity: 输入点
+          department: 部门
+          departments: 负责部门
+          title: 职位
       view:
         desc:
-          name: 观察点
-          manage: 管理观察点
-          dep_list: 部门列表
-          assign_dep: 分配部门
-          assign_desc: 首先创建一个观察点，然后将部门加入到观察点中，一个观察点是查看分析数据的基础
+          name: 视图
+          manage: 管理视图
+          dep_list: 输入点列表
+          user_list: 用户列表
+          assign_dep: 分配输入点
+          assign_desc: 首先创建一个视图，然后将输入点加入到视图中，一个视图是查看分析数据的基础
           next_desc: 完成管理中的所有部分后， 你可以让你的员工（用户）通过‘KPI输入’来输入KPI
+          share: 共享
+          share_desc: 共享你的视图....
+          share_now: 开始共享
+        validate:
+          already_shared: 已共享，不可重复
+        already_assigned: 输入点已经分配，不可重复
+        unassign_confirm: 确定取消分配此输入点？
+      departments:
+        desc:
+          name: 部门
+          manage: 管理部门
+          basic: 基础信息
+          basic-name: 名称
+          users: 部门负责人
+          add-entity: 添加输入点
+          add-user: 添加负责人
+          add-department: 添加部门
+          delete-department: 删除部门
+          del-department-confirm: 删除部门？
+          add-ok: 确定
+          add-cancle: 取消
+          delete-depart-confirm: "删除该输入点？"
+          delete-user: "删除负责人？"
   #dashboard
   dashboard_group:
     base:
@@ -431,7 +460,7 @@ zh:
       create: 现在发布
       serie:
         category: KPI类别
-        view: 观察点
+        view: 视图
         start_time: 开始时间
         end_time: 结束时间
         total: 总数
@@ -455,7 +484,7 @@ zh:
     value: 当前值
     target_range: 目标值范围
     percent: 百分比
-    view: 观察点
+    view: 视图
     line:
       out_of_target: 超出目标值
       kpi_name: KPI 名称
@@ -485,10 +514,18 @@ zh:
     upload_error: 您在上传中出现了错误，无法完成上传
     click_download_error: 点击连接下载错误提示文件，帮助您正确上传:)
     close: 关闭
-    handing_file: 正在处理文件，请等待... 
+    handing_file: 正在处理文件，请等待...
+    user_entity_is_blank: 用户未分配输入点
+    kpi_assign_fail: 用户已分配此KPI
+    user_no_exists: 用户不存在
   vali_msg:
     invalid_date: 日期格式错误
     invalid_value: 数值错误
     kpi_not_assign: KPI未分配给此用户
     invalid_kpi: KPI错误
     invalid_user_email: 用户Email错误
+  epm_report:
+    title: EPM报告
+    current: 当前值
+    target_min: 目标值下限
+    target_max: 目标值上限

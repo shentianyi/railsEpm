@@ -1,0 +1,85 @@
+<div class="part-right" id="part-graph">
+  <div class="inner" id="tree">
+    <% @roots.each do |e|%>
+        <div class="tree">
+          <ul class="draggable">
+            <li entity_group="<%= e.id %>" class="entity_root" >
+              <a entity_group="<%= e.id %>"><i class="icon-globe"></i> <%= e.name%></a>
+              <div class="add-block">
+                <label class="add-block-part"><i class="icon-plus-sign"></i><%= t 'manage.departments.desc.add-department'%></label>
+                <label class="add-block-entity"><i class="icon-plus-sign"></i> <%= t 'manage.departments.desc.add-entity'%></label>
+              </div>
+            </li>
+          </ul>
+        </div>
+    <% end %>
+  </div>
+
+</div>
+<div class="part-left" id="part-info">
+  <section class="title">
+    <div class="inner">
+      <p><%= t 'manage.departments.desc.manage'%></p>
+    </div>
+  </section>
+  <section class="basic">
+    <div class="inner">
+      <p><%= t 'manage.departments.desc.basic'%></p>
+      <dl>
+        <dt><%= t 'manage.departments.desc.basic-name'%>:</dt>
+        <dd class='name' post='name'>Leoni-shanghai</dd>
+      </dl>
+      <a class="btn btn-danger"><%= t 'manage.departments.desc.delete-department'%></a>
+    </div>
+  </section>
+  <section class="users">
+    <div class="inner">
+      <p><%= t 'manage.departments.desc.users'%></p>
+      <ul class="users" id="charge-man">
+        <li>name <i class="icon icon-remove"></i></li>
+      </ul>
+      <a id="btn-add-user" class="btn btn-primary" href="#"><%= t 'manage.departments.desc.add-user'%></a>
+    </div>
+  </section>
+</div>
+
+<div id="add-user" class="add-entity">
+  <i class="icon-remove"></i>
+   <div class="inner">
+     <h4><%= t 'manage.departments.desc.add-user'%></h4>
+     <ul>
+       <li>
+         Zhangsan
+       </li>
+     </ul>
+   </div>
+</div>
+
+<div id="add-entity" class="add-entity">
+  <i class="icon-remove"></i>
+   <div class="inner">
+     <h4><%= t 'manage.departments.desc.add-entity'%></h4>
+     <ul>
+     </ul>
+   </div>
+</div>
+
+<div class="user-block" id="user-block">
+  <p><%= t 'manage.departments.desc.add-department'%></p>
+  <input type='text' placeholder="<%= t 'manage.departments.desc.basic-name'%>"/>
+  <a class="add"><%= t 'manage.departments.desc.add-ok'%></a>
+  <a class="cancel"><%= t 'manage.departments.desc.add-cancle'%></a>
+</div>
+
+<ul id="hidden-entity" style="display:none">
+  <% @roots.each do |e|%>
+  <li entity="<%= e.id%>"></li>
+  <%end%>
+</ul>
+
+
+<% content_for :javascript_includes do%>
+    <%= javascript_include_tag "Manage-part.js"%>
+    <%= javascript_include_tag "jquery-collision.min.js"%>
+    <%= javascript_include_tag "jquery.ui/jquery.draggable.js"%>
+<%end%>
