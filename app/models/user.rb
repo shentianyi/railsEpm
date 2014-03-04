@@ -5,10 +5,11 @@ class User < ActiveRecord::Base
   belongs_to :entity
 
   belongs_to :department
-  has_many :user_departments,:dependent => :destroy
-  has_many :departments,:through => :user_departments
+  has_many :user_departments, :dependent => :destroy
+  has_many :departments, :through => :user_departments
+  has_many :create_departs, :class_name => 'Department'
 
-  has_many :user_entity_groups,:dependent => :destroy
+  has_many :user_entity_groups, :dependent => :destroy
   has_many :entity_groups, :through => :user_entity_groups
   has_many :kpis, :through => :user_kpi_items
   has_many :user_kpi_items, :dependent => :destroy
@@ -16,14 +17,14 @@ class User < ActiveRecord::Base
   has_many :emails, :dependent => :destroy
 
   attr_accessible :email, :password, :password_confirmation, :status, :perishable_token, :confirmed, :first_name, :last_name, :is_tenant
-  attr_accessible :tenant_id, :role_id, :entity_id,:department_id, :is_sys, :title#, :department_group_id
+  attr_accessible :tenant_id, :role_id, :entity_id, :department_id, :is_sys, :title #, :department_group_id
 
   acts_as_authentic do |c|
     c.login_field = :email
     c.validate_email_field = false
     c.merge_validates_format_of_email_field_options :message => 'My message'
   end
-  # acts as tenant
+                                                                                    # acts as tenant
   acts_as_tenant(:tenant)
 
   def method_missing(method_name, *args, &block)
@@ -66,18 +67,15 @@ class User < ActiveRecord::Base
     @tenant= Tenant.new(:company_name => company_name,
                         :edition => $trial_edition,
                         :subscription_status => SubscriptionStatus::TRIAL,
-                        :expire_at => 15.days.from_now)
-    @department = department.new(:name => company_name)
+                        :expire_at => 1500.days.from_now)
 
     begin
       ActiveRecord::Base.transaction do
         @tenant.super_user=self
-
         self.tenant = @tenant
         self.status = UserStatus::ACTIVE
         self.is_tenant=true
         @tenant.save!
-        @department.save!
         self.save!
         @tenant.update_attributes :user_id => self.id
         return self

@@ -10,17 +10,21 @@ module KpisHelper
   end
 
   # assign kpi to user by id
-  def self.assign_kpi_to_user_by_id kpi_id, user
-    if kpi=Kpi.find_by_id(kpi_id)
-      return assign_kpi_to_user(kpi, user), kpi
+  def self.assign_kpi_to_user_by_id id, user, by_category=true
+    if by_category
+      return assign_kpi_to_user_by_category(id, user)
+    else
+      if kpi=Kpi.find_by_id(id)
+        return assign_kpi_to_user(kpi, user), kpi
+      end
     end
     return nil
   end
 
   # assign kpis to user by category
 
-  def self.assign_kpi_to_user_by_category category_id, user_id, current_ability
-    if category=KpiCategory.accessible_by(current_ability).find_by_id(category_id) and user=User.find_by_id(user_id)
+  def self.assign_kpi_to_user_by_category category_id, user
+    if category=KpiCategory.find_by_id(category_id)
       UserKpiItem.transaction do
         assigned=[]
         category.kpis.each do |kpi|
