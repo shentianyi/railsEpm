@@ -317,6 +317,7 @@ zh:
         next: 下一步
         finish: 完成
         destroy_fail: 添加失败
+        assign_all_kpi: 全部分配
       kpi:
         desc:
           create: 创建KPI
