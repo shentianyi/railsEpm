@@ -27,14 +27,14 @@ MANAGE.user.init = function () {
 
         $("#manage-user-add.create-user> div >.div-select>div").css("width", "150px")
     }).on("click", "#manage-user-edit", function () {
-            $("#user-edit").css("left", "0px");
-            $("#manage-right-content").css("padding-left", "200px");
-            $("#manage-user-add").css("right", "999em");
-            $("#manage-right-content").css("padding-right", "0px");
-            $("#left-content-title").css("margin-right", "0px");
-            MANAGE.user.user_edit_box_bind();
-            $("#user-edit> div >.div-select>div").css("width", "150px")
-        });
+        $("#user-edit").css("left", "0px");
+        $("#manage-right-content").css("padding-left", "200px");
+        $("#manage-user-add").css("right", "999em");
+        $("#manage-right-content").css("padding-right", "0px");
+        $("#left-content-title").css("margin-right", "0px");
+        MANAGE.user.user_edit_box_bind();
+        $("#user-edit> div >.div-select>div").css("width", "150px")
+    });
     $("#manage-user-edit-old").on("click", function () {
         MANAGE.user.edit()
     });
@@ -251,7 +251,7 @@ MANAGE.user.edit = function () {
                         first_name: edit_name,
                         email: edit_mail,
                         title: title,
-                        password:password,
+                        password: password,
                         role_id: edit_authority,
                         entity_id: entity_id,
                         department_id: department_id
@@ -287,20 +287,22 @@ MANAGE.user.edit = function () {
 //////////////////////////////////////////////////////////////////////////         User assign kpi
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.user.assign = {};
+MANAGE.user.kpis = function (id) {
+    $.ajax({
+        url: '/kpis/user/' + id,
+        dataType: 'html',
+        success: function (kpis) {
+            $('#assign-kpi-inner').html(kpis);
+        }
+    });
+}
 MANAGE.user.assign.init = function () {
     //assign kpi初始化
     $("#manage-user-delivery").on("click", MANAGE.user.assign.initial)
 
     $("body").on("change", "#assign-kpi-user", function () {
         var id = $(this).find(":selected").attr("value")
-        $.ajax({
-            url: '/kpis/user/' + id,
-            dataType: 'html',
-            success: function (kpis) {
-                $('#assign-kpi-inner').html(kpis);
-            }
-        });
-
+        MANAGE.user.kpis(id);
     });
 
 
@@ -319,6 +321,22 @@ MANAGE.user.assign.init = function () {
             }
         });
     });
+
+    // assign by category
+    $("#assign-kpi-category-btn").on('click', function () {
+        var category = $("#kpi-category :selected").attr('value');
+        var user = $("#assign-kpi-user :selected").attr("value");
+        if (category != null && category != "" && user != null && user != "") {
+            $.post('/kpis/assign', {kpi: category, user: user}, function (msg) {
+                if (msg.result) {
+                    MANAGE.user.kpis(user);
+                } else {
+                    MessageBox(msg.content, "top", "warning");
+                }
+            }, 'json');
+        }
+    });
+    // assign by kpi
     $("body").on("click", "#assign-kpi-list>li>h3", function () {
         var id = $(this).attr("kpi_id"), h3 = $(this).text(), p = $(this).next().text(), validate = true;
         if ($("#assign-kpi-user :selected").text().length > 0) {
@@ -339,7 +357,8 @@ MANAGE.user.assign.init = function () {
                 dataType: 'json',
                 data: {
                     kpi: id,
-                    user: user_id
+                    user: user_id,
+                    by_cate: false
                 },
                 type: 'post',
                 success: function (msg) {

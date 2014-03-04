@@ -313,6 +313,7 @@ en:
       delete_confirm:  Are you sure to delete？
       next: Next
       finish: Finish
+      assign_all_kpi: Assign All
     kpi:
       desc:
         create: Create KPI
