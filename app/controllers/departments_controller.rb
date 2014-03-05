@@ -2,7 +2,7 @@
 class DepartmentsController < ApplicationController
 
   def index
-    @roots = Department.where("user_id = ?",current_user.id).roots
+    @roots = Department.roots
     render
   end
 
