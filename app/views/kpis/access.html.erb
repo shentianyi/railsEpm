@@ -25,6 +25,7 @@
                     <table class="category" special="my-kpi">
                       <tr>
                         <td title='<%= kpi.name%>'><%= kpi.name%></td>
+                        <td><%= kpi.id %></td>
                         <td ><%= KpiFrequency.get_desc_by_value(kpi.frequency)%></td>
                         <td ><%= KpiDirection.get_desc_by_value(kpi.direction)%></td>
                         <td class="manage-kpi-target">
@@ -47,6 +48,7 @@
                       </tr>
                       <tr>
                         <td title='<%= kpi.description%>'><%= kpi.description%></td>
+                        <td>KPI ID</td>
                         <td><%= t 'manage.kpi.frequency'%></td>
                         <td><%= t 'manage.kpi.trend'%></td>
                         <td><%= t 'manage.kpi.target'%></td>
