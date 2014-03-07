@@ -20,7 +20,7 @@ module KpiEntryAnalyseHelper
     end
   end
 
-  def self.get_kpi_entry_analysis_data kpi_id, entity_group_id, start_time, end_time, average, frequency=nil, reduce=ture
+  def self.get_kpi_entry_analysis_data kpi_id, entity_group_id, start_time, end_time, average, frequency=nil, reduce=true
     if kpi=Kpi.find_by_id(kpi_id) and entity_group=EntityGroup.find_by_id(entity_group_id)
       frequency=kpi.frequency if frequency.nil?
       entity_ids=entity_group.entities.pluck(:id)
