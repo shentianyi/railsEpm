@@ -20,7 +20,7 @@ module KpiEntryAnalyseHelper
     end
   end
 
-  def self.get_kpi_entry_analysis_data kpi_id, entity_group_id, start_time, end_time, average, frequency=nil
+  def self.get_kpi_entry_analysis_data kpi_id, entity_group_id, start_time, end_time, average, frequency=nil, reduce=true
     if kpi=Kpi.find_by_id(kpi_id) and entity_group=EntityGroup.find_by_id(entity_group_id)
       frequency=kpi.frequency if frequency.nil?
       entity_ids=entity_group.entities.pluck(:id)
@@ -59,17 +59,24 @@ module KpiEntryAnalyseHelper
       entries.each do |entry|
         frequency_condition.each do |k, v|
           if entry.parsed_entry_at>=v[0] && entry.parsed_entry_at<v[1]
-            current_data[k]=0 if current_data[k]==nil
-            current_data[k]+=entry.value
-            current_data_count[k]+=1
+            #current_data[k]=0 if current_data[k]==nil
+            #current_data[k]+=entry.value
+            current_data[k] = (current_data[k]||0)+entry.value
+            current_data_count[k]+=1 unless current_data[k].nil?
             total+=entry.value
           end
         end
       end
       entity_ids_count= entity_ids.count==0 ? 1 : entity_ids.count
       if average
-        current_data.each do |k, v|
-          current_data[k]=(v/entity_ids_count).round(2)
+        if reduce
+          current_data.each do |k,v|
+            current_data[k]=(v/(current_data_count[k]==0 ? 1 : current_data_count[k])).round(2)
+          end
+        else
+          current_data.each do |k, v|
+            current_data[k]=(v/entity_ids_count).round(2)
+          end
         end
       end
       current_data=current_data.each { |key, value| current_data[key]=KpiUnit.parse_entry_value(kpi.unit, value) }
