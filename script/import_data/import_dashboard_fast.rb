@@ -9,7 +9,7 @@ ActiveRecord::Base.transaction do
     if user = User.find_by_email(row["email"])
       #if someone already has the same dashbaord?
       if dashboard = Dashboard.where("user_id = ? AND name= ?",user.id,row["name"]).first
-        puts "arleady find"+dashboard.name
+        puts ("arleady find"+dashboard.name).yellow
         dashboards[row["code"]] = dashboard
         entity_groups[row["code"]] = row["entitygroups"]
       else
@@ -17,15 +17,15 @@ ActiveRecord::Base.transaction do
         params[:name] = row["name"]
         dashboard = Dashboard.new(params)
         if dashboard.save!
-          puts "create new dashboard"+dashboard.name
+          puts "create new dashboard"+dashboard.name + "with code :" + row["code"]
           dashboards[row["code"]] = dashboard
           entity_groups[row["code"]] = row["entitygroups"]
         else
-          puts "##Dashboard with email:"+row["email"]+" name:"+row["name"] + "created failed!".red;
+          puts ("##Dashboard with email:"+row["email"]+" name:"+row["name"] + "created failed!").red;
         end
       end
     else
-      puts "##User with: "+row["email"] + "not found!".red
+      puts ("##User with: "+row["email"] + "not found!").red
     end
   end
 
@@ -39,7 +39,7 @@ ActiveRecord::Base.transaction do
         #check if we already have the same dashboar item
         if d = DashboardItem.where("dashboard_id = ? AND title = ?",dashboards[row["belongs_to"]].id,kpi).first
           d.destroy
-          puts "already find dashboard item "+d.title+",destroy!".yellow
+          puts ("already find dashboard item "+d.title+",destroy!").yellow
         end
         params[:dashboard_id] = dashboards[row["belongs_to"]].id
         params[:interval] = row["interval"]
@@ -49,7 +49,7 @@ ActiveRecord::Base.transaction do
         params[:sizey] = row["sizey"]
         dashboard_item = DashboardItem.new(params)
         if dashboard_item.save!
-          puts "##create new dashboard item "+kpi
+          puts "##create new dashboard item "+kpi + " for Dashboard:"+row["belongs_to"]
           groups = entity_groups[row["belongs_to"]].split("+")
 
           if groups.last.include?("|")
@@ -77,20 +77,20 @@ ActiveRecord::Base.transaction do
                 if condition.save!
                   puts "####Dashboard condition created for "+dashboard_item.id.to_s
                 else
-                  puts "##condition save failed with dashboard_item_id"+dashbord_item.id.red
+                  (puts "##condition save failed with dashboard_item_id"+dashbord_item.id).red
                 end
 
               else
-                puts "##Kpi not found with name:"+k+ "or entity_group not found with id "+g.red
+                (puts "##Kpi not found with name:"+k+ "or entity_group not found with id "+g).red
               end
             end
           end
         else
-          puts "##Dashboard Item created failed with code:"+row["code"].red
+          puts ("##Dashboard Item created failed with code:"+row["code"]).red
         end
       end
     else
-      puts "Dashboard not exit with code:"+row["belongs_to"].red
+      puts ("Dashboard not exit with code:"+row["belongs_to"]).red
     end
   end
   puts "end importing dashboard ".blue
