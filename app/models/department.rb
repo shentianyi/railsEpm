@@ -6,7 +6,7 @@ class Department < ActiveRecord::Base
   belongs_to :creator, :class_name => 'User', :foreign_key => :user_id
   belongs_to :tenant
 
-  has_many :entities, :dependent => :destroy
+  has_many :entities
   has_one :entity_group, :dependent => :destroy
 
   has_many :department_kpis, :dependent => :destroy
@@ -14,7 +14,7 @@ class Department < ActiveRecord::Base
   has_many :user_departments, :dependent => :destroy
   has_many :users, :through => :user_departments
 
-  after_create :create_entity_group
+  #after_create :create_entity_group
 
   has_ancestry
   acts_as_tenant(:tenant)
@@ -23,13 +23,10 @@ class Department < ActiveRecord::Base
   validates :name, presence: true
 
   #private
-  def create_entity_group
+  #def create_entity_group
     #create the entity_group belongs to the department
-    entity_group = EntityGroup.new(:name => self.name, :department_id => self.id)
-    entity_group.creator = self.creator
-    entity_group.entities<<self.default_entity if self.default_entity
-    entity_group.save!
-  end
+    
+  #end
 
   def validate_create_update
     errors.add(:name, I18n.t("fix.cannot_repeat")) if Department.where(:name => self.name, :tenant_id => self.tenant_id).first if new_record?
