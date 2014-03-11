@@ -19,4 +19,8 @@ class Setting<CZ::BaseClass
   def self.key
     'epm:admin:setting'
   end
+
+  def save
+    $redis.hmset Setting.key,'ios_app_version',self.ios_app_version,'ios_app_update_is_option',self.ios_app_update_is_option
+  end
 end
