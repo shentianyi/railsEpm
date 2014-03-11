@@ -8,7 +8,7 @@
 	function save_version(){
 		var data = {};
 		data.version = $("#version").val();
-		data.optional = $("#optional").val().length < 1 ? 0 : $("#optional").val();
+		data.optional = $("#optional").val().length < 1 ? false : $("#optional").val();
 
 		$.ajax({
 			url:"/admin/settings/version_save",
