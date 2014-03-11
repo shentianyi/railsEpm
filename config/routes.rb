@@ -157,7 +157,11 @@ IFEpm::Application.routes.draw do
       end
     end
     resources :kpi_categories
-
+    resources :settings do
+      collection do
+        get :validate_ios_app_version
+      end
+    end
   end
 
   mount Resque::Server.new, :at => "/admin/resque"
