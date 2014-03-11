@@ -2,7 +2,7 @@
 require 'base_class'
 
 class Setting<CZ::BaseClass
-  attr_accessor :ios_app_version
+  attr_accessor :ios_app_version, :ios_app_update_is_option
 
   def self.find
     if $redis.exists(key)
@@ -11,12 +11,10 @@ class Setting<CZ::BaseClass
     end
   end
 
-  def self.ios_app_version_is_old version
-    if $redis.exists(key)
-      version<self.new($redis.hgetall(key)).ios_app_version
-    end
-    true
+  def ios_app_version_is_old version
+    version<self.ios_app_version
   end
+
 
   def self.key
     'epm:admin:setting'
