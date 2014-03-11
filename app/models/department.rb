@@ -6,7 +6,7 @@ class Department < ActiveRecord::Base
   belongs_to :creator, :class_name => 'User', :foreign_key => :user_id
   belongs_to :tenant
 
-  has_many :entities, :dependent => :destroy
+  has_many :entities
   has_one :entity_group, :dependent => :destroy
 
   has_many :department_kpis, :dependent => :destroy
