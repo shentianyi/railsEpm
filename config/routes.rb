@@ -183,6 +183,13 @@ IFEpm::Application.routes.draw do
       end
     end
 
+    resources :settings do
+      collection do
+        post :version_save
+        get   :version
+      end
+    end
+
   end
 
   resources :departments do
