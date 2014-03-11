@@ -11,7 +11,7 @@ module Api
 
     def validate_ios_app_version
       if setting=Setting.find
-        render json: {result: setting.ios_app_version_is_old(params[:version]), is_option: setting.ios_app_update_is_option}
+        render json: {result: setting.ios_app_version_is_old(params[:version]), is_option: setting.ios_app_update_is_option=='true'}
       else
         render json: {result: false, is_option: true}
       end
