@@ -157,10 +157,8 @@ IFEpm::Application.routes.draw do
       end
     end
     resources :kpi_categories
-    resources :settings do
-      collection do
-        get :validate_ios_app_version
-      end
+    controller :settings do
+      get 'settings/validate_ios_app_version'=>:validate_ios_app_version
     end
   end
 
@@ -221,7 +219,7 @@ IFEpm::Application.routes.draw do
   #  get 'departments/new_entities' => :new_entities
   #end
 
-# This is a legacy wild controller route that's not recommended for RESTful applications.
-# Note: This route will make all actions in every controller accessible via GET requests.
+  # This is a legacy wild controller route that's not recommended for RESTful applications.
+  # Note: This route will make all actions in every controller accessible via GET requests.
   match ':controller(/:action(/:id))(.:format)'
 end
