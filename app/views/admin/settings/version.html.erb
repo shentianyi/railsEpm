@@ -1,7 +1,7 @@
 <h2>App Update</h2>
 <ul>
-	<li><p>Version:</p><input id="version" type="text"/></li>
-	<li><p>Optional:</p><input id="optional" type="text"/></li>
+	<li><p>Version:</p><input id="version" type="text" value="<%= @setting.ios_app_version if @setting %>"/></li>
+	<li><p>Optional:</p><input id="optional" type="text" value="<%= @setting.ios_app_update_is_option if @setting %>"/></li>
 	<li><input type="button" onclick="save_version()" value="Update"/></li>
 </ul>
 <script type="text/javascript">
