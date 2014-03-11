@@ -1,5 +1,7 @@
+#encoding: utf-8
 require 'base_class'
-class Setting<CZ::BaseClass
+
+class Admin::Setting<CZ::BaseClass
   attr_accessor :ios_app_version
 
   def self.find
