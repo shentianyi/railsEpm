@@ -2,7 +2,7 @@
 class EmailSender
   @queue='email_sender_queue'
 
-  def self.perform id,params
+  def self.perform id, params
     if @email=Email.find_by_id(id)
       params.symbolize_keys!
       attachments=params[:attachments]||[]
@@ -14,7 +14,7 @@ class EmailSender
       # send email
       @email.send_mail
 
-      @email.update_analysis_conditon(params[:analysis])
+      @email.update_analysis_conditon(params[:analysis]) if params[:analysis]
     end
   end
 end
