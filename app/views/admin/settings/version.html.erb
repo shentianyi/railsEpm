@@ -1,14 +1,19 @@
 <h2>App Update</h2>
-<ul>
-	<li><p>Version:</p><input id="version" type="text" value="<%= @setting.ios_app_version if @setting %>"/></li>
-	<li><p>Optional:</p><input id="optional" type="text" value="<%= @setting.ios_app_update_is_option if @setting %>"/></li>
-	<li><input type="button" onclick="save_version()" value="Update"/></li>
-</ul>
+<div>
+	<ul>
+		<li><p>Version:</p><input id="version" type="text" value="<%= @setting.ios_app_version if @setting %>"/></li>
+		<br/>
+		<li><label><input class="optional" id="optional" name="option" type="radio" value="true" <% if @setting && (@setting.ios_app_update_is_option=='true' )%> checked<%end%>/>Optional</label></li>
+		<li><label><input class="optional" id="force" name="option" type="radio" value="false" <% if @setting && (@setting.ios_app_update_is_option=='false' ) %> checked<%end%> />Force</label></li>
+		<li><input type="button" onclick="save_version()" value="Update"/></li>
+	</ul>
+</div>
+
 <script type="text/javascript">
 	function save_version(){
 		var data = {};
 		data.version = $("#version").val();
-		data.optional = $("#optional").val().length < 1 ? false : $("#optional").val();
+		data.optional = $(".optional:checked").val();
 
 		$.ajax({
 			url:"/admin/settings/version_save",
@@ -17,9 +22,9 @@
 			dataType:"json",
 			success:function(data){
 				if(data.result){
-					MessageBox("Update App version successfully!","top","success");
+					MessageBox("Update App version successfully!", "top", "success");
 				}else{
-					MessageBox("Update App version failed!","top","warnning");
+					MessageBox("Update App version failed!","top","warning");
 				}
 			},
 		});
