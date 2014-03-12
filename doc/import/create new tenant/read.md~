@@ -1,3 +1,6 @@
+说明：
+ 用以新建帐号
+ 
 命令：
 rails runner script/init_data/create_new_tenant.rb <email> <password> <tenant name>
 
