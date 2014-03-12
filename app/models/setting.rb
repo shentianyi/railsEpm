@@ -12,7 +12,7 @@ class Setting<CZ::BaseClass
   end
 
   def ios_app_version_is_old version
-    version<self.ios_app_version
+    (version||default_app_version)<self.ios_app_version
   end
 
 
@@ -21,6 +21,11 @@ class Setting<CZ::BaseClass
   end
 
   def save
-    $redis.hmset Setting.key,'ios_app_version',self.ios_app_version,'ios_app_update_is_option',self.ios_app_update_is_option
+    $redis.hmset Setting.key, 'ios_app_version', self.ios_app_version, 'ios_app_update_is_option', self.ios_app_update_is_option
   end
+
+  def default_app_version
+    '0.1'
+  end
+
 end
