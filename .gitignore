@@ -20,7 +20,11 @@
 /uploadfiles/data/*.csv
 /uploadfiles/download/*.csv
 /uploadfiles/**/*
+/uploadfiles/attach/tmp/**/*
+/uploadfiles/attach/uped/**/*
 !/uploadfiles/**/*.ignore
+!/uploadfiles/attach/tmp/**/*.ignore
+!/uploadfiles/attach/uped/**/*.ignore
 !/uploadfiles/template/*
 .DS_Store
 *.swp
