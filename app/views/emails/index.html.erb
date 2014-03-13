@@ -30,23 +30,29 @@
 
 <%= link_to 'New Email', new_email_path %>
 
-<!--
+
 <input value="create email" type="button" onclick="send_email()"></input>
 <script type="text/javascript">
     function send_email(){
         var data  = {};
-        data.kpi_id="54";
-        data.kpi_name = "E1-Normal";
-        data.entity_group_id = "1";
-        data.entity_group_name = "C-RBA";
-        data.start_time="2014-01-16T16:00:00.000Z";
-        data.end_time="2014-01-23T16:00:00.000Z";
-        data.average="true";
-        data.frequency="100";
-        data.type="line";
-        data.receivers="qi.li@cz-tek.com";
-        data.title="test";
-        data.content= "test";
+        data.analysis = {};
+        data.analysis.kpi_id="44";
+        data.analysis.kpi_name = "Total Normal Hours";
+        data.analysis.entity_group_id = "132";
+        data.analysis.entity_group_name = "Local";
+        data.analysis.start_time="2014-02-26";
+        data.analysis.end_time="'2014-03-12'";
+        //data.average="true";
+        data.analysis.frequency="100";
+
+        data.attachments = [];
+        data.attachments[0] = {oriName:'2B984145-D107-4C2E-8930-3383E284B2C0.jpeg',pathName:'f24371dd-6b32-4e81-8a14-7cbe64d76d26.jpeg'};
+
+        data.email = {};
+        data.email.content = '';
+        data.email.receivers = [];
+        data.email.receivers[0] = 'tianyi.shen@cz-tek.com';
+        data.email.title = 'test';
 
         $.ajax({
             data: data,
@@ -60,4 +66,4 @@
         });
     }
 </script>
--->
+
