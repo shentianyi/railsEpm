@@ -157,7 +157,9 @@ IFEpm::Application.routes.draw do
       end
     end
     resources :kpi_categories
-
+    controller :settings do
+      get 'settings/validate_ios_app_version'=>:validate_ios_app_version
+    end
   end
 
   mount Resque::Server.new, :at => "/admin/resque"
@@ -180,6 +182,13 @@ IFEpm::Application.routes.draw do
     resources :kpi_templates do
       collection do
         get :categoried
+      end
+    end
+
+    resources :settings do
+      collection do
+        post :version_save
+        get   :version
       end
     end
 
@@ -217,7 +226,7 @@ IFEpm::Application.routes.draw do
   #  get 'departments/new_entities' => :new_entities
   #end
 
-# This is a legacy wild controller route that's not recommended for RESTful applications.
-# Note: This route will make all actions in every controller accessible via GET requests.
+  # This is a legacy wild controller route that's not recommended for RESTful applications.
+  # Note: This route will make all actions in every controller accessible via GET requests.
   match ':controller(/:action(/:id))(.:format)'
 end
