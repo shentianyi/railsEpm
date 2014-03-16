@@ -200,11 +200,11 @@
             password: $("#user_session_password").val()
         }
         var data = {
-            user_session: user_session
+            user: user_session
         }
         console.log(user_session);
         $.ajax({
-            url: '/sign_in',
+            url: '/users/sign_in',
             data: data,
             type: 'POST',
             success: function (data) {

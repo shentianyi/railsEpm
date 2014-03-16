@@ -1,4 +1,5 @@
-class UserSessionsController < ApplicationController
+class UserSessionsController < Devise::SessionsController
+
   skip_before_filter :require_user,:only=>[:new,:create,:locale]
   skip_before_filter :require_active_user,:only=>[:new,:create,:locale]
   skip_before_filter :check_tenant_status
@@ -12,17 +13,24 @@ class UserSessionsController < ApplicationController
   #end
 
   def create
-    msg=Message.new
-    msg.result = false
-    @user_session = UserSession.new(params[:user_session])
-    if msg.result =  @user_session.save
-      msg.result = true
-      msg.content = I18n.t 'auth.msg.login_success'
-    else
-      msg.content = @user_session.errors.full_messages
-    end
-    render :json=>msg
+    self.resource = warden.authenticate!(auth_options)
+    set_flash_message(:notice, :signed_in) if is_flashing_format?
+    sign_in(resource_name, resource)
+    yield resource if block_given?
+    respond_with resource, location: after_sign_in_path_for(resource)
   end
+  #def create
+  #  msg=Message.new
+  #  msg.result = false
+  #  @user_session = UserSession.new(params[:user_session])
+  #  if msg.result =  @user_session.save
+  #    msg.result = true
+  #    msg.content = I18n.t 'auth.msg.login_success'
+  #  else
+  #    msg.content = @user_session.errors.full_messages
+  #  end
+  #  render :json=>msg
+  #end
 
   def destroy
     #current_user_session.destroy
