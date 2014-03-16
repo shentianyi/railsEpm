@@ -6,9 +6,8 @@ class ApplicationController < ActionController::Base
   # end includes
   protect_from_forgery
   helper :all
-  helper_method :current_user_session, :current_user
   before_filter :require_user
-  before_filter :require_active_user
+  #before_filter :require_active_user
 
   before_filter :find_current_user_tenant
   #
@@ -44,16 +43,16 @@ class ApplicationController < ActionController::Base
 
 
 
-  def current_user_session
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
-  end
-
-
-  def current_user
-    return @current_user if defined?(@current_user)
-    @current_user = current_user_session && current_user_session.record
-  end
+  #def current_user_session
+  #  return @current_user_session if defined?(@current_user_session)
+  #  @current_user_session = UserSession.find
+  #end
+  #
+  #
+  #def current_user
+  #  return @current_user if defined?(@current_user)
+  #  @current_user = current_user_session && current_user_session.record
+  #end
 
 
   def current_user_tenant
@@ -126,7 +125,6 @@ class ApplicationController < ActionController::Base
   def require_active_user
     unless current_user && current_user.status == UserStatus::ACTIVE
       flash[:alert]= I18n.t 'auth.msg.lock_account'
-      current_user_session.destroy
       redirect_to new_user_sessions_url
       return false
     end

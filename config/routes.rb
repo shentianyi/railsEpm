@@ -1,5 +1,13 @@
 IFEpm::Application.routes.draw do
 
+  root :to => 'user_sessions#new'
+
+  devise_for :users
+  #, :controllers => {sessions: :user_sessions}
+  #devise_scope :user do
+  #  root :to => 'user_sessions#new'
+  #end
+
   resources :emails do
     collection do
       get '/analyse/:id' => :analyse
@@ -17,7 +25,6 @@ IFEpm::Application.routes.draw do
     end
   end
 
-  root :to => 'user_sessions#new'
   # get "welcome/navigate"
 
 
@@ -158,7 +165,7 @@ IFEpm::Application.routes.draw do
     end
     resources :kpi_categories
     controller :settings do
-      get 'settings/validate_ios_app_version'=>:validate_ios_app_version
+      get 'settings/validate_ios_app_version' => :validate_ios_app_version
     end
   end
 
@@ -188,7 +195,7 @@ IFEpm::Application.routes.draw do
     resources :settings do
       collection do
         post :version_save
-        get   :version
+        get :version
       end
     end
 

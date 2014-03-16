@@ -7,9 +7,9 @@ class UserSessionsController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
 
   layout 'non_authorized'
-  def new
-    @user_session = UserSession.new
-  end
+  #def new
+  #  @user_session = UserSession.new
+  #end
 
   def create
     msg=Message.new
@@ -25,7 +25,8 @@ class UserSessionsController < ApplicationController
   end
 
   def destroy
-    current_user_session.destroy
+    #current_user_session.destroy
+    Devise.sign_out_all_scopes
     flash[:notice] = I18n.t 'auth.msg.logout_success'
     redirect_to new_user_sessions_url
   end

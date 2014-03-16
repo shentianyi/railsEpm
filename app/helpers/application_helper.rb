@@ -1,5 +1,6 @@
 #encoding: utf-8
 module ApplicationHelper
+
   protected
   def get_ability_category
     @categories=KpiCategory.ability_all(current_ability)
