@@ -25,8 +25,6 @@ class UserSessionsController < Devise::SessionsController
     set_flash_message :notice, :signed_out if signed_out && is_flashing_format?
     yield resource if block_given?
 
-    # We actually need to hardcode this as Rails default responder doesn't
-    # support returning empty response on GET request
     respond_to do |format|
       format.all { head :no_content }
       format.any(*navigational_formats) { redirect_to redirect_path }
