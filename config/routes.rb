@@ -7,7 +7,10 @@ IFEpm::Application.routes.draw do
     root :to => 'welcome#index'
     post '/user_sessions/locale' => 'user_sessions#locale'
     get '/user_sessions/new' => 'user_sessions#new'
+    post '/user_sessions/' => 'user_sessions#create'
     get '/user_sessions/destroy' => 'user_sessions#destroy'
+    delete '/api/user_sessions/' => 'user_sessions#destroy'
+    post '/api/user_sessions/' => 'user_sessions#create'
     get '/user_sessions/finish_guide' => 'user_sessions#finish_guide'
   end
 

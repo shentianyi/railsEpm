@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
   # end includes
   protect_from_forgery
   helper :all
-  before_filter :authenticate_user!
-
+  #before_filter :authenticate_user!
+  before_filter :require_user
   before_filter :find_current_user_tenant
   #
   before_filter :check_tenant_status
@@ -23,6 +23,16 @@ class ApplicationController < ActionController::Base
 
 
   private
+
+  def require_user
+    #authenticate_user!
+    unless current_user
+      respond_to do |format|
+        format.json { render json: {access:false,errorCode:-3000} ,status: 401}
+        format.html { redirect_to new_user_sessions_path }
+      end
+    end
+  end
 
   def find_current_user_tenant
     current_tenant=Tenant.find_by_id(current_user.tenant_id)
@@ -81,7 +91,6 @@ class ApplicationController < ActionController::Base
     if current_user
       store_location
       flash[:alert] = I18n.t 'auth.msg.logout_require'
-      #redirect_to root_url
       redirect_to welcome_url
       return false
     end

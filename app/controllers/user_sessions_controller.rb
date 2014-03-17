@@ -1,7 +1,7 @@
 class UserSessionsController < Devise::SessionsController
-  skip_before_filter :authenticate_user!, :only => [:new, :create, :locale]
-  skip_before_filter :check_tenant_status, :only => [:new, :create, :locale]
-  skip_before_filter :find_current_user_tenant, :only => [:new, :create, :locale]
+  skip_before_filter :require_user, :only => [:new, :create, :locale]
+  skip_before_filter :check_tenant_status
+  skip_before_filter :find_current_user_tenant
   before_filter :ensure_params_exist, :only => [:create]
   skip_authorize_resource
 
@@ -26,10 +26,9 @@ class UserSessionsController < Devise::SessionsController
     yield resource if block_given?
 
     respond_to do |format|
-      format.all { head :no_content }
-      format.any(*navigational_formats) { redirect_to redirect_path }
+      format.json { render :json => {:result => true} }
+      format.html { redirect_to redirect_path }
     end
-
   end
 
 
@@ -43,8 +42,7 @@ class UserSessionsController < Devise::SessionsController
   end
 
   def locale
-    msg = Message.new
-    msg.result = true
+    msg = Message.new(result: true)
     cookies[:locale] = params[:locale]
     msg.content = session[:return_to]
     render :json => msg
