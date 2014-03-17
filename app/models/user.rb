@@ -1,10 +1,7 @@
 #encoding: utf-8
 class User < ActiveRecord::Base
-
-
   belongs_to :tenant
   belongs_to :entity
-
   belongs_to :department
   has_many :user_departments, :dependent => :destroy
   has_many :departments, :through => :user_departments
@@ -23,7 +20,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation#, :remember_me
+  attr_accessible :email, :password, :password_confirmation #, :remember_me
   attr_accessible :status, :perishable_token, :confirmed, :first_name, :last_name, :is_tenant
   attr_accessible :tenant_id, :role_id, :entity_id, :department_id, :is_sys, :title #, :department_group_id
 
@@ -32,7 +29,7 @@ class User < ActiveRecord::Base
   #  c.validate_email_field = false
   #  c.merge_validates_format_of_email_field_options :message => 'My message'
   #end
-                                                                                    # acts as tenant
+  # acts as tenant
   acts_as_tenant(:tenant)
 
   def method_missing(method_name, *args, &block)
@@ -106,6 +103,26 @@ class User < ActiveRecord::Base
 
   def department_names
     self.departments.pluck(:name).join(',')
+  end
+
+
+  alias :devise_valid_password? :valid_password?
+
+  def valid_password?(password)
+    begin
+      super(password)
+    rescue BCrypt::Errors::InvalidHash
+      stretches = 20
+      digest = [password, self.password_salt].flatten.join('')
+      stretches.times { digest = Digest::SHA512.hexdigest(digest) }
+      if digest == self.encrypted_password
+        self.encrypted_password = self.password_digest(password)
+        self.save
+        return true
+      else
+        return false
+      end
+    end
   end
 
 

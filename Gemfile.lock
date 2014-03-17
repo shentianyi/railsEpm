@@ -68,6 +68,8 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-encryptable (0.1.2)
+      devise (>= 2.1.0)
     erubis (2.7.0)
     execjs (2.0.2)
     hike (1.2.3)
@@ -192,6 +194,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   colorize
   devise
+  devise-encryptable
   i18n-js
   jquery-rails
   multimap

@@ -6,13 +6,16 @@ class ApplicationController < ActionController::Base
   # end includes
   protect_from_forgery
   helper :all
-  before_filter :require_user
+  before_filter :authenticate_user!
+  #alias :require_user :authenticate_user!
+  #before_filter :require_user
   #before_filter :require_active_user
+
 
   before_filter :find_current_user_tenant
   #
   before_filter :check_tenant_status
-  
+
   # I18n
   before_filter :store_location
   before_filter  :set_locale
@@ -101,14 +104,14 @@ class ApplicationController < ActionController::Base
   #filter methods begin
 
   #need login
-  def require_user
-    unless current_user
-      respond_to do |format|
-      format.json { render json: {access:false,errorCode:-3000} ,status: 401}
-      format.html { redirect_to new_user_sessions_url }
-    end
-    end
-  end
+  #def require_user
+  #  unless current_user
+  #    respond_to do |format|
+  #    format.json { render json: {access:false,errorCode:-3000} ,status: 401}
+  #    format.html { redirect_to new_user_sessions_url }
+  #  end
+  #  end
+  #end
 
   #can't be login
   def require_no_user

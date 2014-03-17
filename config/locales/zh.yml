@@ -197,6 +197,24 @@ zh:
   activerecord:
     errors:
       <<: *errors
+  devise:
+      confirmations:
+        confirmed: "您的帐号已经确认，您现在已登录。"
+        send_instructions: "几分钟后，您将收到确认帐号的电子邮件。"
+        send_paranoid_instructions: "如果您的邮箱存在于我们的数据库中，您将收到一封确认账号的邮件。"
+      failure:
+        already_authenticated: "您已经登录。"
+        inactive: "您还没有激活帐户。"
+        invalid: "邮箱或密码错误。"
+        locked: "您的帐号已被锁定。"
+        last_attempt: "您还有最后一次尝试机会，再次失败您的账号将被锁定。"
+        not_found_in_database: "邮箱或密码错误。"
+        timeout: "您已登录超时，请重新登录。"
+        unauthenticated: "继续操作前请注册或者登录。"
+        unconfirmed: "继续操作前请先确认您的帐号。"
+      sessions:
+        signed_in: "登录成功."
+        signed_out: "退出成功."
   # brilliantech project
   #authlogic:
    # error_messages:
@@ -253,6 +271,7 @@ zh:
       company: 公司
     msg:
       login_success: 登录成功
+      login_fail: 登陆失败,请核实登陆信息
       login_require: 请先登录
       logout_success: 注销成功
       logout_require: 请先注册
