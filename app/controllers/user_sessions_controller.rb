@@ -4,15 +4,10 @@ class UserSessionsController < Devise::SessionsController
   skip_before_filter :find_current_user_tenant, :only => [:new, :create, :locale]
   before_filter :ensure_params_exist, :only => [:create]
   skip_authorize_resource
-  #before_filter :require_no_user, :only => [:new, :create]
 
   layout 'non_authorized'
-  #def new
-  #  @user_session = UserSession.new
-  #end
 
   def create
-
     resource = User.find_for_database_authentication(:email => params[:user][:email])
     return invalid_login_attempt unless resource
     if resource.valid_password?(params[:user][:password])
@@ -23,19 +18,6 @@ class UserSessionsController < Devise::SessionsController
     end
     invalid_login_attempt
   end
-
-  #def create
-  #  msg=Message.new
-  #  msg.result = false
-  #  @user_session = UserSession.new(params[:user_session])
-  #  if msg.result =  @user_session.save
-  #    msg.result = true
-  #    msg.content = I18n.t 'auth.msg.login_success'
-  #  else
-  #    msg.content = @user_session.errors.full_messages
-  #  end
-  #  render :json=>msg
-  #end
 
   def destroy
     redirect_path = after_sign_out_path_for(resource_name)

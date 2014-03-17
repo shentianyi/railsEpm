@@ -21,6 +21,7 @@ class MigrateUserToDevise < ActiveRecord::Migration
     rename_column :users, :current_login_ip, :current_sign_in_ip
     rename_column :users, :last_login_ip, :last_sign_in_ip
 
+
     # Lockable
     rename_column :users, :failed_login_count, :failed_attempts
     add_column :users, :unlock_token, :string, :limit => 255
@@ -29,6 +30,8 @@ class MigrateUserToDevise < ActiveRecord::Migration
     remove_column :users, :persistence_token
     remove_column :users, :perishable_token
     remove_column :users, :single_access_token
+
+    change_column :users, :password_salt,:string, :null => true
 
     add_index :users, :email, :unique => true
     add_index :users, :confirmation_token, :unique => true

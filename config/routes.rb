@@ -2,12 +2,13 @@ IFEpm::Application.routes.draw do
 
   #root :to => 'user_sessions#new'
 
-  devise_for :users, :controllers => {sessions: :user_sessions}
+  devise_for :users, :controllers => {sessions: :user_sessions, registrations: :user_registrations}
   devise_scope :user do
     root :to => 'welcome#index'
-    post '/user_sessions/locale'=>'user_sessions#locale'
-    get '/user_sessions/new'=>'user_sessions#new'
-    get '/user_sessions/destroy'=>'user_sessions#destroy'
+    post '/user_sessions/locale' => 'user_sessions#locale'
+    get '/user_sessions/new' => 'user_sessions#new'
+    get '/user_sessions/destroy' => 'user_sessions#destroy'
+    get '/user_sessions/finish_guide' => 'user_sessions#finish_guide'
   end
 
   resources :emails do

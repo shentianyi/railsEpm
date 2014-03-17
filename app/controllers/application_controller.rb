@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
   #before_filter :require_user
   #before_filter :require_active_user
 
-
   before_filter :find_current_user_tenant
   #
   before_filter :check_tenant_status

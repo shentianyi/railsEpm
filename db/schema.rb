@@ -324,7 +324,7 @@ ActiveRecord::Schema.define(:version => 20140315132239) do
     t.string   "last_name"
     t.string   "email",                                   :null => false
     t.string   "encrypted_password",                      :null => false
-    t.string   "password_salt",                           :null => false
+    t.string   "password_salt"
     t.integer  "sign_in_count",        :default => 0,     :null => false
     t.integer  "failed_attempts",      :default => 0,     :null => false
     t.datetime "last_request_at"
