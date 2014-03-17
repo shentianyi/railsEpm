@@ -1,5 +1,6 @@
 #encoding: utf-8
 class Tenant < ActiveRecord::Base
+  has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner
   has_many :users,:dependent=>:destroy
   has_many :kpi_categories,:dependent=>:destroy
   has_many :entities,:dependent=>:destroy

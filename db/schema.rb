@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140317172509) do
+ActiveRecord::Schema.define(:version => 20140317204227) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -301,8 +301,11 @@ ActiveRecord::Schema.define(:version => 20140317172509) do
     t.text     "redirect_uri", :null => false
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "owner_id"
+    t.string   "owner_type"
   end
 
+  add_index "oauth_applications", ["owner_id", "owner_type"], :name => "index_oauth_applications_on_owner_id_and_owner_type"
   add_index "oauth_applications", ["uid"], :name => "index_oauth_applications_on_uid", :unique => true
 
   create_table "tenants", :force => true do |t|

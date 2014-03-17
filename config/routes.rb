@@ -1,6 +1,9 @@
 IFEpm::Application.routes.draw do
 
-  use_doorkeeper
+  use_doorkeeper do
+    controllers :applications => 'oauth/applications'
+    #controllers :authorizations=>'oauth/authorizations'
+  end
 
   devise_for :users, :controllers => {sessions: :user_sessions, registrations: :user_registrations}
   devise_scope :user do
@@ -43,6 +46,7 @@ IFEpm::Application.routes.draw do
       match :login
       post :add
       put :update
+      get :applications
     end
   end
 
