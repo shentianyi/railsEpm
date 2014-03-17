@@ -1,6 +1,6 @@
 IFEpm::Application.routes.draw do
 
-  #root :to => 'user_sessions#new'
+  use_doorkeeper
 
   devise_for :users, :controllers => {sessions: :user_sessions, registrations: :user_registrations}
   devise_scope :user do
@@ -30,9 +30,6 @@ IFEpm::Application.routes.draw do
       get :template
     end
   end
-
-  # get "welcome/navigate"
-
 
   resources :entities do
     collection do
@@ -124,6 +121,8 @@ IFEpm::Application.routes.draw do
 
   resources :entity_group_items
 
+  # api routes
+  mount ApplicationAPI => '/api'
   namespace :api, :defaults => {:format => 'json'} do
     resources :kpi_entries do
       collection do
@@ -238,6 +237,7 @@ IFEpm::Application.routes.draw do
     get 'departments/entity_users' => :entity_users
     get 'departments/new_entities' => :new_entities
   end
+
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.

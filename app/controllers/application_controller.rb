@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   include ErrorHelper
 
   # end includes
-  protect_from_forgery
+  #protect_from_forgery
   helper :all
   #before_filter :authenticate_user!
   before_filter :require_user
