@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140317204227) do
+ActiveRecord::Schema.define(:version => 20140224074806) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -266,48 +266,6 @@ ActiveRecord::Schema.define(:version => 20140317204227) do
   add_index "kpis", ["tenant_id"], :name => "index_kpis_on_tenant_id"
   add_index "kpis", ["user_id"], :name => "index_kpis_on_user_id"
 
-  create_table "oauth_access_grants", :force => true do |t|
-    t.integer  "resource_owner_id", :null => false
-    t.integer  "application_id",    :null => false
-    t.string   "token",             :null => false
-    t.integer  "expires_in",        :null => false
-    t.text     "redirect_uri",      :null => false
-    t.datetime "created_at",        :null => false
-    t.datetime "revoked_at"
-    t.string   "scopes"
-  end
-
-  add_index "oauth_access_grants", ["token"], :name => "index_oauth_access_grants_on_token", :unique => true
-
-  create_table "oauth_access_tokens", :force => true do |t|
-    t.integer  "resource_owner_id"
-    t.integer  "application_id"
-    t.string   "token",             :null => false
-    t.string   "refresh_token"
-    t.integer  "expires_in"
-    t.datetime "revoked_at"
-    t.datetime "created_at",        :null => false
-    t.string   "scopes"
-  end
-
-  add_index "oauth_access_tokens", ["refresh_token"], :name => "index_oauth_access_tokens_on_refresh_token", :unique => true
-  add_index "oauth_access_tokens", ["resource_owner_id"], :name => "index_oauth_access_tokens_on_resource_owner_id"
-  add_index "oauth_access_tokens", ["token"], :name => "index_oauth_access_tokens_on_token", :unique => true
-
-  create_table "oauth_applications", :force => true do |t|
-    t.string   "name",         :null => false
-    t.string   "uid",          :null => false
-    t.string   "secret",       :null => false
-    t.text     "redirect_uri", :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.integer  "owner_id"
-    t.string   "owner_type"
-  end
-
-  add_index "oauth_applications", ["owner_id", "owner_type"], :name => "index_oauth_applications_on_owner_id_and_owner_type"
-  add_index "oauth_applications", ["uid"], :name => "index_oauth_applications_on_uid", :unique => true
-
   create_table "tenants", :force => true do |t|
     t.string   "company_name",           :null => false
     t.string   "edition",                :null => false
@@ -364,44 +322,34 @@ ActiveRecord::Schema.define(:version => 20140317204227) do
   create_table "users", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "email",                                   :null => false
-    t.string   "encrypted_password",                      :null => false
-    t.string   "password_salt"
-    t.integer  "sign_in_count",        :default => 0,     :null => false
-    t.integer  "failed_attempts",      :default => 0,     :null => false
+    t.string   "email",                                  :null => false
+    t.string   "crypted_password",                       :null => false
+    t.string   "password_salt",                          :null => false
+    t.string   "persistence_token",                      :null => false
+    t.string   "single_access_token",                    :null => false
+    t.string   "perishable_token",                       :null => false
+    t.integer  "login_count",         :default => 0,     :null => false
+    t.integer  "failed_login_count",  :default => 0,     :null => false
     t.datetime "last_request_at"
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.integer  "status",               :default => 0,     :null => false
-    t.boolean  "confirmed",            :default => false, :null => false
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
+    t.integer  "status",              :default => 0,     :null => false
+    t.boolean  "confirmed",           :default => false, :null => false
     t.integer  "tenant_id"
-    t.boolean  "is_tenant",            :default => false
+    t.boolean  "is_tenant",           :default => false
     t.integer  "entity_id"
     t.integer  "role_id"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
-    t.boolean  "is_sys",               :default => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.boolean  "is_sys",              :default => false
     t.string   "title"
     t.integer  "department_id"
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
-    t.string   "reset_password_token"
-    t.string   "remember_token"
-    t.datetime "remember_created_at"
-    t.string   "unlock_token"
-    t.datetime "locked_at"
   end
 
-  add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["department_id"], :name => "index_users_on_department_id"
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["entity_id"], :name => "index_users_on_entity_id"
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["tenant_id"], :name => "index_users_on_tenant_id"
-  add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
 
 end
