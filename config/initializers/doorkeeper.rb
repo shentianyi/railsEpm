@@ -9,10 +9,16 @@ Doorkeeper.configure do
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
-  admin_authenticator do
-    if !current_user || !current_user.is_sys
-      redirect_to new_user_session_path
-    end
+  #admin_authenticator do
+  #  if !current_user || !current_user.is_sys
+  #    redirect_to new_user_session_path
+  #  end
+  #end
+
+  resource_owner_from_credentials do
+    request.params[:user]={email:request.params[:username],password:request.params[:password]}
+    request.env["devise.allow_params_authentication"] = true
+    request.env["warden"].authenticate!(:scope => :user)
   end
 
   # Authorization Code expiration time (default 10 minutes).
@@ -20,7 +26,7 @@ Doorkeeper.configure do
 
   # Access token expiration time (default 2 hours).
   # If you want to disable expiration, set this to nil.
-  access_token_expires_in 3.years
+  access_token_expires_in 10.years
 
   # Issue access tokens with refresh token (disabled by default)
   # use_refresh_token

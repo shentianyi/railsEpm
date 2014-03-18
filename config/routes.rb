@@ -2,7 +2,8 @@ IFEpm::Application.routes.draw do
 
   use_doorkeeper do
     controllers :applications => 'oauth/applications'
-    #controllers :authorizations=>'oauth/authorizations'
+    controllers :authorizations => nil
+    controllers :tokens => nil
   end
 
   devise_for :users, :controllers => {sessions: :user_sessions, registrations: :user_registrations}

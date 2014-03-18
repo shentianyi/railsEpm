@@ -44,7 +44,7 @@ class KpiEntryValidator
     if valided?
       else
       if user=User.find_by_email(self.email)
-        if kpi=Kpi.find_by_id_and_name(self.kpi_id,self.kpi_name)
+        if kpi=Kpi.find_by_id(self.kpi_id)
           unless user_kpi_item=UserKpiItem.find_by_user_id_and_kpi_id(user.id,kpi.id)
             self.valid=false
             self.content<<I18n.t('vali_msg.kpi_not_assign')
@@ -61,7 +61,6 @@ class KpiEntryValidator
         self.content<<I18n.t('vali_msg.invalid_user_email')
       end
     end
-    entry if self.valid
   end
 
   def valided?
