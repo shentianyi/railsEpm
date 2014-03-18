@@ -205,7 +205,7 @@ zh:
    #  password_invalid: 密码最短长度为4
   welcome:
     title: 欢迎
-    sub_title: 欢迎使用EPM
+    sub_title: 欢迎使用ClearInsight
     entrys:
       title: 针对您角色的入口
       kpi_entry: 输入KPI
@@ -233,9 +233,9 @@ zh:
       password_invalid: 是无效的
   epm:
     base:
-      title: EPM
+      title: ClearInsight
       name: 智能工厂
-      desc: 安全，迅速，快捷，EPM帮您挖掘隐藏的数据
+      desc: 安全，迅速，快捷，ClearInsight帮您挖掘隐藏的数据
       language: 语言
       welcome: 欢迎
   auth:
@@ -526,7 +526,7 @@ zh:
     invalid_kpi: KPI错误
     invalid_user_email: 用户Email错误
   epm_report:
-    title: EPM报告
+    title: ClearInsight报告
     current: 当前值
     target_min: 目标值下限
     target_max: 目标值上限

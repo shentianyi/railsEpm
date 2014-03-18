@@ -163,6 +163,8 @@ IFEpm::Application.routes.draw do
   end
 
   mount Resque::Server.new, :at => "/admin/resque"
+  #require 'sidekiq/web'
+  #mount Sidekiq::Web => '/admin/sidekiq'
 
 # The priority is based upon order of creation:
 # first created -> highest priority.
