@@ -127,6 +127,8 @@
     height:250px;
 }
 .signIn-block>h3{
+    margin-top:15px;
+    margin-bottom:23px;
     color:#555;
 }
 .signIn-block[special='sign-up']{

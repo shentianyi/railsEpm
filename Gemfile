@@ -14,6 +14,8 @@ gem 'cancan'
 # gem for backgroud jobs based on redis
 gem 'redis'
 gem 'resque'
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'redis-namespace'
 # gem 'guard-resque'
 
