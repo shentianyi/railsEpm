@@ -41,6 +41,7 @@ class KpiEntryValidator
       self.valid=false
       self.content<<I18n.t('vali_msg.invalid_value')
     end
+
     if valided?
       else
       if user=User.find_by_email(self.email)

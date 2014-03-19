@@ -13,12 +13,32 @@ module KpiEntryGuard
   module HelperMethods
     include BaseGuard
 
+    # validate single input
     def guard_entry!
-      if kpi_entry_param=validate_params_integrated(params, ParamKeys)
-        validator=KpiEntryValidator.new(kpi_entry_param)
-        validator.validate
-        validator.valid ? validator.entry : (raise ArgumentError)
+      @entry_p=validate_params_integrated(params, ParamKeys)
+      yield(@entry_p) if block_given?
+    end
+
+    def guard_entries!
+      raise ArgumentError unless params.has_key?(:entries)
+      params[:entries] = JSON.parse(params[:entries])
+      raise ArgumentError unless params[:entries].is_a?(Array)
+      error=false
+      params[:entries].each_with_index do |entry|
+        if  @entry_p=validate_params_integrated(entry, ParamKeys, false)
+          if block_given?
+            begin
+              yield(@entry_p)
+            rescue ArgumentError
+              error=true
+            end
+          end
+        else
+          error=true
+        end
       end
+      raise ArgumentError if error
+      true
     end
 
   end
@@ -34,7 +54,7 @@ module KpiEntryGuard
       Proc.new { |e|
         response=case e
                    when ArgumentError
-                     Rack::OAuth2::Server::Abstract::Error.new(422, 'Argument Error')
+                     Rack::OAuth2::Server::Abstract::Error.new(422, e.message)
                  end
         response.finish
       }
