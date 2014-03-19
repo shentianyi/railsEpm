@@ -9,7 +9,7 @@ class EntityGroup < ActiveRecord::Base
   has_many :entities, :through => :entity_group_items
   has_many :entity_contacts, :as => :contactable, :dependent => :destroy
   has_many :contacts, :through => :entity_contacts
-  attr_accessible :name, :is_public, :description, :code, :department_id, :user_id
+  attr_accessible :name, :is_public, :description, :code, :department_id, :user_id ,:tenant_id
 
   attr_accessor :can_modify
   #,:parent,:ancestry,:is_department

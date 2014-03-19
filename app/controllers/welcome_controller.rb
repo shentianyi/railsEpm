@@ -21,10 +21,10 @@ class WelcomeController < ApplicationController
   def statistics
     msg = Message.new
     msg.result = true
-    kpis = current_user.kpis.count
-    entities = Entity.all.count
-    users = User.all.count
-    views = current_user.entity_groups.count
+    kpis = Kpi.count
+    entities = Entity.count
+    users = User.count
+    views = EntityGroup.where(:tenant_id => current_user_tenant.id).count
     msg.content = {kpi:kpis,entity:entities,user:users,view:views}
 
     render :json=>msg
