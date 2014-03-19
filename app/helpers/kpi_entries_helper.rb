@@ -123,4 +123,23 @@ module KpiEntriesHelper
                DateTimeHelper.parse_time_to_year_stirng(parsed_entry_at)
            end
   end
+
+  def self.parse_entry_string_date frequency,date
+    return case frequency
+                     when KpiFrequency::Hourly
+                       DateTimeHelper.parse_string_to_date_hour(self.date)
+                     when KpiFrequency::Daily
+                       Time.strptime(date, '%Y-%m-%d')
+                     when KpiFrequency::Weekly
+                       date=Date.parse(date)
+                       Date.commercial(date.year, date.cweek, 1)
+                     when KpiFrequency::Monthly
+                       Time.strptime(date, '%Y-%m-01')
+                     when KpiFrequency::Quarterly
+                       month=Date.parse(date).month
+                       Time.strptime(date, "%Y-#{date.month-month%3}-01")
+                     when KpiFrequency::Yearly
+                       Time.strptime(date, '%Y-01-01')
+                   end
+  end
 end
