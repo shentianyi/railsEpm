@@ -77,11 +77,11 @@ ActiveRecord::Base.transaction do
                 if condition.save!
                   puts "####Dashboard condition created for "+dashboard_item.id.to_s
                 else
-                  (puts "##condition save failed with dashboard_item_id"+dashbord_item.id).red
+                  puts ("##condition save failed with dashboard_item_id"+kpi).red
                 end
 
               else
-                (puts "##Kpi not found with name:"+k+ "or entity_group not found with id "+g).red
+                puts ("##Kpi not found with name:"+kpi+ " or entity_group not found with id "+g).red
               end
             end
           end
