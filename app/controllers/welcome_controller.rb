@@ -24,7 +24,7 @@ class WelcomeController < ApplicationController
     kpis = Kpi.count
     entities = Entity.count
     users = User.count
-    views = EntityGroup.where(:tenant_id => current_user_tenant.id).count
+    views = EntityGroup.count
     msg.content = {kpi:kpis,entity:entities,user:users,view:views}
 
     render :json=>msg

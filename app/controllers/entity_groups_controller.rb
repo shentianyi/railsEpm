@@ -19,6 +19,7 @@ class EntityGroupsController < ApplicationController
   def create
     msg=Message.new
     @entity_group=EntityGroup.new(params[:data])
+    @entity_group.tenant=current_user_tenant
     @entity_group.creator=current_user
     if @entity_group.save
       msg.result=true
