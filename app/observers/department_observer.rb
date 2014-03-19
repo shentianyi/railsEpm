@@ -5,6 +5,7 @@ class DepartmentObserver<ActiveRecord::Observer
 	def after_create department
 		entity_group = EntityGroup.new(:name => department.name, :department_id => department.id)
 		entity_group.creator = department.creator
+    entity_group.tenant=department.tenant
 		entity_group.entities<<department.default_entity if department.default_entity
 		entity_group.save
 
