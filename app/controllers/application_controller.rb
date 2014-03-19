@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   include ErrorHelper
 
   # end includes
-  #protect_from_forgery
+  protect_from_forgery
   helper :all
   #before_filter :authenticate_user!
   before_filter :require_user
@@ -25,7 +25,6 @@ class ApplicationController < ActionController::Base
   private
 
   def require_user
-    #authenticate_user!
     unless current_user
       respond_to do |format|
         format.json { render json: {access:false,errorCode:-3000} ,status: 401}
@@ -35,8 +34,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_current_user_tenant
-    current_tenant=Tenant.find_by_id(current_user.tenant_id)
-    set_current_tenant(current_tenant)
+    set_current_tenant(current_user_tenant)
   end
 
   # set cancan Ability
