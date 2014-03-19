@@ -4,10 +4,6 @@ module V1
     guard_all!
     include KpiEntryGuard
 
-    get "secret" do
-      {:secret => "only smart guys can see this ;)"}
-    end
-
     post :entry do
       guard_entry! &do_entry
     end
