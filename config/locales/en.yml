@@ -230,7 +230,7 @@ en:
   # brilliantech project
   welcome:
     title: Welcome
-    sub_title: Welcome EPM
+    sub_title: Welcome ClearInsight
     entrys:
       title: Entrance of your role
       kpi_entry: Entry KPI
@@ -248,9 +248,9 @@ en:
         view: View
   epm:
     base:
-      title: EPM
+      title: ClearInsight
       name: IntelligentFactory
-      desc: Secure, quick and accurate, EPM uncovers the potential of data
+      desc: Secure, quick and accurate, ClearInsight uncovers the potential of data
       language: Language
       welcome: Welcome
   auth:
@@ -537,7 +537,7 @@ en:
     invalid_kpi: invalid KPI info
     invalid_user_email: invalid email
   epm_report:
-    title: EPM Report
+    title: ClearInsight Report
     current: Current
     target_min: Target Min
     target_max: Target Max

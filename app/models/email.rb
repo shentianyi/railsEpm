@@ -23,6 +23,22 @@ class Email < ActiveRecord::Base
     Attachment.add(attachments, self)
   end
 
+  def self.handle_email_process id, params
+    if @email=Email.find_by_id(id)
+      params.symbolize_keys!
+      attachments=params[:attachments]||[]
+      if pdf=@email.generate_analysis_pdf_and_cache(params[:analysis])
+        attachments<<{oriName: 'Analysis_Pdf.pdf', pathName: pdf}
+      end
+      # save attachments
+      @email.save_attachments(attachments)
+      # send email
+      @email.send_mail
+
+      @email.update_analysis_conditon(params[:analysis]) if params[:analysis]
+    end
+  end
+
   def send_mail
     MailerService.new(from_name: self.user_name,
                       from_mail: self.sender,
@@ -67,4 +83,5 @@ class Email < ActiveRecord::Base
     params.each { |k, v| q=q.where(k => v) unless v.blank? }
     return q
   end
+
 end
