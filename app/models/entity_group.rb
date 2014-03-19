@@ -3,6 +3,7 @@ class EntityGroup < ActiveRecord::Base
 
   belongs_to :creator, :class_name => 'User', :foreign_key => :user_id
   belongs_to :department
+  belongs_to :tenant
   #has_many :users
   belongs_to :tenant
   has_many :user_entity_groups, :dependent => :destroy
@@ -10,8 +11,10 @@ class EntityGroup < ActiveRecord::Base
   has_many :entities, :through => :entity_group_items
   has_many :entity_contacts, :as => :contactable, :dependent => :destroy
   has_many :contacts, :through => :entity_contacts
-  attr_accessible :name, :is_public, :description, :code, :department_id, :user_id,:tenant_id
-  #acts_as_tenant(:tenant)
+
+  attr_accessible :name, :is_public, :description, :code, :department_id, :user_id ,:tenant_id
+  acts_as_tenant(:tenant)
+
   attr_accessor :can_modify
   #,:parent,:ancestry,:is_department
 

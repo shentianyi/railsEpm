@@ -2,6 +2,7 @@
 class DepartmentObserver<ActiveRecord::Observer
   observe :department
 
+
   def after_create department
     entity_group = EntityGroup.new(:name => department.name, :department_id => department.id)
     entity_group.creator = department.creator
