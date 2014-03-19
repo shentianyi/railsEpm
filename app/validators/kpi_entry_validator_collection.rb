@@ -38,23 +38,23 @@ class KpiEntryValidatorCollection
     self.validators.each do |v|
       entries<<v.params_to_hash if v.valid
     end
-    #Resque.enqueue(KpiEntryCreateJob, entries)
-    entries.each do |k|
-      if kpi_entry=KpiEntry.where(user_kpi_item_id: k[:user_kpi_item_id],
-                                  parsed_entry_at: k[:entry_at],
-                                  entity_id: k[:entity_id]).first
-        kpi_entry.update_attributes(:original_value => k[:value])
-      else
-        KpiEntry.new(original_value: k[:value],
-                     user_kpi_item_id: k[:user_kpi_item_id],
-                     parsed_entry_at: k[:entry_at],
-                     entity_id: k[:entity_id],
-                     user_id: k[:user_id],
-                     target_max: k[:target_max],
-                     target_min: k[:target_min],
-                     kpi_id: k[:kpi_id]).save
-      end
-    end
+    Resque.enqueue(KpiEntryCreateJob, entries)
+    #entries.each do |k|
+    #  if kpi_entry=KpiEntry.where(user_kpi_item_id: k[:user_kpi_item_id],
+    #                              parsed_entry_at: k[:entry_at],
+    #                              entity_id: k[:entity_id]).first
+    #    kpi_entry.update_attributes(:original_value => k[:value])
+    #  else
+    #    KpiEntry.new(original_value: k[:value],
+    #                 user_kpi_item_id: k[:user_kpi_item_id],
+    #                 parsed_entry_at: k[:entry_at],
+    #                 entity_id: k[:entity_id],
+    #                 user_id: k[:user_id],
+    #                 target_max: k[:target_max],
+    #                 target_min: k[:target_min],
+    #                 kpi_id: k[:kpi_id]).save
+    #  end
+    #end
     
   end
 end

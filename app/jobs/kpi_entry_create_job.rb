@@ -8,10 +8,8 @@ class KpiEntryCreateJob
       if kpi_entry=KpiEntry.where(user_kpi_item_id: k['user_kpi_item_id'],
                                   parsed_entry_at: date,
                                   entity_id: k['entity_id']).first
-        puts '~~~~~~~~~~~~~~~~~~~~~~~~'
         kpi_entry.update_attributes(:original_value => k['value'])
       else
-        puts '*******************'
         KpiEntry.new(original_value: k['value'],
                      user_kpi_item_id: k['user_kpi_item_id'],
                      parsed_entry_at: date,
