@@ -453,7 +453,7 @@ zh:
           email: 邮箱
           pwd: 密码
           pwd_con: 确认密码
-          entity: 输入点
+          entity: 输入点(普通用户)
           department: 部门
           departments: 负责部门
           title: 职位
