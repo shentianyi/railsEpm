@@ -24,7 +24,7 @@
                     <tr>
                       <td class="user-manage-name"><%= user.first_name %></td>
                       <td class="user-manage-title"><%= user.title %></td>
-                      <td class="user-manage-department" value="<%= user.department_id %>"><%= user.department_name %></td>
+                      <!--<td class="user-manage-department" value=""></td>-->
                       <td class="user-manage-entity" value="<%= user.entity_id %>"><%= user.entity_name %></td>
                       <td><%= user.department_names %></td>
                       <td class="user-manage-authority" value="<%= user.role_id %>"><%= UsersHelper.get_user_role_display(user.role_id) %></td>
@@ -32,7 +32,7 @@
                     <tr>
                       <td class="user-manage-mail"><%= user.email %></td>
                       <td><%= t 'manage.user.new.title' %></td>
-                      <td><%= t 'manage.user.new.department' %></td>
+                      <!--<td></td>-->
                       <td><%= t 'manage.user.new.entity' %></td>
                       <td><%= t 'manage.user.new.departments' %></td>
                       <td><%= t 'manage.user.new.authority' %></td>
@@ -100,10 +100,16 @@
       <a class="btn btn-primary" id="manage-user-delivery"><%= t 'manage.user.desc.assign_now' %></a>
     </section>
     <section class="solid">
-      <h3><%= t 'manage.base.next' %></h3>
+      <h3>管理者权限</h3>
 
-      <p><%= t 'manage.user.desc.next_desc' %></p>
-      <a class="btn btn-primary" href="<%= entity_groups_path %>"><%= t 'manage.view.desc.manage' %></a>
+      <p>观察输入点上kpi实际数据</p>
+
+    </section>
+    <section class="solid">
+      <h3>普通用户的功能</h3>
+
+      <p>输入管理员为其分配kpi的实际数据</p>
+
     </section>
   </aside>
 </div>
@@ -118,14 +124,14 @@
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd' %>" id="new-user-password"/>
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd_con' %>" id="new-user-password-confirm"/>
 
-    <div class="div-select">
-      <select data-placeholder="<%= t 'manage.user.new.department' %>" id="edit-department-for-kpi" class="single-select">
-        <option value=""></option>
-        <% @departments.each do |department| %>
-            <option value="<%= department.id %>"><%= department.name %></option>
-        <% end %>
-      </select>
-    </div>
+    <!--<div class="div-select">-->
+      <!--<select data-placeholder="" id="edit-department-for-kpi" class="single-select">-->
+        <!--<option value=""></option>-->
+        <!---->
+            <!--<option value="</option>-->
+        <!---->
+      <!--</select>-->
+    <!--</div>-->
     <div class="div-select">
       <select data-placeholder="<%= t 'manage.user.new.entity' %>" id="entity-for-kpi" class="single-select">
         <option value=""></option>
