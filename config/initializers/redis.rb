@@ -2,14 +2,18 @@ require 'rake'
 require "resque/server"
 require "resque/tasks"
 
-$redis=Redis.new(:host => "127.0.0.1",:port => "6379",:db=>6)
 
+$default_db=6
+$default_db=7 if Rails.env.demo?
+$default_db=8 if Rails.env.demo_cn?
+
+$redis=Redis.new(:host => "127.0.0.1",:port => "6379",:db=>$default_db)
 
 if defined?(PhusionPassenger)
   PhusionPassenger.on_event(:starting_worker_process) do |forked|
     if forked
       $redis.client.disconnect
-      $redis=Redis.new(:host => "127.0.0.1",:port => "6379",:db=>6)
+      $redis=Redis.new(:host => "127.0.0.1",:port => "6379",:db=>$default_db)
     end
   end
 end
