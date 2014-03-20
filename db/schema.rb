@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140224074806) do
+ActiveRecord::Schema.define(:version => 20140319061208) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -194,9 +194,11 @@ ActiveRecord::Schema.define(:version => 20140224074806) do
     t.string   "description"
     t.string   "code"
     t.integer  "department_id"
+    t.integer  "tenant_id"
   end
 
   add_index "entity_groups", ["department_id"], :name => "index_entity_groups_on_department_id"
+  add_index "entity_groups", ["tenant_id"], :name => "index_entity_groups_on_tenant_id"
   add_index "entity_groups", ["user_id"], :name => "index_entity_groups_on_user_id"
 
   create_table "kpi_categories", :force => true do |t|
@@ -249,7 +251,7 @@ ActiveRecord::Schema.define(:version => 20140224074806) do
     t.integer  "kpi_category_id"
     t.integer  "unit"
     t.integer  "frequency"
-    t.float    "target_max",      :default => 0.0
+    t.float    "target_max"
     t.boolean  "is_calculated",   :default => false
     t.integer  "direction"
     t.integer  "period"
