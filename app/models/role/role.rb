@@ -2,10 +2,12 @@
 require 'base_class'
 class Role
   RoleMethods=[:admin?, :manager?, :director?, :user?]
-  @@roles={:'100' => {:name => 'user', :display => (I18n.t 'manage.user.role.user')},
+  @@roles={
+      :'400' => {:name => 'admin', :display => (I18n.t 'manage.user.role.admin')},
+      :'300' => {:name => 'director', :display => (I18n.t 'manage.user.role.director')},
+      :'100' => {:name => 'user', :display => (I18n.t 'manage.user.role.user')}
            #:'200'=>{:name=>'manager',:display=>(I18n.t 'manage.user.role.manager')},
-           :'300' => {:name => 'director', :display => (I18n.t 'manage.user.role.director')},
-           :'400' => {:name => 'admin', :display => (I18n.t 'manage.user.role.admin')}}
+  }
 
   class<<self
     RoleMethods.each do |m|
