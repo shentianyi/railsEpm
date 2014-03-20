@@ -1,34 +1,25 @@
 #encoding: utf-8
-class KpiEntryValidatorCollection
-  attr_accessor :cacke_key,:valid,:validators
-  def initialize
-    self.cache_key="validator_collection:#{SecureRandom.uuid}"
-    self.valid=true
-    self.validators=[]
-  end
-
-  def destroy
-    $redis.del self.cache_key
-  end
-
-end
-
 class KpiEntryValidator
-  attr_accessor :email,:kpi_id,:kpi_name,:frequency,:date,:value,:entry_at,:user_kpi_item_id,:value,:item_cache_key,:valid,:content
-  attr_accessor :validator_collection,:user_kpi_item,:kpi,:valid_by_cache
-  attr_accessor :entity_id,:user_id,:target_max,:target_min
+  attr_accessor :email, :kpi_id, :kpi_name, :frequency, :date, :value, :entry_at, :user_kpi_item_id, :value, :item_cache_key, :valid, :content
+  attr_accessor :validator_collection, :user_kpi_item, :kpi, :valid_by_cache
+  attr_accessor :entity_id, :user_id, :target_max, :target_min
+  attr_accessor :source
+
   def initialize args={}
     self.valid=true
     self.valid_by_cache=false
-
-    args.each do |k,v|
-      instance_variable_set "@#{k}",v
+    args.each do |k, v|
+      instance_variable_set "@#{k}", v
     end
-
-    self.item_cache_key="kpi_entry_validator:#{self.email}:#{self.kpi_id}:#{self.kpi_name}"
+    self.item_cache_key="kpi_entry_validator:#{self.email}:#{self.kpi_id}"
     self.date=self.date.to_s
     self.value=self.value.to_s
     self.content=[]
+    self.validator_collection.add_validator(self) if self.validator_collection
+  end
+
+  def invalid_message
+    self.content.join(';')
   end
 
   def validate
@@ -42,16 +33,19 @@ class KpiEntryValidator
       self.content<<I18n.t('vali_msg.invalid_value')
     end
 
-    if valided?
-      else
+    if self.validator_collection && (self.source=self.validator_collection.valid_validator(self))
+      self.valid_by_cache=true
+      self.valid=self.source.valid
+      self.content << self.source.content
+    else
       if user=User.find_by_email(self.email)
         if kpi=Kpi.find_by_id(self.kpi_id)
-          unless user_kpi_item=UserKpiItem.find_by_user_id_and_kpi_id(user.id,kpi.id)
+          unless user_kpi_item=UserKpiItem.find_by_user_id_and_kpi_id(user.id, kpi.id)
             self.valid=false
             self.content<<I18n.t('vali_msg.kpi_not_assign')
           else
-          self.kpi=kpi
-          self.user_kpi_item=user_kpi_item
+            self.kpi=kpi
+            self.user_kpi_item=user_kpi_item
           end
         else
           self.valid=false
@@ -61,55 +55,37 @@ class KpiEntryValidator
         self.valid=false
         self.content<<I18n.t('vali_msg.invalid_user_email')
       end
+      self.validator_collection.add_base_validator(self)
     end
-  end
-
-  def valided?
-    self.valid_by_cache=false
+    prepare_params if self.valid
   end
 
   def entry
-    prepare_params
-    if kpi_entry=KpiEntry.where(user_kpi_item_id:self.user_kpi_item_id,parsed_entry_at:self.entry_at,entity_id:self.entity_id).first
-      kpi_entry.update_attributes(:original_value=>self.value)
+    if kpi_entry=KpiEntry.where(user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.entry_at, entity_id: self.entity_id).first
+      kpi_entry.update_attributes(:original_value => self.value)
     else
-      KpiEntry.new(original_value:self.value,user_kpi_item_id:self.user_kpi_item_id,parsed_entry_at:self.entry_at,entity_id:self.entity_id,
-      user_id:self.user_id,target_max:self.target_max,target_min:self.target_min,kpi_id:self.kpi_id).save
+      KpiEntry.new(original_value: self.value, user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.entry_at, entity_id: self.entity_id,
+                   user_id: self.user_id, target_max: self.target_max, target_min: self.target_min, kpi_id: self.kpi_id).save
     end
   end
 
   def prepare_params
-    if valid_by_cache
-
-    else
-    self.kpi_id=self.kpi.id
-    self.frequency=self.kpi.frequency
-    self.user_kpi_item_id=self.user_kpi_item.id
-    self.user_id=self.user_kpi_item.user_id
-    self.entity_id=self.user_kpi_item.entity_id
-    self.target_max=self.user_kpi_item.target_max
-    self.target_min=self.user_kpi_item.target_min
-    end
-    parse_date
-  end
-
-  def parse_date
+    source = self.valid_by_cache ? self.source : self
+    self.kpi_id=source.kpi.id
+    self.frequency=source.kpi.frequency
+    self.user_kpi_item_id=source.user_kpi_item.id
+    self.user_id=source.user_kpi_item.user_id
+    self.entity_id=source.user_kpi_item.entity_id
+    self.target_max=source.user_kpi_item.target_max
+    self.target_min=source.user_kpi_item.target_min
     self.date=Date.parse(self.date).to_s
-    self.entry_at=  case self.frequency
-    when KpiFrequency::Hourly
-      DateTimeHelper.parse_string_to_date_hour(self.date)
-    when KpiFrequency::Daily
-      Time.strptime(self.date,'%Y-%m-%d')
-    when KpiFrequency::Weekly
-      date=Date.parse(self.date)
-      Date.commercial(date.year,date.cweek,1)
-    when KpiFrequency::Monthly
-      Time.strptime(self.date,'%Y-%m-01')
-    when KpiFrequency::Quarterly
-      month=Date.parse(self.date).month
-      Time.strptime(self.date,"%Y-#{date.month-month%3}-01")
-    when KpiFrequency::Yearly
-      Time.strptime(self.date,'%Y-01-01')
-    end
+    self.entry_at =KpiEntriesHelper.parse_entry_string_date self.frequency,self.date
   end
+
+  def params_to_hash
+    {value:self.value,kpi_id: self.kpi_id, frequency: self.frequency, user_kpi_item_id: self.user_kpi_item_id,
+     user_id: self.user_id, entity_id: self.entity_id, target_max: self.target_max,
+     target_min: self.target_min, entry_at: self.entry_at}
+  end
+
 end

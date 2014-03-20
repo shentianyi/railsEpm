@@ -1,6 +1,6 @@
 class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   include ApplicationHelper
-
+  include ErrorHelper
   before_filter :authenticate_user!
   before_filter :require_user_as_admin
   before_filter :authenticate_resource_owner!
