@@ -30,9 +30,6 @@ module KpiEntryGuard
 
     # validate batch entries
     def guard_entries!(in_batch=false)
-      puts '*****************'
-      puts in_batch
-      puts '*****************'
       raise ArgumentError unless params.has_key?(:entries)
       params[:entries] = JSON.parse(params[:entries])
       raise ArgumentError unless params[:entries].is_a?(Array)
