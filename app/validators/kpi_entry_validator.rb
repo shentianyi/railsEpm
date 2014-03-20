@@ -55,7 +55,7 @@ class KpiEntryValidator
         self.valid=false
         self.content<<I18n.t('vali_msg.invalid_user_email')
       end
-      self.validator_collection.add_base_validator(self)
+      self.validator_collection.add_base_validator(self)  if self.validator_collection
     end
     prepare_params if self.valid
   end
