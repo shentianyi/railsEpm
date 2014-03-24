@@ -215,6 +215,10 @@ IFEpm::Application.routes.draw do
       end
     end
 
+    resources :dashboards do
+
+    end
+
   end
 
   resources :departments do
