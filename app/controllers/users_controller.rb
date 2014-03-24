@@ -33,6 +33,10 @@ class UsersController < ApplicationController
     render :json => msg
   end
 
+  def show
+    @user = current_user
+  end
+
   def applications
     @applications=current_user.oauth_applications
   end
