@@ -1,2 +1,9 @@
-<h3>Show User Information</h3>
-<p>Your Name:<%= @user.first_name%></p>
+
+
+<div class="account-block">
+  <p class="user-name">Your Name:<%= @user.first_name%></p>
+  <input type="text" placeholder="旧密码"/>
+  <input type="password" placeholder="新密码"/>
+  <input type="password" placeholder="确认新密码"/>
+  <a class="btn btn-primary finish-change">完成修改</a>
+</div>
