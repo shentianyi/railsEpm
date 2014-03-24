@@ -46,6 +46,7 @@ IFEpm::Application.routes.draw do
       get 'index/:id' => :index
       match :login
       post :add
+      get :show
       put :update
       get :applications
     end
@@ -57,7 +58,11 @@ IFEpm::Application.routes.draw do
     end
   end
   resource :user_confirmations
-  resource :subscriptions
+  resource :subscriptions do
+    collection do
+      post :change_password
+    end
+  end
 
   resources :kpis do
     collection do
@@ -148,6 +153,13 @@ IFEpm::Application.routes.draw do
         get 'dashboard_items/update_sequence' => :update_sequence
       end
     end
+
+    resource :subscriptions do
+      collection do
+        post '/change_password' => :change_password
+      end
+    end
+
     resource :user_sessions do
       collection do
         post :locale

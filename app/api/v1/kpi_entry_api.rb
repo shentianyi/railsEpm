@@ -9,15 +9,14 @@ module V1
     end
 
     post :entries do
-      guard_entries! &do_entry
+      batch_insert=params[:in_batch].nil? ? false : params[:in_batch]=='true'
+      guard_entries!(batch_insert, &do_entry)
     end
 
     helpers do
       def do_entry
-        Proc.new { |entry_p|
-          validator=KpiEntryValidator.new(entry_p)
-          validator.validate
-          validator.valid ? validator.entry : (raise ArgumentError, validator.content.join(';'))
+        Proc.new { |validator_collection|
+          validator_collection.entry
         }
       end
     end

@@ -15,32 +15,54 @@ module KpiEntryGuard
 
     # validate single input
     def guard_entry!
-      @entry_p=validate_params_integrated(params, ParamKeys)
-      yield(@entry_p) if block_given?
+      entry_p=validate_params_integrated(params, ParamKeys)
+      vc= KpiEntryValidatorCollection.new
+      entry_p[:validator_collection]=vc
+      validator=KpiEntryValidator.new(entry_p)
+      validator.validate
+      if validator.valid
+        yield(vc) if block_given?
+      else
+        raise ArgumentError, validator.invalid_message
+      end
+
     end
 
-    def guard_entries!
+    # validate batch entries
+    def guard_entries!(in_batch=false)
       raise ArgumentError unless params.has_key?(:entries)
       params[:entries] = JSON.parse(params[:entries])
       raise ArgumentError unless params[:entries].is_a?(Array)
-      error=false
-      params[:entries].each_with_index do |entry|
-        if  @entry_p=validate_params_integrated(entry, ParamKeys, false)
-          if block_given?
-            begin
-              yield(@entry_p)
-            rescue ArgumentError
-              error=true
-            end
-          end
+      indexes=[]
+      vc= KpiEntryValidatorCollection.new
+      params[:entries].each_with_index do |entry, i|
+        if  entry_p=validate_params_integrated(entry, ParamKeys, false)
+          entry_p[:validator_collection]=vc
+          KpiEntryValidator.new(entry_p)
         else
-          error=true
+          indexes<<i+1
         end
       end
-      raise ArgumentError if error
-      true
+      # argument error
+      if indexes.size>0
+        raise ArgumentError, "data index:#{indexes.join(',')} Argument Error}"
+      else
+        vc.validators.each do |v|
+          v.validate
+          vc.valid=false unless v.valid
+        end
+        if vc.valid
+          yield(vc) if block_given?
+        else
+          unless in_batch
+            yield(vc) if block_given?
+            raise(ArgumentError, vc.invalid_message)
+          else
+            raise(ArgumentError, vc.invalid_message)
+          end
+        end
+      end
     end
-
   end
 
   module ClassMethods

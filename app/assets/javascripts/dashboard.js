@@ -204,7 +204,7 @@ function get_cal_type(method){
         case "1":
             return "ACCUNULATE";
             break;
-        case "2":
+        case "0":
             return "AVERAGE";
             break;
         default :

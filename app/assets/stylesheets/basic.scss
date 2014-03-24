@@ -1,0 +1,64 @@
+ul{
+  list-style-type:none;
+  padding:0px;
+  margin:0px;
+}
+a{
+  text-decoration:none;
+  color:inherit;
+}
+//////////////////////////////////////// 通用函数
+@mixin transition($element){
+  transition:$element ease-out 0.3s
+}
+@mixin word-break{
+  word-break:break-all;
+  word-wrap:break-word;
+}
+@mixin border-radius-same($border){
+  border-radius:$border;
+  -moz-border-radius:$border;
+  -webkit-border-radius:$border;
+}
+@mixin border-radius($lt,$rt,$rb,$lb){
+  border-radius:$lt $rt $rb $lb;
+  -moz-border-radius:$lt $rt $rb $lb;
+  -webkit-border-radius:$lt $rt $rb $lb;
+}
+@mixin box-shadow($x,$y,$shadow,$color){
+  box-shadow:$x $y $shadow $color;
+  -moz-box-shadow:$x $y $shadow $color;
+  -webkit-box-shadow:$x $y $shadow $color;
+}
+@mixin text-shadow($x,$y,$shadow,$color){
+  text-shadow:$x $y $shadow $color;
+  -moz-text-shadow:$x $y $shadow $color;
+  -webkit-text-shadow:$x $y $shadow $color;
+}
+@mixin background($img){
+  background:url($img) no-repeat center center ;
+}
+@mixin after-clear{
+  content:"";
+  display:block;
+  clear:both;
+}
+@mixin circle($width,$color){
+  border-radius:$width;
+  -moz-border-radius:$width;
+  -webkit-border-radius:$width;
+  border:1px solid $color;
+}
+@mixin glass-text-shadow{
+  text-shadow:1px 1px 2px #666;
+  -moz-text-shadow:1px 1px 2px #666;
+  -webkit-text-shadow:1px 1px 2px #666;
+}
+//////////////////////////////////////// 变量
+$static-p:rgba(255,255,255,0.45);
+$golden:#ad9f73;
+$red:#d9514f;
+$min-width:1024px;
+$light-white:rgba(255,255,255,0.5);
+$glass-bg:rgba(255,255,255,0.65);
+$glass-p:rgba(0, 0, 0, 0.53);
