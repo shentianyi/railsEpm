@@ -1,0 +1,28 @@
+<h1>Listing Tenant</h1>
+
+<table>
+  <tr>
+    <th>&nbsp;</th>
+    <th>Company Name</th>
+    <th>Super User</th>
+    <th>Created At</th>
+    <th>Expire At</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @tenants.each_with_index do |t, i| %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td><%= t.company_name %></td>
+        <td><%= t.super_user.email %></td>
+        <td><%= t.created_at %></td>
+        <td><%= t.expire_at %></td>
+        <td><%= link_to 'Edit', edit_admin_tenant_path(t) %></td>
+        <td><%= link_to 'Destroy', [:admin, t], method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br/>
+
+<%= link_to 'New Tenant', new_admin_tenant_path %>

@@ -192,8 +192,6 @@ IFEpm::Application.routes.draw do
 # match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
 
   namespace :admin do
-    get '' => 'sessions#index'
-
     [:kpi_templates, :kpi_category_templates].each do |model|
       resources model do
         collection do
@@ -214,7 +212,7 @@ IFEpm::Application.routes.draw do
         get :version
       end
     end
-
+    resources :tenants
   end
 
   resources :departments do

@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       respond_to do |format|
-        format.json { render json: {access:false,errorCode:-3000} ,status: 401}
+        format.json { render json: {access: false, errorCode: -3000}, status: 401 }
         format.html { redirect_to new_user_sessions_path }
       end
     end
@@ -143,6 +143,7 @@ class ApplicationController < ActionController::Base
           flash[:alert]='You account has been locked.' +
               ' If you have renewed, please get contact with our service'
           redirect_to billing_url
+          #redirect_to new_user_sessions_url
         when SubscriptionStatus::LOCKED #Locked
           render_internal_error_page
         else
