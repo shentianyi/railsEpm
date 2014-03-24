@@ -8,6 +8,7 @@ class UserSessionsController < Devise::SessionsController
   layout 'non_authorized'
 
   def create
+    params[:user] = params[:user_session] if params[:user_sesison]
     resource = User.find_for_database_authentication(:email => params[:user][:email])
     return invalid_login_attempt unless resource
     if resource.valid_password?(params[:user][:password])
