@@ -181,7 +181,7 @@ en:
             other: Bytes
           gb: GB
           kb: KB
-          mb: MB
+          mb: MBsessions
           tb: TB
     percentage:
       format:
