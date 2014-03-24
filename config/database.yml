@@ -58,6 +58,26 @@ performance:
  username: epmer
  password: epmer@
  socket: /var/run/mysqld/mysqld.sock
+
+demo:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: epmdemo
+  pool: 5
+  username: epmer
+  password: epmer@
+  socket: /var/run/mysqld/mysqld.sock
+
+demo_cn:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: epmdbdemocn
+  pool: 5
+  username: epmer
+  password: epmer@
+  socket: /var/run/mysqld/mysqld.sock
 #
 #development:
   #adapter: sqlite3

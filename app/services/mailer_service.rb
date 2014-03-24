@@ -2,7 +2,7 @@
 
 class MailerService
   attr_accessor :from_mail, :from_name, :from, :to, :subject, :text, :attachment, :file_path, :delete_tmp_file
-  ADDRESS= "https://api:key-815jqt0315prsi9k3pmz3n330kq5rbz3@api.mailgun.net/v2/sandbox1973.mailgun.org/messages"
+  ADDRESS= "https://api:key-45f5z85gnjq545rzvcv5n71dyatdjmo6@api.mailgun.net/v2/sandbox1973.mailgun.org/messages"
 
   def initialize params
     self.from_mail=params[:from_mail]

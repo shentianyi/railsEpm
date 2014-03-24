@@ -205,7 +205,7 @@ zh:
    #  password_invalid: 密码最短长度为4
   welcome:
     title: 欢迎
-    sub_title: 欢迎使用EPM
+    sub_title: 欢迎使用ClearInsight
     entrys:
       title: 针对您角色的入口
       kpi_entry: 输入KPI

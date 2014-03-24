@@ -131,7 +131,11 @@ IFEpm::Application.routes.draw do
         get 'dashboard_items/update_sequence' => :update_sequence
       end
     end
-    resources :user_sessions
+    resource :user_sessions do
+      collection do
+        post :locale
+      end
+    end
 
     resources :emails do
       collection do
@@ -163,6 +167,8 @@ IFEpm::Application.routes.draw do
   end
 
   mount Resque::Server.new, :at => "/admin/resque"
+  #require 'sidekiq/web'
+  #mount Sidekiq::Web => '/admin/sidekiq'
 
 # The priority is based upon order of creation:
 # first created -> highest priority.
@@ -230,3 +236,4 @@ IFEpm::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   match ':controller(/:action(/:id))(.:format)'
 end
+
