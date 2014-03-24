@@ -1,6 +1,7 @@
 #encoding: utf-8
 module Api
   class SubscriptionsController < ApiController
+   skip_authorize_resource
     def change_password
       msg=Message.new
       msg.result=false
