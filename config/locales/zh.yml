@@ -329,6 +329,7 @@ zh:
       lock_account: 您的账户已经过期或被锁定，请联系网站管理员
       pwd_changed: 密码修改成功
       old_pwd_error: 原始密码错误
+      fill_blank: 请输入所有信息
   menu:
       start: 开始
       dashboard: 仪表盘
