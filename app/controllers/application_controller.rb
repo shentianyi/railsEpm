@@ -174,11 +174,15 @@ class ApplicationController < ActionController::Base
         when SubscriptionStatus::EXPIRED #expired
           flash[:alert]='You account has been expired.' +
               'If you have renewed, please get contact with our service'
-          redirect_to billing_url
+          #redirect_to billing_url
+          #flash[:alert]= I18n.t 'auth.msg.lock_account'
+          current_user_session.destroy
+          redirect_to new_user_sessions_url
         when SubscriptionStatus::TRIAL #Expired
           flash[:alert]='You account has been locked.'  +
               ' If you have renewed, please get contact with our service'
-          redirect_to billing_url
+          current_user_session.destroy
+          redirect_to new_user_sessions_url
         when SubscriptionStatus::LOCKED #Locked
           render_internal_error_page
         else
