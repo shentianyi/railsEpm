@@ -46,7 +46,6 @@ IFEpm::Application.routes.draw do
       get 'index/:id' => :index
       match :login
       post :add
-      get :show
       put :update
       get :applications
     end
