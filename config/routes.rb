@@ -212,6 +212,10 @@ IFEpm::Application.routes.draw do
         get :version
       end
     end
+
+    resources :dashboards do
+
+    end
     resources :tenants
     get '/' => 'tenants#index'
 
