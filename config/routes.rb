@@ -187,9 +187,9 @@ IFEpm::Application.routes.draw do
   #require 'sidekiq/web'
   #mount Sidekiq::Web => '/admin/sidekiq'
 
-# The priority is based upon order of creation:
-# first created -> highest priority.
-# match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
+  # The priority is based upon order of creation:
+  # first created -> highest priority.
+  # match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
 
   namespace :admin do
     [:kpi_templates, :kpi_category_templates].each do |model|
@@ -213,6 +213,9 @@ IFEpm::Application.routes.draw do
       end
     end
     resources :tenants
+    get '/' => 'tenants#index'
+
+
   end
 
   resources :departments do
