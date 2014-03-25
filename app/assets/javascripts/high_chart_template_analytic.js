@@ -254,8 +254,8 @@ ANALYTICS.form_chart=function(option){
         length=24,
         data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
     bar_fix_from=Date.parse(begin_time_utc);
-    bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,length) <= end_time_utc ?
-                           Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,length)) : Date.parse(end_time_utc) ;
+    bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1)) <= end_time_utc ?
+                           Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1))) : Date.parse(end_time_utc) ;
 
     var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
     console.log(new Date(bar_fix_from).toISOString() );
@@ -387,8 +387,8 @@ ANALYTICS.add_data=function(option){
     var begin_time_utc = ANALYTICS.add_observe[option.interval](option.begin_time_utc,option.add_length),
         length=option.add_length;
 
-    var next_date =  ANALYTICS.add_observe[option.interval](begin_time_utc,length) > option.end_time_utc ?
-                     option.end_time_utc :  ANALYTICS.add_observe[option.interval](begin_time_utc,length);
+    var next_date =  ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1)) > option.end_time_utc ?
+                     option.end_time_utc :  ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1));
     option.data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < option.end_time_utc?true:false;
 
     console.log(new Date(begin_time_utc).toISOString() );
@@ -670,6 +670,7 @@ ANALYTICS.add_observe={
         return new Date(date);
     },
     "100":function(UTCTime,addTime){
+
         var parse_date=Date.parse(UTCTime);
         var old_date=new Date(parse_date);
         var date=old_date.setDate(old_date.getDate() +  parseInt(addTime));
