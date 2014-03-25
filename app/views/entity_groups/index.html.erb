@@ -105,3 +105,10 @@
         MANAGE.view.init();
     })
 </script>
+<% content_for :javascript_includes do%>
+    <%= javascript_include_tag "Manage.js"%>
+    <%= javascript_include_tag "Manage-left-menu.js"%>
+    <%= javascript_include_tag "Manage-right-list.js"%>
+
+    <%= javascript_include_tag "Manage-view.js"%>
+<%end%>
