@@ -28,7 +28,7 @@ class KpiCategoriesController < ApplicationController
   def destroy
     msg=Message.new
     # if @categories.length > 1
-      if @category and @category.kpi_quantity==0
+      if @category and @category.kpis.count==0
         msg.result=@category.destroy
       else
            msg.content=I18n.t "fix.cannot_destroy"
