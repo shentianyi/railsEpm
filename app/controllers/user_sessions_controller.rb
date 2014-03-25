@@ -4,7 +4,7 @@ class UserSessionsController < Devise::SessionsController
   skip_before_filter :find_current_user_tenant
   #before_filter :ensure_params_exist, :only => [:create]
   skip_authorize_resource
-
+  skip_before_filter :verify_authenticity_token,:only=>[:destroy]
   layout 'non_authorized'
 
   def create
