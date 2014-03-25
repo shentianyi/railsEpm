@@ -14,7 +14,6 @@
 //=require jquery_ujs
 //=require jquery.tipsy
 //=require jquery.sparkline.min
-//=require _file_upload
 //=require brilliantech.base
 //=require Template
 //=require bootstrap-datepicker
