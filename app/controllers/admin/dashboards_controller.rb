@@ -8,7 +8,11 @@ class Admin::DashboardsController < Admin::ApplicationController
 
   # POST /admin/dashboards/import
   # POST /admin/dashboards/import.json
-  def import
+  def import_dashboards
+    msg = Message.new
+    msg.result = false
 
+
+    render :json=>msg
   end
 end

@@ -114,6 +114,7 @@ IFEpm::Application.routes.draw do
   resources :dashboards do
     collection do
       get '/fullsize/:id' => :fullsize
+      post '/import_dashboards' => :import_dashboards
     end
   end
 
@@ -223,7 +224,9 @@ IFEpm::Application.routes.draw do
     end
 
     resources :dashboards do
-
+      collection do
+        post '/import_dashboards' => :import_dashboards
+      end
     end
     resources :tenants
     get '/' => 'tenants#index'
