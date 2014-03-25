@@ -1,4 +1,3 @@
-
 /**
  * User: tesla
  * Date: 9/27/13
@@ -140,7 +139,6 @@ ifepm.dashboard_widget.init = function(option){
         //    stop: ifepm.dashboard_widget.drag_stop,
         //},
     }).data('gridster');
-    gridster.disable();
     current_gridster = gridster;
     /*
     gridster_full = $("#dash-fullsize ul").gridster({
@@ -168,7 +166,6 @@ ifepm.dashboard_widget.init_fullsize = function(){
                  stop: ifepm.dashboard_widget.drag_stop,
              },
          }).data('gridster');
-         gridster_full.disable();
          isinit_fullsize = false;
      }
 }
@@ -390,4 +387,3 @@ ifepm.dashboard_widget.drag_stop = function(event,ui){
     }
     ifepm.dashboard.on_drag_stop();
 };
->>>>>>> 2ebea61365a9561f6a910277aaedd9716ee1a995

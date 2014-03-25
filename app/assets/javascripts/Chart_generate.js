@@ -1,1 +1,138 @@
-var CHARTBOOT=CHARTBOOT||{};CHARTBOOT.check=0,function(){$(window).resize(function(){CHARTBOOT.check.check++,window.setTimeout(function(){1==CHARTBOOT.check?(CHARTBOOT.generatePie(CHARTBOOT.pie.scores,"chart-pie-wrap"),CHARTBOOT.check--):CHARTBOOT.check--},300)})}(),CHARTBOOT.generatePie=function(scores,target_wrap){if(0!=scores.length){0==$("#"+target_wrap).find("[name='pie_chart']").length&&$("#"+target_wrap).append($("<canvas />").attr("name","pie_chart"));var width="small"==arguments[2]?$("#"+target_wrap).width()-80:$("#"+target_wrap).width()-10,height="small"==arguments[2]?$("#"+target_wrap).height()-80:$("#"+target_wrap).height()-20;$("#"+target_wrap).find("canvas").attr("height",height).attr("width",width);var canvas=$("#"+target_wrap).find("canvas")[0];canvas.width=canvas.width,canvas.height=canvas.height;{var data=[{value:scores[0],color:"rgba(151,187,205,0.5)"},{value:scores[1],color:"#F38630"},{value:scores[2],color:"#E0E4CC"}],ctx=$("#"+target_wrap).find("canvas").get(0).getContext("2d");new Chart(ctx)}new Chart(ctx).Pie(data)}},CHARTBOOT.pie={},CHARTBOOT.pie.scores,CHARTBOOT.generateColumn=function(scores,target_wrap){if(0!=scores.length){0==$("#"+target_wrap).find("[name='column_chart']").length&&$("#"+target_wrap).append($("<canvas />").attr("name","column_chart"));var width=$("#"+target_wrap).width()-10,height=$("#"+target_wrap).height()-20;$("#"+target_wrap).find("canvas").attr("height",height).attr("width",width);var canvas=$("#"+target_wrap).find("canvas")[0];canvas.width=canvas.width,canvas.height=canvas.height;{var data={labels:["KPI","部门","用户","观察点"],datasets:[{fillColor:"rgba(151,187,205,0.5)",strokeColor:"rgba(151,187,205,1)",data:scores}]},ctx=$("#"+target_wrap).find("canvas").get(0).getContext("2d");new Chart(ctx)}new Chart(ctx).Bar(data)}},CHARTBOOT.column={},CHARTBOOT.column.scores;
+/**
+ * Created with JetBrains RubyMine.
+ * User: wayne
+ * Date: 13-12-26
+ * Time: 下午12:06
+ * To change this template use File | Settings | File Templates.
+ */
+var CHARTBOOT=CHARTBOOT || {};
+CHARTBOOT.check=0;
+(function(){
+    $(window).resize(function(){
+        CHARTBOOT.check.check++;
+        window.setTimeout(function(){
+            if(CHARTBOOT.check==1){
+                CHARTBOOT.generatePie(CHARTBOOT.pie.scores,"chart-pie-wrap");
+                CHARTBOOT.check--;
+            }
+            else{
+                CHARTBOOT.check--;
+            }
+        },300);
+    });
+})()
+//////////////////////////////////////////////////////////////  针对直线图的一些设置
+//CHARTBOOT.generateLine=function(labels,scores,target_wrap){
+//    if(scores.length==0){
+//        return
+//    }
+//    else{
+//        if(scores.length==1){
+//            scores.unshift(0);
+//            labels.unshift("");
+//        }
+//        if($("#"+target_wrap).find("[name='line_chart']").length==0){
+//            $("#"+target_wrap).append($("<canvas />").attr("name","line_chart"))
+//        }
+//        var width=$("#"+target_wrap).width()-10;
+//        var height=$("#"+target_wrap).height()-40;
+//        $("#"+target_wrap).find("canvas").attr("height",height).attr("width",width);
+//        var canvas = $("#"+target_wrap).find("canvas")[0];
+//        canvas.width=canvas.width;
+//        canvas.height=canvas.height;
+//        var data = {
+//            labels : labels,
+//            datasets : [{
+//                fillColor : "rgba(151,187,205,0.5)",
+//                strokeColor : "rgba(151,187,205,1)",
+//                pointColor : "rgba(151,187,205,1)",
+//                pointStrokeColor : "#fff",
+//                data :scores
+//            }]
+//        }
+//        var ctx = $("#"+target_wrap).find("canvas").get(0).getContext("2d");
+//        var myNewChart = new Chart(ctx);
+//        CHARTBOOT.generate_line_option(scores);
+//        new Chart(ctx).Line(data,CHARTBOOT.line_option);
+//    }
+//};
+//CHARTBOOT.line_option={
+//    scaleOverride : true,
+//    scaleSteps : 8,
+//    scaleStartValue :0,
+//    bezierCurve:false
+//}
+//CHARTBOOT.generate_line_option=function(data){
+//    var c=[];
+//    var p=data;
+//    c=deepCopy(p,c);
+//    c.sort(sortNumber);
+//    CHARTBOOT.line_option.scaleStepWidth=Math.ceil(c[0]/CHARTBOOT.line_option.scaleSteps);
+//}
+//function sortNumber(a, b)
+//{
+//    return b-a
+//}
+//////////////////////////////////////////////////////////////  针对饼状图图的一些设置
+CHARTBOOT.generatePie=function(scores,target_wrap){
+    if(scores.length==0){
+        return
+    }
+    else{
+        if($("#"+target_wrap).find("[name='pie_chart']").length==0){
+            $("#"+target_wrap).append($("<canvas />").attr("name","pie_chart"))
+        }
+        var width= arguments[2]=="small" ? $("#"+target_wrap).width()-80: $("#"+target_wrap).width()-10;
+        var height= arguments[2]=="small" ? $("#"+target_wrap).height()-80: $("#"+target_wrap).height()-20;
+        $("#"+target_wrap).find("canvas").attr("height",height).attr("width",width);
+        var canvas = $("#"+target_wrap).find("canvas")[0];
+        canvas.width=canvas.width;
+        canvas.height=canvas.height;
+        var data = [
+            {value:scores[0],color : "rgba(151,187,205,0.5)"},
+            {value:scores[1],color : "#F38630"},
+            {value:scores[2],color : "#E0E4CC"}
+        ]
+        var ctx = $("#"+target_wrap).find("canvas").get(0).getContext("2d");
+        var myNewChart = new Chart(ctx);
+        new Chart(ctx).Pie(data);
+
+
+    }
+};
+CHARTBOOT.pie={};
+CHARTBOOT.pie.scores;
+//////////////////////////////////////////////////////////////  针对柱状图的一些设置
+CHARTBOOT.generateColumn=function(scores,target_wrap){
+    if(scores.length==0){
+        return
+    }
+    else{
+        if($("#"+target_wrap).find("[name='column_chart']").length==0){
+            $("#"+target_wrap).append($("<canvas />").attr("name","column_chart"))
+        }
+        var width= $("#"+target_wrap).width()-10;
+        var height= $("#"+target_wrap).height()-20;
+        $("#"+target_wrap).find("canvas").attr("height",height).attr("width",width);
+        var canvas = $("#"+target_wrap).find("canvas")[0];
+        canvas.width=canvas.width;
+        canvas.height=canvas.height;
+        var data = {
+            labels : ["KPI","部门","用户","观察点"],
+            datasets : [
+                {
+                    fillColor : "rgba(151,187,205,0.5)",
+                    strokeColor : "rgba(151,187,205,1)",
+                    data : scores
+                }
+            ]
+        };
+        var ctx = $("#"+target_wrap).find("canvas").get(0).getContext("2d");
+        var myNewChart = new Chart(ctx);
+        new Chart(ctx).Bar(data);
+
+
+    }
+};
+CHARTBOOT.column={};
+CHARTBOOT.column.scores;

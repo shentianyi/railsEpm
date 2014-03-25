@@ -446,4 +446,4 @@ MANAGE.kpi.library.cancel = function() {
      $("#library-chosen-kpi").empty();
 }
 
->>>>>>> 2ebea61365a9561f6a910277aaedd9716ee1a995
+
