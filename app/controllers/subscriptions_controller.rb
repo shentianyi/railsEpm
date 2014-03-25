@@ -4,7 +4,7 @@ class SubscriptionsController < ApplicationController
   skip_before_filter :require_active_user,:only=>[:new,:create]
   skip_before_filter :check_tenant_status
   skip_before_filter :find_current_user_tenant,:only=>[:new,:create]
-  skip_authorize_resource :only=>[:new,:create]
+  skip_authorize_resource :only=>[:new,:create,:change_password]
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :is_sign_up_allowed, :only => [:new,:create]
   layout 'non_authorized'
@@ -49,6 +49,25 @@ class SubscriptionsController < ApplicationController
       msg.content = invalid.record.errors.full_messages
       #flash[:alert]=I18n.t 'auth.msg.sign_fail'
       #redirect_to new_user_sessions_url
+    end
+
+    render :json=>msg
+  end
+
+  def change_password
+    msg=Message.new
+    msg.result=false
+    if current_user.valid_password?(params[:password])
+      current_user.password = params[:new_password]
+      current_user.password_confirmation = params[:new_password_confirmation]
+      if !(msg.result = current_user.save)
+        puts msg.result
+        msg.content = current_user.errors.full_messages
+      else
+        msg.content = I18n.t "auth.msg.pwd_changed"
+      end
+    else
+      msg.content=I18n.t "auth.msg.old_pwd_error"
     end
 
     render :json=>msg

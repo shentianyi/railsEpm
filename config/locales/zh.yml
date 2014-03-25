@@ -251,6 +251,10 @@ zh:
       confirm: 确认
       con_pwd: 确认密码
       company: 公司
+      old_pwd: 旧密码
+      new_pwd: 新密码
+      new_pwd_cfm: 确认新密码
+      cfm_change: 确认修改
     msg:
       login_success: 登录成功
       login_require: 请先登录
@@ -261,6 +265,9 @@ zh:
       sign_close: 我们还没有开放注册
       sign_fail: 注册失败
       lock_account: 您的账户已经过期或被锁定，请联系网站管理员
+      pwd_changed: 密码修改成功
+      old_pwd_error: 原始密码错误
+      fill_blank: 请输入所有信息
   menu:
       start: 开始
       dashboard: 仪表盘

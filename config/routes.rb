@@ -42,7 +42,11 @@ IFEpm::Application.routes.draw do
     end
   end
   resource :user_confirmations
-  resource :subscriptions
+  resource :subscriptions do
+    collection do
+      post :change_password
+    end
+  end
 
   resources :kpis do
     collection do
@@ -134,6 +138,12 @@ IFEpm::Application.routes.draw do
     resource :user_sessions do
       collection do
         post :locale
+      end
+    end
+
+    resources :subscriptions do
+      collection do
+        match '/change_password' => 'subscriptions#change_password'
       end
     end
 
