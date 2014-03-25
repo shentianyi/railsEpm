@@ -56,12 +56,16 @@ IFEpm::Application.routes.draw do
       post :locale
     end
   end
+
   resource :user_confirmations
+
   resource :subscriptions do
     collection do
       post :change_password
     end
   end
+
+  match '/api/subscriptions/change_password' => 'subscriptions#change_password'
 
   resources :kpis do
     collection do
@@ -150,12 +154,6 @@ IFEpm::Application.routes.draw do
         get 'dashboard_items/get_data' => :get_data
         get 'dashboard_items/items_by_dashboard_id' => :items_by_dashboard_id
         get 'dashboard_items/update_sequence' => :update_sequence
-      end
-    end
-
-    resource :subscriptions do
-      collection do
-        post '/change_password' => :change_password
       end
     end
 
