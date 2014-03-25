@@ -110,17 +110,7 @@ MANAGE.kpi.kpi_add_box_bind = function() {
      $("#add-interval").val('').trigger('chosen:updated');
      $("#add-trend").prepend($("<option />").attr("value", ""));
      $("#add-trend").val('').trigger('chosen:updated');
-     $("#is-calcu-check").on("ifChecked", function() {
-          $("#calculate-type-box").slideDown("2000");
-          $("#is_calcu_relate_chosen").css("width", "131px");
-          $("#is-calcu-relate").prepend($("<option />").attr("value", ""));
-          $("#is-calcu-relate").val('').trigger('chosen:updated');
-     }).on("ifUnchecked", function() {
-          $("#calculate-type-box").slideUp("2000");
-          $("#calcuType-input").val("");
-          $("#is-calcu-relate").find("option:first-of-type").remove();
-          $("#is-calcu-relate").val('').trigger('chosen:updated');
-     });
+    MANAGE.kpi.isCalcuCheck();
      $("body").on("click", "#calculate-type-box>label", function(event) {
           var obj = adapt_event(event).target;
           var sign = $(obj).attr("sign");
@@ -163,6 +153,19 @@ MANAGE.kpi.kpi_add_box_bind = function() {
      $("#manage-kpi-add-new").on("click", function() {
           MANAGE.kpi.add_new_kpi();
      });
+};
+MANAGE.kpi.isCalcuCheck = function(){
+    $("#is-calcu-check").on("ifChecked", function() {
+        $("#calculate-type-box").slideDown("2000");
+        $("#is_calcu_relate_chosen").css("width", "131px");
+        $("#is-calcu-relate").prepend($("<option />").attr("value", ""));
+        $("#is-calcu-relate").val('').trigger('chosen:updated');
+    }).on("ifUnchecked", function() {
+            $("#calculate-type-box").slideUp("2000");
+            $("#calcuType-input").val("");
+            $("#is-calcu-relate").find("option:first-of-type").remove();
+            $("#is-calcu-relate").val('').trigger('chosen:updated');
+        });
 };
 MANAGE.kpi.kpi_add_clear = function() {
      $("#manage-kpi-add input").val("");
@@ -262,6 +265,8 @@ function post_kpi(option) {
                     $("#manage-sort-list li").on("resize", function() {
                          MANAGE.resize_sort_table()
                     });
+
+
                } else {
                     $("#manage-kpi-add").css("right", "999em");
                     $("#manage-right-content").css("padding-right", "0px");
@@ -416,7 +421,7 @@ MANAGE.kpi.library.init = function() {
           } else {
                MessageBox("Nothing have been chosen", "top", "warning");
           }
-
+         MANAGE.kpi.isCalcuCheck();
      });
 }
 MANAGE.kpi.library.add_post = function(category, kpis) {
@@ -431,7 +436,9 @@ MANAGE.kpi.library.add_post = function(category, kpis) {
           async : false,
           success : function(data) {
                if(data.result) {
-                    $("#manage-left-menu").append($("<li />").attr("title", data.content).attr("number", data.object).append($("<i />").addClass("icon-trash icon-item")).append($("<a href='/kpis/c/" + data.object + "'/>").text(data.content)));
+                    $("#manage-left-menu").append($("<li />").attr("title", data.content).attr("number", data.object)
+                        .append($("<i />").addClass("icon-trash icon-item"))
+                        .append($("<a href='/kpis/c/" + data.object + "'/>").text(data.content)));
                } else {
                     MessageBox(data.content, "top", "warning");
                }
