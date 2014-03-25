@@ -17,6 +17,8 @@
 //=require Template
 //=require chosen.jquery.min
 //=require wayne-base
-
+//=require jquery.icheck.min
+//=require jquery.sortable.min
+//=require jquery.ba-resize.min
 //=require i18n
 //=require i18n/translations
