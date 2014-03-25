@@ -1,3 +1,4 @@
+
 /**
  * Created with JetBrains WebStorm.
  * User: wayne
@@ -444,4 +445,5 @@ MANAGE.kpi.library.cancel = function() {
      $("#kpi-library-inner-left").empty();
      $("#library-chosen-kpi").empty();
 }
+
 

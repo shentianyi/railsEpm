@@ -139,7 +139,6 @@ ifepm.dashboard_widget.init = function(option){
         //    stop: ifepm.dashboard_widget.drag_stop,
         //},
     }).data('gridster');
-    gridster.disable();
     current_gridster = gridster;
     /*
     gridster_full = $("#dash-fullsize ul").gridster({
@@ -167,7 +166,6 @@ ifepm.dashboard_widget.init_fullsize = function(){
                  stop: ifepm.dashboard_widget.drag_stop,
              },
          }).data('gridster');
-         gridster_full.disable();
          isinit_fullsize = false;
      }
 }

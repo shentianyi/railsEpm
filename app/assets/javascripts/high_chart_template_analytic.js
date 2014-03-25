@@ -258,7 +258,8 @@ ANALYTICS.form_chart=function(option){
                            Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,length)) : Date.parse(end_time_utc) ;
 
     var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
-    if(option.show_loading==null || option.show_loading)
+    console.log(new Date(bar_fix_from).toISOString() );
+    console.log(new Date(bar_fix_to).toISOString());
     show_loading(top,0,0,0);
     $.post('/kpi_entries/analyse',{
         kpi : option.kpi_id,
@@ -295,7 +296,7 @@ ANALYTICS.form_chart=function(option){
                 option.end_time_utc=end_time_utc;
                 option.bar_fix_from=bar_fix_from;
                 option.bar_fix_to=bar_fix_to;
-                option.add_length=100;
+                option.add_length=24;
                 ANALYTICS.add_data(option);
             }
             ANALYTICS.loading_data=false;
@@ -336,6 +337,7 @@ ANALYTICS.form_chart=function(option){
 
 
     ANALYTICS.form_chart_without_ajax=function(option,data){
+
         ANALYTICS.loading_data=true;
         var begin_time_utc=standardParse(option.begin_time).date,
             end_time_utc=standardParse(option.end_time).date,
@@ -381,12 +383,16 @@ ANALYTICS.form_chart=function(option){
 
 
 ANALYTICS.add_data=function(option){
+
     var begin_time_utc = ANALYTICS.add_observe[option.interval](option.begin_time_utc,option.add_length),
         length=option.add_length;
 
     var next_date =  ANALYTICS.add_observe[option.interval](begin_time_utc,length) > option.end_time_utc ?
                      option.end_time_utc :  ANALYTICS.add_observe[option.interval](begin_time_utc,length);
     option.data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < option.end_time_utc?true:false;
+
+    console.log(new Date(begin_time_utc).toISOString() );
+    console.log(new Date(next_date).toISOString() );
 
     $.post('/kpi_entries/analyse',{
         kpi : option.kpi_id,
