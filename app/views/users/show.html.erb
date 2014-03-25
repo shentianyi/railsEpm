@@ -16,7 +16,7 @@
           MessageBox(I18n.t('auth.msg.fill_blank'),"top","warning");
       }else{
           $.ajax({
-              url:"/subscriptions/change_password",
+              url:"/api/subscriptions/change_password",
               data:data,
               type:"POST",
               dataType:"json",
