@@ -11,9 +11,9 @@ module.exports = function (grunt) {
             my_target: {
                 files: [{
                     expand: true,
-                    cwd: 'app/assets/originJS',
+                    cwd: 'app/assets/javascripts',
                     src: '**/*.js',
-                    dest: 'app/assets/javascripts'
+                    dest: 'app/assets/jsmin'
                 }]
             }
         }
