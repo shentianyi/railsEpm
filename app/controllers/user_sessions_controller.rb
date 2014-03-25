@@ -2,12 +2,13 @@ class UserSessionsController < Devise::SessionsController
   skip_before_filter :require_user, :only => [:new, :create, :locale]
   skip_before_filter :check_tenant_status
   skip_before_filter :find_current_user_tenant
-  before_filter :ensure_params_exist, :only => [:create]
+  #before_filter :ensure_params_exist, :only => [:create]
   skip_authorize_resource
-
+  skip_before_filter :verify_authenticity_token,:only=>[:destroy]
   layout 'non_authorized'
 
   def create
+    params[:user] = params[:user_session] if params[:user_session]
     resource = User.find_for_database_authentication(:email => params[:user][:email])
     return invalid_login_attempt unless resource
     if resource.valid_password?(params[:user][:password])

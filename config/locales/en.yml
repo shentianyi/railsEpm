@@ -309,6 +309,10 @@ en:
       confirm: Ok
       con_pwd: Password Confirmation
       company: Company Name
+      old_pwd: Old password
+      new_pwd: New password
+      new_pwd_cfm: Confirm new password
+      cfm_change: Change
     msg:
       login_success: Login successfully!
       login_fail: Error Login Info!
@@ -320,6 +324,9 @@ en:
       sign_close: Registration is not open!
       sign_fail: Sign up failed!
       local_account: We're sorry, but we could not locate your account.If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process.
+      pwd_changed: Password changed!
+      old_pwd_error: Original password error!
+      fill_blank: Please fill in all the blank!
   menu:
     start: Start
     dashboard: Dashboard

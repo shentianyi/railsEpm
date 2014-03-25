@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       respond_to do |format|
-        format.json { render json: {access:false,errorCode:-3000} ,status: 401}
+        format.json { render json: {access: false, errorCode: -3000}, status: 401 }
         format.html { redirect_to new_user_sessions_path }
       end
     end
@@ -136,13 +136,16 @@ class ApplicationController < ActionController::Base
         current_user_tenant.expire_at.to_time.utc >= Time.now.utc
       case current_user_tenant.subscription_status
         when SubscriptionStatus::EXPIRED #expired
-          flash[:alert]='You account has been expired.' +
-              'If you have renewed, please get contact with our service'
-          redirect_to billing_url
+           Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+           flash[:alert]='You account has been expired.' +
+               'If you have renewed, please get contact with our service'
+          redirect_to new_user_sessions_url
         when SubscriptionStatus::TRIAL #Expired
+          Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
           flash[:alert]='You account has been locked.' +
               ' If you have renewed, please get contact with our service'
-          redirect_to billing_url
+          redirect_to new_user_sessions_url
+          #redirect_to new_user_sessions_url
         when SubscriptionStatus::LOCKED #Locked
           render_internal_error_page
         else

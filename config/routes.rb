@@ -56,8 +56,16 @@ IFEpm::Application.routes.draw do
       post :locale
     end
   end
+
   resource :user_confirmations
-  resource :subscriptions
+
+  resource :subscriptions do
+    collection do
+      post :change_password
+    end
+  end
+
+  match '/api/subscriptions/change_password' => 'subscriptions#change_password'
 
   resources :kpis do
     collection do
@@ -148,6 +156,7 @@ IFEpm::Application.routes.draw do
         get 'dashboard_items/update_sequence' => :update_sequence
       end
     end
+
     resource :user_sessions do
       collection do
         post :locale
@@ -187,13 +196,11 @@ IFEpm::Application.routes.draw do
   #require 'sidekiq/web'
   #mount Sidekiq::Web => '/admin/sidekiq'
 
-# The priority is based upon order of creation:
-# first created -> highest priority.
-# match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
+  # The priority is based upon order of creation:
+  # first created -> highest priority.
+  # match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
 
   namespace :admin do
-    get '' => 'sessions#index'
-
     [:kpi_templates, :kpi_category_templates].each do |model|
       resources model do
         collection do
@@ -214,6 +221,13 @@ IFEpm::Application.routes.draw do
         get :version
       end
     end
+
+    resources :dashboards do
+
+    end
+    resources :tenants
+    get '/' => 'tenants#index'
+
 
   end
 

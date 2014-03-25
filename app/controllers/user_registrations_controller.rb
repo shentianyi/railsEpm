@@ -6,7 +6,6 @@ class UserRegistrationsController<Devise::RegistrationsController
   def create
     msg=Message.new(result: true)
     build_resource(sign_up_params)
-    puts resource
     if resource.save
       msg.object = UserPresenter.new(resource).to_json
     else

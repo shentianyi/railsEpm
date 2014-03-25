@@ -13,9 +13,6 @@
 //=require jquery-1.8.2.min
 //=require jquery_ujs
 //=require jquery.tipsy
-//=require jquery.ba-resize.min
-//=require jquery.icheck.min
-//=require jquery.sortable.min
 //=require brilliantech.base
 //=require Template
 //=require chosen.jquery.min
