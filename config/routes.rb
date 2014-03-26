@@ -1,5 +1,4 @@
 IFEpm::Application.routes.draw do
-
   use_doorkeeper do
     controllers :applications => 'oauth/applications'
     controllers :authorizations => nil
@@ -202,7 +201,7 @@ IFEpm::Application.routes.draw do
   # match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
 
   namespace :admin do
-    [:kpi_templates, :kpi_category_templates].each do |model|
+    [:kpi_templates, :kpi_category_templates,:contacts].each do |model|
       resources model do
         collection do
           post :updata
