@@ -65,6 +65,9 @@ gem 'grape'
 # oauth2 guard on resource server(api)
 gem 'rack-oauth2'
 
+# task
+gem 'whenever'
+
 #gem 'simple_form'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
