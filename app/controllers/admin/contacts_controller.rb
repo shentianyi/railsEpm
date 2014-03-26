@@ -27,9 +27,6 @@ class Admin::ContactsController < Admin::ApplicationController
     end
   end
 
-  def import
-  end
-
   def destroy
     @contact = Contact.find(params[:id])
     @contact.destroy
@@ -37,4 +34,26 @@ class Admin::ContactsController < Admin::ApplicationController
       format.html { redirect_to admin_contacts_path, notice: 'Contact was destroyed.' }
     end
   end
+
+  def updata
+    super { |data, query, row, row_line, path|
+      raise(ArgumentError, "line:#{row_line}, TenantID/Name/Email cannot be blank!") if row['Email'].blank? or row['TenantID'].blank? or row['Name'].blank?
+      rails(ArgumentError, "line:#{row_line},TenantID is wrong!") if (tenant=Tenant.find(row['TenantID']))
+      data[:name]=row['Name']
+      data[:email]=row['Email']
+      data[:title]=row['Title']
+      data[:tel]=row['Tel']
+      data[:phone]=row['Phone']
+      data[:tenant_id]=tenant.id
+      data[:image_url]=save_photo(File.join(path, 'avatar', row['Avatar']), row['Avatar']) unless row['Avatar'].blank?
+      query[:email]=row['Email'] if query
+    }
+  end
+
+  private
+  def save_photo photo_src, photo_name
+    uuid_name=SecureRandom.uuid+File.extname(photo_name)
+    return AliyunOssService.store_avatar(uuid_name, photo_src)
+  end
+
 end

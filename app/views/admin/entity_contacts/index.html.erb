@@ -1,4 +1,5 @@
-<h1>Listing Contacts</h1>
+<h1>Listing EntityContacts</h1>
+<p class="notice">** Contact Type: Entity(输入点) or EntityGroup(视图)</p>
 <p id="notice"><%= notice %></p>
 <table>
   <tr>
@@ -10,8 +11,9 @@
     <th>Phone</th>
     <th>Email</th>
     <th>Title</th>
+    <th>Contactable Type</th>
+    <th>Contactable Name</th>
     <th>Tenant</th>
-    <th></th>
     <th></th>
   </tr>
   <% @contacts.each_with_index do |c, i| %>
@@ -26,8 +28,9 @@
         <td><%= c.phone %></td>
         <td><%= c.email %></td>
         <td><%= c.title %></td>
+        <td class="notice"><%= c.contactable_type %></td>
+        <td class="notice"><%= c.contactable.name %></td>
         <td><%= c.company_name %></td>
-        <td><%= link_to 'Edit', edit_admin_contact_path(c) %></td>
         <td><%= link_to 'Destroy', [:admin, c], method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
   <% end %>
@@ -36,7 +39,7 @@
 <br/>
 <%= will_paginate @contacts, {:previous_label => '<<', :next_label => '>>'} %>
 
-<%= link_to '上传/更新', import_admin_contacts_path %>
+<%= link_to '上传/更新', import_admin_entity_contacts_path %>
 <br/>
 <br/>
 <script type="text/javascript">

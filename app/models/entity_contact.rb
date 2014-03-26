@@ -10,7 +10,7 @@ class EntityContact < ActiveRecord::Base
   validate :validate_save
 
   def self.contact_detail
-    joins(:contact).joins(:tenant).select('*,contacts.*,tenants.company_name')
+    joins(:contact).joins(:tenant).select('contacts.*,tenants.company_name,entity_contacts.*')
   end
 
   private

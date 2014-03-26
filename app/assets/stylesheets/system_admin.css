@@ -1,3 +1,20 @@
+#handle-dialog-modal {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    width: 300px;
+    overflow: hidden;
+    display: none;
+    z-index: 1;
+}
+#handle-dialog-modal .handle-dialog-modal-content {
+    background: #ffffff;
+    height: 150px;
+}
+#handle-dialog-modal .handle-dialog-modal-content p {
+    padding: 40px 0px 0px 60px;
+}
+
 table {
     border: 1px #000000 solid;
     border-collapse: collapse;
@@ -25,8 +42,22 @@ table td {
     font-size:  20px;
     border-left: lightgreen 1px solid;
 }
-.nav ul li:hover{
+.nav ul li a:hover{
     font-size: 22px;
     color: yellowgreen;
+    font-weight: bold;
+}
+.nav a{
+    color: #000000;
+    text-decoration: none;
+}
+.notice,#notice{
+    color: red;
+}
+a{
+    color: blueviolet;
+    text-decoration: blueviolet underline;
+}
+a:hover{
     font-weight: bold;
 }
