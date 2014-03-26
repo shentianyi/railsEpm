@@ -12,7 +12,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div>
+<div  class='nav'>
   <ul>
     <li>
       <a href="<%= admin_tenants_path %>">Tenant</a>
@@ -30,11 +30,11 @@
       <a href="<%= admin_dashboards_path %>">Dashboards</a>
     </li>
     <li>
-      <a href="<%= admin_contacts_path %>">Contacts</a>
+      <a href="<%= admin_contacts_path %>">Contact</a>
     </li>
   </ul>
 </div>
-
+<hr>
 <div class="wrap-page">
   <%= yield %>
 </div>
