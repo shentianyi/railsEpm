@@ -1,0 +1,32 @@
+table {
+    border: 1px #000000 solid;
+    border-collapse: collapse;
+}
+
+table th, tr, td {
+    border: 1px #000000 solid;
+}
+
+table th {
+    background: skyblue;
+}
+
+table td {
+    padding: 2px 10px;
+}
+
+.nav{
+    padding-top: 20px;
+    background-color: steelblue;
+}
+.nav ul li {
+    display: inline;
+    padding: 2px 10px;
+    font-size:  20px;
+    border-left: lightgreen 1px solid;
+}
+.nav ul li:hover{
+    font-size: 22px;
+    color: yellowgreen;
+    font-weight: bold;
+}

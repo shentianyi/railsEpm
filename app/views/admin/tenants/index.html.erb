@@ -1,8 +1,9 @@
-<h1>Listing Tenant</h1>
+<h1>Listing Tenants</h1>
 
 <table>
   <tr>
     <th>&nbsp;</th>
+    <th>Tenant ID</th>
     <th>Company Name</th>
     <th>Super User</th>
     <th>Created At</th>
@@ -13,6 +14,7 @@
   <% @tenants.each_with_index do |t, i| %>
       <tr>
         <td><%= i+1 %></td>
+        <td><%= t.id %></td>
         <td><%= t.company_name %></td>
         <td><%= t.super_user.email %></td>
         <td><%= t.created_at %></td>

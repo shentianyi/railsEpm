@@ -1,0 +1,50 @@
+<h1>Listing Contacts</h1>
+<p id="notice"><%= notice %></p>
+<table>
+  <tr>
+    <th>&nbsp;</th>
+    <th>Avatar</th>
+    <th>Contact ID</th>
+    <th>Name</th>
+    <th>Tel</th>
+    <th>Phone</th>
+    <th>Email</th>
+    <th>Title</th>
+    <th>Tenant</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <% @contacts.each_with_index do |c, i| %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td><a href='<%= c.image_url %>' style="width: 50px;height: 50px;" class="avatar">
+          <img src='<%= c.image_url %>' style="width: 50px;height: 50px;"/>
+        </a></td>
+        <td><%= c.id %></td>
+        <td><%= c.name %></td>
+        <td><%= c.tel %></td>
+        <td><%= c.phone %></td>
+        <td><%= c.email %></td>
+        <td><%= c.title %></td>
+        <td><%= c.company_name %></td>
+        <td><%= link_to 'Edit', edit_admin_contact_path(c) %></td>
+        <td><%= link_to 'Destroy', [:admin, c], method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br/>
+<%= will_paginate @contacts, {:previous_label => '<<', :next_label => '>>'} %>
+<br/>
+<br/>
+<script type="text/javascript">
+    $(function () {
+        $('.avatar').magnificPopup({type: 'image'});
+    });
+</script>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag 'magnific.popup/jquery.magnific-popup.min' %>
+<% end %>
+<% content_for :stylesheet_includes do %>
+    <%= stylesheet_link_tag 'magnific.popup/magnific-popup' %>
+<% end %>
