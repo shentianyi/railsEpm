@@ -1,1 +1,15 @@
-<h2>Dashboard Upload</h2>
+<script type="text/javascript">
+    $(function() {
+        data_upload("#item-data-uploader");
+    });
+</script>
+
+<h1>&nbsp;</h1>
+<h2>Dashboards Upload</h2>
+<h3>shang</h3>
+<div>
+  上传Dashboards文件：
+  <input id="dashboards-upload" type="file" name="files[]" data-url="/admin/dashboards/import_dashboards">
+  <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
+</div>
+<%= render :partial => "shares/handling_msg_box", :locals => { :handlemsg => "处理中..." } %>
