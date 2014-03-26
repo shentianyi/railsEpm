@@ -226,6 +226,7 @@ IFEpm::Application.routes.draw do
     resources :dashboards do
       collection do
         post '/import_dashboards' => :import_dashboards
+        get '/error_file' => :error_file
       end
     end
     resources :tenants
