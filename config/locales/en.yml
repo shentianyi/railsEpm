@@ -457,6 +457,9 @@ en:
         department: Department
         departments: In Charge
         title: Title
+        tel: Tel
+        phone: Phone
+        image_url: Avatar
     view:
       desc:
         name: View

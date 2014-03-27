@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation #, :remember_me
   attr_accessible :status, :perishable_token, :confirmed, :first_name, :last_name, :is_tenant
   attr_accessible :tenant_id, :role_id, :entity_id, :department_id, :is_sys, :title #, :department_group_id
-  attr_accessible :tel,:phone,:image_url
+  attr_accessible :tel, :phone, :image_url
 
   #acts_as_authentic do |c|
   #  c.login_field = :email
@@ -54,6 +54,11 @@ class User < ActiveRecord::Base
       return false
     end
   end
+
+  def image_name
+    self.image_url.match(/(avatar\/)(.*)\?/)[2] unless self.image_url.blank?
+  end
+
 
   def deliver_user_confirmation!
     reset_perishable_token!
