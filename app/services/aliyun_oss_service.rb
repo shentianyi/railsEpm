@@ -25,6 +25,7 @@ class AliyunOssService
   end
 
   def self.delete_avatar name
+    puts "#{name}--------------------------------"
     Aliyun::OSS::OSSObject.delete(name, AVATAR_BUCKET)
   end
 

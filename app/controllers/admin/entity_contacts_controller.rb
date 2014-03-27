@@ -13,4 +13,8 @@ class Admin::EntityContactsController < Admin::ApplicationController
       format.html { redirect_to admin_entity_contacts_path, notice: 'Entity Contact was destroyed.' }
     end
   end
+
+  def updata
+
+  end
 end
