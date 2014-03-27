@@ -1,9 +1,10 @@
 #encoding: utf-8
 class EntityContact < ActiveRecord::Base
   belongs_to :contact
+  belongs_to :user
   belongs_to :contactable, :polymorphic => true
   belongs_to :tenant
-  attr_accessible :contactable_id, :contact_id, :contactable_type
+  attr_accessible :contactable_id, :contact_id,:user_id, :contactable_type
   #
   acts_as_tenant(:tenant)
 

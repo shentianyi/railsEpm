@@ -392,7 +392,6 @@ zh:
           create: 创建KPI
           create_desc: 为不同的KPI类别创建KPI，你可以对KPI做相应的编辑
           create_now: 现在创建
-
           kpi_library_desc: 如果你需要一些常用的KPI，你可以方便的在KPI库中选择
           choose_now: 现在选择
           next_desc: 创建完成KPI后，你应该创建输入点和用户，然后将KPI分配给相应输入点中的用户内
@@ -460,10 +459,13 @@ zh:
           email: 邮箱
           pwd: 密码
           pwd_con: 确认密码
-          entity: 输入点(普通用户)
+          entity: 输入点
           department: 部门
           departments: 负责部门
           title: 职位
+          tel: 座机
+          phone: 手机
+          image_url: 头像
       view:
         desc:
           name: 视图

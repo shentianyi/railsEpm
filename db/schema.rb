@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140319061208) do
+ActiveRecord::Schema.define(:version => 20140327091516) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -166,12 +166,14 @@ ActiveRecord::Schema.define(:version => 20140319061208) do
     t.integer  "tenant_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "user_id"
   end
 
   add_index "entity_contacts", ["contact_id"], :name => "index_entity_contacts_on_contact_id"
   add_index "entity_contacts", ["contactable_id"], :name => "index_entity_contacts_on_contactable_id"
   add_index "entity_contacts", ["contactable_type"], :name => "index_entity_contacts_on_contactable_type"
   add_index "entity_contacts", ["tenant_id"], :name => "index_entity_contacts_on_tenant_id"
+  add_index "entity_contacts", ["user_id"], :name => "index_entity_contacts_on_user_id"
 
   create_table "entity_group_items", :force => true do |t|
     t.integer  "entity_id"
@@ -396,6 +398,9 @@ ActiveRecord::Schema.define(:version => 20140319061208) do
     t.datetime "remember_created_at"
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.string   "tel"
+    t.string   "phone"
+    t.string   "image_url"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

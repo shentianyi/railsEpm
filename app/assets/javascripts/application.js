@@ -22,3 +22,4 @@
 //=require jquery.ba-resize.min
 //=require i18n
 //=require i18n/translations
+//=require Log
