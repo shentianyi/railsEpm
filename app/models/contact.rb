@@ -1,6 +1,7 @@
 #encoding: utf-8
 class Contact < ActiveRecord::Base
   belongs_to :tenant
+  has_many :entity_contacts#,:dependent => :destroy
   attr_accessible :department, :email, :image_url, :name, :phone, :tel, :title, :tenant_id
   acts_as_tenant(:tenant)
 
