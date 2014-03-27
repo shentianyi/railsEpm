@@ -38,16 +38,22 @@ class Admin::ContactsController < Admin::ApplicationController
   def updata
     super { |data, query, row, row_line, path|
       raise(ArgumentError, "line:#{row_line}, TenantID/Name/Email cannot be blank!") if row['Email'].blank? or row['TenantID'].blank? or row['Name'].blank?
-      rails(ArgumentError, "line:#{row_line},TenantID is wrong!") if (tenant=Tenant.find(row['TenantID']))
+      raise(ArgumentError, "line:#{row_line},TenantID is wrong!") unless (tenant=Tenant.find(row['TenantID']))
       data[:name]=row['Name']
       data[:email]=row['Email']
       data[:title]=row['Title']
       data[:tel]=row['Tel']
       data[:phone]=row['Phone']
       data[:tenant_id]=tenant.id
-      data[:image_url]=save_photo(File.join(path, 'avatar', row['Avatar']), row['Avatar']) unless row['Avatar'].blank?
+      if !row['Avatar'].blank? && File.exist?(File.join(path, row['Avatar']))
+        data[:image_url]=save_photo(File.join(path, 'avatar', row['Avatar']), row['Avatar'])
+      end
       query[:email]=row['Email'] if query
     }
+  end
+
+  def model
+    Contact
   end
 
   private
