@@ -41,6 +41,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.uniq_attr
+    ['email']
+  end
+
   def confirmed?
     return true #self.confirmed
   end
@@ -112,6 +116,10 @@ class User < ActiveRecord::Base
 
   def department_names
     self.departments.pluck(:name).join(',')
+  end
+
+  def self.contact_attrs
+    'users.id,users.first_name as name,users.tel,users.phone,users.email,users.title,users.image_url'
   end
 
 

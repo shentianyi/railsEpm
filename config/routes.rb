@@ -201,7 +201,7 @@ IFEpm::Application.routes.draw do
   # match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
 
   namespace :admin do
-    [:kpi_templates, :kpi_category_templates, :contacts,:entity_contacts].each do |model|
+    [:kpi_templates, :kpi_category_templates, :contacts,:entity_contacts,:users].each do |model|
       resources model do
         collection do
           post :updata

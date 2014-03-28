@@ -26,7 +26,7 @@ class UserObserver<ActiveRecord::Observer
     end
 
     if user.image_url_changed?
-      AliyunOssService.delete_avatar user.image_name
+      #AliyunOssService.delete_avatar user.image_name
     end
 
   end

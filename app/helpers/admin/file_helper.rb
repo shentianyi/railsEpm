@@ -14,6 +14,7 @@ end
 
 module Admin::FileHelper
   def updata
+    create_defalut=true
     msg=Message.new(:content => '')
     #begin
     files=params[:files]
@@ -61,16 +62,16 @@ module Admin::FileHelper
         data.delete($UPMARKER)
         if query
           if item=m.where(query).first
-            data.delete(:tenant_id)
+            #data.delete(:tenant_id)
             item.update_attributes(data) if row[$UPMARKER].to_i==1
           else
-            m.create(data)
+            m.create(data) if create_defalut
           end
         else
-          m.create(data)
+          m.create(data) if create_defalut
         end
       end
-      FileUtils.rm_rf(zip_dir) if zip_dir && Dir.exist?(zip_dir)
+      #FileUtils.rm_rf(zip_dir) if zip_dir && Dir.exist?(zip_dir)
       msg.result=true
       msg.content="新建/更新成功！"
     else

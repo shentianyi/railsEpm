@@ -1,37 +1,37 @@
-class Admin::ContactsController < Admin::ApplicationController
+class Admin::UsersController < Admin::ApplicationController
   def index
-    @contacts=User.joins(:tenant).select("#{User.contact_attrs},tenants.company_name").paginate(page: params[:page], per_page: 20)
+    @users=User.joins(:tenant).select("#{User.contact_attrs},tenants.company_name").paginate(page: params[:page], per_page: 20)
     respond_to do |format|
       format.html
     end
   end
 
   def show
-    @contact=User.find(params[:id])
+    @user=User.find(params[:id])
   end
 
   def edit
-    @contact=User.find(params[:id])
+    @user=User.find(params[:id])
   end
 
   def update
-    @contact=User.find(params[:id])
+    @user=User.find(params[:id])
     respond_to do |format|
-      if @contact.update_attributes(params[:contact])
-        format.html { redirect_to [:admin, @contact], notice: 'Contact was successfully updated.' }
+      if @user.update_attributes(params[:user])
+        format.html { redirect_to [:admin, @user], notice: 'user was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @contact.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @contact = Contact.find(params[:id])
-    @contact.destroy
+    @user = user.find(params[:id])
+    @user.destroy
     respond_to do |format|
-      format.html { redirect_to admin_contacts_path, notice: 'Contact was destroyed.' }
+      format.html { redirect_to admin_users_path, notice: 'user was destroyed.' }
     end
   end
 

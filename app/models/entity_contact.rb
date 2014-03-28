@@ -11,11 +11,11 @@ class EntityContact < ActiveRecord::Base
   validate :validate_save
 
   def self.contact_detail
-    joins(:contact).joins(:tenant).select('contacts.*,tenants.company_name,entity_contacts.*')
+    joins(:users).joins(:tenant).select("#{User.contact_attrs},tenants.company_name,entity_contacts.*")
   end
 
   private
   def validate_save
-    errors.add(:contactable_id, I18n.t("fix.cannot_repeat")) if EntityContact.where(contactable_id: self.contactable_id, contact_id: self.contact_id, contactable_type: self.contactable_type).first if new_record?
+    errors.add(:contactable_id, I18n.t("fix.cannot_repeat")) if EntityContact.where(contactable_id: self.contactable_id, user_id: self.user_id, contactable_type: self.contactable_type).first if new_record?
   end
 end

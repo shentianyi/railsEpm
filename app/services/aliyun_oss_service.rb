@@ -25,7 +25,7 @@ class AliyunOssService
   end
 
   def self.delete_avatar name
-    Aliyun::OSS::OSSObject.delete(name, AVATAR_BUCKET) if name
+    #Aliyun::OSS::OSSObject.delete(name, AVATAR_BUCKET) if name
   end
 
   def self.delete_attachments name
