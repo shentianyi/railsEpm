@@ -73,8 +73,4 @@ class SubscriptionsController < ApplicationController
 
     render :json=>msg
   end
-<<<<<<< HEAD
-
-=======
->>>>>>> system_admin
 end
