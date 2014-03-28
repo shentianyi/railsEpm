@@ -49,7 +49,7 @@ class FileData<CZ::BaseClass
         return 'ppt'
       when '.pdf'
         return 'pdf'
-      when '.zip', '.rar', '.7z', '.tar'
+      when '.zip'
         return 'zip'
       else
         return 'default'

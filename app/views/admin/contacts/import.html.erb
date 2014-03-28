@@ -1,0 +1,22 @@
+<script type="text/javascript">
+     $(function() {
+          data_upload("#item-data-uploader");
+     }); 
+</script>
+<h1>&nbsp;</h1>
+<p class="notice">
+  ** Upload the zip file  <br>
+  ** column DOUPDATE: 0(not update the data)/1(update the data)
+</p>
+<p id="notice">
+     <%= notice %>
+</p>
+<h3>上传/更新 Contact</h3>
+<div>
+     上传数据文件：
+     <input id="item-data-uploader" type="file" name="files[]" data-url="/admin/contacts/updata" >
+     <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
+</div> 
+<%= link_to '返回', admin_contacts_path%>
+<%= render :partial => "shares/handling_msg_box", :locals => { :handlemsg => "处理中..." } %>
+<a href="/files/template/contact_template.zip">Download Template</a>

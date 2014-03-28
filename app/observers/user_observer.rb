@@ -24,6 +24,11 @@ class UserObserver<ActiveRecord::Observer
     if user.department_id_changed?
       UserKpiItem.reinit_department_kpis(user, user.department_id, user.department_id_was)
     end
+
+    if user.image_url_changed?
+      #AliyunOssService.delete_avatar user.image_name
+    end
+
   end
 
   def before_update user
@@ -35,5 +40,9 @@ class UserObserver<ActiveRecord::Observer
   def after_create user
     user.entity.increment!(:user_quantity) if user.entity
     user.insert_guide_template
+  end
+
+  def after_destroy user
+    AliyunOssService.delete_avatar(user.image_name)
   end
 end

@@ -6,24 +6,47 @@ ActiveRecord::Base.transaction do
   entity_groups = {}
   CSV.foreach("#{ARGV[0]}/a.csv", :headers => true, :col_sep => ';') do |row|
     params= {}
+    #add replace dashboard
     if user = User.find_by_email(row["email"])
       #if someone already has the same dashbaord?
-      if dashboard = Dashboard.where("user_id = ? AND name= ?",user.id,row["name"]).first
-        puts ("arleady find"+dashboard.name).yellow
-        dashboards[row["code"]] = dashboard
-        entity_groups[row["code"]] = row["entitygroups"]
-      else
-        params[:user_id] = user.id
-        params[:name] = row["name"]
-        dashboard = Dashboard.new(params)
-        if dashboard.save!
-          puts "create new dashboard"+dashboard.name + "with code :" + row["code"]
+      if row["oriname"].nil?
+        #if nil,create new dashboard
+        if dashboard = Dashboard.where("user_id = ? AND name= ?",user.id,row["name"]).first
+          puts ("arleady find"+dashboard.name).yellow
           dashboards[row["code"]] = dashboard
           entity_groups[row["code"]] = row["entitygroups"]
         else
-          puts ("##Dashboard with email:"+row["email"]+" name:"+row["name"] + "created failed!").red;
+          params[:user_id] = user.id
+          params[:name] = row["name"]
+          dashboard = Dashboard.new(params)
+          if dashboard.save!
+            puts "create new dashboard"+dashboard.name + "with code :" + row["code"]
+            dashboards[row["code"]] = dashboard
+            entity_groups[row["code"]] = row["entitygroups"]
+          else
+            puts ("##Dashboard with email:"+row["email"]+" name:"+row["name"] + "created failed!").red;
+          end
+        end
+      else
+        #if not nil then replace dashboard,new dashboard name should not be nil
+        if row["name"].nil?
+          puts ("##New Dashboard name should not be empty").red
+        else
+          #find original dashboard
+          if dashboard = Dashboard.where("user_id = ? AND name = ?",user.id,row["oriname"]).first
+            if dashboard.update_attribute("name",row["name"])
+              dashboards[row["code"]] = dashboard
+              entity_groups[row["code"]] = row["entitygroups"]
+              puts ("update dashboard name from "+row["oriname"] + " to "+ row["name"]).green
+            else
+              puts ("update dashboar "+row["oriname"]+"failed").failed
+            end
+          else
+            puts ("ERROR: dashbaord with name "+row["oriname"] +" not found").red
+          end
         end
       end
+
     else
       puts ("##User with: "+row["email"] + "not found!").red
     end

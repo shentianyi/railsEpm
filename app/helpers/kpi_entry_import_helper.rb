@@ -1,44 +1,46 @@
 #encoding: utf-8
 
 module KpiEntryImportHelper
-  def self.import file,extention
+  def self.import file, extention
     case extention
-    when '.xls'
-      return import_xls(file,extention)
-    when '.xlsx'
-      return import_xlsx(file,extention)
+      when '.xls'
+        return import_xls(file, extention)
+      when '.xlsx'
+        return import_xlsx(file, extention)
     end
   end
 
-  def self.import_xls file,extention
+  def self.import_xls file, extention
     book=Spreadsheet.open file
 
     # error file
     error_book=Spreadsheet::Workbook.new
     error_sheet=error_book.create_worksheet
-    error_header.each{|header| error_sheet.row(0).push(header)}
+    error_header.each { |header| error_sheet.row(0).push(header) }
     error_format=excel_error_fromat
     error_header_length=error_header.length
 
     # read and handle file
     sheet=book.worksheet 0
     valid=true
-    sheet.rows[1..-1].each_with_index do |row,i|
+    sheet.rows[1..-1].each_with_index do |row, i|
       params=excel_xls_param row
-      params.values.each{|v| error_sheet.row(i+1).push v}
+      params.values.each { |v| error_sheet.row(i+1).push v }
       validator=KpiEntryValidator.new(params)
       validator.validate
       unless validator.valid
         valid=false
         error_sheet.row(i+1).push validator.content.length
         error_sheet.row(i+1).push validator.content.join(' # ')
-      error_sheet.row(i+1).set_format(error_header_length-1,error_format)
+        error_sheet.row(i+1).set_format(error_header_length-1, error_format)
+      else
+        validator.entry
       end
     end
-    return write_excel(error_book,SecureRandom.uuid+extention,extention) unless valid
+    return write_excel(error_book, SecureRandom.uuid+extention, extention) unless valid
   end
 
-  def self.import_xlsx file,extention
+  def self.import_xlsx file, extention
     book=Roo::Excelx.new file
 
     book.default_sheet=book.sheets.first
@@ -53,8 +55,8 @@ module KpiEntryImportHelper
       sheet.add_row error_header
       2.upto(book.last_row) do |line|
         params={}
-        entry_param_keys.each_with_index do |key,i|
-          params[key]=book.cell(line,i+1)
+        entry_param_keys.each_with_index do |key, i|
+          params[key]=book.cell(line, i+1)
         end
         row_values=params.values
         validator=KpiEntryValidator.new(params)
@@ -63,47 +65,49 @@ module KpiEntryImportHelper
           valid=false
           row_values<<validator.content.length
           row_values<< validator.content.join(' # ')
+        else
+          validator.entry
         end
         sheet.add_row row_values
         puts "line:#{line}"
         sheet.rows[line-1].cells[error_header_length-1].style=error_format unless validator.valid
       end
     end
-    return write_excel(error_book,SecureRandom.uuid+extention,extention) unless valid
+    return write_excel(error_book, SecureRandom.uuid+extention, extention) unless valid
   end
 
-  def self.write_excel book,file,extention=nil
+  def self.write_excel book, file, extention=nil
     path="tmp/#{file}"
     case extention
-    when '.xls'
-      book.write path
-    when '.xlsx'
-      book.serialize path
+      when '.xls'
+        book.write path
+      when '.xlsx'
+        book.serialize path
     end
-    AliyunOssService.store_kpi_entry_file(file,path)
+    AliyunOssService.store_kpi_entry_file(file, path)
   end
 
   def self.error_header
-    ['Email','KPIID','KPIName','Date','Value','ErrorCount','Error']
+    ['Email', 'KPIID', 'KPIName', 'Date', 'Value', 'ErrorCount', 'Error']
   end
 
   def self.excel_error_fromat
-    Spreadsheet::Format.new :color=>:red,:weight=>:bold
+    Spreadsheet::Format.new :color => :red, :weight => :bold
   end
 
   def self.excelx_error_format
-    {:style=>:bold,:color=>Axlsx::Color.new(:rgb => "FF0000"),:b=>true}
+    {:style => :bold, :color => Axlsx::Color.new(:rgb => "FF0000"), :b => true}
   end
 
   def self.excel_xls_param row
     params={}
-    entry_param_keys.each_with_index do |key,i|
+    entry_param_keys.each_with_index do |key, i|
       params[key]=row[i]
     end
     return params
   end
 
   def self.entry_param_keys
-    [:email,:kpi_id,:kpi_name,:date,:value]
+    [:email, :kpi_id, :kpi_name, :date, :value]
   end
 end

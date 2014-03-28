@@ -77,8 +77,10 @@
   <%end%>
 </ul>
 
-
 <% content_for :javascript_includes do%>
+    <%= javascript_include_tag "Manage.js"%>
+
+
     <%= javascript_include_tag "Manage-part.js"%>
     <%= javascript_include_tag "jquery-collision.min.js"%>
     <%= javascript_include_tag "jquery.ui/jquery.draggable.js"%>

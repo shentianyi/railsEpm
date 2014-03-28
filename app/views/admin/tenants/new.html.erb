@@ -1,0 +1,24 @@
+<h1>New Tenant</h1>
+<form action="/admin/tenants" method="post">
+  <%= flash[:notice]%>
+  <div class="field">
+    <label for="company_name">Company Name</label>
+    <input id="company_name" name="tenant[company_name]" size="30" type="text"/>
+  </div>
+  <div class="field">
+    <label for="first_name">Super User First Name</label>
+    <input id="first_name" name="user[first_name]" size="30" type="text"/>
+  </div>
+  <div class="field">
+    <label for="email">Super User Email</label>
+    <input id="email" name="user[email]" size="30" type="text"/>
+  </div>
+  <div class="field">
+    <label for="password">Super User Password</label>
+    <input id="password" name="user[password]" size="30" type="text"/>
+  </div>
+  <div class="actions">
+    <input name="commit" type="submit" value="Create"/>
+  </div>
+</form>
+<%= link_to 'Back', admin_tenants_path %>

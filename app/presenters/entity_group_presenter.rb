@@ -11,7 +11,7 @@ class EntityGroupPresenter<Presenter
   def to_detail_json
     json=self.to_json
     json[:contacts]=[]
-    @entity_group.contacts.select('contacts.id,contacts.name,tel,phone,email,title,image_url').each do |c|
+    @entity_group.contacts.select(User.contact_attrs).each do |c|
       json[:contacts]<<c
     end
     return json

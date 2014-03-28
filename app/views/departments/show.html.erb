@@ -1,5 +1,37 @@
-<p id="notice"><%= notice %></p>
-
-
-<%= link_to 'Edit', edit_department_path(@department) %> |
-<%= link_to 'Back', departments_path %>
+<h2>Departments</h2>
+<input type="hidden" value="<%= @root.id %>" id="data-hidden" />
+<% content_for :javascript_includes do%>
+	<%= javascript_include_tag "jit.js"%>
+	<%= javascript_include_tag "department-jit.js"%>
+<%end%>
+<style type="text/css">
+	#center-container {
+		margin: 0 auto;
+		height: 600px;
+		width: 600px;
+		background-color: white;
+	}
+</style>
+<div>
+	<div id="container">
+		<div id="center-container">
+			<div id="infovis"></div>
+		</div>
+		<div id="log"></div>
+	</div>
+</div>
+<script>
+	$(document).ready(function(){
+		$.ajax({
+			url: "/departments/jsontree",
+			data: {id:$("#data-hidden").val()},
+			type:"GET",
+			dataType:"json",
+			success: function(data){
+				if(data.result){
+					init(data.content);
+				}
+			}
+		});
+	})
+</script>

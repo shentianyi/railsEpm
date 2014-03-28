@@ -32,4 +32,10 @@ class Department < ActiveRecord::Base
     errors.add(:name, I18n.t("fix.cannot_repeat")) if Department.where(:name => self.name, :tenant_id => self.tenant_id).first if new_record?
     errors.add(:name, I18n.t("fix.cannot_repeat")) if Department.where(:name => self.name, :tenant_id => self.tenant_id).where('id <> ?', self.id).first unless new_record?
   end
+
+  def self.json_tree(nodes)
+    nodes.map do |node, sub_nodes|
+      {:id=>node.id,:name=>node.name,:data=>{},:children=> json_tree(sub_nodes).compact} 
+    end
+  end
 end

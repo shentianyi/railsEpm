@@ -91,8 +91,7 @@ CHARTBOOT.generatePie=function(scores,target_wrap){
         var data = [
             {value:scores[0],color : "rgba(151,187,205,0.5)"},
             {value:scores[1],color : "#F38630"},
-            {value:scores[2],color : "#E0E4CC"},
-            {value:scores[3],color : "#69D2E7"}
+            {value:scores[2],color : "#E0E4CC"}
         ]
         var ctx = $("#"+target_wrap).find("canvas").get(0).getContext("2d");
         var myNewChart = new Chart(ctx);

@@ -1,4 +1,21 @@
 IFEpm::Application.routes.draw do
+  use_doorkeeper do
+    controllers :applications => 'oauth/applications'
+    controllers :authorizations => nil
+    controllers :tokens => nil
+  end
+
+  devise_for :users, :controllers => {sessions: :user_sessions, registrations: :user_registrations}
+  devise_scope :user do
+    root :to => 'welcome#index'
+    post '/user_sessions/locale' => 'user_sessions#locale'
+    get '/user_sessions/new' => 'user_sessions#new'
+    post '/user_sessions/' => 'user_sessions#create'
+    get '/user_sessions/destroy' => 'user_sessions#destroy'
+    delete '/api/user_sessions/' => 'user_sessions#destroy'
+    post '/api/user_sessions/' => 'user_sessions#create'
+    get '/user_sessions/finish_guide' => 'user_sessions#finish_guide'
+  end
 
   resources :emails do
     collection do
@@ -17,10 +34,6 @@ IFEpm::Application.routes.draw do
     end
   end
 
-  root :to => 'user_sessions#new'
-  # get "welcome/navigate"
-
-
   resources :entities do
     collection do
       put :update
@@ -33,6 +46,7 @@ IFEpm::Application.routes.draw do
       match :login
       post :add
       put :update
+      get :applications
     end
   end
 
@@ -41,12 +55,16 @@ IFEpm::Application.routes.draw do
       post :locale
     end
   end
+
   resource :user_confirmations
+
   resource :subscriptions do
     collection do
       post :change_password
     end
   end
+  match '/api/subscriptions/change_password' => 'subscriptions#change_password'
+
 
   resources :kpis do
     collection do
@@ -95,6 +113,7 @@ IFEpm::Application.routes.draw do
   resources :dashboards do
     collection do
       get '/fullsize/:id' => :fullsize
+      post '/import_dashboards' => :import_dashboards
     end
   end
 
@@ -115,6 +134,8 @@ IFEpm::Application.routes.draw do
 
   resources :entity_group_items
 
+  # api routes
+  mount ApplicationAPI => '/api'
   namespace :api, :defaults => {:format => 'json'} do
     resources :kpi_entries do
       collection do
@@ -135,6 +156,7 @@ IFEpm::Application.routes.draw do
         get 'dashboard_items/update_sequence' => :update_sequence
       end
     end
+
     resource :user_sessions do
       collection do
         post :locale
@@ -172,7 +194,7 @@ IFEpm::Application.routes.draw do
     end
     resources :kpi_categories
     controller :settings do
-      get 'settings/validate_ios_app_version'=>:validate_ios_app_version
+      get 'settings/validate_ios_app_version' => :validate_ios_app_version
     end
   end
 
@@ -180,14 +202,12 @@ IFEpm::Application.routes.draw do
   #require 'sidekiq/web'
   #mount Sidekiq::Web => '/admin/sidekiq'
 
-# The priority is based upon order of creation:
-# first created -> highest priority.
-# match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
+  # The priority is based upon order of creation:
+  # first created -> highest priority.
+  # match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
 
   namespace :admin do
-    resources :sessions
-
-    [:kpi_templates, :kpi_category_templates].each do |model|
+    [:kpi_templates, :kpi_category_templates, :contacts, :entity_contacts, :users].each do |model|
       resources model do
         collection do
           post :updata
@@ -204,9 +224,18 @@ IFEpm::Application.routes.draw do
     resources :settings do
       collection do
         post :version_save
-        get   :version
+        get :version
       end
     end
+
+    resources :dashboards do
+      collection do
+        post '/import_dashboards' => :import_dashboards
+        get '/error_file' => :error_file
+      end
+    end
+    resources :tenants
+    get '/' => 'tenants#index'
 
   end
 
@@ -224,6 +253,9 @@ IFEpm::Application.routes.draw do
       get 'valid_entities' => :valid_entities
       #get the valid users can be added to the department
       get 'valid_users' => :valid_users
+      get 'new_entities' => :new_entities
+
+      get 'jsontree' => :jsontree
     end
   end
 
@@ -241,6 +273,7 @@ IFEpm::Application.routes.draw do
   #  get 'departments/entity_users' => :entity_users
   #  get 'departments/new_entities' => :new_entities
   #end
+
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.

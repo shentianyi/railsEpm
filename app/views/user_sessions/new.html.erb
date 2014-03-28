@@ -54,7 +54,8 @@
       <a class="log-btn language-btn" lan="zh">中文</a>
       <a class="log-btn language-btn" lan="en">English</a>
       <a class="log-btn language-btn" lan="de">Deutsch</a>
-      <p id="default_lan" lan="<%= I18n.locale%>" style="display: none"></p>
+
+      <p id="default_lan" lan="<%= I18n.locale %>" style="display: none"></p>
     </div>
   </div>
 </div>
@@ -136,31 +137,31 @@
         });
 
         $("#sign-up,#sign-up-now").on("click", function () {
-            if($("#sign-up-now").attr('state') == "close"){
+            if ($("#sign-up-now").attr('state') == "close") {
                 $('#signIn-block').slideDown('500');
                 $("#sign-up-now").attr('state', 'open');
                 $("#user_session_email").focus();
             }
-            else{
+            else {
                 $('#signIn-block').slideUp('500');
                 $("#sign-up-now").attr('state', 'close');
             }
 
             /*
-            if ($("#sign-up").attr('state') == "close") {
-                if ($("#sign-in").attr("state") == "open") {
-                    $('#signIn-block').slideUp('500');
-                    $("#sign-in").attr('state', 'close');
-                }
-                $('#signUp-block').slideDown('500');
-                $("#sign-up").attr('state', 'open');
+             if ($("#sign-up").attr('state') == "close") {
+             if ($("#sign-in").attr("state") == "open") {
+             $('#signIn-block').slideUp('500');
+             $("#sign-in").attr('state', 'close');
+             }
+             $('#signUp-block').slideDown('500');
+             $("#sign-up").attr('state', 'open');
 
-            }
-            else {
-                $('#signIn-block').slideUp('500');
-                $("#sign-up").attr('state', 'close');
-            }
-            */
+             }
+             else {
+             $('#signIn-block').slideUp('500');
+             $("#sign-up").attr('state', 'close');
+             }
+             */
         });
         $("body").on("keyup", "input[type='text'],input[type='password']", function (event) {
             var e = adapt_event(event).event;
@@ -177,7 +178,7 @@
         error_dis();
     })
 
-    function show_signup(){
+    function show_signup() {
         if ($("#sign-up-now").attr("state") == "open") {
             $('#signIn-block').slideUp('500');
             $("#sign-in").attr('state', 'close');
@@ -189,7 +190,7 @@
         if (errors != '') {
             MessageBox(errors, "top", "warning");
         }
-        if( notice != ''){
+        if (notice != '') {
             MessageBox(notice, "top", "success");
         }
     }
@@ -200,16 +201,16 @@
             password: $("#user_session_password").val()
         }
         var data = {
-            user_session: user_session
+            user: user_session
         }
         console.log(user_session);
         $.ajax({
-            url: '/user_sessions',
+            url: '/user_sessions/',
             data: data,
             type: 'POST',
             success: function (data) {
                 if (data.result) {
-                    MessageBox(data.content,"top","success");
+                    MessageBox(data.content, "top", "success");
                     window.location = '/welcome';
                 }
                 else {
@@ -228,18 +229,22 @@
         }
 
         $.ajax({
-            url:'/subscriptions',
-            data:data,
-            type:'POST',
-            success:function(data){
-                if(data.result){
-                    MessageBox(data.content,"top","success");
-                    window.location='/welcome';
+            url: '/subscriptions',
+            data: data,
+            type: 'POST',
+            success: function (data) {
+                if (data.result) {
+                    MessageBox(data.content, "top", "success");
+                    window.location = '/welcome';
                 }
-                else{
-                    MessageBox(data.content,"top","warning");
+                else {
+                    MessageBox(data.content, "top", "warning");
                 }
             }
         });
     }
 </script>
+
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "Log.js" %>
+<% end %>

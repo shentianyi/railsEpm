@@ -197,6 +197,67 @@ zh:
   activerecord:
     errors:
       <<: *errors
+  devise:
+      confirmations:
+        confirmed: "您的帐号已经确认，您现在已登录。"
+        send_instructions: "几分钟后，您将收到确认帐号的电子邮件。"
+        send_paranoid_instructions: "如果您的邮箱存在于我们的数据库中，您将收到一封确认账号的邮件。"
+      failure:
+        already_authenticated: "您已经登录。"
+        inactive: "您还没有激活帐户。"
+        invalid: "邮箱或密码错误。"
+        locked: "您的帐号已被锁定。"
+        last_attempt: "您还有最后一次尝试机会，再次失败您的账号将被锁定。"
+        not_found_in_database: "邮箱或密码错误。"
+        timeout: "您已登录超时，请重新登录。"
+        unauthenticated: "继续操作前请注册或者登录。"
+        unconfirmed: "继续操作前请先确认您的帐号。"
+      sessions:
+        signed_in: "登录成功."
+        signed_out: "退出成功."
+  doorkeeper:
+      errors:
+        messages:
+          # Common error messages
+          invalid_request: 'The request is missing a required parameter, includes an unsupported parameter value, or is otherwise malformed.'
+          invalid_redirect_uri: 'The redirect uri included is not valid.'
+          unauthorized_client: 'The client is not authorized to perform this request using this method.'
+          access_denied: 'The resource owner or authorization server denied the request.'
+          invalid_scope: 'The requested scope is invalid, unknown, or malformed.'
+          server_error: 'The authorization server encountered an unexpected condition which prevented it from fulfilling the request.'
+          temporarily_unavailable: 'The authorization server is currently unable to handle the request due to a temporary overloading or maintenance of the server.'
+
+          #configuration error messages
+          credential_flow_not_configured: 'Resource Owner Password Credentials flow failed due to Doorkeeper.configure.resource_owner_from_credentials being unconfigured.'
+          resource_owner_authenticator_not_configured: 'Resource Owner find failed due to Doorkeeper.configure.resource_owner_authenticator being unconfiged.'
+
+          # Access grant errors
+          unsupported_response_type: 'The authorization server does not support this response type.'
+
+          # Access token errors
+          invalid_client: 'Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.'
+          invalid_grant: 'The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.'
+          unsupported_grant_type: 'The authorization grant type is not supported by the authorization server.'
+
+          # Password Access token errors
+          invalid_resource_owner: 'The provided resource owner credentials are not valid, or resource owner cannot be found'
+
+          invalid_token:
+            revoked: "The access token was revoked"
+            expired: "The access token expired"
+            unknown: "The access token is invalid"
+
+      flash:
+        applications:
+          create:
+            notice: 'Application created.'
+          destroy:
+            notice: 'Application deleted.'
+          update:
+            notice: 'Application updated.'
+        authorized_applications:
+          destroy:
+            notice: 'Application revoked.'
   # brilliantech project
   #authlogic:
    # error_messages:
@@ -257,6 +318,7 @@ zh:
       cfm_change: 确认修改
     msg:
       login_success: 登录成功
+      login_fail: 登陆失败,请核实登陆信息
       login_require: 请先登录
       logout_success: 注销成功
       logout_require: 请先注册
@@ -330,7 +392,6 @@ zh:
           create: 创建KPI
           create_desc: 为不同的KPI类别创建KPI，你可以对KPI做相应的编辑
           create_now: 现在创建
-
           kpi_library_desc: 如果你需要一些常用的KPI，你可以方便的在KPI库中选择
           choose_now: 现在选择
           next_desc: 创建完成KPI后，你应该创建输入点和用户，然后将KPI分配给相应输入点中的用户内
@@ -402,6 +463,9 @@ zh:
           department: 部门
           departments: 负责部门
           title: 职位
+          tel: 座机
+          phone: 手机
+          image_url: 头像
       view:
         desc:
           name: 视图

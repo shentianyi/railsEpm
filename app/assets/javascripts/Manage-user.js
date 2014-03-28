@@ -117,10 +117,11 @@ MANAGE.user.add_new = function () {
     var entity_id = $("#entity-for-kpi :selected").attr("value");
     var department_id = $("#department-for-kpi :selected").attr("value");
     var department_name = $("#department-for-kpi :selected").text();
-    console.log(department_id);
     var entity_name = $("#entity-for-kpi :selected").text();
     var mail = $("#new-user-mail").val();
     var title = $('#new-user-title').val();
+    var tel = $('#new-user-tel').val();
+    var phone = $('#new-user-phone').val();
     var password = $("#new-user-password").val();
     var password_confirm = $("#new-user-password-confirm").val();
     var role = $("input[name='user-role']:checked").attr("value");
@@ -133,6 +134,8 @@ MANAGE.user.add_new = function () {
                     first_name: name,
                     email: mail,
                     title: title,
+                    tel:tel,
+                    phone:phone,
                     password: password,
                     password_confirmation: password_confirm,
                     entity_id: entity_id,
@@ -153,12 +156,16 @@ MANAGE.user.add_new = function () {
                                 .append($("<tr />")
                                     .append($("<td />").text(object.first_name).addClass("user-manage-name"))
                                     .append($("<td />").text(object.title).addClass("user-manage-title"))
+                                    .append($("<td />").text(object.tel).addClass("user-manage-tel"))
+                                    .append($("<td />").text(object.phone).addClass("user-manage-phone"))
                                     .append($("<td />").text(department_name).addClass("user-manage-department").attr("value", object.department_id))
                                     .append($("<td />").text(entity_name).addClass("user-manage-entity").attr("value", object.entity_id))
                                     .append($("<td />").text(object.role).addClass("user-manage-authority").attr("value", object.role_id)))
                                 .append($("<tr />")
                                     .append($("<td />").text(object.email).addClass("user-manage-mail"))
                                     .append($("<td />").text(I18n.t('manage.user.new.title')))
+                                    .append($("<td />").text(I18n.t('manage.user.new.tel')))
+                                    .append($("<td />").text(I18n.t('manage.user.new.phone')))
                                     .append($("<td />").text(I18n.t('manage.user.new.department')))
                                     .append($("<td />").text(I18n.t('manage.user.new.entity')))
                                     .append($("<td />").text(I18n.t('manage.user.new.departments')))
@@ -214,6 +221,8 @@ MANAGE.user.user_edit_box_bind = function () {
         name = $target.next().find(".user-manage-name").text(),
         mail = $target.next().find(".user-manage-mail").text(),
         title = $target.next().find('.user-manage-title').text(),
+        tel = $target.next().find('.user-manage-tel').text(),
+        phone = $target.next().find('.user-manage-phone').text(),
         department_id = $target.next().find('.user-manage-department').attr("value"),
         entity_id = $target.next().find('.user-manage-entity').attr("value"),
         authority = $target.next().find(".user-manage-authority").attr("value");
@@ -221,6 +230,8 @@ MANAGE.user.user_edit_box_bind = function () {
     $("#user-edit #edit-user-name").val(name);
     $("#user-edit #edit-user-mail").val(mail);
     $("#user-edit #edit-user-title").val(title);
+    $("#user-edit #edit-user-tel").val(tel);
+    $("#user-edit #edit-user-phone").val(phone);
     $("#user-edit input[type='radio'][value='" + authority + "']").iCheck("check");
     $("#manage-user-edit-old").attr("effect_on", $target.parent().attr("id"));
     $("#edit-department-for-kpi option[value='" + department_id + "']").prop('selected', true);
@@ -238,7 +249,9 @@ MANAGE.user.edit = function () {
         entity_name = $("#edit-entity-for-kpi :selected").text(),
         department_id = $("#edit-department-for-kpi :selected").attr("value"),
         department_name = $("#edit-department-for-kpi :selected").text(),
-        title = $("#user-edit #edit-user-title").val();
+        title = $("#user-edit #edit-user-title").val(),
+        tel = $("#user-edit #edit-user-tel").val(),
+        phone = $("#user-edit #edit-user-phone").val();
 
     if ($.trim(edit_name).length > 0 && edit_mail.length > 0) {
         if ($("#user-edit>div>input").filter("[red='true']").length == 0) {
@@ -251,6 +264,8 @@ MANAGE.user.edit = function () {
                         first_name: edit_name,
                         email: edit_mail,
                         title: title,
+                        tel:tel,
+                        phone:phone,
                         password: password,
                         role_id: edit_authority,
                         entity_id: entity_id,
@@ -264,6 +279,8 @@ MANAGE.user.edit = function () {
                         $target.find(".user-manage-name").text(object.first_name);
                         $target.find(".user-manage-mail").text(object.email);
                         $target.find(".user-manage-title").text(object.title);
+                        $target.find(".user-manage-tel").text(object.tel);
+                        $target.find(".user-manage-phone").text(object.phone);
                         $target.find('.user-manage-entity').attr("value", object.entity_id);
                         $target.find('.user-manage-department').attr("value", object.department_id);
                         $target.find('.user-manage-department').text(department_name);

@@ -12,7 +12,7 @@ module Api
     end
 
     def contacts
-      contacts=EntityGroup.find_by_id(params[:id]).contacts.select('contacts.id,contacts.name,tel,phone,email,title,image_url')
+      contacts=EntityGroup.find_by_id(params[:id]).contacts.select(User.contact_attrs)
       respond_to do |t|
         t.json { render :json => contacts }
         t.js { render :js => jsonp_str(contacts) }

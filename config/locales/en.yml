@@ -209,6 +209,67 @@ en:
   activerecord:
     errors:
       <<: *errors
+  devise:
+      confirmations:
+        confirmed: "Your account was successfully confirmed."
+        send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+        send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes."
+      failure:
+        already_authenticated: "You are already signed in."
+        inactive: "Your account is not activated yet."
+        invalid: "Invalid email or password."
+        locked: "Your account is locked."
+        last_attempt: "You have one more attempt before your account will be locked."
+        not_found_in_database: "Invalid email or password."
+        timeout: "Your session expired. Please sign in again to continue."
+        unauthenticated: "You need to sign in or sign up before continuing."
+        unconfirmed: "You have to confirm your account before continuing."
+      sessions:
+        signed_in: "Signed in successfully."
+        signed_out: "Signed out successfully."
+  doorkeeper:
+      errors:
+        messages:
+          # Common error messages
+          invalid_request: 'The request is missing a required parameter, includes an unsupported parameter value, or is otherwise malformed.'
+          invalid_redirect_uri: 'The redirect uri included is not valid.'
+          unauthorized_client: 'The client is not authorized to perform this request using this method.'
+          access_denied: 'The resource owner or authorization server denied the request.'
+          invalid_scope: 'The requested scope is invalid, unknown, or malformed.'
+          server_error: 'The authorization server encountered an unexpected condition which prevented it from fulfilling the request.'
+          temporarily_unavailable: 'The authorization server is currently unable to handle the request due to a temporary overloading or maintenance of the server.'
+
+          #configuration error messages
+          credential_flow_not_configured: 'Resource Owner Password Credentials flow failed due to Doorkeeper.configure.resource_owner_from_credentials being unconfigured.'
+          resource_owner_authenticator_not_configured: 'Resource Owner find failed due to Doorkeeper.configure.resource_owner_authenticator being unconfiged.'
+
+          # Access grant errors
+          unsupported_response_type: 'The authorization server does not support this response type.'
+
+          # Access token errors
+          invalid_client: 'Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.'
+          invalid_grant: 'The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.'
+          unsupported_grant_type: 'The authorization grant type is not supported by the authorization server.'
+
+          # Password Access token errors
+          invalid_resource_owner: 'The provided resource owner credentials are not valid, or resource owner cannot be found'
+
+          invalid_token:
+            revoked: "The access token was revoked"
+            expired: "The access token expired"
+            unknown: "The access token is invalid"
+
+      flash:
+        applications:
+          create:
+            notice: 'Application created.'
+          destroy:
+            notice: 'Application deleted.'
+          update:
+            notice: 'Application updated.'
+        authorized_applications:
+          destroy:
+            notice: 'Application revoked.'
   # brilliantech project
   welcome:
     title: Welcome
@@ -254,6 +315,7 @@ en:
       cfm_change: Change
     msg:
       login_success: Login successfully!
+      login_fail: Error Login Info!
       login_require: Please Login!
       logout_success: Logout successfully!
       logout_require: Please Sign up!
@@ -395,6 +457,9 @@ en:
         department: Department
         departments: In Charge
         title: Title
+        tel: Tel
+        phone: Phone
+        image_url: Avatar
     view:
       desc:
         name: View
