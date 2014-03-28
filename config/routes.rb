@@ -247,23 +247,26 @@ IFEpm::Application.routes.draw do
       get 'valid_entities' => :valid_entities
       #get the valid users can be added to the department
       get 'valid_users' => :valid_users
+      get 'new_entities' => :new_entities
+
+      get 'jsontree' => :jsontree
     end
   end
 
-  controller :departments do
-    get 'departments' => :index
-    post 'departments' => :create
-    delete 'departments/:id' => :destroy
-    post 'departments/add_entity' => :add_entity
-    delete 'departments/remove_entity' => :remove_entity
-    post 'departments/add_user' => :add_user
-    delete 'departments/remove_user' => :remove_user
-    get 'departments/sub_departments' => :sub_departments
-    get 'departments/sub_entities' => :sub_entities
-    get 'departments/users' => :users
-    get 'departments/entity_users' => :entity_users
-    get 'departments/new_entities' => :new_entities
-  end
+  #controller :departments do
+  #  get 'departments' => :index
+  #  post 'departments' => :create
+  #  delete 'departments/:id' => :destroy
+  #  post 'departments/add_entity' => :add_entity
+  #  delete 'departments/remove_entity' => :remove_entity
+  #  post 'departments/add_user' => :add_user
+  #  delete 'departments/remove_user' => :remove_user
+  #  get 'departments/sub_departments' => :sub_departments
+  #  get 'departments/sub_entities' => :sub_entities
+  #  get 'departments/users' => :users
+  #  get 'departments/entity_users' => :entity_users
+  #  get 'departments/new_entities' => :new_entities
+  #end
 
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.

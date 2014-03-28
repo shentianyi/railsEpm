@@ -6,6 +6,20 @@ class DepartmentsController < ApplicationController
     render
   end
 
+  def show
+    @root = Department.roots.first
+  end
+
+  def jsontree
+    msg = Message.new
+    msg.result = true
+    if (d = Department.find_by_id(params[:id]))
+      msg.content = Department.json_tree(d.subtree.arrange) 
+    end
+
+    render :json=>msg
+  end
+
   def create
     msg = Message.new
     msg.result = false

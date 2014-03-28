@@ -1,5 +1,6 @@
 #encoding: utf-8
 class SubscriptionsController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   skip_before_filter :require_user,:only=>[:new,:create]
   skip_before_filter :require_active_user,:only=>[:new,:create]
   skip_before_filter :check_tenant_status
