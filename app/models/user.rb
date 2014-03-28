@@ -56,7 +56,11 @@ class User < ActiveRecord::Base
   end
 
   def image_name
-    self.image_url.match(/(avatar\/)(.*)\?/)[2] unless self.image_url.blank?
+    unless self.image_url.blank?
+      if (arr= self.image_url.match(/(avatar\/)(.*)\?/)).size==3
+        return arr[2]
+      end
+    end
   end
 
 
