@@ -3,11 +3,13 @@
 module Api
   class EmailsController < ApiController
     layout 'pure'
+    #skip_before_filter :verify_authenticity_token
+    #skip_load_and_authorize_resource
 
     def index
       conditions=params[:conditions]||{}
       conditions[:user_id]=current_user.id
-      @emails = Email.search(conditions).paginate(page:params[:page],per_page:30).order('created_at desc').all
+      @emails = Email.search(conditions).paginate(page: params[:page], per_page: 30).order('created_at desc').all
       @emails=EmailPresenter.group_by_time(EmailPresenter.init_presenters(@emails))
       respond_to do |t|
         t.json { render :json => @emails }
@@ -17,7 +19,6 @@ module Api
 
     def show
       @email = Email.find(params[:id])
-
       respond_to do |t|
         t.json { render :json => @email }
         t.js { render :js => jsonp_str(@email) }
@@ -30,8 +31,8 @@ module Api
       @email=Email.new(params[:email])
       @email.init_user_info current_user
       if msg.result = @email.save
-        #Resque.enqueue(EmailSender, @email.id, params)
-        EmailWorker.perform_async(@email.id,params)
+        Resque.enqueue(EmailSender, @email.id, params)
+        #EmailWorker.perform_async(@email.id, params)
       else
         msg.content = @email.errors.full_messages
       end

@@ -9,12 +9,11 @@
     $(document).ready(function(){
         $.get("/welcome/users",{},function(data){
             if(data.result){
-                CHARTBOOT.pie.scores=[data.content.user,data.content.manager,data.content.directors,data.content.admin];
+                CHARTBOOT.pie.scores=[data.content.user,data.content.director,data.content.admin];
                 CHARTBOOT.generatePie(CHARTBOOT.pie.scores,"chart-pie-wrap");
                 $("#count-general").text(CHARTBOOT.pie.scores[0]);
-                $("#count-department-manager").text(CHARTBOOT.pie.scores[1]);
-                $("#count-general-manager").text(CHARTBOOT.pie.scores[2]);
-                $("#count-admin").text(CHARTBOOT.pie.scores[3]);
+                $("#count-general-manager").text(CHARTBOOT.pie.scores[1]);
+                $("#count-admin").text(CHARTBOOT.pie.scores[2]);
             }
         });
         $.get("/welcome/statistics",{},function(data){

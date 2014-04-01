@@ -1,9 +1,7 @@
 #encoding: utf-8
 class User < ActiveRecord::Base
-
   belongs_to :tenant
   belongs_to :entity
-
   belongs_to :department
   has_many :user_departments, :dependent => :destroy
   has_many :departments, :through => :user_departments
@@ -16,15 +14,23 @@ class User < ActiveRecord::Base
   has_many :kpi_entries, :through => :user_kpi_items
   has_many :emails, :dependent => :destroy
 
-  attr_accessible :email, :password, :password_confirmation, :status, :perishable_token, :confirmed, :first_name, :last_name, :is_tenant
-  attr_accessible :tenant_id, :role_id, :entity_id, :department_id, :is_sys, :title #, :department_group_id
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
 
-  acts_as_authentic do |c|
-    c.login_field = :email
-    c.validate_email_field = false
-    c.merge_validates_format_of_email_field_options :message => 'My message'
-  end
-                                                                                    # acts as tenant
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation #, :remember_me
+  attr_accessible :status, :perishable_token, :confirmed, :first_name, :last_name, :is_tenant
+  attr_accessible :tenant_id, :role_id, :entity_id, :department_id, :is_sys, :title #, :department_group_id
+  attr_accessible :tel, :phone, :image_url
+
+  #acts_as_authentic do |c|
+  #  c.login_field = :email
+  #  c.validate_email_field = false
+  #  c.merge_validates_format_of_email_field_options :message => 'My message'
+  #end
+  # acts as tenant
   acts_as_tenant(:tenant)
 
   def method_missing(method_name, *args, &block)
@@ -33,6 +39,10 @@ class User < ActiveRecord::Base
     else
       super
     end
+  end
+
+  def self.uniq_attr
+    ['email']
   end
 
   def confirmed?
@@ -48,6 +58,14 @@ class User < ActiveRecord::Base
       return false
     end
   end
+
+  def image_name
+    unless self.image_url.blank?
+      arr= self.image_url.match(/(avatar\/)(.*)\?/)
+      return arr[2] if arr && arr.size==3
+    end
+  end
+
 
   def deliver_user_confirmation!
     reset_perishable_token!
@@ -98,6 +116,30 @@ class User < ActiveRecord::Base
 
   def department_names
     self.departments.pluck(:name).join(',')
+  end
+
+  def self.contact_attrs
+    'users.id,users.first_name as name,users.tel,users.phone,users.email,users.title,users.image_url'
+  end
+
+
+  alias :devise_valid_password? :valid_password?
+
+  def valid_password?(password)
+    begin
+      super(password)
+    rescue BCrypt::Errors::InvalidHash
+      stretches = 20
+      digest = [password, self.password_salt].flatten.join('')
+      stretches.times { digest = Digest::SHA512.hexdigest(digest) }
+      if digest == self.encrypted_password
+        self.encrypted_password = self.password_digest(password)
+        self.save
+        return true
+      else
+        return false
+      end
+    end
   end
 
 

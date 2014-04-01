@@ -1,0 +1,14 @@
+{
+  "name": "ClearInsight",
+  "description": "ClearInsight management",
+  "version": "0.1.0",
+  "private": true,
+  "author": {
+    "name": "wayne"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-uglify": "*",
+    "load-grunt-tasks": "*"
+  }
+}

@@ -1,50 +1,63 @@
-class UserSessionsController < ApplicationController
-  skip_before_filter :require_user,:only=>[:new,:create,:locale]
-  skip_before_filter :require_active_user,:only=>[:new,:create,:locale]
+class UserSessionsController < Devise::SessionsController
+  skip_before_filter :require_user, :only => [:new, :create, :locale]
   skip_before_filter :check_tenant_status
-  skip_before_filter :find_current_user_tenant,:only=>[:new,:create,:locale]
-  skip_authorize_resource :only=>[:new,:create,:locale]
-  before_filter :require_no_user, :only => [:new, :create]
-
+  skip_before_filter :find_current_user_tenant
+  #before_filter :ensure_params_exist, :only => [:create]
+  skip_authorize_resource
+  skip_before_filter :verify_authenticity_token,:only=>[:destroy]
   layout 'non_authorized'
-  def new
-    @user_session = UserSession.new
-  end
 
   def create
-    msg=Message.new
-    msg.result = false
-    @user_session = UserSession.new(params[:user_session])
-    if msg.result =  @user_session.save
-      msg.result = true
-      msg.content = I18n.t 'auth.msg.login_success'
-    else
-      msg.content = @user_session.errors.full_messages
+    params[:user] = params[:user_session] if params[:user_session]
+    resource = User.find_for_database_authentication(:email => params[:user][:email])
+    return invalid_login_attempt unless resource
+    if resource.valid_password?(params[:user][:password])
+      sign_in(resource_name, resource)
+      render :json => {result: true,
+                       content: I18n.t('auth.msg.login_success')}
+      return
     end
-    render :json=>msg
+    invalid_login_attempt
   end
 
   def destroy
-    current_user_session.destroy
-    flash[:notice] = I18n.t 'auth.msg.logout_success'
-    redirect_to new_user_sessions_url
+    redirect_path = after_sign_out_path_for(resource_name)
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+    set_flash_message :notice, :signed_out if signed_out && is_flashing_format?
+    yield resource if block_given?
+
+    respond_to do |format|
+      format.json { render :json => {:result => true} }
+      format.html { redirect_to redirect_path }
+    end
   end
 
 
   def finish_guide
-    result = {:result=>true}
-    current_user.remove_guide_item(params[:cname],params[:aname])
+    result = {:result => true}
+    current_user.remove_guide_item(params[:cname], params[:aname])
     respond_to do |t|
-      t.json {render :json=>result}
-      t.js {render :js=>jsonp_str(result)}
+      t.json { render :json => result }
+      t.js { render :js => jsonp_str(result) }
     end
   end
 
   def locale
-    msg = Message.new
-    msg.result = true
+    msg = Message.new(result: true)
     cookies[:locale] = params[:locale]
     msg.content = session[:return_to]
     render :json => msg
+  end
+
+
+  protected
+  def ensure_params_exist
+    return unless params[:user].blank?
+    render :json => {:success => false, :message => "missing user_login parameter"}, :status => 422
+  end
+
+  def invalid_login_attempt
+    warden.custom_failure!
+    render :json => {:result => false, :content => I18n.t('auth.msg.login_fail')}
   end
 end

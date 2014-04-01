@@ -1,11 +1,11 @@
 function data_upload(idStr) {
-     // alert('d');
+//     alert('d');
      var vali = true;
      var lock = false;
-     var csvReg = /(\.|\/)(csv|tff)$/i;
+     var csvReg = /(\.|\/)(csv|tff|zip)$/i;
      $(idStr).fileupload({
           singleFileUploads : false,
-          acceptFileTypes : /(\.|\/)(csv|tff)$/i,
+          acceptFileTypes : /(\.|\/)(csv|tff|zip)$/i,
           dataType : 'json',
           change : function(e, data) {
                vali = true;
@@ -15,6 +15,8 @@ function data_upload(idStr) {
                     if(!csvReg.test(file.name)) {
                          msg = '格式错误';
                          vali = false;
+                        alert(msg);
+                        return;
                     }
                     show_handle_dialog();
                     $(idStr + '-preview').show().append("<span>文件：" + file.name + "</span><br/><span info>处理中....</span>");

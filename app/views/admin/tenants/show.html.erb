@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Company Name:</b>
+  <%= @tenant.company_name %>
+</p>
+
+<p>
+  <b>Super User:</b>
+  <%= @tenant.super_user.email %>
+</p>
+
+<p>
+  <b>Created At:</b>
+  <%= @tenant.created_at %>
+</p>
+
+<p>
+  <b>Expire At:</b>
+  <%= @tenant.expire_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_tenant_path(@tenant) %> |
+<%= link_to 'Back', admin_tenants_path %>

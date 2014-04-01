@@ -5,78 +5,76 @@
     </div>
 </div>
 -->
-  <section class="index-welcome">
-    <!--<div class="left-image"></div>-->
-    <div class="right-info">
-      <h2><%= t 'welcome.title'%></h2>
+<section class="index-welcome">
+  <!--<div class="left-image"></div>-->
+  <div class="right-info">
+    <h2><%= t 'welcome.title' %></h2>
 
-      <p><%= t 'welcome.sub_title'%></p>
+    <p><%= t 'welcome.sub_title' %></p>
 
-      <div class="user-info">
-        <p><i class="icon-user"></i><span id="user-email"><%= current_user.email%></span></p>
+    <div class="user-info">
+      <p><i class="icon-user"></i><span id="user-email"><%= current_user.email %></span></p>
 
-        <p><i class="icon-time"></i><span id="login-time"></span></p>
-      </div>
-
+      <p><i class="icon-time"></i><span id="login-time"></span></p>
     </div>
-  </section>
 
-  <section class="choose-role">
-    <p><%= t 'welcome.entrys.title'%></p>
+  </div>
+</section>
 
-    <div class="roles">
-      <div class="item">
-        <a href="<%= kpi_entries_path%>"><i class="icon-upload-alt"></i></a>
+<section class="choose-role">
+  <p><%= t 'welcome.entrys.title' %></p>
 
-        <p><%= t 'manage.user.role.user'%></p>
-        <a href="<%= kpi_entries_path%>"><%= t 'welcome.entrys.kpi_entry'%></a>
-      </div>
-      <div class="item">
-        <a href="<%= analyse_kpi_entries_path %>"><i class="icon-bar-chart"></i></a>
+  <div class="roles">
+    <div class="item">
+      <a href="<%= kpi_entries_path %>"><i class="icon-upload-alt"></i></a>
 
-        <p><%= t 'manage.user.role.manager'%></p>
-        <a href="<%= analyse_kpi_entries_path %>"><%= t 'welcome.entrys.analyse'%></a>
-      </div>
-      <div class="item">
-        <a href="<%= dashboards_path %>"><i class="icon-dashboard"></i></a>
-
-        <p><%= t 'manage.user.role.director'%></p>
-        <a href="<%= dashboards_path %>"><%= t 'welcome.entrys.dashboard'%></a>
-      </div>
-      <div class="item">
-        <a href="/kpis"><i class="icon-sitemap"></i></a>
-
-        <p><%= t 'manage.user.role.admin'%></p>
-        <a href="/kpis"><%= t 'welcome.entrys.manage_kpi'%></a>
-      </div>
+      <p><%= t 'manage.user.role.user' %></p>
+      <a href="<%= kpi_entries_path %>"><%= t 'welcome.entrys.kpi_entry' %></a>
     </div>
-  </section>
+    <div class="item">
+      <a href="<%= analyse_kpi_entries_path %>"><i class="icon-bar-chart"></i></a>
 
-  <section class="index-statistics">
-    <p><%= t 'welcome.statistics.title'%></p>
-
-    <div class="inner">
-      <div class="item" id="chart-pie-wrap">
-        <label><%= t 'welcome.statistics.staff'%></label>
-
-        <p><span><%= t 'manage.user.role.user'%>:</span><span id="count-general">21</span></p>
-
-        <p><span><%= t 'manage.user.role.manager'%>:</span><span id="count-department-manager">6</span></p>
-
-        <p><span><%= t 'manage.user.role.director'%>:</span><span id="count-general-manager">1</span></p>
-
-        <p><span><%= t 'manage.user.role.admin'%>:</span><span id="count-admin">3</span></p>
-        <canvas name="pie_chart"></canvas>
-      </div>
-
-      <div class="item" id="chart-column-wrap">
-        <label><%= t 'welcome.statistics.table'%></label>
-        <canvas name="column_chart"></canvas>
-      </div>
+      <p><%= t 'manage.user.role.manager' %></p>
+      <a href="<%= analyse_kpi_entries_path %>"><%= t 'welcome.entrys.analyse' %></a>
     </div>
-  </section>
-<% content_for :javascript_includes do%>
-    <%= javascript_include_tag "Chart.min.js"%>
-    <%= javascript_include_tag "Chart_generate.js"%>
-    <%= javascript_include_tag "Index.js"%>
+    <div class="item">
+      <a href="<%= dashboards_path %>"><i class="icon-dashboard"></i></a>
+
+      <p><%= t 'manage.user.role.director' %></p>
+      <a href="<%= dashboards_path %>"><%= t 'welcome.entrys.dashboard' %></a>
+    </div>
+    <div class="item">
+      <a href="/kpis"><i class="icon-sitemap"></i></a>
+
+      <p><%= t 'manage.user.role.admin' %></p>
+      <a href="/kpis"><%= t 'welcome.entrys.manage_kpi' %></a>
+    </div>
+  </div>
+</section>
+
+<section class="index-statistics">
+  <p><%= t 'welcome.statistics.title' %></p>
+
+  <div class="inner">
+    <div class="item" id="chart-pie-wrap">
+      <label><%= t 'welcome.statistics.staff' %></label>
+
+      <p><span><%= t 'manage.user.role.user' %>:</span><span id="count-general">21</span></p>
+
+      <p><span><%= t 'manage.user.role.director' %>:</span><span id="count-general-manager">1</span></p>
+
+      <p><span><%= t 'manage.user.role.admin' %>:</span><span id="count-admin">3</span></p>
+      <canvas name="pie_chart"></canvas>
+    </div>
+
+    <div class="item" id="chart-column-wrap">
+      <label><%= t 'welcome.statistics.table' %></label>
+      <canvas name="column_chart"></canvas>
+    </div>
+  </div>
+</section>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "Chart.min.js" %>
+    <%= javascript_include_tag "Chart_generate.js" %>
+    <%= javascript_include_tag "Index.js" %>
 <% end %>

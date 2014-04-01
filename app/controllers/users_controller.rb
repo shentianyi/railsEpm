@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   # get ability entity
   before_filter :get_ability_entity, :only => [:new, :edit]
-  before_filter :get_ability_user, :only => [:edit, :update, :destroy]
+  before_filter :get_ability_user, :only => [:edit, :destroy]
 
   def index
     @roles=Role.role_items
@@ -18,38 +18,9 @@ class UsersController < ApplicationController
     @user=User.accessible_by(current_ability).find_by_id(params[:id])
   end
 
-  def update
-    msg=Message.new
-    if params[:user][:password].blank?
-      params[:user].except!(:password)
-    else
-       params[:user][:password_confirmation]=params[:user][:password]
-    end
-    if @user.update_attributes(params[:user])
-      msg.result=true
-      msg.object = UserPresenter.new(@user).to_json
-    else
-      msg.result=false
-      msg.content=@user.errors
-    end
-    render :json => msg
-  end
 
   def new
     @user=User.new
-  end
-
-  def create
-    @user=User.new(params[:user])
-    msg=Message.new
-    if  @user.save
-      msg.result=true
-      msg.object = UserPresenter.new(@user).to_json
-    else
-      msg.result = false
-      msg.content=@user.errors
-    end
-    render :json => msg
   end
 
   def destroy
@@ -60,6 +31,14 @@ class UsersController < ApplicationController
       msg.content=I18n.t "fix.cannot_destroy"
     end
     render :json => msg
+  end
+
+  def show
+    @user = current_user
+  end
+
+  def applications
+    @applications=current_user.oauth_applications
   end
 
   private

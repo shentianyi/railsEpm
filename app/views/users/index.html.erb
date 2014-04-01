@@ -24,7 +24,8 @@
                     <tr>
                       <td class="user-manage-name"><%= user.first_name %></td>
                       <td class="user-manage-title"><%= user.title %></td>
-                      <!--<td class="user-manage-department" value=""></td>-->
+                      <td class="user-manage-tel"><%= user.tel %></td>
+                      <td class="user-manage-phone"><%= user.phone %></td>
                       <td class="user-manage-entity" value="<%= user.entity_id %>"><%= user.entity_name %></td>
                       <td><%= user.department_names %></td>
                       <td class="user-manage-authority" value="<%= user.role_id %>"><%= UsersHelper.get_user_role_display(user.role_id) %></td>
@@ -32,7 +33,8 @@
                     <tr>
                       <td class="user-manage-mail"><%= user.email %></td>
                       <td><%= t 'manage.user.new.title' %></td>
-                      <!--<td></td>-->
+                      <td><%= t 'manage.user.new.tel' %></td>
+                      <td><%= t 'manage.user.new.phone' %></td>
                       <td><%= t 'manage.user.new.entity' %></td>
                       <td><%= t 'manage.user.new.departments' %></td>
                       <td><%= t 'manage.user.new.authority' %></td>
@@ -49,6 +51,8 @@
             <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="edit-user-name" general="user-name"/>
             <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="edit-user-mail" general="user-mail"/>
             <input type="text" placeholder="<%= t 'manage.user.new.title' %>" id="edit-user-title" general="user-title"/>
+            <input type="text" placeholder="<%= t 'manage.user.new.tel' %>" id="edit-user-tel" general="user-tel"/>
+            <input type="text" placeholder="<%= t 'manage.user.new.phone' %>" id="edit-user-phone" general="user-phone"/>
             <input type="password" placeholder="<%= t 'manage.user.new.pwd' %>" id="edit-user-password" general="user-password"/>
 
             <div class="div-select">
@@ -121,17 +125,11 @@
     <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="new-user-name" general="user-name"/>
     <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="new-user-mail" general="user-mail"/>
     <input type="text" placeholder="<%= t 'manage.user.new.title' %>" id="new-user-title" general="user-title"/>
+    <input type="text" placeholder="<%= t 'manage.user.new.tel' %>" id="new-user-tel" general="user-tel"/>
+    <input type="text" placeholder="<%= t 'manage.user.new.phone' %>" id="new-user-phone" general="user-phone"/>
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd' %>" id="new-user-password"/>
     <input type="password" placeholder="* <%= t 'manage.user.new.pwd_con' %>" id="new-user-password-confirm"/>
 
-    <!--<div class="div-select">-->
-      <!--<select data-placeholder="" id="edit-department-for-kpi" class="single-select">-->
-        <!--<option value=""></option>-->
-        <!---->
-            <!--<option value="</option>-->
-        <!---->
-      <!--</select>-->
-    <!--</div>-->
     <div class="div-select">
       <select data-placeholder="<%= t 'manage.user.new.entity' %>" id="entity-for-kpi" class="single-select">
         <option value=""></option>
@@ -197,3 +195,9 @@
         MANAGE.user.init();
     })
 </script>
+<% content_for :javascript_includes do%>
+    <%= javascript_include_tag "Manage.js"%>
+    <%= javascript_include_tag "Manage-left-menu.js"%>
+    <%= javascript_include_tag "Manage-right-list.js"%>
+    <%= javascript_include_tag "Manage-user.js"%>
+<%end%>

@@ -1,0 +1,19 @@
+<script type="text/javascript">
+    $(function() {
+        dashboard_upload();
+    });
+</script>
+
+<h1>&nbsp;</h1>
+<h2>Dashboards Upload</h2>
+<div>
+	上传Dashboards文件：
+	<input id="dashboards-upload" type="file" name="files[]" data-url="/admin/dashboards/import_dashboards">
+	<div class="abstractblock" id="item-data-uploader-preview" style="display:block;">
+		<p></p>
+		<a></a>
+	</div>
+</div>
+<% content_for :javascript_includes do%>
+  <%= javascript_include_tag "dashboard_upload"%>
+<%end%>
