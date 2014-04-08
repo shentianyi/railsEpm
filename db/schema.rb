@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140327091516) do
+ActiveRecord::Schema.define(:version => 20140408020927) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -193,8 +193,8 @@ ActiveRecord::Schema.define(:version => 20140327091516) do
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
     t.boolean  "is_public",     :default => false
-    t.string   "description"
-    t.string   "code"
+    t.string   "description",   :default => ""
+    t.string   "code",          :default => ""
     t.integer  "department_id"
     t.integer  "tenant_id"
   end
