@@ -18,8 +18,8 @@ module Api
     end
 
     def data
-      # average= params[:average].nil? ? true : params[:average]=="true"
-      average=true
+      average= params[:average].nil? ? true : params[:average]=="1"
+      #average=true
       frequency=params[:frequency].nil? ? nil : params[:frequency].to_i
       data=KpiEntryAnalyseHelper.analysis_data params[:kpi_id],params[:entity_group_id],params[:start_time],params[:end_time],average,frequency
       respond_to do |t|
