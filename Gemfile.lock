@@ -39,6 +39,10 @@ GEM
       activerecord (>= 3.0.0)
     arel (3.0.3)
     attr_required (1.0.0)
+    authlogic (3.4.1)
+      activerecord (>= 3.2)
+      activesupport (>= 3.2)
+      request_store (~> 1.0.5)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -230,6 +234,7 @@ DEPENDENCIES
   acts_as_tenant
   aliyun-oss
   ancestry
+  authlogic
   axlsx (> 2.0.0)
   cancan
   coffee-rails (~> 3.2.1)
