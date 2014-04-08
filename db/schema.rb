@@ -193,8 +193,8 @@ ActiveRecord::Schema.define(:version => 20140408020927) do
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
     t.boolean  "is_public",     :default => false
-    t.string   "description",   :default => ""
-    t.string   "code",          :default => ""
+    t.string   "description"
+    t.string   "code"
     t.integer  "department_id"
     t.integer  "tenant_id"
   end

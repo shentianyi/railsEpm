@@ -8,6 +8,14 @@ class EntityGroupPresenter<Presenter
     self.delegators =Delegators
   end
 
+  def code
+    @entity_group.code||''
+  end
+
+  def description
+    @entity_group.description || ''
+  end
+
   def to_detail_json
     json=self.to_json
     json[:contacts]=[]
