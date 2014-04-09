@@ -7,7 +7,7 @@ class Entity < ActiveRecord::Base
 
 
   has_many :user_kpi_items, :dependent => :destroy
-  has_many :kpi_entries, :through => :user_kpi_items
+  #has_many :kpi_entries, :through => :user_kpi_items
   # has_many :entity_contacts
   has_many :entity_contacts, :as => :contactable, :dependent => :destroy
   has_many :contacts, :through => :entity_contacts
