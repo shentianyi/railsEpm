@@ -90,3 +90,7 @@ gem 'wicked_pdf'
 
 # ancestry
 gem 'ancestry'#,:git => "git://github.com/stefankroes/ancestry.git"
+
+#mongodb
+gem 'mongoid', '~> 3.1.6'
+gem 'bson_ext'

@@ -70,5 +70,8 @@ module IFEpm
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.assets.paths << "#{Rails.root}/app/assets/fonts"
+    config.generators do |g|
+      g.orm :active_record
+    end
   end
 end
