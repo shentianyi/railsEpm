@@ -53,6 +53,9 @@ GEM
       nokogiri (>= 1.4.1)
       rubyzip (~> 1.0.0)
     bcrypt (3.1.7)
+    bson (1.10.0)
+    bson_ext (1.10.0)
+      bson (~> 1.10.0)
     builder (3.0.4)
     cancan (1.6.10)
     celluloid (0.15.2)
@@ -111,13 +114,20 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     mini_portile (0.5.2)
+    mongoid (3.1.6)
+      activemodel (~> 3.2)
+      moped (~> 1.4)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.29)
     mono_logger (1.1.0)
+    moped (1.5.2)
     multi_json (1.9.2)
     multi_xml (0.5.5)
     multimap (1.1.2)
     mysql2 (0.3.15)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    origin (1.1.0)
     orm_adapter (0.5.0)
     polyglot (0.3.4)
     rack (1.4.5)
@@ -237,6 +247,7 @@ DEPENDENCIES
   ancestry
   authlogic
   axlsx (> 2.0.0)
+  bson_ext
   cancan
   coffee-rails (~> 3.2.1)
   colorize
@@ -246,6 +257,7 @@ DEPENDENCIES
   grape
   i18n-js
   jquery-rails
+  mongoid (~> 3.1.6)
   multimap
   mysql2
   rack-oauth2
