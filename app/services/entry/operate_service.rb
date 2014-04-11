@@ -26,16 +26,14 @@ module Entry
     #@operator:String
     #"creata","update","remove"
     def upload records, operator
+      kpi_entries = filter(records, operator)
       case operator
         when 'create'
-          kpi_entries = filter(records, operator)
           insert_entries(kpi_entries, KpiEntry)
         when 'update'
-          kpi_entries = filter(records, operator)
           update_entries(kpi_entries, KpiEntry)
         when 'remove'
-          kpi_entries = filter(reocrds, operator)
-          remove_entries(records, KpiEntry)
+          remove_entries(kpi_entries, KpiEntry)
         else
       end
     end
@@ -64,47 +62,93 @@ module Entry
     def filter records, operator
       case operator
         when "create"
-          attrs = []
-          puts records
-          records[:kpi_ids].each_index do |index|
-            records[:attr_vals].each_index do |val_index|
-              #kpi attributes
-              entry_attrs = []
-              Kpi.find_by_id(id).attributes.each {|attr|
-                entry_attrs << Hash[attr.name,attr.id]
-              }
-              #all attributes include base kpientry attributes
-              full_attrs = Kpi.find_by_id(id).attributes + @base_attrs
-              #attributes really need to fetch
-              fetch_attrs = records[:attrs] & full_attrs
-              #base kpientry attributes not included
-              new_attrs = @base_attrs - records[:attrs]
-              h = {}
-              new_attrs.each { |n| h[n]=nil }
-              #need to transfer kpi attrs to attr ids
-              h = Hash[Hash[records[:attrs].zip(records[:attr_vals][val_index])].select { |k, v| fetch_attrs.include?(k) }.to_a | h.to_a]
-              h.keys.each {|key|
-                #replace all the kpi attributes with attribute id
-                key = entry_attrs[key] if entry_attrs.keys.include?(key)
-              }
-              h["value"] = records[:entries][val_index][index]
-              attrs << h
-            end
-            #fill values
-            fill_attrs(attrs, records[:kpi_ids][index])
-          end
-          attrs
+          create_filter(records)
         when "update"
-
+          update_filter(records)
         when "remove"
-
+          remove_filter(records)
         else
           nil
       end
     end
 
+    #function create_filter
+    #params
+    #@records:Hash ,kpi ids,values and attributes
+    #e.g. not need every kpis match the attribute,it will fetch
+    #records:{
+    #    attrs:["attr1","attr2","attr3"],
+    #    attr_vals:[["1","2","3"],["2","4","6"]],
+    #    kpi_ids:["2","3","5"],
+    #    entries:[["1","3","5"],["2","3","43"]],    attributes
+    #    email:"IT_User@cz-tek.com"
+    #}
+    def create_filter records
+      attrs = []
+      records[:kpi_ids].each_index do |index|
+        records[:attr_vals].each_index do |val_index|
+          #kpi attributes
+          entry_attrs = []
+          Kpi.find_by_id(id).attributes.each {|attr|
+            entry_attrs << Hash[attr.name,attr.id]
+          }
+          #all attributes include base kpientry attributes
+          full_attrs = Kpi.find_by_id(id).attributes + @base_attrs
+          #attributes really need to fetch
+          fetch_attrs = records[:attrs] & full_attrs
+          #base kpientry attributes not included
+          new_attrs = @base_attrs - records[:attrs]
+          h = {}
+          new_attrs.each { |n| h[n]=nil }
+          #need to transfer kpi attrs to attr ids
+          h = Hash[Hash[records[:attrs].zip(records[:attr_vals][val_index])].select { |k, v| fetch_attrs.include?(k) }.to_a | h.to_a]
+          h.keys.each {|key|
+            #replace all the kpi attributes with attribute id
+            key = entry_attrs[key] if entry_attrs.keys.include?(key)
+          }
+          h["value"] = records[:entries][val_index][index]
+          attrs << h
+        end
+        #fill values
+        fill_attrs(attrs, records[:kpi_ids][index])
+      end
+      attrs
+    end
+
+    #function update_filter
+    #params
+    #@records:Hash ,kpi ids,values and attributes
+    #e.g. not need every kpis match the attribute,it will fetch
+    #records:{
+    #    attrs:["attr1","attr2","attr3"],
+    #    attr_vals:[["1","2","3"],["2","4","6"]],
+    #    kpi_ids:["2","3","5"],
+    #    entries:[["1","3","5"],["2","3","43"]],    attributes
+    #    email:"IT_User@cz-tek.com"
+    #}
+    def update_filter records
+
+    end
+
+    #function create_filter
+    #params
+    #@records:Hash ,kpi ids,values and attributes
+    #e.g. not need every kpis match the attribute,it will fetch
+    #records:{
+    #    entry_ids:["1","2","3"]
+    #}
+    def remove_filter records
+
+    end
+
     #function fill_attrs
     #fill all the nil attrs
+    #params
+    #@attrs,array of hash attributes
+    #e.g.
+    #attrs:[{attr1:"1",attr2:"2"},{attr1:"2",attr2:"43"}]
+    #@id, id of kpi
+    #@email, email of user
     def fill_attrs attrs, id, email
       #fill all the Nonil attr
       nonillattr = {}
@@ -129,27 +173,30 @@ module Entry
       attrs
     end
 
-    #function attr_validate
-    #make sure all base attr is set
+    #function insert_entries
     #params
-    #@attrs array of attrs
-    #@kpi_id
-    def attr_validate attrs, kpi_id
-
-    end
-
+    #@kpi_entries,hash of kpi_entry attributes
+    #@model of KpiEntry
     def insert_entries kpi_entries, model
       model.collection.insert(kpi_entries)
     end
 
+    #function update_entries
+    #params
+    #@kpi_entries,hash of kpi_entry attributes,include kpi_id
+    #@model of KpiEntry
     def update_entries kpi_entries, model
       kpi_entries.each do |entry|
         model.find(entry.id).update_attributes(kpi_entries.except(:id))
       end
     end
 
+    #function remove_entries
+    #params
+    #@kpi_entries hash of kpi_entries ids
+    #@model of KpiEntry
     def remove_entries kpi_entries, model
-      model.delete_all()
+
     end
   end
 end
