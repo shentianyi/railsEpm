@@ -377,7 +377,7 @@ DASHBOARD.add.prepare_form_chart=function() {
            entity_group: view,
            startTime : standardParse(begin_time).date.toISOString() ,
            endTime : standardParse(end_time).date.toISOString(),
-           interval:interval
+           frequency:interval
        },function(msg){
            dashboard_remove_loading("dashboard-add-inner");
            if(msg.result){
@@ -694,7 +694,7 @@ DASHBOARD.add.change_interval=function(option) {
                     entity_group: series_object.view,
                     startTime : standardParse(series_object.begin_time).date.toISOString() ,
                     endTime : standardParse(series_object.end_time).date.toISOString(),
-                    interval: option.interval
+                    frequency: option.interval
                 },
                 type:'POST',
                 async:false,

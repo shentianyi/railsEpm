@@ -21,7 +21,6 @@ module IFEpm
     config.autoload_paths+=%W(#{config.root}/validators)
     config.autoload_paths+=Dir[Rails.root.join('app','models','{**}')]
     config.autoload_paths+=Dir[Rails.root.join('app','presenters','{**}')]
-    config.autoload_paths += %W(#{config.root}/app/services)
     config.autoload_paths += %W(#{config.root}/app/caches)
     # for api
     config.paths.add "app/api", glob: "**/*.rb"

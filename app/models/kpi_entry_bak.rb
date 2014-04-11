@@ -1,5 +1,6 @@
 #encoding: utf-8
-class KpiEntry < ActiveRecord::Base
+class KpiEntryBak < ActiveRecord::Base
+  self.set_table_name('kpi_entries')
   belongs_to :user_kpi_item
   belongs_to :kpi ,:class_name=>'Kpi',:foreign_key=>'kpi_id'
 

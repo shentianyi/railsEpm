@@ -65,7 +65,7 @@ class Email < ActiveRecord::Base
         @end_time = analysis[:end_time]
         @frequency = analysis[:frequency]
         @type = analysis[:type]
-        @average=true
+        @average= analysis[:average]
         datas = {:data => data.to_json, :kpi_id => @kpi_id, :kpi_name => @kpi_name, :entity_group_id => @entity_group, :entity_group_name => @entity_group_name,
                  :start_time => @start_time, :end_time => @end_time, :frequency => @frequency, :type => @type, :average => @average, :table_data => table_data.to_json}
         KpiEntryAnalyseCache.new(id: self.id, cacheable_type: self.class.name, query: analysis.to_json, chart_data: data, table_data: table_data).save

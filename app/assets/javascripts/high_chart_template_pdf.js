@@ -267,7 +267,7 @@ ANALYTICS.form_chart=function(option){
         entity_group: option.view,
         startTime : new Date(bar_fix_from).toISOString() ,
         endTime : new Date(bar_fix_to).toISOString(),
-        interval:option.interval
+        frequency:option.interval
     },function(msg){
           if(option.show_loading==null || option.show_loading)
          remove_loading()
@@ -395,7 +395,7 @@ ANALYTICS.add_data=function(option){
         entity_group: option.view,
         startTime : begin_time_utc.toISOString() ,
         endTime : next_date.toISOString(),
-        interval:option.interval
+        frequency:option.interval
     },function(msg){
         if(msg.result){
             var data_length=msg.object.current.length;

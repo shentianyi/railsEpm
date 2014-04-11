@@ -53,9 +53,6 @@ GEM
       nokogiri (>= 1.4.1)
       rubyzip (~> 1.0.0)
     bcrypt (3.1.7)
-    bson (1.10.0)
-    bson_ext (1.10.0)
-      bson (~> 1.10.0)
     builder (3.0.4)
     cancan (1.6.10)
     celluloid (0.15.2)
@@ -247,7 +244,6 @@ DEPENDENCIES
   ancestry
   authlogic
   axlsx (> 2.0.0)
-  bson_ext
   cancan
   coffee-rails (~> 3.2.1)
   colorize
