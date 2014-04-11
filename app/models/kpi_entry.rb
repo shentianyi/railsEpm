@@ -9,12 +9,13 @@ class KpiEntry
   field :tenant_id, type: Integer
   field :user_kpi_item_id, type: Integer
 
-  field :entry_at, type: String
-  field :parsed_entry_at, type: DateTime
-  field :original_value, type: BigDecimal
-  field :value, type: BigDecimal
   field :target_max, type: BigDecimal
   field :target_min, type: BigDecimal
+  field :value, type: BigDecimal
+  field :original_value, type: BigDecimal
+  field :entry_at, type: DateTime
+  field :parsed_entry_at, type: DateTime
+  field :frequency, type: Integer
   # entry_type is a mark of calculated or not
   # default query use 1
   field :entry_type, type: Integer, :default => 0
