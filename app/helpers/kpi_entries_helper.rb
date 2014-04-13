@@ -10,7 +10,7 @@ module KpiEntriesHelper
         else
           kpi_entry=KpiEntry.new(original_value: params[:value], user_kpi_item_id: user_kpi_item.id, parsed_entry_at: parsed_entry_at, entity_id: user_kpi_item.entity_id, user_id: user_kpi_item.user_id,
                                  target_max: user_kpi_item.target_max, target_min: user_kpi_item.target_min)
-          kpi_entry.kpi=kpi
+          kpi_entry.kpi_id=kpi.id
           kpi_entry.save
         end
         return kpi_entry

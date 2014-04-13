@@ -155,6 +155,7 @@ module Entry
       user = User.find_by_email(email)
       kpi = Kpi.find_by_id(id)
       nonillattr["user_id"] = user.id
+      nonillattr["tenant_id"] = user.tenant_id
       nonillattr["entity_id"] = user.entity_id
       nonillattr["entry_at"] = Time.now.utc
       nonillattr["parsed_entry_at"] = KpiEntriesHelper.parse_entry_date(kpi.frequency, nonillattr["entry_at"])
@@ -163,6 +164,8 @@ module Entry
       nonillattr["target_min"] = kpi.target_min
       nonillattr["user_kpi_item_id"] = UserKpiItem.where("user_id = ? AND kpi_id = ?",user.id,kpi.id).first
       nonillattr["entrytype"] = 0
+      nonillattr["frequency"] = kpi.frequency
+
 
       #fill all the attrs
       attrs.each {|attr|
