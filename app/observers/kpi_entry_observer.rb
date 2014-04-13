@@ -8,9 +8,9 @@ class KpiEntryObserver<Mongoid::Observer
   	end
   	#do collect
   	#check if collect exits?
-  	puts kpi_entry.value
   	collect_entry = KpiEntry.where({parsed_entry_at:kpi_entry.parsed_entry_at,entry_type:"1",kpi_id:kpi_entry.kpi_id})
   	if collect_entry
+  	    puts collect_entry.to_json
   		val = collect_entry.value
   		collect_entry.update_attribute("value",val+kpi_entry.value)
   	else
