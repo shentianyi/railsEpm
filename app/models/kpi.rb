@@ -1,4 +1,3 @@
-#encoding: utf-8
 class Kpi < ActiveRecord::Base
   belongs_to :kpi_category
   has_many :kpi_items, :dependent => :destroy

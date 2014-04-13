@@ -1,5 +1,5 @@
 IFEpm::Application.routes.draw do
-  resources :kpiproperties
+  resources :kpi_properties
 
 
   use_doorkeeper do
@@ -74,6 +74,7 @@ IFEpm::Application.routes.draw do
       get '/c/:id' => :index
       put :update
       post :assign
+      post :assign_properties
       post :import
       get :template
       get :parameter

@@ -28,4 +28,9 @@ class KpiEntry
     'properties'
   end
 
+  after_create
+
+  after_update
+
+  after_destroy
 end

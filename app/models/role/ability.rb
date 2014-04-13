@@ -15,6 +15,7 @@ class Ability
       can :create, UserEntityGroup
       can :basic_modify, UserEntityGroup, entity_group: {user_id: user.id}
       can :manage, Department
+      can :manage, KpiProperty
       #can :read,:all
     elsif user.director?
       can :manage, [EntityGroupItem,UserKpiItem, KpiEntry, Dashboard, DashboardItem, DashboardCondition, Email]

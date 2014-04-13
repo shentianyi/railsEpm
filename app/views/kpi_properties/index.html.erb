@@ -1,0 +1,21 @@
+<h1>Listing kpi_properties</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @kpi_properties.each do |kpi_property| %>
+  <tr>
+    <td><%= link_to 'Show', kpi_property %></td>
+    <td><%= link_to 'Edit', edit_kpi_property_path(kpi_property) %></td>
+    <td><%= link_to 'Destroy', kpi_property, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Kpi property', new_kpi_property_path %>
