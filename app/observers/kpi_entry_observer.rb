@@ -8,9 +8,8 @@ class KpiEntryObserver<Mongoid::Observer
   	end
   	#do collect
   	#check if collect exits?
-  	collect_entry = KpiEntry.where({parsed_entry_at:kpi_entry.parsed_entry_at,entry_type:"1",kpi_id:kpi_entry.kpi_id})
+  	collect_entry = KpiEntry.find_by(kpi_id:kpi_entry.kpi_id,parsed_entry_at:kpi_entry.parsed_entry_at,entrytype:"1")
   	if collect_entry
-  	    puts collect_entry.to_json
   		val = collect_entry.value
   		collect_entry.update_attribute("value",val+kpi_entry.value)
   	else
@@ -36,7 +35,7 @@ class KpiEntryObserver<Mongoid::Observer
   	if kpi_entry.entry_type == 1
   		return
   	end
-  	collect_entry = KpiEntry.where({parsed_entry_at:kpi_entry.parsed_entry_at,entry_type:"1",kpi_id:kpi_entry.kpi_id})
+  	collect_entry = KpiEntry.find_by(kpi_id:kpi_entry.kpi_id,parsed_entry_at:kpi_entry.parsed_entry_at,entrytype:"1")
   	#
   	if kpi_entry.value.is_changed? && collect_entry
   		val = kpi_entry.value - kpi_entry.value.old
@@ -50,7 +49,7 @@ class KpiEntryObserver<Mongoid::Observer
   		return
   	end
 
-  	collect_entry = KpiEntry.where({parsed_entry_at:kpi_entry.parsed_entry_at,entry_type:"1",kpi_id:kpi_entry.kpi_id})
+  	collect_entry = KpiEntry.where({parsed_entry_at:kpi_entry.parsed_entry_at,entry_type:"1",kpi_id:kpi_entry.kpi_id}).first
   	if collect_entry
   		val = kpi_entry.value
   		old_val = collect_entry.value
@@ -64,7 +63,7 @@ class KpiEntryObserver<Mongoid::Observer
     if kpi_entry.new_record?
       kpi_entry.frequency = kpi.frequency
     end
-    if kpi_entry.original_value.finite?
+    if kpi_entry.original_value && kpi_entry.original_value.finite?
       kpi_entry.value = KpiUnit.parse_entry_value(kpi.unit,kpi_entry.original_value)
       kpi_entry.abnormal = false
     else

@@ -35,8 +35,7 @@ module IFEpm
     config.active_record.observers = :tenant_observer,:user_observer,:kpi_observer,:entity_observer,:entity_group_observer,:department_observer,:user_department_observer
     config.active_record.observers+=['Admin::KpiTemplateObserver']
 
-    #Mongoid observers
-    config.mongoid.observers = :kpi_entry_observer
+
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
@@ -74,5 +73,9 @@ module IFEpm
     config.generators do |g|
       g.orm :active_record
     end
+
+    #Mongoid observers
+    config.mongoid.observers = :kpi_entry_observer
+    config.mongoid.raise_not_found_error = false
   end
 end
