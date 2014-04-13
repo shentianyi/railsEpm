@@ -372,11 +372,11 @@ DASHBOARD.add.prepare_form_chart=function() {
         }
        dashboard_show_loading("dashboard-add-inner","40px","0px","0px","200px");
        $.post('/kpi_entries/analyse',{
-           kpi : kpi,
+           kpi_id : kpi,
            average:method=="0",
-           entity_group: view,
-           startTime : standardParse(begin_time).date.toISOString() ,
-           endTime : standardParse(end_time).date.toISOString(),
+           entity_group_id: view,
+           start_time : standardParse(begin_time).date.toISOString() ,
+           end_time : standardParse(end_time).date.toISOString(),
            frequency:interval
        },function(msg){
            dashboard_remove_loading("dashboard-add-inner");
@@ -689,11 +689,11 @@ DASHBOARD.add.change_interval=function(option) {
             dashboard_show_loading("dashboard-add-inner",0,0,0,"200px");
             $.ajax({url:'/kpi_entries/analyse',
                 data:{
-                    kpi : series_object.kpi_id,
+                    kpi_id : series_object.kpi_id,
                     average:series_object.method=="0",
-                    entity_group: series_object.view,
-                    startTime : standardParse(series_object.begin_time).date.toISOString() ,
-                    endTime : standardParse(series_object.end_time).date.toISOString(),
+                    entity_group_id: series_object.view,
+                    start_time : standardParse(series_object.begin_time).date.toISOString() ,
+                    end_time : standardParse(series_object.end_time).date.toISOString(),
                     frequency: option.interval
                 },
                 type:'POST',

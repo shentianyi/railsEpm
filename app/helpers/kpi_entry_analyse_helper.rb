@@ -6,18 +6,22 @@ class Fixnum
 end
 
 module KpiEntryAnalyseHelper
-  def self.analysis_data kpi_id, entity_group_id, start_time, end_time, average, frequency, table_flag=nil
-    table_data=get_kpi_entry_analysis_data(kpi_id, entity_group_id, start_time, end_time, average, frequency)
-    return nil if table_data.nil?
-    if table_flag
-      return table_data
-    else
-      chart_data={}
-      table_data.each { |k, v| chart_data[k]= v.kind_of?(Hash) ? v.values : v }
-      chart_data[:date]=table_data[:current].keys
-      return chart_data if table_flag.nil?
-      return chart_data, table_data unless table_flag
-    end
+  def self.analysis_data(params)
+    parameter=Entry::Parameter::AnalyseParameter.new(params)
+    ds=Entry::DataService.new(parameter)
+    ds.aggregate
+
+    #table_data=get_kpi_entry_analysis_data(kpi_id, entity_group_id, start_time, end_time, average, frequency)
+    #return nil if table_data.nil?
+    #if table_flag
+    #  return table_data
+    #else
+    #  chart_data={}
+    #  table_data.each { |k, v| chart_data[k]= v.kind_of?(Hash) ? v.values : v }
+    #  chart_data[:date]=table_data[:current].keys
+    #  return chart_data if table_flag.nil?
+    #  return chart_data, table_data unless table_flag
+    #end
   end
 
   def self.get_kpi_entry_analysis_data kpi_id, entity_group_id, start_time, end_time, average, frequency=nil, reduce=true
@@ -70,7 +74,7 @@ module KpiEntryAnalyseHelper
       entity_ids_count= entity_ids.count==0 ? 1 : entity_ids.count
       if average
         if reduce
-          current_data.each do |k,v|
+          current_data.each do |k, v|
             current_data[k]=(v/(current_data_count[k]==0 ? 1 : current_data_count[k])).round(2)
           end
         else

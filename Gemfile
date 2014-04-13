@@ -93,4 +93,4 @@ gem 'ancestry'#,:git => "git://github.com/stefankroes/ancestry.git"
 
 #mongodb
 gem 'mongoid', '~> 3.1.6'
-#gem 'bson_ext'
+gem 'bson_ext'
