@@ -9,7 +9,7 @@ module KpiEntriesHelper
           kpi_entry.update_attributes(:original_value => params[:value])
         else
           kpi_entry=KpiEntry.new(original_value: params[:value], user_kpi_item_id: user_kpi_item.id, parsed_entry_at: parsed_entry_at, entity_id: user_kpi_item.entity_id, user_id: user_kpi_item.user_id,
-                                 target_max: user_kpi_item.target_max, target_min: user_kpi_item.target_min)
+                                 target_max: user_kpi_item.target_max, target_min: user_kpi_item.target_min, entry_type:1)
           kpi_entry.kpi_id=kpi.id
           kpi_entry.save
         end
@@ -83,7 +83,7 @@ module KpiEntriesHelper
   # get kpi entry by user kpi item id, frequency and datetime
   def self.get_kpi_entry_for_entry kpi_item_id, parsed_entry_at
     if item=UserKpiItem.find_by_id(kpi_item_id)
-      return KpiEntry.where(:user_kpi_item_id => kpi_item_id, :parsed_entry_at => parsed_entry_at, :entity_id => item.entity_id).first
+      return KpiEntry.where(:user_kpi_item_id => kpi_item_id, :parsed_entry_at => parsed_entry_at, :entity_id => item.entity_id,:entry_type => 1).first
     end
     nil
   end
