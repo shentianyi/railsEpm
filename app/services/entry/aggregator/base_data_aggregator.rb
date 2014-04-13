@@ -15,12 +15,11 @@ module Entry
         query_condition=Entry::ConditionService.new(self.parameter).build_base_query_condition
         entries=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 1)
         # group entry by date
-
         entries.each do |entry|
           self.frequency.each do |k, v|
             if entry.parsed_entry_at >=v[0] && entry.parsed_entry_at < v[1]
-              self.target_max[k]=(self.target_max[k]||0) +entry.target_max
-              self.target_min[k]=(self.target_min[k]||0) +entry.target_min
+              #self.target_max[k]=(self.target_max[k]||0) +entry.target_max
+              #self.target_min[k]=(self.target_min[k]||0) +entry.target_min
               self.current[k]=(self.current[k]||0) +entry.value
               self.current_count[k]+=1 if self.current[k]
               self.total+=entry.value
@@ -34,7 +33,6 @@ module Entry
           end
         else
           self.current.each do |k, v|
-            puts self.current_count[k]
             self.current[k]=(v/(self.current_count[k]==0 ? 1 : self.current_count[k])).round(2)
           end
         end if self.parameter.average
@@ -106,7 +104,9 @@ module Entry
 
       def generate_init_frequency(start_time, next_time)
         key=start_time.to_s
-        self.current_count[key]=0
+        self.current[key]= self.current_count[key]=0
+        self.target_max[key]=self.parameter.kpi.target_max
+        self.target_min[key]=self.parameter.kpi.target_min
         self.frequency[key]=[start_time, next_time]
         self.unit[key]= @kpi_uni_sym
       end

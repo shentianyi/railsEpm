@@ -18,8 +18,7 @@ module Entry
     def base_condition
       {kpi_id: self.parameter.kpi.id,
        entity_id: self.parameter.entities,
-       start_time: self.parameter.start_time,
-       end_time: self.parameter.end_time}
+       parsed_entry_at: self.parameter.start_time..self.parameter.end_time}
     end
   end
 end

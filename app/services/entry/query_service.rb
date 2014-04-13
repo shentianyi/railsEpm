@@ -9,10 +9,8 @@ module Entry
       base_conditions.each do |k, v|
         query_cmd=query_key_word(query_cmd, k, v)
       end
-
       #build property query
       property_conditions.each do |k, v|
-        #query_cmd=query_key_word(query_cmd, "#{model.dynamic_field_name}.#{k}".to_sym, v)
         query_cmd=query_key_word(query_cmd, k, v)
       end if property_conditions
 

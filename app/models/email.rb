@@ -52,9 +52,8 @@ class Email < ActiveRecord::Base
   def generate_analysis_pdf_and_cache analysis
     if analysis
       analysis.symbolize_keys!
-      if da=KpiEntryAnalyseHelper.analysis_data(analysis[:kpi_id], analysis[:entity_group_id],
-                                                analysis[:start_time], analysis[:end_time],
-                                                true, analysis[:frequency].to_i, false)
+      analysis[:data_module]=Entry::DataService::WEB_HIGHSTOCK_IOS_TABLE
+      if da=KpiEntryAnalyseHelper.analysis_data(analysis)
         data = da[0]
         table_data = da[1]
         @kpi_id = analysis[:kpi_id]
@@ -69,7 +68,7 @@ class Email < ActiveRecord::Base
         datas = {:data => data.to_json, :kpi_id => @kpi_id, :kpi_name => @kpi_name, :entity_group_id => @entity_group, :entity_group_name => @entity_group_name,
                  :start_time => @start_time, :end_time => @end_time, :frequency => @frequency, :type => @type, :average => @average, :table_data => table_data.to_json}
         KpiEntryAnalyseCache.new(id: self.id, cacheable_type: self.class.name, query: analysis.to_json, chart_data: data, table_data: table_data).save
-        return FileData.new(:data => PdfService.generate_analysis_pdf(datas), :oriName => "analysis.pdf", :path => $AttachTmpPath).saveFile
+        return FileData.new(:data => PdfService.generate_analysis_pdf(datas), :oriName => 'analysis.pdf', :path => $AttachTmpPath).saveFile
       end
     end
   end
