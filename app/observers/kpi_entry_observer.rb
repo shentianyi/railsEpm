@@ -35,7 +35,7 @@ class KpiEntryObserver<Mongoid::Observer
   	if kpi_entry.entry_type == 1
   		return
   	end
-  	collect_entry = KpiEntry.find_by(kpi_id:kpi_entry.kpi_id,parsed_entry_at:kpi_entry.parsed_entry_at,entrytype:"1")
+  	collect_entry = KpiEntry.find_by(kpi_id:kpi_entry.kpi_id,parsed_entry_at:kpi_entry.parsed_entry_at,entry_type:"1")
   	#
   	if kpi_entry.value.is_changed? && collect_entry
   		val = kpi_entry.value - kpi_entry.value.old
@@ -49,7 +49,7 @@ class KpiEntryObserver<Mongoid::Observer
   		return
   	end
 
-  	collect_entry = KpiEntry.where({parsed_entry_at:kpi_entry.parsed_entry_at,entry_type:"1",kpi_id:kpi_entry.kpi_id}).first
+  	collect_entry = KpiEntry.find_by(kpi_id:kpi_entry.kpi_id,parsed_entry_at:kpi_entry.parsed_entry_at,entry_type:"1")
   	if collect_entry
   		val = kpi_entry.value
   		old_val = collect_entry.value
@@ -58,6 +58,10 @@ class KpiEntryObserver<Mongoid::Observer
   end
 
   def before_save kpi_entry
+    if kpi_entry.entry_type == 0
+      return
+    end
+
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
     kpi_entry.kpi_id = kpi.id
     if kpi_entry.new_record?
