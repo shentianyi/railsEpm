@@ -47,4 +47,8 @@ class Kpi < ActiveRecord::Base
     joins(:user_kpi_items).where(user_kpi_items: {entity_id: EntityGroupItem.where(entity_group_id: entity_group_id).pluck(:entity_id)})
     .uniq.select('kpis.id,name,description,kpis.target_max,kpis.target_min,kpi_category_id,kpis.frequency')
   end
+
+  def unit_sym
+    ::KpiUnit.get_entry_unit_sym(self.unit)
+  end
 end

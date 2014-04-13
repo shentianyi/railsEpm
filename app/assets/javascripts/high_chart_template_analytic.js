@@ -262,11 +262,11 @@ ANALYTICS.form_chart=function(option){
     console.log(new Date(bar_fix_to).toISOString());
     show_loading(top,0,0,0);
     $.post('/kpi_entries/analyse',{
-        kpi : option.kpi_id,
+        kpi_id : option.kpi_id,
         average:option.method=="0",
-        entity_group: option.view,
-        startTime : new Date(bar_fix_from).toISOString() ,
-        endTime : new Date(bar_fix_to).toISOString(),
+        entity_group_id: option.view,
+        start_time : new Date(bar_fix_from).toISOString() ,
+        end_time : new Date(bar_fix_to).toISOString(),
         frequency:option.interval
     },function(msg){
           if(option.show_loading==null || option.show_loading)
@@ -395,11 +395,11 @@ ANALYTICS.add_data=function(option){
     console.log(new Date(next_date).toISOString() );
 
     $.post('/kpi_entries/analyse',{
-        kpi : option.kpi_id,
+        kpi_id : option.kpi_id,
         average:option.method=="0",
-        entity_group: option.view,
-        startTime : begin_time_utc.toISOString() ,
-        endTime : next_date.toISOString(),
+        entity_group_id: option.view,
+        start_time : begin_time_utc.toISOString() ,
+        end_time : next_date.toISOString(),
         frequency:option.interval
     },function(msg){
         if(msg.result){
