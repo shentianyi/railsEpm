@@ -73,4 +73,8 @@ class KpiEntryObserver<Mongoid::Observer
     end
     true
   end
+  # calculate parent kpi entry value
+  #def after_save kpi_entry
+  #  Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi_entry.kpi.is_calculated
+  #end
 end
