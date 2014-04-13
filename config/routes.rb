@@ -1,4 +1,7 @@
 IFEpm::Application.routes.draw do
+  resources :kpiproperties
+
+
   use_doorkeeper do
     controllers :applications => 'oauth/applications'
     controllers :authorizations => nil

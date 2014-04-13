@@ -89,7 +89,7 @@ module Entry
         records[:attr_vals].each_index do |val_index|
           #kpi attributes
           entry_attrs = []
-          Kpi.find_by_id(id).attributes.each {|attr|
+          Kpi.find_by_id(id).kpi_properties.each {|attr|
             entry_attrs << Hash[attr.name,attr.id]
           }
           #all attributes include base kpientry attributes
