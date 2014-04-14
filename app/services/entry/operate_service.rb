@@ -2,12 +2,24 @@ module Entry
   #class OperateService
   #support create,update,remove operate for kpientry
   class OperateService
+
     #base attributes
     #these attributes must be set when create a entry
     #user_id,entity_id,entry_at,parsed_entry_at,tenant_id,target_max,target_min,user_kpi_item_id
-    @base_attrs = ["value", "user_id", "entity_id", "entry_at", "parsed_entry_at", "kpi_id", "entrytype", "frequency", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
-    @fill_attrs = ["user_id", "entity_id", "entry_at", "parsed_entry_at", "tenant_id", "target_max", "target_min", "user_kpi_item_id", "entrytype"]
-    #function sdk_upload
+    @base_attrs = ["value", "user_id", "entity_id", "entry_at", "parsed_entry_at", "kpi_id", "frequency", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
+    @fill_attrs = ["user_id", "entity_id", "entry_at", "parsed_entry_at", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
+
+    def upload records, operator,way
+      case way
+        when "sdk"
+        when "doc"
+          upload_doc(records,operator)
+        else
+          nil
+      end
+    end
+
+    #function upload_sdk
     #params
     #@records:Hash ,kpi ids,values and attributes
     #e.g. not need every kpis match the attribute,it will fetch
@@ -15,8 +27,8 @@ module Entry
     #records:{
     #    attrs:["attr1","attr2","attr3"],
     #    attr_vals:[["1","2","3"],["2","4","6"]],
-    #    kpi_ids:["2","3","5"],
-    #    entries:[["1","3","5"],["2","3","43"]],
+    #    kpis:["2","3","5"],
+    #    values:[["1","3","5"],["2","3","43"]],
     #    email:"IT_User@cz-tek.com"
     #}
     #remove
@@ -24,8 +36,36 @@ module Entry
     #    entry_ids:["1","2","3"]
     #}
     #@operator:String
-    #"creata","update","remove"
-    def upload records, operator
+    #"create","update","remove"
+    def upload_sdk
+
+    end
+
+
+    #function upload_doc
+    #params
+    #@records:Hash ,kpi ids,values and attributes
+    #e.g. not need every kpis match the attribute,it will fetch
+    #create and update
+    #records:{
+    #    attrs:["attr1","attr2","attr3"],
+    #    attr_vals:[["1","2","3"],["2","4","6"]],
+    #    kpis:["2","3","5"],
+    #    values:[["1","3","5"],["2","3","43"]],
+    #    email:"IT_User@cz-tek.com"
+    #}
+    #remove
+    #records:{
+    #    entry_ids:["1","2","3"]
+    #}
+    #@operator:String
+    #"create","update","remove"
+    def upload_doc records, operator
+      #need to validate all kpis and attributes
+      msg = validate_records(records,operator)
+      if !msg.result
+        return msg
+      end
       kpi_entries = filter(records, operator)
       case operator
         when 'create'
@@ -47,8 +87,8 @@ module Entry
     #records:{
     #    attrs:["attr1","attr2","attr3"],
     #    attr_vals:[["1","2","3"],["2","4","6"]],
-    #    kpi_ids:["2","3","5"],
-    #    entries:[["1","3","5"],["2","3","43"]],    attributes
+    #    kpis:["2","3","5"],
+    #    values:[["1","3","5"],["2","3","43"]],
     #    email:"IT_User@cz-tek.com"
     #}
     #remove
@@ -79,38 +119,45 @@ module Entry
     #records:{
     #    attrs:["attr1","attr2","attr3"],
     #    attr_vals:[["1","2","3"],["2","4","6"]],
-    #    kpi_ids:["2","3","5"],
-    #    entries:[["1","3","5"],["2","3","43"]],    attributes
+    #    kpis:["2","3","5"],
+    #    values:[["1","3","5"],["2","3","43"]],
     #    email:"IT_User@cz-tek.com"
     #}
     def create_filter records
       attrs = []
       records[:kpi_ids].each_index do |index|
         records[:attr_vals].each_index do |val_index|
-          #kpi attributes
           entry_attrs = []
-          Kpi.find_by_id(id).kpi_properties.each {|attr|
+          kpi_name = records[:kpis][index]
+          #1. find all kpi properties with name and id
+          kpi = Kpi.find_by_name(kpi_name)
+          kpi.kpi_properties.each {|attr|
             entry_attrs << Hash[attr.name,attr.id]
           }
-          #all attributes include base kpientry attributes
-          full_attrs = Kpi.find_by_id(id).attributes + @base_attrs
-          #attributes really need to fetch
+          #2. combine base properties to kpi attributes
+          full_attrs = kpi.kpi_properties.pluck(:name) + @base_attrs
+          #3. properties contained in the upload file
           fetch_attrs = records[:attrs] & full_attrs
-          #base kpientry attributes not included
-          new_attrs = @base_attrs - records[:attrs]
+          #4. base properties not been included
+          new_attrs = @base_attrs - fetch_attrs
+
           h = {}
+          #5. set not included base properties to nil and set it to the new hash h = {}
           new_attrs.each { |n| h[n]=nil }
-          #need to transfer kpi attrs to attr ids
+          #6. combine all properties this kpi has and all the base properties not included in this upload file
+          # and set to hg
           h = Hash[Hash[records[:attrs].zip(records[:attr_vals][val_index])].select { |k, v| fetch_attrs.include?(k) }.to_a | h.to_a]
+          #7. transfer all properties' name to id
           h.keys.each {|key|
-            #replace all the kpi attributes with attribute id
+            #replace kpi properties' name wtih id, not base properties
             key = entry_attrs[key] if entry_attrs.keys.include?(key)
           }
-          h["value"] = records[:entries][val_index][index]
+          #8. set current kpi value
+          h["value"] = records[:values][val_index][index]
           attrs << h
         end
-        #fill values
-        fill_attrs(attrs, records[:kpi_ids][index])
+        #9. fill all the properties value and kpi value
+        fill_attrs(attrs, kpi.id ,records[:email])
       end
       attrs
     end
@@ -122,12 +169,45 @@ module Entry
     #records:{
     #    attrs:["attr1","attr2","attr3"],
     #    attr_vals:[["1","2","3"],["2","4","6"]],
-    #    kpi_ids:["2","3","5"],
-    #    entries:[["1","3","5"],["2","3","43"]],    attributes
+    #    kpis:["2","3","5"],
+    #    values:[["1","3","5"],["2","3","43"]],
     #    email:"IT_User@cz-tek.com"
     #}
     def update_filter records
+      attrs = []
+      records[:kpi_ids].each_index do |index|
+        records[:attr_vals].each_index do |val_index|
+          entry_attrs = []
+          kpi_name = records[:kpis][index]
+          #1. find all kpi properties with name and id
+          kpi = Kpi.find_by_name(kpi_name)
+          kpi.kpi_properties.each {|attr|
+            entry_attrs << Hash[attr.name,attr.id]
+          }
+          #2. combine base properties to kpi attributes
+          full_attrs = kpi.kpi_properties.pluck(:name) + @base_attrs
+          #3. properties contained in the upload file
+          fetch_attrs = records[:attrs] & full_attrs
+          #4. base properties not been included
+          #new_attrs = @base_attrs - fetch_attrs
 
+          h = {}
+          #5. set not included base properties to nil and set it to the new hash h = {}
+          #new_attrs.each { |n| h[n]=nil }
+          #6. combine all properties this kpi has and all the base properties not included in this upload file
+          # and set to hg
+          h = Hash[records[:attrs].zip(records[:attr_vals][val_index])].select { |k, v| fetch_attrs.include?(k) }.to_a
+          #7. transfer all properties' name to id
+          h.keys.each {|key|
+            #replace kpi properties' name wtih id, not base properties
+            key = entry_attrs[key] if entry_attrs.keys.include?(key)
+          }
+          #8. set current kpi value
+          h["value"] = if records[:values][val_index][index].nil?
+          attrs << h
+        end
+      end
+      attrs
     end
 
     #function create_filter
@@ -163,14 +243,15 @@ module Entry
       nonillattr["target_max"] = kpi.target_max
       nonillattr["target_min"] = kpi.target_min
       nonillattr["user_kpi_item_id"] = UserKpiItem.where("user_id = ? AND kpi_id = ?",user.id,kpi.id).first
-      nonillattr["entrytype"] = 0
+      #defaule entry_type is 0 means this is a detail
+      #nonillattr["entrytype"] = 0
       nonillattr["frequency"] = kpi.frequency
 
 
       #fill all the attrs
       attrs.each {|attr|
         attr.each {|key,val|
-          val = nonillattr[key] if @fill_attrs.include?(key)
+          val = nonillattr[key] if @fill_attrs.include?(key) && val.nil?
         }
       }
       attrs
@@ -200,6 +281,34 @@ module Entry
     #@model of KpiEntry
     def remove_entries kpi_entries, model
 
+    end
+
+    #function validate_records
+    #validate kpis,kpi properties for this user
+    #e.g. not need every kpis match the attribute,it will fetch
+    #create and update
+    #records:{
+    #    attrs:["attr1","attr2","attr3"],
+    #    attr_vals:[["1","2","3"],["2","4","6"]],
+    #    kpi_ids:["2","3","5"],
+    #    values:[["1","3","5"],["2","3","43"]],
+    #    email:"IT_User@cz-tek.com"
+    #}
+    #remove
+    #records:{
+    #    entry_ids:["1","2","3"]
+    #}
+    def validate_records records,operator
+      msg = Message.new
+      msg.result = false
+      if (user = User.find_by_email(records.email)).nil?
+        return msg.content << "User not found!"
+      end
+      a = records["kpis"]
+      if a!=(a&user.kpis.pluck(:name))
+        return msg.content << "Contains kpi user does not have,plase check!"
+      end
+      msg.result = true
     end
   end
 end
