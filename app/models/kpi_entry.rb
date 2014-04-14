@@ -29,6 +29,14 @@ class KpiEntry
     'properties'
   end
 
+  def kpi
+    if (kpi = Kpi.find_by_id(self.kpi_id)).nil?
+      nil
+    else
+      kpi
+    end
+  end
+
   #
   #  def self.map
   #    map=%Q{

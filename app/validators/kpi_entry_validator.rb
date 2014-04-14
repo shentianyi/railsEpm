@@ -65,13 +65,13 @@ class KpiEntryValidator
       kpi_entry.update_attributes(:original_value => self.value)
     else
       KpiEntry.new(original_value: self.value, user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.entry_at, entity_id: self.entity_id,
-                   user_id: self.user_id, target_max: self.target_max, target_min: self.target_min, kpi_id: self.kpi_id).save
+                   user_id: self.user_id, target_max: self.target_max, target_min: self.target_min, kpi_id: self.kpi_id,entry_type:1).save
     end
   end
 
   def prepare_params
     source = self.valid_by_cache ? self.source : self
-    self.kpi_id=source.kpi.id
+    self.kpi_id=source.kpi_id
     self.frequency=source.kpi.frequency
     self.user_kpi_item_id=source.user_kpi_item.id
     self.user_id=source.user_kpi_item.user_id
