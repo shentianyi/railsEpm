@@ -1,5 +1,6 @@
 #encoding: utf-8
 class KpisController < ApplicationController
+  #skip_before_filter :verify_authenticity_token
   before_filter :require_user_as_admin, :only => :index
   before_filter :get_ability_category, :only => [:index, :access]
   before_filter :get_kpis_by_category, :only => :categoried
@@ -79,20 +80,33 @@ class KpisController < ApplicationController
     render json: msg
   end
 
-  def assign_properties
+  def assign_property
     msg = Message.new
     msg.result = false
-    kpi_property = KpiProperty.find_by_id(params[:kpi_property_id])
-    kpi = Kpi.find_by_id(params[:kpi_id])
-    if kpi && kpi_property
-      kpi_property_item = KpiPropertyItem.new
-      kpi_property_item.kpi_property_id = kpi_property.id
-      kpi_property_item.kpi_id = kpi.id
-      msg.result = kpi_property_item.save
+
+    if KpiPropertyItem.where("kpi_id = ? AND kpi_property_id = ?",params[:kpi_id],params[:kpi_property_id])
+      msg.content = "Already assign this property!"
     else
-      msg.conent = "KpiProperty or Kpi not found,please check!"
+      kpi_property = KpiProperty.find_by_id(params[:kpi_property_id])
+      kpi = Kpi.find_by_id(params[:kpi_id])
+      if kpi && kpi_property
+        kpi_property_item = KpiPropertyItem.new
+        kpi_property_item.kpi_property_id = kpi_property.id
+        kpi_property_item.kpi_id = kpi.id
+        msg.result = kpi_property_item.save
+      else
+        msg.conent = "KpiProperty or Kpi not found,please check!"
+      end
     end
+
     render :json=>msg
+  end
+
+  def remove_property
+    msg = Message.new
+    msg.result = false
+    msg.result = KpiPropertyItem.find_by_id(params[:id]).destroy
+    render :json => msg
   end
 
   def categoried

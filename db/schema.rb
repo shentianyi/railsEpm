@@ -268,17 +268,6 @@ ActiveRecord::Schema.define(:version => 20140413103738) do
   add_index "kpi_property_items", ["kpi_id"], :name => "index_kpi_property_items_on_kpi_id"
   add_index "kpi_property_items", ["kpi_property_id"], :name => "index_kpi_property_items_on_kpi_property_id"
 
-  create_table "kpiproperties", :force => true do |t|
-    t.string   "name"
-    t.integer  "tenant_id"
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "kpiproperties", ["tenant_id"], :name => "index_kpiproperties_on_tenant_id"
-  add_index "kpiproperties", ["user_id"], :name => "index_kpiproperties_on_user_id"
-
   create_table "kpis", :force => true do |t|
     t.string   "name"
     t.string   "description"
