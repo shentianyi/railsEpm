@@ -30,6 +30,7 @@ class KpiEntriesController < ApplicationController
       params[:map_group]={kpi_id: 'kpi_id', entity_id: 'entity_id'}
       params[:data_module]=Entry::DataService::MAPREDUCE_DETAIL_TABLE
       if data=KpiEntryAnalyseHelper.analysis_data(params)
+        puts data.to_json
         msg.result=true
         msg.object=data
       end

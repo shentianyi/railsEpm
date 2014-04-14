@@ -14,7 +14,7 @@ KpiEntryBak.all.each do |e|
       target_max: e.target_max,
       target_min: e.target_min,
       frequency: e.frequency,
-      entry_type: 1,
+      entry_type: 0,
       abnormal: e.abnormal,
       created_at: e.created_at,
       updated_at: e.updated_at
