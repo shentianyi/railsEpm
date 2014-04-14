@@ -7,5 +7,10 @@ module Api
         t.js { render :js => jsonp_str(@kpis) }
       end
     end
+
+    ## get kpi properties
+    def kpi_properties
+
+    end
   end
 end

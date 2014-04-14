@@ -186,6 +186,11 @@ IFEpm::Application.routes.draw do
       end
     end
 
+    resources :kpis do
+      member do
+        get :properties
+      end
+    end
     controller :kpis do
       match 'kpis/kpis_by_category' => :kpis_by_category
     end

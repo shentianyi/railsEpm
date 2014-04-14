@@ -68,7 +68,7 @@ module Entry
       end
 
       def map_reduce_condition
-        {map_group: self.map_group.to_s.gsub(/(=>)/,':'),reduce_func: self.reduce_func}
+        {map_group: "{#{self.map_group.map { |k, v| k+':this.'+v }.join(',')}}", reduce_func: self.reduce_func}
       end
     end
   end
