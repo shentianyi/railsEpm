@@ -203,7 +203,7 @@ module Entry
             key = entry_attrs[key] if entry_attrs.keys.include?(key)
           }
           #8. set current kpi value
-          h["value"] = if records[:values][val_index][index].nil?
+          h["value"] = records[:values][val_index][index] unless records[:values][val_index][index].nil?
           attrs << h
         end
       end
