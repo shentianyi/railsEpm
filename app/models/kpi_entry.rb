@@ -1,6 +1,7 @@
 class KpiEntry
   include Mongoid::Document
   include Mongoid::Timestamps
+  include DynamicAttributeSupport
   #
   # base field
   field :kpi_id, type: Integer

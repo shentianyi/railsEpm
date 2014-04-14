@@ -4,7 +4,8 @@ class KpiEntryObserver<Mongoid::Observer
 
   def after_save kpi_entry
     if kpi_entry.entry_type == 1
-      Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi_entry.kpi.is_calculated
+      kpi = Kpi.find_by_id(kpi_entry.kpi_id)
+      Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi.is_calculated
       return
     end
     #do collect
