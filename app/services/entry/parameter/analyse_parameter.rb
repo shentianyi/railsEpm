@@ -51,10 +51,17 @@ module Entry
 
       end
 
+
       def self.is_true(value, default=true)
         return default if value.nil?
         return value=='true' || value=='1' if value.is_a?(String)
         return value if value.is_a?(TrueClass) || value.is_a?(FalseClass)
+      end
+
+      def base_query_condition
+        {kpi_id: self.kpi.id,
+         entity_id: self.entities,
+         parsed_entry_at: self.start_time..self.end_time}
       end
     end
   end
