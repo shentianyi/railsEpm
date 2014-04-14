@@ -1,8 +1,6 @@
 module Entry
   module Aggregator
-    class BaseDataAggregator
-      attr_accessor :parameter, :data_module
-
+    class BaseAnalyseAggregator<BaseAggregator
       attr_accessor :current, :current_count, :target_max, :target_min,
                     :unit, :frequency, :total, :average
 
@@ -13,7 +11,7 @@ module Entry
 
       def aggregate
         query_condition=Entry::ConditionService.new(self.parameter).build_base_query_condition
-        entries=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 1)
+        entries=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 1).all
         # group entry by date
         entries.each do |entry|
           self.frequency.each do |k, v|
@@ -50,7 +48,7 @@ module Entry
 
       private
       def init_data_module
-        self.current_count, self.current, self.frequency, self.target_min, self.target_max, self.unit=BaseDataAggregator.new_hash(6)
+        self.current_count, self.current, self.frequency, self.target_min, self.target_max, self.unit=BaseAnalyseAggregator.new_hash(6)
         self.total=self.average =0
         @kpi_uni_sym=self.parameter.kpi.unit_sym
         frequency=self.parameter.frequency

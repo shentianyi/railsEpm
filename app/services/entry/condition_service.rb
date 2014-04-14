@@ -11,14 +11,8 @@ module Entry
     # function(sum,average)
     # kpi_frequency
     def build_base_query_condition
-      {base: base_condition, property: self.parameter.property}
+      {base: self.parameter.base_query_condition, property: self.parameter.property}
     end
 
-    private
-    def base_condition
-      {kpi_id: self.parameter.kpi.id,
-       entity_id: self.parameter.entities,
-       parsed_entry_at: self.parameter.start_time..self.parameter.end_time}
-    end
   end
 end

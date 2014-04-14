@@ -5,4 +5,12 @@ module KpiEntryAnalyseHelper
     ds=Entry::DataService.new(parameter)
     ds.aggregate
   end
+
+  def self.data_detail(params)
+    params[:data_module]=Entry::DataService::DETAIL_TABLE
+    parameter=Entry::Parameter::AnalyseParameter.new(params)
+    ds=Entry::DataService.new(parameter)
+    ds.aggregate
+  end
+
 end

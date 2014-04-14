@@ -23,5 +23,9 @@ module Entry
       query_cmd=query_cmd.between(Hash[k, v]) if v.is_a?(Range)
       return query_cmd
     end
+
+    def map_reduce
+
+    end
   end
 end
