@@ -15,7 +15,7 @@ class Ability
       can :create, UserEntityGroup
       can :basic_modify, UserEntityGroup, entity_group: {user_id: user.id}
       can :manage, Department
-      can :manage, KpiProperty
+      can :manage, KpiProperty, user_id: user.id
       #can :read,:all
     elsif user.director?
       can :manage, [EntityGroupItem,UserKpiItem, KpiEntry, Dashboard, DashboardItem, DashboardCondition, Email]
@@ -33,7 +33,7 @@ class Ability
 
       can :read, KpiCategory, kpis: {department_kpis: {department_id: user.user_departments.pluck(:department_id)}}
       can [:read, :access, :categoried], Kpi, department_kpis: {department_id: user.user_departments.pluck(:department_id)}
-
+      can :read, KpiProperty
       #can :read,:all
     elsif user.user?
       can :manage, User, :id => user.id
@@ -52,6 +52,7 @@ class Ability
       can :manage, KpiEntry, :user_id => user.id
 
       can :manage, Email, :user_id => user.id
+      can :read, KpiProperty
     end
   end
 end
