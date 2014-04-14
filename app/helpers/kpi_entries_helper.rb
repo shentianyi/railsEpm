@@ -8,8 +8,9 @@ module KpiEntriesHelper
         if kpi_entry=KpiEntry.where(user_kpi_item_id: user_kpi_item.id, parsed_entry_at: parsed_entry_at, entity_id: user_kpi_item.entity_id).first
           kpi_entry.update_attributes(:original_value => params[:value])
         else
+          entrytype = params.has_key?("entry_type") ? params[:entry_type] : 1
           kpi_entry=KpiEntry.new(original_value: params[:value], user_kpi_item_id: user_kpi_item.id, parsed_entry_at: parsed_entry_at, entity_id: user_kpi_item.entity_id, user_id: user_kpi_item.user_id,
-                                 target_max: user_kpi_item.target_max, target_min: user_kpi_item.target_min, entry_type:1)
+                                 target_max: user_kpi_item.target_max, target_min: user_kpi_item.target_min, entry_type:entrytype)
           kpi_entry.kpi_id=kpi.id
           kpi_entry.save
         end
