@@ -14,5 +14,9 @@ module Entry
       {base: self.parameter.base_query_condition, property: self.parameter.property}
     end
 
+    def build_map_reduce_condition
+      self.parameter.map_reduce_condition
+    end
+
   end
 end

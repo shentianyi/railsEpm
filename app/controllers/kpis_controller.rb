@@ -1,6 +1,5 @@
 #encoding: utf-8
 class KpisController < ApplicationController
-  #skip_before_filter :verify_authenticity_token
   before_filter :require_user_as_admin, :only => :index
   before_filter :get_ability_category, :only => [:index, :access]
   before_filter :get_kpis_by_category, :only => :categoried
@@ -67,7 +66,7 @@ class KpisController < ApplicationController
       if user.entity_id.blank?
         msg.content = I18n.t "fix.user_entity_is_blank"
       else
-        if result= KpisHelper.assign_kpi_to_user_by_id(params[:kpi], user,params[:by_cate].nil?) and result[0]
+        if result= KpisHelper.assign_kpi_to_user_by_id(params[:kpi], user, params[:by_cate].nil?) and result[0]
           msg.content =result
           msg.result =true
         else
@@ -80,32 +79,19 @@ class KpisController < ApplicationController
     render json: msg
   end
 
-  def assign_property
+  def assign_properties
     msg = Message.new
     msg.result = false
-
-    if KpiPropertyItem.where("kpi_id = ? AND kpi_property_id = ?",params[:kpi_id],params[:kpi_property_id])
-      msg.content = "Already assign this property!"
+    kpi_property = KpiProperty.find_by_id(params[:kpi_property_id])
+    kpi = Kpi.find_by_id(params[:kpi_id])
+    if kpi && kpi_property
+      kpi_property_item = KpiPropertyItem.new
+      kpi_property_item.kpi_property_id = kpi_property.id
+      kpi_property_item.kpi_id = kpi.id
+      msg.result = kpi_property_item.save
     else
-      kpi_property = KpiProperty.find_by_id(params[:kpi_property_id])
-      kpi = Kpi.find_by_id(params[:kpi_id])
-      if kpi && kpi_property
-        kpi_property_item = KpiPropertyItem.new
-        kpi_property_item.kpi_property_id = kpi_property.id
-        kpi_property_item.kpi_id = kpi.id
-        msg.result = kpi_property_item.save
-      else
-        msg.conent = "KpiProperty or Kpi not found,please check!"
-      end
+      msg.conent = "KpiProperty or Kpi not found,please check!"
     end
-
-    render :json=>msg
-  end
-
-  def remove_property
-    msg = Message.new
-    msg.result = false
-    msg.result = KpiPropertyItem.find_by_id(params[:id]).destroy
     render :json => msg
   end
 

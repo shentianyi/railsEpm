@@ -6,6 +6,7 @@ module Entry
       attr_accessor :frequency
       attr_accessor :average, :reduce, :data_module # sum,average
       attr_accessor :valid
+      attr_accessor :map_group, :reduce_func
 
       def initialize(args)
         self.kpi=Kpi.find(args[:kpi_id])
@@ -19,6 +20,8 @@ module Entry
         self.reduce = args[:reduce]
         self.data_module = args[:data_module] || DataService::WEB_HIGHSTOCK
         self.property = args[:property]
+        self.map_group =args[:map_group] if args[:map_group]
+        self.reduce_func=args[:reduce_func] if args[:reduce_func]
         self.valid=false
       end
 
@@ -62,6 +65,10 @@ module Entry
         {kpi_id: self.kpi.id,
          entity_id: self.entities,
          parsed_entry_at: self.start_time..self.end_time}
+      end
+
+      def map_reduce_condition
+        {map_group: self.map_group,reduce_func: self.reduce_func}
       end
     end
   end

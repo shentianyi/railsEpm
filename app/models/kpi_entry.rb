@@ -29,20 +29,21 @@ class KpiEntry
     'properties'
   end
 
-  #
+
   #  def self.map
   #    map=%Q{
   #         function(){
-  #emit({kpi_id:this.kpi_id,entity_id:this.entity_id},this.value);
+  #emit({kpi_id:this.kpi_id,entity_id:this.entity_id},parseFloat(this.value));
   #    }
   #   }
   #    reduce=%Q{
   #        function(key,values){
-  # return Array.sum(values);
+  #return Array.sum(values);
   #}
   #    }
-  #    self.map_reduce(map, reduce).out(inline: true)
+  #    KpiEntry.where(kpi_id:1).map_reduce(map, reduce).out(inline: true)
   #  end
+
 
   RECENT_INPUT_NUM = 5
   after_save :set_recent_input
