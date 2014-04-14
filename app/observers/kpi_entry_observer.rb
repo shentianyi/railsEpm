@@ -31,6 +31,11 @@ class KpiEntryObserver<Mongoid::Observer
       new_collect.entry_type = 1
   		new_collect.save!
     end
+
+    #add property val
+    kpi_entry.dynamic_attributes.each{|attr|
+      KpiPropertyValue.add_property_value(kpi_entry.kpi_id,attr,kpi_entry[attr])
+    }
   end
 
   def after_destroy kpi_entry
@@ -44,6 +49,11 @@ class KpiEntryObserver<Mongoid::Observer
       old_val = collect_entry.value
       collect_entry.update_attribute("value",old_val+val)
     end
+
+    #desc property val
+    kpi_entry.dynamic_attributes.each{|attr|
+      KpiPropertyValue.desc_property_value(kpi_entry.kpi_id,attr,kpi_entry[attr])
+    }
   end
 
   def after_update kpi_entry
@@ -57,6 +67,14 @@ class KpiEntryObserver<Mongoid::Observer
       old_val = collect_entry.value
       collect_entry.update_attribute("value",old_val - val)
     end
+
+
+    (kpi_entry.changed&kpi_entry.dynamic_attributes).each { |attr|
+      KpiPropertyValue.desc_property_value(kpi_entry.kpi_id,attr, kpi_entry.changes[attr][0])
+      KpiPropertyValue.add_property_value(kpi_entry.kpi_id,attr, kpi_entry.changes[attr][1])
+    }
+
+
   end
 
   def before_save kpi_entry

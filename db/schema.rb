@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140413103738) do
+ActiveRecord::Schema.define(:version => 20140414075405) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -267,6 +267,18 @@ ActiveRecord::Schema.define(:version => 20140413103738) do
 
   add_index "kpi_property_items", ["kpi_id"], :name => "index_kpi_property_items_on_kpi_id"
   add_index "kpi_property_items", ["kpi_property_id"], :name => "index_kpi_property_items_on_kpi_property_id"
+
+  create_table "kpi_property_values", :force => true do |t|
+    t.integer  "kpi_property_id"
+    t.integer  "kpi_id"
+    t.string   "value"
+    t.integer  "count"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "kpi_property_values", ["kpi_id"], :name => "index_kpi_property_values_on_kpi_id"
+  add_index "kpi_property_values", ["kpi_property_id"], :name => "index_kpi_property_values_on_kpi_property_id"
 
   create_table "kpis", :force => true do |t|
     t.string   "name"
