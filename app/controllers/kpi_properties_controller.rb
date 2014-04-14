@@ -1,6 +1,8 @@
 class KpiPropertiesController < ApplicationController
   #before_filter :require_user_as_admin, :only=>[:index,:create]
   skip_before_filter :verify_authenticity_token
+  before_filter :require_user_as_admin
+
   # GET /kpi_properties
   # GET /kpi_properties.json
   def index
