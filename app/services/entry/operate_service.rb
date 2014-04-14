@@ -247,10 +247,12 @@ module Entry
       #nonillattr["entrytype"] = 0
       nonillattr["frequency"] = kpi.frequency
 
-
       #fill all the attrs
       attrs.each {|attr|
         attr.each {|key,val|
+          if key == "entry_at" && !val.nil?
+            attr["parsed_entry_at"] = KpiEntriesHelper.parse_entry_date(kpi.frequency, val)
+          end
           val = nonillattr[key] if @fill_attrs.include?(key) && val.nil?
         }
       }
