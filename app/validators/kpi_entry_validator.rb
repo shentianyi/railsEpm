@@ -62,12 +62,16 @@ class KpiEntryValidator
   end
 
   def entry
+    entry = params_to_hash
+    Entry::OperateService.new.insert_entry(entry)
+=begin
     if kpi_entry=KpiEntry.where(user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.parsed_entry_at, entity_id: self.entity_id).first
       kpi_entry.update_attributes(:original_value => self.value)
     else
       KpiEntry.new(original_value: self.value, user_kpi_item_id: self.user_kpi_item_id, entry_at:self.entry_at,parsed_entry_at: self.parsed_entry_at, entity_id: self.entity_id,
                    user_id: self.user_id, target_max: self.target_max, target_min: self.target_min, kpi_id: self.kpi_id,entry_type:1,).save
     end
+=end
   end
 
   def prepare_params
@@ -85,9 +89,11 @@ class KpiEntryValidator
   end
 
   def params_to_hash
-    {value:self.value,kpi_id: self.kpi_id, frequency: self.frequency, user_kpi_item_id: self.user_kpi_item_id,
+    {base_attrs:{value:self.value,kpi_id: self.kpi_id, frequency: self.frequency, user_kpi_item_id: self.user_kpi_item_id,
      user_id: self.user_id, entity_id: self.entity_id, target_max: self.target_max,
-     target_min: self.target_min, entry_at: self.entry_at, parsed_entry_at: self.parsed_entry_at}
+     target_min: self.target_min, entry_at: self.entry_at, parsed_entry_at: self.parsed_entry_at},
+    kpi_properties:self.kpi_properties
+    }
   end
 
 end

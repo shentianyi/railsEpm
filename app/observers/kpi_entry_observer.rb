@@ -16,6 +16,22 @@ class KpiEntryObserver<Mongoid::Observer
       collect_entry.update_attribute("value",val+kpi_entry.value)
     else
       #if not find,create one
+      new_collect_entry = {}
+      new_collect_entry[:base_attrs] = {}
+      new_collect_entry[:base_attrs]["kpi_id"] = kpi_entry.kpi_id
+      new_collect_entry[:base_attrs]["user_id"] = kpi_entry.user_id
+      new_collect_entry[:base_attrs]["entity_id"] = kpi_entry.entity_id
+      new_collect_entry[:base_attrs]["tenant_id"] = kpi_entry.tenant_id
+      new_collect_entry[:base_attrs]["user_kpi_item_id"] = kpi_entry.user_kpi_item_id
+      new_collect_entry[:base_attrs]["target_max"] = kpi_entry.target_max
+      new_collect_entry[:base_attrs]["target_min"] = kpi_entry.target_min
+      new_collect_entry[:base_attrs]["value"] =  kpi_entry.value
+      new_collect_entry[:base_attrs]["entry_at"] = kpi_entry.entry_at
+      new_collect_entry[:base_attrs]["parsed_entry_at"] = kpi_entry.parsed_entry_at
+      new_collect_entry[:base_attrs]["frequency"] = kpi_entry.frequency
+      new_collect_entry[:base_attrs]["entry_type"] = 1
+      Entry::OperateService.new.insert_entry(new_collect_entry)
+=begin
       new_collect = KpiEntry.new
       new_collect.kpi_id = kpi_entry.kpi_id
       new_collect.user_id = kpi_entry.user_id
@@ -30,6 +46,7 @@ class KpiEntryObserver<Mongoid::Observer
       new_collect.frequency = kpi_entry.frequency
       new_collect.entry_type = 1
   		new_collect.save!
+=end
     end
 
     #add property val

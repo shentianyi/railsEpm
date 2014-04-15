@@ -2,6 +2,13 @@
 module KpiEntriesHelper
   # create or update kpi entry
   def self.create_update_kpi_entry params, current_ability=nil
+    validator = KpiEntryValidator.new(params)
+    validator.validate
+    if validator.valid
+      validator.entry
+    end
+
+=begin
     if   kpi= (current_ability.nil? ? Kpi.find_by_id(params[:kpi_id]) : Kpi.accessible_by(current_ability).find_by_id(params[:kpi_id]))
       parsed_entry_at=DateTimeHelper.get_utc_time_by_str(params[:entry_at])
       if user_kpi_item=UserKpiItem.find_by_id(params[:user_kpi_item_id])
@@ -17,6 +24,8 @@ module KpiEntriesHelper
         return kpi_entry
       end
     end unless params[:value].blank?
+=end
+
   end
 
   # calculate kpi parent value

@@ -126,7 +126,29 @@ module Entry
     # }
     def insert_entry entry
       attrs = {}
-      attrs.merge(entry.base_attrs)
+      attrs = attrs.merge(entry[:base_attrs])
+
+      #fetch kpi_properties
+      kpi = Kpi.find_by_id(attrs[:kpi_id])
+      if kpi && !entry[:kpi_properties].nil?
+        properties = {}
+        kpi.kpi_properties.each {|p|
+          properties[p.name] = p.id
+        }
+        fetch_attrs = properties.keys.to_a
+        fetch_attrs = fetch_attrs & entry[:kpi_properties].keys.to_a
+        fetch_attrs.each {|f|
+          attrs[":"+properties[f].to_s] = entry[:kpi_properties][f]
+        }
+      end
+
+      #update
+      if kpi_entry = KpiEntry.where(user_kpi_item_id: attrs["user_kpi_item_id"], parsed_entry_at: attrs["parsed_entry_at"], entity_id: attrs["entity_id"],entry_type: attrs["entity_id"]).first
+        kpi_entry.update_attribute(:original_value, attrs["value"])
+      else
+        kpi_entry = KpiEntry.new(attrs)
+        kpi_entry.save
+      end
     end
     
     def remove_entry id
