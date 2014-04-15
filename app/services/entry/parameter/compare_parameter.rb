@@ -2,11 +2,11 @@ module Entry
   module Parameter
     class PeroidCompareParameter
 
-      attr_accessor :base_time, :compare_time
+      attr_accessor :base_time, :compare_times
 
       def initialize(args)
-        self.base_time=args[:base_time]
-        self.compare_time =args[:compare_time]
+        self.base_time=args[:base_time] if args[:base_time]
+        self.compare_times =args[:compare_times]
         super
       end
 
@@ -17,11 +17,14 @@ module Entry
         }
       end
 
-      def compare_time=(value)
-        @comapre_time={
-            start_time: Time.parse(value[:start_time]).utc,
-            end_time: Time.parse(value[:end_time]).utc
-        }
+      def compare_times=(values)
+        @comapre_times=[]
+        values.each do |v|
+          @comapre_times<<{
+              start_time: Time.parse(v[:start_time]).utc,
+              end_time: Time.parse(v[:end_time]).utc
+          }
+        end
       end
 
       def base_query_condition
@@ -30,8 +33,12 @@ module Entry
       end
 
       def build_or_condition
-        [{parsed_entry_at: self.base_time[:start_time]..self.base_time[:end_time]}
-        , {parsed_entry_at: self.comapre_time[:start_time]..self.compare_time[:end_time]}]
+        conditions=[]
+        conditions<<{parsed_entry_at: self.base_time[:start_time]..self.base_time[:end_time]} if self.base_time
+        self.compare_times.each do |t|
+          conditions<<{parsed_entry_at: t[:start_time]..t[:end_time]}
+        end
+        return conditions
       end
     end
   end

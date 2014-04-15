@@ -5,7 +5,7 @@ module Entry
                     :unit, :frequency, :total, :average
 
       def initialize(parameter)
-        self.parameter =parameter
+        super
         init_data_module
       end
 
