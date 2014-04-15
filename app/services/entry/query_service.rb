@@ -17,7 +17,7 @@ module Entry
       query_cmd
     end
 
-    def query_key_word query_cmd, k, v
+    def query_key_word(query_cmd, k, v)
       query_cmd=query_cmd.where(Hash[k, v]) if v.is_a?(Fixnum) || v.is_a?(String)
       query_cmd=query_cmd.in(Hash[k, v]) if v.is_a?(Array)
       query_cmd=query_cmd.between(Hash[k, v]) if v.is_a?(Range)
