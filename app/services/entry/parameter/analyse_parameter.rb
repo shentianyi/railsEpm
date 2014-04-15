@@ -51,20 +51,20 @@ module Entry
       end
 
       def date_format
-       return case self.frequency
-               when KpiFrequency::Hourly
-                 'yyyy-MM-dd HH'
-               when KpiFrequency::Daily
-                 'yyyy-MM-dd'
-               when KpiFrequency::Weekly
-                 'yyyy-WW'
-               when KpiFrequency::Monthly
-                 'yyyy-MM'
-               when KpiFrequency::Quarterly
-                 'yyyy-qq'
-               when KpiFrequency::Yearly
-                 'yyyy'
-             end
+        return case self.frequency
+                 when KpiFrequency::Hourly
+                   'yyyy-MM-dd HH'
+                 when KpiFrequency::Daily
+                   'yyyy-MM-dd'
+                 when KpiFrequency::Weekly
+                   'yyyy-WW'
+                 when KpiFrequency::Monthly
+                   'yyyy-MM'
+                 when KpiFrequency::Quarterly
+                   'yyyy-qq'
+                 when KpiFrequency::Yearly
+                   'yyyy'
+               end
       end
 
       def validate
@@ -85,7 +85,7 @@ module Entry
       end
 
       def map_reduce_condition
-        {map_group: "#{self.map_group.map { |k, v| k+':this.'+v }.join(',')}", reduce_func: self.reduce_func}
+        {map_group: "#{self.map_group.map { |k, v| k.to_s+':this.'+v }.join(',')}", reduce_func: self.reduce_func}
       end
     end
   end

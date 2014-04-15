@@ -1,12 +1,12 @@
 module Entry
   module Parameter
-    class PeroidCompareParameter
+    class PeriodCompareParameter<AnalyseParameter
 
       attr_accessor :base_time, :compare_times
 
       def initialize(args)
         self.base_time=args[:base_time] if args[:base_time]
-        self.compare_times =args[:compare_times]
+        self.compare_times =args[:compare_times] if args[:compare_times]
         super
       end
 
