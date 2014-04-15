@@ -27,9 +27,7 @@ class KpiEntriesController < ApplicationController
       @entity_groups=get_user_entity_groups
     else
       msg=Message.new
-
       if data=KpiEntryAnalyseHelper.analysis_data(params)
-        puts data.to_json
         msg.result=true
         msg.object=data
       end
