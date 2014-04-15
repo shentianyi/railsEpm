@@ -86,7 +86,7 @@ class KpiEntryValidator
   def params_to_hash
     {value:self.value,kpi_id: self.kpi_id, frequency: self.frequency, user_kpi_item_id: self.user_kpi_item_id,
      user_id: self.user_id, entity_id: self.entity_id, target_max: self.target_max,
-     target_min: self.target_min, entry_at: self.entry_at}
+     target_min: self.target_min, entry_at: self.entry_at, parsed_entry_at: self.parsed_entry_at}
   end
 
 end
