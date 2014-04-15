@@ -13,11 +13,11 @@ module Api
       @frequency=params[:frequency].nil? ? nil : params[:frequency].to_i
       @type='area'
       @average= params[:average].nil? ? true : params[:average]=='true'
-      @data=KpiEntryAnalyseHelper.analysis_data(params).to_json
+      @data=Entry::Analyzer.new(params).analyse.to_json
     end
 
     def data
-      data=KpiEntryAnalyseHelper.analysis_data(params)
+      data=Entry::Analyzer.new(params).analyse
       respond_to do |t|
         t.json { render :json => data }
       end

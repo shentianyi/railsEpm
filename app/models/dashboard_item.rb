@@ -49,12 +49,12 @@ class DashboardItem < ActiveRecord::Base
     item = DashboardItem.find(id)
     if item
       time_span=self.time_string_to_time_span item.time_string
-      data = KpiEntryAnalyseHelper::get_kpi_entry_analysis_data(
+      data = Entry::Analyzer.new(
           kpi_id: item.kpi_id,
           entity_group_id: item.entity_group,
           start_time: time_span[:start].iso8601.to_s,
           end_time: time_span[:end].iso8601.to_s,
-          average: item.calculate_type=='AVERAGE' ? true : false)
+          average: item.calculate_type=='AVERAGE' ? true : false).analyse
       if data
         data[:result]=true
         data[:startTime] = time_span[:start].iso8601

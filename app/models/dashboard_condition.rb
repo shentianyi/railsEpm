@@ -29,13 +29,13 @@ class DashboardCondition < ActiveRecord::Base
           return datas
         end
 
-        data = KpiEntryAnalyseHelper::analysis_data(
+        data =Entry::Analyzer.new(
             kpi_id: condition.kpi_id,
             entity_group_id: condition.entity_group,
             start_time: time_span[:start].iso8601.to_s,
             end_time: time_span[:end].iso8601.to_s,
             average: condition.calculate_type=='AVERAGE' ? true : false,
-            frequency: dashboard_itme.interval)
+            frequency: dashboard_itme.interval).analyse
 
         if data
           data[:result]=true
