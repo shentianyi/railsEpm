@@ -1,6 +1,6 @@
 #encoding: utf-8
 class KpisController < ApplicationController
-  skip_before_filter :verify_authenticity_token
+  #skip_before_filter :verify_authenticity_token
   before_filter :require_user_as_admin, :only => :index
   before_filter :get_ability_category, :only => [:index, :access]
   before_filter :get_kpis_by_category, :only => :categoried

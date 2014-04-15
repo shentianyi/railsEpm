@@ -127,7 +127,6 @@ module Entry
     def insert_entry entry
       attrs = {}
       attrs.merge(entry.base_attrs)
-      attrs.
     end
     
     def remove_entry id
