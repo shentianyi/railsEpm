@@ -29,6 +29,10 @@ class KpiEntry
     'properties'
   end
 
+  def self.date_map_filed
+    'parsed_entry_at'
+  end
+
 
   def kpi
     if (kpi = Kpi.find_by_id(self.kpi_id)).nil?
