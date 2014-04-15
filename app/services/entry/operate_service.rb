@@ -9,7 +9,9 @@ module Entry
     @base_attrs = ["value", "user_id", "entity_id", "entry_at", "parsed_entry_at", "kpi_id", "frequency", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
     @fill_attrs = ["user_id", "entity_id", "entry_at", "parsed_entry_at", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
 
-    def upload records, operator,way
+    #@function upload
+    #validation should be done before call this function
+    def self.upload records, operator,way
       case way
         when "sdk"
         when "doc"
@@ -62,10 +64,10 @@ module Entry
     #"create","update","remove"
     def upload_doc records, operator
       #need to validate all kpis and attributes
-      msg = validate_records(records,operator)
-      if !msg.result
-        return msg
-      end
+      #msg = validate_records(records,operator)
+      #if !msg.result
+      #  return msg
+      #end
       kpi_entries = filter(records, operator)
       case operator
         when 'create'
@@ -76,6 +78,36 @@ module Entry
           remove_entries(kpi_entries, KpiEntry)
         else
       end
+    end
+
+    #@function api_insert
+    #call this func before validation
+    #@params records
+    #record : {
+    # attr1:val,
+    # attr2:val,
+    # kpi_id: 1
+    # date: date
+    # value: 100
+    # email: IT@cz-tek.com
+    # ...
+    # }
+    def self.api_insert record
+      fetch_attrs = kpi.kpi_properties.pluck(:name) & record.keys
+      #default we think this is true
+      k = KpiEntry.new
+      #base fileds
+      k.localized_attributes.each {
+        |attr|
+        k[attr] = record[attr] if record[attr]
+      }
+      #kpi_properties
+      attr = {}
+      kpi.kpi_properties.each {|p| attr[p.name] = p.id}
+      fetch_attrs.each {|f|
+        k[attr[f]] = record[f]
+      }
+      k.save
     end
 
     private

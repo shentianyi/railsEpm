@@ -1,6 +1,6 @@
 #encoding: utf-8
 class KpiEntryValidator
-  attr_accessor :email, :kpi_id, :kpi_name, :frequency, :date, :value, :entry_at, :user_kpi_item_id, :value, :item_cache_key, :valid, :content
+  attr_accessor :email, :kpi_id, :kpi_name, :frequency, :date, :value, :entry_at, :user_kpi_item_id, :value, :item_cache_key, :valid, :content, :parsed_entry_at
   attr_accessor :validator_collection, :user_kpi_item, :kpi, :valid_by_cache
   attr_accessor :entity_id, :user_id, :target_max, :target_min
   attr_accessor :source
@@ -61,11 +61,11 @@ class KpiEntryValidator
   end
 
   def entry
-    if kpi_entry=KpiEntry.where(user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.entry_at, entity_id: self.entity_id).first
+    if kpi_entry=KpiEntry.where(user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.parsed_entry_at, entity_id: self.entity_id).first
       kpi_entry.update_attributes(:original_value => self.value)
     else
-      KpiEntry.new(original_value: self.value, user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.entry_at, entity_id: self.entity_id,
-                   user_id: self.user_id, target_max: self.target_max, target_min: self.target_min, kpi_id: self.kpi_id,entry_type:1).save
+      KpiEntry.new(original_value: self.value, user_kpi_item_id: self.user_kpi_item_id, entry_at:self.entry_at,parsed_entry_at: self.parsed_entry_at, entity_id: self.entity_id,
+                   user_id: self.user_id, target_max: self.target_max, target_min: self.target_min, kpi_id: self.kpi_id,entry_type:1,).save
     end
   end
 
@@ -79,7 +79,8 @@ class KpiEntryValidator
     self.target_max=source.user_kpi_item.target_max
     self.target_min=source.user_kpi_item.target_min
     self.date=Date.parse(self.date).to_s
-    self.entry_at =KpiEntriesHelper.parse_entry_string_date self.frequency,self.date
+    self.entry_at = Time.parse(self.date).utc #KpiEntriesHelper.parse_entry_string_date self.frequency,self.date
+    self.parsed_entry_at = KpiEntriesHelper.parse_entry_string_date self.frequency,self.date
   end
 
   def params_to_hash
