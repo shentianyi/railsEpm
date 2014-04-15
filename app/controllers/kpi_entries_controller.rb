@@ -9,6 +9,9 @@ class KpiEntriesController < ApplicationController
   end
 
   def create
+    params["date"] = params["entry_at"]
+    params["email"] = current_user.email
+    params["entry_type"] = 1
     @kpi_entry=KpiEntriesHelper.create_update_kpi_entry params, current_ability
     render :json => {:result => true}
   end
