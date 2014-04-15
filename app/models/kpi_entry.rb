@@ -97,23 +97,27 @@ class KpiEntry
   end
 
   def set_recent_input
-    time_key=KpiEntry.gen_recent_time_zscore_key user_id, user_kpi_item_id
-    score=(Time.parse(self.parsed_entry_at.to_s).to_f*1000).to_i
-    $redis.zremrangebyscore(time_key, score, score)
-    uuid=SecureRandom.hex
-    $redis.zadd(time_key, score, uuid)
+    if entry_type == 1
+      time_key=KpiEntry.gen_recent_time_zscore_key user_id, user_kpi_item_id
+      score=(Time.parse(self.parsed_entry_at.to_s).to_f*1000).to_i
+      $redis.zremrangebyscore(time_key, score, score)
+      uuid=SecureRandom.hex
+      $redis.zadd(time_key, score, uuid)
 
-    value_key=KpiEntry.gen_recent_value_zscore_key user_id, user_kpi_item_id
-    $redis.zadd(value_key, self.value, uuid)
+      value_key=KpiEntry.gen_recent_value_zscore_key user_id, user_kpi_item_id
+      $redis.zadd(value_key, self.value, uuid)
+    end
   end
 
   def rem_recent_input
-    time_key=KpiEntry.gen_recent_time_zscore_key self.user_id, self.user_kpi_item_id
-    score=(Time.parse(self.parsed_entry_at.to_s).to_f*1000).to_i
-    uuid=$redis.zrangebyscore(time_key, score, score)
-    $redis.zremrangebyscore(time_key, score, score)
+    if self.entry_type == 1
+      time_key=KpiEntry.gen_recent_time_zscore_key self.user_id, self.user_kpi_item_id
+      score=(Time.parse(self.parsed_entry_at.to_s).to_f*1000).to_i
+      uuid=$redis.zrangebyscore(time_key, score, score)
+      $redis.zremrangebyscore(time_key, score, score)
 
-    value_key=KpiEntry.gen_recent_value_zscore_key self.user_id, self.user_kpi_item_id
-    $redis.zrem(value_key, uuid)
+      value_key=KpiEntry.gen_recent_value_zscore_key self.user_id, self.user_kpi_item_id
+      $redis.zrem(value_key, uuid)
+    end
   end
 end

@@ -90,6 +90,9 @@ class KpiEntryObserver<Mongoid::Observer
     end
 
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
+    #if kpi.nil?
+    #  return
+    #end
     kpi_entry.kpi_id = kpi.id
     if kpi_entry.new_record?
       kpi_entry.frequency = kpi.frequency
@@ -101,7 +104,6 @@ class KpiEntryObserver<Mongoid::Observer
       kpi_entry.value = kpi_entry.original_value = 0
       kpi_entry.abnormal = true
     end
-    true
   end
   # calculate parent kpi entry value
   #def after_save kpi_entry

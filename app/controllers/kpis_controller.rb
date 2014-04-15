@@ -1,5 +1,6 @@
 #encoding: utf-8
 class KpisController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   before_filter :require_user_as_admin, :only => :index
   before_filter :get_ability_category, :only => [:index, :access]
   before_filter :get_kpis_by_category, :only => :categoried
@@ -88,7 +89,7 @@ class KpisController < ApplicationController
     kpi_property = KpiProperty.find_by_name(params[:kpi_property_name])
     kpi = Kpi.find_by_id(params[:kpi_id])
     if kpi_property.nil?
-      kpi_property = KpiProperty.create(:name => params[:kpi_property_name])
+      kpi_property = KpiProperty.create(:name => params[:kpi_property_name],:user_id => current_user.id)
     end
 
     if kpi && kpi_property
