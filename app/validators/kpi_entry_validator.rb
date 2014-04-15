@@ -3,6 +3,7 @@ class KpiEntryValidator
   attr_accessor :email, :kpi_id, :kpi_name, :frequency, :date, :value, :entry_at, :user_kpi_item_id, :value, :item_cache_key, :valid, :content, :parsed_entry_at
   attr_accessor :validator_collection, :user_kpi_item, :kpi, :valid_by_cache
   attr_accessor :entity_id, :user_id, :target_max, :target_min
+  attr_accessor :kpi_properties
   attr_accessor :source
 
   def initialize args={}
