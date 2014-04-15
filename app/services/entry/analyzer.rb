@@ -25,6 +25,17 @@ module Entry
       call_data_service
     end
 
+    def period_compare
+      self.params[:data_module]=Entry::DataService::PERIOD_COMPARE_TABLE
+      call_data_service
+    end
+
+    def period_compares
+      self.params[:data_module]=Entry::DataService::PERIOD_COMPARE_CHART
+      call_data_service
+    end
+
+
     private
     def call_data_service
       parameter=Entry::Parameter::AnalyseParameter.new(self.params)
