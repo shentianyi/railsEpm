@@ -1,6 +1,8 @@
 module Entry
   module Aggregator
     class PeriodCompareAggregator<BaseAggregator
+      attr_accessor :data
+
       def aggregate
         c=Entry::ConditionService.new(self.parameter)
         query_condition=c.build_base_query_condition
@@ -18,7 +20,25 @@ module Entry
         reduce=%Q{
            function(key,values){return Array.#{func}(values);};
         }
-        query.map_reduce(map, reduce).out(inline: true)
+        self.data=query.map_reduce(map, reduce).out(inline: true)
+      end
+
+      private
+      def aggregate_type_data
+        return case self.parameter.data_module
+                 when Entry::DataService::PERIOD_COMPARE_TABLE
+                   generate_compare_table
+                 when Entry::DataService::PERIOD_COMPARE_CHART
+                   generate_compare_chart
+               end
+      end
+
+      def generate_compare_table
+
+      end
+
+      def generate_compare_chart
+
       end
     end
   end
