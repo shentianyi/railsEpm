@@ -52,8 +52,7 @@ class Email < ActiveRecord::Base
   def generate_analysis_pdf_and_cache analysis
     if analysis
       analysis.symbolize_keys!
-      analysis[:data_module]=Entry::DataService::WEB_HIGHSTOCK_IOS_TABLE
-      if da=KpiEntryAnalyseHelper.analysis_data(analysis)
+      if da=Entry::Analyzer.new(analysis).analyse_with_table
         data = da[0]
         table_data = da[1]
         @kpi_id = analysis[:kpi_id]

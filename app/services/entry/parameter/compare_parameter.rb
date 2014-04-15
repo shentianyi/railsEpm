@@ -18,9 +18,9 @@ module Entry
       end
 
       def compare_times=(values)
-        @comapre_times=[]
+        @compare_times=[]
         values.each do |v|
-          @comapre_times<<{
+          @compare_times<<{
               start_time: Time.parse(v[:start_time]).utc,
               end_time: Time.parse(v[:end_time]).utc
           }

@@ -1,10 +1,15 @@
 module Entry
   class DataService
+    # base aggregator
     WEB_HIGHSTOCK=1
     IOS_TABLE=2
     WEB_HIGHSTOCK_IOS_TABLE=3
+    # details table
     DETAIL_TABLE=4
-    MAPREDUCE_DETAIL_TABLE=5
+    # period comapre table
+    PERIOD_COMPARE_TABLE=5
+    PERIOD_COMPARE_CHART=6
+
 
     attr_accessor :aggregator
 
@@ -15,8 +20,8 @@ module Entry
             self.aggregator = Entry::Aggregator::BaseAnalyseAggregator.new(parameter)
           elsif DataService.detail_table_types.include?(parameter.data_module)
             self.aggregator=Entry::Aggregator::DataDetailAggregator.new(parameter)
-          elsif DataService.map_reduce_detail_table.include?(parameter.data_module)
-            self.aggregator=Entry::Aggregator::MapReduceAggregator.new(parameter)
+          elsif DataService.period_compare_types.include?(parameter.data_module)
+            self.aggregator=Entry::Aggregator::PeriodCompareAggregator.new(parameter)
           end
       end
     end
@@ -34,8 +39,8 @@ module Entry
       [DETAIL_TABLE]
     end
 
-    def self.map_reduce_detail_table
-      [MAPREDUCE_DETAIL_TABLE]
+    def self.period_compare_types
+      [PERIOD_COMPARE_TABLE,PERIOD_COMPARE_CHART]
     end
   end
 end
