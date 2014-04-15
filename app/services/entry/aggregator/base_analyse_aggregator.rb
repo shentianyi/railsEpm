@@ -19,10 +19,12 @@ module Entry
                   emit({date:format(this.parsed_entry_at,'#{self.parameter.date_format}')},parseFloat(this.value));
               };
         }
+        func=self.parameter.average ? 'avg' : 'sum'
         reduce=%Q{
-           function(key,values){return Array.sum(values);};
+           function(key,values){return Array.#{func}(values);};
         }
         query.map_reduce(map, reduce).out(inline: true).each do |d|
+          puts d
           key= d['_id']['date']
           self.current[key]=d['value']
           self.target_max[key]=@target_max_current
@@ -40,6 +42,7 @@ module Entry
 
       private
       def aggregate_type_data
+        self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
         case self.parameter.data_module
           when Entry::DataService::WEB_HIGHSTOCK
             return generate_web_highstock_data
