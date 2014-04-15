@@ -50,6 +50,23 @@ module Entry
         @reduce= AnalyseParameter.is_true(value)
       end
 
+      def date_format
+       return case self.frequency
+               when KpiFrequency::Hourly
+                 'yyyy-MM-dd HH'
+               when KpiFrequency::Daily
+                 'yyyy-MM-dd'
+               when KpiFrequency::Weekly
+                 'yyyy-WW'
+               when KpiFrequency::Monthly
+                 'yyyy-MM'
+               when KpiFrequency::Quarterly
+                 'yyyy-qq'
+               when KpiFrequency::Yearly
+                 'yyyy'
+             end
+      end
+
       def validate
 
       end

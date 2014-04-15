@@ -13,24 +13,10 @@ module Entry
         query_condition=Entry::ConditionService.new(self.parameter).build_base_query_condition
         query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 1)
 
-        format=case self.parameter.frequency
-                 when KpiFrequency::Hourly
-                   'yyyy-MM-dd HH'
-                 when KpiFrequency::Daily
-                   'yyyy-MM-dd'
-                 when KpiFrequency::Weekly
-                   'yyyy-WW'
-                 when KpiFrequency::Monthly
-                   'yyyy-MM'
-                 when KpiFrequency::Quarterly
-                   'yyyy-qq'
-                 when KpiFrequency::Yearly
-                   'yyyy'
-               end
         map=%Q{
            function(){
                   #{Mongo::Date.date_format}
-                  emit({date:format(this.parsed_entry_at,'#{format}')},parseFloat(this.value));
+                  emit({date:format(this.parsed_entry_at,'#{self.parameter.date_format}')},parseFloat(this.value));
               };
         }
         reduce=%Q{
