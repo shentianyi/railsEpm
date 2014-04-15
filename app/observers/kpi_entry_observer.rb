@@ -33,8 +33,10 @@ class KpiEntryObserver<Mongoid::Observer
     end
 
     #add property val
-    kpi_entry.dynamic_attributes.each{|attr|
-      KpiPropertyValue.add_property_value(kpi_entry.kpi_id,attr,kpi_entry[attr])
+    kpi = Kpi.find_by_id(kpi_entry.kpi_id)
+    kpi_entry.dynamic_attributes.each{|attr_id|
+      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id).first
+      KpiPropertyValue.add_property_value(item.id,kpi_entry[attr]) if item
     }
   end
 
@@ -51,8 +53,10 @@ class KpiEntryObserver<Mongoid::Observer
     end
 
     #desc property val
+    kpi = Kpi.find_by_id(kpi_entry.kpi_id)
     kpi_entry.dynamic_attributes.each{|attr|
-      KpiPropertyValue.desc_property_value(kpi_entry.kpi_id,attr,kpi_entry[attr])
+      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id).first
+      KpiPropertyValue.desc_property_value(item.id,kpi_entry[attr]) if item
     }
   end
 
@@ -68,10 +72,13 @@ class KpiEntryObserver<Mongoid::Observer
       collect_entry.update_attribute("value",old_val - val)
     end
 
-
+    kpi = Kpi.find_by_id(kpi_entry.kpi_id)
     (kpi_entry.changed&kpi_entry.dynamic_attributes).each { |attr|
-      KpiPropertyValue.desc_property_value(kpi_entry.kpi_id,attr, kpi_entry.changes[attr][0])
-      KpiPropertyValue.add_property_value(kpi_entry.kpi_id,attr, kpi_entry.changes[attr][1])
+      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id).first
+      if item
+        KpiPropertyValue.desc_property_value(item.id, kpi_entry.changes[attr][0])
+        KpiPropertyValue.add_property_value(item.id, kpi_entry.changes[attr][1])
+      end
     }
 
 

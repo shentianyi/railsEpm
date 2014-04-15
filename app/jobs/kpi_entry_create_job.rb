@@ -3,6 +3,8 @@ class KpiEntryCreateJob
   @queue='kpi_entry_job_queue'
 
   def self.perform entries
+
+=begin
     entries.each do |k|
       date=Time.parse(k['entry_at']).utc
       if kpi_entry=KpiEntry.where(user_kpi_item_id: k['user_kpi_item_id'],
@@ -21,5 +23,6 @@ class KpiEntryCreateJob
                      entry_type: 1).save
       end
     end
+=end
   end
 end

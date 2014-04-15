@@ -79,11 +79,18 @@ class KpisController < ApplicationController
     render json: msg
   end
 
+  #@function assign_properties
+  #@params kpi_id,kpi_property_name
+  #if kpi_property not found ,create a new one
   def assign_properties
     msg = Message.new
     msg.result = false
-    kpi_property = KpiProperty.find_by_id(params[:kpi_property_id])
+    kpi_property = KpiProperty.find_by_name(params[:kpi_property_name])
     kpi = Kpi.find_by_id(params[:kpi_id])
+    if kpi_property.nil?
+      kpi_property = KpiProperty.create(:name => params[:kpi_property_name])
+    end
+
     if kpi && kpi_property
       kpi_property_item = KpiPropertyItem.new
       kpi_property_item.kpi_property_id = kpi_property.id
