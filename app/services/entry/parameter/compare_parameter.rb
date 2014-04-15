@@ -30,7 +30,8 @@ module Entry
       end
 
       def build_or_condition
-        [@base_time, @comapre_time]
+        [{parsed_entry_at: self.base_time[:start_time]..self.base_time[:end_time]}
+        , {parsed_entry_at: self.comapre_time[:start_time]..self.compare_time[:end_time]}]
       end
     end
   end
