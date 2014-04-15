@@ -93,12 +93,8 @@ module Entry
     # ...
     # }
     def api_insert record
-      puts "------------------------------"
-      puts record.to_json
       kpi = Kpi.find_by_id record['kpi_id']
       fetch_attrs = kpi.kpi_properties.pluck(:name) & record.keys
-      puts "------------------------------"
-      puts fetch_attrs.to_json
       #default we think this is true
       k = KpiEntry.new
       #base fileds
@@ -110,13 +106,32 @@ module Entry
       #kpi_properties
       attr = {}
       kpi.kpi_properties.each {|p| attr[p.name] = p.id}
-      puts "------------------------------"
-      puts attr
       fetch_attrs.each {|f|
         k[attr[f]] = record[f]
       }
-      puts k.to_json
       k.save
+    end
+
+    #@function
+    #insert or update an entry
+    #call this before validate
+    #e.g.
+    #entry :{
+    # base_attrs : {
+    #
+    # },
+    # kpi_properties : {
+    #
+    # }
+    # }
+    def insert_entry entry
+      attrs = {}
+      attrs.merge(entry.base_attrs)
+      attrs.
+    end
+    
+    def remove_entry id
+
     end
 
     private
