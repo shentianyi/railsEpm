@@ -18,5 +18,9 @@ module Entry
       self.parameter.map_reduce_condition
     end
 
+    def build_or_condition
+      self.parameter.build_or_condition
+    end
+
   end
 end
