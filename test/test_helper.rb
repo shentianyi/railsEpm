@@ -13,7 +13,7 @@ class ActiveSupport::TestCase
   # end
   # Add more helper methods to be used by all tests here...
   def setup
-    login('admin@ifscm.com','123456@')
+   # login('admin@leoni.com','1111')
   end
 
   def login(email=nil,password=nil)
