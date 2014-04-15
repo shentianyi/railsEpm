@@ -13,28 +13,15 @@ module Entry
         query_condition=Entry::ConditionService.new(self.parameter).build_base_query_condition
         query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 1)
 
-        format=case self.parameter.frequency
-                 when KpiFrequency::Hourly
-                   'yyyy-MM-dd HH'
-                 when KpiFrequency::Daily
-                   'yyyy-MM-dd'
-                 when KpiFrequency::Weekly
-                   'yyyy-WW'
-                 when KpiFrequency::Monthly
-                   'yyyy-MM'
-                 when KpiFrequency::Quarterly
-                   'yyyy-qq'
-                 when KpiFrequency::Yearly
-                   'yyyy'
-               end
         map=%Q{
            function(){
                   #{Mongo::Date.date_format}
-                  emit({date:format(this.parsed_entry_at,'#{format}')},parseFloat(this.value));
+                  emit({date:format(this.parsed_entry_at,'#{self.parameter.date_format}')},parseFloat(this.value));
               };
         }
+        func=self.parameter.average ? 'avg' : 'sum'
         reduce=%Q{
-           function(key,values){return Array.sum(values);};
+           function(key,values){return Array.#{func}(values);};
         }
         query.map_reduce(map, reduce).out(inline: true).each do |d|
           key= d['_id']['date']
@@ -54,6 +41,7 @@ module Entry
 
       private
       def aggregate_type_data
+        self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
         case self.parameter.data_module
           when Entry::DataService::WEB_HIGHSTOCK
             return generate_web_highstock_data
