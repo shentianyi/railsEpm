@@ -24,7 +24,6 @@ module Entry
            function(key,values){return Array.#{func}(values);};
         }
         query.map_reduce(map, reduce).out(inline: true).each do |d|
-          puts d
           key= d['_id']['date']
           self.current[key]=d['value']
           self.target_max[key]=@target_max_current
