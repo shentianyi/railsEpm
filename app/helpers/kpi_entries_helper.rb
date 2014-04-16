@@ -2,29 +2,47 @@
 module KpiEntriesHelper
   # create or update kpi entry
   def self.create_update_kpi_entry params, current_ability=nil
-    validator = KpiEntryValidator.new(params)
-    validator.validate
-    if validator.valid
-      validator.entry
-    end
+    #validator = KpiEntryValidator.new(params)
+    #validator.validate
+    #if validator.valid
+    #  validator.entry
+    #end
 
-=begin
+
+
     if   kpi= (current_ability.nil? ? Kpi.find_by_id(params[:kpi_id]) : Kpi.accessible_by(current_ability).find_by_id(params[:kpi_id]))
       parsed_entry_at=DateTimeHelper.get_utc_time_by_str(params[:entry_at])
       if user_kpi_item=UserKpiItem.find_by_id(params[:user_kpi_item_id])
+
+        attrs = {}
+        attrs[:base_attrs] = {}
+        attrs[:base_attrs][:original_value] = params[:value]
+        attrs[:base_attrs][:kpi_id] = kpi.id
+        attrs[:base_attrs][:frequency] = kpi.frequency
+        attrs[:base_attrs][:user_kpi_item_id] = user_kpi_item.id
+        attrs[:base_attrs][:user_id] = user_kpi_item.user_id
+        attrs[:base_attrs][:entity_id] = user_kpi_item.entity_id
+        attrs[:base_attrs][:target_max] = user_kpi_item.target_max
+        attrs[:base_attrs][:target_min] = user_kpi_item.target_min
+        attrs[:base_attrs][:entry_at] = params[:entry_at]
+        attrs[:base_attrs][:parsed_entry_at] = parsed_entry_at
+        attrs[:base_attrs][:entry_type] = params.has_key?("entry_type") ? params[:entry_type] : 1
+        attrs[:kpi_properties] = params.has_key?("kpi_properties") ? params["kpi_properties"] : nil
+        kpi_entry = Entry::OperateService.new.insert_entry(attrs)
+=begin
         if kpi_entry=KpiEntry.where(user_kpi_item_id: user_kpi_item.id, parsed_entry_at: parsed_entry_at, entity_id: user_kpi_item.entity_id).first
           kpi_entry.update_attributes(:original_value => params[:value])
         else
           entrytype = params.has_key?("entry_type") ? params[:entry_type] : 1
-          kpi_entry=KpiEntry.new(original_value: params[:value], user_kpi_item_id: user_kpi_item.id, parsed_entry_at: parsed_entry_at, entity_id: user_kpi_item.entity_id, user_id: user_kpi_item.user_id,
+          kpi_entry=KpiEntry.new(original_value: params[:value], user_kpi_item_id: user_kpi_item.id, parsed_entry_at: parsed_entry_at,entry_at:params[:entry_at], entity_id: user_kpi_item.entity_id, user_id: user_kpi_item.user_id,
                                  target_max: user_kpi_item.target_max, target_min: user_kpi_item.target_min, entry_type:entrytype)
           kpi_entry.kpi_id=kpi.id
           kpi_entry.save
         end
+=end
         return kpi_entry
       end
     end unless params[:value].blank?
-=end
 
   end
 

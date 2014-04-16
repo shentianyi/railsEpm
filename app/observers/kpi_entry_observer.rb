@@ -12,8 +12,8 @@ class KpiEntryObserver<Mongoid::Observer
     #check if collect exits?
     collect_entry = KpiEntry.find_by(kpi_id:kpi_entry.kpi_id,parsed_entry_at:kpi_entry.parsed_entry_at,entrytype:"1")
     if collect_entry
-      val = collect_entry.value
-      collect_entry.update_attribute("value",val+kpi_entry.value)
+      val = collect_entry.original_value
+      collect_entry.update_attribute("value",val+kpi_entry.original)
     else
       #if not find,create one
       new_collect_entry = {}
@@ -25,7 +25,7 @@ class KpiEntryObserver<Mongoid::Observer
       new_collect_entry[:base_attrs]["user_kpi_item_id"] = kpi_entry.user_kpi_item_id
       new_collect_entry[:base_attrs]["target_max"] = kpi_entry.target_max
       new_collect_entry[:base_attrs]["target_min"] = kpi_entry.target_min
-      new_collect_entry[:base_attrs]["value"] =  kpi_entry.value
+      new_collect_entry[:base_attrs]["original_value"] =  kpi_entry.value
       new_collect_entry[:base_attrs]["entry_at"] = kpi_entry.entry_at
       new_collect_entry[:base_attrs]["parsed_entry_at"] = kpi_entry.parsed_entry_at
       new_collect_entry[:base_attrs]["frequency"] = kpi_entry.frequency
@@ -61,12 +61,12 @@ class KpiEntryObserver<Mongoid::Observer
     if kpi_entry.entry_type == 1
       return
     end
-    collect_entry = KpiEntry.find_by(kpi_id:kpi_entry.kpi_id,parsed_entry_at:kpi_entry.parsed_entry_at,entry_type:"1")
     #
-    if kpi_entry.value.is_changed? && collect_entry
-      val = kpi_entry.value - kpi_entry.value.old
-      old_val = collect_entry.value
-      collect_entry.update_attribute("value",old_val+val)
+    collect_entry = KpiEntry.find_by(kpi_id:kpi_entry.kpi_id,parsed_entry_at:kpi_entry.parsed_entry_at,entry_type:"1")
+    if collect_entry
+      val = kpi_entry.original_value
+      old_val = collect_entry.original_value
+      collect_entry.update_attribute("original_value",(old_val-val)) if val && old_val
     end
 
     #desc property val
@@ -81,12 +81,11 @@ class KpiEntryObserver<Mongoid::Observer
     if kpi_entry.entry_type == 1
       return
     end
-    
+
     collect_entry = KpiEntry.find_by(kpi_id:kpi_entry.kpi_id,parsed_entry_at:kpi_entry.parsed_entry_at,entry_type:"1")
-    if collect_entry
-      val = kpi_entry.value
-      old_val = collect_entry.value
-      collect_entry.update_attribute("value",old_val - val)
+
+    if collect_entry && kpi_entry.value_changed?
+
     end
 
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)

@@ -117,7 +117,7 @@ class KpiEntry
       $redis.zremrangebyscore(time_key, score, score)
 
       value_key=KpiEntry.gen_recent_value_zscore_key self.user_id, self.user_kpi_item_id
-      $redis.zrem(value_key, uuid)
+      #$redis.zrem(value_key, uuid)
     end
   end
 end

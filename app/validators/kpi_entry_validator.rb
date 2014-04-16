@@ -13,7 +13,12 @@ class KpiEntryValidator
       instance_variable_set "@#{k}", v
     end
     self.item_cache_key="kpi_entry_validator:#{self.email}:#{self.kpi_id}"
-    self.date=self.date.to_s
+    if Time.parse(self.date).utc?
+      self.date=self.date.to_s
+    else
+      self.date=Time.parse(self.date).utc
+    end
+
     self.value=self.value.to_s
     self.content=[]
     self.validator_collection.add_validator(self) if self.validator_collection
@@ -83,13 +88,13 @@ class KpiEntryValidator
     self.entity_id=source.user_kpi_item.entity_id
     self.target_max=source.user_kpi_item.target_max
     self.target_min=source.user_kpi_item.target_min
-    self.date=Date.parse(self.date).to_s
-    self.entry_at = Time.parse(self.date).utc #KpiEntriesHelper.parse_entry_string_date self.frequency,self.date
-    self.parsed_entry_at = KpiEntriesHelper.parse_entry_string_date self.frequency,self.date
+    #self.date=Date.parse(self.date).to_s
+    self.entry_at = Time.parse(self.date) #KpiEntriesHelper.parse_entry_string_date self.frequency,self.date
+    self.parsed_entry_at = DateTimeHelper.get_utc_time_by_str(KpiEntriesHelper.parse_entry_string_date(self.frequency,self.entry_at.to_s).to_s)
   end
 
   def params_to_hash
-    {base_attrs:{value:self.value,kpi_id: self.kpi_id, frequency: self.frequency, user_kpi_item_id: self.user_kpi_item_id,
+    {base_attrs:{original_value:self.value,kpi_id: self.kpi_id, frequency: self.frequency, user_kpi_item_id: self.user_kpi_item_id,
      user_id: self.user_id, entity_id: self.entity_id, target_max: self.target_max,
      target_min: self.target_min, entry_at: self.entry_at, parsed_entry_at: self.parsed_entry_at, entry_type: self.entry_type},
     kpi_properties:self.kpi_properties
