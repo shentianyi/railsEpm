@@ -125,12 +125,12 @@ module Entry
     # }
     # }
     def insert_entry entry
-
+      entry.symbolize_keys!
       attrs = {}
       attrs = attrs.merge(entry[:base_attrs])
 
       #fetch kpi_properties
-      kpi = Kpi.find_by_id(attrs[:kpi_id])
+      kpi = Kpi.find_by_id(attrs['kpi_id'])
       if kpi && !entry[:kpi_properties].nil?
         properties = {}
         kpi.kpi_properties.each {|p|
@@ -144,9 +144,11 @@ module Entry
       end
 
       #update
-      if kpi_entry = KpiEntry.where(user_kpi_item_id: attrs[:user_kpi_item_id], parsed_entry_at: attrs[:parsed_entry_at], entity_id: attrs[:entity_id],entry_type: attrs[:entity_type]).first
-        kpi_entry.update_attribute(:original_value, attrs[:value])
+      if kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], parsed_entry_at: attrs['parsed_entry_at'], entity_id: attrs['entity_id'],entry_type: attrs['entry_type']).first
+        puts "update!"
+        kpi_entry.update_attribute(:original_value, attrs['original_value'])
       else
+        puts "new!"
         kpi_entry = KpiEntry.new(attrs)
         kpi_entry.save
         return kpi_entry

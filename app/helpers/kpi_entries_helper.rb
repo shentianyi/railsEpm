@@ -13,22 +13,29 @@ module KpiEntriesHelper
     if   kpi= (current_ability.nil? ? Kpi.find_by_id(params[:kpi_id]) : Kpi.accessible_by(current_ability).find_by_id(params[:kpi_id]))
       parsed_entry_at=DateTimeHelper.get_utc_time_by_str(params[:entry_at])
       if user_kpi_item=UserKpiItem.find_by_id(params[:user_kpi_item_id])
-
+        validator = KpiEntryValidator.new(params)
+        validator.validate
+        if validator.valid
+          kpi_entry = validator.entry
+          return kpi_entry
+        end
+=begin
         attrs = {}
         attrs[:base_attrs] = {}
-        attrs[:base_attrs][:original_value] = params[:value]
-        attrs[:base_attrs][:kpi_id] = kpi.id
-        attrs[:base_attrs][:frequency] = kpi.frequency
-        attrs[:base_attrs][:user_kpi_item_id] = user_kpi_item.id
-        attrs[:base_attrs][:user_id] = user_kpi_item.user_id
-        attrs[:base_attrs][:entity_id] = user_kpi_item.entity_id
-        attrs[:base_attrs][:target_max] = user_kpi_item.target_max
-        attrs[:base_attrs][:target_min] = user_kpi_item.target_min
-        attrs[:base_attrs][:entry_at] = params[:entry_at]
-        attrs[:base_attrs][:parsed_entry_at] = parsed_entry_at
-        attrs[:base_attrs][:entry_type] = params.has_key?("entry_type") ? params[:entry_type] : 1
+        attrs[:base_attrs]["original_value"] = params[:value]
+        attrs[:base_attrs]["kpi_id"] = kpi.id
+        attrs[:base_attrs]["frequency"] = kpi.frequency
+        attrs[:base_attrs]["user_kpi_item_id"] = user_kpi_item.id
+        attrs[:base_attrs]["user_id"] = user_kpi_item.user_id
+        attrs[:base_attrs]["entity_id"] = user_kpi_item.entity_id
+        attrs[:base_attrs]["target_max"] = user_kpi_item.target_max
+        attrs[:base_attrs]["target_min"] = user_kpi_item.target_min
+        attrs[:base_attrs]["entry_at"] = params[:entry_at]
+        attrs[:base_attrs]["parsed_entry_at"] = parsed_entry_at
+        attrs[:base_attrs]["entry_type"] = params.has_key?(:entry_type) ? params[:entry_type] : 1
         attrs[:kpi_properties] = params.has_key?("kpi_properties") ? params["kpi_properties"] : nil
         kpi_entry = Entry::OperateService.new.insert_entry(attrs)
+=end
 =begin
         if kpi_entry=KpiEntry.where(user_kpi_item_id: user_kpi_item.id, parsed_entry_at: parsed_entry_at, entity_id: user_kpi_item.entity_id).first
           kpi_entry.update_attributes(:original_value => params[:value])
@@ -40,7 +47,7 @@ module KpiEntriesHelper
           kpi_entry.save
         end
 =end
-        return kpi_entry
+        #return kpi_entry
       end
     end unless params[:value].blank?
 
@@ -109,7 +116,7 @@ module KpiEntriesHelper
   end
 
   # get kpi entry by user kpi item id, frequency and datetime
-  def self.get_kpi_entry_for_entry kpi_item_id, parsed_entry_at
+  def self. get_kpi_entry_for_entry kpi_item_id, parsed_entry_at
     if item=UserKpiItem.find_by_id(kpi_item_id)
       entry = KpiEntry.where(:user_kpi_item_id => kpi_item_id, :parsed_entry_at => parsed_entry_at, :entity_id => item.entity_id,:entry_type => 1).first
       return entry
@@ -153,22 +160,33 @@ module KpiEntriesHelper
            end
   end
 
+  #@function parse_entry_string_date
+  #parse string to a specific date string dependent on the frequency
+  #we accept date as utc time
   def self.parse_entry_string_date frequency,date
     return case frequency
-                     when KpiFrequency::Hourly
-                       DateTimeHelper.parse_string_to_date_hour(self.date)
-                     when KpiFrequency::Daily
-                       Time.strptime(date, '%Y-%m-%d')
-                     when KpiFrequency::Weekly
-                       date=Date.parse(date)
-                       Date.commercial(date.year, date.cweek, 1)
-                     when KpiFrequency::Monthly
-                       Time.strptime(date, '%Y-%m-01')
-                     when KpiFrequency::Quarterly
-                       month=Date.parse(date).month
-                       Time.strptime(date, "%Y-#{date.month-month%3}-01")
-                     when KpiFrequency::Yearly
-                       Time.strptime(date, '%Y-01-01')
-                   end
+             when KpiFrequency::Hourly
+               #convert 2014-04-15 12:23:49 to 2014-04-15 12:00:00 UTC
+               #DateTimeHelper.parse_string_to_date_hour(self.date)
+               DateTimeHelper.parse_time_to_hour_string(date)
+             when KpiFrequency::Daily
+               #Time.strptime(date, '%Y-%m-%d').to_datetime
+               #Time.parse(date).strftime('%Y-%m-%d')
+               DateTimeHelper.parse_time_to_day_string(date)
+             when KpiFrequency::Weekly
+               #date=Date.parse(date)
+               #Date.commercial(date.year, date.cweek, 1)
+               DateTimeHelper.parse_time_to_week_string(date)
+             when KpiFrequency::Monthly
+               #Time.strptime(date, '%Y-%m-01').to_datetime
+               DateTimeHelper.parse_time_to_month_string(date)
+             when KpiFrequency::Quarterly
+               #month=Date.parse(date).month
+               #Time.strptime(date, "%Y-#{date.month-month%3}-01").to_datetime
+               DateTimeHelper.parse_time_to_quarter_string(date)
+             when KpiFrequency::Yearly
+               #Time.strptime(date, '%Y-01-01').to_datetime
+               DateTimeHelper.parse_time_to_year_stirng(date)
+           end
   end
 end

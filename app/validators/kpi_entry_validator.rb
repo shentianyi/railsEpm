@@ -6,6 +6,7 @@ class KpiEntryValidator
   attr_accessor :kpi_properties
   attr_accessor :source
 
+  #all the time we accept is utc time
   def initialize args={}
     self.valid=true
     self.valid_by_cache=false
@@ -13,10 +14,11 @@ class KpiEntryValidator
       instance_variable_set "@#{k}", v
     end
     self.item_cache_key="kpi_entry_validator:#{self.email}:#{self.kpi_id}"
+    #
     if Time.parse(self.date).utc?
       self.date=self.date.to_s
     else
-      self.date=Time.parse(self.date).utc
+      self.date=Time.parse(self.date).utc.to_s
     end
 
     self.value=self.value.to_s
@@ -90,14 +92,16 @@ class KpiEntryValidator
     self.target_min=source.user_kpi_item.target_min
     #self.date=Date.parse(self.date).to_s
     self.entry_at = Time.parse(self.date) #KpiEntriesHelper.parse_entry_string_date self.frequency,self.date
-    self.parsed_entry_at = DateTimeHelper.get_utc_time_by_str(KpiEntriesHelper.parse_entry_string_date(self.frequency,self.entry_at.to_s).to_s)
+    #Here we got some problems of transfer time
+    self.parsed_entry_at = KpiEntriesHelper.parse_entry_string_date(self.frequency,self.entry_at)
+    self.parsed_entry_at = DateTimeHelper.get_utc_time_by_str(self.parsed_entry_at)
   end
 
   def params_to_hash
-    {base_attrs:{original_value:self.value,kpi_id: self.kpi_id, frequency: self.frequency, user_kpi_item_id: self.user_kpi_item_id,
-     user_id: self.user_id, entity_id: self.entity_id, target_max: self.target_max,
-     target_min: self.target_min, entry_at: self.entry_at, parsed_entry_at: self.parsed_entry_at, entry_type: self.entry_type},
-    kpi_properties:self.kpi_properties
+    {"base_attrs"=> {"original_value"=>self.value,"kpi_id"=> self.kpi_id, "frequency"=> self.frequency, "user_kpi_item_id"=> self.user_kpi_item_id,
+     "user_id"=> self.user_id, "entity_id"=> self.entity_id, "target_max"=> self.target_max,
+     "target_min"=> self.target_min, "entry_at"=> self.entry_at, "parsed_entry_at"=> self.parsed_entry_at, "entry_type"=> self.entry_type},
+     "kpi_properties"=>self.kpi_properties
     }
   end
 

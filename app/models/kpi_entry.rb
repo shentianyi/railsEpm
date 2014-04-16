@@ -97,6 +97,8 @@ class KpiEntry
   end
 
   def set_recent_input
+    #only when entry_type is 1
+    #fit for input in the web ,not detail kpi_entry
     if entry_type == 1
       time_key=KpiEntry.gen_recent_time_zscore_key user_id, user_kpi_item_id
       score=(Time.parse(self.parsed_entry_at.to_s).to_f*1000).to_i
@@ -110,6 +112,7 @@ class KpiEntry
   end
 
   def rem_recent_input
+=begin
     if self.entry_type == 1
       time_key=KpiEntry.gen_recent_time_zscore_key self.user_id, self.user_kpi_item_id
       score=(Time.parse(self.parsed_entry_at.to_s).to_f*1000).to_i
@@ -117,7 +120,8 @@ class KpiEntry
       $redis.zremrangebyscore(time_key, score, score)
 
       value_key=KpiEntry.gen_recent_value_zscore_key self.user_id, self.user_kpi_item_id
-      #$redis.zrem(value_key, uuid)
+      $redis.zrem(value_key, uuid)
     end
+=end
   end
 end

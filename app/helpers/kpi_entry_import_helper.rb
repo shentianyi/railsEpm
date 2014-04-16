@@ -26,7 +26,7 @@ module KpiEntryImportHelper
     sheet.rows[1..-1].each_with_index do |row, i|
       params=excel_xls_param row
       params.values.each { |v| error_sheet.row(i+1).push v }
-      params["entry_type"] = 1
+      params[:entry_type] = 1
       validator=KpiEntryValidator.new(params)
       validator.validate
       unless validator.valid
