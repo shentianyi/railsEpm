@@ -109,7 +109,7 @@ module KpiEntriesHelper
   end
 
   # get kpi entry by user kpi item id, frequency and datetime
-  def self.get_kpi_entry_for_entry kpi_item_id, parsed_entry_at
+  def self. get_kpi_entry_for_entry kpi_item_id, parsed_entry_at
     if item=UserKpiItem.find_by_id(kpi_item_id)
       entry = KpiEntry.where(:user_kpi_item_id => kpi_item_id, :parsed_entry_at => parsed_entry_at, :entity_id => item.entity_id,:entry_type => 1).first
       return entry
