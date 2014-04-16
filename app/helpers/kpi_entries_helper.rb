@@ -153,22 +153,33 @@ module KpiEntriesHelper
            end
   end
 
+  #@function parse_entry_string_date
+  #parse string to a specific date string dependent on the frequency
+  #we accept date as utc time
   def self.parse_entry_string_date frequency,date
     return case frequency
-                     when KpiFrequency::Hourly
-                       DateTimeHelper.parse_string_to_date_hour(self.date)
-                     when KpiFrequency::Daily
-                       Time.strptime(date, '%Y-%m-%d')
-                     when KpiFrequency::Weekly
-                       date=Date.parse(date)
-                       Date.commercial(date.year, date.cweek, 1)
-                     when KpiFrequency::Monthly
-                       Time.strptime(date, '%Y-%m-01')
-                     when KpiFrequency::Quarterly
-                       month=Date.parse(date).month
-                       Time.strptime(date, "%Y-#{date.month-month%3}-01")
-                     when KpiFrequency::Yearly
-                       Time.strptime(date, '%Y-01-01')
-                   end
+             when KpiFrequency::Hourly
+               #convert 2014-04-15 12:23:49 to 2014-04-15 12:00:00 UTC
+               #DateTimeHelper.parse_string_to_date_hour(self.date)
+               DateTimeHelper.parse_time_to_hour_string(date)
+             when KpiFrequency::Daily
+               #Time.strptime(date, '%Y-%m-%d').to_datetime
+               #Time.parse(date).strftime('%Y-%m-%d')
+               DateTimeHelper.parse_time_to_day_string(date)
+             when KpiFrequency::Weekly
+               #date=Date.parse(date)
+               #Date.commercial(date.year, date.cweek, 1)
+               DateTimeHelper.parse_time_to_week_string(date)
+             when KpiFrequency::Monthly
+               #Time.strptime(date, '%Y-%m-01').to_datetime
+               DateTimeHelper.parse_time_to_month_string(date)
+             when KpiFrequency::Quarterly
+               #month=Date.parse(date).month
+               #Time.strptime(date, "%Y-#{date.month-month%3}-01").to_datetime
+               DateTimeHelper.parse_time_to_quarter_string(date)
+             when KpiFrequency::Yearly
+               #Time.strptime(date, '%Y-01-01').to_datetime
+               DateTimeHelper.parse_time_to_year_stirng(date)
+           end
   end
 end
