@@ -1,6 +1,7 @@
 #encoding: utf-8
 class KpiEntriesController < ApplicationController
   # create or update kpi entry
+  skip_before_filter :verify_authenticity_token
   before_filter :get_ability_category, :only => [:analyse], :if => lambda { |c| request.get? }
 
 
@@ -16,7 +17,16 @@ class KpiEntriesController < ApplicationController
     render :json => {:result => true}
   end
 
-
+  def entry
+    msg = Message.new
+    msg.result = true
+    validator = KpiEntryValidator.new(params)
+    validator.validate
+    if validator.valid
+      validator.entry
+    end
+    render :json=>msg
+  end
   #
   def show
     @f = params[:f].nil? ? KpiFrequency::Hourly : params[:f].to_i
