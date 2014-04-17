@@ -95,6 +95,7 @@ class KpiEntryValidator
     #Here we got some problems of transfer time
     self.parsed_entry_at = KpiEntriesHelper.parse_entry_string_date(self.frequency,self.entry_at)
     self.parsed_entry_at = DateTimeHelper.get_utc_time_by_str(self.parsed_entry_at)
+    self.entry_type = self.entry_type.nil? ? 0 : self.entry_type
   end
 
   def params_to_hash

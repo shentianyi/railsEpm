@@ -142,9 +142,15 @@ module Entry
           attrs[":"+properties[f].to_s] = entry[:kpi_properties][f]
         }
       end
-
+      #dependet on entry_type
+      case attrs['entry_type']
+        when 0
+          kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], entry_at: attrs['entry_at'], entity_id: attrs['entity_id'],entry_type: attrs['entry_type']).first
+        when 1
+          kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], parsed_entry_at: attrs['parsed_entry_at'], entity_id: attrs['entity_id'],entry_type: attrs['entry_type']).first
+      end
       #update
-      if kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], parsed_entry_at: attrs['parsed_entry_at'], entity_id: attrs['entity_id'],entry_type: attrs['entry_type']).first
+      if kpi_entry
         puts "update!"
         kpi_entry.update_attribute(:original_value, attrs['original_value'])
       else

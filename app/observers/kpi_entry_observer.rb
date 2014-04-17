@@ -8,6 +8,12 @@ class KpiEntryObserver<Mongoid::Observer
       Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi.is_calculated
       return
     end
+  end
+
+  def after_create kpi_entry
+    if kpi_entry.entry_type == 1
+      return
+    end
     #do collect
     #check if collect exits?
     #
@@ -15,7 +21,7 @@ class KpiEntryObserver<Mongoid::Observer
     collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
     if collect_entry
       val = collect_entry.original_value
-      collect_entry.update_attribute("original_value",val+kpi_entry.original)
+      collect_entry.update_attribute("original_value",val+kpi_entry.original_value)
     else
       #if not find,create one
       new_collect_entry = {}
@@ -23,7 +29,7 @@ class KpiEntryObserver<Mongoid::Observer
       new_collect_entry[:base_attrs]["kpi_id"] = kpi_entry.kpi_id
       new_collect_entry[:base_attrs]["user_id"] = kpi_entry.user_id
       new_collect_entry[:base_attrs]["entity_id"] = kpi_entry.entity_id
-      new_collect_entry[:base_attrs]["tenant_id"] = kpi_entry.tenant_id
+      #new_collect_entry[:base_attrs]["tenant_id"] = kpi_entry.tenant_id
       new_collect_entry[:base_attrs]["user_kpi_item_id"] = kpi_entry.user_kpi_item_id
       new_collect_entry[:base_attrs]["target_max"] = kpi_entry.target_max
       new_collect_entry[:base_attrs]["target_min"] = kpi_entry.target_min
@@ -54,8 +60,8 @@ class KpiEntryObserver<Mongoid::Observer
     #add property val
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
     kpi_entry.dynamic_attributes.each{|attr_id|
-      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id).first
-      KpiPropertyValue.add_property_value(item.id,kpi_entry[attr]) if item
+      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr(":","")).first
+      KpiPropertyValue.add_property_value(item.id,kpi_entry[attr_id]) if item
     }
   end
 
@@ -73,9 +79,9 @@ class KpiEntryObserver<Mongoid::Observer
 
     #desc property val
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
-    kpi_entry.dynamic_attributes.each{|attr|
-      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id).first
-      KpiPropertyValue.desc_property_value(item.id,kpi_entry[attr]) if item
+    kpi_entry.dynamic_attributes.each{|attr_id|
+      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr(":","")).first
+      KpiPropertyValue.desc_property_value(item.id,kpi_entry[attr_id]) if item
     }
   end
 
@@ -87,17 +93,17 @@ class KpiEntryObserver<Mongoid::Observer
     collect_entry = collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
 
     if collect_entry && kpi_entry.original_value_changed?
-      val_change = kpi_entry.original_value - kpi_entry.original_value_was
-      val = collect_entry.original_value + val_change
-      collect_entry.update_attributes("original_value",val)
+      val_change = kpi_entry.original_value-BigDecimal.new(kpi_entry.original_value_was)
+      val = collect_entry.original_value+val_change
+      collect_entry.update_attribute("original_value",val)
     end
 
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
-    (kpi_entry.changed&kpi_entry.dynamic_attributes).each { |attr|
-      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id).first
+    (kpi_entry.changed&kpi_entry.dynamic_attributes).each { |attr_id|
+      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr(":","")).first
       if item
-        KpiPropertyValue.desc_property_value(item.id, kpi_entry.changes[attr][0])
-        KpiPropertyValue.add_property_value(item.id, kpi_entry.changes[attr][1])
+        KpiPropertyValue.desc_property_value(item.id, kpi_entry.changes[attr_id][0])
+        KpiPropertyValue.add_property_value(item.id, kpi_entry.changes[attr_id][1])
       end
     }
 

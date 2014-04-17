@@ -74,8 +74,9 @@ IFEpm::Application.routes.draw do
       get '/c/:id' => :index
       put :update
       post :assign
-      post :assign_property
-      delete :remove_property
+      post :assign_properties
+      delete :remove_properties
+      get '/properties/:id'=>:properties
       post :import
       get :template
       get :parameter
@@ -99,6 +100,7 @@ IFEpm::Application.routes.draw do
     collection do
       match :analyse
       get :recents
+      post :entry
       post :import
     end
   end
@@ -186,13 +188,17 @@ IFEpm::Application.routes.draw do
       end
     end
 
-    resources :kpis do
-      member do
-        get :properties
-      end
+    controller :departments do
+      match 'departments' => :index
     end
+
+    controller :kpi_properties do
+      match 'kpi_properties/property_value' => :property_value
+    end
+
     controller :kpis do
       match 'kpis/kpis_by_category' => :kpis_by_category
+      match 'kpis/properties' => :properties
     end
 
     resources :entity_groups do

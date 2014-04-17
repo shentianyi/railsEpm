@@ -80,6 +80,24 @@ class KpisController < ApplicationController
     render json: msg
   end
 
+  #@function properties
+  #get all kpi properties
+  def properties
+    @kpi_properties = Kpi.find_by_id(params[:id]).kpi_properties
+    render :json => @kpi_properties
+  end
+
+  #@function remove_properties
+  def remove_properties
+    msg = Message.new
+    msg.result = false
+    if item = KpiPropertyItem.where(kpi_id:params[:kpi_id],kpi_property_id: params[:kpi_property_id])
+      item.destroy
+      msg.result = true
+    end
+    render :json
+  end
+
   #@function assign_properties
   #@params kpi_id,kpi_property_name
   #if kpi_property not found ,create a new one
