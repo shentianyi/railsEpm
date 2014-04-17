@@ -4,7 +4,7 @@ module Entry
       attr_accessor :kpi, :entities, :property
       attr_accessor :start_time, :end_time
       attr_accessor :frequency
-      attr_accessor :average, :reduce, :data_module # sum,average
+      attr_accessor :average, :data_module # sum,average
       attr_accessor :valid
       attr_accessor :map_group, :reduce_func
 
@@ -17,7 +17,6 @@ module Entry
         self.end_time = args[:end_time]
         self.frequency=args[:frequency] || self.kpi.frequency
         self.average=args[:average]
-        self.reduce = args[:reduce]
         self.data_module = args[:data_module] || DataService::WEB_HIGHSTOCK
         self.property = args[:property]
         self.map_group =args[:map_group] if args[:map_group]
@@ -44,10 +43,6 @@ module Entry
 
       def average=(value)
         @average=AnalyseParameter.is_true(value)
-      end
-
-      def reduce=(value)
-        @reduce= AnalyseParameter.is_true(value)
       end
 
       def date_format

@@ -11,13 +11,6 @@ module Entry
         query=query.any_of(c.build_or_condition)
 
         mr_condition[:map_group]+=",date:format(this.parsed_entry_at,'#{self.parameter.date_format}')"
-      puts '-------------------------------------------------'
-        puts mr_condition[:map_group]
-        puts '-------------------------------------------------'
-        #map=%Q{
-        #   #{Mongo::Date.date_format}
-        #   function(){emit({entity_id:this.entity_id,date:format(this.parsed_entry_at,'yyyy-MM')},parseFloat(this.value));};
-        #}
 
         map=%Q{
            function(){

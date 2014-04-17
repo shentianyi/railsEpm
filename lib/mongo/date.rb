@@ -1,12 +1,20 @@
 
 module Mongo
   class Date
-    def self.date_format
+    def self.date_format(time_zone=$DEFAULT_TIME_ZONE)
+      hour_off_set=Time.Time.zone_offset(time_zone)/(3600)
+
       %Q(
+      Date.prototype.addHours= function(h){
+       this.setHours(this.getHours()+h);
+       return this;
+      }
+
         var format = function (date,fmt) {
+date.addHours(#{hour_off_set});
        var week_date = new Date(date);
     week_date.setHours(0, 0, 0);
-    week_date.setDate(week_date.getDate() + 4 - (week_date.getDay() || 7));
+    week_date.setDate(week_date.getUTCDate() + 4 - (week_date.getUTCDay() || 7));
     var week_number = Math.ceil((((week_date - new Date(week_date.getFullYear(), 0, 1)) / 8.64e7) + 1) / 7);
     var o = {
         "M+": date.getMonth() + 1, // month

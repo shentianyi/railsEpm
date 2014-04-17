@@ -24,11 +24,12 @@ module Entry
         reduce=%Q{
            function(key,values){return Array.#{func}(values);};
         }
-        query.map_reduce(map, reduce).out(inline: true).each do |d|
-          key= d['_id']['date']
-          self.current[key]=d['value']
-        end
+        date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
 
+        query.map_reduce(map, reduce).out(inline: true).each do |d|
+          key=date_parse_proc.call(d['_id']['date'])
+          self.current[d['_id']['date']]=d['value']
+        end
         self.data_module= {:current => self.current,
                            :target_max => self.target_max,
                            :target_min => self.target_min,

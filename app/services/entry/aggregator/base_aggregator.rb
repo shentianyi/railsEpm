@@ -6,6 +6,7 @@ module Entry
       def initialize(parameter)
         self.parameter=parameter
       end
+
     end
   end
 end
