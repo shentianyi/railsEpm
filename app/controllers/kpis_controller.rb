@@ -1,6 +1,6 @@
 #encoding: utf-8
 class KpisController < ApplicationController
-  #skip_before_filter :verify_authenticity_token
+  skip_before_filter :verify_authenticity_token
   before_filter :require_user_as_admin, :only => :index
   before_filter :get_ability_category, :only => [:index, :access]
   before_filter :get_kpis_by_category, :only => :categoried
@@ -78,6 +78,24 @@ class KpisController < ApplicationController
       msg.content = I18n.t "fix.user_no_exists"
     end
     render json: msg
+  end
+
+  #@function properties
+  #get all kpi properties
+  def properties
+    @kpi_properties = Kpi.find_by_id(params[:id]).kpi_properties
+    render :json => @kpi_properties
+  end
+
+  #@function remove_properties
+  def remove_properties
+    msg = Message.new
+    msg.result = false
+    if item = KpiPropertyItem.where(kpi_id:params[:kpi_id],kpi_property_id: params[:kpi_property_id])
+      item.destroy
+      msg.result = true
+    end
+    render :json
   end
 
   #@function assign_properties

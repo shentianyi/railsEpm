@@ -15,7 +15,7 @@ class KpiEntryObserver<Mongoid::Observer
     collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
     if collect_entry
       val = collect_entry.original_value
-      collect_entry.update_attribute("original_value",val+kpi_entry.original)
+      collect_entry.update_attribute("original_value",val+kpi_entry.original_value)
     else
       #if not find,create one
       new_collect_entry = {}

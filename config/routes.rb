@@ -74,8 +74,9 @@ IFEpm::Application.routes.draw do
       get '/c/:id' => :index
       put :update
       post :assign
-      post :assign_property
-      delete :remove_property
+      post :assign_properties
+      delete :remove_properties
+      get '/properties/:id'=>:properties
       post :import
       get :template
       get :parameter
