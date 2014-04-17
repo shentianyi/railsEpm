@@ -9,8 +9,9 @@ module Api
     end
 
     ## get kpi properties
-    def kpi_properties
-
+    def properties
+      @kpi_properties = Kpi.find_by_id(params[:id]).kpi_properties
+      render :json => @kpi_properties
     end
   end
 end

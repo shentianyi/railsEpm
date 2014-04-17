@@ -229,7 +229,7 @@ TREE.current_entitygroup_id = -1;
                         target.remove();
                         $("#part-info .users .inner ul.users").append("<li user_id=" + user_id + ">" + name + " <i class='icon icon-remove'></i></li>");
                     } else {
-
+                        MessageBox(data.content,"top","warning")
                     }
                 }
             });

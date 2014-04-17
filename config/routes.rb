@@ -188,13 +188,17 @@ IFEpm::Application.routes.draw do
       end
     end
 
-    resources :kpis do
-      member do
-        get :properties
-      end
+    controller :departments do
+      match 'departments' => :index
     end
+
+    controller :kpi_properties do
+      match 'kpi_properties/property_value' => :property_value
+    end
+
     controller :kpis do
       match 'kpis/kpis_by_category' => :kpis_by_category
+      match 'kpis/properties' => :properties
     end
 
     resources :entity_groups do
