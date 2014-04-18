@@ -105,7 +105,7 @@ class KpisController < ApplicationController
     msg = Message.new
     msg.result = false
     kpi_property = KpiProperty.find_by_name(params[:kpi_property_name])
-    kpi = Kpi.find_by_id(params[:kpi_id])
+    kpi = Kpi.find_by_id(params[:id])
     if kpi_property.nil?
       kpi_property = KpiProperty.create(:name => params[:kpi_property_name],:user_id => current_user.id)
     end

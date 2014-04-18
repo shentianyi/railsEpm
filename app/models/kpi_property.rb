@@ -8,6 +8,9 @@ class KpiProperty < ActiveRecord::Base
 
   acts_as_tenant(:tenant)
 
+  validate :validate_create_update
+  validates :name, :presence => true
+
   def self.property_values kpi_id,kpi_property_id
     item = KpiPropertyItem.where("kpi_id = ? AND kpi_property_id = ?",kpi_id,kpi_property_id)
     if item.nil?
@@ -15,5 +18,10 @@ class KpiProperty < ActiveRecord::Base
     else
       item.kpi_property_values.pluck(:value)
     end
+  end
+
+  def validate_create_update
+    errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where(:name => self.name).first if self.new_record?
+    errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where(:name => self.name).where('id<>?',self.id) unless new_record?
   end
 end

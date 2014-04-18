@@ -30,7 +30,7 @@ class KpiEntriesController < ApplicationController
   #
   def show
     @f = params[:f].nil? ? KpiFrequency::Hourly : params[:f].to_i
-    @parsed_entry_at=DateTimeHelper.get_utc_time_by_str(params[:date])
+    @parsed_entry_at=EntryDateTimeHelper.get_utc_time_from_str(params[:date])
     @user_kpis=KpisHelper.get_kpis_by_user_and_frequency current_user, @f
     render :partial => 'entry'
   end
