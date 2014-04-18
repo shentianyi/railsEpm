@@ -11,7 +11,7 @@ module KpiEntriesHelper
 
 
     if   kpi= (current_ability.nil? ? Kpi.find_by_id(params[:kpi_id]) : Kpi.accessible_by(current_ability).find_by_id(params[:kpi_id]))
-      parsed_entry_at=DateTimeHelper.get_utc_time_by_str(params[:entry_at])
+      parsed_entry_at=EntryDateTimeHelper.get_utc_time_by_str(params[:entry_at])
       if user_kpi_item=UserKpiItem.find_by_id(params[:user_kpi_item_id])
         validator = KpiEntryValidator.new(params)
         validator.validate
@@ -128,15 +128,20 @@ module KpiEntriesHelper
   def self.parse_entry_date frequency, entry_at
     return case frequency
              when KpiFrequency::Hourly
-               DateTimeHelper.parse_string_to_date_hour(entry_at)
+               #DateTimeHelper.parse_string_to_date_hour(entry_at)
+               EntryDateTimeHelper.db_hour_date(entry_at)
              when KpiFrequency::Daily
-               DateTimeHelper.parse_string_to_date_hour(entry_at)
+               #DateTimeHelper.parse_string_to_date_hour(entry_at)
+               EntryDateTimeHelper.db_day_date(entry_at)
              when KpiFrequency::Weekly
-               DateTimeHelper.parse_week_string_to_date_hour(entry_at)
+               #DateTimeHelper.parse_week_string_to_date_hour(entry_at)
+               EntryDateTimeHelper.db_week_day_date(entry_at)
              when KpiFrequency::Monthly
-               DateTimeHelper.parse_month_string_to_date_hour(entry_at)
+               #DateTimeHelper.parse_month_string_to_date_hour(entry_at)
+               EntryDateTimeHelper.db_month_day_date(entry_at)
              when KpiFrequency::Quarterly
-               DateTimeHelper.parse_quarter_string_to_date_hour(entry_at)
+               #DateTimeHelper.parse_quarter_string_to_date_hour(entry_at)
+               EntryDateTimeHelper.db_hour_date(entry_at)
              when KpiFrequency::Yearly
                DateTimeHelper.parse_year_string_to_date_hour(entry_at)
            end
@@ -168,25 +173,25 @@ module KpiEntriesHelper
              when KpiFrequency::Hourly
                #convert 2014-04-15 12:23:49 to 2014-04-15 12:00:00 UTC
                #DateTimeHelper.parse_string_to_date_hour(self.date)
-               EntryDateTimeHelper.get_hour_str(date)
+               EntryDateTimeHelper.db_hour_date(date)
              when KpiFrequency::Daily
                #Time.strptime(date, '%Y-%m-%d').to_datetime
                #Time.parse(date).strftime('%Y-%m-%d')
-               EntryDateTimeHelper.get_day_str(date)
+               EntryDateTimeHelper.db_day_date(date)
              when KpiFrequency::Weekly
                #date=Date.parse(date)
                #Date.commercial(date.year, date.cweek, 1)
-               EntryDateTimeHelper.get_week_day_str(date)
+               EntryDateTimeHelper.db_week_day_date(date)
              when KpiFrequency::Monthly
                #Time.strptime(date, '%Y-%m-01').to_datetime
-               EntryDateTimeHelper.get_month_day_str(date)
+               EntryDateTimeHelper.db_month_day_date(date)
              when KpiFrequency::Quarterly
                #month=Date.parse(date).month
                #Time.strptime(date, "%Y-#{date.month-month%3}-01").to_datetime
-               EntryDateTimeHelper.get_quarter_day_str(date)
+               EntryDateTimeHelper.db_quarter_day_date(date)
              when KpiFrequency::Yearly
                #Time.strptime(date, '%Y-01-01').to_datetime
-               EntryDateTimeHelper.get_year_day_str(date)
+               EntryDateTimeHelper.db_year_day_date(date)
            end
   end
 end
