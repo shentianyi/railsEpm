@@ -14,7 +14,10 @@ class KpiEntryValidator
       instance_variable_set "@#{k}", v
     end
     self.item_cache_key="kpi_entry_validator:#{self.email}:#{self.kpi_id}"
-    #
+
+    #all the time should be utc time
+    #now the server timezone will be the init timezone
+    #if timezone not be set
     if Time.parse(self.date).utc?
       self.date=self.date.to_s
     else
