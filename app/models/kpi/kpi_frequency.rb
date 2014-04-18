@@ -9,10 +9,10 @@ class KpiFrequency
   KpiFrequency.define :Quarterly, 400, (I18n.t 'manage.kpi.freq_item.quarterly')
   KpiFrequency.define :Yearly, 500, (I18n.t 'manage.kpi.freq_item.yearly')
 
-  def self.parse_short_string_to_date(frequency)
+  def self.parse_short_string_to_date(frequency, hour_off_set=$ZONE_HOUR_OFFSET)
     return case frequency
              when KpiFrequency::Hourly, KpiFrequency::Daily
-               Proc.new { |v| Time.zone.parse(v) }
+               Proc.new { |v| Time.zone.parse(v)-hour_off_set.hours }
            end
   end
 end
