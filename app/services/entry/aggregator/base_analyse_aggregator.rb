@@ -28,7 +28,8 @@ module Entry
 
         query.map_reduce(map, reduce).out(inline: true).each do |d|
           key=date_parse_proc.call(d['_id']['date'])
-          self.current[d['_id']['date']]=d['value']
+          #self.current[d['_id']['date']]=d['value']
+          self.current[key]=d['value']
         end
         self.data_module= {:current => self.current,
                            :target_max => self.target_max,

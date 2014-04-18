@@ -17,4 +17,5 @@ $EMAILATTACHPATH=path_config[:email_file_path]
 $AttachTmpPath=path_config[:attach_tmp_path]
 
 $DEFAULT_TIME_ZONE='+08:00'
+$ZONE_HOUR_OFFSET=Time.zone_offset($DEFAULT_TIME_ZONE)/(3600)
 
