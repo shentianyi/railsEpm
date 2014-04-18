@@ -118,7 +118,11 @@ module KpiEntriesHelper
   # get base kpi entry for calculate
   def self.get_kpi_entry_for_calculate user_id, entity_id, kpi_id, parsed_entry_at
     #KpiEntry.joins(:user_kpi_item => :kpi).where('user_kpi_items.user_id=? and user_kpi_items.entity_id=? and kpi_entries.kpi_id=? and kpi_entries.parsed_entry_at=?', user_id, entity_id, kpi_id, parsed_entry_at).readonly(false).first
-    KpiEntry.where('user_kpi_items.user_id=? and user_kpi_items.entity_id=? and kpi_entries.kpi_id=? and kpi_entries.parsed_entry_at=?', user_id, entity_id, kpi_id, parsed_entry_at).readonly(false).first
+    item = UserKpiItem.where(entity_id:entity_id,user_id:user_id,kpi_id:kpi_id).first
+    if item
+      KpiEntry.where(user_kpi_item_id: item.id, parsed_entry_at: parsed_entry_at, entity_id: entity_id,entry_type: 1).first
+    end
+    nil
   end
 
   # get kpi entry by user kpi item id, frequency and datetime
