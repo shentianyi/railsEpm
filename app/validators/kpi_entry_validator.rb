@@ -18,11 +18,15 @@ class KpiEntryValidator
     #all the time should be utc time
     #now the server timezone will be the init timezone
     #if timezone not be set
-    if Time.parse(self.date).utc?
-      self.date=self.date.to_s
-    else
-      self.date=Time.parse(self.date).utc.to_s
-    end
+    #if Time.parse(self.date).utc?
+    #  self.date=Time.parse(self.date).to_s
+    #else
+    #  self.date=Time.parse(self.date).utc.to_s
+    #end
+
+    #2014-4-18
+    #get should be a local time
+    self.date=Time.parse(self.date).to_s
 
     self.value=self.value.to_s
     self.content=[]
@@ -94,10 +98,10 @@ class KpiEntryValidator
     self.target_max=source.user_kpi_item.target_max
     self.target_min=source.user_kpi_item.target_min
     #self.date=Date.parse(self.date).to_s
-    self.entry_at = Time.parse(self.date) #KpiEntriesHelper.parse_entry_string_date self.frequency,self.date
+    self.entry_at = Time.parse(self.date).utc #KpiEntriesHelper.parse_entry_string_date self.frequency,self.date
     #Here we got some problems of transfer time
-    self.parsed_entry_at = KpiEntriesHelper.parse_entry_string_date(self.frequency,self.entry_at)
-    self.parsed_entry_at = DateTimeHelper.get_utc_time_by_str(self.parsed_entry_at)
+    self.parsed_entry_at = KpiEntriesHelper.parse_entry_string_date(self.frequency,Time.parse(self.date))
+    self.parsed_entry_at = EntryDateTimeHelper.get_utc_time_from_str(self.parsed_entry_at)
     self.entry_type = self.entry_type.nil? ? 0 : self.entry_type
   end
 

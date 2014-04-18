@@ -18,6 +18,7 @@ module DateTimeHelper
   end
 
   # parse time to week string
+  # parse time to the first day of this week
   def self.parse_time_to_week_string time
     date=Date.parse(parse_time_to_day_string(time))
     week=date.cweek
@@ -32,6 +33,7 @@ module DateTimeHelper
   end
 
   # parse time to month string
+  # parse time to first of this month utc time
   def self.parse_time_to_month_string time
     month=Time.at(time.to_i).month>9 ? Time.at(time.to_i).month : "0#{Time.at(time.to_i).month}"
     "#{time.year}-#{month}"
