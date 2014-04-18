@@ -58,36 +58,36 @@ module EntryDateTimeHelper
   #get hour string
   #e.g. 2014-4-14 16:00:00 +0800
   def self.view_hour_str time
-    time.strftime('%Y-%m-%d %H:00:00 %z')
+    Time.at(time.to_i).strftime('%Y-%m-%d %H:00:00 %z')
   end
 
   #get day string
   #e.g. 2014-4-14 +0800
   def self.view_day_str time
-    time.strftime('%Y-%m-%d %Z')
+    Time.at(time.to_i).strftime('%Y-%m-%d %Z')
   end
 
   #get week string
   #e.g. 2014-05
   def self.view_week_str time
-    time.strftime('%Y-%W')
+    Time.at(time.to_i).strftime('%Y-%W')
   end
 
   #get month string
   #e.g. 2014-12
   def self.view_month_str time
-    time.strftime('%Y-%m')
+    Time.at(time.to_i).strftime('%Y-%m')
   end
 
   #get quarter string
   #e.g. 2014-03
   def self.view_quarter_str time
-    time.strftime('%Y-'+(time.month/3+1))
+    Time.at(time.to_i).strftime('%Y-'+(time.month/3+1))
   end
 
   #get year string
   #e.gg 2014
   def self.view_year_str time
-    time.strftime('%Y')
+    Time.at(time.to_i).strftime('%Y')
   end
 end

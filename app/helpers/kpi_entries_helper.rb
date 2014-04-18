@@ -11,7 +11,7 @@ module KpiEntriesHelper
 
 
     if   kpi= (current_ability.nil? ? Kpi.find_by_id(params[:kpi_id]) : Kpi.accessible_by(current_ability).find_by_id(params[:kpi_id]))
-      parsed_entry_at=EntryDateTimeHelper.get_utc_time_by_str(params[:entry_at])
+      parsed_entry_at=EntryDateTimeHelper.get_utc_time_from_str(params[:entry_at])
       if user_kpi_item=UserKpiItem.find_by_id(params[:user_kpi_item_id])
         validator = KpiEntryValidator.new(params)
         validator.validate
@@ -58,8 +58,13 @@ module KpiEntriesHelper
     if entry=(kpi_entry_id.nil? ? entry : KpiEntry.where(:id => kpi_entry_id).first)
       if calcualted_kpis=Kpi.parent_kpis_by_id(entry.kpi_id)
         calcualted_kpis.each do |kpi|
-          kpi_entry_at=reparse_entry_date(kpi.frequency, entry.parsed_entry_at)
-          kpi_parsed_entry_at=parse_entry_date(kpi.frequency, kpi_entry_at)
+          #kpi_entry_at=reparse_entry_date(kpi.frequency, entry.parsed_entry_at)
+          #kpi_entry_at = Time.parse(kpi_entry_at).utc
+          #kpi_parsed_entry_at=parse_entry_date(kpi.frequency, kpi_entry_at)
+          #take entry's entry_at as the calculated kpi's entry
+          kpi_entry_at = entry.entry_at
+          kpi_parsed_entry_at = parse_entry_string_date(kpi.frequency,kpi_entry_at)
+          kpi_parsed_entry_at = EntryDateTimeHelper.get_utc_time_from_str(kpi_parsed_entry_at)
           if kpi_parsed_entry_at==entry.parsed_entry_at
             f={}
             kpi.base_kpis.each do |base_bkpi|
@@ -112,7 +117,8 @@ module KpiEntriesHelper
 
   # get base kpi entry for calculate
   def self.get_kpi_entry_for_calculate user_id, entity_id, kpi_id, parsed_entry_at
-    KpiEntry.joins(:user_kpi_item => :kpi).where('user_kpi_items.user_id=? and user_kpi_items.entity_id=? and kpi_entries.kpi_id=? and kpi_entries.parsed_entry_at=?', user_id, entity_id, kpi_id, parsed_entry_at).readonly(false).first
+    #KpiEntry.joins(:user_kpi_item => :kpi).where('user_kpi_items.user_id=? and user_kpi_items.entity_id=? and kpi_entries.kpi_id=? and kpi_entries.parsed_entry_at=?', user_id, entity_id, kpi_id, parsed_entry_at).readonly(false).first
+    KpiEntry.where('user_kpi_items.user_id=? and user_kpi_items.entity_id=? and kpi_entries.kpi_id=? and kpi_entries.parsed_entry_at=?', user_id, entity_id, kpi_id, parsed_entry_at).readonly(false).first
   end
 
   # get kpi entry by user kpi item id, frequency and datetime
@@ -141,9 +147,10 @@ module KpiEntriesHelper
                EntryDateTimeHelper.db_month_day_date(entry_at)
              when KpiFrequency::Quarterly
                #DateTimeHelper.parse_quarter_string_to_date_hour(entry_at)
-               EntryDateTimeHelper.db_hour_date(entry_at)
+               EntryDateTimeHelper.db_quarter_day_date(entry_at)
              when KpiFrequency::Yearly
-               DateTimeHelper.parse_year_string_to_date_hour(entry_at)
+               #DateTimeHelper.parse_year_string_to_date_hour(entry_at)
+               EntryDateTimeHelper.db_year_day_date(entry_at)
            end
   end
 
@@ -152,16 +159,22 @@ module KpiEntriesHelper
     return case frequency
              when KpiFrequency::Hourly
                DateTimeHelper.parse_time_to_hour_string(parsed_entry_at)
+               #EntryDateTimeHelper.view_hour_str(parsed_entry_at)
              when KpiFrequency::Daily
-               DateTimeHelper.parse_time_to_day_string(parsed_entry_at)
+               #DateTimeHelper.parse_time_to_day_string(parsed_entry_at)
+               EntryDateTimeHelper.view_day_str(parsed_entry_at)
              when KpiFrequency::Weekly
                DateTimeHelper.parse_time_to_week_string(parsed_entry_at)
+               #EntryDateTimeHelper.view_week_str(parsed_entry_at)
              when KpiFrequency::Monthly
                DateTimeHelper.parse_time_to_month_string(parsed_entry_at)
+               #EntryDateTimeHelper.view_month_str(parsed_entry_at)
              when KpiFrequency::Quarterly
                DateTimeHelper.parse_time_to_quarter_string(parsed_entry_at)
+               #EntryDateTimeHelper.view_quarter_str(parsed_entry_at)
              when KpiFrequency::Yearly
                DateTimeHelper.parse_time_to_year_stirng(parsed_entry_at)
+               #EntryDateTimeHelper.view_year_str(parsed_entry_at)
            end
   end
 
