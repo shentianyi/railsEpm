@@ -27,7 +27,6 @@ module Entry
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
 
         query.map_reduce(map, reduce).out(inline: true).each do |d|
-          puts        d['_id']['date']
           self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
         end
         self.data_module= {:current => self.current,

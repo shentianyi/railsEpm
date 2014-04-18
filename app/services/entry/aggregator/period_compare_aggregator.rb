@@ -38,6 +38,14 @@ module Entry
       end
 
       def generate_compare_table
+        @data_module={}
+        #self.parameter.map_group.values.map { |i| ':'+i }.each do |p|
+        #
+        #end
+        values=KpiPropertyValue.by_property_id(self.parameter.kpi.id, self.parameter.map_group.values).all
+        propertis={}
+        self.parameter.map_group.values.each { |v| propertis[v]=values.select { |p| p.kpi_id==v.to_i } }
+
         self.data.each do |d|
           puts d
         end

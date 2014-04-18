@@ -52,7 +52,7 @@ class AnalyzerTest < ActiveSupport::TestCase
     params=base_params
     params[:frequency]=KpiFrequency::Monthly
     params[:entity_group_id]=130
-    params[:map_group]={'输入点' =>'entity_id'}
+    params[:map_group]={entity_id3: 'entity_id'}
     params[:base_time]={start_time: '2014-01-31T16:00:00.000Z',
                         end_time: '2014-12-31T16:00:00.000Z'}
     params[:compare_times]=[{start_time: '2013-01-31T16:00:00.000Z',

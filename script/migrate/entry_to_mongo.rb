@@ -1,7 +1,7 @@
 #ActiveRecord::Base.observers.disable :kpi_entry_observer
 KpiEntry.observers.disable :all
 
-KpiEntryBak.where(user_id:User.where(email:'admin@leoni.com').first.id).all.each do |e|
+KpiEntryBak.all.each do |e|
   me=KpiEntry.create(
       kpi_id: e.kpi_id,
       user_id: e.user_id,
@@ -14,7 +14,7 @@ KpiEntryBak.where(user_id:User.where(email:'admin@leoni.com').first.id).all.each
       target_max: e.target_max,
       target_min: e.target_min,
       frequency: e.frequency,
-      entry_type: 1,
+      entry_type: 0,
       abnormal: e.abnormal,
       created_at: e.created_at,
       updated_at: e.updated_at
