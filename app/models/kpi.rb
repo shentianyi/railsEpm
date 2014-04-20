@@ -43,9 +43,9 @@ class Kpi < ActiveRecord::Base
   end
 
   def calculate_formula(kpi_value)
-    formula=self.formula
+    formula=self.formula.dump
     KpisHelper.parse_formula_items(formula).each do |item|
-      formula.sub!("[#{item}]", kpi_value[item.to_sym].to_s)
+      formula.sub!("[#{item}]", kpi_value[item].to_s)
     end
     return formula.calculate
   end

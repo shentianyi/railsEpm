@@ -14,8 +14,6 @@ module Entry
         c=Entry::ConditionService.new(self.parameter)
         query_condition=c.build_base_query_condition
         mr_condition=c.build_map_reduce_condition
-        puts query_condition
-        puts mr_condition
         if query_condition[:property]
           query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 0)
         else
@@ -25,14 +23,12 @@ module Entry
         data_mr="date:format(this.parsed_entry_at,'#{self.parameter.date_format}')"
         mr_condition[:map_group]=
             mr_condition[:map_group].nil? ? data_mr : "#{mr_condition[:map_group]},#{data_mr}"
-        puts mr_condition
         map=%Q{
            function(){
                   #{Mongo::Date.date_format}
                   emit({#{mr_condition[:map_group]}},parseFloat(this.value));
               };
         }
-
         func=self.parameter.average ? 'avg' : 'sum'
         reduce=%Q{
            function(key,values){return Array.#{func}(values);};
@@ -51,16 +47,16 @@ module Entry
         else
           data={}
           self.data.each do |d|
-            puts d
             key=date_parse_proc.call(d['_id']['date'])
             data[key]||={}
-            data[key][d['_id']['kpi'].to_s.to_sym] =d['value']
+            data[key][d['_id']['kpi'].to_i.to_s] =d['value']
           end
-          puts data
           data.each do |k, v|
-            #puts k
-            #puts v
-            #self.current[k]=self.parameter.kpi.calculate_formula(v)
+            begin
+              self.current[k]=self.parameter.kpi.calculate_formula(v)
+            rescue
+              self.current[k]=0
+            end
           end
         end
 
