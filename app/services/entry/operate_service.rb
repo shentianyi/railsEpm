@@ -8,7 +8,6 @@ module Entry
     #user_id,entity_id,entry_at,parsed_entry_at,tenant_id,target_max,target_min,user_kpi_item_id
     @base_attrs = ["value", "user_id", "entity_id", "entry_at", "parsed_entry_at", "kpi_id", "frequency", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
     @fill_attrs = ["user_id", "entity_id", "entry_at", "parsed_entry_at", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
-    @doc_attrs = [:kpi_id,:kpi_name,:date,:value,:email,:entry_type]
 
     #function doc_upload_filter
     # filter for xsl or xsls upload
@@ -44,10 +43,10 @@ module Entry
       attrs[:date] = params[:date]
       attrs[:value] = params[:value]
       attrs[:email] = params[:email]
-      attrs[:entry] = params[:entry_type].nil? ? 1 : params[:entry_type]
+      attrs[:entry_type] = params[:entry_type].nil? ? 1 : params[:entry_type]
 
       #fillter attributes
-      (params.keys&@doc_attrs).each { |k|
+      (params.keys-doc_attr).each { |k|
         attrs[k] = params[k]
       }
       return attrs
@@ -407,6 +406,10 @@ module Entry
         return msg.content << "Contains kpi user does not have,plase check!"
       end
       msg.result = true
+    end
+
+    def doc_attr
+      [:kpi_id,:kpi_name,:date,:value,:email,:entry_type]
     end
   end
 end

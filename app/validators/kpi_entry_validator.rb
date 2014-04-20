@@ -26,6 +26,7 @@ class KpiEntryValidator
 
     #2014-4-18
     #get should be a local time
+    self.date = self.date.to_s
     self.date=Time.parse(self.date).to_s
 
     self.value=self.value.to_s
