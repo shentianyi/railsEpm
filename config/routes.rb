@@ -79,7 +79,7 @@ IFEpm::Application.routes.draw do
       get '/properties/:id'=>:properties
       post :import
       get :template
-      #get :condition
+      get :condition
       get :parameter
       get :access
       [:categoried, :user, :list].each do |a|
