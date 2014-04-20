@@ -79,6 +79,29 @@ module KpiEntriesHelper
               kpi.formula.sub!("[#{item}]", f[item.to_sym].to_s)
             end
             value=kpi.formula.calculate
+            #2014-4-20
+            # change this to use OperateService
+            #
+            user_kpi_item = kpi.user_kpi_items.where(:entity_id => entry.entity_id, :user_id => entry.user_id).first
+            if user_kpi_item
+              attrs = {}
+              attrs[:base_attrs]={}
+              attrs[:base_attrs]['original_value'] = value
+              attrs[:base_attrs]['kpi_id'] = kpi.id
+              attrs[:base_attrs]['frequency'] = kpi.frequency
+              attrs[:base_attrs]['user_kpi_item_id'] = user_kpi_item.id
+              attrs[:base_attrs]['user_id'] = entry.user_id
+              attrs[:base_attrs]['entity_id'] = entry.entity_id
+              attrs[:base_attrs]['target_max'] = kpi.target_max
+              attrs[:base_attrs]['target_min'] = kpi.target_min
+              attrs[:base_attrs]['entry_at'] = kpi_entry_at
+              attrs[:base_attrs]['parsed_entry_at'] = kpi_parsed_entry_at
+              attrs[:base_attrs]['entry_type'] = 1
+              attrs[:kpi_properties] = nil
+              Entry::OperateService.new.insert_entry(attrs)
+            end
+
+=begin
             if calcualted_entry=get_kpi_entry_for_calculate(entry.user_id, entry.entity_id, kpi.id, kpi_parsed_entry_at)
               calcualted_entry.update_attributes(:original_value => value)
             else
@@ -92,6 +115,7 @@ module KpiEntriesHelper
                 # puts '*************8'
               end
             end
+=end
           end
         end
       end
@@ -117,12 +141,14 @@ module KpiEntriesHelper
 
   # get base kpi entry for calculate
   def self.get_kpi_entry_for_calculate user_id, entity_id, kpi_id, parsed_entry_at
+    parsed_entry_at = Time.parse(parsed_entry_at.to_s).utc
     #KpiEntry.joins(:user_kpi_item => :kpi).where('user_kpi_items.user_id=? and user_kpi_items.entity_id=? and kpi_entries.kpi_id=? and kpi_entries.parsed_entry_at=?', user_id, entity_id, kpi_id, parsed_entry_at).readonly(false).first
     item = UserKpiItem.where(entity_id:entity_id,user_id:user_id,kpi_id:kpi_id).first
     if item
       KpiEntry.where(user_kpi_item_id: item.id, parsed_entry_at: parsed_entry_at, entity_id: entity_id,entry_type: 1).first
+    else
+      nil
     end
-    nil
   end
 
   # get kpi entry by user kpi item id, frequency and datetime
