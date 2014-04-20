@@ -1,7 +1,6 @@
 module Entry
   module Aggregator
     class PeriodCompareAggregator<BaseAggregator
-      attr_accessor :data
 
       def aggregate
         c=Entry::ConditionService.new(self.parameter)

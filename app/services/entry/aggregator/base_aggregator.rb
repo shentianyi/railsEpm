@@ -1,7 +1,7 @@
 module Entry
   module Aggregator
     class BaseAggregator
-      attr_accessor :parameter, :data_module
+      attr_accessor :parameter, :data_module,:data
 
       def initialize(parameter)
         self.parameter=parameter

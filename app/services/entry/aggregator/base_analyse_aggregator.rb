@@ -27,21 +27,21 @@ module Entry
         reduce=%Q{
            function(key,values){return Array.#{func}(values);};
         }
-        date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
-
-        query.map_reduce(map, reduce).out(inline: true).each do |d|
-          self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
-        end
-        self.data_module= {:current => self.current,
-                           :target_max => self.target_max,
-                           :target_min => self.target_min,
-                           :unit => self.unit}
-
+        self.data= query.map_reduce(map, reduce).out(inline: true).each
         return aggregate_type_data
       end
 
       private
       def aggregate_type_data
+        date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
+        self.data.each do |d|
+          self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
+        end
+
+        self.data_module= {:current => self.current,
+                           :target_max => self.target_max,
+                           :target_min => self.target_min,
+                           :unit => self.unit}
         self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
         case self.parameter.data_module
           when Entry::DataService::WEB_HIGHSTOCK
