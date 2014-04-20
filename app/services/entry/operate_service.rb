@@ -9,40 +9,9 @@ module Entry
     @base_attrs = ["value", "user_id", "entity_id", "entry_at", "parsed_entry_at", "kpi_id", "frequency", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
     @fill_attrs = ["user_id", "entity_id", "entry_at", "parsed_entry_at", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
 
-    #@function upload
-    #validation should be done before call this function
-    def self.upload records, operator,way
-      case way
-        when "sdk"
-        when "doc"
-          upload_doc(records,operator)
-        else
-          nil
-      end
-    end
-
-    #function upload_sdk
+    #function doc_upload_filter
     #params
-    #@records:Hash ,kpi ids,values and attributes
-    #e.g. not need every kpis match the attribute,it will fetch
-    #create and update
-    #records:{
-    #    attrs:["attr1","attr2","attr3"],
-    #    attr_vals:[["1","2","3"],["2","4","6"]],
-    #    kpis:["2","3","5"],
-    #    values:[["1","3","5"],["2","3","43"]],
-    #    email:"IT_User@cz-tek.com"
-    #}
-    #remove
-    #records:{
-    #    entry_ids:["1","2","3"]
-    #}
-    #@operator:String
-    #"create","update","remove"
-    def upload_sdk
-
-    end
-
+    #@params[]
 
     #function upload_doc
     #params
@@ -139,7 +108,7 @@ module Entry
         fetch_attrs = properties.keys.to_a
         fetch_attrs = fetch_attrs & entry[:kpi_properties].keys.to_a
         fetch_attrs.each {|f|
-          attrs[":"+properties[f].to_s] = entry[:kpi_properties][f]
+          attrs["a"+properties[f].to_s] = entry[:kpi_properties][f]
         }
       end
       #dependet on entry_type
