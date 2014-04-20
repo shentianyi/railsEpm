@@ -25,7 +25,7 @@ module Entry
         data_mr="date:format(this.parsed_entry_at,'#{self.parameter.date_format}')"
         mr_condition[:map_group]=
             mr_condition[:map_group].nil? ? data_mr : "#{mr_condition[:map_group]},#{data_mr}"
-puts mr_condition
+        puts mr_condition
         map=%Q{
            function(){
                   #{Mongo::Date.date_format}
@@ -49,9 +49,18 @@ puts mr_condition
             self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
           end
         else
-          puts '--------------'
+          data={}
           self.data.each do |d|
             puts d
+            key=date_parse_proc.call(d['_id']['date'])
+            data[key]||={}
+            data[key][d['_id']['kpi'].to_s.to_sym] =d['value']
+          end
+          puts data
+          data.each do |k, v|
+            #puts k
+            #puts v
+            #self.current[k]=self.parameter.kpi.calculate_formula(v)
           end
         end
 

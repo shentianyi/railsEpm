@@ -42,6 +42,14 @@ class Kpi < ActiveRecord::Base
     self.kpi_items.pluck(:item_id)
   end
 
+  def calculate_formula(kpi_value)
+    formula=self.formula
+    KpisHelper.parse_formula_items(formula).each do |item|
+      formula.sub!("[#{item}]", kpi_value[item.to_sym].to_s)
+    end
+    return formula.calculate
+  end
+
   def self.ability_find_by_id id, current_ability
     self.accessible_by(current_ability).find_by_id(id)
   end

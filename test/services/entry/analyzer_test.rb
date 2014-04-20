@@ -83,7 +83,7 @@ class AnalyzerTest < ActiveSupport::TestCase
 
   private
   def base_params
-    {kpi_id: '51',
+    {kpi_id: '58',
      entity_group_id: '129',
      average: 'true',
      start_time: '2014-01-31T16:00:00.000Z',
