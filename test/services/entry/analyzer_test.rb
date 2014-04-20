@@ -8,6 +8,15 @@ class AnalyzerTest < ActiveSupport::TestCase
   #  assert true
   #end
   #
+  test 'property analyse avg kpi daily frequency' do
+    puts 'property analyse avg kpi daily frequency:'.blue
+    params=base_params
+    params[:property]={a1: '2'}
+    puts Entry::Analyzer.new(params).analyse
+    assert true
+  end
+
+
   #test 'analyse sum kpi daily frequency' do
   #  puts 'analyse sum kpi daily frequency:'.blue
   #  params=base_params
@@ -47,38 +56,38 @@ class AnalyzerTest < ActiveSupport::TestCase
   #  assert true
   #end
 
-  test 'period compare group by entity id (monthly)' do
-    puts 'period compare group by entity id (monthly):'.blue
-    params=base_params
-    params[:frequency]=KpiFrequency::Monthly
-    params[:map_group]={'输入点' => 'a1'}
-    params[:base_time]={start_time: '2013-12-31T16:00:00.000Z',
-                        end_time: '2014-01-30T16:00:00.000Z'}
+  #test 'period compare group by entity id (monthly)' do
+  #  puts 'period compare group by entity id (monthly):'.blue
+  #  params=base_params
+  #  params[:frequency]=KpiFrequency::Monthly
+  #  params[:map_group]={'输入点' => 'a1'}
+  #  params[:base_time]={start_time: '2013-12-31T16:00:00.000Z',
+  #                      end_time: '2014-01-30T16:00:00.000Z'}
+  #
+  #  puts Entry::Analyzer.new(params).period_compare
+  #  assert true
+  #end
 
-    puts Entry::Analyzer.new(params).period_compare
-    assert true
-  end
-
-  test 'period compares group by entity id (monthly)' do
-    puts 'period compares group by entity id (monthly):'.blue
-    params=base_params
-    params[:frequency]=KpiFrequency::Monthly
-    #params[:map_group]={'输入点' => 'a1'}
-    params[:property]={a1: '2'}
-    params[:base_time]={start_time: '2013-12-31T16:00:00.000Z',
-                        end_time: '2014-01-30T16:00:00.000Z'}
-    puts Entry::Analyzer.new(params).period_compares
-    assert true
-  end
+  #test 'period compares group by entity id (monthly)' do
+  #  puts 'period compares group by entity id (monthly):'.blue
+  #  params=base_params
+  #  params[:frequency]=KpiFrequency::Monthly
+  #  #params[:map_group]={'输入点' => 'a1'}
+  #  params[:property]={a1: '2'}
+  #  params[:base_time]={start_time: '2013-12-31T16:00:00.000Z',
+  #                      end_time: '2014-01-30T16:00:00.000Z'}
+  #  puts Entry::Analyzer.new(params).period_compares
+  #  assert true
+  #end
 
 
   private
   def base_params
-    {kpi_id: '5',
+    {kpi_id: '51',
      entity_group_id: '129',
      average: 'true',
-    #start_time: '2014-01-31T16:00:00.000Z',
-    # end_time: '2014-12-30T16:00:00.000Z',
+     start_time: '2014-01-31T16:00:00.000Z',
+     end_time: '2014-03-31T16:00:00.000Z',
      frequency: '100'
     }
   end

@@ -11,7 +11,6 @@ module Entry
       def initialize(args)
         self.kpi=Kpi.find(args[:kpi_id])
         self.entities = EntityGroup.find(args[:entity_group_id]).entities.pluck(:id)
-
         # args:start_time, end_time arg utc-time-string
         self.start_time =args[:start_time]
         self.end_time = args[:end_time]
@@ -19,7 +18,7 @@ module Entry
         self.average=args[:average]
         self.data_module = args[:data_module] || DataService::WEB_HIGHSTOCK
         self.property = args[:property]
-        self.map_group =args[:map_group] if args[:map_group]
+        self.map_group =args[:map_group]
         self.reduce_func=args[:reduce_func] if args[:reduce_func]
         self.valid=false
       end
@@ -43,6 +42,20 @@ module Entry
 
       def average=(value)
         @average=AnalyseParameter.is_true(value)
+      end
+
+      def map_group=(value)
+        @map_group=value if value
+        if self.kpi.is_calculated
+          mg={kpi: 'kpi_id'}
+          @map_group= @map_group.nil? ? mg : @map_group.merge(mg)
+        end
+      end
+
+      def kpi_ids
+        return @kpi_ids if @kpi_ids
+        @kpi_ids=self.kpi.is_calculated ? self.kpi.kpi_item_ids : self.kpi.id
+        return kpi_ids
       end
 
       def date_format
@@ -74,14 +87,14 @@ module Entry
       end
 
       def base_query_condition
-        {kpi_id: self.kpi.id,
+        {kpi_id: self.kpi_ids,
          entity_id: self.entities,
          parsed_entry_at: self.start_time..self.end_time}
       end
 
       def map_reduce_condition
         if self.map_group
-          return {map_group: "#{self.map_group.map { |k, v| k.to_s+':this.'+v }.join(',')}", reduce_func: self.reduce_func}
+          return {map_group: "#{self.map_group.map { |k, v| k.to_s+':this.'+v }.join(',')}"}
         else
           return {map_group: nil}
         end

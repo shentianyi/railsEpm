@@ -38,6 +38,10 @@ class Kpi < ActiveRecord::Base
     self.accessible_by(current_ability).where(:is_calculated => false).all
   end
 
+  def kpi_item_ids
+    self.kpi_items.pluck(:item_id)
+  end
+
   def self.ability_find_by_id id, current_ability
     self.accessible_by(current_ability).find_by_id(id)
   end

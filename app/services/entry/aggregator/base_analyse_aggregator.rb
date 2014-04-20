@@ -11,18 +11,28 @@ module Entry
       end
 
       def aggregate
-        query_condition=Entry::ConditionService.new(self.parameter).build_base_query_condition
+        c=Entry::ConditionService.new(self.parameter)
+        query_condition=c.build_base_query_condition
+        mr_condition=c.build_map_reduce_condition
+        puts query_condition
+        puts mr_condition
         if query_condition[:property]
           query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 0)
         else
           query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base]).where(entry_type: 1)
         end
+
+        data_mr="date:format(this.parsed_entry_at,'#{self.parameter.date_format}')"
+        mr_condition[:map_group]=
+            mr_condition[:map_group].nil? ? data_mr : "#{mr_condition[:map_group]},#{data_mr}"
+puts mr_condition
         map=%Q{
            function(){
                   #{Mongo::Date.date_format}
-                  emit({date:format(this.parsed_entry_at,'#{self.parameter.date_format}')},parseFloat(this.value));
+                  emit({#{mr_condition[:map_group]}},parseFloat(this.value));
               };
         }
+
         func=self.parameter.average ? 'avg' : 'sum'
         reduce=%Q{
            function(key,values){return Array.#{func}(values);};
@@ -34,8 +44,15 @@ module Entry
       private
       def aggregate_type_data
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
-        self.data.each do |d|
-          self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
+        unless self.parameter.kpi.is_calculated
+          self.data.each do |d|
+            self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
+          end
+        else
+          puts '--------------'
+          self.data.each do |d|
+            puts d
+          end
         end
 
         self.data_module= {:current => self.current,
