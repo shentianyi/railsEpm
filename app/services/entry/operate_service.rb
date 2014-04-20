@@ -8,10 +8,50 @@ module Entry
     #user_id,entity_id,entry_at,parsed_entry_at,tenant_id,target_max,target_min,user_kpi_item_id
     @base_attrs = ["value", "user_id", "entity_id", "entry_at", "parsed_entry_at", "kpi_id", "frequency", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
     @fill_attrs = ["user_id", "entity_id", "entry_at", "parsed_entry_at", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
+    @doc_attrs = [:kpi_id,:kpi_name,:date,:value,:email,:entry_type]
 
     #function doc_upload_filter
+    # filter for xsl or xsls upload
+    # entry_type should be 1 if not defined
     #params
-    #@params[]
+    #@params{
+    # kpi_id: 1
+    # kpi_name: 2
+    # date: value
+    # email: test
+    # value:4
+    # entry_type: 0
+    # attr1:1
+    # attr2:2
+    # attr3:3
+    # }
+    #@return params for validator
+    # {
+    # kpi_id: id,
+    # kpi_name: name,
+    # date: date,
+    # value: value,
+    # email: email
+    # kpi_properties: {
+    #  attr1: 1
+    #  attr2: 2
+    # }
+    # }
+    def doc_upload_filter params
+      attrs = {}
+      attrs[:kpi_id] = params[:kpi_id]
+      attrs[:kpi_name] = params[:kpi_name]
+      attrs[:date] = params[:date]
+      attrs[:value] = params[:value]
+      attrs[:email] = params[:email]
+      attrs[:entry] = params[:entry_type].nil? ? 1 : params[:entry_type]
+
+      #fillter attributes
+      (params.keys&@doc_attrs).each { |k|
+        attrs[k] = params[k]
+      }
+      return attrs
+    end
 
     #function upload_doc
     #params
