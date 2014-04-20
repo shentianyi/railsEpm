@@ -39,16 +39,28 @@ module Entry
 
       def generate_compare_table
         @data_module={}
-        #self.parameter.map_group.values.map { |i| ':'+i }.each do |p|
-        #
-        #end
-        values=KpiPropertyValue.by_property_id(self.parameter.kpi.id, self.parameter.map_group.values).all
-        propertis={}
-        self.parameter.map_group.values.each { |v| propertis[v]=values.select { |p| p.kpi_id==v.to_i } }
+
+        values=KpiPropertyValue.by_property_id(self.parameter.kpi.id, self.parameter.map_group.values.map{|v| v.sub(/a/,'')}).all
+
+        values.each do |v|
+          @data_module[v.value]=[
+              {self.parameter.base_time[:start_time] => 0},
+              {self.parameter.compare_times.first[:start_time] => 0}]
+        end
+
+        date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
 
         self.data.each do |d|
-          puts d
+          name=d['_id'][self.parameter.map_group.first[0]]
+          date=date_parse_proc.call(d['_id']['date'])
+          @data_module[name].each { |v| v[date]= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value']) }
         end
+
+        data=[]
+        @data_module.each do |k, v|
+          data<<{name: k, value: v[0].values.first, last_value: v[1].values.first}
+        end
+        return data
       end
 
       def generate_compare_chart

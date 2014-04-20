@@ -17,7 +17,8 @@ KpiEntryBak.all.each do |e|
       entry_type: 0,
       abnormal: e.abnormal,
       created_at: e.created_at,
-      updated_at: e.updated_at
+      updated_at: e.updated_at,
+      'a1'=>e.entity_id.to_s
   )
   puts me.to_json
 end
