@@ -12,8 +12,11 @@ module Entry
 
       def aggregate
         query_condition=Entry::ConditionService.new(self.parameter).build_base_query_condition
-        query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 1)
-
+        if query_condition[:property]
+          query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 0)
+        else
+          query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base]).where(entry_type: 1)
+        end
         map=%Q{
            function(){
                   #{Mongo::Date.date_format}
@@ -73,8 +76,8 @@ module Entry
                 step=7.days #60*60*24*7
                 start_time=Date.parse(start_time.to_s)
                 end_time=Date.parse(end_time.to_s)
-                start_time=Time.parse(Date.commercial(start_time.year,start_time.cweek,1).to_s).utc
-                end_time=Time.parse(Date.commercial(end_time.year,end_time.cweek,1).to_s).utc
+                start_time=Time.parse(Date.commercial(start_time.year, start_time.cweek, 1).to_s).utc
+                end_time=Time.parse(Date.commercial(end_time.year, end_time.cweek, 1).to_s).utc
             end
             while start_time<=end_time do
               next_time=start_time+step
@@ -82,21 +85,21 @@ module Entry
               start_time=next_time
             end
           when KpiFrequency::Monthly
-            start_time=Time.parse(Date.new(start_time.year,start_time.month,1).to_s).utc
-            end_time=Time.parse(Date.new(end_time.year,end_time.month,1).to_s).utc
+            start_time=Time.parse(Date.new(start_time.year, start_time.month, 1).to_s).utc
+            end_time=Time.parse(Date.new(end_time.year, end_time.month, 1).to_s).utc
             while start_time<=end_time do
               if start_time.month==1
                 next_time=start_time+(start_time.year.leap? ? 29.days : 28.days) #(60*60*24*29 : 60*60*24*28)
               else
-                next_time=start_time+([2,4,6,9,11,12].include?(start_time.month) ? 31.days : 30.days) #(60*60*24*31 : 60*60*24*30)
+                next_time=start_time+([2, 4, 6, 9, 11, 12].include?(start_time.month) ? 31.days : 30.days) #(60*60*24*31 : 60*60*24*30)
               end
               generate_init_frequency(start_time)
               start_time=next_time
             end
           when KpiFrequency::Quarterly
             step_arr=[90, 91, 92, 92]
-            start_time=Time.parse(Date.new(start_time.year,(start_time.month-1)/3*3+1,1).to_s).utc
-            end_time=Time.parse(Date.new(end_time.year,(end_time.month-1)/3*3,1).to_s).utc
+            start_time=Time.parse(Date.new(start_time.year, (start_time.month-1)/3*3+1, 1).to_s).utc
+            end_time=Time.parse(Date.new(end_time.year, (end_time.month-1)/3*3, 1).to_s).utc
             while start_time<=end_time do
               if start_time.month==12
                 next_time=start_time+((start_time.year+1).leap? ? (step_arr[0]+1).days : step_arr[0]).days
@@ -107,8 +110,8 @@ module Entry
               start_time=next_time
             end
           when KpiFrequency::Yearly
-            start_time=Time.parse(Date.new(start_time.year,1,1).to_s).utc
-            end_time=Time.parse(Date.new(end_time.year,1,1).to_s).utc
+            start_time=Time.parse(Date.new(start_time.year, 1, 1).to_s).utc
+            end_time=Time.parse(Date.new(end_time.year, 1, 1).to_s).utc
             while start_time<=end_time do
               next_time=start_time+((start_time.year+1).leap? ? 366.days : 365.days)
               generate_init_frequency(start_time)
