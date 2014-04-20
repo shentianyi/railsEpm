@@ -25,11 +25,11 @@ module Entry
       end
 
       def start_time=(value)
-        @start_time=Time.parse(value).utc
+        @start_time=Time.parse(value).utc if value
       end
 
       def end_time=(value)
-        @end_time=Time.parse(value).utc
+        @end_time=Time.parse(value).utc if value
       end
 
 

@@ -149,6 +149,8 @@ IFEpm::Application.routes.draw do
       collection do
         get :analyse, :defaults => {:format => 'html'}
         get :data
+        match :compare
+        match :compares
       end
     end
 

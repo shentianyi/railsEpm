@@ -74,11 +74,11 @@ class AnalyzerTest < ActiveSupport::TestCase
 
   private
   def base_params
-    {kpi_id: '1',
+    {kpi_id: '5',
      entity_group_id: '129',
      average: 'true',
-     start_time: '2014-01-31T16:00:00.000Z',
-     end_time: '2014-12-30T16:00:00.000Z',
+    #start_time: '2014-01-31T16:00:00.000Z',
+    # end_time: '2014-12-30T16:00:00.000Z',
      frequency: '100'
     }
   end
