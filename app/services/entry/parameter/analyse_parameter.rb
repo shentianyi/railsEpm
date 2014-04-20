@@ -80,7 +80,11 @@ module Entry
       end
 
       def map_reduce_condition
-        {map_group: "#{self.map_group.map { |k, v| k.to_s+':this.'+v }.join(',')}", reduce_func: self.reduce_func}
+        if self.map_group
+          return {map_group: "#{self.map_group.map { |k, v| k.to_s+':this.'+v }.join(',')}", reduce_func: self.reduce_func}
+        else
+          return {map_group: nil}
+        end
       end
     end
   end

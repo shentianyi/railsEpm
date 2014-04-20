@@ -32,6 +32,8 @@ module Entry
 
     def period_compares
       self.params[:data_module]=Entry::DataService::PERIOD_COMPARE_CHART
+      self.params[:compare_size]=params[:point_num]
+      self.params[:compare_size]=params[:compare_size] || 10
       call_compare_data_service
     end
 
@@ -41,6 +43,7 @@ module Entry
       parameter=Entry::Parameter::AnalyseParameter.new(self.params)
       Entry::DataService.new(parameter).aggregate
     end
+
     def call_compare_data_service
       parameter=Entry::Parameter::PeriodCompareParameter.new(self.params)
       Entry::DataService.new(parameter).aggregate
