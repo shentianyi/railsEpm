@@ -48,7 +48,7 @@ module Entry
       def date_format
         return case self.frequency
                  when KpiFrequency::Hourly
-                   'yyyy-MM-dd HH'
+                   'yyyy-MM-dd hh'
                  when KpiFrequency::Daily
                    'yyyy-MM-dd'
                  when KpiFrequency::Weekly
