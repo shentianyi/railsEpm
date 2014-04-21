@@ -255,6 +255,9 @@
     position:relative;
 
 }
+.manage-sort-list[type="kpi"] li{
+    height:90px;
+}
 .manage-sort-list li>p{
     font-family:"Arial";
     font-weight:bold;
