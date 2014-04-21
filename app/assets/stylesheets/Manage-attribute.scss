@@ -87,6 +87,51 @@
   }
 }
 
+.kpi-library[type="attribute"][for="kpi"]{
+  &>div{
+    $height:450px;
+    $width:550px;
+    $margin-left:18px;
+    $margin-bottom:10px;
+    $border:1px solid #C8C8C8;
+    $box-shadow:0 0 3px #FFFFFF inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+    width:$width;
+    height:$height;
+    margin-left:- $width/2;
+    margin-top:- $height/2;
+    .select-div{
+      width:300px;
+      display:block;
+      margin-left:$margin-left;
+      margin-bottom:$margin-bottom;
+      &:first-of-type{
+        margin-top:40px;
+      }
+    }
+    textarea{
+      width:230px;
+      margin-left:$margin-left;
+      margin-bottom:$margin-bottom;
+      border:$border;
+      box-shadow:$box-shadow;
+    }
+    input{
+      border:1px solid #9d9d9d;
+      display:block;
+      margin-left:$margin-left;
+      margin-bottom:$margin-bottom;
+      padding:6px 5px;
+      border:$border;
+      box-shadow:$box-shadow;
+    }
+    .calculate-type-box{
+      position:absolute;
+      right:0px;
+      top:40px;
+    }
+  }
+}
+
 
 .attribute-position{
   position:absolute;
