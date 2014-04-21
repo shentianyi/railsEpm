@@ -75,7 +75,7 @@ class KpiEntryValidator
     end
 
     #
-    if self.entry_type == "1"
+    if self.entry_type == "1" && self.valid
       source = self.valid_by_cache ? self.source : self
       entry_at = Time.parse(self.date).utc
       parsed_entry_at = KpiEntriesHelper.parse_entry_string_date(source.kpi.frequency,Time.parse(entry_at.to_s))
