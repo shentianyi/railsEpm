@@ -32,6 +32,7 @@ module Entry
       end
 
       def property=(value)
+       return @property=nil if value.nil? || value.size==0
         @property={}
         value.each do |k,v|
           @property["a#{k}"]=v

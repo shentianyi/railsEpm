@@ -245,7 +245,7 @@ ANALYTICS.form_chart=function(option){
         start_time : new Date(bar_fix_from).toISOString() ,
         end_time : new Date(bar_fix_to).toISOString(),
         frequency:option.interval,
-        property:option.property
+        property:option.kpi_property
     },function(msg){
           if(option.show_loading==null || option.show_loading)
          remove_loading()

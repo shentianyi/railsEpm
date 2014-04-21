@@ -116,18 +116,19 @@ function prepare_form_chart() {
     }
     var begin_time = $("#analy-begin-time").attr("hide_value"), end_time = $("#analy-end-time").attr("hide_value");
     var properties=$("#kpi-property-select").find("option:selected");
-    var property=null;
+    var kpi_property=null;
     console.log(properties.length);
     if(properties.length>0){
-        property={};
+        kpi_property={};
+       console.log('---------');
         for(var i=0;i<properties.length;i++){
             var _property= $(properties[i]).attr('property');
-            if(property[_property]==null)
-                   property[_property]=[];
-            property[_property].push($(properties[i]).text());
+            if(kpi_property[_property]==null)
+                kpi_property[_property]=[];
+            kpi_property[_property].push($(properties[i]).text());
         }
     }
-    console.log(property);
+    console.log(kpi_property);
 
     if (kpi && begin_time && view) {
         if (end_time) {
@@ -152,7 +153,7 @@ function prepare_form_chart() {
             view_text: view_text,
             method: method,
             chart_body_close_validate: chart_body_close_validate,
-            property:property
+            kpi_property:kpi_property
         };
 
 
