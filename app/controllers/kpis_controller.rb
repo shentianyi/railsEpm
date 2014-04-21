@@ -83,7 +83,7 @@ class KpisController < ApplicationController
   #@function properties
   #get all kpi properties
   def properties
-    @kpi_properties = Kpi.find_by_id(params[:id]).kpi_properties
+    @kpi_properties =KpiPropertyPresenter.init_json_presenters(Kpi.find_by_id(params[:id]).kpi_properties)
     render :json => @kpi_properties
   end
 
