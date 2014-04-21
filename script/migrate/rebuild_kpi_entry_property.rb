@@ -1,5 +1,7 @@
+KpiEntry.observers.disable :all
+
 kpi_id=1
-count=KpiEntry.where(kpi_id: kpi_id).count
+count=KpiEntry.where(kpi_id: kpi_id, entry_type: 0).count
 puts count
 properties=Kpi.find(kpi_id).kpi_property_items.all
 property_values={}
@@ -9,7 +11,7 @@ properties.each do |p|
 end
 
 
-KpiEntry.where(kpi_id: kpi_id).each_with_index do |entry, i|
+KpiEntry.where(kpi_id: kpi_id, entry_type: 0).each_with_index do |entry, i|
   puts (i+1).to_s.yellow
   r=Random.new
   h={}

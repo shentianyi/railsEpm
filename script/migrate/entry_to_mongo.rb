@@ -1,9 +1,9 @@
 #ActiveRecord::Base.observers.disable :kpi_entry_observer
 KpiEntry.observers.disable :all
 
-KpiEntryBak.all.each do |e|
+KpiEntryBak.where(kpi_id:1).all.each do |e|
   r=Random.new
-  0.upto(5).each do |i|
+  0.upto(1).each do |i|
     date= e.parsed_entry_at-i.years
     value= e.value+r.rand(0..100)
     [0, 1].each do |y|
