@@ -31,6 +31,13 @@ module Entry
         @end_time=Time.parse(value).utc if value
       end
 
+      def property=(value)
+        @property={}
+        value.each do |k,v|
+          @property["a#{k}"]=v
+        end
+      end
+
 
       def frequency=(value)
         @frequency=value.to_i

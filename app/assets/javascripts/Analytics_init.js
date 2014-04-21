@@ -5,40 +5,40 @@ function init_analytics() {
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
     });
-    var target="#analy-begin-time,#analy-end-time";
-    $("#chart-kpi").chosen().change(function(){
+    var target = "#analy-begin-time,#analy-end-time";
+    $("#chart-kpi").chosen().change(function () {
         var interval = $("#chart-kpi").find(":selected").attr("interval");
         $(target).val("");
         $(".index-date-extra-info").text("");
 
-        new DATE_PICKER[interval](target,"date").datePicker();
+        new DATE_PICKER[interval](target, "date").datePicker();
     });
-    $("#chart-group").chosen().change(function(){
+    $("#chart-group").chosen().change(function () {
         $("#analy-begin-time,#analy-end-time").datepicker("remove");
         $("#analy-begin-time,#analy-end-time").datetimepicker("remove");
     });
 
-    $("body").on("change","#analy-begin-time",function(){
+    $("body").on("change", "#analy-begin-time",function () {
         var interval = $("#chart-kpi").find(":selected").attr("interval");
         if (interval == "200") {
-            var week=standardParse($(this).val()).date.toWeekNumber();
+            var week = standardParse($(this).val()).date.toWeekNumber();
             $(this).next().text("week " + week);
         }
         else if (interval == "400") {
-            var quarter=standardParse($(this).val()).date.monthToQuarter();
+            var quarter = standardParse($(this).val()).date.monthToQuarter();
             $(this).next().text("quarter " + quarter);
         }
-    }).on("change","#analy-end-time",function(){
+    }).on("change", "#analy-end-time", function () {
             var interval = $("#chart-kpi").find(":selected").attr("interval");
             if (interval == "200") {
-                var week=standardParse($(this).val()).date.toWeekNumber();
+                var week = standardParse($(this).val()).date.toWeekNumber();
                 $(this).next().text("week " + week);
             }
             else if (interval == "400") {
-                var quarter=standardParse($(this).val()).date.monthToQuarter();
+                var quarter = standardParse($(this).val()).date.monthToQuarter();
                 $(this).next().text("quarter " + quarter);
             }
-    });
+        });
 
     resize_chart.body();
     resize_chart.container();
@@ -50,7 +50,7 @@ function init_analytics() {
     $("#chart-group").on("change", function (event) {
         var id = $(adapt_event(event).target).attr("value");
         $.ajax({
-            url: '/kpis/categoried/'+id,
+            url: '/kpis/categoried/' + id,
             dataType: "json",
             success: function (data) {
                 $("#chart-kpi").empty().trigger('chosen:updated');
@@ -62,10 +62,29 @@ function init_analytics() {
             }
         });
     });
+
+    $('#chart-kpi').on('change', function (event) {
+        var id = $(adapt_event(event).target).attr('value');
+        $.get('/kpis/group_properties/' + id, function (data) {
+            $("#kpi-property-select").empty().trigger('chosen:updated');
+            if (data) {
+                $.each(data, function (k, v) {
+                    var gp = $('<optgroup/>').attr('label', k);
+                    for (var i = 0; i < v.length; i++) {
+                        gp.append($('<option/>').attr('value', v[i].id).attr('property', v[i].property).text(v[i].value));
+                    }
+                    $("#kpi-property-select").append(gp);
+                });
+                $("#kpi-property-select").val('').trigger('chosen:updated');
+            }
+        }, 'json');
+    });
+    //init groupdetail
+    groupDetailInit();
 }
 function analytic_control_condition_visible() {
     var open_state = $("#analytic-control-condition-visible").attr("state");
-    if (open_state=="open") {
+    if (open_state == "open") {
         $("#analytics-condition").css("top", "-16px");
         $("#chart-body").css("top", "26px").height(parseInt($("#chart-body").height()) + 86);
         $("#analytics-condition-invisible-mark").css("display", "block");
@@ -92,10 +111,24 @@ function prepare_form_chart() {
     }
     else {
         chart_body_close_validate = true;
-        interval = $("#analy-begin-time").attr("interval")==undefined || $("#analy-begin-time").attr("interval").length==0?$("#chart-kpi :selected").attr("interval"):$("#analy-begin-time").attr("interval");
+        interval = $("#analy-begin-time").attr("interval") == undefined || $("#analy-begin-time").attr("interval").length == 0 ? $("#chart-kpi :selected").attr("interval") : $("#analy-begin-time").attr("interval");
         type = "line";
     }
     var begin_time = $("#analy-begin-time").attr("hide_value"), end_time = $("#analy-end-time").attr("hide_value");
+    var properties=$("#kpi-property-select").find("option:selected");
+    var property=null;
+    console.log(properties.length);
+    if(properties.length>0){
+        property={};
+        for(var i=0;i<properties.length;i++){
+            var _property= $(properties[i]).attr('property');
+            if(property[_property]==null)
+                   property[_property]=[];
+            property[_property].push($(properties[i]).text());
+        }
+    }
+    console.log(property);
+
     if (kpi && begin_time && view) {
         if (end_time) {
             var compare_result = compare_time(begin_time, end_time);
@@ -118,13 +151,17 @@ function prepare_form_chart() {
             view: view,
             view_text: view_text,
             method: method,
-            chart_body_close_validate:chart_body_close_validate
+            chart_body_close_validate: chart_body_close_validate,
+            property:property
         };
+
+
+
         ANALYTICS.chartSeries.addCount();
         ANALYTICS.chartSeries.id_give();
-        option.id=ANALYTICS.chartSeries.id;
+        option.id = ANALYTICS.chartSeries.id;
         ANALYTICS.chartSeries.addSeries(option);
-        if(option.chart_body_close_validate){
+        if (option.chart_body_close_validate) {
             show_chart_body(option);
         }
         ANALYTICS.form_chart(option);
@@ -135,7 +172,7 @@ function prepare_form_chart() {
 }
 function show_chart_body(option) {
     $("#chart-body").css("display", "block");
-    $("body").on("click","#chart-type-alternate td",function(event){
+    $("body").on("click", "#chart-type-alternate td", function (event) {
         alternate_chart_type(event)
     });
 
@@ -157,10 +194,10 @@ function show_chart_body(option) {
     $("#chart-interval-alternate").find("li[interval='" + option.interval + "']").addClass("active");
 }
 function alternate_chart_type(event) {
-    if(ANALYTICS.loading_data==true){
-        MessageBox("Can't do it during loading","top","warning");
+    if (ANALYTICS.loading_data == true) {
+        MessageBox("Can't do it during loading", "top", "warning");
     }
-    else{
+    else {
         var target = adapt_event(event).target;
         if (!$(target).hasClass("image")) {
             var option = {
@@ -170,33 +207,33 @@ function alternate_chart_type(event) {
                 interval: $("#chart-interval-alternate li.active").attr("interval")
             }
             for (var i = 0; i < ANALYTICS.chartSeries.series.length; i++) {
-                if(ANALYTICS.chartSeries.series[i]===undefined){
+                if (ANALYTICS.chartSeries.series[i] === undefined) {
                     continue
                 }
-                else{
+                else {
                     option.id = i;
                     ANALYTICS.proper_type_for_chart(option)
                 }
             }
             $(target).siblings().removeClass("image");
-            $("#chart-type-alternate td").find("p").css("display","block")
-            $(target).addClass("image").find("p").css("display","block");
+            $("#chart-type-alternate td").find("p").css("display", "block")
+            $(target).addClass("image").find("p").css("display", "block");
         }
     }
 }
 
 function change_interval(option) {
-    if(ANALYTICS.loading_data==true){
-        MessageBox("Can't do it during loading","top","warning");
+    if (ANALYTICS.loading_data == true) {
+        MessageBox("Can't do it during loading", "top", "warning");
     }
-    else{
-        var series_object, have_data=[],not_have_data=[];
+    else {
+        var series_object, have_data = [], not_have_data = [];
         var chart = $("#" + option.target).highcharts();
         for (var i = 0; i < ANALYTICS.chartSeries.id_count; i++) {
-            if(ANALYTICS.chartSeries.series[i]===undefined){
+            if (ANALYTICS.chartSeries.series[i] === undefined) {
                 continue
             }
-            else{
+            else {
                 series_object = ANALYTICS.chartSeries.series[i];
                 if (series_object[option.interval]) {
                     have_data.push(i);
@@ -214,12 +251,12 @@ function change_interval(option) {
             interval: option.interval,
             count: ANALYTICS.chartSeries.getCount()
 
-        },j;
-        for(j=0;j< have_data.length;j++){
+        }, j;
+        for (j = 0; j < have_data.length; j++) {
             option.kpi = ANALYTICS.chartSeries.series[j].kpi;
             option.id = j;
             option.begin_time = ANALYTICS.chartSeries.series[j].begin_time;
-            option.data=ANALYTICS.chartSeries.series[j][option.interval]
+            option.data = ANALYTICS.chartSeries.series[j][option.interval]
             if (j == 0) {
                 ANALYTICS.render_to(option);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
@@ -235,12 +272,12 @@ function change_interval(option) {
             option.id = j;
             option.begin_time = ANALYTICS.chartSeries.series[j].begin_time;
             option.end_time = ANALYTICS.chartSeries.series[j].end_time;
-            if(have_data.length==0 && j==0){
-                option.chart_body_close_validate=true;
+            if (have_data.length == 0 && j == 0) {
+                option.chart_body_close_validate = true;
                 ANALYTICS.form_chart(option);
             }
-            else{
-                option.chart_body_close_validate=false;
+            else {
+                option.chart_body_close_validate = false;
                 ANALYTICS.form_chart(option);
             }
         }
@@ -280,11 +317,20 @@ function clear_chart_condition() {
     $(".index-date-extra-info").text("");
 }
 
+var RATIO = 1;
+function chart_point_click(object) {
 
-//function chart_point_click(object) {
-//    console.log(object)
-//    $("#chart-point-detail").css("left", "0");
-//    $("#chart-container").css("left", "320px");
+    $("#chart-point-detail").css("left", "0");
+    $("#chart-main-middle").css("left", "400px");
+    $("#chart-type-alternate").css("left", "400px");
+    RATIO = object.y / 100;
+    $("#group-detail-select").val('').trigger('chosen:updated');
+    generateDetailDate(groupDetail.dict.dict[0].array[0]);
+    //all this data come from groupDetail.js
+    //fake data only for weixing demo
+
+
+    //old data
 //    if (object.series.type == "pie") {
 //        if (object.time_from != null) {
 //            $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
@@ -317,10 +363,11 @@ function clear_chart_condition() {
 //        $("#target-min").text((object.series.type=="column"?object.target_min:object.low) + object.unit).parent().removeClass("hide");
 //        $("#value").text(object.y + object.unit).parent().removeClass("hide");
 //    }
-//}
+}
 function close_chart_detail() {
-    $("#chart-point-detail").css("left", "-300px");
-    $("#chart-container").css("left", "0px");
+    $("#chart-point-detail").css("left", "-400px");
+    $("#chart-main-middle").css("left", "0px");
+    $("#chart-type-alternate").css("left", "0px");
 }
 function tcr_trend(judge) {
     switch (judge) {
@@ -339,8 +386,91 @@ function tcr_trend(judge) {
     }
 }
 
+//group detail
+function groupDetailInit() {
+    $("#group_detail_select_chosen").css("width", "250px");
+    var typeArray = groupDetail.dict.dict[0].array,
+        i;
+    for (i = 0; i < typeArray.length; i++) {
+        $("#group-detail-select").append($("<option />").text(typeArray[i]));
+    }
+    $("#group-detail-select").val('').trigger('chosen:updated');
+    $("#group-detail-select").chosen().change(function () {
+        var title = $("#group-detail-select :selected").text()
+        generateDetailDate(title);
+    });
+}
+function generateDetailDate(type) {
+    var source = searchForFilter(type);
+    generatePie(source);
+    generateDetailTable(source);
+}
+function searchForFilter(type) {
+    var target = groupDetail.dict.dict[1].dict,
+        i,
+        position;
+    console.log(type)
+    for (i = 0; i < target.key.length; i++) {
+        if (target.key[i] === type) {
+            return target.array[i];
+        }
+    }
+}
+function generatePie(source) {
+    var colorArray = groupDetail.color,
+        length = source.length,
+        i, target,
+        data = [];
+    $("#groupDetailPie").remove();
+    $("#group-detail-ul").empty();
+    for (i = 0; i < length; i++) {
+        target = source[i]
+        $("#group-detail-ul")
+            .append($("<li />")
+                .append($("<span />").text(getObject(target, "name")))
+                .append($("<span />").text(getObject(target, "percentage")).css("color", colorArray[i]))
+            )
+        data.push({
+            value: parseInt(getObject(target, "value")),
+            color: colorArray[i]
+        })
+    }
+    $("#chart-part").prepend($("<canvas />").attr("height", "180").attr("width", "180").attr("id", "groupDetailPie"))
+    var ctx = document.getElementById("groupDetailPie").getContext("2d");
+    new Chart(ctx).Pie(data);
+}
+function generateDetailTable(source) {
+    var length = source.length,
+        i, target, value, last, icon, compare;
+    $("#group-detail-table tbody").empty();
+    for (i = 0; i < length; i++) {
+        target = source[i];
+        value = (parseInt(getObject(target, "value")) * RATIO).toFixed(1);
+        last = (parseInt(getObject(target, "last")) * RATIO).toFixed(1);
+        compare = (Math.abs(value - last) / last * 100).toFixed(1) + "%";
+        icon = value > last ? "icon-arrow-up" : (value == last ? "" : "icon-arrow-down");
+        $("#group-detail-table tbody")
+            .append($("<tr />")
+                .append($("<td />").text(getObject(target, "name")))
+                .append($("<td />").text(value))
+                .append($("<td />").text(last))
+                .append($("<td />").text(compare))
+                .append($("<td />").append($("<i />").addClass("icon " + icon)))
+            )
+    }
+}
 
 
+function getObject(object, name) {
+    var i, value,
+        key = object.key,
+        string = object.string;
+    for (i = 0; i < key.length; i++) {
+        if (key[i] === name) {
+            return string[i];
+        }
+    }
+}
 
 
 

@@ -55,29 +55,6 @@ ANALYTICS.high_chart={
                     }
             }
 
-//        formatter: function() {
-//            var target=this.points[0];
-//            var new_target=target.series.name.replace("(","#").replace(")","#").split("#");
-//            var name=new_target[0];
-//            var view=new_target[1];
-//            if(target.series.type=="column"){
-//                return '<b>'+target.key+'</b>'
-//                    +'<br />KPI: <span style="color:'+target.series.color+'">'+name
-//                    +'</span>'
-//                    +'<br />'+': '+view
-//                    +'<br />'+': '+target.y
-//                    +"<br />"+": "+target.point.target_min+"-"+target.point.high
-//            }
-//            else{
-//                return '<b>'+target.key+'</b>'
-//                    +'<br />KPI: <span style="color:'+target.series.color+'">'+name
-//                    +'</span>'
-//                    +'<br />'+': '+view
-//                    +'<br />'+': '+target.y
-//                    +"<br />"+": "+target.point.low+"-"+target.point.high
-//            }
-//        }
-
     },
     legend: {
         enabled: true,
@@ -110,9 +87,9 @@ ANALYTICS.high_chart={
             cursor:'pointer',
             point:{
                 events:{
-//                    click:function(){
-//                        chart_point_click(this);
-//                    }
+                    click:function(){
+                        chart_point_click(this);
+                    }
                 }
             },
             marker: {
@@ -267,7 +244,8 @@ ANALYTICS.form_chart=function(option){
         entity_group_id: option.view,
         start_time : new Date(bar_fix_from).toISOString() ,
         end_time : new Date(bar_fix_to).toISOString(),
-        frequency:option.interval
+        frequency:option.interval,
+        property:option.property
     },function(msg){
           if(option.show_loading==null || option.show_loading)
          remove_loading()

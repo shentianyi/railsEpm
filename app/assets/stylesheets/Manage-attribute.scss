@@ -1,0 +1,162 @@
+@import "STYLE";
+.kpi-library[type="attribute"]{
+  &>div{
+    $height:450px;
+    $width:550px;
+    width:$width;
+    height:$height;
+    margin-left:- $width/2;
+    margin-top:- $height/2;
+    &:before{
+      content:"";
+    }
+    &:after{
+      clear:both;
+      display:block;
+      content:"";
+    }
+    &>i{
+      cursor:pointer;
+      pointer-events:auto;
+      float:right;
+      margin-top:10px;
+      margin-right:10px;
+      font-size:18px;
+      color:#000;
+      @include transition(color);
+      &:hover{
+        color: rgba(0,0,0,0.6);
+      }
+    }
+    .attribute-block{
+      position:absolute;
+      left:50%;
+      top:50px;
+      margin-left:-40%;
+      width:80%;
+      height:340px;
+      overflow-y:auto;
+      &>ul{
+        li{
+          padding:5px 4px;
+          input{
+            width:210px;
+            margin-left:100px;
+            padding:3px;
+          }
+          i{
+            color:$red;
+            float:right;
+            margin-right:70px;
+            margin-top:3px;
+            pointer-events:auto;
+            cursor:pointer;
+            @include transition(color);
+            &:hover{
+              color:transparentize($red,0.3);
+            }
+          }
+        }
+      }
+      &>a{
+        font-size:11px;
+        width:60px;
+        padding:4px 5px;
+        margin-left:255px;
+        margin-top:3px;
+      }
+    }
+
+    .btn-group{
+      position:absolute;
+      bottom:0px;
+      left:0px;
+      right:0px;
+      height:40px;
+      border-top:1px solid #ddd;
+
+      .btn{
+        float:right;
+        margin-right:25px;
+        margin-top:5px;
+        &:last-of-type{
+          margin-right:0px;
+        }
+      }
+    }
+  }
+}
+
+
+.attribute-position{
+  position:absolute;
+  height:24px;
+  bottom:0px;
+  left:0px;
+  p{
+    width:70%;
+    overflow-x:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    display:inline-block;
+    float:left;
+    font-size:11px;
+    color:$green;
+    line-height:20px;
+    span{
+      margin-right:5px;
+    }
+  }
+  .btn{
+    float:left;
+    display:inline-block;
+    padding:3px 8px;
+    font-size:10px;
+    margin-left:70px;
+  }
+}
+
+.attribute-block[type="edit"]
+{
+  height:230px !important;
+  border:1px solid #ddd;
+  padding:8px;
+  ul{
+
+    li{
+      padding:0px 4px !important;
+      border-bottom:1px solid #ddd;
+      label{
+        display:inline-block;
+        width:380px;
+        font-size:12px;
+        line-height:19px;
+        margin-top:5px;
+        @include text-overflow;
+      }
+      i{
+        margin-top:5px !important;
+        margin-right:20px !important;
+      }
+    }
+  }
+}
+.add-attribute{
+  position:absolute;
+  top:305px;
+  width:290px;
+  left:156px;
+  input{
+    padding:4px 5px;
+    float:left;
+    font-size:13px;
+  }
+  .btn{
+    padding:7px;
+    height:15px;
+    float:left;
+    font-size:12px;
+    margin:0px;
+    @include border-radius-same(0px);
+  }
+}

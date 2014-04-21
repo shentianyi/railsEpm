@@ -3,10 +3,16 @@ class KpiPropertyValue < ActiveRecord::Base
   attr_accessible :value, :count, :kpi_property_item_id
 
   belongs_to :kpi_property_item
+  #delegate :kpi_property, to: :kpi_property_item
 
   def self.by_property_id(kpi_id, property_id)
     joins(:kpi_property_item).where(kpi_property_items: {kpi_id: kpi_id, kpi_property_id: property_id})
     .select('kpi_property_values.*,kpi_property_items.kpi_property_id')
+  end
+
+  def self.by_kpi_id(kpi_id)
+    joins(kpi_property_item: :kpi_property).where(kpi_property_items: {kpi_id: kpi_id})
+    .select('kpi_property_values.*,kpi_properties.name as property_name,kpi_properties.id as property_id')
   end
 
   def self.desc_property_value item_id, value
