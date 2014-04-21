@@ -75,6 +75,16 @@ class KpiEntryValidator
     end
 
     #
+    if self.entry_type == "1"
+      source = self.valid_by_cache ? self.source : self
+      entry_at = Time.parse(self.date).utc
+      parsed_entry_at = KpiEntriesHelper.parse_entry_string_date(source.kpi.frequency,Time.parse(entry_at.to_s))
+      kpi_entry = KpiEntry.where(user_kpi_item_id: source.user_kpi_item.id, parsed_entry_at: parsed_entry_at, entity_id: source.user_kpi_item.entity_id,entry_type: 0).first
+      if kpi_entry
+        self.valid = false
+        self.content<<"You can't modify KpiEntry when it has Details!"
+      end
+    end
 
     prepare_params if self.valid
   end
