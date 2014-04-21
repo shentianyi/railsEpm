@@ -62,6 +62,8 @@ function init_analytics() {
             }
         });
     });
+    //init groupdetail
+    groupDetailInit();
 }
 function analytic_control_condition_visible() {
     var open_state = $("#analytic-control-condition-visible").attr("state");
@@ -280,11 +282,21 @@ function clear_chart_condition() {
     $(".index-date-extra-info").text("");
 }
 
+var RATIO=1;
+function chart_point_click(object) {
 
-//function chart_point_click(object) {
-//    console.log(object)
-//    $("#chart-point-detail").css("left", "0");
-//    $("#chart-container").css("left", "320px");
+    $("#chart-point-detail").css("left", "0");
+    $("#chart-main-middle").css("left", "400px");
+    $("#chart-type-alternate").css("left", "400px");
+    RATIO=object.y/100;
+    $("#group-detail-select").val('').trigger('chosen:updated');
+    generateDetailDate(groupDetail.dict.dict[0].array[0]);
+    //all this data come from groupDetail.js
+    //fake data only for weixing demo
+
+
+
+    //old data
 //    if (object.series.type == "pie") {
 //        if (object.time_from != null) {
 //            $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
@@ -317,10 +329,11 @@ function clear_chart_condition() {
 //        $("#target-min").text((object.series.type=="column"?object.target_min:object.low) + object.unit).parent().removeClass("hide");
 //        $("#value").text(object.y + object.unit).parent().removeClass("hide");
 //    }
-//}
+}
 function close_chart_detail() {
-    $("#chart-point-detail").css("left", "-300px");
-    $("#chart-container").css("left", "0px");
+    $("#chart-point-detail").css("left", "-400px");
+    $("#chart-main-middle").css("left", "0px");
+    $("#chart-type-alternate").css("left", "0px");
 }
 function tcr_trend(judge) {
     switch (judge) {
@@ -339,8 +352,91 @@ function tcr_trend(judge) {
     }
 }
 
+//group detail
+function groupDetailInit(){
+    $("#group_detail_select_chosen").css("width","250px");
+    var typeArray=groupDetail.dict.dict[0].array,
+        i;
+    for(i=0;i<typeArray.length;i++){
+        $("#group-detail-select").append($("<option />").text(typeArray[i]));
+    }
+    $("#group-detail-select").val('').trigger('chosen:updated');
+    $("#group-detail-select").chosen().change(function(){
+         var title=$("#group-detail-select :selected").text()
+         generateDetailDate(title);
+    });
+}
+function generateDetailDate(type){
+    var source=searchForFilter(type);
+    generatePie(source);
+    generateDetailTable(source);
+}
+function searchForFilter(type){
+    var target=groupDetail.dict.dict[1].dict,
+        i,
+        position;
+    console.log(type)
+    for(i=0;i<target.key.length;i++){
+       if(target.key[i]===type){
+           return target.array[i] ;
+       }
+    }
+}
+function generatePie(source){
+    var colorArray=groupDetail.color,
+        length=source.length,
+        i,target,
+        data=[];
+    $("#groupDetailPie").remove();
+    $("#group-detail-ul").empty();
+    for(i=0;i<length;i++){
+       target=source[i]
+       $("#group-detail-ul")
+           .append($("<li />")
+               .append($("<span />").text(getObject(target,"name")))
+               .append($("<span />").text(getObject(target,"percentage")).css("color",colorArray[i]))
+           )
+        data.push({
+            value:parseInt(getObject(target,"value")),
+            color:colorArray[i]
+        })
+    }
+    $("#chart-part").prepend($("<canvas />").attr("height","180").attr("width","180").attr("id","groupDetailPie"))
+    var ctx = document.getElementById("groupDetailPie").getContext("2d");
+    new Chart(ctx).Pie(data);
+}
+function generateDetailTable(source){
+    var length=source.length,
+        i,target,value,last,icon,compare;
+    $("#group-detail-table tbody").empty();
+    for(i=0;i<length;i++){
+        target=source[i];
+        value=(parseInt(getObject(target,"value"))*RATIO).toFixed(1);
+        last=(parseInt(getObject(target,"last"))*RATIO).toFixed(1);
+        compare=(Math.abs(value-last)/last*100).toFixed(1)+"%";
+        icon=value>last?"icon-arrow-up":(value==last?"":"icon-arrow-down");
+        $("#group-detail-table tbody")
+            .append($("<tr />")
+                .append($("<td />").text(getObject(target,"name")))
+                .append($("<td />").text(value))
+                .append($("<td />").text(last))
+                .append($("<td />").text(compare))
+                .append($("<td />").append($("<i />").addClass("icon "+icon)))
+        )
+    }
+}
 
 
+function getObject(object,name){
+   var i,value,
+       key=object.key,
+       string=object.string;
+   for(i=0;i<key.length;i++){
+       if(key[i]===name){
+           return string[i];
+       }
+   }
+}
 
 
 

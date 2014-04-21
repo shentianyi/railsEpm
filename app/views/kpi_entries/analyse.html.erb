@@ -1,3 +1,6 @@
+<% content_for :javascript_includes do%>
+    <%= javascript_include_tag "groupDetail.js"%>
+<%end%>
 <div>
      <div class="analytics-condition clearfix" id="analytics-condition">
           <div class="analytics-mark pull-left" style="width:124px;">
@@ -68,71 +71,39 @@
                     </li>
                </ul>
           </div>
+
+          <div id="chart-point-detail" class="chart-point-detail">
+             <i class="icon icon-remove chart-detail-close" id="chart-detail-close" onclick="close_chart_detail()"></i>
+             <select style="width:150px;" class="chosen-select" id="group-detail-select">
+            </select>
+            <div class="chart-part" id="chart-part">
+              <canvas id="groupDetailPie" width="200" height="200"></canvas>
+              <ul id="group-detail-ul"></ul>
+            </div>
+            <div id="group-detail-table" class="group-detail-table">
+               <table>
+                 <thead>
+                  <tr>
+                    <td>名称</td>
+                    <td>当前值</td>
+                    <td>上一同期值</td>
+                    <td>同比</td>
+                    <td></td>
+                  </tr>
+                 </thead>
+                 <tbody>
+
+                 </tbody>
+               </table>
+            </div>
+          </div>
+
           <div class="relative" id="chart-main-middle">
                <div class="chart-container " id="chart-container"></div>
-               <div id="chart-point-detail" class="chart-point-detail">
-                    <table class="chart-detail-table">
-                         <thead>
-                              <tr>
-                                   <td colspan="2" align="center" id="chart-detail-kpi" ></td>
-                              </tr>
-                         </thead>
-                         <tbody> 
-                              <tr>
-                                   <td width="80px"  align="right"><%= t 'analytics.date'%>:</td>
-                                   <td id="date" align="left"></td>
-                              </tr>
-                              <tr>
-                                   <td width="80px"  align="right"><%= t 'analytics.begin_time'%>:</td>
-                                   <td id="from" align="left"></td>
-                              </tr>
-                              <tr class="hide">
-                                   <td width="80px"  align="right"><%= t 'analytics.end_time'%>:</td>
-                                   <td id="to" align="left"></td>
-                              </tr>
-                              <tr class="hide">
-                                   <td width="80px"  align="right"><%= t 'analytics.percent'%>:</td>
-                                   <td id="percent" align="left"></td>
-                              </tr>
-                              <tr>
-                                   <td width="80px"  align="right"><%= t 'analytics.sum_target'%>:</td>
-                                   <td id="sum-target" align="left"></td>
-                              </tr>
-                              <tr>
-                                   <td width="80px"  align="right"><%= t 'analytics.sum_value'%>:</td>
-                                   <td id="sum-value" align="left"></td>
-                              </tr>
-                              <tr>
-                                   <td width="80px"  align="right">目标上限:</td>
-                                   <td id="target-max" align="left"></td>
-                              </tr>
-                              <tr>
-                                   <td width="80px"  align="right">目标下限:</td>
-                                   <td id="target-min" align="left"></td>
-                              </tr>
-                              <tr class="hide">
-                                   <td width="80px"  align="right"><%= t 'analytics.aver_target'%>:</td>
-                                   <td id="aver-target" align="left"></td>
-                              </tr>
-                              <tr>
-                                   <td width="80px"  align="right"><%= t 'analytics.value'%>:</td>
-                                   <td id="value" align="left"></td>
-                              </tr>
-                              <tr class="hide">
-                                   <td width="80px"  align="right"><%= t 'analytics.aver_value'%>:</td>
-                                   <td id="aver-value" align="left"></td>
-                              </tr>
-                              <tr>
-                                   <td width="80px"  align="right"><%= t 'analytics.tcr'%>:</td>
-                                   <td id="tcr" align="left"></td>
-                              </tr>
-                         </tbody>
-                    </table>
-                    <div class="chart-detail-close" id="chart-detail-close" onclick="close_chart_detail()">
-                         <%= t 'analytics.close_btn'%>
-                    </div>
-               </div>
+
+
           </div>
+
           <table class="chart-type-alternate" id="chart-type-alternate"  my_height="70">
                <tr>
                     <td class="analytics-chart-line image" type="line">
@@ -150,6 +121,7 @@
                     </p></td>
                </tr>
           </table>
+
      </div>
 </div>
 
@@ -162,6 +134,7 @@
   <%= javascript_include_tag "bootstrap-datepicker.js"%>
   <%= javascript_include_tag "date_picker_template.js"%>
   <%= javascript_include_tag "bootstrap-datetimepicker.min.js"%>
+    <%= javascript_include_tag "Chart.min.js"%>
 <%end%>
 
 <script>
