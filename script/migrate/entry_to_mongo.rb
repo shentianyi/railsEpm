@@ -4,9 +4,9 @@ KpiEntry.observers.disable :all
 KpiEntryBak.all.each do |e|
   r=Random.new
   0.upto(5).each do |i|
+    date= e.parsed_entry_at-i.years
+    value= e.value+r.rand(0..100)
     [0, 1].each do |y|
-      date= e.parsed_entry_at-i.years;
-      value= e.value+r.rand(0..100)
       me=KpiEntry.create(
           kpi_id: e.kpi_id,
           user_id: e.user_id,
