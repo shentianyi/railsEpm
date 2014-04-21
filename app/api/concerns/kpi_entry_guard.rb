@@ -15,7 +15,10 @@ module KpiEntryGuard
 
     # validate single input
     def guard_entry!
-      entry_p=validate_params_integrated(params, ParamKeys)
+      #entry_p=validate_params_integrated(params, ParamKeys)
+      raise ArgumentError unless params.has_key?(:entry)
+      params[:entry] = JSON.parse(params[:entry])
+      entry_p = params[:entry]
       vc= KpiEntryValidatorCollection.new
       entry_p[:validator_collection]=vc
       validator=KpiEntryValidator.new(entry_p)

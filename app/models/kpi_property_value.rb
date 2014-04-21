@@ -10,6 +10,7 @@ class KpiPropertyValue < ActiveRecord::Base
   end
 
   def self.desc_property_value item_id, value
+    puts "DEL"
     property_val = self.where("kpi_property_item_id = ? AND value = ?", item_id, value).first
     if !property_val.nil?
       if property_val.count <= 1
@@ -21,6 +22,7 @@ class KpiPropertyValue < ActiveRecord::Base
   end
 
   def self.add_property_value item_id, value
+    puts "ADD"
     property_val = self.where("kpi_property_item_id = ? AND value = ?", item_id, value).first
     if property_val.nil?
       property_val = self.new
