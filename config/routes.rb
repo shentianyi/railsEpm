@@ -76,13 +76,12 @@ IFEpm::Application.routes.draw do
       post :assign
       post :assign_properties
       delete :remove_properties
-      get '/properties/:id'=>:properties
       post :import
       get :template
       get :condition
       get :parameter
       get :access
-      [:categoried, :user, :list].each do |a|
+      [:categoried, :user, :list,:properties,:group_properties].each do |a|
         get "#{a}/:id" => a
       end
     end
