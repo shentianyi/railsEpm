@@ -6,7 +6,7 @@ class KpiPropertyValue < ActiveRecord::Base
 
   def self.by_property_id(kpi_id, property_id)
     joins(:kpi_property_item).where(kpi_property_items: {kpi_id: kpi_id, kpi_property_id: property_id})
-    .select('kpi_property_values.*,kpi_property_items.property_id')
+    .select('kpi_property_values.*,kpi_property_items.kpi_property_id')
   end
 
   def self.desc_property_value item_id, value

@@ -22,5 +22,14 @@ module Api
         t.json { render :json => data }
       end
     end
+
+    def compare
+      render json: Entry::Analyzer.new(params).period_compare
+    end
+
+    def compares
+      params[:compare_size]=params[:point_num]
+      render json: Entry::Analyzer.new(params).period_compares
+    end
   end
 end

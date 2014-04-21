@@ -55,6 +55,13 @@ class KpiEntry
                parseFloat(this.value));
         };
       }
+
+      map=%Q{
+           function(){
+  emit({property:this.:1},parseFloat(this.value));
+      };
+     }
+
       reduce=%Q{
           function(key,values){
   return Array.sum(values);

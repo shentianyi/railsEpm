@@ -79,6 +79,7 @@ IFEpm::Application.routes.draw do
       get '/properties/:id'=>:properties
       post :import
       get :template
+      get :condition
       get :parameter
       get :access
       [:categoried, :user, :list].each do |a|
@@ -148,6 +149,8 @@ IFEpm::Application.routes.draw do
       collection do
         get :analyse, :defaults => {:format => 'html'}
         get :data
+        match :compare
+        match :compares
       end
     end
 
