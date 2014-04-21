@@ -87,11 +87,16 @@ class KpisController < ApplicationController
     render :json => @kpi_properties
   end
 
+  def group_properties
+    @properties=KpiPropertyValue.by_kpi_id(params[:id]).all
+    render json: KpiPropertyPresenter.to_group_select(@properties)
+  end
+
   #@function remove_properties
   def remove_properties
     msg = Message.new
     msg.result = false
-    if item = KpiPropertyItem.where(kpi_id:params[:kpi_id],kpi_property_id: params[:kpi_property_id])
+    if item = KpiPropertyItem.where(kpi_id: params[:kpi_id], kpi_property_id: params[:kpi_property_id])
       item.destroy
       msg.result = true
     end
@@ -107,7 +112,7 @@ class KpisController < ApplicationController
     kpi_property = KpiProperty.find_by_name(params[:kpi_property_name])
     kpi = Kpi.find_by_id(params[:id])
     if kpi_property.nil?
-      kpi_property = KpiProperty.create(:name => params[:kpi_property_name],:user_id => current_user.id)
+      kpi_property = KpiProperty.create(:name => params[:kpi_property_name], :user_id => current_user.id)
     end
 
     if kpi && kpi_property
