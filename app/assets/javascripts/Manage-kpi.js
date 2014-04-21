@@ -463,17 +463,17 @@ MANAGE.kpi.library.cancel = function() {
 MANAGE.kpi.attribute=function(){
     $("body")
         //管理KPI点击出来的
-        .on("click","#kpi-manage-attribute",function(){
-            $("#kpi-attribute-outer").css("display","block");
-            $("#kpi-attribute-outer>div").css("display","block");
-        })
-        .on("click","#attribute-block-remove",function(){
-            MANAGE.kpi.attribute_close();
-        })
-        .on("click","#attribute-block-cancel",function(){
-            MANAGE.kpi.attribute_close();
-
-        })
+//        .on("click","#kpi-manage-attribute",function(){
+//            $("#kpi-attribute-outer").css("display","block");
+//            $("#kpi-attribute-outer>div").css("display","block");
+//        })
+//        .on("click","#attribute-block-remove",function(){
+//            MANAGE.kpi.attribute_close();
+//        })
+//        .on("click","#attribute-block-cancel",function(){
+//            MANAGE.kpi.attribute_close();
+//
+//        })
         //每一个KPI上点击编辑属性出来的
         .on("click",".edit-kpi-attribute",function(){
             $("#edit-attribute-block").css("display","block");
@@ -486,10 +486,10 @@ MANAGE.kpi.attribute=function(){
             MANAGE.kpi.edit_attribute_close();
         })
 }
-MANAGE.kpi.attribute_close=function(){
-    $("#kpi-attribute-outer").css("display","none");
-    $("#kpi-attribute-outer>div").css("display","none");
-}
+//MANAGE.kpi.attribute_close=function(){
+//    $("#kpi-attribute-outer").css("display","none");
+//    $("#kpi-attribute-outer>div").css("display","none");
+//}
 MANAGE.kpi.edit_attribute_close=function(){
     $("#edit-attribute-block").css("display","none");
     $("#edit-attribute-block>div").css("display","none");

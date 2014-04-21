@@ -44,13 +44,13 @@
                </p>
                <a class="btn btn-primary" id="kpi-library-btn"><%= t 'manage.kpi.desc.choose_now'%></a>
           </section>
-          <section class="solid">
-               <h3>管理KPI属性</h3>
-               <p>
-                 KPI属性是KPI自身所具有的特征,它使KPI的值具有更多信息
-               </p>
-         <a class="btn btn-success" id="kpi-manage-attribute">管理属性</a>
-       </section>
+          <!--<section class="solid">-->
+               <!--<h3>管理KPI属性</h3>-->
+               <!--<p>-->
+                 <!--KPI属性是KPI自身所具有的特征,它使KPI的值具有更多信息-->
+               <!--</p>-->
+         <!--<a class="btn btn-success" id="kpi-manage-attribute">管理属性</a>-->
+       <!--</section>-->
           <section class="solid">
                <h3>什么是KPI？</h3>
                <p>
@@ -85,21 +85,76 @@
 </div>
 
 
-<div class="kpi-library" id="kpi-attribute-outer" type="attribute">
-  <div>
-          <i class="icon icon-remove" id="attribute-block-remove"></i>
-          <div class="attribute-block">
-              <ul>
-                <li><input placeholder="属性名"/><i class="icon icon-trash"></i></li>
-              </ul>
-              <a class="btn btn-success">增加属性</a>
-          </div>
-          <div class="btn-group">
-              <a class="btn btn-small" id="attribute-block-cancel">取消</a>
-              <a class="btn btn-primary btn-small">保存</a>
-          </div>
+<!--<div class="kpi-library" id="kpi-attribute-outer" type="attribute">-->
+  <!--<div>-->
+          <!--<i class="icon icon-remove" id="attribute-block-remove"></i>-->
+          <!--<div class="attribute-block">-->
+              <!--<ul>-->
+                <!--<li><input placeholder="属性名"/><i class="icon icon-trash"></i></li>-->
+              <!--</ul>-->
+              <!--<a class="btn btn-success">增加属性</a>-->
+          <!--</div>-->
+          <!--<div class="btn-group">-->
+              <!--<a class="btn btn-small" id="attribute-block-cancel">取消</a>-->
+              <!--<a class="btn btn-primary btn-small">保存</a>-->
+          <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<div class="kpi-library"  type="attribute" for="kpi" style="display:none">
+  <div style="display:none">
+    <i class="icon icon-remove"></i>
+    <div class="select-div">
+      <select style="width:242px;" data-placeholder="* Category" class="chosen-select"  id="new-kpi-category" ></select>
+    </div>
+    <input type="text" placeholder="* <%= t 'manage.kpi.name'%>" id="new-kpi-name"/>
+    <textarea placeholder=" <%= t 'manage.kpi.description'%>" id="new-kpi-desc"></textarea>
+    <div class="select-div">
+      <select style="width:242px;" class="chosen-select" data-placeholder="* <%= t 'manage.kpi.frequency'%>" id="add-interval" name="frequency"></select>
+    </div>
+    <input type="text" placeholder="* <%= t 'manage.kpi.target'%>" id="new-kpi-target"/>
+    <input type="text" placeholder="* <%= t 'manage.kpi.target_min'%>" id="new-kpi-target-low"/>
+    <div class="select-div">
+      <select style="width:242px;" class="chosen-select" data-placeholder="* <%= t 'manage.kpi.unit'%>" id="add-unit" name="unit">
+
+      </select>
+    </div>
+
+    <div class="select-div">
+      <select style="width:242px;" class="chosen-select" data-placeholder="* <%= t 'manage.kpi.trend'%>" id="add-trend" name="direction">
+
+      </select>
+    </div>
+
+    <input type="checkbox" id="is-calcu-check"/>
+    <label><%= t 'manage.kpi.is_calculate_type'%></label>
+
+    <div class="calculate-type-box" id="calculate-type-box">
+      <div class="select-div">
+        <select class="chosen-select" data-placeholder="* <%= t 'manage.kpi.list'%>" id="is-calcu-relate" name="base">
+
+        </select>
+      </div>
+      <label sign="+">+</label>
+      <label sign="-">-</label>
+      <label sign="*">x</label>
+      <label sign="/">/</label>
+      <label sign="(">(</label>
+      <label sign=")">)</label>
+      <input type="text" placeholder="* <%= t 'manage.kpi.formula'%>" id="calcuType-input"/>
+      <div style="display:none" id="takeCal" cal></div>
+    </div>
+
+    <div class="btn-group">
+      <a class="btn btn-small">取消</a>
+      <a class="btn btn-primary btn-small">创建</a>
+    </div>
+
   </div>
 </div>
+
+
+
 
 <div class="kpi-library" id="edit-attribute-block" type="attribute">
   <div>
