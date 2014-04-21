@@ -122,7 +122,7 @@ class KpisController < ApplicationController
   end
 
   def categoried
-    render :json => get_kpis_by_category(params[:id])
+    render json: KpiSelectPresenter.init_json_presenters(get_kpis_by_category(params[:id]))
   end
 
   def user
