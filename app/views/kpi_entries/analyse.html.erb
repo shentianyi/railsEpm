@@ -3,7 +3,7 @@
 <% end %>
 <div>
   <div class="analytics-condition clearfix" id="analytics-condition">
-    <div class="analytics-mark pull-left" style="width:124px;">
+    <div class="analytics-mark pull-left" style="width:90px;">
       <h2 class="normal-blue text-center pointer" onclick="analytic_control_condition_visible()"><%= t 'analytics.title' %></h2>
     </div>
     <div class="pull-left analytics-condition-choose" style="padding: 18px 0 5px 11px;">
@@ -40,23 +40,27 @@
           <input type="radio" name="chartRadios" value="0" checked>
           <%= t 'analytics.average' %> </label>
       </div>
+      <div class="chosen-attribute">
+        <select data-placeholder="选择属性" multiple style="width:250px;" class="chosen-select " title="analy-attribute-select" id="kpi-property-select">
+          <optgroup label="客户属性">
+            <option>Nike</option>
+            <option>Adidas</option>
+            <option>NYC</option>
+            <option>Washington</option>
+          </optgroup>
+          <optgroup label="材料性质">
+            <option>cartoon</option>
+            <option>plastic</option>
+            <option>iron</option>
+            <option>human made</option>
+          </optgroup>
+        </select>
+      </div>
+
 
       <a class="btn btn-primary btn-normal pull-left" style="margin:14px 0 0 3px" onclick="prepare_form_chart()"><%= t 'analytics.add_chart' %></a>
 
-      <select data-placeholder="<%= t 'analytics.view' %> *" multiple style="width:430px;" class="chosen-select" title="analy-view-select" id="kpi-property-select">
-        <optgroup label="客户属性">
-          <option>Nike</option>
-          <option>Adidas</option>
-          <option>NYC</option>
-          <option>Washington</option>
-        </optgroup>
-        <optgroup label="材料性质">
-          <option>cartoon</option>
-          <option>plastic</option>
-          <option>iron</option>
-          <option>human made</option>
-        </optgroup>
-      </select>
+
 
     </div>
 
