@@ -69,10 +69,9 @@ function init_analytics() {
             $("#kpi-property-select").empty().trigger('chosen:updated');
             if (data) {
                 $.each(data, function (k, v) {
-                    console.log(k);
                     var gp = $('<optgroup/>').attr('label', k);
                     for (var i = 0; i < v.length; i++) {
-                        gp.append($('<option/>').attr('value', v[i].id).attr('property', v[i].property_id).text(v[i].value));
+                        gp.append($('<option/>').attr('value', v[i].id).attr('property', v[i].property).text(v[i].value));
                     }
                     $("#kpi-property-select").append(gp);
                 });
@@ -116,6 +115,20 @@ function prepare_form_chart() {
         type = "line";
     }
     var begin_time = $("#analy-begin-time").attr("hide_value"), end_time = $("#analy-end-time").attr("hide_value");
+    var properties=$("#kpi-property-select").find("option:selected");
+    var property=null;
+    console.log(properties.length);
+    if(properties.length>0){
+        property={};
+        for(var i=0;i<properties.length;i++){
+            var _property= $(properties[i]).attr('property');
+            if(property[_property]==null)
+                   property[_property]=[];
+            property[_property].push($(properties[i]).text());
+        }
+    }
+    console.log(property);
+
     if (kpi && begin_time && view) {
         if (end_time) {
             var compare_result = compare_time(begin_time, end_time);
@@ -138,8 +151,12 @@ function prepare_form_chart() {
             view: view,
             view_text: view_text,
             method: method,
-            chart_body_close_validate: chart_body_close_validate
+            chart_body_close_validate: chart_body_close_validate,
+            property:property
         };
+
+
+
         ANALYTICS.chartSeries.addCount();
         ANALYTICS.chartSeries.id_give();
         option.id = ANALYTICS.chartSeries.id;
