@@ -90,6 +90,10 @@ MANAGE.kpi.init = function() {
      $(window).resize(function() {
           $("#manage-kpi-add").height($(document).height());
      });
+
+     MANAGE.kpi.attribute();
+
+
 }
 MANAGE.kpi.kpi_for_calculate = [];
 
@@ -451,6 +455,27 @@ MANAGE.kpi.library.cancel = function() {
      $("#kpi-library").css("display", "none");
      $("#kpi-library-inner-left").empty();
      $("#library-chosen-kpi").empty();
+}
+
+
+//2014.4.21 属性的各种操作
+//属性初始化
+MANAGE.kpi.attribute=function(){
+    $("body")
+        .on("click","#kpi-manage-attribute",function(){
+            $("#kpi-attribute-outer").css("display","block");
+            $("#kpi-attribute-outer>div").css("display","block");
+        })
+        .on("click","#attribute-block-remove",function(){
+            MANAGE.kpi.attribute_close();
+        })
+        .on("click","#attribute-block-cancel",function(){
+            MANAGE.kpi.attribute_close();
+    })
+}
+MANAGE.kpi.attribute_close=function(){
+    $("#kpi-attribute-outer").css("display","none");
+    $("#kpi-attribute-outer>div").css("display","none");
 }
 
 
