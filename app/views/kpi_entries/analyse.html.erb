@@ -42,6 +42,22 @@
       </div>
 
       <a class="btn btn-primary btn-normal pull-left" style="margin:14px 0 0 3px" onclick="prepare_form_chart()"><%= t 'analytics.add_chart' %></a>
+
+      <select data-placeholder="<%= t 'analytics.view' %> *" multiple style="width:430px;" class="chosen-select" title="analy-view-select" id="chart-view">
+        <optgroup label="客户属性">
+          <option>Nike</option>
+          <option>Adidas</option>
+          <option>NYC</option>
+          <option>Washington</option>
+        </optgroup>
+        <optgroup label="材料性质">
+          <option>cartoon</option>
+          <option>plastic</option>
+          <option>iron</option>
+          <option>human made</option>
+        </optgroup>
+      </select>
+
     </div>
 
     <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible"
