@@ -36,5 +36,9 @@
 *= require Entry
 *= require Log
 *= require treeview
+*= require STYLE
+*= require Manage-attribute
 *= require_self
+
+
  */
