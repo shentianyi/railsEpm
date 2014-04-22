@@ -39,6 +39,7 @@ module Entry
          entity_id: self.entities}
       end
 
+
       def times
         times=[]
         times<<self.base_time if self.base_time
