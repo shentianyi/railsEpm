@@ -1,3 +1,4 @@
+@import "STYLE";
 .chosen-attribute{
   float:left;
   width:280px;
@@ -9,5 +10,13 @@
       max-height:60px !important;
       height:60px !important;
     }
+  }
+}
+.chart-body-sass{
+  .compare-current-btn{
+    float:right;
+    width:120px;
+    font-size:12px;
+    padding:6px 0px;
   }
 }

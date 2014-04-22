@@ -39,9 +39,9 @@
           </table>
        <div class="attribute-position">
          <a class="btn btn-success edit-kpi-attribute" work_at="<%= kpi.id%>">编辑属性</a>
-         <p>
-           <% kpi.kpi_properties.each do |p| %>
-               <span><%= p.name %></span>
+         <p kpi_id="<%= kpi.id%>">
+           <% kpi.kpi_property_items.each do |item| %>
+               <span id="<%= item.id %>"><%= item.kpi_property.name %></span>
            <%end%>
          </p>
 
