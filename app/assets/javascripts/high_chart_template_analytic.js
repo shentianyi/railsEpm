@@ -509,7 +509,7 @@ ANALYTICS.deal_data=function() {
         case "90":
             for (i = 0; i < data.length; i++) {
                 data[i].x = Date.UTC(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i);
-                data[i].UTCDatte=Date.UTC(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i)-8*60*60*1000;
+                data[i].UTCDate=Date.UTC(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i)-8*60*60*1000;
                 data[i].name = new Date(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i).toWayneString().hour;
             }
             return data;
@@ -517,7 +517,7 @@ ANALYTICS.deal_data=function() {
         case "100":
             for (i = 0; i < this.data.length; i++) {
                 this.data[i].x = Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + i);
-                data[i].UTCDatte=Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + i)-8*60*60*1000;
+                data[i].UTCDate=Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + i)-8*60*60*1000;
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + i).toWayneString().day;
             }
             return data;
@@ -526,7 +526,7 @@ ANALYTICS.deal_data=function() {
             for (i = 0; i < this.data.length; i++) {
                 var week_template=standardParse(last_date_of_week(Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i)).date.toWayneString().day).template;
                 this.data[i].x = Date.UTC(week_template[0], week_template[1], week_template[2]);
-                data[i].UTCDatte=Date.UTC(week_template[0], week_template[1], week_template[2])-8*60*60*1000;
+                data[i].UTCDate=Date.UTC(week_template[0], week_template[1], week_template[2])-8*60*60*1000;
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWayneString().day
                     + " week" + new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWeekNumber();
             }
@@ -535,7 +535,7 @@ ANALYTICS.deal_data=function() {
         case "300":
             for (i = 0; i < this.data.length; i++) {
                 this.data[i].x = Date.UTC(this.template[0], parseInt(this.template[1]) + i);
-                data[i].UTCDatte=Date.UTC(this.template[0], parseInt(this.template[1]) + i)-8*60*60*1000;
+                data[i].UTCDate=Date.UTC(this.template[0], parseInt(this.template[1]) + i)-8*60*60*1000;
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + i).toWayneString().month;
             }
             return data;
@@ -544,7 +544,7 @@ ANALYTICS.deal_data=function() {
             for (i = 0; i < this.data.length; i++) {
                 var first_month_of_quarter=Math.floor(parseInt(this.template[1])/3)*3
                 this.data[i].x = Date.UTC(this.template[0], first_month_of_quarter + 3 * i);
-                data[i].UTCDatte=Date.UTC(this.template[0], first_month_of_quarter + 3 * i)-8*60*60*1000;
+                data[i].UTCDate=Date.UTC(this.template[0], first_month_of_quarter + 3 * i)-8*60*60*1000;
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + 3 * i).getFullYear()+" quarter " + new Date(this.template[0], parseInt(this.template[1]) + 3 * i).monthToQuarter();
             }
             return data;
@@ -552,7 +552,7 @@ ANALYTICS.deal_data=function() {
         case "500":
             for (i = 0; i < this.data.length; i++) {
                 this.data[i].x = Date.UTC(parseInt(this.template[0]) + i, 0);
-                data[i].UTCDatte=Date.UTC(parseInt(this.template[0]) + i, 0)-8*60*60*1000;
+                data[i].UTCDate=Date.UTC(parseInt(this.template[0]) + i, 0)-8*60*60*1000;
                 this.data[i].name = new Date(parseInt(this.template[0]) + i, 0).toWayneString().year;
             }
             return data;

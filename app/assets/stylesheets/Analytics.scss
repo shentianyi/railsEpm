@@ -15,8 +15,12 @@
 .chart-body-sass{
   .compare-current-btn{
     float:right;
+    padding:5px 0px;
     width:120px;
     font-size:12px;
-    padding:6px 0px;
+    z-index:999;
+    position:relative;
+    top:3px;
+    right:-6px;
   }
 }

@@ -1,6 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////init select
 
-
 function init_analytics() {
     $("input[type='radio']").iCheck({
         radioClass: 'iradio_minimal-aero'
@@ -79,8 +78,18 @@ function init_analytics() {
             }
         }, 'json');
     });
+    //int同期对比
+    ANALYTICS.currentCompare.int();
     //init groupdetail
     groupDetailInit();
+
+}
+ANALYTICS.currentCompare={};
+ANALYTICS.currentCompare.int=function(){
+    $("body")
+        .on("click","#compare-current-btn",function(){
+
+        })
 }
 function analytic_control_condition_visible() {
     var open_state = $("#analytic-control-condition-visible").attr("state");
