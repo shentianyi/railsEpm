@@ -68,19 +68,24 @@ function init_analytics() {
         $.get('/kpis/group_properties/' + id, function (data) {
             $("#kpi-property-select").empty().trigger('chosen:updated');
             if (data) {
+                var properties = {};
                 $.each(data, function (k, v) {
-                    var gp = $('<optgroup/>').attr('label', k);
-                    for (var i = 0; i < v.length; i++) {
-                        gp.append($('<option/>').attr('value', v[i].id).attr('property', v[i].property).text(v[i].value));
-                    }
-                    $("#kpi-property-select").append(gp);
+                    $.each(v, function (kk, vv) {
+                        properties[k] = kk;
+                        var gp = $('<optgroup/>').attr('label', kk);
+                        for (var i = 0; i < vv.length; i++) {
+                            gp.append($('<option/>').attr('value', vv[i].id).attr('property', k).text(vv[i].value));
+                        }
+                        $("#kpi-property-select").append(gp);
+                    });
                 });
                 $("#kpi-property-select").val('').trigger('chosen:updated');
+                groupDetailInit(properties);
             }
         }, 'json');
     });
     //init groupdetail
-    groupDetailInit();
+//    groupDetailInit();
 }
 function analytic_control_condition_visible() {
     var open_state = $("#analytic-control-condition-visible").attr("state");
@@ -97,6 +102,21 @@ function analytic_control_condition_visible() {
         $("#analytic-control-condition-visible").attr("state", "open").removeClass("icon-chevron-down").addClass("icon-chevron-up");
     }
     resize_chart.container();
+}
+
+function get_selected_property() {
+    var properties = $("#kpi-property-select").find("option:selected");
+    var kpi_property = null;
+    if (properties.length > 0) {
+        kpi_property = {};
+        for (var i = 0; i < properties.length; i++) {
+            var _property = $(properties[i]).attr('property');
+            if (kpi_property[_property] == null)
+                kpi_property[_property] = [];
+            kpi_property[_property].push($(properties[i]).text());
+        }
+    }
+    return kpi_property;
 }
 function prepare_form_chart() {
     var kpi = $("#chart-kpi :selected").attr("value");
@@ -115,17 +135,7 @@ function prepare_form_chart() {
         type = "line";
     }
     var begin_time = $("#analy-begin-time").attr("hide_value"), end_time = $("#analy-end-time").attr("hide_value");
-    var properties = $("#kpi-property-select").find("option:selected");
-    var kpi_property = null;
-    if (properties.length > 0) {
-        kpi_property = {};
-        for (var i = 0; i < properties.length; i++) {
-            var _property = $(properties[i]).attr('property');
-            if (kpi_property[_property] == null)
-                kpi_property[_property] = [];
-            kpi_property[_property].push($(properties[i]).text());
-        }
-    }
+    var kpi_property = get_selected_property();
 
     if (kpi && begin_time && view) {
         if (end_time) {
@@ -315,6 +325,9 @@ function clear_chart_condition() {
 }
 
 var RATIO = 1;
+var condition = {};
+condition.detail_condition = {};
+
 function chart_point_click(object) {
     console.log(object);
     $("#chart-point-detail").css("left", "0");
@@ -322,8 +335,13 @@ function chart_point_click(object) {
     $("#chart-type-alternate").css("left", "400px");
     RATIO = object.y / 100;
     $("#group-detail-select").val('').trigger('chosen:updated');
-    generateDetailDate(groupDetail.dict.dict[0].array[0]);
-
+    condition.detail_condition = {kpi_id: ANALYTICS.base_option.kpi_id,
+        entity_group_id: ANALYTICS.base_option.entity_group_id,
+        average: ANALYTICS.base_option.average,
+        frequency: ANALYTICS.base_option.frequency,
+        property: ANALYTICS.base_option.kpi_property
+    };
+    generateDetailDate();
 }
 function close_chart_detail() {
     $("#chart-point-detail").css("left", "-400px");
@@ -348,24 +366,54 @@ function tcr_trend(judge) {
 }
 
 //group detail
-function groupDetailInit() {
+function groupDetailInit(properties) {
     $("#group_detail_select_chosen").css("width", "250px");
-    var typeArray = groupDetail.dict.dict[0].array,
-        i;
-    for (i = 0; i < typeArray.length; i++) {
-        $("#group-detail-select").append($("<option />").text(typeArray[i]));
-    }
+    $.each(properties, function (k, v) {
+        $("#group-detail-select").append($("<option />").attr('value', k).text(v));
+    });
     $("#group-detail-select").val('').trigger('chosen:updated');
     $("#group-detail-select").chosen().change(function () {
-        var title = $("#group-detail-select :selected").text()
-        generateDetailDate(title);
+        generateDetailDate();
     });
 }
-function generateDetailDate(type) {
-    var source = searchForFilter(type);
+
+function generateDetailDate() {
+    var source = null;
+    var property_map_group = {};
+    property_map_group[$("#group-detail-select :selected").text()] = $("#group-detail-select :selected").val();
+    condition.detail_condition.property_map_group = property_map_group;
+    $.ajax({
+        url: '/kpi_entries/compare',
+        type: 'POST',
+        dataType: 'json',
+        data: condition.detail_condition,
+        success: function (data) {
+
+        }
+    });
     generatePie(source);
     generateDetailTable(source);
 }
+//function groupDetailInit(a) {
+//    $("#group_detail_select_chosen").css("width", "250px");
+//    var typeArray = groupDetail.dict.dict[0].array,
+//        i;
+//    for (i = 0; i < typeArray.length; i++) {
+//        $("#group-detail-select").append($("<option />").text(typeArray[i]));
+//    }
+//    $("#group-detail-select").val('').trigger('chosen:updated');
+//    $("#group-detail-select").chosen().change(function () {
+//        var title = $("#group-detail-select :selected").text()
+//        generateDetailDate(title);
+//    });
+//}
+//function generateDetailDate(type) {
+//    var source = searchForFilter(type);
+//    console.log(source);
+//    generatePie(source);
+//    generateDetailTable(source);
+//}
+
 function searchForFilter(type) {
     var target = groupDetail.dict.dict[1].dict,
         i,

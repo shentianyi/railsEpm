@@ -99,6 +99,7 @@ IFEpm::Application.routes.draw do
   resources :kpi_entries do
     collection do
       match :analyse
+      match :compare
       get :recents
       post :entry
       post :import

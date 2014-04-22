@@ -1,4 +1,5 @@
 var ANALYTICS=ANALYTICS||{};
+ANALYTICS.base_option=null;
 ANALYTICS.loading_data=false;
 ANALYTICS.url='http://42.121.111.38:9002/HighChartsFileService/';
 ANALYTICS.high_chart={
@@ -238,9 +239,21 @@ ANALYTICS.form_chart=function(option){
     console.log(new Date(bar_fix_from).toISOString() );
     console.log(new Date(bar_fix_to).toISOString());
     show_loading(top,0,0,0);
+
+    ANALYTICS.base_option={
+        kpi_id : option.kpi_id,
+        average: option.method=="0",
+        entity_group_id: option.view,
+        start_time : new Date(bar_fix_from).toISOString() ,
+        end_time : new Date(bar_fix_to).toISOString(),
+        frequency: option.interval,
+        kpi_property: option.kpi_property
+    };
+
+
     $.post('/kpi_entries/analyse',{
         kpi_id : option.kpi_id,
-        average:option.method=="0",
+        average: option.method=="0",
         entity_group_id: option.view,
         start_time : new Date(bar_fix_from).toISOString() ,
         end_time : new Date(bar_fix_to).toISOString(),

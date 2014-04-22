@@ -25,8 +25,9 @@ class KpiEntriesController < ApplicationController
     if validator.valid
       validator.entry
     end
-    render :json=>msg
+    render :json => msg
   end
+
   #
   def show
     @f = params[:f].nil? ? KpiFrequency::Hourly : params[:f].to_i
@@ -46,6 +47,15 @@ class KpiEntriesController < ApplicationController
       end
       render :json => msg
     end
+  end
+
+  def compare
+    msg=Message.new
+    if data=Entry::Analyzer.new(params).period_compare
+      msg.result=true
+      msg.object=data
+    end
+    render :json => msg
   end
 
   def recents
