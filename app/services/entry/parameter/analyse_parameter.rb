@@ -6,7 +6,7 @@ module Entry
       attr_accessor :frequency
       attr_accessor :average, :data_module # sum,average
       attr_accessor :valid
-      attr_accessor :map_group, :reduce_func
+      attr_accessor :property_map_group, :reduce_func
 
       def initialize(args)
         self.kpi=Kpi.find(args[:kpi_id])
@@ -18,7 +18,8 @@ module Entry
         self.average=args[:average]
         self.data_module = args[:data_module] || DataService::WEB_HIGHSTOCK
         self.property = args[:property]
-        self.map_group =args[:map_group]
+        self.property_map_group=args[:property_map_group]
+        #self.map_group =args[:map_group]
         self.reduce_func=args[:reduce_func] if args[:reduce_func]
         self.valid=false
       end
@@ -32,9 +33,9 @@ module Entry
       end
 
       def property=(value)
-       return @property=nil if value.nil? || value.size==0
+        return @property=nil if value.nil? || value.size==0
         @property={}
-        value.each do |k,v|
+        value.each do |k, v|
           @property["a#{k}"]=v
         end
       end
@@ -52,12 +53,19 @@ module Entry
         @average=AnalyseParameter.is_true(value)
       end
 
-      def map_group=(value)
-        @map_group=value if value
-        if self.kpi.is_calculated
-          mg={kpi: 'kpi_id'}
-          @map_group= @map_group.nil? ? mg : @map_group.merge(mg)
+      def property_map_group=(value)
+        @property_map_group=nil
+        if value
+          @property_map_group={}
+          value.each do |k, v|
+            @property_map_group["a#{k}"]=v
+          end
         end
+      end
+
+      def map_group
+        return @total_map_group if @total_map_group
+        @total_map_group=self.property_map_group
       end
 
       def kpi_ids
