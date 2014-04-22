@@ -24,6 +24,7 @@
         </select>
 
       </div>
+
       <div class="index-condition-group" style="width:222px">
         <input style="margin-left:13px;width:120px !important;" type="text" class="index-pick-date" placeholder="<%= t 'analytics.begin_time' %> *" id="analy-begin-time"
                readonly=true/>
@@ -32,7 +33,8 @@
                readonly=true/>
         <label class="index-date-extra-info"></label>
       </div>
-      <div class="index-condition-group" style="width:77px;margin-left:-66px;">
+
+      <div class="index-condition-group" style="width:77px;margin-left:-25px;">
         <label class="analytics-radio-label">
           <input type="radio" name="chartRadios" value="1">
           <%= t 'analytics.sum' %> </label>
@@ -73,8 +75,9 @@
     </p>
   </div>
 
-  <div class="chart-body" id="chart-body" style="display:none">
+  <div class="chart-body chart-body-sass" id="chart-body" style="display:none">
     <div class="clearfix" id="chart-interval-alternate" my_height="28">
+
       <ul class="pull-right control-chart-interval-group">
         <li interval="90">
           <a>Hr</a>
@@ -95,6 +98,7 @@
           <a>Y</a>
         </li>
       </ul>
+      <a class="btn btn-success compare-current-btn">进行同期对比</a>
     </div>
 
     <div id="chart-point-detail" class="chart-point-detail">

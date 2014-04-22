@@ -8,13 +8,13 @@ class AnalyzerTest < ActiveSupport::TestCase
   #  assert true
   #end
   #
-  test 'property analyse avg kpi daily frequency' do
-    puts 'property analyse avg kpi daily frequency:'.blue
-    params=base_params
-    params[:property]={a1: '2'}
-    puts Entry::Analyzer.new(params).analyse
-    assert true
-  end
+  #test 'property analyse avg kpi daily frequency' do
+  #  puts 'property analyse avg kpi daily frequency:'.blue
+  #  params=base_params
+  #  params[:property]={a1: '2'}
+  #  puts Entry::Analyzer.new(params).analyse
+  #  assert true
+  #end
 
 
   #test 'analyse sum kpi daily frequency' do
@@ -32,6 +32,15 @@ class AnalyzerTest < ActiveSupport::TestCase
   #  puts Entry::Analyzer.new(params).analyse
   #  assert true
   #end
+
+  test 'analyse avg kpi quarterly frequency' do
+    puts 'analyse avg kpi quarterly frequency:'.blue
+    params=base_params
+    params[:frequency]=KpiFrequency::Quarterly
+    puts Entry::Analyzer.new(params).analyse
+    assert true
+  end
+
   #
   #test 'analyse sum kpi monthly frequency' do
   #  puts 'analyse sum kpi monthly frequency:'.blue
@@ -83,11 +92,11 @@ class AnalyzerTest < ActiveSupport::TestCase
 
   private
   def base_params
-    {kpi_id: '58',
+    {kpi_id: '1',
      entity_group_id: '129',
      average: 'true',
-     start_time: '2014-01-31T16:00:00.000Z',
-     end_time: '2014-03-31T16:00:00.000Z',
+     start_time: '2013-12-31T16:00:00.000Z',
+     end_time: '2014-04-21T16:00:00.000Z',
      frequency: '100'
     }
   end

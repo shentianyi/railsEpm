@@ -8,18 +8,14 @@
  */
 var MANAGE = MANAGE || {};
 MANAGE.kpi = {};
+MANAGE.attribute={};
 MANAGE.kpi.library = {};
 //////////////////////////////////////////////////////////////////////////  KPI init
 //////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.kpi.init = function() {
      MANAGE.kpi.kpi_add_box_bind();
      MANAGE.kpi.kpi_add_clear();
-     $("#new-kpi-category").append($("<option />").text(""));
-     $("#manage-left-menu>li").each(function() {
-          if($(this).attr("number") != undefined) {
-               $("#new-kpi-category").append($("<option />").attr("value", $(this).attr("number")).text($(this).attr("title")))
-          }
-     });
+
      $("#manage-left-menu").on("click", "li", function() {
           var li = $(this);
           var id = li.attr('number');
@@ -34,27 +30,43 @@ MANAGE.kpi.init = function() {
                });
           }
      });
-     $("#new-kpi-category").val('').trigger('chosen:updated');
-     $("body").on("click", "#kpi-add-show", function() {
-          var show_button = $("#kpi-add-show");
-          if(!show_button.attr('showed')) {
-               $.get("/kpis/condition", function(data) {
+
+    //点击添加KPI的按钮
+     $("body")
+         .on("click", "#kpi-add-show", function() {
+            $("#add-new-kpi-block").css("left","0px").css("right","0px");
+            $("#add-new-kpi-block>div").css("left","50%").css("right","0px");
+
+            $.get("/kpis/condition", function(data) {
                     $.each(data, function(key, data) {
                          var select = $("select[name='" + key + "']");
-                         select.empty().trigger('chosen:updated');
                          for(var i = 0; i < data.length; i++) {
                               select.append($("<option />").attr("value", (data[i].value == null ? data[i].id : data[i].value)).text((data[i].desc == null ? data[i].name : data[i].desc)));
                          }
                          select.prepend($("<option />").attr("value", ""));
                          select.val('').trigger('chosen:updated');
                     });
-                    show_button.attr('showed', true);
-               }, 'json');
-          }
-          $("#manage-kpi-add").css("right", "261px");
-          $("#manage-right-content").css("padding-right", "200px");
-          $("#left-content-title").css("margin-right", "201px");
-     });
+            }, 'json');
+
+             $("#new-kpi-category").append($("<option />").text(""));
+             for(var i=0;i<$("#manage-left-menu>li").length;i++){
+                 var $target=$("#manage-left-menu>li").eq(i);
+                 if($target.attr("number") != undefined) {
+                     $("#new-kpi-category")
+                         .append($("<option />")
+                             .attr("value", $target.attr("number"))
+                             .text($target.attr("title")))
+                 }
+             }
+             $("#new-kpi-category").val('').trigger('chosen:updated');
+        })
+         .on("click","#remove-new-kpi-block",function(){
+             MANAGE.kpi.kpi_add_clear();
+         })
+         .on("click","#cancel-new-kpi-block",function(){
+             MANAGE.kpi.kpi_add_clear();
+         })
+     ;
 
      $("#kpi-library-btn").on("click", function() {
           $("#kpi-library").css("display", "block");
@@ -93,19 +105,14 @@ MANAGE.kpi.init = function() {
 
      MANAGE.kpi.attribute();
 
-
 }
 MANAGE.kpi.kpi_for_calculate = [];
 
 //////////////////////////////////////////////////////////////////////////  KPI添加那一块的
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 MANAGE.kpi.kpi_add_box_bind = function() {
-     $("body").on("click", "#close-add-kpi", function() {
-          $("#manage-kpi-add").css("right", "999em");
-          $("#manage-right-content").css("padding-right", "0px");
-          $("#left-content-title").css("margin-right", "0px")
-          MANAGE.kpi.kpi_add_clear();
-     }).on("keyup", "#new-kpi-target,#new-kpi-target-low", function(event) {
+     $("body")
+         .on("keyup", "#new-kpi-target,#new-kpi-target-low", function(event) {
           var e = adapt_event(event).event;
           clearNoNumZero(e.target);
      });
@@ -115,6 +122,7 @@ MANAGE.kpi.kpi_add_box_bind = function() {
      $("#add-interval").val('').trigger('chosen:updated');
      $("#add-trend").prepend($("<option />").attr("value", ""));
      $("#add-trend").val('').trigger('chosen:updated');
+
     MANAGE.kpi.isCalcuCheck();
      $("body").on("click", "#calculate-type-box>label", function(event) {
           var obj = adapt_event(event).target;
@@ -157,6 +165,7 @@ MANAGE.kpi.kpi_add_box_bind = function() {
      });
      $("#manage-kpi-add-new").on("click", function() {
           MANAGE.kpi.add_new_kpi();
+         MANAGE.kpi.kpi_add_clear();
      });
 };
 MANAGE.kpi.isCalcuCheck = function(){
@@ -170,16 +179,29 @@ MANAGE.kpi.isCalcuCheck = function(){
             $("#calcuType-input").val("");
             $("#is-calcu-relate").find("option:first-of-type").remove();
             $("#is-calcu-relate").val('').trigger('chosen:updated');
+            $("#takeCal").attr("cal","");
+
         });
 };
+//清空KPI添加
 MANAGE.kpi.kpi_add_clear = function() {
-     $("#manage-kpi-add input").val("");
-     $("#manage-kpi-add select").val("").trigger('chosen:updated');
-     $("#manage-kpi-add textarea").val("");
-     $("#manage-kpi-add textarea").val("");
+     $("#add-new-kpi-block input").val("");
+     $("#add-new-kpi-block select").val("").trigger('chosen:updated');
+     $("#add-new-kpi-block textarea").val("");
+     $("#add-new-kpi-block textarea").val("");
+    $("#add-new-kpi-block").find("select").empty().trigger('chosen:updated');
      if($("#is-calcu-check").prop("checked")) {
           $("#is-calcu-check").iCheck("uncheck")
      }
+    var count=$("#auto-form-label ul").children().length;
+    if(count>1){
+        for(var i=0;i<count-1;i++){
+            $("#auto-form-label ul").children().eq(0).remove();
+        }
+    }
+    $("#add-new-kpi-block").css("left","-999em").css("right","auto");
+    $("#add-new-kpi-block>div").css("left","-999em").css("right","auto");
+
 };
 MANAGE.kpi.calculate_input = function(object) {
      var post_value = $(object).val();
@@ -207,6 +229,16 @@ MANAGE.kpi.add_new_kpi = function() {
           formula : $("#takeCal").attr("cal"),
           formula_string : $("#calcuType-input").val()
      }
+    option.attributes=[];
+    var count=$("#auto-form-label ul").children().length;
+    if(count>1){
+        var text;
+        for(var i=0;i<count-1;i++){
+            text= $.trim($("#auto-form-label ul").children().eq(i).find("span").text());
+            option.attributes.push(text);
+        }
+    }
+//   console.log(option);
      if(option.is_calculated) {
           if($.trim(option.name).length > 0 && option.interval != false && option.target_max.length > 0 && option.target_min.length > 0 && option.unit != false && option.formula_string.length > 0) {
                post_kpi(option);
@@ -266,7 +298,7 @@ function post_kpi(option) {
                     $("#manage-kpi-add").css("right", "999em");
                     $("#manage-right-content").css("padding-right", "0px");
                     $("#left-content-title").css("margin-right", "0px");
-                    MANAGE.kpi.kpi_add_clear();
+//                    MANAGE.kpi.kpi_add_clear();
                     $("#manage-sort-list li").on("resize", function() {
                          MANAGE.resize_sort_table()
                     });
@@ -276,7 +308,7 @@ function post_kpi(option) {
                     $("#manage-kpi-add").css("right", "999em");
                     $("#manage-right-content").css("padding-right", "0px");
                     $("#left-content-title").css("margin-right", "0px");
-                    MANAGE.kpi.kpi_add_clear();
+//                    MANAGE.kpi.kpi_add_clear();
                     MessageBox("Add success", "top", "success");
                }
                if(!object.is_calculated) {
@@ -288,69 +320,6 @@ function post_kpi(option) {
           }
      });
 
-     //    var id="21";
-     //    var formula_string= option.is_calculated ? option.formula_string : "No";
-     //    $("#manage-sort-list").prepend($("<li />").attr("id",id)
-     //        .append($("<p />").addClass("sort-handle").text(":"))
-     //        .append($("<input/>").attr("type","checkbox").attr("is_calculated",option.is_calculated))
-     //        .append($("<table />").addClass("category")
-     //            .append($("<tr />")
-     //                .append($("<td />").text(option.name).attr("title",option.name))
-     //                .append($("<td />").text(option.interval))
-     //                .append($("<td />").text(option.trend))
-     //                .append($("<td />").addClass("manage-kpi-target")
-     //                    .append($("<div />")
-     //                        .append($("<span />").addClass("can-change").text(option.target_max).attr("title",option.target_max))
-     //                        .append($("<span />").text(option.section)).append($("<input />").attr("type","text").attr("effect_on",id)))
-     //                )
-     //                .append($("<td />").addClass("manage-kpi-target")
-     //                    .append($("<div />")
-     //                        .append($("<span />").addClass("can-change").text(option.target_min).attr("title",option.target_min))
-     //                        .append($("<span />").text(option.section)).append($("<input />").attr("type","text").attr("effect_on",id)))
-     //                )
-     //                .append($("<td />").text(option.is_calculated ? "Yes": "No").attr("title",formula_string))
-     //            )
-     //            .append($("<tr />")
-     //                .append($("<td />").text(option.desc).attr("title",option.desc))
-     //                .append($("<td />").text("Frequency"))
-     //                .append($("<td />").text("Trend"))
-     //                .append($("<td />").text("Target Max"))
-     //                .append($("<td />").text("Target Min"))
-     //                .append($("<td />").text("Is Calcu Type"))
-     //            )
-     //        )
-     //    );
-     //    $("#manage-sort-list li").each(function(){
-     //        $(this).find("table tr:first-of-type td:last-of-type").tipsy({gravity: 'se'});
-     //    });
-     //    if(!option.is_calculated){
-     //        $("#is-calcu-relate").append($("<option />").attr("value",id).text(option.name));
-     //        $("#is-calcu-relate").val('').trigger('chosen:updated');
-     //    }
-     //    MANAGE.judge_kpi_count();
-     //    $("#manage-sort-list input[type='checkbox']").iCheck({
-     //        checkboxClass: 'icheckbox_minimal-aero'
-     //    });
-     //    $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
-     //        if(!$(this).parent().hasClass("checked")){
-     //            MANAGE.totalChecked+=1;
-     //            total_check_listener();
-     //        }
-     //        else{
-     //            MANAGE.totalChecked-=1;
-     //            total_check_listener();
-     //        }
-     //    });
-     //    MANAGE.sort_init();
-     //    MANAGE.resize_sort_table();
-     //    $("#manage-kpi-add").css("right","999em");
-     //    $("#manage-right-content").css("padding-right","0px");
-     //    $("#left-content-title").css("margin-right","0px");
-     //    $("#manage-right-content").css("padding-left","0px");
-     //    MANAGE.kpi.kpi_add_clear();
-     //    $("#manage-sort-list li").on("resize",function(){
-     //        MANAGE.resize_sort_table()
-     //    });
 
 }
 
@@ -457,27 +426,15 @@ MANAGE.kpi.library.cancel = function() {
      $("#library-chosen-kpi").empty();
 }
 
-
 //2014.4.21 属性的各种操作
 //属性初始化
 MANAGE.kpi.attribute=function(){
     $("body")
-        //管理KPI点击出来的
-//        .on("click","#kpi-manage-attribute",function(){
-//            $("#kpi-attribute-outer").css("display","block");
-//            $("#kpi-attribute-outer>div").css("display","block");
-//        })
-//        .on("click","#attribute-block-remove",function(){
-//            MANAGE.kpi.attribute_close();
-//        })
-//        .on("click","#attribute-block-cancel",function(){
-//            MANAGE.kpi.attribute_close();
-//
-//        })
         //每一个KPI上点击编辑属性出来的
         .on("click",".edit-kpi-attribute",function(){
-            $("#edit-attribute-block").css("display","block");
-            $("#edit-attribute-block>div").css("display","block");
+            MANAGE.kpi.edit_attribute_copen(this);
+            //$("#edit-attribute-block").css("display","block");
+            //$("#edit-attribute-block>div").css("display","block");
         })
         .on("click","#edit-attribute-block-remove",function(){
             MANAGE.kpi.edit_attribute_close();
@@ -485,14 +442,92 @@ MANAGE.kpi.attribute=function(){
         .on("click","#edit-attribute-block-cancel",function(){
             MANAGE.kpi.edit_attribute_close();
         })
+        .on("click","#edit-attribute-block-add",function(){
+            var kpi_id = $(this).attr("work_at");
+            var property_name = $(this).parent().children("input").val().replace(/^\s+|\s+$/g, "");
+            if(property_name.length == 0){
+                MessageBox("属性名不能为空","top","warning");
+            }else{
+                $.ajax({
+                    url:"/kpis/assign_properties",
+                    data:{kpi_property_name:property_name,id:kpi_id},
+                    dataType:"json",
+                    type:"POST",
+                    success:function(data){
+                        if(data.result){
+                            $("#edit-attribute-block-add").parent().children("input").val("");
+                            $('<li><label>'+data.content.name+'</label><i class="icon icon-trash" attr-id='+data.content.id+'></i></li>').appendTo($("#kpi-properties"));
+                            $('<span id='+data.content.id+'>'+data.content.name+'</span>').appendTo($("p[kpi_id="+kpi_id+"]"));
+                        }else{
+                            MessageBox(data.content,"top","warning");
+                        }
+                    }
+                });
+            }
+        })
+        .on("click",".remove-attr",function(){
+            var attr_id = $(this).attr("attr-id");
+            $.ajax({
+                url:"/kpis/remove_properties",
+                data:{id:attr_id},
+                type:"POST",
+                dataType:"json",
+                success:function(data){
+                    if(data.result){
+                        $("i[attr-id="+attr_id+"]").parent().remove();
+                        $("span#"+attr_id).remove();
+                        //MessageBox("Delete property successfully!","top","success");
+                    }else{
+
+                    }
+                }
+            })
+        })
+    MANAGE.attribute.autoLabel();
 }
-//MANAGE.kpi.attribute_close=function(){
-//    $("#kpi-attribute-outer").css("display","none");
-//    $("#kpi-attribute-outer>div").css("display","none");
-//}
+
+MANAGE.kpi.edit_attribute_copen=function(obj){
+    //append kpi_property
+    var attrs = $(obj).parent().children("p").children();
+    $("#kpi-properties").children().remove();
+    for(var i = 0;i<attrs.length;i++){
+        var id = $(attrs[i]).attr("id");
+        var name = $(attrs[i]).text();
+        $('<li><label>'+name+'</label><i class="icon icon-trash remove-attr" attr-id='+id+'></i></li>').appendTo($("#kpi-properties"));
+    }
+    $("#edit-attribute-block-add").attr("work_at",$(obj).attr("work_at"));
+    //
+    $("#edit-attribute-block").css("display","block");
+    $("#edit-attribute-block>div").css("display","block");
+}
+
 MANAGE.kpi.edit_attribute_close=function(){
     $("#edit-attribute-block").css("display","none");
     $("#edit-attribute-block>div").css("display","none");
 }
+
+MANAGE.attribute.autoLabel=function(){
+    $("body")
+        .on("click","#auto-form-label",function(){
+            $(this).find("input").focus();
+        })
+        .on("keyup","#auto-form-label input",function(event){
+            var e=adapt_event(event).event;
+            var text= $.trim($(this).val());
+            if(e.keyCode==13 && text.length>0){
+               $(this).parents("li").before(
+                   $("<li />")
+                       .append($("<span />").text(text))
+                       .append($("<i />").addClass("icon icon-remove"))
+               );
+               $(this).val("");
+            }
+        })
+        .on("click","#auto-form-label i",function(){
+             $(this).parents("li").remove();
+        })
+}
+
+
 
 
