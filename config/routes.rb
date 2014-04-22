@@ -75,7 +75,7 @@ IFEpm::Application.routes.draw do
       put :update
       post :assign
       post :assign_properties
-      delete :remove_properties
+      post :remove_properties
       post :import
       get :template
       get :condition
