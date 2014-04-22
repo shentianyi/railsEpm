@@ -34,25 +34,35 @@ ANALYTICS.high_chart={
     },
     tooltip:{
             formatter: function() {
-                var target=this.points[0];
-                var new_target=target.series.name.replace("(","#").replace(")","#").split("#");
-                var name=new_target[0];
-                var view=new_target[1];
+                var targetString="",
+                    target,new_target,name,view;
+                for(var i=0;i<this.points.length;i++){
+                    target=this.points[i];
+                    new_target=target.series.name.replace("(","#").replace(")","#").split("#");
+                    name=new_target[0];
+                    view=new_target[1];
+                    targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+" "+target.point.unit+'<br />';
+                }
+
                     if(target.series.type=="column"){
                         return '<b>'+target.key+'</b>'
-                            +'<br />KPI: <span style="color:'+target.series.color+'">'+name
-                            +'</span>'
-                            +'<br />'+I18n.t('chart.view')+': '+view
-                            +'<br />'+I18n.t('chart.value')+': '+target.y+" "+target.point.unit
-                            +"<br />"+I18n.t('chart.target_range')+": "+target.point.target_min+"-"+target.point.high
+                               +'<br />'
+                               +targetString;
+//                            +'<br />KPI: <span style="color:'+target.series.color+'">'+name
+//                            +'</span>'
+//                            +'<br />'+I18n.t('chart.view')+': '+view
+//                            +'<br />'+I18n.t('chart.value')+': '+target.y+" "+target.point.unit
+//                            +"<br />"+I18n.t('chart.target_range')+": "+target.point.target_min+"-"+target.point.high
                     }
                     else{
                         return '<b>'+target.key+'</b>'
-                            +'<br />KPI: <span style="color:'+target.series.color+'">'+name
-                            +'</span>'
-                            +'<br />'+I18n.t('chart.view')+': '+view
-                            +'<br />'+I18n.t('chart.value')+': '+target.y+" "+target.point.unit
-                            +"<br />"+I18n.t('chart.target_range')+": "+target.point.low+"-"+target.point.high
+                                +'<br />'
+                                +targetString;
+//                            +'<br />KPI: <span style="color:'+target.series.color+'">'+name
+//                            +'</span>'
+//                            +'<br />'+I18n.t('chart.view')+': '+view
+//                            +'<br />'+I18n.t('chart.value')+': '+target.y+" "+target.point.unit
+//                            +"<br />"+I18n.t('chart.target_range')+": "+target.point.low+"-"+target.point.high
                     }
             }
 
@@ -524,6 +534,7 @@ ANALYTICS.deal_data=function() {
                 data[i].x = Date.UTC(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i);
                 data[i].UTCDate=Date.UTC(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i)-8*60*60*1000;
                 data[i].name = new Date(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i).toWayneString().hour;
+
             }
             return data;
             break;
@@ -532,6 +543,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].x = Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + i);
                 data[i].UTCDate=Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + i)-8*60*60*1000;
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + i).toWayneString().day;
+//                console.log(new Date(data[i].UTCDate).toISOString())
             }
             return data;
             break;
