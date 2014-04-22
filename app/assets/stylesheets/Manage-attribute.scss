@@ -88,7 +88,13 @@
 }
 
 .kpi-library[type="attribute"][for="kpi"]{
+  right:auto;
+  left:-999em;
+  display: block !important;
   &>div{
+    left:-999em;
+    right:auto;
+    display:block !important;
     $height:450px;
     $width:550px;
     $margin-left:18px;
@@ -109,13 +115,20 @@
       }
     }
     textarea{
-      width:230px;
+      $width:230px;
+      $height:43px;
+      min-width:$width;
+      width:$width;
+      max-width:$width;
+      min-height:$height;
+      height:$height;
+      max-height:$height;
       margin-left:$margin-left;
       margin-bottom:$margin-bottom;
       border:$border;
       box-shadow:$box-shadow;
     }
-    input{
+    &>input{
       border:1px solid #9d9d9d;
       display:block;
       margin-left:$margin-left;
@@ -124,13 +137,159 @@
       border:$border;
       box-shadow:$box-shadow;
     }
-    .calculate-type-box{
+
+    .auto-form-label{
+      $font-size:13px;
       position:absolute;
-      right:0px;
+      right:15px;
       top:40px;
+      width:240px;
+      border:$border;
+      height:68px;
+      overflow-y:auto;
+      @include border-radius-same(4px);
+      box-shadow:$box-shadow;
+      ul{
+        display:block;
+        li{
+          display:inline-block;
+          margin-right:6px;
+          //margin-bottom:2px;
+          height:15px;
+          span{
+            font-size:$font-size;
+            color:$blue;
+          }
+          i{
+            margin-left:2px;
+            pointer-events:auto;
+            cursor:pointer;
+            color:#222;
+            font-size:$font-size - 2;
+            &:hover{
+              color:$red;
+            }
+          }
+          input{
+            font-size:$font-size;
+            border:none;
+            box-shadow:none;
+            -moz-box-shadow:none;
+            -webkit-box-shadow:none;
+            width:45px;
+            margin:0px;
+            padding:2px 3px;
+
+
+          }
+        }
+
+      }
+    }
+    .instrument-form-label{
+      position:absolute;
+      right:15px;
+      top:112px;
+      font-size:11px;
+      color:#9d9d9d;
+    }
+    .is-calculate-block{
+      position:absolute;
+      right:15px;
+      top:120px;
+      width:240px;
+      &>label{
+        font-size:13px;
+        position:relative;
+        top:-3px;
+      }
+
+      .calculate-type-box{
+        //border:1px solid #ddd;
+        border-radius:3px;
+        -webkit-border-radius:3px;
+        -moz-border-radius:3px;
+        width:230px;
+        margin-left:0;
+        height:124px;
+        display:none;
+
+        .select-div{
+          $width:220px;
+          width:$width;
+          margin-left:0px;
+          margin-top:5px;
+          margin-bottom:2px;
+          select{
+            width:$width;
+          }
+        }
+
+        label{
+          color:rgba(255,255,255,1);
+          background-color:$blue;
+          $width:20px;
+          text-align:center;
+          width:$width;
+          height:$width;
+          display:inline-block;
+          cursor:pointer;
+          margin-right:3px;
+          transition:color 0.25s ease-out;
+          font-size:18px;
+          position:relative;
+          @include border-radius-same(3px);
+          top:4px;
+          &:hover{
+            background:$blue-hover;
+          }
+          &:nth-of-type(1){
+            margin-left:0px;
+            top:7px;
+          }
+          &:nth-of-type(2){
+            top:7px;
+          }
+          &:nth-of-type(3){
+            top:4px;
+            font-size:15px;
+          }
+          &:nth-of-type(4){
+            top:7px;
+          }
+          &:nth-of-type(5){
+            font-size:15px;
+          }
+          &:nth-of-type(6){
+            font-size:15px;
+          }
+        }
+
+        textarea{
+          $width:210px;
+          $height:100px;
+          min-width:$width;
+          width:$width;
+          max-width:$width;
+
+          height:$height;
+          min-height:$height;
+          max-height:$height+110;
+
+          margin-left:0px;
+          margin-top:21px;
+          padding:5px 4px;
+          font-size:13px;
+          font-weight:lighter;
+          font-family:"open-sans";
+          background-color:white;
+        }
+
+      }
     }
   }
 }
+
 
 
 .attribute-position{
