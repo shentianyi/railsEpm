@@ -96,11 +96,11 @@ class KpisController < ApplicationController
   def remove_properties
     msg = Message.new
     msg.result = false
-    if item = KpiPropertyItem.where(kpi_id: params[:kpi_id], kpi_property_id: params[:kpi_property_id])
+    if item = KpiPropertyItem.find_by_id(params[:id])#KpiPropertyItem.where(kpi_id: params[:kpi_id], kpi_property_id: params[:kpi_property_id])
       item.destroy
       msg.result = true
     end
-    render :json
+    render :json=>msg
   end
 
   #@function assign_properties
@@ -116,10 +116,16 @@ class KpisController < ApplicationController
     end
 
     if kpi && kpi_property
-      kpi_property_item = KpiPropertyItem.new
-      kpi_property_item.kpi_property_id = kpi_property.id
-      kpi_property_item.kpi_id = kpi.id
-      msg.result = kpi_property_item.save
+      if KpiPropertyItem.where(kpi_id:kpi.id,kpi_property_id:kpi_property.id).first
+        msg.content = "You already have this property"
+      else
+        kpi_property_item = KpiPropertyItem.new
+        kpi_property_item.kpi_property_id = kpi_property.id
+        kpi_property_item.kpi_id = kpi.id
+        msg.result = kpi_property_item.save
+        msg.content = {id:kpi_property_item.id,name:kpi_property.name}
+      end
+
     else
       msg.content = "KpiProperty or Kpi not found,please check!"
     end

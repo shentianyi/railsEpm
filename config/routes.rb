@@ -75,7 +75,7 @@ IFEpm::Application.routes.draw do
       put :update
       post :assign
       post :assign_properties
-      delete :remove_properties
+      post :remove_properties
       post :import
       get :template
       get :condition
@@ -99,6 +99,7 @@ IFEpm::Application.routes.draw do
   resources :kpi_entries do
     collection do
       match :analyse
+      match :compare
       get :recents
       post :entry
       post :import

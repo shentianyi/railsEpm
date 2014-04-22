@@ -426,15 +426,15 @@ MANAGE.kpi.library.cancel = function() {
      $("#library-chosen-kpi").empty();
 }
 
-
 //2014.4.21 属性的各种操作
 //属性初始化
 MANAGE.kpi.attribute=function(){
     $("body")
         //每一个KPI上点击编辑属性出来的
         .on("click",".edit-kpi-attribute",function(){
-            $("#edit-attribute-block").css("display","block");
-            $("#edit-attribute-block>div").css("display","block");
+            MANAGE.kpi.edit_attribute_copen(this);
+            //$("#edit-attribute-block").css("display","block");
+            //$("#edit-attribute-block>div").css("display","block");
         })
         .on("click","#edit-attribute-block-remove",function(){
             MANAGE.kpi.edit_attribute_close();
@@ -442,7 +442,63 @@ MANAGE.kpi.attribute=function(){
         .on("click","#edit-attribute-block-cancel",function(){
             MANAGE.kpi.edit_attribute_close();
         })
+        .on("click","#edit-attribute-block-add",function(){
+            var kpi_id = $(this).attr("work_at");
+            var property_name = $(this).parent().children("input").val().replace(/^\s+|\s+$/g, "");
+            if(property_name.length == 0){
+                MessageBox("属性名不能为空","top","warning");
+            }else{
+                $.ajax({
+                    url:"/kpis/assign_properties",
+                    data:{kpi_property_name:property_name,id:kpi_id},
+                    dataType:"json",
+                    type:"POST",
+                    success:function(data){
+                        if(data.result){
+                            $("#edit-attribute-block-add").parent().children("input").val("");
+                            $('<li><label>'+data.content.name+'</label><i class="icon icon-trash" attr-id='+data.content.id+'></i></li>').appendTo($("#kpi-properties"));
+                            $('<span id='+data.content.id+'>'+data.content.name+'</span>').appendTo($("p[kpi_id="+kpi_id+"]"));
+                        }else{
+                            MessageBox(data.content,"top","warning");
+                        }
+                    }
+                });
+            }
+        })
+        .on("click",".remove-attr",function(){
+            var attr_id = $(this).attr("attr-id");
+            $.ajax({
+                url:"/kpis/remove_properties",
+                data:{id:attr_id},
+                type:"POST",
+                dataType:"json",
+                success:function(data){
+                    if(data.result){
+                        $("i[attr-id="+attr_id+"]").parent().remove();
+                        $("span#"+attr_id).remove();
+                        //MessageBox("Delete property successfully!","top","success");
+                    }else{
+
+                    }
+                }
+            })
+        })
     MANAGE.attribute.autoLabel();
+}
+
+MANAGE.kpi.edit_attribute_copen=function(obj){
+    //append kpi_property
+    var attrs = $(obj).parent().children("p").children();
+    $("#kpi-properties").children().remove();
+    for(var i = 0;i<attrs.length;i++){
+        var id = $(attrs[i]).attr("id");
+        var name = $(attrs[i]).text();
+        $('<li><label>'+name+'</label><i class="icon icon-trash remove-attr" attr-id='+id+'></i></li>').appendTo($("#kpi-properties"));
+    }
+    $("#edit-attribute-block-add").attr("work_at",$(obj).attr("work_at"));
+    //
+    $("#edit-attribute-block").css("display","block");
+    $("#edit-attribute-block>div").css("display","block");
 }
 
 MANAGE.kpi.edit_attribute_close=function(){
