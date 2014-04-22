@@ -31,7 +31,8 @@ module Entry
         }
         func=self.parameter.average ? 'avg' : 'sum'
         reduce=%Q{
-           function(key,values){return Array.#{func}(values);};
+           function(key,values){
+            return Array.#{func}(values);};
         }
         self.data= query.map_reduce(map, reduce).out(inline: true).each
         return aggregate_type_data
@@ -42,6 +43,8 @@ module Entry
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
         unless self.parameter.kpi.is_calculated
           self.data.each do |d|
+            puts d
+            puts date_parse_proc.call(d['_id']['date'])
             self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
           end
         else
@@ -107,8 +110,12 @@ module Entry
               start_time=next_time
             end
           when KpiFrequency::Monthly
+            start_time+=8.hours
+            end_time+=8.hours
+
             start_time=Time.parse(Date.new(start_time.year, start_time.month, 1).to_s).utc
             end_time=Time.parse(Date.new(end_time.year, end_time.month, 1).to_s).utc
+
             while start_time<=end_time do
               if start_time.month==1
                 next_time=start_time+(start_time.year.leap? ? 29.days : 28.days) #(60*60*24*29 : 60*60*24*28)
@@ -119,9 +126,13 @@ module Entry
               start_time=next_time
             end
           when KpiFrequency::Quarterly
+            start_time+=8.hours
+            end_time+=8.hours
+
             step_arr=[90, 91, 92, 92]
             start_time=Time.parse(Date.new(start_time.year, (start_time.month-1)/3*3+1, 1).to_s).utc
-            end_time=Time.parse(Date.new(end_time.year, (end_time.month-1)/3*3, 1).to_s).utc
+            end_time=Time.parse(Date.new(end_time.year, (end_time.month-1)/3*3+1, 1).to_s).utc
+
             while start_time<=end_time do
               if start_time.month==12
                 next_time=start_time+((start_time.year+1).leap? ? (step_arr[0]+1).days : step_arr[0]).days
@@ -132,6 +143,9 @@ module Entry
               start_time=next_time
             end
           when KpiFrequency::Yearly
+            start_time+=8.hours
+            end_time+=8.hours
+
             start_time=Time.parse(Date.new(start_time.year, 1, 1).to_s).utc
             end_time=Time.parse(Date.new(end_time.year, 1, 1).to_s).utc
             while start_time<=end_time do

@@ -115,20 +115,17 @@ function prepare_form_chart() {
         type = "line";
     }
     var begin_time = $("#analy-begin-time").attr("hide_value"), end_time = $("#analy-end-time").attr("hide_value");
-    var properties=$("#kpi-property-select").find("option:selected");
-    var kpi_property=null;
-    console.log(properties.length);
-    if(properties.length>0){
-        kpi_property={};
-       console.log('---------');
-        for(var i=0;i<properties.length;i++){
-            var _property= $(properties[i]).attr('property');
-            if(kpi_property[_property]==null)
-                kpi_property[_property]=[];
+    var properties = $("#kpi-property-select").find("option:selected");
+    var kpi_property = null;
+    if (properties.length > 0) {
+        kpi_property = {};
+        for (var i = 0; i < properties.length; i++) {
+            var _property = $(properties[i]).attr('property');
+            if (kpi_property[_property] == null)
+                kpi_property[_property] = [];
             kpi_property[_property].push($(properties[i]).text());
         }
     }
-    console.log(kpi_property);
 
     if (kpi && begin_time && view) {
         if (end_time) {
@@ -153,9 +150,8 @@ function prepare_form_chart() {
             view_text: view_text,
             method: method,
             chart_body_close_validate: chart_body_close_validate,
-            kpi_property:kpi_property
+            kpi_property: kpi_property
         };
-
 
 
         ANALYTICS.chartSeries.addCount();
@@ -320,50 +316,14 @@ function clear_chart_condition() {
 
 var RATIO = 1;
 function chart_point_click(object) {
-
+    console.log(object);
     $("#chart-point-detail").css("left", "0");
     $("#chart-main-middle").css("left", "400px");
     $("#chart-type-alternate").css("left", "400px");
     RATIO = object.y / 100;
     $("#group-detail-select").val('').trigger('chosen:updated');
     generateDetailDate(groupDetail.dict.dict[0].array[0]);
-    //all this data come from groupDetail.js
-    //fake data only for weixing demo
 
-
-    //old data
-//    if (object.series.type == "pie") {
-//        if (object.time_from != null) {
-//            $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
-//            $("#chart-point-detail tbody>tr").addClass("hide");
-//            $("#from").text(object.time_from).parent().removeClass("hide");
-//            $("#to").text(object.time_to).parent().removeClass("hide");
-//
-//            $("#sum-value").text(object.y + object.unit).parent().removeClass("hide");
-//            $("#aver-value").text(object.average_y + object.unit).parent().removeClass("hide");
-//
-//            $("#percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
-//        }
-//        else {
-//            $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
-//            $("#chart-point-detail tbody>tr").addClass("hide");
-//            $("#date").text(object.name).parent().removeClass("hide");
-//            $("#target-max").text(object.high + object.unit).parent().removeClass("hide");
-//            $("#target-min").text(object.low + object.unit).parent().removeClass("hide");
-//            $("#value").text(object.y + object.unit).parent().removeClass("hide");
-//
-//            $("#percent").text((object.percentage).toFixed(1) + " %").parent().removeClass("hide");
-//        }
-//
-//    }
-//    else {
-//        $("#chart-detail-kpi").text(object.series.name[object.seriesId]).css("color", object.color);
-//        $("#chart-point-detail tbody>tr").addClass("hide");
-//        $("#date").text(object.name).parent().removeClass("hide");
-//        $("#target-max").text(object.high + object.unit).parent().removeClass("hide");
-//        $("#target-min").text((object.series.type=="column"?object.target_min:object.low) + object.unit).parent().removeClass("hide");
-//        $("#value").text(object.y + object.unit).parent().removeClass("hide");
-//    }
 }
 function close_chart_detail() {
     $("#chart-point-detail").css("left", "-400px");
