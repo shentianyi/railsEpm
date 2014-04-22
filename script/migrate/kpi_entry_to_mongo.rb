@@ -1,5 +1,5 @@
 #ActiveRecord::Base.observers.disable :kpi_entry_observer
-:KpiEntry.observers.disable :all
+KpiEntry.observers.disable :all
 
 KpiEntryBak.all.each do |e|
   me=KpiEntry.create(
@@ -8,7 +8,7 @@ KpiEntryBak.all.each do |e|
       entity_id: e.entity_id,
       user_kpi_item_id: e.user_kpi_item_id,
       entry_at: e.entry_at,
-      parsed_entry_at: date,
+      parsed_entry_at: e.parsed_entry_at,
       original_value: e.original_value,
       value: e.value,
       target_max: e.target_max,
