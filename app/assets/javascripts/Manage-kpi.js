@@ -476,8 +476,9 @@ MANAGE.kpi.attribute=function(){
 //        })
         //每一个KPI上点击编辑属性出来的
         .on("click",".edit-kpi-attribute",function(){
-            $("#edit-attribute-block").css("display","block");
-            $("#edit-attribute-block>div").css("display","block");
+            MANAGE.kpi.edit_attribute_copen(this);
+            //$("#edit-attribute-block").css("display","block");
+            //$("#edit-attribute-block>div").css("display","block");
         })
         .on("click","#edit-attribute-block-remove",function(){
             MANAGE.kpi.edit_attribute_close();
@@ -485,6 +486,21 @@ MANAGE.kpi.attribute=function(){
         .on("click","#edit-attribute-block-cancel",function(){
             MANAGE.kpi.edit_attribute_close();
         })
+        .on("click",)
+}
+
+MANAGE.kpi.edit_attribute_copen=function(obj){
+    //append kpi_property
+    var attrs = $(obj).parent().children("p").children();
+    $("#kpi-properties").children().remove();
+    for(var i = 0;i<attrs.length;i++){
+        var id = $(attrs[i]).attr("id");
+        var name = $(attrs[i]).text();
+        $('<li><label>'+name+'</label><i class="icon icon-trash" attr-id='+id+'></i></li>').appendTo($("#kpi-properties"));
+    }
+    //
+    $("#edit-attribute-block").css("display","block");
+    $("#edit-attribute-block>div").css("display","block");
 }
 //MANAGE.kpi.attribute_close=function(){
 //    $("#kpi-attribute-outer").css("display","none");
