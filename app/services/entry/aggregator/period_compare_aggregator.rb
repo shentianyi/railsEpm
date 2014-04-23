@@ -40,6 +40,7 @@ module Entry
       def generate_compare_table
         self.data_module={}
         values=KpiPropertyValue.by_property_id(self.parameter.kpi.id, self.parameter.map_group.values.map { |v| v.sub(/a/, '') }).all
+        return nil if values.size==0
         properties={}
 
         values.each do |v|
