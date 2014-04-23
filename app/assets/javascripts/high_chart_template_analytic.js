@@ -246,8 +246,8 @@ ANALYTICS.form_chart=function(option){
                            Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1))) : Date.parse(end_time_utc) ;
 
     var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
-    console.log(new Date(bar_fix_from).toISOString() );
-    console.log(new Date(bar_fix_to).toISOString());
+//    console.log(new Date(bar_fix_from).toISOString() );
+//    console.log(new Date(bar_fix_to).toISOString());
     show_loading(top,0,0,0);
 
     ANALYTICS.base_option={
@@ -337,7 +337,7 @@ ANALYTICS.form_chart=function(option){
 }
 
 
-    ANALYTICS.form_chart_without_ajax=function(option,data){
+ANALYTICS.form_chart_without_ajax=function(option,data){
 
         ANALYTICS.loading_data=true;
         var begin_time_utc=standardParse(option.begin_time).date,
@@ -380,7 +380,7 @@ ANALYTICS.form_chart=function(option){
                 }
                 ANALYTICS.loading_data=false;
 
-    }
+}
 
 
 ANALYTICS.add_data=function(option){
@@ -392,8 +392,8 @@ ANALYTICS.add_data=function(option){
                      option.end_time_utc :  ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1));
     option.data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < option.end_time_utc?true:false;
 
-    console.log(new Date(begin_time_utc).toISOString() );
-    console.log(new Date(next_date).toISOString() );
+//    console.log(new Date(begin_time_utc).toISOString() );
+//    console.log(new Date(next_date).toISOString() );
 
     $.post('/kpi_entries/analyse',{
         kpi_id : option.kpi_id,
@@ -416,7 +416,7 @@ ANALYTICS.add_data=function(option){
             }
             option.data=data_array;
             var c={},p=option.data;
-            ANALYTICS.chartSeries.series[option.id][option.interval].concat(deepCopy(c,p));
+            ANALYTICS.chartSeries.series[option.id][option.interval]=ANALYTICS.chartSeries.series[option.id][option.interval].concat(deepCopy(c,p));
             var chart=$("#"+option.target).highcharts();
 
             var point = chart.series[option.id+1].options.data;
@@ -590,7 +590,7 @@ ANALYTICS.proper_type_for_chart=function(){
     var name=obj.kpi_name===null?this.chart.get(this.id).options.name:obj.kpi_name+"("+obj.view_text+")";
     var p={
         name:name ,
-        id: this.chart.get(this.id).options.id,
+        id: obj.id,
         color:this.chart.get(this.id).color,
         data: this.chart.get(this.id).options.data
     },c;

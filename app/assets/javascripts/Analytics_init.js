@@ -83,15 +83,13 @@ function init_analytics() {
             }
         }, 'json');
     });
-    //int同期对比
-    ANALYTICS.currentCompare.int();
-    //init groupdetail
-
-    groupDetailInit();
-
+    //init同期对比
+    ANALYTICS.currentCompare.init();
+    //init详细
+    ANALYTICS.detailPoint.init();
 }
 ANALYTICS.currentCompare={};
-ANALYTICS.currentCompare.int=function(){
+ANALYTICS.currentCompare.init=function(){
     $("body")
         .on("click","#compare-current-btn",function(){
 
@@ -211,6 +209,8 @@ function show_chart_body(option) {
     });
     $("#chart-interval-alternate").find("li[interval='" + option.interval + "']").addClass("active");
 }
+
+//改变图表的类型
 function alternate_chart_type(event) {
     if (ANALYTICS.loading_data == true) {
         MessageBox("Can't do it during loading", "top", "warning");
@@ -240,6 +240,7 @@ function alternate_chart_type(event) {
     }
 }
 
+//切换小时、天、周、月、季度、年
 function change_interval(option) {
     if (ANALYTICS.loading_data == true) {
         MessageBox("Can't do it during loading", "top", "warning");
@@ -261,7 +262,6 @@ function change_interval(option) {
                 }
             }
         }
-
         chart.destroy();
         var option = {
             target: "chart-container",
@@ -270,11 +270,14 @@ function change_interval(option) {
             count: ANALYTICS.chartSeries.getCount()
 
         }, j;
+        //有数据的直接拿来生成
         for (j = 0; j < have_data.length; j++) {
             option.kpi = ANALYTICS.chartSeries.series[j].kpi;
-            option.id = j;
+            option.id = ANALYTICS.chartSeries.series[j].id;
             option.begin_time = ANALYTICS.chartSeries.series[j].begin_time;
-            option.data = ANALYTICS.chartSeries.series[j][option.interval]
+            option.data = ANALYTICS.chartSeries.series[j][option.interval] ;
+            option.view = ANALYTICS.chartSeries.series[j].view;
+            option.view_text = ANALYTICS.chartSeries.series[j].view_text;
             if (j == 0) {
                 ANALYTICS.render_to(option);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
@@ -282,25 +285,29 @@ function change_interval(option) {
             ANALYTICS.add_series(option);
             ANALYTICS.proper_type_for_chart(option);
         }
+        //没有数据的再去请求
         for (j = 0; j < not_have_data.length; j++) {
-            option.kpi = ANALYTICS.chartSeries.series[j].kpi;
-            option.kpi_id = ANALYTICS.chartSeries.series[j].kpi_id;
-            option.method = ANALYTICS.chartSeries.series[j].method;
-            option.view = ANALYTICS.chartSeries.series[j].view;
-            option.id = j;
-            option.begin_time = ANALYTICS.chartSeries.series[j].begin_time;
-            option.end_time = ANALYTICS.chartSeries.series[j].end_time;
-            if (have_data.length == 0 && j == 0) {
-                option.chart_body_close_validate = true;
-                ANALYTICS.form_chart(option);
+
+            var series_id= not_have_data[j];
+            option.kpi = ANALYTICS.chartSeries.series[series_id].kpi;
+            option.kpi_id = ANALYTICS.chartSeries.series[series_id].kpi_id;
+            option.method = ANALYTICS.chartSeries.series[series_id].method;
+            option.view = ANALYTICS.chartSeries.series[series_id].view;
+            option.view_text = ANALYTICS.chartSeries.series[series_id].view_text;
+            option.id = series_id;
+            option.begin_time = ANALYTICS.chartSeries.series[series_id].begin_time;
+            option.end_time = ANALYTICS.chartSeries.series[series_id].end_time;
+            if(!$("#"+option.target).highcharts()){
+                ANALYTICS.render_to(option);
+                new Highcharts.StockChart(ANALYTICS.high_chart);
             }
-            else {
-                option.chart_body_close_validate = false;
-                ANALYTICS.form_chart(option);
-            }
+            option.chart_body_close_validate = false;
+            ANALYTICS.form_chart(option);
         }
     }
 }
+
+//窗口大小改变后，改变相应的图表大小
 var resize_chart = {
     body: function () {
         $("#chart-body").height(parseInt($(window).height()) - parseInt($("#analytics-condition").height()) - parseInt($("#analytics-condition").css("top")) - 3 >= 0 ?
@@ -327,26 +334,40 @@ var resize_chart = {
     }
 }
 
+//清空图表的生成条件
 function clear_chart_condition() {
     $("#analytics-condition").find("input[type='text']").each(function () {
         $(this).val("");
     });
-//    $("#chart-view").val('').trigger('chosen:updated');
+     //$("#chart-view").val('').trigger('chosen:updated');
     $(".index-date-extra-info").text("");
 }
-
-var RATIO = 1;
+//点击事件初始化
+ANALYTICS.detailPoint={}
+ANALYTICS.detailPoint.init=function(){
+   $("body")
+       .on("click","#close-detail-block",function(){
+           $("#detail-block").css("left","-999em").css("right","auto");
+       })
+       .on("keyup","#group_detail_select_chosen input",function(event){
+           var e=adapt_event(event).event;
+           if(e.keyCode==13){
+               generateDetailDate();
+           }
+       })
+       .on("click","#analyse-btn",function(){
+           generateDetailDate();
+       })
+}
 var condition = {};
 condition.detail_condition = {};
-
+//点击某个点以后触发
 function chart_point_click(object) {
     console.log(object);
-    $("#chart-point-detail").css("left", "0");
-    $("#chart-main-middle").css("left", "400px");
-    $("#chart-type-alternate").css("left", "400px");
-    RATIO = object.y / 100;
-    $("#group-detail-select").val('').trigger('chosen:updated');
-    condition.detail_condition = {kpi_id: ANALYTICS.base_option.kpi_id,
+    $("#detail-block").css("left", "0").css("right","0");
+    $("#group-detail-select").children().eq(0).prop("selected",true).trigger('chosen:updated');
+    condition.detail_condition = {
+        kpi_id: ANALYTICS.base_option.kpi_id,
         entity_group_id: ANALYTICS.base_option.entity_group_id,
         average: ANALYTICS.base_option.average,
         frequency: ANALYTICS.base_option.frequency,
@@ -354,11 +375,7 @@ function chart_point_click(object) {
     };
     generateDetailDate();
 }
-function close_chart_detail() {
-    $("#chart-point-detail").css("left", "-400px");
-    $("#chart-main-middle").css("left", "0px");
-    $("#chart-type-alternate").css("left", "0px");
-}
+
 function tcr_trend(judge) {
     switch (judge) {
         case "low":
@@ -377,21 +394,30 @@ function tcr_trend(judge) {
 }
 
 //group detail
+//初始化detail中聚合条件选项
 function groupDetailInit(properties) {
-    $("#group_detail_select_chosen").css("width", "250px");
+    //{
+    //  attrID:{
+    //      attrName:[ {id:value:} ]
+    //  }
+    //}
+    console.log(properties)
+    var firstKey,firstValue;
     $.each(properties, function (k, v) {
         $("#group-detail-select").append($("<option />").attr('value', k).text(v));
+        if(k==0){
+            firstKey=k;
+            firstValue=v;
+        }
     });
     $("#group-detail-select").val('').trigger('chosen:updated');
-    $("#group-detail-select").chosen().change(function () {
-        generateDetailDate();
-    });
 }
 
 function generateDetailDate() {
     var source = null;
     var property_map_group = {};
     property_map_group[$("#group-detail-select :selected").text()] = $("#group-detail-select :selected").val();
+    console.log(condition.detail_condition.property_map_group)
     condition.detail_condition.property_map_group = property_map_group;
     $.ajax({
         url: '/kpi_entries/compare',
@@ -402,8 +428,8 @@ function generateDetailDate() {
 
         }
     });
-    generatePie(source);
-    generateDetailTable(source);
+//    generatePie(source);
+//    generateDetailTable(source);
 }
 //function groupDetailInit(a) {
 //    $("#group_detail_select_chosen").css("width", "250px");
