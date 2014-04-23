@@ -84,6 +84,11 @@ class KpiEntryObserver<Mongoid::Observer
       item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first
       KpiPropertyValue.desc_property_value(item.id,kpi_entry[attr_id]) if item
     }
+
+    #destroy collection kpi entry if no details left
+    if kpi_entry.last_detail?
+      collect_entry.destroy
+    end
   end
 
   def after_update kpi_entry
@@ -108,10 +113,7 @@ class KpiEntryObserver<Mongoid::Observer
       end
     }
 
-    #destroy collection kpi entry if no details left
-    if kpi_entry.last_detail?
-      collect_entry.destroy
-    end
+
   end
 
   def before_save kpi_entry

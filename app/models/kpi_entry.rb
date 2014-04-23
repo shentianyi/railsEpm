@@ -93,6 +93,10 @@ class KpiEntry
     return values
   end
 
+  def last_detail?
+    KpiEntry.where(user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.parsed_entry_at, entity_id: self.entity_id,entry_type: self.entry_type).first.nil?
+  end
+
   private
 
   def self.gen_recent_time_zscore_key user_id, user_kpi_item_id
@@ -132,7 +136,5 @@ class KpiEntry
 =end
   end
 
-  def last_detail?
-    KpiEntry.where(user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.parsed_entry_at, entity_id: self.entity_id,entry_type: self.entry_type).first.nil?
-  end
+
 end
