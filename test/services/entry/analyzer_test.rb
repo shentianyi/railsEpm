@@ -33,13 +33,13 @@ class AnalyzerTest < ActiveSupport::TestCase
   #  assert true
   #end
 
-  test 'analyse avg kpi quarterly frequency' do
-    puts 'analyse avg kpi quarterly frequency:'.blue
-    params=base_params
-    params[:frequency]=KpiFrequency::Quarterly
-    puts Entry::Analyzer.new(params).analyse
-    assert true
-  end
+  #test 'analyse avg kpi quarterly frequency' do
+  #  puts 'analyse avg kpi quarterly frequency:'.blue
+  #  params=base_params
+  #  params[:frequency]=KpiFrequency::Quarterly
+  #  puts Entry::Analyzer.new(params).analyse
+  #  assert true
+  #end
 
   #
   #test 'analyse sum kpi monthly frequency' do
@@ -65,17 +65,21 @@ class AnalyzerTest < ActiveSupport::TestCase
   #  assert true
   #end
 
-  #test 'period compare group by entity id (monthly)' do
-  #  puts 'period compare group by entity id (monthly):'.blue
-  #  params=base_params
-  #  params[:frequency]=KpiFrequency::Monthly
-  #  params[:map_group]={'输入点' => 'a1'}
-  #  params[:base_time]={start_time: '2013-12-31T16:00:00.000Z',
-  #                      end_time: '2014-01-30T16:00:00.000Z'}
-  #
-  #  puts Entry::Analyzer.new(params).period_compare
-  #  assert true
-  #end
+  test 'period compare group by entity id (monthly)' do
+    puts 'period compare group by entity id (monthly):'.blue
+    params= {kpi_id: '1',
+             entity_group_id: '129',
+             average: 'false',
+             frequency: '100'
+    }
+    params[:frequency]=KpiFrequency::Monthly
+    params[:property_map_group]={'1' => '1','2'=>'2','3'=>'3'}
+    params[:base_time]={start_time: '2013-12-31T16:00:00.000Z',
+                        end_time: '2014-01-30T16:00:00.000Z'}
+
+    puts Entry::Analyzer.new(params).period_compare
+    assert true
+  end
 
   #test 'period compares group by entity id (monthly)' do
   #  puts 'period compares group by entity id (monthly):'.blue
@@ -95,8 +99,8 @@ class AnalyzerTest < ActiveSupport::TestCase
     {kpi_id: '1',
      entity_group_id: '129',
      average: 'true',
-     start_time: '2013-12-31T16:00:00.000Z',
-     end_time: '2014-04-21T16:00:00.000Z',
+   #  start_time: '2013-12-31T16:00:00.000Z',
+    # end_time: '2014-04-21T16:00:00.000Z',
      frequency: '100'
     }
   end
