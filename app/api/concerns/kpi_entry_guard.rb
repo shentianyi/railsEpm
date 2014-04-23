@@ -17,7 +17,12 @@ module KpiEntryGuard
     def guard_entry!
       #entry_p=validate_params_integrated(params, ParamKeys)
       raise ArgumentError unless params.has_key?(:entry)
+      #if params[:entry].is_a?(Hashie::Mash)
+
+      #else
       params[:entry] = JSON.parse(params[:entry])
+      #end
+
       entry_p = params[:entry]
       vc= KpiEntryValidatorCollection.new
       entry_p[:validator_collection]=vc
@@ -34,7 +39,12 @@ module KpiEntryGuard
     # validate batch entries
     def guard_entries!(in_batch=false)
       raise ArgumentError unless params.has_key?(:entries)
+      #if params[:entries].is_a?(Array)
+
+      #else
       params[:entries] = JSON.parse(params[:entries])
+      #end
+
       raise ArgumentError unless params[:entries].is_a?(Array)
       indexes=[]
       vc= KpiEntryValidatorCollection.new

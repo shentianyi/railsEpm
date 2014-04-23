@@ -44,10 +44,11 @@ module Entry
       attrs[:value] = params[:value]
       attrs[:email] = params[:email]
       attrs[:entry_type] = params[:entry_type].nil? ? 1 : params[:entry_type]
-
+      attrs[:kpi_properties] = {}
       #fillter attributes
       (params.keys-doc_attr).each { |k|
-        attrs[k] = params[k]
+        attrs[:kpi_properties][k] = params[k]
+        #attrs[k] = params[k]
       }
       return attrs
     end
