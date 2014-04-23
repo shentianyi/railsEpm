@@ -411,7 +411,7 @@ function groupDetailInit(properties) {
 function generateDetailDate() {
     var source = null;
     var property_map_group = {};
-    property_map_group[$("#group-detail-select :selected").text()] = $("#group-detail-select :selected").val();
+    property_map_group[$("#group-detail-select :selected").val()] = $("#group-detail-select :selected").val();
     condition.detail_condition.property_map_group = property_map_group;
     $.ajax({
         url: '/kpi_entries/compare',
