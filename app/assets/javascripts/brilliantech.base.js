@@ -1,3 +1,7 @@
+$(function(){
+    $.scrollUp({scrollText: ''});
+});
+
 // ws: 判断数字是否是非负数
 function isNotNegaNum(v) {
     if (!isNaN(v)) {
