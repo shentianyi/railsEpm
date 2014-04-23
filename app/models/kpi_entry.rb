@@ -131,4 +131,8 @@ class KpiEntry
     end
 =end
   end
+
+  def last_detail?
+    KpiEntry.where(user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.parsed_entry_at, entity_id: self.entity_id,entry_type: self.entry_type).first.nil?
+  end
 end
