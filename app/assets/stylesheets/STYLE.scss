@@ -32,6 +32,11 @@ $green-hover:transparentize($green,0.4);
   white-space:nowrap;
   text-overflow:ellipsis;
 }
+@mixin clearFloat{
+  content:"";
+  display:block;
+  clear: both;
+}
 /*************************************************************  button style
 *********************************************************************************************************/
 .btn{
