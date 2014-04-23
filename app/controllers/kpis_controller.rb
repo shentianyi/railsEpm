@@ -13,11 +13,29 @@ class KpisController < ApplicationController
   # create kpi
   def create
     msg=Message.new
-    @kpi=Kpi.new(params[:kpi])
-    @kpi.creator=current_user
-    if @kpi.save
-      temp = {}
+    kpi=Kpi.new(params[:kpi].except(:kpi_properties))
+    kpi.creator=current_user
+
+    #kpi_properties
+    attrs = []
+    if params[:kpi].has_key?(:kpi_properties)
+      params[:kpi][:kpi_properties].uniq.each {|name|
+
+        if property = KpiProperty.find_by_name(name)
+        else
+          property = KpiProperty.new(:name => name)
+          property.user = current_user
+          property.tenant = current_tenant
+          property.save
+        end
+        attrs << property
+      }
+    end
+    if kpi.save
+      kpi.add_properties(attrs)
+      #temp = {}
       msg.result=true
+=begin
       temp[:id] = @kpi.id
       temp[:name]=@kpi.name
       temp[:is_calculated] = @kpi.is_calculated
@@ -28,10 +46,11 @@ class KpisController < ApplicationController
       temp[:target_min] = KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min)
       temp[:section] = KpiUnit.get_entry_unit_sym(@kpi.unit)
       temp[:desc] = @kpi.description
-      msg.object=temp.as_json
+=end
+      msg.object=KpiPresenter.new(kpi).to_json
     else
-      @kpi.errors.messages[:result]= I18n.t "fix.add_fail"
-      msg.content=@kpi.errors.messages.values.join('; ')
+      kpi.errors.messages[:result]= I18n.t "fix.add_fail"
+      msg.content=kpi.errors.messages.values.join('; ')
     end
     render :json => msg
   end

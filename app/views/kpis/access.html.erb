@@ -58,11 +58,9 @@
                     </table>
                     <div class="attribute-position" type="myKPI">
                       <p kpi_id="<%= kpi.id%>">
-                        <span>sfasd</span>
-                        <span>sfasd</span>
-                        <span>sfasd</span>
-                        <span>sfasd</span>
-                        <span>sfasd</span>
+                        <% kpi.kpi_properties.each do |p| %>
+                            <span><%= p.name%></span>
+                        <% end%>
                       </p>
 
 

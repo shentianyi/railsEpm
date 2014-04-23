@@ -62,4 +62,17 @@ class Kpi < ActiveRecord::Base
   def unit_sym
     ::KpiUnit.get_entry_unit_sym(self.unit)
   end
+
+  def add_properties attrs
+    attrs.each {|attr|
+      if item = KpiPropertyItem.where(kpi_id:self.id,kpi_property_id:attr.id).first
+
+      else
+        item = KpiPropertyItem.new(kpi_id:self.id,kpi_property_id:attr.id)
+        item.save
+        self.kpi_property_items<<item
+      end
+    }
+    self.save
+  end
 end
