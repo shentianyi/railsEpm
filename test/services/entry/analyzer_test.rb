@@ -69,11 +69,11 @@ class AnalyzerTest < ActiveSupport::TestCase
     puts 'period compare group by entity id (monthly):'.blue
     params= {kpi_id: '1',
              entity_group_id: '129',
-             average: 'true',
+             average: 'false',
              frequency: '100'
     }
     params[:frequency]=KpiFrequency::Monthly
-    params[:map_group]={'输入点' => 'a1'}
+    params[:property_map_group]={'1' => '1','2'=>'2','3'=>'3'}
     params[:base_time]={start_time: '2013-12-31T16:00:00.000Z',
                         end_time: '2014-01-30T16:00:00.000Z'}
 
@@ -99,8 +99,8 @@ class AnalyzerTest < ActiveSupport::TestCase
     {kpi_id: '1',
      entity_group_id: '129',
      average: 'true',
-     start_time: '2013-12-31T16:00:00.000Z',
-     end_time: '2014-04-21T16:00:00.000Z',
+   #  start_time: '2013-12-31T16:00:00.000Z',
+    # end_time: '2014-04-21T16:00:00.000Z',
      frequency: '100'
     }
   end

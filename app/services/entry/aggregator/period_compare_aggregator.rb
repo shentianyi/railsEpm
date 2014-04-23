@@ -40,20 +40,37 @@ module Entry
       def generate_compare_table
         self.data_module={}
         values=KpiPropertyValue.by_property_id(self.parameter.kpi.id, self.parameter.map_group.values.map { |v| v.sub(/a/, '') }).all
+        properties={}
+
         values.each do |v|
-          self.data_module[v.value]=[
-              {self.parameter.base_time[:start_time] => 0},
-              {self.parameter.compare_times.first[:start_time] => 0}]
+          properties[v.kpi_property_id]||=[]
+          properties[v.kpi_property_id]<< v.value
+          #{self.parameter.base_time[:start_time] => 0},
+          #{self.parameter.compare_times.first[:start_time] => 0}]
         end
 
+        metrix=[]
+        size=properties.size
+        if size==1
+          metrix=properties.values[0].product
+        else
+          metrix=properties.values[0].product(*properties.values[1...size])
+        end
+
+        metrix.each do |m|
+          self.data_module[m]= [{self.parameter.base_time[:start_time] => 0},
+                                {self.parameter.compare_times.first[:start_time] => 0}]
+        end
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
-
+        property_ids=properties.keys
         self.data.each do |d|
-          name=d['_id'][self.parameter.map_group.first[0]]
+          key=[]
+          property_ids.each do |id|
+            key<<d['_id'][id.to_s]
+          end
           date=date_parse_proc.call(d['_id']['date'])
-          self.data_module[name].each { |v| v[date]= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value']) }
+          self.data_module[key].each { |v| v[date]= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value']) }
         end
-
         data=[]
         self.data_module.each do |k, v|
           data<<{name: k, value: v[0].values.first, last_value: v[1].values.first}
