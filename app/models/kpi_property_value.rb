@@ -11,8 +11,11 @@ class KpiPropertyValue < ActiveRecord::Base
   end
 
   def self.by_kpi_id(kpi_id)
-    joins(kpi_property_item: :kpi_property).where(kpi_property_items: {kpi_id: kpi_id})
-    .select('kpi_property_values.*,kpi_properties.name as property_name,kpi_properties.id as property_id')
+    #joins(kpi_property_item: :kpi_property).where(kpi_property_items: {kpi_id: kpi_id})
+    #.select('kpi_property_values.*,kpi_properties.name as property_name,kpi_properties.id as property_id')
+
+    joins('right join kpi_property_items on kpi_property_items.id=kpi_property_values.kpi_property_item_id inner join kpi_properties as k on kpi_property_items.kpi_property_id = k.id').where(kpi_property_items: {kpi_id: kpi_id})
+    .select('kpi_property_values.*,k.name as property_name,k.id as property_id')
   end
 
   def self.desc_property_value item_id, value

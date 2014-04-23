@@ -58,7 +58,7 @@ module Entry
         if value
           @property_map_group={}
           value.each do |k, v|
-            @property_map_group["a#{k}"]=v
+            @property_map_group[k]="a#{v}"
           end
         end
       end

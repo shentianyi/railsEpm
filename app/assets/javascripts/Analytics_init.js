@@ -83,6 +83,7 @@ function init_analytics() {
             }
         }, 'json');
     });
+
     //init同期对比
     ANALYTICS.currentCompare.init();
     //init详细
@@ -90,8 +91,14 @@ function init_analytics() {
 }
 ANALYTICS.currentCompare={};
 ANALYTICS.currentCompare.init=function(){
+
+
+}
+ANALYTICS.currentCompare = {};
+ANALYTICS.currentCompare.int = function () {
+
     $("body")
-        .on("click","#compare-current-btn",function(){
+        .on("click", "#compare-current-btn", function () {
 
         })
 
@@ -332,7 +339,7 @@ var resize_chart = {
             }
         }
     }
-}
+};
 
 //清空图表的生成条件
 function clear_chart_condition() {
@@ -361,6 +368,7 @@ ANALYTICS.detailPoint.init=function(){
 }
 var condition = {};
 condition.detail_condition = {};
+
 //点击某个点以后触发
 function chart_point_click(object) {
     console.log(object);
@@ -368,12 +376,39 @@ function chart_point_click(object) {
     $("#group-detail-select").children().eq(0).prop("selected",true).trigger('chosen:updated');
     condition.detail_condition = {
         kpi_id: ANALYTICS.base_option.kpi_id,
+
         entity_group_id: ANALYTICS.base_option.entity_group_id,
         average: ANALYTICS.base_option.average,
         frequency: ANALYTICS.base_option.frequency,
         property: ANALYTICS.base_option.kpi_property
     };
+    var current_date = point.UTCDate;
+    var end_time = get_next_date(current_date, ANALYTICS.base_option.frequency).add('milliseconds', -1);
+    condition.detail_condition.base_time = {start_time: new Date(current_date).toISOString(), end_time: end_time.toISOString()};
     generateDetailDate();
+}
+
+function get_next_date(date, frequency) {
+    var m = moment(date);
+    switch (parseInt(frequency)) {
+        case 90:
+            return  m.add('hours', 1);
+        case 100:
+            return  m.add('days', 1);
+        case 200:
+            return  m.add('weeks', 1);
+        case 300:
+            return   m.add('months', 1);
+        case 400:
+            return  m.add('months', 4);
+        case 500:
+            return  m.add('years', 1);
+    }
+}
+function close_chart_detail() {
+    $("#chart-point-detail").css("left", "-400px");
+    $("#chart-main-middle").css("left", "0px");
+    $("#chart-type-alternate").css("left", "0px");
 }
 
 function tcr_trend(judge) {
@@ -396,6 +431,7 @@ function tcr_trend(judge) {
 //group detail
 //初始化detail中聚合条件选项
 function groupDetailInit(properties) {
+
     //{
     //  attrID:{
     //      attrName:[ {id:value:} ]
@@ -403,6 +439,7 @@ function groupDetailInit(properties) {
     //}
     console.log(properties)
     var firstKey,firstValue;
+
     $.each(properties, function (k, v) {
         $("#group-detail-select").append($("<option />").attr('value', k).text(v));
         if(k==0){
@@ -416,8 +453,9 @@ function groupDetailInit(properties) {
 function generateDetailDate() {
     var source = null;
     var property_map_group = {};
-    property_map_group[$("#group-detail-select :selected").text()] = $("#group-detail-select :selected").val();
-    console.log(condition.detail_condition.property_map_group)
+
+    property_map_group[$("#group-detail-select :selected").val()] = $("#group-detail-select :selected").val();
+
     condition.detail_condition.property_map_group = property_map_group;
     $.ajax({
         url: '/kpi_entries/compare',
@@ -425,11 +463,16 @@ function generateDetailDate() {
         dataType: 'json',
         data: condition.detail_condition,
         success: function (data) {
-
+            if (data.result) {
+                generatePie(data.object);
+                generateDetailTable(data.object);
+            }
         }
     });
+
 //    generatePie(source);
 //    generateDetailTable(source);
+
 }
 //function groupDetailInit(a) {
 //    $("#group_detail_select_chosen").css("width", "250px");
@@ -465,21 +508,30 @@ function searchForFilter(type) {
 function generatePie(source) {
     var colorArray = groupDetail.color,
         length = source.length,
-        i, target,
+        target,
         data = [];
     $("#groupDetailPie").remove();
     $("#group-detail-ul").empty();
-    for (i = 0; i < length; i++) {
-        target = source[i]
+    var total = 0;
+    for (var j = 0; j < length; j++) {
+        total += source[j].value;
+    }
+    for (var i = 0; i < length; i++) {
+        target = source[i];
+        var per = 0;
+        if (total != 0) {
+            per = Math.round((target.value / total) * 100,2);
+        }
+
         $("#group-detail-ul")
             .append($("<li />")
-                .append($("<span />").text(getObject(target, "name")))
-                .append($("<span />").text(getObject(target, "percentage")).css("color", colorArray[i]))
-            )
+                .append($("<span />").text(target.name)
+                    .append($("<span />").text(per).css("color", colorArray[i]))
+                ));
         data.push({
-            value: parseInt(getObject(target, "value")),
+            value: parseInt(target.value),
             color: colorArray[i]
-        })
+        });
     }
     $("#chart-part").prepend($("<canvas />").attr("height", "180").attr("width", "180").attr("id", "groupDetailPie"))
     var ctx = document.getElementById("groupDetailPie").getContext("2d");
