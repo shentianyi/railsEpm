@@ -399,6 +399,7 @@ function tcr_trend(judge) {
 //group detail
 function groupDetailInit(properties) {
     $("#group_detail_select_chosen").css("width", "250px");
+    $("#group-detail-select").empty().trigger('chosen:updated');
     $.each(properties, function (k, v) {
         $("#group-detail-select").append($("<option />").attr('value', k).text(v));
     });
