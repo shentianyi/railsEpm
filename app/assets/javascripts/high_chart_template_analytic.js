@@ -534,7 +534,8 @@ ANALYTICS.deal_data=function() {
                 data[i].x = Date.UTC(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i);
                 data[i].UTCDate=Date.UTC(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i)-8*60*60*1000;
                 data[i].name = new Date(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i).toWayneString().hour;
-
+                data[i].kpi=this.kpi_name;
+                data[i].view=this.view_text;
             }
             return data;
             break;
@@ -543,7 +544,8 @@ ANALYTICS.deal_data=function() {
                 this.data[i].x = Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + i);
                 data[i].UTCDate=Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + i)-8*60*60*1000;
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + i).toWayneString().day;
-//                console.log(new Date(data[i].UTCDate).toISOString())
+                data[i].kpi=this.kpi_name;
+                data[i].view=this.view_text;
             }
             return data;
             break;
@@ -554,6 +556,8 @@ ANALYTICS.deal_data=function() {
                 data[i].UTCDate=Date.UTC(week_template[0], week_template[1], week_template[2])-8*60*60*1000;
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWayneString().day
                     + " week" + new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWeekNumber();
+                data[i].kpi=this.kpi_name;
+                data[i].view=this.view_text;
             }
             return data;
             break;
@@ -562,6 +566,8 @@ ANALYTICS.deal_data=function() {
                 this.data[i].x = Date.UTC(this.template[0], parseInt(this.template[1]) + i);
                 data[i].UTCDate=Date.UTC(this.template[0], parseInt(this.template[1]) + i)-8*60*60*1000;
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + i).toWayneString().month;
+                data[i].kpi=this.kpi_name;
+                data[i].view=this.view_text;
             }
             return data;
             break;
@@ -571,6 +577,8 @@ ANALYTICS.deal_data=function() {
                 this.data[i].x = Date.UTC(this.template[0], first_month_of_quarter + 3 * i);
                 data[i].UTCDate=Date.UTC(this.template[0], first_month_of_quarter + 3 * i)-8*60*60*1000;
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + 3 * i).getFullYear()+" quarter " + new Date(this.template[0], parseInt(this.template[1]) + 3 * i).monthToQuarter();
+                data[i].kpi=this.kpi_name;
+                data[i].view=this.view_text;
             }
             return data;
             break;
@@ -579,6 +587,8 @@ ANALYTICS.deal_data=function() {
                 this.data[i].x = Date.UTC(parseInt(this.template[0]) + i, 0);
                 data[i].UTCDate=Date.UTC(parseInt(this.template[0]) + i, 0)-8*60*60*1000;
                 this.data[i].name = new Date(parseInt(this.template[0]) + i, 0).toWayneString().year;
+                data[i].kpi=this.kpi;
+                data[i].view=this.view_text;
             }
             return data;
             break;

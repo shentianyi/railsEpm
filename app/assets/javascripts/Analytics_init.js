@@ -95,13 +95,11 @@ ANALYTICS.currentCompare.init=function(){
 
 }
 ANALYTICS.currentCompare = {};
-ANALYTICS.currentCompare.int = function () {
-
+ANALYTICS.currentCompare.init = function () {
     $("body")
         .on("click", "#compare-current-btn", function () {
 
         })
-
 }
 function analytic_control_condition_visible() {
     var open_state = $("#analytic-control-condition-visible").attr("state");
@@ -366,27 +364,51 @@ ANALYTICS.detailPoint.init=function(){
            generateDetailDate();
        })
 }
-var condition = {};
-condition.detail_condition = {};
-
 //点击某个点以后触发
 function chart_point_click(object) {
     console.log(object);
     $("#detail-block").css("left", "0").css("right","0");
     $("#group-detail-select").children().eq(0).prop("selected",true).trigger('chosen:updated');
+    $("#detail-date").text(object.name);
+    $("#detail-kpi").text(object.kpi);
+    $("#detail-view").text(object.view);
     condition.detail_condition = {
         kpi_id: ANALYTICS.base_option.kpi_id,
-
         entity_group_id: ANALYTICS.base_option.entity_group_id,
         average: ANALYTICS.base_option.average,
         frequency: ANALYTICS.base_option.frequency,
         property: ANALYTICS.base_option.kpi_property
     };
-    var current_date = point.UTCDate;
+    var current_date = object.UTCDate;
     var end_time = get_next_date(current_date, ANALYTICS.base_option.frequency).add('milliseconds', -1);
     condition.detail_condition.base_time = {start_time: new Date(current_date).toISOString(), end_time: end_time.toISOString()};
+    console.log(condition.detail_condition);
     generateDetailDate();
 }
+//在详细中生成pie以及table
+function generateDetailDate() {
+    var property_map_group = {};
+    property_map_group[$("#group-detail-select :selected").val()] = $("#group-detail-select :selected").val();
+    condition.detail_condition.property_map_group = property_map_group;
+    $.ajax({
+        url: '/kpi_entries/compare',
+        type: 'POST',
+        dataType: 'json',
+        data: condition.detail_condition,
+        success: function (data) {
+            if (data.result) {
+                alert("ok")
+                console.log(data.object)
+//                generatePie(data.object);
+//                generateDetailTable(data.object);
+            }
+        }
+    });
+}
+var condition = {};
+condition.detail_condition = {};
+
+
 
 function get_next_date(date, frequency) {
     var m = moment(date);
@@ -431,49 +453,13 @@ function tcr_trend(judge) {
 //group detail
 //初始化detail中聚合条件选项
 function groupDetailInit(properties) {
-
-    //{
-    //  attrID:{
-    //      attrName:[ {id:value:} ]
-    //  }
-    //}
-    console.log(properties)
-    var firstKey,firstValue;
-
+//    console.log(properties)
     $.each(properties, function (k, v) {
         $("#group-detail-select").append($("<option />").attr('value', k).text(v));
-        if(k==0){
-            firstKey=k;
-            firstValue=v;
-        }
     });
     $("#group-detail-select").val('').trigger('chosen:updated');
 }
 
-function generateDetailDate() {
-    var source = null;
-    var property_map_group = {};
-
-    property_map_group[$("#group-detail-select :selected").val()] = $("#group-detail-select :selected").val();
-
-    condition.detail_condition.property_map_group = property_map_group;
-    $.ajax({
-        url: '/kpi_entries/compare',
-        type: 'POST',
-        dataType: 'json',
-        data: condition.detail_condition,
-        success: function (data) {
-            if (data.result) {
-                generatePie(data.object);
-                generateDetailTable(data.object);
-            }
-        }
-    });
-
-//    generatePie(source);
-//    generateDetailTable(source);
-
-}
 //function groupDetailInit(a) {
 //    $("#group_detail_select_chosen").css("width", "250px");
 //    var typeArray = groupDetail.dict.dict[0].array,
