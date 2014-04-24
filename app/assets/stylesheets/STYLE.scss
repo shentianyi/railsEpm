@@ -76,11 +76,18 @@ $green-hover:transparentize($green,0.4);
     background:#5fa9da;
     //background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
     //background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
-    color:white;
+    color:#fff;
     &:hover{
       background:#69aef5;
       //background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
       //background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
+    }
+  }
+  &.btn-dark{
+    background:#333;
+    color:#fff;
+    &:hover{
+      background:rgba(0,0,0,0.6);
     }
   }
   &.btn-success{

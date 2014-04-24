@@ -79,7 +79,7 @@ function init_analytics() {
                     });
                 });
                 $("#kpi-property-select").val('').trigger('chosen:updated');
-                groupDetailInit(properties);
+                groupDetailInit(data);
             }
         }, 'json');
     });
@@ -363,12 +363,95 @@ ANALYTICS.detailPoint.init=function(){
        .on("click","#analyse-btn",function(){
            generateDetailDate();
        })
+    //accordion
+       .on("click","#assembleCondition .accordion-header",function(){
+           var $this=$(this),
+               $body=$(this).next(".accordion-body");
+           $this.toggleClass("active");
+           $this.find("i").toggleClass("icon-chevron-right").toggleClass("icon-chevron-down");
+           if($this.hasClass("active")){
+               $body.slideDown();
+           }
+           else{
+               $body.slideUp();
+           }
+       })
+    //  拖拽
+
+    $( "#conditionLocal" ).droppable({
+        activeClass: "active",
+        hoverClass: "hover",
+        accept: ":not(.ui-sortable-helper)",
+        drop: function( event, ui ) {
+            var $li=$("#conditionLocal ul").children(),
+                validate=true,validate1,validate2,validate3;
+            for(var i=0;i<$li.length;i++){
+                validate1=$li.eq(i).find("span").text()==ui.draggable.text();
+                validate2=(ui.draggable[0].tagName!=="LI" && $li.eq(i).attr("type")=="item" && $li.eq(i).attr("group")==ui.draggable.attr("group")) ;
+                validate3=(ui.draggable[0].tagName==="LI" && $li.eq(i).attr("type")=="group" && $li.eq(i).attr("group")==ui.draggable.attr("group"));
+                if(validate1 || validate2  || validate3  ){
+                    validate=false;
+                    break ;
+                }
+            }
+            if(validate){
+                $("#conditionLocal ul").append(
+                    $("<li />").attr("group",ui.draggable.attr("group")).attr("myID",ui.draggable.attr("id"))
+                        .append($("<i />").addClass("icon"))
+                        .append($("<span />").text(ui.draggable.text()))
+                        .append($("<i />").addClass("icon icon-remove"))
+                )
+                if(ui.draggable[0].tagName==="LI"){
+                    $("#conditionLocal ul").children().last().attr("type","item").find("i").eq(0).addClass("icon-ok item");
+                }
+                else{
+                    $("#conditionLocal ul").children().last().attr("type","group").find("i").eq(0).addClass("icon-inbox group");
+                }
+            }
+
+        }
+    });
+    var width=$(document).width()-$("#assembleCondition").width()-$("#assembleDemonstrate .left").width()-parseInt($("#assembleDemonstrate .left").css("paddingLeft"));
+    $("#assembleDemonstrate .right").width(width-120);
+    $("body").on("resize",function(){
+        var width=$(document).width()-$("#assembleCondition").width()-$("#assembleDemonstrate .left").width()-parseInt($("#assembleDemonstrate .left").css("paddingLeft"));
+        $("#assembleDemonstrate .right").width(width-120);
+    });
+    $("body")
+        .on("click","#conditionLocal .icon-remove",function(){
+            $(this).parents("li").remove();
+        })
+        //带你家返回分析
+        .on("click","#btn-back",function(){
+            $("#detail-block").css("left", "-999em").css("right","auto");
+            $("#conditionOrigin").find(".accordion-header").css("background","#fff").find("i").attr("class","icon icon-chevron-right");
+            $("#conditionOrigin").find(".accordion-body").css("display","none");
+            $("#conditionLocal ul").empty();
+            $("#assembleDemonstrate").css("display","none");
+        })
+        //店家聚合分析
+        .on("click","#assemble-analyse",function(){
+            if($("#conditionLocal ul").children().length>0){
+                generateDetailDate();
+            }
+            else{
+                MessageBox("请至少选择一个属性进行聚合","top","warning")
+            }
+        })
+    ;
+
+}
+function checkConditionHeight(){
+    var rightHeight=$("#assembleDemonstrate").height();
+    var leftHeight=$("#assembleCondition").height();
+    if(leftHeight<rightHeight){
+        $("#assembleCondition").height(rightHeight)
+    }
 }
 //点击某个点以后触发
 function chart_point_click(object) {
-    console.log(object);
+//    console.log(object);
     $("#detail-block").css("left", "0").css("right","0");
-    $("#group-detail-select").children().eq(0).prop("selected",true).trigger('chosen:updated');
     $("#detail-date").text(object.name);
     $("#detail-kpi").text(object.kpi);
     $("#detail-view").text(object.view);
@@ -382,14 +465,28 @@ function chart_point_click(object) {
     var current_date = object.UTCDate;
     var end_time = get_next_date(current_date, ANALYTICS.base_option.frequency).add('milliseconds', -1);
     condition.detail_condition.base_time = {start_time: new Date(current_date).toISOString(), end_time: end_time.toISOString()};
-    console.log(condition.detail_condition);
-    generateDetailDate();
+//    generateDetailDate();
 }
 //在详细中生成pie以及table
 function generateDetailDate() {
-    var property_map_group = {};
-    property_map_group[$("#group-detail-select :selected").val()] = $("#group-detail-select :selected").val();
-    condition.detail_condition.property_map_group = property_map_group;
+    var property_map_group = {},property={},$li;
+    var $target=$("#conditionLocal ul").children();
+    for(var i=0;i<$target.length;i++){
+        $li=$target.eq(i);
+        if($li.attr("type")=='item'){
+            if(!property[$li.attr("group")]){
+                property[$li.attr("group")]=[];
+            }
+            property[$li.attr("group")].push($.trim($li.find("span").text()));
+            property_map_group[$li.attr("group")]=$li.attr("group");
+        }
+        else if($li.attr("type")=='group'){
+            property_map_group[$li.attr("myID")] = $li.attr("myID");
+        }
+    }
+    condition.detail_condition.property=property;
+    condition.detail_condition.property_map_group=property_map_group;
+    console.log(condition.detail_condition);
     $.ajax({
         url: '/kpi_entries/compare',
         type: 'POST',
@@ -397,9 +494,9 @@ function generateDetailDate() {
         data: condition.detail_condition,
         success: function (data) {
             if (data.result) {
-                alert("ok")
                 console.log(data.object)
-//                generatePie(data.object);
+                $("#assembleDemonstrate").css("display","block");
+                generatePie(data.object);
 //                generateDetailTable(data.object);
             }
         }
@@ -452,76 +549,93 @@ function tcr_trend(judge) {
 
 //group detail
 //初始化detail中聚合条件选项
-function groupDetailInit(properties) {
-//    console.log(properties)
-    $.each(properties, function (k, v) {
-        $("#group-detail-select").append($("<option />").attr('value', k).text(v));
+function groupDetailInit(data) {
+    $("#conditionOrigin>p").nextAll().remove();
+    var template,body="",bodyData;
+    for(var groupID in data){
+       for(var groupTitle in data[groupID]){
+           template='<div class="accordion-header" id="'+groupID+'" group="'+groupID+'">'+
+                        '<i class="icon icon-chevron-right"></i>'+
+                        '<label>'+groupTitle+'</label>'+
+                    '</div>';
+           bodyData={"data":data[groupID][groupTitle]};;
+           body=Mustache.render('<div class="accordion-body">'+
+                                    '<ul>'+
+                                        '{{#data}}<li group="'+groupID+'" id="{{id}}">{{value}}</li>{{/data}}'+
+                                    '</ul>'+
+                                '</div>',bodyData);
+           template+=body;
+       }
+       $("#conditionOrigin").append(template);
+    }
+    $( "#conditionOrigin .accordion-header" ).draggable({
+        helper: "clone"
     });
-    $("#group-detail-select").val('').trigger('chosen:updated');
+    $( "#conditionOrigin li" ).draggable({
+        helper: "clone"
+    });
 }
-
-//function groupDetailInit(a) {
-//    $("#group_detail_select_chosen").css("width", "250px");
-//    var typeArray = groupDetail.dict.dict[0].array,
-//        i;
-//    for (i = 0; i < typeArray.length; i++) {
-//        $("#group-detail-select").append($("<option />").text(typeArray[i]));
-//    }
-//    $("#group-detail-select").val('').trigger('chosen:updated');
-//    $("#group-detail-select").chosen().change(function () {
-//        var title = $("#group-detail-select :selected").text()
-//        generateDetailDate(title);
-//    });
-//}
-//function generateDetailDate(type) {
-//    var source = searchForFilter(type);
-//    console.log(source);
-//    generatePie(source);
-//    generateDetailTable(source);
-//}
 
 function searchForFilter(type) {
     var target = groupDetail.dict.dict[1].dict,
         i,
         position;
-    console.log(type)
+//    console.log(type)
     for (i = 0; i < target.key.length; i++) {
         if (target.key[i] === type) {
             return target.array[i];
         }
     }
 }
+ANALYTICS.DETAIL={};
+ANALYTICS.DETAIL.sum=0;
+ANALYTICS.DETAIL.average;
+ANALYTICS.DETAIL.count;
+ANALYTICS.DETAIL.max=0;
+ANALYTICS.DETAIL.min;
 function generatePie(source) {
-    var colorArray = groupDetail.color,
-        length = source.length,
-        target,
-        data = [];
-    $("#groupDetailPie").remove();
-    $("#group-detail-ul").empty();
-    var total = 0;
-    for (var j = 0; j < length; j++) {
-        total += source[j].value;
+    if($("#pie_chart").highcharts()){
+        $("#pie_chart").highcharts().destroy();
     }
-    for (var i = 0; i < length; i++) {
-        target = source[i];
-        var per = 0;
-        if (total != 0) {
-            per = Math.round((target.value / total) * 100,2);
+    var pie_template=CHARTDETAIL.factory("pie_chart");
+    pie_template.chart.type="pie";
+    pie_template.chart.options3d={
+        enabled: true,
+        alpha: 45,
+        beta: 0
+    }
+    var series=[],name="";
+    ANALYTICS.DETAIL.count=source.length;
+    for(var i=0;i<source.length;i++){
+        if(i==0){
+            ANALYTICS.DETAIL.min=source[i].value;
         }
-
-        $("#group-detail-ul")
-            .append($("<li />")
-                .append($("<span />").text(target.name)
-                    .append($("<span />").text(per).css("color", colorArray[i]))
-                ));
-        data.push({
-            value: parseInt(target.value),
-            color: colorArray[i]
-        });
+        name="";
+        for(var j=0;j<source[i].name.length;j++){
+            name+=source[i].name[j]
+            if(j<source[i].name.length-1){
+                name+="-";
+            }
+        }
+       series.push({
+           last:source[i].last_value,
+           name:name,
+           y:source[i].value
+       })
+       ANALYTICS.DETAIL.sum+=parseInt(source[i].value);
+       ANALYTICS.DETAIL.max=ANALYTICS.DETAIL.max>source[i].value?ANALYTICS.DETAIL.max:source[i].value;
+       ANALYTICS.DETAIL.min=ANALYTICS.DETAIL.min<source[i].value?ANALYTICS.DETAIL.min:source[i].value;
     }
-    $("#chart-part").prepend($("<canvas />").attr("height", "180").attr("width", "180").attr("id", "groupDetailPie"))
-    var ctx = document.getElementById("groupDetailPie").getContext("2d");
-    new Chart(ctx).Pie(data);
+    ANALYTICS.DETAIL.average=(ANALYTICS.DETAIL.sum/ANALYTICS.DETAIL.count).toFixed(2);
+    pie_template.series=[];
+    pie_template.series[0]={}
+    pie_template.series[0].data=series;
+    new Highcharts.Chart(pie_template);
+    $("#assume-sum").text(ANALYTICS.DETAIL.sum);
+    $("#assume-average").text(ANALYTICS.DETAIL.average);
+    $("#assume-count").text(ANALYTICS.DETAIL.count);
+    $("#assume-max").text(ANALYTICS.DETAIL.max);
+    $("#assume-min").text(ANALYTICS.DETAIL.min);
 }
 function generateDetailTable(source) {
     var length = source.length,
