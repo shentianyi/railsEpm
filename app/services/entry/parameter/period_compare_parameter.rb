@@ -49,6 +49,15 @@ module Entry
         return times
       end
 
+      def clean_property_values(properties)
+        if self.property
+          property.each do |k,v|
+            key=k.sub(/a/,'').to_i
+            properties[key]=v if properties.has_key?(key)
+          end
+        end
+      end
+
       def build_or_condition
         conditions=[]
         self.times.each do |t|

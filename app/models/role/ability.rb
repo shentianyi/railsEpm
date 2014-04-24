@@ -6,7 +6,9 @@ class Ability
     alias_action :update, :destroy, :to => :modify
 
     if user.admin?
-      can :manage, [User, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem, UserKpiItem, UserSession, Dashboard, DashboardItem, DashboardCondition, Email]
+      can :manage, [User, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem,
+                    UserKpiItem, UserSession, Dashboard, DashboardItem, DashboardCondition, Email,
+                    KpiProperty, KpiPropertyItem, KpiPropertyValue]
       can :manage, UserSession, :email => user.email
 
       can :read, EntityGroup, user_entity_groups: {user_id: user.id}
@@ -18,7 +20,8 @@ class Ability
       can :manage, KpiProperty, user_id: user.id
       #can :read,:all
     elsif user.director?
-      can :manage, [EntityGroupItem,UserKpiItem, KpiEntry, Dashboard, DashboardItem, DashboardCondition, Email]
+      can :manage, [EntityGroupItem, UserKpiItem, KpiEntry, Dashboard, DashboardItem, DashboardCondition, Email,
+                    KpiProperty, KpiPropertyItem, KpiPropertyValue]
       can :manage, User, :id => user.id
 
       can :manage, UserSession, :email => user.email
@@ -32,10 +35,10 @@ class Ability
       can :basic_modify, UserEntityGroup, entity_group: {user_id: user.id}
 
       can :read, KpiCategory, kpis: {department_kpis: {department_id: user.user_departments.pluck(:department_id)}}
-      can [:read, :access, :categoried, :properties], Kpi, department_kpis: {department_id: user.user_departments.pluck(:department_id)}
+      can [:read, :access, :categoried, :properties,:group_properties], Kpi, department_kpis: {department_id: user.user_departments.pluck(:department_id)}
       can :read, Department, user_id: user.id
-      can [:read,:property_value], KpiProperty
-      can :read, [KpiPropertyItem,KpiPropertyValue]
+      can [:read, :property_value], KpiProperty
+      can :read, [KpiPropertyItem, KpiPropertyValue]
     elsif user.user?
       can :manage, User, :id => user.id
       can :manage, UserSession, :email => user.email
@@ -53,7 +56,7 @@ class Ability
       can :manage, KpiEntry, :user_id => user.id
 
       can :manage, Email, :user_id => user.id
-      can :read, [KpiProperty,KpiPropertyItem]
+      can :read, [KpiProperty, KpiPropertyItem]
       can :manage, KpiPropertyValue
     end
   end
