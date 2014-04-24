@@ -49,7 +49,9 @@ module Entry
           #{self.parameter.base_time[:start_time] => 0},
           #{self.parameter.compare_times.first[:start_time] => 0}]
         end
-
+        puts properties
+        self.parameter.clean_property_values(properties)
+        puts properties
         metrix=[]
         size=properties.size
         if size==1
@@ -62,6 +64,8 @@ module Entry
           self.data_module[m]= [{self.parameter.base_time[:start_time] => 0},
                                 {self.parameter.compare_times.first[:start_time] => 0}]
         end
+
+
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
         property_ids=properties.keys
         self.data.each do |d|
@@ -69,6 +73,7 @@ module Entry
           property_ids.each do |id|
             key<<d['_id'][id.to_s]
           end
+
           date=date_parse_proc.call(d['_id']['date'])
           self.data_module[key].each { |v| v[date]= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value']) }
         end

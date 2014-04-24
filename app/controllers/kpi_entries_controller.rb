@@ -58,6 +58,15 @@ class KpiEntriesController < ApplicationController
     render :json => msg
   end
 
+  def compares
+    msg=Message.new
+    if data=Entry::Analyzer.new(params).period_compares
+      msg.result=true
+      msg.object=data
+    end
+    render :json => msg
+  end
+
   def recents
     render :json => KpiEntry.recent_input(current_user.id, params[:ids], params[:time].to_i)
   end

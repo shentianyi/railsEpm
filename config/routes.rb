@@ -100,6 +100,7 @@ IFEpm::Application.routes.draw do
     collection do
       match :analyse
       match :compare
+      match :compares
       get :recents
       post :entry
       post :import
