@@ -71,7 +71,7 @@ class KpiEntryObserver<Mongoid::Observer
       return
     end
     #
-    collect_entry = collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
+    collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
     if collect_entry
       val = kpi_entry.original_value
       old_val = collect_entry.original_value
@@ -84,6 +84,11 @@ class KpiEntryObserver<Mongoid::Observer
       item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first
       KpiPropertyValue.desc_property_value(item.id,kpi_entry[attr_id]) if item
     }
+
+    #destroy collection kpi entry if no details left
+    if kpi_entry.last_detail?
+      collect_entry.destroy
+    end
   end
 
   def after_update kpi_entry

@@ -318,6 +318,14 @@
     font-size:10px;
     margin-left:70px;
   }
+  &[type="myKPI"]{
+    right:0px;
+    bottom:-6px;
+    left:23px;
+    p{
+      width:90%;
+    }
+  }
 }
 
 .attribute-block[type="edit"]

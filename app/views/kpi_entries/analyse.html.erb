@@ -44,18 +44,6 @@
       </div>
       <div class="chosen-attribute">
         <select data-placeholder="选择属性" multiple style="width:250px;" class="chosen-select " title="analy-attribute-select" id="kpi-property-select">
-          <optgroup label="客户属性">
-            <option>Nike</option>
-            <option>Adidas</option>
-            <option>NYC</option>
-            <option>Washington</option>
-          </optgroup>
-          <optgroup label="材料性质">
-            <option>cartoon</option>
-            <option>plastic</option>
-            <option>iron</option>
-            <option>human made</option>
-          </optgroup>
         </select>
       </div>
 
@@ -98,35 +86,9 @@
           <a>Y</a>
         </li>
       </ul>
-      <a class="btn btn-success compare-current-btn">进行同期对比</a>
+      <!--<a class="btn btn-success compare-current-btn" id="compare-current-btn">进行同期对比</a>-->
     </div>
 
-    <div id="chart-point-detail" class="chart-point-detail">
-      <i class="icon icon-remove chart-detail-close" id="chart-detail-close" onclick="close_chart_detail()"></i>
-      <select style="width:150px;" class="chosen-select" id="group-detail-select">
-      </select>
-
-      <div class="chart-part" id="chart-part">
-        <canvas id="groupDetailPie" width="200" height="200"></canvas>
-        <ul id="group-detail-ul"></ul>
-      </div>
-      <div id="group-detail-table" class="group-detail-table">
-        <table>
-          <thead>
-          <tr>
-            <td>名称</td>
-            <td>当前值</td>
-            <td>上一同期值</td>
-            <td>同比</td>
-            <td></td>
-          </tr>
-          </thead>
-          <tbody>
-
-          </tbody>
-        </table>
-      </div>
-    </div>
 
     <div class="relative" id="chart-main-middle">
       <div class="chart-container " id="chart-container"></div>
@@ -153,11 +115,103 @@
   </div>
 </div>
 
+<div class="detail-block" id="detail-block">
+   <div class="inner">
+     <i class="icon icon-remove" id="close-detail-block"></i>
+     <div class="title">
+       <p class="date" id="detail-date"></p>
+       <p class="kpi"><span id="detail-kpi"></span><span id="detail-view"></span></p>
+     </div>
+     <div class="content">
+       <div class="select-attribute">
+         <select data-placeholder="选择聚合属性" multiple class="chosen-select attribute-select" id="group-detail-select">
+         </select>
+         <a class="btn btn-primary analyse-btn" id="analyse-btn">聚合分析</a>
+       </div>
+
+       <div class="chart">
+         <div class="graph" id="pie_chart"></div>
+         <div class="detail">
+           <div class="big">
+             <p>wangzixiao</p>
+             <p>90.0%</p>
+           </div>
+           <div class="small">
+             <dl>
+               <dt>当前值</dt>
+               <dd>60</dd>
+               <dt>上一同期值</dt>
+               <dd>123</dd>
+               <dt>同比</dt>
+               <dd>40%</dd>
+               <dd><i class="icon icon-arrow-up"></i></dd>
+             </dl>
+             <dl>
+               <dt>聚合总值</dt>
+               <dd>6600</dd>
+               <dt>聚合平均值</dt>
+               <dd>80</dd>
+               <dt>条目数量</dt>
+               <dd>2</dd>
+               <dt>最大值</dt>
+               <dd>60</dd>
+               <dt>最小值</dt>
+               <dd>40</dd>
+             </dl>
+           </div>
+         </div>
+       </div>
+
+       <table>
+         <thead>
+            <tr>
+              <td>名字</td>
+              <td>当前值</td>
+              <td>上一同期值</td>
+              <td>同比</td>
+              <td></td>
+            </tr>
+         </thead>
+         <tbody>
+         <tr>
+           <td>wangzixiao</td>
+           <td>60</td>
+           <td>120</td>
+           <td>50%</td>
+           <td><i class="icon icon-arrow-down"></i></td>
+         </tr>
+         <tr>
+           <td>baitingting</td>
+           <td>40</td>
+           <td>120</td>
+           <td>80%</td>
+           <td><i class="icon icon-arrow-down"></i></td>
+         </tr>
+
+         </tbody>
+       </table>
+
+     </div>
+   </div>
+</div>
+
+<script>
+$(document).ready(function(){
+   var pie_template=CHARTDETAIL.factory("pie_chart");
+   pie_template.chart.type="pie";
+   pie_template.series=[{data:[{name:"wangzixiao",y:60},{name:"baitingting",y:40}]}];
+   new Highcharts.Chart(pie_template)
+
+})
+</script>
+
 <% content_for :javascript_includes do %>
+    <%= javascript_include_tag "moment.min.js" %>
     <%= javascript_include_tag "highstock.js" %>
     <%= javascript_include_tag "exporting.js" %>
     <%= javascript_include_tag "exporting.extend.src.js" %>
     <%= javascript_include_tag "high_chart_template_analytic.js" %>
+    <%= javascript_include_tag "high_chart_template_detail.js" %>
     <%= javascript_include_tag "Analytics_init.js" %>
     <%= javascript_include_tag "bootstrap-datepicker.js" %>
     <%= javascript_include_tag "date_picker_template.js" %>

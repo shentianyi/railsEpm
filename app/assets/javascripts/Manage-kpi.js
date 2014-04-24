@@ -266,13 +266,15 @@ function post_kpi(option) {
                unit : option.unit,
                is_calculated : option.is_calculated,
                formula : option.formula,
-               formula_string : option.formula_string
+               formula_string : option.formula_string,
+              kpi_properties:option.attributes
           }
      }, function(data) {
           if(data.result) {
                var object = data.object
                var id = object.id;
                var formula_string = object.is_calculated ? object.formula_string : I18n.t('manage.kpi.not_calculate_type');
+              var attrs = object.properties;
                if(option.entity == $("#manage-left-menu .active").attr("number")) {
                     $("#manage-sort-list").prepend($("<li />").attr("id", id).append($("<p />").addClass("sort-handle").text(":")).append($("<input type='checkbox'/>").attr("is_calculated", object.is_calculated)).append($("<table />").addClass("category").append($("<tr />").append($("<td />").text(object.name).attr("title", object.name)).append($("<td />").text(object.interval)).append($("<td />").text(object.trend)).append($("<td />").addClass("manage-kpi-target").append($("<div />").append($("<span />").addClass("can-change").text(object.target_max).attr("title", object.target_max)).append($("<span />").text(object.section)).append($("<input type='text'/>").attr("effect_on", id)))).append($("<td />").addClass("manage-kpi-target").append($("<div />").append($("<span />").addClass("can-change").text(object.target_min).attr("title", object.target_min)).append($("<span />").text(object.section)).append($("<input type='text'/>").attr("effect_on", id)))).append($("<td />").text(option.is_calculated ? I18n.t('manage.kpi.calculate_type') : I18n.t('manage.kpi.not_calculate_type')).attr("title", formula_string))).append($("<tr />").append($("<td />").text(object.desc).attr("title", object.desc)).append($("<td />").text(I18n.t('manage.kpi.frequency'))).append($("<td />").text(I18n.t('manage.kpi.trend'))).append($("<td />").text(I18n.t('manage.kpi.target'))).append($("<td />").text(I18n.t('manage.kpi.target_min'))).append($("<td />").text(I18n.t('manage.kpi.is_calculate_type'))))));
                     $("#manage-sort-list li").each(function() {
@@ -280,6 +282,11 @@ function post_kpi(option) {
                               gravity : 'se'
                          });
                     });
+                   //append attrs
+                   $("#manage-sort-list li#"+id).append($("<div/>").addClass("attribute-position").append($("<a/>").addClass("btn btn-success edit-kpi-attribute").text("编辑属性")).append($("<p/>").attr("kpi_id",id)));
+                   for(var i = 0;i<attrs.length;i++){
+                       $("p[kpi_id="+id+"]").append($("<span/>").attr("id",attrs[i].id).text(attrs[i].name));
+                   }
                     MANAGE.judge_kpi_count();
                     $("#manage-sort-list input[type='checkbox']").iCheck({
                          checkboxClass : 'icheckbox_minimal-aero'
