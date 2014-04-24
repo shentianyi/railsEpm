@@ -50,7 +50,7 @@ class EntityGroupsController < ApplicationController
   def destroy
     msg=Message.new
     if @entity_group=EntityGroup.accessible_by(current_ability).find_by_id(params[:id])
-      if @entity_group.can_modify_by_user(current_user)
+      if @entity_group.can_destroy_by_user(current_user)
         @entity_group.destroy
         msg.result=true
       else
