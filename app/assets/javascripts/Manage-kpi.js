@@ -456,7 +456,7 @@ MANAGE.kpi.attribute=function(){
 }
 
 MANAGE.kpi.add_kpi_property=function(e){
-    if(e.keyCode != "undefined" && e.keyCode != 13){
+    if(e.keyCode != undefined && e.keyCode != 13){
         return;
     }
     var kpi_id = $(this).attr("work_at");
@@ -514,6 +514,7 @@ MANAGE.kpi.edit_attribute_copen=function(obj){
     }
     $("#edit-attribute-block-add").attr("work_at",$(obj).attr("work_at"));
     $("#add-kpi-property").attr("work_at",$(obj).attr("work_at"));
+    $("#add-kpi-property").val("");
     //
     $("#edit-attribute-block").css("display","block");
     $("#edit-attribute-block>div").css("display","block");
