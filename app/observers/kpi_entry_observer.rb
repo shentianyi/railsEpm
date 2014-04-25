@@ -87,7 +87,7 @@ class KpiEntryObserver<Mongoid::Observer
 
     #destroy collection kpi entry if no details left
     if kpi_entry.last_detail?
-      collect_entry.destroy
+      collect_entry.destroy if collect_entry
     end
   end
 
@@ -96,7 +96,7 @@ class KpiEntryObserver<Mongoid::Observer
       return
     end
 
-    collect_entry = collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
+    collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
 
     if collect_entry && kpi_entry.original_value_changed?
       val_change = kpi_entry.original_value-BigDecimal.new(kpi_entry.original_value_was)
