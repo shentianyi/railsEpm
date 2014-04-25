@@ -3,12 +3,13 @@
 
 KpiEntryBak.all.each do |e|
   if Kpi.find_by_id(e.kpi_id)
+    entry_at = e.entry_at.nil? ? e.parsed_entry_at : e.entry_at
     me=KpiEntry.create(
         kpi_id: e.kpi_id,
         user_id: e.user_id,
         entity_id: e.entity_id,
         user_kpi_item_id: e.user_kpi_item_id,
-        entry_at: e.entry_at,
+        entry_at: entry_at,
         parsed_entry_at: e.parsed_entry_at,
         original_value: e.original_value,
         value: e.value,
