@@ -181,3 +181,20 @@ function dashboard_show_loading(out_id){
 function dashboard_remove_loading(out_id){
     $("#"+out_id).find(".dashboard-show-loading").remove();
 }
+//数组中去除重复元素
+Array.prototype.strip = function(){
+    if (this.length<2) return [this[0]] || [];
+    var arr = [];
+    for (var i=0;i<this.length;i++)
+    {
+        arr.push(this.splice(i--,1));
+        for (var j=0; j<this.length; j++)
+        {
+            if (this[j] == arr[arr.length -1])
+            {
+                this.splice(j--,1);
+            }
+        }
+    }
+    return arr;
+}

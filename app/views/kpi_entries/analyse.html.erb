@@ -125,7 +125,7 @@
     <div class="assembleCondition" id="assembleCondition">
       <!--选择条件的-->
       <div class="origin" id="conditionOrigin">
-        <p>所有属性</p>
+        <p>所有属性<span>(拖拽属性类或单项)</span></p>
 
       </div>
       <!--已经选择的-->
@@ -138,12 +138,16 @@
     </div>
 
     <div class="assembleDemonstrate" id="assembleDemonstrate">
+
        <div class="left">
-         <div class="graph" id="pie_chart"></div>
+
+         <div class="graph" id="pie_chart" ></div>
+
          <div class="big">
-           <p>wangzixiao</p>
-           <p>90.0%</p>
+           <p id="assemble-name"></p>
+           <p id="assemble-percent"></p>
          </div>
+
          <div class="small">
            <dl>
              <dt>当前值</dt>
@@ -168,38 +172,15 @@
            </dl>
          </div>
        </div>
+
        <div class="right">
          <table>
-            <thead>
+            <thead id="assemble-thead">
                 <tr>
-                    <td>名字</td>
-                    <td>当前值</td>
-                    <td>占比</td>
-                    <td>上一同期值</td>
-                    <td>同比</td>
-                    <td></td>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>wangzixiao</td>
-                    <td>60</td>
-                    <td>60%</td>
-                    <td>120</td>
-                    <td>50%</td>
-                    <td><i class="icon icon-arrow-down"></i></td>
-                </tr>
-                <tr>
-                    <td>baitingting</td>
-                    <td>40</td>
-                    <td>40%</td>
-                    <td>120</td>
-                    <td>80%</td>
-                    <td><i class="icon icon-arrow-down"></i></td>
-                </tr>
-
-
-         </tbody>
+            <tbody id="assemble-tbody">
+            </tbody>
          </table>
        </div>
     </div>
@@ -208,7 +189,35 @@
 
 </div>
 
-
+<div class="detail-table-compare-block" id="detail-table-compare-block">
+  <div class="inner">
+    <div class="header">
+      <p id="table-compare-condition"></p>
+      <p id="table-compare-kpi"></p>
+      <p id="table-compare-view"></p>
+      <i class="icon icon-remove" id="detail-table-remove"></i>
+    </div>
+    <div class="graph" id="table-detail-line"></div>
+    <div class="footer">
+      <dl>
+        <dt>总值</dt>
+        <dd id="table-compare-sum"></dd>
+      </dl>
+      <dl>
+        <dt>平均值</dt>
+        <dd id="table-compare-average"></dd>
+      </dl>
+      <dl>
+        <dt>最大值</dt>
+        <dd id="table-compare-max"></dd>
+      </dl>
+      <dl>
+        <dt>最小值</dt>
+        <dd id="table-compare-min"></dd>
+      </dl>
+    </div>
+  </div>
+</div>
 
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "moment.min.js" %>

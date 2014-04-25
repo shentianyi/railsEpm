@@ -376,6 +376,17 @@ ANALYTICS.detailPoint.init=function(){
                $body.slideUp();
            }
        })
+    //点击table 同比
+       .on("click",".table-detail-compare",function(event){
+
+           var obj=adapt_event(event).target
+           ANALYTICS.DETAIL.generate_table_detail(obj);
+
+       })
+       .on("click","#detail-table-remove",function(){
+           $("#detail-table-compare-block").css("left","-999em").css("right","auto");
+           $("#detail-table-compare-block .inner").css("left","-1000px");
+       })
     //  拖拽
 
     $( "#conditionLocal" ).droppable({
@@ -411,12 +422,14 @@ ANALYTICS.detailPoint.init=function(){
 
         }
     });
-    var width=$(document).width()-$("#assembleCondition").width()-$("#assembleDemonstrate .left").width()-parseInt($("#assembleDemonstrate .left").css("paddingLeft"));
+
+    var width=$(document).width()-$("#assembleCondition").width();
     $("#assembleDemonstrate .right").width(width-120);
     $("body").on("resize",function(){
-        var width=$(document).width()-$("#assembleCondition").width()-$("#assembleDemonstrate .left").width()-parseInt($("#assembleDemonstrate .left").css("paddingLeft"));
+        var width=$(document).width()-$("#assembleCondition").width();
         $("#assembleDemonstrate .right").width(width-120);
     });
+
     $("body")
         .on("click","#conditionLocal .icon-remove",function(){
             $(this).parents("li").remove();
@@ -424,7 +437,7 @@ ANALYTICS.detailPoint.init=function(){
         //带你家返回分析
         .on("click","#btn-back",function(){
             $("#detail-block").css("left", "-999em").css("right","auto");
-            $("#conditionOrigin").find(".accordion-header").css("background","#fff").find("i").attr("class","icon icon-chevron-right");
+            $("#conditionOrigin").find(".accordion-header").removeClass("active").css("background","#fff").find("i").attr("class","icon icon-chevron-right");
             $("#conditionOrigin").find(".accordion-body").css("display","none");
             $("#conditionLocal ul").empty();
             $("#assembleDemonstrate").css("display","none");
@@ -445,7 +458,8 @@ function checkConditionHeight(){
     var rightHeight=$("#assembleDemonstrate").height();
     var leftHeight=$("#assembleCondition").height();
     if(leftHeight<rightHeight){
-        $("#assembleCondition").height(rightHeight)
+        $("#assembleCondition").height(rightHeight);
+        $("#detail-table-compare-block").height(rightHeight+$("#detail-block .navigation").height());
     }
 }
 //点击某个点以后触发
@@ -455,6 +469,9 @@ function chart_point_click(object) {
     $("#detail-date").text(object.name);
     $("#detail-kpi").text(object.kpi);
     $("#detail-view").text(object.view);
+    //table同比中的
+    $("#table-compare-kpi").text(object.kpi);
+    $("#table-compare-view").text(object.view);
     condition.detail_condition = {
         kpi_id: ANALYTICS.base_option.kpi_id,
         entity_group_id: ANALYTICS.base_option.entity_group_id,
@@ -465,12 +482,12 @@ function chart_point_click(object) {
     var current_date = object.UTCDate;
     var end_time = get_next_date(current_date, ANALYTICS.base_option.frequency).add('milliseconds', -1);
     condition.detail_condition.base_time = {start_time: new Date(current_date).toISOString(), end_time: end_time.toISOString()};
-//    generateDetailDate();
 }
 //在详细中生成pie以及table
 function generateDetailDate() {
     var property_map_group = {},property={},$li;
     var $target=$("#conditionLocal ul").children();
+    var propertyGroupSort=[],validate=true;
     for(var i=0;i<$target.length;i++){
         $li=$target.eq(i);
         if($li.attr("type")=='item'){
@@ -479,14 +496,18 @@ function generateDetailDate() {
             }
             property[$li.attr("group")].push($.trim($li.find("span").text()));
             property_map_group[$li.attr("group")]=$li.attr("group");
+            propertyGroupSort.push(parseInt($li.attr("group")));
         }
         else if($li.attr("type")=='group'){
             property_map_group[$li.attr("myID")] = $li.attr("myID");
+            propertyGroupSort.push(parseInt($li.attr("myID")));
         }
     }
+    propertyGroupSort.sort(function compare(a,b){return a-b});
+    propertyGroupSort=propertyGroupSort.strip();
     condition.detail_condition.property=property;
     condition.detail_condition.property_map_group=property_map_group;
-    console.log(condition.detail_condition);
+    //console.log(condition.detail_condition);
     $.ajax({
         url: '/kpi_entries/compare',
         type: 'POST',
@@ -494,10 +515,11 @@ function generateDetailDate() {
         data: condition.detail_condition,
         success: function (data) {
             if (data.result) {
-                console.log(data.object)
+                //console.log(data.object)
                 $("#assembleDemonstrate").css("display","block");
                 generatePie(data.object);
-//                generateDetailTable(data.object);
+                generateDetailTable(data.object,propertyGroupSort);
+                checkConditionHeight();
             }
         }
     });
@@ -549,11 +571,14 @@ function tcr_trend(judge) {
 
 //group detail
 //初始化detail中聚合条件选项
+
 function groupDetailInit(data) {
     $("#conditionOrigin>p").nextAll().remove();
     var template,body="",bodyData;
+    ANALYTICS.DETAIL.propertyGroup=[];
     for(var groupID in data){
        for(var groupTitle in data[groupID]){
+           ANALYTICS.DETAIL.propertyGroup.push(groupTitle);
            template='<div class="accordion-header" id="'+groupID+'" group="'+groupID+'">'+
                         '<i class="icon icon-chevron-right"></i>'+
                         '<label>'+groupTitle+'</label>'+
@@ -588,17 +613,169 @@ function searchForFilter(type) {
     }
 }
 ANALYTICS.DETAIL={};
-ANALYTICS.DETAIL.sum=0;
+
 ANALYTICS.DETAIL.average;
 ANALYTICS.DETAIL.count;
-ANALYTICS.DETAIL.max=0;
 ANALYTICS.DETAIL.min;
+ANALYTICS.DETAIL.choose_property_id;
+ANALYTICS.DETAIL.max=0;
+ANALYTICS.DETAIL.sum=0;
+ANALYTICS.DETAIL.maxOrder=0;
+ANALYTICS.DETAIL.propertyGroup=[];
+//table同比时
+ANALYTICS.DETAIL.generate_table_detail=function(obj){
+    var c;
+    c=deepCopy(condition.detail_condition,c);
+    var $targets=$(obj).parents("tr").children();
+    c.property={};
+    for(var i=0;i<ANALYTICS.DETAIL.choose_property_id.length;i++){
+        c.property[ANALYTICS.DETAIL.choose_property_id[i]]=$targets.eq(i).text();
+    }
+    c.point_num=10;
+    $.post("/kpi_entries/compares",c,function(data){
+        if(data.result){
+            $("#detail-table-compare-block").css("left","0px").css("right","0px");
+            $("#detail-table-compare-block .inner").css("left","0px");
+            var keys=[],sum= 0,average,min,max=0;
+            switch (c.frequency){
+                case "90":
+                    for(var i=0;i<data.object.keys.length;i++){
+                        keys[i]=new Date(data.object.keys[i]).toWayneString().hour;
+                        if(i==0){
+                            min=data.object.values[i];
+                        }
+                        sum+=data.object.values[i];
+                        max=max>data.object.values[i]?max:data.object.values[i];
+                        min=min<data.object.values[i]?min:data.object.values[i];
+                    }
+                    average=(sum/data.object.values.length).toFixed(2);
+                    break;
+                case "100":
+                    for(var i=0;i<data.object.keys.length;i++){
+                        keys[i]=new Date(data.object.keys[i]).toWayneString().day;
+                        if(i==0){
+                            min=data.object.values[i];
+                        }
+                        sum+=data.object.values[i];
+                        max=max>data.object.values[i]?max:data.object.values[i];
+                        min=min<data.object.values[i]?min:data.object.values[i];
+                    }
+                    average=(sum/data.object.values.length).toFixed(2);
+                    break;
+                case "200":
+                    for(var i=0;i<data.object.keys.length;i++){
+                        keys[i]=new Date(data.object.keys[i]).toWayneString().year+" "+new Date(data.object.keys[i]).toWeekNumber()+"周";
+                        if(i==0){
+                            min=data.object.values[i];
+                        }
+                        sum+=data.object.values[i];
+                        max=max>data.object.values[i]?max:data.object.values[i];
+                        min=min<data.object.values[i]?min:data.object.values[i];
+                    }
+                    average=(sum/data.object.values.length).toFixed(2);
+                    break;
+                case "300":
+                    for(var i=0;i<data.object.keys.length;i++){
+                       keys[i]=new Date(data.object.keys[i]).toWayneString().month;
+                        if(i==0){
+                            min=data.object.values[i];
+                        }
+                        sum+=data.object.values[i];
+                        max=max>data.object.values[i]?max:data.object.values[i];
+                        min=min<data.object.values[i]?min:data.object.values[i];
+                    }
+                    average=(sum/data.object.values.length).toFixed(2);
+                    break;
+                case "400":
+                    for(var i=0;i<data.object.keys.length;i++){
+                        keys[i]=new Date(data.object.keys[i]).toWayneString().year+" "+new Date(data.object.keys[i]).monthToQuarter()+"季度";
+                        if(i==0){
+                            min=data.object.values[i];
+                        }
+                        sum+=data.object.values[i];
+                        max=max>data.object.values[i]?max:data.object.values[i];
+                        min=min<data.object.values[i]?min:data.object.values[i];
+                    }
+                    break;
+                case "500":
+                    for(var i=0;i<data.object.keys.length;i++){
+                        keys[i]=new Date(data.object.keys[i]).toWayneString().year;
+                        if(i==0){
+                            min=data.object.values[i];
+                        }
+                        sum+=data.object.values[i];
+                        max=max>data.object.values[i]?max:data.object.values[i];
+                        min=min<data.object.values[i]?min:data.object.values[i];
+                    }
+                    average=(sum/data.object.values.length).toFixed(2);
+                    break;
+            }
+            var line_template=CHARTDETAIL.factory("table-detail-line");
+            line_template.series=[
+                {type:"column",data:data.object.values},
+                {type:"line",data:data.object.values}
+            ];
+            line_template.xAxis={};
+            line_template.xAxis.labels={};
+            line_template.xAxis.labels.style={};
+            line_template.xAxis.labels.style.fontSize="10px";
+            line_template.xAxis.categories=keys;
+            new Highcharts.Chart(line_template);
+            var name="";
+            for (var i in c.property){
+                name+=c.property[i]+"/";
+            }
+            $("#table-compare-condition").text(name);
+            $("#table-compare-sum").text(sum);
+            $("#table-compare-average").text(average);
+            $("#table-compare-max").text(max);
+            $("#table-compare-min").text(min);
+        }
+        else{
+            MessageBox("发生了一些错误","top","warning")
+        }
+    });
+}
+ANALYTICS.DETAIL.compare=function(current,last){
+   var number=Math.abs(current-last);
+   if(last==0){
+       return number.toFixed(1)+"%";
+   }
+    else{
+       return (number/last*100).toFixed(1)+"%";
+   }
+}
+ANALYTICS.DETAIL.compareArrow=function(current,last){
+    var icon=current>last?"icon icon-arrow-up":(current==last?"":"icon icon-arrow-down");
+    return icon;
+}
+
+
+ANALYTICS.DETAIL.pieClick=function(data){
+    $("#assemble-current").text(data.y);
+    $("#assemble-last").text(data.last);
+    var compare=ANALYTICS.DETAIL.compare(data.y,data.last);
+    $("#assemble-compare").text(compare);
+    var icon=ANALYTICS.DETAIL.compareArrow(data.y,data.last);
+    $("#assemble-arrow").attr("class",icon);
+    $("#assemble-name").css("color",data.borderColor).text(data.name);
+    $("#assemble-percent").css("color",data.borderColor).text((data.percentage).toFixed(1)+"%");
+}
 function generatePie(source) {
+    ANALYTICS.DETAIL.max=0;
+    ANALYTICS.DETAIL.sum=0;
+    ANALYTICS.DETAIL.maxOrder=0;
     if($("#pie_chart").highcharts()){
         $("#pie_chart").highcharts().destroy();
     }
     var pie_template=CHARTDETAIL.factory("pie_chart");
     pie_template.chart.type="pie";
+    pie_template.legend={
+        enabled:true,
+        y: 0,
+        floating: true,
+        maxHeight:55
+    };
     pie_template.chart.options3d={
         enabled: true,
         alpha: 45,
@@ -620,13 +797,21 @@ function generatePie(source) {
        series.push({
            last:source[i].last_value,
            name:name,
-           y:source[i].value
+           y:source[i].value ,
+           order:i
        })
        ANALYTICS.DETAIL.sum+=parseInt(source[i].value);
        ANALYTICS.DETAIL.max=ANALYTICS.DETAIL.max>source[i].value?ANALYTICS.DETAIL.max:source[i].value;
+       ANALYTICS.DETAIL.maxOrder=ANALYTICS.DETAIL.max>source[i].value?ANALYTICS.DETAIL.maxOrder:i;
        ANALYTICS.DETAIL.min=ANALYTICS.DETAIL.min<source[i].value?ANALYTICS.DETAIL.min:source[i].value;
     }
     ANALYTICS.DETAIL.average=(ANALYTICS.DETAIL.sum/ANALYTICS.DETAIL.count).toFixed(2);
+    series[ANALYTICS.DETAIL.maxOrder].sliced=true;
+    series[ANALYTICS.DETAIL.maxOrder].selected=true;
+    series[ANALYTICS.DETAIL.maxOrder].percentage=series[ANALYTICS.DETAIL.maxOrder].y/ANALYTICS.DETAIL.sum*100;
+    var length=ANALYTICS.series_colors.length;
+    series[ANALYTICS.DETAIL.maxOrder].borderColor=ANALYTICS.DETAIL.maxOrder<length?ANALYTICS.series_colors[ANALYTICS.DETAIL.maxOrder]:ANALYTICS.series_colors[ANALYTICS.DETAIL.maxOrder % ANALYTICS.series_colors.length - 1];
+    ANALYTICS.DETAIL.pieClick( series[ANALYTICS.DETAIL.maxOrder] );
     pie_template.series=[];
     pie_template.series[0]={}
     pie_template.series[0].data=series;
@@ -637,25 +822,56 @@ function generatePie(source) {
     $("#assume-max").text(ANALYTICS.DETAIL.max);
     $("#assume-min").text(ANALYTICS.DETAIL.min);
 }
-function generateDetailTable(source) {
-    var length = source.length,
-        i, target, value, last, icon, compare;
-    $("#group-detail-table tbody").empty();
-    for (i = 0; i < length; i++) {
-        target = source[i];
-        value = (parseInt(getObject(target, "value")) * RATIO).toFixed(1);
-        last = (parseInt(getObject(target, "last")) * RATIO).toFixed(1);
-        compare = (Math.abs(value - last) / last * 100).toFixed(1) + "%";
-        icon = value > last ? "icon-arrow-up" : (value == last ? "" : "icon-arrow-down");
-        $("#group-detail-table tbody")
-            .append($("<tr />")
-                .append($("<td />").text(getObject(target, "name")))
-                .append($("<td />").text(value))
-                .append($("<td />").text(last))
-                .append($("<td />").text(compare))
-                .append($("<td />").append($("<i />").addClass("icon " + icon)))
-            )
+function generateDetailTable(source,property_group) {
+    $("#assemble-tbody").empty();
+    $("#assemble-thead tr").empty();
+    ANALYTICS.DETAIL.choose_property_id=property_group;
+    for(var i=property_group.length-1;i>=0;i--){
+       $("#assemble-thead tr").prepend($("<td />").text(ANALYTICS.DETAIL.propertyGroup[property_group[i]-1]))
     }
+    var headerDefault="<td>当前值</td>"+
+        "<td>占比</td>"+
+        "<td>上一同期值</td>"+
+        "<td>同比</td>"+
+        "<td></td>"+
+        "<td style='width:80px;'></td>"
+    $("#assemble-thead tr").append(headerDefault);
+    var sum=0;
+    for(var i=0;i<source.length;i++){
+        sum+=source[i].value;
+    }
+    var templateData={};
+    templateData.data=source;
+    templateData.percent= function(){
+        return (parseInt(this.value)/sum*100).toFixed(1)+"%";
+    }
+    templateData.compare=function(){
+        var current=parseInt(this.value),
+            last=parseInt(this.last_value);
+        var compare=Math.abs(current-last);
+        if(last==0){
+            return current;
+        }
+        else{
+            return (compare/last*100).toFixed(1)+"%";
+        }
+    }
+    templateData.icon=function(){
+        var current=parseInt(this.value),
+            last=parseInt(this.last_value);
+        return current>last?"icon-arrow-up":(current==last?"":"icon-arrow-down");
+    }
+    var render =Mustache.render('{{#data}}<tr>'+
+        '{{#name}}<td>{{.}}</td>{{/name}}'+
+        '<td>{{value}}</td>'+
+        '<td>{{percent}}</td>'+
+        '<td>{{last_value}}</td>'+
+        '<td>{{compare}}</td>'+
+        '<td><i class="icon {{icon}}"></i></td>'+
+        '<td><a class="btn btn-primary table-detail-compare">同比分析</a></td>'+
+        '</tr>{{/data}}',templateData);
+    $("#assemble-tbody").append(render);
+
 }
 
 

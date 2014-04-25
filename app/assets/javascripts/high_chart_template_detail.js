@@ -30,7 +30,9 @@ CHARTDETAIL.factory=function(render){
         tooltip:{
             formatter: function() {
                 var returnString="";
-                returnString+="<span style='color:"+this.point.color+"'>"+this.point.name+"</span><br />"
+                if(this.point.name){
+                    returnString+="<span style='color:"+this.point.color+"'>"+this.point.name+"</span><br />"
+                }
                 returnString+="当前值："+this.point.y+"<br />"
                 if(this.point.percentage){
                     returnString+="占比："+(this.point.percentage).toFixed(1)+"%<br />"
@@ -59,13 +61,6 @@ CHARTDETAIL.factory=function(render){
                     duration: 1000
                 },
                 cursor:'pointer',
-                point:{
-                    events:{
-                        click:function(){
-                            console.log(this)
-                        }
-                    }
-                },
                 marker: {
                     enabled: true,
                     fillColor: null,
@@ -112,7 +107,7 @@ CHARTDETAIL.factory=function(render){
             pie: {
                 allowPointSelect: true,
                 cursor: 'pointer',
-                size:220,
+                size:210,
                 depth:28,
                 colors:[
                     '#97cbe4',
@@ -126,10 +121,18 @@ CHARTDETAIL.factory=function(render){
                     '#94cd7b',
                     '#69b0bd'
                 ],
+                showInLegend:true,
                 dataLabels: {
                     enabled: false,
                     distance:-10,
                     format: '{point.name}'
+                },
+                point:{
+                    events:{
+                        click:function(){
+                            ANALYTICS.DETAIL.pieClick(this);
+                        }
+                    }
                 }
             }
         }
