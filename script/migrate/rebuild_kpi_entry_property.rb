@@ -7,7 +7,7 @@ properties=Kpi.find(kpi_id).kpi_property_items.all
 property_values={}
 properties.each do |p|
   values=p.kpi_property_values.all
-  property_values[p.kpi_property_id]={count: values.size, values: values}
+  property_values[p.kpi_property_id]={count: values.size, values: values} if values.size>0
 end
 
 

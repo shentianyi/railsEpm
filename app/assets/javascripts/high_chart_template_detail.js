@@ -19,6 +19,7 @@ CHARTDETAIL.factory=function(render){
             events : {
 
             }
+
         },
         title: {
             text: null
@@ -32,7 +33,7 @@ CHARTDETAIL.factory=function(render){
                 returnString+="<span style='color:"+this.point.color+"'>"+this.point.name+"</span><br />"
                 returnString+="当前值："+this.point.y+"<br />"
                 if(this.point.percentage){
-                    returnString+="占比："+this.point.percentage+"%<br />"
+                    returnString+="占比："+(this.point.percentage).toFixed(1)+"%<br />"
                 }
                 return returnString;
             }
@@ -111,7 +112,8 @@ CHARTDETAIL.factory=function(render){
             pie: {
                 allowPointSelect: true,
                 cursor: 'pointer',
-                size:180,
+                size:220,
+                depth:28,
                 colors:[
                     '#97cbe4',
                     '#f99c92',
@@ -126,7 +128,8 @@ CHARTDETAIL.factory=function(render){
                 ],
                 dataLabels: {
                     enabled: false,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    distance:-10,
+                    format: '{point.name}'
                 }
             }
         }

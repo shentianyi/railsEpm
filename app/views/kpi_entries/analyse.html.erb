@@ -116,98 +116,104 @@
 </div>
 
 <div class="detail-block" id="detail-block">
-   <div class="inner">
-     <i class="icon icon-remove" id="close-detail-block"></i>
-     <div class="title">
-       <p class="date" id="detail-date"></p>
-       <p class="kpi"><span id="detail-kpi"></span><span id="detail-view"></span></p>
-     </div>
-     <div class="content">
-       <div class="select-attribute">
-         <select data-placeholder="选择聚合属性" multiple class="chosen-select attribute-select" id="group-detail-select">
-         </select>
-         <a class="btn btn-primary analyse-btn" id="analyse-btn">聚合分析</a>
-       </div>
+  <div class="navigation">
+    <a class="btn-back" id="btn-back"><i class="icon icon-chevron-left"></i> 返回分析</a>
+    <p><span id="detail-date"></span><span id="detail-kpi"></span><span id="detail-view"></span></p>
+  </div>
+  <div class="content">
 
-       <div class="chart">
+    <div class="assembleCondition" id="assembleCondition">
+      <!--选择条件的-->
+      <div class="origin" id="conditionOrigin">
+        <p>所有属性</p>
+
+      </div>
+      <!--已经选择的-->
+      <div class="local" id="conditionLocal">
+        <p>已选择属性</p>
+        <ul>
+        </ul>
+      </div>
+      <a class="btn btn-primary" id="assemble-analyse">聚合分析</a>
+    </div>
+
+    <div class="assembleDemonstrate" id="assembleDemonstrate">
+       <div class="left">
          <div class="graph" id="pie_chart"></div>
-         <div class="detail">
-           <div class="big">
-             <p>wangzixiao</p>
-             <p>90.0%</p>
-           </div>
-           <div class="small">
-             <dl>
-               <dt>当前值</dt>
-               <dd>60</dd>
-               <dt>上一同期值</dt>
-               <dd>123</dd>
-               <dt>同比</dt>
-               <dd>40%</dd>
-               <dd><i class="icon icon-arrow-up"></i></dd>
-             </dl>
-             <dl>
-               <dt>聚合总值</dt>
-               <dd>6600</dd>
-               <dt>聚合平均值</dt>
-               <dd>80</dd>
-               <dt>条目数量</dt>
-               <dd>2</dd>
-               <dt>最大值</dt>
-               <dd>60</dd>
-               <dt>最小值</dt>
-               <dd>40</dd>
-             </dl>
-           </div>
+         <div class="big">
+           <p>wangzixiao</p>
+           <p>90.0%</p>
+         </div>
+         <div class="small">
+           <dl>
+             <dt>当前值</dt>
+             <dd id="assemble-current"></dd>
+             <dt>上一同期值</dt>
+             <dd  id="assemble-last"></dd>
+             <dt>同比</dt>
+             <dd id="assemble-compare"></dd>
+             <dd><i class="icon icon-arrow-up"  id="assemble-arrow"></i></dd>
+           </dl>
+           <dl>
+             <dt>聚合总值</dt>
+             <dd id="assume-sum"></dd>
+             <dt>聚合平均值</dt>
+             <dd id="assume-average"></dd>
+             <dt>条目数量</dt>
+             <dd id="assume-count"></dd>
+             <dt>最大值</dt>
+             <dd id="assume-max"></dd>
+             <dt>最小值</dt>
+             <dd id="assume-min"></dd>
+           </dl>
          </div>
        </div>
+       <div class="right">
+         <table>
+            <thead>
+                <tr>
+                    <td>名字</td>
+                    <td>当前值</td>
+                    <td>占比</td>
+                    <td>上一同期值</td>
+                    <td>同比</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>wangzixiao</td>
+                    <td>60</td>
+                    <td>60%</td>
+                    <td>120</td>
+                    <td>50%</td>
+                    <td><i class="icon icon-arrow-down"></i></td>
+                </tr>
+                <tr>
+                    <td>baitingting</td>
+                    <td>40</td>
+                    <td>40%</td>
+                    <td>120</td>
+                    <td>80%</td>
+                    <td><i class="icon icon-arrow-down"></i></td>
+                </tr>
 
-       <table>
-         <thead>
-            <tr>
-              <td>名字</td>
-              <td>当前值</td>
-              <td>上一同期值</td>
-              <td>同比</td>
-              <td></td>
-            </tr>
-         </thead>
-         <tbody>
-         <tr>
-           <td>wangzixiao</td>
-           <td>60</td>
-           <td>120</td>
-           <td>50%</td>
-           <td><i class="icon icon-arrow-down"></i></td>
-         </tr>
-         <tr>
-           <td>baitingting</td>
-           <td>40</td>
-           <td>120</td>
-           <td>80%</td>
-           <td><i class="icon icon-arrow-down"></i></td>
-         </tr>
 
          </tbody>
-       </table>
+         </table>
+       </div>
+    </div>
 
-     </div>
-   </div>
+  </div>
+
 </div>
 
-<script>
-$(document).ready(function(){
-   var pie_template=CHARTDETAIL.factory("pie_chart");
-   pie_template.chart.type="pie";
-   pie_template.series=[{data:[{name:"wangzixiao",y:60},{name:"baitingting",y:40}]}];
-   new Highcharts.Chart(pie_template)
 
-})
-</script>
 
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "moment.min.js" %>
     <%= javascript_include_tag "highstock.js" %>
+    <%= javascript_include_tag "highcharts-3d.js" %>
     <%= javascript_include_tag "exporting.js" %>
     <%= javascript_include_tag "exporting.extend.src.js" %>
     <%= javascript_include_tag "high_chart_template_analytic.js" %>
@@ -216,7 +222,7 @@ $(document).ready(function(){
     <%= javascript_include_tag "bootstrap-datepicker.js" %>
     <%= javascript_include_tag "date_picker_template.js" %>
     <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
-    <%= javascript_include_tag "Chart.min.js" %>
+    <%= javascript_include_tag "jquery.ui/jquery-ui-wayne.min.js" %>
 <% end %>
 
 <script>
