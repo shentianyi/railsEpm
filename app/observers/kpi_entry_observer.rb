@@ -138,9 +138,10 @@ class KpiEntryObserver<Mongoid::Observer
     if kpi_entry.new_record?
       kpi_entry.frequency = kpi.frequency
     end
-    if kpi_entry.is_a? String
-      puts kpi_entry.to_s.red
+    if kpi_entry.original_value.is_a? String
+      kpi_entry.original_value = kpi_entry.original_value.to_f
     end
+
     if kpi_entry.original_value && kpi_entry.original_value.finite?
       kpi_entry.value = KpiUnit.parse_entry_value(kpi.unit,kpi_entry.original_value)
       kpi_entry.abnormal = false
