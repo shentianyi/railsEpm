@@ -122,9 +122,9 @@ class KpiEntryObserver<Mongoid::Observer
     #end
 
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
-    #if kpi.nil?
-    #  return
-    #end
+    if kpi.nil?
+      return
+    end
     kpi_entry.kpi_id = kpi.id
     if kpi_entry.new_record?
       kpi_entry.frequency = kpi.frequency
