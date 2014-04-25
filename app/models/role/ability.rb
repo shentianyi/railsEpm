@@ -50,7 +50,7 @@ class Ability
       can :basic_modify, EntityGroupItem, user_id: user.id
 
       can :read, KpiCategory, kpis: {user_kpi_items: {user_id: user.id}}
-      can [:read, :categoried, :access, :properties], Kpi, user_kpi_items: {user_id: user.id}
+      can [:read, :categoried, :access, :properties,:group_properties], Kpi, user_kpi_items: {user_id: user.id}
 
       can :manage, UserKpiItem, :user_id => user.id
       can :manage, KpiEntry, :user_id => user.id
