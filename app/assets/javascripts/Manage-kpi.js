@@ -449,33 +449,39 @@ MANAGE.kpi.attribute=function(){
         .on("click","#edit-attribute-block-cancel",function(){
             MANAGE.kpi.edit_attribute_close();
         })
-        .on("click","#edit-attribute-block-add",function(){
-            var kpi_id = $(this).attr("work_at");
-            var property_name = $(this).parent().children("input").val().replace(/^\s+|\s+$/g, "");
-            if(property_name.length == 0){
-                MessageBox("属性名不能为空","top","warning");
-            }else{
-                $.ajax({
-                    url:"/kpis/assign_properties",
-                    data:{kpi_property_name:property_name,id:kpi_id},
-                    dataType:"json",
-                    type:"POST",
-                    success:function(data){
-                        if(data.result){
-                            $("#edit-attribute-block-add").parent().children("input").val("");
-                            //$('<li><label>'+data.content.name+'</label><i class="icon icon-trash" attr-id='+data.content.id+'></i></li>').appendTo($("#kpi-properties"));
-                            $('<li/>').append($('<label/>').text(data.content.name)).append($('<i/>').addClass("icon icon-trash remove-attr").attr('attr-id',data.content.id)).appendTo($("#kpi-properties"));
-                            $('<span id='+data.content.id+'>'+data.content.name+'</span>').appendTo($("p[kpi_id="+kpi_id+"]"));
-                            $("body").on("click",".remove-attr",MANAGE.kpi.delete_kpi_property);
-                        }else{
-                            MessageBox(data.content,"top","warning");
-                        }
-                    }
-                });
-            }
-        })
+        .on("click","#edit-attribute-block-add",MANAGE.kpi.add_kpi_property)
+        .on("keydown","#add-kpi-property",MANAGE.kpi.add_kpi_property)
         .on("click",".remove-attr",MANAGE.kpi.delete_kpi_property)
     MANAGE.attribute.autoLabel();
+}
+
+MANAGE.kpi.add_kpi_property=function(e){
+    if(e.keyCode != "undefined" && e.keyCode != 13){
+        return;
+    }
+    var kpi_id = $(this).attr("work_at");
+    var property_name = $(this).parent().children("input").val().replace(/^\s+|\s+$/g, "");
+    if(property_name.length == 0){
+        MessageBox("属性名不能为空","top","warning");
+    }else{
+        $.ajax({
+            url:"/kpis/assign_properties",
+            data:{kpi_property_name:property_name,id:kpi_id},
+            dataType:"json",
+            type:"POST",
+            success:function(data){
+                if(data.result){
+                    $("#edit-attribute-block-add").parent().children("input").val("");
+                    //$('<li><label>'+data.content.name+'</label><i class="icon icon-trash" attr-id='+data.content.id+'></i></li>').appendTo($("#kpi-properties"));
+                    $('<li/>').append($('<label/>').text(data.content.name)).append($('<i/>').addClass("icon icon-trash remove-attr").attr('attr-id',data.content.id)).appendTo($("#kpi-properties"));
+                    $('<span id='+data.content.id+'>'+data.content.name+'</span>').appendTo($("p[kpi_id="+kpi_id+"]"));
+                    $("body").on("click",".remove-attr",MANAGE.kpi.delete_kpi_property);
+                }else{
+                    MessageBox(data.content,"top","warning");
+                }
+            }
+        });
+    }
 }
 
 MANAGE.kpi.delete_kpi_property=function(){
@@ -507,6 +513,7 @@ MANAGE.kpi.edit_attribute_copen=function(obj){
         $('<li><label>'+name+'</label><i class="icon icon-trash remove-attr" attr-id='+id+'></i></li>').appendTo($("#kpi-properties"));
     }
     $("#edit-attribute-block-add").attr("work_at",$(obj).attr("work_at"));
+    $("#add-kpi-property").attr("work_at",$(obj).attr("work_at"));
     //
     $("#edit-attribute-block").css("display","block");
     $("#edit-attribute-block>div").css("display","block");
