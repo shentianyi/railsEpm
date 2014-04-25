@@ -378,10 +378,14 @@ ANALYTICS.detailPoint.init=function(){
        })
     //点击table 同比
        .on("click",".table-detail-compare",function(event){
-
+           stop_propagation(event);
            var obj=adapt_event(event).target
            ANALYTICS.DETAIL.generate_table_detail(obj);
 
+       })
+       .on("click","#assemble-tbody tr",function(){
+           var obj=$(this).find(".table-detail-compare")[0]
+           ANALYTICS.DETAIL.generate_table_detail(obj);
        })
        .on("click","#detail-table-remove",function(){
            $("#detail-table-compare-block").css("left","-999em").css("right","auto");
@@ -416,7 +420,10 @@ ANALYTICS.detailPoint.init=function(){
                     $("#conditionLocal ul").children().last().attr("type","item").find("i").eq(0).addClass("icon-ok item");
                 }
                 else{
-                    $("#conditionLocal ul").children().last().attr("type","group").find("i").eq(0).addClass("icon-inbox group");
+                    if(ui.draggable.next().find("ul").children().length>0){
+                        $("#conditionLocal ul").children().last().attr("type","group").find("i").eq(0).addClass("icon-inbox group");
+                    }
+
                 }
             }
 

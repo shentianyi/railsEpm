@@ -324,14 +324,17 @@
       }
 
       .right{
+            height:248px;
 
+            overflow-y:auto;
             &>table{
               min-width:300px;
-              width:100%;
+              width:95%;
               margin-top:10px;
               margin-left:45px;
               border-collapse:collapse;
               margin-bottom:10px;
+
               $tr-padding:4px 3px;
               $tr-bg:rgba(0,0,0,0.05);
               $tr-border:1px solid #ddd;
@@ -351,8 +354,12 @@
                 table-layout:fixed;
                 tr{
                   border:$tr-border;
+                  cursor:pointer;
                   &:nth-of-type(even){
                     background:$tr-bg;
+                  }
+                  &:hover{
+                    background:transparentize($green,0.9);
                   }
                 }
                 td{
