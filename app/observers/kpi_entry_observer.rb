@@ -5,7 +5,7 @@ class KpiEntryObserver<Mongoid::Observer
   def after_save kpi_entry
     if kpi_entry.entry_type == 1
       kpi = Kpi.find_by_id(kpi_entry.kpi_id)
-      Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi.is_calculated
+      Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi.is_calculated if kpi
       #KpiEntriesHelper.calculate_kpi_parent_value kpi_entry.id unless kpi.is_calculated
       return
     end
@@ -61,7 +61,7 @@ class KpiEntryObserver<Mongoid::Observer
     #add property val
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
     kpi_entry.dynamic_attributes.each{|attr_id|
-      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first
+      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first if kpi
       KpiPropertyValue.add_property_value(item.id,kpi_entry[attr_id]) if item
     }
   end
@@ -123,6 +123,7 @@ class KpiEntryObserver<Mongoid::Observer
 
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
     if kpi.nil?
+      puts ("kpi_with_id: "+kpi_entry.kpi_id+" not found").red
       return
     end
     kpi_entry.kpi_id = kpi.id
