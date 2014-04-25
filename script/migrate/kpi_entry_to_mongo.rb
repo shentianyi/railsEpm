@@ -24,3 +24,4 @@ KpiEntryBak.all.each do |e|
     puts me.to_json
   end
 end
+
