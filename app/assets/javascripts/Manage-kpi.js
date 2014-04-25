@@ -463,8 +463,10 @@ MANAGE.kpi.attribute=function(){
                     success:function(data){
                         if(data.result){
                             $("#edit-attribute-block-add").parent().children("input").val("");
-                            $('<li><label>'+data.content.name+'</label><i class="icon icon-trash" attr-id='+data.content.id+'></i></li>').appendTo($("#kpi-properties"));
+                            //$('<li><label>'+data.content.name+'</label><i class="icon icon-trash" attr-id='+data.content.id+'></i></li>').appendTo($("#kpi-properties"));
+                            $('<li/>').append($('<label/>').text(data.content.name)).append($('<i/>').addClass("icon icon-trash remove-attr").attr('attr-id',data.content.id)).appendTo($("#kpi-properties"));
                             $('<span id='+data.content.id+'>'+data.content.name+'</span>').appendTo($("p[kpi_id="+kpi_id+"]"));
+                            $("body").on("click",".remove-attr",MANAGE.kpi.delete_kpi_property);
                         }else{
                             MessageBox(data.content,"top","warning");
                         }
@@ -472,25 +474,27 @@ MANAGE.kpi.attribute=function(){
                 });
             }
         })
-        .on("click",".remove-attr",function(){
-            var attr_id = $(this).attr("attr-id");
-            $.ajax({
-                url:"/kpis/remove_properties",
-                data:{id:attr_id},
-                type:"POST",
-                dataType:"json",
-                success:function(data){
-                    if(data.result){
-                        $("i[attr-id="+attr_id+"]").parent().remove();
-                        $("span#"+attr_id).remove();
-                        //MessageBox("Delete property successfully!","top","success");
-                    }else{
-
-                    }
-                }
-            })
-        })
+        .on("click",".remove-attr",MANAGE.kpi.delete_kpi_property)
     MANAGE.attribute.autoLabel();
+}
+
+MANAGE.kpi.delete_kpi_property=function(){
+    var attr_id = $(this).attr("attr-id");
+    $.ajax({
+        url:"/kpis/remove_properties",
+        data:{id:attr_id},
+        type:"POST",
+        dataType:"json",
+        success:function(data){
+            if(data.result){
+                $("i[attr-id="+attr_id+"]").parent().remove();
+                $("span#"+attr_id).remove();
+                //MessageBox("Delete property successfully!","top","success");
+            }else{
+
+            }
+        }
+    })
 }
 
 MANAGE.kpi.edit_attribute_copen=function(obj){
