@@ -125,9 +125,15 @@ class KpiEntryObserver<Mongoid::Observer
 
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
     if kpi.nil?
-      puts ("kpi_with_id: "+kpi_entry.kpi_id+" not found").red
-      return
+      puts ("kpi_with_id: "+kpi_entry.kpi_id.to_s+" not found").red
+      if kpi_entry.new_record?
+        #if we counld not find the kpi ,this entry should not be inserted.
+        return false
+      else
+        return
+      end
     end
+
     kpi_entry.kpi_id = kpi.id
     if kpi_entry.new_record?
       kpi_entry.frequency = kpi.frequency
