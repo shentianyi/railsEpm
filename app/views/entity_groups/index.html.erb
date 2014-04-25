@@ -28,7 +28,7 @@
                      @user_group_entities.each_with_index do |entity, i| %>
                         <li>
                           <h3><%= entity.name %></h3>
-                          <% if @entity_group.can_modify %>
+                          <% if @entity_group.can_destroy_by_user(current_user) %>
                               <i class="icon-trash" entity_id="<%= entity.entity_group_item_id %>"></i>
                           <% end %>
                         </li>

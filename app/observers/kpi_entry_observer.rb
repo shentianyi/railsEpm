@@ -5,7 +5,9 @@ class KpiEntryObserver<Mongoid::Observer
   def after_save kpi_entry
     if kpi_entry.entry_type == 1
       kpi = Kpi.find_by_id(kpi_entry.kpi_id)
-      Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi.is_calculated
+      if kpi
+        Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi.is_calculated
+      end
       #KpiEntriesHelper.calculate_kpi_parent_value kpi_entry.id unless kpi.is_calculated
       return
     end
@@ -61,7 +63,7 @@ class KpiEntryObserver<Mongoid::Observer
     #add property val
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
     kpi_entry.dynamic_attributes.each{|attr_id|
-      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first
+      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first if kpi
       KpiPropertyValue.add_property_value(item.id,kpi_entry[attr_id]) if item
     }
   end
@@ -87,7 +89,7 @@ class KpiEntryObserver<Mongoid::Observer
 
     #destroy collection kpi entry if no details left
     if kpi_entry.last_detail?
-      collect_entry.destroy
+      collect_entry.destroy if collect_entry
     end
   end
 
@@ -96,7 +98,7 @@ class KpiEntryObserver<Mongoid::Observer
       return
     end
 
-    collect_entry = collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
+    collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
 
     if collect_entry && kpi_entry.original_value_changed?
       val_change = kpi_entry.original_value-BigDecimal.new(kpi_entry.original_value_was)
@@ -122,13 +124,24 @@ class KpiEntryObserver<Mongoid::Observer
     #end
 
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
-    #if kpi.nil?
-    #  return
-    #end
+    if kpi.nil?
+      puts ("kpi_with_id: "+kpi_entry.kpi_id.to_s+" not found").red
+      if kpi_entry.new_record?
+        #if we counld not find the kpi ,this entry should not be inserted.
+        return false
+      else
+        return
+      end
+    end
+
     kpi_entry.kpi_id = kpi.id
     if kpi_entry.new_record?
       kpi_entry.frequency = kpi.frequency
     end
+    if kpi_entry.original_value.is_a? String
+      kpi_entry.original_value = kpi_entry.original_value.to_f
+    end
+
     if kpi_entry.original_value && kpi_entry.original_value.finite?
       kpi_entry.value = KpiUnit.parse_entry_value(kpi.unit,kpi_entry.original_value)
       kpi_entry.abnormal = false
