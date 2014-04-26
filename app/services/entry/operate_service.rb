@@ -161,7 +161,13 @@ module Entry
       #update
       if kpi_entry
         puts "update!"
-        kpi_entry.update_attribute(:original_value, attrs['original_value'])
+        case attrs['entry_type']
+          when 0
+            kpi_entry.update_attributes(attrs);
+          when 1
+            kpi_entry.update_attribute(:original_value, attrs['original_value'])
+        end
+
       else
         puts "new!"
         kpi_entry = KpiEntry.new(attrs)
