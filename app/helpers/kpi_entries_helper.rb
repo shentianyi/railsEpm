@@ -86,7 +86,7 @@ module KpiEntriesHelper
             if user_kpi_item
               attrs = {}
               attrs[:base_attrs]={}
-              attrs[:base_attrs]['original_value'] = value
+              attrs[:base_attrs]['original_value'] = value.to_f
               attrs[:base_attrs]['kpi_id'] = kpi.id
               attrs[:base_attrs]['frequency'] = kpi.frequency
               attrs[:base_attrs]['user_kpi_item_id'] = user_kpi_item.id

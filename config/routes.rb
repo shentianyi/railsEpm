@@ -75,14 +75,13 @@ IFEpm::Application.routes.draw do
       put :update
       post :assign
       post :assign_properties
-      delete :remove_properties
-      get '/properties/:id'=>:properties
+      post :remove_properties
       post :import
       get :template
       get :condition
       get :parameter
       get :access
-      [:categoried, :user, :list].each do |a|
+      [:categoried, :user, :list,:properties,:group_properties].each do |a|
         get "#{a}/:id" => a
       end
     end
@@ -100,6 +99,8 @@ IFEpm::Application.routes.draw do
   resources :kpi_entries do
     collection do
       match :analyse
+      match :compare
+      match :compares
       get :recents
       post :entry
       post :import

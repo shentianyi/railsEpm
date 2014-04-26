@@ -169,6 +169,10 @@ function total_check_listener(){
 MANAGE.resize_sort_table=function(){
     var table_size=$("#manage-sort-list li").width()-70;
     $("#manage-sort-list table").width(table_size)
+    if(".attribute-position"){
+        $("#manage-sort-list .attribute-position").width(table_size+40)
+        $("#manage-sort-list .attribute-position>p").width(table_size-180)
+    }
 }
 MANAGE.judge_kpi_count=function(){
     if($("#manage-sort-list").children().length>0){

@@ -10,10 +10,10 @@ class KpiEntriesController < ApplicationController
   end
 
   def create
-    params["date"] = params["entry_at"]
-    params["email"] = current_user.email
-    params["entry_type"] = 1
-    @kpi_entry=KpiEntriesHelper.create_update_kpi_entry params, current_ability
+    #params["date"] = params["entry_at"]
+    #params["email"] = current_user.email
+    #params["entry_type"] = 0
+    #@kpi_entry=KpiEntriesHelper.create_update_kpi_entry params, current_ability
     render :json => {:result => true}
   end
 
@@ -25,8 +25,9 @@ class KpiEntriesController < ApplicationController
     if validator.valid
       validator.entry
     end
-    render :json=>msg
+    render :json => msg
   end
+
   #
   def show
     @f = params[:f].nil? ? KpiFrequency::Hourly : params[:f].to_i
@@ -46,6 +47,24 @@ class KpiEntriesController < ApplicationController
       end
       render :json => msg
     end
+  end
+
+  def compare
+    msg=Message.new
+    if data=Entry::Analyzer.new(params).period_compare
+      msg.result=true
+      msg.object=data
+    end
+    render :json => msg
+  end
+
+  def compares
+    msg=Message.new
+    if data=Entry::Analyzer.new(params).period_compares
+      msg.result=true
+      msg.object=data
+    end
+    render :json => msg
   end
 
   def recents

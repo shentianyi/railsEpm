@@ -1,4 +1,4 @@
-<ul id="manage-sort-list" class="manage-sort-list">
+<ul id="manage-sort-list" class="manage-sort-list" type="kpi">
      <%@kpis.each do |kpi|%>
      <li id="<%= kpi.id%>">
           <p class="sort-handle">
@@ -37,6 +37,16 @@
                     <td><%= t 'manage.kpi.is_calculate_type'%></td>
                </tr>
           </table>
+       <div class="attribute-position">
+         <a class="btn btn-success edit-kpi-attribute" work_at="<%= kpi.id%>">编辑属性</a>
+         <p kpi_id="<%= kpi.id%>">
+           <% kpi.kpi_property_items.each do |item| %>
+               <span id="<%= item.id %>"><%= item.kpi_property.name %></span>
+           <%end%>
+         </p>
+
+
+       </div>
      </li>
      <%end if @kpis%>
 </ul>

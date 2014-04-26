@@ -209,63 +209,7 @@
     left:2px;
     top:-2px;
 }
-.manage-kpi-add>div>.calculate-type-box{
-    border:1px solid #ddd;
-    border-radius:3px;
-    -webkit-border-radius:3px;
-    -moz-border-radius:3px;
-    width:148px;
-    margin-left:25px;
-    height:124px;
-    display:none;
-}
-.calculate-type-box>.select-div{
-    width:131px;
-    margin-left:9px;
-    margin-top:5px;
-    margin-bottom:2px;
-}
-.calculate-type-box>.select-div>select{
-    width:131px;
-}
-.calculate-type-box>label{
-    color:rgba(0,0,0,0.4);
-    cursor:pointer;
-    margin-right:5px;
-    transition:color 0.25s ease-out;
-    font-size:18px;
-    position:relative;
-}
-.calculate-type-box>label:hover{
-    color:rgba(0,0,0,0.9)
-}
-.calculate-type-box>label:first-of-type{
-    margin-left:10px;
-    top:2px;
-}
-.calculate-type-box>label:nth-of-type(3){
-    top:-1px;
-    font-size:15px;
-}
-.calculate-type-box>label:nth-of-type(4){
-    top:2px;
-}
-.calculate-type-box>label:nth-of-type(5){
-    font-size:15px;
-}
-.calculate-type-box>label:nth-of-type(6){
-    font-size:15px;
-}
-.calculate-type-box>input{
-    width:120px;
-    margin-left:9px;
-    margin-top:30px;
-    padding:5px 4px;
-    font-size:13px;
-    font-weight:lighter;
-    font-family:"open-sans";
-    background-color:white;
-}
+
 /* btn */
 .manage-kpi-add>div>.btn{
     margin-top:45px;

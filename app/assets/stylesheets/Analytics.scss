@@ -1,0 +1,480 @@
+@import "STYLE";
+.chosen-attribute{
+  float:left;
+  width:280px;
+  height:80px;
+  &>div{
+    margin-top:2px;
+    & .chosen-choices{
+      overflow-y:auto;
+      max-height:60px !important;
+      height:60px !important;
+    }
+  }
+}
+.chart-body-sass{
+
+}
+
+.detail-block{
+  position:absolute;
+  top:71px;
+  right:"auto";
+  bottom:0px;
+  left:-999em;
+  z-index:500;
+  background:#fff;
+  $min-width:1024px;
+  $min-height:700px;
+  min-width:$min-width;
+  min-height:$min-height;
+  $navigation-height:40px;
+  .navigation{
+    position:relative;
+    height:$navigation-height;
+    background:#eaedec;
+    cursor:pointer;
+    @include transition(color);
+    &:after{
+      content:"";
+      position:absolute;
+      left:0px;
+      right:0px;
+      bottom:0px;
+      height:1px;
+      background:rgba(0,0,0,0.2);
+    }
+
+    .btn-back{
+      float:left;
+      margin-top:11px;
+      margin-left:16px;
+      font-size:15px;
+      color:$blue;
+      cursor:pointer;
+      i{
+        margin-right:3px;
+      }
+      &:hover{
+        color:rgba(0,0,0,0.6);
+      }
+    }
+    p{
+      pointer-events:none;
+      position:absolute;
+      left:0px;
+      right:0px;
+      text-align:center;
+      line-height:38px;
+
+      span{
+        letter-spacing:1px;
+        display:inline-block;
+        &:first-of-type{
+          font-size:23px;
+          font-family:"helve";
+          margin-right:15px;
+        }
+        &:nth-of-type(2){
+          font-size:23px;
+          font-family:"helve";
+          margin-right:5px;
+        }
+        &:nth-of-type(3){
+          letter-spacing:0px;
+          color:#9d9d9d;
+          font-size:11px;
+        }
+      }
+    }
+  }
+
+  .content{
+    width:100%;
+    position:absolute;
+    top:$navigation-height;
+    bottom:0px;
+    height:auto;
+    min-height: $min-height - $navigation-height +30;
+    //选择属性条件的那一块
+    .assembleCondition{
+      float:left;
+      width:320px;
+      height:100%;
+      position:relative;
+      &:after{
+        content:"";
+        width:3px;
+        position:absolute;
+        top:0px;
+        bottom:0px;
+        right:0px;
+        background:#ddd;
+      }
+      //选择条件
+      $condition-width:100%;
+      $condition-height:250px;
+      $condition-font:12px;
+      $condition-border-bottom:3px solid #ddd;
+      .origin{
+        width:$condition-width;
+        height:$condition-height;
+        border-bottom:$condition-border-bottom;
+        overflow-y:auto;
+        font-size:$condition-font;
+        &>p{
+          color:#222;
+          font-size:14px;
+          padding:5px 0 0 5px;
+          font-weight:600;
+          span{
+            color:#9d9d9d;
+            font-size:11px;
+            font-weight:100;
+          }
+        }
+        .accordion-header{
+          border-top:1px solid rgba(0,0,0,0.2);
+          border-bottom:1px solid rgba(0,0,0,0.2);
+          padding:4px 5px;
+          position:relative;
+          cursor: pointer;
+          &.active{
+            background:rgba(0,0,0,0.2);
+          }
+          i{
+            margin-right:19px;
+
+          }
+          &:before{
+            content:"::";
+            position:absolute;
+            left:21px;
+            top:2px;
+            font-size:14px;
+            cursor: move;
+          }
+        }
+        .accordion-body{
+          display:none;
+          ul{
+            padding:0 5px 0 25px;
+            li{
+              padding:3px 0 0 19px;
+              border-bottom:1px solid rgba(0,0,0,0.2);
+              position:relative;
+              cursor:move;
+              &:last-of-type{
+                border-bottom:none;
+              }
+              &:before{
+                content:"::";
+                position:absolute;
+                left:3px;
+                top:1px;
+                font-size:14px;
+              }
+            }
+          }
+        }
+      }
+      //已选择的
+      .local{
+        width:$condition-width;
+        height:$condition-height;
+        border-bottom:$condition-border-bottom;
+        overflow-y:auto;
+        font-size:$condition-font;
+        &.active{
+          background:#fcf7d2;
+        }
+        &.hover{
+          background:#fedc8b;
+        }
+        &>p{
+          color:#222;
+          font-size:14px;
+          padding:5px 0 0 5px;
+          font-weight:600;
+        }
+        ul{
+          li{
+            padding:3px 6px;
+            cursor:default;
+            border-bottom:1px solid rgba(0,0,0,0.2);
+            position:relative;
+            &:hover .icon-remove{
+              display:inline-block;
+            }
+            &:last-of-type{
+              border-bottom:none;
+            }
+            i{
+              &.item{
+                color:$blue;
+              }
+              &.group{
+                color:$green;
+              }
+              &:first-of-type{
+                margin-right:4px;
+              }
+              &:last-of-type{
+                position:absolute;
+                right:11px;
+                cursor:pointer;
+                @include transition(color);
+                pointer-events:auto;
+                display:none;
+                &:hover{
+                  display:inline-block;
+                  color:$red;
+                }
+              }
+
+            }
+          }
+        }
+      }
+      //聚合分析按钮
+      &>.btn{
+        font-size:13px;
+        width:180px;
+        margin:18px auto ;
+      }
+    }
+
+    .assembleDemonstrate{
+      display:none;
+      float:left;
+      &:after{
+        @include clearFloat;
+      }
+
+      .left{
+        $width:350px;
+        width:100%;
+        height:$width+50 ;
+        padding-left:45px;
+        position:relative;
+         .graph{
+           width:$width;
+           height:$width ;
+           margin-left:-20px;
+           float:left;
+         }
+
+         .big{
+          width:260px;
+          height:$width+50 ;
+          float:left;
+          p{
+            text-align:center;
+            color:#e2bf35;
+            font-weight:bolder;
+            &:first-of-type{
+              margin-top:$width/2 - 50;
+              font-size:15px;
+              margin-bottom:2px;
+              @include word-break;
+            }
+
+            &:nth-of-type(2){
+              margin-top:0px;
+              font-size:60px;
+              font-family:"helve";
+              font-weight:300;
+              margin-top:-5px;
+            }
+          }
+         }
+
+         .small{
+           float:left;
+          &:after{
+            @include clearFloat;
+          }
+          border-left:1px solid #ddd;
+          width:300px;
+          text-align:left;
+          margin-top:95px;
+          padding-top:10px;
+           padding-left:25px;
+              dl{
+                float:left;
+                width:50%;
+                margin-top:5px;
+                dt{
+                  font-size:11px;
+                  color:#9d9d9d;
+                  margin-top:5px;
+                }
+                dd{
+                  width:100%;
+                  @include text-overflow;
+                  .icon-arrow-up{
+                       color:$green;
+                  }
+                  .icon-arrow-down{
+                       color:$red;
+                  }
+                }
+              }
+          }
+      }
+
+      .right{
+            height:248px;
+
+            overflow-y:auto;
+            &>table{
+              min-width:300px;
+              width:95%;
+              margin-top:10px;
+              margin-left:45px;
+              border-collapse:collapse;
+              margin-bottom:10px;
+
+              $tr-padding:4px 3px;
+              $tr-bg:rgba(0,0,0,0.05);
+              $tr-border:1px solid #ddd;
+              thead{
+                tr{
+                  border:$tr-border;
+                  &:nth-of-type(odd){
+                    background:$tr-bg;
+                  }
+                }
+                td{
+                  font-weight:bold;
+                  padding:$tr-padding;
+                }
+              }
+              tbody{
+                table-layout:fixed;
+                tr{
+                  border:$tr-border;
+                  cursor:pointer;
+                  &:nth-of-type(even){
+                    background:$tr-bg;
+                  }
+                  &:hover{
+                    background:transparentize($green,0.9);
+                  }
+                }
+                td{
+                  padding:$tr-padding;
+                  color:#555;
+                  @include word-break;
+                  &:first-of-type{
+
+                  }
+                  .icon-arrow-down{
+                    color:$red;
+                  }
+                  .icon-arrow-up{
+                    color:$green;
+                  }
+                  .table-detail-compare{
+                    width:70px;
+                    padding:3px;
+                    font-size:11px;
+                  }
+                }
+              }
+
+            }
+      }
+
+    }
+
+  }
+}
+
+
+.detail-table-compare-block{
+  background:rgba(0,0,0,0.7);
+  position:absolute;
+  z-index:600;
+  left:-999em;
+  right:auto;
+  bottom:0px;
+  top:71px;
+  $min-width:1024px;
+  $min-height:730px;
+  min-width:$min-width;
+  min-height:$min-height;
+  .inner{
+    position:absolute;
+    top:0px;
+    left:-1000px;
+    bottom:0px;
+    min-height:$min-height;
+    $inner-width:1000px;
+    width:$inner-width;
+    background:#fff;
+    transition:left 0.45s ease-out;
+    .header{
+      padding:10px 0px 15px;
+      margin:0 20px;
+      border-bottom:1px solid #9d9d9d;
+      position:relative;
+      p{
+        padding-left:5px;
+        margin:0px;
+        &:first-of-type{
+          font-size:38px;
+          margin-top:12px;
+          font-family:"helve";
+        }
+        &:nth-of-type(2){
+          font-size:19px;
+        }
+        &:nth-of-type(3){
+          font-size:12px;
+          color:#9d9d9d;
+        }
+        width:80%;
+      }
+      .icon-remove{
+        float:right;
+        font-size:23px;
+        position:absolute;
+        top:10px;
+        right:5px;
+        color:#9d9d9d;
+        cursor:pointer;
+        pointer-events:auto;
+        @include transition(color);
+        &:hover{
+          color:$red-hover
+        }
+      }
+    }
+    .graph{
+      width:90%;
+      margin:20px auto 25px;
+      height:450px;
+    }
+    .footer{
+      $footer-width : $inner-width - 200;
+      width:$footer-width;
+      margin:0 auto 0;
+      &:after{
+        @include clearFloat;
+      }
+      dl{
+        float:left;
+        width:$footer-width/4;
+        dt{
+          font-size:13px;
+          color:#9d9d9d;
+        }
+        dd{
+          font-size:22px;
+          padding-left:19px;
+        }
+      }
+    }
+  }
+}

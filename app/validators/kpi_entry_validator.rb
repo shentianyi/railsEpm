@@ -73,6 +73,19 @@ class KpiEntryValidator
       end
       self.validator_collection.add_base_validator(self)  if self.validator_collection
     end
+
+    #
+    if self.entry_type == "1" && self.valid
+      # source = self.valid_by_cache ? self.source : self
+      # entry_at = Time.parse(self.date).utc
+      # parsed_entry_at = KpiEntriesHelper.parse_entry_string_date(source.kpi.frequency,Time.parse(entry_at.to_s))
+      # kpi_entry = KpiEntry.where(user_kpi_item_id: source.user_kpi_item.id, parsed_entry_at: parsed_entry_at, entity_id: source.user_kpi_item.entity_id,entry_type: 0).first
+      # if kpi_entry
+      self.valid = false
+      self.content<<"You can't modify KpiEntry when it has Details!"
+      # end
+    end
+
     prepare_params if self.valid
   end
 
@@ -103,7 +116,7 @@ class KpiEntryValidator
     #Here we got some problems of transfer time
     self.parsed_entry_at = KpiEntriesHelper.parse_entry_string_date(self.frequency,Time.parse(self.date))
     self.parsed_entry_at = EntryDateTimeHelper.get_utc_time_from_str(self.parsed_entry_at)
-    self.entry_type = self.entry_type.nil? ? 0 : self.entry_type
+    self.entry_type = 0#self.entry_type.nil? ? 0 : self.entry_type
   end
 
   def params_to_hash

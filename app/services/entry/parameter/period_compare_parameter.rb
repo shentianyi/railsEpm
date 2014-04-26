@@ -39,6 +39,7 @@ module Entry
          entity_id: self.entities}
       end
 
+
       def times
         times=[]
         times<<self.base_time if self.base_time
@@ -46,6 +47,13 @@ module Entry
           times<<t
         end
         return times
+      end
+
+      def clean_property_values(properties)
+        property.each do |k, v|
+          key=k.sub(/a/, '').to_i
+          properties[key]=v if properties.has_key?(key)
+        end if self.property
       end
 
       def build_or_condition

@@ -71,7 +71,7 @@ body{
 /********************************************************************************************************* 右边主内容区
 *******************************************************************************************************************/
 .wrap-main{
-    min-width:1024px;
+    min-width:1290px;
     position:absolute;
     transition:left 0.25s ease-out;
     right:0;
@@ -520,4 +520,13 @@ nav ul li a:hover ~ .nav-manage-sub{
 }
 .upload-file-name>i:hover{
     color:#D95C5C;
+}
+
+/* Image style */
+#scrollUp {
+    bottom: 20px;
+    right: 20px;
+    height: 38px;  /* Height of image */
+    width: 38px; /* Width of image */
+    background: url('/assets/top.png') no-repeat;
 }

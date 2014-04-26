@@ -44,10 +44,11 @@ module Entry
       attrs[:value] = params[:value]
       attrs[:email] = params[:email]
       attrs[:entry_type] = params[:entry_type].nil? ? 1 : params[:entry_type]
-
+      attrs[:kpi_properties] = {}
       #fillter attributes
       (params.keys-doc_attr).each { |k|
-        attrs[k] = params[k]
+        attrs[:kpi_properties][k] = params[k]
+        #attrs[k] = params[k]
       }
       return attrs
     end
@@ -160,7 +161,13 @@ module Entry
       #update
       if kpi_entry
         puts "update!"
-        kpi_entry.update_attribute(:original_value, attrs['original_value'])
+        case attrs['entry_type']
+          when 0
+            kpi_entry.update_attributes(attrs);
+          when 1
+            kpi_entry.update_attribute(:original_value, attrs['original_value'])
+        end
+
       else
         puts "new!"
         kpi_entry = KpiEntry.new(attrs)

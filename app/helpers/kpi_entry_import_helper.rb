@@ -22,11 +22,12 @@ module KpiEntryImportHelper
 
     # read and handle file
     sheet=book.worksheet 0
+    headers = sheet.rows[0]
     valid=true
     sheet.rows[1..-1].each_with_index do |row, i|
-      params=excel_xls_param row
+      params=excel_xls_param row,headers
       params.values.each { |v| error_sheet.row(i+1).push v }
-      params[:date] = params[:date].change(:offset => "+0800")
+      params[:date] = params[:date].change(:offset => "+0800") if params[:date]
       #params[:entry_type] = 1
       #
       params = Entry::OperateService.new.doc_upload_filter(params)
@@ -63,9 +64,16 @@ module KpiEntryImportHelper
         entry_param_keys.each_with_index do |key, i|
           params[key]=book.cell(line, i+1)
         end
+        #fetch attrs
+        i = entry_param_keys.length+1
+        while !book.cell(1,i).nil?
+          params[book.cell(1,i)] = book.cell(line,i)
+          i = i+1
+        end
+
         row_values=params.values
         #params["entry_type"] = 1
-        params[:date] = params[:date].change(:offset => "+0800")
+        params[:date] = params[:date].change(:offset => "+0800") if params[:date]
         params = Entry::OperateService.new.doc_upload_filter(params)
         validator=KpiEntryValidator.new(params)
         validator.validate
@@ -107,10 +115,14 @@ module KpiEntryImportHelper
     {:style => :bold, :color => Axlsx::Color.new(:rgb => "FF0000"), :b => true}
   end
 
-  def self.excel_xls_param row
+  def self.excel_xls_param row, headers
     params={}
     entry_param_keys.each_with_index do |key, i|
       params[key]=row[i]
+    end
+    #fetach attrs
+    for col in entry_param_keys.length..(row.length-1)
+      params[headers[col]] = row[col]
     end
     return params
   end

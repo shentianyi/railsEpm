@@ -13,11 +13,29 @@ class KpisController < ApplicationController
   # create kpi
   def create
     msg=Message.new
-    @kpi=Kpi.new(params[:kpi])
-    @kpi.creator=current_user
-    if @kpi.save
-      temp = {}
+    kpi=Kpi.new(params[:kpi].except(:kpi_properties))
+    kpi.creator=current_user
+
+    #kpi_properties
+    attrs = []
+    if params[:kpi].has_key?(:kpi_properties)
+      params[:kpi][:kpi_properties].uniq.each {|name|
+
+        if property = KpiProperty.find_by_name(name)
+        else
+          property = KpiProperty.new(:name => name)
+          property.user = current_user
+          property.tenant = current_tenant
+          property.save
+        end
+        attrs << property
+      }
+    end
+    if kpi.save
+      kpi.add_properties(attrs)
+      #temp = {}
       msg.result=true
+=begin
       temp[:id] = @kpi.id
       temp[:name]=@kpi.name
       temp[:is_calculated] = @kpi.is_calculated
@@ -28,10 +46,11 @@ class KpisController < ApplicationController
       temp[:target_min] = KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min)
       temp[:section] = KpiUnit.get_entry_unit_sym(@kpi.unit)
       temp[:desc] = @kpi.description
-      msg.object=temp.as_json
+=end
+      msg.object=KpiPresenter.new(kpi).to_json
     else
-      @kpi.errors.messages[:result]= I18n.t "fix.add_fail"
-      msg.content=@kpi.errors.messages.values.join('; ')
+      kpi.errors.messages[:result]= I18n.t "fix.add_fail"
+      msg.content=kpi.errors.messages.values.join('; ')
     end
     render :json => msg
   end
@@ -83,19 +102,24 @@ class KpisController < ApplicationController
   #@function properties
   #get all kpi properties
   def properties
-    @kpi_properties = Kpi.find_by_id(params[:id]).kpi_properties
+    @kpi_properties =KpiPropertyPresenter.init_json_presenters(Kpi.find_by_id(params[:id]).kpi_properties)
     render :json => @kpi_properties
+  end
+
+  def group_properties
+    @properties=KpiPropertyValue.by_kpi_id(params[:id]).all
+    render json: KpiPropertyPresenter.to_group_select(@properties)
   end
 
   #@function remove_properties
   def remove_properties
     msg = Message.new
     msg.result = false
-    if item = KpiPropertyItem.where(kpi_id:params[:kpi_id],kpi_property_id: params[:kpi_property_id])
+    if item = KpiPropertyItem.find_by_id(params[:id])#KpiPropertyItem.where(kpi_id: params[:kpi_id], kpi_property_id: params[:kpi_property_id])
       item.destroy
       msg.result = true
     end
-    render :json
+    render :json=>msg
   end
 
   #@function assign_properties
@@ -107,14 +131,20 @@ class KpisController < ApplicationController
     kpi_property = KpiProperty.find_by_name(params[:kpi_property_name])
     kpi = Kpi.find_by_id(params[:id])
     if kpi_property.nil?
-      kpi_property = KpiProperty.create(:name => params[:kpi_property_name],:user_id => current_user.id)
+      kpi_property = KpiProperty.create(:name => params[:kpi_property_name], :user_id => current_user.id)
     end
 
     if kpi && kpi_property
-      kpi_property_item = KpiPropertyItem.new
-      kpi_property_item.kpi_property_id = kpi_property.id
-      kpi_property_item.kpi_id = kpi.id
-      msg.result = kpi_property_item.save
+      if KpiPropertyItem.where(kpi_id:kpi.id,kpi_property_id:kpi_property.id).first
+        msg.content = "You already have this property"
+      else
+        kpi_property_item = KpiPropertyItem.new
+        kpi_property_item.kpi_property_id = kpi_property.id
+        kpi_property_item.kpi_id = kpi.id
+        msg.result = kpi_property_item.save
+        msg.content = {id:kpi_property_item.id,name:kpi_property.name}
+      end
+
     else
       msg.content = "KpiProperty or Kpi not found,please check!"
     end
@@ -122,7 +152,7 @@ class KpisController < ApplicationController
   end
 
   def categoried
-    render :json => get_kpis_by_category(params[:id])
+    render json: KpiSelectPresenter.init_json_presenters(get_kpis_by_category(params[:id]))
   end
 
   def user
