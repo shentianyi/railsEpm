@@ -77,6 +77,10 @@ class KpiEntry
 
   def self.recent_input user_id, user_kpi_item_ids, time
     values=[]
+    if user_id.nil? || user_kpi_item_ids.nil? || time.nil?
+      values
+    end
+
     user_kpi_item_ids.each do |user_kpi_item_id|
       time_key=gen_recent_time_zscore_key(user_id, user_kpi_item_id)
       uuids= $redis.zrevrangebyscore(time_key, time, 0, :limit => [0, RECENT_INPUT_NUM])
