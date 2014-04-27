@@ -1,36 +1,75 @@
-<%@user_kpis.each_with_index do |kpi,i|
-      value =KpiUnit.parse_entry_value(kpi.unit, entry.value)  if(entry=KpiEntriesHelper.get_kpi_entry_for_entry(kpi.user_kpi_item_id,@parsed_entry_at))
-     %>
-     <li id="<%= kpi.user_kpi_item_id%>">
-       <table>
-         <tr>
-           <td title="<%= kpi.name%>"><%= kpi.name%></td>
-           <td title="<%= kpi.category_name%>"><%= kpi.category_name%></td>
+<% @user_kpis.each_with_index do |kpi, i|
+  value =KpiUnit.parse_entry_value(kpi.unit, entry.value) if (entry=KpiEntriesHelper.get_kpi_entry_for_entry(kpi.user_kpi_item_id, @parsed_entry_at))
+%>
+    <li id="<%= kpi.user_kpi_item_id %>">
+      <div style="height: 100%;overflow: hidden;">
+        <table>
+          <tr>
+            <td title="<%= kpi.name %>"><%= kpi.name %></td>
+            <td title="<%= kpi.category_name %>"><%= kpi.category_name %></td>
 
-           <td ><%=KpiDirection.get_desc_by_value(kpi.direction)%></td>
-           <td title="<%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target_max)%>">
-             <span class="entry-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target_max)%></span>
-           </td>
+            <td><%= KpiDirection.get_desc_by_value(kpi.direction) %></td>
+            <td title="<%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target_max) %>">
+              <span class="entry-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target_max) %></span>
+            </td>
 
-           <td title="<%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target_min)%>">
-             <span class="entry-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target_min)%></span>
-           </td>
+            <td title="<%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target_min) %>">
+              <span class="entry-target"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.user_kpi_item_target_min) %></span>
+            </td>
 
-           <td ><input type="text" class="entry-actual"  kpi_id="<%=kpi.id%>" user_kpi_item_id="<%= kpi.user_kpi_item_id%>"  value="<%=value%>" disabled="disables" /></td>
+            <td>
+              <input type="text" class="entry-actual" kpi_id="<%= kpi.id %>" user_kpi_item_id="<%= kpi.user_kpi_item_id %>" value="<%= value %>" disabled="disables"/>
+            </td>
 
-           <td class="kpi-entry-trend"></td>
-         </tr>
-         <tr>
-           <td><%= kpi.description%></td>
-           <td><%= t 'entry.desc.category'%></td>
-           <td><%= t 'entry.desc.trend'%></td>
-           <td><%= t 'manage.kpi.target'%></td>
-           <td><%= t 'manage.kpi.target_min'%></td>
-           <td><%= t 'entry.desc.actual'%></td>
-           <td><%= t 'entry.desc.recent'%></td>
-         </tr>
-       </table>
-     </li>
-<%end%>
+            <td class="kpi-entry-trend"></td>
+            <td class=""><a class="btn btn-success show-entry-detail" id="<%= kpi.user_kpi_item_id %>">Detail</a></td>
+          </tr>
+          <tr>
+            <td><%= kpi.description %></td>
+            <td><%= t 'entry.desc.category' %></td>
+            <td><%= t 'entry.desc.trend' %></td>
+            <td><%= t 'manage.kpi.target' %></td>
+            <td><%= t 'manage.kpi.target_min' %></td>
+            <td><%= t 'entry.desc.actual' %></td>
+            <td><%= t 'entry.desc.recent' %></td>
+            <td><%= "Details" %></td>
+          </tr>
+        </table>
+      </div>
+      <div class="box">
+        <div class="text">
+          1
+          <br />
+          2
+          <br />
+          3
+          <br />
+        </div>
+      </div>
+    </li>
+<% end %>
 
+<script>
+    MANAGE.entry.init();
+</script>
 
+<style>
+    .text {
+        line-height: 22px;
+        padding: 0 6px;
+        color: #666;
+    }
+
+    .box h1 {
+        padding-left: 10px;
+        height: 22px;
+        line-height: 22px;
+        background: #f1f1f1;
+        font-weight: bold;
+    }
+
+    .box {
+        position: relative;
+        border: 1px solid #e7e7e7;
+    }
+</style>

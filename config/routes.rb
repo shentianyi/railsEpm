@@ -104,6 +104,7 @@ IFEpm::Application.routes.draw do
       get :recents
       post :entry
       post :import
+      post :details
     end
   end
 
