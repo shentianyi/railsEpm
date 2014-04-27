@@ -22,10 +22,11 @@ MANAGE.entry.init = function(){
             data:{user_kpi_item_id:id,parsed_entry_at:entry_at},
             dataType:"json",
             success:function(result){
-                var target = $("li#"+id).children("div.box").children(".text");
+                //var target = $("li#"+id).children("div.box").children(".text");
                 //target.innerHTML = data;
-                target.html(result);
-                target.slideToggle("slow");
+                //target.html(result);
+                //target.slideToggle("slow");
+                $("li#"+id).children("div.box").children(".text").slideToggle("slow");
             }
         });
     });
