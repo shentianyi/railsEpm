@@ -98,7 +98,7 @@ class KpiEntry
   end
 
   def property_val property_id
-    key = "a"+property_id
+    key = "a"+property_id.to_s
     if self[key].nil?
       ""
     else
