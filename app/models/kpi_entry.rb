@@ -78,7 +78,7 @@ class KpiEntry
   def self.recent_input user_id, user_kpi_item_ids, time
     values=[]
     if user_id.nil? || user_kpi_item_ids.nil? || time.nil?
-      values
+      return values
     end
 
     user_kpi_item_ids.each do |user_kpi_item_id|
