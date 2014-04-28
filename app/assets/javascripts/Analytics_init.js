@@ -445,6 +445,9 @@ ANALYTICS.detailPoint.init=function(){
                     if(ui.draggable.next().find("ul").children().length>0){
                         $("#conditionLocal ul").children().last().attr("type","group").find("i").eq(0).addClass("icon-inbox group");
                     }
+                    else{
+                        $("#conditionLocal ul").children().last().remove();
+                    }
 
                 }
             }

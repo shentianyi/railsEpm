@@ -27,6 +27,7 @@ MANAGE.kpi.init = function() {
                     $('#kpi-item-container').html(data);
                     window.history.pushState(id, null, "/kpis/c/" + id);
                     MANAGE.widget_init();
+                   MANAGE.kpi.isCalcuCheck();
                });
           }
      });
