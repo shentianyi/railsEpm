@@ -188,7 +188,7 @@ function prepare_form_chart() {
         ANALYTICS.form_chart(option);
     }
     else {
-        MessageBox("please fill all blanks in *", "top", "warning")
+        MessageBox(I18n.t('analytics.fill_all_blank'), "top", "warning")
     }
 }
 function show_chart_body(option) {
@@ -480,7 +480,7 @@ ANALYTICS.detailPoint.init=function(){
                 generateDetailDate();
             }
             else{
-                MessageBox("请至少选择一个属性进行聚合","top","warning")
+                MessageBox(I1n8.t("analytics.detail.choose_one_dim"),"top","warning")
             }
         })
     ;

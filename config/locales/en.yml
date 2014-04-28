@@ -363,6 +363,7 @@ en:
     tcr: TCR
     close_btn: Close
     select-dim: Select Dimensions
+    fill_all_blank: Sta should not be blank
     detail:
       drag: Drag dimension or dimension value
       back: Back to Analytics
@@ -381,6 +382,7 @@ en:
       average: Average
       rate: Rate
       year-analyse: YoY Analytics
+      choose_one_dim: Please choose at least one dimension or dimension value
   #kpi entry
   entry:
     desc:
