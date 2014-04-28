@@ -1,4 +1,12 @@
 @import "STYLE";
+
+.analytics-mark{
+  h2{
+    @include word-break;
+    font-size:30px;
+  }
+}
+
 .chosen-attribute{
   float:left;
   width:280px;
