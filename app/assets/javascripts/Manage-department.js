@@ -246,7 +246,7 @@ MANAGE.department.add_department_init = function () {
                         });
                     }
                     else {
-                        MessageBox("Same name exist yet", "top", "warning");
+                        MessageBox(I18n.t('fix.cannot_repeat'), "top", "warning");
                     }
                 }
             }

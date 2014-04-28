@@ -58,7 +58,7 @@
                   <i class="icon-remove" id="close-user-share"></i>
 
 
-                  <h4>已共享用户</h4>
+                  <h4><%= t 'manage.view.desc.already_shared'%></h4>
                   <ul class="shared-user-list">
                     <% @shared_users.each do |user| %>
                         <li>
@@ -66,7 +66,7 @@
                         </li>
                     <% end %>
                   </ul>
-                  <h4>未共享用户</h4>
+                  <h4><%= t 'manage.view.desc.not_shared'%></h4>
                   <ul class="unshared-user-list">
                     <% @unshared_users.each do |user| %>
                         <li>

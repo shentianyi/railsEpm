@@ -60,7 +60,7 @@ MANAGE.manage_menu_left_add.prototype={
                   });
               }
               else{
-                      MessageBox("Same name exist yet","top","warning");
+                      MessageBox(I18n.t('fix.cannot_repeat'),"top","warning");
               }
           }
       },
@@ -240,7 +240,7 @@ MANAGE.manage_menu_left_edit.prototype={
                 $("#manage-left-menu li>a").each(function(){
                     if($(this).text()==$(e.target).val()){
                         validate=false;
-                        MessageBox("Same name exist yet","top","warning");
+                        MessageBox(I18n.t('fix.cannot_repeat'),"top","warning");
                         return false;
                     }
                 });
@@ -248,7 +248,7 @@ MANAGE.manage_menu_left_edit.prototype={
             }
         }
         else{
-            MessageBox("give it a name","top","warning");
+            MessageBox(I18n.t('fix.not_empty'),"top","warning");
             return false;
         }
     },

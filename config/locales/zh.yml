@@ -418,8 +418,8 @@ zh:
           kpi_library_desc: 如果你需要一些常用的KPI，你可以方便的在KPI库中选择
           choose_now: 现在选择
           next_desc: 创建完成KPI后，你应该创建输入点和用户，然后将KPI分配给相应输入点中的用户内
-
-
+          what-is-kpi-title: 什么是KPI?
+          what-is-kpi: KPI是企业关键绩效指标(KPI：Key Performance Indicator)是通过对组织内部流程的输入端、输出端的关键参数进行设 置、取样、计算、分析，衡量流程绩效的一种目标式量化管理指标，是把企业的战略目标分解为可操作的工作目标的工具，是企 业绩效管理的基础。
         title: 管理KPI
         category: KPI类别
         kpi_library: KPI 库
@@ -437,6 +437,8 @@ zh:
         formula: 计算公式
         invalid: 公式不合法
         cannot_repeat: 同一类别KPI不可重复
+        ok: 创建
+        cancle: 取消
         freq_item:
           hourly: 小时
           daily: 天
@@ -456,6 +458,7 @@ zh:
         dimensions-same-error: 该KPI已经有相同的属性!
         dimensions-kpi-not-fount: KPI或者KPI维度没有找到，请检查！
         details: 详细
+        category-not-repeat: 类别不可重复!
       department:
         desc:
           dep: 输入点
@@ -466,9 +469,11 @@ zh:
           user_quantity: 用户数目
           create: 创建输入点
           create_now: 现在创建
-          create_desc: 输入点是管理员工的地方，而视图则建立在输入点的基础上
+          create_desc: 输入点是管理员工的地方，而视图则建立在输入点的基础上。
           give_name: 给它一个名字
-          next_desc: 完成输入点创建后， 接下来你需要为你的输入点添加员工这样他们为你的输入点贡献KPI
+          next_desc: 完成输入点创建后， 接下来你需要为你的输入点添加员工这样他们为你的输入点贡献KPI。
+          what-is-entity-title: 什么是输入点？
+          what-is-entity: 输入点是组织内部管理kpi数据的最小单位。
       user:
         desc:
           manage: 管理用户
@@ -479,6 +484,10 @@ zh:
           assign_desc: 想分配任务一样给你的员工分配不同的KPI
           assign_now: 现在分配
           next_desc: 在分配完KPI后，你应该将你的部门放到你的视图中，以视图为基础，我们为你生成分析数据和仪表盘
+          what-is-manager-title: 管理者权限
+          what-is-magager: 观察输入点上kpi实际数据
+          what-is-user-title: 普通用户权限
+          what-is-user: 输入管理员为其分配kpi的实际数据
         role:
           admin: 系统管理员
           director: 管理者
@@ -509,6 +518,8 @@ zh:
           share: 共享
           share_desc: 共享你的视图....
           share_now: 开始共享
+          already_shared: 已共享用户
+          not_shared: 未共享用户
         validate:
           already_shared: 已共享，不可重复
         already_assigned: 输入点已经分配，不可重复
@@ -602,6 +613,7 @@ zh:
       max: 最大值
       min: 最小值
   fix:
+    not_empty: 不能为空
     zone_too_large: 对不起，时间范围太大了！
     cannot_destroy: 此项不可删除
     add_fail: 添加失败

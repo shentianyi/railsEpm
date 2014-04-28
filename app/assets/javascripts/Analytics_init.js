@@ -499,7 +499,7 @@ function chart_point_click(object) {
 //    console.log(object);
     $("#detail-block").css("left", "0").css("right","0");
     $("#detail-date").text(object.name);
-    var method=object.method=="0"?"平均":"累计";
+    var method=object.method=="0"? I18n.t('analytics.average'):I18n.t('analytics.sum');
     $("#detail-kpi").text(object.kpi+"["+method+"]");
     $("#detail-view").text(object.view);
     //table同比中的
