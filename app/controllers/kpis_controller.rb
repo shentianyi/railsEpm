@@ -136,7 +136,7 @@ class KpisController < ApplicationController
 
     if kpi && kpi_property
       if KpiPropertyItem.where(kpi_id:kpi.id,kpi_property_id:kpi_property.id).first
-        msg.content = "You already have this property"
+        msg.content =  I18n.t "manage.kpi.dimensions-same-error"
       else
         kpi_property_item = KpiPropertyItem.new
         kpi_property_item.kpi_property_id = kpi_property.id
@@ -146,7 +146,7 @@ class KpisController < ApplicationController
       end
 
     else
-      msg.content = "KpiProperty or Kpi not found,please check!"
+      msg.content = I18n.t "manage.kpi.dimensions-kpi-not-fount"
     end
     render :json => msg
   end

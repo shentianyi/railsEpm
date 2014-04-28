@@ -425,6 +425,14 @@ zh:
           none: 无
           up: 上升
           down: 下降
+        dimensions: 维度
+        dimensions-inputname: 输入维度名称
+        dimensions-edit: 编辑维度
+        dimensions-add: 添加维度
+        dimensions-enter: 回车添加维度
+        dimensions-same-error: 该KPI已经有相同的属性!
+        dimensions-kpi-not-fount: KPI或者KPI属性没有找到，请检查！
+        details: 详细
       department:
         desc:
           dep: 输入点

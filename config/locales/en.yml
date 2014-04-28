@@ -419,6 +419,14 @@ en:
         none: None
         up: Up
         down: Down
+      dimensions: Dimensions
+      dimensions-inputname: Enter Dimension name
+      dimensions-edit: Edit Dimensions
+      dimensions-add: Add Dimension
+      dimensions-enter: Enter to add Dimension
+      dimensions-same-error: Kpi already has the same dimension!
+      dimensions-kpi-not-fount: Kpi or Kpi Property not found, please check!
+
     department:
       desc:
         dep: Data Point

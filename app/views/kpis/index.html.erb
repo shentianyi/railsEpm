@@ -130,10 +130,10 @@
 
     <div class="auto-form-label" id="auto-form-label">
       <ul>
-        <li><input placeholder="标签"/></li>
+        <li><input placeholder="<%= t 'manage.kpi.dimensions'%>"/></li>
       </ul>
     </div>
-    <label class="instrument-form-label">回车形成属性</label>
+    <label class="instrument-form-label"><%= t 'manage.kpi.dimensions-enter'%></label>
     <div class="is-calculate-block">
 
       <input type="checkbox" id="is-calcu-check"/>
@@ -181,8 +181,8 @@
     </div>
 
     <div class="add-attribute">
-      <input id="add-kpi-property" placeholder="输入属性名"/>
-      <a class="btn btn-normal btn-success" id="edit-attribute-block-add">添加属性</a>
+      <input id="add-kpi-property" placeholder="<%= t 'manage.kpi.dimensions-inputname'%>"/>
+      <a class="btn btn-normal btn-success" id="edit-attribute-block-add"><%= t 'manage.kpi.dimensions-add'%></a>
     </div>
 
     <!--

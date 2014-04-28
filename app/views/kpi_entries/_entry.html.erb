@@ -22,7 +22,7 @@
             </td>
 
             <td class="kpi-entry-trend"></td>
-            <td class=""><a class="btn btn-success show-entry-detail" id="<%= kpi.user_kpi_item_id %>">Detail</a></td>
+            <td class=""><a class="btn btn-success show-entry-detail" id="<%= kpi.user_kpi_item_id %>"><td><%= t 'manage.kpi.details' %></td></a></td>
           </tr>
           <tr>
             <td><%= kpi.description %></td>
@@ -32,7 +32,7 @@
             <td><%= t 'manage.kpi.target_min' %></td>
             <td><%= t 'entry.desc.actual' %></td>
             <td><%= t 'entry.desc.recent' %></td>
-            <td><%= "Details" %></td>
+            <td><%= t 'manage.kpi.details' %></td>
           </tr>
         </table>
       </div>
