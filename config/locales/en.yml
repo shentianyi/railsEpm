@@ -391,6 +391,8 @@ en:
       recent: Recent Value
       date: Time
       value: Value
+      del-error: Can not delete total value!
+      del-success: Delete details successfully!
   #manage
   manage:
     base:
@@ -412,6 +414,8 @@ en:
         kpi_library_desc: Create kpi in different category,then you can edit it's max target and min target
         choose_now: Choose Now
         next_desc: Create kpi in different category,then you can edit it's max target and min target
+        what-is-kpi-title: What is KPI?
+        what-is-kpi: A Key performance indicator is a business metric used to evaluate factors that are crucial to the success of an organization. Kpis differ per organization.
       title: Manage KPI
       category: KPI Category
       kpi_library: KPI Library
@@ -429,6 +433,8 @@ en:
       formula: Formula
       invalid: Formula is not valid
       cannot_repeat: Can not repeat
+      ok: Create
+      cancle: Cancle
       freq_item:
         hourly: Houly
         daily: Daily
@@ -446,8 +452,9 @@ en:
       dimensions-add: Add Dimension
       dimensions-enter: Enter to add Dimension
       dimensions-same-error: Kpi already has the same dimension!
-      dimensions-kpi-not-fount: Kpi or Kpi Property not found, please check!
-
+      dimensions-kpi-not-fount: Kpi or Kpi Dimension not found, please check!
+      details: Details
+      category-not-repeat: Category could not be repeated!
     department:
       desc:
         dep: Data Point
@@ -461,6 +468,8 @@ en:
         create_desc: Department is the place to put your staff and the view is made up of data points
         give_name: Give it a name
         next_desc: After creating data point , it's time to create user(staff) to your data point so that they can contribute to their data point KPI
+        what-is-entity-title: What is Data Point?
+        what-is-entity: Date point is the minimum depart which manager can monitor and analysis their kpis’ actual data.
     user:
       desc:
         manage: Manage User
@@ -471,6 +480,10 @@ en:
         assign_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
         assign_now: Assign Now
         next_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
+        what-is-manager-title: The Director’s right
+        what-is-manager: Monitor the kpis’actual data which based on the data point or their combination
+        what-is-user-title: The User’s right
+        what-is-user: Input the kpis’actual data which the director assigned to him
       role:
         admin: System Admin
         director: Director
@@ -501,6 +514,8 @@ en:
         share_desc: Share the view.......
         share_now: Share Now
         next_desc: Creating view first , then assign data point to the view,view is the base condition in analytics
+        already_shared: Shared user list
+        not_shared: Unshared user list
       validate:
         already_shared: Already shared to this user!
       already_assigned: Data point has been assigned!
@@ -593,6 +608,7 @@ en:
        max: Max Value
        min: Min Value
   fix:
+    not_empty: should not be epmty!
     zone_too_large: zone to large error!
     cannot_destroy: can not delete
     add_fail: add fail

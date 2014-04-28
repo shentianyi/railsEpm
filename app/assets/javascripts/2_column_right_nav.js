@@ -111,7 +111,7 @@ right_nav_main.item_prototype.add.prototype={
 
             }
             else{
-                MessageBox("Same name exist yet","top","warning");
+                MessageBox(I18n.t('fix.cannot_repeat'),"top","warning");
             }
 
 
@@ -226,7 +226,7 @@ right_nav_main.item_prototype.edit.prototype={
                 $("#content-right-nav-group>li").each(function(){
                     if($(this).attr("title")==$(e.target).val()){
                         validate=false;
-                        MessageBox("Same name exist yet","top","warning");
+                        MessageBox(I18n.t('fix.cannot_repeat'),"top","warning");
                         return false;
                     }
                 });
