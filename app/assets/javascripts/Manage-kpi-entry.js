@@ -32,7 +32,7 @@ MANAGE.entry.init = function(){
             dataType:'html',
             success : function(data){
                 target.addClass("open");
-                //target.html(data);
+                target.html(data);
                 target.slideToggle("slow");
                 //$("li#"+id).children("div.box").children(".text").slideToggle("slow");
             }
