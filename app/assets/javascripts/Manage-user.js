@@ -215,7 +215,7 @@ MANAGE.user.add_new = function () {
             }
         });
     } else {
-        MessageBox("Please fill all the blanket taking *", "top", "warning");
+        MessageBox(I18n.t('manage.base.fill-all-star'), "top", "warning");
     }
 };
 //////////////////////////////////////////////////////////////////////////         User 编辑那一块的
@@ -293,16 +293,16 @@ MANAGE.user.edit = function () {
                         if ($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant") == "false")
                             $target.find(".user-manage-authority").text(object.role).attr("value", object.role_id);
                     } else {
-                        MessageBox("Something get wrong", "top", "wrong");
+                        MessageBox(I18n.t('manage.base.sth-wrong'), "top", "wrong");
                     }
                 }
             });
             MANAGE.user.user_edit_close();
         } else {
-            MessageBox("Please fix the input with red border", "top", "danger");
+            MessageBox(I18n.t('manage.base.fill-all-star'), "top", "danger");
         }
     } else {
-        MessageBox("Please fill all the blanket taking *", "top", "warning");
+        MessageBox(I18n.t('manage.base.fill-all-star'), "top", "warning");
     }
 };
 //////////////////////////////////////////////////////////////////////////         User assign kpi

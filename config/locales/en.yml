@@ -410,6 +410,8 @@ en:
       assign_all_kpi: Assign All
       fill-all-star: Star should not be empty
       not-empty: should not be empty
+      fix-red: please fix the red input
+      sth-wrong: Sorry, Something get wrong
     kpi:
       desc:
         create: Create KPI

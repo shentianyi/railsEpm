@@ -414,6 +414,8 @@ zh:
         assign_all_kpi: 全部分配
         fill-all-star: 星号不能为空
         not-empty: 不能为空
+        fix-red: 请修改红框内的值
+        sth-wrong: 对不起，出错了
       kpi:
         desc:
           create: 创建KPI
