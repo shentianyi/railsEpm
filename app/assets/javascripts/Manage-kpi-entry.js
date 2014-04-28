@@ -6,6 +6,10 @@ MANAGE.entry.init = function(){
         .on("click",".show-entry-detail",function(){
             var id = $(this).attr("id");
             var $target = $("li#"+id).find(".box");
+            //if($target.hasClass("down")){
+            //    $target.removeClass("down");
+            //    return;
+            //}
 
             var interval=$("#entry-left-menu li.active").attr("interval"),
                 date=$("#entry-date-picker").val(),entry_at,d=standardParse(date).date;
@@ -27,7 +31,8 @@ MANAGE.entry.init = function(){
                 dataType:'html',
                 success : function(data){
                     $target.html(data);
-                    $target.slideDown("fast");
+                    $target.slideDown("slow");
+                    $target.addClass("down");
                 }
             });
         })
@@ -37,7 +42,7 @@ MANAGE.entry.init = function(){
 //////////////////////  在这里写detail 点击删除的事件
         })
         .on("click",function(){
-           $("#entry-sort-list").find(".box").slideUp("fast");
+           $("#entry-sort-list").find(".box").slideUp("slow");
         })
     ;
 }
