@@ -1,7 +1,7 @@
 var MANAGE = MANAGE || {};
 MANAGE.entry = {};
 MANAGE.entry.init = function(){
-    $("div.text").hide();
+    //$("div.text").hide();
     $("a.show-entry-detail").click(function(){
         var interval=$("#entry-left-menu li.active").attr("interval"),
             date=$("#entry-date-picker").val(),entry_at,d=standardParse(date).date;
@@ -20,13 +20,13 @@ MANAGE.entry.init = function(){
             url:"/kpi_entries/details",
             type:'POST',
             data:{user_kpi_item_id:id,parsed_entry_at:entry_at},
-            dataType:"json",
-            success:function(result){
-                //var target = $("li#"+id).children("div.box").children(".text");
-                //target.innerHTML = data;
-                //target.html(result);
-                //target.slideToggle("slow");
-                $("li#"+id).children("div.box").children(".text").slideToggle("slow");
+            dataType:'json',
+            success : function(result){
+                var target = $("li#"+id).children("div.box").children(".text");
+                target.innerHTML = data;
+                target.html(result);
+                target.slideToggle("slow");
+                //$("li#"+id).children("div.box").children(".text").slideToggle("slow");
             }
         });
     });
