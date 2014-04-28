@@ -43,7 +43,7 @@
           <%= t 'analytics.average' %> </label>
       </div>
       <div class="chosen-attribute">
-        <select data-placeholder="选择属性" multiple style="width:250px;" class="chosen-select " title="analy-attribute-select" id="kpi-property-select">
+        <select data-placeholder="<%= t 'analytics.select-dim'%>" multiple style="width:250px;" class="chosen-select " title="analy-attribute-select" id="kpi-property-select">
         </select>
       </div>
 
@@ -117,7 +117,7 @@
 
 <div class="detail-block" id="detail-block">
   <div class="navigation">
-    <a class="btn-back" id="btn-back"><i class="icon icon-chevron-left"></i> 返回分析</a>
+    <a class="btn-back" id="btn-back"><i class="icon icon-chevron-left"></i><%= t 'analytics.detail.back'%></a>
     <p><span id="detail-date"></span><span id="detail-kpi"></span><span id="detail-view"></span></p>
   </div>
   <div class="content">
@@ -125,16 +125,16 @@
     <div class="assembleCondition" id="assembleCondition">
       <!--选择条件的-->
       <div class="origin" id="conditionOrigin">
-        <p>所有属性<span>(拖拽属性类或单项)</span></p>
+        <p><%= t 'analytics.detail.dimensions'%><span>(<%= t 'analytics.detail.drag'%>)</span></p>
 
       </div>
       <!--已经选择的-->
       <div class="local" id="conditionLocal">
-        <p>已选择属性</p>
+        <p><%= t 'analytics.detail.dimensions-selected'%></p>
         <ul>
         </ul>
       </div>
-      <a class="btn btn-primary" id="assemble-analyse">聚合分析</a>
+      <a class="btn btn-primary" id="assemble-analyse"><%= t 'analytics.detail.aggredated-analyse'%></a>
     </div>
 
     <div class="assembleDemonstrate" id="assembleDemonstrate">
@@ -150,24 +150,23 @@
 
          <div class="small">
            <dl>
-             <dt>当前值</dt>
+             <dt><%= t 'analytics.detail.current-val'%></dt>
              <dd id="assemble-current"></dd>
-             <dt>上一同期值</dt>
+             <dt><%= t 'analytics.detail.last-period'%></dt>
              <dd  id="assemble-last"></dd>
-             <dt>同比</dt>
+             <dt><%= t 'analytics.detail.yearly'%></dt>
              <dd id="assemble-compare"></dd>
              <dd><i class="icon icon-arrow-up"  id="assemble-arrow"></i></dd>
            </dl>
-           <dl>
-             <dt>聚合总值</dt>
+           <dl><%= t 'analytics.detail.agg-sum'%></dt>
              <dd id="assume-sum"></dd>
-             <dt>聚合平均值</dt>
+             <dt><%= t 'analytics.detail.agg-average'%></dt>
              <dd id="assume-average"></dd>
-             <dt>条目数量</dt>
+             <dt><%= t 'analytics.detail.count'%></dt>
              <dd id="assume-count"></dd>
-             <dt>最大值</dt>
+             <dt><%= t 'analytics.detail.max'%></dt>
              <dd id="assume-max"></dd>
-             <dt>最小值</dt>
+             <dt><%= t 'analytics.detail.min'%></dt>
              <dd id="assume-min"></dd>
            </dl>
          </div>
@@ -200,19 +199,19 @@
     <div class="graph" id="table-detail-line"></div>
     <div class="footer">
       <dl>
-        <dt>总值</dt>
+        <dt><%= t 'analytics.detail.sum'%></dt>
         <dd id="table-compare-sum"></dd>
       </dl>
       <dl>
-        <dt>平均值</dt>
+        <dt><%= t 'analytics.detail.average'%></dt>
         <dd id="table-compare-average"></dd>
       </dl>
       <dl>
-        <dt>最大值</dt>
+        <dt><%= t 'analytics.detail.max'%></dt>
         <dd id="table-compare-max"></dd>
       </dl>
       <dl>
-        <dt>最小值</dt>
+        <dt><%= t 'analytics.detail.min'%></dt>
         <dd id="table-compare-min"></dd>
       </dl>
     </div>

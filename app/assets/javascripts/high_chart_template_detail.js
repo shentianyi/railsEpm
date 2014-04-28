@@ -33,9 +33,9 @@ CHARTDETAIL.factory=function(render){
                 if(this.point.name){
                     returnString+="<span style='color:"+this.point.color+"'>"+this.point.name+"</span><br />"
                 }
-                returnString+="当前值："+this.point.y+"<br />"
+                returnString+= I18n.t('analytics.detail.current-val')+"："+this.point.y+"<br />"
                 if(this.point.percentage){
-                    returnString+="占比："+(this.point.percentage).toFixed(1)+"%<br />"
+                    returnString+= I18n.t('analytics.detail.rate')+"："+(this.point.percentage).toFixed(1)+"%<br />"
                 }
                 return returnString;
             }
