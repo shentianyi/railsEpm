@@ -206,6 +206,10 @@ MANAGE.user.add_new = function () {
                     if (data.content.hasOwnProperty("password_confirmation")) {
                         errmsg = errmsg + "  密码确认：" + data.content.password_confirmation[0] + ";";
                     }
+                    if(errmsg.length < 1)
+                    {
+                        errmsg = errmsg + data.content;
+                    }
                     MessageBox(errmsg, "top", "warning")
                 }
             }

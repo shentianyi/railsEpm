@@ -412,6 +412,8 @@ zh:
         finish: 完成
         destroy_fail: 添加失败
         assign_all_kpi: 全部分配
+        fill-all-star: 星号不能为空
+        not-empty: 不能为空
       kpi:
         desc:
           create: 创建KPI
@@ -487,7 +489,7 @@ zh:
           assign_now: 现在分配
           next_desc: 在分配完KPI后，你应该将你的部门放到你的视图中，以视图为基础，我们为你生成分析数据和仪表盘
           what-is-manager-title: 管理者权限
-          what-is-magager: 观察输入点上kpi实际数据
+          what-is-manager: 观察输入点上kpi实际数据
           what-is-user-title: 普通用户权限
           what-is-user: 输入管理员为其分配kpi的实际数据
         role:
