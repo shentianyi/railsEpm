@@ -415,7 +415,6 @@ ANALYTICS.detailPoint.init=function(){
            $("#detail-table-compare-block .inner").css("left","-1000px");
        })
     //  拖拽
-
     $( "#conditionLocal" ).droppable({
         activeClass: "active",
         hoverClass: "hover",
@@ -497,7 +496,8 @@ function chart_point_click(object) {
 //    console.log(object);
     $("#detail-block").css("left", "0").css("right","0");
     $("#detail-date").text(object.name);
-    $("#detail-kpi").text(object.kpi);
+    var method=object.method=="0"?"平均":"累计";
+    $("#detail-kpi").text(object.kpi+"["+method+"]");
     $("#detail-view").text(object.view);
     //table同比中的
     $("#table-compare-kpi").text(object.kpi);

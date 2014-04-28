@@ -282,7 +282,8 @@ ANALYTICS.form_chart=function(option){
                 data_array[i].high=msg.object.target_max[i];
                 data_array[i].low=msg.object.target_min[i];
                 data_array[i].unit=msg.object.unit[i];
-                data_array[i].id=option.id
+                data_array[i].id=option.id;
+                data_array[i].method=option.method;
             }
             option.data=data_array;
             var c={},p=option.data;
@@ -365,6 +366,7 @@ ANALYTICS.form_chart_without_ajax=function(option,data){
                     data_array[i].low=data.target_min[i];
                     data_array[i].unit=data.unit[i];
                     data_array[i].id=option.id
+                    data_array[i].method=option.method;
                 }
                 option.data=data_array;
                 var c={},p=option.data;
@@ -424,6 +426,7 @@ ANALYTICS.add_data=function(option){
                 data_array[i].low=msg.object.target_min[i];
                 data_array[i].unit=msg.object.unit[i];
                 data_array[i].id=option.id
+                data_array[i].method=option.method;
             }
             option.data=data_array;
             var c={},p=option.data;
