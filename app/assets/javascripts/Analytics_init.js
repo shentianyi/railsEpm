@@ -246,6 +246,12 @@ function alternate_chart_type(event) {
 }
 
 //切换小时、天、周、月、季度、年
+//等待请求队列
+ANALYTICS.currentThread=[];
+ANALYTICS.currentThreadOrder;
+ANALYTICS.currentThreadLoading=false;
+ANALYTICS.currentThreadOrderCenter;
+ANALYTICS.currentThreadPreCondition;
 function change_interval(option) {
     if (ANALYTICS.loading_data == true) {
         MessageBox("Can't do it during loading", "top", "warning");
@@ -275,6 +281,7 @@ function change_interval(option) {
             count: ANALYTICS.chartSeries.getCount()
 
         }, j;
+        ANALYTICS.currentThreadPreCondition=option;
         //有数据的直接拿来生成
         for (j = 0; j < have_data.length; j++) {
             option.kpi = ANALYTICS.chartSeries.series[j].kpi;
@@ -291,27 +298,43 @@ function change_interval(option) {
             ANALYTICS.proper_type_for_chart(option);
         }
         //没有数据的再去请求
+        ANALYTICS.currentThread=[];
         for (j = 0; j < not_have_data.length; j++) {
-
-            var series_id= not_have_data[j];
-            option.kpi = ANALYTICS.chartSeries.series[series_id].kpi;
-            option.kpi_id = ANALYTICS.chartSeries.series[series_id].kpi_id;
-            option.method = ANALYTICS.chartSeries.series[series_id].method;
-            option.view = ANALYTICS.chartSeries.series[series_id].view;
-            option.view_text = ANALYTICS.chartSeries.series[series_id].view_text;
-            option.id = series_id;
-            option.begin_time = ANALYTICS.chartSeries.series[series_id].begin_time;
-            option.end_time = ANALYTICS.chartSeries.series[series_id].end_time;
-            if(!$("#"+option.target).highcharts()){
-                ANALYTICS.render_to(option);
-                new Highcharts.StockChart(ANALYTICS.high_chart);
-            }
-            option.chart_body_close_validate = false;
-            ANALYTICS.form_chart(option);
+            ANALYTICS.currentThread.push(not_have_data[j]);
+        }
+        if(ANALYTICS.currentThread.length>0){
+            ANALYTICS.currentThreadOrder=0;
+            ANALYTICS.currentThreadLoading=false;
+            ANALYTICS.currentThreadOrderCenter=window.setInterval("singleThreadRequest()",500);
         }
     }
 }
-
+function singleThreadRequest(){
+    if(ANALYTICS.currentThreadOrder>=ANALYTICS.currentThread.length){
+        window.clearInterval(ANALYTICS.currentThreadOrderCenter);
+    }
+    else{
+        if(!ANALYTICS.currentThreadLoading){
+            ANALYTICS.currentThreadLoading=true;
+            var series_id=ANALYTICS.currentThread[ANALYTICS.currentThreadOrder++];
+            console.log(series_id);
+            ANALYTICS.currentThreadPreCondition.kpi = ANALYTICS.chartSeries.series[series_id].kpi;
+            ANALYTICS.currentThreadPreCondition.kpi_id = ANALYTICS.chartSeries.series[series_id].kpi_id;
+            ANALYTICS.currentThreadPreCondition.method = ANALYTICS.chartSeries.series[series_id].method;
+            ANALYTICS.currentThreadPreCondition.view = ANALYTICS.chartSeries.series[series_id].view;
+            ANALYTICS.currentThreadPreCondition.view_text = ANALYTICS.chartSeries.series[series_id].view_text;
+            ANALYTICS.currentThreadPreCondition.id = series_id;
+            ANALYTICS.currentThreadPreCondition.begin_time = ANALYTICS.chartSeries.series[series_id].begin_time;
+            ANALYTICS.currentThreadPreCondition.end_time = ANALYTICS.chartSeries.series[series_id].end_time;
+            if(!$("#"+ANALYTICS.currentThreadPreCondition.target).highcharts()){
+                ANALYTICS.render_to(ANALYTICS.currentThreadPreCondition);
+                new Highcharts.StockChart(ANALYTICS.high_chart);
+            }
+            ANALYTICS.currentThreadPreCondition.chart_body_close_validate = false;
+            ANALYTICS.form_chart(ANALYTICS.currentThreadPreCondition);
+        }
+    }
+}
 //窗口大小改变后，改变相应的图表大小
 var resize_chart = {
     body: function () {

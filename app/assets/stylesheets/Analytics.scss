@@ -72,12 +72,12 @@
         display:inline-block;
         &:first-of-type{
           font-size:23px;
-          font-family:"helve";
+          //font-family:"helve";
           margin-right:15px;
         }
         &:nth-of-type(2){
           font-size:23px;
-          font-family:"helve";
+          //font-family:"helve";
           margin-right:5px;
         }
         &:nth-of-type(3){
@@ -355,6 +355,8 @@
                 tr{
                   border:$tr-border;
                   cursor:pointer;
+                  background:#fff;
+                  @include transition(background);
                   &:nth-of-type(even){
                     background:$tr-bg;
                   }
@@ -425,7 +427,7 @@
         &:first-of-type{
           font-size:38px;
           margin-top:12px;
-          font-family:"helve";
+          //font-family:"helve";
         }
         &:nth-of-type(2){
           font-size:19px;

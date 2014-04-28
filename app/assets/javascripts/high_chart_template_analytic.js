@@ -234,6 +234,7 @@ ANALYTICS.high_chart={
 
 
 ANALYTICS.form_chart=function(option){
+    //ANALYTICS.loading_data 表示正在加载数据
     ANALYTICS.loading_data=true;
     var begin_time_utc=standardParse(option.begin_time).date,
         end_time_utc=standardParse(option.end_time).date,
@@ -300,7 +301,11 @@ ANALYTICS.form_chart=function(option){
                 option.add_length=24;
                 ANALYTICS.add_data(option);
             }
-            ANALYTICS.loading_data=false;
+            else{
+                ANALYTICS.loading_data=false;
+                ANALYTICS.currentThreadLoading=false;
+                console.log("loading over");
+            }
         }
         else{
             MessageBox("sorry , something wrong" , "top", "warning") ;
@@ -370,6 +375,7 @@ ANALYTICS.form_chart_without_ajax=function(option,data){
                 }
                 ANALYTICS.add_series(option);
                 ANALYTICS.proper_type_for_chart(option);
+
                 if(data_too_long){
                     option.begin_time_utc=begin_time_utc;
                     option.end_time_utc=end_time_utc;
@@ -378,7 +384,12 @@ ANALYTICS.form_chart_without_ajax=function(option,data){
                     option.add_length=100;
                     ANALYTICS.add_data(option);
                 }
-                ANALYTICS.loading_data=false;
+                else{
+                    ANALYTICS.loading_data=false;
+                    ANALYTICS.currentThreadLoading=false;
+                    console.log("loading over");
+                }
+
 
 }
 
@@ -430,6 +441,11 @@ ANALYTICS.add_data=function(option){
             if(option.data_too_long) {
                 option.begin_time_utc=begin_time_utc;
                 ANALYTICS.add_data(option);
+            }
+            else{
+                ANALYTICS.loading_data=false;
+                ANALYTICS.currentThreadLoading=false;
+                console.log("loading over");
             }
         }
         else{
