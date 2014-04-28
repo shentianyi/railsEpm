@@ -391,6 +391,8 @@ en:
       recent: Recent Value
       date: Time
       value: Value
+      del-error: Can not delete total value!
+      del-success: Delete details successfully!
   #manage
   manage:
     base:
@@ -446,7 +448,7 @@ en:
       dimensions-add: Add Dimension
       dimensions-enter: Enter to add Dimension
       dimensions-same-error: Kpi already has the same dimension!
-      dimensions-kpi-not-fount: Kpi or Kpi Property not found, please check!
+      dimensions-kpi-not-fount: Kpi or Kpi Dimension not found, please check!
 
     department:
       desc:

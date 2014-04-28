@@ -394,6 +394,8 @@ zh:
       recent: 最近数据
       date: 时间
       value: 值
+      del-error: 不能删除总值!
+      del-success: 删除成功!
   #manage
   manage:
       base:
@@ -452,7 +454,7 @@ zh:
         dimensions-add: 添加维度
         dimensions-enter: 回车添加维度
         dimensions-same-error: 该KPI已经有相同的属性!
-        dimensions-kpi-not-fount: KPI或者KPI属性没有找到，请检查！
+        dimensions-kpi-not-fount: KPI或者KPI维度没有找到，请检查！
         details: 详细
       department:
         desc:

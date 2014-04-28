@@ -49,6 +49,25 @@ class KpiEntriesController < ApplicationController
     render :partial => 'entry'
   end
 
+  def destroy
+    msg = Message.new
+    msg.result = true
+    entry = KpiEntry.find_by(id:params[:id])
+    if entry.entry_type == 1
+      msg.result =false
+      msg.content = I18n.t "entry.desc.del-error"
+    else
+      entry.destroy
+      total = KpiEntry.find_by(parsed_entry_at:entry.parsed_entry_at,entity_id:entry.entity_id,user_kpi_item_id:entry.user_kpi_item_id,entry_type:1)
+      if total
+        msg.content = {item_id:entry.user_kpi_item_id,value:total.value}
+      else
+        msg.content = {item_id:entry.user_kpi_item_id,value:""}
+      end
+    end
+    render :json=> msg
+  end
+
   def analyse
     if request.get?
       @entity_groups=get_user_entity_groups

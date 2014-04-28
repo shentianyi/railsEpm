@@ -37,9 +37,27 @@ MANAGE.entry.init = function(){
             });
         })
         .on("click",".box .icon-remove",function(event){
-           stop_propagation(event);
+            stop_propagation(event);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////  在这里写detail 点击删除的事件
+            var $target = $(this);
+            var id = $(this).attr("target");
+            $.ajax({
+                url:"/kpi_entries/"+id,
+                data:{id:id},
+                dataType:"json",
+                type:"DELETE",
+                success:function(data){
+                    if(data.result){
+                        $target.parent().parent().remove();
+                        $("input[user_kpi_item_id="+data.content.item_id+"]").val(data.content.value);
+                        MessageBox(I18n.t('entry.desc.del-success'),top,"success");
+                    }
+                    else{
+                        MessageBox(data.content,top,"warning");
+                    }
+                }
+            });
         })
         .on("click",function(){
            $("#entry-sort-list").find(".box").slideUp("slow");
