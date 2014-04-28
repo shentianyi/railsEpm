@@ -22,7 +22,7 @@
   right:"auto";
   bottom:0px;
   left:-999em;
-  z-index:500;
+  z-index:1;
   background:#fff;
   $min-width:1024px;
   $min-height:700px;
@@ -325,7 +325,7 @@
 
       .right{
             height:248px;
-
+            overflow-x:hidden;
             overflow-y:auto;
             &>table{
               min-width:300px;
@@ -397,7 +397,7 @@
 .detail-table-compare-block{
   background:rgba(0,0,0,0.7);
   position:absolute;
-  z-index:600;
+  z-index:2;
   left:-999em;
   right:auto;
   bottom:0px;
