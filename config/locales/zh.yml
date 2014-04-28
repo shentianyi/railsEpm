@@ -373,6 +373,8 @@ zh:
       trend: 趋势
       actual: 实际值
       recent: 最近数据
+      date: 时间
+      value: 值
   #manage
   manage:
       base:

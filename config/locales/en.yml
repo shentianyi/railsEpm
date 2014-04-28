@@ -370,6 +370,8 @@ en:
       trend: Trend
       actual: Actual Value
       recent: Recent Value
+      date: Time
+      value: Value
   #manage
   manage:
     base:

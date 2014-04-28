@@ -1,48 +1,26 @@
-<!--
 <% if @kpi %>
-<table>
-  <th>Date</th>
-  <th>Entity</th>
-  <th>Target Max</th>
-  <th>Target Min</th>
-  <th>Value</th>
-  <th>Frequency</th>
-  <% @kpi.kpi_properties.each do |property|%>
-  <th><%= property.name %></th>
-  <% end %>
-
-  <% @kpi_entries.each do |entry| %>
-      <td><%= entry.entry_at %></td>
-      <td><%= @entity.name %></td>
-      <td><%= entry.target_max %></td>
-      <td><%= entry.target_min %></td>
-      <td><%= entry.value %></td>
-      <td><%= @kpi.frequency%></td>
-      <% @kpi.kpi_properties.each do |property|%>
-          <td><%= entry.property_val property.id %></td>
-      <% end %>
-  <% end %>
+    <table>
+      <thead>
+      <tr>
+        <td><%= t 'entry.desc.date'%></td>
+        <td><%= t 'entry.desc.value'%></td>
+        <% @kpi.kpi_properties.each do |property|%>
+            <td><%= property.name %></td>
+        <% end %>
+        <td></td>
+      </tr>
+      </thead>
+      <tbody>
+      <% @kpi_entries.each do |entry| %>
+      <tr>
+        <td><%= entry.entry_at %></td>
+        <td><%= entry.value %></td>
+        <% @kpi.kpi_properties.each do |property|%>
+            <td><%= entry.property_val property.id %></td>
+        <% end %>
+        <td><i class="icon icon-remove"></i></td>
+      </tr>
+          <% end %>
+      </tbody>
 </table>
 <% end %>
--->
-<ul>
-<% if @kpi %>
-<li>
-<d>Date</d>
-<d>Value</d>
-<% @kpi.kpi_properties.each do |property|%>
-  <d><%= property.name %></d>
-  <% end %>
-</li>
-  <% @kpi_entries.each do |entry| %>
-  <li>
-    <d><%= entry.entry_at %></d>
-    <d><%= entry.value %></d>
-    <% @kpi.kpi_properties.each do |property|%>
-    <d><%= entry.property_val property.id %></d>
-    <% end %>
-  </li>
-      
-  <% end %>
-<% end %>
-</ul>

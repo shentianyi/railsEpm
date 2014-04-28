@@ -6,11 +6,11 @@ MANAGE.entry.init = function(){
         var id = $(this).attr("id");
         var target = $("li#"+id).children("div.box").children(".text");
 
-        if(target.hasClass("open")){
+        /*if(target.hasClass("open")){
             target.removeClass("open");
             target.slideToggle("slow");
             return;
-        }
+        }*/
 
         var interval=$("#entry-left-menu li.active").attr("interval"),
             date=$("#entry-date-picker").val(),entry_at,d=standardParse(date).date;
