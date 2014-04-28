@@ -13,12 +13,12 @@
       <tbody>
       <% @kpi_entries.each do |entry| %>
       <tr>
-        <td><%= entry.entry_at %></td>
-        <td><%= entry.value %></td>
+        <td><%= entry.date %></td>
+        <td><%= entry.values %></td>
         <% @kpi.kpi_properties.each do |property|%>
             <td><%= entry.property_val property.id %></td>
         <% end %>
-        <td><i class="icon icon-remove"></i></td>
+        <td><i class="icon icon-remove" target="<%= entry.id %>"></i></td>
       </tr>
           <% end %>
       </tbody>
