@@ -362,6 +362,25 @@ en:
     aver_value: Actual Value Average
     tcr: TCR
     close_btn: Close
+    select-dim: Select Dimensions
+    detail:
+      drag: Drag dimension or dimension value
+      back: Back to Analytics
+      dimensions: All Dimensions
+      dimensions-selected: Selected Dimensions
+      aggredated-analyse: Aggregated Analysis
+      current-val: Value
+      last-period: Last Period
+      yearly: Year-on-year
+      agg-sum: Aggregated total
+      agg-average: Aggregated average
+      count: Details Count
+      max: Maximum
+      min: Minimum
+      sum: Total
+      average: Average
+      rate: Rate
+      year-analyse: YoY Analytics
   #kpi entry
   entry:
     desc:

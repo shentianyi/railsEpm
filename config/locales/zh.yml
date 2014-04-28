@@ -346,25 +346,44 @@ zh:
       department: 输入点
       entity: 部门
   analytics:
-      title: 分析
-      kpi_category: KPI类别
-      kpi: KPI
-      view: 视图
-      begin_time: 开始时间
-      end_time: 结束时间
-      sum: 累计
-      average: 平均
-      add_chart: 分析           
-      date: 时间
-      percent: 比例
-      target: 目标值
-      sum_target: 累计目标值
-      aver_target: 平均目标值
-      value: 实际值
-      sum_value: 累计实际值
-      aver_value: 平均实际值
-      tcr: TCR
-      close_btn: 关闭
+    title: 分析
+    kpi_category: KPI类别
+    kpi: KPI
+    view: 视图
+    begin_time: 开始时间
+    end_time: 结束时间
+    sum: 累计
+    average: 平均
+    add_chart: 分析
+    date: 时间
+    percent: 比例
+    target: 目标值
+    sum_target: 累计目标值
+    aver_target: 平均目标值
+    value: 实际值
+    sum_value: 累计实际值
+    aver_value: 平均实际值
+    tcr: TCR
+    close_btn: 关闭
+    select-dim: 选择维度
+    detail:
+      drag: 拖拽维度或某个维度值
+      back: 返回分析页
+      dimensions: 所有维度
+      dimensions-selected: 已选维度
+      aggredated-analyse: 聚合分析
+      current-val: 当前值
+      last-period: 上一同期
+      yearly: 同比
+      agg-sum: 聚合总值
+      agg-average: 聚合平均
+      count: 条目数量
+      max: 最大值
+      min: 最小值
+      sum: 总值
+      average: 平均值
+      rate: 占比
+      year-analyse: 同比分析
   #kpi entry
   entry:
     desc:

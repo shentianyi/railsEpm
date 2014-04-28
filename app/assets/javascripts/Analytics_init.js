@@ -859,10 +859,10 @@ function generateDetailTable(source,property_group) {
     for(var i=property_group.length-1;i>=0;i--){
        $("#assemble-thead tr").prepend($("<td />").text(ANALYTICS.DETAIL.propertyGroup[property_group[i]-1]))
     }
-    var headerDefault="<td>当前值</td>"+
-        "<td>占比</td>"+
-        "<td>上一同期值</td>"+
-        "<td>同比</td>"+
+    var headerDefault="<td>"+I18n.t('analytics.detail.current-val')+"</td>"+
+        "<td>"+I18n.t('analytics.detail.rate')+"</td>"+
+        "<td>"+I18n.t('analytics.detail.last-period')+"</td>"+
+        "<td>"+I18n.t('analytics.detail.yearly')+"</td>"+
         "<td></td>"+
         "<td style='width:80px;'></td>"
     $("#assemble-thead tr").append(headerDefault);
@@ -898,7 +898,7 @@ function generateDetailTable(source,property_group) {
         '<td>{{last_value}}</td>'+
         '<td>{{compare}}</td>'+
         '<td><i class="icon {{icon}}"></i></td>'+
-        '<td><a class="btn btn-primary table-detail-compare">同比分析</a></td>'+
+        '<td><a class="btn btn-primary table-detail-compare">'+I18n.t('analytics.detail.year-analyse')+'</a></td>'+
         '</tr>{{/data}}',templateData);
     $("#assemble-tbody").append(render);
 
