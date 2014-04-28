@@ -1,4 +1,4 @@
-<p>Details</p>
+<!--
 <% if @kpi %>
 <table>
   <th>Date</th>
@@ -24,3 +24,25 @@
   <% end %>
 </table>
 <% end %>
+-->
+<ul>
+<% if @kpi %>
+<li>
+<d>Date</d>
+<d>Value</d>
+<% @kpi.kpi_properties.each do |property|%>
+  <d><%= property.name %></d>
+  <% end %>
+</li>
+  <% @kpi_entries.each do |entry| %>
+  <li>
+    <d><%= entry.entry_at %></d>
+    <d><%= entry.value %></d>
+    <% @kpi.kpi_properties.each do |property|%>
+    <d><%= entry.property_val property.id %></d>
+    <% end %>
+  </li>
+      
+  <% end %>
+<% end %>
+</ul>

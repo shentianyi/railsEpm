@@ -33,10 +33,11 @@ class KpiEntriesController < ApplicationController
     @kpi = user_kpi_item.kpi
     @entity = user_kpi_item.entity
     @kpi_entries = KpiEntry.where(user_kpi_item_id: params["user_kpi_item_id"], parsed_entry_at: params["parsed_entry_at"], entity_id: user_kpi_item.entity_id ,entry_type: 0) if user_kpi_item
-    respond_to do |format|
-      format.html
-      format.js {render :partial=>'details'}
-    end
+    #respond_to do |format|
+      #format.html {render :partial=>'details'}
+      #format.js {render :partial=>'details'}
+    #end
+    render :partial => 'details'
   end
 
   #
