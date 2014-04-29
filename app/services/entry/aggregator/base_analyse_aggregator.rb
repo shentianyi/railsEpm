@@ -41,7 +41,7 @@ module Entry
       private
       def aggregate_type_data
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
-        if self.parameter.kpi.is_calculated && !self.parameter.blank?
+        if self.parameter.kpi.is_calculated && !self.parameter.property.blank?
           data={}
           self.data.each do |d|
             key=date_parse_proc.call(d['_id']['date'])
