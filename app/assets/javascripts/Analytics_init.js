@@ -480,7 +480,7 @@ ANALYTICS.detailPoint.init=function(){
                 generateDetailDate();
             }
             else{
-                MessageBox(I1n8.t("analytics.detail.choose_one_dim"),"top","warning")
+                MessageBox(I18n.t("analytics.detail.choose_one_dim"),"top","warning")
             }
         })
     ;
