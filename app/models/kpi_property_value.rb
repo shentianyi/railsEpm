@@ -4,6 +4,7 @@ class KpiPropertyValue < ActiveRecord::Base
 
   belongs_to :kpi_property_item
   #delegate :kpi_property, to: :kpi_property_item
+  validate: 
 
   def self.by_property_id(kpi_id, property_id)
     joins(:kpi_property_item).where(kpi_property_items: {kpi_id: kpi_id, kpi_property_id: property_id})
@@ -19,6 +20,9 @@ class KpiPropertyValue < ActiveRecord::Base
   end
 
   def self.desc_property_value item_id, value
+    if item_id.blank? || value.blank?
+      return
+    end
     puts "DEL"
     property_val = self.where("kpi_property_item_id = ? AND value = ?", item_id, value).first
     if !property_val.nil?
@@ -31,6 +35,9 @@ class KpiPropertyValue < ActiveRecord::Base
   end
 
   def self.add_property_value item_id, value
+    if item_id.blank? || value.blank?
+      return
+    end
     puts "ADD"
     property_val = self.where("kpi_property_item_id = ? AND value = ?", item_id, value).first
     if property_val.nil?
