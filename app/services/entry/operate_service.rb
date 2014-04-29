@@ -160,7 +160,7 @@ module Entry
       end
       #update
       if kpi_entry
-        puts "update!"
+        #puts "update!"
         case attrs['entry_type']
           when 0
             kpi_entry.update_attributes(attrs);
@@ -169,7 +169,7 @@ module Entry
         end
 
       else
-        puts "new!"
+        #puts "new!"
         kpi_entry = KpiEntry.new(attrs)
         kpi_entry.save
         return kpi_entry
