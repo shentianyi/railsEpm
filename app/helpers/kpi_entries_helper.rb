@@ -96,7 +96,7 @@ module KpiEntriesHelper
               attrs[:base_attrs]['target_min'] = kpi.target_min
               attrs[:base_attrs]['entry_at'] = kpi_entry_at
               attrs[:base_attrs]['parsed_entry_at'] = kpi_parsed_entry_at
-              attrs[:base_attrs]['entry_type'] = 1
+              attrs[:base_attrs]['entry_type'] = 0
               attrs[:kpi_properties] = nil
               Entry::OperateService.new.insert_entry(attrs)
             end
