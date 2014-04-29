@@ -4,7 +4,6 @@ class KpiPropertyValue < ActiveRecord::Base
 
   belongs_to :kpi_property_item
   #delegate :kpi_property, to: :kpi_property_item
-  validate: 
 
   def self.by_property_id(kpi_id, property_id)
     joins(:kpi_property_item).where(kpi_property_items: {kpi_id: kpi_id, kpi_property_id: property_id})
