@@ -34,20 +34,14 @@ module Entry
            function(key,values){
             return Array.#{func}(values);};
         }
-        self.data= query.map_reduce(map, reduce).out(inline: true).each
+        self.data= query.map_reduce(map, reduce).out(inline: true)
         return aggregate_type_data
       end
 
       private
       def aggregate_type_data
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
-        unless self.parameter.kpi.is_calculated
-          self.data.each do |d|
-            puts d
-            puts date_parse_proc.call(d['_id']['date'])
-            self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
-          end
-        else
+        if self.parameter.kpi.is_calculated && !self.parameter.blank?
           data={}
           self.data.each do |d|
             key=date_parse_proc.call(d['_id']['date'])
@@ -60,6 +54,10 @@ module Entry
             rescue
               self.current[k]=0
             end
+          end
+        else
+          self.data.each do |d|
+            self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
           end
         end
 

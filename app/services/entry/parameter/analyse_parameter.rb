@@ -70,7 +70,7 @@ module Entry
 
       def kpi_ids
         return @kpi_ids if @kpi_ids
-        @kpi_ids=self.kpi.is_calculated ? (self.property.nil? ? self.kpi.id : self.kpi.kpi_item_ids): self.kpi.id
+        @kpi_ids=self.kpi.is_calculated ? (self.property.blank? ? self.kpi.id : self.kpi.kpi_item_ids): self.kpi.id
         return kpi_ids
       end
 
