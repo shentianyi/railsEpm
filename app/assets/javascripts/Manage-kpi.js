@@ -244,13 +244,13 @@ MANAGE.kpi.add_new_kpi = function() {
           if($.trim(option.name).length > 0 && option.interval != false && option.target_max.length > 0 && option.target_min.length > 0 && option.unit != false && option.formula_string.length > 0) {
                post_kpi(option);
           } else {
-               MessageBox("Please fill all the blanket taking *", "top", "warning");
+               MessageBox(I18n.t('manage.base.fill-all-star'), "top", "warning");
           }
      } else {
           if($.trim(option.name).length > 0 && option.interval != false && option.target_max.length > 0 && option.target_min.length > 0 && option.unit != false) {
                post_kpi(option);
           } else {
-               MessageBox("Please fill all the blanket taking *", "top", "warning");
+               MessageBox(I18n.t('manage.base.fill-all-star'), "top", "warning");
           }
      }
 };

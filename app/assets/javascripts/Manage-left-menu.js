@@ -122,7 +122,7 @@ MANAGE.left.manage_left_add_init=function(){
     $("#manage-menu-add input").on("keydown",function(event){
         if(adapt_event(event).event.keyCode==13){
             if($.trim($(adapt_event(event).target).val())==0){
-                MessageBox("it needs a name","top","warning");
+                MessageBox(I18n.t('manage.base.not-empty'),"top","warning");
             }
             else{
                 MANAGE[MANAGE.type].add.add_complete();

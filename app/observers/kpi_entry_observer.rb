@@ -23,8 +23,13 @@ class KpiEntryObserver<Mongoid::Observer
     #collect_entry = KpiEntry.find_by(kpi_id:kpi_entry.kpi_id,parsed_entry_at:kpi_entry.parsed_entry_at,entrytype:"1")
     collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
     if collect_entry
-      val = collect_entry.original_value
-      collect_entry.update_attribute("original_value",val+kpi_entry.original_value)
+      #recalculate all kpi entrys
+      total = 0
+      KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 0).each{|entry|
+        total = total + entry.original_value
+      }
+      #val = collect_entry.original_value
+      collect_entry.update_attribute("original_value",total)
     else
       #if not find,create one
       new_collect_entry = {}
@@ -75,9 +80,13 @@ class KpiEntryObserver<Mongoid::Observer
     #
     collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
     if collect_entry
-      val = kpi_entry.original_value
-      old_val = collect_entry.original_value
-      collect_entry.update_attribute("original_value",(old_val-val)) if val && old_val
+      total = 0
+      KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 0).each{|entry|
+        total = total + entry.original_value
+      }
+      #val = kpi_entry.original_value
+      #old_val = collect_entry.original_value
+      collect_entry.update_attribute("original_value",total)
     end
 
     #desc property val
@@ -101,9 +110,13 @@ class KpiEntryObserver<Mongoid::Observer
     collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
 
     if collect_entry && kpi_entry.original_value_changed?
-      val_change = kpi_entry.original_value-BigDecimal.new(kpi_entry.original_value_was)
-      val = collect_entry.original_value+val_change
-      collect_entry.update_attribute("original_value",val)
+      #val_change = kpi_entry.original_value-BigDecimal.new(kpi_entry.original_value_was)
+      #val = collect_entry.original_value+val_change
+      total = 0
+      KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 0).each{|entry|
+        total = total + entry.original_value
+      }
+      collect_entry.update_attribute("original_value",total)
     end
 
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)

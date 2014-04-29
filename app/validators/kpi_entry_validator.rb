@@ -26,10 +26,16 @@ class KpiEntryValidator
 
     #2014-4-18
     #get should be a local time
-    self.date = self.date.to_s
-    self.date=Time.parse(self.date).to_s
+    if self.date
+      self.date = self.date.to_s
+      self.date=Time.parse(self.date).to_s
+    end
 
-    self.value=self.value.to_s
+    if self.value
+      self.value=self.value.to_s
+    end
+
+
     self.content=[]
     self.validator_collection.add_validator(self) if self.validator_collection
   end
@@ -39,12 +45,12 @@ class KpiEntryValidator
   end
 
   def validate
-    unless self.date.is_date?
+    if self.date.nil? || !self.date.is_date?
       self.valid=false
       self.content<<I18n.t('vali_msg.invalid_date')
     end
 
-    unless self.value.to_s.is_number?
+    if self.value.nil? || !self.value.to_s.is_number?
       self.valid=false
       self.content<<I18n.t('vali_msg.invalid_value')
     end

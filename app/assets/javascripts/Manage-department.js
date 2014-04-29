@@ -293,7 +293,7 @@ MANAGE.entity.edit = function () {
         });
         MANAGE.entity.entity_edit_close();
     } else {
-        MessageBox("Please fill all the blanket taking *", "top", "warning");
+        MessageBox(I18n.t('manage.base.fill-all-star'), "top", "warning");
     }
 };
 

@@ -366,6 +366,7 @@ zh:
     tcr: TCR
     close_btn: 关闭
     select-dim: 选择维度
+    fill_all_blank: 星号不能为空
     detail:
       drag: 拖拽维度或某个维度值
       back: 返回分析页
@@ -384,6 +385,7 @@ zh:
       average: 平均值
       rate: 占比
       year-analyse: 同比分析
+      choose_one_dim: 请至少选择一个维度进行聚合
   #kpi entry
   entry:
     desc:
@@ -410,6 +412,10 @@ zh:
         finish: 完成
         destroy_fail: 添加失败
         assign_all_kpi: 全部分配
+        fill-all-star: 星号不能为空
+        not-empty: 不能为空
+        fix-red: 请修改红框内的值
+        sth-wrong: 对不起，出错了
       kpi:
         desc:
           create: 创建KPI
@@ -455,7 +461,7 @@ zh:
         dimensions-edit: 编辑维度
         dimensions-add: 添加维度
         dimensions-enter: 回车添加维度
-        dimensions-same-error: 该KPI已经有相同的属性!
+        dimensions-same-error: 该KPI已经有相同的维度!
         dimensions-kpi-not-fount: KPI或者KPI维度没有找到，请检查！
         details: 详细
         category-not-repeat: 类别不可重复!
@@ -485,7 +491,7 @@ zh:
           assign_now: 现在分配
           next_desc: 在分配完KPI后，你应该将你的部门放到你的视图中，以视图为基础，我们为你生成分析数据和仪表盘
           what-is-manager-title: 管理者权限
-          what-is-magager: 观察输入点上kpi实际数据
+          what-is-manager: 观察输入点上kpi实际数据
           what-is-user-title: 普通用户权限
           what-is-user: 输入管理员为其分配kpi的实际数据
         role:
