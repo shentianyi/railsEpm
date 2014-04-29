@@ -113,7 +113,7 @@ ifepm.dashboard.form_graph = function (datas, id) {
             data: data,
             count: i + 1,
             view_text: datas[i].view,
-            total:datas[0].total
+            total: datas[0].total
         };
         if (isfullsize) {
             option.theme = "dark";
@@ -483,25 +483,25 @@ ifepm.dashboard.on_finish_load = function () {
     ++current_index;
     if (current_index >= ifepm.dashboard.graph_sequence.length) {
         ifepm.dashboard_widget.enable(true);
-        if(isfullsize){
+        if (isfullsize) {
             //add a full size title
             /*$(container_selector).append(ifepm.template.title.replace(/!title!/g, current_dashboard_name));
-            var option = {};
-            option.container_selector = container_selector;
-            option.isnew = false;
-            option.id = ifepm.template.titleid;
-            //option.col = 1;
-            //option.row = 1;
-            option.sizex = 1;
-            option.sizey = 1;
-            ifepm.dashboard_widget.add_w(option);
-            */
+             var option = {};
+             option.container_selector = container_selector;
+             option.isnew = false;
+             option.id = ifepm.template.titleid;
+             //option.col = 1;
+             //option.row = 1;
+             option.sizex = 1;
+             option.sizey = 1;
+             ifepm.dashboard_widget.add_w(option);
+             */
             ifepm.dashboard.on_drag_stop();
             $("#dash-fullsize").height()
-            window.setTimeout(function(){
-                var height=$(document).height();
-                $("#dashboard-content-full").css("height",height+"px");
-            },100)
+            window.setTimeout(function () {
+                var height = $(document).height();
+                $("#dashboard-content-full").css("height", height + "px");
+            }, 100)
         }
         return;
     }
@@ -517,8 +517,8 @@ ifepm.dashboard.on_finish_load = function () {
     option.container_selector = container_selector;
     option.id = graph_id;
 
-    if(isfullsize){
-        if (ifepm.dashboard.graphs[graph_id].col){
+    if (isfullsize) {
+        if (ifepm.dashboard.graphs[graph_id].col) {
             option.isnew = false;
             option.row = ifepm.dashboard.graphs[graph_id].row;
             option.col = ifepm.dashboard.graphs[graph_id].col;
@@ -527,8 +527,7 @@ ifepm.dashboard.on_finish_load = function () {
             option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
             ifepm.dashboard_widget.add_w(option);
         }
-        else
-        {
+        else {
             option.isnew = true;
             option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
             var result = ifepm.dashboard_widget.add_w(option);
@@ -539,44 +538,43 @@ ifepm.dashboard.on_finish_load = function () {
             ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
         }
     }
-    else{
-        option.isnew = true;
-        option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
-        ifepm.dashboard_widget.add_w(option);
-    }
-
-
-
-    /*if (ifepm.dashboard.graphs[graph_id].col) {
-        option.isnew = false;
-        option.row = ifepm.dashboard.graphs[graph_id].row;
-        option.col = ifepm.dashboard.graphs[graph_id].col;
-        option.sizex = ifepm.dashboard.graphs[graph_id].sizex;
-        option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
-        option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
-        ifepm.dashboard_widget.add_w(option);
-    }
     else {
         option.isnew = true;
         option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
-        var result = ifepm.dashboard_widget.add_w(option);
+        ifepm.dashboard_widget.add_w(option);
+    }
 
-        ifepm.dashboard.graphs[graph_id].col = result.col;
-        ifepm.dashboard.graphs[graph_id].row = result.row;
-        ifepm.dashboard.graphs[graph_id].sizex = result.sizex;
-        ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
 
-        var options = [];
-        var opt = {};
-        opt.id = graph_id;
-        opt.sizex = result.sizex;
-        opt.sizey = result.sizey;
-        opt.col = result.col;
-        opt.row = result.row;
-        options.push(opt);
-        ifepm.dashboard.save_grid_pos(options, {success: function () {
-        }});
-    } */
+    /*if (ifepm.dashboard.graphs[graph_id].col) {
+     option.isnew = false;
+     option.row = ifepm.dashboard.graphs[graph_id].row;
+     option.col = ifepm.dashboard.graphs[graph_id].col;
+     option.sizex = ifepm.dashboard.graphs[graph_id].sizex;
+     option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
+     option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
+     ifepm.dashboard_widget.add_w(option);
+     }
+     else {
+     option.isnew = true;
+     option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
+     var result = ifepm.dashboard_widget.add_w(option);
+
+     ifepm.dashboard.graphs[graph_id].col = result.col;
+     ifepm.dashboard.graphs[graph_id].row = result.row;
+     ifepm.dashboard.graphs[graph_id].sizex = result.sizex;
+     ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
+
+     var options = [];
+     var opt = {};
+     opt.id = graph_id;
+     opt.sizex = result.sizex;
+     opt.sizey = result.sizey;
+     opt.col = result.col;
+     opt.row = result.row;
+     options.push(opt);
+     ifepm.dashboard.save_grid_pos(options, {success: function () {
+     }});
+     } */
 
     if (!isfullsize) {
         ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
@@ -613,38 +611,38 @@ ifepm.dashboard.create_dashboard = function () {
         ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
         // change to not save position
         /*
-        if (ifepm.dashboard.graphs[graph_id].sizex) {
-            option.isnew = false;
-            option.row = ifepm.dashboard.graphs[graph_id].row;
-            option.col = ifepm.dashboard.graphs[graph_id].col;
-            option.sizex = ifepm.dashboard.graphs[graph_id].sizex;
-            option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
-            ifepm.dashboard_widget.add_w(option);
-        }
-        else {
-            option.isnew = true;
-            option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
-            var result = ifepm.dashboard_widget.add_w(option);
+         if (ifepm.dashboard.graphs[graph_id].sizex) {
+         option.isnew = false;
+         option.row = ifepm.dashboard.graphs[graph_id].row;
+         option.col = ifepm.dashboard.graphs[graph_id].col;
+         option.sizex = ifepm.dashboard.graphs[graph_id].sizex;
+         option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
+         ifepm.dashboard_widget.add_w(option);
+         }
+         else {
+         option.isnew = true;
+         option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
+         var result = ifepm.dashboard_widget.add_w(option);
 
-            ifepm.dashboard.graphs[graph_id].col = result.col;
-            ifepm.dashboard.graphs[graph_id].row = result.row;
-            ifepm.dashboard.graphs[graph_id].sizex = result.sizex;
-            ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
+         ifepm.dashboard.graphs[graph_id].col = result.col;
+         ifepm.dashboard.graphs[graph_id].row = result.row;
+         ifepm.dashboard.graphs[graph_id].sizex = result.sizex;
+         ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
 
-            var options = [];
-            var opt = {};
-            opt.id = graph_id;
-            opt.sizex = result.sizex;
-            opt.sizey = result.sizey;
-            opt.col = result.col;
-            opt.row = result.row;
-            options.push(opt);
-            ifepm.dashboard.save_grid_pos(options, {success: function () {
-            }});
-        }
-        *?
-        ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
-        /*
+         var options = [];
+         var opt = {};
+         opt.id = graph_id;
+         opt.sizex = result.sizex;
+         opt.sizey = result.sizey;
+         opt.col = result.col;
+         opt.row = result.row;
+         options.push(opt);
+         ifepm.dashboard.save_grid_pos(options, {success: function () {
+         }});
+         }
+         *?
+         ifepm.dashboard.setTimer(ifepm.dashboard.graphs[graph_id]);
+         /*
          for(index in ifepm.dashboard.graph_sequence){
          var graph_id = ifepm.dashboard.graph_sequence[index];
          if( ifepm.dashboard.graphs[graph_id].last_update == null){
@@ -710,7 +708,7 @@ ifepm.dashboard.create_dashboard = function () {
  * @function init
  * init graph array after select a dashboard group
  * */
-ifepm.dashboard.init = function (id,callback) {
+ifepm.dashboard.init = function (id, callback) {
     ifepm.dashboard.graphs = {};
     ifepm.dashboard.graph_sequence = [];
     $.ajax(
@@ -722,11 +720,11 @@ ifepm.dashboard.init = function (id,callback) {
             success: function (data) {
                 ifepm.dashboard_widget.enable(false);
                 ifepm.dashboard.clear_all_timer();
-                for (var i in data) {
+                for (var i = 0;i<data.length;i++) {
                     var graph_item = new Graph();
-                    graph_item.id = data[i].id
-                    //graph_item.name = data[i].name
-                    graph_item.title = data[i].title
+                    graph_item.id = data[i].id;
+                    //graph_item.name = data[i].name;
+                    graph_item.title = data[i].title;
                     //graph_item.calculate_type = data[i].calculate_type
                     //graph_item.from =data[i].start
                     //graph_item.end = data[i].end
@@ -747,14 +745,14 @@ ifepm.dashboard.init = function (id,callback) {
                     ifepm.dashboard.graph_sequence.push(data[i].id)
 
                 }
-                if(callback){
+
+                if (callback) {
                     callback.call();
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("Oops, something went wrong, please try again");
             }}
-
     );
 
 };
@@ -949,14 +947,14 @@ ifepm.dashboard.add_item = function (dashboard_item, options) {
 ifepm.dashboard.save_grid_pos = function (sequence, options) {
     $.ajax({
         //url: ifepm.config.dashboard_item_save_grid_url.url,
-      url:'/dashboard_items/save_grid',
-      data: {sequence: sequence},
-      type:'POST',
-      //crossDomain: ifepm.config.dashboard_item_save_grid_url.crossDomain,
-      //dataType: ifepm.config.dashboard_item_save_grid_url.dataType,
-      success: options.success,
-      error: options.error,
-      complete: options.complete
+        url: '/dashboard_items/save_grid',
+        data: {sequence: sequence},
+        type: 'POST',
+        //crossDomain: ifepm.config.dashboard_item_save_grid_url.crossDomain,
+        //dataType: ifepm.config.dashboard_item_save_grid_url.dataType,
+        success: options.success,
+        error: options.error,
+        complete: options.complete
     })
 }
 
@@ -1005,7 +1003,7 @@ ifepm.dashboard.full_size = function (option) {
             option.container_selector = container_selector;
             option.id = graph_id;
 
-            if(ifepm.dashboard.graphs[graph_id].col){
+            if (ifepm.dashboard.graphs[graph_id].col) {
                 option.isnew = false;
                 option.col = ifepm.dashboard.graphs[graph_id].col;
                 option.row = ifepm.dashboard.graphs[graph_id].row;
@@ -1013,13 +1011,13 @@ ifepm.dashboard.full_size = function (option) {
                 option.sizey = ifepm.dashboard.graphs[graph_id].sizey;
                 option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
             }
-            else{
+            else {
                 option.isnew = true;
                 option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
             }
 
             var result = ifepm.dashboard_widget.add_w(option);
-            if(option.isnew){
+            if (option.isnew) {
                 ifepm.dashboard.graphs[graph_id].col = result.col;
                 ifepm.dashboard.graphs[graph_id].row = result.row;
                 ifepm.dashboard.graphs[graph_id].sizex = result.sizex;

@@ -190,13 +190,13 @@ ActiveRecord::Schema.define(:version => 20140414075405) do
   create_table "entity_groups", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.integer  "tenant_id"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
     t.boolean  "is_public",     :default => false
     t.string   "description"
     t.string   "code"
     t.integer  "department_id"
+    t.integer  "tenant_id"
   end
 
   add_index "entity_groups", ["department_id"], :name => "index_entity_groups_on_department_id"
@@ -284,7 +284,7 @@ ActiveRecord::Schema.define(:version => 20140414075405) do
     t.integer  "kpi_category_id"
     t.integer  "unit"
     t.integer  "frequency"
-    t.float    "target_max",      :default => 0.0
+    t.float    "target_max"
     t.boolean  "is_calculated",   :default => false
     t.integer  "direction"
     t.integer  "period"
