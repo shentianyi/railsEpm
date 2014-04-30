@@ -74,10 +74,7 @@ module Entry
           property_ids.each do |id|
             key<<d['_id'][id.to_s]
           end
-puts '------------------'
-puts key.to_json
-puts self.data_module.to_json
-puts '--------------------------------'
+
           date=date_parse_proc.call(d['_id']['date'])
           self.data_module[key].each { |v| v[date]= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value']) } if self.data_module.has_key?(key)
         end
