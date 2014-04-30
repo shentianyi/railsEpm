@@ -160,7 +160,7 @@ function prepare_form_chart() {
         else {
             end_time = begin_time
         }
-
+        console.log(kpi_property);
         var option = {
             kpi: $("#chart-kpi :selected").text(),
             kpi_id: kpi,
@@ -290,6 +290,7 @@ function change_interval(option) {
             option.data = ANALYTICS.chartSeries.series[j][option.interval] ;
             option.view = ANALYTICS.chartSeries.series[j].view;
             option.view_text = ANALYTICS.chartSeries.series[j].view_text;
+            option.kpi_property = ANALYTICS.chartSeries.series[j].kpi_property;
             if (j == 0) {
                 ANALYTICS.render_to(option);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
@@ -326,6 +327,7 @@ function singleThreadRequest(){
             ANALYTICS.currentThreadPreCondition.id = series_id;
             ANALYTICS.currentThreadPreCondition.begin_time = ANALYTICS.chartSeries.series[series_id].begin_time;
             ANALYTICS.currentThreadPreCondition.end_time = ANALYTICS.chartSeries.series[series_id].end_time;
+            ANALYTICS.currentThreadPreCondition.kpi_property = ANALYTICS.chartSeries.series[series_id].kpi_property;
             if(!$("#"+ANALYTICS.currentThreadPreCondition.target).highcharts()){
                 ANALYTICS.render_to(ANALYTICS.currentThreadPreCondition);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
@@ -536,7 +538,8 @@ function generateDetailDate() {
             propertyGroupSort.push(parseInt($li.attr("myID")));
         }
     }
-    propertyGroupSort.sort(function compare(a,b){return a-b});
+    console.log(propertyGroupSort)
+//    propertyGroupSort.sort(function compare(a,b){return a-b});
     propertyGroupSort=propertyGroupSort.strip();
     condition.detail_condition.property=property;
     condition.detail_condition.property_map_group=property_map_group;
