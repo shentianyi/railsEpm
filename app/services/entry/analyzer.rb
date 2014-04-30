@@ -31,8 +31,10 @@ module Entry
     end
 
     def period_compares
+
       self.params[:data_module]=Entry::DataService::PERIOD_COMPARE_CHART
-      self.params[:compare_size]=params[:compare_size] || 10
+      self.params[:compare_size]=self.params[:compare_size] || 10
+      self.params.delete(:property_map_group) if self.params.has_key?(:property_map_group)
       call_compare_data_service
     end
 

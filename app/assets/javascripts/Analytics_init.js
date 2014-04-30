@@ -608,10 +608,10 @@ function tcr_trend(judge) {
 function groupDetailInit(data) {
     $("#conditionOrigin>p").nextAll().remove();
     var template,body="",bodyData;
-    ANALYTICS.DETAIL.propertyGroup=[];
+    ANALYTICS.DETAIL.propertyGroup={};
     for(var groupID in data){
        for(var groupTitle in data[groupID]){
-           ANALYTICS.DETAIL.propertyGroup.push(groupTitle);
+           ANALYTICS.DETAIL.propertyGroup[groupID]=groupTitle;
            template='<div class="accordion-header" id="'+groupID+'" group="'+groupID+'">'+
                         '<i class="icon icon-chevron-right"></i>'+
                         '<label>'+groupTitle+'</label>'+
@@ -654,7 +654,7 @@ ANALYTICS.DETAIL.choose_property_id;
 ANALYTICS.DETAIL.max=0;
 ANALYTICS.DETAIL.sum=0;
 ANALYTICS.DETAIL.maxOrder=0;
-ANALYTICS.DETAIL.propertyGroup=[];
+ANALYTICS.DETAIL.propertyGroup={};
 //table同比时
 ANALYTICS.DETAIL.generate_table_detail=function(obj){
     var c;
@@ -665,6 +665,9 @@ ANALYTICS.DETAIL.generate_table_detail=function(obj){
         c.property[ANALYTICS.DETAIL.choose_property_id[i]]=$targets.eq(i).text();
     }
     c.point_num=10;
+    if(c["property_map_group"]){
+        delete c["property_map_group"];
+    }
     $.post("/kpi_entries/compares",c,function(data){
         if(data.result){
             $("#detail-table-compare-block").css("left","0px").css("right","0px");
@@ -860,7 +863,7 @@ function generateDetailTable(source,property_group) {
     $("#assemble-thead tr").empty();
     ANALYTICS.DETAIL.choose_property_id=property_group;
     for(var i=property_group.length-1;i>=0;i--){
-       $("#assemble-thead tr").prepend($("<td />").text(ANALYTICS.DETAIL.propertyGroup[property_group[i]-1]))
+       $("#assemble-thead tr").prepend($("<td />").text(ANALYTICS.DETAIL.propertyGroup[property_group[i]]))
     }
     var headerDefault="<td>"+I18n.t('analytics.detail.current-val')+"</td>"+
         "<td>"+I18n.t('analytics.detail.rate')+"</td>"+
