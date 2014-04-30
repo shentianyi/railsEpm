@@ -520,7 +520,8 @@ function chart_point_click(object) {
 }
 //在详细中生成pie以及table
 function generateDetailDate() {
-    var property_map_group = {},property={},$li;
+    var property_map_group = {},property={},$li,
+        property_map_group_post=[];
     var $target=$("#conditionLocal ul").children();
     var propertyGroupSort=[],validate=true;
     for(var i=0;i<$target.length;i++){
@@ -531,10 +532,12 @@ function generateDetailDate() {
             }
             property[$li.attr("group")].push($.trim($li.find("span").text()));
             property_map_group[$li.attr("group")]=$li.attr("group");
+            property_map_group_post.push($li.attr("group"));
             propertyGroupSort.push(parseInt($li.attr("group")));
         }
         else if($li.attr("type")=='group'){
             property_map_group[$li.attr("myID")] = $li.attr("myID");
+            property_map_group_post.push($li.attr("myID"));
             propertyGroupSort.push(parseInt($li.attr("myID")));
         }
     }
@@ -542,7 +545,8 @@ function generateDetailDate() {
 //    propertyGroupSort.sort(function compare(a,b){return a-b});
     propertyGroupSort=propertyGroupSort.strip();
     condition.detail_condition.property=property;
-    condition.detail_condition.property_map_group=property_map_group;
+    condition.detail_condition.property_map_group=property_map_group_post;
+    console.log(condition.detail_condition)
     //console.log(condition.detail_condition);
     $.ajax({
         url: '/kpi_entries/compare',
