@@ -39,15 +39,15 @@ module Entry
 
       def generate_compare_table
         self.data_module={}
-        values=KpiPropertyValue.by_property_id(self.parameter.kpi.id, self.parameter.map_group.values.map { |v| v.sub(/a/, '') }).all
+        ids=self.parameter.map_group.values.map { |v| v.sub(/a/, '').to_i }
+        values=KpiPropertyValue.by_property_id(self.parameter.kpi.id, ids).all
         return nil if values.size==0
         properties={}
-
-        values.each do |v|
-          properties[v.kpi_property_id]||=[]
-          properties[v.kpi_property_id]<< v.value
-          #{self.parameter.base_time[:start_time] => 0},
-          #{self.parameter.compare_times.first[:start_time] => 0}]
+        ids.each do |id|
+          values.select{|vv| vv.kpi_property_id==id}.each do |v|
+              properties[v.kpi_property_id]||=[]
+              properties[v.kpi_property_id]<< v.value
+          end
         end
         puts properties
         self.parameter.clean_property_values(properties)
