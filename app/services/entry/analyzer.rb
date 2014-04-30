@@ -27,7 +27,7 @@ module Entry
 
     def period_compare
       ordered={}
-      params[:property_map_group_array].each do |p|
+      params[:property_map_group].each do |p|
         ordered[p]=p
       end
       params[:property_map_group]=ordered
