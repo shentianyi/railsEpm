@@ -284,7 +284,7 @@ function post_kpi(option) {
                          });
                     });
                    //append attrs
-                   $("#manage-sort-list li#"+id).append($("<div/>").addClass("attribute-position").append($("<a/>").addClass("btn btn-success edit-kpi-attribute").text("编辑属性")).append($("<p/>").attr("kpi_id",id)));
+                   $("#manage-sort-list li#"+id).append($("<div/>").addClass("attribute-position").append($("<a/>").addClass("btn btn-success edit-kpi-attribute").text(I18n.t('manage.kpi.dimensions-edit'))).append($("<p/>").attr("kpi_id",id)));
                    for(var i = 0;i<attrs.length;i++){
                        $("p[kpi_id="+id+"]").append($("<span/>").attr("id",attrs[i].id).text(attrs[i].name));
                    }
