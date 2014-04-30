@@ -14,7 +14,8 @@ class DepartmentValidator
   def valid_add_user
     if self.user_id.nil? || self.department_id.nil?
       self.valid = false
-      self.content << "Argument Error"
+      txt = I18n.t "manage.department.desc.argument-err"
+      self.content << txt
     end
 
     user = User.find_by_id(self.user_id)
@@ -22,13 +23,15 @@ class DepartmentValidator
 
     if user.nil? || department.nil?
       self.valid = false
-      self.content << "User or Department not fount?"
+      txt = I18n.t "manage.department.desc.not-found"
+      self.content << txt
     end
 
     user.departments.each do |d|
       if d.subtree.exists?(:name => department.name)
         self.valid = false
-        self.content = "You have already add this user to higher department,["+d.name+"]"
+        txt = I18n.t "manage.department.desc.already-assign"
+        self.content = txt+",["+d.name+"]"
       end
     end
   end
