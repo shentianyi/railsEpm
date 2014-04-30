@@ -477,6 +477,9 @@ en:
         next_desc: After creating data point , it's time to create user(staff) to your data point so that they can contribute to their data point KPI
         what-is-entity-title: What is Data Point?
         what-is-entity: Date point is the minimum depart which manager can monitor and analysis their kpis’ actual data.
+        argument-err: Argument Error
+        not-found: User or Department not fount
+        already-assign: You have already add this user to higher department
     user:
       desc:
         manage: Manage User
