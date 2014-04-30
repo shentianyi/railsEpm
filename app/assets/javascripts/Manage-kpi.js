@@ -463,7 +463,7 @@ MANAGE.kpi.add_kpi_property=function(e){
     var kpi_id = $(this).attr("work_at");
     var property_name = $(this).parent().children("input").val().replace(/^\s+|\s+$/g, "");
     if(property_name.length == 0){
-        MessageBox("属性名不能为空","top","warning");
+        MessageBox(I18n.t('manage.kpi.dimensions-not-null'),"top","warning");
     }else{
         $.ajax({
             url:"/kpis/assign_properties",

@@ -454,6 +454,7 @@ en:
         down: Down
       dimensions: Dimensions
       dimensions-inputname: Enter Dimension name
+      dimensions-not-null: Dimension name should not be blank
       dimensions-edit: Edit Dimensions
       dimensions-add: Add Dimension
       dimensions-enter: Enter to add Dimension

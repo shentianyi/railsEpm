@@ -458,6 +458,7 @@ zh:
           down: 下降
         dimensions: 维度
         dimensions-inputname: 输入维度名称
+        dimensions-not-null: 维度名不能为空
         dimensions-edit: 编辑维度
         dimensions-add: 添加维度
         dimensions-enter: 回车添加维度
