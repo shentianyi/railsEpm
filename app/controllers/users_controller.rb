@@ -25,9 +25,11 @@ class UsersController < ApplicationController
 
   def destroy
     msg=Message.new
+    msg.result = true
     if @user and !@user.is_tenant
-      msg.result=@user.destroy
+      @user.destroy
     else
+      msg.result = false
       msg.content=I18n.t "fix.cannot_destroy"
     end
     render :json => msg
