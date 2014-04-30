@@ -26,12 +26,17 @@ module Entry
     end
 
     def period_compare
+      ordered={}
+      params[:property_map_group_array].each do |p|
+        ordered[p]=p
+      end
+      params[:property_map_group]=ordered
+      self.params
       self.params[:data_module]=Entry::DataService::PERIOD_COMPARE_TABLE
       call_compare_data_service
     end
 
     def period_compares
-
       self.params[:data_module]=Entry::DataService::PERIOD_COMPARE_CHART
       self.params[:compare_size]=self.params[:compare_size] || 10
       self.params.delete(:property_map_group) if self.params.has_key?(:property_map_group)
