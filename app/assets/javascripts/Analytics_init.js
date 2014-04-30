@@ -665,6 +665,9 @@ ANALYTICS.DETAIL.generate_table_detail=function(obj){
         c.property[ANALYTICS.DETAIL.choose_property_id[i]]=$targets.eq(i).text();
     }
     c.point_num=10;
+    if(c["property_map_group"]){
+        delete c["property_map_group"];
+    }
     $.post("/kpi_entries/compares",c,function(data){
         if(data.result){
             $("#detail-table-compare-block").css("left","0px").css("right","0px");
