@@ -149,6 +149,9 @@ MANAGE.user.add_new = function () {
                 if (data.result) {
                     if ($("#manage-left-menu li.active").attr("number") == role) {
                         var object = data.object;
+                        //add user to the assign table
+                        $("#assign-kpi-user").append("<option value="+object.id+">"+object.email+"</option>");
+                        //
                         $("#manage-sort-list").prepend($("<li />").attr("id", object.id)
                             .append($("<p />").addClass("sort-handle").text(":"))
                             .append($("<input type='checkbox'/>"))
@@ -165,8 +168,8 @@ MANAGE.user.add_new = function () {
                                     .append($("<td />").text(object.email).addClass("user-manage-mail"))
                                     .append($("<td />").text(I18n.t('manage.user.new.title')))
                                     .append($("<td />").text(I18n.t('manage.user.new.tel')))
+                                    //.append($("<td />").text(I18n.t('manage.user.new.department')))
                                     .append($("<td />").text(I18n.t('manage.user.new.phone')))
-                                    .append($("<td />").text(I18n.t('manage.user.new.department')))
                                     .append($("<td />").text(I18n.t('manage.user.new.entity')))
                                     .append($("<td />").text(I18n.t('manage.user.new.departments')))
                                     .append($("<td />").text(I18n.t('manage.user.new.authority'))))
@@ -419,6 +422,7 @@ MANAGE.user.assign.init = function () {
                 type: 'DELETE',
                 success: function (data) {
                     if (data.result) {
+                        //also remove from assign user list
                         $target.remove();
                     }
                 }

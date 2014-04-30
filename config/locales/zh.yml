@@ -458,6 +458,7 @@ zh:
           down: 下降
         dimensions: 维度
         dimensions-inputname: 输入维度名称
+        dimensions-not-null: 维度名不能为空
         dimensions-edit: 编辑维度
         dimensions-add: 添加维度
         dimensions-enter: 回车添加维度
@@ -480,6 +481,9 @@ zh:
           next_desc: 完成输入点创建后， 接下来你需要为你的输入点添加员工这样他们为你的输入点贡献KPI。
           what-is-entity-title: 什么是输入点？
           what-is-entity: 输入点是组织内部管理kpi数据的最小单位。
+          argument-err: 参数错误
+          not-found: 用户或者部门没有找到
+          already-assign: 你已经该用户加入到上级部门
       user:
         desc:
           manage: 管理用户

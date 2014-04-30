@@ -284,7 +284,7 @@ function post_kpi(option) {
                          });
                     });
                    //append attrs
-                   $("#manage-sort-list li#"+id).append($("<div/>").addClass("attribute-position").append($("<a/>").addClass("btn btn-success edit-kpi-attribute").text("编辑属性")).append($("<p/>").attr("kpi_id",id)));
+                   $("#manage-sort-list li#"+id).append($("<div/>").addClass("attribute-position").append($("<a/>").addClass("btn btn-success edit-kpi-attribute").attr("work_at",id).text(I18n.t('manage.kpi.dimensions-edit'))).append($("<p/>").attr("kpi_id",id)));
                    for(var i = 0;i<attrs.length;i++){
                        $("p[kpi_id="+id+"]").append($("<span/>").attr("id",attrs[i].id).text(attrs[i].name));
                    }
@@ -463,7 +463,7 @@ MANAGE.kpi.add_kpi_property=function(e){
     var kpi_id = $(this).attr("work_at");
     var property_name = $(this).parent().children("input").val().replace(/^\s+|\s+$/g, "");
     if(property_name.length == 0){
-        MessageBox("属性名不能为空","top","warning");
+        MessageBox(I18n.t('manage.kpi.dimensions-not-null'),"top","warning");
     }else{
         $.ajax({
             url:"/kpis/assign_properties",
