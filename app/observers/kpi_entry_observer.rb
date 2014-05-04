@@ -109,7 +109,7 @@ class KpiEntryObserver<Mongoid::Observer
 
     collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
 
-    if collect_entry && kpi_entry.original_value_changed?
+    if collect_entry #&& kpi_entry.original_value_changed?
       #val_change = kpi_entry.original_value-BigDecimal.new(kpi_entry.original_value_was)
       #val = collect_entry.original_value+val_change
       total = 0
