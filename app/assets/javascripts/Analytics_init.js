@@ -782,7 +782,7 @@ ANALYTICS.DETAIL.generate_table_detail=function(obj){
 ANALYTICS.DETAIL.compare=function(current,last){
    var number=Math.abs(current-last);
    if(last==0){
-       return number.toFixed(1)+"%";
+       return number.toFixed(1);
    }
     else{
        return (number/last*100).toFixed(1)+"%";
@@ -793,7 +793,7 @@ ANALYTICS.DETAIL.compareArrow=function(current,last){
     return icon;
 }
 
-
+//点击pie上的点触发的事件
 ANALYTICS.DETAIL.pieClick=function(data){
     $("#assemble-current").text(data.y);
     $("#assemble-last").text(data.last);
@@ -803,6 +803,7 @@ ANALYTICS.DETAIL.pieClick=function(data){
     $("#assemble-arrow").attr("class",icon);
     $("#assemble-name").css("color",data.borderColor).text(data.name);
     $("#assemble-percent").css("color",data.borderColor).text((data.percentage).toFixed(1)+"%");
+
 }
 function generatePie(source) {
     ANALYTICS.DETAIL.max=0;
