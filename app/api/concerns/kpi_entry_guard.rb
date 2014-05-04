@@ -24,7 +24,9 @@ module KpiEntryGuard
       #end
 
       entry_p = params[:entry]
-      entry_p.kpi_properties = JSON.parse(params[:entry][:kpi_properties])
+      unless params[:entry][:kpi_properties].is_a?(Hashie::Mash)
+        entry_p.kpi_properties = JSON.parse(params[:entry][:kpi_properties])
+      end
 
       vc= KpiEntryValidatorCollection.new
       entry_p[:validator_collection]=vc
