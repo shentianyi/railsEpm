@@ -134,12 +134,12 @@ module KpiEntriesHelper
                        date=Date.parse(date)
                        Date.commercial(date.year, date.cweek, 1)
                      when KpiFrequency::Monthly
-                       Time.strptime(date, '%Y-%m-01')
+                       Time.strptime(date, '%Y-%m')
                      when KpiFrequency::Quarterly
                        month=Date.parse(date).month
                        Time.strptime(date, "%Y-#{date.month-month%3}-01")
                      when KpiFrequency::Yearly
-                       Time.strptime(date, '%Y-01-01')
+                       Time.strptime(date, '%Y-01')
                    end
   end
 end

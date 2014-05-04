@@ -50,7 +50,7 @@ end
 
 gem 'jquery-rails'
 
-gem 'authlogic'
+#gem 'authlogic'
 
 # user system
 gem 'devise'
