@@ -24,6 +24,8 @@ module KpiEntryGuard
       #end
 
       entry_p = params[:entry]
+      entry_p.kpi_properties = JSON.parse(params[:entry][:kpi_properties])
+
       vc= KpiEntryValidatorCollection.new
       entry_p[:validator_collection]=vc
       validator=KpiEntryValidator.new(entry_p)
