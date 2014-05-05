@@ -382,7 +382,7 @@ en:
       sum: Total
       average: Average
       rate: Rate
-      year-analyse: YoY Analytics
+      year-analyse: Year of Year
       choose_one_dim: Please choose at least one dimension or dimension value
   #kpi entry
   entry:
