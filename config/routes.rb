@@ -204,6 +204,7 @@ IFEpm::Application.routes.draw do
     controller :kpis do
       match 'kpis/kpis_by_category' => :kpis_by_category
       match 'kpis/properties' => :properties
+      get :group_properties
     end
 
     resources :entity_groups do
