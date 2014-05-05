@@ -350,7 +350,14 @@ MANAGE.user.assign.init = function () {
     $("#assign-kpi-category-btn").on('click', function () {
         var category = $("#kpi-category :selected").attr('value');
         var user = $("#assign-kpi-user :selected").attr("value");
-        if (category != null && category != "" && user != null && user != "") {
+        if(category==null || category == ""){
+            MessageBox("请选择KPI类别", "top", "warning");
+            return;
+        }
+        if(user==null || user == ""){
+            MessageBox("请选择用户", "top", "warning");
+            return;
+        }
             $.post('/kpis/assign', {kpi: category, user: user}, function (msg) {
                 if (msg.result) {
                     MANAGE.user.kpis(user);
@@ -358,7 +365,6 @@ MANAGE.user.assign.init = function () {
                     MessageBox(msg.content, "top", "warning");
                 }
             }, 'json');
-        }
     });
     // assign by kpi
     $("body").on("click", "#assign-kpi-list>li>h3", function () {
@@ -372,6 +378,7 @@ MANAGE.user.assign.init = function () {
             });
         }
         else {
+                MessageBox("请选择用户", "top", "warning");
             return;
         }
         if (validate) {
