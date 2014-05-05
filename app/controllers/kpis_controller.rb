@@ -171,8 +171,10 @@ class KpisController < ApplicationController
   end
 
   def condition
-    render :json => {:unit => KpiUnit.all, :frequency => EnumPresenter.init_json_presenters(KpiFrequency.all),
-                     :direction =>EnumPresenter.init_json_presenters(KpiDirection.all), :base => Kpi.base_kpis(current_ability)}
+    render :json => {:unit => KpiUnit.all,
+                     :frequency => EnumPresenter.init_json_presenters(KpiFrequency.all),
+                     :direction =>EnumPresenter.init_json_presenters(KpiDirection.all),
+                     :base => Kpi.base_kpis(current_ability)}
   end
 
   def import

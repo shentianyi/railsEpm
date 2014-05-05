@@ -13,6 +13,7 @@ class EnumPresenter<Presenter
     self.delegators.each do |dele|
       json[dele]=self.send(dele)
     end
+    puts  @enum.i18nt_desc
     json[:desc]=@enum.i18nt_desc
     return json
   end

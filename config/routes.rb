@@ -149,7 +149,7 @@ IFEpm::Application.routes.draw do
   namespace :api, :defaults => {:format => 'json'} do
     resources :kpi_entries do
       collection do
-        get :analyse, :defaults => {:format => 'html'}
+        match :analyse, :defaults => {:format => 'html'}
         get :data
         match :compare
         match :compares

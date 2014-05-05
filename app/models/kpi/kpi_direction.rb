@@ -7,7 +7,7 @@ class KpiDirection
 
 
   def i18nt_desc
-    KpiDirection.get_by_value(self.value)
+    KpiDirection.get_desc_by_value(self.value)
   end
 
   def self.get_desc_by_value value

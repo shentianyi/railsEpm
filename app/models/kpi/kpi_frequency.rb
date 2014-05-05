@@ -54,7 +54,7 @@ class KpiFrequency
 
 
   def i18nt_desc
-    KpiFrequency.get_by_value(self.value)
+    KpiFrequency.get_desc_by_value(self.value)
   end
 
   def self.get_desc_by_value value
