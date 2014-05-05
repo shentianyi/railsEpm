@@ -15,7 +15,7 @@ module Entry
 
     # chart and table data
     def analyse_with_table
-      self.params[:data_module]==Entry::DataService::WEB_HIGHSTOCK_IOS_TABLE
+      self.params[:data_module]=Entry::DataService::WEB_HIGHSTOCK_IOS_TABLE
       call_data_service
     end
 

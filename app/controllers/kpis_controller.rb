@@ -128,7 +128,7 @@ class KpisController < ApplicationController
   def assign_properties
     msg = Message.new
     msg.result = false
-    kpi_property = KpiProperty.find_by_name(params[:kpi_property_name])
+    kpi_property = KpiProperty.where("BINARY name = ?",params[:kpi_property_name]).first #KpiProperty.find_by_name(params[:kpi_property_name])
     kpi = Kpi.find_by_id(params[:id])
     if kpi_property.nil?
       kpi_property = KpiProperty.create(:name => params[:kpi_property_name], :user_id => current_user.id)
@@ -171,7 +171,10 @@ class KpisController < ApplicationController
   end
 
   def condition
-    render :json => {:unit => KpiUnit.all, :frequency => KpiFrequency.all, :direction => KpiDirection.all, :base => Kpi.base_kpis(current_ability)}
+    render :json => {:unit => KpiUnit.all,
+                     :frequency => EnumPresenter.init_json_presenters(KpiFrequency.all),
+                     :direction =>EnumPresenter.init_json_presenters(KpiDirection.all),
+                     :base => Kpi.base_kpis(current_ability)}
   end
 
   def import

@@ -91,10 +91,14 @@ class KpiEntryObserver<Mongoid::Observer
 
     #desc property val
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
-    kpi_entry.dynamic_attributes.each{|attr_id|
-      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first
-      KpiPropertyValue.desc_property_value(item.id,kpi_entry[attr_id]) if item
-    }
+    unless kpi.nil?
+      kpi_entry.dynamic_attributes.each{|attr_id|
+        item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first
+        KpiPropertyValue.desc_property_value(item.id,kpi_entry[attr_id]) if item
+      }
+
+    end
+
 
     #destroy collection kpi entry if no details left
     if kpi_entry.last_detail?

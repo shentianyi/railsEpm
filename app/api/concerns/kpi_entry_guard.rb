@@ -18,7 +18,6 @@ module KpiEntryGuard
       #entry_p=validate_params_integrated(params, ParamKeys)
       raise ArgumentError unless params.has_key?(:entry)
       #if params[:entry].is_a?(Hashie::Mash)
-
       #else
       params[:entry] = JSON.parse(params[:entry])
       #end

@@ -80,6 +80,9 @@ module KpiEntryImportHelper
         row_values=params.values
         #params["entry_type"] = 1
         #date
+        #params[:date] = params[:date].to_s
+        #puts params[:date]
+
         if params[:date].is_a?(String)
           params[:date] = Time.parse(params[:date])
         else
