@@ -10,7 +10,7 @@
 
       <div class="index-condition-group">
         <select data-placeholder="<%= t 'analytics.kpi_category' %> *" style="width:130px;" class="chosen-select" title="analy-entity-select" id="chart-group">
-          <% @categories.each_with_index do |catetory, i| %>
+          <% @categories.each do |catetory| %>
               <option value="<%= catetory.id %>"><%= catetory.name %></option>
           <% end %>
         </select>
@@ -18,7 +18,7 @@
           <option value=""></option>
         </select>
         <select data-placeholder="<%= t 'analytics.view' %> *" style="width:130px;" class="chosen-select" title="analy-view-select" id="chart-view">
-          <% @entity_groups.each_with_index do |entity_group, i| %>
+          <% @entity_groups.each do |entity_group| %>
               <option value="<%= entity_group.id %>"><%= entity_group.name %></option>
           <% end %>
         </select>
