@@ -5,9 +5,9 @@ class KpiEntryObserver<Mongoid::Observer
   def after_save kpi_entry
     if kpi_entry.entry_type == 1
       kpi = Kpi.find_by_id(kpi_entry.kpi_id)
-      if kpi
-        Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi.is_calculated
-      end
+      #if kpi
+      Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi.is_calculated
+      #end
       #KpiEntriesHelper.calculate_kpi_parent_value kpi_entry.id unless kpi.is_calculated
       return
     end
@@ -91,10 +91,14 @@ class KpiEntryObserver<Mongoid::Observer
 
     #desc property val
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
-    kpi_entry.dynamic_attributes.each{|attr_id|
-      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first
-      KpiPropertyValue.desc_property_value(item.id,kpi_entry[attr_id]) if item
-    }
+    unless kpi.nil?
+      kpi_entry.dynamic_attributes.each{|attr_id|
+        item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first
+        KpiPropertyValue.desc_property_value(item.id,kpi_entry[attr_id]) if item
+      }
+
+    end
+
 
     #destroy collection kpi entry if no details left
     if kpi_entry.last_detail?
@@ -109,7 +113,7 @@ class KpiEntryObserver<Mongoid::Observer
 
     collect_entry = KpiEntry.where(user_kpi_item_id: kpi_entry.user_kpi_item_id, parsed_entry_at: kpi_entry.parsed_entry_at, entity_id: kpi_entry.entity_id,entry_type: 1).first
 
-    if collect_entry && kpi_entry.original_value_changed?
+    if collect_entry #&& kpi_entry.original_value_changed?
       #val_change = kpi_entry.original_value-BigDecimal.new(kpi_entry.original_value_was)
       #val = collect_entry.original_value+val_change
       total = 0

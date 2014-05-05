@@ -214,7 +214,11 @@ function show_chart_body(option) {
     });
     $("#chart-interval-alternate").find("li[interval='" + option.interval + "']").addClass("active");
 }
-
+ANALYTICS.changeTypeLoad=false;
+ANALYTICS.changeTypeInterval;
+ANALYTICS.changeTypeOption;
+ANALYTICS.changeTypeIDs=[];
+ANALYTICS.changeTypeCurrentOrder;
 //改变图表的类型
 function alternate_chart_type(event) {
     if (ANALYTICS.loading_data == true) {
@@ -227,24 +231,47 @@ function alternate_chart_type(event) {
                 target: "chart-container",
                 type: $(target).attr("type"),
                 count: ANALYTICS.chartSeries.getCount(),
-                interval: $("#chart-interval-alternate li.active").attr("interval")
+                interval: $("#chart-interval-alternate li.active").attr("interval"),
+                changeType:true
             }
+            ANALYTICS.changeTypeOption=option;
+//            var ids=[];
             for (var i = 0; i < ANALYTICS.chartSeries.series.length; i++) {
                 if (ANALYTICS.chartSeries.series[i] === undefined) {
                     continue
                 }
                 else {
-                    option.id = i;
-                    ANALYTICS.proper_type_for_chart(option)
+//                    ANALYTICS.changeTypeIDs.push(i);
+//                    ids.push(i);
+                    option.id=i;
+                    option.changeTypeLoad=true
+                    ANALYTICS.proper_type_for_chart(option);
                 }
             }
+//            if(ANALYTICS.changeTypeIDs.length>0){
+//                ANALYTICS.changeTypeLoad=false;
+//                ANALYTICS.changeTypeCurrentOrder=0;
+//                ANALYTICS.changeTypeInterval=window.setInterval("typeGenerate()",1)
+//            }
             $(target).siblings().removeClass("image");
             $("#chart-type-alternate td").find("p").css("display", "block")
             $(target).addClass("image").find("p").css("display", "block");
         }
     }
 }
-
+// function typeGenerate(){
+//     if(!ANALYTICS.changeTypeLoad){
+//         if(ANALYTICS.changeTypeIDs.length<=ANALYTICS.changeTypeCurrentOrder){
+//             window.clearInterval(ANALYTICS.changeTypeInterval);
+//         }
+//         else{
+//             ANALYTICS.changeTypeLoad=true;
+//             ANALYTICS.changeTypeOption.id=ANALYTICS.changeTypeIDs[ANALYTICS.changeTypeCurrentOrder++];
+//             ANALYTICS.proper_type_for_chart(ANALYTICS.changeTypeOption)
+//         }
+//     }
+//
+// }
 //切换小时、天、周、月、季度、年
 //等待请求队列
 ANALYTICS.currentThread=[];
@@ -675,6 +702,7 @@ ANALYTICS.DETAIL.generate_table_detail=function(obj){
     if(c["property_map_group"]){
         delete c["property_map_group"];
     }
+    console.log(c);
     $.post("/kpi_entries/compares",c,function(data){
         if(data.result){
             $("#detail-table-compare-block").css("left","0px").css("right","0px");
@@ -782,7 +810,7 @@ ANALYTICS.DETAIL.generate_table_detail=function(obj){
 ANALYTICS.DETAIL.compare=function(current,last){
    var number=Math.abs(current-last);
    if(last==0){
-       return number.toFixed(1)+"%";
+       return number.toFixed(1);
    }
     else{
        return (number/last*100).toFixed(1)+"%";
@@ -793,7 +821,7 @@ ANALYTICS.DETAIL.compareArrow=function(current,last){
     return icon;
 }
 
-
+//点击pie上的点触发的事件
 ANALYTICS.DETAIL.pieClick=function(data){
     $("#assemble-current").text(data.y);
     $("#assemble-last").text(data.last);
@@ -803,6 +831,7 @@ ANALYTICS.DETAIL.pieClick=function(data){
     $("#assemble-arrow").attr("class",icon);
     $("#assemble-name").css("color",data.borderColor).text(data.name);
     $("#assemble-percent").css("color",data.borderColor).text((data.percentage).toFixed(1)+"%");
+
 }
 function generatePie(source) {
     ANALYTICS.DETAIL.max=0;

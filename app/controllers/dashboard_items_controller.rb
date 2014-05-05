@@ -23,7 +23,9 @@ class DashboardItemsController < ApplicationController
     @conditions = params[:conditions]
     @conditions.each{|condition|
     @new_condition = DashboardCondition.new(condition[1])
-
+    if @new_condition.time_string.nil?
+      next
+    end
     ##check if time out of range
     time_span = DashboardItem.time_string_to_time_span @new_condition.time_string
     count = DashboardCondition.time_range_count(time_span[:start].iso8601.to_s,time_span[:end].iso8601.to_s,@new_item.interval)

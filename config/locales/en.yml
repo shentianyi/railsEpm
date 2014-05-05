@@ -296,6 +296,7 @@ en:
       desc: Secure, quick and accurate, ClearInsight uncovers the potential of data
       language: Language
       welcome: Welcome
+      403: Sorry you do not have permission!
   auth:
     view:
       login_title: Sign In
@@ -363,7 +364,7 @@ en:
     tcr: TCR
     close_btn: Close
     select-dim: Select Dimensions
-    fill_all_blank: Sta should not be blank
+    fill_all_blank: Star should not be blank
     detail:
       drag: Drag dimension or dimension value
       back: Back to Analytics
@@ -381,7 +382,7 @@ en:
       sum: Total
       average: Average
       rate: Rate
-      year-analyse: YoY Analytics
+      year-analyse: Year of Year
       choose_one_dim: Please choose at least one dimension or dimension value
   #kpi entry
   entry:
@@ -442,7 +443,7 @@ en:
       ok: Create
       cancle: Cancle
       freq_item:
-        hourly: Houly
+        hourly: Houlry
         daily: Daily
         weekly: Weekly
         monthly: Monthly
@@ -469,7 +470,7 @@ en:
         name: Data Point Name
         code: Code
         description: Descripion
-        user_quanity: User Quantity
+        user_quantity: User Quantity
         create: Create Data Point
         create_now: Create Now
         create_desc: Department is the place to put your staff and the view is made up of data points
@@ -538,12 +539,12 @@ en:
         basic-name: Name
         users: Department Heads
         add-entity: Add Data Point
-        add-user: Add Department Head
+        add-user: Add Leader
         add-department: Add Department
         delete-department: Delete Department
         del-department-confirm: Delete Department?
         add-ok: Add
-        add-cancle: Cancle
+        add-cancle: Cancel
         delete-depart-confirm: Delete this Data Point?
         delete-user: Delete Department Head?
   #dashboard
@@ -624,7 +625,7 @@ en:
     add_fail: add fail
     cannot_destroy_contain_kpi: it is base kpi, cannot delete!
     not_exists: not exists
-    cannot_repeat: it is exists, cannot repeat
+    cannot_repeat: Already exits, names can not be repeated!
     upload_kpi: Upload KPI
     download_template: Download Template
     upload_data_file: Upload Data File(Max is 20M)

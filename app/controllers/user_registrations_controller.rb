@@ -10,8 +10,12 @@ class UserRegistrationsController<Devise::RegistrationsController
       msg.object = UserPresenter.new(resource).to_json
     else
       clean_up_passwords resource
-      msg.result =false
-      msg.content = resource.errors.to_json
+      msg.result = false
+      msg.content = ""
+      #msg.content = resource.errors
+      resource.errors.messages.each do |key,value|
+        msg.content << key.to_s + ":" + value.first.to_s + ";"
+      end
     end
     render json: msg
   end

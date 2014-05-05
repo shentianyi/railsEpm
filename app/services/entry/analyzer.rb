@@ -15,7 +15,7 @@ module Entry
 
     # chart and table data
     def analyse_with_table
-      self.params[:data_module]==Entry::DataService::WEB_HIGHSTOCK_IOS_TABLE
+      self.params[:data_module]=Entry::DataService::WEB_HIGHSTOCK_IOS_TABLE
       call_data_service
     end
 
@@ -27,11 +27,10 @@ module Entry
 
     def period_compare
       ordered={}
-      params[:property_map_group].each do |p|
+      self.params[:property_map_group].each do |p|
         ordered[p]=p
       end
-      params[:property_map_group]=ordered
-      self.params
+      self.params[:property_map_group]=ordered
       self.params[:data_module]=Entry::DataService::PERIOD_COMPARE_TABLE
       call_compare_data_service
     end
@@ -51,7 +50,11 @@ module Entry
     end
 
     def call_compare_data_service
+      unless self.params[:base_time].has_key?(:end_time)
+        self.params[:base_time][:end_time]=(KpiFrequency.get_next_date(self.params[:base_time][:start_time], self.params[:frequency])-1.second).to_s
+      end
       parameter=Entry::Parameter::PeriodCompareParameter.new(self.params)
+
       Entry::DataService.new(parameter).aggregate
     end
   end

@@ -96,6 +96,8 @@ module Entry
               when KpiFrequency::Daily
                 step=1.day #60*60*24
               when KpiFrequency::Weekly
+                start_time+=8.hours
+                end_time+=8.hours
                 step=7.days #60*60*24*7
                 start_time=Date.parse(start_time.to_s)
                 end_time=Date.parse(end_time.to_s)
@@ -118,7 +120,7 @@ module Entry
               if start_time.month==1
                 next_time=start_time+(start_time.year.leap? ? 29.days : 28.days) #(60*60*24*29 : 60*60*24*28)
               else
-                next_time=start_time+([2, 4, 6, 9, 11, 12].include?(start_time.month) ? 31.days : 30.days) #(60*60*24*31 : 60*60*24*30)
+                next_time=start_time+([2, 4, 6, 7, 9, 11, 12].include?(start_time.month) ? 31.days : 30.days) #(60*60*24*31 : 60*60*24*30)
               end
               generate_init_frequency(start_time)
               start_time=next_time

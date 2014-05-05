@@ -21,7 +21,7 @@ class KpiProperty < ActiveRecord::Base
   end
 
   def validate_create_update
-    errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where(:name => self.name).first if self.new_record?
-    errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where(:name => self.name).where('id<>?',self.id) unless new_record?
+    errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where("BINARY name = ?",self.name).first if self.new_record?
+    errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where("BINARY name = ?",self.name).where('id<>?',self.id) unless new_record?
   end
 end

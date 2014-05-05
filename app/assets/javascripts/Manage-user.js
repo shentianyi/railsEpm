@@ -27,6 +27,7 @@ MANAGE.user.init = function () {
 
         $("#manage-user-add.create-user> div >.div-select>div").css("width", "150px")
     }).on("click", "#manage-user-edit", function () {
+            $("#user-edit").show();
         $("#user-edit").css("left", "0px");
         $("#manage-right-content").css("padding-left", "200px");
         $("#manage-user-add").css("right", "999em");
@@ -159,10 +160,10 @@ MANAGE.user.add_new = function () {
                                 .append($("<tr />")
                                     .append($("<td />").text(object.first_name).addClass("user-manage-name"))
                                     .append($("<td />").text(object.title).addClass("user-manage-title"))
-                                    .append($("<td />").text(object.tel).addClass("user-manage-tel"))
-                                    .append($("<td />").text(object.phone).addClass("user-manage-phone"))
-                                    .append($("<td />").text(department_name).addClass("user-manage-department").attr("value", object.department_id))
-                                    .append($("<td />").text(entity_name).addClass("user-manage-entity").attr("value", object.entity_id))
+                                    .append($("<td />").text(object.tel).addClass("user-manage-tel").attr("title",object.tel))
+                                    .append($("<td />").text(object.phone).addClass("user-manage-phone").attr("title",object.phone))
+                                    .append($("<td />").text(department_name).addClass("user-manage-department").attr("value", object.department_id).attr("title",department_name))
+                                    .append($("<td />").text(entity_name).addClass("user-manage-entity").attr("value", object.entity_id).attr("title",entity_name))
                                     .append($("<td />").text(object.role).addClass("user-manage-authority").attr("value", object.role_id)))
                                 .append($("<tr />")
                                     .append($("<td />").text(object.email).addClass("user-manage-mail"))
@@ -283,18 +284,24 @@ MANAGE.user.edit = function () {
                 success: function (data) {
                     if (data.result) {
                         var object = data.object;
-                        $target.find(".user-manage-name").text(object.first_name);
-                        $target.find(".user-manage-mail").text(object.email);
-                        $target.find(".user-manage-title").text(object.title);
-                        $target.find(".user-manage-tel").text(object.tel);
-                        $target.find(".user-manage-phone").text(object.phone);
-                        $target.find('.user-manage-entity').attr("value", object.entity_id);
-                        $target.find('.user-manage-department').attr("value", object.department_id);
-                        $target.find('.user-manage-department').text(department_name);
-                        $target.find('.user-manage-entity').text(entity_name);
+                        if($("#manage-left-menu li.active").attr("number")==object.role_id){
+                            $target.find(".user-manage-name").text(object.first_name);
+                            $target.find(".user-manage-mail").text(object.email);
+                            $target.find(".user-manage-title").text(object.title);
+                            $target.find(".user-manage-tel").text(object.tel);
+                            $target.find(".user-manage-phone").text(object.phone);
+                            $target.find('.user-manage-entity').attr("value", object.entity_id);
+                            $target.find('.user-manage-department').attr("value", object.department_id);
+                            $target.find('.user-manage-department').text(department_name);
+                            $target.find('.user-manage-entity').text(entity_name);
 
-                        if ($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant") == "false")
-                            $target.find(".user-manage-authority").text(object.role).attr("value", object.role_id);
+                            if ($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant") == "false")
+                                $target.find(".user-manage-authority").text(object.role).attr("value", object.role_id);
+                        }
+                        else{
+                            $target.remove();
+                        }
+
                     } else {
                         MessageBox(I18n.t('manage.base.sth-wrong'), "top", "wrong");
                     }
@@ -350,7 +357,14 @@ MANAGE.user.assign.init = function () {
     $("#assign-kpi-category-btn").on('click', function () {
         var category = $("#kpi-category :selected").attr('value');
         var user = $("#assign-kpi-user :selected").attr("value");
-        if (category != null && category != "" && user != null && user != "") {
+        if(category==null || category == ""){
+            MessageBox("请选择KPI类别", "top", "warning");
+            return;
+        }
+        if(user==null || user == ""){
+            MessageBox("请选择用户", "top", "warning");
+            return;
+        }
             $.post('/kpis/assign', {kpi: category, user: user}, function (msg) {
                 if (msg.result) {
                     MANAGE.user.kpis(user);
@@ -358,7 +372,6 @@ MANAGE.user.assign.init = function () {
                     MessageBox(msg.content, "top", "warning");
                 }
             }, 'json');
-        }
     });
     // assign by kpi
     $("body").on("click", "#assign-kpi-list>li>h3", function () {
@@ -372,6 +385,7 @@ MANAGE.user.assign.init = function () {
             });
         }
         else {
+                MessageBox("请选择用户", "top", "warning");
             return;
         }
         if (validate) {

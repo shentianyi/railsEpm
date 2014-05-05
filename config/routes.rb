@@ -149,7 +149,7 @@ IFEpm::Application.routes.draw do
   namespace :api, :defaults => {:format => 'json'} do
     resources :kpi_entries do
       collection do
-        get :analyse, :defaults => {:format => 'html'}
+        match :analyse, :defaults => {:format => 'html'}
         get :data
         match :compare
         match :compares
@@ -204,6 +204,7 @@ IFEpm::Application.routes.draw do
     controller :kpis do
       match 'kpis/kpis_by_category' => :kpis_by_category
       match 'kpis/properties' => :properties
+      get :group_properties
     end
 
     resources :entity_groups do

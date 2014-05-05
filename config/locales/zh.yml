@@ -299,6 +299,7 @@ zh:
       desc: 安全，迅速，快捷，ClearInsight帮您挖掘隐藏的数据
       language: 语言
       welcome: 欢迎
+      403: 对不起，你没有权限!
   auth:
     view:
       login_title: 登 录
