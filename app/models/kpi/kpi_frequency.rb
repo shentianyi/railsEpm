@@ -14,22 +14,40 @@ class KpiFrequency
              when KpiFrequency::Hourly, KpiFrequency::Daily
                Proc.new { |v| Time.parse(v).utc }
              when KpiFrequency::Weekly
-               Proc.new{|v|
+               Proc.new { |v|
                  arr=v.split('-').map(&:to_i)
-                 Time.parse(Date.commercial(arr[0],arr[1],1).to_s).utc
+                 Time.parse(Date.commercial(arr[0], arr[1], 1).to_s).utc
                }
              when KpiFrequency::Monthly
-               Proc.new{|v|
+               Proc.new { |v|
                  arr=v.split('-').map(&:to_i)
-                 Time.parse(Date.new(arr[0],arr[1]).to_s).utc
+                 Time.parse(Date.new(arr[0], arr[1]).to_s).utc
                }
              when KpiFrequency::Quarterly
-               Proc.new{|v|
+               Proc.new { |v|
                  arr=v.split('-').map(&:to_i)
-                 Time.parse(Date.new(arr[0],arr[1]*3-2).to_s).utc
+                 Time.parse(Date.new(arr[0], arr[1]*3-2).to_s).utc
                }
              when KpiFrequency::Yearly
                Proc.new { |v| Time.parse("#{v}-01-01").utc }
+           end
+  end
+
+  def self.get_next_date(date, frequency)
+    date=Time.parse(date) if date.is_a?(String)
+    return case frequency.to_i
+             when KpiFrequency::Hourly
+               date+1.hour
+             when KpiFrequency::Daily
+               date+1.day
+             when KpiFrequency::Weekly
+               date+1.week
+             when KpiFrequency::Monthly
+               date+1.month
+             when KpiFrequency::Quarterly
+               date+4.months
+             when KpiFrequency::Yearly
+               date+1.year
            end
   end
 end

@@ -49,9 +49,7 @@ module Entry
               properties[v.kpi_property_id]<< v.value
           end
         end
-        puts properties
         self.parameter.clean_property_values(properties)
-        puts properties
         metrix=[]
         size=properties.size
         if size==1

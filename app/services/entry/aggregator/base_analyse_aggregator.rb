@@ -120,7 +120,6 @@ module Entry
               else
                 next_time=start_time+([2, 4, 6,7, 9, 11, 12].include?(start_time.month) ? 31.days : 30.days) #(60*60*24*31 : 60*60*24*30)
               end
-              puts next_time
               generate_init_frequency(start_time)
               start_time=next_time
             end
