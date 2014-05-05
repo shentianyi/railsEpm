@@ -149,7 +149,12 @@ module Entry
         fetch_attrs = fetch_attrs & entry[:kpi_properties].keys.to_a
         fetch_attrs.each {|f|
           if !entry[:kpi_properties][f].blank?
-            attrs["a"+properties[f].to_s] = entry[:kpi_properties][f].strip if entry[:kpi_properties][f].is_a?(String)
+            if entry[:kpi_properties][f].is_a?(String)
+              attrs["a"+properties[f].to_s] = entry[:kpi_properties][f].strip
+            else
+              attrs["a"+properties[f].to_s] = entry[:kpi_properties][f]
+            end
+
           end
         }
       end
