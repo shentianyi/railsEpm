@@ -59,6 +59,7 @@ gem 'devise-encryptable'
 # OAuth 2 Authorization Server
 gem 'doorkeeper'
 #gem 'oauth'
+
 # api framework
 gem 'grape'
 
