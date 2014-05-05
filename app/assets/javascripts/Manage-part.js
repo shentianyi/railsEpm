@@ -176,7 +176,7 @@ TREE.current_entitygroup_id = -1;
                         $('<li class="im-entities" entity_group="' + entity_group.id + '"><a><i class="icon-laptop"></i> ' +
                             entity_group.name + '</a>' +
                             '<div class="add-block"><label class="add-block-part"><i class="icon-plus-sign"></i>'+I18n.t('manage.departments.desc.add-department')+'</label>' +
-                            '<label class="add-block-entity"><i class="icon-plus-sign"></i> '+I18n.t('manage.departments.desc.delete-department')+'</label>' +
+                            '<label class="add-block-entity"><i class="icon-plus-sign"></i> '+I18n.t('manage.departments.desc.add-entity')+'</label>' +
                             '</div>' +
                             '</li>').appendTo($("li[entity_group='" + TREE.current_entitygroup_id + "']>ul"));
                     } else {
