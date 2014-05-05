@@ -148,7 +148,9 @@ module Entry
         fetch_attrs = properties.keys.to_a
         fetch_attrs = fetch_attrs & entry[:kpi_properties].keys.to_a
         fetch_attrs.each {|f|
-          attrs["a"+properties[f].to_s] = entry[:kpi_properties][f].strip if !entry[:kpi_properties][f].blank?
+          if !entry[:kpi_properties][f].blank?
+            attrs["a"+properties[f].to_s] = entry[:kpi_properties][f].strip if entry[:kpi_properties][f].is_a?(String)
+          end
         }
       end
       #dependet on entry_type
