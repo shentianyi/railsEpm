@@ -235,38 +235,43 @@ function alternate_chart_type(event) {
                 changeType:true
             }
             ANALYTICS.changeTypeOption=option;
+//            var ids=[];
             for (var i = 0; i < ANALYTICS.chartSeries.series.length; i++) {
                 if (ANALYTICS.chartSeries.series[i] === undefined) {
                     continue
                 }
                 else {
-                    ANALYTICS.changeTypeIDs.push(i);
+//                    ANALYTICS.changeTypeIDs.push(i);
+//                    ids.push(i);
+                    option.id=i;
+                    option.changeTypeLoad=true
+                    ANALYTICS.proper_type_for_chart(option);
                 }
             }
-            if(ANALYTICS.changeTypeIDs.length>0){
-                ANALYTICS.changeTypeLoad=false;
-                ANALYTICS.changeTypeCurrentOrder=0;
-                ANALYTICS.changeTypeInterval=window.setInterval("typeGenerate()",500)
-            }
+//            if(ANALYTICS.changeTypeIDs.length>0){
+//                ANALYTICS.changeTypeLoad=false;
+//                ANALYTICS.changeTypeCurrentOrder=0;
+//                ANALYTICS.changeTypeInterval=window.setInterval("typeGenerate()",1)
+//            }
             $(target).siblings().removeClass("image");
             $("#chart-type-alternate td").find("p").css("display", "block")
             $(target).addClass("image").find("p").css("display", "block");
         }
     }
 }
- function typeGenerate(){
-     if(!ANALYTICS.changeTypeLoad){
-         if(ANALYTICS.changeTypeIDs.length<=ANALYTICS.changeTypeCurrentOrder){
-             window.clearInterval(ANALYTICS.changeTypeInterval);
-         }
-         else{
-             ANALYTICS.changeTypeLoad=true;
-             ANALYTICS.changeTypeOption.id=ANALYTICS.changeTypeIDs[ANALYTICS.changeTypeCurrentOrder++];
-             ANALYTICS.proper_type_for_chart(ANALYTICS.changeTypeOption)
-         }
-     }
-
- }
+// function typeGenerate(){
+//     if(!ANALYTICS.changeTypeLoad){
+//         if(ANALYTICS.changeTypeIDs.length<=ANALYTICS.changeTypeCurrentOrder){
+//             window.clearInterval(ANALYTICS.changeTypeInterval);
+//         }
+//         else{
+//             ANALYTICS.changeTypeLoad=true;
+//             ANALYTICS.changeTypeOption.id=ANALYTICS.changeTypeIDs[ANALYTICS.changeTypeCurrentOrder++];
+//             ANALYTICS.proper_type_for_chart(ANALYTICS.changeTypeOption)
+//         }
+//     }
+//
+// }
 //切换小时、天、周、月、季度、年
 //等待请求队列
 ANALYTICS.currentThread=[];
