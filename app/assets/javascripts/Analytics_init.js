@@ -675,6 +675,7 @@ ANALYTICS.DETAIL.generate_table_detail=function(obj){
     if(c["property_map_group"]){
         delete c["property_map_group"];
     }
+    console.log(c);
     $.post("/kpi_entries/compares",c,function(data){
         if(data.result){
             $("#detail-table-compare-block").css("left","0px").css("right","0px");
