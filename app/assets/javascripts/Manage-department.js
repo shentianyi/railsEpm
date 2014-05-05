@@ -127,7 +127,7 @@ MANAGE.department.add_department_init = function () {
                                 "<table class='group'>"+
                                     "<tr>"+
                                         "<td class='entity-manage-name'>"+name+"</td>"+
-                                        "<td class='entity-manage-code'>"+name+"</td>"+
+                                        "<td class='entity-manage-code'>"+code+"</td>"+
                                         "<td class='entity-manage-users'>"+"0"+"</td>"+
                                         "<td class='entity-manage-description'>"+description+"</td>"+
                                     "</tr>"+

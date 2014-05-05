@@ -442,7 +442,7 @@ en:
       ok: Create
       cancle: Cancle
       freq_item:
-        hourly: Houly
+        hourly: Houlry
         daily: Daily
         weekly: Weekly
         monthly: Monthly
@@ -469,7 +469,7 @@ en:
         name: Data Point Name
         code: Code
         description: Descripion
-        user_quanity: User Quantity
+        user_quantity: User Quantity
         create: Create Data Point
         create_now: Create Now
         create_desc: Department is the place to put your staff and the view is made up of data points
@@ -538,7 +538,7 @@ en:
         basic-name: Name
         users: Department Heads
         add-entity: Add Data Point
-        add-user: Add Department Head
+        add-user: Add Leader
         add-department: Add Department
         delete-department: Delete Department
         del-department-confirm: Delete Department?
