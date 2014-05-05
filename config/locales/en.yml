@@ -543,7 +543,7 @@ en:
         delete-department: Delete Department
         del-department-confirm: Delete Department?
         add-ok: Add
-        add-cancle: Cancle
+        add-cancle: Cancel
         delete-depart-confirm: Delete this Data Point?
         delete-user: Delete Department Head?
   #dashboard
