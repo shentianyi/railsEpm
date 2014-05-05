@@ -84,7 +84,7 @@ DASHBOARD.add.initial.analytic_control_condition_visible=function(){
 DASHBOARD.add.close=function(){
     $("#dashboard-name-input").val("");
     $("#db-add-type li").removeClass("active");
-    $("#db-add-type li").eq(0).addClass("active");
+    $("#db-add-type li").eq(1).addClass("active");
     $("#db-add-kpi-list").empty();
     $("#dashboard-group-name").val('').trigger('chosen:updated');
     $("li","#db-chart-interval-alternate").removeClass("active");
