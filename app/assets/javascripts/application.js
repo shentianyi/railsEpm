@@ -24,4 +24,4 @@
 //=require i18n/translations
 //=require Log
 //=require jquery.scrollUp.min
-//=require mustache
+//=require mustache.min

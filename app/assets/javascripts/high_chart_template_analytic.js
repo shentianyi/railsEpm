@@ -524,6 +524,7 @@ ANALYTICS.set_data=function(option) {
     this.view=option.view ? option.view:null;
     this.view_text=option.view_text ? option.view_text:null;
     this.kpi_name=option.kpi ? option.kpi:null;
+    this.changeType=option.changeType ? option.changeType:null;
 };
 ANALYTICS.render_to=function(option) {
     ANALYTICS.high_chart.chart.renderTo = option.target;
@@ -629,6 +630,7 @@ ANALYTICS.deal_data=function() {
 };
 ANALYTICS.proper_type_for_chart=function(){
     ANALYTICS.set_data.apply(this,arguments);
+
     var obj=this;
     var name=obj.kpi_name===null?this.chart.get(this.id).options.name:obj.kpi_name+"("+obj.view_text+")";
     var p={
@@ -637,6 +639,12 @@ ANALYTICS.proper_type_for_chart=function(){
         color:this.chart.get(this.id).color,
         data: this.chart.get(this.id).options.data
     },c;
+    if(obj.changeType){
+        p.data=ANALYTICS.chartSeries.series[p.id][obj.interval];
+    }
+//    console.log(p.id)
+//    console.log(ANALYTICS.chartSeries.series[p.id][obj.interval])
+
     var new_series=deepCopy(p,c);
     if(this.type=="column"){
         for(var i=0;i<new_series.data.length;i++){
@@ -651,10 +659,12 @@ ANALYTICS.proper_type_for_chart=function(){
             }
         }
     }
+
     new_series.type=this.type;
     this.chart.get(this.id).remove(false);
     this.chart.addSeries(new_series,false);
     this.chart.redraw();
+//    ANALYTICS.changeTypeLoad=false;
 };
 
 
