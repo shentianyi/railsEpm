@@ -283,18 +283,24 @@ MANAGE.user.edit = function () {
                 success: function (data) {
                     if (data.result) {
                         var object = data.object;
-                        $target.find(".user-manage-name").text(object.first_name);
-                        $target.find(".user-manage-mail").text(object.email);
-                        $target.find(".user-manage-title").text(object.title);
-                        $target.find(".user-manage-tel").text(object.tel);
-                        $target.find(".user-manage-phone").text(object.phone);
-                        $target.find('.user-manage-entity').attr("value", object.entity_id);
-                        $target.find('.user-manage-department').attr("value", object.department_id);
-                        $target.find('.user-manage-department').text(department_name);
-                        $target.find('.user-manage-entity').text(entity_name);
+                        if($("#manage-left-menu li.active").attr("number")==object.role_id){
+                            $target.find(".user-manage-name").text(object.first_name);
+                            $target.find(".user-manage-mail").text(object.email);
+                            $target.find(".user-manage-title").text(object.title);
+                            $target.find(".user-manage-tel").text(object.tel);
+                            $target.find(".user-manage-phone").text(object.phone);
+                            $target.find('.user-manage-entity').attr("value", object.entity_id);
+                            $target.find('.user-manage-department').attr("value", object.department_id);
+                            $target.find('.user-manage-department').text(department_name);
+                            $target.find('.user-manage-entity').text(entity_name);
 
-                        if ($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant") == "false")
-                            $target.find(".user-manage-authority").text(object.role).attr("value", object.role_id);
+                            if ($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant") == "false")
+                                $target.find(".user-manage-authority").text(object.role).attr("value", object.role_id);
+                        }
+                        else{
+                            $target.remove();
+                        }
+
                     } else {
                         MessageBox(I18n.t('manage.base.sth-wrong'), "top", "wrong");
                     }
