@@ -24,10 +24,10 @@
                     <tr>
                       <td class="user-manage-name"><%= user.first_name %></td>
                       <td class="user-manage-title"><%= user.title %></td>
-                      <td class="user-manage-tel"><%= user.tel %></td>
-                      <td class="user-manage-phone"><%= user.phone %></td>
-                      <td class="user-manage-entity" value="<%= user.entity_id %>"><%= user.entity_name %></td>
-                      <td><%= user.department_names %></td>
+                      <td class="user-manage-tel" title="<%= user.tel %>"><%= user.tel %></td>
+                      <td class="user-manage-phone" title="<%= user.phone %>"><%= user.phone %></td>
+                      <td class="user-manage-entity" title="<%= user.entity_name %>" value="<%= user.entity_id %>"><%= user.entity_name %></td>
+                      <td title="<%= user.department_names %>"><%= user.department_names %></td>
                       <td class="user-manage-authority" value="<%= user.role_id %>"><%= UsersHelper.get_user_role_display(user.role_id) %></td>
                     </tr>
                     <tr>
