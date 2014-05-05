@@ -664,7 +664,7 @@ ANALYTICS.proper_type_for_chart=function(){
     this.chart.get(this.id).remove(false);
     this.chart.addSeries(new_series,false);
     this.chart.redraw();
-    ANALYTICS.changeTypeLoad=false;
+//    ANALYTICS.changeTypeLoad=false;
 };
 
 
