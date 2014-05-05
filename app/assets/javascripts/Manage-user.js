@@ -27,6 +27,7 @@ MANAGE.user.init = function () {
 
         $("#manage-user-add.create-user> div >.div-select>div").css("width", "150px")
     }).on("click", "#manage-user-edit", function () {
+            $("#user-edit").show();
         $("#user-edit").css("left", "0px");
         $("#manage-right-content").css("padding-left", "200px");
         $("#manage-user-add").css("right", "999em");

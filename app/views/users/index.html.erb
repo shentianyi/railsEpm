@@ -44,7 +44,7 @@
             <% end %>
           </ul>
         </div>
-        <div class="manage-user-add" id="user-edit" general="manage-user-add">
+        <div class="manage-user-add" id="user-edit" general="manage-user-add" style="display: none">
           <i class="icon-remove" id="close-user-edit" general="close-user"></i>
 
           <div>
@@ -55,14 +55,6 @@
             <input type="text" placeholder="<%= t 'manage.user.new.phone' %>" id="edit-user-phone" general="user-phone"/>
             <input type="password" placeholder="<%= t 'manage.user.new.pwd' %>" id="edit-user-password" general="user-password"/>
 
-            <!--<div class="div-select">
-              <select data-placeholder="<%= t 'manage.user.new.department' %>" id="edit-department-for-kpi" class="single-select">
-                <option value=""></option>
-                <% @departments.each do |department| %>
-                    <option value="<%= department.id %>"><%= department.name %></option>
-                <% end %>
-              </select>
-            </div>-->
             <div class="div-select">
               <select data-placeholder="<%= t 'manage.user.new.entity' %>" id="edit-entity-for-kpi" class="single-select">
                 <option value=""></option>
