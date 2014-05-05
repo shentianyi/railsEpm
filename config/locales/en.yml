@@ -296,6 +296,7 @@ en:
       desc: Secure, quick and accurate, ClearInsight uncovers the potential of data
       language: Language
       welcome: Welcome
+      403: Sorry you do not have permission!
   auth:
     view:
       login_title: Sign In
@@ -624,7 +625,7 @@ en:
     add_fail: add fail
     cannot_destroy_contain_kpi: it is base kpi, cannot delete!
     not_exists: not exists
-    cannot_repeat: it is exists, cannot repeat
+    cannot_repeat: Already exits, names can not be repeated!
     upload_kpi: Upload KPI
     download_template: Download Template
     upload_data_file: Upload Data File(Max is 20M)
