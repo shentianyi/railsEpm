@@ -620,7 +620,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].x = Date.UTC(parseInt(this.template[0]) + i, 0);
                 data[i].UTCDate=Date.UTC(parseInt(this.template[0]) + i, 0)-8*60*60*1000;
                 this.data[i].name = new Date(parseInt(this.template[0]) + i, 0).toWayneString().year;
-                data[i].kpi=this.kpi;
+                data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
             }
             return data;
