@@ -166,7 +166,7 @@ MANAGE.kpi.kpi_add_box_bind = function() {
      });
      $("#manage-kpi-add-new").on("click", function() {
           MANAGE.kpi.add_new_kpi();
-         MANAGE.kpi.kpi_add_clear();
+
      });
 };
 MANAGE.kpi.isCalcuCheck = function(){
@@ -272,6 +272,7 @@ function post_kpi(option) {
           }
      }, function(data) {
           if(data.result) {
+              MANAGE.kpi.kpi_add_clear();
                var object = data.object
                var id = object.id;
                var formula_string = object.is_calculated ? object.formula_string : I18n.t('manage.kpi.not_calculate_type');

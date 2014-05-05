@@ -24,10 +24,10 @@
                     <tr>
                       <td class="user-manage-name"><%= user.first_name %></td>
                       <td class="user-manage-title"><%= user.title %></td>
-                      <td class="user-manage-tel"><%= user.tel %></td>
-                      <td class="user-manage-phone"><%= user.phone %></td>
-                      <td class="user-manage-entity" value="<%= user.entity_id %>"><%= user.entity_name %></td>
-                      <td><%= user.department_names %></td>
+                      <td class="user-manage-tel" title="<%= user.tel %>"><%= user.tel %></td>
+                      <td class="user-manage-phone" title="<%= user.phone %>"><%= user.phone %></td>
+                      <td class="user-manage-entity" title="<%= user.entity_name %>" value="<%= user.entity_id %>"><%= user.entity_name %></td>
+                      <td title="<%= user.department_names %>"><%= user.department_names %></td>
                       <td class="user-manage-authority" value="<%= user.role_id %>"><%= UsersHelper.get_user_role_display(user.role_id) %></td>
                     </tr>
                     <tr>
@@ -55,14 +55,14 @@
             <input type="text" placeholder="<%= t 'manage.user.new.phone' %>" id="edit-user-phone" general="user-phone"/>
             <input type="password" placeholder="<%= t 'manage.user.new.pwd' %>" id="edit-user-password" general="user-password"/>
 
-            <div class="div-select">
+            <!--<div class="div-select">
               <select data-placeholder="<%= t 'manage.user.new.department' %>" id="edit-department-for-kpi" class="single-select">
                 <option value=""></option>
                 <% @departments.each do |department| %>
                     <option value="<%= department.id %>"><%= department.name %></option>
                 <% end %>
               </select>
-            </div>
+            </div>-->
             <div class="div-select">
               <select data-placeholder="<%= t 'manage.user.new.entity' %>" id="edit-entity-for-kpi" class="single-select">
                 <option value=""></option>
