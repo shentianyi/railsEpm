@@ -420,6 +420,7 @@ en:
         create_now: Create Now
         kpi_library_desc: Create kpi in different category,then you can edit it's max target and min target
         choose_now: Choose Now
+        or: OR
         next_desc: Create kpi in different category,then you can edit it's max target and min target
         what-is-kpi-title: What is KPI?
         what-is-kpi: A Key performance indicator is a business metric used to evaluate factors that are crucial to the success of an organization. Kpis differ per organization.
