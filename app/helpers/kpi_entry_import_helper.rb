@@ -99,7 +99,7 @@ module KpiEntryImportHelper
           validator.entry
         end
         sheet.add_row row_values
-        puts "line:#{line}"
+        #puts "line:#{line}"
         sheet.rows[line-1].cells[error_header_length-1].style=error_format unless validator.valid
       end
     end
