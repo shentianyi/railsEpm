@@ -12,4 +12,11 @@ module ErrorHelper
       format.json { render json: {access: false}, status: 404 }
     end
   end
+
+  def error_page_500
+    respond_to do |format|
+      format.html { render :file => File.join(Rails.root, 'public/500.html'), :status => 500, :layout => false }
+      format.json { render json: {access: false}, status: 500 }
+    end
+  end
 end

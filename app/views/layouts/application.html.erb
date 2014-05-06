@@ -33,13 +33,13 @@
     $.ajaxSetup({
         statusCode: {
             403: function () {
-                alert('403 Forbidden');
+                location.href='/403';
             },
             404: function () {
-                alert('404 Not Found');
+                location.href='/404';
             },
             500:function(){
-                alert('500 Internal Server Error');
+                location.href='/500';
             }
         }
     });
