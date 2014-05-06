@@ -509,6 +509,7 @@ DASHBOARD.add.show_chart_body=function(option){
     });
     $("#db-chart-interval-alternate").find("li[interval='" + option.interval + "']").addClass("active");
 }
+//切换类型
 DASHBOARD.add.alternate_chart_type=function(event) {
     if($("#db-chart-body:visible").length>0){
         var target = adapt_event(event).target;
@@ -531,6 +532,7 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                     option.id = db_chartSeries.series[i].id;
                     option.kpi = db_chartSeries.series[i].kpi;
                     option.view_text = db_chartSeries.series[i].view_text;
+                    option.view= db_chartSeries.series[i].view;
                     option.data=db_chartSeries.series[i][option.interval];
                     proper_type_for_chart(option);
                     DASHBOARD.add.generate(option);
@@ -542,6 +544,7 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 option.id="line-target";
                 option.begin_time=db_chartSeries.series[id].begin_time;
                 option.view_text = db_chartSeries.series[id].view_text;
+                option.view= db_chartSeries.series[id].view;
                 option.data=db_chartSeries.series[id][option.interval];
                 add_series(option);
                 proper_type_for_chart(option);
@@ -549,7 +552,7 @@ DASHBOARD.add.alternate_chart_type=function(event) {
             limit_pointer_number(option);
     }
 }
-
+//切换周期
 DASHBOARD.add.change_interval=function(option) {
     var series_object, new_data_wrapper = [],count= 0,id_array=[];
     var chart = $("#" + option.target).highcharts();
@@ -562,6 +565,7 @@ DASHBOARD.add.change_interval=function(option) {
             count++;
             id_array.push(i);
             series_object = db_chartSeries.series[i];
+
             if (series_object[option.interval]) {
                 new_data_wrapper.push(series_object[option.interval])
             }
@@ -575,7 +579,8 @@ DASHBOARD.add.change_interval=function(option) {
                     entity_group_id: series_object.view,
                     start_time : standardParse(series_object.begin_time).date.toISOString() ,
                     end_time : standardParse(series_object.end_time).date.toISOString(),
-                    frequency: option.interval
+                    frequency: option.interval,
+
                 },
                 type:'POST',
                 async:false,
@@ -591,6 +596,7 @@ DASHBOARD.add.change_interval=function(option) {
                             data_array[i].low=msg.object.target_min[i];
                             data_array[i].high=msg.object.target_max[i];
                             data_array[i].unit=msg.object.unit[i];
+
                         }
                         new_data_wrapper.push(data_array);
                         series_object[option.interval] = data_array;
@@ -599,17 +605,6 @@ DASHBOARD.add.change_interval=function(option) {
                         MessageBox("sorry , something wrong" , "top", "warning");
                     }
                 }});
-
-//                var data_array=[
-//                    {y: 22,low:1,high:30, target: 10, unit: "$",id:post_id},
-//                    {y: 23,low:2,high:200,  target: 10, unit: "$"},
-//                    {y: 21,low: 33,high:54 ,target: 10, unit: "$"},
-//                    {y: 23,low:2,high:320, target: 10, unit: "$"},
-//                    {y: 20, low:2,high:423, target: 10, unit: "$"},
-//                    {y: 27,low:1,high:403,  target: 10, unit: "$"}
-//                ];
-//                new_data_wrapper.push(data_array);
-//                series_object[option.interval] = data_array;
 
             }
         }
@@ -629,6 +624,8 @@ DASHBOARD.add.change_interval=function(option) {
                 option.kpi = db_chartSeries.getSeries()[index]["kpi"];
                 option.id = db_chartSeries.getSeries()[index]["id"];
                 option.begin_time = db_chartSeries.getSeries()[index]["begin_time"];
+                option.view = db_chartSeries.getSeries()[index]["view"];
+                option.view_text = db_chartSeries.getSeries()[index]["view_text"];
                 option.data = new_data_wrapper[j];
                 if (j == 0) {
                     render_to(option);
@@ -646,6 +643,8 @@ DASHBOARD.add.change_interval=function(option) {
                 var index=id_array[j];
                 option.kpi = db_chartSeries.getSeries()[index]["kpi"];
                 option.id = db_chartSeries.getSeries()[index]["id"];
+                option.view = db_chartSeries.getSeries()[index]["view"];
+                option.view_text = db_chartSeries.getSeries()[index]["view_text"];
                 option.begin_time = db_chartSeries.getSeries()[index]["begin_time"];
                 option.data = new_data_wrapper[j];
                 if (j == 0) {
