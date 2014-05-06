@@ -1,0 +1,56 @@
+@import "STYLE";
+.entry-sort-list{
+  li{
+    .show-entry-detail{
+      font-size:12px;
+      width:60px;
+      padding:7px 6px;
+      margin:0px;
+      position:absolute;
+      top:10px;
+    }
+    .box{
+      $background-color:rgba(0,0,0,0.8);
+      width:auto;
+      right:10px;
+      position:absolute;
+      z-index:200;
+      padding:0px;
+      border:none;
+      top:74px;
+      &:before{
+        border-bottom: 18px solid rgba(0, 0, 0, 0.8);
+        border-left: 18px solid rgba(0, 0, 0, 0);
+        content: "";
+        height: 0;
+        position: absolute;
+        right: 49px;
+        top: -16px;
+        width: 0;
+      }
+      table{
+        background:$background-color;
+        @include box-shadow(3px,3px,4px,rgba(0,0,0,0.5));
+        @include border-radius-same(3px);
+        width:auto;
+        color:#fff;
+        font-size:12px;
+        border-collapse:collapse;
+        tr{
+          border-bottom:1px solid rgba(255,255,255,0.3);
+        }
+        td{
+          padding:5px 13px;
+          i{
+            pointer-events:auto;
+            cursor:pointer;
+            @include transition(color);
+            &:hover{
+              color:$red-hover;
+            }
+          }
+        }
+      }
+    }
+  }
+}

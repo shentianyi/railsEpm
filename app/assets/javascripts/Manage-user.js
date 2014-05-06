@@ -18,23 +18,36 @@ MANAGE.user.init = function () {
 
     $(".single-select").chosen({ allow_single_deselect: true });
 
-    $("body").on("click", "#add-user-show",function () {
-        $("#manage-user-add").css("right", "261px");
-        $("#manage-right-content").css("padding-right", "200px");
-        $("#left-content-title").css("margin-right", "201px");
-        $("#user-edit").css("left", "-250px");
-        $("#manage-right-content").css("padding-left", "0px");
+    $("body")
+        .on("click", "#add-user-show",function () {
+            $("#manage-user-add").css("right", "261px");
+            $("#manage-right-content").css("padding-right", "200px");
+            $("#left-content-title").css("margin-right", "201px");
+            $("#user-edit").css("left", "-250px");
+            $("#manage-right-content").css("padding-left", "0px");
 
-        $("#manage-user-add.create-user> div >.div-select>div").css("width", "150px")
-    }).on("click", "#manage-user-edit", function () {
-        $("#user-edit").css("left", "0px");
-        $("#manage-right-content").css("padding-left", "200px");
-        $("#manage-user-add").css("right", "999em");
-        $("#manage-right-content").css("padding-right", "0px");
-        $("#left-content-title").css("margin-right", "0px");
-        MANAGE.user.user_edit_box_bind();
-        $("#user-edit> div >.div-select>div").css("width", "150px")
-    });
+            $("#manage-user-add.create-user> div >.div-select>div").css("width", "150px")
+            })
+        .on("click", "#manage-user-edit", function () {
+            $("#user-edit").show();
+            $("#user-edit").css("left", "0px");
+            $("#manage-right-content").css("padding-left", "200px");
+            $("#manage-user-add").css("right", "999em");
+            $("#manage-right-content").css("padding-right", "0px");
+            $("#left-content-title").css("margin-right", "0px");
+            MANAGE.user.user_edit_box_bind();
+            $("#user-edit> div >.div-select>div").css("width", "150px");
+
+            window.setTimeout(function(){
+                var table_size=$("#manage-sort-list li").width()-70;
+                $("#manage-sort-list table").width(table_size)
+                if(".attribute-position"){
+                    $("#manage-sort-list .attribute-position").width(table_size+40)
+                    $("#manage-sort-list .attribute-position>p").width(table_size-180)
+                }
+            },1500);
+
+        });
     $("#manage-user-edit-old").on("click", function () {
         MANAGE.user.edit()
     });
@@ -149,6 +162,9 @@ MANAGE.user.add_new = function () {
                 if (data.result) {
                     if ($("#manage-left-menu li.active").attr("number") == role) {
                         var object = data.object;
+                        //add user to the assign table
+                        $("#assign-kpi-user").append("<option value="+object.id+">"+object.email+"</option>");
+                        //
                         $("#manage-sort-list").prepend($("<li />").attr("id", object.id)
                             .append($("<p />").addClass("sort-handle").text(":"))
                             .append($("<input type='checkbox'/>"))
@@ -156,17 +172,17 @@ MANAGE.user.add_new = function () {
                                 .append($("<tr />")
                                     .append($("<td />").text(object.first_name).addClass("user-manage-name"))
                                     .append($("<td />").text(object.title).addClass("user-manage-title"))
-                                    .append($("<td />").text(object.tel).addClass("user-manage-tel"))
-                                    .append($("<td />").text(object.phone).addClass("user-manage-phone"))
-                                    .append($("<td />").text(department_name).addClass("user-manage-department").attr("value", object.department_id))
-                                    .append($("<td />").text(entity_name).addClass("user-manage-entity").attr("value", object.entity_id))
+                                    .append($("<td />").text(object.tel).addClass("user-manage-tel").attr("title",object.tel))
+                                    .append($("<td />").text(object.phone).addClass("user-manage-phone").attr("title",object.phone))
+                                    .append($("<td />").text(department_name).addClass("user-manage-department").attr("value", object.department_id).attr("title",department_name))
+                                    .append($("<td />").text(entity_name).addClass("user-manage-entity").attr("value", object.entity_id).attr("title",entity_name))
                                     .append($("<td />").text(object.role).addClass("user-manage-authority").attr("value", object.role_id)))
                                 .append($("<tr />")
                                     .append($("<td />").text(object.email).addClass("user-manage-mail"))
                                     .append($("<td />").text(I18n.t('manage.user.new.title')))
                                     .append($("<td />").text(I18n.t('manage.user.new.tel')))
+                                    //.append($("<td />").text(I18n.t('manage.user.new.department')))
                                     .append($("<td />").text(I18n.t('manage.user.new.phone')))
-                                    .append($("<td />").text(I18n.t('manage.user.new.department')))
                                     .append($("<td />").text(I18n.t('manage.user.new.entity')))
                                     .append($("<td />").text(I18n.t('manage.user.new.departments')))
                                     .append($("<td />").text(I18n.t('manage.user.new.authority'))))
@@ -206,12 +222,16 @@ MANAGE.user.add_new = function () {
                     if (data.content.hasOwnProperty("password_confirmation")) {
                         errmsg = errmsg + "  密码确认：" + data.content.password_confirmation[0] + ";";
                     }
+                    if(errmsg.length < 1)
+                    {
+                        errmsg = errmsg + data.content;
+                    }
                     MessageBox(errmsg, "top", "warning")
                 }
             }
         });
     } else {
-        MessageBox("Please fill all the blanket taking *", "top", "warning");
+        MessageBox(I18n.t('manage.base.fill-all-star'), "top", "warning");
     }
 };
 //////////////////////////////////////////////////////////////////////////         User 编辑那一块的
@@ -276,29 +296,35 @@ MANAGE.user.edit = function () {
                 success: function (data) {
                     if (data.result) {
                         var object = data.object;
-                        $target.find(".user-manage-name").text(object.first_name);
-                        $target.find(".user-manage-mail").text(object.email);
-                        $target.find(".user-manage-title").text(object.title);
-                        $target.find(".user-manage-tel").text(object.tel);
-                        $target.find(".user-manage-phone").text(object.phone);
-                        $target.find('.user-manage-entity').attr("value", object.entity_id);
-                        $target.find('.user-manage-department').attr("value", object.department_id);
-                        $target.find('.user-manage-department').text(department_name);
-                        $target.find('.user-manage-entity').text(entity_name);
+                        if($("#manage-left-menu li.active").attr("number")==object.role_id){
+                            $target.find(".user-manage-name").text(object.first_name);
+                            $target.find(".user-manage-mail").text(object.email);
+                            $target.find(".user-manage-title").text(object.title);
+                            $target.find(".user-manage-tel").text(object.tel);
+                            $target.find(".user-manage-phone").text(object.phone);
+                            $target.find('.user-manage-entity').attr("value", object.entity_id);
+                            $target.find('.user-manage-department').attr("value", object.department_id);
+                            $target.find('.user-manage-department').text(department_name);
+                            $target.find('.user-manage-entity').text(entity_name);
 
-                        if ($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant") == "false")
-                            $target.find(".user-manage-authority").text(object.role).attr("value", object.role_id);
+                            if ($("#manage-sort-list").find(":checked").parent().parent().attr("is_tenant") == "false")
+                                $target.find(".user-manage-authority").text(object.role).attr("value", object.role_id);
+                        }
+                        else{
+                            $target.remove();
+                        }
+
                     } else {
-                        MessageBox("Something get wrong", "top", "wrong");
+                        MessageBox(I18n.t('manage.base.sth-wrong'), "top", "wrong");
                     }
                 }
             });
             MANAGE.user.user_edit_close();
         } else {
-            MessageBox("Please fix the input with red border", "top", "danger");
+            MessageBox(I18n.t('manage.base.fill-all-star'), "top", "danger");
         }
     } else {
-        MessageBox("Please fill all the blanket taking *", "top", "warning");
+        MessageBox(I18n.t('manage.base.fill-all-star'), "top", "warning");
     }
 };
 //////////////////////////////////////////////////////////////////////////         User assign kpi
@@ -343,7 +369,14 @@ MANAGE.user.assign.init = function () {
     $("#assign-kpi-category-btn").on('click', function () {
         var category = $("#kpi-category :selected").attr('value');
         var user = $("#assign-kpi-user :selected").attr("value");
-        if (category != null && category != "" && user != null && user != "") {
+        if(category==null || category == ""){
+            MessageBox(I18n.t('manage.user.desc.no_kpi_category_selected'), "top", "warning");
+            return;
+        }
+        if(user==null || user == ""){
+            MessageBox(I18n.t('manage.user.desc.no_user_selected'), "top", "warning");
+            return;
+        }
             $.post('/kpis/assign', {kpi: category, user: user}, function (msg) {
                 if (msg.result) {
                     MANAGE.user.kpis(user);
@@ -351,7 +384,6 @@ MANAGE.user.assign.init = function () {
                     MessageBox(msg.content, "top", "warning");
                 }
             }, 'json');
-        }
     });
     // assign by kpi
     $("body").on("click", "#assign-kpi-list>li>h3", function () {
@@ -365,6 +397,7 @@ MANAGE.user.assign.init = function () {
             });
         }
         else {
+                MessageBox("请选择用户", "top", "warning");
             return;
         }
         if (validate) {
@@ -415,6 +448,7 @@ MANAGE.user.assign.init = function () {
                 type: 'DELETE',
                 success: function (data) {
                     if (data.result) {
+                        //also remove from assign user list
                         $target.remove();
                     }
                 }

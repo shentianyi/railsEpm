@@ -14,7 +14,7 @@ class KpiCategory < ActiveRecord::Base
   end
   private
   def validate_create_update
-    errors.add(:name,'类别不可重复') if KpiCategory.where(:name=>self.name,:tenant_id=>self.tenant_id).first if new_record? # for create
-    errors.add(:name,'类别不可重复') if KpiCategory.where(:name=>self.name,:tenant_id=>self.tenant_id).where('id<>?',self.id).first unless new_record? # for update
+    errors.add(:name,I18n.t("manage.kpi.category-not-repeat")) if KpiCategory.where(:name=>self.name,:tenant_id=>self.tenant_id).first if new_record? # for create
+    errors.add(:name,I18n.t("manage.kpi.category-not-repeat")) if KpiCategory.where(:name=>self.name,:tenant_id=>self.tenant_id).where('id<>?',self.id).first unless new_record? # for update
   end
 end

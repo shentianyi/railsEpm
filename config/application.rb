@@ -21,20 +21,20 @@ module IFEpm
     config.autoload_paths+=%W(#{config.root}/validators)
     config.autoload_paths+=Dir[Rails.root.join('app','models','{**}')]
     config.autoload_paths+=Dir[Rails.root.join('app','presenters','{**}')]
-    config.autoload_paths += %W(#{config.root}/app/services)
     config.autoload_paths += %W(#{config.root}/app/caches)
     # for api
     config.paths.add "app/api", glob: "**/*.rb"
     config.paths.add "app/services", glob: "**/*.rb"
     config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
-    config.autoload_paths += Dir["#{Rails.root}/app/services/*"]
+    config.autoload_paths += Dir["#{Rails.root}/app/services/**/*.rb"]
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
     # Activate observers that should always be running.
-    config.active_record.observers = :tenant_observer,:user_observer,:kpi_observer,:kpi_entry_observer,:entity_observer,:entity_group_observer,:department_observer,:user_department_observer
+    config.active_record.observers = :tenant_observer,:user_observer,:kpi_observer,:entity_observer,:entity_group_observer,:department_observer,:user_department_observer
     config.active_record.observers+=['Admin::KpiTemplateObserver']
+
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
@@ -70,5 +70,12 @@ module IFEpm
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.assets.paths << "#{Rails.root}/app/assets/fonts"
+    config.generators do |g|
+      g.orm :active_record
+    end
+
+    #Mongoid observers
+    config.mongoid.observers = :kpi_entry_observer
+    config.mongoid.raise_not_found_error = false
   end
 end

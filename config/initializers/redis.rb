@@ -6,6 +6,7 @@ require "resque/tasks"
 $default_db=6
 $default_db=7 if Rails.env.demo?
 $default_db=8 if Rails.env.demo_cn?
+$default_db=9 if Rails.env.jiangnan?
 
 $redis=Redis.new(:host => "127.0.0.1",:port => "6379",:db=>$default_db)
 

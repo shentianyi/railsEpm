@@ -30,7 +30,7 @@ test:
  adapter: mysql2
  encoding: utf8
  reconnect: false
- database: epmdb_test
+ database: epmdb
  pool: 5
  username: epmer
  password: epmer@
@@ -74,6 +74,15 @@ demo_cn:
   encoding: utf8
   reconnect: false
   database: epmdbdemocn
+  pool: 5
+  username: epmer
+  password: epmer@
+  socket: /var/run/mysqld/mysqld.sock
+jiangnan:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: epmdb_jiangnan
   pool: 5
   username: epmer
   password: epmer@

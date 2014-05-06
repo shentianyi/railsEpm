@@ -167,6 +167,7 @@ ifepm.dashboard_widget.init_fullsize = function(){
              },
          }).data('gridster');
          isinit_fullsize = false;
+         gridster_full.disable();
      }
 }
 

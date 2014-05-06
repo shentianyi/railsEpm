@@ -2,6 +2,8 @@ $blue:#5fa9da;
 $blue-hover:#69aef5;
 $red:#f75460;
 $red-hover:#f59b9b;
+$green:#0cb156;
+$green-hover:transparentize($green,0.4);
 
 @mixin transition($element){
   transition:$element ease-out 0.25s
@@ -24,6 +26,16 @@ $red-hover:#f59b9b;
   box-shadow:$x $y $shadow $color;
   -moz-box-shadow:$x $y $shadow $color;
   -webkit-box-shadow:$x $y $shadow $color;
+}
+@mixin text-overflow{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+@mixin clearFloat{
+  content:"";
+  display:block;
+  clear: both;
 }
 /*************************************************************  button style
 *********************************************************************************************************/
@@ -64,18 +76,25 @@ $red-hover:#f59b9b;
     background:#5fa9da;
     //background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
     //background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
-    color:white;
+    color:#fff;
     &:hover{
       background:#69aef5;
       //background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
       //background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
     }
   }
+  &.btn-dark{
+    background:#333;
+    color:#fff;
+    &:hover{
+      background:rgba(0,0,0,0.6);
+    }
+  }
   &.btn-success{
-    background:#2fcc76;
+    background:$green;
     color:white;
     &:hover{
-      background:#3bdf81
+      background:$green-hover
     }
   }
   &.btn-warning{
@@ -84,6 +103,11 @@ $red-hover:#f59b9b;
     &:hover{
       background:#f6af6a
     }
+  }
+  &.btn-small{
+    display:inline-block;
+    padding:5px 26px;
+    font-size:12px;
   }
 }
 /*************************************************************  ul

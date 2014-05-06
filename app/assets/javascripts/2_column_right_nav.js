@@ -111,7 +111,7 @@ right_nav_main.item_prototype.add.prototype={
 
             }
             else{
-                MessageBox("Same name exist yet","top","warning");
+                MessageBox(I18n.t('fix.cannot_repeat'),"top","warning");
             }
 
 
@@ -142,7 +142,7 @@ right_nav_main.item_prototype.add_init=function(){
     $("#content-right-nav-add-block>input").on("keydown",function(event){
         if(adapt_event(event).event.keyCode==13){
             if($.trim($(adapt_event(event).target).val())==0){
-                MessageBox("it needs a name","top","warning");
+                MessageBox(I18n.t('manage.base.not-empty'),"top","warning");
             }
             else{
                 right_nav_main[right_nav_main.current_section].add.add_complete();
@@ -226,7 +226,7 @@ right_nav_main.item_prototype.edit.prototype={
                 $("#content-right-nav-group>li").each(function(){
                     if($(this).attr("title")==$(e.target).val()){
                         validate=false;
-                        MessageBox("Same name exist yet","top","warning");
+                        MessageBox(I18n.t('fix.cannot_repeat'),"top","warning");
                         return false;
                     }
                 });

@@ -71,7 +71,7 @@ body{
 /********************************************************************************************************* 右边主内容区
 *******************************************************************************************************************/
 .wrap-main{
-    min-width:1024px;
+    min-width:1290px;
     position:absolute;
     transition:left 0.25s ease-out;
     right:0;
@@ -184,7 +184,7 @@ nav ul li a:hover ~ .nav-manage-sub{
     width:100px;
     padding:0;
     background:#5FA9DA;
-    z-index:100;
+    z-index:650;
     left:-999em;
     box-shadow:-2px 3px 3px rgba(0, 0, 0, 0.4);
     -moz-shadow:-2px 3px 3px rgba(0, 0, 0, 0.4);
@@ -520,4 +520,13 @@ nav ul li a:hover ~ .nav-manage-sub{
 }
 .upload-file-name>i:hover{
     color:#D95C5C;
+}
+
+/* Image style */
+#scrollUp {
+    bottom: 20px;
+    right: 20px;
+    height: 38px;  /* Height of image */
+    width: 38px; /* Width of image */
+    background: url('/assets/top.png') no-repeat;
 }

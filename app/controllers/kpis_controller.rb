@@ -1,5 +1,6 @@
 #encoding: utf-8
 class KpisController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   before_filter :require_user_as_admin, :only => :index
   before_filter :get_ability_category, :only => [:index, :access]
   before_filter :get_kpis_by_category, :only => :categoried
@@ -12,11 +13,29 @@ class KpisController < ApplicationController
   # create kpi
   def create
     msg=Message.new
-    @kpi=Kpi.new(params[:kpi])
-    @kpi.creator=current_user
-    if @kpi.save
-      temp = {}
+    kpi=Kpi.new(params[:kpi].except(:kpi_properties))
+    kpi.creator=current_user
+
+    #kpi_properties
+    attrs = []
+    if params[:kpi].has_key?(:kpi_properties)
+      params[:kpi][:kpi_properties].uniq.each {|name|
+
+        if property = KpiProperty.find_by_name(name)
+        else
+          property = KpiProperty.new(:name => name)
+          property.user = current_user
+          property.tenant = current_tenant
+          property.save
+        end
+        attrs << property
+      }
+    end
+    if kpi.save
+      kpi.add_properties(attrs)
+      #temp = {}
       msg.result=true
+=begin
       temp[:id] = @kpi.id
       temp[:name]=@kpi.name
       temp[:is_calculated] = @kpi.is_calculated
@@ -27,10 +46,11 @@ class KpisController < ApplicationController
       temp[:target_min] = KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min)
       temp[:section] = KpiUnit.get_entry_unit_sym(@kpi.unit)
       temp[:desc] = @kpi.description
-      msg.object=temp.as_json
+=end
+      msg.object=KpiPresenter.new(kpi).to_json
     else
-      @kpi.errors.messages[:result]= I18n.t "fix.add_fail"
-      msg.content=@kpi.errors.messages.values.join('; ')
+      kpi.errors.messages[:result]= I18n.t "fix.add_fail"
+      msg.content=kpi.errors.messages.values.join('; ')
     end
     render :json => msg
   end
@@ -66,7 +86,7 @@ class KpisController < ApplicationController
       if user.entity_id.blank?
         msg.content = I18n.t "fix.user_entity_is_blank"
       else
-        if result= KpisHelper.assign_kpi_to_user_by_id(params[:kpi], user,params[:by_cate].nil?) and result[0]
+        if result= KpisHelper.assign_kpi_to_user_by_id(params[:kpi], user, params[:by_cate].nil?) and result[0]
           msg.content =result
           msg.result =true
         else
@@ -79,8 +99,60 @@ class KpisController < ApplicationController
     render json: msg
   end
 
+  #@function properties
+  #get all kpi properties
+  def properties
+    @kpi_properties =KpiPropertyPresenter.init_json_presenters(Kpi.find_by_id(params[:id]).kpi_properties)
+    render :json => @kpi_properties
+  end
+
+  def group_properties
+    @properties=KpiPropertyValue.by_kpi_id(params[:id]).all
+    render json: KpiPropertyPresenter.to_group_select(@properties)
+  end
+
+  #@function remove_properties
+  def remove_properties
+    msg = Message.new
+    msg.result = false
+    if item = KpiPropertyItem.find_by_id(params[:id])#KpiPropertyItem.where(kpi_id: params[:kpi_id], kpi_property_id: params[:kpi_property_id])
+      item.destroy
+      msg.result = true
+    end
+    render :json=>msg
+  end
+
+  #@function assign_properties
+  #@params kpi_id,kpi_property_name
+  #if kpi_property not found ,create a new one
+  def assign_properties
+    msg = Message.new
+    msg.result = false
+    kpi_property = KpiProperty.where("BINARY name = ?",params[:kpi_property_name]).first #KpiProperty.find_by_name(params[:kpi_property_name])
+    kpi = Kpi.find_by_id(params[:id])
+    if kpi_property.nil?
+      kpi_property = KpiProperty.create(:name => params[:kpi_property_name], :user_id => current_user.id)
+    end
+
+    if kpi && kpi_property
+      if KpiPropertyItem.where(kpi_id:kpi.id,kpi_property_id:kpi_property.id).first
+        msg.content =  I18n.t "manage.kpi.dimensions-same-error"
+      else
+        kpi_property_item = KpiPropertyItem.new
+        kpi_property_item.kpi_property_id = kpi_property.id
+        kpi_property_item.kpi_id = kpi.id
+        msg.result = kpi_property_item.save
+        msg.content = {id:kpi_property_item.id,name:kpi_property.name}
+      end
+
+    else
+      msg.content = I18n.t "manage.kpi.dimensions-kpi-not-fount"
+    end
+    render :json => msg
+  end
+
   def categoried
-    render :json => get_kpis_by_category(params[:id])
+    render json: KpiSelectPresenter.init_json_presenters(get_kpis_by_category(params[:id]))
   end
 
   def user
@@ -99,7 +171,10 @@ class KpisController < ApplicationController
   end
 
   def condition
-    render :json => {:unit => KpiUnit.all, :frequency => KpiFrequency.all, :direction => KpiDirection.all, :base => Kpi.base_kpis(current_ability)}
+    render :json => {:unit => KpiUnit.all,
+                     :frequency => EnumPresenter.init_json_presenters(KpiFrequency.all),
+                     :direction =>EnumPresenter.init_json_presenters(KpiDirection.all),
+                     :base => Kpi.base_kpis(current_ability)}
   end
 
   def import

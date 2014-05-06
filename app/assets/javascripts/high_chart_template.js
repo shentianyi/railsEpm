@@ -21,6 +21,7 @@ var high_chart = {
         formatter: function() {
             if(this.series.type!="pie"){
                 if(this.series.type=="column"){
+                    console.log(this.point);
                     return '<b>'+this.point.name+'</b>'
                         +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                         +'</span>'
@@ -38,8 +39,11 @@ var high_chart = {
                 }
             }
             else{
+//                console.log(this.point)
+//                console.log(typeof this.series.name);
+                var seriesName=typeof this.series.name=="string"?this.series.name:this.series.name[this.point.seriesId]
                 return '<b>'+this.point.name+'</b>'
-                    +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+                    +'<br />KPI: <span style="color:'+this.series.color+'">'+seriesName
                     +'</span>'
                     +'<br />'+I18n.t('chart.view')+': '+this.point.view
                     +'<br />'+I18n.t('chart.value')+': '+this.y+" "+this.point.unit
@@ -482,6 +486,7 @@ function proper_type_for_chart(){
                 dataItem.high=this.chart.series[0].data[i].high;
                 dataItem.low=this.chart.series[0].data[i].low;
                 dataItem.unit=this.chart.series[0].data[i].unit;
+                dataItem.view=this.chart.series[0].data[i].view;
                 if(i==0){
                     max_data=dataItem.y;
                     index=0;
@@ -514,6 +519,7 @@ function proper_type_for_chart(){
 //                    dataItemTarget+=parseFloat(this.chart.series[i].data[j].target);
                 }
                 dataItem.kpi_name=this.chart.series[i].name;
+                dataItem.unit=this.chart.series[0].data[i].unit;
                 dataItem.y=dataItemValue;
                 dataItem.seriesId=this.chart.series[i].data[0].id;
                 chart_name.push(this.chart.series[i].name);
@@ -523,6 +529,7 @@ function proper_type_for_chart(){
                 dataItem.time_from=this.chart.series[i].data[0].name;
                 dataItem.time_to=this.chart.series[i].data[this.chart.series[i].data.length-1].name;
                 dataItem.unit=this.chart.series[i].data[0].unit;
+                dataItem.view=this.chart.series[i].data[0].view;
                 dataItem.color=  this.theme ?
                     HIGH_CHART.chart_color[this.theme][dataItem.seriesId % HIGH_CHART.chart_color[this.theme].length]
                     :HIGH_CHART.chart_color["default"][dataItem.seriesId % HIGH_CHART.chart_color["default"].length];;

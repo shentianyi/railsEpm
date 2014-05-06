@@ -247,6 +247,7 @@ ANALYTICS.high_chart={
 
 
 ANALYTICS.form_chart=function(option){
+
     ANALYTICS.loading_data=true;
     var begin_time_utc=standardParse(option.begin_time).date,
         end_time_utc=standardParse(option.end_time).date,
@@ -262,12 +263,12 @@ ANALYTICS.form_chart=function(option){
     if(option.show_loading==null || option.show_loading)
     show_loading(top,0,0,0);
     $.post('/kpi_entries/analyse',{
-        kpi : option.kpi_id,
+        kpi_id : option.kpi_id,
         average:option.method=="0",
-        entity_group: option.view,
-        startTime : new Date(bar_fix_from).toISOString() ,
-        endTime : new Date(bar_fix_to).toISOString(),
-        interval:option.interval
+        entity_group_id: option.view,
+        start_time : new Date(bar_fix_from).toISOString() ,
+        end_time : new Date(bar_fix_to).toISOString(),
+        frequency:option.interval
     },function(msg){
           if(option.show_loading==null || option.show_loading)
          remove_loading()
@@ -361,6 +362,7 @@ ANALYTICS.form_chart=function(option){
                 }
                 option.data=data_array;
                 var c={},p=option.data;
+
                 ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
                 if(option.chart_body_close_validate){
                     ANALYTICS.render_to(option);
@@ -390,12 +392,12 @@ ANALYTICS.add_data=function(option){
     option.data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < option.end_time_utc?true:false;
 
     $.post('/kpi_entries/analyse',{
-        kpi : option.kpi_id,
+        kpi_id : option.kpi_id,
         average:option.method=="0",
-        entity_group: option.view,
-        startTime : begin_time_utc.toISOString() ,
-        endTime : next_date.toISOString(),
-        interval:option.interval
+        entity_group_id: option.view,
+        start_time : begin_time_utc.toISOString() ,
+        end_time : next_date.toISOString(),
+        frequency:option.interval
     },function(msg){
         if(msg.result){
             var data_length=msg.object.current.length;
@@ -410,6 +412,8 @@ ANALYTICS.add_data=function(option){
             }
             option.data=data_array;
             var c={},p=option.data;
+            console.log(ANALYTICS.chartSeries.series[option.id][option.interval]);
+
             ANALYTICS.chartSeries.series[option.id][option.interval].concat(deepCopy(c,p));
             var chart=$("#"+option.target).highcharts();
 
@@ -577,7 +581,7 @@ ANALYTICS.proper_type_for_chart=function(){
     var name=obj.kpi_name===null?this.chart.get(this.id).options.name:obj.kpi_name+"("+obj.view_text+")";
     var p={
         name:name ,
-        id: this.chart.get(this.id).options.id,
+        id: obj.id,
         color:this.chart.get(this.id).color,
         data: this.chart.get(this.id).options.data
     },c;
@@ -596,7 +600,7 @@ ANALYTICS.proper_type_for_chart=function(){
         }
     }
     new_series.type=this.type;
-    this.chart.get(this.id).remove(false);
+    this.chart.get(obj.id).remove(false);
     this.chart.addSeries(new_series,false);
     this.chart.redraw();
 };
