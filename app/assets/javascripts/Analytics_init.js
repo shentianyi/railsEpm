@@ -160,7 +160,7 @@ function prepare_form_chart() {
         else {
             end_time = begin_time
         }
-        console.log(kpi_property);
+
         var option = {
             kpi: $("#chart-kpi :selected").text(),
             kpi_id: kpi,
