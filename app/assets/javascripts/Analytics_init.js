@@ -542,6 +542,7 @@ function chart_point_click(object) {
         property: ANALYTICS.base_option.kpi_property
     };
     var current_date = object.UTCDate;
+    console.log(current_date);
     var end_time = get_next_date(current_date, ANALYTICS.base_option.frequency).add('milliseconds', -1);
     condition.detail_condition.base_time = {start_time: new Date(current_date).toISOString(), end_time: end_time.toISOString()};
 }
