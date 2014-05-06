@@ -21,6 +21,7 @@ var high_chart = {
         formatter: function() {
             if(this.series.type!="pie"){
                 if(this.series.type=="column"){
+                    console.log(this.point);
                     return '<b>'+this.point.name+'</b>'
                         +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
                         +'</span>'

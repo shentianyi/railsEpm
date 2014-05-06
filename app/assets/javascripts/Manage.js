@@ -167,6 +167,7 @@ function total_check_listener(){
     }
 }
 MANAGE.resize_sort_table=function(){
+    console.log("here")
     var table_size=$("#manage-sort-list li").width()-70;
     $("#manage-sort-list table").width(table_size)
     if(".attribute-position"){
