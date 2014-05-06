@@ -30,7 +30,8 @@ ANALYTICS.high_chart={
         enabled : true,
         series : {
             id : 'navigator'
-        }
+        },
+        adaptToUpdatedData:false
     },
     tooltip:{
             formatter: function() {
@@ -451,8 +452,13 @@ ANALYTICS.add_data=function(option){
             point = point.concat(data_array);
             option.data=point;
             var new_data=ANALYTICS.deal_data(option);
+            console.log(new_data  )
+
             chart.series[option.id+1].setData(new_data, false);
             chart.series[0].setData(new_data, false);
+
+            console.log(option.id)
+
             chart.redraw();
 //            chart.xAxis[0].setExtremes(option.bar_fix_from, option.bar_fix_to);
             if(option.data_too_long) {
@@ -643,7 +649,7 @@ ANALYTICS.proper_type_for_chart=function(){
         p.data=ANALYTICS.chartSeries.series[p.id][obj.interval];
     }
 //    console.log(p.id)
-//    console.log(ANALYTICS.chartSeries.series[p.id][obj.interval])
+//    console.log(p.data.length)
 
     var new_series=deepCopy(p,c);
     if(this.type=="column"){

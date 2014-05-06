@@ -568,7 +568,7 @@ function generateDetailDate() {
             propertyGroupSort.push(parseInt($li.attr("myID")));
         }
     }
-    console.log(propertyGroupSort)
+//    console.log(propertyGroupSort)
 //    propertyGroupSort.sort(function compare(a,b){return a-b});
     propertyGroupSort=propertyGroupSort.strip();
     condition.detail_condition.property=property;
