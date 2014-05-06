@@ -33,20 +33,7 @@ class KpisController < ApplicationController
     end
     if kpi.save
       kpi.add_properties(attrs)
-      #temp = {}
       msg.result=true
-=begin
-      temp[:id] = @kpi.id
-      temp[:name]=@kpi.name
-      temp[:is_calculated] = @kpi.is_calculated
-      temp[:formula_string] = @kpi.formula_string
-      temp[:interval] = KpiFrequency.get_desc_by_value(@kpi.frequency)
-      temp[:trend] = KpiDirection.get_desc_by_value(@kpi.direction)
-      temp[:target_max] = KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max)
-      temp[:target_min] = KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min)
-      temp[:section] = KpiUnit.get_entry_unit_sym(@kpi.unit)
-      temp[:desc] = @kpi.description
-=end
       msg.object=KpiPresenter.new(kpi).to_json
     else
       kpi.errors.messages[:result]= I18n.t "fix.add_fail"

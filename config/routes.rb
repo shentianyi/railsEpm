@@ -46,6 +46,7 @@ IFEpm::Application.routes.draw do
   resources :users do
     collection do
       get 'index/:id' => :index
+      get 'c/:id'=>:index
       match :login
       post :add
       put :update

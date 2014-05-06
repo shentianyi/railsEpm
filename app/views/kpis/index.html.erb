@@ -45,13 +45,6 @@
                </p>
                <a class="btn btn-primary" id="kpi-library-btn"><%= t 'manage.kpi.desc.choose_now'%></a>
           </section>
-          <!--<section class="solid">-->
-               <!--<h3>管理KPI属性</h3>-->
-               <!--<p>-->
-                 <!--KPI属性是KPI自身所具有的特征,它使KPI的值具有更多信息-->
-               <!--</p>-->
-         <!--<a class="btn btn-success" id="kpi-manage-attribute">管理属性</a>-->
-       <!--</section>-->
           <section class="solid">
                <h3><%= t 'manage.kpi.desc.what-is-kpi-title'%></h3>
                <p>
@@ -82,23 +75,6 @@
           </div>
      </div>
 </div>
-
-
-<!--<div class="kpi-library" id="kpi-attribute-outer" type="attribute">-->
-  <!--<div>-->
-          <!--<i class="icon icon-remove" id="attribute-block-remove"></i>-->
-          <!--<div class="attribute-block">-->
-              <!--<ul>-->
-                <!--<li><input placeholder="属性名"/><i class="icon icon-trash"></i></li>-->
-              <!--</ul>-->
-              <!--<a class="btn btn-success">增加属性</a>-->
-          <!--</div>-->
-          <!--<div class="btn-group">-->
-              <!--<a class="btn btn-small" id="attribute-block-cancel">取消</a>-->
-              <!--<a class="btn btn-primary btn-small">保存</a>-->
-          <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
 
 <div class="kpi-library"  type="attribute" for="kpi" id="add-new-kpi-block">
   <div >
@@ -183,14 +159,6 @@
       <input id="add-kpi-property" placeholder="<%= t 'manage.kpi.dimensions-inputname'%>"/>
       <a class="btn btn-normal btn-success" id="edit-attribute-block-add"><%= t 'manage.kpi.dimensions-add'%></a>
     </div>
-
-    <!--
-    <div class="btn-group">
-      <a class="btn btn-small" id="edit-attribute-block-cancel">取消</a>
-      <a class="btn btn-primary btn-small">保存</a>
-    </div>
-    -->
-
   </div>
 </div>
 
@@ -207,6 +175,5 @@
   <%= javascript_include_tag "Manage.js"%>
   <%= javascript_include_tag "Manage-left-menu.js"%>
   <%= javascript_include_tag "Manage-right-list.js"%>
-
   <%= javascript_include_tag "Manage-kpi.js"%>
 <%end%>
