@@ -168,6 +168,7 @@ DASHBOARD.add.init=function(){
     $("header").css("box-shadow","0 2px 5px rgba(71,71,71,0.3)");
 
     $("#analytic-control-condition-visible,#add-one-series").on("click",DASHBOARD.add.initial.analytic_control_condition_visible);
+
     $("#db-add-type>li").on("click",function(event){
         var target=adapt_event(event).target;
         if($(this).hasClass("active")==false){
@@ -181,10 +182,12 @@ DASHBOARD.add.init=function(){
             }
         }
     });
+    //删除一条线
     $("body").on("click","#db-add-kpi-list li i",function(){
         var id=parseInt($(this).attr("kpi_id"));
-        db_chartSeries.id_array.splice(id,1);
-        db_chartSeries.series.splice(id,1);
+        console.log(db_chartSeries)
+        delete db_chartSeries.id_array[id];
+        delete db_chartSeries.series[id];
         db_chartSeries.minusCount();
         $("#chart-container").highcharts().get(id).remove(false);
         $('#chart-container').highcharts().destroy();
@@ -208,6 +211,8 @@ DASHBOARD.add.init=function(){
                         type: $("#db-add-type>li.active").attr("type"),
                         interval: $("#db-chart-interval-alternate li.active").attr("interval"),
                         data:item[$("#db-chart-interval-alternate li.active").attr("interval")],
+                        view: item.view,
+                        view_text: item.view_text,
                         count: new_count
                     }
                     if(new_count-1==0){
