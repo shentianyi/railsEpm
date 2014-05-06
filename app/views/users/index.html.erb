@@ -153,7 +153,7 @@
 
     <div class="assign-kpi-left" special="user" id="assign-kpi-options">
       <div class="select-div" style="left: 35%; width: 300px;">
-        <select class="chosen-select" data-placeholder="<%= t 'manage.kpi.category' %>" id="kpi-category">
+        <select class="chosen-select" data-placeholder="* <%= t 'manage.user.desc.select_kpi_categroy' %>" id="kpi-category">
         </select>
         <input type="button" value="<%= t 'manage.base.assign_all_kpi' %>" class="btn btn-primary" style="width: 75px; display: inline-block;" id="assign-kpi-category-btn"/>
       </div>
@@ -164,7 +164,7 @@
     </div>
     <div class="assign-kpi-right" id="assign-kpi-right">
       <div class="select-div">
-        <select data-placeholder="* <%= t 'manage.user.new.name' %>" class="chosen-select" style="width:180px;" id="assign-kpi-user">
+        <select data-placeholder="* <%= t 'manage.user.desc.select_user' %>" class="chosen-select" style="width:180px;" id="assign-kpi-user">
           <option></option>
           <% @users.each_with_index do |user, i| %>
               <option value="<%= user.id %>"><%= user.email %></option>

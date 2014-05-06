@@ -160,7 +160,7 @@ function prepare_form_chart() {
         else {
             end_time = begin_time
         }
-        console.log(kpi_property);
+
         var option = {
             kpi: $("#chart-kpi :selected").text(),
             kpi_id: kpi,
@@ -542,6 +542,7 @@ function chart_point_click(object) {
         property: ANALYTICS.base_option.kpi_property
     };
     var current_date = object.UTCDate;
+    console.log(current_date);
     var end_time = get_next_date(current_date, ANALYTICS.base_option.frequency).add('milliseconds', -1);
     condition.detail_condition.base_time = {start_time: new Date(current_date).toISOString(), end_time: end_time.toISOString()};
 }
@@ -568,7 +569,7 @@ function generateDetailDate() {
             propertyGroupSort.push(parseInt($li.attr("myID")));
         }
     }
-    console.log(propertyGroupSort)
+//    console.log(propertyGroupSort)
 //    propertyGroupSort.sort(function compare(a,b){return a-b});
     propertyGroupSort=propertyGroupSort.strip();
     condition.detail_condition.property=property;
@@ -880,7 +881,7 @@ function generatePie(source) {
     ANALYTICS.DETAIL.average=(ANALYTICS.DETAIL.sum/ANALYTICS.DETAIL.count).toFixed(2);
     series[ANALYTICS.DETAIL.maxOrder].sliced=true;
     series[ANALYTICS.DETAIL.maxOrder].selected=true;
-    series[ANALYTICS.DETAIL.maxOrder].percentage=series[ANALYTICS.DETAIL.maxOrder].y/ANALYTICS.DETAIL.sum*100;
+    series[ANALYTICS.DETAIL.maxOrder].percentage=ANALYTICS.DETAIL.sum==0?0:series[ANALYTICS.DETAIL.maxOrder].y/ANALYTICS.DETAIL.sum*100;
     var length=ANALYTICS.series_colors.length;
     series[ANALYTICS.DETAIL.maxOrder].borderColor=ANALYTICS.DETAIL.maxOrder<length?ANALYTICS.series_colors[ANALYTICS.DETAIL.maxOrder]:ANALYTICS.series_colors[ANALYTICS.DETAIL.maxOrder % ANALYTICS.series_colors.length - 1];
     ANALYTICS.DETAIL.pieClick( series[ANALYTICS.DETAIL.maxOrder] );
@@ -915,7 +916,7 @@ function generateDetailTable(source,property_group) {
     var templateData={};
     templateData.data=source;
     templateData.percent= function(){
-        return (parseInt(this.value)/sum*100).toFixed(1)+"%";
+        return sum==0?0:(parseInt(this.value)/sum*100).toFixed(1)+"%";
     }
     templateData.compare=function(){
         var current=parseInt(this.value),

@@ -299,7 +299,7 @@ zh:
       desc: 安全，迅速，快捷，ClearInsight帮您挖掘隐藏的数据
       language: 语言
       welcome: 欢迎
-      403: 对不起，你没有权限!
+      403: 对不起，您没有权限!
   auth:
     view:
       login_title: 登 录
@@ -420,11 +420,12 @@ zh:
       kpi:
         desc:
           create: 创建KPI
-          create_desc: 为不同的KPI类别创建KPI，你可以对KPI做相应的编辑
+          create_desc: 为不同的KPI类别创建KPI，您可以对KPI做相应的编辑
           create_now: 现在创建
-          kpi_library_desc: 如果你需要一些常用的KPI，你可以方便的在KPI库中选择
+          kpi_library_desc: 如果您需要一些常用的KPI，您可以方便的在KPI库中选择
           choose_now: 现在选择
-          next_desc: 创建完成KPI后，你应该创建输入点和用户，然后将KPI分配给相应输入点中的用户内
+          or: 或者
+          next_desc: 创建完成KPI后，您应该创建输入点和用户，然后将KPI分配给相应输入点中的用户内
           what-is-kpi-title: 什么是KPI?
           what-is-kpi: KPI是企业关键绩效指标(KPI：Key Performance Indicator)是通过对组织内部流程的输入端、输出端的关键参数进行设 置、取样、计算、分析，衡量流程绩效的一种目标式量化管理指标，是把企业的战略目标分解为可操作的工作目标的工具，是企 业绩效管理的基础。
         title: 管理KPI
@@ -479,29 +480,33 @@ zh:
           create_now: 现在创建
           create_desc: 输入点是管理员工的地方，而视图则建立在输入点的基础上。
           give_name: 给它一个名字
-          next_desc: 完成输入点创建后， 接下来你需要为你的输入点添加员工这样他们为你的输入点贡献KPI。
+          next_desc: 完成输入点创建后， 接下来您需要为您的输入点添加员工这样他们为您的输入点贡献KPI。
           what-is-entity-title: 什么是输入点？
           what-is-entity: 输入点是组织内部管理kpi数据的最小单位。
           argument-err: 参数错误
           not-found: 用户或者部门没有找到
-          already-assign: 你已经该用户加入到上级部门
+          already-assign: 您已经该用户加入到上级部门
       user:
         desc:
           manage: 管理用户
           create: 创建用户
-          create_desc: 用户，即你在不同部门创建的员工，完成创建后，你可以给他们分配KPI
+          create_desc: 用户，即您在不同部门创建的员工，完成创建后，您可以给他们分配KPI
           create_now: 现在创建
           assign: 分配KPI
-          assign_desc: 想分配任务一样给你的员工分配不同的KPI
+          assign_desc: 像分配任务一样给您的员工分配不同的KPI
           assign_now: 现在分配
-          next_desc: 在分配完KPI后，你应该将你的部门放到你的视图中，以视图为基础，我们为你生成分析数据和仪表盘
-          what-is-manager-title: 管理者权限
+          next_desc: 在分配完KPI后，您应该将您的部门放到您的视图中，以视图为基础，我们为您生成分析数据和仪表盘
+          no_kpi_category_selected: 请选择KPI类别
+          no_user_selected: 请选择用户
+          select_kpi_categroy: 选择KPI类别
+          select_user: 选择用户
+          what-is-manager-title: 管理员权限
           what-is-manager: 观察输入点上kpi实际数据
           what-is-user-title: 普通用户权限
           what-is-user: 输入管理员为其分配kpi的实际数据
         role:
           admin: 系统管理员
-          director: 管理者
+          director: 管理员
           manager: 经理
           user: 普通用户
         new:
@@ -525,9 +530,9 @@ zh:
           user_list: 用户列表
           assign_dep: 分配输入点
           assign_desc: 首先创建一个视图，然后将输入点加入到视图中，一个视图是查看分析数据的基础
-          next_desc: 完成管理中的所有部分后， 你可以让你的员工（用户）通过‘KPI输入’来输入KPI
+          next_desc: 完成管理中的所有部分后， 您可以让您的员工（用户）通过‘KPI输入’来输入KPI
           share: 共享
-          share_desc: 共享你的视图....
+          share_desc: 共享您的视图....
           share_now: 开始共享
           already_shared: 已共享用户
           not_shared: 未共享用户
@@ -546,7 +551,7 @@ zh:
           add-user: 添加负责人
           add-department: 添加部门
           delete-department: 删除部门
-          del-department-confirm: 删除部门？
+          del-department-confirm: 您正在删除一个部门,这是一项不可恢复的操作,您确定吗?
           add-ok: 确定
           add-cancle: 取消
           delete-depart-confirm: "删除该输入点？"
@@ -562,7 +567,7 @@ zh:
       edit: 修改组名
     dashboard:
       add: 添加仪表盘
-      add_desc: 选择一款你喜欢的图表样式进行创建，将其添加到仪表盘组中，方便您日后的查看
+      add_desc: 选择一款您喜欢的图表样式进行创建，将其添加到仪表盘组中，方便您日后的查看
       add_now: 现在添加
 
       full: 全屏显示
@@ -570,7 +575,7 @@ zh:
       full_now: 进入全屏
 
       name: 仪表盘名称
-      name_desc: 给你的仪表盘一个合适的名字
+      name_desc: 给您的仪表盘一个合适的名字
       choose_type: 选择一种仪表盘类型
       type:
         line: 折线图
@@ -579,7 +584,7 @@ zh:
         Scatter: 散点图
 
       content: 创建仪表盘内容
-      content_desc: 添加一个系列或者多个系列的数据给你的仪表盘
+      content_desc: 添加一个系列或者多个系列的数据给您的仪表盘
       add_series: 添加一个系列数据
       select_group: 选择仪表盘组
       create: 现在发布
@@ -598,10 +603,10 @@ zh:
         temp: 模板添加
 
       group: 选择仪表盘所在组
-      group_desc: 选择一个仪表盘组来放置你的仪表盘
+      group_desc: 选择一个仪表盘组来放置您的仪表盘
 
       finish: 完成
-      finish_desc: 发布你刚才创建的仪表盘
+      finish_desc: 发布您刚才创建的仪表盘
 
     item:
       out_of_target: 在目标范围外
@@ -634,6 +639,9 @@ zh:
     upload_kpi: 上传KPI
     download_template: 下载模板
     upload_data_file: 上传数据文件(最大为20M)
+    upload_info: 请根据模板上传数据文件
+    upload_format_error: 文件格式错误
+    upload_size_error: 文件大小已超出20M
     upload_finish: 完成
     kpi_upload_support_format: 支持格式 Excel(.xls and .xlsx)
     error_title: 错误

@@ -358,11 +358,11 @@ MANAGE.user.assign.init = function () {
         var category = $("#kpi-category :selected").attr('value');
         var user = $("#assign-kpi-user :selected").attr("value");
         if(category==null || category == ""){
-            MessageBox("请选择KPI类别", "top", "warning");
+            MessageBox(I18n.t('manage.user.desc.no_kpi_category_selected'), "top", "warning");
             return;
         }
         if(user==null || user == ""){
-            MessageBox("请选择用户", "top", "warning");
+            MessageBox(I18n.t('manage.user.desc.no_user_selected'), "top", "warning");
             return;
         }
             $.post('/kpis/assign', {kpi: category, user: user}, function (msg) {
