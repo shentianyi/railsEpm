@@ -880,7 +880,7 @@ function generatePie(source) {
     ANALYTICS.DETAIL.average=(ANALYTICS.DETAIL.sum/ANALYTICS.DETAIL.count).toFixed(2);
     series[ANALYTICS.DETAIL.maxOrder].sliced=true;
     series[ANALYTICS.DETAIL.maxOrder].selected=true;
-    series[ANALYTICS.DETAIL.maxOrder].percentage=series[ANALYTICS.DETAIL.maxOrder].y/ANALYTICS.DETAIL.sum*100;
+    series[ANALYTICS.DETAIL.maxOrder].percentage=ANALYTICS.DETAIL.sum==0?0:series[ANALYTICS.DETAIL.maxOrder].y/ANALYTICS.DETAIL.sum*100;
     var length=ANALYTICS.series_colors.length;
     series[ANALYTICS.DETAIL.maxOrder].borderColor=ANALYTICS.DETAIL.maxOrder<length?ANALYTICS.series_colors[ANALYTICS.DETAIL.maxOrder]:ANALYTICS.series_colors[ANALYTICS.DETAIL.maxOrder % ANALYTICS.series_colors.length - 1];
     ANALYTICS.DETAIL.pieClick( series[ANALYTICS.DETAIL.maxOrder] );
@@ -915,7 +915,7 @@ function generateDetailTable(source,property_group) {
     var templateData={};
     templateData.data=source;
     templateData.percent= function(){
-        return (parseInt(this.value)/sum*100).toFixed(1)+"%";
+        return sum==0?0:(parseInt(this.value)/sum*100).toFixed(1)+"%";
     }
     templateData.compare=function(){
         var current=parseInt(this.value),
