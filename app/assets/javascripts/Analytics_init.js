@@ -160,7 +160,7 @@ function prepare_form_chart() {
         else {
             end_time = begin_time
         }
-        console.log(kpi_property);
+
         var option = {
             kpi: $("#chart-kpi :selected").text(),
             kpi_id: kpi,
@@ -235,43 +235,24 @@ function alternate_chart_type(event) {
                 changeType:true
             }
             ANALYTICS.changeTypeOption=option;
-//            var ids=[];
             for (var i = 0; i < ANALYTICS.chartSeries.series.length; i++) {
                 if (ANALYTICS.chartSeries.series[i] === undefined) {
                     continue
                 }
                 else {
-//                    ANALYTICS.changeTypeIDs.push(i);
-//                    ids.push(i);
                     option.id=i;
-                    option.changeTypeLoad=true
+                    option.changeTypeLoad=true;
                     ANALYTICS.proper_type_for_chart(option);
                 }
             }
-//            if(ANALYTICS.changeTypeIDs.length>0){
-//                ANALYTICS.changeTypeLoad=false;
-//                ANALYTICS.changeTypeCurrentOrder=0;
-//                ANALYTICS.changeTypeInterval=window.setInterval("typeGenerate()",1)
-//            }
+
             $(target).siblings().removeClass("image");
             $("#chart-type-alternate td").find("p").css("display", "block")
             $(target).addClass("image").find("p").css("display", "block");
         }
     }
 }
-// function typeGenerate(){
-//     if(!ANALYTICS.changeTypeLoad){
-//         if(ANALYTICS.changeTypeIDs.length<=ANALYTICS.changeTypeCurrentOrder){
-//             window.clearInterval(ANALYTICS.changeTypeInterval);
-//         }
-//         else{
-//             ANALYTICS.changeTypeLoad=true;
-//             ANALYTICS.changeTypeOption.id=ANALYTICS.changeTypeIDs[ANALYTICS.changeTypeCurrentOrder++];
-//             ANALYTICS.proper_type_for_chart(ANALYTICS.changeTypeOption)
-//         }
-//     }
-//
-// }
+
 //切换小时、天、周、月、季度、年
 //等待请求队列
 ANALYTICS.currentThread=[];
@@ -284,7 +265,7 @@ function change_interval(option) {
         MessageBox("Can't do it during loading", "top", "warning");
     }
     else {
-        var series_object, have_data = [], not_have_data = [];
+        var series_object, have_data = [], not_have_data = [],invisible=[];
         var chart = $("#" + option.target).highcharts();
         for (var i = 0; i < ANALYTICS.chartSeries.id_count; i++) {
             if (ANALYTICS.chartSeries.series[i] === undefined) {
@@ -292,6 +273,10 @@ function change_interval(option) {
             }
             else {
                 series_object = ANALYTICS.chartSeries.series[i];
+                if(!chart.get(i).visible){
+                     invisible.push(i);
+
+                }
                 if (series_object[option.interval]) {
                     have_data.push(i);
                 }
@@ -318,10 +303,19 @@ function change_interval(option) {
             option.view = ANALYTICS.chartSeries.series[j].view;
             option.view_text = ANALYTICS.chartSeries.series[j].view_text;
             option.kpi_property = ANALYTICS.chartSeries.series[j].kpi_property;
+            option.visible="";
+            for(var k=0 ;k<invisible.length;k++){
+                if(have_data[j]==invisible[k]){
+                    option.visible="disable";
+                    break;
+                }
+            }
+
             if (j == 0) {
                 ANALYTICS.render_to(option);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
             }
+            console.log(option)
             ANALYTICS.add_series(option);
             ANALYTICS.proper_type_for_chart(option);
         }
@@ -331,6 +325,7 @@ function change_interval(option) {
             ANALYTICS.currentThread.push(not_have_data[j]);
         }
         if(ANALYTICS.currentThread.length>0){
+            ANALYTICS.currentThreadInvisible=invisible;
             ANALYTICS.currentThreadOrder=0;
             ANALYTICS.currentThreadLoading=false;
             ANALYTICS.currentThreadOrderCenter=window.setInterval("singleThreadRequest()",500);
@@ -345,7 +340,7 @@ function singleThreadRequest(){
         if(!ANALYTICS.currentThreadLoading){
             ANALYTICS.currentThreadLoading=true;
             var series_id=ANALYTICS.currentThread[ANALYTICS.currentThreadOrder++];
-            console.log(series_id);
+//            console.log(series_id);
             ANALYTICS.currentThreadPreCondition.kpi = ANALYTICS.chartSeries.series[series_id].kpi;
             ANALYTICS.currentThreadPreCondition.kpi_id = ANALYTICS.chartSeries.series[series_id].kpi_id;
             ANALYTICS.currentThreadPreCondition.method = ANALYTICS.chartSeries.series[series_id].method;
@@ -355,6 +350,14 @@ function singleThreadRequest(){
             ANALYTICS.currentThreadPreCondition.begin_time = ANALYTICS.chartSeries.series[series_id].begin_time;
             ANALYTICS.currentThreadPreCondition.end_time = ANALYTICS.chartSeries.series[series_id].end_time;
             ANALYTICS.currentThreadPreCondition.kpi_property = ANALYTICS.chartSeries.series[series_id].kpi_property;
+            ANALYTICS.currentThreadPreCondition.visible="";
+            for(var k=0 ;k<ANALYTICS.currentThreadInvisible.length;k++){
+                if(series_id==ANALYTICS.currentThreadInvisible[k]){
+                    ANALYTICS.currentThreadPreCondition.visible="disable";
+                    break;
+                }
+            }
+
             if(!$("#"+ANALYTICS.currentThreadPreCondition.target).highcharts()){
                 ANALYTICS.render_to(ANALYTICS.currentThreadPreCondition);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
@@ -542,6 +545,7 @@ function chart_point_click(object) {
         property: ANALYTICS.base_option.kpi_property
     };
     var current_date = object.UTCDate;
+    console.log(current_date);
     var end_time = get_next_date(current_date, ANALYTICS.base_option.frequency).add('milliseconds', -1);
     condition.detail_condition.base_time = {start_time: new Date(current_date).toISOString(), end_time: end_time.toISOString()};
 }
@@ -568,7 +572,7 @@ function generateDetailDate() {
             propertyGroupSort.push(parseInt($li.attr("myID")));
         }
     }
-    console.log(propertyGroupSort)
+//    console.log(propertyGroupSort)
 //    propertyGroupSort.sort(function compare(a,b){return a-b});
     propertyGroupSort=propertyGroupSort.strip();
     condition.detail_condition.property=property;
@@ -880,7 +884,7 @@ function generatePie(source) {
     ANALYTICS.DETAIL.average=(ANALYTICS.DETAIL.sum/ANALYTICS.DETAIL.count).toFixed(2);
     series[ANALYTICS.DETAIL.maxOrder].sliced=true;
     series[ANALYTICS.DETAIL.maxOrder].selected=true;
-    series[ANALYTICS.DETAIL.maxOrder].percentage=series[ANALYTICS.DETAIL.maxOrder].y/ANALYTICS.DETAIL.sum*100;
+    series[ANALYTICS.DETAIL.maxOrder].percentage=ANALYTICS.DETAIL.sum==0?0:series[ANALYTICS.DETAIL.maxOrder].y/ANALYTICS.DETAIL.sum*100;
     var length=ANALYTICS.series_colors.length;
     series[ANALYTICS.DETAIL.maxOrder].borderColor=ANALYTICS.DETAIL.maxOrder<length?ANALYTICS.series_colors[ANALYTICS.DETAIL.maxOrder]:ANALYTICS.series_colors[ANALYTICS.DETAIL.maxOrder % ANALYTICS.series_colors.length - 1];
     ANALYTICS.DETAIL.pieClick( series[ANALYTICS.DETAIL.maxOrder] );
@@ -915,7 +919,7 @@ function generateDetailTable(source,property_group) {
     var templateData={};
     templateData.data=source;
     templateData.percent= function(){
-        return (parseInt(this.value)/sum*100).toFixed(1)+"%";
+        return sum==0?0:(parseInt(this.value)/sum*100).toFixed(1)+"%";
     }
     templateData.compare=function(){
         var current=parseInt(this.value),

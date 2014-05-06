@@ -175,6 +175,13 @@ class ApplicationController < ActionController::Base
     error_page_403
   end
 
+  #rescue_from ActiveRecord::RecordNotFound, :with => :error_page_404
+  #rescue_from  RoutingError, :with => :error_page_404
+  #rescue_from ActionController::UnknownController, :with => :error_page_404
+  #rescue_from ActionController::UnknownAction, :with => :error_page_404
+  #rescue_from Exception, :with => :error_page_500
+
+
   # I18n
   def set_locale
     I18n.locale=cookies[:locale] || extract_locale_from_accept_language_header || I18n.default_locale

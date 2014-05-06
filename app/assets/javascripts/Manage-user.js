@@ -18,24 +18,36 @@ MANAGE.user.init = function () {
 
     $(".single-select").chosen({ allow_single_deselect: true });
 
-    $("body").on("click", "#add-user-show",function () {
-        $("#manage-user-add").css("right", "261px");
-        $("#manage-right-content").css("padding-right", "200px");
-        $("#left-content-title").css("margin-right", "201px");
-        $("#user-edit").css("left", "-250px");
-        $("#manage-right-content").css("padding-left", "0px");
+    $("body")
+        .on("click", "#add-user-show",function () {
+            $("#manage-user-add").css("right", "261px");
+            $("#manage-right-content").css("padding-right", "200px");
+            $("#left-content-title").css("margin-right", "201px");
+            $("#user-edit").css("left", "-250px");
+            $("#manage-right-content").css("padding-left", "0px");
 
-        $("#manage-user-add.create-user> div >.div-select>div").css("width", "150px")
-    }).on("click", "#manage-user-edit", function () {
+            $("#manage-user-add.create-user> div >.div-select>div").css("width", "150px")
+            })
+        .on("click", "#manage-user-edit", function () {
             $("#user-edit").show();
-        $("#user-edit").css("left", "0px");
-        $("#manage-right-content").css("padding-left", "200px");
-        $("#manage-user-add").css("right", "999em");
-        $("#manage-right-content").css("padding-right", "0px");
-        $("#left-content-title").css("margin-right", "0px");
-        MANAGE.user.user_edit_box_bind();
-        $("#user-edit> div >.div-select>div").css("width", "150px")
-    });
+            $("#user-edit").css("left", "0px");
+            $("#manage-right-content").css("padding-left", "200px");
+            $("#manage-user-add").css("right", "999em");
+            $("#manage-right-content").css("padding-right", "0px");
+            $("#left-content-title").css("margin-right", "0px");
+            MANAGE.user.user_edit_box_bind();
+            $("#user-edit> div >.div-select>div").css("width", "150px");
+
+            window.setTimeout(function(){
+                var table_size=$("#manage-sort-list li").width()-70;
+                $("#manage-sort-list table").width(table_size)
+                if(".attribute-position"){
+                    $("#manage-sort-list .attribute-position").width(table_size+40)
+                    $("#manage-sort-list .attribute-position>p").width(table_size-180)
+                }
+            },1500);
+
+        });
     $("#manage-user-edit-old").on("click", function () {
         MANAGE.user.edit()
     });
@@ -358,11 +370,11 @@ MANAGE.user.assign.init = function () {
         var category = $("#kpi-category :selected").attr('value');
         var user = $("#assign-kpi-user :selected").attr("value");
         if(category==null || category == ""){
-            MessageBox("请选择KPI类别", "top", "warning");
+            MessageBox(I18n.t('manage.user.desc.no_kpi_category_selected'), "top", "warning");
             return;
         }
         if(user==null || user == ""){
-            MessageBox("请选择用户", "top", "warning");
+            MessageBox(I18n.t('manage.user.desc.no_user_selected'), "top", "warning");
             return;
         }
             $.post('/kpis/assign', {kpi: category, user: user}, function (msg) {

@@ -30,7 +30,8 @@ ANALYTICS.high_chart={
         enabled : true,
         series : {
             id : 'navigator'
-        }
+        },
+        adaptToUpdatedData:false
     },
     tooltip:{
             formatter: function() {
@@ -451,8 +452,13 @@ ANALYTICS.add_data=function(option){
             point = point.concat(data_array);
             option.data=point;
             var new_data=ANALYTICS.deal_data(option);
+//            console.log(new_data  )
+
             chart.series[option.id+1].setData(new_data, false);
             chart.series[0].setData(new_data, false);
+
+//            console.log(option.id)
+
             chart.redraw();
 //            chart.xAxis[0].setExtremes(option.bar_fix_from, option.bar_fix_to);
             if(option.data_too_long) {
@@ -525,6 +531,7 @@ ANALYTICS.set_data=function(option) {
     this.view_text=option.view_text ? option.view_text:null;
     this.kpi_name=option.kpi ? option.kpi:null;
     this.changeType=option.changeType ? option.changeType:null;
+    this.visible=option.visible ? option.visible:null;
 };
 ANALYTICS.render_to=function(option) {
     ANALYTICS.high_chart.chart.renderTo = option.target;
@@ -546,6 +553,7 @@ ANALYTICS.render_to=function(option) {
     };
 };
 ANALYTICS.add_series=function(option) {
+
     var series_name = option.kpi;
     var series_id = option.id;
     var chart_container = option.target;
@@ -557,6 +565,8 @@ ANALYTICS.add_series=function(option) {
         color:color,
         data: data
     })
+
+
 };
 ANALYTICS.deal_data=function() {
     ANALYTICS.set_data.apply(this, arguments);
@@ -585,10 +595,10 @@ ANALYTICS.deal_data=function() {
             break;
         case "200":
             for (i = 0; i < this.data.length; i++) {
-                var week_template=standardParse(last_date_of_week(Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i)).date.toWayneString().day).template;
+                var week_template=standardParse(first_date_of_week(Date.UTC(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i)).date.toWayneString().day).template;
                 this.data[i].x = Date.UTC(week_template[0], week_template[1], week_template[2]);
                 data[i].UTCDate=Date.UTC(week_template[0], week_template[1], week_template[2])-8*60*60*1000;
-                this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWayneString().day
+                this.data[i].name = new Date(week_template[0], week_template[1],week_template[2]).toWayneString().day
                     + " week" + new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWeekNumber();
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
@@ -643,7 +653,7 @@ ANALYTICS.proper_type_for_chart=function(){
         p.data=ANALYTICS.chartSeries.series[p.id][obj.interval];
     }
 //    console.log(p.id)
-//    console.log(ANALYTICS.chartSeries.series[p.id][obj.interval])
+//    console.log(p.data.length)
 
     var new_series=deepCopy(p,c);
     if(this.type=="column"){
@@ -661,10 +671,16 @@ ANALYTICS.proper_type_for_chart=function(){
     }
 
     new_series.type=this.type;
+    var visible=true;
+    if(!this.chart.get(this.id).visible || this.visible=="disable"){
+        visible=false;
+    }
     this.chart.get(this.id).remove(false);
     this.chart.addSeries(new_series,false);
     this.chart.redraw();
-//    ANALYTICS.changeTypeLoad=false;
+    if(!visible){
+        this.chart.get(this.id).hide();
+    }
 };
 
 

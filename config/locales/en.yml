@@ -420,6 +420,7 @@ en:
         create_now: Create Now
         kpi_library_desc: Create kpi in different category,then you can edit it's max target and min target
         choose_now: Choose Now
+        or: OR
         next_desc: Create kpi in different category,then you can edit it's max target and min target
         what-is-kpi-title: What is KPI?
         what-is-kpi: A Key performance indicator is a business metric used to evaluate factors that are crucial to the success of an organization. Kpis differ per organization.
@@ -434,8 +435,8 @@ en:
       unit: Unit
       trend: Trend
       is_calculate_type: Is need calculate
-      not_calculate_type: No
-      calculate_type: Yes
+      not_calculate_type: N
+      calculate_type: Y
       list: Choose KPI
       formula: Formula
       invalid: Formula is not valid
@@ -443,7 +444,7 @@ en:
       ok: Create
       cancle: Cancle
       freq_item:
-        hourly: Houlry
+        hourly: Hourly
         daily: Daily
         weekly: Weekly
         monthly: Monthly
@@ -491,6 +492,10 @@ en:
         assign_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
         assign_now: Assign Now
         next_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
+        no_kpi_category_selected: Please select a kpi category
+        no_user_selected: Please select a user
+        select_kpi_categroy: select a kpi category
+        select_user: select a user
         what-is-manager-title: The Director’s right
         what-is-manager: Monitor the kpis’actual data which based on the data point or their combination
         what-is-user-title: The User’s right
@@ -542,7 +547,7 @@ en:
         add-user: Add Leader
         add-department: Add Department
         delete-department: Delete Department
-        del-department-confirm: Delete Department?
+        del-department-confirm: You are deleting a department, which is operating an unrecoverable, are you sure?
         add-ok: Add
         add-cancle: Cancel
         delete-depart-confirm: Delete this Data Point?
@@ -627,6 +632,9 @@ en:
     not_exists: not exists
     cannot_repeat: Already exits, names can not be repeated!
     upload_kpi: Upload KPI
+    upload_info: Upload the data file based on the template
+    upload_format_error: File format is not supported
+    upload_size_error: File size is over 20M
     download_template: Download Template
     upload_data_file: Upload Data File(Max is 20M)
     upload_finish: Finish

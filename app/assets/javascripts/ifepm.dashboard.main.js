@@ -87,6 +87,7 @@ ifepm.dashboard.form_graph = function (datas, id) {
     if (datas.length < 1) {
         dashboard_remove_loading(outer);
         ifepm.dashboard.on_finish_load();
+        window.clearTimeout(constraintFullSizeHeight);
         return;
     }
 
@@ -472,17 +473,23 @@ ifepm.dashboard.update_item_sequence = function (container_selector) {
         data: {sequence: ifepm.dashboard.graph_sequence}
     })
 };
-
+var constraintFullSizeHeight;
 var current_index = 0;
 /*
  * @function on_finish_load
  * called after the previous dashboard item finish loading
  * */
 ifepm.dashboard.on_finish_load = function () {
+
     var container_selector = ifepm.config.container_selector;
     ++current_index;
     if (current_index >= ifepm.dashboard.graph_sequence.length) {
         ifepm.dashboard_widget.enable(true);
+        constraintFullSizeHeight=window.setTimeout(function () {
+            var height = $(document).height();
+            console.log("timeout")
+            $("#dashboard-content-full").css("height", height + "px");
+        }, 100)
         if (isfullsize) {
             //add a full size title
             /*$(container_selector).append(ifepm.template.title.replace(/!title!/g, current_dashboard_name));
@@ -500,6 +507,7 @@ ifepm.dashboard.on_finish_load = function () {
             $("#dash-fullsize").height()
             window.setTimeout(function () {
                 var height = $(document).height();
+                console.log("timeout")
                 $("#dashboard-content-full").css("height", height + "px");
             }, 100)
         }

@@ -108,6 +108,19 @@ function last_date_of_week(date_value){
         year:endDate.getFullYear()
     }
 }
+//得到日期，登出该日期所在周的第一天的日期以及年份
+function first_date_of_week(date_value){
+    var date=new Date(date_value),beginDate;
+    if(date.getDay() == 1) {
+        beginDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    } else {
+        beginDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() +1 );
+    }
+    return {
+        date:beginDate,
+        year:beginDate.getFullYear()
+    }
+}
 //得到日期，返回所在周
 if(!Date.prototype.toWeekNumber){
     Date.prototype.toWeekNumber=function(){
