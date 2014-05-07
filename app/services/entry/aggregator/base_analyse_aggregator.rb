@@ -66,10 +66,10 @@ module Entry
                            :target_min => self.target_min,
                            :unit => self.unit}
         self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
-        #puts '-------------'
-        #puts self.current.keys.size
-        #puts self.target_min.keys.size
-        #puts '-------------'
+        puts '-------------'
+        puts self.current.keys.size
+        puts self.target_min.keys.size
+        puts '-------------'
         case self.parameter.data_module
           when Entry::DataService::WEB_HIGHSTOCK
             return generate_web_highstock_data
@@ -97,8 +97,10 @@ module Entry
             case frequency
               when KpiFrequency::Hourly
                 step=3600 #60*60
+                end_time=end_time+1.hour-1.second
               when KpiFrequency::Daily
                 step=1.day #60*60*24
+                end_time=end_time+1.day-1.second
               when KpiFrequency::Weekly
                 start_time+=8.hours
                 end_time+=8.hours
@@ -106,8 +108,11 @@ module Entry
                 start_time=Date.parse(start_time.to_s)
                 end_time=Date.parse(end_time.to_s)
                 start_time=Time.parse(Date.commercial(start_time.year, start_time.cweek, 1).to_s).utc
-                end_time=Time.parse(Date.commercial(end_time.year, end_time.cweek, 1).to_s).utc
+                end_time=Time.parse(Date.commercial(end_time.year, end_time.cweek, 1).to_s).utc + 1.week - 1.second
             end
+            self.parameter.start_time=start_time
+            self.parameter.end_time=end_time
+
             while start_time<=end_time do
               next_time=start_time+step
               generate_init_frequency(start_time)
@@ -118,7 +123,10 @@ module Entry
             end_time+=8.hours
 
             start_time=Time.parse(Date.new(start_time.year, start_time.month, 1).to_s).utc
-            end_time=Time.parse(Date.new(end_time.year, end_time.month, 1).to_s).utc
+            end_time=Time.parse(Date.new(end_time.year, end_time.month, 1).to_s).utc + 1.month-1.second
+
+            self.parameter.start_time=start_time
+            self.parameter.end_time=end_time
 
             while start_time<=end_time do
               if start_time.month==1
@@ -135,7 +143,10 @@ module Entry
 
             step_arr=[90, 91, 92, 92]
             start_time=Time.parse(Date.new(start_time.year, (start_time.month-1)/3*3+1, 1).to_s).utc
-            end_time=Time.parse(Date.new(end_time.year, (end_time.month-1)/3*3+1, 1).to_s).utc
+            end_time=Time.parse(Date.new(end_time.year, (end_time.month-1)/3*3+3, 1).to_s).utc+1.month-1.second
+
+            self.parameter.start_time=start_time
+            self.parameter.end_time=end_time
 
             while start_time<=end_time do
               if start_time.month==12
@@ -152,7 +163,11 @@ module Entry
 
             start_time=Time.parse(Date.new(start_time.year, 1, 1).to_s).utc
 
-            end_time=Time.parse(Date.new(end_time.year, 1, 1).to_s).utc
+            end_time=Time.parse(Date.new(end_time.year, 1, 1).to_s).utc+1.year-1.second
+
+
+            self.parameter.start_time=start_time
+            self.parameter.end_time=end_time
 
             while start_time<=end_time do
               next_time=start_time+((start_time.year+1).leap? ? 366.days : 365.days)
