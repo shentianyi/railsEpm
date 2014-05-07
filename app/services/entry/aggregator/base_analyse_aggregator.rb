@@ -66,6 +66,9 @@ module Entry
                            :target_min => self.target_min,
                            :unit => self.unit}
         self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
+        puts self.data_module[:current].keys.count
+        puts self.data_module[:current].keys
+        #puts self.data_module
         case self.parameter.data_module
           when Entry::DataService::WEB_HIGHSTOCK
             return generate_web_highstock_data
@@ -103,6 +106,8 @@ module Entry
                 end_time=Date.parse(end_time.to_s)
                 start_time=Time.parse(Date.commercial(start_time.year, start_time.cweek, 1).to_s).utc
                 end_time=Time.parse(Date.commercial(end_time.year, end_time.cweek, 1).to_s).utc
+                puts start_time
+                puts end_time
             end
             while start_time<=end_time do
               next_time=start_time+step
@@ -135,7 +140,7 @@ module Entry
 
             while start_time<=end_time do
               if start_time.month==12
-                next_time=start_time+((start_time.year+1).leap? ? (step_arr[0]+1).days : step_arr[0]).days
+                next_time=start_time+((start_time.year+1).leap? ? (step_arr[0]+1).days : step_arr[0].days)
               else
                 next_time=start_time+step_arr[(start_time.month-1)/3+1].days
               end
@@ -147,7 +152,9 @@ module Entry
             end_time+=8.hours
 
             start_time=Time.parse(Date.new(start_time.year, 1, 1).to_s).utc
+
             end_time=Time.parse(Date.new(end_time.year, 1, 1).to_s).utc
+
             while start_time<=end_time do
               next_time=start_time+((start_time.year+1).leap? ? 366.days : 365.days)
               generate_init_frequency(start_time)
