@@ -1,4 +1,3 @@
-
 module Mongo
   class Date
     def self.date_format
@@ -19,7 +18,12 @@ module Mongo
         "q+": Math.floor((date.getMonth() + 3) / 3), // quarter
         "S": date.getMilliseconds() // millsecond
     };
+    if(fmt.indexOf('WW')>-1){
+         if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (week_date.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+        else{
     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+    }
     for (var k in o)
         if (new RegExp("(" + k + ")").test(fmt))
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
