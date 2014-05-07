@@ -4,10 +4,8 @@ class KpisController < ApplicationController
   before_filter :require_user_as_admin, :only => :index
   before_filter :get_ability_category, :only => [:index, :access]
   before_filter :get_kpis_by_category, :only => :categoried
-
   def index
-    @active_category_id= params[:id].nil? ? (@categories.length>0 ? @categories[0].id : nil) : params[:id].to_i
-    get_kpis_by_category(@active_category_id) if @active_category_id
+    kpi_list
   end
 
   # create kpi
@@ -19,7 +17,7 @@ class KpisController < ApplicationController
     #kpi_properties
     attrs = []
     if params[:kpi].has_key?(:kpi_properties)
-      params[:kpi][:kpi_properties].uniq.each {|name|
+      params[:kpi][:kpi_properties].uniq.each { |name|
 
         if property = KpiProperty.find_by_name(name)
         else
@@ -102,11 +100,11 @@ class KpisController < ApplicationController
   def remove_properties
     msg = Message.new
     msg.result = false
-    if item = KpiPropertyItem.find_by_id(params[:id])#KpiPropertyItem.where(kpi_id: params[:kpi_id], kpi_property_id: params[:kpi_property_id])
+    if item = KpiPropertyItem.find_by_id(params[:id]) #KpiPropertyItem.where(kpi_id: params[:kpi_id], kpi_property_id: params[:kpi_property_id])
       item.destroy
       msg.result = true
     end
-    render :json=>msg
+    render :json => msg
   end
 
   #@function assign_properties
@@ -115,21 +113,21 @@ class KpisController < ApplicationController
   def assign_properties
     msg = Message.new
     msg.result = false
-    kpi_property = KpiProperty.where("BINARY name = ?",params[:kpi_property_name]).first #KpiProperty.find_by_name(params[:kpi_property_name])
+    kpi_property = KpiProperty.where("BINARY name = ?", params[:kpi_property_name]).first #KpiProperty.find_by_name(params[:kpi_property_name])
     kpi = Kpi.find_by_id(params[:id])
     if kpi_property.nil?
       kpi_property = KpiProperty.create(:name => params[:kpi_property_name], :user_id => current_user.id)
     end
 
     if kpi && kpi_property
-      if KpiPropertyItem.where(kpi_id:kpi.id,kpi_property_id:kpi_property.id).first
-        msg.content =  I18n.t "manage.kpi.dimensions-same-error"
+      if KpiPropertyItem.where(kpi_id: kpi.id, kpi_property_id: kpi_property.id).first
+        msg.content = I18n.t "manage.kpi.dimensions-same-error"
       else
         kpi_property_item = KpiPropertyItem.new
         kpi_property_item.kpi_property_id = kpi_property.id
         kpi_property_item.kpi_id = kpi.id
         msg.result = kpi_property_item.save
-        msg.content = {id:kpi_property_item.id,name:kpi_property.name}
+        msg.content = {id: kpi_property_item.id, name: kpi_property.name}
       end
 
     else
@@ -148,8 +146,7 @@ class KpisController < ApplicationController
   end
 
   def access
-    @active_category_id= params[:id].nil? ? (@categories.length>0 ? @categories[0].id : nil) : params[:id].to_i
-    get_kpis_by_category(@active_category_id) if @active_category_id
+    kpi_list
   end
 
   def list
@@ -157,10 +154,15 @@ class KpisController < ApplicationController
     render :partial => 'list'
   end
 
+  def access_list
+    get_kpis_by_category params[:id]
+    render :partial => 'access'
+  end
+
   def condition
     render :json => {:unit => KpiUnit.all,
                      :frequency => EnumPresenter.init_json_presenters(KpiFrequency.all),
-                     :direction =>EnumPresenter.init_json_presenters(KpiDirection.all),
+                     :direction => EnumPresenter.init_json_presenters(KpiDirection.all),
                      :base => Kpi.base_kpis(current_ability)}
   end
 
@@ -222,5 +224,10 @@ class KpisController < ApplicationController
     kpi.creator=current_user
     kpi.kpi_category=category
     return kpi
+  end
+
+  def kpi_list
+    @active_category_id= params[:id].nil? ? (@categories.length>0 ? @categories[0].id : nil) : params[:id].to_i
+    get_kpis_by_category(@active_category_id) if @active_category_id
   end
 end

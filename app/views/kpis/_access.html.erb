@@ -1,0 +1,48 @@
+<ul id="manage-sort-list" class="manage-sort-list">
+  <% @kpis.each do |kpi| %>
+      <li id="<%= kpi.id %>">
+        <table class="category" special="my-kpi">
+          <tr>
+            <td title='<%= kpi.name %>'><%= kpi.name %></td>
+            <td><%= kpi.id %></td>
+            <td><%= KpiFrequency.get_desc_by_value(kpi.frequency) %></td>
+            <td><%= KpiDirection.get_desc_by_value(kpi.direction) %></td>
+            <td class="manage-kpi-target">
+              <div>
+                <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target_max) %></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit) %></span>
+                <input type='text' effect_on="<%= kpi.id %>"/>
+              </div>
+            </td>
+
+            <td class="manage-kpi-target">
+              <div>
+                <span class="can-change"><%= KpiUnit.parse_entry_value(kpi.unit, kpi.target_min) %></span><span><%= KpiUnit.get_entry_unit_sym(kpi.unit) %></span>
+                <input type='text' effect_on="<%= kpi.id %>"/>
+              </div>
+            </td>
+            <% if kpi.is_calculated %>
+                <td title="<%= kpi.formula_string %>"><%= t 'manage.kpi.calculate_type' %></td>
+            <% else %>
+                <td><%= t 'manage.kpi.not_calculate_type' %></td>
+            <% end %>
+          </tr>
+          <tr>
+            <td title='<%= kpi.description %>'><%= kpi.description %></td>
+            <td>KPI ID</td>
+            <td><%= t 'manage.kpi.frequency' %></td>
+            <td><%= t 'manage.kpi.trend' %></td>
+            <td><%= t 'manage.kpi.target' %></td>
+            <td><%= t 'manage.kpi.target_min' %></td>
+            <td><%= t 'manage.kpi.is_calculate_type' %></td>
+          </tr>
+        </table>
+        <div class="attribute-position" type="myKPI">
+          <p kpi_id="<%= kpi.id %>">
+            <% kpi.kpi_properties.each do |p| %>
+                <span><%= p.name %></span>
+            <% end %>
+          </p>
+        </div>
+      </li>
+  <% end if @kpis %>
+</ul>
