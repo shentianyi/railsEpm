@@ -66,6 +66,10 @@ module Entry
                            :target_min => self.target_min,
                            :unit => self.unit}
         self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
+        #puts '-------------'
+        #puts self.current.keys.size
+        #puts self.target_min.keys.size
+        #puts '-------------'
         case self.parameter.data_module
           when Entry::DataService::WEB_HIGHSTOCK
             return generate_web_highstock_data
