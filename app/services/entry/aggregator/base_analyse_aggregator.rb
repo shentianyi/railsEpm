@@ -66,9 +66,6 @@ module Entry
                            :target_min => self.target_min,
                            :unit => self.unit}
         self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
-        puts self.data_module[:current].keys.count
-        puts self.data_module[:current].keys
-        #puts self.data_module
         case self.parameter.data_module
           when Entry::DataService::WEB_HIGHSTOCK
             return generate_web_highstock_data
@@ -106,8 +103,6 @@ module Entry
                 end_time=Date.parse(end_time.to_s)
                 start_time=Time.parse(Date.commercial(start_time.year, start_time.cweek, 1).to_s).utc
                 end_time=Time.parse(Date.commercial(end_time.year, end_time.cweek, 1).to_s).utc
-                puts start_time
-                puts end_time
             end
             while start_time<=end_time do
               next_time=start_time+step
