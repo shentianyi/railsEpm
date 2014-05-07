@@ -22,3 +22,7 @@
 every :reboot do
   rake 'resque:work'
 end
+
+every 1.second do
+  KpiCalcylateQueue.check
+end
