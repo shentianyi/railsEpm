@@ -44,11 +44,27 @@ ANALYTICS.high_chart={
                         new_target=target.series.name.replace("(","#").replace(")","#").split("#");
                         name=new_target[0];
                         view=new_target[1];
-                        if(target.point.unit){
-                            targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+" "+target.point.unit+'<br />';
+
+                        var y=(target.y+"").length;
+                        var dotCount=Math.ceil(y/3)-1;
+                        if(dotCount>0){
+                            y=target.y+"";
+                            y= y.split("");
+                            for(var i=0;i<dotCount;i++){
+                                y.splice(3*(i+1)+i,0,",");
+                                console.log(y)
+                            }
+                            y= y.join("");
                         }
                         else{
-                            targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+'<br />';
+                            y=target.y
+                        }
+
+                        if(target.point.unit){
+                            targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+y+" "+target.point.unit+'<br />';
+                        }
+                        else{
+                            targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+y+'<br />';
                         }
                     }
                     if(target.series.type=="column"){
@@ -74,7 +90,23 @@ ANALYTICS.high_chart={
                 }
                 else if(this.point){
                     target=this.point;
-                    targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']:'+target.y+" "+target.unit+'<br />';
+
+                    var y=(target.y+"").length;
+                    var dotCount=Math.ceil(y/3)-1;
+                    if(dotCount>0){
+                        y=target.y+"";
+                        y= y.split("");
+                        for(var i=0;i<dotCount;i++){
+                            y.splice(3*(i+1)+i,0,",");
+
+                        }
+                        y= y.join("");
+                    }
+                    else{
+                        y=target.y
+                    }
+
+                    targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']:'+y+" "+target.unit+'<br />';
                     return '<b>'+target.name+'</b>'
                         +'<br />'
                         +targetString;
