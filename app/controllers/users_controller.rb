@@ -43,6 +43,11 @@ class UsersController < ApplicationController
     @applications=current_user.oauth_applications
   end
 
+  def list
+    @users= User.accessible_by(current_ability).by_role(params[:id]).all
+    render partial: 'list'
+  end
+
   private
 
   def get_ability_entity

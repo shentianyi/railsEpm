@@ -15,7 +15,22 @@ MANAGE.user.init = function () {
     MANAGE.user.user_add_clear();
     MANAGE.user.icheck.init();
     MANAGE.user.assign.init();
-
+    $("#manage-left-menu").on("click", "li", function() {
+        MANAGE.user.user_add_close();
+        MANAGE.user.user_edit_close();
+        var li = $(this);
+        var id = li.attr('number');
+        if(id) {
+            $("#manage-left-menu>li").removeClass('active');
+            li.addClass('active');
+            $.get('/users/list/' + id, function(data) {
+                $("#manage-edit-target").text(li.attr('title'));
+                $('#user-item-container').html(data);
+                window.history.pushState(id, null, "/users/c/" + id);
+                MANAGE.widget_init();
+            });
+        }
+    });
     $(".single-select").chosen({ allow_single_deselect: true });
 
     $("body")
