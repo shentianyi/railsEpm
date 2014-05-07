@@ -78,9 +78,15 @@ TREE.current_entitygroup_id = -1;
             
         })
         .on("dblclick", "#part-info .basic dd", function () {
-            var value = $(this).text();
-            $(this).empty().append($("<input type='text' />").val(value));
+            var value = $.trim($(this).text());
+            $(this).empty().append($("<input type='text' />").val(value).css("width","115px"));
             $(this).find("input").focus();
+        })
+        .on("click", "#part-info .basic dl i", function () {
+            var $target=$(this).prevAll(".name");
+            var value = $.trim($target.text());
+            $target.empty().append($("<input type='text' />").val(value).css("width","115px"));
+            $target.find("input").focus();
         })
         .on("blur", "#part-info .basic dd input", function () {
             var value = $(this).val(),
