@@ -34,21 +34,21 @@ class KpiFrequency
            end
   end
 
-  def self.get_next_date(date, frequency)
-    date=Time.parse(date) if date.is_a?(String)
-    return case frequency.to_i
+  def self.get_next_end_date(start_time, frequency)
+    start_time=Time.parse(start_time) if start_time.is_a?(String)
+    return case frequency
              when KpiFrequency::Hourly
-               date+1.hour
+               start_time.full_end_of_hour
              when KpiFrequency::Daily
-               date+1.day
+               start_time.full_end_of_day
              when KpiFrequency::Weekly
-               date+1.week
+               start_time.full_end_of_week
              when KpiFrequency::Monthly
-               date+1.month
+               start_time.full_end_of_month
              when KpiFrequency::Quarterly
-               date+4.months
+               start_time.full_end_of_quarter
              when KpiFrequency::Yearly
-               date+1.year
+               start_time.full_end_of_year
            end
   end
 
