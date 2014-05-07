@@ -31,6 +31,7 @@ ANALYTICS.high_chart={
         series : {
             id : 'navigator'
         },
+        baseSeries:0,
         adaptToUpdatedData:false
     },
     tooltip:{
@@ -83,7 +84,7 @@ ANALYTICS.high_chart={
 
     },
     legend: {
-        enabled: true,
+        enabled: false,
         borderRadius: 2,
         borderColor: "rgba(0,0,0,0)",
         itemStyle: {
@@ -327,33 +328,6 @@ ANALYTICS.form_chart=function(option){
             MessageBox("sorry , something wrong" , "top", "warning") ;
         }
     });
-//    option.data = [
-//        {y: 2,low:123,high:4321, target: 10, unit: "$",id:option.id},
-//        {y: 3,low:12,high:20,  target: 10, unit: "$"},
-//        {y: 13,low:22,high:20,  target: 10, unit: "$"},
-//        {y: 23,low:4,high:20,  target: 10, unit: "$"},
-//        {y: 33,low:30,high:20,  target: 10, unit: "$"},
-//        {y: 13,low:19,high:20,  target: 10, unit: "$"}
-//    ];
-//    var c={},p=option.data;
-//    ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
-//    if(option.chart_body_close_validate){
-//        ANALYTICS.render_to(option);
-//        new Highcharts.StockChart(ANALYTICS.high_chart);
-//    }
-//    ANALYTICS.add_series(option);
-//    ANALYTICS.proper_type_for_chart(option);
-//    if(data_too_long){
-//        option.begin_time_utc=begin_time_utc;
-//        option.end_time_utc=end_time_utc;
-//        option.bar_fix_from=bar_fix_from;
-//        option.bar_fix_to=bar_fix_to;
-//        option.add_length=length;
-//        window.setTimeout(function(){
-//            ANALYTICS.add_data(option)
-//        },1000)
-//    }
-//    ANALYTICS.loading_data=false;
 
 }
 
@@ -476,32 +450,6 @@ ANALYTICS.add_data=function(option){
         }
     });
 
-
-
-//    option.data = [
-//        {y: 2,low:123,high:4321, target: 10, unit: "$"},
-//        {y: 3,low:2,high:20,  target: 10, unit: "$"},
-//        {y: 21,low:33,high:54 ,target: 10, unit: "$"},
-//        {y: 3,low:2,high:32, target: 10, unit: "$"},
-//        {y: 10, low: 2,high:43, target: 10, unit: "$"},
-//        {y: 7,low:1,high:43,  target: 10, unit: "$"}
-//    ];
-//    var c={},p=option.data;
-//    var c=deepCopy(c,p);
-//    ANALYTICS.chartSeries.series[option.id][option.interval]=ANALYTICS.chartSeries.series[option.id][option.interval].concat(c);
-//    var chart=$("#"+option.target).highcharts();
-//    var point = chart.series[option.id+1].options.data;
-//    point = point.concat(option.data);
-//    option.data=point;
-//    var new_data=ANALYTICS.deal_data(option);
-//    chart.series[option.id+1].setData(new_data, false);
-//    chart.series[0].setData(new_data, false);
-//    chart.redraw();
-////    chart.xAxis[0].setExtremes(option.bar_fix_from, option.bar_fix_to);
-//    if(option.data_too_long) {
-//        option.begin_time_utc=begin_time_utc;
-//        ANALYTICS.add_data(option);
-//    }
 };
 
 ANALYTICS.series_colors=[
@@ -686,7 +634,7 @@ ANALYTICS.proper_type_for_chart=function(){
 
 
 
-
+//利用chart.get id可以准确找到线
 ANALYTICS.chartSeries = {
     count: 0,
     id_count:0,
@@ -736,7 +684,12 @@ ANALYTICS.chartSeries = {
                 }
             }
         }
-
+    },
+    deleteSeries:function(id){
+        --this.count;
+        delete this.series[id];
+        delete this.id_array[id];
+        $("#chart-container").highcharts().get(id).remove();
     }
 };
 ANALYTICS.add_observe={
