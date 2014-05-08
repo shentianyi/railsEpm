@@ -123,6 +123,7 @@ module KpiEntriesHelper
   end
 
   def self.calculate_caled_kpi kpi_id,entry_id
+    KpiCalculateQueue.instance.process(kpi_id,entry_id)
     kpi = Kpi.find_by_id(kpi_id)
     entry = KpiEntry.find_by(id:entry_id)
 
@@ -165,6 +166,7 @@ module KpiEntriesHelper
         Entry::OperateService.new.insert_entry(attrs)
       end
     end
+    KpiCalculateQueue.instance.finish(kpi_id,entry_id)
   end
 
   def self.init_cal_type_kpi_entry kpi_id
