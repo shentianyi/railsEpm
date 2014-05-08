@@ -36,8 +36,8 @@ class KpiCalcylateQueue
   end
 
   def self.finish kpi_id,parsed_entry_at
-    key = redis_key(kpi_id,parsed_entry_at)
-    @cal_queue[k]["status"] = KpiQueueStatus::FINISH
+    rkey = redis_key(kpi_id,parsed_entry_at)
+    @cal_queue[rkey]["status"] = KpiQueueStatus::FINISH
     $redis.set(KPICALCULATENAME,@cal_queue)
   end
 
