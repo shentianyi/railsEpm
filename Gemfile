@@ -17,6 +17,8 @@ gem 'resque'
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'redis-namespace'
+
+gem 'rufus-scheduler'
 # gem 'guard-resque'
 
 gem 'will_paginate'

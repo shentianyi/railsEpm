@@ -9,4 +9,5 @@ class EmailWorker
     puts id
     puts params
   end
-end=end
+end
+=end
