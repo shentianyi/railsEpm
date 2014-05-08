@@ -27,6 +27,11 @@ $green-hover:transparentize($green,0.4);
   -moz-box-shadow:$x $y $shadow $color;
   -webkit-box-shadow:$x $y $shadow $color;
 }
+@mixin text-shadow($x,$y,$shadow,$color){
+  text-shadow:$x $y $shadow $color;
+  -moz-text-shadow:$x $y $shadow $color;
+  -webkit-text-shadow:$x $y $shadow $color;
+}
 @mixin text-overflow{
   overflow:hidden;
   white-space:nowrap;

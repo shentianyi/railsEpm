@@ -24,5 +24,5 @@ every :reboot do
 end
 
 every 1.second do
-  KpiCalcylateQueue.check
+  KpiCalcylateQueue.instance.check
 end

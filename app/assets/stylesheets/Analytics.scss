@@ -3,7 +3,10 @@
 .analytics-mark{
   h2{
     @include word-break;
-    font-size:30px;
+    font-size:24px;
+    margin-top:8px;
+    font-family:"Arial";
+    font-weight:100;
   }
 }
 
@@ -20,8 +23,70 @@
     }
   }
 }
+//////////////////////////////////////////////////  chart body part
 .chart-body-sass{
+  .chart-container-item{
+    height:45px;
+    positon:relative;
+    &:after{
+      content:"";
+      position:absolute;
+      bottom:0px;
+      height:1px;
+      left:0px;
+      right:0px;
+      background:#ddd;
+    }
+    .items{
+      height:100%;
+      width:200px;
+      margin:0 auto;
+      display:block;
+      max-height:90%;
+      overflow-x:hidden;
+      overflow-y:auto;
+      li{
 
+        display:inline-block;
+        margin-right:10px;
+        padding:1px 28px 2px 6px;
+        font-size:13px;
+        cursor:pointer;
+
+        position:relative;
+        @include border-radius-same(3px);
+        @include box-shadow(2px,2px,2px,rgba(0,0,0,0.6));
+        &:after{
+          @include clearFloat;
+        }
+        label{
+          color:#222;
+          pointer-events:none;
+          display:block;
+          &:nth-of-type(2){
+            font-size:11px;
+            color:#555;
+            @include text-shadow(1px,1px,2px,rgba(0,0,0,0.0));
+          }
+        }
+        i{
+          position:absolute;
+          right:4px;
+          top:3px;
+          font-size:16px;
+          color:#fff;
+          margin-left:5px;
+          pointer-events:auto;
+          cursor:pointer;
+          @include transition(color);
+          @include text-shadow(1px,1px,2px,rgba(0,0,0,0.0));
+          &:hover{
+            color:rgba(0,0,0,0.7);
+          }
+        }
+      }
+    }
+  }
 }
 
 .detail-block{
