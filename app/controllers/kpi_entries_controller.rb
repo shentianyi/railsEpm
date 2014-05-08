@@ -32,11 +32,11 @@ class KpiEntriesController < ApplicationController
     user_kpi_item = UserKpiItem.find_by_id(params[:user_kpi_item_id])
     @kpi = user_kpi_item.kpi
     @entity = user_kpi_item.entity
-    entries = KpiEntry.where(user_kpi_item_id: params["user_kpi_item_id"], parsed_entry_at: params["parsed_entry_at"], entity_id: user_kpi_item.entity_id ,entry_type: 0) if user_kpi_item
+    entries = KpiEntry.where(user_kpi_item_id: params["user_kpi_item_id"], parsed_entry_at: params["parsed_entry_at"], entity_id: user_kpi_item.entity_id, entry_type: 0) if user_kpi_item
     @kpi_entries = KpiEntryPresenter.init_presenters(entries)
     #respond_to do |format|
-      #format.html {render :partial=>'details'}
-      #format.js {render :partial=>'details'}
+    #format.html {render :partial=>'details'}
+    #format.js {render :partial=>'details'}
     #end
     render :partial => 'details'
   end
@@ -52,20 +52,22 @@ class KpiEntriesController < ApplicationController
   def destroy
     msg = Message.new
     msg.result = true
-    entry = KpiEntry.find_by(id:params[:id])
-    if entry.entry_type == 1
-      msg.result =false
-      msg.content = I18n.t "entry.desc.del-error"
-    else
-      entry.destroy
-      total = KpiEntry.find_by(parsed_entry_at:entry.parsed_entry_at,entity_id:entry.entity_id,user_kpi_item_id:entry.user_kpi_item_id,entry_type:1)
-      if total
-        msg.content = {item_id:entry.user_kpi_item_id,value:total.value}
+    entry = KpiEntry.find_by(id: params[:id])
+    if entry
+      if entry.entry_type == 1
+        msg.result =false
+        msg.content = I18n.t "entry.desc.del-error"
       else
-        msg.content = {item_id:entry.user_kpi_item_id,value:""}
+        entry.destroy
+        total = KpiEntry.find_by(parsed_entry_at: entry.parsed_entry_at, entity_id: entry.entity_id, user_kpi_item_id: entry.user_kpi_item_id, entry_type: 1)
+        if total
+          msg.content = {item_id: entry.user_kpi_item_id, value: total.value}
+        else
+          msg.content = {item_id: entry.user_kpi_item_id, value: ""}
+        end
       end
     end
-    render :json=> msg
+    render :json => msg
   end
 
   def analyse
