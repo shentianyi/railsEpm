@@ -15,7 +15,7 @@ class KpiCalcylateQueue
   end
 
   def self.check
-    
+
   end
 
   #============
