@@ -35,7 +35,7 @@ class KpiCalculateQueue
             @cal_queue[rkey] = {}
             @cal_queue[rkey]["status"] = KpiQueueStatus::WAIT
             @cal_queue[rkey]["kpi_id"] = k.id
-            @cal_queue[rkey]["entry_id"] = entry.id
+            @cal_queue[rkey]["entry_id"] = entry.id.to_s
           elsif KpiQueueStatus.need_to_push(@cal_queue[rkey]["status"])
             @cal_queue[rkey]["status"] = KpiQueueStatus::WAIT
           else
@@ -50,8 +50,10 @@ class KpiCalculateQueue
   #switch PUSHED to PROCESSING
   def process kpi_id,entry_id
     rkey = redis_key(kpi_id,entry_id)
+    puts ("process"+rkey).blue
     if @cal_queue[rkey] && @cal_queue[rkey]["status"] == KpiQueueStatus::PUSHED
       @cal_queue[rkey]["status"] = KpiQueueStatus::PROCESSING
+      puts @cal_queue[rkey].to_json.blue
     end
     #$redis.set(KPICALCULATENAME,@cal_queue.to_json)
   end
@@ -59,9 +61,12 @@ class KpiCalculateQueue
   #switch PROCESSING to FINISHED
   def finish kpi_id,entry_id
     rkey = redis_key(kpi_id,entry_id)
+    puts ("finish"+rkey).blue
     if @cal_queue[rkey] && @cal_queue[rkey]["status"] == KpiQueueStatus::PROCESSING
       @cal_queue[rkey]["status"] = KpiQueueStatus::FINISHED
+      puts @cal_queue[rkey].to_json.blue
     end
+
     #$redis.set(KPICALCULATENAME,@cal_queue.to_json)
   end
 
@@ -71,7 +76,8 @@ class KpiCalculateQueue
       if val["status"] == KpiQueueStatus::WAIT
         #push to resque queue
         @cal_queue[k]["status"] = KpiQueueStatus::PUSHED
-        Resque.enqueue(KpiEntryCalculator, val["kpi_id"],val["entry_id"])
+        #Resque.enqueue(KpiEntryCalculator, val["kpi_id"],val["entry_id"])
+        CalculateWorker.perform_async(val["kpi_id"],val["entry_id"])
         #KpiEntriesHelper.calculate_caled_kpi(val["kpi_id"],val["entry_id"])
         #change status to PUSHED
 

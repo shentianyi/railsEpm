@@ -1,5 +1,5 @@
 #encoding: utf-8
-=begin
+
 class EmailWorker
   include Sidekiq::Worker
 
@@ -10,4 +10,3 @@ class EmailWorker
     puts params
   end
 end
-=end

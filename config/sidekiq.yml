@@ -9,6 +9,7 @@
 :queues:
 #  - [often, 7]
   - [default, 5]
+#  - [email, 7]
 #  - [seldom, 3]
   - [kpicaljob,7]
 #  - [email,7]

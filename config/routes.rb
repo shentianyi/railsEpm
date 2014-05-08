@@ -1,6 +1,9 @@
 IFEpm::Application.routes.draw do
   resources :kpi_properties
 
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+
   use_doorkeeper do
     controllers :applications => 'oauth/applications'
     controllers :authorizations => nil
