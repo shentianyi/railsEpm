@@ -28,6 +28,7 @@ MANAGE.user.init = function () {
                 $('#user-item-container').html(data);
                 window.history.pushState(id, null, "/users/c/" + id);
                 MANAGE.widget_init();
+                MANAGE.user.icheck.init();
             });
         }
     });
@@ -175,6 +176,7 @@ MANAGE.user.add_new = function () {
             dataType: 'json',
             success: function (data) {
                 if (data.result) {
+
                     if ($("#manage-left-menu li.active").attr("number") == role) {
                         var object = data.object;
                         //add user to the assign table
