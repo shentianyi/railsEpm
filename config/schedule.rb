@@ -20,9 +20,9 @@
 # Learn more: http://github.com/javan/whenever
 
 every :reboot do
-  rake 'resque:work'
+  rake 'resque:workers COUNT=5'
 end
 
-every 1.second do
-  KpiCalcylateQueue.instance.check
+every 2.second do
+  runner "KpiCalculateQueue.instance.check"
 end
