@@ -14,27 +14,18 @@ module Entry
         c=Entry::ConditionService.new(self.parameter)
         query_condition=c.build_base_query_condition
         mr_condition=c.build_map_reduce_condition
+        query_serivice= Entry::QueryService.new
         if query_condition[:property]
-          query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 0)
+          query=query_serivice.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 0)
         else
-          query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base]).where(entry_type: 1)
+          query=query_serivice.base_query(KpiEntry, query_condition[:base]).where(entry_type: 1)
         end
 
         data_mr="date:format(this.parsed_entry_at,'#{self.parameter.date_format}')"
         mr_condition[:map_group]=
             mr_condition[:map_group].nil? ? data_mr : "#{mr_condition[:map_group]},#{data_mr}"
-        map=%Q{
-           function(){
-                  #{Mongo::Date.date_format}
-                  emit({#{mr_condition[:map_group]}},parseFloat(this.value));
-              };
-        }
-        func=self.parameter.average ? 'avg' : 'sum'
-        reduce=%Q{
-           function(key,values){
-            return Array.#{func}(values);};
-        }
-        self.data= query.map_reduce(map, reduce).out(inline: true)
+
+        self.data=query_serivice.map_reduce(query, mr_condition[:map_group])
         return aggregate_type_data
       end
 
@@ -57,7 +48,7 @@ module Entry
           end
         else
           self.data.each do |d|
-            self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
+            self.current[date_parse_proc.call(d['_id']['date'])]=d['value'][self.value_key]
           end
         end
 
