@@ -67,6 +67,7 @@ GEM
     coffee-script-source (1.7.0)
     colorize (0.7.2)
     connection_pool (2.0.0)
+    daemons (1.1.9)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     devise (3.2.4)
@@ -251,6 +252,7 @@ DEPENDENCIES
   cancan
   coffee-rails (~> 3.2.1)
   colorize
+  daemons
   devise
   devise-encryptable
   doorkeeper

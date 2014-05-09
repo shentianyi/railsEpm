@@ -22,6 +22,7 @@ gem 'slim'
 gem 'redis-namespace'
 
 gem 'rufus-scheduler'
+gem 'daemons'
 # gem 'guard-resque'
 
 gem 'will_paginate'
