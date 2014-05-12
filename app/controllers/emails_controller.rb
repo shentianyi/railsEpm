@@ -46,7 +46,8 @@ class EmailsController < ApplicationController
     @email=Email.new(params[:email])
     @email.init_user_info current_user
     if msg.result = @email.save
-      Resque.enqueue(EmailSender,@email.id,params)
+      #Resque.enqueue(EmailSender,@email.id,params)
+      EmailWorker.perform_async(@email.id,params)
     else
       msg.content = @email.errors.full_messages
     end

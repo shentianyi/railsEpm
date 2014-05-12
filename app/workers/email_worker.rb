@@ -3,10 +3,9 @@
 class EmailWorker
   include Sidekiq::Worker
 
-  sidekiq_options :queue => :email, :backtrace => true
+  sidekiq_options :queue => :email, :backtrace => true, :retry => false
 
   def perform(id, params)
-    puts id
-    puts params
+    Email.handle_email_process id, params
   end
 end
