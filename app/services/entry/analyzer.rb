@@ -28,7 +28,7 @@ module Entry
     def period_compare
       ordered={}
       self.params[:property_map_group].each do |p|
-        ordered[p]=p
+        ordered[p]= p
       end
       self.params[:property_map_group]=ordered
       self.params[:data_module]=Entry::DataService::PERIOD_COMPARE_TABLE
