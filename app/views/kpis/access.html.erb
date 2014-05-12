@@ -56,6 +56,15 @@
                         <td><%= t 'manage.kpi.is_calculate_type'%></td>
                       </tr>
                     </table>
+                    <div class="attribute-position" type="myKPI">
+                      <p kpi_id="<%= kpi.id%>">
+                        <% kpi.kpi_properties.each do |p| %>
+                            <span><%= p.name%></span>
+                        <% end%>
+                      </p>
+
+
+                    </div>
                   </li>
               <%end if @kpis%>
             </ul>

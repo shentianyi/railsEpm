@@ -8,15 +8,22 @@ module APIGuard
   included do |base|
     # OAuth2 Resource Server Authentication
     use Rack::OAuth2::Server::Resource::Bearer, 'The API' do |request|
+      puts 'api request'
       request.access_token
     end
+
+    #use Grape::Middleware::Auth::Basic do |user,pwd|
+    #  puts 'api user pwd'
+    #  @user=user
+    #  @pwd=pwd
+    #end
 
     helpers HelperMethods
 
     install_error_responders(base)
   end
 
-  # Helper Methods for Grape Endpoint
+# Helper Methods for Grape Endpoint
   module HelperMethods
     # Invokes the doorkeeper guard.
     #
@@ -39,6 +46,35 @@ module APIGuard
     #           Defaults to empty array.
     #
     def guard!(scopes= [])
+      if request.env['HTTP_AUTHORIZATION'].split(' ')[0]=='Bearer'
+        guard_by_token(scopes)
+      else
+        guard_by_basic
+      end
+    end
+
+    def current_user
+      @current_user
+    end
+
+    def current_tenant
+      @current_tenant
+    end
+
+    private
+    def guard_by_basic
+      auth_header = env['HTTP_AUTHORIZATION'].split(' ')
+      user, pass = Base64.decode64(auth_header[1]).split(':')
+
+      if (user=User.find_for_database_authentication(:email => user)) && user.valid_password?(pass)
+        @current_user=user
+        @current_tenant=user.tenant
+      else
+        raise BasicAuthError
+      end
+    end
+
+    def guard_by_token(scopes= [])
       token_string = get_token_string()
 
       if token_string.blank?
@@ -63,15 +99,7 @@ module APIGuard
       end
     end
 
-    def current_user
-      @current_user
-    end
 
-    def current_tenant
-      @current_tenant
-    end
-
-    private
     def get_token_string
       # The token was stored after the authenticator was invoked.
       # It could be nil. The authenticator does not check its existence.
@@ -103,7 +131,7 @@ module APIGuard
 
     private
     def install_error_responders(base)
-      error_classes = [MissingTokenError, TokenNotFoundError,
+      error_classes = [BasicAuthError, MissingTokenError, TokenNotFoundError,
                        ExpiredError, RevokedError, InsufficientScopeError]
 
       base.send :rescue_from, *error_classes, oauth2_bearer_token_error_handler
@@ -112,6 +140,10 @@ module APIGuard
     def oauth2_bearer_token_error_handler
       Proc.new { |e|
         response = case e
+                     when BasicAuthError
+                       Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
+                           :invalid_token,
+                           "Invalid User Info.")
                      when MissingTokenError
                        Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new
 
@@ -119,7 +151,6 @@ module APIGuard
                        Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
                            :invalid_token,
                            "Bad Access Token.")
-
                      when ExpiredError
                        Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
                            :invalid_token,
@@ -144,10 +175,12 @@ module APIGuard
     end
   end
 
-  #
-  # Exceptions
-  #
+#
+# Exceptions
+#
 
+  class BasicAuthError<StandardError;
+  end
   class MissingTokenError < StandardError;
   end
 

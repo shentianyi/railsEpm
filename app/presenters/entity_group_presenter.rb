@@ -12,6 +12,7 @@ class EntityGroupPresenter<Presenter
     @entity_group.code||''
   end
 
+
   def description
     @entity_group.description || ''
   end

@@ -82,6 +82,8 @@ ENTRY.init=function(){
        .on("click","#upload-kpi-finish",function(){
            $("#upload-kpi-close").click();
        })
+
+
 }
 
 ENTRY.datepicker.init=function(){
@@ -234,6 +236,10 @@ ENTRY.datepicker.post=function(){
             });
             $("#entry-sort-list td").tipsy({gravity: 'se'});
             ENTRY.trend(post_date);
+            $("#entry-sort-list").find("table").css("table-layout","auto");
+            window.setTimeout(function(){
+                $("#entry-sort-list").find("table").css("table-layout","fixed");
+            },500);
         }
     });
 
@@ -274,7 +280,7 @@ ENTRY.trend_form=function(id,values){
 };
 ENTRY.resize_sort_table=function(){
     var table_size=$("#entry-sort-list li").width()*0.97;
-    $("#entry-sort-list table").width(table_size)
+    $("#entry-sort-list .table-outer-div>table").width(table_size)
 }
 ENTRY.recent_entry={
     "90":function(date){

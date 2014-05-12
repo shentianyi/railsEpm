@@ -108,6 +108,19 @@ function last_date_of_week(date_value){
         year:endDate.getFullYear()
     }
 }
+//得到日期，登出该日期所在周的第一天的日期以及年份
+function first_date_of_week(date_value){
+    var date=new Date(date_value),beginDate;
+    if(date.getDay() == 1) {
+        beginDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    } else {
+        beginDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() +1 );
+    }
+    return {
+        date:beginDate,
+        year:beginDate.getFullYear()
+    }
+}
 //得到日期，返回所在周
 if(!Date.prototype.toWeekNumber){
     Date.prototype.toWeekNumber=function(){
@@ -131,7 +144,7 @@ function compare_time(begin_time,end_time){
 function deepCopy(p,c){
     var c= c || {};
     for(var i in p){
-        if(typeof p[i]=='object'){
+        if(typeof p[i]=='object' && p[i] !== null){
             c[i] = (p[i].constructor==Array) ? [] : {};
             deepCopy(p[i],c[i])
         }
@@ -180,4 +193,21 @@ function dashboard_show_loading(out_id){
 }
 function dashboard_remove_loading(out_id){
     $("#"+out_id).find(".dashboard-show-loading").remove();
+}
+//数组中去除重复元素
+Array.prototype.strip = function(){
+    if (this.length<2) return [this[0]] || [];
+    var arr = [];
+    for (var i=0;i<this.length;i++)
+    {
+        arr.push(this.splice(i--,1));
+        for (var j=0; j<this.length; j++)
+        {
+            if (this[j] == arr[arr.length -1])
+            {
+                this.splice(j--,1);
+            }
+        }
+    }
+    return arr;
 }

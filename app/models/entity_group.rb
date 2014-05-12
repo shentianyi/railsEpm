@@ -21,7 +21,11 @@ class EntityGroup < ActiveRecord::Base
 
 
   def can_modify_by_user user
-    self.user_id==user.id
+    self.user_id==user.id #&& self.department.nil?
+  end
+
+  def can_destroy_by_user(user)
+    self.user_id==user.id && self.department.nil?
   end
 
   def shared_user

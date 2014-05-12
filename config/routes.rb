@@ -1,4 +1,7 @@
 IFEpm::Application.routes.draw do
+  resources :kpi_properties
+
+
   use_doorkeeper do
     controllers :applications => 'oauth/applications'
     controllers :authorizations => nil
@@ -71,11 +74,14 @@ IFEpm::Application.routes.draw do
       get '/c/:id' => :index
       put :update
       post :assign
+      post :assign_properties
+      post :remove_properties
       post :import
       get :template
       get :condition
+      get :parameter
       get :access
-      [:categoried, :user, :list].each do |a|
+      [:categoried, :user, :list,:properties,:group_properties].each do |a|
         get "#{a}/:id" => a
       end
     end
@@ -93,8 +99,12 @@ IFEpm::Application.routes.draw do
   resources :kpi_entries do
     collection do
       match :analyse
+      match :compare
+      match :compares
       get :recents
+      post :entry
       post :import
+      post :details
     end
   end
 
@@ -139,8 +149,10 @@ IFEpm::Application.routes.draw do
   namespace :api, :defaults => {:format => 'json'} do
     resources :kpi_entries do
       collection do
-        get :analyse, :defaults => {:format => 'html'}
+        match :analyse, :defaults => {:format => 'html'}
         get :data
+        match :compare
+        match :compares
       end
     end
 
@@ -181,8 +193,18 @@ IFEpm::Application.routes.draw do
       end
     end
 
+    controller :departments do
+      match 'departments' => :index
+    end
+
+    controller :kpi_properties do
+      match 'kpi_properties/property_value' => :property_value
+    end
+
     controller :kpis do
       match 'kpis/kpis_by_category' => :kpis_by_category
+      match 'kpis/properties' => :properties
+      get :group_properties
     end
 
     resources :entity_groups do

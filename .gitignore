@@ -29,6 +29,6 @@
 .DS_Store
 *.swp
 *.MERGE_MSG
-
+.MERGE_MSG
 #~
 ~#

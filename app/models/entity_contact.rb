@@ -11,7 +11,7 @@ class EntityContact < ActiveRecord::Base
   validate :validate_save
 
   def self.contact_detail
-    joins(:users).joins(:tenant).select("#{User.contact_attrs},tenants.company_name,entity_contacts.*")
+    joins(:user).joins(:tenant).select("#{User.contact_attrs},tenants.company_name,entity_contacts.*")
   end
 
   private

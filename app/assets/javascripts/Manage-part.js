@@ -175,8 +175,8 @@ TREE.current_entitygroup_id = -1;
 
                         $('<li class="im-entities" entity_group="' + entity_group.id + '"><a><i class="icon-laptop"></i> ' +
                             entity_group.name + '</a>' +
-                            '<div class="add-block"><label class="add-block-part"><i class="icon-plus-sign"></i> 添加部门</label>' +
-                            '<label class="add-block-entity"><i class="icon-plus-sign"></i> 添加观察点</label>' +
+                            '<div class="add-block"><label class="add-block-part"><i class="icon-plus-sign"></i>'+I18n.t('manage.departments.desc.add-department')+'</label>' +
+                            '<label class="add-block-entity"><i class="icon-plus-sign"></i> '+I18n.t('manage.departments.desc.add-entity')+'</label>' +
                             '</div>' +
                             '</li>').appendTo($("li[entity_group='" + TREE.current_entitygroup_id + "']>ul"));
                     } else {
@@ -229,7 +229,7 @@ TREE.current_entitygroup_id = -1;
                         target.remove();
                         $("#part-info .users .inner ul.users").append("<li user_id=" + user_id + ">" + name + " <i class='icon icon-remove'></i></li>");
                     } else {
-
+                        MessageBox(data.content,"top","warning")
                     }
                 }
             });

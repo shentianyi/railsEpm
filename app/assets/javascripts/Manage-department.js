@@ -127,7 +127,7 @@ MANAGE.department.add_department_init = function () {
                                 "<table class='group'>"+
                                     "<tr>"+
                                         "<td class='entity-manage-name'>"+name+"</td>"+
-                                        "<td class='entity-manage-code'>"+name+"</td>"+
+                                        "<td class='entity-manage-code'>"+code+"</td>"+
                                         "<td class='entity-manage-users'>"+"0"+"</td>"+
                                         "<td class='entity-manage-description'>"+description+"</td>"+
                                     "</tr>"+
@@ -246,7 +246,7 @@ MANAGE.department.add_department_init = function () {
                         });
                     }
                     else {
-                        MessageBox("Same name exist yet", "top", "warning");
+                        MessageBox(I18n.t('fix.cannot_repeat'), "top", "warning");
                     }
                 }
             }
@@ -293,7 +293,7 @@ MANAGE.entity.edit = function () {
         });
         MANAGE.entity.entity_edit_close();
     } else {
-        MessageBox("Please fill all the blanket taking *", "top", "warning");
+        MessageBox(I18n.t('manage.base.fill-all-star'), "top", "warning");
     }
 };
 
