@@ -512,6 +512,8 @@ ANALYTICS.set_data=function(option) {
     this.kpi_name=option.kpi ? option.kpi:null;
     this.changeType=option.changeType ? option.changeType:null;
     this.visible=option.visible ? option.visible:null;
+    this.kpi_property=option.kpi_property?option.kpi_property:null;
+
 };
 ANALYTICS.render_to=function(option) {
     ANALYTICS.high_chart.chart.renderTo = option.target;
