@@ -43,11 +43,25 @@ ANALYTICS.high_chart={
                         new_target=target.series.name.replace("(","#").replace(")","#").split("#");
                         name=new_target[0];
                         view=new_target[1];
+//                        console.log(target.point )
                         if(target.point.unit){
-                            targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+" "+target.point.unit+'<br />';
+                            if(target.point.kpi_property.length>0){
+                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']'+'('+target.point.kpi_property+')'+':'+target.y+" "+target.point.unit+'<br />';
+                            }
+                            else{
+                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+" "+target.point.unit+'<br />';
+                            }
+
+
                         }
                         else{
-                            targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+'<br />';
+                            if(target.point.kpi_property.length>0){
+                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']'+'('+target.point.kpi_property+')'+':'+target.y+" "+'<br />';
+                            }
+                            else{
+                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+" "+'<br />';
+                            }
+
                         }
                     }
                     if(target.series.type=="column"){
@@ -73,7 +87,25 @@ ANALYTICS.high_chart={
                 }
                 else if(this.point){
                     target=this.point;
-                    targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']:'+target.y+" "+target.unit+'<br />';
+
+                    if(target.unit){
+                        if(target.kpi_property.length>0){
+                            targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']'+'('+target.kpi_property+')'+':'+target.y+" "+target.unit+'<br />';
+                        }
+                        else{
+                            targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']:'+target.y+" "+target.unit+'<br />';
+                        }
+
+                    }
+                    else{
+                        if(target.kpi_property.length>0){
+                            targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']'+'('+target.kpi_property+')'+':'+target.y+" "+'<br />';
+                        }
+                        else{
+                            targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']:'+target.y+" "+'<br />';
+                        }
+
+                    }
                     return '<b>'+target.name+'</b>'
                         +'<br />'
                         +targetString;
@@ -429,7 +461,8 @@ ANALYTICS.add_data=function(option){
         entity_group_id: option.view,
         start_time : begin_time_utc.toISOString() ,
         end_time : next_date.toISOString(),
-        frequency:option.interval
+        frequency:option.interval,
+        property:option.kpi_property
     },function(msg){
         if(msg.result){
             var data_length=msg.object.current.length;
@@ -532,6 +565,7 @@ ANALYTICS.set_data=function(option) {
     this.kpi_name=option.kpi ? option.kpi:null;
     this.changeType=option.changeType ? option.changeType:null;
     this.visible=option.visible ? option.visible:null;
+    this.kpi_property=option.kpi_property?option.kpi_property:null;
 };
 ANALYTICS.render_to=function(option) {
     ANALYTICS.high_chart.chart.renderTo = option.target;
@@ -572,6 +606,18 @@ ANALYTICS.deal_data=function() {
     ANALYTICS.set_data.apply(this, arguments);
     var i;
     var data = this.data;
+
+    var properties="",
+        item;
+    if(this.kpi_property){
+        for(var i in this.kpi_property){
+            item=this.kpi_property[i];
+            for(var j=0;j<item.length;j++){
+                properties+=item[j]+"/";
+            }
+        }
+    }
+//    console.log(properties)
     switch (this.interval) {
         case "90":
             for (i = 0; i < data.length; i++) {
@@ -580,6 +626,7 @@ ANALYTICS.deal_data=function() {
                 data[i].name = new Date(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i).toWayneString().hour;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].kpi_property=properties;
             }
             return data;
             break;
@@ -590,6 +637,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + i).toWayneString().day;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].kpi_property=properties;
             }
             return data;
             break;
@@ -602,6 +650,7 @@ ANALYTICS.deal_data=function() {
                     + " week" + new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWeekNumber();
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].kpi_property=properties;
             }
             return data;
             break;
@@ -612,6 +661,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + i).toWayneString().month;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].kpi_property=properties;
             }
             return data;
             break;
@@ -623,6 +673,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + 3 * i).getFullYear()+" quarter " + new Date(this.template[0], parseInt(this.template[1]) + 3 * i).monthToQuarter();
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].kpi_property=properties;
             }
             return data;
             break;
@@ -633,6 +684,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(parseInt(this.template[0]) + i, 0).toWayneString().year;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].kpi_property=properties;
             }
             return data;
             break;
