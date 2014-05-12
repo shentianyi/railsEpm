@@ -123,13 +123,19 @@ module KpiEntriesHelper
   end
 
   def self.calculate_caled_kpi kpi_id,entry
+    #puts "--START CALCULATE--".red
+    #KpiCalculateQueue.process(kpi_id,entry["parsed_entry_at"].to_milli)
     KpiCalculateQueue.process(kpi_id,Time.parse(entry["parsed_entry_at"]).to_milli)
     kpi = Kpi.find_by_id(kpi_id)
 
-    kpi_entry_at = entry["entry_at"]
+    kpi_entry_at = Time.parse(entry["entry_at"])
     kpi_parsed_entry_at = parse_entry_string_date(kpi.frequency,kpi_entry_at)
     kpi_parsed_entry_at = EntryDateTimeHelper.get_utc_time_from_str(kpi_parsed_entry_at)
-    if kpi_parsed_entry_at==entry["parsed_entry_at"]
+
+    #puts kpi_parsed_entry_at
+    #puts entry["parsed_entry_at"]
+
+    if kpi_parsed_entry_at==Time.parse(entry["parsed_entry_at"])
       f={}
       kpi.base_kpis.each do |base_bkpi|
         sym=base_bkpi.id.to_s.to_sym; f[sym]=nil
@@ -143,6 +149,7 @@ module KpiEntriesHelper
         kpi.formula.sub!("[#{item}]", f[item.to_sym].to_s)
       end
       value=kpi.formula.calculate
+      puts "VALUE:"+value.to_s
       #2014-4-20
       # change this to use OperateService
       #
@@ -165,6 +172,7 @@ module KpiEntriesHelper
         Entry::OperateService.new.insert_entry(attrs)
       end
     end
+    #puts "--END CALCULATE--".red
   end
 
   def self.init_cal_type_kpi_entry kpi_id

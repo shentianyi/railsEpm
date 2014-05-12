@@ -4,6 +4,7 @@ cd $(dirname $0)/..
 app_root=$(pwd)
 sidekiq_pidfile="$app_root/tmp/pids/sidekiq.pid"
 sidekiq_logfile="$app_root/log/sidekiq.log"
+sidekiq_cnf="$app_root/config/sidekiq.yml"
 #gitlab_user=$(ls -l config.ru | awk '{pring $3}')
 
 function warn
@@ -37,7 +38,12 @@ function start_no_deamonize
 
 function start_sidekiq
 {
-    bundle exec sidekiq -q kpicaljob -q default -C config/sidekiq.yml -e $RAILS_ENV -P $sidekiq_pidfile $@ >> $sidekiq_logfile 2>&1
+    bundle exec sidekiq -q kpicaljob -q default -q email -q kpicreatejob -C config/sidekiq.yml -e $RAILS_ENV -P $sidekiq_pidfile $@ >> $sidekiq_logfile 2>&1
+}
+
+function start_with_deamonize
+{
+    bundle exec sidekiq -C $sidekiq_cnf -e $RAILS_ENV -d -P $sidekiq_pidfile  -L $sidekiq_logfile
 }
 
 function load_ok
@@ -61,7 +67,7 @@ case "$1" in
         stop
         ;;
     start)
-        restart
+        start_with_deamonize
         ;;
     start_no_demonize)
         start_no_demonize

@@ -38,11 +38,14 @@ class KpiCalculateQueue
   def self.process kpi_id,parsed_entry_at
     fetch
     rkey = redis_key(kpi_id,parsed_entry_at)
+    puts "--PROCESS START--".blue
     puts rkey.green
     puts @cal_queue.to_json.green
     if @cal_queue[rkey] && @cal_queue[rkey] > 0
       @cal_queue[rkey] = @cal_queue[rkey] - 1
     end
+    puts @cal_queue.to_json.green
+    puts "--PROCESS END--".blue
     save
   end
 
