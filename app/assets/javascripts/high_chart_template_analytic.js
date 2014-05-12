@@ -31,7 +31,8 @@ ANALYTICS.high_chart={
         series : {
             id : 'navigator'
         },
-        adaptToUpdatedData:false
+        adaptToUpdatedData:true,
+        baseSeries:0
     },
     tooltip:{
             formatter: function() {
@@ -335,6 +336,7 @@ ANALYTICS.form_chart=function(option){
             option.data=data_array;
             var c={},p=option.data;
             ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
+//            console.log("optionID:"+option.id)
             if(option.chart_body_close_validate){
                 ANALYTICS.render_to(option);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
@@ -451,7 +453,11 @@ ANALYTICS.add_data=function(option){
             }
             option.data=data_array;
             var c={},p=option.data;
+
             ANALYTICS.chartSeries.series[option.id][option.interval]=ANALYTICS.chartSeries.series[option.id][option.interval].concat(deepCopy(c,p));
+//            console.log(ANALYTICS.chartSeries.series[option.id][option.interval])
+//            console.log("option.id+addDAate:"+[option.id]);
+
             var chart=$("#"+option.target).highcharts();
 
             var point = chart.series[option.id+1].options.data;
@@ -461,8 +467,15 @@ ANALYTICS.add_data=function(option){
 //            console.log(new_data  )
 
             chart.series[option.id+1].setData(new_data, false);
-            chart.series[0].setData(new_data, false);
+//            console.log(chart.series[0])
+//            console.log("setData"+(option.id+1))
+//            console.log(ANALYTICS.chartSeries.series[0][option.interval]);
+//            alert(ANALYTICS.chartSeries.count)
+            if(ANALYTICS.chartSeries.count<=1){
+                $("#chart-container").highcharts().get("navigator").setData(new_data, false);
+            }
 
+//            console.log(ANALYTICS.chartSeries.series[0][option.interval]);
 //            console.log(option.id)
 
             chart.redraw();
@@ -566,6 +579,7 @@ ANALYTICS.add_series=function(option) {
     var chart_container = option.target;
     var data = ANALYTICS.deal_data(option);
     var color=option.color?option.color:ANALYTICS.series_colors[series_id % ANALYTICS.series_colors.length];
+
     $("#" + chart_container).highcharts().addSeries({
         name: series_name,
         id: series_id,
@@ -664,6 +678,8 @@ ANALYTICS.deal_data=function() {
     }
 };
 ANALYTICS.proper_type_for_chart=function(){
+//    alert("ds")
+//    console.log("chart-series",ANALYTICS.chartSeries.series[0])
     ANALYTICS.set_data.apply(this,arguments);
 
     var obj=this;
@@ -700,6 +716,7 @@ ANALYTICS.proper_type_for_chart=function(){
     if(!this.chart.get(this.id).visible || this.visible=="disable"){
         visible=false;
     }
+//    console.log("optionID"+this.id)
     this.chart.get(this.id).remove(false);
     this.chart.addSeries(new_series,false);
     this.chart.redraw();
