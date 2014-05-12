@@ -43,7 +43,7 @@ ANALYTICS.high_chart={
                         new_target=target.series.name.replace("(","#").replace(")","#").split("#");
                         name=new_target[0];
                         view=new_target[1];
-                        console.log(target.point )
+//                        console.log(target.point )
                         if(target.point.unit){
                             if(target.point.kpi_property.length>0){
                                 targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']'+'('+target.point.kpi_property+')'+':'+target.y+" "+target.point.unit+'<br />';
@@ -617,7 +617,7 @@ ANALYTICS.deal_data=function() {
             }
         }
     }
-    console.log(properties)
+//    console.log(properties)
     switch (this.interval) {
         case "90":
             for (i = 0; i < data.length; i++) {
