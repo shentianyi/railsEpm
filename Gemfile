@@ -18,6 +18,8 @@ gem 'resque'
 gem 'sidekiq'
 gem 'sinatra',require: false# '>= 1.3.0', :require => nil
 gem 'slim'
+gem 'sidekiq-benchmark'
+#gem 'sidekiq_monitor'
 
 gem 'redis-namespace'
 
