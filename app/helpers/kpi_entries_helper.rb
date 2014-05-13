@@ -125,8 +125,8 @@ module KpiEntriesHelper
   def self.calculate_caled_kpi kpi_id,entry
     #puts "--START CALCULATE--".red
     #KpiCalculateQueue.process(kpi_id,entry["parsed_entry_at"].to_milli)
-    KpiCalculateQueue.process(kpi_id,Time.parse(entry["parsed_entry_at"]).to_milli)
-    kpi = Kpi.find_by_id(kpi_id)
+    KpiCalculateQueue.process(kpi_id,entry["user_id"],Time.parse(entry["parsed_entry_at"]).to_milli)
+    kpi = Kpi.includes(:user_kpi_items).find_by_id(kpi_id)
 
     kpi_entry_at = Time.parse(entry["entry_at"])
     kpi_parsed_entry_at = parse_entry_string_date(kpi.frequency,kpi_entry_at)

@@ -12,7 +12,7 @@ class KpiCalculateQueue
     unless entry.nil?
       if kpis = Kpi.parent_kpis_by_id(entry["kpi_id"])
         kpis.each do |k|
-          rkey = redis_key(k.id,entry["parsed_entry_at"].to_milli)
+          rkey = redis_key(k.id,entry["user_id"],entry["parsed_entry_at"].to_milli)
           if !@cal_queue.has_key?(rkey)
             @cal_queue[rkey] = 1
             save
@@ -35,9 +35,9 @@ class KpiCalculateQueue
   end
 
   #switch PUSHED to PROCESSING
-  def self.process kpi_id,parsed_entry_at
+  def self.process kpi_id,user_id,parsed_entry_at
     fetch
-    rkey = redis_key(kpi_id,parsed_entry_at)
+    rkey = redis_key(kpi_id,user_id,parsed_entry_at)
     puts "--PROCESS START--".blue
     puts rkey.green
     puts @cal_queue.to_json.green
@@ -54,8 +54,8 @@ class KpiCalculateQueue
   #============
   private
 
-  def self.redis_key kpi_id,parsed_entry_at
-    "#"+kpi_id.to_s+"-"+parsed_entry_at.to_s
+  def self.redis_key kpi_id,user_id,parsed_entry_at
+    "#@"+kpi_id.to_s+"@"+user_id.to_s+"@"+parsed_entry_at.to_s
   end
 
   def self.fetch
