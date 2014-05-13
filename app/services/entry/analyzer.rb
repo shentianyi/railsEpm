@@ -3,6 +3,7 @@ module Entry
     attr_accessor :params
 
     def initialize(params)
+      #params[:start_time]='1920-05-12T16:00:00Z'
       self.params=params
     end
 
