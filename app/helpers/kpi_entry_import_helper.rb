@@ -24,6 +24,7 @@ module KpiEntryImportHelper
     sheet=book.worksheet 0
     headers = sheet.rows[0]
     valid=true
+    validator_collection=KpiEntryValidatorCollection.new
     sheet.rows[1..-1].each_with_index do |row, i|
       params=excel_xls_param row,headers
       params.values.each { |v| error_sheet.row(i+1).push v }
@@ -39,6 +40,7 @@ module KpiEntryImportHelper
       params = Entry::OperateService.new.doc_upload_filter(params)
       #
       validator=KpiEntryValidator.new(params)
+      validator.validator_collection=validator_collection
       validator.validate
       unless validator.valid
         valid=false
@@ -63,6 +65,7 @@ module KpiEntryImportHelper
     error_header_length=error_header.length
     error_format=error_sheet.styles.add_style excelx_error_format
     valid=true
+    validator_collection=KpiEntryValidatorCollection.new
     error_sheet.add_worksheet do |sheet|
       sheet.add_row error_header
       2.upto(book.last_row) do |line|
@@ -90,6 +93,7 @@ module KpiEntryImportHelper
         end
         params = Entry::OperateService.new.doc_upload_filter(params)
         validator=KpiEntryValidator.new(params)
+        validator.validator_collection=validator_collection
         validator.validate
         unless validator.valid
           valid=false
