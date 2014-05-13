@@ -104,8 +104,9 @@ right connector from last child*/
     font-family: arial, verdana, tahoma;
     font-size: 11px;
     display: inline-block;
-    padding-top:15px;
-    height:60px;
+    padding: 15px 13px;
+    height: 50px;
+    width: 63px;
     background-color:#3D6AA2;
 
     -moz-border-radius: 50%;

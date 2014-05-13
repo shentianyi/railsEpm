@@ -122,6 +122,59 @@ module KpiEntriesHelper
     end
   end
 
+  def self.calculate_caled_kpi kpi_id,entry
+    #puts "--START CALCULATE--".red
+    #KpiCalculateQueue.process(kpi_id,entry["parsed_entry_at"].to_milli)
+    KpiCalculateQueue.process(kpi_id,entry["user_id"],Time.parse(entry["parsed_entry_at"]).to_milli)
+    kpi = Kpi.includes(:user_kpi_items).find_by_id(kpi_id)
+
+    kpi_entry_at = Time.parse(entry["entry_at"])
+    kpi_parsed_entry_at = parse_entry_string_date(kpi.frequency,kpi_entry_at)
+    kpi_parsed_entry_at = EntryDateTimeHelper.get_utc_time_from_str(kpi_parsed_entry_at)
+
+    #puts kpi_parsed_entry_at
+    #puts entry["parsed_entry_at"]
+
+    if kpi_parsed_entry_at==Time.parse(entry["parsed_entry_at"])
+      f={}
+      kpi.base_kpis.each do |base_bkpi|
+        sym=base_bkpi.id.to_s.to_sym; f[sym]=nil
+        if base_entry=get_kpi_entry_for_calculate(entry["user_id"], entry["entity_id"], base_bkpi.id, entry["parsed_entry_at"])
+          f[sym]=base_entry.value
+        else
+          f[sym]=0
+        end
+      end
+      KpisHelper.parse_formula_items(kpi.formula).each do |item|
+        kpi.formula.sub!("[#{item}]", f[item.to_sym].to_s)
+      end
+      value=kpi.formula.calculate
+      puts "VALUE:"+value.to_s
+      #2014-4-20
+      # change this to use OperateService
+      #
+      user_kpi_item = kpi.user_kpi_items.where(:entity_id => entry["entity_id"], :user_id => entry["user_id"]).first
+      if user_kpi_item
+        attrs = {}
+        attrs[:base_attrs]={}
+        attrs[:base_attrs]['original_value'] = value.to_f
+        attrs[:base_attrs]['kpi_id'] = kpi.id
+        attrs[:base_attrs]['frequency'] = kpi.frequency
+        attrs[:base_attrs]['user_kpi_item_id'] = user_kpi_item.id
+        attrs[:base_attrs]['user_id'] = entry["user_id"]
+        attrs[:base_attrs]['entity_id'] = entry["entity_id"]
+        attrs[:base_attrs]['target_max'] = kpi.target_max
+        attrs[:base_attrs]['target_min'] = kpi.target_min
+        attrs[:base_attrs]['entry_at'] = kpi_entry_at
+        attrs[:base_attrs]['parsed_entry_at'] = kpi_parsed_entry_at
+        attrs[:base_attrs]['entry_type'] = 0
+        attrs[:kpi_properties] = nil
+        Entry::OperateService.new.insert_entry(attrs)
+      end
+    end
+    #puts "--END CALCULATE--".red
+  end
+
   def self.init_cal_type_kpi_entry kpi_id
     if kpi=Kpi.find_by_id(kpi_id)
       kpi.base_kpis.each do |base_kpi|

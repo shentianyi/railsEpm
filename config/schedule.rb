@@ -19,6 +19,14 @@
 
 # Learn more: http://github.com/javan/whenever
 
+=begin
+set :environment, 'demo'
+
 every :reboot do
-  rake 'resque:work'
+  rake 'resque:workers COUNT=5'
 end
+
+every 1.minutes do
+  runner "KpiCalculateQueue.instance.check"
+end
+=end

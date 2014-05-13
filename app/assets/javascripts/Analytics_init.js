@@ -88,6 +88,8 @@ function init_analytics() {
     ANALYTICS.currentCompare.init();
     //init详细
     ANALYTICS.detailPoint.init();
+    //legend
+    ANALYTICS.legend.init();
 }
 ANALYTICS.currentCompare={};
 ANALYTICS.currentCompare.init=function(){
@@ -178,14 +180,19 @@ function prepare_form_chart() {
         };
 
 
+       //find id
         ANALYTICS.chartSeries.addCount();
         ANALYTICS.chartSeries.id_give();
         option.id = ANALYTICS.chartSeries.id;
+        // find color
+        option.color=ANALYTICS.series_colors[option.id % ANALYTICS.series_colors.length];
+
         ANALYTICS.chartSeries.addSeries(option);
         if (option.chart_body_close_validate) {
             show_chart_body(option);
         }
         ANALYTICS.form_chart(option);
+        ANALYTICS.legend.generateItem(option);
     }
     else {
         MessageBox(I18n.t('analytics.fill_all_blank'), "top", "warning")
@@ -196,7 +203,6 @@ function show_chart_body(option) {
     $("body").on("click", "#chart-type-alternate td", function (event) {
         alternate_chart_type(event)
     });
-
     $("#chart-interval-alternate").find("li").each(function () {
         $(this).bind("click", function (event) {
             var target = adapt_event(event).target;
@@ -375,13 +381,21 @@ var resize_chart = {
             parseInt($(window).height()) - parseInt($("#analytics-condition").height()) - parseInt($("#analytics-condition").css("top")) - 3 : 0);
     },
     container: function () {
-        $("#chart-main-middle").height(parseInt($("#chart-body").height()) - parseInt($("#chart-interval-alternate").attr("my_height")) - parseInt($("#chart-type-alternate").attr("my_height")) - 1);
-        $("#chart-container").height(parseInt($("#chart-main-middle").height()));
+        $("#chart-main-middle").height(
+            parseInt($("#chart-body").height())
+                - parseInt($("#chart-interval-alternate").attr("my_height"))
+                - parseInt($("#chart-type-alternate").attr("my_height"))
+                - 1
+            );
+
+        var chart_container_height=parseInt( $("#chart-main-middle").height() )- parseInt( $("#chart-container-item").height() );
+        $("#chart-container").height(parseInt(chart_container_height));
+
         if ($("#chart-container").highcharts()) {
             var chart = $("#chart-container").highcharts();
             chart.setSize(
                 $("#chart-main-middle").width(),
-                $("#chart-main-middle").height(),
+                chart_container_height,
                 false
             );
         }
@@ -961,6 +975,59 @@ function getObject(object, name) {
             return string[i];
         }
     }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////// 2014.5.7
+//随着图形生成legend
+ANALYTICS.legend={}
+ANALYTICS.legend.init=function(){
+   $("body")
+       .on("click","#chart-container-item li",function(){
+           var id=parseInt($(this).attr("series-id")),
+               chart=$("#chart-container").highcharts();
+           if(chart.get(id).visible){
+               chart.get(id).hide();
+               $(this).css("background","#ddd")
+           }
+           else{
+               chart.get(id).show();
+               $(this).css("background",$(this).attr("originBG"))
+           }
+       })
+       .on("click","#chart-container-item li i",function(event){
+           stop_propagation(event);
+           var id=parseInt($(this).attr("series-id"));
+           $(this).parents("li").remove();
+           ANALYTICS.legend.removeItem(id);
+       })
+}
+ANALYTICS.legend.generateItem=function(option){
+    //option里要有线的kpi view_text id color
+    $("#chart-container-item .items").append(
+        $("<li />").attr("series-id",option.id).css("background",option.color).attr("originBG",option.color)
+            .append($("<label />").text(option.kpi))
+            .append($("<label />").text("[ "+option.view_text+" ]"))
+            .append($("<i />").addClass("icon icon-remove").attr("series-id",option.id))
+    )
+    ANALYTICS.legend.generateLayout();
+}
+ANALYTICS.legend.generateLayout=function(){
+    var count=ANALYTICS.chartSeries.getCount(),
+        $target=$("#chart-container-item .items").children(),
+        margin_right=10,
+        padding=70,
+        items_width=0;
+
+    for(var i=0;i<count;i++){
+       items_width+=$target.eq(i).width() + margin_right + padding;
+    }
+    $("#chart-container-item .items").width(items_width);
+}
+ANALYTICS.legend.removeItem=function(id){
+    // 'id' is an integer number
+    ANALYTICS.chartSeries.deleteSeries(id);
+    ANALYTICS.legend.generateLayout();
 }
 
 

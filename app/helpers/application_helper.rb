@@ -10,8 +10,9 @@ module ApplicationHelper
     @category=KpiCategory.accessible_by(current_ability).find_by_id(params[:id])
   end
 
-  def get_kpis_by_category id=nil
-    @kpis=id.nil? ? [] : Kpi.accessible_by(current_ability).joins(:kpi_category).where(:kpi_category_id => id).select("kpis.*,kpi_categories.name as 'category_name'").uniq.all
+  def get_kpis_by_category(id=nil)
+    @kpis=id.nil? ? [] : Kpi.accessible_by(current_ability).joins(:kpi_category)
+    .where(:kpi_category_id => id).select("kpis.*,kpi_categories.name as 'category_name'").includes(kpi_property_items: :kpi_property).uniq.all
   end
 
   def get_user_entity_groups

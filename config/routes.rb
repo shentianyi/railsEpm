@@ -1,6 +1,10 @@
 IFEpm::Application.routes.draw do
   resources :kpi_properties
 
+  require 'sidekiq/web'
+  authenticate :user, lambda {|u| u.is_sys } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 
   use_doorkeeper do
     controllers :applications => 'oauth/applications'
@@ -46,6 +50,7 @@ IFEpm::Application.routes.draw do
   resources :users do
     collection do
       get 'index/:id' => :index
+      get 'c/:id' => :index
       match :login
       post :add
       put :update
@@ -81,7 +86,8 @@ IFEpm::Application.routes.draw do
       get :condition
       get :parameter
       get :access
-      [:categoried, :user, :list,:properties,:group_properties].each do |a|
+
+      [:categoried, :user, :list, :access_list, :properties, :group_properties].each do |a|
         get "#{a}/:id" => a
       end
     end

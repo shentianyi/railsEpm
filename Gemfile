@@ -14,9 +14,17 @@ gem 'cancan'
 # gem for backgroud jobs based on redis
 gem 'redis'
 gem 'resque'
+#sidekiq
 gem 'sidekiq'
-gem 'sinatra', '>= 1.3.0', :require => nil
+gem 'sinatra',require: false# '>= 1.3.0', :require => nil
+gem 'slim'
+gem 'sidekiq-benchmark'
+#gem 'sidekiq_monitor'
+
 gem 'redis-namespace'
+
+gem 'rufus-scheduler'
+gem 'daemons'
 # gem 'guard-resque'
 
 gem 'will_paginate'

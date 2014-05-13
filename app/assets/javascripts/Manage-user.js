@@ -15,7 +15,23 @@ MANAGE.user.init = function () {
     MANAGE.user.user_add_clear();
     MANAGE.user.icheck.init();
     MANAGE.user.assign.init();
-
+    $("#manage-left-menu").on("click", "li", function() {
+        MANAGE.user.user_add_close();
+        MANAGE.user.user_edit_close();
+        var li = $(this);
+        var id = li.attr('number');
+        if(id) {
+            $("#manage-left-menu>li").removeClass('active');
+            li.addClass('active');
+            $.get('/users/list/' + id, function(data) {
+                $("#manage-edit-target").text(li.attr('title'));
+                $('#user-item-container').html(data);
+                window.history.pushState(id, null, "/users/c/" + id);
+                MANAGE.widget_init();
+                MANAGE.user.icheck.init();
+            });
+        }
+    });
     $(".single-select").chosen({ allow_single_deselect: true });
 
     $("body")
@@ -160,6 +176,7 @@ MANAGE.user.add_new = function () {
             dataType: 'json',
             success: function (data) {
                 if (data.result) {
+
                     if ($("#manage-left-menu li.active").attr("number") == role) {
                         var object = data.object;
                         //add user to the assign table

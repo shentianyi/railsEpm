@@ -4,7 +4,7 @@
 
      <%@roles.each do |role|%>
          <li class="<%= role.id==@active_role_id ? 'active' : ''%>" title="<%= role.name %>" number="<%= role.id%>">
-             <a href="/users/index/<%=role.id%>"><%= role.name %></a>
+             <a><%= role.name %></a>
          </li>
      <%end%>
 </ul>
