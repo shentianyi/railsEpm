@@ -55,7 +55,7 @@ class KpiCalculateQueue
   private
 
   def self.redis_key kpi_id,user_id,parsed_entry_at
-    "#@"+kpi_id.to_s+"@"+user_id.to_s+"@"+parsed_entry_at.to_s
+    "#z"+kpi_id.to_s+"z"+user_id.to_s+"z"+parsed_entry_at.to_s
   end
 
   def self.fetch
