@@ -302,6 +302,7 @@ function change_interval(option) {
         ANALYTICS.currentThreadPreCondition=option;
         //有数据的直接拿来生成
         for (j = 0; j < have_data.length; j++) {
+
             option.kpi = ANALYTICS.chartSeries.series[j].kpi;
             option.id = ANALYTICS.chartSeries.series[j].id;
             option.begin_time = ANALYTICS.chartSeries.series[j].begin_time;
@@ -626,7 +627,7 @@ function get_next_date(date, frequency) {
         case 300:
             return   m.add('months', 1);
         case 400:
-            return  m.add('months', 4);
+            return  m.add('months', 3);
         case 500:
             return  m.add('years', 1);
     }

@@ -31,8 +31,8 @@ ANALYTICS.high_chart={
         series : {
             id : 'navigator'
         },
-        baseSeries:0,
-        adaptToUpdatedData:false
+        adaptToUpdatedData:true,
+        baseSeries:0
     },
     tooltip:{
             formatter: function() {
@@ -44,27 +44,24 @@ ANALYTICS.high_chart={
                         new_target=target.series.name.replace("(","#").replace(")","#").split("#");
                         name=new_target[0];
                         view=new_target[1];
-
-                        var y=(target.y+"").length;
-                        var dotCount=Math.ceil(y/3)-1;
-                        if(dotCount>0){
-                            y=target.y+"";
-                            y= y.split("");
-                            for(var i=0;i<dotCount;i++){
-                                y.splice(3*(i+1)+i,0,",");
-                                console.log(y)
-                            }
-                            y= y.join("");
-                        }
-                        else{
-                            y=target.y
-                        }
-
+//                        console.log(target.point )
                         if(target.point.unit){
-                            targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+y+" "+target.point.unit+'<br />';
+                            if(target.point.kpi_property.length>0){
+                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']'+'('+target.point.kpi_property+')'+':'+target.y+" "+target.point.unit+'<br />';
+                            }
+                            else{
+                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+" "+target.point.unit+'<br />';
+                            }
+
+
                         }
                         else{
-                            targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+y+'<br />';
+                            if(target.point.kpi_property.length>0){
+                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']'+'('+target.point.kpi_property+')'+':'+target.y+" "+'<br />';
+                            }
+                            else{
+                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+" "+'<br />';
+                            }
                         }
                     }
                     if(target.series.type=="column"){
@@ -90,23 +87,24 @@ ANALYTICS.high_chart={
                 }
                 else if(this.point){
                     target=this.point;
-
-                    var y=(target.y+"").length;
-                    var dotCount=Math.ceil(y/3)-1;
-                    if(dotCount>0){
-                        y=target.y+"";
-                        y= y.split("");
-                        for(var i=0;i<dotCount;i++){
-                            y.splice(3*(i+1)+i,0,",");
-
+                    if(target.unit){
+                        if(target.kpi_property.length>0){
+                            targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']'+'('+target.kpi_property+')'+':'+target.y+" "+target.unit+'<br />';
                         }
-                        y= y.join("");
+                        else{
+                            targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']:'+target.y+" "+target.unit+'<br />';
+                        }
+
                     }
                     else{
-                        y=target.y
-                    }
+                        if(target.kpi_property.length>0){
+                            targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']'+'('+target.kpi_property+')'+':'+target.y+" "+'<br />';
+                        }
+                        else{
+                            targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']:'+target.y+" "+'<br />';
+                        }
 
-                    targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']:'+y+" "+target.unit+'<br />';
+                    }
                     return '<b>'+target.name+'</b>'
                         +'<br />'
                         +targetString;
@@ -336,6 +334,7 @@ ANALYTICS.form_chart=function(option){
             option.data=data_array;
             var c={},p=option.data;
             ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
+//            console.log("optionID:"+option.id)
             if(option.chart_body_close_validate){
                 ANALYTICS.render_to(option);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
@@ -435,7 +434,8 @@ ANALYTICS.add_data=function(option){
         entity_group_id: option.view,
         start_time : begin_time_utc.toISOString() ,
         end_time : next_date.toISOString(),
-        frequency:option.interval
+        frequency:option.interval,
+        property:option.kpi_property
     },function(msg){
         if(msg.result){
             var data_length=msg.object.current.length;
@@ -451,7 +451,11 @@ ANALYTICS.add_data=function(option){
             }
             option.data=data_array;
             var c={},p=option.data;
+
             ANALYTICS.chartSeries.series[option.id][option.interval]=ANALYTICS.chartSeries.series[option.id][option.interval].concat(deepCopy(c,p));
+//            console.log(ANALYTICS.chartSeries.series[option.id][option.interval])
+//            console.log("option.id+addDAate:"+[option.id]);
+
             var chart=$("#"+option.target).highcharts();
 
             var point = chart.series[option.id+1].options.data;
@@ -461,8 +465,15 @@ ANALYTICS.add_data=function(option){
 //            console.log(new_data  )
 
             chart.series[option.id+1].setData(new_data, false);
-            chart.series[0].setData(new_data, false);
+//            console.log(chart.series[0])
+//            console.log("setData"+(option.id+1))
+//            console.log(ANALYTICS.chartSeries.series[0][option.interval]);
+//            alert(ANALYTICS.chartSeries.count)
+            if(ANALYTICS.chartSeries.count<=1){
+                $("#chart-container").highcharts().get("navigator").setData(new_data, false);
+            }
 
+//            console.log(ANALYTICS.chartSeries.series[0][option.interval]);
 //            console.log(option.id)
 
             chart.redraw();
@@ -512,6 +523,7 @@ ANALYTICS.set_data=function(option) {
     this.kpi_name=option.kpi ? option.kpi:null;
     this.changeType=option.changeType ? option.changeType:null;
     this.visible=option.visible ? option.visible:null;
+    this.kpi_property=option.kpi_property?option.kpi_property:null;
 };
 ANALYTICS.render_to=function(option) {
     ANALYTICS.high_chart.chart.renderTo = option.target;
@@ -539,6 +551,7 @@ ANALYTICS.add_series=function(option) {
     var chart_container = option.target;
     var data = ANALYTICS.deal_data(option);
     var color=option.color?option.color:ANALYTICS.series_colors[series_id % ANALYTICS.series_colors.length];
+
     $("#" + chart_container).highcharts().addSeries({
         name: series_name,
         id: series_id,
@@ -552,6 +565,18 @@ ANALYTICS.deal_data=function() {
     ANALYTICS.set_data.apply(this, arguments);
     var i;
     var data = this.data;
+
+    var properties="",
+        item;
+    if(this.kpi_property){
+        for(var i in this.kpi_property){
+            item=this.kpi_property[i];
+            for(var j=0;j<item.length;j++){
+                properties+=item[j]+"/";
+            }
+        }
+    }
+//    console.log(properties)
     switch (this.interval) {
         case "90":
             for (i = 0; i < data.length; i++) {
@@ -560,6 +585,7 @@ ANALYTICS.deal_data=function() {
                 data[i].name = new Date(this.template[0], this.template[1], this.template[2], parseInt(this.template[3]) + i).toWayneString().hour;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].kpi_property=properties;
             }
             return data;
             break;
@@ -570,6 +596,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + i).toWayneString().day;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].kpi_property=properties;
             }
             return data;
             break;
@@ -582,6 +609,7 @@ ANALYTICS.deal_data=function() {
                     + " week" + new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWeekNumber();
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].kpi_property=properties;
             }
             return data;
             break;
@@ -592,6 +620,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + i).toWayneString().month;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].kpi_property=properties;
             }
             return data;
             break;
@@ -603,6 +632,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + 3 * i).getFullYear()+" quarter " + new Date(this.template[0], parseInt(this.template[1]) + 3 * i).monthToQuarter();
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].kpi_property=properties;
             }
             return data;
             break;
@@ -613,12 +643,15 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(parseInt(this.template[0]) + i, 0).toWayneString().year;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].kpi_property=properties;
             }
             return data;
             break;
     }
 };
 ANALYTICS.proper_type_for_chart=function(){
+//    alert("ds")
+//    console.log("chart-series",ANALYTICS.chartSeries.series[0])
     ANALYTICS.set_data.apply(this,arguments);
 
     var obj=this;
@@ -655,6 +688,7 @@ ANALYTICS.proper_type_for_chart=function(){
     if(!this.chart.get(this.id).visible || this.visible=="disable"){
         visible=false;
     }
+//    console.log("optionID"+this.id)
     this.chart.get(this.id).remove(false);
     this.chart.addSeries(new_series,false);
     this.chart.redraw();

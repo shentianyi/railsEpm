@@ -255,9 +255,9 @@ DASHBOARD.add.generate=function(option){
 //        $target.find(".dashboard-item-extra-info").css("backgroundColor","rgba(96,96,96,1)");
 //        $target.find(".dashboard-item-extra-info td").css("color","black");
         $target.find(".dashboard-item-extra-info td").css("color","#fff");
-        $target.find(".dashboard-item-extra-info .primary-value").css("color","#9cdd00");
-        $target.find(".dashboard-item-extra-info .secondary-value").css("color","#fe7005");
+        $target.find(".dashboard-item-extra-info .primary-value").css("color","#00e8ca");
+        $target.find(".dashboard-item-extra-info .secondary-value").css("color","#FF0202");
         $target.find(".dashboard-item-extra-info .danger-value").css("color","#ff0202");
-        $target.find(".dashboard-item-extra-info .normal-value").css("color","#9CDD00");
+        $target.find(".dashboard-item-extra-info .normal-value").css("color","#00e8ca");
     }
 }
