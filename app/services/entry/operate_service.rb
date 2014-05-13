@@ -71,7 +71,7 @@ module Entry
       attrs = attrs.merge(entry[:base_attrs])
 
       #fetch kpi_properties
-      kpi = Kpi.find_by_id(attrs['kpi_id'])
+      kpi = Kpi.find_by_id(attrs['kpi_id']).includes(:kpi_properties)
       if kpi && !entry[:kpi_properties].nil?
         properties = {}
         kpi.kpi_properties.each {|p|
