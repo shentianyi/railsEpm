@@ -106,5 +106,6 @@ gem 'bson_ext'
 
 # redis search
 gem 'ruby-pinyin'
-gem 'redis-search'
+gem 'chinese_pinyin'
+#gem 'redis-search'
 

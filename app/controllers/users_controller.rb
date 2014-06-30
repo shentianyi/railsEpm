@@ -48,6 +48,15 @@ class UsersController < ApplicationController
     render partial: 'list'
   end
 
+  def fast_search
+    items=[]
+    Redis::Search.complete('User', params[:q], :conditions => {tenant_id: current_user_tenant.id, role_id: Role.director}).each do |item|
+      puts item
+      items<<{id: item['id'], name: item['title'], email: item['email']}
+    end
+    render json: items
+  end
+
   private
 
   def get_ability_entity
