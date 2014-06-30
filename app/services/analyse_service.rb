@@ -6,7 +6,7 @@ class AnalyseService
     end
     time_span = DashboardItem.time_string_to_time_span condition.time_string
 
-    count = time_range_count(time_span[:start].iso8601.to_s, time_span[:end].iso8601.to_s, dashboard_itme.interval)
+    count = DashboardCondition.time_range_count(time_span[:start].iso8601.to_s, time_span[:end].iso8601.to_s, condition.interval)
     if count > 150
       return false
     end
@@ -21,7 +21,7 @@ class AnalyseService
   end
 
   def self.get_data condition
-    unless q = condition_filter condition
+    unless q = condition_filter(condition)
       return false
     end
     query = q

@@ -77,12 +77,14 @@ function create_story() {
 
     DASHBOARD.add.prepare_to_add_item(function (post) {
         var condition = {};
-        condition.entity_group = post.series[0].view;
-        condition.kpi_id = post.series[0].kpi;
-        condition.calculate_type = get_cal_type(post.series[0].average);
-        condition.time_string = get_time_string_by_twocar(post.series[0].begin_time, post.series[0].end_time);
-        condition.interval = 100
-        chart_conditions.push(condition);
+        for(var i = 0;i<post.series.length;i++){
+            condition.entity_group = post.series[i].view;
+            condition.kpi_id = post.series[i].kpi;
+            condition.calculate_type = get_cal_type(post.series[i].average);
+            condition.time_string = get_time_string_by_twocar(post.series[i].begin_time, post.series[i].end_time);
+            condition.interval = 100
+            chart_conditions.push(condition);
+        }
     });
 
     if (chart_conditions.length > 0) {
@@ -92,13 +94,10 @@ function create_story() {
         story.attachments = attachments;
     }
     $.post('/stories', {story: story}, function (data) {
-<<<<<<< HEAD
-
-     });
-=======
-        alert('Create Success')
+        if(data.result){
+            DASHBOARD.add.close();
+        }
     });
->>>>>>> b3b29385f855f744d4fad3dc624a184d61115f08
 }
 
 function get_attachments(id) {

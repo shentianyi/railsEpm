@@ -12,15 +12,15 @@ class Story < ActiveRecord::Base
   after_create :save_chart_data
 
   def save_chart_data
-=begin
     self.chart_conditions.each do |c|
+      puts c
       query = AnalyseService.condition_filter(c)
       if query
         data = Entry::Analyzer.new(query).analyse
-        KpiEntryAnalyseCache.new(id:c.id,cacheable_type: c.class.name,query: query.to_json, chart_data:data).save
+        puts data
+        #KpiEntryAnalyseCache.new(id:c.id,cacheable_type: c.class.name,query: query.to_json, chart_data:data).save
       end
     end
-=end
   end
 
   def self.detail_by_set_id id
