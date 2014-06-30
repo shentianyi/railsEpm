@@ -1,4 +1,5 @@
 class StoriesController < ApplicationController
+  before_filter :get_ability_category,:get_kpis_by_category,:get_user_entity_groups, :only => [:index,:new]
   # GET /stories
   # GET /stories.json
   def index
@@ -20,6 +21,7 @@ class StoriesController < ApplicationController
   # GET /stories/new
   # GET /stories/new.json
   def new
+
     @story = Story.new
 
     respond_to do |format|
@@ -37,9 +39,14 @@ class StoriesController < ApplicationController
   # POST /stories.json
   def create
     @msg=Message.new(result: true)
-    @story = Story.new(params[:story].except(:attachments))
+    @story = Story.new(params[:story].except(:attachments,:chart_conditions))
     @story.user=current_user
     Attachment.add(params[:story][:attachments].values, @story) unless params[:story][:attachments].blank?
+    unless params[:story][:chart_conditions].blank?
+      params[:story][:chart_conditions].each do |index,c|
+        StoryService.add_chart_condition(c,@story)
+      end
+    end
     @story.save
     @msg.content=@story
     render json: @msg

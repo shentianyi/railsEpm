@@ -7,6 +7,7 @@ class CreateChartConditions < ActiveRecord::Migration
       t.string :time_string
       t.integer :chartable_id
       t.string :chartable_type
+      t.integer :interval
       t.timestamps
     end
     add_index :chart_conditions, :kpi_id

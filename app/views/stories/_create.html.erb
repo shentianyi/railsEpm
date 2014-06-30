@@ -1,0 +1,137 @@
+<div class="dashboard-add-wrap" id="dashboard-add-wrap" style="display: block">
+  <div class="dashboard-add-inner" id="dashboard-add-inner">
+    <div class="dashboard-add-sub-menu" id="dashboard-add-sub-menu">
+      <a class="icon-remove" id="close-add-dashboard"> <%= t 'dashboard_group.dashboard.close' %></a>
+    </div>
+    <aside class="content-right-nav" name='dashboard-add'>
+      <section class="solid dashboard-add-name">
+        <h3>Title</h3>
+        <br/>
+        <input type='text' placeholder="Title" id="story-title"/>
+      </section>
+      <!--内容-->
+      <section class="solid">
+        <h3>Content</h3>
+        <input type="text" id="story-content" placeholder="Content"/>
+      </section>
+      <!--类型-->
+      <section class="solid dashboard-add-type">
+        <h3>Choose Chart Type</h3>
+        <ul id="db-add-type">
+          <li type="line"></li>
+          <li class="active"type="column"></li>
+          <li type="pie"></li>
+          <li type="scatter"></li>
+        </ul>
+      </section>
+      <!--线-->
+      <section class="solid">
+        <h3>Series</h3>
+        <ul class="db-add-kpi-list" id="db-add-kpi-list"></ul>
+        <a class="btn btn-primary" id="add-one-series"><%= t 'dashboard_group.dashboard.add_series' %></a>
+      </section>
+      <!--附件-->
+      <section class="solid">
+        <h3>Attachment</h3>
+        <input id="item-data-uploader" type="file" name="files[]" multiple="true"  data-url="/files/upload">
+        <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
+      </section>
+      <!--添加Story-->
+      <section class="solid">
+        <a class="btn btn-primary" onclick="create_story()">Add Message</a>
+      </section>
+    </aside>
+
+    <div class="content-left-main" name="dashboard-add">
+      <div class="left-content-title" name="dashboard-add" id="left-content-title-add">
+        <div class="pull-left analytics-condition-choose" name="dashboard-add">
+          <div class="index-condition-group">
+            <select data-placeholder="<%= t 'analytics.kpi_category'%> *" style="width:120px;" class="chosen-select"   title="analy-entity-select" id="chart-group">
+              <%@categories.each_with_index do |catetory,i|%>
+                  <option value="<%= catetory.id%>"><%= catetory.name%></option>
+              <%end %>
+            </select>
+            <select data-placeholder="<%= t 'analytics.kpi'%> *" style="width:120px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
+              <option value=""></option>
+            </select>
+            <select data-placeholder="<%= t 'analytics.view'%> *" style="width:120px;" class="chosen-select" title="analy-view-select"  id="chart-view">
+              <%@entity_groups.each_with_index do |entity_group,i|%>
+                  <option value="<%= entity_group.id%>" ><%= entity_group.name%></option>
+              <%end %>
+            </select>
+          </div>
+          <div class="index-condition-group">
+            <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.start_time' %> *" id="analy-begin-time"
+                   readonly=true/>
+            <label class="index-date-extra-info"></label>
+            <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.end_time' %>" id="analy-end-time"
+                   readonly=true/>
+            <label class="index-date-extra-info"></label>
+          </div>
+          <div class="index-condition-group" style="width:100px">
+            <label class="analytics-radio-label">
+              <input type="radio" name="chartRadios" value="1" checked>
+              <%= t 'dashboard_group.dashboard.serie.total' %>
+            </label>
+            <label class="analytics-radio-label">
+              <input type="radio" name="chartRadios" value="0">
+              <%= t 'dashboard_group.dashboard.serie.average' %>
+            </label>
+          </div>
+          <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px;margin-left:0px" id="db-add-chart">Add</a>
+        </div>
+        <i class="icon-chevron-down analytic-control-condition-visible" id="analytic-control-condition-visible" state="close"> </i>
+      </div>
+      <div class="db-chart-body" id="db-chart-body">
+        <div class="clearfix" id="db-chart-interval-alternate" my_height="28">
+          <ul class="pull-right db-control-chart-interval-group">
+            <li interval="90"><a>Hr</a></li>
+            <li interval="100"><a>D</a></li>
+            <li interval="200"><a>W</a></li>
+            <li interval="300"><a>M</a></li>
+            <li interval="400"><a>Qr</a></li>
+            <li interval="500"><a>Y</a></li>
+          </ul>
+        </div>
+        <div class="put-db-chart" id="put-db-chart">
+          <table class="dashboard-item-extra-info"></table>
+          <div class="db-chart-container" id="chart-container"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
+    <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
+    <%= javascript_include_tag "story_manage.js" %>
+
+    <%= javascript_include_tag "highcharts.js"%>
+    <%= javascript_include_tag "highcharts-more.js"%>
+    <%= javascript_include_tag "jquery.gridster.js"%>
+    <%= javascript_include_tag "jquery.gridster.with-extras.js"%>
+    <%= javascript_include_tag "bootstrap-datepicker.js"%>
+    <%= javascript_include_tag "bootstrap-datetimepicker.min.js"%>
+    <%= javascript_include_tag "date_picker_template.js"%>
+
+    <%= javascript_include_tag "ifepm.activeSelector.js"%>
+    <%= javascript_include_tag "ifepm.text.js"%>
+    <%= javascript_include_tag "ifepm.config.js"%>
+    <%= javascript_include_tag "dashboard.js"%>
+    <%= javascript_include_tag "ifepm.grid.main.js"%>
+    <%= javascript_include_tag "ifepm.dashboard.template.js"%>
+    <%= javascript_include_tag "ifepm.dashboard.main.js"%>
+
+    <%= javascript_include_tag "high_chart_template.js"%>
+    <%= javascript_include_tag "high_chart_theme.js"%>
+    <%= javascript_include_tag "Dashboard-add.js"%>
+    <%= javascript_include_tag "Dashboard-init.js"%>
+    <%= javascript_include_tag "dashboard_type_special.js"%>
+<% end %>
+<script type="text/javascript">
+    $(function () {
+        DASHBOARD.add.init();
+        attach_upload("item-data-uploader");
+    });
+</script>

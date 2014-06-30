@@ -71,13 +71,32 @@ function close_block(event) {
 }
 
 function create_story() {
-    var story = {title: $('#story-title').val(), story_set_id: $('#current_story_set').val()};
+    var story = {title: $('#story-title').val(), description:$('#story-content').val() ,story_set_id: $('#current_story_set').val()};
     var attachments = get_attachments('item-data-uploader-preview');
+    var chart_conditions = [];
+
+    DASHBOARD.add.prepare_to_add_item(function (post) {
+        var condition = {};
+        for(var i = 0;i<post.series.length;i++){
+            condition.entity_group = post.series[i].view;
+            condition.kpi_id = post.series[i].kpi;
+            condition.calculate_type = get_cal_type(post.series[i].average);
+            condition.time_string = get_time_string_by_twocar(post.series[i].begin_time, post.series[i].end_time);
+            condition.interval = 100
+            chart_conditions.push(condition);
+        }
+    });
+
+    if (chart_conditions.length > 0) {
+        story.chart_conditions = chart_conditions;
+    }
     if (attachments) {
         story.attachments = attachments;
     }
     $.post('/stories', {story: story}, function (data) {
-        alert('Create Success')
+        if(data.result){
+            DASHBOARD.add.close();
+        }
     });
 }
 

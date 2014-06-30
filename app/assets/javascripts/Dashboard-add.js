@@ -325,6 +325,28 @@ DASHBOARD.add.init=function(){
 
 };
 
+DASHBOARD.add.prepare_to_add_item = function(callback){
+    var post={},i;
+    post.dashboard_name=$("#dashboard-name-input").val();
+    post.type=$("#db-add-type li.active").attr("type");
+    post.interval=$("#db-chart-interval-alternate li.active").attr("interval");
+    post.dashboard_id = $("#dashboard-group-name :selected").attr("value");
+    post.series=[];
+    for(i=0;i<db_chartSeries.series.length;i++){
+        post.series[i]={};
+        post.series[i].kpi=db_chartSeries.series[i].kpi_id;
+        post.series[i].view=db_chartSeries.series[i].view;
+        post.series[i].view_text=db_chartSeries.series[i].view_text;
+        post.series[i].average=db_chartSeries.series[i].method;
+        post.series[i].begin_time=db_chartSeries.series[i].begin_post ;
+        post.series[i].end_time=db_chartSeries.series[i].end_post;
+        post.series[i].count=i+1;
+    }
+    if(callback){
+        callback(post)
+    }
+}
+
 DASHBOARD.add.prepare_form_chart=function() {
     var kpi = $("#chart-kpi :selected").attr("value");
     var view = $("#chart-view :selected").attr("value");
