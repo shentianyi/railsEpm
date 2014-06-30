@@ -39,17 +39,12 @@ class StoriesController < ApplicationController
   # POST /stories
   # POST /stories.json
   def create
+    @msg=Message.new(result: true)
     @story = Story.new(params[:story].except(:attachments))
     Attachment.add(params[:story][:attachments].values, @story) unless params[:story][:attachments].blank?
-    respond_to do |format|
-      if @story.save
-        format.html { redirect_to @story, notice: 'Story was successfully created.' }
-        format.json { render json: @story, status: :created, location: @story }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @story.errors, status: :unprocessable_entity }
-      end
-    end
+    @story.story_set=StorySet.first
+    @story.save
+    render json: @msg
   end
 
   # PUT /stories/1

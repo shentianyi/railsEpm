@@ -71,7 +71,7 @@ function close_block(event) {
 }
 
 function create_story() {
-    var story = {title: $('#story-title').text()};
+    var story = {title: $('#story-title').val()};
     var attachments = get_attachments('item-data-uploader-preview');
     if (attachments) {
         story.attachments = attachments;

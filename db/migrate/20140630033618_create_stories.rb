@@ -5,9 +5,11 @@ class CreateStories < ActiveRecord::Migration
       t.string :description
       t.references :user
       t.references :story_set
+      t.references :tenant
       t.timestamps
     end
     add_index :stories,:user_id
     add_index :stories,:story_set_id
+    add_index :stories,:tenant_id
   end
 end
