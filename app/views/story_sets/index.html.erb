@@ -1,30 +1,113 @@
-<h1>Listing Story Sets</h1>
+<div class="story-set-index">
+  <div class="left-part">
+      <div class="area">
+        <div class="header"></div>
+        <div class="title">
+          <a><i class="icon icon-folder-open"></i></a>
+          <p>All My Projects</p>
+          <a class="btn btn-primary"><i class="icon icon-plus"></i> Create project</a>
+        </div>
+        <div class="projects">
+            <div class="item">
+              <div class="left">
+                <p>一个标题</p>
+                <p>project description project description </p>
+              </div>
+              <div class="right"></div>
+            </div>
+          <div class="item">
+            <div class="left">
+              <p>一个标题</p>
+              <p>project description project description </p>
+            </div>
+            <div class="right"></div>
+          </div>
+          <div class="item">
+            <div class="left">
+              <p>一个标题</p>
+              <p>project description project description </p>
+            </div>
+            <div class="right"></div>
+          </div>
+          <div class="item">
+            <div class="left">
+              <p>一个标题</p>
+              <p>project description project description </p>
+            </div>
+            <div class="right"></div>
+          </div>
+          <div class="item">
+            <div class="left">
+              <p>一个标题</p>
+              <p>project description project description </p>
+            </div>
+            <div class="right"></div>
+          </div>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Collaborators</th>
-  </tr>
+        </div>
+      </div>
+  </div>
+  <div class="right-part">
+      <div class="area">
+        <p>Newest notification</p>
+        <div class="table">
+          <table>
+            <tr>
+              <td>project name</td>
+              <td>2014.7.1</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="area">
+        <p>The project I issued</p>
+        <div class="table">
+          <table>
+            <tr>
+              <td>project name</td>
+              <td>2014.7.1</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+  </div>
+</div>
 
-<% @story_sets.each do |story_set| %>
-  <tr>
-    <td><%= story_set.title%></td>
-    <td><%= story_set.description%></td>
-    <td>
-      <ul>
-        <% story_set.collaborators.each do |c|%>
-            <li><%= c.first_name%></li>
-        <%end%>
-      </ul>
-    </td>
-    <td><%= link_to 'Show', story_set %></td>
-    <td><%= link_to 'Edit', edit_story_set_path(story_set) %></td>
-    <td><%= link_to 'Destroy', story_set, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
 
-<br />
 
-<%= link_to 'New Story set', new_story_set_path %>
+
+
+
+
+
+
+<!--<h1>Listing Story Setdas</h1>-->
+<!--&lt;!&ndash;我参与的和我发起的项目，新建项目&ndash;&gt;-->
+<!--<table>-->
+  <!--<tr>-->
+    <!--<th>Title</th>-->
+    <!--<th>Description</th>-->
+    <!--<th>Collaborators</th>-->
+  <!--</tr>-->
+
+<!--<% @story_sets.each do |story_set| %>-->
+  <!--<tr>-->
+    <!--<td><%= story_set.title%></td>-->
+    <!--<td><%= story_set.description%></td>-->
+    <!--<td>-->
+      <!--<ul>-->
+        <!--<% story_set.collaborators.each do |c|%>-->
+            <!--<li><%= c.first_name%></li>-->
+        <!--<%end%>-->
+      <!--</ul>-->
+    <!--</td>-->
+    <!--<td><%= link_to 'Show', story_set %></td>-->
+    <!--<td><%= link_to 'Edit', edit_story_set_path(story_set) %></td>-->
+    <!--<td><%= link_to 'Destroy', story_set, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+  <!--</tr>-->
+<!--<% end %>-->
+<!--</table>-->
+
+<!--<br />-->
+
+<!--<%= link_to 'New Story set', new_story_set_path %>-->

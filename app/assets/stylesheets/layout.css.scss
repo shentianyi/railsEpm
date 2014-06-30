@@ -1,3 +1,8 @@
+@import "basic";
+.wrap-main{
+  background:$background-grey;
+  min-height:600px;
+}
 header{
   $nav-back-color:#353a46;
   $split-color:rgba(255,255,255,0.8);

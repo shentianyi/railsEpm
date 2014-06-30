@@ -79,13 +79,13 @@ $green-hover:transparentize($green,0.4);
   }
   &.btn-primary{
     background:#5fa9da;
-    //background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
-    //background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
+    background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
+    background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
     color:#fff;
     &:hover{
       background:#69aef5;
-      //background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
-      //background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
+      background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
+      background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
     }
   }
   &.btn-dark{

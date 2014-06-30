@@ -42,6 +42,7 @@
 *= require Analytics
 *= require EntryScss
 *= require layout
+*= require story_sets
 
 *= require_self
 

@@ -1,3 +1,180 @@
 // Place all the styles related to the StorySets controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "basic";
+.story-set-index{
+  height:calc(100% - 70px);
+  height:-moz-calc(100% - 70px);
+  height:-webkit-calc(100% - 70px);
+  &:after{
+    @include after-clear;
+  }
+  .left-part{
+    box-sizing:border-box;
+    float:left;
+    height:100%;
+    width:70%;
+    position:relative;
+    .area{
+      width:90%;
+      height:90%;
+      position:relative;
+      left:50%;
+      margin-left:-45%;
+      margin-top:30px;
+      border:1px solid $layout-border-color;
+      .header{
+        height:20px;
+        background:$nav-dark;
+      }
+      .title{
+        background:#fff;
+        height:135px;
+        padding-top:20px;
+        $font-color:#9d9d9d;
+        a:first-of-type{
+          display:block;
+          $width:35px;
+          width:$width;
+          height:$width;
+          @include border-radius-same($width);
+          border:1px solid $layout-border-color;
+          text-align:center;
+          line-height:$width;
+          color:$font-color;
+          margin:0px auto 0;
+        }
+        p:first-of-type{
+          text-align:center;
+          color:$font-color;
+          font-size:23px;
+        }
+        a.btn{
+          margin:15px auto 0;
+          width:210px;
+        }
+      }
+      .projects{
+        height:calc(100% - 195px);
+        height:-moz-calc(100% - 195px);
+        height:-webkit-calc(100% - 195px);
+        background:#fff;
+        position:absolute;
+        bottom:0px;
+        left:0px;
+        right:0px;
+        overflow-y:auto;
+        $margin-left:15px;
+        $width:220px;
+        $after-width:$margin-left * 2 + $width * 3;
+        padding-left:calc(50% - 345px);
+        padding-left:-moz-calc(50% - 345px);
+        padding-left:-webkit-calc(50% - 345px);
+        &:after{
+          @include after-clear;
+        }
+        .item{
+           float:left;
+           width:$width;
+          height:190px;
+          margin:20px 0 0 $margin-left;
+          border:1px solid rgba(0,0,0,0.1);
+          cursor: pointer;
+          &:hover{
+            border:1px solid $blue;
+          }
+          &:nth-of-type(3n-2){
+            margin:20px 0 0 0;
+          }
+          &:after{
+            @include after-clear;
+          }
+          .left{
+            box-sizing:border-box;
+            float:left;
+            width:60%;
+            padding-left:20px;
+            height:100%;
+            p:first-of-type{
+              margin-top:38px;
+              font-size:24px;
+              margin-bottom:5px;
+              line-height:24px;
+            }
+            p:last-of-type{
+              font-size:12px;
+              color:#9d9d9d;
+              margin:0px;
+            }
+            overflow-y:hidden;
+
+          }
+          .right{
+            box-sizing:border-box;
+            float:left;
+            width:40%;
+            background:url(project-item.png) center 0px;
+            height:100%;
+          }
+        }
+      }
+    }
+
+  }
+  .right-part{
+    box-sizing:border-box;
+    float:left;
+    height:100%;
+    width:30%;
+    border-left:1px solid $layout-border-color;
+    .area{
+      height:50%;
+      box-sizing:border-box;
+      padding-top:20px;
+      p{
+        padding:2px 8px;
+        height:24px;
+        margin-bottom:8px;
+        font-size:17px;
+        color:$nav-dark;
+        position:relative;
+        &:after{
+          content:"";
+          position:absolute;
+          bottom:0px;
+          height:1px;
+          background:$nav-dark;
+          left:8px;
+          right:8px;
+        }
+      }
+      &:nth-of-type(2){
+        .table{
+          height:calc(100% - 36px);
+          height:-moz-calc(100% - 36px);
+          height:-webkit-calc(100% - 36px);
+        }
+      }
+      .table{
+        overflow-y:auto;
+        //background:#fff;
+        height:calc(100% - 36px);
+        height:-moz-calc(100% - 36px);
+        height:-webkit-calc(100% - 36px);
+        table{
+          width:100%;
+          tr{
+            td:first-of-type{
+              width:calc(100% - 100px);
+              width:-moz-calc(100% - 100px);
+              width:-webkit-calc(100% - 100px);
+            }
+            td:last-of-type{
+              width:100px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
