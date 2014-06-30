@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20140630040235) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
+    t.integer  "tenant_id"
     t.string   "content"
     t.integer  "commentable_id"
     t.string   "commentable_type"
@@ -76,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20140630040235) do
     t.datetime "updated_at",       :null => false
   end
 
+  add_index "comments", ["tenant_id"], :name => "index_comments_on_tenant_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "contacts", :force => true do |t|
@@ -372,11 +374,13 @@ ActiveRecord::Schema.define(:version => 20140630040235) do
     t.string   "description"
     t.integer  "user_id"
     t.integer  "story_set_id"
+    t.integer  "tenant_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
 
   add_index "stories", ["story_set_id"], :name => "index_stories_on_story_set_id"
+  add_index "stories", ["tenant_id"], :name => "index_stories_on_tenant_id"
   add_index "stories", ["user_id"], :name => "index_stories_on_user_id"
 
   create_table "story_set_users", :force => true do |t|
@@ -392,13 +396,15 @@ ActiveRecord::Schema.define(:version => 20140630040235) do
   create_table "story_sets", :force => true do |t|
     t.string   "title"
     t.integer  "user_id"
+    t.integer  "tenant_id"
     t.string   "description"
-    t.boolean  "email_alert"
-    t.boolean  "sms_alert"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.boolean  "email_alert", :default => true
+    t.boolean  "sms_alert",   :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
+  add_index "story_sets", ["tenant_id"], :name => "index_story_sets_on_tenant_id"
   add_index "story_sets", ["user_id"], :name => "index_story_sets_on_user_id"
 
   create_table "tenants", :force => true do |t|
