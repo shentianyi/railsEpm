@@ -9,11 +9,9 @@ class Attachment < ActiveRecord::Base
   after_destroy :delete_attach_file
 
   # this method can be used to add attachemts
-  def self.add attachments, attachable
+  def self.add attachments, attachable, oss=true
     unless attachments.blank?
       attachments.each do |att|
-        puts att
-        puts att[:pathName]
         att.symbolize_keys! if att.respond_to?(:symbolize_keys!)
         path = File.join($AttachTmpPath, att[:pathName])
         size = FileData.get_size(path)

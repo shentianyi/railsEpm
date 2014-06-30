@@ -1,5 +1,5 @@
 class StoriesController < ApplicationController
-  before_filter :get_ability_category,:get_kpis_by_category,:get_user_entity_groups, :only => [:index,:new]
+  before_filter :get_ability_category, :get_kpis_by_category, :get_user_entity_groups, :only => [:index, :new]
   # GET /stories
   # GET /stories.json
   def index
@@ -15,6 +15,7 @@ class StoriesController < ApplicationController
   def show
     @story = Story.find(params[:id])
     @comments=CommentPresenter.init_presenters(Comment.detail_by_commentable(@story).all)
+    @chart_conditions=ChartConditionPresenter.init_presenters(ChartCondition.detail_by_chartable(@story).all)
     render partial: 'detail'
   end
 
@@ -39,12 +40,12 @@ class StoriesController < ApplicationController
   # POST /stories.json
   def create
     @msg=Message.new(result: true)
-    @story = Story.new(params[:story].except(:attachments,:chart_conditions))
+    @story = Story.new(params[:story].except(:attachments, :chart_conditions))
     @story.user=current_user
     Attachment.add(params[:story][:attachments].values, @story) unless params[:story][:attachments].blank?
     unless params[:story][:chart_conditions].blank?
-      params[:story][:chart_conditions].each do |index,c|
-        StoryService.add_chart_condition(c,@story)
+      params[:story][:chart_conditions].each do |index, c|
+        StoryService.add_chart_condition(c, @story)
       end
     end
     @story.save
