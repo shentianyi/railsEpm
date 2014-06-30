@@ -41,6 +41,7 @@
 *= require Manage-attribute
 *= require Analytics
 *= require EntryScss
+*= require layout
 
 *= require_self
 

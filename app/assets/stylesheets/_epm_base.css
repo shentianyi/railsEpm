@@ -82,10 +82,9 @@ body{
 *******************************************************************************************************************/
 header{
     height:70px;
-    background-color:#f2f2f2;
     z-index:30;
     position:relative;
-    background-color:#5fa9da;
+    background-color:#272a32;
     box-shadow:0 2px 5px rgba(71, 71, 71, 0.3);
     -moz-shadow:0 2px 5px rgba(71, 71, 71, 0.3);
     -webki-shadow:0 2px 5px rgba(71, 71, 71, 0.3);
@@ -134,7 +133,6 @@ nav>ul>li.active a span{
 nav>ul>li>a{
     display:block;
 
-    color:white;
     font-size:13px;
     height:46px;
     text-align:center;

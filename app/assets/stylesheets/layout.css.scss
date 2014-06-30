@@ -1,0 +1,35 @@
+header{
+  $nav-back-color:#353a46;
+  $split-color:rgba(255,255,255,0.8);
+  background:$nav-back-color;
+  nav{
+    ul{
+      li{
+        .nav-manage-sub{
+          background:$nav-back-color;
+        }
+        a{
+          span{
+            color:rgba(255,255,255,0.9);
+            &:nth-of-type(1){
+              padding:3px 7px;
+            }
+          }
+
+        }
+        &:nth-last-of-type(2){
+          a{
+            span{
+              border-left:2px solid $split-color;
+            }
+          }
+        }
+      }
+    }
+  }
+  .nav-user-part{
+    .empty{
+      border-left:2px solid $split-color;
+    }
+  }
+}
