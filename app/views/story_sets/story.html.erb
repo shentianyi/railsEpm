@@ -1,3 +1,6 @@
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "highcharts.js" %>
+<% end %>
 <h1>Listing stories</h1>
 <!--mockup-->
 <table>
@@ -28,9 +31,6 @@
 </div>
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag 'magnific.popup/jquery.magnific-popup.min' %>
-    <%= javascript_include_tag "highcharts.js"%>
-    <%= javascript_include_tag "high_chart_template_analytic.js"%>
-    <%= javascript_include_tag "Analytics_init.js"%>
 <% end %>
 <script type="text/javascript">
     $(function () {

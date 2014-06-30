@@ -20,17 +20,14 @@
       </div>
   <% end %>
 </div>
-<% content_for :javascript_includes do%>
-    <%= javascript_include_tag "highcharts.js"%>
-    <%= javascript_include_tag "high_chart_template_analytic.js"%>
-    <%= javascript_include_tag "Analytics_init.js"%>
-<%end%>
+
 <script>
     $(document).ready(function () {
         for (var i = 0; i < $('.chart-conditions').children().length; i++)
             prepare_form_cchart(i);
     });
     function prepare_form_cchart(i) {
+        alert()
         var data = jQuery.parseJSON($("#data-hidden-"+i).val());
         var kpi = $("#kpi-id-hidden-"+i).val();
         var kpi_name = $("#kpi-name-hidden-"+i).val();
