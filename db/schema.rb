@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140414075405) do
+ActiveRecord::Schema.define(:version => 20140630033618) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -342,6 +342,40 @@ ActiveRecord::Schema.define(:version => 20140414075405) do
 
   add_index "oauth_applications", ["owner_id", "owner_type"], :name => "index_oauth_applications_on_owner_id_and_owner_type"
   add_index "oauth_applications", ["uid"], :name => "index_oauth_applications_on_uid", :unique => true
+
+  create_table "stories", :force => true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.integer  "user_id"
+    t.integer  "story_set_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "stories", ["story_set_id"], :name => "index_stories_on_story_set_id"
+  add_index "stories", ["user_id"], :name => "index_stories_on_user_id"
+
+  create_table "story_set_users", :force => true do |t|
+    t.integer  "story_set_id"
+    t.integer  "user_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "story_set_users", ["story_set_id"], :name => "index_story_set_users_on_story_set_id"
+  add_index "story_set_users", ["user_id"], :name => "index_story_set_users_on_user_id"
+
+  create_table "story_sets", :force => true do |t|
+    t.string   "title"
+    t.integer  "user_id"
+    t.string   "description"
+    t.boolean  "email_alert"
+    t.boolean  "sms_alert"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "story_sets", ["user_id"], :name => "index_story_sets_on_user_id"
 
   create_table "tenants", :force => true do |t|
     t.string   "company_name",           :null => false

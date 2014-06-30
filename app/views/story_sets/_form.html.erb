@@ -1,0 +1,17 @@
+<%= form_for(@story_set) do |f| %>
+  <% if @story_set.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@story_set.errors.count, "error") %> prohibited this story_set from being saved:</h2>
+
+      <ul>
+      <% @story_set.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

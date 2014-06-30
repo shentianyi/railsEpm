@@ -7,7 +7,6 @@ class User < ActiveRecord::Base
   has_many :user_departments, :dependent => :destroy
   has_many :departments, :through => :user_departments
   has_many :create_departs, :class_name => 'Department'
-
   has_many :user_entity_groups, :dependent => :destroy
   has_many :entity_groups, :through => :user_entity_groups
   has_many :kpis, :through => :user_kpi_items
@@ -15,6 +14,9 @@ class User < ActiveRecord::Base
   has_many :entity_contacts
   #has_many :kpi_entries, :through => :user_kpi_items
   has_many :emails, :dependent => :destroy
+  #
+  has_many :story_sets, :dependent => :destroy
+  has_many :stories, :dependent => :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
