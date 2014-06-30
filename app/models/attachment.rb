@@ -4,7 +4,7 @@ class Attachment < ActiveRecord::Base
   self.inheritance_column = nil
   belongs_to :attachable, :polymorphic => true
 
-  attr_accessible :name, :path, :size, :type, :attachable_id, :attachable_type,:pathname
+  attr_accessible :name, :path, :size, :type, :attachable_id, :attachable_type, :pathname
 
   after_destroy :delete_attach_file
 
@@ -24,6 +24,11 @@ class Attachment < ActiveRecord::Base
       end
     end
     return attachable.attachments
+  end
+
+
+  def is_image?
+    self.type=='image'
   end
 
   private

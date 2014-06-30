@@ -77,7 +77,7 @@ function create_story() {
         story.attachments = attachments;
     }
     $.post('/stories', {story: story}, function (data) {
-
+        alert('Create Success')
     });
 }
 
@@ -85,9 +85,28 @@ function get_attachments(id) {
     var attachments = null;
     if ($('#' + id).children().length > 0) {
         attachments = [];
-        $('#item-data-uploader-preview').children().each(function () {
+        $('#' + id).children().each(function () {
             attachments.push({oriName: $(this).text(), pathName: $(this).attr('path-name')});
         });
     }
     return attachments;
+}
+
+function init_story_page() {
+    $('body').on('click', '.show-story-detail-a', function () {
+        $.get('/stories/' + $(this).attr('story'), function (data) {
+            $('#story-content').html(data);
+        }, 'html');
+    })
+}
+
+function create_comment() {
+    var comment = {content: $("#comment-content").val() };
+    var attachments = get_attachments('comment-item-data-uploader-preview');
+    if (attachments) {
+        comment.attachments = attachments;
+    }
+    $.post('/stories/' + $('#current-story').val() + '/comment', {comment: comment}, function (data) {
+        alert('Comment Success')
+    });
 }

@@ -87,7 +87,7 @@ class StorySetsController < ApplicationController
   def story
     @stories=[]
     if @story_set=StorySet.find_by_id(params[:id])
-      @stories=@story_set.stories
+      @stories=StoryPresenter.init_presenters(Story.detail_by_set_id(@story_set.id).all)
     end
   end
 end
