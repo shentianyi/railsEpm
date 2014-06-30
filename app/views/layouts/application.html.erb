@@ -30,19 +30,19 @@
 <script type="text/javascript">
     I18n.defaultLocale = "<%= I18n.default_locale %>";
     I18n.locale = "<%= I18n.locale %>";
-    $.ajaxSetup({
-        statusCode: {
-            403: function () {
-                location.href='/403';
-            },
-            404: function () {
-                location.href='/404';
-            },
-            500:function(){
-                location.href='/500';
-            }
-        }
-    });
+//    $.ajaxSetup({
+//        statusCode: {
+//            403: function () {
+//                location.href='/403';
+//            },
+//            404: function () {
+//                location.href='/404';
+//            },
+//            500:function(){
+//                location.href='/500';
+//            }
+//        }
+//    });
 </script>
 <%= yield :javascript_includes %>
 </html>

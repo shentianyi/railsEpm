@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
   #
   has_many :story_sets, :dependent => :destroy
   has_many :stories, :dependent => :destroy
+  has_many :story_set_users
+  has_many :collaborated_story_sets, :through => :story_set_users
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

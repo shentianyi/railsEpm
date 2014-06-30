@@ -1,5 +1,24 @@
 <h1>New story</h1>
 
-<%= render 'form' %>
+<div>
+  title: <input type="text" id="story-title">
 
+  <div>
+    <span>附件：</span>
+    <input id="item-data-uploader" type="file" name="files[]" multiple="true"  data-url="/files/upload">
+
+    <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
+  </div>
+  <input type="button" value="Create Story" onclick="create_story()">
+</div>
 <%= link_to 'Back', stories_path %>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
+    <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
+    <%= javascript_include_tag "story_attachment.js" %>
+<% end %>
+<script type="text/javascript">
+    $(function () {
+        attach_upload("item-data-uploader");
+    });
+</script>

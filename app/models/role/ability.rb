@@ -8,7 +8,7 @@ class Ability
     if user.admin?
       can :manage, [User, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem,
                     UserKpiItem, UserSession, Dashboard, DashboardItem, DashboardCondition, Email,
-                    KpiProperty, KpiPropertyItem, KpiPropertyValue]
+                    KpiProperty, KpiPropertyItem, KpiPropertyValue,Story,StorySet,StorySetUser]
       can :manage, UserSession, :email => user.email
 
       can :read, EntityGroup, user_entity_groups: {user_id: user.id}
@@ -21,7 +21,7 @@ class Ability
       #can :read,:all
     elsif user.director?
       can :manage, [EntityGroupItem, UserKpiItem, KpiEntry, Dashboard, DashboardItem, DashboardCondition, Email,
-                    KpiProperty, KpiPropertyItem, KpiPropertyValue]
+                    KpiProperty, KpiPropertyItem, KpiPropertyValue,Story,StorySet,StorySetUser]
       can :manage, User, :id => user.id
 
       can :manage, UserSession, :email => user.email
