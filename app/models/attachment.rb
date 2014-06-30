@@ -3,7 +3,7 @@ class Attachment < ActiveRecord::Base
   # attr_accessible :title, :body
   self.inheritance_column = nil
   belongs_to :attachable, :polymorphic=>true
-  has_many :comments, :as=> :commentable, :depentent => :destroy
+  has_many :comments, :as=> :commentable, :dependent => :destroy
 
   attr_accessible :name, :path, :size, :type, :attachable_id, :attachable_type,:pathname
 

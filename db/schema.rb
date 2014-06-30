@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140630035229) do
+ActiveRecord::Schema.define(:version => 20140630040235) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -66,6 +66,17 @@ ActiveRecord::Schema.define(:version => 20140630035229) do
   end
 
   add_index "chart_conditions", ["kpi_id"], :name => "index_chart_conditions_on_kpi_id"
+
+  create_table "comments", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "content"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "contacts", :force => true do |t|
     t.string   "name"
