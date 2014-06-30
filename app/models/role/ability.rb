@@ -35,7 +35,7 @@ class Ability
       can :basic_modify, UserEntityGroup, entity_group: {user_id: user.id}
 
       can :read, KpiCategory, kpis: {department_kpis: {department_id: user.user_departments.pluck(:department_id)}}
-      can [:read, :access, :categoried, :properties,:group_properties], Kpi, department_kpis: {department_id: user.user_departments.pluck(:department_id)}
+      can [:read, :access,:access_list,:categoried, :properties,:group_properties], Kpi, department_kpis: {department_id: user.user_departments.pluck(:department_id)}
       can :read, Department, user_id: user.id
       can [:read, :property_value], KpiProperty
       can :read, [KpiPropertyItem, KpiPropertyValue]
@@ -50,7 +50,7 @@ class Ability
       can :basic_modify, EntityGroupItem, user_id: user.id
 
       can :read, KpiCategory, kpis: {user_kpi_items: {user_id: user.id}}
-      can [:read, :categoried, :access, :properties,:group_properties], Kpi, user_kpi_items: {user_id: user.id}
+      can [:read, :categoried, :access, :access_list,:properties,:group_properties], Kpi, user_kpi_items: {user_id: user.id}
 
       can :manage, UserKpiItem, :user_id => user.id
       can :manage, KpiEntry, :user_id => user.id

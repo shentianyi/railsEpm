@@ -154,6 +154,10 @@ class KpisController < ApplicationController
     render :partial => 'list'
   end
 
+  def subscribe
+
+  end
+
   def access_list
     get_kpis_by_category params[:id]
     render :partial => 'access'
