@@ -632,8 +632,8 @@ ANALYTICS.proper_type_for_chart=function(){
     if(obj.changeType){
         p.data=ANALYTICS.chartSeries.series[p.id][obj.interval];
     }
-    console.log(p.id)
-    console.log(p.data)
+//    console.log(p.id)
+//    console.log(p.data)
 
     var new_series=deepCopy(p,c);
     if(this.type=="column"){

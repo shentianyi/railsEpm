@@ -584,7 +584,7 @@ DASHBOARD.add.change_interval=function(option) {
                     entity_group_id: series_object.view,
                     start_time : standardParse(series_object.begin_time).date.toISOString() ,
                     end_time : standardParse(series_object.end_time).date.toISOString(),
-                    frequency: option.interval,
+                    frequency: option.interval
 
                 },
                 type:'POST',
