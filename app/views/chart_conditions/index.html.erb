@@ -1,0 +1,21 @@
+<h1>Listing chart_conditions</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @chart_conditions.each do |chart_condition| %>
+  <tr>
+    <td><%= link_to 'Show', chart_condition %></td>
+    <td><%= link_to 'Edit', edit_chart_condition_path(chart_condition) %></td>
+    <td><%= link_to 'Destroy', chart_condition, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Chart condition', new_chart_condition_path %>

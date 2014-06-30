@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140630033618) do
+ActiveRecord::Schema.define(:version => 20140630035229) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -53,6 +53,19 @@ ActiveRecord::Schema.define(:version => 20140630033618) do
 
   add_index "attachments", ["attachable_id"], :name => "index_attachments_on_attachable_id"
   add_index "attachments", ["attachable_type"], :name => "index_attachments_on_attachable_type"
+
+  create_table "chart_conditions", :force => true do |t|
+    t.string   "entity_group"
+    t.string   "kpi_id"
+    t.string   "calculate_type"
+    t.string   "time_string"
+    t.integer  "chartable_id"
+    t.string   "chartable_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "chart_conditions", ["kpi_id"], :name => "index_chart_conditions_on_kpi_id"
 
   create_table "contacts", :force => true do |t|
     t.string   "name"
