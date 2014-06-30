@@ -1,5 +1,23 @@
 <p id="notice"><%= notice %></p>
+<p>
+  <b>Title:</b>
+  <%= @story.title %>
+</p>
+<input type="hidden" id="current-story" value="<%= @story.id %>">
+<div>
+  <p>Comment:</p>
 
+  <div>
+    <textarea id="comment-content" rows="3" cols="20"></textarea>
+  </div>
+  <div>
+    <div>
+      <p>Attachment</p>
+      <input id="comment-item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
 
-<%= link_to 'Edit', edit_story_path(@story) %> |
-<%= link_to 'Back', stories_path %>
+      <div class="abstractblock" id="comment-item-data-uploader" style="display:none;"></div>
+    </div>
+  </div>
+  <input type="button" onclick="create_comment();">
+</div>
+

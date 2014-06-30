@@ -1,4 +1,5 @@
 class StoriesController < ApplicationController
+  before_filter :get_ability_category,:get_kpis_by_category,:get_user_entity_groups, :only => [:index,:new]
   # GET /stories
   # GET /stories.json
   def index
@@ -13,16 +14,14 @@ class StoriesController < ApplicationController
   # GET /stories/1.json
   def show
     @story = Story.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @story }
-    end
+    @comments=CommentPresenter.init_presenters(Comment.detail_by_commentable(@story).all)
+    render partial: 'detail'
   end
 
   # GET /stories/new
   # GET /stories/new.json
   def new
+
     @story = Story.new
 
     respond_to do |format|
@@ -40,10 +39,16 @@ class StoriesController < ApplicationController
   # POST /stories.json
   def create
     @msg=Message.new(result: true)
-    @story = Story.new(params[:story].except(:attachments))
+    @story = Story.new(params[:story].except(:attachments,:chart_conditions))
+    @story.user=current_user
     Attachment.add(params[:story][:attachments].values, @story) unless params[:story][:attachments].blank?
-    @story.story_set=StorySet.first
+    unless params[:story][:chart_conditions].blank?
+      params[:story][:chart_conditions].each do |index,c|
+        StoryService.add_chart_condition(c,@story)
+      end
+    end
     @story.save
+    @msg.content=@story
     render json: @msg
   end
 
@@ -76,4 +81,17 @@ class StoriesController < ApplicationController
   end
 
 
+  def comment
+    @msg=Message.new
+    if @story= Story.find_by_id(params[:id])
+      @comment=Comment.new(params[:comment].except(:attachments))
+      @comment.commentable=@story
+      @comment.user=current_user
+      Attachment.add(params[:comment][:attachments].values, @comment) unless params[:comment][:attachments].blank?
+      @comment.save
+      @msg.content=@comment
+      @msg.result=true
+    end
+    render json: @msg
+  end
 end

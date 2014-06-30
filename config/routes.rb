@@ -5,7 +5,11 @@ IFEpm::Application.routes.draw do
   resources :chart_conditions
 
 
-  resources :stories
+  resources :stories do
+    member do
+      post :comment
+    end
+  end
 
 
   resources :story_sets do
@@ -71,6 +75,7 @@ IFEpm::Application.routes.draw do
       post :add
       put :update
       get :applications
+      get :fast_search
     end
   end
 

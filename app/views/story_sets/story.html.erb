@@ -2,20 +2,39 @@
 <!--mockup-->
 <table>
   <tr>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>User</th>
+    <th>Title</th>
   </tr>
 
-<% @stories.each do |story| %>
-  <tr>
-    <td><%= link_to 'Show', story %></td>
-    <td><%= link_to 'Edit', edit_story_path(story) %></td>
-    <td><%= link_to 'Destroy', story, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+  <% @stories.each do |story| %>
+      <tr>
+        <td>
+          <image src='<%= story.user_avatar %>' width='50px'/>
+          <span><%= story.user_name %></span>
+        </td>
+        <td>
+          <a href="#" story='<%= story.id %>' class='show-story-detail-a'>
+            <%= story.title %>
+          </a>
+        </td>
+      </tr>
+  <% end %>
 </table>
+<hr/>
+<%= render partial: 'stories/create' %>
+<h3>Story Detail</h3>
+<div id="story-content-div">
 
-<br />
-
-<%= link_to 'New Story', new_story_path %>
+</div>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag 'magnific.popup/jquery.magnific-popup.min' %>
+<% end %>
+<script type="text/javascript">
+    $(function () {
+        init_story_page();
+    });
+</script>
+<% content_for :stylesheet_includes do %>
+    <%= stylesheet_link_tag 'magnific.popup/magnific-popup' %>
+<% end %>
+<input type="hidden" value="<%= @story_set.id %>" id="current_story_set">

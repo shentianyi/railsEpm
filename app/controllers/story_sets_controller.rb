@@ -1,4 +1,5 @@
 class StorySetsController < ApplicationController
+  before_filter :get_ability_category, :get_kpis_by_category, :get_user_entity_groups, :only => [:story]
   # GET /story_sets
   # GET /story_sets.json
   def index
@@ -43,7 +44,7 @@ class StorySetsController < ApplicationController
   def create
     @story_set = StorySet.new(params[:story_set])
     @story_set.user = current_user
-    @story_set.story_set_users = StorySetService.generate_story_set_user(params[:users])
+    @story_set.collaborators = StorySetService.gen_collaborators(params[:users])
 
     respond_to do |format|
       if @story_set.save
@@ -87,7 +88,7 @@ class StorySetsController < ApplicationController
   def story
     @stories=[]
     if @story_set=StorySet.find_by_id(params[:id])
-      @stories=@story_set.stories
+      @stories=StoryPresenter.init_presenters(Story.detail_by_set_id(@story_set.id).all)
     end
   end
 end

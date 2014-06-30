@@ -1,0 +1,20 @@
+<div id="user-select-div">
+  <select data-placeholder="Select User...." style="width:130px;" multiple class="chosen-select" id="user-select">
+  </select>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#user-select-div').on('keyup', 'input', function () {
+            console.log($(this).val());
+            var val = $("#user-select").chosen().val();
+            $.get('/users/fast_search', {q: $(this).val()}, function (data) {
+//                $("#user-select").empty();
+                for (var i = 0; i < data.length; i++) {
+                    $("#user-select").append($("<option />").attr("value", data[i].id).text(data[i].name));
+                }
+                $("#user-select").chosen().trigger('chosen:updated');
+            }, 'json');
+            val = $("#user-select").chosen().val();
+        });
+    });
+</script>
