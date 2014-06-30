@@ -2,8 +2,7 @@ class StoriesController < ApplicationController
   # GET /stories
   # GET /stories.json
   def index
-    @stories = Story.all
-
+    @stories = current_user.stories
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @stories }
@@ -40,8 +39,8 @@ class StoriesController < ApplicationController
   # POST /stories
   # POST /stories.json
   def create
-    @story = Story.new(params[:story])
-
+    @story = Story.new(params[:story].except(:attachments))
+    Attachment.add(params[:story][:attachments].values, @story) unless params[:story][:attachments].blank?
     respond_to do |format|
       if @story.save
         format.html { redirect_to @story, notice: 'Story was successfully created.' }
@@ -80,4 +79,6 @@ class StoriesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
 end

@@ -2,7 +2,8 @@ class StorySetsController < ApplicationController
   # GET /story_sets
   # GET /story_sets.json
   def index
-    @story_sets = StorySet.all
+    @story_sets = current_user.story_sets
+    @collaborated_story_sets=current_user.collaborated_story_sets
 
     respond_to do |format|
       format.html # index.html.erb
@@ -80,6 +81,13 @@ class StorySetsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to story_sets_url }
       format.json { head :no_content }
+    end
+  end
+
+  def story
+    @stories=[]
+    if @story_set=StorySet.find_by_id(params[:id])
+      @stories=@story_set.stories
     end
   end
 end

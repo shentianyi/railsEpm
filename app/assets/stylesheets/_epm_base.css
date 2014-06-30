@@ -530,3 +530,78 @@ nav ul li a:hover ~ .nav-manage-sub{
     width: 38px; /* Width of image */
     background: url('/assets/top.png') no-repeat;
 }
+
+.atta-line{
+    margin-bottom:8px;
+    min-height:15px;
+    border:2px dashed #ddd;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    padding:5px;
+    min-width:200px;
+    max-height:352px;
+    overflow-y:scroll;
+}
+.attachment-item{
+    margin-right:5px;
+    cursor:pointer;
+}
+.attachment-sign{
+    position:relative;
+    width:60px;
+    height:65px;
+    background-position:center top;
+    background-repeat:no-repeat;
+}
+.attachment-p{
+    width:60px;
+    word-break:break-all;
+    word-wrap:break-word;
+    margin-bottom:0px;
+    margin-top:-1px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size:13px;
+}
+.attachment-sign:hover .attachment-operate{
+    display:block
+}
+.atta-image{
+    /*background-image:url("../images/atta-jpg.png");*/
+    background-image:url("/assets/atta-jpg.png")
+}
+.atta-doc{
+    /*background-image:url("../images/atta-doc.png")*/
+    background-image:url("/assets/atta-doc.png")
+}
+.atta-pdf{
+    /*background-image:url("../images/atta-pdf.png")*/
+    background-image:url("/assets/atta-pdf.png")
+}
+.atta-excel{
+    /*background-image:url("../images/atta-excel.png")*/
+    background-image:url("/assets/atta-excel.png")
+}
+.atta-rar{
+    /*background-image:url("../images/atta-rar.png")*/
+    background-image:url("/assets/atta-rar.png")
+}
+.atta-zip{
+    /*background-image:url("../images/atta-zip.png")*/
+    background-image:url("/assets/atta-zip.png")
+}
+.atta-default{
+    /*background-image:url("../images/atta-default.png")*/
+    background-image:url("/assets/atta-default.png")
+}
+.attachment-operate{
+    position:absolute;
+    bottom:0;
+    background-color:black;
+    opacity:0.6;
+    width:100%;
+    height:15px;
+    display:none;
+}

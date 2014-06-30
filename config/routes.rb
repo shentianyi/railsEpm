@@ -8,13 +8,17 @@ IFEpm::Application.routes.draw do
   resources :stories
 
 
-  resources :story_sets
+  resources :story_sets do
+    member do
+      get :story
+    end
+  end
 
 
   resources :kpi_properties
 
   require 'sidekiq/web'
-  authenticate :user, lambda {|u| u.is_sys } do
+  authenticate :user, lambda { |u| u.is_sys } do
     mount Sidekiq::Web => '/sidekiq'
   end
 
