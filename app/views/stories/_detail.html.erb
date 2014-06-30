@@ -1,8 +1,25 @@
 <p id="notice"><%= notice %></p>
-<p>
+<div>
   <b>Title:</b>
   <%= @story.title %>
-</p>
+  <div>
+    <p>Attachments:</p>
+    <% @story.attachments.each do |attach| %>
+        <div class="attachment-item inline-block" title="<%= attach.name %>">
+          <div class="attachment-sign atta-<%= attach.type %>" href="<%= attach.path %>">
+            <a href="<%= attach.path %>" class='attach-download' target="_blank">
+              <div class="attachment-operate" title="下载">
+                <i class="icon-arrow-down icon-white pointer pull-right"> </i>
+              </div>
+            </a>
+          </div>
+          <p class="attachment-p">
+            <%= attach.name %>
+          </p>
+        </div>
+    <% end %>
+  </div>
+</div>
 <p>Comments</p>
 
 <% @comments.each_with_index do |comment, i| %>
@@ -26,7 +43,7 @@
               <%= attach.name %>
             </p>
           </div>
-      <% end if comment.attachments.count>0 %>
+      <% end %>
     </div>
 <% end %>
 <input type="hidden" id="current-story" value="<%= @story.id %>">

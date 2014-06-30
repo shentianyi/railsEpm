@@ -1,5 +1,5 @@
 <section class="solid">
-  <a class="btn btn-primary" id="add-dashboard-show"></a>
+  <a class="btn btn-primary" id="add-dashboard-show">Create Story</a>
 </section>
 
 <div class="dashboard-add-wrap" id="dashboard-add-wrap">
@@ -35,11 +35,11 @@
         <a class="btn btn-primary" id="add-one-series"><%= t 'dashboard_group.dashboard.add_series' %></a>
       </section>
       <!--附件-->
-      <section class="solid">
-        <h3>Attachment</h3>
-        <input id="item-data-uploader" type="file" name="files[]" multiple="true"  data-url="/files/upload">
+      <div>
+        <p>Attachment</p>
+        <input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
         <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
-      </section>
+      </div>
       <!--添加Story-->
       <section class="solid">
         <a class="btn btn-primary" onclick="create_story()">Add Message</a>
@@ -84,7 +84,7 @@
           </div>
           <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px;margin-left:0px" id="db-add-chart">Add</a>
         </div>
-        <i class="icon-chevron-down analytic-control-condition-visible" id="analytic-control-condition-visible" state="close"> </i>
+        <i class="icon-chevron-down analytic-control-condition-visible" id="analytic-control-condition-visible" state="open"> </i>
       </div>
       <div class="db-chart-body" id="db-chart-body">
         <div class="clearfix" id="db-chart-interval-alternate" my_height="28">

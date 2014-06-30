@@ -114,7 +114,7 @@ function get_attachments(id) {
 function init_story_page() {
     $('body').on('click', '.show-story-detail-a', function () {
         $.get('/stories/' + $(this).attr('story'), function (data) {
-            $('#story-content').html(data);
+            $('#story-content-div').html(data);
         }, 'html');
     })
 }

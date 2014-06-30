@@ -21,37 +21,20 @@
   <% end %>
 </table>
 <hr/>
-<div style="background: yellow">
-  <h1>Create story</h1>
-  <div>
-    title: <input type="text" id="story-title">
-    <div>
-      <p>Attachment</p>
-      <input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
-
-      <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
-    </div>
-    <input type="button" value="Create Story" onclick="create_story()">
-    <input type="hidden" value="<%= @story_set.id %>" id="current_story_set">
-  </div>
-  <hr/>
-</div>
+<%= render partial: 'stories/create' %>
 <h3>Story Detail</h3>
-<div id="story-content">
+<div id="story-content-div">
 
 </div>
 <% content_for :javascript_includes do %>
-    <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
-    <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
-    <%= javascript_include_tag "story_manage.js" %>
     <%= javascript_include_tag 'magnific.popup/jquery.magnific-popup.min' %>
 <% end %>
 <script type="text/javascript">
     $(function () {
-        attach_upload("item-data-uploader");
         init_story_page();
     });
 </script>
 <% content_for :stylesheet_includes do %>
     <%= stylesheet_link_tag 'magnific.popup/magnific-popup' %>
 <% end %>
+<input type="hidden" value="<%= @story_set.id %>" id="current_story_set">
