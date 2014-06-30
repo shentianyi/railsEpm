@@ -1,0 +1,30 @@
+<h1>Listing Story Sets</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Collaborators</th>
+  </tr>
+
+<% @story_sets.each do |story_set| %>
+  <tr>
+    <td><%= story_set.title%></td>
+    <td><%= story_set.description%></td>
+    <td>
+      <ul>
+        <% story_set.collaborators.each do |c|%>
+            <li><%= c.first_name%></li>
+        <%end%>
+      </ul>
+    </td>
+    <td><%= link_to 'Show', story_set %></td>
+    <td><%= link_to 'Edit', edit_story_set_path(story_set) %></td>
+    <td><%= link_to 'Destroy', story_set, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Story set', new_story_set_path %>

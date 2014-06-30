@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140414075405) do
+ActiveRecord::Schema.define(:version => 20140630040235) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -53,6 +53,32 @@ ActiveRecord::Schema.define(:version => 20140414075405) do
 
   add_index "attachments", ["attachable_id"], :name => "index_attachments_on_attachable_id"
   add_index "attachments", ["attachable_type"], :name => "index_attachments_on_attachable_type"
+
+  create_table "chart_conditions", :force => true do |t|
+    t.string   "entity_group"
+    t.string   "kpi_id"
+    t.string   "calculate_type"
+    t.string   "time_string"
+    t.integer  "chartable_id"
+    t.string   "chartable_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "chart_conditions", ["kpi_id"], :name => "index_chart_conditions_on_kpi_id"
+
+  create_table "comments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "tenant_id"
+    t.string   "content"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "comments", ["tenant_id"], :name => "index_comments_on_tenant_id"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "contacts", :force => true do |t|
     t.string   "name"
@@ -342,6 +368,44 @@ ActiveRecord::Schema.define(:version => 20140414075405) do
 
   add_index "oauth_applications", ["owner_id", "owner_type"], :name => "index_oauth_applications_on_owner_id_and_owner_type"
   add_index "oauth_applications", ["uid"], :name => "index_oauth_applications_on_uid", :unique => true
+
+  create_table "stories", :force => true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.integer  "user_id"
+    t.integer  "story_set_id"
+    t.integer  "tenant_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "stories", ["story_set_id"], :name => "index_stories_on_story_set_id"
+  add_index "stories", ["tenant_id"], :name => "index_stories_on_tenant_id"
+  add_index "stories", ["user_id"], :name => "index_stories_on_user_id"
+
+  create_table "story_set_users", :force => true do |t|
+    t.integer  "story_set_id"
+    t.integer  "user_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "story_set_users", ["story_set_id"], :name => "index_story_set_users_on_story_set_id"
+  add_index "story_set_users", ["user_id"], :name => "index_story_set_users_on_user_id"
+
+  create_table "story_sets", :force => true do |t|
+    t.string   "title"
+    t.integer  "user_id"
+    t.integer  "tenant_id"
+    t.string   "description"
+    t.boolean  "email_alert", :default => true
+    t.boolean  "sms_alert",   :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  add_index "story_sets", ["tenant_id"], :name => "index_story_sets_on_tenant_id"
+  add_index "story_sets", ["user_id"], :name => "index_story_sets_on_user_id"
 
   create_table "tenants", :force => true do |t|
     t.string   "company_name",           :null => false

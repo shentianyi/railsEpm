@@ -1,0 +1,22 @@
+<h1>New story_set</h1>
+
+<label>Title:</label>
+<input id="storyset-title" type="text" placeholder="title"/>
+<br/>
+<label>Description:</label>
+<input id="storyset-description" type="text" placeholder="description" />
+<br/>
+<select id="storyset-users" multiple size="10">
+  <% User.by_role(300).each do |u|%>
+  <option user="<%= u.id%>"><%= u.first_name%></option>
+  <% end %>
+</select>
+<br/>
+<input id="storyset-create" type="button" value="Create" onclick="MANAGE.story_set.create()">
+<br/>
+
+<%= link_to 'Back', story_sets_path %>
+
+<% content_for :javascript_includes do%>
+    <%= javascript_include_tag "Manage-storyset.js"%>
+<%end%>

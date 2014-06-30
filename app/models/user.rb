@@ -1,12 +1,12 @@
 #encoding: utf-8
 class User < ActiveRecord::Base
+  include Redis::Search
   belongs_to :tenant
   belongs_to :entity
   belongs_to :department
   has_many :user_departments, :dependent => :destroy
   has_many :departments, :through => :user_departments
   has_many :create_departs, :class_name => 'Department'
-
   has_many :user_entity_groups, :dependent => :destroy
   has_many :entity_groups, :through => :user_entity_groups
   has_many :kpis, :through => :user_kpi_items
@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
   has_many :entity_contacts
   #has_many :kpi_entries, :through => :user_kpi_items
   has_many :emails, :dependent => :destroy
+  #
+  has_many :story_sets, :dependent => :destroy
+  has_many :stories, :dependent => :destroy
+  has_many :story_set_users
+  has_many :collaborated_story_sets, :through => :story_set_users
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -33,6 +38,11 @@ class User < ActiveRecord::Base
   #end
   # acts as tenant
   acts_as_tenant(:tenant)
+
+  redis_search_index(:title_field => :first_name,
+                     :condition_fields => [:tenant_id, :is_sys, :role_id, :entity_id],
+                     :prefix_index_enable => true,
+                     :ext_fields => [:email])
 
   def method_missing(method_name, *args, &block)
     if Role::RoleMethods.include?(method_name)
