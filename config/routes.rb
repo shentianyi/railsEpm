@@ -1,4 +1,10 @@
 IFEpm::Application.routes.draw do
+  resources :comments
+
+
+  resources :chart_conditions
+
+
   resources :stories
 
 
