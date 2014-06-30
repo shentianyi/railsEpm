@@ -42,9 +42,14 @@ class StoriesController < ApplicationController
   # POST /stories.json
   def create
     @msg=Message.new(result: true)
-    @story = Story.new(params[:story].except(:attachments))
+    @story = Story.new(params[:story].except(:attachments,:chart_conditions))
     @story.user=current_user
     Attachment.add(params[:story][:attachments].values, @story) unless params[:story][:attachments].blank?
+    unless params[:story][:chart_conditions].blank?
+      params[:story][:chart_conditions].each do |index,c|
+        StoryService.add_chart_condition(c,@story)
+      end
+    end
     @story.save
     render json: @msg
   end

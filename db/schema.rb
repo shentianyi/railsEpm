@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20140630040235) do
     t.string   "time_string"
     t.integer  "chartable_id"
     t.string   "chartable_type"
+    t.integer  "interval"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
