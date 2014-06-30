@@ -41,8 +41,8 @@ class StoriesController < ApplicationController
   def create
     @msg=Message.new(result: true)
     @story = Story.new(params[:story].except(:attachments))
+    @story.user=current_user
     Attachment.add(params[:story][:attachments].values, @story) unless params[:story][:attachments].blank?
-    @story.story_set=StorySet.first
     @story.save
     render json: @msg
   end

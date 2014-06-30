@@ -2,20 +2,46 @@
 
 <table>
   <tr>
+    <th>Title</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @stories.each do |story| %>
-  <tr>
-    <td><%= link_to 'Show', story %></td>
-    <td><%= link_to 'Edit', edit_story_path(story) %></td>
-    <td><%= link_to 'Destroy', story, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+  <% @stories.each do |story| %>
+      <tr>
+        <td><%= story.title %></td>
+        <td><%= link_to 'Show', story %></td>
+        <td><%= link_to 'Edit', edit_story_path(story) %></td>
+        <td><%= link_to 'Destroy', story, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+  <% end %>
 </table>
 
-<br />
+<br/>
 
-<%= link_to 'New Story', new_story_path %>
+
+<h1>Create story</h1>
+
+<div>
+  title: <input type="text" id="story-title">
+  <div>
+    <span>附件：</span>
+    <input id="item-data-uploader" type="file" name="files[]" multiple="true"  data-url="/files/upload">
+
+    <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
+  </div>
+  <input type="button" value="Create Story" onclick="create_story()">
+  <input type="hidden" value="<%=@story_set.id%>" id="current_story_set">
+</div>
+<%= link_to 'Back', stories_path %>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
+    <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
+    <%= javascript_include_tag "story_manage.js" %>
+<% end %>
+<script type="text/javascript">
+    $(function () {
+        attach_upload("item-data-uploader");
+    });
+</script>
