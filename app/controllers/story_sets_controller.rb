@@ -43,7 +43,7 @@ class StorySetsController < ApplicationController
   def create
     @story_set = StorySet.new(params[:story_set])
     @story_set.user = current_user
-    @story_set.story_set_users = StorySetService.generate_story_set_user(params[:users])
+    @story_set.collaborators = StorySetService.gen_collaborators(params[:users])
 
     respond_to do |format|
       if @story_set.save
