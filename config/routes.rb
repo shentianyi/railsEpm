@@ -1,4 +1,10 @@
 IFEpm::Application.routes.draw do
+  resources :stories
+
+
+  resources :story_sets
+
+
   resources :kpi_properties
 
   require 'sidekiq/web'
