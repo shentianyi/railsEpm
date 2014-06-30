@@ -2,46 +2,56 @@
 
 <table>
   <tr>
+    <th>User</th>
     <th>Title</th>
-    <th></th>
-    <th></th>
-    <th></th>
   </tr>
 
   <% @stories.each do |story| %>
       <tr>
-        <td><%= story.title %></td>
-        <td><%= link_to 'Show', story %></td>
-        <td><%= link_to 'Edit', edit_story_path(story) %></td>
-        <td><%= link_to 'Destroy', story, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <td>
+          <image src='<%= story.user_avatar %>' width='50px'/>
+          <span><%= story.user_name %></span>
+        </td>
+        <td>
+          <a href="#" story='<%= story.id %>' class='show-story-detail-a'>
+            <%= story.title %>
+          </a>
+        </td>
       </tr>
   <% end %>
 </table>
-
-<br/>
-
-
-<h1>Create story</h1>
-
-<div>
-  title: <input type="text" id="story-title">
+<hr/>
+<div style="background: yellow">
+  <h1>Create story</h1>
   <div>
-    <span>附件：</span>
-    <input id="item-data-uploader" type="file" name="files[]" multiple="true"  data-url="/files/upload">
+    title: <input type="text" id="story-title">
+    <div>
+      <p>Attachment</p>
+      <input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
 
-    <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
+      <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
+    </div>
+    <input type="button" value="Create Story" onclick="create_story()">
+    <input type="hidden" value="<%= @story_set.id %>" id="current_story_set">
   </div>
-  <input type="button" value="Create Story" onclick="create_story()">
-  <input type="hidden" value="<%=@story_set.id%>" id="current_story_set">
+  <hr/>
 </div>
-<%= link_to 'Back', stories_path %>
+<h3>Story Detail</h3>
+<div id="story-content">
+
+</div>
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
     <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
     <%= javascript_include_tag "story_manage.js" %>
+    <%= javascript_include_tag 'magnific.popup/jquery.magnific-popup.min' %>
 <% end %>
 <script type="text/javascript">
     $(function () {
         attach_upload("item-data-uploader");
+        init_story_page();
     });
 </script>
+<% content_for :stylesheet_includes do %>
+    <%= stylesheet_link_tag 'magnific.popup/magnific-popup' %>
+<% end %>

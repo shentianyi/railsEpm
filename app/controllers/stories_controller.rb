@@ -14,11 +14,8 @@ class StoriesController < ApplicationController
   # GET /stories/1.json
   def show
     @story = Story.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @story }
-    end
+    @comments=CommentPresenter.init_presenters(Comment.detail_by_commentable(@story).all)
+    render partial: 'detail'
   end
 
   # GET /stories/new
@@ -51,6 +48,7 @@ class StoriesController < ApplicationController
       end
     end
     @story.save
+    @msg.content=@story
     render json: @msg
   end
 
@@ -83,4 +81,17 @@ class StoriesController < ApplicationController
   end
 
 
+  def comment
+    @msg=Message.new
+    if @story= Story.find_by_id(params[:id])
+      @comment=Comment.new(params[:comment].except(:attachments))
+      @comment.commentable=@story
+      @comment.user=current_user
+      Attachment.add(params[:comment][:attachments].values, @comment) unless params[:comment][:attachments].blank?
+      @comment.save
+      @msg.content=@comment
+      @msg.result=true
+    end
+    render json: @msg
+  end
 end
