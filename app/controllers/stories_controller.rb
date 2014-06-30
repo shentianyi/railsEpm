@@ -1,4 +1,5 @@
 class StoriesController < ApplicationController
+  before_filter :get_ability_category,:get_kpis_by_category,:get_user_entity_groups, :only => [:index,:new]
   # GET /stories
   # GET /stories.json
   def index
@@ -23,6 +24,7 @@ class StoriesController < ApplicationController
   # GET /stories/new
   # GET /stories/new.json
   def new
+
     @story = Story.new
 
     respond_to do |format|
