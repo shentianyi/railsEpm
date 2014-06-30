@@ -42,8 +42,11 @@
                 <span><%= p.name %></span>
             <% end %>
           </p>
-          <a class="btn btn-success edit-kpi-attribute" work_at="1">订阅KPI</a>
+          <a class="btn btn-success subscribe-kpi" work_at="1" kpi_id="<%= kpi.id%>">订阅KPI</a>
         </div>
       </li>
   <% end if @kpis %>
 </ul>
+<div id="subscribe-kpi" class="subscribe-kpi-select">
+  <h2>Test</h2>
+</div>

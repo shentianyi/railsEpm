@@ -441,3 +441,9 @@
 .manage-kpi-navi>section:nth-of-type(2){
     border-top:none;
 }
+
+.subscribe-kpi-select{
+    width:70%;
+    padding: 15px;
+    position: absolute;
+}
