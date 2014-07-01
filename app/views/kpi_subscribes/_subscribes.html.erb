@@ -12,13 +12,13 @@
               </p>
             </td>
             <td>
-              <a class="btn btn-success" href="/kpi_subscribes/new/<%= kpi.id%>">添加订阅</a>
+              <a class="btn btn-success" href="/kpi_subscribes/new/<%= kpi.id%>"><%= t 'subscription.add'%></a>
             </td>
           </tr>
           <tr>
             <td title='<%= kpi.description %>'><%= kpi.description %></td>
-            <td>订阅</td>
-            <td>操作</td>
+            <td><%= t 'subscription.subscription'%></td>
+            <td></td>
           </tr>
         </table>
       </li>
