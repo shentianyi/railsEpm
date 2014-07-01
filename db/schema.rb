@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140630181714) do
+ActiveRecord::Schema.define(:version => 20140701020838) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20140630181714) do
     t.integer  "interval"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.string   "chart_type"
   end
 
   add_index "chart_conditions", ["entity_group_id"], :name => "index_chart_conditions_on_entity_group_id"
