@@ -9,4 +9,34 @@ class StorySet < ActiveRecord::Base
   belongs_to :tenant
   acts_as_tenant(:tenant)
 
+  after_create :generate_collaborator_set
+  after_create :pub_collaborator_message
+
+  def self.regenerate_collaborator_set
+    all.each do |ss|
+      key=ss.generate_key
+      $redis.del key
+      ss.generate_collaborator_set
+    end
+  end
+
+  #private
+  def generate_collaborator_set
+    c= self.collaborators.all
+    $redis.sadd(generate_key, c.collect { |u| u.id }) if c.count>0
+  end
+
+  def pub_collaborator_message
+    collaborator_set.each do |u|
+      #UserMessage.new(messageable_type: self.class.name, messageable:)
+    end
+  end
+
+  def collaborator_set
+    $redis.sembers(generate_key)
+  end
+
+  def generate_key
+    "story_set:#{self.id}:collaborator:set"
+  end
 end

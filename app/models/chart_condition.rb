@@ -1,5 +1,6 @@
 class ChartCondition < ActiveRecord::Base
-  attr_accessible :entity_group_id, :kpi_id, :calculate_type, :time_string, :chartable_id, :chartable_type, :interval
+  attr_accessible :entity_group_id, :kpi_id, :calculate_type,
+                  :time_string, :chartable_id, :chartable_type, :interval,:chart_type
   belongs_to :chartable, :polymorphic => true
   belongs_to :kpi
   belongs_to :entity_group

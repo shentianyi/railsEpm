@@ -16,6 +16,7 @@ class Story < ActiveRecord::Base
       query = AnalyseService.chart_condition_filter(c)
       if query
         data = Entry::Analyzer.new(query).analyse
+        puts data
         KpiEntryAnalyseCache.new(id:c.id,cacheable_type: c.class.name,query: query.to_json, chart_data:data).save
       end
     end
