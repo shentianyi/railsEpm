@@ -331,11 +331,13 @@ ActiveRecord::Schema.define(:version => 20140701022307) do
 
   create_table "kpi_subscribes", :force => true do |t|
     t.integer  "user_id"
+    t.integer  "kpi_id"
     t.integer  "tenant_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
+  add_index "kpi_subscribes", ["kpi_id"], :name => "index_kpi_subscribes_on_kpi_id"
   add_index "kpi_subscribes", ["tenant_id"], :name => "index_kpi_subscribes_on_tenant_id"
   add_index "kpi_subscribes", ["user_id"], :name => "index_kpi_subscribes_on_user_id"
 
