@@ -10,7 +10,7 @@ class KpiSubscribeAlert < ActiveRecord::Base
     data.each do |d|
       if SubscribeAlert.alert(self.alert_type,self.value,d)
         #create an alert message
-        
+
       end
     end
   end

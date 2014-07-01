@@ -1,11 +1,10 @@
-<p id="notice"><%= notice %></p>
+
+<p><%= @story.title %></p>
+
 <hr/>
-<h3>Chart</h3>
-<%= render partial: 'chart' %>
-<hr/>
-<div>
-  <b>Title:</b>
-  <%= @story.title %>
+
+<div id="story-partial" class="story-partial">
+  <%= render partial: 'chart' %>
   <div>
     <p>Attachments:</p>
     <% @story.attachments.each do |attach| %>
@@ -23,49 +22,24 @@
         </div>
     <% end %>
   </div>
-</div>
-<p>Comments</p>
 
-<% @comments.each_with_index do |comment, i| %>
-    <div>
-      <span style="background: gold"><%= i+1 %></span>
-      <span>
-         <image src='<%= comment.user_avatar %>' width='50px'/>
-          <span><%= comment.user_name %></span>
-      </span>
-      <span> <%= comment.content %></span>
-      <% comment.attachments.each do |attach| %>
-          <div class="attachment-item inline-block" title="<%= attach.name %>">
-            <div class="attachment-sign atta-<%= attach.type %>" href="<%= attach.path %>">
-              <a href="<%= attach.path %>" class='attach-download' target="_blank">
-                <div class="attachment-operate" title="下载">
-                  <i class="icon-arrow-down icon-white pointer pull-right"> </i>
-                </div>
-              </a>
-            </div>
-            <p class="attachment-p">
-              <%= attach.name %>
-            </p>
-          </div>
+  <a id="comments-btn"><i class="icon  icon-comments-alt"></i> comments()</a>
+
+  <div class="comment-area">
+    <div class="form">
+      <textarea placeholder="leave your comment here ..." class="form-control my_post_comment" id="comment-content"></textarea>
+      <input type="button" class="btn btn-warning comment-submit-button" value="comment" onclick="create_comment();"/>
+    </div>
+
+    <ul class="comment-content-list">
+      <% @comments.each_with_index do |comment, i| %>
+          <li>
+            <p><a><%= comment.user_name %>:</a><%= comment.content %></p>
+            <span><%= time_ago_in_words(comment.created_at.localtime) %></span>
+          </li>
       <% end %>
-    </div>
-<% end %>
-<input type="hidden" id="current-story" value="<%= @story.id %>">
-<div>
-  <p>Comment It:</p>
-
-  <div>
-    <textarea id="comment-content" rows="3" cols="20"></textarea>
+    </ul>
   </div>
-  <div>
-    <div>
-      <p>Attachment</p>
-      <input id="comment-item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
-
-      <div class="abstractblock" id="comment-item-data-uploader-preview" style="display:none;"></div>
-    </div>
-  </div>
-  <input type="button" value="Comment" onclick="create_comment();">
 </div>
 
 <script type="text/javascript">
@@ -74,3 +48,4 @@
         $('.atta-image').magnificPopup({type: 'image'});
     });
 </script>
+<input type="hidden" id="current-story" value="<%= @story.id %>"/>

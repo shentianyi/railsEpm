@@ -11,6 +11,7 @@ IFEpm::Application.routes.draw do
   resources :stories do
     member do
       post :comment
+      get :detail
     end
   end
 

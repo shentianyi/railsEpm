@@ -78,7 +78,7 @@ function create_story() {
     DASHBOARD.add.prepare_to_add_item(function (post) {
         var condition = {};
         for(var i = 0;i<post.series.length;i++){
-            condition.entity_group = post.series[i].view;
+            condition.entity_group_id = post.series[i].view;
             condition.kpi_id = post.series[i].kpi;
             condition.calculate_type = get_cal_type(post.series[i].average);
             condition.time_string = get_time_string_by_twocar(post.series[i].begin_time, post.series[i].end_time);
@@ -114,7 +114,7 @@ function get_attachments(id) {
 
 function init_story_page() {
     $('body').on('click', '.show-story-detail-a', function () {
-        $.get('/stories/' + $(this).attr('story'), function (data) {
+        $.get('/stories/' + $(this).attr('story')+'/detail', function (data) {
             $('#story-content-div').html(data);
         }, 'html');
     })
