@@ -666,7 +666,8 @@ zh:
     target_min: 目标值下限
     target_max: 目标值上限
   user_message:
-    add_to_story_set: 你被加入了讨论组
+    add_to_story_set: 你被加入了新讨论组
+    story_comment: 你的主题有新评论
   subscription:
     subscription: 订阅
     add: 添加订阅

@@ -662,6 +662,7 @@ en:
     target_max: Target Max
   user_message:
     add_to_story_set: You are added to story set
+    story_comment: Your story was commented
   subscription:
     subscription: Subscription
     add: Add Sunscription
