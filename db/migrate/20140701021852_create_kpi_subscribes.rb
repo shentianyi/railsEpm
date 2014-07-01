@@ -8,6 +8,6 @@ class CreateKpiSubscribes < ActiveRecord::Migration
     end
     add_index :kpi_subscribes, :user_id
     add_index :kpi_subscribes, :tenant_id
-    add_idnex :kpi_subscribes, :kpi_id
+    add_index :kpi_subscribes, :kpi_id
   end
 end
