@@ -28,7 +28,7 @@ class StorySet < ActiveRecord::Base
 
   def pub_collaborator_message
     collaborator_set.each do |u|
-      UserMessage.add_story_set_message(u)
+      UserMessage.add_story_set_message(u) unless u.to_i==self.user_id
     end
   end
 

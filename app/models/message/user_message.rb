@@ -39,8 +39,7 @@ class UserMessage<CZ::BaseClass
 
   def self.clean_story_set_message user_id
     if message=find(user_id, UserMessageType::ADD_TO_STROY_SET)
-      message.count=0
-      message.save
+      $redis.hset message.key, 'count', 0
     end
   end
 
