@@ -2,8 +2,11 @@ var MANAGE = MANAGE || {};
 MANAGE.kpi_subscribe = MANAGE.kpi_subscribe || {};
 
 MANAGE.kpi_subscribe.init_new = function () {
+    $("#manage-edit-target").text($("li.active").attr('title'));
+
     $("#kpi-category").on("change", function (event) {
         var id = $(adapt_event(event).target).attr("value");
+
         $.ajax({
             url: '/kpis/categoried/' + id,
             dataType: "json",
