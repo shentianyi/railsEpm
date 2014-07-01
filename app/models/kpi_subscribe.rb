@@ -16,9 +16,6 @@ class KpiSubscribe < ActiveRecord::Base
       query[:start_time] = kpi_entry.parsed_entry_at.to_s
       query[:end_time] = kpi_entry.parsed_entry_at.to_s
       data = Entry::Analyzer.new(query).analyse
-      puts '~~~~~~~~~~~~~~~~~~~~~~~'
-      puts data
-      puts '~~~~~~~~~~~~~~~~~~~~~~~'
 
       self.kpi_subscribe_alerts.each do |alert|
         alert.execute data[:current]
@@ -26,5 +23,9 @@ class KpiSubscribe < ActiveRecord::Base
     else
       puts 'false'
     end
+  end
+
+  def description
+    self.chart_condition.entity_group.name
   end
 end
