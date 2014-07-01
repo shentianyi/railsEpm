@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140630181714) do
+ActiveRecord::Schema.define(:version => 20140701022307) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20140630181714) do
     t.integer  "interval"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.string   "chart_type"
   end
 
   add_index "chart_conditions", ["entity_group_id"], :name => "index_chart_conditions_on_entity_group_id"
@@ -305,6 +306,38 @@ ActiveRecord::Schema.define(:version => 20140630181714) do
   end
 
   add_index "kpi_property_values", ["kpi_property_item_id"], :name => "index_kpi_property_values_on_kpi_property_item_id"
+
+  create_table "kpi_subscribe_alerts", :force => true do |t|
+    t.integer  "kpi_subscribe_id"
+    t.string   "alert_type"
+    t.float    "value"
+    t.integer  "tenant_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "kpi_subscribe_alerts", ["kpi_subscribe_id"], :name => "index_kpi_subscribe_alerts_on_kpi_subscribe_id"
+  add_index "kpi_subscribe_alerts", ["tenant_id"], :name => "index_kpi_subscribe_alerts_on_tenant_id"
+
+  create_table "kpi_subscribe_users", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "kpi_subscribe_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "kpi_subscribe_users", ["kpi_subscribe_id"], :name => "index_kpi_subscribe_users_on_kpi_subscribe_id"
+  add_index "kpi_subscribe_users", ["user_id"], :name => "index_kpi_subscribe_users_on_user_id"
+
+  create_table "kpi_subscribes", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "tenant_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "kpi_subscribes", ["tenant_id"], :name => "index_kpi_subscribes_on_tenant_id"
+  add_index "kpi_subscribes", ["user_id"], :name => "index_kpi_subscribes_on_user_id"
 
   create_table "kpis", :force => true do |t|
     t.string   "name"

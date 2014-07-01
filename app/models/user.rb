@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   belongs_to :tenant
   belongs_to :entity
   belongs_to :department
+  has_many :kpi_subscribes, :dependent => :destroy
+  has_many :kpi_subscribe_users, :dependent => :destroy
+  has_many :kpi_notifier, :through => :kpi_subscribe_users, :source => :kpi_subscribes
   has_many :user_departments, :dependent => :destroy
   has_many :departments, :through => :user_departments
   has_many :create_departs, :class_name => 'Department'
