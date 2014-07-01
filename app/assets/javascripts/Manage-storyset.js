@@ -2,7 +2,7 @@ var MANAGE = MANAGE || {};
 MANAGE.story_set = {};
 (function(){
     $(document).ready(function(){
-        $("bocyd")
+        $("body")
             .on("click","#story-create-btn",function(){
                 MANAGE.story_set.create();
             })
