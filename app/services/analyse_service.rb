@@ -16,7 +16,7 @@ class AnalyseService
     query[:start_time] = time_span[:start].iso8601.to_s
     query[:end_time] = time_span[:end].iso8601.to_s
     query[:average] = condition.calculate_type=='AVERAGE' ? true : false
-    query[:frequency] = 100
+    query[:frequency] = condition.interval
     query
   end
 

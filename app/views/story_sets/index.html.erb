@@ -6,71 +6,29 @@
         <div class="title">
           <a><i class="icon icon-folder-open"></i></a>
           <p>All My Projects</p>
-          <a class="btn btn-primary"><i class="icon icon-plus"></i> Create project</a>
+          <a class="btn btn-primary" href="/story_sets/new"><i class="icon icon-plus"></i> Create project</a>
         </div>
         <div class="projects">
-            <div class="item">
+          <% @story_sets.each do |story_set| %>
+            <a class="item" href="<%= story_set_path(story_set) %>">
               <div class="left">
-                <p>一个标题</p>
-                <p>project description project description </p>
+                <p title="<%= story_set.title %>"><%= story_set.title %></p>
+                <p title="<%= story_set.description %>"><%= story_set.description %></p>
               </div>
               <div class="right"></div>
-            </div>
-          <div class="item">
-            <div class="left">
-              <p>一个标题</p>
-              <p>project description project description </p>
-            </div>
-            <div class="right"></div>
-          </div>
-          <div class="item">
-            <div class="left">
-              <p>一个标题</p>
-              <p>project description project description </p>
-            </div>
-            <div class="right"></div>
-          </div>
-          <div class="item">
-            <div class="left">
-              <p>一个标题</p>
-              <p>project description project description </p>
-            </div>
-            <div class="right"></div>
-          </div>
-          <div class="item">
-            <div class="left">
-              <p>一个标题</p>
-              <p>project description project description </p>
-            </div>
-            <div class="right"></div>
-          </div>
+            </a>
+          <% end %>
 
         </div>
       </div>
   </div>
   <div class="right-part">
-      <div class="area">
-        <p>Newest notification</p>
-        <div class="table">
-          <table>
-            <tr>
-              <td>project name</td>
-              <td>2014.7.1</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <div class="area">
+    <div class="area">
+        <p>Last update project</p>
+    </div>
+    <div class="area">
         <p>The project I issued</p>
-        <div class="table">
-          <table>
-            <tr>
-              <td>project name</td>
-              <td>2014.7.1</td>
-            </tr>
-          </table>
-        </div>
-      </div>
+    </div>
   </div>
 </div>
 

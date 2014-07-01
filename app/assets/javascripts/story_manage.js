@@ -83,6 +83,7 @@ function create_story() {
             condition.calculate_type = get_cal_type(post.series[i].average);
             condition.time_string = get_time_string_by_twocar(post.series[i].begin_time, post.series[i].end_time);
             condition.interval = 100;
+            condition.chart_type = post.type;
             chart_conditions.push(condition);
         }
     });

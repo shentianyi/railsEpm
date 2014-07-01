@@ -1,4 +1,7 @@
 IFEpm::Application.routes.draw do
+  resources :kpi_subscribes
+
+
   resources :comments
 
 

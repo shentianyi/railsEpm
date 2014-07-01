@@ -51,6 +51,8 @@ $green-hover:transparentize($green,0.4);
   transition: background-color 0.25s ease 0s,color 0.25s ease 0s;
   -moz-transition: background-color 0.25s ease 0s;
   -webkit-transition: background-color 0.25s ease 0s;
+  background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.2) 55%) #eee;
+  background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.2) 55%) #eee;
   cursor:pointer;
   padding:8px 8px;
   margin:0 20px;
@@ -63,6 +65,8 @@ $green-hover:transparentize($green,0.4);
   font-weight:lighter;
   &:hover{
     background:rgba(238,238,238,0.7);
+    background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.5) 55%) #eee;
+    background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.5) 55%) #eee;
     color:rgba(0,0,0,0.4)
   }
   & i{
