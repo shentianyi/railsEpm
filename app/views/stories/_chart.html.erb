@@ -25,15 +25,15 @@
         for (var i = 0; i < $('.chart-conditions').children().length; i++)
             prepare_form_cchart(i);
     });
-    function prepare_form_cchart(i) {
-        alert()
-        var data = jQuery.parseJSON($("#data-hidden-" + i).val());
-        var kpi = $("#kpi-id-hidden-" + i).val();
-        var kpi_name = $("#kpi-name-hidden-" + i).val();
-        var view = $("#entity-group-id-hidden-" + i).val();
-        var view_text = $("#entity-group-name-hidden-" + i).val();
-        var interval = $("#frequency-hidden-" + i).val(), type = $("#type-hidden-" + i).val(), chart_body_close_validate;
-        var begin_time = $("#start-time-hidden-" + i).val(), end_time = $("#end-time-hidden-" + i).val();
+
+        var data = jQuery.parseJSON($("#data-hidden-"+i).val());
+        var kpi = $("#kpi-id-hidden-"+i).val();
+        var kpi_name = $("#kpi-name-hidden-"+i).val();
+        var view = $("#entity-group-id-hidden-"+i).val();
+        var view_text = $("#entity-group-name-hidden-"+i).val();
+        var interval = $("#frequency-hidden-"+i).val(), type = $("#type-hidden-"+i).val(), chart_body_close_validate;
+        var begin_time = $("#start-time-hidden-"+i).val(), end_time = $("#end-time-hidden-"+i).val();
+
         if ($("#chart-body").css("display") == "block") {
             chart_body_close_validate = false;
         } else {

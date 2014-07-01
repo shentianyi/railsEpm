@@ -1,8 +1,12 @@
 class KpiSubscribesController < ApplicationController
+  before_filter :get_ability_category,:get_kpis_by_category,:get_user_entity_groups, :only => [:index,:new,:mine]
   # GET /kpi_subscribes
   # GET /kpi_subscribes.json
   def index
-    @kpi_subscribes = KpiSubscribe.all
+    @active_category_id= params[:id].nil? ? (@categories.length>0 ? @categories[0].id : nil) : params[:id].to_i
+    get_kpis_by_category(@active_category_id) if @active_category_id
+
+    @kpi_subscribes = current_user.kpi_subscribes
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,7 +45,18 @@ class KpiSubscribesController < ApplicationController
   # POST /kpi_subscribes.json
   def create
     @kpi_subscribe = KpiSubscribe.new(params[:kpi_subscribe])
-
+    @kpi_subscribe.user = current_user
+    @kpi_subscribe.tenant = current_tenant
+    #create chart condition
+    @chart_condition = ChartCondition.new(params[:chart_condition])
+    @kpi_subscribe.chart_condition = @chart_condition
+    #create alert
+    alerts = []
+    params[:subscribe_alerts].each do |index,alert|
+      alerts << KpiSubscribeAlert.new(alert)
+    end
+    @kpi_subscribe.kpi_subscribe_alerts = alerts
+    #
     respond_to do |format|
       if @kpi_subscribe.save
         format.html { redirect_to @kpi_subscribe, notice: 'Kpi subscribe was successfully created.' }
@@ -51,6 +66,22 @@ class KpiSubscribesController < ApplicationController
         format.json { render json: @kpi_subscribe.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def mine
+    @active_category_id= params[:id].nil? ? (@categories.length>0 ? @categories[0].id : nil) : params[:id].to_i
+    get_kpis_by_category(@active_category_id) if @active_category_id
+    puts "##############################"
+    puts @active_category_id
+    respond_to do |format|
+      format.html # mine.html.erb
+      format.json { render json: @kpis }
+    end
+  end
+
+  def my_subscribe
+    get_kpis_by_category params[:id]
+    render :partial => 'subscribes'
   end
 
   # PUT /kpi_subscribes/1

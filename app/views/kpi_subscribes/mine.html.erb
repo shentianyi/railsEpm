@@ -16,15 +16,7 @@
         </div>
         <div class="manage-right-list">
           <div id="kpi-item-container">
-            <%= render partial: 'access' %>
-          </div>
-          <div class="kpi-library" id="subscribe-kpi-block" type="attribute">
-            <div>
-              <i class="icon icon-remove" id="subscribe-kpi-block-remove"></i>
-              <div class="attribute-block" type="edit">
-
-              </div>
-            </div>
+            <%= render :partial => 'subscribes'%>
           </div>
         </div>
       </div>
@@ -35,9 +27,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        MANAGE.kpi.init();
+        MANAGE.kpi_subscribe.init_new();
     })
 </script>
 <% content_for :javascript_includes do %>
-    <%= javascript_include_tag "user.kpi.js" %>
+    <%= javascript_include_tag "kpi_subscribe_manage.js" %>
 <% end %>
