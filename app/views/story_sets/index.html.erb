@@ -10,13 +10,13 @@
         </div>
         <div class="projects">
           <% @story_sets.each do |story_set| %>
-            <div class="item">
+            <a class="item" href="<%= story_set_path(story_set) %>">
               <div class="left">
                 <p title="<%= story_set.title %>"><%= story_set.title %></p>
                 <p title="<%= story_set.description %>"><%= story_set.description %></p>
               </div>
               <div class="right"></div>
-            </div>
+            </a>
           <% end %>
 
         </div>
