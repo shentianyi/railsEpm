@@ -41,15 +41,13 @@
           <li>
             <a href="<%= story_sets_path %>" guide-name="story_set_menu"> <span><%= t 'menu.story_set' %></span> </a>
           </li>
+          <li>
+            <a href="<%= mine_kpi_subscribes_path %>" guide-name="analyze_menu">
+              <span><%= t 'menu.subscription' %></span> </a>
+          </li>
       <% end %>
       <li>
         <a href="<%= analyse_kpi_entries_path %>" guide-name="analyze_menu"> <span><%= t 'menu.analytics' %></span> </a>
-      </li>
-      <li>
-        <a href="<%= story_sets_path %>" guide-name="analyze_menu"> <span><%= t 'menu.story_set' %></span> </a>
-      </li>
-      <li>
-        <a href="<%=mine_kpi_subscribes_path %>" guide-name="analyze_menu"> <span><%= t 'menu.subscription' %></span> </a>
       </li>
       <li><a>
         <span>&nbsp;</span>
@@ -63,6 +61,7 @@
   <ul class="nav-user-part">
     <li>
       <a href="/users/<%= current_user.id %>"><i class="icon-user" title="<%= current_user.first_name %>"> </i></a>
+
       <div id='user-message-div'>
       </div>
     </li>

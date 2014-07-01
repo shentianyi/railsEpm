@@ -10,21 +10,13 @@ class UserMessageType
     }
   end
 
-  def self.genereate_user_message_key(user_id, type, key_params=nil)
-    return case type
-             when ADD_TO_STROY_SET
-               "user:#{user_id}:message_box:#{type}"
-             when UNREAD_STORY_COMMENT
-               "user:#{user_id}:message_box:#{type}:story:#{key_params[:story_id]}"
-           end
-  end
 
   def self.content_and_link(type)
     case type
       when ADD_TO_STROY_SET
-        return I18n.t('user_message.add_to_story_set')
+        return I18n.t('user_message.add_to_story_set'), '/story_sets'
       when UNREAD_STORY_COMMENT
-        return I18n.t('user_message.story_comment')
+        return I18n.t('user_message.story_comment'), '/story_sets'
       else
         ''
     end

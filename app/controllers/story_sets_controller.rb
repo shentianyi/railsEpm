@@ -5,6 +5,7 @@ class StorySetsController < ApplicationController
   def index
     @story_sets =current_user.collaborated_story_sets.all
     UserMessage.clean_story_set_message(current_user.id)
+    UserMessage.clean_story_comment_message(current_user.id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @story_sets }
