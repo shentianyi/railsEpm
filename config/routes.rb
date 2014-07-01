@@ -1,5 +1,11 @@
 IFEpm::Application.routes.draw do
-  resources :kpi_subscribes
+  resources :kpi_subscribes do
+    collection do
+      get 'mine/:id' => :mine
+      get 'mine' => :mine
+      get 'my_subscribe/:id' => :my_subscribe
+    end
+  end
 
 
   resources :comments

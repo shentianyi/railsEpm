@@ -1,8 +1,11 @@
 class KpiSubscribesController < ApplicationController
-  before_filter :get_ability_category,:get_kpis_by_category,:get_user_entity_groups, :only => [:new]
+  before_filter :get_ability_category,:get_kpis_by_category,:get_user_entity_groups, :only => [:index,:new,:mine]
   # GET /kpi_subscribes
   # GET /kpi_subscribes.json
   def index
+    @active_category_id= params[:id].nil? ? (@categories.length>0 ? @categories[0].id : nil) : params[:id].to_i
+    get_kpis_by_category(@active_category_id) if @active_category_id
+
     @kpi_subscribes = current_user.kpi_subscribes
 
     respond_to do |format|
@@ -63,6 +66,22 @@ class KpiSubscribesController < ApplicationController
         format.json { render json: @kpi_subscribe.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def mine
+    @active_category_id= params[:id].nil? ? (@categories.length>0 ? @categories[0].id : nil) : params[:id].to_i
+    get_kpis_by_category(@active_category_id) if @active_category_id
+    puts "##############################"
+    puts @active_category_id
+    respond_to do |format|
+      format.html # mine.html.erb
+      format.json { render json: @kpis }
+    end
+  end
+
+  def my_subscribe
+    get_kpis_by_category params[:id]
+    render :partial => 'subscribes'
   end
 
   # PUT /kpi_subscribes/1
