@@ -33,6 +33,10 @@ class UserMessage<CZ::BaseClass
     UserMessage.new(user_id: user_id, type: UserMessageType::ADD_TO_STROY_SET).save
   end
 
+  def self.add_subscription_message user_id
+    UserMessage.new(user_id: user_id, type: UserMessageType::SUBSCRIBE_ALERT).save
+  end
+
   def self.clean_story_set_message user_id
     if message=find(user_id, UserMessageType::ADD_TO_STROY_SET)
       message.count=0
