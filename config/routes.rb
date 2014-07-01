@@ -87,6 +87,7 @@ IFEpm::Application.routes.draw do
       put :update
       get :applications
       get :fast_search
+      get :message
     end
   end
 

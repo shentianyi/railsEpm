@@ -3,9 +3,8 @@ class StorySetsController < ApplicationController
   # GET /story_sets
   # GET /story_sets.json
   def index
-    @story_sets = current_user.story_sets.all
-    @collaborated_story_sets=current_user.collaborated_story_sets.all
-    @story_sets= @story_sets+@collaborated_story_sets
+    @story_sets =current_user.collaborated_story_sets.all
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @story_sets }
@@ -16,7 +15,6 @@ class StorySetsController < ApplicationController
   # GET /story_sets/1.json
   def show
     @story_set = StorySet.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @story_set }
@@ -27,7 +25,7 @@ class StorySetsController < ApplicationController
   # GET /story_sets/new.json
   def new
     @story_set = StorySet.new
-
+    @users=User.where('id <> ?', current_user.id).where(role_id:Role.director).all
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @story_set }
@@ -44,7 +42,7 @@ class StorySetsController < ApplicationController
   def create
     @story_set = StorySet.new(params[:story_set])
     @story_set.user = current_user
-    @story_set.collaborators = StorySetService.gen_collaborators(params[:users])
+    @story_set.collaborators = [current_user]+StorySetService.gen_collaborators(params[:users])
 
     respond_to do |format|
       if @story_set.save

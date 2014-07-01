@@ -1,23 +1,26 @@
 <div class="story-set-new">
   <p>Create new project</p>
+
   <div class="divide"></div>
   <div class="form">
     <p>Project name</p>
-    <input type="text"  id="storyset-title"/>
+    <input type="text" id="storyset-title"/>
+
     <p>Project description</p>
     <textarea id="storyset-description"></textarea>
+
     <p>People participate</p>
     <select multiple class="chosen-select" data-placeholder="choose member" id="storyset-users">
-      <% User.by_role(300).each do |u|%>
-          <option user="<%= u.id%>"><%= u.first_name%></option>
+      <%@users.each do |u| %>
+          <option user="<%= u.id %>"><%= u.first_name %></option>
       <% end %>
     </select>
     <a class="btn btn-primary" id="story-create-btn">create</a>
-    <%= link_to 'cancel', story_sets_path,:class=>"btn" %>
+    <%= link_to 'cancel', story_sets_path, :class => "btn" %>
   </div>
 </div>
 
 
-<% content_for :javascript_includes do%>
-    <%= javascript_include_tag "Manage-storyset.js"%>
-<%end%>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "Manage-storyset.js" %>
+<% end %>
