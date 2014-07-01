@@ -18,14 +18,19 @@ class KpiSubscribe < ActiveRecord::Base
       data = Entry::Analyzer.new(query).analyse
 
       self.kpi_subscribe_alerts.each do |alert|
-        alert.execute data[:current]
+        if alert.execute data[:current]
+          alert_user
+          return
+        end
       end
-    else
-      puts 'false'
     end
   end
 
   def description
     self.chart_condition.entity_group.name
+  end
+
+  def alert_user
+    UserMessage.add_subscription_message(self.user.id)
   end
 end

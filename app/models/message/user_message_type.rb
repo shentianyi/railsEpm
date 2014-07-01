@@ -2,6 +2,7 @@ class UserMessageType
   ADD_TO_STROY_SET=100
   NEW_STORY=200
   UNREAD_STORY_COMMENT=300
+  SUBSCRIBE_ALERT=400
 
   def self.types
     self.constants.collect { |c|
