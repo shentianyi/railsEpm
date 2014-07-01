@@ -1,3 +1,35 @@
 <h1>New kpi_subscribe</h1>
 
+<select id="kpi-category">
+  <% @categories.each do |catetory| %>
+      <option value="<%= catetory.id %>"><%= catetory.name %></option>
+  <% end %>
+</select>
+
+<select id="kpis">
+
+</select>
+
+<select id="entity-groups">
+  <% @entity_groups.each do |entity_group| %>
+      <option value="<%= entity_group.id %>"><%= entity_group.name %></option>
+  <% end %>
+</select>
+
+<input type="text" id="start-time" placeholder="2014-1-1 12:00:00"/>
+<input type="text" id="end-time" placeholder="2014-12-31 23:00:00"/>
+<br/>
+<input type="button" onclick="MANAGE.kpi_subscribe.create()" value="CREATE"/>
+<br/>
 <%= link_to 'Back', kpi_subscribes_path %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      MANAGE.kpi_subscribe.init_new();
+  })
+</script>
+
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "kpi_subscribe_manage" %>
+<% end %>
+
