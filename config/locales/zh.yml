@@ -346,7 +346,8 @@ zh:
       entry_kpi: KPI输入
       department: 输入点
       entity: 部门
-      story_set: StorySet
+      story_set: 我的讨论组
+      subscription: 我的订阅
   analytics:
     title: 分析
     kpi_category: KPI类别
@@ -664,3 +665,8 @@ zh:
     current: 当前值
     target_min: 目标值下限
     target_max: 目标值上限
+  user_message:
+    add_to_story_set: 你被加入了讨论组
+  subscription:
+    subscription: 订阅
+    add: 添加订阅

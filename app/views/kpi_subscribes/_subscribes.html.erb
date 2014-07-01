@@ -1,0 +1,27 @@
+<ul id="manage-sort-list" class="manage-sort-list">
+  <% @kpis.each do |kpi| %>
+      <li id="<%= kpi.id %>">
+        <table class="category" special="my-kpi">
+          <tr>
+            <td title='<%= kpi.name %>'><%= kpi.name %></td>
+            <td>
+              <p>
+              <% kpi.kpi_subscribes.each do |ks| %>
+                  <span><%= ks.description %></span>
+              <% end %>
+              </p>
+            </td>
+            <td>
+              <a class="btn btn-success" href="/kpi_subscribes/new/<%= kpi.id%>"><%= t 'subscription.add'%></a>
+            </td>
+          </tr>
+          <tr>
+            <td title='<%= kpi.description %>'><%= kpi.description %></td>
+            <td><%= t 'subscription.subscription'%></td>
+            <td></td>
+          </tr>
+        </table>
+      </li>
+  <% end if @kpis %>
+</ul>
+

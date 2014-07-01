@@ -28,7 +28,7 @@ class StorySet < ActiveRecord::Base
 
   def pub_collaborator_message
     collaborator_set.each do |u|
-      #UserMessage.new(messageable_type: self.class.name, messageable:)
+      UserMessage.add_story_set_message(u)
     end
   end
 

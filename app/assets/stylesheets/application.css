@@ -43,7 +43,11 @@
 *= require EntryScss
 *= require layout
 *= require story_sets
+
 *= require stories.css
+
+*= require popModal.min
+
 
 *= require_self
 
