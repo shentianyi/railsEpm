@@ -6,39 +6,42 @@
     <ul>
       <li>
         <a href="/"> <span><%= t 'menu.start' %></span> </a>
-	</li>
-	<% if current_user.admin?%>
-      <li class="relative">
-        <a> <span guide-name="mange_menu"><%= t 'menu.manage' %></span></a>
-        <ul class="nav-manage-sub">
-          <li>
-            <a href="<%= kpis_path %>"><%= t 'menu.kpi' %></a>
+      </li>
+      <% if current_user.admin? %>
+          <li class="relative">
+            <a> <span guide-name="mange_menu"><%= t 'menu.manage' %></span></a>
+            <ul class="nav-manage-sub">
+              <li>
+                <a href="<%= kpis_path %>"><%= t 'menu.kpi' %></a>
+              </li>
+              <li>
+                <a href="<%= entities_path %>"><%= t 'menu.department' %></a>
+              </li>
+              <li>
+                <a href="<%= users_path %>"><%= t 'menu.user' %></a>
+              <li>
+                <a href="<%= departments_path %>"><%= t 'menu.entity' %></a>
+              </li>
+              <li>
+                <a href="/oauth/applications">OAuth</a>
+              </li>
+            </ul>
           </li>
-          <li>
-            <a href="<%= entities_path %>"><%= t 'menu.department' %></a>
-          </li>
-          <li>
-            <a href="<%= users_path %>"><%= t 'menu.user' %></a>
-          <li>
-            <a href="<%= departments_path %>"><%= t 'menu.entity' %></a>
-          </li>
-          <li>
-            <a href="/oauth/applications">OAuth</a>
-          </li>
-        </ul>
-	</li>
-    <%end%>
+      <% end %>
       <li>
-        <a guide-name="report_menu"  href="<%= entity_groups_path %>"> <span><%= t 'menu.my_view' %></span></a>
+        <a guide-name="report_menu" href="<%= entity_groups_path %>"> <span><%= t 'menu.my_view' %></span></a>
       </li>
       <li>
-        <a guide-name="report_menu"  href="<%= access_kpis_path%>"> <span><%= t 'menu.my_kpi' %></span></a>
+        <a guide-name="report_menu" href="<%= access_kpis_path %>"> <span><%= t 'menu.my_kpi' %></span></a>
       </li>
-      <%if current_user.director?%>
-      <li>
-        <a href="<%= dashboards_path %>" guide-name="dashboard_menu"> <span><%= t 'menu.dashboard' %></span> </a>
-      </li>
-      <%end%>
+      <% if current_user.director? %>
+          <li>
+            <a href="<%= dashboards_path %>" guide-name="dashboard_menu"> <span><%= t 'menu.dashboard' %></span> </a>
+          </li>
+          <li>
+            <a href="<%= story_sets_path %>" guide-name="story_set_menu"> <span><%= t 'menu.story_set' %></span> </a>
+          </li>
+      <% end %>
       <li>
         <a href="<%= analyse_kpi_entries_path %>" guide-name="analyze_menu"> <span><%= t 'menu.analytics' %></span> </a>
       </li>
@@ -53,7 +56,7 @@
   </nav>
   <ul class="nav-user-part">
     <li>
-      <a href="/users/<%= current_user.id %>"><i class="icon-user" title="<%= current_user.first_name %>">  </i></a>
+      <a href="/users/<%= current_user.id %>"><i class="icon-user" title="<%= current_user.first_name %>"> </i></a>
     </li>
     <%= render partial: 'shares/locale' %>
     <li class='empty'><a>
