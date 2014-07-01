@@ -384,6 +384,7 @@ var resize_chart = {
             parseInt($("#chart-body").height())
                 - parseInt($("#chart-interval-alternate").attr("my_height"))
                 - parseInt($("#chart-type-alternate").attr("my_height"))
+                - parseInt($("#project-block").attr("my_height"))
                 - 1
             );
 
@@ -407,7 +408,65 @@ var resize_chart = {
         }
     }
 };
+//下面生成project的存在对高度的影响
+function show_project_block(){
+    $("#project-block").slideDown();
+    $("#chart-main-middle").height(
+        parseInt($("#chart-body").height())
+            - parseInt($("#chart-interval-alternate").attr("my_height"))
+            - parseInt($("#chart-type-alternate").attr("my_height"))
+            - parseInt($("#project-block").attr("my_height"))
+            - 1
+    );
 
+    var chart_container_height=parseInt( $("#chart-main-middle").height() )- parseInt( $("#chart-container-item").height() );
+    $("#chart-container").height(parseInt(chart_container_height));
+
+    if ($("#chart-container").highcharts()) {
+        var chart = $("#chart-container").highcharts();
+        chart.setSize(
+            $("#chart-main-middle").width(),
+            chart_container_height,
+            false
+        );
+    }
+    if ($("#chart-type-alternate td.active").attr("type") == "pie") {
+        for (var k = 0; k < $("#chart-container").highcharts().series.length; k++) {
+            $("#chart-container").highcharts().series[k].update({
+                showInLegend: false
+            })
+        }
+    }
+}
+function hide_project_block(){
+    $("#project-block").slideUp();
+    $("#chart-main-middle").height(
+        parseInt($("#chart-body").height())
+            - parseInt($("#chart-interval-alternate").attr("my_height"))
+            - parseInt($("#chart-type-alternate").attr("my_height"))
+            - 0
+            - 1
+    );
+
+    var chart_container_height=parseInt( $("#chart-main-middle").height() )- parseInt( $("#chart-container-item").height() );
+    $("#chart-container").height(parseInt(chart_container_height));
+
+    if ($("#chart-container").highcharts()) {
+        var chart = $("#chart-container").highcharts();
+        chart.setSize(
+            $("#chart-main-middle").width(),
+            chart_container_height,
+            false
+        );
+    }
+    if ($("#chart-type-alternate td.active").attr("type") == "pie") {
+        for (var k = 0; k < $("#chart-container").highcharts().series.length; k++) {
+            $("#chart-container").highcharts().series[k].update({
+                showInLegend: false
+            })
+        }
+    }
+}
 //清空图表的生成条件
 function clear_chart_condition() {
     $("#analytics-condition").find("input[type='text']").each(function () {

@@ -1,7 +1,8 @@
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "groupDetail.js" %>
 <% end %>
-<div>
+
+<div >
   <div class="analytics-condition clearfix" id="analytics-condition">
     <div class="analytics-mark pull-left" style="width:123px;">
       <h2 class="normal-blue text-center pointer" onclick="analytic_control_condition_visible()"><%= t 'analytics.title' %></h2>
@@ -117,8 +118,32 @@
       </tr>
     </table>
 
+    <!--condition-->
+    <div class="project-block" id="project-block" my_height="210">
+      <div class="inner">
+        <div class="left">
+          <p>Project title</p>
+          <input type="text" id="project-title"/>
+          <p>Project description</p>
+          <textarea id="project-desc"></textarea>
+        </div>
+        <div class="right">
+          <div>
+            <p>Attachment</p>
+            <input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
+            <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
+          </div>
+
+        </div>
+        <a class="btn btn-for-project">Cancel</a>
+        <a class="btn btn-success btn-for-project">Publish</a>
+      </div>
+    </div>
+
   </div>
 </div>
+
+
 
 <div class="detail-block" id="detail-block">
   <div class="navigation">
@@ -223,6 +248,9 @@
   </div>
 </div>
 
+
+
+
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "moment.min.js" %>
     <%= javascript_include_tag "highstock.js" %>
@@ -236,11 +264,26 @@
     <%= javascript_include_tag "date_picker_template.js" %>
     <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
     <%= javascript_include_tag "jquery.ui/jquery-ui-wayne.min.js" %>
+
+
+    <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
+    <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
+    <%= javascript_include_tag "story_manage.js" %>
 <% end %>
 
 <script>
     $(document).ready(function () {
         init_analytics();
+        attach_upload("item-data-uploader");
+        $("body")
+                .on("click",".attachment-item-remove",function(event){
+                    if (confirm('Sure to delelte?')) {
+                        var e = event ? event : (window.event ? window.event : null);
+                        var obj = e.srcElement || e.target;
+                        e.stopPropagation();
+                        $(".attachment-item[path-name='" + $(obj).attr("path-name") + "']").remove();
+                    }
+                })
     });
     $(window).resize(function () {
         resize_chart.body();

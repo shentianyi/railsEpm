@@ -1,5 +1,5 @@
 @import "STYLE";
-
+@import "basic";
 .analytics-mark{
   h2{
     @include word-break;
@@ -87,7 +87,69 @@
       }
     }
   }
+  .project-block{
+    height:210px;
+    box-sizing:border-box;
+    margin-top:70px;
+    padding:0px 10px 8px;
+    .inner{
+      width:100%;
+      height:100%;
+      border:1px solid $layout-border-color;
+      background:#fff;
+      position:relative;
+      @include box-shadow(1px,1px,2px,rgba(0,0,0,0.9));
+      @include border-radius-same(10px);
+      .btn-for-project{
+        position:absolute;
+        width:100px;
+        bottom:8px;
+        font-size:13px;
+        &:nth-of-type(1){
+          right:150px;
+        }
+        &:nth-of-type(2){
+          right: 20px;
+        }
+      }
+      .left,.right{
+        float:left;
+        box-sizing:border-box;
+        width:50%;
+        overflow-y:auto;
+      }
+      p{
+        font-size:13px;
+        color:#777;
+        padding-left:15px;
+        margin:8px 0 2px;
+        font-weight: 500;
+      }
+      input,textarea{
+        margin-left:15px;
+      }
+      input{
+         width:210px;
+      }
+      textarea{
+         width:80%;
+         resize:none;
+      }
+      .right{
+        position:relative;
+        .abstractblock{
+          height:100px;
+          overflow-y:auto;
+        }
+
+      }
+
+    }
+  }
 }
+//////////////////////////////////////////////////  chart body part
+
+
 
 .detail-block{
   position:absolute;

@@ -1,3 +1,4 @@
+
 function attach_upload(id) {
     var vali = true;
     var lock = false;
@@ -28,13 +29,22 @@ function attach_upload(id) {
             var prev = $("#" + id + '-preview');
             if (data.result) {
                 for (var i = 0; i < data.content.length; i++) {
-                    prev.append($("<div />").addClass("attachment-item inline-block")
-                        .attr("title", data.content[i].oriName).attr("path-name", data.content[i].pathName)
-                        .append($("<div />").addClass('attachment-sign').addClass("atta-" + data.content[i].type)
-                            .append($("<div />").addClass("attachment-operate").attr("path-name", data.content[i].pathName)
-                                .click(attachment_remove).append($("<i />").addClass("icon-remove attach-icon-remove icon-white pointer pull-left")
-                                    .attr("path-name", data.content[i].pathName)))).append($("<p />").addClass("attachment-p")
-                            .html(data.content[i].oriName)));
+                      var html='<div class="attachment-item" title="'+data.content[i].oriName+'" path-name="'+data.content[i].pathName+'">'+
+                                '<div class="content">'+
+                                    '<p>'+data.content[i].oriName+'</p>'+
+                                '</div>'+
+                                '<div class="remove">'+
+                                    '<i class="icon icon-remove attachment-item-remove" path-name="'+data.content[i].pathName+'"></i>'+
+                                '</div>'+
+                                 '</div>'
+                      prev.append(html);
+//                    prev.append($("<div />").addClass("attachment-item inline-block")
+//                        .attr("title", data.content[i].oriName).attr("path-name", data.content[i].pathName)
+//                        .append($("<div />").addClass('attachment-sign').addClass("atta-" + data.content[i].type)
+//                            .append($("<div />").addClass("attachment-operate").attr("path-name", data.content[i].pathName)
+//                                .click(attachment_remove).append($("<i />").addClass("icon-remove attach-icon-remove icon-white pointer pull-left")
+//                                    .attr("path-name", data.content[i].pathName)))).append($("<p />").addClass("attachment-p")
+//                            .html(data.content[i].oriName)));
                 }
             } else {
                 alert(data.content);
