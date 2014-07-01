@@ -36,5 +36,11 @@ header{
     .empty{
       border-left:2px solid $split-color;
     }
+    &>li.select-language{
+        .menu-select-language{
+          background:$nav-dark;
+      }
+    }
+
   }
 }
