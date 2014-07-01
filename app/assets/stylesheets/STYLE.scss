@@ -101,9 +101,13 @@ $green-hover:transparentize($green,0.4);
   }
   &.btn-success{
     background:$green;
-    color:white;
+    color:#fff;
+    background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(43, 207, 66, 0.2) 55%) $green;
+    background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(43, 207, 66, 0.2) 55%) $green;
     &:hover{
-      background:$green-hover
+      background:$green-hover;
+      background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(43, 207, 66, 0.5) 55%) $green;
+      background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(43, 207, 66, 0.5) 55%) $green;
     }
   }
   &.btn-warning{
