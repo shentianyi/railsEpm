@@ -20,8 +20,6 @@ class KpiSubscribe < ActiveRecord::Base
       self.kpi_subscribe_alerts.each do |alert|
         alert.execute data[:current]
       end
-    else
-      puts 'false'
     end
   end
 

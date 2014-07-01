@@ -2,6 +2,7 @@ IFEpm::Application.routes.draw do
   resources :kpi_subscribes do
     collection do
       get 'mine/:id' => :mine
+      get 'new/:id' => :new
       get 'mine' => :mine
       get 'my_subscribe/:id' => :my_subscribe
     end

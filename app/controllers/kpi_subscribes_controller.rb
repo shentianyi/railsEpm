@@ -1,5 +1,7 @@
 class KpiSubscribesController < ApplicationController
-  before_filter :get_ability_category,:get_kpis_by_category,:get_user_entity_groups, :only => [:index,:new,:mine]
+  before_filter :get_ability_category,:only =>[:mine,:new]
+  before_filter :get_kpis_by_category,:only=>[:new]
+  before_filter :get_user_entity_groups, :only => [:new]
   # GET /kpi_subscribes
   # GET /kpi_subscribes.json
   def index
@@ -28,6 +30,9 @@ class KpiSubscribesController < ApplicationController
   # GET /kpi_subscribes/new
   # GET /kpi_subscribes/new.json
   def new
+    if params[:id]
+      @kpi = Kpi.find_by_id(params[:id])
+    end
     @kpi_subscribe = KpiSubscribe.new
 
     respond_to do |format|

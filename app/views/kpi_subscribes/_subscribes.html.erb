@@ -4,7 +4,6 @@
         <table class="category" special="my-kpi">
           <tr>
             <td title='<%= kpi.name %>'><%= kpi.name %></td>
-            <td><%= kpi.id %></td>
             <td>
               <p>
               <% kpi.kpi_subscribes.each do |ks| %>
@@ -13,12 +12,11 @@
               </p>
             </td>
             <td>
-              <a class="btn btn-success">添加订阅</a>
+              <a class="btn btn-success" href="/kpi_subscribes/new/<%= kpi.id%>">添加订阅</a>
             </td>
           </tr>
           <tr>
             <td title='<%= kpi.description %>'><%= kpi.description %></td>
-            <td>KPI ID</td>
             <td>订阅</td>
             <td>操作</td>
           </tr>
