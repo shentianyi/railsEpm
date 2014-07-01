@@ -4,7 +4,7 @@ class StorySetsController < ApplicationController
   # GET /story_sets.json
   def index
     @story_sets =current_user.collaborated_story_sets.all
-
+    UserMessage.clean_story_set_message(current_user.id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @story_sets }
@@ -25,7 +25,7 @@ class StorySetsController < ApplicationController
   # GET /story_sets/new.json
   def new
     @story_set = StorySet.new
-    @users=User.where('id <> ?', current_user.id).where(role_id:Role.director).all
+    @users=User.where('id <> ?', current_user.id).where(role_id: Role.director).all
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @story_set }
