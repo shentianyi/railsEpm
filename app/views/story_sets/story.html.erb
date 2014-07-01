@@ -1,43 +1,70 @@
-<% content_for :javascript_includes do %>
-    <%= javascript_include_tag "highcharts.js" %>
-<% end %>
-<h1>Listing stories</h1>
-<!--mockup-->
-<table>
-  <tr>
-    <th>User</th>
-    <th>Title</th>
-  </tr>
+<div class="story-set-show">
+  <div class="left">
+    <div class="header">
+      <a href="<%= story_sets_path %>"><i class=" icon-chevron-left"></i> back</a>
+    </div>
+    <div class="content" id="story-content-div">
 
-  <% @stories.each do |story| %>
-      <tr>
-        <td>
-          <image src='<%= story.user_avatar %>' width='50px'/>
-          <span><%= story.user_name %></span>
-        </td>
-        <td>
-          <a href="#" story='<%= story.id %>' class='show-story-detail-a'>
-            <%= story.title %>
-          </a>
-        </td>
-      </tr>
-  <% end %>
-</table>
-<hr/>
-<%= render partial: 'stories/create' %>
-<h3>Story Detail</h3>
-<div id="story-content-div">
+    </div>
+  </div>
+  <div class="right">
+    <div class="holder">
+      <div class="avatar">
+        <a>
+          <image src='<%= @story_set.user.image_url %>' width='80px'/>
+        </a>
+      </div>
+      <div class="title">
+        <p><%= @story_set.user.first_name %></p>
+
+        <p><%= @story_set.user.title %></p>
+      </div>
+
+      <div class="btn-area">
+        <a class="btn btn-success" id="add-dashboard-show">publish</a>
+      </div>
+    </div>
+    <div class="participate">
+      <p>Project participator</p>
+      <% @stories.each do |story| %>
+          <div class="item">
+            <div class="avatar">
+              <a>
+                <image src='<%= story.user_avatar %>' width='80px'/>
+              </a>
+            </div>
+            <div class="title">
+              <p><span><%= story.user_name %></span><span><%= story.user_title %></span></p>
+
+              <p><%= story.title %></p>
+
+              <p>
+                <span><%= time_ago_in_words(story.created_at.localtime) %></span><span>comment_count: <%= story.comment_count %></span>
+              </p>
+            </div>
+            <div class="btn-area">
+              <a class="btn btn-primary show-story-detail-a" story='<%= story.id %>'>check</a>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
 
 </div>
 <% content_for :javascript_includes do %>
+    <%= javascript_include_tag "highcharts.js" %>
     <%= javascript_include_tag 'magnific.popup/jquery.magnific-popup.min' %>
 <% end %>
+
+<% content_for :stylesheet_includes do %>
+    <%= stylesheet_link_tag 'magnific.popup/magnific-popup' %>
+<% end %>
+<input type="hidden" value="<%= @story_set.id %>" id="current_story_set">
+
+<%= render partial: 'stories/create' %>
+
 <script type="text/javascript">
     $(function () {
         init_story_page();
     });
 </script>
-<% content_for :stylesheet_includes do %>
-    <%= stylesheet_link_tag 'magnific.popup/magnific-popup' %>
-<% end %>
-<input type="hidden" value="<%= @story_set.id %>" id="current_story_set">

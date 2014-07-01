@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140701022307) do
+ActiveRecord::Schema.define(:version => 20140701064220) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -412,8 +412,10 @@ ActiveRecord::Schema.define(:version => 20140701022307) do
     t.integer  "user_id"
     t.integer  "story_set_id"
     t.integer  "tenant_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "comment_count", :default => 0
+    t.integer  "chart_count",   :default => 0
   end
 
   add_index "stories", ["story_set_id"], :name => "index_stories_on_story_set_id"
@@ -435,10 +437,14 @@ ActiveRecord::Schema.define(:version => 20140701022307) do
     t.integer  "user_id"
     t.integer  "tenant_id"
     t.string   "description"
-    t.boolean  "email_alert", :default => true
-    t.boolean  "sms_alert",   :default => false
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.boolean  "email_alert",   :default => true
+    t.boolean  "sms_alert",     :default => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.integer  "story_count",   :default => 0
+    t.integer  "comment_count", :default => 0
+    t.integer  "chart_count",   :default => 0
+    t.integer  "user_count",    :default => 0
   end
 
   add_index "story_sets", ["tenant_id"], :name => "index_story_sets_on_tenant_id"

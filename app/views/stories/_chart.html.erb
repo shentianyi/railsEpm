@@ -1,26 +1,25 @@
-<div>
+<div class="chart">
   <div class="chart-body" id="chart-body" style="display:none">
     <div class="relative" id="chart-main-middle">
       <div class="chart-container " id="chart-container"></div>
     </div>
   </div>
+  <div class="chart-conditions">
+    <% @chart_conditions.each_with_index do |cc, i| %>
+        <div>
+          <input type="hidden" value="<%= cc.kpi_id %>" id="kpi-id-hidden-<%= i %>"/>
+          <input type="hidden" value="<%= cc.kpi_name %>" id="kpi-name-hidden-<%= i %>"/>
+          <input type="hidden" value="<%= cc.entity_group_id %>" id="entity-group-id-hidden-<%= i %>"/>
+          <input type="hidden" value="<%= cc.entity_group_name %>" id="entity-group-name-hidden-<%= i %>"/>
+          <input type="hidden" value="<%= cc.start_time %>" id="start-time-hidden-<%= i %>"/>
+          <input type="hidden" value="<%= cc.end_time %>" id="end-time-hidden-<%= i %>"/>
+          <input type="hidden" value="<%= cc.interval %>" id="frequency-hidden-<%= i %>"/>
+          <input type="hidden" value="<%= cc.chart_type %>" id="type-hidden-<%= i %>"/>
+          <input type="hidden" value="<%= cc.cache_data %>" id="data-hidden-<%= i %>"/>
+        </div>
+    <% end %>
+  </div>
 </div>
-<div class="chart-conditions">
-  <% @chart_conditions.each_with_index do |cc, i| %>
-      <div>
-        <input type="hidden" value="<%= cc.kpi_id %>" id="kpi-id-hidden-<%= i %>"/>
-        <input type="hidden" value="<%= cc.kpi_name %>" id="kpi-name-hidden-<%= i %>"/>
-        <input type="hidden" value="<%= cc.entity_group_id %>" id="entity-group-id-hidden-<%= i %>"/>
-        <input type="hidden" value="<%= cc.entity_group_name %>" id="entity-group-name-hidden-<%= i %>"/>
-        <input type="hidden" value="<%= cc.start_time %>" id="start-time-hidden-<%= i %>"/>
-        <input type="hidden" value="<%= cc.end_time %>" id="end-time-hidden-<%= i %>"/>
-        <input type="hidden" value="<%= cc.interval %>" id="frequency-hidden-<%= i %>"/>
-        <input type="hidden" value="<%= cc.chart_type %>" id="type-hidden-<%= i %>"/>
-        <input type="hidden" value="<%= cc.cache_data %>" id="data-hidden-<%= i %>"/>
-      </div>
-  <% end %>
-</div>
-
 <script>
     $(document).ready(function () {
         for (var i = 0; i < $('.chart-conditions').children().length; i++)
@@ -28,13 +27,13 @@
     });
     function prepare_form_cchart(i) {
         alert()
-        var data = jQuery.parseJSON($("#data-hidden-"+i).val());
-        var kpi = $("#kpi-id-hidden-"+i).val();
-        var kpi_name = $("#kpi-name-hidden-"+i).val();
-        var view = $("#entity-group-id-hidden-"+i).val();
-        var view_text = $("#entity-group-name-hidden-"+i).val();
-        var interval = $("#frequency-hidden-"+i).val(), type = $("#type-hidden-"+i).val(), chart_body_close_validate;
-        var begin_time = $("#start-time-hidden-"+i).val(), end_time = $("#end-time-hidden-"+i).val();
+        var data = jQuery.parseJSON($("#data-hidden-" + i).val());
+        var kpi = $("#kpi-id-hidden-" + i).val();
+        var kpi_name = $("#kpi-name-hidden-" + i).val();
+        var view = $("#entity-group-id-hidden-" + i).val();
+        var view_text = $("#entity-group-name-hidden-" + i).val();
+        var interval = $("#frequency-hidden-" + i).val(), type = $("#type-hidden-" + i).val(), chart_body_close_validate;
+        var begin_time = $("#start-time-hidden-" + i).val(), end_time = $("#end-time-hidden-" + i).val();
         if ($("#chart-body").css("display") == "block") {
             chart_body_close_validate = false;
         } else {

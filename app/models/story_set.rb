@@ -1,6 +1,6 @@
 class StorySet < ActiveRecord::Base
 
-  attr_accessible :title, :description, :email_alert, :sms_alert
+  attr_accessible :title, :description, :email_alert, :sms_alert, :comment_count, :chart_count, :user_count
 
   belongs_to :user
   has_many :story_set_users, :dependent => :destroy
@@ -33,7 +33,7 @@ class StorySet < ActiveRecord::Base
   end
 
   def collaborator_set
-    $redis.sembers(generate_key)
+    $redis.smembers(generate_key)
   end
 
   def generate_key
