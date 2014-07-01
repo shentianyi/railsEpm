@@ -1,5 +1,5 @@
 class Story < ActiveRecord::Base
-  attr_accessible :title, :description, :story_set_id
+  attr_accessible :title, :description, :story_set_id ,:comment_count,:chart_count
   belongs_to :user
   belongs_to :story_set
   has_many :chart_conditions, :as => :chartable, :dependent => :destroy
@@ -23,6 +23,6 @@ class Story < ActiveRecord::Base
   end
 
   def self.detail_by_set_id id
-    joins(:user).where(story_set_id: id).select('users.first_name as user_name, users.image_url as user_avatar,stories.*')
+    joins(:user).where(story_set_id: id).select('users.first_name as user_name,users.title as user_title,users.email, users.image_url as user_avatar,stories.*')
   end
 end

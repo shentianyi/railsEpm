@@ -3,9 +3,9 @@ class StorySetsController < ApplicationController
   # GET /story_sets
   # GET /story_sets.json
   def index
-    @story_sets = current_user.story_sets
-    @collaborated_story_sets=current_user.collaborated_story_sets
-
+    @story_sets = current_user.story_sets.all
+    @collaborated_story_sets=current_user.collaborated_story_sets.all
+    @story_sets= @story_sets+@collaborated_story_sets
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @story_sets }
@@ -89,6 +89,9 @@ class StorySetsController < ApplicationController
     @stories=[]
     if @story_set=StorySet.find_by_id(params[:id])
       @stories=StoryPresenter.init_presenters(Story.detail_by_set_id(@story_set.id).all)
+      if @stories.count>0
+        @default_stroy=@stories.first
+      end
     end
   end
 end
