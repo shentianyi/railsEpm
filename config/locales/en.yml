@@ -659,3 +659,5 @@ en:
     current: Current
     target_min: Target Min
     target_max: Target Max
+  user_message:
+    add_to_story_set: You are added to story set

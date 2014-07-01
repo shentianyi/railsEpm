@@ -25,3 +25,4 @@
 //=require Log
 //=require jquery.scrollUp.min
 //=require mustache.min
+//= require popModal.min

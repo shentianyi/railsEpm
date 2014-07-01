@@ -664,3 +664,5 @@ zh:
     current: 当前值
     target_min: 目标值下限
     target_max: 目标值上限
+  user_message:
+    add_to_story_set: 你被加入了讨论组

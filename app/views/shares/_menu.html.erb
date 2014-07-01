@@ -57,6 +57,8 @@
   <ul class="nav-user-part">
     <li>
       <a href="/users/<%= current_user.id %>"><i class="icon-user" title="<%= current_user.first_name %>"> </i></a>
+      <div id='user-message-div'>
+      </div>
     </li>
     <%= render partial: 'shares/locale' %>
     <li class='empty'><a>
