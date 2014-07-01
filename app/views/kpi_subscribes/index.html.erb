@@ -2,13 +2,12 @@
 
 <table>
   <tr>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>kpi</th>
   </tr>
 
 <% @kpi_subscribes.each do |kpi_subscribe| %>
   <tr>
+    <td><%= kpi_subscribe.kpi_id%></td>
     <td><%= link_to 'Show', kpi_subscribe %></td>
     <td><%= link_to 'Edit', edit_kpi_subscribe_path(kpi_subscribe) %></td>
     <td><%= link_to 'Destroy', kpi_subscribe, method: :delete, data: { confirm: 'Are you sure?' } %></td>

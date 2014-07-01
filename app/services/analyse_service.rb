@@ -20,7 +20,7 @@ class AnalyseService
     query
   end
 
-  def chart_condition_filter(condition)
+  def self.chart_condition_filter(condition)
     time_span = DashboardItem.time_string_to_time_span condition.time_string
     count = DashboardCondition.time_range_count(time_span[:start].iso8601.to_s, time_span[:end].iso8601.to_s, condition.interval)
     if count > 150
