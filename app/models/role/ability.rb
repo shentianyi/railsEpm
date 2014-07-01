@@ -8,7 +8,7 @@ class Ability
     if user.admin?
       can :manage, [User, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem,
                     UserKpiItem, UserSession, Dashboard, DashboardItem, DashboardCondition, Email,
-                    KpiProperty, KpiPropertyItem, KpiPropertyValue,StorySet,Story,Comment,ChartCondition,StorySetUser]
+                    KpiProperty, KpiPropertyItem, KpiPropertyValue,StorySet,Story,Comment,ChartCondition,StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert]
       can :manage, UserSession, :email => user.email
 
       can :read, EntityGroup, user_entity_groups: {user_id: user.id}
@@ -21,7 +21,7 @@ class Ability
       #can :read,:all
     elsif user.director?
       can :manage, [EntityGroupItem, UserKpiItem, KpiEntry, Dashboard, DashboardItem, DashboardCondition, Email,
-                    KpiProperty, KpiPropertyItem, KpiPropertyValue,StorySet,Story,Comment,ChartCondition,StorySetUser]
+                    KpiProperty, KpiPropertyItem, KpiPropertyValue,StorySet,Story,Comment,ChartCondition,StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert]
       can :manage, User, :id => user.id
 
       can :manage, UserSession, :email => user.email
@@ -56,7 +56,7 @@ class Ability
       can :manage, KpiEntry, :user_id => user.id
 
       can :manage, Email, :user_id => user.id
-      can :read, [KpiProperty, KpiPropertyItem,StorySet,Story,Comment,ChartCondition,StorySetUser]
+      can :read, [KpiProperty, KpiPropertyItem,StorySet,Story,Comment,ChartCondition,StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert]
       can :manage, KpiPropertyValue
     end
   end
