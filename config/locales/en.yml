@@ -666,7 +666,7 @@ en:
     new_story: Your story set has new story
   event_message:
     add_to_story_set: add you to story set
-    story_comment: commit your sotry
+    story_comment: comment your sotry
     new_story: create  anew story
   subscription:
     subscription: Subscription

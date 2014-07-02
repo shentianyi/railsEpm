@@ -125,10 +125,23 @@ function init_story_page() {
     $('body').on('click', '.show-story-detail-item', function () {
         $('.show-story-detail-item').removeClass('active');
         $(this).addClass("active");
-        $.get('/stories/' + $(this).attr('story') + '/detail', function (data) {
-            $('#story-content-div').html(data);
-        }, 'html');
-    })
+        load_story_detail($(this).attr('story'));
+    });
+
+    // load default story
+    $(function () {
+        var id = $('#default_story_id').val();
+        if (id) {
+            $(".show-story-detail-item[story='" + id + "']").addClass('active');
+            load_story_detail(id);
+        }
+    });
+}
+
+function load_story_detail(id) {
+    $.get('/stories/' + id + '/detail', function (data) {
+        $('#story-content-div').html(data);
+    }, 'html');
 }
 
 function create_comment() {

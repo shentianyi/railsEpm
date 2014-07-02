@@ -76,6 +76,10 @@ class KpiEntriesController < ApplicationController
       @setting = params[:setting].nil? ? 'analyse' : params[:setting]
       @current_story_set = StorySet.find_by_id(@setting)
       @users=User.where('id <> ?', current_user.id).where(role_id: Role.director).all
+      # from kpi subscribes
+      if params.has_key?(:s)
+
+      end
     else
       msg=Message.new
       if data=Entry::Analyzer.new(params).analyse
