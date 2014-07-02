@@ -100,7 +100,7 @@
             padding-left:20px;
             height:100%;
             p{
-              @include word-break;
+              word-wrap: break-word;
             }
             p:first-of-type{
               margin-top:38px;
