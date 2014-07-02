@@ -326,4 +326,11 @@
         resize_chart.body();
         resize_chart.container();
     });
+        function show_wzx(){
+            for(var i=0;i<ANALYTICS.chartSeries.series.length;i++){
+                ANALYTICS.chartSeries.series[i].type=$("#chart-type-alternate .image").attr("type");
+                ANALYTICS.chartSeries.series[i].interval=$("#chart-interval-alternate .active").attr("interval");
+            }
+            console.log(ANALYTICS.chartSeries.series);
+        }
 </script>
