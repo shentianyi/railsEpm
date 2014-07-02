@@ -123,7 +123,7 @@ module KpiEntriesHelper
   end
 
   def self.calculate_caled_kpi kpi_id,entry
-    KpiCalculateQueue.process(kpi_id,Time.parse(entry["parsed_entry_at"]).to_milli)
+    #KpiCalculateQueue.process(kpi_id,Time.parse(entry["parsed_entry_at"]).to_milli)
     kpi = Kpi.find_by_id(kpi_id)
 
     kpi_entry_at = entry["entry_at"]

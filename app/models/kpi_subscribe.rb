@@ -1,6 +1,6 @@
 class KpiSubscribe < ActiveRecord::Base
   # attr_accessible :title, :body
-  attr_accessible :user_id, :tenant_id, :kpi_id, :is_alert
+  attr_accessible :user_id, :tenant_id, :kpi_id, :is_alert,:alert_by_sms,:alert_by_email
   belongs_to :user
   belongs_to :tenant
   belongs_to :kpi

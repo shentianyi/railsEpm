@@ -12,6 +12,8 @@ class KpiCalculateQueue
     unless entry.nil?
       if kpis = Kpi.parent_kpis_by_id(entry["kpi_id"])
         kpis.each do |k|
+          CalculateWorker.perform_async(k.id,entry)
+=begin
           rkey = redis_key(k.id,entry["parsed_entry_at"].to_milli)
           if !@cal_queue.has_key?(rkey)
             @cal_queue[rkey] = 1
@@ -28,7 +30,8 @@ class KpiCalculateQueue
           else
             #Do nothing
           end
-          puts @cal_queue.to_json.green
+=end
+          #puts @cal_queue.to_json.green
         end
       end
     end
@@ -38,8 +41,8 @@ class KpiCalculateQueue
   def self.process kpi_id,parsed_entry_at
     fetch
     rkey = redis_key(kpi_id,parsed_entry_at)
-    puts rkey.green
-    puts @cal_queue.to_json.green
+    #puts rkey.green
+    #puts @cal_queue.to_json.green
     if @cal_queue[rkey] && @cal_queue[rkey] > 0
       @cal_queue[rkey] = @cal_queue[rkey] - 1
     end

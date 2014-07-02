@@ -40,10 +40,14 @@
     </div>
 
     <p>Alert method</p>
-    <select style="height: 30px; width:423px; margin: 5px" id="calculate-type" class="chosen-select">
+    <!--<select style="height: 30px; width:423px; margin: 5px" id="calculate-type" class="chosen-select">
       <option value="0">SMS</option>
       <option value="1">E-mail/option>
-    </select>
+    </select>-->
+    <div class="extreme">
+      <input type="checkbox" value="SMS" name="SMS" id="alert-sms"/>
+      <input type="checkbox" value="EMAIL" id="alert-email"/>
+    </div>
 
 
     <a class="btn btn-primary" id="story-create-btn" onclick="MANAGE.kpi_subscribe.create()"> <%= t 'subscription.create'%> </a>
