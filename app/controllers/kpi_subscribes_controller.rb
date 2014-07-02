@@ -108,12 +108,11 @@ class KpiSubscribesController < ApplicationController
   # DELETE /kpi_subscribes/1
   # DELETE /kpi_subscribes/1.json
   def destroy
+    msg = Message.new
+    msg.result = true
     @kpi_subscribe = KpiSubscribe.find(params[:id])
     @kpi_subscribe.destroy
 
-    respond_to do |format|
-      format.html { redirect_to kpi_subscribes_url }
-      format.json { head :no_content }
-    end
+    render json: msg
   end
 end

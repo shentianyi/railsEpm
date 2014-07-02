@@ -13,7 +13,7 @@
     <div class="extreme">
       <select style="height: 30px; width:130px;margin: 5px" id="alert-type" class="chosen-select">
         <% SubscribeAlert.list_type.each do |menu|%>
-            <option><%= menu%></option>
+            <option value="<%= menu[:type]%>"><%= menu[:display]%></option>
         <%end%>
       </select>
       <input type='text' id="value" placeholder="Value" />

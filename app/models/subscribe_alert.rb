@@ -21,7 +21,18 @@ class SubscribeAlert
     end
   end
 
+  def self.display type
+    case type
+      when 'MAX'
+        'aaa'
+      when 'MIN'
+        'bbb'
+      else
+        'NULL'
+    end
+  end
+
   def self.list_type
-    ALERTTYPE
+    ALERTTYPE.collect{|type| {type:type,display:display(type)} }
   end
 end

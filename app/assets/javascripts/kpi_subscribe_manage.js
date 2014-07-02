@@ -38,7 +38,7 @@ MANAGE.kpi_subscribe.init_new = function () {
     $("#value").keypress(function(event){
         if(event.which == 13){
             var value = $("#value").val();
-            var type = $("#alert-type option.selected").val();
+            var type = $("#alert-type option.selected").attr("value");
             $(this).val("");
             $("#alert-list").append("<li type="+type+">"+value+"</li>");
             event.preventDefault();
@@ -77,6 +77,17 @@ MANAGE.kpi_subscribe.create = function(){
         },
         success:function(data){
             console.log(data)
+        }
+    })
+}
+
+MANAGE.kpi_subscribe.destroy = function(id,callback){
+    $.ajax({
+        url:'/kpi_subscribes/'+id,
+        type:'DELETE',
+        dataType:'json',
+        success: function(data){
+            callback(data);
         }
     })
 }

@@ -7,7 +7,7 @@
             <td>
               <div class="subscribe-wrap" style="width:100%;overflow-x:auto">
                   <% kpi.kpi_subscribes.each do |ks| %>
-                    <span><%= ks.description %> <i class="icon icon-remove subscribe-remove"></i></span>
+                    <span><%= ks.description %> <i value="<%= ks.id%>" class="icon icon-remove subscribe-remove"></i></span>
                   <% end %>
               </div>
 
@@ -30,7 +30,16 @@
        $("body")
                .on("click",".subscribe-remove",function(event){
                     var target=adapt_event(event).target;
-                   $(target).parents(".subscribe-wrap").eq(0).remove();
+                   MANAGE.kpi_subscribe.destroy($(target).attr("value"),function(data){
+                       if(data.result){
+                           $(target).parent().remove();
+                       }else{
+
+                       }
+
+                       //$(target).remove();
+                   });
+                   //$(target).parents(".subscribe-wrap").eq(0).remove();
                })
   })
 </script>
