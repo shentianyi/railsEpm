@@ -2,7 +2,8 @@
   <div class="left">
     <div class="header">
       <a href="<%= story_sets_path %>"><i class=" icon-chevron-left"></i> back</a>
-      <p><%= @story_set.title%></p>
+
+      <p><%= @story_set.title %></p>
     </div>
     <div class="content" id="story-content-div">
 
@@ -22,7 +23,7 @@
       </div>
 
       <div class="btn-area">
-        <a class="btn btn-success" href="/kpi_entries/analyse/<%= @story_set.id%>">publish</a>
+        <a class="btn btn-success" href="/kpi_entries/analyse/<%= @story_set.id %>">publish</a>
       </div>
     </div>
     <div class="participate">
@@ -44,7 +45,7 @@
               </p>
             </div>
             <!--<div class="btn-area">-->
-              <!--<a class="btn btn-primary show-story-detail-a" story='<%= story.id %>'>check</a>-->
+            <!--<a class="btn btn-primary show-story-detail-a" story='<%= story.id %>'>check</a>-->
             <!--</div>-->
           </div>
       <% end %>
@@ -53,11 +54,9 @@
 
 </div>
 <% content_for :javascript_includes do %>
-
     <%= javascript_include_tag "highstock.js" %>
-
-    <%= javascript_include_tag "high_chart_template_analytic.js"%>
-    <%= javascript_include_tag "Analytics_init.js"%>
+    <%= javascript_include_tag "high_chart_template_analytic.js" %>
+    <%= javascript_include_tag "Analytics_init.js" %>
     <%= javascript_include_tag 'magnific.popup/jquery.magnific-popup.min' %>
 <% end %>
 
@@ -65,6 +64,7 @@
     <%= stylesheet_link_tag 'magnific.popup/magnific-popup' %>
 <% end %>
 <input type="hidden" value="<%= @story_set.id %>" id="current_story_set">
+<input type="hidden" value="<%= @default_story_id %>" id="default_story_id">
 
 <%= render partial: 'stories/create' %>
 

@@ -20,7 +20,7 @@ class Story < ActiveRecord::Base
       end
     end
 
-    user_ids= StorySet.collaborator_set.select { |u| u.to_i!=self.user_id }
+    user_ids= StorySet.find_collaborator_set(self.story_set_id).select { |u| u.to_i!=self.user_id }
     UserMessage.add_new_story_messgage(user_ids)
 
     EventMessage.new(sender_id: self.user_id, receiver_ids:user_ids, content: self.title,

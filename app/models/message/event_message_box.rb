@@ -12,14 +12,12 @@ class EventMessageBox<CZ::BaseClass
   end
 
   def self.all_story_set_message(user_id)
-    msg= all_message_by_type(user_id, EventMessageBoxType::STORY_SET_EVENT)
-    puts msg.to_json
-    msg
+   all_message_by_type(user_id, EventMessageBoxType::STORY_SET_EVENT)
   end
 
   def self.all_message_by_type user_id, type
     list_key= genereate_event_message_list_key(user_id, type)
-    keys=$redis.zrange(list_key, 0, -1)
+    keys=$redis.zrevrange(list_key, 0, -1)
     EventMessage.find_by_ids(keys)
   end
 
