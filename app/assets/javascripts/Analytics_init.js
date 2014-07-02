@@ -436,13 +436,13 @@ var resize_chart = {
 };
 //下面生成project的存在对高度的影响
 function show_project_block(){
-    ANALYTICS.project_block_state=parseInt($("#project-block").attr("my_height"));
+    ANALYTICS.project_block_state=210;
     $("#project-block").slideDown();
     $("#chart-main-middle").height(
         parseInt($("#chart-body").height())
             - parseInt($("#chart-interval-alternate").attr("my_height"))
             - parseInt($("#chart-type-alternate").attr("my_height"))
-            - parseInt($("#project-block").attr("my_height"))
+            - ANALYTICS.project_block_state
             - 1
     );
 
