@@ -673,6 +673,7 @@ en:
     add: Add Sunscription
     create: Create
     cancel: Cancel
+    kpi: KPI
     add-sub:
       department: Department
       time: Time Range

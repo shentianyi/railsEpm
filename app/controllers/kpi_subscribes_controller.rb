@@ -73,10 +73,11 @@ class KpiSubscribesController < ApplicationController
   end
 
   def mine
+=begin
     @active_category_id= params[:id].nil? ? (@categories.length>0 ? @categories[0].id : nil) : params[:id].to_i
     get_kpis_by_category(@active_category_id) if @active_category_id
-    puts "##############################"
-    puts @active_category_id
+=end
+    @kpi_subscribes = current_user.kpi_subscribes
     respond_to do |format|
       format.html # mine.html.erb
       format.json { render json: @kpis }

@@ -68,7 +68,7 @@ MANAGE.kpi_subscribe.create = function(){
     for(var i = 0;i<$("#alert-list li").length;i++){
         var alert = {}
         alert.alert_type = $("#alert-list li").eq(0).attr("type");
-        alert.value = $("#alert-list li").eq(0).text();
+        alert.value = $("#alert-list li").eq(0).attr("value");
         subscribe_alerts.push(alert)
     }
 
