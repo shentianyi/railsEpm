@@ -181,10 +181,10 @@ function prepare_for_create_story() {
         var condition = {};
         condition.entity_group_id = ANALYTICS.chartSeries.series[i].view;
         condition.kpi_id = ANALYTICS.chartSeries.series[i].kpi_id;
-        condition.calculate_type = CHARTUTIL.calculate_type($("#chart-type-alternate .image").attr("type"));
+        condition.calculate_type = CHARTUTIL.calculate_type(ANALYTICS.chartSeries.series[i].method);
         condition.time_string = CHARTUTIL.time.time_string(ANALYTICS.chartSeries.series[i].begin_time, ANALYTICS.chartSeries.series[i].end_time);
         condition.interval = $("#chart-interval-alternate .active").attr("interval");
-        condition.chart_type = ANALYTICS.chartSeries.series[i].type;
+        condition.chart_type = $("#chart-type-alternate .image").attr("type");
         chart_conditions.push(condition);
     }
 
