@@ -49,6 +49,8 @@ class KpiSubscribesController < ApplicationController
   # POST /kpi_subscribes
   # POST /kpi_subscribes.json
   def create
+    msg = Message.new
+    msg.result = false
     @kpi_subscribe = KpiSubscribe.new(params[:kpi_subscribe])
     @kpi_subscribe.user = current_user
     @kpi_subscribe.tenant = current_tenant
@@ -62,22 +64,21 @@ class KpiSubscribesController < ApplicationController
     end
     @kpi_subscribe.kpi_subscribe_alerts = alerts
     #
-    respond_to do |format|
-      if @kpi_subscribe.save
-        format.html { redirect_to @kpi_subscribe, notice: 'Kpi subscribe was successfully created.' }
-        format.json { render json: @kpi_subscribe, status: :created, location: @kpi_subscribe }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @kpi_subscribe.errors, status: :unprocessable_entity }
-      end
+    if msg.result = @kpi_subscribe.save
+      msg.content = @kpi_subscribe
+    else
+      msg.content = @kpi_subscribe.errors.full_messages
     end
+    render json: msg
   end
 
   def mine
+=begin
     @active_category_id= params[:id].nil? ? (@categories.length>0 ? @categories[0].id : nil) : params[:id].to_i
     get_kpis_by_category(@active_category_id) if @active_category_id
-    puts "##############################"
-    puts @active_category_id
+=end
+    UserMessage.clean_subscription_message(current_user.id)
+    @kpi_subscribes = current_user.kpi_subscribes
     respond_to do |format|
       format.html # mine.html.erb
       format.json { render json: @kpis }
@@ -108,12 +109,11 @@ class KpiSubscribesController < ApplicationController
   # DELETE /kpi_subscribes/1
   # DELETE /kpi_subscribes/1.json
   def destroy
+    msg = Message.new
+    msg.result = true
     @kpi_subscribe = KpiSubscribe.find(params[:id])
     @kpi_subscribe.destroy
 
-    respond_to do |format|
-      format.html { redirect_to kpi_subscribes_url }
-      format.json { head :no_content }
-    end
+    render json: msg
   end
 end

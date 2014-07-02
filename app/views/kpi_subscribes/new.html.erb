@@ -2,37 +2,41 @@
   <p><%= t 'subscription.add'%></p>
   <div class="divide"></div>
   <div class="form">
-    <p id="kpi-id" kpi-id="<%=@kpi.id%>"  class="kpi-title"><%= @kpi.name %></p>
-    <p>部门</p>
+    <p id="kpi-id" kpi-id="<%=@kpi.id%>"  kpi-interval= "<%= @kpi.frequency %>" class="kpi-title"><%= @kpi.name %></p>
+    <p><%= t 'subscription.add-sub.department'%></p>
     <select id="entity-groups" style="height: 30px; width:230px; margin: 5px;" class="chosen-select">
       <% @entity_groups.each do |entity_group| %>
           <option value="<%= entity_group.id %>"><%= entity_group.name %></option>
       <% end %>
     </select>
-    <p>临界值</p>
+
+    <p><%= t 'subscription.add-sub.time'%></p>
+    <div class="time-range" style="margin: 5px 0px;">
+      <input type='text' id="start-time" placeholder="<%= t 'subscription.add-sub.start-time'%>" />
+      <label></label>
+      <input type='text' id="end-time" placeholder="<%= t 'subscription.add-sub.end-time'%>" />
+      <label></label>
+    </div>
+
+    <select style="height: 30px; width:130px; margin: 5px" id="calculate-type" class="chosen-select">
+      <option value="0"><%= t 'subscription.add-sub.average'%></option>
+      <option value="1"><%= t 'subscription.add-sub.total'%></option>
+    </select>
+
+    <p><%= t 'subscription.add-sub.alert_type'%></p>
     <div class="extreme">
       <select style="height: 30px; width:130px;margin: 5px" id="alert-type" class="chosen-select">
         <% SubscribeAlert.list_type.each do |menu|%>
-            <option><%= menu%></option>
+            <option value="<%= menu[:type]%>"><%= menu[:display]%></option>
         <%end%>
       </select>
-      <input type='text' id="value" placeholder="Value" />
+      <input type='number' id="value" placeholder="<%= t 'subscription.add-sub.value'%>" />
       <ul id="alert-list" style="margin: 5px">
       </ul>
     </div>
 
-
-    <p>时间范围</p>
-    <div class="time-range">
-      <input type='text' id="start-time" placeholder="Start" />
-      <label></label>
-      <input type='text' id="end-time" placeholder="End" />
-      <label></label>
-    </div>
-
-
-    <a class="btn btn-primary" id="story-create-btn" onclick="MANAGE.kpi_subscribe.create()">create</a>
-    <%= link_to 'cancel', mine_kpi_subscribes_path,:class=>"btn" %>
+    <a class="btn btn-primary" id="story-create-btn" onclick="MANAGE.kpi_subscribe.create()"> <%= t 'subscription.create'%> </a>
+    <%= link_to (t 'subscription.cancel'), mine_kpi_subscribes_path,:class=>"btn" %>
   </div>
 </div>
 
@@ -41,13 +45,12 @@
         MANAGE.kpi_subscribe.init_new();
 
         var target = "#start-time,#end-time";
-        var interval="200";
+        var interval= $("#kpi-id").attr("kpi-interval");
 
-            new DATE_PICKER[interval](target, "date").datePicker();
-
+        new DATE_PICKER[interval](target, "date").datePicker();
 
         $("body").on("change", "#start-time",function () {
-            var interval ="200";
+            var interval = $("#kpi-id").attr("kpi-interval");
             if (interval == "200") {
                 var week = standardParse($(this).val()).date.toWeekNumber();
                 $(this).next().text("week " + week);
@@ -57,7 +60,7 @@
                 $(this).next().text("quarter " + quarter);
             }
         }).on("change", "#end-time", function () {
-                    var interval = "200";
+                    var interval = $("#kpi-id").attr("kpi-interval");
                     if (interval == "200") {
                         var week = standardParse($(this).val()).date.toWeekNumber();
                         $(this).next().text("week " + week);
@@ -74,5 +77,6 @@
     <%= javascript_include_tag "kpi_subscribe_manage.js" %>
     <%= javascript_include_tag "bootstrap-datepicker.js" %>
     <%= javascript_include_tag "date_picker_template.js" %>
+    <%= javascript_include_tag "chart-util.js" %>
     <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
 <% end %>

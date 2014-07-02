@@ -663,6 +663,29 @@ en:
   user_message:
     add_to_story_set: You are added to story set
     story_comment: Your story was commented
+    new_story: Your story set has new story
+  event_message:
+    add_to_story_set: add you to story set
+    story_comment: comment your sotry
+    new_story: create  anew story
   subscription:
     subscription: Subscription
     add: Add Sunscription
+    create: Create
+    cancel: Cancel
+    kpi: KPI
+    add-sub:
+      department: Department
+      time: Time Range
+      cal_type: Calculate Type
+      alert_type: Alert Type
+      alert_type_exit: Same alert type exits
+      start-time: Start Time
+      end-time: End Time
+      value: Please Enter to add an alert
+      average: AVERAGE
+      total: TOTAL
+    alert-type:
+      max: Should not larger than
+      min: Should not smaller than
+      error: Alert type error

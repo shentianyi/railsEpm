@@ -47,12 +47,7 @@
         <select data-placeholder="<%= t 'analytics.select-dim'%>" multiple style="width:250px;" class="chosen-select " title="analy-attribute-select" id="kpi-property-select">
         </select>
       </div>
-
-
       <a class="btn btn-primary btn-normal pull-left" style="margin:14px 0 0 3px" onclick="prepare_form_chart()"><%= t 'analytics.add_chart' %></a>
-
-
-
     </div>
 
     <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible"
@@ -340,6 +335,12 @@
                     var story = prepare_for_create_story();
 
                     MANAGE.story.create(story,function(data){
+                        if(data.result){
+                            window.location.href = "/story_sets/"+data.content.story_set_id+"/story";
+                        }else
+                        {
+                            MessageBox(data.content,'top','warning');
+                        }
 
                     });
                 })
@@ -353,7 +354,12 @@
                         if(data.result){
                             story.story_set_id = data.content.id;
                             MANAGE.story.create(story,function(data){
-
+                                if(data.result){
+                                    window.location.href = "/story_sets/"+data.content.story_set_id+"/story";
+                                }else
+                                {
+                                    MessageBox(data.content,'top','warning');
+                                }
                             })
                         }
                         else{
@@ -366,9 +372,9 @@
                     story.story_set_id = $(this).attr("value");
                     MANAGE.story.create(story,function(data){
                         if(data.result){
-
+                            window.location.href = '/story_sets/'+data.content.id+'/story?story';
                         }else{
-
+                            MessageBox(data.content,'top','warning');
                         }
                     });
                 })

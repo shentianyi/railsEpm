@@ -11,7 +11,6 @@
 
 
 <%= render :partial => 'shares/user_message' %>
-<%= render :partial => 'shares/user_guide_env' %>
 <article class="wrap-main" id="wrap-main">
   <%= render :partial => 'shares/menu' %>
   <%= yield %>
@@ -23,28 +22,23 @@
 <%= render :partial => 'shares/slide_box' %>
 
 
-
-<% if need_guide %>
-    <%= render :partial => 'shares/user_guide' %>
-<% end %>
-
 </body>
 <script type="text/javascript">
     I18n.defaultLocale = "<%= I18n.default_locale %>";
     I18n.locale = "<%= I18n.locale %>";
-    //    $.ajaxSetup({
-    //        statusCode: {
-    //            403: function () {
-    //                location.href='/403';
-    //            },
-    //            404: function () {
-    //                location.href='/404';
-    //            },
-    //            500:function(){
-    //                location.href='/500';
-    //            }
-    //        }
-    //    });
+//    $.ajaxSetup({
+//        statusCode: {
+//            403: function () {
+//                location.href = '/403';
+//            },
+//            404: function () {
+//                location.href = '/404';
+//            },
+//            500: function () {
+//                location.href = '/500';
+//            }
+//        }
+//    });
     var old_message = null;
     (function callmessage() {
         setTimeout(function () {
@@ -68,7 +62,6 @@
                         if ($('#user-message-ul').children().length > 0)
                             $('#user-message-div').popModal({
                                 html: $('#user-messgae-div'),
-                                duration: 5000,
                                 onDocumentClickClose: false,
                                 onLoad: function () {
                                     $('#user-messgae-div').show();
@@ -95,7 +88,7 @@
                     if (xhr.status == 304) return;
                 }
             });
-        }, 3000);
+        }, 500000);
     })();
 </script>
 <%= yield :javascript_includes %>

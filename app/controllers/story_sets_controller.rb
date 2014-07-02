@@ -6,6 +6,8 @@ class StorySetsController < ApplicationController
     @story_sets =current_user.collaborated_story_sets.all
     UserMessage.clean_story_set_message(current_user.id)
     UserMessage.clean_story_comment_message(current_user.id)
+    UserMessage.clean_new_story_message(current_user.id)
+    @messages=EventMessageBox.all_story_set_message(current_user.id)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @story_sets }
@@ -87,11 +89,21 @@ class StorySetsController < ApplicationController
 
   def story
     @stories=[]
-    if @story_set=StorySet.find_by_id(params[:id])
+    @story_set_id=params[:id]
+    if params.has_key?(:comment)
+      @comment=Comment.find_by_id(params[:id])
+      @default_story=@comment.commentable
+      @story_set_id = @default_story.story_set_id
+    elsif params.has_key?(:story)
+      @default_story=Story.find_by_id(params[:id])
+      @story_set_id = @default_story.story_set_id
+    end
+    if @story_set=StorySet.find_by_id(@story_set_id)
       @stories=StoryPresenter.init_presenters(Story.detail_by_set_id(@story_set.id).all)
-      if @stories.count>0
-        @default_stroy=@stories.first
+      if @default_story.nil? && @stories.count>0
+        @default_story=@stories.first
       end
     end
+    @default_story_id =@default_story.id if @default_story
   end
 end

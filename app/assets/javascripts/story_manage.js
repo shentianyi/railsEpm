@@ -1,4 +1,3 @@
-
 function attach_upload(id) {
     var vali = true;
     var lock = false;
@@ -29,15 +28,15 @@ function attach_upload(id) {
             var prev = $("#" + id + '-preview');
             if (data.result) {
                 for (var i = 0; i < data.content.length; i++) {
-                      var html='<div class="attachment-item" title="'+data.content[i].oriName+'" path-name="'+data.content[i].pathName+'">'+
-                                '<div class="content">'+
-                                    '<p>'+data.content[i].oriName+'</p>'+
-                                '</div>'+
-                                '<div class="remove">'+
-                                    '<i class="icon icon-remove attachment-item-remove" path-name="'+data.content[i].pathName+'"></i>'+
-                                '</div>'+
-                                 '</div>'
-                      prev.append(html);
+                    var html = '<div class="attachment-item" title="' + data.content[i].oriName + '" path-name="' + data.content[i].pathName + '">' +
+                        '<div class="content">' +
+                        '<p>' + data.content[i].oriName + '</p>' +
+                        '</div>' +
+                        '<div class="remove">' +
+                        '<i class="icon icon-remove attachment-item-remove" path-name="' + data.content[i].pathName + '"></i>' +
+                        '</div>' +
+                        '</div>'
+                    prev.append(html);
 //                    prev.append($("<div />").addClass("attachment-item inline-block")
 //                        .attr("title", data.content[i].oriName).attr("path-name", data.content[i].pathName)
 //                        .append($("<div />").addClass('attachment-sign').addClass("atta-" + data.content[i].type)
@@ -81,13 +80,13 @@ function close_block(event) {
 }
 
 function create_story() {
-    var story = {title: $('#story-title').val(), description:$('#story-content').val() ,story_set_id: $('#current_story_set').val()};
+    var story = {title: $('#story-title').val(), description: $('#story-content').val(), story_set_id: $('#current_story_set').val()};
     var attachments = get_attachments('item-data-uploader-preview');
     var chart_conditions = [];
 
     DASHBOARD.add.prepare_to_add_item(function (post) {
         var condition = {};
-        for(var i = 0;i<post.series.length;i++){
+        for (var i = 0; i < post.series.length; i++) {
             condition.entity_group_id = post.series[i].view;
             condition.kpi_id = post.series[i].kpi;
             condition.calculate_type = get_cal_type(post.series[i].average);
@@ -105,7 +104,7 @@ function create_story() {
         story.attachments = attachments;
     }
     $.post('/stories', {story: story}, function (data) {
-        if(data.result){
+        if (data.result) {
             DASHBOARD.add.close();
         }
     });
@@ -124,12 +123,25 @@ function get_attachments(id) {
 
 function init_story_page() {
     $('body').on('click', '.show-story-detail-item', function () {
+        $('.show-story-detail-item').removeClass('active');
         $(this).addClass("active");
-        $.get('/stories/' + $(this).attr('story')+'/detail', function (data) {
-            $('#story-content-div').html(data);
-            $("#chart-container")
-        }, 'html');
-    })
+        load_story_detail($(this).attr('story'));
+    });
+
+    // load default story
+    $(function () {
+        var id = $('#default_story_id').val();
+        if (id) {
+            $(".show-story-detail-item[story='" + id + "']").addClass('active');
+            load_story_detail(id);
+        }
+    });
+}
+
+function load_story_detail(id) {
+    $.get('/stories/' + id + '/detail', function (data) {
+        $('#story-content-div').html(data);
+    }, 'html');
 }
 
 function create_comment() {
@@ -143,27 +155,27 @@ function create_comment() {
     });
 }
 
-function prepare_for_create_story(){
-    var story = {title: $("#story-title").val(), description:$("#story-desc").val(),story_set_id: $("#story-sets option:selected").attr("value")};
+function prepare_for_create_story() {
+    var story = {title: $("#story-title").val(), description: $("#story-desc").val(), story_set_id: $("#story-sets option:selected").attr("value")};
     var attachments = MANAGE.story.get_attachments('item-data-uploader-preview');
     var chart_conditions = [];
 
-    for(var i=0;i<ANALYTICS.chartSeries.series.length;i++){
+    for (var i = 0; i < ANALYTICS.chartSeries.series.length; i++) {
         var condition = {};
         condition.entity_group_id = ANALYTICS.chartSeries.series[i].view;
         condition.kpi_id = ANALYTICS.chartSeries.series[i].kpi_id;
         condition.calculate_type = CHARTUTIL.calculate_type($("#chart-type-alternate .image").attr("type"));
-        condition.time_string = CHARTUTIL.time.time_string(ANALYTICS.chartSeries.series[i].begin_time,ANALYTICS.chartSeries.series[i].end_time);
+        condition.time_string = CHARTUTIL.time.time_string(ANALYTICS.chartSeries.series[i].begin_time, ANALYTICS.chartSeries.series[i].end_time);
         condition.interval = $("#chart-interval-alternate .active").attr("interval");
         condition.chart_type = ANALYTICS.chartSeries.series[i].type;
         chart_conditions.push(condition);
     }
 
-    if (chart_conditions.length > 0){
+    if (chart_conditions.length > 0) {
         story.chart_conditions = chart_conditions;
     }
 
-    if(attachments){
+    if (attachments) {
         story.attachments = attachments;
     }
     return story;

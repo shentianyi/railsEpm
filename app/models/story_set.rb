@@ -23,20 +23,27 @@ class StorySet < ActiveRecord::Base
   #private
   def generate_collaborator_set
     c= self.collaborators.all
-    $redis.sadd(generate_key, c.collect { |u| u.id }) if c.count>0
+    $redis.sadd(StorySet.generate_key(self.id), c.collect { |u| u.id }) if c.count>0
   end
 
   def pub_collaborator_message
-    collaborator_set.each do |u|
-      UserMessage.add_story_set_message(u) unless u.to_i==self.user_id
-    end
+    user_ids= collaborator_set.select { |u| u.to_i!=self.user_id }
+    UserMessage.add_story_set_message(user_ids)
+
+    EventMessage.new(sender_id: self.user_id, receiver_ids: user_ids, content: self.title,
+                     messageble_type: self.class.name, messageable_id: self.id,
+                     type: EventMessageType::ADD_TO_STROY_SET).save
   end
 
   def collaborator_set
-    $redis.smembers(generate_key)
+    $redis.smembers(generate_key(self.id))
   end
 
-  def generate_key
-    "story_set:#{self.id}:collaborator:set"
+  def self.find_collaborator_set id
+    $redis.smembers(generate_key(id))
+  end
+
+  def self.generate_key(id)
+    "story_set:#{id}:collaborator:set"
   end
 end
