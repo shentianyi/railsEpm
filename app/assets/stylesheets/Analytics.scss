@@ -626,8 +626,8 @@
 
 //弹出选择组
 .choose-project-team{
-  $width:450px;
-  $height:300px;
+  $width:500px;
+  $height:380px;
    position:absolute;
   width:$width;
   background:#fff;
@@ -678,6 +678,7 @@
       font-weight:500;
       font-size:12px;
       padding:5px 9px;
+      margin:0px;
     }
     .btn{
       padding:5px 8px;
@@ -688,9 +689,15 @@
       bottom:10px;
     }
   }
+  .choose-by-select{
+    //padding:6px 0px;
+  }
   .choose-by-create{
     input:first-of-type{
       width:130px;
+    }
+    .chosen-container .chosen-results{
+      max-height: 128px;
     }
   }
 }

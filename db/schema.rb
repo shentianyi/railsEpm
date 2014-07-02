@@ -334,9 +334,11 @@ ActiveRecord::Schema.define(:version => 20140702184208) do
     t.integer  "user_id"
     t.integer  "kpi_id"
     t.integer  "tenant_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.boolean  "is_alert",   :default => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "is_alert",       :default => false
+    t.boolean  "alert_by_sms",   :default => false
+    t.boolean  "alert_by_email", :default => false
   end
 
   add_index "kpi_subscribes", ["kpi_id"], :name => "index_kpi_subscribes_on_kpi_id"

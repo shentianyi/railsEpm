@@ -47,7 +47,13 @@
         <select data-placeholder="<%= t 'analytics.select-dim'%>" multiple style="width:250px;" class="chosen-select " title="analy-attribute-select" id="kpi-property-select">
         </select>
       </div>
-      <a class="btn btn-primary btn-normal pull-left" style="margin:14px 0 0 3px" onclick="prepare_form_chart()"><%= t 'analytics.add_chart' %></a>
+      <% if @setting == 'analyse' %>
+          <a class="btn btn-primary btn-normal pull-left" id="form-chart-btn" style="margin:14px 0 0 3px" onclick="prepare_form_chart()" condition="analyse"><%= t 'analytics.add_chart' %></a>
+      <% else %>
+          <a class="btn btn-primary btn-normal pull-left" id="form-chart-btn" style="margin:14px 0 0 3px" onclick="prepare_form_chart()" condition="discuss"><%= t 'analytics.add_chart' %></a>
+      <% end %>
+
+
     </div>
 
     <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible"
@@ -338,6 +344,9 @@
                 })
                 .on("click","#create-discuss-btn",function(){
                     show_project_block();
+                    if($("#analytic-control-condition-visible").attr("state")=="open"){
+                        $("#analytic-control-condition-visible").click();
+                    }
                 })
                 .on("click","#cancel-fro-project",function(){
                     hide_project_block();

@@ -232,6 +232,11 @@ function prepare_form_chart() {
         }
         ANALYTICS.form_chart(option);
         ANALYTICS.legend.generateItem(option);
+
+        var condition=$("#form-chart-btn").attr("condition");
+        if(condition=="discuss"){
+            $("#analytic-control-condition-visible").click();
+        }
     }
     else {
         MessageBox(I18n.t('analytics.fill_all_blank'), "top", "warning")

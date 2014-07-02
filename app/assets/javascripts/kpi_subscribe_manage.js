@@ -62,6 +62,8 @@ MANAGE.kpi_subscribe.create = function(){
     chart_condition.chart_type = "NULL";
 
     var kpi_subscribe = {}
+    kpi_subscribe.alert_by_sms = $("#alert-sms").attr('checked') === 'checked';
+    kpi_subscribe.alert_by_email = $("#alert-email").attr('checked') === 'checked';
     kpi_subscribe.kpi_id = chart_condition.kpi_id;
 
     var subscribe_alerts = []
