@@ -1,6 +1,6 @@
 class KpiSubscribe < ActiveRecord::Base
   # attr_accessible :title, :body
-  attr_accessible :user_id,:tenant_id,:kpi_id
+  attr_accessible :user_id,:tenant_id,:kpi_id,:is_alert
   belongs_to :user
   belongs_to :tenant
   belongs_to :kpi
@@ -20,6 +20,8 @@ class KpiSubscribe < ActiveRecord::Base
       self.kpi_subscribe_alerts.each do |alert|
         if alert.execute data[:current]
           alert_user
+          self.is_alert = true
+          self.save
           return
         end
       end

@@ -77,6 +77,7 @@ class KpiSubscribesController < ApplicationController
     @active_category_id= params[:id].nil? ? (@categories.length>0 ? @categories[0].id : nil) : params[:id].to_i
     get_kpis_by_category(@active_category_id) if @active_category_id
 =end
+    UserMessage.clean_subscription_message(current_user.id)
     @kpi_subscribes = current_user.kpi_subscribes
     respond_to do |format|
       format.html # mine.html.erb
