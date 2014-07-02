@@ -2,6 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "basic";
+@import "STYLE";
 .story-set-index{
   height:calc(100% - 70px);
   height:-moz-calc(100% - 70px);
@@ -70,6 +71,9 @@
         padding-left:calc(50% - 345px);
         padding-left:-moz-calc(50% - 345px);
         padding-left:-webkit-calc(50% - 345px);
+        padding-right:calc(50% - 375px);
+        padding-right:-moz-calc(50% - 375px);
+        padding-right:-webkit-calc(50% - 375px);
         &:after{
           @include after-clear;
         }
@@ -325,8 +329,23 @@
       }
       .avatar{
         width:90px;
-
+        position:relative;
         box-sizing:border-box;
+        a{
+          display:block;
+          $width:60px;
+          width:$width;
+          height:$width;
+
+          position:absolute;
+          left:50%;
+          top:50%;
+          margin-left:- $width / 2;
+          margin-top:- $width / 2;
+          img{
+            @include border-radius-same($width);
+          }
+        }
       }
       .title{
         padding:0px 10px;
@@ -372,8 +391,23 @@
         }
         .avatar{
           width:80px;
-
           box-sizing:border-box;
+          position:relative;
+          a{
+            display:block;
+            $width:50px;
+            width:$width;
+            height:$width;
+
+            position:absolute;
+            left:50%;
+            top:50%;
+            margin-left:- $width / 2;
+            margin-top:- $width / 2;
+            img{
+              @include border-radius-same($width);
+            }
+          }
         }
         .title{
           padding:0px 8px;
