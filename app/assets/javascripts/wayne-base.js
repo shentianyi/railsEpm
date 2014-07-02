@@ -58,6 +58,39 @@ if(!Date.prototype.toWayneString){
        }
     }
 }
+//化为标准格式显示用
+if(!Date.prototype.toWangString){
+    Date.prototype.toWangString=function(interval){
+        var second=this.getSeconds()<10?"0"+this.getSeconds():this.getSeconds();
+        var minute=this.getMinutes()<10?"0"+this.getMinutes():this.getMinutes();
+        var hour=this.getHours()<10?"0"+this.getHours():this.getHours();
+        var day=this.getDate()<10?"0"+this.getDate():this.getDate();
+        var month=this.getMonth()+1<10?"0"+(this.getMonth()+1):this.getMonth()+1;
+        var year=this.getFullYear();
+        var string="";
+        switch(interval){
+            case "90":
+                string= year+"-"+month+"-"+day+" "+hour+":00";
+                break;
+            case "100":
+                string= year+"-"+month+"-"+day;
+                break;
+            case "200":
+                string= year+"-"+month+"-"+day;
+                break;
+            case "300":
+                string= year+"-"+month;
+                break;
+            case "400":
+                string= year+"-"+month;
+                break;
+            case "500":
+                string= year.toString();
+                break;
+        }
+        return string;
+    }
+}
 //yy-mm-dd hh:ii格式解析
 function standardParse(date_value){
     var date_value=(date_value.replace(/\s/g,"-").replace(/:/g,"-").replace(/T/g,"-")).split("-");

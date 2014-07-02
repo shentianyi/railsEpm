@@ -25,7 +25,7 @@
             <% else %>
                 <td><%= t 'manage.kpi.not_calculate_type' %></td>
             <% end %>
-            <td><a class="btn btn-success" href="/kpi_subscribes/new/<%= kpi.id%>"><%= t 'subscription.add'%></a></td>
+            <td><a class="btn btn-success" href="/kpi_subscribes/new/<%= kpi.id%>" style="font-size:13px;padding:6px 8px;"><%= t 'subscription.add'%></a></td>
           </tr>
           <tr>
             <td title='<%= kpi.description %>'><%= kpi.description %></td>

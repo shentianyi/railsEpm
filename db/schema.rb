@@ -61,10 +61,10 @@ ActiveRecord::Schema.define(:version => 20140702073512) do
     t.string   "time_string"
     t.integer  "chartable_id"
     t.string   "chartable_type"
-    t.integer  "interval"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "chart_type"
+    t.integer  "interval"
   end
 
   add_index "chart_conditions", ["entity_group_id"], :name => "index_chart_conditions_on_entity_group_id"

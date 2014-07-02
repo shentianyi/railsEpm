@@ -5,6 +5,12 @@ function init_analytics() {
         radioClass: 'iradio_minimal-aero'
     });
     var target = "#analy-begin-time,#analy-end-time";
+
+    if ($("#s_subscribe_id").val()) {
+        var kpi_category_id=$("#s_kpi_category_id").val();
+        $('#chart-group').val(kpi_category_id);
+    }
+
     $("#chart-kpi").chosen().change(function () {
         var interval = $("#chart-kpi").find(":selected").attr("interval");
         $(target).val("");
@@ -12,10 +18,7 @@ function init_analytics() {
 
         new DATE_PICKER[interval](target, "date").datePicker();
     });
-    $("#chart-group").chosen().change(function () {
-        $("#analy-begin-time,#analy-end-time").datepicker("remove");
-        $("#analy-begin-time,#analy-end-time").datetimepicker("remove");
-    });
+
 
     $("body").on("change", "#analy-begin-time",function () {
         var interval = $("#chart-kpi").find(":selected").attr("interval");
@@ -41,11 +44,8 @@ function init_analytics() {
 
     resize_chart.body();
     resize_chart.container();
-    $("#chart-group").prepend($("<option />").attr("value", ""));
-    $("#chart-group").val('').trigger('chosen:updated');
-    $("#chart-kpi").val('').trigger('chosen:updated');
-    $("#chart-view").prepend($("<option />").attr("value", ""));
-    $("#chart-view").val('').trigger('chosen:updated');
+
+
     $("#chart-group").on("change", function (event) {
         var id = $(adapt_event(event).target).attr("value");
         $.ajax({
@@ -57,14 +57,19 @@ function init_analytics() {
                     $("#chart-kpi").append($("<option />").attr("value", data[i].id).attr("interval", data[i].frequency).text(data[i].name));
                 }
                 $("#chart-kpi").prepend($("<option />").attr("value", ""));
-                $("#chart-kpi").val('').trigger('chosen:updated');
+                var kpi_id=$("#s_kpi_id").val();
+                if(kpi_id){
+                    $("#chart-kpi").val(kpi_id).trigger('chosen:updated');
+                    $( "#chart-kpi" ).trigger( "change",{selected:kpi_id} );
+                }  else{
+                    $("#chart-kpi").val('').trigger('chosen:updated');
+                }
             }
         });
     });
 
-    $('#chart-kpi').on('change', function (event) {
-        var id = $(adapt_event(event).target).attr('value');
-        $.get('/kpis/group_properties/' + id, function (data) {
+    $('#chart-kpi').on('change', function (event,id) {
+        $.get('/kpis/group_properties/' + id.selected, function (data) {
             $("#kpi-property-select").empty().trigger('chosen:updated');
             if (data) {
                 var properties = {};
@@ -80,10 +85,44 @@ function init_analytics() {
                 });
                 $("#kpi-property-select").val('').trigger('chosen:updated');
                 groupDetailInit(data);
+                if(ANALYTICS.demo){
+                    var interval =  $("#s_interval").val();
+                    var start_time =new Date($("#s_start_time").val()).toWangString(interval);
+                    var end_time =new Date($("#s_end_time").val()).toWangString(interval);
+                    $("#analy-begin-time").val(start_time).attr("hide_value",start_time).attr("hide_post",start_time);
+                    $("#analy-end-time").val(end_time).attr("hide_value",end_time).attr("hide_post",end_time);
+                    prepare_form_chart();
+                }
             }
         }, 'json');
     });
+    ANALYTICS.demo=false;
+    if($("#s_subscribe_id").val()){
+        ANALYTICS.demo=true;
+       var kpi_category_id=$("#s_kpi_category_id").val();
+        var kpi_id = $("#s_kpi_id").val();
+        var entity_grop_id = $("#s_entity_group_id").val();
+        $("#chart-group").val(kpi_category_id).trigger('chosen:updated');
+        $("#chart-view").val(entity_grop_id).trigger('chosen:updated');
+        $("#chart-group").trigger("change");
+//        window.setTimeout(function(){
+//            var interval =  $("#s_interval").val();
+//            var start_time =new Date($("#s_start_time").val()).toWangString(interval);
+//            var end_time =new Date($("#s_end_time").val()).toWangString(interval);
+//            $("#analy-begin-time").val(start_time).attr("hide_value",start_time).attr("hide_post",start_time);
+//            $("#analy-end-time").val(end_time).attr("hide_value",end_time).attr("hide_post",end_time);
+//        },1500)
+//        window.setTimeout(function(){
+//            prepare_form_chart();
+//        },2000)
 
+    }   else{
+        $("#chart-group").prepend($("<option />").attr("value", ""));
+        $("#chart-group").val('').trigger('chosen:updated');
+        $("#chart-kpi").val('').trigger('chosen:updated');
+        $("#chart-view").prepend($("<option />").attr("value", ""));
+        $("#chart-view").val('').trigger('chosen:updated');
+    }
     //init同期对比
     ANALYTICS.currentCompare.init();
     //init详细
@@ -411,13 +450,13 @@ var resize_chart = {
 };
 //下面生成project的存在对高度的影响
 function show_project_block(){
-    ANALYTICS.project_block_state=parseInt($("#project-block").attr("my_height"));
+    ANALYTICS.project_block_state=210;
     $("#project-block").slideDown();
     $("#chart-main-middle").height(
         parseInt($("#chart-body").height())
             - parseInt($("#chart-interval-alternate").attr("my_height"))
             - parseInt($("#chart-type-alternate").attr("my_height"))
-            - parseInt($("#project-block").attr("my_height"))
+            - ANALYTICS.project_block_state
             - 1
     );
 

@@ -9,7 +9,7 @@ class Comment < ActiveRecord::Base
   after_create :incr_comment_count_and_pub_message
 
   def self.detail_by_commentable(commentable)
-    commentable.comments.joins(:user).select('users.first_name as user_name, users.image_url as user_avatar,comments.*')
+    commentable.comments.joins(:user).order('id desc').select('users.first_name as user_name, users.image_url as user_avatar,comments.*')
   end
 
   def incr_comment_count_and_pub_message

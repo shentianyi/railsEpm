@@ -690,6 +690,7 @@ zh:
       value: 按回车来添加一个提醒
       average: 平均
       total: 总计
+      alert: 异常
     alert-type:
       max: 不能超过
       min: 不能低于

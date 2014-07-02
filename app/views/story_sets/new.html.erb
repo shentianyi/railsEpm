@@ -1,16 +1,16 @@
 <div class="story-set-new">
-  <p>Create new project</p>
+  <p>Create new discussions</p>
 
   <div class="divide"></div>
   <div class="form">
-    <p>Project name</p>
+    <p>Discussions name</p>
     <input type="text" id="storyset-title"/>
 
-    <p>Project description</p>
-    <textarea id="storyset-description" placeholder="option"></textarea>
+    <p>Discussions description</p>
+    <textarea id="storyset-description" placeholder="write your description"></textarea>
 
-    <p>People participate</p>
-    <select multiple class="chosen-select" data-placeholder="choose member" id="storyset-users">
+    <p>Invite people</p>
+    <select multiple class="chosen-select" data-placeholder="select people" id="storyset-users">
       <%@users.each do |u| %>
           <option user="<%= u.id %>"><%= u.first_name %></option>
       <% end %>

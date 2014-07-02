@@ -67,6 +67,11 @@ IFEpm::Application.routes.draw do
   resources :avatars
   resources :user_entity_groups
   resources :files do
+    collection do
+      match :upload
+      get :attach
+      get :avatar
+    end
     member do
       get :template
     end
@@ -224,12 +229,6 @@ IFEpm::Application.routes.draw do
     resources :emails do
       collection do
         get 'analyse/:id' => :analyse, :defaults => {:format => 'html'}
-      end
-    end
-
-    resources :files do
-      collection do
-        match :upload
       end
     end
 

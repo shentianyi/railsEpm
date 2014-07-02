@@ -19,9 +19,12 @@ function attach_upload(id) {
             });
         },
         add: function (e, data) {
-            if (vali)
-                if (data.submit != null)
-                    data.submit();
+            if(data.files.length>0){
+                if (vali)
+                    if (data.submit != null)
+                        data.submit();
+            }
+
         },
         success: function (data) {
             $("#" + id + '-preview > p').remove();
@@ -37,6 +40,7 @@ function attach_upload(id) {
                         '</div>' +
                         '</div>'
                     prev.append(html);
+
 //                    prev.append($("<div />").addClass("attachment-item inline-block")
 //                        .attr("title", data.content[i].oriName).attr("path-name", data.content[i].pathName)
 //                        .append($("<div />").addClass('attachment-sign').addClass("atta-" + data.content[i].type)
@@ -44,6 +48,8 @@ function attach_upload(id) {
 //                                .click(attachment_remove).append($("<i />").addClass("icon-remove attach-icon-remove icon-white pointer pull-left")
 //                                    .attr("path-name", data.content[i].pathName)))).append($("<p />").addClass("attachment-p")
 //                            .html(data.content[i].oriName)));
+
+
                 }
             } else {
                 alert(data.content);
@@ -145,14 +151,31 @@ function load_story_detail(id) {
 }
 
 function create_comment() {
-    var comment = {content: $("#comment-content").val() };
+    var comment = {content: $.trim($("#comment-content").val()) };
     var attachments = get_attachments('comment-item-data-uploader-preview');
     if (attachments) {
         comment.attachments = attachments;
     }
-    $.post('/stories/' + $('#current-story').val() + '/comment', {comment: comment}, function (data) {
-        alert('Comment Success')
-    });
+    if(comment.content.length>0){
+        $.post('/stories/' + $('#current-story').val() + '/comment', {comment: comment}, function (data) {
+            MessageBox("Comment Success","top","success");
+            var html="<li>"+
+                "<p>"+
+                "<a>Jim Guo:</a>"+
+                comment.content+
+                "</p>"+
+                "<span>just now</span>"+
+                "</li>"
+            $("#comment-content-list").prepend(html);
+            $("#comment-area textarea").val("");
+            var count=parseInt($("#comments-btn span").text());
+            $("#comments-btn span").text(++count);
+        });
+    }
+    else{
+        MessageBox("no content","top","warning");
+    }
+
 }
 
 function prepare_for_create_story() {

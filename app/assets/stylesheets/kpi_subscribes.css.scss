@@ -7,44 +7,38 @@
     li{
       table{
         tr{
-          td{
-            &:nth-of-type(1){
+          &:first-of-type{
+            td{
               width:25%;
-            }
-            &:nth-of-type(2){
-              width:60%;
+              font-size:15px;
+              &:nth-of-type(1){
+                width:20%;
+              }
+              &:nth-of-type(2){
+                width:20%;
+              }
+              &:nth-of-type(3){
+                width:33%;
+              }
+              &:nth-of-type(4){
+                width:20%;
+              }
+              &:nth-of-type(5){
+                width:8%;
+              }
+              a.btn{
+                font-size:12px;
+                padding:5px 8px;
+              }
               .subscribe-wrap{
-                width:100%;
-                overflow-x:auto;
                 span{
-                  display:inline-block;
-                  font-size:13px;
-                  padding:2px 5px;
-                  margin-right:5px;
-                  background:$blue;
-                  color:#fff;
-                  @include border-radius-same(3px);
-                  i{
-                    font-size:11px;
-                    pointer-events:auto;
-                    color:#fff;
-                    cursor:pointer;
-                    @include transition(color);
-                    &:hover{
-                      color:$red;
-                    }
-                  }
+                  display:block;
+                  color:#ef9f2c;
                 }
               }
             }
-            &:nth-of-type(3){
-              width:15%;
-            }
-            a.btn{
-              font-size:12px;
-              padding:5px 8px;
-            }
           }
+
         }
       }
     }
@@ -52,17 +46,27 @@
 }
 
 .kpi-subscribes-new.story-set-new{
+
   .form{
+    position:relative;
+    padding:0px 40px;
     .kpi-title{
       font-size:25px;
       font-weight:500;
+      border-bottom:1px solid rgba(0,0,0,0.3);
+      padding:18px 3px 5px;
+      margin:0px 18px;
+      color:$blue;
     }
     input{
       margin-left:20px;
       margin-top:5px;
       font-size:14px;
       padding:5px 5px;
-      width:218px;
+      width:410px;
+    }
+    .chosen-container{
+      width:420px;
     }
     .extreme{
       &:after{
@@ -70,6 +74,17 @@
       }
       .chosen-container,input{
 
+      }
+      .alert-list{
+        li{
+          width:200px;
+          text-align: center;
+          padding:5px 0px;
+          @include border-radius-same(4px);
+          background:$blue;
+          color:#fff;
+          margin-top:8px;
+        }
       }
     }
     .time-range{
@@ -85,6 +100,18 @@
         &:last-of-type{
           top:40px;
         }
+      }
+    }
+    &>.btn{
+      margin-top:55px;
+      width:150px;
+      padding:8px 10px;
+      margin-bottom:20px;
+      &:first-of-type{
+        bottom:40px;
+      }
+      &:last-of-type{
+        bottom:10px;
       }
     }
   }

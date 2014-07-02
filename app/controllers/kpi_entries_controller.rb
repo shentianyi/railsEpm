@@ -78,7 +78,17 @@ class KpiEntriesController < ApplicationController
       @users=User.where('id <> ?', current_user.id).where(role_id: Role.director).all
       # from kpi subscribes
       if params.has_key?(:s)
-
+        @subscribe=KpiSubscribe.detail_by_id(params[:s]).first
+        @condition= ChartConditionPresenter.new(@subscribe.chart_condition)
+        # condition for sub
+        @s_subscribe_id=@subscribe.id
+        @s_kpi_category_id=@subscribe.kpi_category_id
+        @s_kpi_id=@subscribe.kpi_id
+        @s_entity_group_id=@condition.entity_group_id
+        @s_start_time= @condition.start_time
+        @s_end_time=@condition.end_time
+        @s_interval= @condition.interval
+        @s_calculate_type=@condition.calculate_type
       end
     else
       msg=Message.new
