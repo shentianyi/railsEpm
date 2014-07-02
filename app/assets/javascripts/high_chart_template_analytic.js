@@ -458,15 +458,15 @@ ANALYTICS.add_data=function(option){
             point = point.concat(data_array);
             option.data=point;
             var new_data=ANALYTICS.deal_data(option);
-//            console.log(new_data  )
+
 
             chart.series[option.id+1].setData(new_data, false);
             chart.series[0].setData(new_data, false);
 
-//            console.log(option.id)
+
 
             chart.redraw();
-//            chart.xAxis[0].setExtremes(option.bar_fix_from, option.bar_fix_to);
+
             if(option.data_too_long) {
                 option.begin_time_utc=begin_time_utc;
                 ANALYTICS.add_data(option);

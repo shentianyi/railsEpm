@@ -28,4 +28,14 @@ class DepartmentObserver<ActiveRecord::Observer
       eg.update_attribute("name", department.name)
     end
   end
+
+  def after_destroy department
+    department.entities.all.each do |e|
+      e.department.path.each do |d|
+        if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(e.id,d.entity_group.id)
+          entity_group_item.destroy
+        end
+      end
+    end
+  end
 end

@@ -1,4 +1,5 @@
 @import "basic";
+@import "STYLE";
 .wrap-main{
   background:$background-grey;
   min-height:600px;
@@ -82,4 +83,46 @@ header{
      }
    }
  }
+}
+//通知
+.popModal{
+  padding:5px 5px !important;
+  .close{
+    font-size:18px !important;
+  }
+  .popModal_content{
+    margin:5px auto !important;
+  }
+}
+.user-message-ul{
+  padding-top:8px;
+  li{
+    padding-left:5px;
+    margin-bottom:3px;
+    a{
+      position:relative;
+      &:hover span{
+        color:#777;
+      }
+      span{
+        font-size:12px;
+        display:inline-block;
+        @include word-break;
+        &:last-of-type{
+          color:#fff;
+          background:$alert-orange;
+          $width:15px;
+          text-align:center;
+          line-height:$width + 2;
+          width:$width;
+          height:$width;
+          @include border-radius-same($width);
+          margin-left:3px;
+          font-size:11px;
+          position:relative;
+          top:-1px;
+        }
+      }
+    }
+  }
 }

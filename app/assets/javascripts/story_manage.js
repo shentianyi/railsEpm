@@ -19,9 +19,12 @@ function attach_upload(id) {
             });
         },
         add: function (e, data) {
-            if (vali)
-                if (data.submit != null)
-                    data.submit();
+            if(data.files.length>0){
+                if (vali)
+                    if (data.submit != null)
+                        data.submit();
+            }
+
         },
         success: function (data) {
             $("#" + id + '-preview > p').remove();
@@ -37,6 +40,7 @@ function attach_upload(id) {
                         '</div>' +
                         '</div>'
                     prev.append(html);
+
 //                    prev.append($("<div />").addClass("attachment-item inline-block")
 //                        .attr("title", data.content[i].oriName).attr("path-name", data.content[i].pathName)
 //                        .append($("<div />").addClass('attachment-sign').addClass("atta-" + data.content[i].type)
@@ -44,6 +48,8 @@ function attach_upload(id) {
 //                                .click(attachment_remove).append($("<i />").addClass("icon-remove attach-icon-remove icon-white pointer pull-left")
 //                                    .attr("path-name", data.content[i].pathName)))).append($("<p />").addClass("attachment-p")
 //                            .html(data.content[i].oriName)));
+
+
                 }
             } else {
                 alert(data.content);
