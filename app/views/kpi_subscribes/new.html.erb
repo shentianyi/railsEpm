@@ -1,24 +1,33 @@
-<div class="story-set-new">
+<div class="story-set-new kpi-subscribes-new">
   <p><%= t 'subscription.add'%></p>
   <div class="divide"></div>
   <div class="form">
-    <input style="margin: 5px" type="text" value="<%= @kpi.name %>" id="kpi-id" kpi-id="<%=@kpi.id%>" disabled />
-    <select id="entity-groups" style="height: 30px; width:230px; margin: 5px;">
+    <p id="kpi-id" kpi-id="<%=@kpi.id%>"  class="kpi-title"><%= @kpi.name %></p>
+    <p>部门</p>
+    <select id="entity-groups" style="height: 30px; width:230px; margin: 5px;" class="chosen-select">
       <% @entity_groups.each do |entity_group| %>
           <option value="<%= entity_group.id %>"><%= entity_group.name %></option>
       <% end %>
     </select>
-    <select style="height: 30px; width:230px;margin: 5px" id="alert-type">
-      <% SubscribeAlert.list_type.each do |menu|%>
-      <option><%= menu%></option>
-      <%end%>
-    </select>
-    <input style="margin: 5px" type='text' id="value" placeholder="Value" />
-    <ul id="alert-list" style="margin: 5px">
-    </ul>
+    <p>临界值</p>
+    <div class="extreme">
+      <select style="height: 30px; width:130px;margin: 5px" id="alert-type" class="chosen-select">
+        <% SubscribeAlert.list_type.each do |menu|%>
+            <option><%= menu%></option>
+        <%end%>
+      </select>
+      <input type='text' id="value" placeholder="Value" />
+      <ul id="alert-list" style="margin: 5px">
+      </ul>
+    </div>
 
-    <input style="margin: 5px" type='text' id="start-time" placeholder="Start" />
-    <input style="margin: 5px" type='text' id="end-time" placeholder="End" />
+
+    <p>时间范围</p>
+    <div>
+      <input type='text' id="start-time" placeholder="Start" />
+      <input type='text' id="end-time" placeholder="End" />
+    </div>
+
 
     <a class="btn btn-primary" id="story-create-btn" onclick="MANAGE.kpi_subscribe.create()">create</a>
     <%= link_to 'cancel', mine_kpi_subscribes_path,:class=>"btn" %>
@@ -28,8 +37,18 @@
 <script type="text/javascript">
     $(document).ready(function () {
         MANAGE.kpi_subscribe.init_new();
+
+        var target = "#start-time,#end-time";
+        var interval="100";
+
+            new DATE_PICKER[interval](target, "date").datePicker();
+
+
     })
 </script>
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "kpi_subscribe_manage.js" %>
+    <%= javascript_include_tag "bootstrap-datepicker.js" %>
+    <%= javascript_include_tag "date_picker_template.js" %>
+    <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
 <% end %>

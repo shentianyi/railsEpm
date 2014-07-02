@@ -5,11 +5,12 @@
           <tr>
             <td title='<%= kpi.name %>'><%= kpi.name %></td>
             <td>
-              <p>
-              <% kpi.kpi_subscribes.each do |ks| %>
-                  <span><%= ks.description %></span>
-              <% end %>
-              </p>
+              <div class="subscribe-wrap" style="width:100%;overflow-x:auto">
+                  <% kpi.kpi_subscribes.each do |ks| %>
+                    <span><%= ks.description %> <i class="icon icon-remove subscribe-remove"></i></span>
+                  <% end %>
+              </div>
+
             </td>
             <td>
               <a class="btn btn-success" href="/kpi_subscribes/new/<%= kpi.id%>"><%= t 'subscription.add'%></a>
@@ -24,4 +25,13 @@
       </li>
   <% end if @kpis %>
 </ul>
+<script>
+  $(document).ready(function(){
+       $("body")
+               .on("click",".subscribe-remove",function(event){
+                    var target=adapt_event(event).target;
+                   $(target).parents(".subscribe-wrap").eq(0).remove();
+               })
+  })
+</script>
 
