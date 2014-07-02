@@ -7,44 +7,31 @@
     li{
       table{
         tr{
-          td{
-            &:nth-of-type(1){
+          &:first-of-type{
+            td{
               width:25%;
-            }
-            &:nth-of-type(2){
-              width:60%;
-              .subscribe-wrap{
-                width:100%;
-                overflow-x:auto;
-                span{
-                  display:inline-block;
-                  font-size:13px;
-                  padding:2px 5px;
-                  margin-right:5px;
-                  background:$blue;
-                  color:#fff;
-                  @include border-radius-same(3px);
-                  i{
-                    font-size:11px;
-                    pointer-events:auto;
-                    color:#fff;
-                    cursor:pointer;
-                    @include transition(color);
-                    &:hover{
-                      color:$red;
-                    }
-                  }
-                }
+              &:nth-of-type(1){
+                  width:22%;
+              }
+              &:nth-of-type(2){
+                width:22%;
+              }
+              &:nth-of-type(3){
+                width:22%;
+              }
+              &:nth-of-type(4){
+                width:22%;
+              }
+              &:nth-of-type(5){
+                width:12%;
+              }
+              a.btn{
+                font-size:12px;
+                padding:5px 8px;
               }
             }
-            &:nth-of-type(3){
-              width:15%;
-            }
-            a.btn{
-              font-size:12px;
-              padding:5px 8px;
-            }
           }
+
         }
       }
     }

@@ -145,14 +145,31 @@ function load_story_detail(id) {
 }
 
 function create_comment() {
-    var comment = {content: $("#comment-content").val() };
+    var comment = {content: $.trim($("#comment-content").val()) };
     var attachments = get_attachments('comment-item-data-uploader-preview');
     if (attachments) {
         comment.attachments = attachments;
     }
-    $.post('/stories/' + $('#current-story').val() + '/comment', {comment: comment}, function (data) {
-        alert('Comment Success')
-    });
+    if(comment.content.length>0){
+        $.post('/stories/' + $('#current-story').val() + '/comment', {comment: comment}, function (data) {
+            MessageBox("Comment Success","top","success");
+            var html="<li>"+
+                "<p>"+
+                "<a>Jim Guo:</a>"+
+                comment.content+
+                "</p>"+
+                "<span>just now</span>"+
+                "</li>"
+            $("#comment-content-list").prepend(html);
+            $("#comment-area textarea").val("");
+            var count=parseInt($("#comments-btn span").text());
+            $("#comments-btn span").text(++count);
+        });
+    }
+    else{
+        MessageBox("no content","top","warning");
+    }
+
 }
 
 function prepare_for_create_story() {
@@ -164,10 +181,10 @@ function prepare_for_create_story() {
         var condition = {};
         condition.entity_group_id = ANALYTICS.chartSeries.series[i].view;
         condition.kpi_id = ANALYTICS.chartSeries.series[i].kpi_id;
-        condition.calculate_type = CHARTUTIL.calculate_type($("#chart-type-alternate .image").attr("type"));
+        condition.calculate_type = CHARTUTIL.calculate_type(ANALYTICS.chartSeries.series[i].method);
         condition.time_string = CHARTUTIL.time.time_string(ANALYTICS.chartSeries.series[i].begin_time, ANALYTICS.chartSeries.series[i].end_time);
         condition.interval = $("#chart-interval-alternate .active").attr("interval");
-        condition.chart_type = ANALYTICS.chartSeries.series[i].type;
+        condition.chart_type = $("#chart-type-alternate .image").attr("type");
         chart_conditions.push(condition);
     }
 
