@@ -91,11 +91,16 @@ function init_analytics() {
 
     if($("#s_subscribe_id").val()){
        var kpi_category_id=$("#s_kpi_category_id").val();
-        var kpi_id=$("#s_kpi_id").val();
-        var entity_grop_id=$("#s_entity_group_id").val();
+        var kpi_id = $("#s_kpi_id").val();
+        var entity_grop_id = $("#s_entity_group_id").val();
         $("#chart-group").val(kpi_category_id).trigger('chosen:updated');
         $("#chart-view").val(entity_grop_id).trigger('chosen:updated');
-        $( "#chart-group" ).trigger( "change" );
+        $("#chart-group").trigger("change");
+        var interval =  $("#s_interval").val();
+        var start_time =new Date($("#s_start_time").val()).toWangString(interval);
+        var end_time =new Date($("#s_end_time").val()).toWangString(interval);
+        $("#analy-begin-time").val(start_time);
+        $("#analy-end-time").val(end_time);
         prepare_form_chart();
     }   else{
         $("#chart-group").prepend($("<option />").attr("value", ""));
@@ -431,13 +436,13 @@ var resize_chart = {
 };
 //下面生成project的存在对高度的影响
 function show_project_block(){
-    ANALYTICS.project_block_state=parseInt($("#project-block").attr("my_height"));
+    ANALYTICS.project_block_state=210;
     $("#project-block").slideDown();
     $("#chart-main-middle").height(
         parseInt($("#chart-body").height())
             - parseInt($("#chart-interval-alternate").attr("my_height"))
             - parseInt($("#chart-type-alternate").attr("my_height"))
-            - parseInt($("#project-block").attr("my_height"))
+            - ANALYTICS.project_block_state
             - 1
     );
 

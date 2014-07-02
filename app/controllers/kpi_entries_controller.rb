@@ -87,6 +87,7 @@ class KpiEntriesController < ApplicationController
         @s_entity_group_id=@condition.entity_group_id
         @s_start_time= @condition.start_time
         @s_end_time=@condition.end_time
+        @s_interval= @condition.interval
         @s_calculate_type=@condition.calculate_type
       end
     else

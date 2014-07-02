@@ -60,7 +60,7 @@ if(!Date.prototype.toWayneString){
 }
 //化为标准格式显示用
 if(!Date.prototype.toWangString){
-    Date.prototype.toWayneString=function(interval){
+    Date.prototype.toWangString=function(interval){
         var second=this.getSeconds()<10?"0"+this.getSeconds():this.getSeconds();
         var minute=this.getMinutes()<10?"0"+this.getMinutes():this.getMinutes();
         var hour=this.getHours()<10?"0"+this.getHours():this.getHours();

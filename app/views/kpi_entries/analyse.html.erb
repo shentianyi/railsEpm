@@ -118,7 +118,14 @@
     </table>
 
     <!------------------------------------------------   最下面的创建讨论的版  -------------------------------------->
-    <div class="project-block" id="project-block" my_height="210">
+
+    <% if @setting == 'analyse' %>
+        <div class="project-block" id="project-block" my_height="0" style="display:none">
+        <% else %>
+        <div class="project-block" id="project-block" my_height="210">
+
+    <% end %>
+
       <div class="inner">
         <div class="left">
           <p>标题</p>
@@ -287,6 +294,7 @@
   <input type="hidden" id="s_start_time" value="<%=@s_start_time%>"/>
   <input type="hidden" id="s_end_time" value="<%=@s_end_time%>"/>
   <input type="hidden" id="s_calculate_type" value="<%=@s_calculate_type%>"/>
+  <input type="hidden" id="s_interval" value="<%=@s_interval%>"/>
 </div>
 
 <% content_for :javascript_includes do %>
