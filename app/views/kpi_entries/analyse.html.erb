@@ -139,8 +139,14 @@
           </div>
 
         </div>
-        <a class="btn btn-for-project" id="cancel-fro-project">Cancel</a>
-        <a class="btn btn-success btn-for-project" id="publish-fro-project">Publish</a>
+        <% if @current_story_set.nil?%>
+            <a class="btn btn-for-project" id="cancel-fro-project">Cancel</a>
+            <a class="btn btn-success btn-for-project" id="publish-fro-project">Publish</a>
+        <%else%>
+            <a class="btn btn-for-project" id="cancel-fro-project" href="/story_sets/<%= @current_story_set.id%>/story">Cancel</a>
+            <a class="btn btn-success btn-for-project" value="<%= @current_story_set.id%>" id="direct-publish-fro-project">Publish</a>
+        <%end%>
+
       </div>
     </div>
 
@@ -354,6 +360,17 @@
 
                         }
                     })
+                })
+                .on("click","#direct-publish-fro-project",function(){
+                    var story = prepare_for_create_story();
+                    story.story_set_id = $(this).attr("value");
+                    MANAGE.story.create(story,function(data){
+                        if(data.result){
+
+                        }else{
+
+                        }
+                    });
                 })
     });
     $(window).resize(function () {
