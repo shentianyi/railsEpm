@@ -17,6 +17,12 @@
                 </div>
               </td>
               <td>
+                <% if ks.alert_by_sms %>
+                    <span>SMS</span>
+                <% end %>
+                <% if ks.alert_by_email %>
+                    <span>EMAIL</span>
+                <% end %>
               </td>
               <td>
                 <% if ks.is_alert %>
@@ -29,7 +35,7 @@
               <td><%= t 'subscription.add-sub.department' %></td>
               <td><%= t 'subscription.add-sub.time' %></td>
               <td><%= t 'subscription.add-sub.alert_type' %></td>
-              <td></td>
+              <td>Alert By</td>
               <td></td>
             </tr>
           </table>

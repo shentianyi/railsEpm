@@ -149,7 +149,7 @@
         </div>
         <% if @current_story_set.nil?%>
             <a class="btn btn-for-project" id="cancel-fro-project">Cancel</a>
-            <a class="btn btn-success btn-for-project" id="publish-fro-project">Add</a>
+            <a class="btn btn-success btn-for-project" id="publish-fro-project">Create</a>
         <%else%>
             <a class="btn btn-for-project" id="cancel-fro-project" href="/story_sets/<%= @current_story_set.id%>/story">Cancel</a>
             <a class="btn btn-success btn-for-project" value="<%= @current_story_set.id%>" id="direct-publish-fro-project">Publish</a>
@@ -269,26 +269,26 @@
 <div class="back-pop" id='back-pop'>
      <div class="choose-project-team">
        <i class="icon icon-remove" id="remove-back-pop"></i>
-       <p>选择讨论组</p>
+       <p>create discussion</p>
          <div class="choose-by-select">
-           <p>加入已有讨论组</p>
-           <select data-placeholder="选择讨论组" class="chosen-select" id="story-sets">
+           <p>Add to a discussion</p>
+           <select data-placeholder="discussion list" class="chosen-select" id="story-sets">
              <% current_user.collaborated_story_sets.all.each do |set|%>
                  <option value="<%= set.id %>"><%= set.title%></option>
              <%end%>
            </select>
-           <a class="btn btn-primary" id="add-to-storyset">加入</a>
+           <a class="btn btn-primary" id="add-to-storyset">Add</a>
          </div>
          <div class="choose-by-create">
-           <p>创建新的讨论组</p>
-           <input type="text" id="storyset-title" placeholder="讨论组名称"/>
-           <input type="text" id="storyset-desc" placeholder="讨论组描述"/>
-           <select multiple class="chosen-select" data-placeholder="选择成员" id="storyset-users">
+           <p>Create new discussion</p>
+           <input type="text" id="storyset-title" placeholder="discussion name"/>
+           <input type="text" id="storyset-desc" placeholder="discussion description"/>
+           <select multiple class="chosen-select" data-placeholder="invite people" id="storyset-users">
              <%@users.each do |u| %>
                  <option user="<%= u.id %>"><%= u.first_name %></option>
              <% end %>
            </select>
-           <a class="btn btn-primary" id="create-add-to-storyset">创建并加入</a>
+           <a class="btn btn-primary" id="create-add-to-storyset">Create and Add</a>
          </div>
      </div>
 </div>
@@ -352,7 +352,11 @@
                     hide_project_block();
                 })
                 .on("click","#publish-fro-project",function(){
+                    if($('#story-title').val()){
                     $("#back-pop").addClass("show")
+                    }else{
+                        MessageBox('Please add discussion title','top','warning');
+                    }
                 })
                 .on("click","#remove-back-pop",function(){
                     $("#back-pop").removeClass("show")
