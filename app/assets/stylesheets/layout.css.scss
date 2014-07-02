@@ -112,9 +112,12 @@ header{
         font-size:12px;
         display:table-cell;
         @include word-break;
+        &:first-of-type{
 
+        }
         &:last-of-type{
           vertical-align:middle;
+          width:20px;
           label{
             display:block;
             color:#fff;
