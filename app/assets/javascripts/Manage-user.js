@@ -29,6 +29,7 @@ MANAGE.user.init = function () {
                 window.history.pushState(id, null, "/users/c/" + id);
                 MANAGE.widget_init();
                 MANAGE.user.icheck.init();
+                MANAGE.user.init_assign_user();
             });
         }
     });
@@ -533,4 +534,14 @@ MANAGE.user.assign.input = function (event) {
     });
 };
 
-
+///////////////
+MANAGE.user.init_assign_user = function(){
+    $("#assign-kpi-user option").remove();
+    $("#assign-kpi-user").append("<option></option>");
+    //'<option value="<%= user.id %>"><%= user.email %></option>';
+    var users = $("#manage-sort-list li");
+    for(var i = 0;i<users.length;i++){
+        var id = users.eq[i].attr("id");
+        var email = users.eq[i].attr("email");
+    }
+$}

@@ -685,6 +685,7 @@ en:
       value: Please Enter to add an alert
       average: AVERAGE
       total: TOTAL
+      alert: Alert
     alert-type:
       max: Should not larger than
       min: Should not smaller than

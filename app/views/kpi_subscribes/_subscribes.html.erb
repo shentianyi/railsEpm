@@ -33,7 +33,7 @@
             <% query = AnalyseService.chart_condition_filter(ks.chart_condition) %>
             <td><%= ks.chart_condition.kpi.name %></td>
             <td><%= ks.chart_condition.entity_group.name %></td>
-            <td><%= query[:start_time] %> | <%= query[:end_time]%></td>
+            <td><%= KpiEntriesHelper.parse_entry_date(query[:frequency],Time.parse(query[:start_time])) %> | <%= KpiEntriesHelper.parse_entry_date(query[:frequency],Time.parse(query[:end_time])) %></td>
             <td>
               <div class="subscribe-wrap" style="width:100%;overflow-x:auto">
                 <% ks.kpi_subscribe_alerts.each do |alert| %>
@@ -41,7 +41,11 @@
                 <% end %>
               </div>
             </td>
-            <td><a class="btn btn-danger"><异常></异常></a></td>
+            <td>
+              <% if ks.is_alert %>
+                  <a class="btn btn-danger"><%= t 'subscription.add-sub.alert'%></a>
+              <% end %>
+            </td>
           </tr>
           <tr>
             <td><%= t 'subscription.kpi'%></td>
