@@ -27,7 +27,7 @@ class KpiSubscribe < ActiveRecord::Base
   end
 
   def description
-    self.chart_condition.entity_group.name
+    'Subscribe the '+self.chart_condition.kpi.name + ' of '+self.chart_condition.entity_group.name
   end
 
   def alert_user

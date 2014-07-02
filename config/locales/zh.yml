@@ -676,3 +676,20 @@ zh:
   subscription:
     subscription: 订阅
     add: 添加订阅
+    create: 添加
+    cancel: 取消
+    add-sub:
+      department: 部门
+      time: 时间范围
+      cal_type: 计算方式
+      alert_type: 提醒方式
+      alert_type_exit: 同一种提醒方式不能重复添加
+      start-time: 开始时间
+      end-time: 结束时间
+      value: 按回车来添加一个提醒
+      average: 平均
+      total: 总计
+    alert-type:
+      max: 不能超过
+      min: 不能低于
+      error: 错误的提醒方式

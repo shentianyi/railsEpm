@@ -671,3 +671,20 @@ en:
   subscription:
     subscription: Subscription
     add: Add Sunscription
+    create: Create
+    cancel: Cancel
+    add-sub:
+      department: Department
+      time: Time Range
+      cal_type: Calculate Type
+      alert_type: Alert Type
+      alert_type_exit: Same alert type exits
+      start-time: Start Time
+      end-time: End Time
+      value: Please Enter to add an alert
+      average: AVERAGE
+      total: TOTAL
+    alert-type:
+      max: Should not larger than
+      min: Should not smaller than
+      error: Alert type error

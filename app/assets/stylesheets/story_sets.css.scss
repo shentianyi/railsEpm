@@ -2,6 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "basic";
+@import "STYLE";
 .story-set-index{
   height:calc(100% - 70px);
   height:-moz-calc(100% - 70px);
@@ -70,6 +71,9 @@
         padding-left:calc(50% - 345px);
         padding-left:-moz-calc(50% - 345px);
         padding-left:-webkit-calc(50% - 345px);
+        padding-right:calc(50% - 375px);
+        padding-right:-moz-calc(50% - 375px);
+        padding-right:-webkit-calc(50% - 375px);
         &:after{
           @include after-clear;
         }
@@ -214,6 +218,7 @@
     width:65%;
     .header{
       height:40px;
+      position:relative;
       background:#eee;
       background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.6) 55%) #eee;
       background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.6) 55%) #eee;
@@ -227,6 +232,16 @@
         &:hover{
           color:#222;
         }
+      }
+      p{
+        position:absolute;
+        text-align:center;
+        margin:0px;
+        left:0px;
+        right:0px;
+        top:0px;
+        padding-top:8px;
+        font-size:18px;
       }
     }
     .content{
@@ -325,8 +340,23 @@
       }
       .avatar{
         width:90px;
-
+        position:relative;
         box-sizing:border-box;
+        a{
+          display:block;
+          $width:60px;
+          width:$width;
+          height:$width;
+
+          position:absolute;
+          left:50%;
+          top:50%;
+          margin-left:- $width / 2;
+          margin-top:- $width / 2;
+          img{
+            @include border-radius-same($width);
+          }
+        }
       }
       .title{
         padding:0px 10px;
@@ -364,20 +394,46 @@
         width:96%;
         height:80px;
         margin:8px auto;
+        cursor:pointer;
+        &:hover{
+          background:lighten($blue,35%);
+        }
+        &.active{
+          background:lighten($blue,35%);
+        }
         @include box-shadow(1px,1px,2px,rgba(0,0,0,0.4));
         &>div{
+          cursor:pointer;
           vertical-align: middle;
           display:table-cell;
           box-sizing:border-box;
         }
         .avatar{
+          cursor:pointer;
           width:80px;
-
           box-sizing:border-box;
+          position:relative;
+          a{
+            display:block;
+            $width:50px;
+            width:$width;
+            height:$width;
+
+            position:absolute;
+            left:50%;
+            top:50%;
+            margin-left:- $width / 2;
+            margin-top:- $width / 2;
+            img{
+              @include border-radius-same($width);
+            }
+          }
         }
         .title{
+          cursor:pointer;
           padding:0px 8px;
           p{
+            cursor:pointer;
             margin:0px;
             @include word-break;
             font-size:13px;

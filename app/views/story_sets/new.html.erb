@@ -7,7 +7,7 @@
     <input type="text" id="storyset-title"/>
 
     <p>Project description</p>
-    <textarea id="storyset-description"></textarea>
+    <textarea id="storyset-description" placeholder="option"></textarea>
 
     <p>People participate</p>
     <select multiple class="chosen-select" data-placeholder="choose member" id="storyset-users">
@@ -16,7 +16,7 @@
       <% end %>
     </select>
     <a class="btn btn-primary" id="story-create-btn">create</a>
-    <%= link_to 'cancel', story_sets_path, :class => "btn" %>
+    <%= link_to 'cancel', story_sets_path, :class => "btn"%>
   </div>
 </div>
 

@@ -123,7 +123,8 @@ function get_attachments(id) {
 }
 
 function init_story_page() {
-    $('body').on('click', '.show-story-detail-a', function () {
+    $('body').on('click', '.show-story-detail-item', function () {
+        $(this).addClass("active");
         $.get('/stories/' + $(this).attr('story')+'/detail', function (data) {
             $('#story-content-div').html(data);
         }, 'html');
@@ -139,4 +140,30 @@ function create_comment() {
     $.post('/stories/' + $('#current-story').val() + '/comment', {comment: comment}, function (data) {
         alert('Comment Success')
     });
+}
+
+function prepare_for_create_story(){
+    var story = {title: $("#story-title").val(), description:$("#story-desc").val(),story_set_id: $("#story-sets option:selected").attr("value")};
+    var attachments = MANAGE.story.get_attachments('item-data-uploader-preview');
+    var chart_conditions = [];
+
+    for(var i=0;i<ANALYTICS.chartSeries.series.length;i++){
+        var condition = {};
+        condition.entity_group_id = ANALYTICS.chartSeries.series[i].view;
+        condition.kpi_id = ANALYTICS.chartSeries.series[i].kpi_id;
+        condition.calculate_type = CHARTUTIL.calculate_type($("#chart-type-alternate .image").attr("type"));
+        condition.time_string = CHARTUTIL.time.time_string(ANALYTICS.chartSeries.series[i].begin_time,ANALYTICS.chartSeries.series[i].end_time);
+        condition.interval = $("#chart-interval-alternate .active").attr("interval");
+        condition.chart_type = ANALYTICS.chartSeries.series[i].type;
+        chart_conditions.push(condition);
+    }
+
+    if (chart_conditions.length > 0){
+        story.chart_conditions = chart_conditions;
+    }
+
+    if(attachments){
+        story.attachments = attachments;
+    }
+    return story;
 }

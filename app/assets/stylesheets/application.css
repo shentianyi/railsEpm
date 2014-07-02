@@ -43,6 +43,7 @@
 *= require EntryScss
 *= require layout
 *= require story_sets
+*= require kpi_subscribes
 
 *= require stories.css
 
