@@ -1,3 +1,92 @@
 // Place all the styles related to the KpiSubscribes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "basic";
+.kpi-subscribes{
+  .manage-sort-list{
+    li{
+      table{
+        tr{
+          td{
+            &:nth-of-type(1){
+              width:25%;
+            }
+            &:nth-of-type(2){
+              width:60%;
+              .subscribe-wrap{
+                width:100%;
+                overflow-x:auto;
+                span{
+                  display:inline-block;
+                  font-size:13px;
+                  padding:2px 5px;
+                  margin-right:5px;
+                  background:$blue;
+                  color:#fff;
+                  @include border-radius-same(3px);
+                  i{
+                    font-size:11px;
+                    pointer-events:auto;
+                    color:#fff;
+                    cursor:pointer;
+                    @include transition(color);
+                    &:hover{
+                      color:$red;
+                    }
+                  }
+                }
+              }
+            }
+            &:nth-of-type(3){
+              width:15%;
+            }
+            a.btn{
+              font-size:12px;
+              padding:5px 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.kpi-subscribes-new.story-set-new{
+  .form{
+    .kpi-title{
+      font-size:25px;
+      font-weight:500;
+    }
+    input{
+      margin-left:20px;
+      margin-top:5px;
+      font-size:14px;
+      padding:5px 5px;
+      width:218px;
+    }
+    .extreme{
+      &:after{
+        @include after-clear;
+      }
+      .chosen-container,input{
+
+      }
+    }
+    .time-range{
+      position:relative;
+      label{
+         position:absolute;
+        font-size:13px;
+        color:#9d9d9d;
+        left:260px;
+        &:first-of-type{
+          top:7px;
+        }
+        &:last-of-type{
+          top:40px;
+        }
+      }
+    }
+  }
+
+}
