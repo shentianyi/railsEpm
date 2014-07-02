@@ -127,6 +127,7 @@ function init_story_page() {
         $(this).addClass("active");
         $.get('/stories/' + $(this).attr('story')+'/detail', function (data) {
             $('#story-content-div').html(data);
+            $("#chart-container")
         }, 'html');
     })
 }
