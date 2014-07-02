@@ -102,8 +102,33 @@
         }
       }
     }
+    .checkbox-group{
+      &:after{
+        @include after-clear;
+      }
+      .checkbox-item{
+        float:left;
+        &:after{
+          @include after-clear;
+        }
+        input{
+          width:auto;
+          float:left;
+          margin-top:0px;
+        }
+        label{
+          display:inline-block;
+          float:left;
+          font-size:12px;
+          position:relative;
+          left:5px;
+          top:0px;
+          color:$blue;
+        }
+      }
+    }
     &>.btn{
-      margin-top:55px;
+      margin-top:30px;
       width:150px;
       padding:8px 10px;
       margin-bottom:20px;
