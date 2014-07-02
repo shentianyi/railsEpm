@@ -26,72 +26,72 @@
 <script type="text/javascript">
     I18n.defaultLocale = "<%= I18n.default_locale %>";
     I18n.locale = "<%= I18n.locale %>";
-    $.ajaxSetup({
-        statusCode: {
-            403: function () {
-                location.href = '/403';
-            },
-            404: function () {
-                location.href = '/404';
-            },
-            500: function () {
-                location.href = '/500';
-            }
-        }
-    });
-    var old_message = null;
-    (function callmessage() {
-        setTimeout(function () {
-            $.ajax({
-                url: '/users/message',
-                dataType: 'json',
-                type: 'get',
-                success: function (data) {
-                    if (old_message != JSON.stringify(data) || $('#user-message-control').val() == 'false') {
-                        $('#user-message-ul').children().remove();
-                        $.each(data, function (i, v) {
-                            if (v.count != 0) {
-                                $('#user-message-ul').append(
-                                        $("<li/>").append(
-                                                $("<a/>").attr('href', v.link)
-                                                        .append($("<span/>").text(v.content))
-                                                        .append($("<span/>")
-                                                                .append($("<label />").text(v.count)))
-                                        )
-                                );
-                            }
-                        });
-                        if ($('#user-message-ul').children().length > 0)
-                            $('#user-message-div').popModal({
-                                html: $('#user-messgae-div'),
-                                onDocumentClickClose: false,
-                                onLoad: function () {
-                                    $('#user-messgae-div').show();
-                                    $('#user-message-control').val("true");
-                                },
-                                onClose: function () {
-                                    $('#user-messgae-div').hide();
-                                    $('#user-message-control').val("false");
-                                }
-                            });
-                        else {
-                            if ($('#user-message-control').val() == 'true')
-                                $('#user-message-div').popModal("hide");
-                        }
-                        old_message = JSON.stringify(data);
-                    }
-                    callmessage();
-                },
-                error: function () {
-                    console.log('e');
-                    callmessage();
-                },
-                complete: function (xhr) {
-                    if (xhr.status == 304) return;
-                }
-            });
-        }, 5000);
-    })();
+
+//    $.ajaxSetup({
+//        statusCode: {
+//            403: function () {
+//                location.href = '/403';
+//            },
+//            404: function () {
+//                location.href = '/404';
+//            },
+//            500: function () {
+//                location.href = '/500';
+//            }
+//        }
+//    });
+//    var old_message = null;
+//    (function callmessage() {
+//        setTimeout(function () {
+//            $.ajax({
+//                url: '/users/message',
+//                dataType: 'json',
+//                type: 'get',
+//                success: function (data) {
+//                    if (old_message != JSON.stringify(data) || $('#user-message-control').val() == 'false') {
+//                        $('#user-message-ul').children().remove();
+//                        $.each(data, function (i, v) {
+//                            if (v.count != 0) {
+//                                $('#user-message-ul').append(
+//                                        $("<li/>").append(
+//                                                $("<a/>").attr('href', v.link).append($("<span/>").text(v.content))
+//                                                        .append($("<span/>").text(v.count))
+//                                        )
+//                                );
+//                            }
+//                        });
+//                        if ($('#user-message-ul').children().length > 0)
+//                            $('#user-message-div').popModal({
+//                                html: $('#user-messgae-div'),
+//                                onDocumentClickClose: false,
+//                                onLoad: function () {
+//                                    $('#user-messgae-div').show();
+//                                    $('#user-message-control').val("true");
+//                                },
+//                                onClose: function () {
+//                                    $('#user-messgae-div').hide();
+//                                    $('#user-message-control').val("false");
+//                                }
+//                            });
+//                        else {
+//                            if ($('#user-message-control').val() == 'true')
+//                                $('#user-message-div').popModal("hide");
+//                        }
+//                        old_message = JSON.stringify(data);
+//                    }
+//                    callmessage();
+//                },
+//                error: function () {
+//                    console.log('e');
+//                    callmessage();
+//                },
+//                complete: function (xhr) {
+//                    if (xhr.status == 304) return;
+//                }
+//            });
+//        }, 5000000);
+//    })();
+
 </script>
 <%= yield :javascript_includes %>
 </html>
