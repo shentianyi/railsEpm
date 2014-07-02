@@ -678,6 +678,7 @@ zh:
     add: 添加订阅
     create: 添加
     cancel: 取消
+    kpi: KPI
     add-sub:
       department: 部门
       time: 时间范围
