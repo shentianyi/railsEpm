@@ -1,13 +1,4 @@
 
-ul{
-  list-style-type:none;
-  padding:0px;
-  margin:0px;
-}
-a{
-  text-decoration:none;
-  color:inherit;
-}
 //////////////////////////////////////// 变量
 $static-p:rgba(255,255,255,0.45);
 $golden:#ad9f73;
@@ -68,4 +59,31 @@ $nav-height:70px;
   text-shadow:1px 1px 2px #666;
   -moz-text-shadow:1px 1px 2px #666;
   -webkit-text-shadow:1px 1px 2px #666;
+}
+//////////////////////////////////////// 通用组件
+
+ul{
+  list-style-type:none;
+  padding:0px;
+  margin:0px;
+}
+a{
+  text-decoration:none;
+  color:inherit;
+}
+body{
+  background:$background-grey;
+}
+.back-pop{
+  background:rgba(0,0,0,0.8);
+  position:fixed;
+  top:0px;
+  right:auto;
+  bottom:0px;
+  left:-999em;
+  z-index:999;
+}
+.back-pop.show{
+  left:0px !important;
+  right:0px !important;
 }

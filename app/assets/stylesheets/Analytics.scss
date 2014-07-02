@@ -146,6 +146,14 @@
 
     }
   }
+  .chart-interval-alternate{
+     .compare-current-btn{
+        width:140px;
+       float:right;
+       font-size: 13px;
+       padding: 6px 8px;
+     }
+  }
 }
 //////////////////////////////////////////////////  chart body part
 
@@ -612,6 +620,77 @@
           padding-left:19px;
         }
       }
+    }
+  }
+}
+
+//弹出选择组
+.choose-project-team{
+  $width:450px;
+  $height:300px;
+   position:absolute;
+  width:$width;
+  background:#fff;
+  left:50%;
+  margin-left:- ( $width / 2 );
+  height:$height;
+  margin-top:- ( $height / 2 );;
+  top:50%;
+  overflow-y:auto;
+  i.icon-remove{
+    position:absolute;
+    font-size:18px;
+    color:#666;
+    pointer-events:auto;
+    cursor:pointer;
+    right:12px;
+    top:9px;
+    @include transition(color);
+    &:hover{
+       color:#222;
+    }
+  }
+  &>p{
+    font-weight:500;
+    font-size:16px;
+    padding-top:8px;
+    padding-left:8px;
+    margin-bottom:8px;
+  }
+  input,.chosen-container{
+    width:200px;
+    display:block;
+    margin-left:8px;
+  }
+  input{
+    padding:4px 5px;
+    margin-bottom:6px;
+    font-size:12px;
+  }
+  .chosen-container{
+    width:211px !important;
+  }
+  &>div{
+    border-top:1px solid rgba(0,0,0,0.2);
+    position:relative;
+    padding:8px 0px;
+    p{
+      font-weight:500;
+      font-size:12px;
+      padding:5px 9px;
+    }
+    .btn{
+      padding:5px 8px;
+      width:120px;
+      font-size:12px;
+      position:absolute;
+      right:10px;
+      bottom:10px;
+    }
+  }
+  .choose-by-create{
+    input:first-of-type{
+      width:130px;
     }
   }
 }

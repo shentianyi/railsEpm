@@ -373,6 +373,7 @@ function singleThreadRequest(){
         }
     }
 }
+ANALYTICS.project_block_state=parseInt($("#project-block").attr("my_height"));
 //窗口大小改变后，改变相应的图表大小
 var resize_chart = {
     body: function () {
@@ -384,7 +385,7 @@ var resize_chart = {
             parseInt($("#chart-body").height())
                 - parseInt($("#chart-interval-alternate").attr("my_height"))
                 - parseInt($("#chart-type-alternate").attr("my_height"))
-                - parseInt($("#project-block").attr("my_height"))
+                - ANALYTICS.project_block_state
                 - 1
             );
 
@@ -410,6 +411,7 @@ var resize_chart = {
 };
 //下面生成project的存在对高度的影响
 function show_project_block(){
+    ANALYTICS.project_block_state=parseInt($("#project-block").attr("my_height"));
     $("#project-block").slideDown();
     $("#chart-main-middle").height(
         parseInt($("#chart-body").height())
@@ -439,6 +441,7 @@ function show_project_block(){
     }
 }
 function hide_project_block(){
+    ANALYTICS.project_block_state=0;
     $("#project-block").slideUp();
     $("#chart-main-middle").height(
         parseInt($("#chart-body").height())

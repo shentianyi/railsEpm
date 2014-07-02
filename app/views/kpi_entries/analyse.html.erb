@@ -65,7 +65,7 @@
   </div>
 
   <div class="chart-body chart-body-sass" id="chart-body" style="display:none">
-    <div class="clearfix" id="chart-interval-alternate" my_height="28">
+    <div class="clearfix chart-interval-alternate" id="chart-interval-alternate" my_height="28">
 
       <ul class="pull-right control-chart-interval-group">
         <li interval="90">
@@ -87,7 +87,8 @@
           <a>Y</a>
         </li>
       </ul>
-      <!--<a class="btn btn-success compare-current-btn" id="compare-current-btn">进行同期对比</a>-->
+      <!------------------------------------------------   创建讨论版的按钮  -------------------------------------->
+      <a class="btn btn-warning linear compare-current-btn" id="create-discuss-btn">创建讨论</a>
     </div>
 
 
@@ -118,7 +119,7 @@
       </tr>
     </table>
 
-    <!--condition-->
+    <!------------------------------------------------   最下面的创建讨论的版  -------------------------------------->
     <div class="project-block" id="project-block" my_height="210">
       <div class="inner">
         <div class="left">
@@ -135,8 +136,8 @@
           </div>
 
         </div>
-        <a class="btn btn-for-project">Cancel</a>
-        <a class="btn btn-success btn-for-project">Publish</a>
+        <a class="btn btn-for-project" id="cancel-fro-project">Cancel</a>
+        <a class="btn btn-success btn-for-project" id="publish-fro-project">Publish</a>
       </div>
     </div>
 
@@ -248,7 +249,29 @@
   </div>
 </div>
 
-
+<div class="back-pop" id='back-pop'>
+     <div class="choose-project-team">
+       <i class="icon icon-remove" id="remove-back-pop"></i>
+       <p>选择讨论组</p>
+         <div class="choose-by-select">
+           <p>加入已有讨论组</p>
+           <select data-placeholder="选择讨论组" class="chosen-select" >
+             <option>1</option>
+             <option>2</option>
+           </select>
+           <a class="btn btn-primary">加入</a>
+         </div>
+         <div class="choose-by-create">
+           <p>创建新的讨论组</p>
+           <input type="text" id="storyset-title" placeholder="讨论组名称"/>
+           <input type="text" id="storyset-desc" placeholder="讨论组描述"/>
+           <select multiple class="chosen-select" data-placeholder="选择成员" id="storyset-users">
+                <option>asd</option>
+           </select>
+           <a class="btn btn-primary">创建并加入</a>
+         </div>
+     </div>
+</div>
 
 
 <% content_for :javascript_includes do %>
@@ -271,6 +294,8 @@
     <%= javascript_include_tag "story_manage.js" %>
 <% end %>
 
+<!------------------------------------------------   2014.7.2 demo 很多JS主要写在下面  -------------------------------------->
+
 <script>
     $(document).ready(function () {
         init_analytics();
@@ -283,6 +308,18 @@
                         e.stopPropagation();
                         $(".attachment-item[path-name='" + $(obj).attr("path-name") + "']").remove();
                     }
+                })
+                .on("click","#create-discuss-btn",function(){
+                    show_project_block();
+                })
+                .on("click","#cancel-fro-project",function(){
+                    hide_project_block();
+                })
+                .on("click","#publish-fro-project",function(){
+                    $("#back-pop").addClass("show")
+                })
+                .on("click","#remove-back-pop",function(){
+                    $("#back-pop").removeClass("show")
                 })
     });
     $(window).resize(function () {
