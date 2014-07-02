@@ -2,6 +2,7 @@
   <div class="left">
     <div class="header">
       <a href="<%= story_sets_path %>"><i class=" icon-chevron-left"></i> back</a>
+      <p><%= @story_set.title%></p>
     </div>
     <div class="content" id="story-content-div">
 
@@ -27,7 +28,7 @@
     <div class="participate">
       <p>Project participator</p>
       <% @stories.each do |story| %>
-          <div class="item">
+          <div class="item show-story-detail-item" story='<%= story.id %>'>
             <div class="avatar">
               <a>
                 <image src='<%= story.user_avatar %>' width='50px'/>
@@ -42,9 +43,9 @@
                 <span><%= time_ago_in_words(story.created_at.localtime) %></span><span>comment_count: <%= story.comment_count %></span>
               </p>
             </div>
-            <div class="btn-area">
-              <a class="btn btn-primary show-story-detail-a" story='<%= story.id %>'>check</a>
-            </div>
+            <!--<div class="btn-area">-->
+              <!--<a class="btn btn-primary show-story-detail-a" story='<%= story.id %>'>check</a>-->
+            <!--</div>-->
           </div>
       <% end %>
     </div>

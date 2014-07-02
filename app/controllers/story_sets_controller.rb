@@ -41,19 +41,20 @@ class StorySetsController < ApplicationController
   # POST /story_sets
   # POST /story_sets.json
   def create
+    msg = Message.new
+    msg.result = false
+
     @story_set = StorySet.new(params[:story_set])
     @story_set.user = current_user
     @story_set.collaborators = [current_user]+StorySetService.gen_collaborators(params[:users])
 
-    respond_to do |format|
-      if @story_set.save
-        format.html { redirect_to @story_set, notice: 'Story set was successfully created.' }
-        format.json { render json: @story_set, status: :created, location: @story_set }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @story_set.errors, status: :unprocessable_entity }
-      end
+
+    if msg.result = @story_set.save
+      msg.content= @story_set
+    else
+      msg.content = @story_set.errors.full_messages
     end
+    render json: msg
   end
 
   # PUT /story_sets/1

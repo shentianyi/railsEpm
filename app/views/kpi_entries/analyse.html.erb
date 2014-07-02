@@ -126,14 +126,14 @@
     <div class="project-block" id="project-block" my_height="210">
       <div class="inner">
         <div class="left">
-          <p>Project title</p>
-          <input type="text" id="project-title"/>
-          <p>Project description</p>
-          <textarea id="project-desc"></textarea>
+          <p>标题</p>
+          <input type="text" id="story-title"/>
+          <p>内容</p>
+          <textarea id="story-desc"></textarea>
         </div>
         <div class="right">
           <div>
-            <p>Attachment</p>
+            <p>附件</p>
             <input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
             <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
           </div>
@@ -258,20 +258,23 @@
        <p>选择讨论组</p>
          <div class="choose-by-select">
            <p>加入已有讨论组</p>
-           <select data-placeholder="选择讨论组" class="chosen-select" >
-             <option>1</option>
-             <option>2</option>
+           <select data-placeholder="选择讨论组" class="chosen-select" id="story-sets">
+             <% current_user.collaborated_story_sets.all.each do |set|%>
+                 <option value="<%= set.id %>"><%= set.title%></option>
+             <%end%>
            </select>
-           <a class="btn btn-primary">加入</a>
+           <a class="btn btn-primary" id="add-to-storyset">加入</a>
          </div>
          <div class="choose-by-create">
            <p>创建新的讨论组</p>
            <input type="text" id="storyset-title" placeholder="讨论组名称"/>
            <input type="text" id="storyset-desc" placeholder="讨论组描述"/>
            <select multiple class="chosen-select" data-placeholder="选择成员" id="storyset-users">
-                <option>asd</option>
+             <%@users.each do |u| %>
+                 <option user="<%= u.id %>"><%= u.first_name %></option>
+             <% end %>
            </select>
-           <a class="btn btn-primary">创建并加入</a>
+           <a class="btn btn-primary" id="create-add-to-storyset">创建并加入</a>
          </div>
      </div>
 </div>
@@ -290,6 +293,9 @@
     <%= javascript_include_tag "date_picker_template.js" %>
     <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
     <%= javascript_include_tag "jquery.ui/jquery-ui-wayne.min.js" %>
+    <%= javascript_include_tag "chart-util.js" %>
+    <%= javascript_include_tag "Manage-story.js" %>
+    <%= javascript_include_tag "Manage-storyset.js"%>
 
 
     <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
@@ -323,6 +329,31 @@
                 })
                 .on("click","#remove-back-pop",function(){
                     $("#back-pop").removeClass("show")
+                })
+                .on("click","#add-to-storyset",function(){
+                    var story = prepare_for_create_story();
+
+                    MANAGE.story.create(story,function(data){
+
+                    });
+                })
+                .on("click","#create-add-to-storyset",function(){
+                    var story = prepare_for_create_story();
+                    var story_set = {};
+                    story_set.title = $("#storyset-title").val();
+                    story_set.description = $("#storyset-desc").val();
+                    story_set.users = $("#storyset-users option:selected").map(function(){return $(this).attr("user")}).get();
+                    MANAGE.story_set.create(story_set,function(data){
+                        if(data.result){
+                            story.story_set_id = data.content.id;
+                            MANAGE.story.create(story,function(data){
+
+                            })
+                        }
+                        else{
+
+                        }
+                    })
                 })
     });
     $(window).resize(function () {
