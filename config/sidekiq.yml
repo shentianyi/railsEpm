@@ -3,7 +3,7 @@
 #   sidekiq -C config.yml
 ---
 #:pidfile: ./tmp/pids/sidekiq.pid
-:concurrency: 20
+:concurrency: 50
 # Set timeout to 8 on Heroku, longer if you manage your own systems.
 :timeout: 30
 :queues:
