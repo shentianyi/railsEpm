@@ -4,30 +4,30 @@ MANAGE.story_set = {};
     $(document).ready(function(){
         $("body")
             .on("click","#story-create-btn",function(){
-                MANAGE.story_set.create();
+                var storyset = {}
+                storyset.title = $("#storyset-title").val();
+                storyset.description = $("#storyset-description").val();
+                storyset.users = $("#storyset-users option:selected").map(function(){return $(this).attr("user")}).get();
+                MANAGE.story_set.create(storyset,function(data){
+
+                });
             })
     })
 })()
-MANAGE.story_set.create = function(){
-    var title = $("#storyset-title").val();
-    var description = $("#storyset-description").val();
-    var users = $("#storyset-users option:selected").map(function(){return $(this).attr("user")}).get();
-
+MANAGE.story_set.create = function(storyset,callback){
     $.ajax({
         url:'/story_sets',
         data: {
             story_set:{
-                title: title,
-                description: description
+                title: storyset.title,
+                description: storyset.description
             },
-            users: users
+            users: storyset.users
         },
         dataType: 'json',
         type: 'POST',
         success: function(data){
-            if(data){
-
-            }
+            callback(data);
         }
     });
 }

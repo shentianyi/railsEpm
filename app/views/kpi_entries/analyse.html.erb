@@ -270,9 +270,11 @@
            <input type="text" id="storyset-title" placeholder="讨论组名称"/>
            <input type="text" id="storyset-desc" placeholder="讨论组描述"/>
            <select multiple class="chosen-select" data-placeholder="选择成员" id="storyset-users">
-             <option>asd</option>
+             <%@users.each do |u| %>
+                 <option user="<%= u.id %>"><%= u.first_name %></option>
+             <% end %>
            </select>
-           <a class="btn btn-primary">创建并加入</a>
+           <a class="btn btn-primary" id="create-add-to-storyset">创建并加入</a>
          </div>
      </div>
 </div>
@@ -293,6 +295,7 @@
     <%= javascript_include_tag "jquery.ui/jquery-ui-wayne.min.js" %>
     <%= javascript_include_tag "chart-util.js" %>
     <%= javascript_include_tag "Manage-story.js" %>
+    <%= javascript_include_tag "Manage-storyset.js"%>
 
 
     <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
@@ -328,32 +331,29 @@
                     $("#back-pop").removeClass("show")
                 })
                 .on("click","#add-to-storyset",function(){
-                    var story = {title: $("#story-title").val(), description:$("#story-desc").val(),story_set_id: $("#story-sets option:selected").attr("value")};
-                    var attachments = MANAGE.story.get_attachments('item-data-uploader-preview');
-                    var chart_conditions = [];
-
-                    for(var i=0;i<ANALYTICS.chartSeries.series.length;i++){
-                        var condition = {};
-                        condition.entity_group_id = ANALYTICS.chartSeries.series[i].view;
-                        condition.kpi_id = ANALYTICS.chartSeries.series[i].kpi_id;
-                        condition.calculate_type = CHARTUTIL.calculate_type($("#chart-type-alternate .image").attr("type"));
-                        condition.time_string = CHARTUTIL.time.time_string(ANALYTICS.chartSeries.series[i].begin_time,ANALYTICS.chartSeries.series[i].end_time);
-                        condition.interval = $("#chart-interval-alternate .active").attr("interval");
-                        condition.chart_type = ANALYTICS.chartSeries.series[i].type;
-                        chart_conditions.push(condition);
-                    }
-
-                    if (chart_conditions.length > 0){
-                        story.chart_conditions = chart_conditions;
-                    }
-
-                    if(attachments){
-                        story.attachments = attachments;
-                    }
-                    //console.log(story);
+                    var story = prepare_for_create_story();
 
                     MANAGE.story.create(story,function(data){
+
                     });
+                })
+                .on("click","#create-add-to-storyset",function(){
+                    var story = prepare_for_create_story();
+                    var story_set = {};
+                    story_set.title = $("#storyset-title").val();
+                    story_set.description = $("#storyset-desc").val();
+                    story_set.users = $("#storyset-users option:selected").map(function(){return $(this).attr("user")}).get();
+                    MANAGE.story_set.create(story_set,function(data){
+                        if(data.result){
+                            story.story_set_id = data.content.id;
+                            MANAGE.story.create(story,function(data){
+
+                            })
+                        }
+                        else{
+
+                        }
+                    })
                 })
     });
     $(window).resize(function () {
