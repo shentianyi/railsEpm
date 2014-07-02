@@ -8,7 +8,7 @@ class KpiSubscribeAlert < ActiveRecord::Base
   def execute data
 
     data.each do |d|
-      if SubscribeAlert.alert(self.alert_type,self.value,d)
+      if SubscribeAlert.alert(self.alert_type,d,self.value)
         return true
       end
       return false

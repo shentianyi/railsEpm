@@ -2,10 +2,17 @@ class SubscribeAlert
   ALERTTYPE=["MAX","MIN"]
 
   def self.alert type,value,target
+    puts '--------------------'
+    puts type
+    puts value
+    puts target
     self.send(type,value,target)
   end
 
   def self.MAX value,target
+    puts '~~~~~~~~~~~~~~~~~~~~~'
+    puts value
+    puts target
     if value >= target
       return true
     else

@@ -25,17 +25,7 @@ class ChartCondition < ActiveRecord::Base
     query = AnalyseService.chart_condition_filter self
     department = EntityGroup.find_by_id(query[:entity_group_id]).department
     entity = Entity.find_by_id(kpi_entry.entity_id)
-    puts '#################################'
-    puts query
-    puts entity.to_json
-    puts entity.department.to_json
-    puts entity.department.path_ids
-    puts department.id
-    puts '#################################'
     if entity && entity.department && department && entity.department.path_ids.include?(department.id)
-      puts kpi_entry.entry_at
-      puts kpi_entry.entry_at >= query[:start_time]
-      puts kpi_entry.entry_at <= query[:end_time]
 
       if kpi_entry.entry_at >= query[:start_time] && kpi_entry.entry_at <= query[:end_time]
         return true

@@ -20,6 +20,8 @@ class UserMessageType
         return I18n.t('user_message.story_comment'), '/story_sets'
       when NEW_STORY
         return I18n.t('user_message.new_story'), '/story_sets'
+      when SUBSCRIBE_ALERT
+        return 'You have kpi subscription alert ', '/kpi_subscribes/mine'
       else
         ''
     end
