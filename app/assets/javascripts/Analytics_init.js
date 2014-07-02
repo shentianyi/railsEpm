@@ -85,23 +85,37 @@ function init_analytics() {
                 });
                 $("#kpi-property-select").val('').trigger('chosen:updated');
                 groupDetailInit(data);
+                if(ANALYTICS.demo){
+                    var interval =  $("#s_interval").val();
+                    var start_time =new Date($("#s_start_time").val()).toWangString(interval);
+                    var end_time =new Date($("#s_end_time").val()).toWangString(interval);
+                    $("#analy-begin-time").val(start_time).attr("hide_value",start_time).attr("hide_post",start_time);
+                    $("#analy-end-time").val(end_time).attr("hide_value",end_time).attr("hide_post",end_time);
+                    prepare_form_chart();
+                }
             }
         }, 'json');
     });
-
+    ANALYTICS.demo=false;
     if($("#s_subscribe_id").val()){
+        ANALYTICS.demo=true;
        var kpi_category_id=$("#s_kpi_category_id").val();
         var kpi_id = $("#s_kpi_id").val();
         var entity_grop_id = $("#s_entity_group_id").val();
         $("#chart-group").val(kpi_category_id).trigger('chosen:updated');
         $("#chart-view").val(entity_grop_id).trigger('chosen:updated');
         $("#chart-group").trigger("change");
-        var interval =  $("#s_interval").val();
-        var start_time =new Date($("#s_start_time").val()).toWangString(interval);
-        var end_time =new Date($("#s_end_time").val()).toWangString(interval);
-        $("#analy-begin-time").val(start_time);
-        $("#analy-end-time").val(end_time);
-        prepare_form_chart();
+//        window.setTimeout(function(){
+//            var interval =  $("#s_interval").val();
+//            var start_time =new Date($("#s_start_time").val()).toWangString(interval);
+//            var end_time =new Date($("#s_end_time").val()).toWangString(interval);
+//            $("#analy-begin-time").val(start_time).attr("hide_value",start_time).attr("hide_post",start_time);
+//            $("#analy-end-time").val(end_time).attr("hide_value",end_time).attr("hide_post",end_time);
+//        },1500)
+//        window.setTimeout(function(){
+//            prepare_form_chart();
+//        },2000)
+
     }   else{
         $("#chart-group").prepend($("<option />").attr("value", ""));
         $("#chart-group").val('').trigger('chosen:updated');
