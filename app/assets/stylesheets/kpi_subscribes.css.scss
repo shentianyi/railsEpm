@@ -77,7 +77,7 @@
       }
       .alert-list{
         li{
-          width:120px;
+          width:200px;
           text-align: center;
           padding:5px 0px;
           @include border-radius-same(4px);
@@ -103,9 +103,10 @@
       }
     }
     &>.btn{
-       margin-top:55px;
+      margin-top:55px;
       width:150px;
       padding:8px 10px;
+      margin-bottom:20px;
       &:first-of-type{
         bottom:40px;
       }

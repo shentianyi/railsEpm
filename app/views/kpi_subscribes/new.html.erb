@@ -23,6 +23,10 @@
       <option value="1"><%= t 'subscription.add-sub.total'%></option>
     </select>
 
+
+
+
+
     <p><%= t 'subscription.add-sub.alert_type'%></p>
     <div class="extreme">
       <select style="height: 30px; width:423px;margin: 5px" id="alert-type" class="chosen-select">
@@ -30,10 +34,17 @@
             <option value="<%= menu[:type]%>"><%= menu[:display]%></option>
         <%end%>
       </select>
-      <input type='number' id="value" placeholder="<%= t 'subscription.add-sub.value'%>" />
+      <input type='number' id="value" placeholder="<%= t 'subscription.add-sub.value'%>" style="width:407px !important" />
       <ul id="alert-list" class="alert-list" style="margin: 5px;padding-left:16px;font-size:13px;color:#ef9f2c">
       </ul>
     </div>
+
+    <p>Alert method</p>
+    <select style="height: 30px; width:423px; margin: 5px" id="calculate-type" class="chosen-select">
+      <option value="0">SMS</option>
+      <option value="1">E-mail/option>
+    </select>
+
 
     <a class="btn btn-primary" id="story-create-btn" onclick="MANAGE.kpi_subscribe.create()"> <%= t 'subscription.create'%> </a>
     <%= link_to (t 'subscription.cancel'), mine_kpi_subscribes_path,:class=>"btn" %>
