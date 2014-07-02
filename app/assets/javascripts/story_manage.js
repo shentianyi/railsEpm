@@ -123,7 +123,8 @@ function get_attachments(id) {
 }
 
 function init_story_page() {
-    $('body').on('click', '.show-story-detail-a', function () {
+    $('body').on('click', '.show-story-detail-item', function () {
+        $(this).addClass("active");
         $.get('/stories/' + $(this).attr('story')+'/detail', function (data) {
             $('#story-content-div').html(data);
         }, 'html');
