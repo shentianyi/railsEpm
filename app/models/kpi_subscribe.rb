@@ -1,11 +1,11 @@
 class KpiSubscribe < ActiveRecord::Base
   # attr_accessible :title, :body
-  attr_accessible :user_id,:tenant_id,:kpi_id,:is_alert
+  attr_accessible :user_id, :tenant_id, :kpi_id, :is_alert
   belongs_to :user
   belongs_to :tenant
   belongs_to :kpi
 
-  has_one :chart_condition,  :as => :chartable, :dependent => :destroy
+  has_one :chart_condition, :as => :chartable, :dependent => :destroy
   has_many :kpi_subscribe_users, :dependent => :destroy
   has_many :kpi_subscribe_alerts, :dependent => :destroy
 
@@ -26,6 +26,10 @@ class KpiSubscribe < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def self.detail_by_id(id)
+    joins(:kpi).where(id: id).select('kpis.kpi_category_id,kpi_subscribes.*')
   end
 
   def description

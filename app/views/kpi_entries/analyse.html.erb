@@ -10,15 +10,15 @@
     <div class="pull-left analytics-condition-choose" style="padding: 18px 0 5px 11px;">
 
       <div class="index-condition-group">
-        <select data-placeholder="<%= t 'analytics.kpi_category' %> *" style="width:130px;" class="chosen-select" title="analy-entity-select" id="chart-group">
+        <select data-placeholder="<%= t 'analytics.kpi_category' %> *" style="width:130px;"  class="chosen-select"   title="analy-entity-select" id="chart-group">
           <% @categories.each do |catetory| %>
               <option value="<%= catetory.id %>"><%= catetory.name %></option>
           <% end %>
         </select>
-        <select data-placeholder="<%= t 'analytics.kpi' %> *" style="width:130px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
+        <select data-placeholder="<%= t 'analytics.kpi' %> *" style="width:130px;" class="select-chosen"    title="analy-kpi-select" id="chart-kpi" date-pick=false>
           <option value=""></option>
         </select>
-        <select data-placeholder="<%= t 'analytics.view' %> *" style="width:130px;" class="chosen-select" title="analy-view-select" id="chart-view">
+        <select data-placeholder="<%= t 'analytics.view' %> *" style="width:130px;"   class="chosen-select"  title="analy-view-select" id="chart-view">
           <% @entity_groups.each do |entity_group| %>
               <option value="<%= entity_group.id %>"><%= entity_group.name %></option>
           <% end %>
@@ -279,7 +279,15 @@
          </div>
      </div>
 </div>
-
+<div style="display: none">
+  <input type="hidden" id="s_subscribe_id" value="<%=@s_subscribe_id%>"/>
+  <input type="hidden" id="s_kpi_category_id" value="<%=@s_kpi_category_id%>"/>
+  <input type="hidden" id="s_kpi_id" value="<%=@s_kpi_id%>"/>
+  <input type="hidden" id="s_entity_group_id" value="<%=@s_entity_group_id%>"/>
+  <input type="hidden" id="s_start_time" value="<%=@s_start_time%>"/>
+  <input type="hidden" id="s_end_time" value="<%=@s_end_time%>"/>
+  <input type="hidden" id="s_calculate_type" value="<%=@s_calculate_type%>"/>
+</div>
 
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "moment.min.js" %>
@@ -308,6 +316,7 @@
 
 <script>
     $(document).ready(function () {
+//        fill_analyse_condition_by_subscribe();
         init_analytics();
         attach_upload("item-data-uploader");
         $("body")
@@ -377,8 +386,10 @@
                             MessageBox(data.content,'top','warning');
                         }
                     });
-                })
+                });
     });
+
+
     $(window).resize(function () {
         resize_chart.body();
         resize_chart.container();
