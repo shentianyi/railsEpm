@@ -5,6 +5,12 @@ function init_analytics() {
         radioClass: 'iradio_minimal-aero'
     });
     var target = "#analy-begin-time,#analy-end-time";
+
+    if ($("#s_subscribe_id").val()) {
+        var kpi_category_id=$("#s_kpi_category_id").val();
+        $('#chart-group').val(kpi_category_id);
+    }
+
     $("#chart-kpi").chosen().change(function () {
         var interval = $("#chart-kpi").find(":selected").attr("interval");
         $(target).val("");
@@ -12,10 +18,7 @@ function init_analytics() {
 
         new DATE_PICKER[interval](target, "date").datePicker();
     });
-    $("#chart-group").chosen().change(function () {
-        $("#analy-begin-time,#analy-end-time").datepicker("remove");
-        $("#analy-begin-time,#analy-end-time").datetimepicker("remove");
-    });
+
 
     $("body").on("change", "#analy-begin-time",function () {
         var interval = $("#chart-kpi").find(":selected").attr("interval");
@@ -41,11 +44,8 @@ function init_analytics() {
 
     resize_chart.body();
     resize_chart.container();
-    $("#chart-group").prepend($("<option />").attr("value", ""));
-    $("#chart-group").val('').trigger('chosen:updated');
-    $("#chart-kpi").val('').trigger('chosen:updated');
-    $("#chart-view").prepend($("<option />").attr("value", ""));
-    $("#chart-view").val('').trigger('chosen:updated');
+
+
     $("#chart-group").on("change", function (event) {
         var id = $(adapt_event(event).target).attr("value");
         $.ajax({
@@ -57,14 +57,19 @@ function init_analytics() {
                     $("#chart-kpi").append($("<option />").attr("value", data[i].id).attr("interval", data[i].frequency).text(data[i].name));
                 }
                 $("#chart-kpi").prepend($("<option />").attr("value", ""));
-                $("#chart-kpi").val('').trigger('chosen:updated');
+                var kpi_id=$("#s_kpi_id").val();
+                if(kpi_id){
+                    $("#chart-kpi").val(kpi_id).trigger('chosen:updated');
+                    $( "#chart-kpi" ).trigger( "change",{selected:kpi_id} );
+                }  else{
+                    $("#chart-kpi").val('').trigger('chosen:updated');
+                }
             }
         });
     });
 
-    $('#chart-kpi').on('change', function (event) {
-        var id = $(adapt_event(event).target).attr('value');
-        $.get('/kpis/group_properties/' + id, function (data) {
+    $('#chart-kpi').on('change', function (event,id) {
+        $.get('/kpis/group_properties/' + id.selected, function (data) {
             $("#kpi-property-select").empty().trigger('chosen:updated');
             if (data) {
                 var properties = {};
@@ -84,6 +89,21 @@ function init_analytics() {
         }, 'json');
     });
 
+    if($("#s_subscribe_id").val()){
+       var kpi_category_id=$("#s_kpi_category_id").val();
+        var kpi_id=$("#s_kpi_id").val();
+        var entity_grop_id=$("#s_entity_group_id").val();
+        $("#chart-group").val(kpi_category_id).trigger('chosen:updated');
+        $("#chart-view").val(entity_grop_id).trigger('chosen:updated');
+        $( "#chart-group" ).trigger( "change" );
+        prepare_form_chart();
+    }   else{
+        $("#chart-group").prepend($("<option />").attr("value", ""));
+        $("#chart-group").val('').trigger('chosen:updated');
+        $("#chart-kpi").val('').trigger('chosen:updated');
+        $("#chart-view").prepend($("<option />").attr("value", ""));
+        $("#chart-view").val('').trigger('chosen:updated');
+    }
     //init同期对比
     ANALYTICS.currentCompare.init();
     //init详细

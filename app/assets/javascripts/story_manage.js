@@ -145,14 +145,31 @@ function load_story_detail(id) {
 }
 
 function create_comment() {
-    var comment = {content: $("#comment-content").val() };
+    var comment = {content: $.trim($("#comment-content").val()) };
     var attachments = get_attachments('comment-item-data-uploader-preview');
     if (attachments) {
         comment.attachments = attachments;
     }
-    $.post('/stories/' + $('#current-story').val() + '/comment', {comment: comment}, function (data) {
-        alert('Comment Success')
-    });
+    if(comment.content.length>0){
+        $.post('/stories/' + $('#current-story').val() + '/comment', {comment: comment}, function (data) {
+            MessageBox("Comment Success","top","success");
+            var html="<li>"+
+                "<p>"+
+                "<a>Jim Guo:</a>"+
+                comment.content+
+                "</p>"+
+                "<span>just now</span>"+
+                "</li>"
+            $("#comment-content-list").prepend(html);
+            $("#comment-area textarea").val("");
+            var count=parseInt($("#comments-btn span").text());
+            $("#comments-btn span").text(++count);
+        });
+    }
+    else{
+        MessageBox("no content","top","warning");
+    }
+
 }
 
 function prepare_for_create_story() {

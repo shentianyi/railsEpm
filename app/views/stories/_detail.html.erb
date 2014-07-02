@@ -5,33 +5,36 @@
 
 <div id="story-partial" class="story-partial">
   <%= render partial: 'chart' %>
-  <div>
-    <p>Attachments:</p>
-    <% @story.attachments.each do |attach| %>
-        <div class="attachment-item inline-block" title="<%= attach.name %>">
-          <div class="attachment-sign atta-<%= attach.type %>" href="<%= attach.path %>">
-            <a href="<%= attach.path %>" class='attach-download' target="_blank">
-              <div class="attachment-operate" title="下载">
-                <i class="icon-arrow-down icon-white pointer pull-right"> </i>
+  <div style="width:100%;overflow-x:auto;">
+    <% if @story.attachments.count>0 %>
+        <p style="font-size:13px;color:#666;margin-top:8px;margin-bottom:2px;">Attachments:</p>
+        <% @story.attachments.each do |attach| %>
+            <div class="attachment-item inline-block" title="<%= attach.name %>">
+              <div class="attachment-sign atta-<%= attach.type %>" href="<%= attach.path %>">
+                <a href="<%= attach.path %>" class='attach-download' target="_blank">
+                  <!--<div class="attachment-operate" title="下载">-->
+                  <!--<i class="icon-arrow-down icon-white pointer pull-right"> </i>-->
+                  <!--</div>-->
+                </a>
               </div>
-            </a>
-          </div>
-          <p class="attachment-p">
-            <%= attach.name %>
-          </p>
-        </div>
+              <p class="attachment-p">
+                <%= attach.name %>
+              </p>
+            </div>
+        <% end %>
     <% end %>
+
   </div>
 
-  <a id="comments-btn"><i class="icon  icon-comments-alt"></i> comments()</a>
+  <a id="comments-btn" state="close"><i class="icon  icon-comments-alt"></i> comments(<span><%= @comments.count %></span>)</a>
 
-  <div class="comment-area">
+  <div class="comment-area" id="comment-area">
     <div class="form">
       <textarea placeholder="leave your comment here ..." class="form-control my_post_comment" id="comment-content"></textarea>
       <input type="button" class="btn btn-warning comment-submit-button" value="comment" onclick="create_comment();"/>
     </div>
 
-    <ul class="comment-content-list">
+    <ul class="comment-content-list" id="comment-content-list">
       <% @comments.each_with_index do |comment, i| %>
           <li>
             <p><a><%= comment.user_name %>:</a><%= comment.content %></p>
@@ -47,5 +50,6 @@
         attach_upload("comment-item-data-uploader");
         $('.atta-image').magnificPopup({type: 'image'});
     });
+
 </script>
 <input type="hidden" id="current-story" value="<%= @story.id %>"/>
