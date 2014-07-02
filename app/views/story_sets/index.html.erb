@@ -24,14 +24,14 @@
   </div>
   <div class="right-part">
     <div class="area">
-      <p>Last update project</p>
+      <p class="title">Last update project</p>
       <% @messages.each do |msg| %>
-          <p>
-            <a href="<%= msg.link %>"> <%= msg.content_display %> </a>
-          </p>
-          <p>
-            <%= time_ago_in_words(Time.at(msg.created_at_dispaly.to_i).localtime) %>
-          </p>
+          <div class="item">
+            <p><a href="<%= msg.link %>"> <%= msg.content_display %> </a></p>
+            <p><%= time_ago_in_words(Time.at(msg.created_at_dispaly.to_i).localtime) %></p>
+          </div>
+
+
       <% end if @messages %>
     </div>
   </div>

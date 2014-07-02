@@ -670,7 +670,7 @@ en:
     new_story: create  anew story
   subscription:
     subscription: Subscription
-    add: Add Sunscription
+    add: Subscribe
     create: Create
     cancel: Cancel
     kpi: KPI
