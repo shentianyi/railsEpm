@@ -1,4 +1,5 @@
 class StoriesController < ApplicationController
+  include ActionView::Helpers::DateHelper
   before_filter :get_ability_category, :get_kpis_by_category, :get_user_entity_groups, :only => [:index, :new]
   # GET /stories
   # GET /stories.json
@@ -97,6 +98,7 @@ class StoriesController < ApplicationController
       Attachment.add(params[:comment][:attachments].values, @comment) unless params[:comment][:attachments].blank?
       @comment.save
       @msg.content=@comment
+
       @msg.result=true
     end
     render json: @msg
