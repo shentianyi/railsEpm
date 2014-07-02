@@ -535,13 +535,16 @@ MANAGE.user.assign.input = function (event) {
 };
 
 ///////////////
-MANAGE.user.init_assign_user = function(){
+MANAGE.user.init_assign_user = function() {
     $("#assign-kpi-user option").remove();
-    $("#assign-kpi-user").append("<option></option>");
+    var target = $("#assign-kpi-user");
+    target.append("<option></option>");
     //'<option value="<%= user.id %>"><%= user.email %></option>';
-    var users = $("#manage-sort-list li");
-    for(var i = 0;i<users.length;i++){
-        var id = users.eq[i].attr("id");
-        var email = users.eq[i].attr("email");
-    }
-$}
+    var users = $("#manage-sort-list>li");
+    users.each(function () {
+        var user_id = $(this).attr("id");
+        var email = $(this).attr("email");
+
+        target.append("<option value="+user_id+">"+email+"</option>");
+    });
+}
