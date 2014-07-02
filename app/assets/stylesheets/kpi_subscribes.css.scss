@@ -46,17 +46,27 @@
 }
 
 .kpi-subscribes-new.story-set-new{
+
   .form{
+    position:relative;
+    padding:0px 40px;
     .kpi-title{
       font-size:25px;
       font-weight:500;
+      border-bottom:1px solid rgba(0,0,0,0.3);
+      padding:18px 3px 5px;
+      margin:0px 18px;
+      color:$blue;
     }
     input{
       margin-left:20px;
       margin-top:5px;
       font-size:14px;
       padding:5px 5px;
-      width:218px;
+      width:410px;
+    }
+    .chosen-container{
+      width:420px;
     }
     .extreme{
       &:after{
@@ -64,6 +74,17 @@
       }
       .chosen-container,input{
 
+      }
+      .alert-list{
+        li{
+          width:120px;
+          text-align: center;
+          padding:5px 0px;
+          @include border-radius-same(4px);
+          background:$blue;
+          color:#fff;
+          margin-top:8px;
+        }
       }
     }
     .time-range{
@@ -79,6 +100,17 @@
         &:last-of-type{
           top:40px;
         }
+      }
+    }
+    &>.btn{
+       margin-top:55px;
+      width:150px;
+      padding:8px 10px;
+      &:first-of-type{
+        bottom:40px;
+      }
+      &:last-of-type{
+        bottom:10px;
       }
     }
   }

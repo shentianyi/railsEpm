@@ -4,7 +4,7 @@
   <div class="form">
     <p id="kpi-id" kpi-id="<%=@kpi.id%>"  kpi-interval= "<%= @kpi.frequency %>" class="kpi-title"><%= @kpi.name %></p>
     <p><%= t 'subscription.add-sub.department'%></p>
-    <select id="entity-groups" style="height: 30px; width:230px; margin: 5px;" class="chosen-select">
+    <select id="entity-groups" style="height: 30px; width:423px; margin: 5px;" class="chosen-select">
       <% @entity_groups.each do |entity_group| %>
           <option value="<%= entity_group.id %>"><%= entity_group.name %></option>
       <% end %>
@@ -18,20 +18,20 @@
       <label></label>
     </div>
 
-    <select style="height: 30px; width:130px; margin: 5px" id="calculate-type" class="chosen-select">
+    <select style="height: 30px; width:423px; margin: 5px" id="calculate-type" class="chosen-select">
       <option value="0"><%= t 'subscription.add-sub.average'%></option>
       <option value="1"><%= t 'subscription.add-sub.total'%></option>
     </select>
 
     <p><%= t 'subscription.add-sub.alert_type'%></p>
     <div class="extreme">
-      <select style="height: 30px; width:130px;margin: 5px" id="alert-type" class="chosen-select">
+      <select style="height: 30px; width:423px;margin: 5px" id="alert-type" class="chosen-select">
         <% SubscribeAlert.list_type.each do |menu|%>
             <option value="<%= menu[:type]%>"><%= menu[:display]%></option>
         <%end%>
       </select>
       <input type='number' id="value" placeholder="<%= t 'subscription.add-sub.value'%>" />
-      <ul id="alert-list" style="margin: 5px;padding-left:16px;font-size:13px;color:#ef9f2c">
+      <ul id="alert-list" class="alert-list" style="margin: 5px;padding-left:16px;font-size:13px;color:#ef9f2c">
       </ul>
     </div>
 
