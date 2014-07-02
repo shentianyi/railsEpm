@@ -41,11 +41,11 @@ MANAGE.kpi_subscribe.init_new = function () {
             var type = $("#alert-type option:selected").attr("value");
             var display = $("#alert-type option:selected").text();
             if($("#alert-list li[type='"+type+"']").length > 0){
-                MessageBox('不能设置相同的提醒','top','warning');
+                MessageBox('Cannot set the same alter type','top','warning');
             }
             else{
                 $(this).val("");
-                $("#alert-list").append("<li type="+type+" value="+value+">"+display + value+"</li>");
+                $("#alert-list").append("<li type="+type+" value="+value+">"+display + "   " +value+"</li>");
             }
             event.preventDefault();
         }
