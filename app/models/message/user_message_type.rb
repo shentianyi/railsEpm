@@ -2,6 +2,7 @@ class UserMessageType
   ADD_TO_STROY_SET=100
   NEW_STORY=200
   UNREAD_STORY_COMMENT=300
+
   SUBSCRIBE_ALERT=400
 
   def self.types
@@ -17,6 +18,8 @@ class UserMessageType
         return I18n.t('user_message.add_to_story_set'), '/story_sets'
       when UNREAD_STORY_COMMENT
         return I18n.t('user_message.story_comment'), '/story_sets'
+      when NEW_STORY
+        return I18n.t('user_message.new_story'), '/story_sets'
       else
         ''
     end

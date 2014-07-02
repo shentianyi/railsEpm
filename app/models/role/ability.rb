@@ -8,7 +8,8 @@ class Ability
     if user.admin?
       can :manage, [User, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem,
                     UserKpiItem, UserSession, Dashboard, DashboardItem, DashboardCondition, Email,
-                    KpiProperty, KpiPropertyItem, KpiPropertyValue,StorySet,Story,Comment,ChartCondition,StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert]
+                    KpiProperty, KpiPropertyItem, KpiPropertyValue,StorySet,Story,Comment,
+                    ChartCondition,StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert]
       can :manage, UserSession, :email => user.email
 
       can :read, EntityGroup, user_entity_groups: {user_id: user.id}
@@ -21,7 +22,8 @@ class Ability
       #can :read,:all
     elsif user.director?
       can :manage, [EntityGroupItem, UserKpiItem, KpiEntry, Dashboard, DashboardItem, DashboardCondition, Email,
-                    KpiProperty, KpiPropertyItem, KpiPropertyValue,StorySet,Story,Comment,ChartCondition,StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert]
+                    KpiProperty, KpiPropertyItem, KpiPropertyValue,StorySet,Story,Comment,ChartCondition,
+                    StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert]
       can :manage, User, :id => user.id
 
       can :manage, UserSession, :email => user.email
@@ -36,7 +38,7 @@ class Ability
 
       can :read, KpiCategory, kpis: {department_kpis: {department_id: user.user_departments.pluck(:department_id)}}
       can [:read, :access,:access_list,:categoried, :properties,:group_properties], Kpi, department_kpis: {department_id: user.user_departments.pluck(:department_id)}
-      can :read, Department, user_id: user.id
+      #can :read, Department, user_id: user.id
       can [:read, :property_value], KpiProperty
       can :read, [KpiPropertyItem, KpiPropertyValue]
     elsif user.user?

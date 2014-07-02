@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   set_current_tenant_through_filter
 
   authorize_resource
-
+  #skip_load_and_authorize_resource [UserDepartment,User,Department]
 
   private
 

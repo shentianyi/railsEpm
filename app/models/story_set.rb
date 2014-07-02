@@ -27,9 +27,12 @@ class StorySet < ActiveRecord::Base
   end
 
   def pub_collaborator_message
-    collaborator_set.each do |u|
-      UserMessage.add_story_set_message(u) unless u.to_i==self.user_id
-    end
+    user_ids= collaborator_set.select { |u| u.to_i!=self.user_id }
+    UserMessage.add_story_set_message(user_ids)
+
+    EventMessage.new(sender_id: self.user_id, receiver_ids:user_ids, content: self.title,
+                     messageble_type: self.class.name, messageable_id: self.id,
+                     type: EventMessageType::ADD_TO_STROY_SET).save
   end
 
   def collaborator_set

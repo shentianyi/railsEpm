@@ -668,6 +668,11 @@ zh:
   user_message:
     add_to_story_set: 你被加入了新讨论组
     story_comment: 你的主题有了新评论
+    new_story: 你参与的讨论组有了新主题
+  event_message:
+    add_to_story_set: 将你加入新讨论组
+    story_comment: 评论了你的主题
+    new_story: 新建了主题
   subscription:
     subscription: 订阅
     add: 添加订阅

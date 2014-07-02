@@ -6,8 +6,8 @@ class UserMessage<CZ::BaseClass
 
   def initialize(params={})
     super
-    @count=1 if @count.blank?
     @key = UserMessage.generate_key(@user_id, @type) if @key.blank?
+    @count=1 if @count.blank?
   end
 
   def save
@@ -29,13 +29,23 @@ class UserMessage<CZ::BaseClass
     "user:#{user_id}:message_box:#{type}"
   end
 
-  def self.add_story_set_message user_id
-    UserMessage.new(user_id: user_id, type: UserMessageType::ADD_TO_STROY_SET).save
+
+  def self.add_story_set_message user_ids
+    user_ids.each do |user_id|
+      UserMessage.new(user_id: user_id, type: UserMessageType::ADD_TO_STROY_SET).save
+    end
+  end
+
+  def self.add_new_story_messgage user_ids
+    user_ids.each do |user_id|
+      UserMessage.new(user_id: user_id, type: UserMessageType::NEW_STORY).save
+    end
   end
 
   def self.add_story_comment_message user_id
     UserMessage.new(user_id: user_id, type: UserMessageType::UNREAD_STORY_COMMENT).save
   end
+
 
   def self.add_subscription_message user_id
     UserMessage.new(user_id: user_id, type: UserMessageType::SUBSCRIBE_ALERT).save
@@ -44,6 +54,12 @@ class UserMessage<CZ::BaseClass
 
   def self.clean_story_set_message user_id
     if message=find(user_id, UserMessageType::ADD_TO_STROY_SET)
+      $redis.hset message.key, 'count', 0
+    end
+  end
+
+  def self.clean_new_story_message user_id
+    if message=find(user_id, UserMessageType::NEW_STORY)
       $redis.hset message.key, 'count', 0
     end
   end

@@ -1,32 +1,39 @@
-
 <div class="story-set-index">
   <div class="left-part">
-      <div class="area">
-        <div class="header"></div>
-        <div class="title">
-          <a><i class="icon icon-folder-open"></i></a>
-          <p>All My Projects</p>
-          <a class="btn btn-primary" href="/story_sets/new"><i class="icon icon-plus"></i> Create project</a>
-        </div>
-        <div class="projects">
-          <% @story_sets.each do |story_set| %>
+    <div class="area">
+      <div class="header"></div>
+      <div class="title">
+        <a><i class="icon icon-folder-open"></i></a>
+
+        <p>All My Projects</p>
+        <a class="btn btn-primary" href="/story_sets/new"><i class="icon icon-plus"></i> Create project</a>
+      </div>
+      <div class="projects">
+        <% @story_sets.each do |story_set| %>
             <a class="item" href="<%= story_story_set_path(story_set) %>">
               <div class="left">
                 <p title="<%= story_set.title %>"><%= story_set.title %></p>
+
                 <p title="<%= story_set.description %>"><%= story_set.description %></p>
               </div>
               <div class="right"></div>
             </a>
-          <% end %>
-        </div>
+        <% end %>
       </div>
+    </div>
   </div>
   <div class="right-part">
     <div class="area">
-        <p>Last update project</p>
-    </div>
-    <div class="area">
-        <p>The project I issued</p>
+      <p>Last update project</p>
+      <% @messages.each do |msg| %>
+          <p>
+            <a href="<%= msg.link %>"> <%= msg.content_display %> </a>
+          </p>
+
+          <p>
+            <%= time_ago_in_words(Time.at(msg.created_at_dispaly.to_i).localtime) %>
+          </p>
+      <% end if @messages %>
     </div>
   </div>
 </div>
