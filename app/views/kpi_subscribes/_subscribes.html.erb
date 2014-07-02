@@ -10,7 +10,6 @@
                     <span><%= ks.description %> <i value="<%= ks.id%>" class="icon icon-remove subscribe-remove"></i></span>
                   <% end %>
               </div>
-
             </td>
             <td>
               <a class="btn btn-success" href="/kpi_subscribes/new/<%= kpi.id%>"><%= t 'subscription.add'%></a>
@@ -36,10 +35,7 @@
                        }else{
 
                        }
-
-                       //$(target).remove();
                    });
-                   //$(target).parents(".subscribe-wrap").eq(0).remove();
                })
   })
 </script>

@@ -49,6 +49,8 @@ class KpiSubscribesController < ApplicationController
   # POST /kpi_subscribes
   # POST /kpi_subscribes.json
   def create
+    msg = Message.new
+    msg.result = false
     @kpi_subscribe = KpiSubscribe.new(params[:kpi_subscribe])
     @kpi_subscribe.user = current_user
     @kpi_subscribe.tenant = current_tenant
@@ -62,15 +64,12 @@ class KpiSubscribesController < ApplicationController
     end
     @kpi_subscribe.kpi_subscribe_alerts = alerts
     #
-    respond_to do |format|
-      if @kpi_subscribe.save
-        format.html { redirect_to @kpi_subscribe, notice: 'Kpi subscribe was successfully created.' }
-        format.json { render json: @kpi_subscribe, status: :created, location: @kpi_subscribe }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @kpi_subscribe.errors, status: :unprocessable_entity }
-      end
+    if msg.result = @kpi_subscribe.save
+      msg.content = @kpi_subscribe
+    else
+      msg.content = @kpi_subscribe.errors.full_messages
     end
+    render json: msg
   end
 
   def mine

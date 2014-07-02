@@ -24,11 +24,11 @@ class SubscribeAlert
   def self.display type
     case type
       when 'MAX'
-        'aaa'
+        I18n.t 'subscription.alert-type.max'
       when 'MIN'
-        'bbb'
+        I18n.t 'subscription.alert-type.min'
       else
-        'NULL'
+        I18nt 'subscription.alert-type.error'
     end
   end
 
