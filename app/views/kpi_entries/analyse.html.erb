@@ -128,14 +128,14 @@
 
       <div class="inner">
         <div class="left">
-          <p>标题</p>
+          <p>Title</p>
           <input type="text" id="story-title"/>
-          <p>内容</p>
+          <p>Description</p>
           <textarea id="story-desc"></textarea>
         </div>
         <div class="right">
           <div>
-            <p>附件</p>
+            <p>Attachment</p>
             <input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
             <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
           </div>
@@ -143,7 +143,7 @@
         </div>
         <% if @current_story_set.nil?%>
             <a class="btn btn-for-project" id="cancel-fro-project">Cancel</a>
-            <a class="btn btn-success btn-for-project" id="publish-fro-project">Publish</a>
+            <a class="btn btn-success btn-for-project" id="publish-fro-project">Add</a>
         <%else%>
             <a class="btn btn-for-project" id="cancel-fro-project" href="/story_sets/<%= @current_story_set.id%>/story">Cancel</a>
             <a class="btn btn-success btn-for-project" value="<%= @current_story_set.id%>" id="direct-publish-fro-project">Publish</a>

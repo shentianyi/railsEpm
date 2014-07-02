@@ -16,6 +16,6 @@ class KpiSubscribeAlert < ActiveRecord::Base
   end
 
   def display
-    SubscribeAlert.display(self.alert_type) + self.value.to_s
+    SubscribeAlert.display(self.alert_type)+' '+ self.value.to_s
   end
 end
