@@ -1,9 +1,11 @@
 class ChartCondition < ActiveRecord::Base
   attr_accessible :entity_group_id, :kpi_id, :calculate_type,
-                  :time_string, :chartable_id, :chartable_type, :interval,:chart_type,:kpi_property
+                  :time_string, :chartable_id, :chartable_type, :interval, :chart_type, :kpi_property
   belongs_to :chartable, :polymorphic => true
   belongs_to :kpi
   belongs_to :entity_group
+
+  after_destroy :clean_data_cache
 
   def time_span
     DashboardItem.time_string_to_time_span self.time_string
@@ -40,5 +42,12 @@ class ChartCondition < ActiveRecord::Base
       end
     end
     return true
+  end
+
+  private
+  def clean_data_cache
+    if cache= KpiEntryAnalyseCache.find_by_id(self.id, self.class.name)
+     cache.destroy
+    end
   end
 end
