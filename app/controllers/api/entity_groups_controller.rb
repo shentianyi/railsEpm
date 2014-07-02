@@ -11,6 +11,8 @@ module Api
       puts request.protocol.class
       puts request.host_with_port
       egs.each do |eg|
+        eg.code= eg.code||''
+        eg.description= eg.description || ''
         a=JSON.parse(eg.to_json)
         #a[:contacts]=eg.contacts.select(User.contact_attrs).each { |c| c.image_url=request.protocol+request.host_with_port+'/files/avatar?f='+c.image_url }
         a[:contacts]=eg.contacts.select(User.contact_attrs).each { |c| c.image_url=request.protocol+request.host_with_port+c.image }

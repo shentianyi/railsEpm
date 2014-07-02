@@ -12,25 +12,23 @@ class KpiCalculateQueue
     unless entry.nil?
       if kpis = Kpi.parent_kpis_by_id(entry["kpi_id"])
         kpis.each do |k|
-          CalculateWorker.perform_async(k.id,entry)
-=begin
+          #CalculateWorker.perform_async(k.id,entry)
           rkey = redis_key(k.id,entry["parsed_entry_at"].to_milli)
           if !@cal_queue.has_key?(rkey)
             @cal_queue[rkey] = 1
             save
-            puts "Calculate".red
+            #puts "Calculate".red
             CalculateWorker.perform_async(k.id,entry)
             #KpiEntriesHelper.calculate_caled_kpi(k.id,entry)
           elsif @cal_queue[rkey] < 1
             @cal_queue[rkey] = 1
             save
-            puts "Calculate".red
+            #puts "Calculate".red
             CalculateWorker.perform_async(k.id,entry)
             #KpiEntriesHelper.calculate_caled_kpi(k.id,entry)
           else
             #Do nothing
           end
-=end
           #puts @cal_queue.to_json.green
         end
       end
