@@ -79,6 +79,8 @@ class KpiEntriesController < ApplicationController
       # from kpi subscribes
       if params.has_key?(:s)
         @subscribe=KpiSubscribe.detail_by_id(params[:s]).first
+        @subscribe.is_alert = false
+        @subscribe.save
         @condition= ChartConditionPresenter.new(@subscribe.chart_condition)
         # condition for sub
         @s_subscribe_id=@subscribe.id
