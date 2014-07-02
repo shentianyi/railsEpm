@@ -3,8 +3,8 @@
     <div class="area">
       <div class="header"></div>
       <div class="title">
-        <a><i class="icon icon-folder-open"></i></a>
-        <p>All My Discussions</p>
+        <!--<a><i class="icon icon-folder-open"></i></a>-->
+        <p><a><i class="icon icon-folder-open"></i></a> All My Discussions</p>
         <a class="btn btn-primary" href="/story_sets/new"><i class="icon icon-plus"></i> Create Discussion</a>
       </div>
       <div class="projects">
@@ -22,15 +22,32 @@
     </div>
   </div>
   <div class="right-part">
-    <div class="area">
+    <div class="area" id="latest-notice">
       <p class="title">Latest Actions</p>
       <% @messages.each do |msg| %>
-          <div class="item">
-            <p><a href="<%= msg.link %>"> <%= msg.content_display %> </a></p>
+          <div class="item" content="<%= msg.content_display %>">
+            <p>
+              <a href="<%= msg.link %>" class="name"> </a>
+              <a href="<%= msg.link %>" class="word"> </a>
+            </p>
             <p><%= time_ago_in_words(Time.at(msg.created_at_dispaly.to_i).localtime) %></p>
           </div>
       <% end if @messages %>
     </div>
   </div>
 </div>
+<script>
+ $(document).ready(function(){
+      var $targets=$("#latest-notice .item");
+     for(var i=0;i<$targets.length;i++){
+         var $target=$targets.eq(i),
+             content=$target.attr("content");
+         var name=content.split(",")[0];
+         var word=content.split(",")[1].split(":")[0];
+         var mark=content.split(",")[1].split(":")[1];
+         $target.find(".name").text(name+" :");
+         $target.find(".word").html("<span>"+word+"</span><span class='mark'>"+mark+"</span>");
+     }
+ })
+</script>
 

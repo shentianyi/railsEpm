@@ -89,6 +89,8 @@ header{
   padding:5px 5px !important;
   .close{
     font-size:18px !important;
+    right: 3px !important;
+    top: 1px !important;
   }
   .popModal_content{
     margin:5px auto !important;
@@ -104,23 +106,31 @@ header{
       &:hover span{
         color:#777;
       }
+      display:table;
+      width:100%;
       span{
         font-size:12px;
-        display:inline-block;
+        display:table-cell;
         @include word-break;
+
         &:last-of-type{
-          color:#fff;
-          background:$alert-orange;
-          $width:15px;
-          text-align:center;
-          line-height:$width + 2;
-          width:$width;
-          height:$width;
-          @include border-radius-same($width);
-          margin-left:3px;
-          font-size:11px;
-          position:relative;
-          top:-1px;
+          vertical-align:middle;
+          label{
+            display:block;
+            color:#fff;
+            background:$alert-orange;
+            $width:15px;
+            text-align:center;
+            line-height:$width + 2;
+            width:$width;
+            height:$width;
+            @include border-radius-same($width);
+            margin-left:3px;
+            font-size:11px;
+            position:relative;
+            top:-1px;
+          }
+
         }
       }
     }
