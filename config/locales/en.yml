@@ -661,9 +661,9 @@ en:
     target_min: Target Min
     target_max: Target Max
   user_message:
-    add_to_story_set: You are added to story set
-    story_comment: Your story was commented
-    new_story: Your story set has new story
+    add_to_story_set: You are added discussion
+    story_comment: Your insight was commented
+    new_story: Your discussion set has new insight
   event_message:
     add_to_story_set: add you to disscussion
     story_comment: commented your insight

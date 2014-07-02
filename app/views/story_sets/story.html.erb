@@ -13,7 +13,7 @@
     <div class="holder">
       <div class="avatar">
         <a>
-          <image src='/files/avatar?f=<%= @story_set.user.image_url %>' width='60px'/>
+          <image src='<%= @story_set.user.image %>' width='60px'/>
         </a>
       </div>
       <div class="title">
@@ -32,7 +32,7 @@
           <div class="item show-story-detail-item" story='<%= story.id %>'>
             <div class="avatar">
               <a>
-                <image src='/files/avatar?f=<%= story.user_avatar %>' width='50px'/>
+                <image src='<%= story.user_avatar %>' width='50px'/>
               </a>
             </div>
             <div class="title">

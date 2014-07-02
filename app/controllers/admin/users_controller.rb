@@ -56,7 +56,6 @@ class Admin::UsersController < Admin::ApplicationController
         end
       end
       if !row['Avatar'].blank? && File.exist?(File.join(path, 'avatar', row['Avatar']))
-        puts path
         data[:image_url]=save_photo(File.join(path, 'avatar', row['Avatar']), row['Avatar'])
       end
       query[:email]=row['Email'] if query

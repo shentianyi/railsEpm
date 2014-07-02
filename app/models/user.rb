@@ -73,13 +73,29 @@ class User < ActiveRecord::Base
     end
   end
 
-  def image_name
-    unless self.image_url.blank?
-      arr= self.image_url.match(/(avatar\/)(.*)\?/)
+
+  def image
+    User.get_image(User.get_image_name(self.image_url))
+  end
+
+  def self.get_avatar (image_url)
+    get_image(get_image_name(image_url))
+  end
+
+  def self.get_image_name(image_url)
+    unless image_url.blank?
+      #arr= self.image_url.match(/(avatar\/)(.*)\?/)
+      #local
+      arr= image_url.match(/(avatar\/)(.*)/)
       return arr[2] if arr && arr.size==3
+    else
+      return ''
     end
   end
 
+  def self.get_image(image_name)
+    '/avatars/'+ image_name
+  end
 
   def deliver_user_confirmation!
     reset_perishable_token!
