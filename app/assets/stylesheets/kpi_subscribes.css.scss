@@ -72,6 +72,21 @@
 
       }
     }
+    .time-range{
+      position:relative;
+      label{
+         position:absolute;
+        font-size:13px;
+        color:#9d9d9d;
+        left:260px;
+        &:first-of-type{
+          top:7px;
+        }
+        &:last-of-type{
+          top:40px;
+        }
+      }
+    }
   }
 
 }

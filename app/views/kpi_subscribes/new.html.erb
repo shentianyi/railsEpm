@@ -23,9 +23,11 @@
 
 
     <p>时间范围</p>
-    <div>
+    <div class="time-range">
       <input type='text' id="start-time" placeholder="Start" />
+      <label></label>
       <input type='text' id="end-time" placeholder="End" />
+      <label></label>
     </div>
 
 
@@ -39,10 +41,32 @@
         MANAGE.kpi_subscribe.init_new();
 
         var target = "#start-time,#end-time";
-        var interval="100";
+        var interval="200";
 
             new DATE_PICKER[interval](target, "date").datePicker();
 
+
+        $("body").on("change", "#start-time",function () {
+            var interval ="200";
+            if (interval == "200") {
+                var week = standardParse($(this).val()).date.toWeekNumber();
+                $(this).next().text("week " + week);
+            }
+            else if (interval == "400") {
+                var quarter = standardParse($(this).val()).date.monthToQuarter();
+                $(this).next().text("quarter " + quarter);
+            }
+        }).on("change", "#end-time", function () {
+                    var interval = "200";
+                    if (interval == "200") {
+                        var week = standardParse($(this).val()).date.toWeekNumber();
+                        $(this).next().text("week " + week);
+                    }
+                    else if (interval == "400") {
+                        var quarter = standardParse($(this).val()).date.monthToQuarter();
+                        $(this).next().text("quarter " + quarter);
+                    }
+                });
 
     })
 </script>
