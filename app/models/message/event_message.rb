@@ -27,7 +27,7 @@ class EventMessage<CZ::BaseClass
 
   def init_content_and_link
     cl=EventMessageType.content_and_link(self)
-    @content_display= "#{User.find_by_id(self.sender_id).first_name}, #{cl[0]}:#{self.content}"
+    @content_display= "#{User.find_by_id(self.sender_id).first_name}, #{cl[0]}: #{self.content}"
     @link=cl[1]
     @created_at_dispaly=Time.at(self.created_at.to_i/1000)
   end

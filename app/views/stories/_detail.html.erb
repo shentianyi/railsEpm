@@ -38,7 +38,7 @@
       <% @comments.each_with_index do |comment, i| %>
           <li>
             <p><a><%= comment.user_name %>:</a><%= comment.content %></p>
-            <span><%= time_ago_in_words(comment.created_at.localtime) %></span>
+            <span><%= time_ago_in_words(comment.created_at.localtime) %> ago</span>
           </li>
       <% end %>
     </ul>

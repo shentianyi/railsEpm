@@ -23,11 +23,11 @@
       </div>
 
       <div class="btn-area">
-        <a class="btn btn-success" href="/kpi_entries/analyse/<%= @story_set.id %>">publish</a>
+        <a class="btn btn-success icon icon-plus" href="/kpi_entries/analyse/<%= @story_set.id %>"> Insight</a>
       </div>
     </div>
     <div class="participate">
-      <p>Project participator</p>
+      <p>All Insights</p>
       <% @stories.each do |story| %>
           <div class="item show-story-detail-item" story='<%= story.id %>'>
             <div class="avatar">
@@ -41,7 +41,7 @@
               <p><%= story.title %></p>
 
               <p>
-                <span><%= time_ago_in_words(story.created_at.localtime) %></span><span>comment_count: <%= story.comment_count %></span>
+                <span><%= time_ago_in_words(story.created_at.localtime) %> ago</span><span>comments: <%= story.comment_count %></span>
               </p>
             </div>
           </div>
