@@ -96,23 +96,23 @@ header{
     cursor:default;
 }
 .user-portrait-brand{
-    background:url("/assets/logo.png") no-repeat 3px -5px;
+    background:url("/assets/logo.png") no-repeat  -1px -7px ;
     /*background:url("../images/logo2.png") no-repeat center center;*/
-    width:45px;
-    height:45px;
+    width:60px;
+    height:58px;
     padding-top:0px;
     margin-top:12px;
     margin-left:13px;
     position:relative;
 }
-.user-portrait-brand:after{
-    content:"ClearInsight";
-    position:absolute;
-    bottom:0px;
-    font-size:10px;
-    color:rgba(255,255,255,0.55);
-    left:-3px;
-}
+/*.user-portrait-brand:after{*/
+    /*content:"ClearInsight";*/
+    /*position:absolute;*/
+    /*font-size:10px;*/
+    /*color:rgba(255,255,255,0.85);*/
+    /*left:3px;*/
+    /*bottom:6px;*/
+/*}*/
 nav{
     height:100%;
 }
