@@ -90,20 +90,20 @@ class StorySetsController < ApplicationController
   def story
     @stories=[]
     @story_set_id=params[:id]
-
     if params.has_key?(:comment)
       @comment=Comment.find_by_id(params[:id])
-      @default_stroy=@comment.commentable
-      @story_set_id = @default_stroy.story_set_id
+      @default_story=@comment.commentable
+      @story_set_id = @default_story.story_set_id
     elsif params.has_key?(:story)
-      @default_stroy=Story.find_by_id(params[:id])
-      @story_set_id = @default_stroy.story_set_id
+      @default_story=Story.find_by_id(params[:id])
+      @story_set_id = @default_story.story_set_id
     end
     if @story_set=StorySet.find_by_id(@story_set_id)
       @stories=StoryPresenter.init_presenters(Story.detail_by_set_id(@story_set.id).all)
-      if @default_stroy.nil? && @stories.count>0
-        @default_stroy=@stories.first
+      if @default_story.nil? && @stories.count>0
+        @default_story=@stories.first
       end
     end
+    @default_story_id =@default_story.id if @default_story
   end
 end

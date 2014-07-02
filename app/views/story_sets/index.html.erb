@@ -29,7 +29,6 @@
           <p>
             <a href="<%= msg.link %>"> <%= msg.content_display %> </a>
           </p>
-
           <p>
             <%= time_ago_in_words(Time.at(msg.created_at_dispaly.to_i).localtime) %>
           </p>
