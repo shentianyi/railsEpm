@@ -106,7 +106,7 @@ class StoriesController < ApplicationController
       @comment.user=current_user
       Attachment.add(params[:comment][:attachments].values, @comment) unless params[:comment][:attachments].blank?
       @comment.save
-      @msg.content=@comment
+      @msg.content={content:@comment.content,user:current_user.first_name}
 
       @msg.result=true
     end

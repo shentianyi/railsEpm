@@ -131,7 +131,7 @@ function create_comment() {
             MessageBox("Comment Success","top","success");
             var html="<li>"+
                 "<p>"+
-                "<a>Jim Guo:</a>"+
+                "<a>"+data.content.user+":</a>"+
                 comment.content+
                 "</p>"+
                 "<span>just now</span>"+
