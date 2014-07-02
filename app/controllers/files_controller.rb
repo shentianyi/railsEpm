@@ -21,4 +21,12 @@ class FilesController < ApplicationController
     end
     render json: @msg
   end
+
+  def attach
+    send_file  params[:f]
+  end
+
+  def avatar
+    send_file  params[:f]
+  end
 end

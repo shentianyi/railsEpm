@@ -10,11 +10,11 @@
         <p style="font-size:13px;color:#666;margin-top:8px;margin-bottom:2px;">Attachments:</p>
         <% @story.attachments.each do |attach| %>
             <div class="attachment-item inline-block" title="<%= attach.name %>">
-              <div class="attachment-sign atta-<%= attach.type %>" href="<%= attach.path %>">
-                <a href="<%= attach.path %>" class='attach-download' target="_blank">
-                  <!--<div class="attachment-operate" title="下载">-->
-                  <!--<i class="icon-arrow-down icon-white pointer pull-right"> </i>-->
-                  <!--</div>-->
+              <div class="attachment-sign atta-<%= attach.type %>" href="/files/attach?f=<%= attach.path %>">
+                <a href="/files/attach?f=<%= attach.path %>" class='attach-download' target="_blank">
+                  <div class="attachment-operate">
+                  <i class="icon-arrow-down icon-white pointer pull-right"></i>
+                  </div>
                 </a>
               </div>
               <p class="attachment-p">
