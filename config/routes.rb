@@ -138,6 +138,7 @@ IFEpm::Application.routes.draw do
   resources :kpi_entries do
     collection do
       match :analyse
+      match 'analyse/:setting' => :analyse
       match :compare
       match :compares
       get :recents

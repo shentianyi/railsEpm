@@ -74,6 +74,7 @@ class KpiEntriesController < ApplicationController
     if request.get?
       @entity_groups=get_user_entity_groups
     else
+      @setting = params[:setting].nil? ? 'analyse' : params[:setting]
       msg=Message.new
       if data=Entry::Analyzer.new(params).analyse
         msg.result=true
