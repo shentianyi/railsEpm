@@ -36,11 +36,11 @@ class StorySet < ActiveRecord::Base
   end
 
   def collaborator_set
-    $redis.smembers(generate_key(self.id))
+    $redis.smembers(StorySet.generate_key(self.id))
   end
 
   def self.find_collaborator_set id
-    $redis.smembers(generate_key(id))
+    $redis.smembers(StorySet.generate_key(id))
   end
 
   def self.generate_key(id)
