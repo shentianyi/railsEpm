@@ -46,6 +46,11 @@ class UserMessage<CZ::BaseClass
     UserMessage.new(user_id: user_id, type: UserMessageType::UNREAD_STORY_COMMENT).save
   end
 
+  def self.clean_subscription_message user_id
+    if message=find(user_id, UserMessageType::SUBSCRIBE_ALERT)
+      $redis.hset message.key, 'count', 0
+    end
+  end
 
   def self.add_subscription_message user_id
     UserMessage.new(user_id: user_id, type: UserMessageType::SUBSCRIBE_ALERT).save
