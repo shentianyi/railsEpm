@@ -74,6 +74,7 @@ class KpiEntriesController < ApplicationController
     if request.get?
       @entity_groups=get_user_entity_groups
       @setting = params[:setting].nil? ? 'analyse' : params[:setting]
+      @current_story_set = StorySet.find_by_id(@setting)
       @users=User.where('id <> ?', current_user.id).where(role_id: Role.director).all
     else
       msg=Message.new
