@@ -42,10 +42,10 @@ MANAGE.story_set.create = function (storyset, callback) {
                 }
             });
         } else {
-            MessageBox("请添加至少一位参与者", "top", "warning");
+            MessageBox("Please invite people", "top", "warning");
         }
     }
     else {
-        MessageBox("请填写讨论组名称", "top", "warning");
+        MessageBox("Please add discussion name", "top", "warning");
     }
 }

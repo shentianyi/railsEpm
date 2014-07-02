@@ -33,6 +33,7 @@ class AnalyseService
     query[:end_time] = time_span[:end].iso8601.to_s
     query[:average] = condition.calculate_type=='AVERAGE' ? true : false
     query[:frequency] = condition.interval
+    query[:property]=JSON.parse(condition.kpi_property)
     query
   end
 
