@@ -52,6 +52,15 @@ class StoriesController < ApplicationController
     Attachment.add(params[:story][:attachments].values, @story) unless params[:story][:attachments].blank?
     unless params[:story][:chart_conditions].blank?
       params[:story][:chart_conditions].each do |index, c|
+        #puts c
+        puts c[:kpi_property]
+        puts c[:kpi_property].class
+        if  c[:kpi_property].blank?
+          c.except!(:kpi_property)
+        else
+          c[:kpi_property]= c[:kpi_property].to_json
+        end
+        puts c
         StoryService.add_chart_condition(c, @story)
       end
     end
