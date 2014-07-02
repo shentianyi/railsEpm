@@ -127,7 +127,7 @@ module KpiEntriesHelper
     kpi = Kpi.find_by_id(kpi_id)
 
     kpi_entry_at = entry["entry_at"]
-    kpi_parsed_entry_at = parse_entry_string_date(kpi.frequency,kpi_entry_at)
+    kpi_parsed_entry_at = parse_entry_string_date(kpi.frequency,Time.parse(kpi_entry_at))
     kpi_parsed_entry_at = EntryDateTimeHelper.get_utc_time_from_str(kpi_parsed_entry_at)
     if kpi_parsed_entry_at==entry["parsed_entry_at"]
       f={}
