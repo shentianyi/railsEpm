@@ -118,7 +118,14 @@
     </table>
 
     <!------------------------------------------------   最下面的创建讨论的版  -------------------------------------->
-    <div class="project-block" id="project-block" my_height="210">
+
+    <% if @setting == 'analyse' %>
+        <div class="project-block" id="project-block" my_height="0" style="display:none">
+        <% else %>
+        <div class="project-block" id="project-block" my_height="210">
+
+    <% end %>
+
       <div class="inner">
         <div class="left">
           <p>标题</p>
