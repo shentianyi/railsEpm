@@ -665,9 +665,9 @@ en:
     story_comment: Your story was commented
     new_story: Your story set has new story
   event_message:
-    add_to_story_set: add you to story set
-    story_comment: comment your sotry
-    new_story: create  anew story
+    add_to_story_set: add you to disscussion
+    story_comment: commented your insight
+    new_story: created a new insight
   subscription:
     subscription: Subscription
     add: Subscribe
