@@ -669,6 +669,7 @@ zh:
     add_to_story_set: 你被加入了新讨论组
     story_comment: 你的主题有了新评论
     new_story: 你参与的讨论组有了新主题
+    subscription_alert: 你的订阅中有一个新的提醒
   event_message:
     add_to_story_set: 将你加入新讨论组
     story_comment: 评论了你的主题
