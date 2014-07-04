@@ -683,7 +683,8 @@ zh:
       department: 部门
       time: 时间范围
       cal_type: 计算方式
-      alert_type: 提醒方式
+      alert_by: 提醒方式
+      alert_type: 何时提醒
       alert_type_exit: 同一种提醒方式不能重复添加
       start-time: 开始时间
       end-time: 结束时间
