@@ -16,6 +16,7 @@
 /log/*.log
 /tmp
 /.idea/*
+/.sass-cache
 /.project
 /uploadfiles/data/*.csv
 /uploadfiles/download/*.csv
