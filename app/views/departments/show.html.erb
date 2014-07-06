@@ -1,37 +1,21 @@
-<h2>Departments</h2>
-<input type="hidden" value="<%= @root.id %>" id="data-hidden" />
-<% content_for :javascript_includes do%>
-	<%= javascript_include_tag "jit.js"%>
-	<%= javascript_include_tag "department-jit.js"%>
-<%end%>
 <style type="text/css">
-	#center-container {
-		margin: 0 auto;
-		height: 600px;
-		width: 600px;
-		background-color: white;
-	}
+  #canvas-container {
+      height: 500px;
+      width: 500px;
+      border: 1px solid #aaa;
+  }
 </style>
-<div>
-	<div id="container">
-		<div id="center-container">
-			<div id="infovis"></div>
-		</div>
-		<div id="log"></div>
-	</div>
+<h2>Departments</h2>
+<div id="canvas-container">
 </div>
-<script>
-	$(document).ready(function(){
-		$.ajax({
-			url: "/departments/jsontree",
-			data: {id:$("#data-hidden").val()},
-			type:"GET",
-			dataType:"json",
-			success: function(data){
-				if(data.result){
-					init(data.content);
-				}
-			}
-		});
-	})
+<script type="text/javascript">
+  $(document).ready(function(){
+      var paper = new Raphael(document.getElementById('canvas-container',500,500));
+      var circle = paper.circle(250,140,40);
+      circle.attr("fill","#000");
+      circle.attr("stroke","#000");
+  });
 </script>
+<% content_for :javascript_includes do%>
+    <%= javascript_include_tag "raphael.js"%>
+<%end%>
