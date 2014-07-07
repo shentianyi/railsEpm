@@ -80,7 +80,7 @@ class UserMessage<CZ::BaseClass
     UserMessageType.types.each do |type|
       if message=self.find(user_id, type)
         cl= UserMessageType.content_and_link(type)
-        messages<<{count: message.count.to_i, content: cl[0], link: cl[1]}
+        messages<<{count: message.count.to_i, content: cl[0], link: cl[1],type:type}
       end
     end
     return messages

@@ -30,3 +30,7 @@ every 1.minutes do
   runner "KpiCalculateQueue.instance.check"
 end
 =end
+every 1.minutes do
+  #runner 'sidekiq -C config/sidekiq.yml -d -P tmp/pids/sidekiq.pid -L log/sidekiq.log'
+  sidekiq ''
+end
