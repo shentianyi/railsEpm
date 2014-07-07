@@ -664,6 +664,7 @@ en:
     add_to_story_set: You are invited discussion
     story_comment: Your insight was commented
     new_story: Your discussion set has new insight
+    subscription_alert: Your KPI subscription has a new alert
   event_message:
     add_to_story_set: invited you to disscussion
     story_comment: commented your insight
@@ -678,7 +679,8 @@ en:
       department: Department
       time: Time Range
       cal_type: Calculate Type
-      alert_type: Alert Type
+      alert_by: Alert by
+      alert_type: Alert When
       alert_type_exit: Same alert type exits
       start-time: Start Time
       end-time: End Time

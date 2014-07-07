@@ -669,13 +669,14 @@ zh:
     add_to_story_set: 你被加入了新讨论组
     story_comment: 你的主题有了新评论
     new_story: 你参与的讨论组有了新主题
+    subscription_alert: 你的订阅中有一个新的提醒
   event_message:
     add_to_story_set: 将你加入新讨论组
     story_comment: 评论了你的主题
     new_story: 新建了主题
   subscription:
     subscription: 订阅
-    add: 添加订阅
+    add: 订阅
     create: 添加
     cancel: 取消
     kpi: KPI
@@ -683,7 +684,8 @@ zh:
       department: 部门
       time: 时间范围
       cal_type: 计算方式
-      alert_type: 提醒方式
+      alert_by: 提醒方式
+      alert_type: 何时提醒
       alert_type_exit: 同一种提醒方式不能重复添加
       start-time: 开始时间
       end-time: 结束时间
