@@ -78,10 +78,9 @@ class UserMessage<CZ::BaseClass
   def self.all(user_id)
     messages=[]
     UserMessageType.types.each do |type|
-      if message=self.find(user_id, type)
-        cl= UserMessageType.content_and_link(type)
-        messages<<{count: message.count.to_i, content: cl[0], link: cl[1],type:type}
-      end
+      cl= UserMessageType.content_and_link(type)
+      message=self.find(user_id, type)
+      messages<<{count: message.nil? ? 0 : message.count.to_i, content: cl[0], link: cl[1], type: type}
     end
     return messages
   end

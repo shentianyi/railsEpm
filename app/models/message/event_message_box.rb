@@ -1,7 +1,7 @@
 require 'base_class'
 
 class EventMessageBox<CZ::BaseClass
-  LIMIT=30
+  LIMIT=50
 
   def self.add_message(msg, receiver_ids)
     receiver_ids.each do |receiver_id|
