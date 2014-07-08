@@ -184,14 +184,12 @@ class ApplicationController < ActionController::Base
 
   # I18n
   def set_locale
-    I18n.locale=cookies[:locale] || extract_locale_from_accept_language_header || I18n.default_locale
+     I18n.locale=cookies[:locale] || I18n.default_locale #||  extract_locale_from_accept_language_header
   end
 
   def extract_locale_from_accept_language_header
     request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first if request.env['HTTP_ACCEPT_LANGUAGE']
   end
-
-
 end
 
 

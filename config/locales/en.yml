@@ -661,12 +661,12 @@ en:
     target_min: Target Min
     target_max: Target Max
   user_message:
-    add_to_story_set: You are invited discussion
+    add_to_story_set: You are invited to a discussion
     story_comment: Your insight was commented
     new_story: Your discussion set has new insight
     subscription_alert: Your KPI subscription has a new alert
   event_message:
-    add_to_story_set: invited you to disscussion
+    add_to_story_set: invited you to a disscussion
     story_comment: commented your insight
     new_story: created a new insight
   subscription:
