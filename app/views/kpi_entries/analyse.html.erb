@@ -363,7 +363,10 @@
                 })
                 .on("click","#add-to-storyset",function(){
                     var story = prepare_for_create_story();
-
+                    if(story.story_set_id == null){
+                        MessageBox('No Story Set,Please use select one or Use create and add button','top','warning');
+                        return;
+                    }
                     MANAGE.story.create(story,function(data){
                         if(data.result){
                             window.location.href = "/story_sets/"+data.content.story_set_id+"/story";
