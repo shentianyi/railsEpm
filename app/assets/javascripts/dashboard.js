@@ -453,8 +453,8 @@ function on_resize_window(){
     option.full = {};
     option.full.width = $("div#dashboard-content-full").width();
     option.full.height = $(window).height() -60;
-    option.full.max_col = 2;
-    option.full.max_row = 3;
+    option.full.max_col = 4;
+    option.full.max_row = 4;
 
     var grid = ifepm.dashboard_widget.resize_window(option,"dashboard");
 
