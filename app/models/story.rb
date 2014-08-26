@@ -30,7 +30,7 @@ class Story < ActiveRecord::Base
   end
 
   def self.detail_by_set_id id
-    joins(:user).where(story_set_id: id).select('users.first_name as user_name,users.title as user_title,users.email, users.image_url,stories.*')
+    joins(:user).where(story_set_id: id).order('created_at DESC').select('users.first_name as user_name,users.title as user_title,users.email, users.image_url,stories.*')
   end
 
 end
