@@ -1,4 +1,11 @@
 IFEpm::Application.routes.draw do
+
+
+
+  #show notification list for ipad temporily
+  #get "/notification/list" => "push_notifications#list"
+  match "/notification/list", to: 'push_notifications#list', via: :get
+
   resources :kpi_subscribes do
     collection do
       get 'mine/:id' => :mine
@@ -7,6 +14,8 @@ IFEpm::Application.routes.draw do
       get 'my_subscribe/:id' => :my_subscribe
     end
   end
+
+
 
 
   resources :comments

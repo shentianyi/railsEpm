@@ -61,10 +61,10 @@ ActiveRecord::Schema.define(:version => 20140702184208) do
     t.string   "time_string"
     t.integer  "chartable_id"
     t.string   "chartable_type"
-    t.integer  "interval"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "chart_type"
+    t.integer  "interval"
     t.string   "kpi_property"
   end
 

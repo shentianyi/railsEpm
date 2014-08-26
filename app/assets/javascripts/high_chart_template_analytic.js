@@ -35,6 +35,7 @@ ANALYTICS.high_chart={
         adaptToUpdatedData:false
     },
     tooltip:{
+            enabled: true,
             formatter: function() {
                 var targetString="",
                     target,new_target,name,view;
@@ -45,16 +46,18 @@ ANALYTICS.high_chart={
                         name=new_target[0];
                         view=new_target[1];
 
-                        var y=(target.y+"").length;
+                        var y=(parseInt(target.y)).length;
                         var dotCount=Math.ceil(y/3)-1;
+
                         if(dotCount>0){
-                            y=target.y+"";
-                            y= y.split("");
+                            var tempY,tempArray;
+                            tempY=target.y+"";
+                            tempArray= tempY.split("");
                             for(var i=0;i<dotCount;i++){
-                                y.splice(3*(i+1)+i,0,",");
+                                tempArray.splice(3*(i+1)+i,0,",");
                                 console.log(y)
                             }
-                            y= y.join("");
+                            y= tempArray.join("");
                         }
                         else{
                             y=target.y
@@ -71,21 +74,11 @@ ANALYTICS.high_chart={
                         return '<b>'+target.key+'</b>'
                             +'<br />'
                             +targetString;
-//                            +'<br />KPI: <span style="color:'+target.series.color+'">'+name
-//                            +'</span>'
-//                            +'<br />'+I18n.t('chart.view')+': '+view
-//                            +'<br />'+I18n.t('chart.value')+': '+target.y+" "+target.point.unit
-//                            +"<br />"+I18n.t('chart.target_range')+": "+target.point.target_min+"-"+target.point.high
                     }
                     else{
                         return '<b>'+target.key+'</b>'
                             +'<br />'
                             +targetString;
-//                            +'<br />KPI: <span style="color:'+target.series.color+'">'+name
-//                            +'</span>'
-//                            +'<br />'+I18n.t('chart.view')+': '+view
-//                            +'<br />'+I18n.t('chart.value')+': '+target.y+" "+target.point.unit
-//                            +"<br />"+I18n.t('chart.target_range')+": "+target.point.low+"-"+target.point.high
                     }
                 }
                 else if(this.point){
