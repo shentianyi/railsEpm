@@ -59,7 +59,17 @@ class DepartmentsController < ApplicationController
         msg.content=I18n.t "fix.cannot_destroy"
       else
         if @department.user_id == current_user.id
+          ActiveRecord::Base.transaction do
+            @department.entities.all.each do |e|
+              e.department.path.each do |d|
+                if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(e.id,d.entity_group.id)
+                  entity_group_item.destroy
+                end
+              end
+            end
+
           @department.destroy
+          end
           msg.result=true
         else
           msg.content = I18n.t "fix.cannot_destroy"
