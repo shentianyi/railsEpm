@@ -38,8 +38,9 @@ class KpiEntryValidatorCollection
     self.validators.each do |v|
       entries<<v.params_to_hash if v.valid
     end
-    #Resque.enqueue(KpiEntryCreateJob, entries)
-    KpiEntryCreateWorker.perform_async(entries)
+    Resque.enqueue(KpiEntryCreateJob, entries)
+    #KpiEntryCreateWorker.perform_async(entries)
+
     #entries.each do |k|
     #  if kpi_entry=KpiEntry.where(user_kpi_item_id: k[:user_kpi_item_id],
     #                              parsed_entry_at: k[:entry_at],

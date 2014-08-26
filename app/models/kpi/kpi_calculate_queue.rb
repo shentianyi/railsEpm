@@ -24,12 +24,12 @@ class KpiCalculateQueue
             @cal_queue[rkey] = 1
             save
             #puts "Calculate".red
-           # CalculateWorker.perform_async(k.id,entry)
+            #CalculateWorker.perform_async(k.id,entry)
             #KpiEntriesHelper.calculate_caled_kpi(k.id,entry)
           else
             #Do nothing
           end
-          CalculateWorker.perform_async(k.id,entry)
+          #CalculateWorker.perform_async(k.id,entry)
           #puts @cal_queue.to_json.green
         end
       end

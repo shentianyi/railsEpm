@@ -4,10 +4,14 @@ class CalculateWorker
 
   sidekiq_options :queue => :kpicaljob, :retry => false, :backtrace => true
 
-  def perform(kpi_id,entry)
+  #def perform(kpi_id,entry)
     #benchmark.first_metric do
-    KpiEntriesHelper.calculate_caled_kpi(kpi_id,entry)
+    #KpiEntriesHelper.calculate_caled_kpi(kpi_id,entry)
     #end
+  #end
+
+  def perform(kpi_entry_id)
+    KpiEntriesHelper.calculate_kpi_parent_value(kpi_entry_id)
   end
 
 =begin
