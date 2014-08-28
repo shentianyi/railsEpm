@@ -160,10 +160,10 @@ ifepm.dashboard_widget.init_fullsize = function(){
          var height = ifepm.dashboard_widget.config.full.height;
          gridster_full = $("#dash-fullsize ul").gridster({
              namespace:'#dash-fullsize',
-             widget_margins: [10,10],
+             widget_margins: [25,10],
              widget_base_dimensions: [width,height] ,
              draggable:{
-                 stop: ifepm.dashboard_widget.drag_stop,
+                 stop: ifepm.dashboard_widget.drag_stop
              },
          }).data('gridster');
          isinit_fullsize = false;
