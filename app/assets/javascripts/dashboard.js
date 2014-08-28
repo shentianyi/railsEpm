@@ -407,8 +407,8 @@ function init_grid(){
     option.full = {};
     option.full.width = $("div#dashboard-content-full").width();
     option.full.height = $(window).height() -60;
-    option.full.max_col = 2;
-    option.full.max_row = 3;
+    option.full.max_col = 4;
+    option.full.max_row = 2;
 
     ifepm.dashboard_widget.init(option);
 }
