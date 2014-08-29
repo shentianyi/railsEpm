@@ -95,7 +95,6 @@ HIGH_CHART.theme={
             yAxis: {
                 labels: {
                     style: {
-//                        color: '#999',
                         color:'rgba(255,255,255,0.6)',
                         fontWeight: 'bold'
                     }
