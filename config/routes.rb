@@ -187,6 +187,7 @@ IFEpm::Application.routes.draw do
       get :items_by_dashboard_id
       get :get_data
       get :update_sequence
+      get :fake_data
     end
   end
 
