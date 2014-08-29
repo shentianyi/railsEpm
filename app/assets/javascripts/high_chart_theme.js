@@ -85,7 +85,6 @@ HIGH_CHART.theme={
             xAxis: {
                 labels: {
                     style: {
-//                        color: '#999',
                         color:'#eaedec',
                         fontWeight:"bold"
                     }

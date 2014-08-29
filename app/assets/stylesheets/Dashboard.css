@@ -116,8 +116,8 @@
     position:relative;
 }
 .gridster.black{
-    /*background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
-    /*background: -webkit-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);*/
+    background: -moz-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
+    background: -webkit-radial-gradient(  #009bb5 10%, #0080a3 40%, #003a79 80%);
 }
 .full-size-title{
     padding-left:20px;
@@ -148,7 +148,7 @@
     position:absolute;
     height:20px;
     right:49px;
-    top:50%;
+    top:30%;
     margin-top:-10px;
 }
 .full-size-btn:hover{

@@ -20,6 +20,7 @@ var DashBoardExampleChart=function(option){
     this.init=function(){
         var $target=$("#"+this.target);
         this.basic.title.text=option.kpi;
+        this.basic.chart.height=option.height;
         this.basic.subtitle.text=option.date;
         this.basic.xAxis.categories=option.departmentArray;
         this.basic.series=this.assorted(option.targetArray,option.currentArray);
@@ -50,17 +51,20 @@ DashBoardExampleChart.prototype.basic={
         "#ac1010"
     ],
     title: {
-
         style:{
-            'fontSize':"24px"
+            'fontSize':"24px",
+            color:'#FFF'
         },
+        margin:35,
         align:"left"
     },
     subtitle: {
-
         style:{
-            'fontSize':"18px"
+            'fontSize':"17px",
+            color:'rgba(255,255,255,0.9)'
         },
+        floating:true,
+        y:36,
         align:"left"
     },
     credits: {
@@ -82,12 +86,9 @@ DashBoardExampleChart.prototype.basic={
             color: '#FFF'
         },
         formatter: function() {
-            return '<b>'+this.point.name+'</b>'
-                +'<br />KPI: <span style="color:'+this.series.color+'">'+this.series.name
+            return '<b>'+this.series.name+'</b>'
+                +'<br />Value: <span style="color:'+this.series.color+'">'+this.point.y
                 +'</span>'
-                +'<br />'+'chart.view'+': '+this.point.view
-                +'<br />'+'chart.value'+' : '+this.y+" "+this.point.unit
-                +"<br />"+'chart.target_range'+": "+this.point.target_min+"-"+this.point.high
 
         }
     },
@@ -110,16 +111,28 @@ DashBoardExampleChart.prototype.basic={
         }
     },
     xAxis: {
-
+        labels: {
+            style: {
+                color:'#eaedec',
+                fontWeight:"bold"
+            }
+        }
     },
     yAxis: {
         min: 0,
         title: {
-            text: 'Rainfall (mm)'
-        },
-        title: {
             enabled: false
-        }
+        },
+        labels: {
+            style: {
+                color:'rgba(255,255,255,0.6)',
+                fontWeight: 'bold'
+            }
+        },
+        tickPixelInterval: 30,
+        gridLineDashStyle: 'solid',
+        gridLineWidth:1,
+        gridLineColor: 'rgba(255,255,255,0.6)'
     },
     plotOptions: {
         series: {
