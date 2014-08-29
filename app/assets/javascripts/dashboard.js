@@ -407,7 +407,7 @@ function init_grid(){
     option.full = {};
     option.full.width = $("div#dashboard-content-full").width();
     option.full.height = $(window).height() -60;
-    option.full.max_col = 4;
+    option.full.max_col = 2;
     option.full.max_row = 2;
 
     ifepm.dashboard_widget.init(option);
@@ -429,9 +429,9 @@ function init_component(){
 * @function on_full_size
 * */
 function on_full_size(){
-    $("#full-size-title p").text('STEDSADS');
+    $("#full-size-title p").text('Daily BU Performance');
     //$("#full-size-title p").text(current_dashboard_name);
-    //ifepm.dashboard_widget.full_size(true);
+    ifepm.dashboard_widget.full_size(true);
     //ifepm.dashboard.full_size({fullsize:true,id:current_dashboard_id});
 };
 
