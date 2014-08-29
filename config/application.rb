@@ -14,6 +14,7 @@ module IFEpm
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     self.paths["config/database"] = "config/database_wz.yml" if ENV["USER"] == 'wayne'
+    self.paths["config/database"] = "config/database_liqi.yml" if ENV["USER"] == 'Luna'
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
     config.autoload_paths += Dir["#{config.root}/lib/**/"]

@@ -91,8 +91,6 @@ class DashboardItemsController < ApplicationController
     end
   end
 
-
-
   def get_data
     datas = DashboardCondition::get_item_formatted_data(params[:id])
 
@@ -105,6 +103,38 @@ class DashboardItemsController < ApplicationController
       t.json {render :json=>datas.to_json}
       t.js {render :js=>jsonp_str(datas)}
     end
+  end
+
+  def fake_data
+    kpi_id = '51'
+    kpi = Kpi.find_by_id(kpi_id)
+    deps = ["MB"]
+
+    startstr = 2.day.ago.timestrf("%Y-%m-%d 7:00:00")
+    start_time = Time.parse(startstr).iso8601.to_s
+    endstr = 1.day.ago.timestrf("%Y-%m-%d 7:00:00")
+    end_time = Time.parse(endstr).iso8601.to_s
+
+    cal = "AVERAGE"
+    interval = 100
+    dep_array = []
+
+    deps.each do |dep|
+      e = EntityGroup.find_by_name(dep)
+      data = Entry::Analyzer.new(
+          kpi_id: kpi_id,
+          entity_group_id: e.id,
+          start_time: start_time,
+          end_time: end_time,
+          average: cal,
+          frequency: interval).analyse
+      dep_array<<{"name"=>e.name,"data"=>data}
+    end
+    result = {}
+    result[:time] = start_time.strftime("%m-%d")+"~"+end_time.strftime("%m-%d")
+    result[:title] = "Kpi Name: #{kpi.name}"
+    result[:data] = dep_array
+    render :json=>result
   end
 
 
