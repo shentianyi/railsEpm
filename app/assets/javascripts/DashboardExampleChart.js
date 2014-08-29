@@ -1,8 +1,28 @@
 var DashBoardExampleChart=function(option){
     this.target=option.target;
+    this.assorted=function(targetArray,currentArray){
+        var newArray=[];
+        newArray[0]={name:'Target',data:targetArray};
+        newArray[1]={name:"Current",data:[]};
+        var i,target,current;
+        for(i=0;i<targetArray.length;i++){
+            target=targetArray[i];
+            current=currentArray[i];
+            if(current>=target){
+                newArray[1].data.push(current);
+            }
+            else{
+                newArray[1].data.push({y:current,color:"#fe7005"});
+            }
+        }
+        return newArray;
+    }
     this.init=function(){
         var $target=$("#"+this.target);
-        console.log(this.basic);
+        this.basic.title.text=option.kpi;
+        this.basic.subtitle.text=option.date;
+        this.basic.xAxis.categories=option.departmentArray;
+        this.basic.series=this.assorted(option.targetArray,option.currentArray);
         $target.highcharts(this.basic);
     }
 }
@@ -16,8 +36,9 @@ DashBoardExampleChart.prototype.basic={
         backgroundColor:"rgba(255,255,255,0.0)"
     },
     colors:[
+        "#00e3fe",
         "#9cdd00",
-        "#fe7005",
+
         "#f6d742",
         "#00e3fe",
         "#eb68fb",
@@ -29,14 +50,14 @@ DashBoardExampleChart.prototype.basic={
         "#ac1010"
     ],
     title: {
-        text: 'E1',
+
         style:{
             'fontSize':"24px"
         },
         align:"left"
     },
     subtitle: {
-        text: '2014.8.7 - 2014.8.9',
+
         style:{
             'fontSize':"18px"
         },
@@ -89,12 +110,7 @@ DashBoardExampleChart.prototype.basic={
         }
     },
     xAxis: {
-        categories: [
-            'MB',
-            'VW',
-            'Local',
-            'Caps'
-        ]
+
     },
     yAxis: {
         min: 0,
@@ -113,14 +129,5 @@ DashBoardExampleChart.prototype.basic={
             pointPadding: 0.2,
             borderWidth: 0
         }
-    },
-    series: [{
-        name: 'Target',
-        data: [{y:300,color:"#f86c80"},200,300,200]
-
-    }, {
-        name: 'Current',
-        data: [400,250,315,300]
-
-    }]
+    }
 }

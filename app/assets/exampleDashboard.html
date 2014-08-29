@@ -35,7 +35,14 @@
 <script src="javascripts/DashboardExampleChart.js"></script>
 <script>
     $(document).ready(function () {
-        var option={target:"wayne"};
+        var option={
+            target:"wayne",
+            kpi:"E-ONE",
+            date:"2014.8.29",
+            departmentArray:["VM","BM","Local","Caps"],
+            currentArray:[300,400,500,200],
+            targetArray:[300,300,300,300]
+        };
         var one=new DashBoardExampleChart(option);
         one.init();
     });
