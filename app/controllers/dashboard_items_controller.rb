@@ -105,35 +105,53 @@ class DashboardItemsController < ApplicationController
     end
   end
 
+  # GET /dashbaort_items/fake_data
+  # Params kpi
+  # Param departments
   def fake_data
-    kpi_id = '51'
-    kpi = Kpi.find_by_id(kpi_id)
-    deps = ["MB"]
 
-    startstr = 2.day.ago.timestrf("%Y-%m-%d 7:00:00")
-    start_time = Time.parse(startstr).iso8601.to_s
-    endstr = 1.day.ago.timestrf("%Y-%m-%d 7:00:00")
-    end_time = Time.parse(endstr).iso8601.to_s
+    kpi_name = "Attendance"
+    target_name = kpi_name+"_Target"
+    kpi = Kpi.find_by_name(kpi_name)
+    deps = ["MB","GM"]
 
+    startstr = 10.day.ago
+    start_time = Time.parse(startstr.strftime("%Y-%m-%d")).iso8601.to_s
+    endstr = 9.day.ago
+    end_time = Time.parse(endstr.strftime("%Y-%m-%d")).iso8601.to_s
     cal = "AVERAGE"
     interval = 100
-    dep_array = []
+
+    departments = []
+    value = []
+    target = []
 
     deps.each do |dep|
       e = EntityGroup.find_by_name(dep)
       data = Entry::Analyzer.new(
-          kpi_id: kpi_id,
+          kpi_id: kpi.id,
           entity_group_id: e.id,
           start_time: start_time,
           end_time: end_time,
           average: cal,
           frequency: interval).analyse
-      dep_array<<{"name"=>e.name,"data"=>data}
+      data_target = Entry::Analyzer.new(
+          kpi_id: kpi.id,
+          entity_group_id: e.id,
+          start_time: start_time,
+          end_time: end_time,
+          average: cal,
+          frequency: interval).analyse
+      departments << e.name
+      value<<data[:current][0]
+      target<<data_target[:current][0]
     end
     result = {}
-    result[:time] = start_time.strftime("%m-%d")+"~"+end_time.strftime("%m-%d")
+    result[:time] = startstr.strftime("%m-%d")+"~"+endstr.strftime("%m-%d")
     result[:title] = "Kpi Name: #{kpi.name}"
-    result[:data] = dep_array
+    result[:departments] = departments
+    result[:value] = value
+    result[:target] = target
     render :json=>result
   end
 
