@@ -175,10 +175,7 @@
    </div>
    <div id="dash-fullsize" class="gridster black">
      <ul class="dashBoard-show" id="dashBoard-show-full">
-        <li><div id="example-one" class="example-container"></div></li>
-       <li><div id="example-two" class="example-container"></div></li>
-       <li><div id="example-three" class="example-container"></div></li>
-       <li><div id="example-four" class="example-container"></div></li>
+
      </ul>
    </div>
  </div>
@@ -209,35 +206,12 @@
   <%= javascript_include_tag "Dashboard-add.js"%>
   <%= javascript_include_tag "Dashboard-init.js"%>
   <%= javascript_include_tag "dashboard_type_special.js"%>
-  <%= javascript_include_tag "DashboardExampleChart"%>
+
 <%end%>
 
 <script type="text/javascript">
     $(document).ready(function (){
-        var KPIArray=[ "E1","PPM_L","RFT_L","OEE_L"],
-            i,
-            departmentArray=["MB","GM","Local",'Cutting'],
-            $targets=$("#dashBoard-show-full").find(".example-container");
-        for(i=0;i<KPIArray.length;i++){
-            (function(i){
-                $.get("/dashboard_items/fake_data",
-                        {kpi:KPIArray[i],department:departmentArray},
-                        function(data){
-                            var option={
-                                target:$targets.eq(i).attr("id"),
-                                kpi:data.title,
-                                date:data.time,
-                                departmentArray:departmentArray,
-                                currentArray:data.value,
-                                targetArray:data.target
-                            };
-                            var one=new DashBoardExampleChart(option);
-                            one.init();
-                        }
-                )
-            })(i);
 
-        }
 
 
         init_component();
