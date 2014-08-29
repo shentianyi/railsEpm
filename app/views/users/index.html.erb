@@ -24,10 +24,10 @@
                     <tr>
                       <td class="user-manage-name"><%= user.first_name %></td>
                       <td class="user-manage-title"><%= user.title %></td>
-                      <td class="user-manage-tel"><%= user.tel %></td>
-                      <td class="user-manage-phone"><%= user.phone %></td>
-                      <td class="user-manage-entity" value="<%= user.entity_id %>"><%= user.entity_name %></td>
-                      <td><%= user.department_names %></td>
+                      <td class="user-manage-tel" title="<%= user.tel %>"><%= user.tel %></td>
+                      <td class="user-manage-phone" title="<%= user.phone %>"><%= user.phone %></td>
+                      <td class="user-manage-entity" title="<%= user.entity_name %>" value="<%= user.entity_id %>"><%= user.entity_name %></td>
+                      <td title="<%= user.department_names %>"><%= user.department_names %></td>
                       <td class="user-manage-authority" value="<%= user.role_id %>"><%= UsersHelper.get_user_role_display(user.role_id) %></td>
                     </tr>
                     <tr>
@@ -44,7 +44,7 @@
             <% end %>
           </ul>
         </div>
-        <div class="manage-user-add" id="user-edit" general="manage-user-add">
+        <div class="manage-user-add" id="user-edit" general="manage-user-add" style="display: none">
           <i class="icon-remove" id="close-user-edit" general="close-user"></i>
 
           <div>
@@ -55,14 +55,6 @@
             <input type="text" placeholder="<%= t 'manage.user.new.phone' %>" id="edit-user-phone" general="user-phone"/>
             <input type="password" placeholder="<%= t 'manage.user.new.pwd' %>" id="edit-user-password" general="user-password"/>
 
-            <div class="div-select">
-              <select data-placeholder="<%= t 'manage.user.new.department' %>" id="edit-department-for-kpi" class="single-select">
-                <option value=""></option>
-                <% @departments.each do |department| %>
-                    <option value="<%= department.id %>"><%= department.name %></option>
-                <% end %>
-              </select>
-            </div>
             <div class="div-select">
               <select data-placeholder="<%= t 'manage.user.new.entity' %>" id="edit-entity-for-kpi" class="single-select">
                 <option value=""></option>
@@ -104,15 +96,15 @@
       <a class="btn btn-primary" id="manage-user-delivery"><%= t 'manage.user.desc.assign_now' %></a>
     </section>
     <section class="solid">
-      <h3>管理者权限</h3>
+      <h3><%= t 'manage.user.desc.what-is-manager-title'%></h3>
 
-      <p>观察输入点上kpi实际数据</p>
+      <p><%= t 'manage.user.desc.what-is-manager'%></p>
 
     </section>
     <section class="solid">
-      <h3>普通用户的功能</h3>
+      <h3><%= t 'manage.user.desc.what-is-user-title'%></h3>
 
-      <p>输入管理员为其分配kpi的实际数据</p>
+      <p><%= t 'manage.user.desc.what-is-user'%></p>
 
     </section>
   </aside>
@@ -161,7 +153,7 @@
 
     <div class="assign-kpi-left" special="user" id="assign-kpi-options">
       <div class="select-div" style="left: 35%; width: 300px;">
-        <select class="chosen-select" data-placeholder="<%= t 'manage.kpi.category' %>" id="kpi-category">
+        <select class="chosen-select" data-placeholder="* <%= t 'manage.user.desc.select_kpi_categroy' %>" id="kpi-category">
         </select>
         <input type="button" value="<%= t 'manage.base.assign_all_kpi' %>" class="btn btn-primary" style="width: 75px; display: inline-block;" id="assign-kpi-category-btn"/>
       </div>
@@ -172,7 +164,7 @@
     </div>
     <div class="assign-kpi-right" id="assign-kpi-right">
       <div class="select-div">
-        <select data-placeholder="* <%= t 'manage.user.new.name' %>" class="chosen-select" style="width:180px;" id="assign-kpi-user">
+        <select data-placeholder="* <%= t 'manage.user.desc.select_user' %>" class="chosen-select" style="width:180px;" id="assign-kpi-user">
           <option></option>
           <% @users.each_with_index do |user, i| %>
               <option value="<%= user.id %>"><%= user.email %></option>

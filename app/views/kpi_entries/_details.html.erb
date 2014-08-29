@@ -1,0 +1,26 @@
+<% if @kpi %>
+    <table>
+      <thead>
+      <tr>
+        <td><%= t 'entry.desc.date'%></td>
+        <td><%= t 'entry.desc.value'%></td>
+        <% @kpi.kpi_properties.each do |property|%>
+            <td><%= property.name %></td>
+        <% end %>
+        <td></td>
+      </tr>
+      </thead>
+      <tbody>
+      <% @kpi_entries.each do |entry| %>
+      <tr>
+        <td><%= entry.date %></td>
+        <td><%= entry.values %></td>
+        <% @kpi.kpi_properties.each do |property|%>
+            <td><%= entry.property_val property.id %></td>
+        <% end %>
+        <td><i class="icon icon-remove" target="<%= entry.id %>"></i></td>
+      </tr>
+          <% end %>
+      </tbody>
+</table>
+<% end %>

@@ -166,12 +166,17 @@ class DepartmentsController < ApplicationController
     msg = Message.new
     msg.result = false
     if User.find_by_id(params[:user_id]) && Department.find_by_id(params[:id])
-      user_department = UserDepartment.new(:user_id => params[:user_id],:department_id => params[:id])
-      if !(msg.result = user_department.save)
-        msg.content = user_department.errors.full_messages
+      validator = DepartmentValidator.new({:user_id=>params[:user_id],:department_id=>params[:id]})
+      validator.valid_add_user
+      if validator.valid
+        user_department = UserDepartment.new(:user_id => params[:user_id],:department_id => params[:id])
+        if !(msg.result = user_department.save)
+          msg.content = user_department.errors.full_messages
+        end
+      else
+        msg.content = validator.content
       end
     end
-
 
     render :json=>msg
   end

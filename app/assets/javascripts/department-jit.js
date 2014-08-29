@@ -68,12 +68,13 @@ function init(dep){
     //set overridable=true for styling individual
     //nodes or edges
     Node: {
-      height: 40,
-      width: 60,
-      type: 'nodeline',
-      color: 'blue',
+      height: 45,
+      width: 110,
+      type: 'rectangle',
+      color: 'gray',
       lineWIdth: 2,
-      overridable: true
+      overridable: true,
+      align: "center"
     },
 
     Edge: {
@@ -122,7 +123,7 @@ function init(dep){
             //add some color to the nodes in the path between the
             //root node and the selected node.
             if (node.selected) {
-                node.data.$color = "#000";
+                node.data.$color = "blue";
             }
             else {
                 delete node.data.$color;
@@ -136,7 +137,7 @@ function init(dep){
         //override the Edge global style properties.
         onBeforePlotLine: function(adj){
             if (adj.nodeFrom.selected && adj.nodeTo.selected) {
-                adj.data.$color = "#000";
+                adj.data.$color = "blue";
                 adj.data.$lineWidth = 3;
             }
             else {

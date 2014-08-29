@@ -29,10 +29,8 @@
 <script>
      $(document).ready(function() {
           prepare_form_cchart();
-          $("#content").text("aaaaaa");
      });
      function prepare_form_cchart() {
-
           var data = jQuery.parseJSON($("#data-hidden").val());
           var kpi = $("#kpi-id-hidden").val();
           var kpi_name = $("#kpi-name-hidden").val();
@@ -54,7 +52,7 @@
                count : ANALYTICS.chartSeries.count + 1,
                view : view,
                view_text : view_text,
-               method : 0,
+               method : method,
                chart_body_close_validate : chart_body_close_validate
           };
           ANALYTICS.chartSeries.addCount();

@@ -118,7 +118,10 @@ CHARTBOOT.generateColumn=function(scores,target_wrap){
         canvas.width=canvas.width;
         canvas.height=canvas.height;
         var data = {
-            labels : ["KPI","部门","用户","观察点"],
+            labels : [I18n.t('welcome.statistics.item.kpi'),
+                I18n.t('welcome.statistics.item.entity'),
+                I18n.t('welcome.statistics.item.user'),
+                I18n.t('welcome.statistics.item.view')],
             datasets : [
                 {
                     fillColor : "rgba(151,187,205,0.5)",

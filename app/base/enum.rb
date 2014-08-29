@@ -1,6 +1,6 @@
 #encoding: utf-8
 module Enum
- def initialize(key, value,desc)
+  def initialize(key, value, desc)
     @key = key
     @value = value
     @desc= desc
@@ -23,9 +23,9 @@ module Enum
   end
 
   module EnumMethods
-    def define(key, value,desc)
+    def define(key, value, desc)
       @hash ||= {}
-      @hash[key] = self.new(key, value,desc)
+      @hash[key] = self.new(key, value, desc)
     end
 
     def const_missing(key)
@@ -33,18 +33,19 @@ module Enum
     end
 
     def get_by_value value
-      @hash.each do |k,v|
+      @hash.each do |k, v|
         if v.value==value
-        return v.key
+          return v.key
         end
       end
       return nil
     end
 
     def get_desc_by_value value
-      @hash.each do |k,v|
+      @hash.each do |k, v|
         if v.value==value
-        return v.desc
+          puts v.class
+          return v.desc
         end
       end
       return nil
@@ -55,9 +56,9 @@ module Enum
     end
 
     def include?(value)
-      @hash.each do |k,v|
+      @hash.each do |k, v|
         if v.value==value
-        return true
+          return true
         end
       end
       return false

@@ -1,6 +1,7 @@
 module BaseGuard
+  #keys include keys should not be nil
   def validate_params_integrated params, keys, raise_error=true
-    p={}
+    p=params
     keys.each do |k|
       if params[k].blank?
         unless raise_error

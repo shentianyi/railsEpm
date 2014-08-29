@@ -1,17 +1,18 @@
-#encoding: utf-8
 class Kpi < ActiveRecord::Base
   belongs_to :kpi_category
   has_many :kpi_items, :dependent => :destroy
   has_many :kpi_parent_items, :class_name => 'KpiItem', :foreign_key => 'item_id'
   has_many :user_kpi_items, :dependent => :destroy
   has_many :base_kpis, :through => :kpi_items, :source => 'base_kpi'
+  has_many :kpi_property_items, :dependent => :destroy
+  has_many :kpi_properties, :through => :kpi_property_items
 
   has_many :department_kpis, :dependent => :destroy
   has_many :departments, :through => :department_kpis
 
   belongs_to :creator, :class_name => 'User', :foreign_key => 'user_id'
 
-  has_many :kpi_entries, :through => :user_kpi_items
+  #has_many :kpi_entries, :through => :user_kpi_items
   belongs_to :tenant
   attr_accessible :description, :direction, :frequency, :is_calculated, :period, :name, :target_max, :target_min, :unit, :formula, :formula_string
   attr_accessible :kpi_category_id, :tenant_id
@@ -37,6 +38,18 @@ class Kpi < ActiveRecord::Base
     self.accessible_by(current_ability).where(:is_calculated => false).all
   end
 
+  def kpi_item_ids
+    self.kpi_items.pluck(:item_id)
+  end
+
+  def calculate_formula(kpi_value)
+    formula=self.formula.dump
+    KpisHelper.parse_formula_items(formula).each do |item|
+      formula.sub!("[#{item}]", kpi_value[item].to_s)
+    end
+    return formula.calculate
+  end
+
   def self.ability_find_by_id id, current_ability
     self.accessible_by(current_ability).find_by_id(id)
   end
@@ -44,5 +57,22 @@ class Kpi < ActiveRecord::Base
   def self.by_entity_group entity_group_id
     joins(:user_kpi_items).where(user_kpi_items: {entity_id: EntityGroupItem.where(entity_group_id: entity_group_id).pluck(:entity_id)})
     .uniq.select('kpis.id,name,description,kpis.target_max,kpis.target_min,kpi_category_id,kpis.frequency')
+  end
+
+  def unit_sym
+    ::KpiUnit.get_entry_unit_sym(self.unit)
+  end
+
+  def add_properties attrs
+    attrs.each {|attr|
+      if item = KpiPropertyItem.where(kpi_id:self.id,kpi_property_id:attr.id).first
+
+      else
+        item = KpiPropertyItem.new(kpi_id:self.id,kpi_property_id:attr.id)
+        item.save
+        self.kpi_property_items<<item
+      end
+    }
+    self.save
   end
 end

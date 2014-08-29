@@ -50,7 +50,7 @@ end
 
 gem 'jquery-rails'
 
-gem 'authlogic'
+#gem 'authlogic'
 
 # user system
 gem 'devise'
@@ -59,6 +59,7 @@ gem 'devise-encryptable'
 # OAuth 2 Authorization Server
 gem 'doorkeeper'
 #gem 'oauth'
+
 # api framework
 gem 'grape'
 
@@ -90,3 +91,7 @@ gem 'wicked_pdf'
 
 # ancestry
 gem 'ancestry'#,:git => "git://github.com/stefankroes/ancestry.git"
+
+#mongodb
+gem 'mongoid', '~> 3.1.6'
+gem 'bson_ext'

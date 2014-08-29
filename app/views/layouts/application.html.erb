@@ -1,42 +1,48 @@
 <!DOCTYPE html>
 <html>
-     <head>
-          <title>ClearInsight</title>
-          <%= stylesheet_link_tag    "application", :media => "all" %>
-          <%= javascript_include_tag "application" %>
-          <%= csrf_meta_tags %>
-     </head>
-     <body>
+<head>
+  <title>ClearInsight</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
 
 
-          <%=render :partial=> 'shares/user_guide_env'%>
-          <article class="wrap-main" id="wrap-main">
-               <%= render :partial=>'shares/menu'%>
-               <%= yield %>
-          </article>
-
-
-
-          <%= render :partial=>'shares/message_box'%>
-           <%= render :partial=>'shares/slide_box'%>
+<%= render :partial => 'shares/user_guide_env' %>
+<article class="wrap-main" id="wrap-main">
+  <%= render :partial => 'shares/menu' %>
+  <%= yield %>
+</article>
 
 
 
-          <% if need_guide %>
-         <%= render :partial=> 'shares/user_guide'%>
-     <% end %>
+<%= render :partial => 'shares/message_box' %>
+<%= render :partial => 'shares/slide_box' %>
 
-     </body>
-     <script type="text/javascript">
-           I18n.defaultLocale = "<%= I18n.default_locale %>";
-           I18n.locale = "<%= I18n.locale %>";
-           $.ajaxSetup({
-             statusCode : {
-              403 : function() {
-               alert("无权访问");
+
+
+<% if need_guide %>
+    <%= render :partial => 'shares/user_guide' %>
+<% end %>
+
+</body>
+<script type="text/javascript">
+    I18n.defaultLocale = "<%= I18n.default_locale %>";
+    I18n.locale = "<%= I18n.locale %>";
+    $.ajaxSetup({
+        statusCode: {
+            403: function () {
+                location.href='/403';
+            },
+            404: function () {
+                location.href='/404';
+            },
+            500:function(){
+               location.href='/500';
             }
-           }
-         }); 
-     </script>
-     <%= yield :javascript_includes%>
+        }
+    });
+</script>
+<%= yield :javascript_includes %>
 </html>

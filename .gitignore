@@ -27,8 +27,9 @@
 !/uploadfiles/attach/uped/**/*.ignore
 !/uploadfiles/template/*
 .DS_Store
+*.DS_Store
 *.swp
 *.MERGE_MSG
-
+.MERGE_MSG
 #~
 ~#

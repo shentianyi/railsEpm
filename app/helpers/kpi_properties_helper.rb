@@ -1,0 +1,2 @@
+module KpiPropertiesHelper
+end
