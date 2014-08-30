@@ -109,7 +109,6 @@ class DashboardItemsController < ApplicationController
   # Params kpi
   # Param departments
   def fake_data
-
     kpi_name = params[:kpi]
     target_name = kpi_name+"_Target"
     kpi = Kpi.find_by_name(kpi_name)

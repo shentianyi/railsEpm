@@ -14,12 +14,12 @@
   </div>
   <div id="dash-fullsize" class="gridster black">
     <ul class="dashBoard-show" id="dashBoard-show-full">
-      <li data-col="1" data-row="1" data-sizex="4" data-sizey="1" class="gs-w" style="display: list-item;">
+      <li data-sizex="4" data-sizey="1" data-col="1" data-row="1"  class="gs-w" style="display: list-item;">
         <div id="example-one" class="example-container"></div>
       </li>
-      <li data-col="1" data-row="2" data-sizex="4" data-sizey="1" class="gs-w" style="display: list-item;"><div id="example-two" class="example-container"></div></li>
-      <li data-col="1" data-row="3" data-sizex="4" data-sizey="1" class="gs-w" style="display: list-item;"><div id="example-three" class="example-container"></div></li>
-      <li data-col="1" data-row="4" data-sizex="4" data-sizey="1" class="gs-w" style="display: list-item;"><div id="example-four" class="example-container"></div></li>
+      <li data-sizex="4" data-sizey="1" data-col="1" data-row="2" class="gs-w" style="display: list-item;"><div id="example-two" class="example-container"></div></li>
+      <li data-sizex="4" data-sizey="1" data-col="1" data-row="3" class="gs-w" style="display: list-item;"><div id="example-three" class="example-container"></div></li>
+      <li data-sizex="4" data-sizey="1" data-col="1" data-row="4" class="gs-w" style="display: list-item;"><div id="example-four" class="example-container"></div></li>
     </ul>
   </div>
 </div>
@@ -97,11 +97,11 @@
 
       }
       init_component();
-      fullsize();
       //DASHBOARD.init();
       right_nav_main.init();
       $("#dashboard-content-full").css("display","block");
       DASHBOARD.add.init();
+      fullsize();
       //current_dashboard_id = $("#dashboard-content-full").attr("dashboard-id");
       //select_dashboard(current_dashboard_id,fullsize);
       //current_dashboard_name = $("#dashboard-content-full").attr("dashboard-name");
