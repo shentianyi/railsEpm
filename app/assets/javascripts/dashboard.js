@@ -422,16 +422,17 @@ function init_component(){
         select_dashboard(id);
     }
     $(window).resize(function(){
-        on_resize_window();
+        //on_resize_window();
     });
 }
 /*
 * @function on_full_size
 * */
 function on_full_size(){
-    $("#full-size-title p").text(current_dashboard_name);
+    $("#full-size-title p").text('Daily BU Performance');
+    //$("#full-size-title p").text(current_dashboard_name);
     ifepm.dashboard_widget.full_size(true);
-    ifepm.dashboard.full_size({fullsize:true,id:current_dashboard_id});
+    //ifepm.dashboard.full_size({fullsize:true,id:current_dashboard_id});
 };
 
 /*

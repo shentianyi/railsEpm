@@ -109,15 +109,14 @@ class DashboardItemsController < ApplicationController
   # Params kpi
   # Param departments
   def fake_data
-
-    kpi_name = "Attendance"
+    kpi_name = params[:kpi]
     target_name = kpi_name+"_Target"
     kpi = Kpi.find_by_name(kpi_name)
-    deps = ["MB","GM"]
+    deps = params[:department]
 
-    startstr = 10.day.ago
+    startstr = 11.day.ago
     start_time = Time.parse(startstr.strftime("%Y-%m-%d")).iso8601.to_s
-    endstr = 9.day.ago
+    endstr = 10.day.ago
     end_time = Time.parse(endstr.strftime("%Y-%m-%d")).iso8601.to_s
     cal = "AVERAGE"
     interval = 100

@@ -67,7 +67,7 @@ class DashboardsController < ApplicationController
   end
 
   def fullsize
-    @dashboard = Dashboard.find(params[:id])
+    #@dashboard = Dashboard.find(params[:id])
     render
   end
 

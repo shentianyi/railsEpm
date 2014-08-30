@@ -13,10 +13,7 @@
             <div class="dashboard-content" id="dashboard-content">
                 <div id="dash-normalsize" class="gridster dash-content">
                     <ul class="dashBoard-show" id="dashBoard-show">
-                      <li><div id="example-one" class="example-container"></div></li>
-                      <li><div id="example-two" class="example-container"></div></li>
-                      <li><div id="example-three" class="example-container"></div></li>
-                      <li><div id="example-four" class="example-container"></div></li>
+
                     </ul>
                 </div>
             </div>
@@ -179,7 +176,12 @@
    </div>
    <div id="dash-fullsize" class="gridster black">
      <ul class="dashBoard-show" id="dashBoard-show-full">
-
+       <li data-col="1" data-row="1" data-sizex="2" data-sizey="1" class="gs-w" style="display: list-item;">
+         <div id="example-one" class="example-container"></div>
+       </li>
+       <li data-col="2" data-row="1" data-sizex="2" data-sizey="1" class="gs-w" style="display: list-item;"><div id="example-two" class="example-container"></div></li>
+       <li data-col="1" data-row="2" data-sizex="2" data-sizey="1" class="gs-w" style="display: list-item;"><div id="example-three" class="example-container"></div></li>
+       <li data-col="2" data-row="2" data-sizex="2" data-sizey="1" class="gs-w" style="display: list-item;"><div id="example-four" class="example-container"></div></li>
      </ul>
    </div>
  </div>
@@ -215,16 +217,25 @@
 
 <script type="text/javascript">
     $(document).ready(function (){
-        var KPIArray=[ "E1","PPM_L","RFT_L","OEE_L"],
+        var KPIArray=[ "E1-Total","Attendance","E1-Normal","Output"],
                 i,
-                departmentArray=["MB","GM","Local",'Cutting'],
-                $targets=$("#dashBoard-show").find(".example-container");
+                departmentArray=["MB","GM","Local","C-RBA"],
+                $targets=$("#dashBoard-show-full").find(".example-container");
         for(i=0;i<KPIArray.length;i++){
             (function(i){
                 $.get("/dashboard_items/fake_data",
                         {kpi:KPIArray[i],department:departmentArray},
                         function(data){
+                            var height=function(i){
+                                if($targets.eq(i).parents(".gs-w").height()===0){
+                                    return height(++i);
+                                }
+                                else{
+                                    return $targets.eq(i).parents(".gs-w").height();
+                                }
+                            }
                             var option={
+                                height:height(i),
                                 target:$targets.eq(i).attr("id"),
                                 kpi:data.title,
                                 date:data.time,
