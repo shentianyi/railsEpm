@@ -65,12 +65,17 @@
   $(document).ready(function (){
       var KPIArray=[ "E1-Total","Attendance","E1-Normal","Output"],
               i,
-              departmentArray=["MB","GM","Local","C-RBA"],
+              departmentArray={
+                  "1":["MB","GM","Local","C-RBA"],
+                  "2":["MB","GM","Local","C-RBA"],
+                  "3":["MB","GM","Local","C-RBA"],
+                  "4":["MB","GM","Local","C-RBA"]
+              },
               $targets=$("#dashBoard-show-full").find(".example-container");
       for(i=0;i<KPIArray.length;i++){
           (function(i){
               $.get("/dashboard_items/fake_data",
-                      {kpi:KPIArray[i],department:departmentArray},
+                      {kpi:KPIArray[i],department:departmentArray[""+i]},
                       function(data){
                           var height=function(i){
                               if($targets.eq(i).parents(".gs-w").height()===0){
@@ -85,7 +90,7 @@
                               target:$targets.eq(i).attr("id"),
                               kpi:data.title,
                               date:data.time,
-                              departmentArray:departmentArray,
+                              departmentArray:departmentArray[""+i],
                               currentArray:data.value,
                               targetArray:data.target
                           };
