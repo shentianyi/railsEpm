@@ -172,7 +172,7 @@ class DashboardItemsController < ApplicationController
       target<<data_target[:current][0]
     end
     result = {}
-    result[:time] = time_span[:start].strftime("%m-%d")+"~"+time_span[:end].strftime("%m-%d")
+    result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]-24.hours).strftime("%m-%d")
     result[:title] = "Kpi Name: #{kpi.name}"+" "+title+" Performance"
     result[:departments] = departments
     result[:value] = value
