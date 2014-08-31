@@ -128,7 +128,7 @@ class DashboardItemsController < ApplicationController
         time_string = 'LAST1HOUR'
         title = 'Hourly'
       when '100'
-        time_string = 'LAST1DAY'
+        time_string = 'LAST2DAY'
         title =  'Daily'
       when '200'
         time_string = 'LAST1WEEK'
