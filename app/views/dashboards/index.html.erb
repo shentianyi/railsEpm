@@ -225,11 +225,12 @@
                     "3":["MB","GM","Local","C-RBA"],
                     "4":["MB","GM","Local","C-RBA"]
                 },
+                intervalArray=[90,100,200,300],
                 $targets=$("#dashBoard-show-full").find(".example-container");
         for(i=0;i<KPIArray.length;i++){
             (function(i){
                 $.get("/dashboard_items/fake_data",
-                        {kpi:KPIArray[i],department:departmentArray[""+i]},
+                        {kpi:KPIArray[i],department:departmentArray[""+i],interval:intervalArray[i]},
                         function(data){
                             var height=function(i){
                                 if($targets.eq(i).parents(".gs-w").height()===0){
