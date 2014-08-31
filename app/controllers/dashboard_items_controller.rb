@@ -163,7 +163,7 @@ class DashboardItemsController < ApplicationController
           average: cal,
           frequency: interval).analyse
       data_target = Entry::Analyzer.new(
-          kpi_id: kpi_target.id,
+          kpi_id: kpi.id,
           entity_group_id: e.id,
           start_time: start_time,
           end_time: end_time,
