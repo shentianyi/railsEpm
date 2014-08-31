@@ -114,6 +114,7 @@ class DashboardItemsController < ApplicationController
     target_name = kpi_name+"_Target"
     kpi = Kpi.find_by_name(kpi_name)
     kpi_target = Kpi.find_by_name(target_name)
+    kpi_target = kpi_target.nil? ? kpi : kpi_target
     #departments
     deps = params[:department]
     #interval
@@ -121,24 +122,21 @@ class DashboardItemsController < ApplicationController
     #time range
 
     time_string = 'LAST1DAY'
-    title = 'Daily'
+    title = 'Test'
     case interval
-      when 90
+      when '90'
         time_string = 'LAST1HOUR'
         title = 'Hourly'
-      when 100
+      when '100'
         time_string = 'LAST1DAY'
         title =  'Daily'
-      when 200
+      when '200'
         time_string = 'LAST1WEEK'
         title = 'Weekly'
-      when 300
+      when '300'
         time_string = 'LAST1MONTH'
         title = 'Monthly'
-      when 400
-        time_string = 'LAST1QUARTER'
-        title = 'Quarterly'
-      when 500
+      when '400'
         time_string = 'LAST1YEAR'
         title = 'Yearly'
     end
@@ -163,7 +161,7 @@ class DashboardItemsController < ApplicationController
           average: cal,
           frequency: interval).analyse
       data_target = Entry::Analyzer.new(
-          kpi_id: kpi.id,
+          kpi_id: kpi_target.id,
           entity_group_id: e.id,
           start_time: start_time,
           end_time: end_time,

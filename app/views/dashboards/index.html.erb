@@ -217,15 +217,15 @@
 
 <script type="text/javascript">
     $(document).ready(function (){
-        var KPIArray=[ "E1-Total","Attendance","E1-Normal","Output"],
+        var KPIArray=[ "E1","PPM_L","PPM_L","OEE_L"],
                 i,
                 departmentArray={
+                    "0":["MB","GM","Local","C-RBA"],
                     "1":["MB","GM","Local","C-RBA"],
                     "2":["MB","GM","Local","C-RBA"],
-                    "3":["MB","GM","Local","C-RBA"],
-                    "4":["MB","GM","Local","C-RBA"]
+                    "3":["MB","GM","Local","C-RBA"]
                 },
-                intervalArray=[90,100,200,300],
+                intervalArray=[100,100,100,100],
                 $targets=$("#dashBoard-show-full").find(".example-container");
         for(i=0;i<KPIArray.length;i++){
             (function(i){
