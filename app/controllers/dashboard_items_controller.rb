@@ -109,18 +109,45 @@ class DashboardItemsController < ApplicationController
   # Params kpi
   # Param departments
   def fake_data
+    #kpi
     kpi_name = params[:kpi]
     target_name = kpi_name+"_Target"
     kpi = Kpi.find_by_name(kpi_name)
     kpi_target = Kpi.find_by_name(target_name)
+    #departments
     deps = params[:department]
+    #interval
+    interval = params[:interval]
+    #time range
 
-    startstr = 11.day.ago
-    start_time = Time.parse(startstr.strftime("%Y-%m-%d")).iso8601.to_s
-    endstr = 10.day.ago
-    end_time = Time.parse(endstr.strftime("%Y-%m-%d")).iso8601.to_s
+    time_string = 'LAST1DAY'
+    title = 'Daily'
+    case interval
+      when 90
+        time_string = 'LAST1HOUR'
+        title = 'Hourly'
+      when 100
+        time_string = 'LAST1DAY'
+        title =  'Daily'
+      when 200
+        time_string = 'LAST1WEEK'
+        title = 'Weekly'
+      when 300
+        time_string = 'LAST1MONTH'
+        title = 'Monthly'
+      when 400
+        time_string = 'LAST1QUARTER'
+        title = 'Quarterly'
+      when 500
+        time_string = 'LAST1YEAR'
+        title = 'Yearly'
+    end
+    time_span = DashboardItem.time_string_to_time_span time_string
+    start_time = time_span[:start].iso8601.to_s
+    end_time = time_span[:end].iso8601.to_s
+
+    #
     cal = "AVERAGE"
-    interval = 100
 
     departments = []
     value = []
@@ -147,8 +174,8 @@ class DashboardItemsController < ApplicationController
       target<<data_target[:current][0]
     end
     result = {}
-    result[:time] = startstr.strftime("%m-%d")+"~"+endstr.strftime("%m-%d")
-    result[:title] = "Kpi Name: #{kpi.name}"
+    result[:time] = time_span[:start].strftime("%m-%d")+"~"+time_span[:end].strftime("%m-%d")
+    result[:title] = "Kpi Name: #{kpi.name}"+" "+title+" Performance"
     result[:departments] = departments
     result[:value] = value
     result[:target] = target
