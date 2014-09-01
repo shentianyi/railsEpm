@@ -104,6 +104,7 @@
                                   return $targets.eq(i).parents(".gs-w").height();
                               }
                           }
+                          var boolPPM=KPIArray[i].indexOf("PPM");
                           var option={
                               height:height(i),
                               target:$targets.eq(i).attr("id"),
@@ -111,7 +112,8 @@
                               date:data.time,
                               departmentArray:departmentArray[""+i],
                               currentArray:data.value,
-                              targetArray:data.target
+                              targetArray:data.target,
+                              ppm:boolPPM===-1?0:1
                           };
                           var one=new DashBoardExampleChart(option);
                           one.init();

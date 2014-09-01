@@ -217,45 +217,52 @@
 
 <script type="text/javascript">
     $(document).ready(function (){
-        var KPIArray=[ "E1","PPM_L","RFT_L","OEE_L"],
-                i,
-                departmentArray={
-                    "0":["MB","GM","Local","Cutting"],
-                    "1":["MB","GM","Local","Cutting"],
-                    "2":["MB","GM","Local","Cutting"],
-                    "3":["BU-MB","BU-GM","BU-VW"]
-                },
-                intervalArray=[100,100,100,100],
-                $targets=$("#dashBoard-show-full").find(".example-container");
-        for(i=0;i<KPIArray.length;i++){
-            (function(i){
-                $.get("/dashboard_items/fake_data",
-                        {kpi:KPIArray[i],department:departmentArray[""+i],interval:intervalArray[i]},
-                        function(data){
-                            var height=function(i){
-                                if($targets.eq(i).parents(".gs-w").height()===0){
-                                    return height(++i);
+        window.setInterval(function(){
+            var KPIArray=[ "E1","PPM_L","RFT_L","OEE_L"],
+                    i,
+                    departmentArray={
+                        "0":["MB","GM","Local","Cutting"],
+                        "1":["MB","GM","Local","Cutting"],
+                        "2":["MB","GM","Local","Cutting"],
+                        "3":["BU-MB","BU-GM","BU-VW"]
+                    },
+                    intervalArray=[100,100,100,100],
+                    $targets=$("#dashBoard-show-full").find(".example-container");
+            for(i=0;i<KPIArray.length;i++){
+                (function(i){
+                    $.get("/dashboard_items/fake_data",
+                            {kpi:KPIArray[i],department:departmentArray[""+i],interval:intervalArray[i]},
+                            function(data){
+                                var height=function(i){
+                                    if($targets.eq(i).parents(".gs-w").height()===0){
+                                        return height(++i);
+                                    }
+                                    else{
+                                        return $targets.eq(i).parents(".gs-w").height();
+                                    }
                                 }
-                                else{
-                                    return $targets.eq(i).parents(".gs-w").height();
+                                if($targets.eq(i).highcharts()){
+                                    $targets.eq(i).highcharts().destroy();
                                 }
+                                var boolPPM=KPIArray[i].indexOf("PPM");
+                                var option={
+                                    height:height(i),
+                                    target:$targets.eq(i).attr("id"),
+                                    kpi:data.title,
+                                    date:data.time,
+                                    departmentArray:departmentArray[""+i],
+                                    currentArray:data.value,
+                                    targetArray:data.target,
+                                    ppm:boolPPM===-1?0:1
+                                };
+                                var one=new DashBoardExampleChart(option);
+                                one.init();
                             }
-                            var option={
-                                height:height(i),
-                                target:$targets.eq(i).attr("id"),
-                                kpi:data.title,
-                                date:data.time,
-                                departmentArray:departmentArray[""+i],
-                                currentArray:data.value,
-                                targetArray:data.target
-                            };
-                            var one=new DashBoardExampleChart(option);
-                            one.init();
-                        }
-                )
-            })(i);
+                    )
+                })(i);
 
-        }
+            }
+        },3000);
         init_component();
         DASHBOARD.init();
         right_nav_main.init();
