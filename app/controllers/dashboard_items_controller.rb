@@ -167,7 +167,7 @@ class DashboardItemsController < ApplicationController
           end_time: end_time,
           average: cal,
           frequency: interval).analyse
-      departments << e.name
+      departments << e.name.gsub('BU-','')
       value<<data[:current][0]
       target<<data_target[:current][0]
     end
