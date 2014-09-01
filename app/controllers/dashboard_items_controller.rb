@@ -148,6 +148,8 @@ class DashboardItemsController < ApplicationController
 
     date = []
 
+    data[:date] = data[:date].collect { |d| d.localtime }
+
     case interval
       when '90'
         title = 'Hourly'
@@ -240,14 +242,14 @@ class DashboardItemsController < ApplicationController
           end_time: end_time,
           average: cal,
           frequency: interval).analyse
-      departments << e.name.gsub('BU-','')
+      departments << e.name
       value<<data[:current][0]
       target<<data_target[:current][0]
     end
     result = {}
     result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]-24.hours).strftime("%m-%d")
     result[:title] = "Kpi Name: #{kpi.name.gsub('_L','')}"+" "+title+" BU Performance"
-    result[:departments] = departments
+    result[:axis] = departments
     result[:value] = value
     result[:target] = target
     render :json=>result
