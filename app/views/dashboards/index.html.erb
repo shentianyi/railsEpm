@@ -182,6 +182,7 @@
        <li data-col="2" data-row="1" data-sizex="2" data-sizey="1" class="gs-w" style="display: list-item;"><div id="example-two" class="example-container"></div></li>
        <li data-col="1" data-row="2" data-sizex="2" data-sizey="1" class="gs-w" style="display: list-item;"><div id="example-three" class="example-container"></div></li>
        <li data-col="2" data-row="2" data-sizex="2" data-sizey="1" class="gs-w" style="display: list-item;"><div id="example-four" class="example-container"></div></li>
+       <li data-col="1" data-row="3" data-sizex="2" data-sizey="1" class="gs-w" style="display: list-item;"><div id="example-five" class="example-container"></div></li>
      </ul>
    </div>
  </div>
@@ -217,13 +218,13 @@
 
 <script type="text/javascript">
     $(document).ready(function (){
-        var arguments=[
+        var args=[
             {kpi:"E1",departmentArray:["MB","GM","VW","Cutting"],interval:100,everyDay:false,time_range:null},
             {kpi:"PPM_L",departmentArray:["MB","GM","VW","Cutting"],interval:100,everyDay:false,time_range:null},
             {kpi:"RFT_L",departmentArray:["MB","GM","VW"],interval:100,everyDay:false,time_range:null},
             {kpi:"OEE_L",departmentArray:["BU-MB","BU-GM","BU-VW"],interval:100,everyDay:false,time_range:null},
-            {kpi:"E1",departmentArray:['MB'],interval:100,everyDay:true,time_range:"LAST15DAYS"}
-        ],
+            {kpi:"E1",departmentArray:['MB'],interval:100,everyDay:true,time_range:"LAST15DAY"}
+        ], i,
                 $targets=$("#dashBoard-show-full").find(".example-container");
 //        var KPIArray=[ "E1","PPM_L","RFT_L","OEE_L"],
 //                i,
@@ -235,9 +236,9 @@
 //                },
 //                intervalArray=[100,100,100,100],
 
-        for(i=0;i<arguments.length;i++){
+        for(i=0;i<args.length;i++){
             (function(i){
-                var item=arguments[i];
+                var item=args[i];
                 if(!item.everyDay){
                     $.get("/dashboard_items/fake_data",
                             {kpi:item.kpi,department:item.departmentArray,interval:item.interval},

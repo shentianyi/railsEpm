@@ -29,8 +29,6 @@ class DashboardItemsController < ApplicationController
     ##check if time out of range
     time_span = DashboardItem.time_string_to_time_span @new_condition.time_string
     count = DashboardCondition.time_range_count(time_span[:start].iso8601.to_s,time_span[:end].iso8601.to_s,@new_item.interval)
-    puts "=================="
-    puts count
     if count > 150
       cansave = false
       break
@@ -107,17 +105,17 @@ class DashboardItemsController < ApplicationController
   # GET /dashboard_items/fake_data_time
   def fake_data_time
     #kpi
-    kpi_name = 'E1'#params[:kpi]
+    kpi_name = params[:kpi]
     target_name = kpi_name+"_Target"
     kpi = Kpi.find_by_name(kpi_name)
     kpi_target = Kpi.find_by_name(target_name)
     kpi_target = kpi_target.nil? ? kpi : kpi_target
     #department
-    department = 'MB'#params[:departments]
+    department = params[:department]
     #interval
-    interval = '100' #params[:interval]
+    interval = params[:interval]
     #time range
-    time_range = 'LAST7DAY' #params[:time_range]
+    time_range = params[:time_range]
 
     time_span = DashboardItem.time_string_to_time_span time_range
     start_time = time_span[:start].iso8601.to_s
@@ -165,7 +163,9 @@ class DashboardItemsController < ApplicationController
     result[:department] = department
     result[:value] = current
     result[:target] = target
-    result[:axis]=data[:date]
+    axis = data[:date].collect{|d| d.strftime("%m-%d")}
+    result[:axis]=axis
+
     render :json=>result
   end
 
