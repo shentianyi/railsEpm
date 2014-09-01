@@ -29,8 +29,6 @@ class DashboardItemsController < ApplicationController
     ##check if time out of range
     time_span = DashboardItem.time_string_to_time_span @new_condition.time_string
     count = DashboardCondition.time_range_count(time_span[:start].iso8601.to_s,time_span[:end].iso8601.to_s,@new_item.interval)
-    puts "=================="
-    puts count
     if count > 150
       cansave = false
       break
@@ -104,8 +102,91 @@ class DashboardItemsController < ApplicationController
       t.js {render :js=>jsonp_str(datas)}
     end
   end
+  # GET /dashboard_items/fake_data_time
+  def fake_data_time
+    #kpi
+    kpi_name = params[:kpi]
+    target_name = kpi_name+"_Target"
+    kpi = Kpi.find_by_name(kpi_name)
+    kpi_target = Kpi.find_by_name(target_name)
+    kpi_target = kpi_target.nil? ? kpi : kpi_target
+    #department
+    department = params[:department]
+    #interval
+    interval = params[:interval]
+    #time range
+    time_range = params[:time_range]
 
-  # GET /dashbaort_items/fake_data
+    time_span = DashboardItem.time_string_to_time_span time_range
+    start_time = time_span[:start].iso8601.to_s
+    end_time = time_span[:end].iso8601.to_s
+
+    cal = true
+    title = 'test'
+
+
+
+    e = EntityGroup.find_by_name(department)
+    data = Entry::Analyzer.new(
+        kpi_id: kpi.id,
+        entity_group_id: e.id,
+        start_time: start_time,
+        end_time: end_time,
+        average: cal,
+        frequency: interval).analyse
+    current = data[:current]
+
+    data_target = Entry::Analyzer.new(
+        kpi_id: kpi_target.id,
+        entity_group_id: e.id,
+        start_time: start_time,
+        end_time: end_time,
+        average: cal,
+        frequency: interval).analyse
+
+    target = data_target[:current]
+
+    date = []
+
+    data[:date] = data[:date].collect { |d| d.localtime }
+    count = 1
+
+    case interval
+      when '90'
+        count = time_span[:end].hour - time_span[:start].hour
+        title = "Last #{count} hours "
+        date = data[:date].collect{|d| d.strftime("%H:%M")}
+      when '100'
+        count = time_span[:end].yday - time_span[:start].yday
+        title =  "Last #{count} days "
+        date = data[:date].collect { |d| d.strftime("%m-%d") }
+      when '200'
+        count = time_span[:end].strftime("%W").to_i - time_span[:start].strftime("%W").to_i
+        title = "Last #{count} weeks "
+        date = data[:date].collect { |d| d.strftime("Week %W") }
+      when '300'
+        count = time_span[:end].month - time_span[:start].month
+        title = "Last #{count} months"
+        date = data[:date].collect { |d| d.strftime("%b") }
+      when '400'
+        count = time_span[:end].year - time_span[:start].year
+        title = "Last #{count} years"
+        date = data[:date].collect { |d| d.strftime("%y") }
+    end
+
+    result = {}
+    result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]-24.hours).strftime("%m-%d")
+    result[:title] = "#{kpi.name.gsub('_L','')}/"+department+" "+title+"Performance"
+    result[:department] = department
+    result[:value] = current
+    result[:target] = target
+    axis = date
+    result[:axis]=axis
+
+    render :json=>result
+  end
+
+  # GET /dashboard_items/fake_data
   # Params kpi
   # Param departments
   def fake_data
@@ -145,7 +226,7 @@ class DashboardItemsController < ApplicationController
     end_time = time_span[:end].iso8601.to_s
 
     #
-    cal = "AVERAGE"
+    cal = true
 
     departments = []
     value = []
@@ -153,10 +234,6 @@ class DashboardItemsController < ApplicationController
 
     deps.each do |dep|
       e = EntityGroup.find_by_name(dep)
-      if e.nil?
-        puts "==================================="
-        puts dep
-      end
       data = Entry::Analyzer.new(
           kpi_id: kpi.id,
           entity_group_id: e.id,
@@ -177,8 +254,8 @@ class DashboardItemsController < ApplicationController
     end
     result = {}
     result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]).strftime("%m-%d")
-    result[:title] = "Kpi Name: #{kpi.name}"+" "+title+" Performance"
-    result[:departments] = departments
+    result[:title] = "#{kpi.name.gsub('_L','')}/"+title+" Performance"
+    result[:axis] = departments
     result[:value] = value
     result[:target] = target
     render :json=>result
