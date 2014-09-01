@@ -128,7 +128,7 @@ class DashboardItemsController < ApplicationController
         time_string = 'LAST1HOUR'
         title = 'Hourly'
       when '100'
-        time_string = 'LAST2DAY'
+        time_string = 'LAST1DAY'
         title =  'Daily'
       when '200'
         time_string = 'LAST1WEEK'
@@ -153,6 +153,10 @@ class DashboardItemsController < ApplicationController
 
     deps.each do |dep|
       e = EntityGroup.find_by_name(dep)
+      if e.nil?
+        puts "==================================="
+        puts dep
+      end
       data = Entry::Analyzer.new(
           kpi_id: kpi.id,
           entity_group_id: e.id,
@@ -172,7 +176,7 @@ class DashboardItemsController < ApplicationController
       target<<data_target[:current][0]
     end
     result = {}
-    result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]-24.hours).strftime("%m-%d")
+    result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]).strftime("%m-%d")
     result[:title] = "Kpi Name: #{kpi.name}"+" "+title+" Performance"
     result[:departments] = departments
     result[:value] = value
