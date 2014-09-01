@@ -149,28 +149,34 @@ class DashboardItemsController < ApplicationController
     date = []
 
     data[:date] = data[:date].collect { |d| d.localtime }
+    count = 1
 
     case interval
       when '90'
-        title = 'Hourly'
+        count = time_span[:end].hour - time_span[:start].hour
+        title = "Last #{count} hours "
         date = data[:date].collect{|d| d.strftime("%H:%M")}
       when '100'
-        title =  'Daily'
+        count = time_span[:end].yday - time_span[:start].yday
+        title =  "Last #{count} days "
         date = data[:date].collect { |d| d.strftime("%m-%d") }
       when '200'
-        title = 'Weekly'
-        date = data[:date].collect { |d| d.strftime("Week %V") }
+        count = time_span[:end].strftime("%W").to_i - time_span[:start].strftime("%W").to_i
+        title = "Last #{count} weeks "
+        date = data[:date].collect { |d| d.strftime("Week %W") }
       when '300'
-        title = 'Monthly'
+        count = time_span[:end].month - time_span[:start].month
+        title = "Last #{count} months"
         date = data[:date].collect { |d| d.strftime("%b") }
       when '400'
-        title = 'Yearly'
+        count = time_span[:end].year - time_span[:start].year
+        title = "Last #{count} years"
         date = data[:date].collect { |d| d.strftime("%y") }
     end
 
     result = {}
     result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]-24.hours).strftime("%m-%d")
-    result[:title] = "Kpi Name: #{kpi.name.gsub('_L','')}"+" "+department+" "+title+" BU Performance"
+    result[:title] = "#{kpi.name.gsub('_L','')}/"+department+" "+title+"Performance"
     result[:department] = department
     result[:value] = current
     result[:target] = target
@@ -248,7 +254,7 @@ class DashboardItemsController < ApplicationController
     end
     result = {}
     result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]-24.hours).strftime("%m-%d")
-    result[:title] = "Kpi Name: #{kpi.name.gsub('_L','')}"+" "+title+" BU Performance"
+    result[:title] = "#{kpi.name.gsub('_L','')}/"+title+" Performance"
     result[:axis] = departments
     result[:value] = value
     result[:target] = target
