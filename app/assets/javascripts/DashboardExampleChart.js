@@ -26,7 +26,11 @@ var DashBoardExampleChart=function(option){
                 }
             }
         }
-        newArray[2]={name:"Current Abnormal",data:[0,0,0,0]};
+        var abNormalArray=new Array(targetArray.length);
+        for(var i=0;i<abNormalArray.length;i++){
+            abNormalArray[i]=0;
+        }
+        newArray[2]={name:"Current Abnormal",data:abNormalArray};
         return newArray;
     }
     this.init=function(){
