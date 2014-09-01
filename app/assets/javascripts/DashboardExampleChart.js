@@ -1,8 +1,13 @@
 var DashBoardExampleChart=function(option){
     this.target=option.target;
-    this.assorted=function(targetArray,currentArray,ppm){
+    this.assorted=function(targetArray,currentArray,ppm,targetLine){
         var newArray=[];
-        newArray[0]={name:'Target',data:targetArray};
+        if(targetLine){
+            newArray[0]={name:'Target',data:targetArray,type:'line'};
+        }
+        else{
+            newArray[0]={name:'Target',data:targetArray};
+        }
         newArray[1]={name:"Current Normal",data:[]};
         var i,target,current;
         for(i=0;i<targetArray.length;i++){
@@ -39,7 +44,7 @@ var DashBoardExampleChart=function(option){
         this.basic.chart.height=option.height;
         this.basic.subtitle.text=option.date;
         this.basic.xAxis.categories=option.departmentArray;
-        this.basic.series=this.assorted(option.targetArray,option.currentArray,option.ppm);
+        this.basic.series=this.assorted(option.targetArray,option.currentArray,option.ppm,option.targetLine);
         $target.highcharts(this.basic);
     }
 }
