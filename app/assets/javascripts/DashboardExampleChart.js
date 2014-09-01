@@ -102,7 +102,8 @@ DashBoardExampleChart.prototype.basic={
             color: '#FFF'
         },
         formatter: function() {
-            return '<b>'+this.series.name+'</b>'
+            var name=this.series.name==="Target"?"Target":"Current";
+            return '<b>'+name+'</b>'
                 +'<br />Value: <span style="color:'+this.series.color+'">'+this.point.y
                 +'</span>'
 
