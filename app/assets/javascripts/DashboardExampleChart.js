@@ -1,20 +1,32 @@
 var DashBoardExampleChart=function(option){
     this.target=option.target;
-    this.assorted=function(targetArray,currentArray){
+    this.assorted=function(targetArray,currentArray,ppm){
         var newArray=[];
         newArray[0]={name:'Target',data:targetArray};
-        newArray[1]={name:"Current",data:[]};
+        newArray[1]={name:"Current Normal",data:[]};
         var i,target,current;
         for(i=0;i<targetArray.length;i++){
             target=targetArray[i];
             current=currentArray[i];
             if(current>=target){
-                newArray[1].data.push(current);
+                if(ppm===1){
+                    newArray[1].data.push({y:current,color:"#fe7005"});
+                }
+                else{
+                    newArray[1].data.push(current);
+                }
+
             }
             else{
-                newArray[1].data.push({y:current,color:"#fe7005"});
+                if(ppm===1){
+                    newArray[1].data.push(current);
+                }
+                else{
+                    newArray[1].data.push({y:current,color:"#fe7005"});
+                }
             }
         }
+        newArray[2]={name:"Current Abnormal",data:[0,0,0,0]};
         return newArray;
     }
     this.init=function(){
@@ -23,7 +35,7 @@ var DashBoardExampleChart=function(option){
         this.basic.chart.height=option.height;
         this.basic.subtitle.text=option.date;
         this.basic.xAxis.categories=option.departmentArray;
-        this.basic.series=this.assorted(option.targetArray,option.currentArray);
+        this.basic.series=this.assorted(option.targetArray,option.currentArray,option.ppm);
         $target.highcharts(this.basic);
     }
 }
@@ -39,7 +51,7 @@ DashBoardExampleChart.prototype.basic={
     colors:[
         "#00e3fe",
         "#9cdd00",
-
+        "#fe7005",
         "#f6d742",
         "#00e3fe",
         "#eb68fb",
