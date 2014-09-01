@@ -124,18 +124,7 @@ class DashboardItemsController < ApplicationController
     cal = "AVERAGE"
     title = 'test'
 
-    case interval
-      when '90'
-        title = 'Hourly'
-      when '100'
-        title =  'Daily'
-      when '200'
-        title = 'Weekly'
-      when '300'
-        title = 'Monthly'
-      when '400'
-        title = 'Yearly'
-    end
+
 
     e = EntityGroup.find_by_name(department)
     data = Entry::Analyzer.new(
@@ -157,13 +146,33 @@ class DashboardItemsController < ApplicationController
 
     target = data_target[:current]
 
+    date = []
+
+    case interval
+      when '90'
+        title = 'Hourly'
+        date = data[:date].collect{|d| d.strftime("%H:%M")}
+      when '100'
+        title =  'Daily'
+        date = data[:date].collect { |d| d.strftime("%m-%d") }
+      when '200'
+        title = 'Weekly'
+        date = data[:date].collect { |d| d.strftime("Week %V") }
+      when '300'
+        title = 'Monthly'
+        date = data[:date].collect { |d| d.strftime("%b") }
+      when '400'
+        title = 'Yearly'
+        date = data[:date].collect { |d| d.strftime("%y") }
+    end
+
     result = {}
     result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]-24.hours).strftime("%m-%d")
     result[:title] = "Kpi Name: #{kpi.name.gsub('_L','')}"+" "+department+" "+title+" BU Performance"
     result[:department] = department
     result[:value] = current
     result[:target] = target
-    axis = data[:date].collect{|d| d.strftime("%m-%d")}
+    axis = date
     result[:axis]=axis
 
     render :json=>result
