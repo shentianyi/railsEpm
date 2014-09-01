@@ -121,7 +121,7 @@ class DashboardItemsController < ApplicationController
     start_time = time_span[:start].iso8601.to_s
     end_time = time_span[:end].iso8601.to_s
 
-    cal = false
+    cal = true
     title = 'test'
 
 
@@ -220,7 +220,7 @@ class DashboardItemsController < ApplicationController
     end_time = time_span[:end].iso8601.to_s
 
     #
-    cal = false
+    cal = true
 
     departments = []
     value = []
