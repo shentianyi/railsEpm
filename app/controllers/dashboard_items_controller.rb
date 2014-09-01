@@ -104,8 +104,72 @@ class DashboardItemsController < ApplicationController
       t.js {render :js=>jsonp_str(datas)}
     end
   end
+  # GET /dashboard_items/fake_data_time
+  def fake_data_time
+    #kpi
+    kpi_name = 'E1'#params[:kpi]
+    target_name = kpi_name+"_Target"
+    kpi = Kpi.find_by_name(kpi_name)
+    kpi_target = Kpi.find_by_name(target_name)
+    kpi_target = kpi_target.nil? ? kpi : kpi_target
+    #department
+    department = 'MB'#params[:departments]
+    #interval
+    interval = '100' #params[:interval]
+    #time range
+    time_range = 'LAST7DAY' #params[:time_range]
 
-  # GET /dashbaort_items/fake_data
+    time_span = DashboardItem.time_string_to_time_span time_range
+    start_time = time_span[:start].iso8601.to_s
+    end_time = time_span[:end].iso8601.to_s
+
+    cal = "AVERAGE"
+    title = 'test'
+
+    case interval
+      when '90'
+        title = 'Hourly'
+      when '100'
+        title =  'Daily'
+      when '200'
+        title = 'Weekly'
+      when '300'
+        title = 'Monthly'
+      when '400'
+        title = 'Yearly'
+    end
+
+    e = EntityGroup.find_by_name(department)
+    data = Entry::Analyzer.new(
+        kpi_id: kpi.id,
+        entity_group_id: e.id,
+        start_time: start_time,
+        end_time: end_time,
+        average: cal,
+        frequency: interval).analyse
+    current = data[:current]
+
+    data_target = Entry::Analyzer.new(
+        kpi_id: kpi_target.id,
+        entity_group_id: e.id,
+        start_time: start_time,
+        end_time: end_time,
+        average: cal,
+        frequency: interval).analyse
+
+    target = data_target[:current]
+
+    result = {}
+    result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]-24.hours).strftime("%m-%d")
+    result[:title] = "Kpi Name: #{kpi.name.gsub('_L','')}"+" "+department+" "+title+" BU Performance"
+    result[:department] = department
+    result[:value] = current
+    result[:target] = target
+    result[:axis]=data[:date]
+    render :json=>result
+  end
+
+  # GET /dashboard_items/fake_data
   # Params kpi
   # Param departments
   def fake_data

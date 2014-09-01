@@ -188,6 +188,7 @@ IFEpm::Application.routes.draw do
       get :get_data
       get :update_sequence
       get :fake_data
+      get :fake_data_time
     end
   end
 
