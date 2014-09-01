@@ -217,47 +217,91 @@
 
 <script type="text/javascript">
     $(document).ready(function (){
-        var KPIArray=[ "E1","PPM_L","RFT_L","OEE_L"],
-                i,
-                departmentArray={
-                    "0":["MB","GM","VW","Cutting"],
-                    "1":["MB","GM","VW","Cutting"],
-                    "2":["MB","GM","VW"],
-                    "3":["BU-MB","BU-GM","BU-VW"]
-                },
-                intervalArray=[100,100,100,100],
+        var arguments=[
+            {kpi:"E1",departmentArray:["MB","GM","VW","Cutting"],interval:100,everyDay:false,time_range:null},
+            {kpi:"PPM_L",departmentArray:["MB","GM","VW","Cutting"],interval:100,everyDay:false,time_range:null},
+            {kpi:"RFT_L",departmentArray:["MB","GM","VW"],interval:100,everyDay:false,time_range:null},
+            {kpi:"OEE_L",departmentArray:["BU-MB","BU-GM","BU-VW"],interval:100,everyDay:false,time_range:null},
+            {kpi:"E1",departmentArray:['MB'],interval:100,everyDay:true,time_range:"LAST15DAYS"}
+        ],
                 $targets=$("#dashBoard-show-full").find(".example-container");
-        for(i=0;i<KPIArray.length;i++){
+//        var KPIArray=[ "E1","PPM_L","RFT_L","OEE_L"],
+//                i,
+//                departmentArray={
+//                    "0":["MB","GM","VW","Cutting"],
+//                    "1":["MB","GM","VW","Cutting"],
+//                    "2":["MB","GM","VW"],
+//                    "3":["BU-MB","BU-GM","BU-VW"]
+//                },
+//                intervalArray=[100,100,100,100],
+
+        for(i=0;i<arguments.length;i++){
             (function(i){
-                $.get("/dashboard_items/fake_data",
-                        {kpi:KPIArray[i],department:departmentArray[""+i],interval:intervalArray[i]},
-                        function(data){
-                            var height=function(i){
-                                if($targets.eq(i).parents(".gs-w").height()===0){
-                                    return height(++i);
+                var item=arguments[i];
+                if(!item.everyDay){
+                    $.get("/dashboard_items/fake_data",
+                            {kpi:item.kpi,department:item.departmentArray,interval:item.interval},
+                            function(data){
+                                var height=function(i){
+                                    if($targets.eq(i).parents(".gs-w").height()===0){
+                                        return height(++i);
+                                    }
+                                    else{
+                                        return $targets.eq(i).parents(".gs-w").height();
+                                    }
                                 }
-                                else{
-                                    return $targets.eq(i).parents(".gs-w").height();
+                                if($targets.eq(i).highcharts()){
+                                    $targets.eq(i).highcharts().destroy();
                                 }
+                                var boolPPM=item.kpi.indexOf("PPM");
+                                var option={
+                                    height:height(i),
+                                    target:$targets.eq(i).attr("id"),
+                                    kpi:data.title,
+                                    date:data.time,
+                                    departmentArray:data.axis,
+                                    currentArray:data.value,
+                                    targetArray:data.target,
+                                    ppm:boolPPM===-1?0:1,
+                                    targetLine:false
+                                };
+                                var one=new DashBoardExampleChart(option);
+                                one.init();
                             }
-                            if($targets.eq(i).highcharts()){
-                                $targets.eq(i).highcharts().destroy();
+                    )
+                }
+                else{
+                    $.get("/dashboard_items/fake_data_time",
+                            {kpi:item.kpi,department:item.departmentArray[0],interval:item.interval,time_range:item.time_range},
+                            function(data){
+                                var height=function(i){
+                                    if($targets.eq(i).parents(".gs-w").height()===0){
+                                        return height(++i);
+                                    }
+                                    else{
+                                        return $targets.eq(i).parents(".gs-w").height();
+                                    }
+                                }
+                                if($targets.eq(i).highcharts()){
+                                    $targets.eq(i).highcharts().destroy();
+                                }
+                                var boolPPM=item.kpi.indexOf("PPM");
+                                var option={
+                                    height:height(i),
+                                    target:$targets.eq(i).attr("id"),
+                                    kpi:data.title,
+                                    date:data.time,
+                                    departmentArray:data.axis,
+                                    currentArray:data.value,
+                                    targetArray:data.target,
+                                    ppm:boolPPM===-1?0:1,
+                                    targetLine:true
+                                };
+                                var one=new DashBoardExampleChart(option);
+                                one.init();
                             }
-                            var boolPPM=KPIArray[i].indexOf("PPM");
-                            var option={
-                                height:height(i),
-                                target:$targets.eq(i).attr("id"),
-                                kpi:data.title,
-                                date:data.time,
-                                departmentArray:departmentArray[""+i],
-                                currentArray:data.value,
-                                targetArray:data.target,
-                                ppm:boolPPM===-1?0:1
-                            };
-                            var one=new DashBoardExampleChart(option);
-                            one.init();
-                        }
-                )
+                    )
+                }
             })(i);
 
         }
