@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+</head>
+<body>
+<p id="wayne"></p>
+<script src="javascripts/sea-modules/seajs/sea.js" id="seajsnode"></script>
+<script>
+    seajs.config({
+        base:"./javascripts/sea-modules",
+        alias:{
+            "jquery":"jquery/jquery-1.8.2.min.js"
+        }
+    });
+    seajs.use("test/main");
+</script>
+</body>
+</html>
