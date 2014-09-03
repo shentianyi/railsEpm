@@ -1,4 +1,5 @@
 define(function(require){
-  var second=require("./second");
-  second.init();
+  var $=require('jquery'),
+      second=require('./second');
+  second.example();
 });

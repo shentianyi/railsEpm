@@ -1,6 +1,5 @@
 define(function(require,exports,module){
-    var $=require("jquery");
-    exports.init=function(){
-       $("#wayne")
+    exports.example=function(){
+        $("#wayne").text("wayne");
     }
 })
