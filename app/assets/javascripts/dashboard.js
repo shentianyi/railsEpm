@@ -439,6 +439,7 @@ function on_full_size(){
 * @function on_restore_size
 * */
 function on_restore_size(){
+    window.clearInterval(INTERVAL_DASH);
     ifepm.dashboard_widget.full_size(false);
     ifepm.dashboard.full_size({fullsize:false,id:current_dashboard_id});
 }
