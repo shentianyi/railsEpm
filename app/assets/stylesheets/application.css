@@ -37,13 +37,13 @@
 *= require Log
 *= require treeview
 
-*= require STYLE
 *= require Manage-attribute
 *= require Analytics
 *= require EntryScss
 *= require layout
 *= require story_sets
 *= require kpi_subscribes
+*= require reports
 
 *= require stories.css
 
