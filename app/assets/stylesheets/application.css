@@ -49,6 +49,7 @@
 
 *= require popModal.min
 *= require dhtmlxgrid
+*= require dhtmlxdataview
 
 
 *= require_self
