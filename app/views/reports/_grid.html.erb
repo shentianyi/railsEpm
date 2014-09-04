@@ -1,13 +1,23 @@
 <div>
   <h1>Extra Excell - Calendar</h1>
-  <input type="button" value="Get as Excel"
-         onclick="mygrid.toExcel('http://dhtmlxgrid.appspot.com/export/excel');">
+  <input type="button" value="Filter" onclick="filter()">
   <div id="gridbox" style="width:600px; height:250px; background-color:white;"></div>
 </div>
 <% content_for :javascript_includes do%>
     <%= javascript_include_tag "dhtmlxgrid"%>
 <%end%>
 <script>
+    function filter() {
+        mygrid.filterBy(2,function(a){
+            if(a == "John Grisham" || a == "Stephen King"){
+                return true
+            }
+            else{
+                return false
+            }
+        });
+    }
+
     mygrid = {}
     $(document).ready(function(){
         mygrid = new dhtmlXGridObject('gridbox');
