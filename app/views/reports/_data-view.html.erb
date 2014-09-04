@@ -1,0 +1,51 @@
+<div id="data_container" style="border:1px solid #A4BED4; background-color:white; width:710px;height:392px;">
+
+</div>
+<input type="button" onclick="data.parse(Data2,'json')" value="ADD"></input>
+
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "dhtmlxdataview" %>
+<% end %>
+<script>
+  data = {}
+    $(document).ready(function () {
+        data = new dhtmlXDataView({
+            container: "data_container",
+            type: {
+                template: "<span class='dhx_strong'>Target: #Maintaner#</span>Defec: #Package# <span class='dhx_light'>Passed: #Version#</span>",
+                height: 35
+            }
+        });
+        data.parse(Data1, "json");
+    });
+
+    Data1 = [
+        {
+            "id": "1",
+            "Package": "Shanghai",
+            "Version": "182.125",
+            "Maintaner": "CF001"
+        },
+        {
+            "id": "3",
+            "Package": "Wuhuan",
+            "Version": "182.125",
+            "Maintaner": "CF001"
+        }
+    ]
+
+    Data2 = [
+        {
+            "id": "1",
+            "Package": "Suzhou",
+            "Version": "125.235",
+            "Maintaner": "CF003"
+        },
+        {
+            "id": "2",
+            "Package": "Nanjing",
+            "Version": "125.235",
+            "Maintaner": "CF003"
+        }
+    ]
+</script>
