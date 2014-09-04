@@ -15,8 +15,7 @@ IFEpm::Application.routes.draw do
     end
   end
 
-
-
+  resources :reports
 
   resources :comments
 
