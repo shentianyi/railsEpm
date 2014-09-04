@@ -48,6 +48,7 @@
 *= require stories.css
 
 *= require popModal.min
+*= require dhtmlxgrid
 
 
 *= require_self
