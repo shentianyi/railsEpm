@@ -1,0 +1,28 @@
+<div>
+  <h1>Extra Excell - Calendar</h1>
+  <div id="gridbox" style="width:503px;height:145px;background-color:white;"></div>
+</div>
+<% content_for :javascript_includes do%>
+    <%= javascript_include_tag "dhtmlxgrid"%>
+<%end%>
+<script>
+  data = {
+      rows:[
+          {id:1,data:["A Time to Kill","John Grisham","100"]},
+          {id:2,data:["Blood and Smoke","Sedaksd","2000"]},
+          {id:3,data:["dasdasdsd","dasdasd","200"]}
+      ]
+  }
+
+    mygrid = new dhtmlXGridObject('gridbox');
+    mygrid.setImagePath("../../../codebase/imgs/");
+    mygrid.setHeader("Name,Date of Birth, First Book Published");
+    mygrid.setInitWidths("*,100,100")
+    mygrid.setColAlign("left,center,center")
+    mygrid.setColTypes("ed,dhxCalendar,dhxCalendarA");
+    mygrid.setColSorting("str,date,date")
+    mygrid.setSkin("dhx_skyblue")
+    mygrid.init();
+    //mygrid.loadXML("../common/grid_dates.xml");
+    mygrid.parse(data,"json");
+</script>
