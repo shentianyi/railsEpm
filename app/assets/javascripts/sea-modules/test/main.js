@@ -1,4 +1,3 @@
 define(function(require){
-  var $=require('jquery');
-    $("#wayne").text("wayne");
+  console.log("here")
 });
