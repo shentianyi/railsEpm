@@ -1,0 +1,15 @@
+<%= render "my-reports" %>
+<div class="report-content">
+  <%= render "current-status"%>
+</div>
+<script src="../../assets/javascripts/sea-modules/seajs/2.3.0/dist/sea.js" id="seajsnode"></script>
+<script>
+    seajs.config({
+        base:"../../assets/javascripts/sea-modules/",
+        alias: {
+            "jquery":"jquery/1.8.3/jquery",
+            "highcharts":"highcharts/4.0.1/highcharts"
+        }
+    });
+    seajs.use("test/main");
+</script>

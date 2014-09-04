@@ -1,5 +1,5 @@
 class Story < ActiveRecord::Base
-  attr_accessible :title, :description, :story_set_id, :comment_count, :chart_count
+  attr_accessible :title, :description, :story_set_id, :comment_count, :chart_count, :chart_type
   belongs_to :user
   belongs_to :story_set
   has_many :chart_conditions, :as => :chartable, :dependent => :destroy

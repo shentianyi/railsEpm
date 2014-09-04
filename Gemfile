@@ -110,3 +110,4 @@ gem 'chinese_pinyin'
 #gem 'redis-search'
 
 # Front-end module
+gem "seajs-rails"
