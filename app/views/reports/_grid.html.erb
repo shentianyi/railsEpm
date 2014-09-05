@@ -4,15 +4,11 @@
 </div>
 <div width="500px">
   <select multiple class="chosen-select" data-placeholder="Model" id="deffect-model">
-
   </select>
 
   <select multiple class="chosen-select" data-placeholder="Phase" id="deffect-phase">
-
   </select>
-
   <select multiple class="chosen-select" data-placeholder="Deffect Date" id="deffect-date">
-
   </select>
 </div>
 <div>
@@ -22,64 +18,13 @@
 
 <% content_for :javascript_includes do%>
     <%= javascript_include_tag "dhtmlxgrid"%>
+    <%= javascript_include_tag "func-module/chosen"%>
+    <%= javascript_include_tag "reports/grid"%>
+    <%= javascript_include_tag "reports/grideData"%>
 <%end%>
 <script>
-    mygrid = {}
     $(document).ready(function(){
-        mygrid = new dhtmlXGridObject('gridbox');
-        mygrid.setImagePath("/assets/dhtmlx/");
-        mygrid.setHeader("VIN,Model,Station,Phase,Date,Is Serious");
-        mygrid.attachHeader("#text_search,#select_filter,#select_filter,#select_filter,5,6");
-        mygrid.setInitWidths("150,100,120,100,120,120");
-        mygrid.enableAutoWidth(true);
-        mygrid.setColAlign("right,left,left,right,center,left");
-        mygrid.setColTypes("ro,ro,ro,ro,rotxt,ch");
-        mygrid.getCombo(5).put(2,2);
-        mygrid.setColSorting("str,str,str,str,date,int");
-        mygrid.setSkin("dhx_skyblue");
-        mygrid.init();
-        mygrid.enableSmartRendering(true);
-        mygrid.parse(data,"json");
-
-        var models = mygrid.collectValues(1);
-        for(i=0;i<models.length;i++){
-            $("#deffect-model option").remove();
-            $("#deffect-model").append("<option>"+models[i]+"</option>");
-        }
-        //var phases = mygrid.collectValues(3);
-        //var dates = mygrid.collectValues(4);
-    });
-
-    data={
-        rows:[
-            { id:1001,
-                data:[
-                    "L12123223",
-                    "CF11",
-                    "BBO",
-                    "PH1",
-                    "05/01/1998",
-                    "1"] },
-            { id:1002,
-                data:[
-                    "L12123223",
-                    "CF11",
-                    "BBA",
-                    "PH2",
-                    "05/01/1998",
-                    "1"] },
-            { id:1003,
-                data:[
-                    "L12123221",
-                    "CF11",
-                    "BBO",
-                    "PH1",
-                    "05/02/1998",
-                    "1"] },
-
-        ]
-    }
-
-
+        grid.init();
+    })
 
 </script>
