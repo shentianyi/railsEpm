@@ -1,4 +1,5 @@
 var grid = {};
+grid.o = {};
 grid.init = function () {
     chosen.init(
         ["deffect-model", "deffect-phase", "deffect-date"],
@@ -19,7 +20,10 @@ grid.init = function () {
     mygrid.init();
     mygrid.enableSmartRendering(true);
     mygrid.parse(grideData, "json");
-
+    mygrid.attachEvent("onFilterEnd",function(elements){
+        grid.onfilter(elements);
+    });
+    grid.o = mygrid;
     var models = mygrid.collectValues(1);
     $("#deffect-model option").remove();
     for (i = 0; i < models.length; i++) {
@@ -42,4 +46,65 @@ grid.init = function () {
         $("#deffect-date").append("<option>" + dates[i] + "</option>");
     }
     chosen.single_update("deffect-date");
+}
+
+grid.onfilter = function(els){
+    
+}
+
+grid.filter = function(){
+    grid.o.filterByAll();
+
+    var models = [];
+    var i = 0;
+    $("#deffect-model option:selected").each(function(){
+        models[i] = $(this).text();
+        i++;
+    });
+    if(models.length > 0)
+    {
+        grid.o.filterBy(1,function(a){
+            for(j = 0;j<models.length;j++){
+                if(a == models[j]){
+                    return true;
+                }
+            }
+        })
+    }
+
+    var phases = [];
+    i = 0;
+    $("#deffect-phase option:selected").each(function(){
+        phases[i] = $(this).text();
+        i++;
+    });
+    if(phases.length > 0)
+    {
+        grid.o.filterBy(3,function(a){
+            for(j = 0;j<phases.length;j++){
+                if(a == phases[j]){
+                    return true;
+                }
+            }
+        })
+    }
+
+
+    var dates = [];
+    i = 0;
+    $("#deffect-date option:selected").each(function(){
+        dates[i] = $(this).text();
+        i++;
+    });
+    if(dates.length > 0)
+    {
+        grid.o.filterBy(4,function(a){
+            for(j = 0;j<dates.length;j++){
+                if(a == dates[j]){
+                    return true;
+                }
+            }
+        })
+    }
+
 }
