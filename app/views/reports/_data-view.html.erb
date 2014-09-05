@@ -2,87 +2,25 @@
   <div class="header">
     <div class="left">
       <p>First Time Quality (FTQ) Summary Percentage</p>
-
-      <p id=""></p>
-
+      <p id="current-date"></p>
       <p>Early shift</p>
     </div>
     <div class="right">
-      <p></p>
+      <p><span>Current time:</span><span id="current-clock"></span></p>
       <select id="vechile-select">
         <option>Vehicle_1</option>
         <option>Vehicle_2</option>
         <option>Vehicle_3</option>
       </select>
-
-      <!-----------------Data View---------------------------->
-      <div id="data_container" style="border:1px solid #A4BED4; background-color:white; width:710px;height:392px;">
-
-      </div>
-      <!-----------------Data View---------------------------->
     </div>
   </div>
+  <div id="data_container" class="data-container" ></div>
+
 </section>
 
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "dhtmlxdataview" %>
-    <%= javascript_include_tag "data-view" %>
+    <%= javascript_include_tag "reports/data-view" %>
+    <%= javascript_include_tag "reports/current_status" %>
+    <%= javascript_include_tag "reports/vdata" %>
 <% end %>
-<script>
-    data = {}
-    $(document).ready(function () {
-        DV.init("data_container");
-        DV.parse(vdata["Vehicle_1"]);
-
-        $("#vechile-select").change(function () {
-            DV.clear();
-            var a = $("#vechile-select option:selected").text();
-            console.log(a);
-            DV.parse(vdata[a]);
-        });
-    });
-
-    vdata = {
-        Vehicle_1: [
-            {
-                "id": "1",
-                "INQA": "iQ1",
-                "Defects": "20",
-                "Pass": "25",
-                "FTQ":"85%"
-            },
-            {
-                "id": "2",
-                "INQA": "iQ2",
-                "Defects": "20",
-                "Pass": "23",
-                "FTQ":"90%"
-            }
-        ],
-        Vehicle_2: [
-            {
-                "id": "1",
-                "INQA": "iQ Total",
-                "Defects": "20",
-                "Pass": "25",
-                "FTQ":"85%"
-            },
-            {
-                "id": "2",
-                "INQA": "iQ Door",
-                "Defects": "20",
-                "Pass": "21",
-                "FTQ":"81%"
-            }
-        ],
-        Vehicle_3: [
-            {
-                "id": "1",
-                "INQA": "iQ1",
-                "Defects": "20",
-                "Pass": "25",
-                "FTQ":"85%"
-            }
-        ]
-    }
-</script>

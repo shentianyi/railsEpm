@@ -13,6 +13,7 @@ $main-height:600px - 70px;
   position:relative;
   section{
     background:lighten($nav-dark,4%);
+    @include box-shadow-inset(-3px,0px,8px,rgba(0,0,0,0.1));
     height:100%;
     &>.header{
       width:100%;
@@ -93,19 +94,63 @@ $main-height:600px - 70px;
   // >>>>>>>>>>>>>>>>>>>current status
   .current-status{
     .header{
+      width:100%;
+      height:55px;
+      border-bottom:1px solid rgba(0,0,0,0.2);
+      $margin-top:8px;
       .left{
         float:left;
         @include box-sizing-border;
         width:50%;
+        p{
+          $margin-left:10px;
+          margin:0px;
+          font-size:14px;
+          display: inline-block;
+          margin-left:$margin-left;
+          &:first-of-type{
+            font-size:18px;
+            display:block;
+            margin-top:$margin-top;
+            margin-left:$margin-left;
+          }
+          &:nth-of-type(3){
+            color:$golden-text;
+          }
+        }
       }
       .right{
         float:left;
         @include box-sizing-border;
         width:50%;
+        $magin-right:40px;
+        p{
+          float:right;
+          font-size:18px;
+          margin:0px;
+          margin-top:$margin-top;
+          margin-right:$magin-right;
+          span{
+            display:inline-block;
+          }
+          span:first-of-type{
+            margin-right:8px;
+          }
+        }
+        select{
+          margin-right:$magin-right;
+          clear:right;
+          float:right;
+          width:240px;
+          paddding:5px 6px;
+        }
       }
     }
-    width:100%;
-    height:55px;
-    border-bottom:1px solid rgba(0,0,0,0.2);
+    .data-container{
+      background-color:#fff;
+      width:100%;
+      overflow-y:auto;
+      height:392px;
+    }
   }
 }

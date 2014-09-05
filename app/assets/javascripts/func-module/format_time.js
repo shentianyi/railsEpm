@@ -30,3 +30,7 @@ format_time.current_time=function(){
         year=current_date.getFullYear();
     return day+" "+date+" "+month+" "+year;
 }
+format_time.current_time_clock=function(){
+    var current_date=new Date().toString();
+    return current_date.split(" ")[4];
+}
