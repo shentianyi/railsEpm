@@ -2,6 +2,9 @@ IFEpm::Application.routes.draw do
 
 
 
+  resources :report_snaps
+
+
   #show notification list for ipad temporily
   #get "/notification/list" => "push_notifications#list"
   match "/notification/list", to: 'push_notifications#list', via: :get
@@ -15,7 +18,12 @@ IFEpm::Application.routes.draw do
     end
   end
 
-  resources :reports
+  resources :reports do
+    collection do
+      get ':part'=>:index
+      get ':part/:ajax'=>:index
+    end
+  end
 
   resources :comments
 

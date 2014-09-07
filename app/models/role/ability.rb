@@ -9,7 +9,7 @@ class Ability
       can :manage, [User, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem,
                     UserKpiItem, UserSession, Dashboard, DashboardItem, DashboardCondition, Email,
                     KpiProperty, KpiPropertyItem, KpiPropertyValue,StorySet,Story,Comment,
-                    ChartCondition,StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert]
+                    ChartCondition,StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert,ReportSnap]
       can :manage, UserSession, :email => user.email
 
       can :read, EntityGroup, user_entity_groups: {user_id: user.id}
@@ -23,7 +23,7 @@ class Ability
     elsif user.director?
       can :manage, [EntityGroupItem, UserKpiItem, KpiEntry, Dashboard, DashboardItem, DashboardCondition, Email,
                     KpiProperty, KpiPropertyItem, KpiPropertyValue,StorySet,Story,Comment,ChartCondition,
-                    StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert]
+                    StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert,ReportSnap]
       can :manage, User, :id => user.id
 
       can :manage, UserSession, :email => user.email

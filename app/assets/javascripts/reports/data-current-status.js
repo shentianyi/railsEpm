@@ -1,4 +1,4 @@
-var vdata = {
+var d_current_status = {
     Vehicle_1: [
         {
             "id": "1",
