@@ -1,5 +1,5 @@
-<section class="current-status">
-  <div class="header">
+<section class="current-status" id="current-status">
+  <div class="header" id="current-status-header">
     <div class="left">
       <p>First Time Quality (FTQ) Summary Percentage</p>
 
@@ -16,8 +16,16 @@
       </select>
     </div>
   </div>
-  <div id="data_container" class="data-container"></div>
-
+  <div id="data_container" class="data-container" ></div>
+  <div class="button-group" id="current-status-button-group">
+    <a class="btn btn-func">Refresh</a>
+    <a class="btn btn-func">Quick print</a>
+    <a class="btn btn-func">Excel</a>
+    <a class="btn btn-func">Target</a>
+    <a class="btn btn-func">All defects</a>
+    <a class="btn btn-func">Key station defects</a>
+    <a class="btn btn-func">Change data</a>
+  </div>
 </section>
 <input type="button" value="Excel" onclick="export_data_view_excel()"/>
 <% content_for :javascript_includes do %>

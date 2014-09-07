@@ -7,4 +7,13 @@ current_status.init=function(container_id,data){
         var a = $("#vechile-select option:selected").text();
         DV.parse(vdata[a]);
     });
+    current_status.flexible();
+    window.onresize=function(){
+        current_status.flexible();
+    }
+}
+current_status.flexible=function(){
+    var total_height=$("#wrap-main").height()-$("header").height()-1;
+    var height=total_height-$("#current-status-header").height()-$("#current-status-button-group").height()-2;
+    $("#data_container").height(height);
 }

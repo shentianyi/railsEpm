@@ -44,6 +44,7 @@
 *= require story_sets
 *= require kpi_subscribes
 *= require reports
+*= require dataview/dataview_tiem
 
 *= require stories.css
 

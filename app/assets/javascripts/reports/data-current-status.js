@@ -13,6 +13,62 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90%"
+        },
+        {
+            "id": "3",
+            "INQA": "iQ1",
+            "Defects": "20",
+            "Pass": "25",
+            "FTQ":"85%"
+        },
+        {
+            "id": "4",
+            "INQA": "iQ2",
+            "Defects": "20",
+            "Pass": "23",
+            "FTQ":"90%"
+        },
+        {
+            "id": "5",
+            "INQA": "iQ1",
+            "Defects": "20",
+            "Pass": "25",
+            "FTQ":"85%"
+        },
+        {
+            "id": "6",
+            "INQA": "iQ2",
+            "Defects": "20",
+            "Pass": "23",
+            "FTQ":"90%"
+        },
+        {
+            "id": "7",
+            "INQA": "iQ1",
+            "Defects": "20",
+            "Pass": "25",
+            "FTQ":"85%"
+        },
+        {
+            "id": "8",
+            "INQA": "iQ2",
+            "Defects": "20",
+            "Pass": "23",
+            "FTQ":"90%"
+        },
+        {
+            "id": "9",
+            "INQA": "iQ1",
+            "Defects": "20",
+            "Pass": "25",
+            "FTQ":"85%"
+        },
+        {
+            "id": "10",
+            "INQA": "iQ2",
+            "Defects": "20",
+            "Pass": "23",
+            "FTQ":"90%"
         }
     ],
     Vehicle_2: [
