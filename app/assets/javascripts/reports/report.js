@@ -1,9 +1,9 @@
 var Report = Report || {};
 Report.option = {};
 Report.r = {};
-Report.init = function(option){
+Report.init = function (option) {
     this.option = option;
-    switch(option.type){
+    switch (option.type) {
         case 'current-status':
             this.r = DV;
             break;
@@ -17,17 +17,18 @@ Report.init = function(option){
             break;
     }
     this.r.init(option);
+    init_snap();
     //load data
     var data = this.get_json();
     this.json_parse(data);
-}
+};
 
 Report.json_parse = function (jsondata) {
-    this.r.parse(jsondata,'json');
-}
+    this.r.parse(jsondata, 'json');
+};
 
-Report.get_json = function(){
-    switch(this.option.type){
+Report.get_json = function () {
+    switch (this.option.type) {
         case 'current-status':
             return d_current_status['Vehicle_1'];
         case 'station-data':
@@ -37,4 +38,8 @@ Report.get_json = function(){
         default :
             return null;
     }
-}
+};
+
+Report.serializeToJson = function () {
+    return  this.r.o.serializeToJson();
+};

@@ -42,4 +42,4 @@
 
         Report.init(option);
     })
-})()
+})();

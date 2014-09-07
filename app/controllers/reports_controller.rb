@@ -10,7 +10,8 @@ class ReportsController < ApplicationController
       else
         @partial = 'data-view'
     end
-
+    # snaps
+    @snaps=current_user.report_snaps.where(type_string: 'current-status').order('created_at desc').all
     render :partial => @partial if params[:ajax]
   end
 end

@@ -1,0 +1,8 @@
+<ul>
+  <% @snaps.each do |snap| %>
+      <li class="snap-li" snap="<%= snap.id %>" type="<%= snap.type_string %>">
+        <span>Desc:<%= snap.desc %></span>
+        <span>CreatedAt:<%= time_ago_in_words(snap.created_at.localtime) %> ago</span>
+      </li>
+  <% end %>
+</ul>

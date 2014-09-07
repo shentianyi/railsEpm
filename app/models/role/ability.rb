@@ -8,8 +8,8 @@ class Ability
     if user.admin?
       can :manage, [User, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem,
                     UserKpiItem, UserSession, Dashboard, DashboardItem, DashboardCondition, Email,
-                    KpiProperty, KpiPropertyItem, KpiPropertyValue,StorySet,Story,Comment,
-                    ChartCondition,StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert,ReportSnap]
+                    KpiProperty, KpiPropertyItem, KpiPropertyValue, StorySet, Story, Comment,
+                    ChartCondition, StorySetUser, KpiSubscribe, KpiSubscribeUser, KpiSubscribeAlert, ReportSnap]
       can :manage, UserSession, :email => user.email
 
       can :read, EntityGroup, user_entity_groups: {user_id: user.id}
@@ -22,8 +22,8 @@ class Ability
       #can :read,:all
     elsif user.director?
       can :manage, [EntityGroupItem, UserKpiItem, KpiEntry, Dashboard, DashboardItem, DashboardCondition, Email,
-                    KpiProperty, KpiPropertyItem, KpiPropertyValue,StorySet,Story,Comment,ChartCondition,
-                    StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert,ReportSnap]
+                    KpiProperty, KpiPropertyItem, KpiPropertyValue, StorySet, Story, Comment, ChartCondition,
+                    StorySetUser, KpiSubscribe, KpiSubscribeUser, KpiSubscribeAlert]
       can :manage, User, :id => user.id
 
       can :manage, UserSession, :email => user.email
@@ -37,10 +37,11 @@ class Ability
       can :basic_modify, UserEntityGroup, entity_group: {user_id: user.id}
 
       can :read, KpiCategory, kpis: {department_kpis: {department_id: user.user_departments.pluck(:department_id)}}
-      can [:read, :access,:access_list,:categoried, :properties,:group_properties], Kpi, department_kpis: {department_id: user.user_departments.pluck(:department_id)}
+      can [:read, :access, :access_list, :categoried, :properties, :group_properties], Kpi, department_kpis: {department_id: user.user_departments.pluck(:department_id)}
       #can :read, Department, user_id: user.id
       can [:read, :property_value], KpiProperty
       can :read, [KpiPropertyItem, KpiPropertyValue]
+      can :manage, ReportSnap, user_id: user.id
     elsif user.user?
       can :manage, User, :id => user.id
       can :manage, UserSession, :email => user.email
@@ -52,13 +53,13 @@ class Ability
       can :basic_modify, EntityGroupItem, user_id: user.id
 
       can :read, KpiCategory, kpis: {user_kpi_items: {user_id: user.id}}
-      can [:read, :categoried, :access, :access_list,:properties,:group_properties], Kpi, user_kpi_items: {user_id: user.id}
+      can [:read, :categoried, :access, :access_list, :properties, :group_properties], Kpi, user_kpi_items: {user_id: user.id}
 
       can :manage, UserKpiItem, :user_id => user.id
       can :manage, KpiEntry, :user_id => user.id
 
       can :manage, Email, :user_id => user.id
-      can :read, [KpiProperty, KpiPropertyItem,StorySet,Story,Comment,ChartCondition,StorySetUser,KpiSubscribe,KpiSubscribeUser,KpiSubscribeAlert]
+      can :read, [KpiProperty, KpiPropertyItem, StorySet, Story, Comment, ChartCondition, StorySetUser, KpiSubscribe, KpiSubscribeUser, KpiSubscribeAlert]
       can :manage, KpiPropertyValue
     end
   end

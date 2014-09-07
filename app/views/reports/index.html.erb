@@ -2,18 +2,18 @@
 
 <div class="report-content" id="report-content">
   <% case @partial %>
-  <% when 'grid'%>
+  <% when 'grid' %>
       <%= render "grid" %>
-  <% when 'data-view'%>
+  <% when 'data-view' %>
       <%= render "data-view" %>
-  <%end%>
-
+  <% end %>
 </div>
-<% content_for :javascript_includes do%>
-    <%= javascript_include_tag "func-module/format_time.js"%>
-    <%= javascript_include_tag "preload/classie.js"%>
-    <%= javascript_include_tag "preload/snap.svg-min.js"%>
-    <%= javascript_include_tag "preload/svgLoader.js"%>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "func-module/format_time.js" %>
+    <%= javascript_include_tag "preload/classie.js" %>
+    <%= javascript_include_tag "preload/snap.svg-min.js" %>
+    <%= javascript_include_tag "preload/svgLoader.js" %>
     <%= javascript_include_tag "reports/report.js" %>
-    <%= javascript_include_tag "reports/main.js"%>
-<%end%>
+    <%= javascript_include_tag "reports/main.js" %>
+    <%= javascript_include_tag "reports/snap" %>
+<% end %>

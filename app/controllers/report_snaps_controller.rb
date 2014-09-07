@@ -41,16 +41,9 @@ class ReportSnapsController < ApplicationController
   # POST /report_snaps.json
   def create
     @report_snap = ReportSnap.new(params[:report_snap])
-
-    respond_to do |format|
-      if @report_snap.save
-        format.html { redirect_to @report_snap, notice: 'Report snap was successfully created.' }
-        format.json { render json: @report_snap, status: :created, location: @report_snap }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @report_snap.errors, status: :unprocessable_entity }
-      end
-    end
+    @report_snap.user=current_user
+    @report_snap.save
+    render json: {result: true, content: @report_snap}
   end
 
   # PUT /report_snaps/1

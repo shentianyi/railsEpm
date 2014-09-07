@@ -33,6 +33,7 @@ dhtmlXDataView.prototype.toExcel = function (url) {
         })).appendTo('body').submit();
 };
 dhtmlXDataView.prototype.serializeToJson = function () {
+//    console.log(this.serialize());
     return this.serialize();
 };
 
@@ -65,7 +66,6 @@ DV.init = function (option) {
 
         }
     });
-    init_snap(DV.dv);
 };
 
 DV.parse = function (jsondata) {

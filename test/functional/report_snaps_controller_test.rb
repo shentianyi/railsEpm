@@ -18,7 +18,7 @@ class ReportSnapsControllerTest < ActionController::TestCase
 
   test "should create report_snap" do
     assert_difference('ReportSnap.count') do
-      post :create, report_snap: { data: @report_snap.data, desc: @report_snap.desc, type: @report_snap.type }
+      post :create, report_snap: { data: @report_snap.data, desc: @report_snap.desc, type: @report_snap.type, type_string: @report_snap.type_string }
     end
 
     assert_redirected_to report_snap_path(assigns(:report_snap))
@@ -35,7 +35,7 @@ class ReportSnapsControllerTest < ActionController::TestCase
   end
 
   test "should update report_snap" do
-    put :update, id: @report_snap, report_snap: { data: @report_snap.data, desc: @report_snap.desc, type: @report_snap.type }
+    put :update, id: @report_snap, report_snap: { data: @report_snap.data, desc: @report_snap.desc, type: @report_snap.type, type_string: @report_snap.type_string }
     assert_redirected_to report_snap_path(assigns(:report_snap))
   end
 

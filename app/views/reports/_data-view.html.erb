@@ -16,21 +16,20 @@
       </select>
     </div>
   </div>
-  <div id="data_container" class="data-container" ></div>
+  <div id="data_container" class="data-container"></div>
   <div class="button-group" id="current-status-button-group">
     <a class="btn btn-func">Refresh</a>
     <a class="btn btn-func">Quick print</a>
-    <a class="btn btn-func">Excel</a>
+    <a class="btn btn-func" onclick="export_data_view_excel()">Excel</a>
     <a class="btn btn-func">Target</a>
     <a class="btn btn-func">All defects</a>
     <a class="btn btn-func">Key station defects</a>
     <a class="btn btn-func">Change data</a>
   </div>
 </section>
-<input type="button" value="Excel" onclick="export_data_view_excel()"/>
+<%= render 'snap' %>
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "dhtmlx" %>
     <%= javascript_include_tag "reports/data-view" %>
-    <%= javascript_include_tag "reports/snap"%>
     <%= javascript_include_tag "reports/data-current-status" %>
 <% end %>

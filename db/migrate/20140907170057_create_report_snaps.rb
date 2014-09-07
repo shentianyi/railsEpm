@@ -3,6 +3,7 @@ class CreateReportSnaps < ActiveRecord::Migration
     create_table :report_snaps do |t|
       t.string :desc
       t.integer :type
+      t.string :type_string
       t.references :user
       t.text :data
       t.references :tenant
