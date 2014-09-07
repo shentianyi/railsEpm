@@ -26,7 +26,11 @@
         Report.init(option);
 
         $("#my-reports li").on('click',function(){
-
+            $("#my-reports li a").removeClass("active");
+            $(this).find("a").addClass("active");
+            var now_href=window.location.href.split("/");
+            var length=now_href.length;
+            
         });
     })
 })()
