@@ -11,6 +11,7 @@ class ReportsController < ApplicationController
         @partial = 'data-view'
     end
     # snaps
+    #@partial='grid'
     @snaps=current_user.report_snaps.where(type_string: 'current-status').order('created_at desc').all
     render :partial => @partial if params[:ajax]
   end
