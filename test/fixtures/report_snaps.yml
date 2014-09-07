@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  desc: MyString
+  type: 1
+  user: 
+  data: MyText
+  tenant: 
+
+two:
+  desc: MyString
+  type: 1
+  user: 
+  data: MyText
+  tenant: 

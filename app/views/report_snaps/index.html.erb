@@ -1,0 +1,31 @@
+<h1>Listing report_snaps</h1>
+
+<table>
+  <tr>
+    <th>Desc</th>
+    <th>Type</th>
+    <th>User</th>
+    <th>Data</th>
+    <th>Tenant</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @report_snaps.each do |report_snap| %>
+  <tr>
+    <td><%= report_snap.desc %></td>
+    <td><%= report_snap.type %></td>
+    <td><%= report_snap.user %></td>
+    <td><%= report_snap.data %></td>
+    <td><%= report_snap.tenant %></td>
+    <td><%= link_to 'Show', report_snap %></td>
+    <td><%= link_to 'Edit', edit_report_snap_path(report_snap) %></td>
+    <td><%= link_to 'Destroy', report_snap, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Report snap', new_report_snap_path %>
