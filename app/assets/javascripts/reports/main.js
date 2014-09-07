@@ -9,5 +9,9 @@
         grid.init();
         //DV.init("data_container");
         //DV.parse(vdata);
+
+        $("#my-reports li").on('click',function(){
+
+        });
     })
 })()

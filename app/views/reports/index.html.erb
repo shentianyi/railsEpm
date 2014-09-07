@@ -1,6 +1,11 @@
 <%= render "my-reports" %>
-<div class="report-content">
-  <%= render "data-view"%>
+<div class="report-content" id="report-content">
+  <% case @partial %>
+  <% when 'grid'%>
+      <%= render "grid" %>
+  <% when 'data-view'%>
+      <%= render "data-view" %>
+  <%end%>
 </div>
 <% content_for :javascript_includes do%>
     <!-- alias js -->
