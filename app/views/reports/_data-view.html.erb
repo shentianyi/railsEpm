@@ -2,7 +2,9 @@
   <div class="header">
     <div class="left">
       <p>First Time Quality (FTQ) Summary Percentage</p>
+
       <p id="current-date"></p>
+
       <p>Early shift</p>
     </div>
     <div class="right">
@@ -14,13 +16,14 @@
       </select>
     </div>
   </div>
-  <div id="data_container" class="data-container" ></div>
+  <div id="data_container" class="data-container"></div>
 
 </section>
-
+<input type="button" value="Excel" onclick="export_data_view_excel()"/>
 <% content_for :javascript_includes do %>
-    <%= javascript_include_tag "dhtmlxdataview" %>
+    <%= javascript_include_tag "dhtmlx" %>
     <%= javascript_include_tag "reports/data-view" %>
     <%= javascript_include_tag "reports/current_status" %>
     <%= javascript_include_tag "reports/vdata" %>
+    <%= javascript_include_tag "reports/snap"%>
 <% end %>

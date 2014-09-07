@@ -17,13 +17,16 @@ class Story < ActiveRecord::Base
       if query
         data = Entry::Analyzer.new(query).analyse
         KpiEntryAnalyseCache.new(id: c.id, cacheable_type: c.class.name, query: query.to_json, chart_data: data).save
+        #c.query=query
+        #c.data=data
+        c.update_attributes(query: query.to_json, data: data.to_json)
       end
     end
 
     user_ids= StorySet.find_collaborator_set(self.story_set_id).select { |u| u.to_i!=self.user_id }
     UserMessage.add_new_story_messgage(user_ids)
 
-    EventMessage.new(sender_id: self.user_id, receiver_ids:user_ids, content: self.title,
+    EventMessage.new(sender_id: self.user_id, receiver_ids: user_ids, content: self.title,
                      messageble_type: self.class.name, messageable_id: self.id,
                      type: EventMessageType::NEW_STORY).save
 

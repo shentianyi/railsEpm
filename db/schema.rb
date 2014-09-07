@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140904034653) do
+ActiveRecord::Schema.define(:version => 20140907104239) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(:version => 20140904034653) do
     t.datetime "updated_at",      :null => false
     t.string   "chart_type"
     t.string   "kpi_property"
+    t.text     "query"
+    t.text     "data"
   end
 
   add_index "chart_conditions", ["entity_group_id"], :name => "index_chart_conditions_on_entity_group_id"
@@ -409,6 +411,19 @@ ActiveRecord::Schema.define(:version => 20140904034653) do
 
   add_index "oauth_applications", ["owner_id", "owner_type"], :name => "index_oauth_applications_on_owner_id_and_owner_type"
   add_index "oauth_applications", ["uid"], :name => "index_oauth_applications_on_uid", :unique => true
+
+  create_table "report_snaps", :force => true do |t|
+    t.string   "desc"
+    t.integer  "type"
+    t.integer  "user_id"
+    t.text     "data"
+    t.integer  "tenant_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "report_snaps", ["tenant_id"], :name => "index_report_snaps_on_tenant_id"
+  add_index "report_snaps", ["user_id"], :name => "index_report_snaps_on_user_id"
 
   create_table "stories", :force => true do |t|
     t.string   "title"
