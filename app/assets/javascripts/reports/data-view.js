@@ -1,3 +1,12 @@
+(function(){
+    $(document).ready(function(){
+        $("#vehicle-select").change(function(){
+            DV.parse(d_current_status[$("#vehicle-select option:selected").text()]);
+        });
+    });
+})();
+
+
 dhtmlXDataView.prototype.toExcel = function (url) {
     console.log(url);
     var data = this.serialize();

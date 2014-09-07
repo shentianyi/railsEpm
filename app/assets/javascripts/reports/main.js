@@ -13,6 +13,10 @@
             $(this).find("a").addClass("active");
             var now_href = window.location.href.split("/");
             var length = now_href.length;
+            //=============
+            //load partial view
+
+            //=============
             var left = document.getElementById("report-menu").getBoundingClientRect().right,
                 top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
             $(".pageload-overlay svg").css('left', left);
