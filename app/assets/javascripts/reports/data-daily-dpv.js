@@ -1,4 +1,4 @@
-grideData={
+var d_daily_dpv = {
     rows:[
         { id:1001,
             data:[

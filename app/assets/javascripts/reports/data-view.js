@@ -1,8 +1,8 @@
-var DV = {} || DataView
-DV.dv = {}
-DV.init = function (container) {
-    this.dv = new dhtmlXDataView({
-        container: container,
+var DV = {} || DV
+DV.o = {}
+DV.init = function (option) {
+    this.o = new dhtmlXDataView({
+        container: option.container,
         type: {
             template: "<span class='dhx_strong'>#INQA#</span> #FTQ# <span class='dhx_light'>#Defects#</span>-<span class='dhx_light'>#Pass#</span>",
             height: 35
@@ -11,9 +11,9 @@ DV.init = function (container) {
 }
 
 DV.parse = function(jsondata){
-    this.dv.parse(jsondata,"json");
+    this.o.parse(jsondata,"json");
 }
 
 DV.clear = function(){
-    this.dv.clearAll();
+    this.o.clearAll();
 }

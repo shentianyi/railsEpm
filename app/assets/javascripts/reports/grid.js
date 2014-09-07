@@ -1,6 +1,6 @@
-var grid = {};
-grid.o = {};
-grid.init = function () {
+var Grid = {};
+Grid.o = {};
+Grid.init = function (option) {
     chosen.init(
         ["deffect-model", "deffect-phase", "deffect-date"],
         [220, 220, 220]
@@ -21,9 +21,11 @@ grid.init = function () {
     mygrid.enableSmartRendering(true);
     mygrid.parse(grideData, "json");
     mygrid.attachEvent("onFilterEnd",function(elements){
-        grid.onfilter(elements);
+        Grid.onfilter(elements);
     });
-    grid.o = mygrid;
+
+    this.o = mygrid;
+
     var models = mygrid.collectValues(1);
     $("#deffect-model option").remove();
     for (i = 0; i < models.length; i++) {
@@ -48,11 +50,11 @@ grid.init = function () {
     chosen.single_update("deffect-date");
 }
 
-grid.onfilter = function(els){
+Grid.onfilter = function(els){
     
 }
 
-grid.filter = function(){
+Grid.filter = function(){
     grid.o.filterByAll();
 
     var models = [];
