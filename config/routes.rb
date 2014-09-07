@@ -18,7 +18,12 @@ IFEpm::Application.routes.draw do
     end
   end
 
-  resources :reports
+  resources :reports do
+    collection do
+      get ':part'=>:index
+      get ':part/:ajax'=>:index
+    end
+  end
 
   resources :comments
 

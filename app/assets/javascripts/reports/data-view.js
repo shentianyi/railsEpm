@@ -35,11 +35,12 @@ dhtmlXDataView.prototype.toExcel = function (url) {
 dhtmlXDataView.prototype.serializeToJson = function () {
     return this.serialize();
 };
-var DV = {} || DataView;
-DV.dv = {};
-DV.init = function (container) {
-    this.dv = new dhtmlXDataView({
-        container: container,
+
+var DV = {} || DV
+DV.o = {}
+DV.init = function (option) {
+    this.o = new dhtmlXDataView({
+        container: option.container,
         type: {
             template: "<span class='dhx_strong'>#INQA#</span> #FTQ# <span class='dhx_light'>#Defects#</span>-<span class='dhx_light'>#Pass#</span>",
             height: 35
@@ -49,14 +50,13 @@ DV.init = function (container) {
 };
 
 DV.parse = function (jsondata) {
-    this.dv.parse(jsondata, "json");
+    this.o.parse(jsondata, "json");
 };
 
 DV.clear = function () {
-    this.dv.clearAll();
+    this.o.clearAll();
 };
-
+// need to rewrite
 function export_data_view_excel() {
-    DV.dv.toExcel('http://42.121.111.38:9003/DHXFileService/Excel');
+    DV.o.toExcel('http://42.121.111.38:9003/DHXFileService/Excel');
 }
-
