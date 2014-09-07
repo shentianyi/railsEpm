@@ -5,7 +5,9 @@
         window.setInterval(function(){
             $("#current-clock").text(format_time.current_time_clock());
         },1000);
-//        current_status.init("data_container",vdata);
+        current_status.init("data_container",vdata);
         grid.init();
+        //DV.init("data_container");
+        //DV.parse(vdata);
     })
 })()
