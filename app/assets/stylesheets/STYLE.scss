@@ -53,6 +53,11 @@ $golden-text:#f2c54a;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+@mixin after-clear{
+  content:"";
+  display:block;
+  clear:both;
+}
 /*************************************************************  button style
 *********************************************************************************************************/
 .btn{
@@ -123,7 +128,7 @@ $golden-text:#f2c54a;
   }
   &.btn-warning{
     background:#eb9541;
-    color:white;
+    color:#fff;
     &.linear{
       background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(235, 149, 65, 0.2) 55%) #eb9541;
       background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(235, 149, 65, 0.2) 55%) #eb9541;
@@ -135,6 +140,17 @@ $golden-text:#f2c54a;
     &:hover{
       background:#f6af6a
     }
+  }
+  &.btn-func{
+    background: $nav-dark;
+    color:#fff;
+//    background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(53,58,70, 0.2) 55%) $nav-dark !important;
+//    background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(53,58,70, 0.2) 55%) $nav-dark !important;
+//    &:hover{
+//      background:lighten($nav-dark,15%);
+//      background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(53,58,70, 0.5) 55%) lighten($nav-dark,15%) !important;
+//      background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(53,58,70, 0.5) 55%) lighten($nav-dark,15%) !important;
+//    }
   }
   &.btn-small{
     display:inline-block;

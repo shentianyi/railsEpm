@@ -1,10 +1,11 @@
 <%= render "my-reports" %>
 <div class="report-content">
-  <%= render "grid"%>
+  <%= render "data-view"%>
 </div>
 <% content_for :javascript_includes do%>
-    <!-- alias js -->
     <%= javascript_include_tag "func-module/format_time.js"%>
-    <!-- specify js -->
+    <%= javascript_include_tag "preload/classie.js"%>
+    <%= javascript_include_tag "preload/snap.svg-min.js"%>
+    <%= javascript_include_tag "preload/svgLoader.js"%>
     <%= javascript_include_tag "reports/main.js"%>
 <%end%>
