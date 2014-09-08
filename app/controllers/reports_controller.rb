@@ -2,14 +2,7 @@ class ReportsController < ApplicationController
   skip_authorize_resource
 
   def index
-    case params[:part].to_i
-      when ChartType::CurrentStatus
-        @partial = 'current-status'
-      when ChartType::DailyDPV
-        @partial = 'daily-dpv'
-      else
-        @partial = 'current-status'
-    end
+    @partial = ChartType.partial(params[:part].to_i)
     # snaps
     #@partial='grid'
     @users=User.where('id <> ?', current_user.id).where(role_id: Role.director).all

@@ -13,9 +13,16 @@ class ChartType
       when Highchart
         'chart'
       when CurrentStatus
-        'chart'
+        'current-status'
+      when SummaryReport
+      when StationData
+      when TrackingReport
+      when Defect
+      when VehicleInfo
+      when DailyDPV
+        'daily-dpv'
       else
-        'chart'
+        'current-status'
     end
   end
 end
