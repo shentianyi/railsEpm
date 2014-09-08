@@ -49,5 +49,6 @@
         }
 
         Report.init(option);
+        init_snap();
     })
 })();
