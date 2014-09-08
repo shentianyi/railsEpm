@@ -119,6 +119,7 @@ report_main.init_snap_btn=function(id){
             }
         })
         .on("click","#snap-shot-remove",function(){
+            $("#snap-shot-desc").val("").blur();
             $("#snap_block").css("left","-999em");
         })
         .on("click","#snap-shot-btn",function(){
