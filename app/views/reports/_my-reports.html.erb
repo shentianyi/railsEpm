@@ -6,11 +6,11 @@
   <ul id="my-reports">
     <p>Quality Gate</p>
     <li><a class="<%='active' if @partial == 'data-view'%>" menu="current-status" href="#current-status"><i class="icon-adjust mark"></i> Current status<i class="icon-chevron-right indicate"></i></a></li>
-    <li><a class="<%='active' if @partial == 'grid'%>" href="#summary-report"><i class="icon-columns mark"></i> Sumary report<i class="icon-chevron-right indicate"></i></a></li>
-    <li><a ><i class="icon-list mark" href="#station-data"></i> Station data<i class="icon-chevron-right indicate"></i></a></li>
-    <li><a ><i class="icon-screenshot mark" href="#tracking-report"></i> Tracking report<i class="icon-chevron-right indicate"></i></a></li>
-    <li><a ><i class="icon-remove-sign mark" href="#deffects"></i> Defects<i class="icon-chevron-right indicate"></i></a></li>
-    <li><a ><i class="icon-dashboard mark" href="#vehicle-info"></i> Vehicle information<i class="icon-chevron-right indicate"></i></a></li>
+    <li><a class="<%='active' if @partial == 'grid'%>" menu="summary-report" href="#summary-report"><i class="icon-columns mark"></i> Sumary report<i class="icon-chevron-right indicate"></i></a></li>
+    <li><a ><i class="icon-list mark" menu="station-data" href="#station-data"></i> Station data<i class="icon-chevron-right indicate"></i></a></li>
+    <li><a ><i class="icon-screenshot mark" menu="tracking-report" href="#tracking-report"></i> Tracking report<i class="icon-chevron-right indicate"></i></a></li>
+    <li><a ><i class="icon-remove-sign mark" menu="defects" href="#deffects"></i> Defects<i class="icon-chevron-right indicate"></i></a></li>
+    <li><a ><i class="icon-dashboard mark" menu="vehicle-info" href="#vehicle-info"></i> Vehicle information<i class="icon-chevron-right indicate"></i></a></li>
   </ul>
   <a class="btn btn-primary share">Share to discussion</a>
 

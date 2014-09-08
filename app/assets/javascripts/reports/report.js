@@ -1,7 +1,9 @@
 var Report = Report || {};
 Report.option = {};
 Report.r = {};
-Report.init = function (option) {
+Report.init = function (type) {
+	var option = this.get_option_by_type(type);
+	
     this.option = option;
     switch (option.type) {
         case 'current_status':
@@ -44,3 +46,25 @@ Report.get_json = function () {
 Report.serializeToJson = function () {
     return  this.r.o.serializeToJson();
 };
+
+Report.reload= function(){
+	this.init(this.option);
+}
+
+Report.get_option_by_type = function(type){
+    var option = {};
+    switch(type) {
+        case 'current-status':
+            option.type = 'current_status';
+            option.container = 'data_container';
+            break;
+        case 'daily-dpv':
+            option.type = 'daily-dpv';
+            break;
+        default :
+            option.type = 'current_status';
+            option.container = 'data_container';
+            break;
+    }
+	return option;
+}

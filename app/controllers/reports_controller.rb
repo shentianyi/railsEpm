@@ -2,11 +2,12 @@ class ReportsController < ApplicationController
   skip_authorize_resource
 
   def index
+    puts params[:part]
     case params[:part]
-      when 'grid'
-        @partial = 'grid'
-      when 'data-view'
+      when 'current-status'
         @partial = 'data-view'
+      when 'summary-report'
+        @partial = 'grid'
       else
         @partial = 'data-view'
     end

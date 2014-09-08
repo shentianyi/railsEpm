@@ -23,7 +23,9 @@
 				url:"/reports/"+part+"/ajax",
 				type:"GET",
 				success:function(data){
-					data
+					$("#report-content").html(data);
+					//
+					Report.init(part);
 				}
 			});
             //=============
@@ -36,23 +38,8 @@
                 loader.hide()
             }, 2000);
         });
-
-        var current_type = 'current_status'
-        var option = {};
-        switch(current_type) {
-            case 'current_status':
-                option.type = 'current_status';
-                option.container = 'data_container';
-                break;
-            case 'daily-dpv':
-                option.type = 'daily-dpv';
-                break;
-            default :
-                option.type = 'current_status';
-                option.container = 'data_container';
-                break;
-        }
-
-        Report.init(option);
+		
+		var current = $("#my-reports li a.active").attr("menu");
+        Report.init(current);
     })
 })();
