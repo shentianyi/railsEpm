@@ -10,8 +10,9 @@ Report.init = function (type) {
             this.r = DV;
             current_status.init();
             break;
-		case 'summart-report':
+		case 'summary-report':
 			this.t = Grid;
+            break;
         case 'station-data':
             this.r = Grid;
             break;
