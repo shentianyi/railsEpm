@@ -1,4 +1,21 @@
+@import "STYLE";
 .snap-groups{
   height:90px;
   border-top:1px solid rgba(0,0,0,0.2);
+}
+.snap_block{
+  position:fixed;
+  z-index:9999;
+  top:100px;
+  left:100px;
+  height:120px;
+  width:240px;
+  background:#fff;
+  @include border-radius-same(4px);
+  border:1px solid rgba(0,0,0,0.4);
+  .icon-remove{
+    color:$red;
+    pointer-event:auto;
+
+  }
 }
