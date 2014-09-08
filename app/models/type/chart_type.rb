@@ -14,6 +14,8 @@ class ChartType
         'chart'
       when CurrentStatus
         'current-status'
+      when StationData
+        'station-data'
       when DailyDPV
         'daily-dpv'
       else

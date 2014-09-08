@@ -14,6 +14,7 @@ Report.init = function (type) {
         case this.type["summary-report"]:
             break;
         case this.type["station-data"]:
+            this.r = StationData;
             break;
         case this.type["tracking-report"]:
             break;
@@ -41,6 +42,8 @@ Report.get_json = function () {
             return d_current_status['Vehicle_1'];
         case this.type["daily-dpv"]:
             return  d_daily_dpv;
+        case this.type["station-data"]:
+            return d_station_data
         default :
             return null;
     }
@@ -259,6 +262,30 @@ function export_report_excel() {
 
 var StationData = {} || StationData;
 
-StationData.init = function(){
+StationData.o = {};
 
+StationData.init = function () {
+    mygrid = new dhtmlXGridObject('gridbox');
+    mygrid.setImagePath("../../../codebase/imgs/");
+    mygrid.setHeader("Inspection,#cspan,Vechile Total,OK Vehicle,NOK Vehicle,FTQ,DPV,DPV Target,Defects,Vehs,FTQ Target,OK,NOK");
+    //mygrid.attachHeader("full,short,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
+    mygrid.setInitWidths("150,80,80,80,80,80,80,80,80,80,80,80,80");
+    mygrid.setColAlign("right,center,center,center,center,center,center,center,center,center,center,center,center");
+    mygrid.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+    mygrid.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int");
+    //mygrid.setColumnColor("white,#d5f1ff,#d5f1ff");
+    mygrid.setSkin("dhx_skyblue");
+    mygrid.init();
+    mygrid.enableMultiselect(true);
+    this.o = mygrid;
+}
+
+StationData.page_load = function () {
+
+}
+
+StationData.parse = function (jsondata) {
+    if(jsondata != null){
+        this.o.parse(jsondata, "json");
+    }
 }
