@@ -3,7 +3,7 @@ class ChartType
   CurrentStatus = 1
   SummaryReport = 2
   StationData = 3
-  TrackingReport = 44
+  TrackingReport = 4
   Defect = 5
   VehicleInfo = 6
   DailyDPV = 7

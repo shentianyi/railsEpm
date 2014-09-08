@@ -14,7 +14,7 @@
                 $(this).addClass("active");
                 //=============
                 //load partial view
-			    var part = $(this).attr("menu");
+			    var part = Report.type[$(this).attr("menu")];
                 var left = document.getElementById("report-menu").getBoundingClientRect().right,
                     top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
                 $(".pageload-overlay svg").css('left', left);

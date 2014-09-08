@@ -2,11 +2,10 @@ class ReportsController < ApplicationController
   skip_authorize_resource
 
   def index
-    puts params[:part]
-    case params[:part]
-      when 'current-status'
+    case params[:part].to_i
+      when ChartType::CurrentStatus
         @partial = 'current-status'
-      when 'daily-dpv'
+      when ChartType::DailyDPV
         @partial = 'daily-dpv'
       else
         @partial = 'current-status'

@@ -255,3 +255,9 @@ DV.clear = function () {
 function export_data_view_excel() {
     DV.o.toExcel('http://42.121.111.38:9003/DHXFileService/Excel');
 };
+
+var StationData = {} || StationData;
+
+StationData.init = function(){
+
+}
