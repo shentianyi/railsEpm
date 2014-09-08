@@ -1,6 +1,5 @@
 (function(){
     $(document).ready(function(){
-        report_main.init_snap_btn("snap-shot-button");
         loader = new SVGLoader( document.getElementById( 'preloader' ), { speedIn : 100 } );
 
         $('body')
@@ -96,6 +95,7 @@
         
 		var current = $("#my-reports li a.active").attr("menu");
         Report.init(current);
+        report_main.init_snap_btn("snap-shot-button");
         init_snap();
     })
 })();
@@ -106,21 +106,40 @@ report_main.init_snap_btn=function(id){
         var e=adapt_event(event).event;
         var left= e.clientX,
             top= e.clientY;
-//        $.post(
-//            '/report_snaps',
-//            {
-//                report_snap: {
-//                    desc: $('#snap-shot-desc').val(),
-//                    type_string: Report.option.type,
-//                    data: JSON.stringify(Report.serializeToJson())
-//                }
-//            },
-//            function (data) {
-//                if (data.result) {
-//                    alert('success');
-//                    // call back to init snap item
-//                }
-//             }, 'json');
+        $("#snap_block").css("left",left).css("top",top-170);
+        $("#snap-shot-desc").focus();
     })
+        .on("keyup","#snap-shot-desc",function(event){
+            var e=adapt_event(event).event;
+            if(e.keyCode===13){
+                $("#snap-shot-btn").click();
+            }
+            else if(e.keyCode===27){
+                $("#snap-shot-remove").click();
+            }
+        })
+        .on("click","#snap-shot-remove",function(){
+            $("#snap_block").css("left","-999em");
+        })
+        .on("click","#snap-shot-btn",function(){
+            alert(Report.option.type)
+                $.post(
+                    '/report_snaps',
+                    {
+                        report_snap: {
+                            desc: $.trim($('#snap-shot-desc').val()),
+                            type: Report.option.type,
+                            data: JSON.stringify(Report.serializeToJson())
+                        }
+                    },
+                    function (data) {
+                        if (data.result) {
+                            $("#snap-shot-remove").click();
+                            alert('success');
+                            // call back to init snap item
+                        }
+                    }, 'json');
+
+        })
 }
 
