@@ -1,0 +1,13 @@
+@import "STYLE";
+.daily_dpv{
+  .left{
+    float:left;
+    @include box-sizing-border;
+    width:70%;
+  }
+  .right{
+    float:left;
+    @include box-sizing-border;
+    width:30%;
+  }
+}
