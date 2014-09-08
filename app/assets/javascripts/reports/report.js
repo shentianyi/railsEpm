@@ -92,14 +92,14 @@ Grid.init = function (option) {
     mygrid = {}
     mygrid = new dhtmlXGridObject('gridbox');
     mygrid.setImagePath("/assets/dhtmlx/");
-    mygrid.setHeader("VIN,Model,Station,Phase,Date,Is Serious");
-    mygrid.attachHeader("#text_search,#select_filter,#select_filter,#select_filter,5,6");
-    mygrid.setInitWidths("150,100,120,100,120,120");
+    mygrid.setHeader("FALSE,Volumn,Effect,DPV,SDPV");
+    mygrid.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
+    mygrid.setInitWidths("150,150,150,150,150");
     mygrid.enableAutoWidth(true);
-    mygrid.setColAlign("right,left,left,right,center,left");
-    mygrid.setColTypes("ro,ro,ro,ro,rotxt,ch");
-    //mygrid.getCombo(5).put(2, 2);
-    mygrid.setColSorting("str,str,str,str,date,int");
+    mygrid.setColAlign("left,center,center,center,center");
+    mygrid.setColTypes("ro,ro,ro,ro,ro");
+    mygrid.setColSorting("str,int,int,int,int");
+    mygrid.setNumberFormat("0,000.00",0,".",",");
     mygrid.setSkin("dhx_skyblue");
     mygrid.init();
     mygrid.enableSmartRendering(true);
