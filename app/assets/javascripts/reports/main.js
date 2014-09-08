@@ -7,6 +7,7 @@
         },1000);
 
         loader = new SVGLoader( document.getElementById( 'preloader' ), { speedIn : 100 } );
+
         $('body').on("click","#my-reports a",function(event) {
             if(event.preventDefault){
                 event.preventDefault()
@@ -19,6 +20,12 @@
             //=============
             //load partial view
 			var part = $(this).attr("menu");
+            var left = document.getElementById("report-menu").getBoundingClientRect().right,
+                top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
+            $(".pageload-overlay svg").css('left', left);
+            $(".pageload-overlay svg").css('top', top);
+            loader.show();
+			
 			$.ajax({
 				url:"/reports/"+part+"/ajax",
 				type:"GET",
@@ -26,17 +33,11 @@
 					$("#report-content").html(data);
 					//
 					Report.init(part);
+					loader.hide()
 				}
 			});
             //=============
-            var left = document.getElementById("report-menu").getBoundingClientRect().right,
-                top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
-            $(".pageload-overlay svg").css('left', left);
-            $(".pageload-overlay svg").css('top', top);
-            loader.show();
-            setTimeout(function () {
-                loader.hide()
-            }, 2000);
+		});
         
 		var current = $("#my-reports li a.active").attr("menu");
         Report.init(current);
