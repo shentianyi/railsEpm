@@ -6,4 +6,5 @@ module ChartType
   TrackingReport = 44
   Defect = 5
   VehicleInfo = 6
+  DailyDPV = 7
 end
