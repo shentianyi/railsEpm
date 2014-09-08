@@ -1,10 +1,9 @@
-
 <p><%= @story.title %></p>
 <p><%= @story.description %></p>
 <hr/>
 
 <div id="story-partial" class="story-partial">
-  <%= render partial: 'chart' %>
+  <%= render partial: @partial %>
   <div style="width:100%;overflow-x:auto;">
     <% if @story.attachments.count>0 %>
         <p style="font-size:13px;color:#666;margin-top:8px;margin-bottom:2px;">Attachments:</p>
@@ -13,7 +12,7 @@
               <div class="attachment-sign atta-<%= attach.type %>" href="/files/attach?f=<%= attach.path %>">
                 <a href="/files/attach?f=<%= attach.path %>" class='attach-download' target="_blank">
                   <div class="attachment-operate" style="background:#000;text-align:center">
-                   <p style="text-align:center;margin:0px;font-size:10px;color:#fff">download</p>
+                    <p style="text-align:center;margin:0px;font-size:10px;color:#fff">download</p>
                   </div>
                 </a>
               </div>
@@ -26,7 +25,8 @@
 
   </div>
 
-  <a id="comments-btn" state="close"><i class="icon  icon-comments-alt"></i> comments(<span><%= @comments.count %></span>)</a>
+  <a id="comments-btn" state="close"><i class="icon  icon-comments-alt"></i>
+    comments(<span><%= @comments.count %></span>)</a>
 
   <div class="comment-area" id="comment-area">
     <div class="form">

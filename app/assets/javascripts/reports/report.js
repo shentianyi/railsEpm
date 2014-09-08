@@ -2,15 +2,15 @@ var Report = Report || {};
 Report.option = {};
 Report.r = {};
 Report.init = function (type) {
-	var option = this.get_option_by_type(type);
-	
+    var option = this.get_option_by_type(type);
+
     this.option = option;
     switch (option.type) {
         case this.type["current-status"]:
             this.r = DV;
             current_status.init();
             break;
-		case this.type["summary-report"]:
+        case this.type["summary-report"]:
             break;
         case this.type["station-data"]:
             break;
@@ -49,13 +49,17 @@ Report.serializeToJson = function () {
     return  this.r.o.serializeToJson();
 };
 
-Report.reload= function(){
-	this.init(this.option);
+Report.serializeToJSONString = function () {
+    return JSON.stringify(this.serializeToJson());
+};
+
+Report.reload = function () {
+    this.init(this.option);
 }
 
-Report.get_option_by_type = function(type){
+Report.get_option_by_type = function (type) {
     var option = {};
-    switch(type) {
+    switch (type) {
         case 'current-status':
             option.container = 'data_container';
             break;
@@ -66,7 +70,7 @@ Report.get_option_by_type = function(type){
             break;
     }
     option.type = this.type[type];
-	return option;
+    return option;
 }
 
 Report.type = {
