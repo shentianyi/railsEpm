@@ -19,15 +19,19 @@
                     top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
                 $(".pageload-overlay svg").css('left', left);
                 $(".pageload-overlay svg").css('top', top);
+
                 loader.show();
-			
+
 			    $.ajax({
 				    url:"/reports/"+part+"/ajax",
 				    type:"GET",
 				    success:function(data){
 					    $("#report-content").html(data);
 					    //
-					    loader.hide()
+                        setTimeout(function(){
+                            loader.hide()
+                        },1500);
+
 				    }
 			    })
 		    })
