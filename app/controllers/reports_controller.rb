@@ -13,6 +13,7 @@ class ReportsController < ApplicationController
     end
     # snaps
     #@partial='grid'
+    @users=User.where('id <> ?', current_user.id).where(role_id: Role.director).all
     @snaps=current_user.report_snaps.where(type_string: 'current-status').order('created_at desc').all
     render :partial => @partial if params[:ajax]
   end

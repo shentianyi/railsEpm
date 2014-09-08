@@ -6,6 +6,7 @@ class ChartType
   TrackingReport = 44
   Defect = 5
   VehicleInfo = 6
+  DailyDPV = 7
 
   def self.partial(type)
     case type

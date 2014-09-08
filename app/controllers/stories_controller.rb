@@ -23,7 +23,7 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:id])
     @comments=CommentPresenter.init_presenters(Comment.detail_by_commentable(@story).all)
     @chart_conditions=ChartConditionPresenter.init_presenters(ChartCondition.detail_by_chartable(@story))
-    @partial = ChartType.partial(@story.type)
+    @partial = ChartType.partial(@story.chart_type)
     render partial: 'detail'
   end
 

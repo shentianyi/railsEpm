@@ -4,7 +4,7 @@ function init_snap() {
         $.post('/report_snaps', {report_snap: {
             desc: $('#snap-shot-desc').val(),
             type: Report.option.type,
-            data: JSON.stringify(Report.serializeToJson())
+            data: Report.serializeToJSONString()
         }}, function (data) {
             if (data.result) {
                 alert('success');
