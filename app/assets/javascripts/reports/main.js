@@ -102,22 +102,25 @@
 var report_main={};
 report_main.init_snap_btn=function(id){
     var target=id.indexOf("#")===-1?"#"+id:id;
-    $('body').on("click",target,function(){
-        $.post(
-            '/report_snaps',
-            {
-                report_snap: {
-                    desc: $('#snap-shot-desc').val(),
-                    type_string: Report.option.type,
-                    data: JSON.stringify(Report.serializeToJson())
-                }
-            },
-            function (data) {
-                if (data.result) {
-                    alert('success');
-                    // call back to init snap item
-                }
-             }, 'json');
+    $('body').on("click",target,function(event){
+        var e=adapt_event(event).event;
+        var left= e.clientX,
+            top= e.clientY;
+//        $.post(
+//            '/report_snaps',
+//            {
+//                report_snap: {
+//                    desc: $('#snap-shot-desc').val(),
+//                    type_string: Report.option.type,
+//                    data: JSON.stringify(Report.serializeToJson())
+//                }
+//            },
+//            function (data) {
+//                if (data.result) {
+//                    alert('success');
+//                    // call back to init snap item
+//                }
+//             }, 'json');
     })
 }
 

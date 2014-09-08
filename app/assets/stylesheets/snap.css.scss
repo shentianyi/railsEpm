@@ -6,16 +6,36 @@
 .snap_block{
   position:fixed;
   z-index:9999;
-  top:100px;
-  left:100px;
   height:120px;
   width:240px;
   background:#fff;
+  padding:8px;
+  left:-999em;
+  @include box-shadow(2px,2px,4px,rgba(0,0,0,0.8));
   @include border-radius-same(4px);
   border:1px solid rgba(0,0,0,0.4);
   .icon-remove{
     color:$red;
-    pointer-event:auto;
+    pointer-events:auto;
+    cursor:pointer;
+    font-size:16px;
+    float:right;
+    &:hover{
+      color:$red-hover;
+    }
+  }
+  p{
+    clear:both;
+    text-align: left;
+    padding-left:3px;
+    font-size:13px;
+    color:#666;
+    margin-bottom:1px;
+  }
+  .btn{
+    font-size:13px;
+    padding:7px 14px;
+    margin-top:9px;
 
   }
 }
