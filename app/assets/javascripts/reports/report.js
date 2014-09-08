@@ -256,3 +256,9 @@ DV.clear = function () {
 function export_report_excel() {
     Report.toExcel();
 };
+
+var StationData = {} || StationData;
+
+StationData.init = function(){
+
+}
