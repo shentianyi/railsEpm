@@ -46,7 +46,7 @@
 *= require reports
 *= require snap
 *= require dataview/dataview_tiem
-
+*= require daily_dpv
 *= require stories.css
 
 *= require popModal.min
