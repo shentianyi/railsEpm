@@ -19,6 +19,6 @@ current_status.init=function(data){
 }
 current_status.flexible=function(){
     var total_height=$("#wrap-main").height()-$("header").height()-1;
-    var height=total_height-$("#current-status-header").height()-$("#current-snap-group").height()-2;
+    var height=total_height-$("#current-status-header").height()-$("#snap-groups").height()-2;
     $("#data_container").height(height);
 }
