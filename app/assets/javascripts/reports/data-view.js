@@ -1,15 +1,6 @@
 
-(function(){
-    $(document).ready(function(){
-        $("#vehicle-select").change(function(){
-            DV.parse(d_current_status[$("#vehicle-select option:selected").text()]);
-        });
-    });
-})();
-
-
-var DV = {} || DV
-DV.o = {}
+var DV = {} || DV;
+DV.o = {};
 DV.init = function (option) {
     this.o = new dhtmlXDataView({
         container: option.container,
@@ -37,7 +28,14 @@ DV.init = function (option) {
 
         }
     });
+	this.page_load();
 };
+
+DV.page_load = function(){
+	$("#vehicle-select").change(function(){
+	     DV.parse(d_current_status[$("#vehicle-select option:selected").text()]);
+    });
+}
 
 DV.parse = function (jsondata) {
     this.o.parse(jsondata, "json");
@@ -49,4 +47,4 @@ DV.clear = function () {
 // need to rewrite
 function export_data_view_excel() {
     DV.o.toExcel('http://42.121.111.38:9003/DHXFileService/Excel');
-}
+};

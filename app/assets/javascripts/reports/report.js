@@ -1,13 +1,17 @@
 var Report = Report || {};
 Report.option = {};
 Report.r = {};
-Report.init = function (option) {
+Report.init = function (type) {
+	var option = this.get_option_by_type(type);
+	
     this.option = option;
     switch (option.type) {
-        case 'current_status':
+        case 'current-status':
             this.r = DV;
             current_status.init();
             break;
+		case 'summart-report':
+			this.t = Grid;
         case 'station-data':
             this.r = Grid;
             break;
@@ -18,7 +22,6 @@ Report.init = function (option) {
             break;
     }
     this.r.init(option);
-    init_snap();
     //load data
     var data = this.get_json();
     this.json_parse(data);
@@ -30,8 +33,10 @@ Report.json_parse = function (jsondata) {
 
 Report.get_json = function () {
     switch (this.option.type) {
-        case 'current_status':
+        case 'current-status':
             return d_current_status['Vehicle_1'];
+		case 'summary-report':
+			return d_daily_dpv;
         case 'station-data':
             return null;
         case 'daily-dpv':
@@ -44,3 +49,27 @@ Report.get_json = function () {
 Report.serializeToJson = function () {
     return  this.r.o.serializeToJson();
 };
+
+Report.reload= function(){
+	this.init(this.option);
+}
+
+Report.get_option_by_type = function(type){
+    var option = {};
+    switch(type) {
+        case 'current-status':
+            option.type = 'current-status';
+            option.container = 'data_container';
+            break;
+		case 'summary-report':
+			option.type = 'summary-report';
+        case 'daily-dpv':
+            option.type = 'daily-dpv';
+            break;
+        default :
+            option.type = 'current-status';
+            option.container = 'data_container';
+            break;
+    }
+	return option;
+}

@@ -1,6 +1,7 @@
 (function(){
     $(document).ready(function(){
         loader = new SVGLoader( document.getElementById( 'preloader' ), { speedIn : 100 } );
+
         $('body').on("click","#my-reports a",function(event) {
             if(event.preventDefault){
                 event.preventDefault()
@@ -9,39 +10,31 @@
                 window.event.returnValue=false;
             }
             $("#my-reports li a").removeClass("active");
-            $(this).find("a").addClass("active");
-            var now_href = window.location.href.split("/");
-            var length = now_href.length;
+            $(this).addClass("active");
             //=============
             //load partial view
-
-            //=============
+			var part = $(this).attr("menu");
             var left = document.getElementById("report-menu").getBoundingClientRect().right,
                 top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
             $(".pageload-overlay svg").css('left', left);
             $(".pageload-overlay svg").css('top', top);
             loader.show();
-            setTimeout(function () {
-                loader.hide()
-            }, 2000);
-        });
-
-        var current_type = 'current_status'
-        var option = {};
-        switch(current_type) {
-            case 'current_status':
-                option.type = 'current_status';
-                option.container = 'data_container';
-                break;
-            case 'daily-dpv':
-                option.type = 'daily-dpv';
-                break;
-            default :
-                option.type = 'current_status';
-                option.container = 'data_container';
-                break;
-        }
-
-        Report.init(option);
+			
+			$.ajax({
+				url:"/reports/"+part+"/ajax",
+				type:"GET",
+				success:function(data){
+					$("#report-content").html(data);
+					//
+					Report.init(part);
+					loader.hide()
+				}
+			});
+            //=============
+		});
+        
+		var current = $("#my-reports li a.active").attr("menu");
+        Report.init(current);
+        init_snap();
     })
 })();
