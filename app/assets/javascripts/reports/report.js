@@ -4,8 +4,9 @@ Report.r = {};
 Report.init = function (option) {
     this.option = option;
     switch (option.type) {
-        case 'current-status':
+        case 'current_status':
             this.r = DV;
+            current_status.init();
             break;
         case 'station-data':
             this.r = Grid;
@@ -29,7 +30,7 @@ Report.json_parse = function (jsondata) {
 
 Report.get_json = function () {
     switch (this.option.type) {
-        case 'current-status':
+        case 'current_status':
             return d_current_status['Vehicle_1'];
         case 'station-data':
             return null;

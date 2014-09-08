@@ -5,10 +5,15 @@
         window.setInterval(function(){
             $("#current-clock").text(format_time.current_time_clock());
         },1000);
-        //current_status.init("data_container",vdata);
 
         loader = new SVGLoader( document.getElementById( 'preloader' ), { speedIn : 100 } );
-        $('body').on("click","#my-reports a",function() {
+        $('body').on("click","#my-reports a",function(event) {
+            if(event.preventDefault){
+                event.preventDefault()
+            }
+            else{
+                window.event.returnValue=false;
+            }
             $("#my-reports li a").removeClass("active");
             $(this).find("a").addClass("active");
             var now_href = window.location.href.split("/");
@@ -23,24 +28,23 @@
             $(".pageload-overlay svg").css('top', top);
             loader.show();
             setTimeout(function () {
-                loader.hide();
-
+                loader.hide()
             }, 2000);
         });
 
-        var current_type = 'current-status'
+        var current_type = 'current_status'
         var option = {};
         switch(current_type) {
-            case 'current-status':
-                option.type = 'current-status';
+            case 'current_status':
+                option.type = 'current_status';
                 option.container = 'data_container';
                 break;
             case 'daily-dpv':
                 option.type = 'daily-dpv';
                 break;
             default :
-                option.type = 'current-status';
-                option.container = 'data-container';
+                option.type = 'current_status';
+                option.container = 'data_container';
                 break;
         }
 

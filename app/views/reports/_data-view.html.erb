@@ -27,8 +27,9 @@
     <a class="btn btn-func">Change data</a>
   </div>
 </section>
-<%= render 'snap' %>
+
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "reports/data-view" %>
     <%= javascript_include_tag "reports/data-current-status" %>
+    <%= javascript_include_tag "reports/current_status" %>
 <% end %>
