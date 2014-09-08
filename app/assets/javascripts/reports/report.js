@@ -27,6 +27,7 @@ Report.init = function (type) {
     //load data
     var data = this.get_json();
     this.json_parse(data);
+    this.r.page_load();
 };
 
 Report.json_parse = function (jsondata) {
@@ -73,12 +74,184 @@ Report.get_option_by_type = function (type) {
 }
 
 Report.type = {
-    "high-chart": 0,
-    "current-status": 1,
-    "summary-report": 2,
-    "station-data": 3,
-    "tracking-report": 4,
-    "defect": 5,
-    "vehicle-info": 6,
-    "daily-dpv": 7
+    "high-chart":0,
+    "current-status":1,
+    "summary-report":2,
+    "station-data":3,
+    "tracking-report":4,
+    "defect":5,
+    "vehicle-info":6,
+    "daily-dpv":7
 }
+
+//===========================================
+//daily-dpv
+var Grid = {};
+Grid.o = {};
+Grid.init = function (option) {
+    chosen.init(
+        ["deffect-model", "deffect-phase", "deffect-date"],
+        [220, 220, 220]
+    );
+    mygrid = {}
+    mygrid = new dhtmlXGridObject('gridbox');
+    mygrid.setImagePath("/assets/dhtmlx/");
+    mygrid.setHeader("FALSE,Volumn,Effect,DPV,SDPV");
+    mygrid.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
+    mygrid.setInitWidths("150,150,150,150,150");
+    mygrid.enableAutoWidth(true);
+    mygrid.setColAlign("left,center,center,center,center");
+    mygrid.setColTypes("ro,ro,ro,ro,ro");
+    mygrid.setColSorting("str,int,int,int,int");
+    mygrid.setNumberFormat("0,000.00",0,".",",");
+    mygrid.setSkin("dhx_skyblue");
+    mygrid.init();
+    mygrid.enableSmartRendering(true);
+    //mygrid.parse(grideData, "json");
+    mygrid.attachEvent("onFilterEnd",function(elements){
+        Grid.onfilter(elements);
+    });
+
+    this.o = mygrid;
+}
+
+Grid.page_load = function(){
+    var models = mygrid.collectValues(1);
+    $("#deffect-model option").remove();
+    for (i = 0; i < models.length; i++) {
+        $("#deffect-model").append("<option>" + models[i] + "</option>");
+    }
+    chosen.single_update("deffect-model");
+
+    var phases = mygrid.collectValues(3);
+    $("#deffect-phase option").remove();
+    for (i = 0; i < phases.length; i++) {
+
+        $("#deffect-phase").append("<option>" + phases[i] + "</option>");
+    }
+    chosen.single_update("deffect-phase");
+
+    var dates = mygrid.collectValues(4);
+    $("#deffect-date option").remove();
+    for (i = 0; i < dates.length; i++) {
+
+        $("#deffect-date").append("<option>" + dates[i] + "</option>");
+    }
+    chosen.single_update("deffect-date");
+}
+
+Grid.onfilter = function(els){
+
+}
+
+Grid.filter = function(){
+    Grid.o.filterByAll();
+
+    var models = [];
+    var i = 0;
+    $("#deffect-model option:selected").each(function(){
+        models[i] = $(this).text();
+        i++;
+    });
+    if(models.length > 0)
+    {
+        Grid.o.filterBy(1,function(a){
+            for(j = 0;j<models.length;j++){
+                if(a == models[j]){
+                    return true;
+                }
+            }
+        })
+    }
+
+    var phases = [];
+    i = 0;
+    $("#deffect-phase option:selected").each(function(){
+        phases[i] = $(this).text();
+        i++;
+    });
+    if(phases.length > 0)
+    {
+        Grid.o.filterBy(3,function(a){
+            for(j = 0;j<phases.length;j++){
+                if(a == phases[j]){
+                    return true;
+                }
+            }
+        })
+    }
+
+
+    var dates = [];
+    i = 0;
+    $("#deffect-date option:selected").each(function(){
+        dates[i] = $(this).text();
+        i++;
+    });
+    if(dates.length > 0)
+    {
+        Grid.o.filterBy(4,function(a){
+            for(j = 0;j<dates.length;j++){
+                if(a == dates[j]){
+                    return true;
+                }
+            }
+        })
+    }
+
+}
+
+Grid.parse = function(jsondata){
+    this.o.parse(jsondata,"json");
+}
+
+//===========================================
+//current-status
+var DV = {} || DV;
+DV.o = {};
+DV.init = function (option) {
+    this.o = new dhtmlXDataView({
+        container: option.container,
+        type: {
+            template:
+                "<div class='dv-header'>" +
+                "<p>#INQA#</p>" +
+                "</div>"+
+                "<div class='dv-body'>" +
+                "<div class='left'>" +
+                "<p>#FTQ#</p>" +
+                "</div>" +
+                "<div class='right'>" +
+                "<p>#Defects#</p>" +
+                "<p>OPEN DEFECTS</p>" +
+                "<p>#Pass#</p>" +
+                "<p>VEHICLE PASS</p>" +
+                "</div>" +
+                "</div>",
+            css:"dv-item",
+            height: 150,
+            width:230,
+            margin:5,
+            padding:8
+
+        }
+    });
+};
+
+DV.page_load = function(){
+    $("#vehicle-select").change(function(){
+        DV.parse(d_current_status[$("#vehicle-select option:selected").text()]);
+    });
+}
+
+DV.parse = function (jsondata) {
+    this.o.parse(jsondata, "json");
+};
+
+DV.clear = function () {
+    this.o.clearAll();
+};
+// need to rewrite
+function export_data_view_excel() {
+    DV.o.toExcel('http://42.121.111.38:9003/DHXFileService/Excel');
+};

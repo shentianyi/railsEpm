@@ -27,7 +27,6 @@
 				    success:function(data){
 					    $("#report-content").html(data);
 					    //
-					    Report.init(part);
 					    loader.hide()
 				    }
 			    })
@@ -92,9 +91,6 @@
                     }
                 });
             });
-        
-		var current = $("#my-reports li a.active").attr("menu");
-        Report.init(current);
         report_main.init_snap_btn("snap-shot-button");
         init_snap();
     })
