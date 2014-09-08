@@ -14,11 +14,6 @@ class ChartType
         'chart'
       when CurrentStatus
         'current-status'
-      when SummaryReport
-      when StationData
-      when TrackingReport
-      when Defect
-      when VehicleInfo
       when DailyDPV
         'daily-dpv'
       else
