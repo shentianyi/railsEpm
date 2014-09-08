@@ -1,6 +1,7 @@
 var Report = Report || {};
 Report.option = {};
 Report.r = {};
+Report.export_excel_url = 'http://42.121.111.38:9003/DHXFileService/Excel';
 Report.init = function (type) {
     var option = this.get_option_by_type(type);
 
@@ -55,7 +56,11 @@ Report.serializeToJSONString = function () {
 
 Report.reload = function () {
     this.init(this.option);
-}
+};
+
+Report.toExcel = function () {
+    this.r.o.toExcel(this.export_excel_url);
+};
 
 Report.get_option_by_type = function (type) {
     var option = {};
@@ -74,14 +79,14 @@ Report.get_option_by_type = function (type) {
 }
 
 Report.type = {
-    "high-chart":0,
-    "current-status":1,
-    "summary-report":2,
-    "station-data":3,
-    "tracking-report":4,
-    "defect":5,
-    "vehicle-info":6,
-    "daily-dpv":7
+    "high-chart": 0,
+    "current-status": 1,
+    "summary-report": 2,
+    "station-data": 3,
+    "tracking-report": 4,
+    "defect": 5,
+    "vehicle-info": 6,
+    "daily-dpv": 7
 }
 
 //===========================================
@@ -103,19 +108,19 @@ Grid.init = function (option) {
     mygrid.setColAlign("left,center,center,center,center");
     mygrid.setColTypes("ro,ro,ro,ro,ro");
     mygrid.setColSorting("str,int,int,int,int");
-    mygrid.setNumberFormat("0,000.00",0,".",",");
+    mygrid.setNumberFormat("0,000.00", 0, ".", ",");
     mygrid.setSkin("dhx_skyblue");
     mygrid.init();
     mygrid.enableSmartRendering(true);
     //mygrid.parse(grideData, "json");
-    mygrid.attachEvent("onFilterEnd",function(elements){
+    mygrid.attachEvent("onFilterEnd", function (elements) {
         Grid.onfilter(elements);
     });
 
     this.o = mygrid;
 }
 
-Grid.page_load = function(){
+Grid.page_load = function () {
     var models = mygrid.collectValues(1);
     $("#deffect-model option").remove();
     for (i = 0; i < models.length; i++) {
@@ -140,24 +145,23 @@ Grid.page_load = function(){
     chosen.single_update("deffect-date");
 }
 
-Grid.onfilter = function(els){
+Grid.onfilter = function (els) {
 
 }
 
-Grid.filter = function(){
+Grid.filter = function () {
     Grid.o.filterByAll();
 
     var models = [];
     var i = 0;
-    $("#deffect-model option:selected").each(function(){
+    $("#deffect-model option:selected").each(function () {
         models[i] = $(this).text();
         i++;
     });
-    if(models.length > 0)
-    {
-        Grid.o.filterBy(1,function(a){
-            for(j = 0;j<models.length;j++){
-                if(a == models[j]){
+    if (models.length > 0) {
+        Grid.o.filterBy(1, function (a) {
+            for (j = 0; j < models.length; j++) {
+                if (a == models[j]) {
                     return true;
                 }
             }
@@ -166,15 +170,14 @@ Grid.filter = function(){
 
     var phases = [];
     i = 0;
-    $("#deffect-phase option:selected").each(function(){
+    $("#deffect-phase option:selected").each(function () {
         phases[i] = $(this).text();
         i++;
     });
-    if(phases.length > 0)
-    {
-        Grid.o.filterBy(3,function(a){
-            for(j = 0;j<phases.length;j++){
-                if(a == phases[j]){
+    if (phases.length > 0) {
+        Grid.o.filterBy(3, function (a) {
+            for (j = 0; j < phases.length; j++) {
+                if (a == phases[j]) {
                     return true;
                 }
             }
@@ -184,15 +187,14 @@ Grid.filter = function(){
 
     var dates = [];
     i = 0;
-    $("#deffect-date option:selected").each(function(){
+    $("#deffect-date option:selected").each(function () {
         dates[i] = $(this).text();
         i++;
     });
-    if(dates.length > 0)
-    {
-        Grid.o.filterBy(4,function(a){
-            for(j = 0;j<dates.length;j++){
-                if(a == dates[j]){
+    if (dates.length > 0) {
+        Grid.o.filterBy(4, function (a) {
+            for (j = 0; j < dates.length; j++) {
+                if (a == dates[j]) {
                     return true;
                 }
             }
@@ -201,8 +203,8 @@ Grid.filter = function(){
 
 }
 
-Grid.parse = function(jsondata){
-    this.o.parse(jsondata,"json");
+Grid.parse = function (jsondata) {
+    this.o.parse(jsondata, "json");
 }
 
 //===========================================
@@ -213,10 +215,9 @@ DV.init = function (option) {
     this.o = new dhtmlXDataView({
         container: option.container,
         type: {
-            template:
-                "<div class='dv-header'>" +
+            template: "<div class='dv-header'>" +
                 "<p>#INQA#</p>" +
-                "</div>"+
+                "</div>" +
                 "<div class='dv-body'>" +
                 "<div class='left'>" +
                 "<p>#FTQ#</p>" +
@@ -228,18 +229,18 @@ DV.init = function (option) {
                 "<p>VEHICLE PASS</p>" +
                 "</div>" +
                 "</div>",
-            css:"dv-item",
+            css: "dv-item",
             height: 150,
-            width:230,
-            margin:5,
-            padding:8
+            width: 230,
+            margin: 5,
+            padding: 8
 
         }
     });
 };
 
-DV.page_load = function(){
-    $("#vehicle-select").change(function(){
+DV.page_load = function () {
+    $("#vehicle-select").change(function () {
         DV.parse(d_current_status[$("#vehicle-select option:selected").text()]);
     });
 }
@@ -252,8 +253,8 @@ DV.clear = function () {
     this.o.clearAll();
 };
 // need to rewrite
-function export_data_view_excel() {
-    DV.o.toExcel('http://42.121.111.38:9003/DHXFileService/Excel');
+function export_report_excel() {
+    Report.toExcel();
 };
 
 var StationData = {} || StationData;
