@@ -1,9 +1,9 @@
 function init_snap() {
     $("#snap-shot-button").bind('click', function () {
-        console.log(Report.serializeToJson());
+//        console.log(Report.serializeToJson());
         $.post('/report_snaps', {report_snap: {
             desc: $('#snap-shot-desc').val(),
-            type_string: Report.option.type,
+            type: Report.option.type,
             data: JSON.stringify(Report.serializeToJson())
         }}, function (data) {
             if (data.result) {
