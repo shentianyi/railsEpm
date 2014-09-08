@@ -26,9 +26,10 @@
 				    url:"/reports/"+part+"/ajax",
 				    type:"GET",
 				    success:function(data){
-					    $("#report-content").html(data);
+
 					    //
                         setTimeout(function(){
+                            $("#report-content").html(data);
                             loader.hide()
                         },1500);
 
