@@ -10,16 +10,11 @@
   </select>
   <select multiple class="chosen-select" data-placeholder="Deffect Date" id="deffect-date">
   </select>
-  <input type="button" value="Retrieve Data" onclick="grid.filter()"/>
-</div>
-<div>
-  <h1>Group By</h1>
-  <div id="gridbox-grouped" style="width:600px; height:250px; background-color:white;"></div>
+  <input type="button" value="Retrieve Data" onclick="Grid.filter()"/>
 </div>
 
-<% content_for :javascript_includes do%>
-    <%= javascript_include_tag "dhtmlxgrid"%>
-    <%= javascript_include_tag "func-module/chosen"%>
-    <%= javascript_include_tag "reports/grid"%>
-    <%= javascript_include_tag "reports/data-dailu-dpv"%>
-<%end%>
+<script>
+  $(document).ready(function(){
+      Report.init("daily-dpv");
+  })
+</script>

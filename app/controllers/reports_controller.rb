@@ -5,11 +5,11 @@ class ReportsController < ApplicationController
     puts params[:part]
     case params[:part]
       when 'current-status'
-        @partial = 'data-view'
-      when 'summary-report'
-        @partial = 'grid'
+        @partial = 'current-status'
+      when 'daily-dpv'
+        @partial = 'daily-dpv'
       else
-        @partial = 'data-view'
+        @partial = 'current-status'
     end
     # snaps
     #@partial='grid'

@@ -31,16 +31,11 @@
 				type:"GET",
 				success:function(data){
 					$("#report-content").html(data);
-					//
-					Report.init(part);
 					loader.hide()
 				}
 			});
             //=============
 		});
-        
-		var current = $("#my-reports li a.active").attr("menu");
-        Report.init(current);
         init_snap();
     })
 })();
