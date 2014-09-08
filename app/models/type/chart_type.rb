@@ -1,6 +1,10 @@
 module ChartType
   Highchart = 0
   CurrentStatus = 1
-  AllDefects = 2
-  DailyDPV = 3
+  SummaryReport = 2
+  StationData = 3
+  TrackingReport = 44
+  Defect = 5
+  VehicleInfo = 6
+  DailyDPV = 7
 end
