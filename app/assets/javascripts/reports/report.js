@@ -22,7 +22,6 @@ Report.init = function (type) {
             break;
     }
     this.r.init(option);
-    init_snap();
     //load data
     var data = this.get_json();
     this.json_parse(data);

@@ -37,9 +37,9 @@
             setTimeout(function () {
                 loader.hide()
             }, 2000);
-        });
-		
+        
 		var current = $("#my-reports li a.active").attr("menu");
         Report.init(current);
+        init_snap();
     })
 })();
