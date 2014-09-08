@@ -2,10 +2,17 @@
   <div class="header" id="current-status-header">
     <div class="left">
       <p>First Time Quality (FTQ) Summary Percentage</p>
-
       <p id="current-date"></p>
-
       <p>Early shift</p>
+      <div class="btn-groups">
+        <a class="btn btn-primary">Refresh</a>
+        <a class="btn btn-primary">Quick print</a>
+        <a class="btn btn-primary" onclick="export_data_view_excel()">Excel</a>
+        <a class="btn btn-primary">Target</a>
+        <a class="btn btn-primary">All defects</a>
+        <a class="btn btn-primary">Key station defects</a>
+        <!--<a class="btn btn-func">Change data</a>-->
+      </div>
     </div>
     <div class="right">
       <p><span>Current time:</span><span id="current-clock"></span></p>
@@ -17,19 +24,15 @@
     </div>
   </div>
   <div id="data_container" class="data-container"></div>
-  <div class="button-group" id="current-status-button-group">
-    <a class="btn btn-func">Refresh</a>
-    <a class="btn btn-func">Quick print</a>
-    <a class="btn btn-func" onclick="export_data_view_excel()">Excel</a>
-    <a class="btn btn-func">Target</a>
-    <a class="btn btn-func">All defects</a>
-    <a class="btn btn-func">Key station defects</a>
-    <a class="btn btn-func">Change data</a>
-  </div>
+  <%= render 'snap'%>
 </section>
-<%= render 'snap'%>
+
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "reports/current_status" %>
+<% end %>
+
 <script>
-  $(document).ready(function(){
-      Report.init('current-status');
-  })
+    $(document).ready(function(){
+        Report.init("current-status");
+    })
 </script>
