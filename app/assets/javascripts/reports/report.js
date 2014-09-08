@@ -246,6 +246,17 @@ DV.page_load = function () {
     $("#vehicle-select").change(function () {
         DV.parse(d_current_status[$("#vehicle-select option:selected").text()]);
     });
+    $("#quick-print").on("click",function(){
+        html2canvas($("#data_container"), {
+            onrendered: function(canvas) {
+                theCanvas = canvas;
+                document.body.appendChild(canvas);
+
+                // Convert and download as image
+                Canvas2Image.saveAsPNG(canvas);
+            }
+        });
+    });
 }
 
 DV.parse = function (jsondata) {
@@ -270,7 +281,7 @@ StationData.init = function () {
     mygrid.setHeader("Inspection,#cspan,Vechile Total,OK Vehicle,NOK Vehicle,FTQ,DPV,DPV Target,Defects,Vehs,FTQ Target,OK,NOK");
     //mygrid.attachHeader("full,short,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
     mygrid.setInitWidths("150,80,80,80,80,80,80,80,80,80,80,80,80");
-    mygrid.setColAlign("right,center,center,center,center,center,center,center,center,center,center,center,center");
+    mygrid.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center");
     mygrid.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
     mygrid.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int");
     //mygrid.setColumnColor("white,#d5f1ff,#d5f1ff");
