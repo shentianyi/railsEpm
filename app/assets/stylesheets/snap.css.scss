@@ -2,6 +2,8 @@
 .snap-groups{
   height:90px;
   border-top:1px solid rgba(0,0,0,0.2);
+  overflow-y:hidden;
+  overflow-x:auto;
 }
 .snap_block{
   position:fixed;
