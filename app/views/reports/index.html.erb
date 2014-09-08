@@ -1,12 +1,7 @@
 <%= render "my-reports" %>
 
 <div class="report-content" id="report-content">
-  <% case @partial %>
-  <% when 'grid' %>
-      <%= render "grid" %>
-  <% when 'data-view' %>
-      <%= render "data-view" %>
-  <% end %>
+   <%= render "current-status" %>
 </div>
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "func-module/format_time.js" %>
@@ -19,4 +14,8 @@
     <%= javascript_include_tag "reports/report.js" %>
     <%= javascript_include_tag "reports/main.js" %>
     <%= javascript_include_tag "reports/snap" %>
+    <%= javascript_include_tag "func-module/chosen"%>
+    <%= javascript_include_tag "reports/data-daily-dpv"%>
+    <%= javascript_include_tag "reports/data-current-status" %>
+    <%= javascript_include_tag "reports/current_status" %>
 <% end %>

@@ -1,0 +1,38 @@
+<section class="current-status" id="current-status">
+  <div class="header" id="current-status-header">
+    <div class="left">
+      <p>First Time Quality (FTQ) Summary Percentage</p>
+      <p id="current-date"></p>
+      <p>Early shift</p>
+      <div class="btn-groups">
+        <a class="btn btn-primary">Refresh</a>
+        <a class="btn btn-primary">Quick print</a>
+        <a class="btn btn-primary" onclick="export_data_view_excel()">Excel</a>
+        <a class="btn btn-primary">Target</a>
+        <a class="btn btn-primary">All defects</a>
+        <a class="btn btn-primary">Key station defects</a>
+        <!--<a class="btn btn-func">Change data</a>-->
+      </div>
+    </div>
+    <div class="right">
+      <p><span>Current time:</span><span id="current-clock"></span></p>
+      <select id="vehicle-select">
+        <option>Vehicle_1</option>
+        <option>Vehicle_2</option>
+        <option>Vehicle_3</option>
+      </select>
+    </div>
+  </div>
+  <div id="data_container" class="data-container"></div>
+  <%= render 'snap'%>
+</section>
+
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "reports/current_status" %>
+<% end %>
+
+<script>
+    $(document).ready(function(){
+        Report.init("current-status");
+    })
+</script>
