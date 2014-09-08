@@ -1,17 +1,18 @@
-<div>
-  <h1>All Deffects</h1>
-  <div id="gridbox" style="height:500px;background-color:white;"></div>
-</div>
-<div width="500px">
-  <select multiple class="chosen-select" data-placeholder="Model" id="deffect-model">
-  </select>
+<section class="daily_dpv">
+  <div class="left">
+    <div id="gridbox" style="height:500px;background-color:white;"></div>
+  </div>
+  <div class="'right">
+    <select multiple class="chosen-select" data-placeholder="Model" id="deffect-model">
+    </select>
+    <select multiple class="chosen-select" data-placeholder="Phase" id="deffect-phase">
+    </select>
+    <select multiple class="chosen-select" data-placeholder="Deffect Date" id="deffect-date">
+    </select>
+    <input type="button" value="Retrieve Data" onclick="Grid.filter()"/>
+  </div>
+</section>
 
-  <select multiple class="chosen-select" data-placeholder="Phase" id="deffect-phase">
-  </select>
-  <select multiple class="chosen-select" data-placeholder="Deffect Date" id="deffect-date">
-  </select>
-  <input type="button" value="Retrieve Data" onclick="Grid.filter()"/>
-</div>
 
 <script>
   $(document).ready(function(){
