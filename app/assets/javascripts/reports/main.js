@@ -120,3 +120,4 @@ report_main.init_snap_btn=function(id){
              }, 'json');
     })
 }
+

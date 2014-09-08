@@ -23,6 +23,7 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:id])
     @comments=CommentPresenter.init_presenters(Comment.detail_by_commentable(@story).all)
     @chart_conditions=ChartConditionPresenter.init_presenters(ChartCondition.detail_by_chartable(@story))
+    @partial = ChartType.partial(@story.chart_type)
     render partial: 'detail'
   end
 
@@ -53,14 +54,11 @@ class StoriesController < ApplicationController
     unless params[:story][:chart_conditions].blank?
       params[:story][:chart_conditions].each do |index, c|
         #puts c
-        puts c[:kpi_property]
-        puts c[:kpi_property].class
         if  c[:kpi_property].blank?
           c.except!(:kpi_property)
         else
           c[:kpi_property]= c[:kpi_property].to_json
         end
-        puts c
         StoryService.add_chart_condition(c, @story)
       end
     end
@@ -106,7 +104,7 @@ class StoriesController < ApplicationController
       @comment.user=current_user
       Attachment.add(params[:comment][:attachments].values, @comment) unless params[:comment][:attachments].blank?
       @comment.save
-      @msg.content={content:@comment.content,user:current_user.first_name}
+      @msg.content={content: @comment.content, user: current_user.first_name}
 
       @msg.result=true
     end
