@@ -1,0 +1,10 @@
+<div id="data_container" class="data-container"></div>
+<p id="hide-data"><%= @chart_conditions.first.to_json %></p>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "reports/current_status" %>
+<% end %>
+<script>
+    $(document).ready(function(){
+        Report.init("current_status");
+    })
+</script>
