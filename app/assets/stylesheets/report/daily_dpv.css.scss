@@ -1,9 +1,22 @@
 @import "STYLE";
 .daily_dpv{
+  &:after{
+    @include after-clear;
+  }
   .left{
     float:left;
     @include box-sizing-border;
     width:70%;
+    .chart_dpv_one{
+      height:200px;
+    }
+    .chart_dpv_two{
+      height:200px;
+    }
+    .data_container{
+      background:#fff;
+      overflow-y:auto;
+    }
   }
   .right{
     float:left;

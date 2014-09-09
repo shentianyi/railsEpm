@@ -29,6 +29,7 @@ var Highchart_generator=function(option){
             },
             formatter: function() { return this.y ; }
         }
+        this.basic.subtitle.enabled=false;
         this.basic.xAxis.categories=option.xArray;
         this.basic.series=option.data;
         if(option.height){

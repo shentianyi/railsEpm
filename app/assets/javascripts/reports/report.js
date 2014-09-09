@@ -125,6 +125,7 @@ Report.configure = function(){
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.init();
             dhtmlxobj.enableSmartRendering(true);
+            daily_dpv.init();
             break;
         default:
             break;
