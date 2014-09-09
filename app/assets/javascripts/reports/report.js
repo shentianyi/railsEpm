@@ -67,7 +67,7 @@ Report.get_dhtmlx = function(){
         case this.type["station_data"]:
             return new dhtmlXGridObject(container);
         default:
-            return new dhtmlXDataView(container);
+            return null;
     }
 }
 
@@ -225,64 +225,59 @@ Report.daily_dpv_init = function(){
         $("#deffect-date").append("<option>" + dates[i] + "</option>");
     }
     chosen.single_update("deffect-date");
-}
 
-//===========================================
-//daily-dpv
-var Grid = {}
+    $("#retrieve-data").on('click',function(){
+        //Report.r.filterByAll();
 
-Grid.filter = function () {
-    Grid.o.filterByAll();
-
-    var models = [];
-    var i = 0;
-    $("#deffect-model option:selected").each(function () {
-        models[i] = $(this).text();
-        i++;
-    });
-    if (models.length > 0) {
-        Grid.o.filterBy(1, function (a) {
-            for (j = 0; j < models.length; j++) {
-                if (a == models[j]) {
-                    return true;
+        var models = [];
+        var i = 0;
+        $("#deffect-model option:selected").each(function () {
+            models[i] = $(this).text();
+            i++;
+        });
+        if (models.length > 0) {
+            Report.r.filterBy(1, function (a) {
+                for (j = 0; j < models.length; j++) {
+                    if (a == models[j]) {
+                        return true;
+                    }
                 }
-            }
-        })
-    }
+            })
+        }
 
-    var phases = [];
-    i = 0;
-    $("#deffect-phase option:selected").each(function () {
-        phases[i] = $(this).text();
-        i++;
-    });
-    if (phases.length > 0) {
-        Grid.o.filterBy(3, function (a) {
-            for (j = 0; j < phases.length; j++) {
-                if (a == phases[j]) {
-                    return true;
+        var phases = [];
+        i = 0;
+        $("#deffect-phase option:selected").each(function () {
+            phases[i] = $(this).text();
+            i++;
+        });
+        if (phases.length > 0) {
+            Report.r.filterBy(3, function (a) {
+                for (j = 0; j < phases.length; j++) {
+                    if (a == phases[j]) {
+                        return true;
+                    }
                 }
-            }
-        })
-    }
+            })
+        }
 
 
-    var dates = [];
-    i = 0;
-    $("#deffect-date option:selected").each(function () {
-        dates[i] = $(this).text();
-        i++;
-    });
-    if (dates.length > 0) {
-        Grid.o.filterBy(4, function (a) {
-            for (j = 0; j < dates.length; j++) {
-                if (a == dates[j]) {
-                    return true;
+        var dates = [];
+        i = 0;
+        $("#deffect-date option:selected").each(function () {
+            dates[i] = $(this).text();
+            i++;
+        });
+        if (dates.length > 0) {
+            Report.r.filterBy(4, function (a) {
+                for (j = 0; j < dates.length; j++) {
+                    if (a == dates[j]) {
+                        return true;
+                    }
                 }
-            }
-        })
-    }
-
+            })
+        }
+    })
 }
 // need to rewrite
 function export_report_excel() {

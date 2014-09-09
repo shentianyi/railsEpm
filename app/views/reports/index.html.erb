@@ -1,7 +1,7 @@
 <%= render "my-reports" %>
 
 <div class="report-content" id="report-content">
-   <%= render "current-status" %>
+  <%= render "current-status" %>
 </div>
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "func-module/format_time.js" %>
@@ -9,12 +9,12 @@
     <%= javascript_include_tag "preload/snap.svg-min.js" %>
     <%= javascript_include_tag "preload/svgLoader.js" %>
     <%= javascript_include_tag "xml2json"%>
-    <%= javascript_include_tag "dhtmlx" %>
-    <%= javascript_include_tag "dhtmlx-extend" %>
     <%= javascript_include_tag "reports/report.js" %>
     <%= javascript_include_tag "reports/main.js" %>
     <%= javascript_include_tag "reports/snap" %>
     <%= javascript_include_tag "func-module/chosen"%>
+    <%= javascript_include_tag "dhtmlx.js"%>
+    <%= javascript_include_tag "dhtmlx-extend.js"%>
     <%= javascript_include_tag "reports/data-daily-dpv"%>
     <%= javascript_include_tag "reports/data-current-status" %>
     <%= javascript_include_tag "reports/current_status" %>
