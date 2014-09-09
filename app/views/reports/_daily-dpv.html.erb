@@ -1,6 +1,6 @@
 <section class="daily_dpv">
   <div class="left">
-    <div id="gridbox" style="height:500px;background-color:white;"></div>
+    <div id="data_container" style="height:500px;background-color:white;"></div>
   </div>
   <div class="'right">
     <select multiple class="chosen-select" data-placeholder="Model" id="deffect-model">
@@ -16,6 +16,6 @@
 <a class="btn btn-primary" onclick="export_report_excel()">Excel</a>
 <script>
   $(document).ready(function(){
-      Report.init("daily-dpv");
+      Report.init("daily_dpv");
   })
 </script>
