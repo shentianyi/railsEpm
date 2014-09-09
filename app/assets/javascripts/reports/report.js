@@ -115,7 +115,7 @@ Report.configure = function(){
         case this.type["daily_dpv"]:
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader("FALSE,Volumn,Effect,DPV,SDPV");
-            dhtmlxobj.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
+            //dhtmlxobj.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
             dhtmlxobj.setInitWidths("150,150,150,150,150");
             dhtmlxobj.enableAutoWidth(true);
             dhtmlxobj.setColAlign("left,center,center,center,center");
