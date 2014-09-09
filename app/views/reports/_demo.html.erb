@@ -1,0 +1,35 @@
+<div id="gridbox" style="width:503px;height:145px;background-color:white;"></div>
+<input type="button" value="Filter" onclick="test_filer()"/>
+<input type="button" value="RESET" onclick="rest_filter()"/>
+<%= javascript_include_tag "dhtmlxgrid" %>
+<script>
+  var mygrid = {}
+  $(document).ready(function(){
+      mygrid = new dhtmlXGridObject('gridbox');
+      mygrid.setImagePath("assets/codebase/imgs/");
+      mygrid.setHeader("Sales,Book Title,Author");
+      mygrid.setInitWidths("50,250,*")
+      mygrid.setColAlign("right,left,left")
+      mygrid.setColTypes("dyn,ed,ed");
+      mygrid.setColSorting("str,str,str")
+      mygrid.init();
+      mygrid.setSkin("dhx_skyblue")
+      var data = {
+          rows:[
+              {id:1,
+                  data:["1","1/8/1992","Today"]},
+              {id:2,
+                  data:["0","1/8/1992","AA"]}
+          ]
+      }
+      mygrid.parse(data,'json');
+  });
+
+        function test_filer(){
+            mygrid.filterBy(2,"Today");
+        }
+
+        function rest_filter(){
+            mygrid.filterByAll();
+        }
+</script>

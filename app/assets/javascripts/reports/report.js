@@ -2,7 +2,7 @@ var Report = Report || {};
 Report.option = {};
 Report.r = {};
 Report.export_excel_url = 'http://42.121.111.38:9003/DHXFileService/Excel';
-
+/*
 Report.init = function (type) {
     var option = this.get_option_by_type(type);
 
@@ -32,70 +32,73 @@ Report.init = function (type) {
     this.json_parse(data);
     this.r.page_load();
 };
-/*
-
-Report.init = function(option){
-    this.option = option;
-    this.r = this.get_dhtmlx();
-    this.configure();
-    this.parse_json(this.get_json());
-    this.prepare();
-};
 */
 
+/*init report*/
+Report.init = function(type){
+    this.option = this.get_option_by_type(type);
+    delete this.r;
+    this.r = this.get_dhtmlx();
+    this.configure();
+    this.json_parse(this.get_json());
+    this.prepare();
+};
+
+/*prepare page*/
 Report.prepare = function(){
-    
+    var fn = Report[this.option.type_string+"_init"];
+    if(typeof fn === "function"){
+        fn();
+    }
 };
 
-Report.parse_json = function(json){
-    this.r.parse(json,"json");
-};
-
+/*parse json data*/
 Report.json_parse = function (jsondata) {
     this.r.parse(jsondata, 'json');
 };
 
+/*get dhtmlx object*/
 Report.get_dhtmlx = function(){
     var container = "data_container";
     switch(this.option.type){
         case this.type["current_status"]:
             return new dhtmlXDataView(container);
-        case this.type["daily-dpv"]:
-        case this.type["station-data"]:
+        case this.type["daily_dpv"]:
+        case this.type["station_data"]:
             return new dhtmlXGridObject(container);
         default:
-            return new dhtmlXDataView(container);
+            return null;
     }
 }
 
 Report.configure = function(){
-    var dhtmlx = this.r;
+    var dhtmlxobj = this.r;
     var type = this.option.type;
     switch(type){
-        case this.type["current-status"]:
-           dhtmlxobj.type =  {
+        case this.type["current_status"]:
+            dhtmlxobj.define("type",{
                 template: "<div class='dv-header'>" +
-                "<p>#INQA#</p>" +
-                "</div>" +
-                "<div class='dv-body'>" +
-                "<div class='left'>" +
-                "<p>#FTQ#</p>" +
-                "</div>" +
-                "<div class='right'>" +
-                "<p>#Defects#</p>" +
-                "<p>OPEN DEFECTS</p>" +
-                "<p>#Pass#</p>" +
-                "<p>VEHICLE PASS</p>" +
-                "</div>" +
-                "</div>",
-                    css: "dv-item",
-                    height: 150,
-                    width: 230,
-                    margin: 5,
-                    padding: 8
-            }
+                    "<p>#INQA#</p>" +
+                    "</div>" +
+                    "<div class='dv-body'>" +
+                    "<div class='left'>" +
+                    "<p>#FTQ#</p>" +
+                    "</div>" +
+                    "<div class='right'>" +
+                    "<p>#Defects#</p>" +
+                    "<p>OPEN DEFECTS</p>" +
+                    "<p>#Pass#</p>" +
+                    "<p>VEHICLE PASS</p>" +
+                    "</div>" +
+                    "</div>",
+                css: "dv-item",
+                height: 150,
+                width: 230,
+                margin: 5,
+                padding: 8
+            });
             break;
-        case this.type["station-data"]:
+        case this.type["station_data"]:
             dhtmlxobj.setImagePath("../../../codebase/imgs/");
             dhtmlxobj.setHeader("Inspection,#cspan,Vechile Total,OK Vehicle,NOK Vehicle,FTQ,DPV,DPV Target,Defects,Vehs,FTQ Target,OK,NOK");
             //mygrid.attachHeader("full,short,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
@@ -108,7 +111,7 @@ Report.configure = function(){
             dhtmlxobj.init();
             dhtmlxobj.enableMultiselect(true);
             break;
-        case this.type["daily-dpv"]:
+        case this.type["daily_dpv"]:
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader("FALSE,Volumn,Effect,DPV,SDPV");
             dhtmlxobj.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
@@ -129,11 +132,11 @@ Report.configure = function(){
 
 Report.get_json = function () {
     switch (this.option.type) {
-        case this.type["current-status"]:
+        case this.type["current_status"]:
             return d_current_status['Vehicle_1'];
-        case this.type["daily-dpv"]:
+        case this.type["daily_dpv"]:
             return  d_daily_dpv;
-        case this.type["station-data"]:
+        case this.type["station_data"]:
             return d_station_data;
         default :
             return null;
@@ -141,7 +144,7 @@ Report.get_json = function () {
 };
 
 Report.serializeToJson = function () {
-    return  this.r.o.serializeToJson();
+    return  this.r.serializeToJson();
 };
 
 Report.serializeToJSONString = function () {
@@ -153,185 +156,36 @@ Report.reload = function () {
 };
 
 Report.toExcel = function () {
-    this.r.o.toExcel(this.export_excel_url);
+    this.r.toExcel(this.export_excel_url);
 };
 
 Report.get_option_by_type = function (type) {
     var option = {};
-    switch (type) {
-        case 'current-status':
-            option.container = 'data_container';
-            break;
-        case 'daily-dpv':
-            break;
-        default :
-            option.container = 'data_container';
-            break;
-    }
     option.type = this.type[type];
+    option.type_string = type;
     return option;
 }
 
 Report.type = {
-    "high-chart": 0,
-    "current-status": 1,
-    "summary-report": 2,
-    "station-data": 3,
-    "tracking-report": 4,
+    "high_chart": 0,
+    "current_status": 1,
+    "summary_report": 2,
+    "station_data": 3,
+    "tracking_report": 4,
     "defect": 5,
-    "vehicle-info": 6,
-    "daily-dpv": 7
+    "vehicle_info": 6,
+    "daily_dpv": 7
 }
 
-//===========================================
-//daily-dpv
-var Grid = {};
-Grid.o = {};
-Grid.init = function (option) {
-    chosen.init(
-        ["deffect-model", "deffect-phase", "deffect-date"],
-        [220, 220, 220]
-    );
-    mygrid = {}
-    mygrid = new dhtmlXGridObject('gridbox');
-    mygrid.setImagePath("/assets/dhtmlx/");
-    mygrid.setHeader("FALSE,Volumn,Effect,DPV,SDPV");
-    mygrid.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
-    mygrid.setInitWidths("150,150,150,150,150");
-    mygrid.enableAutoWidth(true);
-    mygrid.setColAlign("left,center,center,center,center");
-    mygrid.setColTypes("ro,ro,ro,ro,ro");
-    mygrid.setColSorting("str,int,int,int,int");
-    mygrid.setNumberFormat("0,000.00", 0, ".", ",");
-    mygrid.setSkin("dhx_skyblue");
-    mygrid.init();
-    mygrid.enableSmartRendering(true);
-
-    this.o = mygrid;
-}
-
-Grid.page_load = function () {
-    var models = mygrid.collectValues(1);
-    $("#deffect-model option").remove();
-    for (i = 0; i < models.length; i++) {
-        $("#deffect-model").append("<option>" + models[i] + "</option>");
-    }
-    chosen.single_update("deffect-model");
-
-    var phases = mygrid.collectValues(3);
-    $("#deffect-phase option").remove();
-    for (i = 0; i < phases.length; i++) {
-
-        $("#deffect-phase").append("<option>" + phases[i] + "</option>");
-    }
-    chosen.single_update("deffect-phase");
-
-    var dates = mygrid.collectValues(4);
-    $("#deffect-date option").remove();
-    for (i = 0; i < dates.length; i++) {
-
-        $("#deffect-date").append("<option>" + dates[i] + "</option>");
-    }
-    chosen.single_update("deffect-date");
-}
-
-Grid.onfilter = function (els) {
-
-}
-
-Grid.filter = function () {
-    Grid.o.filterByAll();
-
-    var models = [];
-    var i = 0;
-    $("#deffect-model option:selected").each(function () {
-        models[i] = $(this).text();
-        i++;
-    });
-    if (models.length > 0) {
-        Grid.o.filterBy(1, function (a) {
-            for (j = 0; j < models.length; j++) {
-                if (a == models[j]) {
-                    return true;
-                }
-            }
-        })
-    }
-
-    var phases = [];
-    i = 0;
-    $("#deffect-phase option:selected").each(function () {
-        phases[i] = $(this).text();
-        i++;
-    });
-    if (phases.length > 0) {
-        Grid.o.filterBy(3, function (a) {
-            for (j = 0; j < phases.length; j++) {
-                if (a == phases[j]) {
-                    return true;
-                }
-            }
-        })
-    }
-
-
-    var dates = [];
-    i = 0;
-    $("#deffect-date option:selected").each(function () {
-        dates[i] = $(this).text();
-        i++;
-    });
-    if (dates.length > 0) {
-        Grid.o.filterBy(4, function (a) {
-            for (j = 0; j < dates.length; j++) {
-                if (a == dates[j]) {
-                    return true;
-                }
-            }
-        })
-    }
-
-}
-
-Grid.parse = function (jsondata) {
-    this.o.parse(jsondata, "json");
-}
-
-//===========================================
-//current-status
-var DV = {} || DV;
-DV.o = {};
-DV.init = function (option) {
-    this.o = new dhtmlXDataView({
-        container: option.container,
-        type: {
-            template: "<div class='dv-header'>" +
-                "<p>#INQA#</p>" +
-                "</div>" +
-                "<div class='dv-body'>" +
-                "<div class='left'>" +
-                "<p>#FTQ#</p>" +
-                "</div>" +
-                "<div class='right'>" +
-                "<p>#Defects#</p>" +
-                "<p>OPEN DEFECTS</p>" +
-                "<p>#Pass#</p>" +
-                "<p>VEHICLE PASS</p>" +
-                "</div>" +
-                "</div>",
-            css: "dv-item",
-            height: 150,
-            width: 230,
-            margin: 5,
-            padding: 8
-
-        }
-    });
-};
-
-DV.page_load = function () {
+/*
+* write your init code here
+* for different type
+* func name should be typename_init, like current-status_init
+* */
+Report.current_status_init = function(){
     $("#vehicle-select").change(function () {
-        DV.parse(d_current_status[$("#vehicle-select option:selected").text()]);
+        Report.r.clearAll();
+        Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
     });
     $("#quick-print").on("click",function(){
         html2canvas($("#data_container"), {
@@ -343,44 +197,89 @@ DV.page_load = function () {
     });
 }
 
-DV.parse = function (jsondata) {
-    this.o.parse(jsondata, "json");
-};
+Report.daily_dpv_init = function(){
+    chosen.init(
+        ["deffect-model", "deffect-phase", "deffect-date"],
+        [220, 220, 220]
+    );
 
-DV.clear = function () {
-    this.o.clearAll();
-};
+    var models = Report.r.collectValues(1);
+    $("#deffect-model option").remove();
+    for (i = 0; i < models.length; i++) {
+        $("#deffect-model").append("<option>" + models[i] + "</option>");
+    }
+    chosen.single_update("deffect-model");
+
+    var phases = Report.r.collectValues(3);
+    $("#deffect-phase option").remove();
+    for (i = 0; i < phases.length; i++) {
+
+        $("#deffect-phase").append("<option>" + phases[i] + "</option>");
+    }
+    chosen.single_update("deffect-phase");
+
+    var dates = Report.r.collectValues(4);
+    $("#deffect-date option").remove();
+    for (i = 0; i < dates.length; i++) {
+
+        $("#deffect-date").append("<option>" + dates[i] + "</option>");
+    }
+    chosen.single_update("deffect-date");
+
+    $("#retrieve-data").on('click',function(){
+        //Report.r.filterByAll();
+
+        var models = [];
+        var i = 0;
+        $("#deffect-model option:selected").each(function () {
+            models[i] = $(this).text();
+            i++;
+        });
+        if (models.length > 0) {
+            Report.r.filterBy(1, function (a) {
+                for (j = 0; j < models.length; j++) {
+                    if (a == models[j]) {
+                        return true;
+                    }
+                }
+            })
+        }
+
+        var phases = [];
+        i = 0;
+        $("#deffect-phase option:selected").each(function () {
+            phases[i] = $(this).text();
+            i++;
+        });
+        if (phases.length > 0) {
+            Report.r.filterBy(3, function (a) {
+                for (j = 0; j < phases.length; j++) {
+                    if (a == phases[j]) {
+                        return true;
+                    }
+                }
+            })
+        }
+
+
+        var dates = [];
+        i = 0;
+        $("#deffect-date option:selected").each(function () {
+            dates[i] = $(this).text();
+            i++;
+        });
+        if (dates.length > 0) {
+            Report.r.filterBy(4, function (a) {
+                for (j = 0; j < dates.length; j++) {
+                    if (a == dates[j]) {
+                        return true;
+                    }
+                }
+            })
+        }
+    })
+}
 // need to rewrite
 function export_report_excel() {
     Report.toExcel();
 };
-
-var StationData = {} || StationData;
-
-StationData.o = {};
-
-StationData.init = function () {
-    mygrid = new dhtmlXGridObject('gridbox');
-    mygrid.setImagePath("../../../codebase/imgs/");
-    mygrid.setHeader("Inspection,#cspan,Vechile Total,OK Vehicle,NOK Vehicle,FTQ,DPV,DPV Target,Defects,Vehs,FTQ Target,OK,NOK");
-    //mygrid.attachHeader("full,short,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
-    mygrid.setInitWidths("150,80,80,80,80,80,80,80,80,80,80,80,80");
-    mygrid.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center");
-    mygrid.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
-    mygrid.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int");
-    //mygrid.setColumnColor("white,#d5f1ff,#d5f1ff");
-    mygrid.setSkin("dhx_skyblue");
-    mygrid.init();
-    mygrid.enableMultiselect(true);
-    this.o = mygrid;
-}
-
-StationData.page_load = function () {
-
-}
-
-StationData.parse = function (jsondata) {
-    if(jsondata != null){
-        this.o.parse(jsondata, "json");
-    }
-}
