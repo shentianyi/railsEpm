@@ -117,8 +117,10 @@ Report.configure = function(){
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader("FALSE,Volumn,Effect,DPV,SDPV");
             //dhtmlxobj.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
+
             dhtmlxobj.setInitWidths(width+","+width+","+width+","+width+","+width);
             dhtmlxobj.enableAutoWidth(false);
+
             dhtmlxobj.setColAlign("left,center,center,center,center");
             dhtmlxobj.setColTypes("ro,ro,ro,ro,ro");
             dhtmlxobj.setColSorting("str,int,int,int,int");
@@ -206,6 +208,8 @@ Report.current_status_init = function(){
 }
 
 Report.daily_dpv_init = function(){
+    /*------------------------------------------------------------*/
+    /*init chosen*/
     chosen.init(
         ["deffect-model", "deffect-phase", "deffect-date"],
         [220, 220, 220]
@@ -234,6 +238,8 @@ Report.daily_dpv_init = function(){
     }
     chosen.single_update("deffect-date");
 
+    /*------------------------------------------------------------*/
+    /*filter data*/
     $("#retrieve-data").on('click',function(){
         //Report.r.filterByAll();
 
@@ -285,7 +291,50 @@ Report.daily_dpv_init = function(){
                 }
             })
         }
-    })
+    });
+
+    /*------------------------------------------------------------*/
+    /*Tricky code, need to rewrite*/
+    /*reload daily dpv and sdpv chart*/
+    var jsondata = Report.r.serializeToJson();
+    var xArray = [],data = [];
+
+    var colindx = 0;
+    for(var j = 0;j<jsondata['rows'].length;j++){
+        xArray[j] = jsondata['rows'][j]['data'][colindx]
+    }
+
+    //DPV
+    colindx = 3;
+    for(var j = 0;j<jsondata['rows'].length;j++){
+        data[j] = jsondata['rows'][j]['data'][colindx]
+    }
+
+    var option_one={
+        xArray:xArray,
+        data:[{
+            name: 'DPV',
+            data: data
+        }]
+    };
+
+    daily_dpv.chart_dpv.reload_daily_dpv(option_one);
+
+    //SDPV
+    colindx = 4;
+    for(var j = 0;j<jsondata['rows'].length;j++){
+        data[j] = jsondata['rows'][j]['data'][colindx]
+    }
+
+    option_one={
+        xArray:xArray,
+        data:[{
+            name: 'SDPV',
+            data: data
+        }]
+    };
+    daily_dpv.chart_sdpv.reload_daily_dpv(option_one);
+    /*------------------------------------------------------------*/
 }
 // need to rewrite
 function export_report_excel() {
