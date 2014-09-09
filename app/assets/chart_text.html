@@ -5,7 +5,7 @@
     <title>if kpi</title>
 </head>
 <body>
-<div id="chart_container" style='width:500px;height:400px'></div>
+<div id="chart_container" style='width:700px;height:400px'></div>
 
 <script src="javascripts/jquery-1.8.2.min.js"></script>
 <script src="javascripts/highstock.js"></script>
@@ -14,14 +14,30 @@
 <script>
     window.onload=function(){
         var option={
-            chart_type:"column",
             target:"chart_container",
-            xArray:["1","2","3"],
-            height:"300"
+            xArray:["Jan","Feb","Mar","Jan","Feb","Mar","Jan","Feb","Mar","Jan","Feb","Mar"],
+            height:"300",
+            data:[{
+                name: 'Tokyo',
+                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+            }],
+            color:"purple",
+            title:"SPV"
         }
         var chart=new Highchart_generator(option);
-        chart.init();
+        chart.init_daily_dpv();
+        setInterval(function(){
+            var option={
+                xArray:["Jan","Feb","Mar","Jan","Feb","Mar","Jan","Feb","Mar","Jan","Feb","Mar"],
+                data:[{
+                    name: 'Summer',
+                    data: [parseInt(Math.random()*50), 20, 10, 12, 14, 17, 13, 14, 21, 19, 9, 5]
+                }]
+            }
+            chart.reload_daily_dpv(option);
+        },5000);
     }
+
 </script>
 </body>
 </html>

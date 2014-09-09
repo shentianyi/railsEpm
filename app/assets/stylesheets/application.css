@@ -43,10 +43,10 @@
 *= require layout
 *= require story_sets
 *= require kpi_subscribes
-*= require reports
-*= require snap
+*= require report/reports
+*= require report/snap.css.scss
 *= require dataview/dataview_tiem
-*= require daily_dpv
+*= require report/daily_dpv
 *= require stories.css
 
 *= require popModal.min

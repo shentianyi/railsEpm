@@ -70,41 +70,52 @@
   }
 }
 .report_center_back_pop{
-  padding:15px !important;
-  .basic_info{
-    &:after{
-      @include after-clear;
+  .choose-project-team{
+    $width:540px;
+    $height:410px;
+    margin-top:- $height / 2;
+    margin-left:- $width / 2;
+    width:$width;
+    height:$height;
+    @include border-radius-same(3px);
+    &>div{
+      padding:8px 6px;
     }
-    .basic_left{
-      @include box-sizing-border;
-      width:50%;
-      float:left;
-      overflow-y:auto;
-    }
-    .basic_right{
-      @include box-sizing-border;
-      width:50%;
-      float:left;
-      overflow-y:auto;
-      p{
-        padding-left:0px;
+    .basic_info{
+      &:after{
+        @include after-clear;
       }
-      textarea{
-        $width:210px;
-        width:$width;
-        max-width:$width;
-        min-width:$width;
+      .basic_left{
+        @include box-sizing-border;
+        width:50%;
+        float:left;
+        overflow-y:auto;
+      }
+      .basic_right{
+        @include box-sizing-border;
+        width:50%;
+        float:left;
+        overflow-y:auto;
+        p{
+          padding-left:0px;
+        }
+        textarea{
+          $width:225px;
+          width:$width;
+          max-width:$width;
+          min-width:$width;
+        }
       }
     }
-  }
-  .choose-by-select{
-    &>p{
-      color:$blue;
+    .choose-by-select{
+      &>p{
+        color:$blue;
+      }
     }
-  }
-  .choose-by-create{
-    &>p{
-      color:$blue;
+    .choose-by-create{
+      &>p{
+        color:$blue;
+      }
     }
   }
 }
