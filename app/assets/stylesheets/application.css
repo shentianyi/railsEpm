@@ -48,6 +48,7 @@
 *= require dataview/dataview_tiem
 *= require report/daily_dpv
 *= require stories.css
+*= require report/current_status
 
 *= require popModal.min
 *= require dhtmlxgrid
