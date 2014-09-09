@@ -37,30 +37,23 @@
 
 <input type="hidden" id="report-story-type-hidden">
 
-<div class="back-pop" id='back-pop'>
+<div class="back-pop report_center_back_pop" id='back-pop'>
   <div class="choose-project-team">
     <i class="icon icon-remove" id="remove-back-pop"></i>
-
-    <p>Create Insight</p>
-
-    <div class="left">
-      <p>Title</p>
-      <input type="text" id="story-title"/>
-
-      <p>Description</p>
-      <textarea id="story-desc"></textarea>
-    </div>
-    <div class="right">
-      <div>
+    <p>Share to discussion</p>
+    <div class="basic_info">
+      <div class="basic_left">
+        <p>Title</p>
+        <input type="text" id="story-title"/>
         <p>Attachment</p>
         <input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
-
         <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
       </div>
-
+      <div class="basic_right">
+        <p>Description</p>
+        <textarea id="story-desc"></textarea>
+      </div>
     </div>
-    <p>create discussion</p>
-
     <div class="choose-by-select">
       <p>Add to a discussion</p>
       <select data-placeholder="discussion list" class="chosen-select" id="story-sets">

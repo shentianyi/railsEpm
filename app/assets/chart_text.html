@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" >
+    <title>if kpi</title>
+</head>
+<body>
+<div id="chart_container" style='width:500px;height:400px'></div>
+
+<script src="javascripts/jquery-1.8.2.min.js"></script>
+<script src="javascripts/highstock.js"></script>
+<script src="javascripts/Highchart/Highchart_generator.js"></script>
+
+<script>
+    window.onload=function(){
+        var option={
+            chart_type:"column",
+            target:"chart_container",
+            xArray:["1","2","3"],
+            height:"300"
+        }
+        var chart=new Highchart_generator(option);
+        chart.init();
+    }
+</script>
+</body>
+</html>

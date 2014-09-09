@@ -19,15 +19,20 @@
                     top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
                 $(".pageload-overlay svg").css('left', left);
                 $(".pageload-overlay svg").css('top', top);
+
                 loader.show();
-			
+
 			    $.ajax({
 				    url:"/reports/"+part+"/ajax",
 				    type:"GET",
 				    success:function(data){
-					    $("#report-content").html(data);
+
 					    //
-					    loader.hide()
+                        setTimeout(function(){
+                            $("#report-content").html(data);
+                            loader.hide()
+                        },1500);
+
 				    }
 			    })
 		    })
@@ -119,12 +124,13 @@ report_main.init_snap_btn=function(id){
             $("#snap_block").css("left","-999em");
         })
         .on("click","#snap-shot-btn",function(){
-            alert(Report.option.type)
+            var value=$.trim($('#snap-shot-desc').val());
+            if(value.length>0){
                 $.post(
                     '/report_snaps',
                     {
                         report_snap: {
-                            desc: $.trim($('#snap-shot-desc').val()),
+                            desc: value ,
                             type: Report.option.type,
                             data: JSON.stringify(Report.serializeToJson())
                         }
@@ -132,11 +138,19 @@ report_main.init_snap_btn=function(id){
                     function (data) {
                         if (data.result) {
                             $("#snap-shot-remove").click();
-                            alert('success');
-                            // call back to init snap item
+                            var type=data.content.type+"";
+                            var template='<div class="snap-li" snap="'+data.content.id+'" type="'+type+'">'+
+                                '<p>'+data.content.desc+'</p>'+
+                                    '<p>'+'right now'+'</p>'+
+                                '</div>'
+                            $("#snap-groups").prepend(template);
+
                         }
                     }, 'json');
-
-        })
+            }
+            else{
+                MessageBox("Please fill the description", "top", "warning");
+            }
+        });
 }
 
