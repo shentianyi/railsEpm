@@ -115,15 +115,15 @@ Report.configure = function(){
         case this.type["daily_dpv"]:
             var width=Math.floor($("#report-content .right").width()/5)+"";
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
-            dhtmlxobj.setHeader("FALSE,Volumn,Effect,DPV,SDPV");
+            dhtmlxobj.setHeader(this.headers["daily_dpv"]);
             //dhtmlxobj.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
 
-            dhtmlxobj.setInitWidths(width+","+width+","+width+","+width+","+width);
+            dhtmlxobj.setInitWidths(width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width);
             dhtmlxobj.enableAutoWidth(false);
 
-            dhtmlxobj.setColAlign("left,center,center,center,center");
-            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro");
-            dhtmlxobj.setColSorting("str,int,int,int,int");
+            dhtmlxobj.setColAlign("left,center,center,center,center,center,center,center,center,center,center");
+            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+            dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int");
             dhtmlxobj.setNumberFormat("0,000.00", 0, ".", ",");
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.init();
@@ -169,7 +169,7 @@ Report.get_option_by_type = function (type) {
     option.type = this.type[type];
     option.type_string = type;
     return option;
-}
+};
 
 Report.type = {
     "high_chart": 0,
@@ -180,7 +180,11 @@ Report.type = {
     "defect": 5,
     "vehicle_info": 6,
     "daily_dpv": 7
-}
+};
+
+Report.headers = {
+    "daily_dpv" : "FALSE,iQ1,iQ2,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10"
+};
 
 /*
 * write your init code here
@@ -298,14 +302,8 @@ Report.daily_dpv_init = function(){
     /*reload daily dpv and sdpv chart*/
     var jsondata = Report.r.serializeToJson();
     var xArray = [],data = [];
-
-    var colindx = 0;
-    for(var j = 0;j<jsondata['rows'].length;j++){
-        xArray[j] = jsondata['rows'][j]['data'][colindx]
-    }
-
+    xArray = Report.headers["daily_dpv"].split(",");
     //DPV
-    colindx = 3;
     for(var j = 0;j<jsondata['rows'].length;j++){
         data[j] = jsondata['rows'][j]['data'][colindx]
     }
