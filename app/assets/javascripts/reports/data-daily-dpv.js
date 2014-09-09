@@ -1,23 +1,86 @@
 var d_daily_dpv = {
     rows:[
-        { id:1001,
+        { id:1,
             data:[
                 "Volumne",
-                "Defect",
-                "DPV",
-                "SPDV"
-            ] }
-    ]
-}
-
-for(var i = 1;i<100;i++){
-        d_daily_dpv["rows"][i]={
-            id:i+1,
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50)
+            ] },
+        {
+            id:2,
             data:[
-                RAND.range_int(0,40),
-                RAND.range_int(0,200),
-                RAND.range_float(0,50),
-                RAND.range_float(0,200)
+                "Defect",
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
+                RAND.range_int(0,250)
+            ]
+        },
+        {
+            id:3,
+            data:[
+                "DPV",
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30)
+            ]
+        },
+        {
+            id:4,
+            data:[
+                "SDPV",
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
             ]
         }
+    ]
 }

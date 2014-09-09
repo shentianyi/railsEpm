@@ -14,5 +14,5 @@ RAND.range_int = function(a,b){
 
 /*float between*/
 RAND.range_float = function(a,b){
-    return Math.random()*(a+b)-a;
+    return (Math.random()*(a+b)-a).toFixed(2);
 }

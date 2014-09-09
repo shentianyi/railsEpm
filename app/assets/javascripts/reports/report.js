@@ -55,6 +55,10 @@ Report.prepare = function(){
 /*parse json data*/
 Report.json_parse = function (jsondata) {
     this.r.parse(jsondata, 'json');
+    var fn = Report[this.option.type_string+"_on_json_parse"]
+    if(typeof fn === 'function'){
+        fn();
+    }
 };
 
 /*get dhtmlx object*/
@@ -100,7 +104,7 @@ Report.configure = function(){
             current_status.init();
             break;
         case this.type["station_data"]:
-            dhtmlxobj.setImagePath("../../../codebase/imgs/");
+            dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader("Inspection,#cspan,Vechile Total,OK Vehicle,NOK Vehicle,FTQ,DPV,DPV Target,Defects,Vehs,FTQ Target,OK,NOK");
             //mygrid.attachHeader("full,short,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
             dhtmlxobj.setInitWidths("150,80,80,80,80,80,80,80,80,80,80,80,80");
@@ -110,23 +114,24 @@ Report.configure = function(){
             //mygrid.setColumnColor("white,#d5f1ff,#d5f1ff");
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.init();
-            dhtmlxobj.enableMultiselect(true);
+            //dhtmlxobj.enableMultiselect(true);
             break;
         case this.type["daily_dpv"]:
-            var width=Math.floor($("#report-content .right").width()/5)+"";
+            var width=Math.floor($("#report-content .left").width()/16);
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader(this.headers["daily_dpv"]);
             //dhtmlxobj.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
 
-            dhtmlxobj.setInitWidths(width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width);
+            dhtmlxobj.setInitWidths(width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width);
             dhtmlxobj.enableAutoWidth(false);
 
-            dhtmlxobj.setColAlign("left,center,center,center,center,center,center,center,center,center,center");
-            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
-            dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int");
-            dhtmlxobj.setNumberFormat("0,000.00", 0, ".", ",");
+            dhtmlxobj.setColAlign("left,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
+            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+            dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int");
+            //dhtmlxobj.setNumberFormat("0,000.00", 0, ".", ",");
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.init();
+            dhtmlxobj.setColumnColor("#d5f1ff");
             dhtmlxobj.enableSmartRendering(true);
             daily_dpv.init();
             break;
@@ -183,7 +188,7 @@ Report.type = {
 };
 
 Report.headers = {
-    "daily_dpv" : "FALSE,iQ1,iQ2,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10"
+    "daily_dpv" : "FALSE,iQ1,iQ2,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15"
 };
 
 /*
@@ -300,18 +305,26 @@ Report.daily_dpv_init = function(){
             })
         }
     });
-
+    /*------------------------------------------------------------*/
+}
+/*----------------------------------------------------*/
+/*on_json_parse for different type*/
+Report.daily_dpv_on_json_parse = function(){
     /*------------------------------------------------------------*/
     /*Tricky code, need to rewrite*/
     /*reload daily dpv and sdpv chart*/
     var jsondata = Report.r.serializeToJson();
-    var xArray = [],data = [];
-    xArray = Report.headers["daily_dpv"].split(",");
+    var xArray = [],data = [],header  = [];
+    header = Report.headers["daily_dpv"].split(",")
+    xArray = header;
     //DPV
-    for(var j = 0;j<jsondata['rows'].length;j++){
-        data[j] = jsondata['rows'][j]['data'][colindx]
+    colindx = 2;
+    for(var j = 0;j<xArray.length;j++){
+        data[j] = jsondata['rows'][colindx]['data'][j]
     }
 
+    xArray.shift();
+    data.shift();
     var option_one={
         xArray:xArray,
         data:[{
@@ -322,11 +335,14 @@ Report.daily_dpv_init = function(){
 
     daily_dpv.chart_dpv.reload_daily_dpv(option_one);
 
+    xArray = header;
     //SDPV
-    colindx = 4;
-    for(var j = 0;j<jsondata['rows'].length;j++){
-        data[j] = jsondata['rows'][j]['data'][colindx]
+    colindx = 3;
+    for(var j = 0;j<xArray.length;j++){
+        data[j] = jsondata['rows'][colindx]['data'][j]
     }
+    xArray.shift();
+    data.shift();
 
     option_one={
         xArray:xArray,
@@ -336,8 +352,8 @@ Report.daily_dpv_init = function(){
         }]
     };
     daily_dpv.chart_sdpv.reload_daily_dpv(option_one);
-    /*------------------------------------------------------------*/
 }
+
 // need to rewrite
 function export_report_excel() {
     Report.toExcel();
