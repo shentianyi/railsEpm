@@ -70,8 +70,8 @@
   to { transform: translateX(-20px); }
 }
 
-.current-status-pageload-loading.current-status-pageload-overlay::after,
-.current-status-pageload-loading.current-status-pageload-overlay::before {
+.pageload-loading.current-status-pageload-overlay::after,
+.pageload-loading.current-status-pageload-overlay::before {
   opacity: 1;
   visibility: visible;
   -webkit-transition: opacity 0.3s;

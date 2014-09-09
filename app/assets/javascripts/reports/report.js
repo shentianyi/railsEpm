@@ -203,9 +203,9 @@ Report.current_status_init = function(){
 
     $("#refresh").on("click",function(){
         current_status.loader_show();
-        Report.r.clearAll();
-        Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
         setTimeout(function(){
+            Report.r.clearAll();
+            Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
             current_status.loader_hide();
         },1500);
     });
