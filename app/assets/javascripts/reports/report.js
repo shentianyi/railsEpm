@@ -2,6 +2,7 @@ var Report = Report || {};
 Report.option = {};
 Report.r = {};
 Report.export_excel_url = 'http://42.121.111.38:9003/DHXFileService/Excel';
+/*
 Report.init = function (type) {
     var option = this.get_option_by_type(type);
 
@@ -31,10 +32,99 @@ Report.init = function (type) {
     this.json_parse(data);
     this.r.page_load();
 };
+*/
+
+Report.init = function(option){
+    this.option = option;
+    this.r = this.get_dhtmlx();
+    this.configure();
+    this.parse_json(this.get_json());
+    this.prepare();
+};
+
+Report.prepare = function(){
+    
+};
+
+Report.parse_json = function(json){
+    this.r.parse(json,"json");
+};
 
 Report.json_parse = function (jsondata) {
     this.r.parse(jsondata, 'json');
 };
+
+Report.get_dhtmlx = function(){
+    var container = "data_container";
+    switch(this.option.type){
+        case this.type["current_status"]:
+            return new dhtmlXDataView(container);
+        case this.type["daily-dpv"]:
+        case this.type["station-data"]:
+            return new dhtmlXGridObject(container);
+        default:
+            return new dhtmlXDataView(container);
+    }
+}
+
+Report.configure = function(){
+    var dhtmlx = this.r;
+    var type = this.option.type;
+    switch(type){
+        case this.type["current-status"]:
+           dhtmlxobj.type =  {
+                template: "<div class='dv-header'>" +
+                "<p>#INQA#</p>" +
+                "</div>" +
+                "<div class='dv-body'>" +
+                "<div class='left'>" +
+                "<p>#FTQ#</p>" +
+                "</div>" +
+                "<div class='right'>" +
+                "<p>#Defects#</p>" +
+                "<p>OPEN DEFECTS</p>" +
+                "<p>#Pass#</p>" +
+                "<p>VEHICLE PASS</p>" +
+                "</div>" +
+                "</div>",
+                    css: "dv-item",
+                    height: 150,
+                    width: 230,
+                    margin: 5,
+                    padding: 8
+            }
+            break;
+        case this.type["station-data"]:
+            dhtmlxobj.setImagePath("../../../codebase/imgs/");
+            dhtmlxobj.setHeader("Inspection,#cspan,Vechile Total,OK Vehicle,NOK Vehicle,FTQ,DPV,DPV Target,Defects,Vehs,FTQ Target,OK,NOK");
+            //mygrid.attachHeader("full,short,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
+            dhtmlxobj.setInitWidths("150,80,80,80,80,80,80,80,80,80,80,80,80");
+            dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center");
+            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+            dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int");
+            //mygrid.setColumnColor("white,#d5f1ff,#d5f1ff");
+            dhtmlxobj.setSkin("dhx_skyblue");
+            dhtmlxobj.init();
+            dhtmlxobj.enableMultiselect(true);
+            break;
+        case this.type["daily-dpv"]:
+            dhtmlxobj.setImagePath("/assets/dhtmlx/");
+            dhtmlxobj.setHeader("FALSE,Volumn,Effect,DPV,SDPV");
+            dhtmlxobj.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
+            dhtmlxobj.setInitWidths("150,150,150,150,150");
+            dhtmlxobj.enableAutoWidth(true);
+            dhtmlxobj.setColAlign("left,center,center,center,center");
+            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro");
+            dhtmlxobj.setColSorting("str,int,int,int,int");
+            dhtmlxobj.setNumberFormat("0,000.00", 0, ".", ",");
+            dhtmlxobj.setSkin("dhx_skyblue");
+            dhtmlxobj.init();
+            dhtmlxobj.enableSmartRendering(true);
+            break;
+        default:
+            break;
+    }
+}
 
 Report.get_json = function () {
     switch (this.option.type) {
@@ -43,7 +133,7 @@ Report.get_json = function () {
         case this.type["daily-dpv"]:
             return  d_daily_dpv;
         case this.type["station-data"]:
-            return d_station_data
+            return d_station_data;
         default :
             return null;
     }
@@ -115,10 +205,6 @@ Grid.init = function (option) {
     mygrid.setSkin("dhx_skyblue");
     mygrid.init();
     mygrid.enableSmartRendering(true);
-    //mygrid.parse(grideData, "json");
-    mygrid.attachEvent("onFilterEnd", function (elements) {
-        Grid.onfilter(elements);
-    });
 
     this.o = mygrid;
 }
