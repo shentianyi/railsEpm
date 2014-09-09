@@ -82,7 +82,7 @@ Report.configure = function(){
                     "</div>" +
                     "<div class='dv-body'>" +
                     "<div class='left'>" +
-                    "<p>#FTQ#</p>" +
+                    "<p>#FTQ#%</p>" +
                     "</div>" +
                     "<div class='right'>" +
                     "<p>#Defects#</p>" +
@@ -135,7 +135,7 @@ Report.configure = function(){
 Report.get_json = function () {
     switch (this.option.type) {
         case this.type["current_status"]:
-            return d_current_status['Vehicle_1'];
+            return d_current_status['CF11'];
         case this.type["daily_dpv"]:
             return  d_daily_dpv;
         case this.type["station_data"]:
@@ -196,6 +196,11 @@ Report.current_status_init = function(){
                 Canvas2Image.saveAsPNG(canvas);
             }
         });
+    });
+
+    $("#refresh").on("click",function(){
+        Report.r.clearAll();
+        Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
     });
 }
 
