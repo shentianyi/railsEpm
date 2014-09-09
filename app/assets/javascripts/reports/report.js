@@ -97,6 +97,7 @@ Report.configure = function(){
                 margin: 5,
                 padding: 8
             });
+            current_status.init();
             break;
         case this.type["station_data"]:
             dhtmlxobj.setImagePath("../../../codebase/imgs/");

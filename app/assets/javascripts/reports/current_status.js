@@ -1,5 +1,5 @@
 var current_status={};
-current_status.init=function(data){
+current_status.init=function(){
 //    DV.init(container_id);
 //    DV.parse(data["Vehicle_1"]);
 //    $("#vechile-select").change(function () {
