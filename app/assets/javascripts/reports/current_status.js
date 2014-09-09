@@ -22,3 +22,16 @@ current_status.flexible=function(){
     var height=total_height-$("#current-status-header").height()-$("#snap-groups").height()-2;
     $("#data_container").height(height);
 }
+current_status.loader_show=function(){
+    current_status.loader = new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
+    var left = document.getElementById("report-menu").getBoundingClientRect().right,
+        top = document.getElementById("current-status-header").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0,
+        height=$("#data_container").height();
+    $(".current-status-pageload-overlay svg").css('left', left);
+    $(".current-status-pageload-overlay svg").css('top', top);
+    $(".current-status-pageload-overlay svg").css("height",height+"px");
+    current_status.loader.show();
+}
+current_status.loader_hide=function(){
+    current_status.loader.hide();
+}

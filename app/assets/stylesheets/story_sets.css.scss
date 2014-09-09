@@ -11,7 +11,7 @@
     @include after-clear;
   }
   .left-part{
-    box-sizing:border-box;
+    @include box-sizing-border;
     float:left;
     height:100%;
     width:70%;
@@ -152,7 +152,7 @@
 
   }
   .right-part{
-    box-sizing:border-box;
+    @include box-sizing-border;
     float:left;
     height:100%;
     width:30%;
