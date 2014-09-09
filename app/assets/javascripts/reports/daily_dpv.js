@@ -26,13 +26,14 @@ daily_dpv.init=function(){
     var chart_two=new Highchart_generator(option_two);
     chart_two.init_daily_dpv();
     daily_dpv.flexible();
-    window.onresize=function(){
-        daily_dpv.flexible();
-    }
+//    window.onresize=function(){
+//        daily_dpv.flexible();
+//    }
 }
 daily_dpv.flexible=function(){
     var total_height=$("#wrap-main").height()-$("header").height()-1;
-    var height=total_height-$("#chart_dpv_one").height()-$("#chart_dpv_two").height()-2;
-    $("#data_container").width($("#report-content .left").width());
-    $("#data_container").height(height);
+//    var height=total_height-$("#chart_dpv_one").height()-$("#chart_dpv_two").height()-2;
+//    $("#data_container").width($("#report-content .left").width());
+//    $("#data_container").height(height);
+    $("#report-content").height(total_height);
 }
