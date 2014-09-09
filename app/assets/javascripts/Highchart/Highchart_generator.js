@@ -2,7 +2,7 @@ var Highchart_generator=function(option){
     this.target=option.target;
     this.color_system={
         "blue":"#97cbe4",
-      "purple":"#7435c1"
+      "purple":"#9b65de"
     };
     this.init=function(){
         var $target=this.target.indexOf("#")===-1?$("#"+this.target):$(this.target);
@@ -31,6 +31,7 @@ var Highchart_generator=function(option){
         }
         this.basic.subtitle.enabled=false;
         this.basic.xAxis.categories=option.xArray;
+        this.basic.title.margin=5;
         this.basic.series=option.data;
         if(option.height){
             this.basic.chart.height=option.height

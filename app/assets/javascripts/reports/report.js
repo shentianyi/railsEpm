@@ -116,7 +116,7 @@ Report.configure = function(){
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader("FALSE,Volumn,Effect,DPV,SDPV");
             //dhtmlxobj.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
-            dhtmlxobj.setInitWidths("150,150,150,150,150");
+            dhtmlxobj.setInitWidths("100,100,100,100,100");
             dhtmlxobj.enableAutoWidth(true);
             dhtmlxobj.setColAlign("left,center,center,center,center");
             dhtmlxobj.setColTypes("ro,ro,ro,ro,ro");
@@ -292,7 +292,15 @@ Report.daily_dpv_init = function(){
 
     /*------------------------------------------------------------*/
     /*reload daily dpv and sdpv chart*/
-    
+    var xArray = [],data = [];
+    var colindx = Report.r.getColIndexById("FALSE");
+    var i = 0;
+    Report.r.forEachRow(function(id){
+        //xArray[i] = Report.r.getCellById(id,colindx);
+    });
+
+    i = 0;
+    colindx = Report.r.getColIndexById("DPV")
 }
 // need to rewrite
 function export_report_excel() {

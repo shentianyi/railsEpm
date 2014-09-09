@@ -1,17 +1,26 @@
 @import "STYLE";
+.report-content{
+  overflow-y:auto;
+}
 .daily_dpv{
+
   &:after{
     @include after-clear;
   }
   .left{
     float:left;
     @include box-sizing-border;
-    width:70%;
+    width:60%;
+    padding:8px 10px;
+    $border:1px solid rgba(0,0,0,0.2);
     .chart_dpv_one{
-      height:200px;
+      height:300px;
+      border:$border;
+      margin-bottom:10px;
     }
     .chart_dpv_two{
-      height:200px;
+      height:300px;
+      border:$border;
     }
     .data_container{
       background:#fff;
@@ -21,6 +30,11 @@
   .right{
     float:left;
     @include box-sizing-border;
-    width:30%;
+    width:40%;
+    background:#fff;
+    padding:5px;
+    .condition{
+      
+    }
   }
 }
