@@ -291,16 +291,47 @@ Report.daily_dpv_init = function(){
     });
 
     /*------------------------------------------------------------*/
+    /*Tricky code, need to rewrite*/
     /*reload daily dpv and sdpv chart*/
+    var jsondata = Report.r.serializeToJson();
     var xArray = [],data = [];
-    var colindx = Report.r.getColIndexById("FALSE");
-    var i = 0;
-    Report.r.forEachRow(function(id){
-        //xArray[i] = Report.r.getCellById(id,colindx);
-    });
 
-    i = 0;
-    colindx = Report.r.getColIndexById("DPV")
+    var colindx = 0;
+    for(var j = 0;j<jsondata['rows'].length;j++){
+        xArray[j] = jsondata['rows'][j]['data'][colindx]
+    }
+
+    //DPV
+    colindx = 3;
+    for(var j = 0;j<jsondata['rows'].length;j++){
+        data[j] = jsondata['rows'][j]['data'][colindx]
+    }
+
+    var option_one={
+        xArray:xArray,
+        data:[{
+            name: 'DPV',
+            data: data
+        }]
+    };
+
+    daily_dpv.chart_dpv.reload_daily_dpv(option_one);
+
+    //SDPV
+    colindx = 4;
+    for(var j = 0;j<jsondata['rows'].length;j++){
+        data[j] = jsondata['rows'][j]['data'][colindx]
+    }
+
+    option_one={
+        xArray:xArray,
+        data:[{
+            name: 'SDPV',
+            data: data
+        }]
+    };
+    daily_dpv.chart_sdpv.reload_daily_dpv(option_one);
+    /*------------------------------------------------------------*/
 }
 // need to rewrite
 function export_report_excel() {
