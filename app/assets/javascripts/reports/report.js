@@ -205,6 +205,8 @@ Report.current_status_init = function(){
 }
 
 Report.daily_dpv_init = function(){
+    /*------------------------------------------------------------*/
+    /*init chosen*/
     chosen.init(
         ["deffect-model", "deffect-phase", "deffect-date"],
         [220, 220, 220]
@@ -233,6 +235,8 @@ Report.daily_dpv_init = function(){
     }
     chosen.single_update("deffect-date");
 
+    /*------------------------------------------------------------*/
+    /*filter data*/
     $("#retrieve-data").on('click',function(){
         //Report.r.filterByAll();
 
@@ -284,7 +288,11 @@ Report.daily_dpv_init = function(){
                 }
             })
         }
-    })
+    });
+
+    /*------------------------------------------------------------*/
+    /*reload daily dpv and sdpv chart*/
+    
 }
 // need to rewrite
 function export_report_excel() {

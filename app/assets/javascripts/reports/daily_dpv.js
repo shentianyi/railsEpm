@@ -1,4 +1,6 @@
 var daily_dpv={};
+daily_dpv.chart_dpv = {};
+daily_dpv.chart_sdpv = {};
 daily_dpv.init=function(){
     var option_one={
         target:"chart_dpv_one",
@@ -30,6 +32,8 @@ daily_dpv.init=function(){
     window.onresize=function(){
         daily_dpv.flexible();
     }
+    this.chart_dpv = chart_one;
+    this.chart_sdpv = chart_two;
 }
 daily_dpv.flexible=function(){
     var total_height=$("#wrap-main").height()-$("header").height()-1;

@@ -1,6 +1,5 @@
 (function(){
     window.setInterval(function(){
-        console.log("Refresh Vehicle Value");
         var models = ["CF11","CF14","CF16"];
         for(var j = 0;j<models.length;j++){
             var model = models[j];
