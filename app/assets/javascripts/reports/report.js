@@ -2,7 +2,7 @@ var Report = Report || {};
 Report.option = {};
 Report.r = {};
 Report.export_excel_url = 'http://42.121.111.38:9003/DHXFileService/Excel';
-/*
+
 Report.init = function (type) {
     var option = this.get_option_by_type(type);
 
@@ -32,7 +32,7 @@ Report.init = function (type) {
     this.json_parse(data);
     this.r.page_load();
 };
-*/
+/*
 
 Report.init = function(option){
     this.option = option;
@@ -41,6 +41,7 @@ Report.init = function(option){
     this.parse_json(this.get_json());
     this.prepare();
 };
+*/
 
 Report.prepare = function(){
     
