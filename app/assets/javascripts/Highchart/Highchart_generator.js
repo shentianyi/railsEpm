@@ -43,7 +43,9 @@ var Highchart_generator=function(option){
     this.reload_daily_dpv=function(option){
         var $target=this.target.indexOf("#")===-1?$("#"+this.target):$(this.target);
         $target.highcharts().destroy();
-        this.basic.xAxis.categories=option.xArray;
+        if(option.xarray){
+            this.basic.xAxis.categories=option.xArray;
+        }
         this.basic.series=option.data;
         $target.highcharts(this.basic);
     }
