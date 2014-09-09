@@ -1,0 +1,14 @@
+<div id="data_container" class="data-container"></div>
+<div>
+  <input id="hidden-data" type="hidden" value="<%= @chart_conditions.first.data %>"/>
+</div>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "reports/current_status" %>
+<% end %>
+<script>
+    $(document).ready(function(){
+        Report.init("current_status");
+        var json = JSON.parse($("#hidden-data").val());
+        Report.json_parse(json);
+    })
+</script>

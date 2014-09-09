@@ -22,7 +22,11 @@ class StoriesController < ApplicationController
   def detail
     @story = Story.find(params[:id])
     @comments=CommentPresenter.init_presenters(Comment.detail_by_commentable(@story).all)
+    if @story.chart_type==ChartType::Highchart
     @chart_conditions=ChartConditionPresenter.init_presenters(ChartCondition.detail_by_chartable(@story))
+    else
+      @chart_conditions=@story.chart_conditions
+    end
     @partial = ChartType.partial(@story.chart_type)
     render partial: 'detail'
   end
