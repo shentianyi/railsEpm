@@ -5,23 +5,27 @@
   </div>
   <div class="right">
     <div class="condition">
-      <p>Model</p>
-      <select multiple class="chosen-select" id="deffect-model">
-      </select>
-      <p>Phase</p>
-      <select multiple class="chosen-select" id="deffect-phase">
-      </select>
-      <p>Deffect Date</p>
-      <select multiple class="chosen-select" id="deffect-date">
-      </select>
-      <input id="retrieve-data" type="button" value="Retrieve Data"/>
+      <div class="condition_left">
+        <p>Model</p>
+        <select multiple class="chosen-select" data-placeholder=" " id="deffect-model">
+        </select>
+        <p>Phase</p>
+        <select multiple class="chosen-select" data-placeholder=" " id="deffect-phase">
+        </select>
+        <p>Deffect Date</p>
+        <select multiple class="chosen-select" data-placeholder=" " id="deffect-date">
+        </select>
+        <a id="retrieve-data" class="btn btn-primary retrieve_data">Retrieve Data</a>
+      </div>
+      <div class="condition_right">
+        <p>Export data</p>
+          <a class="btn btn-success btn_excel" onclick="export_report_excel()">Excel</a>
+      </div>
     </div>
 
     <div id="data_container" class="data_container"></div>
   </div>
 </section>
-
-<a class="btn btn-primary" onclick="export_report_excel()">Excel</a>
 <script>
   $(document).ready(function(){
       Report.init("daily_dpv");

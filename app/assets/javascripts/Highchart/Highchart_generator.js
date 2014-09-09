@@ -27,12 +27,21 @@ var Highchart_generator=function(option){
                 fontWeight: 'bold',
                 fontSize:'11px'
             },
-            formatter: function() { return this.y ; }
+            formatter: function() {
+                if(this.y>0){
+                    return this.y ;
+                }
+                else{
+                    return "" ;
+                }
+
+            }
         }
         this.basic.subtitle.enabled=false;
         this.basic.xAxis.categories=option.xArray;
         this.basic.title.margin=5;
         this.basic.series=option.data;
+//        this.basic.xAxis.offset=   offset: 5,
         if(option.height){
             this.basic.chart.height=option.height
         }
@@ -49,6 +58,15 @@ var Highchart_generator=function(option){
         }
         this.basic.series=option.data;
         $target.highcharts(this.basic);
+    }
+    this.resize=function(width,height){
+        var $target=this.target.indexOf("#")===-1?$("#"+this.target):$(this.target),
+            chart=$target.highcharts();
+        chart.setSize(
+            width,
+            height,
+            false
+        );
     }
 }
 Highchart_generator.prototype.basic={
@@ -132,6 +150,9 @@ Highchart_generator.prototype.basic={
         }
     },
     xAxis: {
+        lineWidth: 0,
+        tickWidth: 1,
+        offset: 0,
         labels: {
             style: {
                 color:'rgba(0,0,0,0.4)',

@@ -3,7 +3,7 @@
   overflow-y:auto;
 }
 .daily_dpv{
-
+  height:100%;
   &:after{
     @include after-clear;
   }
@@ -14,12 +14,12 @@
     padding:8px 10px;
     $border:1px solid rgba(0,0,0,0.2);
     .chart_dpv_one{
-      height:300px;
+      height:280px;
       border:$border;
       margin-bottom:10px;
     }
     .chart_dpv_two{
-      height:300px;
+      height:280px;
       border:$border;
     }
     .data_container{
@@ -33,8 +33,51 @@
     width:40%;
     background:#fff;
     padding:5px;
+    height:100%;
+    border-left:1px solid rgba(0,0,0,0.2);
     .condition{
-      
+      border-bottom:1px solid rgba(0,0,0,0.1);
+      padding-bottom:5px;
+      margin-bottom:5px;
+      &:after{
+        @include after-clear;
+      }
+      .condition_left{
+        float:left;
+        @include box-sizing-border;
+        width:60%;
+        p{
+          margin-bottom:0px;
+          margin-top:6px;
+          font-size:12px;
+          color:#666;
+        }
+        .retrieve_data{
+          font-size:13px;
+          padding:4px 8px;
+          margin:8px 0 3px 0px;
+          width:150px;
+        }
+      }
+      .condition_right{
+        float:left;
+        @include box-sizing-border;
+        width:40%;
+        p{
+          text-align:center;
+          color:#888;
+          font-size:15px;
+          margin:8px 0 0;
+          margin-top:133px;
+        }
+        .btn_excel{
+          width:120px;
+          font-size:13px;
+          padding:5px 8px;
+          margin-top:5px;
+          margin-left:20px;
+        }
+      }
     }
   }
 }
