@@ -12,6 +12,7 @@ daily_dpv.init=function(){
     };
     var chart_one=new Highchart_generator(option_one);
     chart_one.init_daily_dpv();
+
     var option_two={
         target:"chart_dpv_two",
         xArray:["iQ1","iQ2","iQ IP","iQ DR","iQ3","iQ4","iQ5","iQ6","iQ7","iQ8","iQ9","iQ10","iQ11","iQ12","iQ13","iQ14","iQ15"],

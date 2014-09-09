@@ -82,7 +82,7 @@ Report.configure = function(){
                     "</div>" +
                     "<div class='dv-body'>" +
                     "<div class='left'>" +
-                    "<p>#FTQ#</p>" +
+                    "<p>#FTQ#%</p>" +
                     "</div>" +
                     "<div class='right'>" +
                     "<p>#Defects#</p>" +
