@@ -10,7 +10,7 @@
   .left{
     float:left;
     @include box-sizing-border;
-    width:60%;
+    width:75%;
     padding:0px 10px;
     $border:1px solid rgba(0,0,0,0.2);
     .chart_dpv_one{
@@ -31,52 +31,48 @@
   .right{
     float:left;
     @include box-sizing-border;
-    width:40%;
+    width:25%;
     background:#fff;
     padding:5px;
     height:100%;
     border-left:1px solid rgba(0,0,0,0.2);
     .condition{
-      border-bottom:1px solid rgba(0,0,0,0.1);
-      padding-bottom:5px;
-      margin-bottom:5px;
-      &:after{
-        @include after-clear;
-      }
-      .condition_left{
-        float:left;
-        @include box-sizing-border;
-        width:60%;
-        p{
-          margin-bottom:0px;
-          margin-top:6px;
-          font-size:12px;
-          color:#666;
+      .condition_block{
+        border-top:1px solid rgba(0,0,0,0.2);
+        padding:5px 0px 0px 6px;
+        &>label{
+          display:block;
+          font-size:14px;
+          color:#777;
+        };
+        &:first-of-type{
+          border-top:1px solid rgba(0,0,0,0);
+          p{
+            margin:5px 0px 2px 0px;
+            font-size:13px;
+          }
+          .retrieve_data{
+            font-size:13px;
+            padding:4px 8px;
+            width:140px;
+            margin:8px 0 12px;
+          }
         }
-        .retrieve_data{
-          font-size:13px;
-          padding:4px 8px;
-          margin:8px 0 3px 0px;
-          width:150px;
+        &:nth-of-type(2){
+          .btn_excel{
+            font-size:13px;
+            padding:4px 8px;
+            width:140px;
+            margin:8px 0 12px;
+          }
         }
-      }
-      .condition_right{
-        float:left;
-        @include box-sizing-border;
-        width:40%;
-        p{
-          text-align:center;
-          color:#888;
-          font-size:15px;
-          margin:8px 0 0;
-          margin-top:133px;
-        }
-        .btn_excel{
-          width:120px;
-          font-size:13px;
-          padding:5px 8px;
-          margin-top:5px;
-          margin-left:20px;
+        &:nth-of-type(3){
+          .snap-groups{
+            border-top-width:0;
+            .snap-li:first-of-type{
+              margin-left:0px;
+            }
+          }
         }
       }
     }

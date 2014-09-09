@@ -1,10 +1,10 @@
 @import "STYLE";
-$item-bg:#e8eaef;
+$item-bg:rgba(255,255,255,0.8);
 $bg-click:#f2edeb;
 .dhx_dataview_dv-item_item{
   background:$item-bg;
-  background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.5) 55%) $item-bg;
-  background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.5) 55%) $item-bg;
+  background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.2) 55%) $item-bg;
+  background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.2) 55%) $item-bg;
 }
 .dhx_dataview_dv-item_item_selected {
   background:$bg-click;

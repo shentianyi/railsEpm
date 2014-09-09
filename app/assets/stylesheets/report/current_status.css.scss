@@ -1,4 +1,9 @@
 @import "STYLE";
+.current-status{
+  .header{
+    background:rgba(255,255,255,0.3);
+  }
+}
 .current-status-pageload-overlay {
   position: fixed;
   width: 100%;
@@ -46,7 +51,6 @@
   -webkit-animation: moveRight 0.6s linear infinite alternate;
   animation: moveRight 0.6s linear infinite alternate;
 }
-
 .current-status-pageload-overlay::before {
     background: #4fc3f7;
   -webkit-transform: translateX(20px);
