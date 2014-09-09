@@ -113,11 +113,12 @@ Report.configure = function(){
             dhtmlxobj.enableMultiselect(true);
             break;
         case this.type["daily_dpv"]:
+            var width=Math.floor($("#report-content .right").width()/5)+"";
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader("FALSE,Volumn,Effect,DPV,SDPV");
             //dhtmlxobj.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
-            dhtmlxobj.setInitWidths("150,150,150,150,150");
-            dhtmlxobj.enableAutoWidth(true);
+            dhtmlxobj.setInitWidths(width+","+width+","+width+","+width+","+width);
+            dhtmlxobj.enableAutoWidth(false);
             dhtmlxobj.setColAlign("left,center,center,center,center");
             dhtmlxobj.setColTypes("ro,ro,ro,ro,ro");
             dhtmlxobj.setColSorting("str,int,int,int,int");
