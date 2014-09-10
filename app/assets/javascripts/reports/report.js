@@ -228,14 +228,16 @@ Report.daily_dpv_init = function(){
         [220, 220, 220]
     );
 
-    var models = Report.r.collectValues(1);
+    //var models = Report.r.collectValues(1);
+    var models = ["CF11","CF14","CF16"];
     $("#deffect-model option").remove();
     for (i = 0; i < models.length; i++) {
         $("#deffect-model").append("<option>" + models[i] + "</option>");
     }
     chosen.single_update("deffect-model");
 
-    var phases = Report.r.collectValues(3);
+    //var phases = Report.r.collectValues(3);
+    var phases = ["{Blank}","MRD1","MRD10","MRD11","MRD2","MRD8","MRD9"]
     $("#deffect-phase option").remove();
     for (i = 0; i < phases.length; i++) {
 
@@ -243,67 +245,32 @@ Report.daily_dpv_init = function(){
     }
     chosen.single_update("deffect-phase");
 
-    var dates = Report.r.collectValues(4);
+    //var dates = Report.r.collectValues(4);
+    var dates = [];
+    var j = 0;
+    for(var i=Date.parse('2014-09-01');i<(new Date()).getTime();i+=24*60*60*1000){
+        d = new Date(i);
+        dates[j] = d.getMonth()+1+"/"+ d.getDate()+"/"+ d.getFullYear() ;
+        j++;
+    }
+
     $("#deffect-date option").remove();
     for (i = 0; i < dates.length; i++) {
-
         $("#deffect-date").append("<option>" + dates[i] + "</option>");
     }
     chosen.single_update("deffect-date");
 
     /*------------------------------------------------------------*/
     /*filter data*/
-    $("#retrieve-data").on('click',function(){
-        //Report.r.filterByAll();
-
-        var models = [];
-        var i = 0;
-        $("#deffect-model option:selected").each(function () {
-            models[i] = $(this).text();
-            i++;
-        });
-        if (models.length > 0) {
-            Report.r.filterBy(1, function (a) {
-                for (j = 0; j < models.length; j++) {
-                    if (a == models[j]) {
-                        return true;
-                    }
-                }
-            })
+    $("#retrieve-data").on('click',function() {
+        if($("#deffect-model option:selected").length > 0
+            || $("#deffect-phase option:selected").length > 0
+            || $("#deffect-date option:selected").length > 0){
+            
+            var data = SampleData.init_daily_dpv();
+            Report.json_parse(data);
         }
 
-        var phases = [];
-        i = 0;
-        $("#deffect-phase option:selected").each(function () {
-            phases[i] = $(this).text();
-            i++;
-        });
-        if (phases.length > 0) {
-            Report.r.filterBy(3, function (a) {
-                for (j = 0; j < phases.length; j++) {
-                    if (a == phases[j]) {
-                        return true;
-                    }
-                }
-            })
-        }
-
-
-        var dates = [];
-        i = 0;
-        $("#deffect-date option:selected").each(function () {
-            dates[i] = $(this).text();
-            i++;
-        });
-        if (dates.length > 0) {
-            Report.r.filterBy(4, function (a) {
-                for (j = 0; j < dates.length; j++) {
-                    if (a == dates[j]) {
-                        return true;
-                    }
-                }
-            })
-        }
     });
     /*------------------------------------------------------------*/
 }
@@ -344,14 +311,14 @@ Report.daily_dpv_on_json_parse = function(){
     xArray.shift();
     data.shift();
 
-    option_one={
+    var option_two={
         xArray:xArray,
         data:[{
             name: 'SDPV',
             data: data
         }]
     };
-    daily_dpv.chart_sdpv.reload_daily_dpv(option_one);
+    daily_dpv.chart_sdpv.reload_daily_dpv(option_two);
 }
 
 // need to rewrite
