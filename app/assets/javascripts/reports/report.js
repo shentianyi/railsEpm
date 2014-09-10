@@ -55,6 +55,7 @@ Report.prepare = function(){
 /*parse json data*/
 Report.json_parse = function (jsondata) {
     console.log(jsondata);
+    this.r.clearAll();
     this.r.parse(jsondata, 'json');
     var fn = Report[this.option.type_string+"_on_json_parse"]
     if(typeof fn === 'function'){
@@ -202,6 +203,13 @@ Report.headers = {
 * for different type
 * func name should be typename_init, like current-status_init
 * */
+/*-----------------------------------------------*/
+Report.station_data_init = function(){
+    $("#retrieve").on('click',function(){
+        Report.json_parse(SampleData.init_station_data());
+    });
+}
+/*-----------------------------------------------*/
 Report.current_status_init = function(){
     $("#vehicle-select").change(function () {
         Report.r.clearAll();
@@ -272,7 +280,6 @@ Report.daily_dpv_init = function(){
         if($("#deffect-model option:selected").length > 0
             || $("#deffect-phase option:selected").length > 0
             || $("#deffect-date option:selected").length > 0){
-            Report.clear();
             var data = SampleData.init_daily_dpv();
             Report.json_parse(data);
             daily_dpv.flexible();

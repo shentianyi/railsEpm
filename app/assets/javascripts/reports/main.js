@@ -4,6 +4,12 @@
 
         $('body')
             .on("click","#my-reports a",function(event) {
+                var part = Report.type[$(this).attr("menu")];
+
+                if(part == report_main.current_menu){
+                    return;
+                }
+
                 if(event.preventDefault){
                     event.preventDefault()
                 }
@@ -14,7 +20,7 @@
                 $(this).addClass("active");
                 //=============
                 //load partial view
-			    var part = Report.type[$(this).attr("menu")];
+
                 var left = document.getElementById("report-menu").getBoundingClientRect().right,
                     top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
                 $(".pageload-overlay svg").css('left', left);
@@ -26,7 +32,7 @@
 				    url:"/reports/"+part+"/ajax",
 				    type:"GET",
 				    success:function(data){
-
+                        report_main.current_menu = part;
 					    //
                         setTimeout(function(){
                             $("#report-content").html(data);
@@ -101,6 +107,7 @@
     })
 })();
 var report_main={};
+report_main.current_menu = Report.type["current_status"];
 report_main.init_snap_btn=function(id){
     var target=id.indexOf("#")===-1?"#"+id:id;
     $('body').on("click",target,function(event){
