@@ -16,12 +16,11 @@ $bg-click:#f2edeb;
   @include border-radius-same(5px);
   .dv-header{
     p{
-      $title_color:#fbd15f;
       text-align:center;
       padding:7px 0px;
       @include border-radius-same(2px);
       background:lighten($nav-dark,14%);
-      color:$title_color;
+      color:$golden-text;
       font-size:16px;
     }
   }
@@ -41,7 +40,7 @@ $bg-click:#f2edeb;
       @include box-sizing-border;
       width:40%;
       float:left;
-      padding-top:15px;
+      padding-top:8px;
       p{
         text-align:right;
         padding-right:3px;

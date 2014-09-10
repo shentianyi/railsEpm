@@ -48,3 +48,4 @@ current_status.example_set_color=function(){
         }
     }
 }
+

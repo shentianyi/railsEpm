@@ -78,10 +78,16 @@
             white-space: normal;
             height:300px;
             overflow-y:auto;
-//            width:180px;
+            &.snap-content:before,&.snap-content:after{
+              display:none;
+            }
             .snap-li{
               margin-left:0px;
               float:left;
+              margin-top:8px;
+              &:first-of-type{
+                margin-top:3px;
+              }
             }
           }
         }
