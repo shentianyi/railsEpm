@@ -176,14 +176,29 @@ var Highchart_generator=function(option){
         this.basic.series=option.data;
         $target.highcharts(this.basic);
     };
-    this.resize=function(width,height){
+    this.daily_resize=function(width,height,type){
         var $target=this.target.indexOf("#")===-1?$("#"+this.target):$(this.target),
             chart=$target.highcharts();
-        chart.setSize(
-            width,
-            height,
-            false
-        );
+        daily_dpv_resize_count[type]++;
+            chart.setSize(
+                width,
+                height,
+                true
+            );
+            var basic=this.basic,
+                target_chart=this.target;
+            setTimeout(function(){
+                daily_dpv_resize_count[type]--;
+                if(daily_dpv_resize_count[type]===0){
+                    var $target=target_chart.indexOf("#")===-1?$("#"+target_chart):$(target_chart);
+                    $target.highcharts().destroy();
+                    $target.highcharts(basic);
+                }
+            },500);
     };
 
 }
+daily_dpv_resize_count={
+    "dpv":0,
+    "sdpv":0
+};

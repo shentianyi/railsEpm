@@ -211,9 +211,11 @@ Report.station_data_init = function(){
 }
 /*-----------------------------------------------*/
 Report.current_status_init = function(){
+    current_status.example_set_color();
     $("#vehicle-select").change(function () {
         Report.r.clearAll();
         Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
+        current_status.example_set_color();
     });
     $("#quick-print").on("click",function(){
         html2canvas($("#data_container"), {
@@ -282,6 +284,7 @@ Report.daily_dpv_init = function(){
             || $("#deffect-date option:selected").length > 0){
             var data = SampleData.init_daily_dpv();
             Report.json_parse(data);
+            daily_dpv.flexible();
         }
 
     });

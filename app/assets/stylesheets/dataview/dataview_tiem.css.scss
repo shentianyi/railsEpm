@@ -16,12 +16,13 @@ $bg-click:#f2edeb;
   @include border-radius-same(5px);
   .dv-header{
     p{
+      $title_color:#fbd15f;
       text-align:center;
       padding:7px 0px;
       @include border-radius-same(2px);
       background:lighten($nav-dark,14%);
-      color:#fff;
-      font-size:14px;
+      color:$title_color;
+      font-size:16px;
     }
   }
   .dv-body{
@@ -32,7 +33,7 @@ $bg-click:#f2edeb;
       p{
         text-align:center;
         padding:23px 0;
-        font-size:45px;
+        font-size:50px;
         font-family:"avenir"
       }
     }
@@ -40,7 +41,7 @@ $bg-click:#f2edeb;
       @include box-sizing-border;
       width:40%;
       float:left;
-      padding-top:6px;
+      padding-top:15px;
       p{
         text-align:right;
         padding-right:3px;
