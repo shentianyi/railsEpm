@@ -266,7 +266,7 @@ Report.daily_dpv_init = function(){
         if($("#deffect-model option:selected").length > 0
             || $("#deffect-phase option:selected").length > 0
             || $("#deffect-date option:selected").length > 0){
-            
+
             var data = SampleData.init_daily_dpv();
             Report.json_parse(data);
         }

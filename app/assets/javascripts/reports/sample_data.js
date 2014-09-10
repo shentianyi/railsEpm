@@ -1,7 +1,7 @@
 var SampleData = {};
 
 SampleData.init_daily_dpv = function(){
-    return  {
+    var new_data = {
         rows:[
             { id:1,
                 data:[
@@ -87,4 +87,5 @@ SampleData.init_daily_dpv = function(){
             }
         ]
     };
+    return  new_data;
 }
