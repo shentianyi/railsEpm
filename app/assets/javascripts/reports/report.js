@@ -257,7 +257,7 @@ Report.daily_dpv_init = function(){
     chosen.single_update("deffect-model");
 
     //var phases = Report.r.collectValues(3);
-    var phases = ["{Blank}","MRD1","MRD10","MRD11","MRD2","MRD8","MRD9"]
+    var phases = ["MRD1","MRD10","MRD11","MRD2","MRD8","MRD9"]
     $("#deffect-phase option").remove();
     for (i = 0; i < phases.length; i++) {
 
