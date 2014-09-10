@@ -1,30 +1,37 @@
 <section class="current-status" id="current-status">
-  <div class="header" id="current-status-header">
-    <div class="left">
-      <p>First Time Quality (FTQ) Summary Percentage</p>
-      <p id="current-date"></p>
-      <p>Early shift</p>
-      <div class="btn-groups">
-        <a class="btn btn-primary" id="refresh">Refresh</a>
-        <a class="btn btn-primary" id="quick-print">Quick print</a>
-        <a class="btn btn-primary" onclick="export_report_excel()">Excel</a>
-        <a class="btn btn-primary" id="target">Target</a>
-        <a class="btn btn-primary">All defects</a>
-        <a class="btn btn-primary">Key station defects</a>
-        <!--<a class="btn btn-func">Change data</a>-->
+  <section id="current-status-normal" >
+    <div class="header" id="current-status-header">
+      <div class="left">
+        <p>First Time Quality (FTQ) Summary Percentage</p>
+        <p id="current-date"></p>
+        <p>Early shift</p>
+        <div class="btn-groups">
+          <a class="btn btn-primary" id="refresh">Refresh</a>
+          <a class="btn btn-primary" id="quick-print">Quick print</a>
+          <a class="btn btn-primary" onclick="export_report_excel()">Excel</a>
+          <a class="btn btn-primary" id="target">Target</a>
+          <a class="btn btn-primary">All defects</a>
+          <a class="btn btn-primary">Key station defects</a>
+          <!--<a class="btn btn-func">Change data</a>-->
+        </div>
+      </div>
+      <div class="right">
+        <p><span>Current time:</span><span id="current-clock"></span></p>
+        <select id="vehicle-select">
+          <option>CF11</option>
+          <option>CF14</option>
+          <option>CF16</option>
+        </select>
       </div>
     </div>
-    <div class="right">
-      <p><span>Current time:</span><span id="current-clock"></span></p>
-      <select id="vehicle-select">
-        <option>CF11</option>
-        <option>CF14</option>
-        <option>CF16</option>
-      </select>
-    </div>
-  </div>
-  <div id="data_container" class="data-container"></div>
-  <%= render 'snap'%>
+    <div id="data_container" class="data-container"></div>
+    <%= render 'snap'%>
+  </section>
+  <section id="current-status-target" class='current-status-wrapper' style="display:none">
+     <div class="wrapper-header">
+       <a class="back-btn"><span>FTQ  Summary  Percentage</span></a>
+     </div>
+  </section>
 </section>
 <div id="current_status_loader" class="current-status-pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z">
   <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none">
