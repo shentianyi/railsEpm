@@ -9,10 +9,10 @@ RAND.rate = function(a,rate,b){
 
 /*int between*/
 RAND.range_int = function(a,b){
-    return Math.floor((Math.random()*(a+b))-a);
+    return Math.floor((Math.random()*(b-a))+a);
 }
 
 /*float between*/
 RAND.range_float = function(a,b){
-    return (Math.random()*(a+b)-a).toFixed(2);
+    return (Math.random()*(b-a)+a).toFixed(2);
 }
