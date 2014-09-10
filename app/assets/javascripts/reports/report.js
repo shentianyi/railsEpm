@@ -275,6 +275,7 @@ Report.daily_dpv_init = function(){
             Report.clear();
             var data = SampleData.init_daily_dpv();
             Report.json_parse(data);
+            daily_dpv.flexible();
         }
 
     });
