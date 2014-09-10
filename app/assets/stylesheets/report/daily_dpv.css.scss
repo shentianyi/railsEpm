@@ -15,17 +15,19 @@
     $border:1px solid rgba(0,0,0,0.2);
     .chart_dpv_one{
       margin-top:5px;
-      height:210px;
+      height:190px;
       border:$border;
       margin-bottom:10px;
     }
     .chart_dpv_two{
-      height:210px;
+      height:190px;
       border:$border;
+      margin-bottom:10px;
     }
     .data_container{
       background:#fff;
       overflow-y:auto;
+      margin-bottom:10px;
     }
   }
   .right{

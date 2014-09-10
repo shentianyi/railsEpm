@@ -117,7 +117,7 @@ Report.configure = function(){
             //dhtmlxobj.enableMultiselect(true);
             break;
         case this.type["daily_dpv"]:
-            var width=Math.floor($("#report-content .left").width()/16);
+            var width=Math.floor($("#report-content .left").width()/16)-1;
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader(this.headers["daily_dpv"]);
             //dhtmlxobj.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
