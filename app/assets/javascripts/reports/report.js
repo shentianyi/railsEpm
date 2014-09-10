@@ -203,6 +203,13 @@ Report.headers = {
 * for different type
 * func name should be typename_init, like current-status_init
 * */
+/*-----------------------------------------------*/
+Report.station_data_init = function(){
+    $("#retrieve").on('click',function(){
+        Report.json_parse(SampleData.init_station_data());
+    });
+}
+/*-----------------------------------------------*/
 Report.current_status_init = function(){
     $("#vehicle-select").change(function () {
         Report.r.clearAll();
