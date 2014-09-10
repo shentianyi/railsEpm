@@ -19,7 +19,7 @@ class ChartType
       when DailyDPV
         'daily-dpv'
       else
-        'current-status'
+        'demo'
     end
   end
 end
