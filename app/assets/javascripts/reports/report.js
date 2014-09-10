@@ -288,7 +288,6 @@ Report.daily_dpv_init = function(){
             || $("#deffect-date option:selected").length > 0){
             var data = SampleData.init_daily_dpv();
             Report.json_parse(data);
-            daily_dpv.flexible();
         }
 
     });
