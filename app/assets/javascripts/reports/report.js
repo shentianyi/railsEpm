@@ -211,6 +211,8 @@ Report.station_data_init = function(){
 }
 /*-----------------------------------------------*/
 Report.current_status_init = function(){
+    $("#target").on("click",function(){
+    });
 
     $("#vehicle-select").change(function () {
         Report.r.clearAll();

@@ -1,14 +1,15 @@
 <section class="daily_dpv discussion" id="daily_dpv" style="height:600px;">
   <div class="left" id="daily_dpv_left">
-    <div id="chart_dpv_one" class="chart_dpv_one" style="height:200px"></div>
+    <div id="chart_dpv_one" class="chart_dpv_one" ></div>
     <div id="data_container" class="data_container"></div>
-    <div id="chart_dpv_two" class="chart_dpv_two" style="height:200px"></div>
+    <div id="chart_dpv_two" class="chart_dpv_two" ></div>
   </div>
 </section>
+<input type="hidden" id="hidden-data" value="<%= @chart_conditions.first.data %>"/>
 <script>
     $(document).ready(function(){
         Report.init("daily_dpv");
         var data = JSON.parse($("#hidden-data").val());
         Report.json_parse(data);
-    })
+    });
 </script>
