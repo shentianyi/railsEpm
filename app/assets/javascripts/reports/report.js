@@ -236,7 +236,8 @@ Report.daily_dpv_init = function(){
     }
     chosen.single_update("deffect-model");
 
-    var phases = Report.r.collectValues(3);
+    //var phases = Report.r.collectValues(3);
+    var phases = ["{Blank}","MRD1","MRD10","MRD11","MRD2","MRD8","MRD9"]
     $("#deffect-phase option").remove();
     for (i = 0; i < phases.length; i++) {
 
@@ -244,18 +245,32 @@ Report.daily_dpv_init = function(){
     }
     chosen.single_update("deffect-phase");
 
-    var dates = Report.r.collectValues(4);
+    //var dates = Report.r.collectValues(4);
+    var dates = [];
+    var j = 0;
+    for(var i=Date.parse('2014-09-01');i<(new Date()).getTime();i+=24*60*60*1000){
+        d = new Date(i);
+        dates[j] = d.getMonth()+1+"/"+ d.getDate()+"/"+ d.getFullYear() ;
+        j++;
+    }
+
     $("#deffect-date option").remove();
     for (i = 0; i < dates.length; i++) {
-
         $("#deffect-date").append("<option>" + dates[i] + "</option>");
     }
     chosen.single_update("deffect-date");
 
     /*------------------------------------------------------------*/
     /*filter data*/
-    $("#retrieve-data").on('click',function(){
-        //Report.r.filterByAll();
+    $("#retrieve-data").on('click',function() {
+        if($("#deffect-model option:selected").length > 0
+            || $("#deffect-phase option:selected").length > 0
+            || $("#deffect-date option:selected").length > 0){
+            
+            var data = SampleData.init_daily_dpv();
+            Report.json_parse(data);
+        }
+
     });
     /*------------------------------------------------------------*/
 }
