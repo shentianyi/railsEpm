@@ -33,40 +33,40 @@ daily_dpv.init=function(){
         daily_dpv.flexible();
     }
     setTimeout(function(){
-        $("#data_container").width($("#report-content .left").width()-2);
+        $("#data_container").width($("#daily_dpv_left").width()-2);
     },100);
 }
 daily_dpv.flex_init=function(){
     //set the content whole height
     var total_height=$("#wrap-main").height()-$("header").height()-1;
     //set the table height and width
-    $("#report-content").height(total_height);
-    var chart_one_height=Math.floor($("#report-content").height()/3-10),
-        chart_two_height=Math.floor($("#report-content").height()/3-10);
-    $("#data_container").height(total_height-chart_one_height-chart_two_height-15);
-    $("#data_container").width($("#report-content .left").width()-2);
+    $("#daily_dpv").height(total_height);
+    var chart_one_height=Math.floor($("#daily_dpv").height()/3-15),
+        chart_two_height=Math.floor($("#daily_dpv").height()/3-15);
+    $("#data_container").height(total_height-chart_one_height-chart_two_height-55);
+    $("#data_container").width($("#daily_dpv_left").width()-2);
     //chart height
     $("#chart_dpv_one").height(chart_one_height);
     $("#chart_dpv_two").height(chart_two_height);
     $("#chart_dpv_one").highcharts().setSize($("#chart_dpv_one").width(),chart_one_height );
     $("#chart_dpv_two").highcharts().setSize($("#chart_dpv_two").width(),chart_two_height );
     // left right same height
-    $("#report-content .right").height($("#report-content .left").height());
+    $("#daily_dpvt .right").height($("#daily_dpv_left").height());
 }
 daily_dpv.flexible=function(){
     //set the content whole height
     var total_height=$("#wrap-main").height()-$("header").height()-1;
     //set the table height and width
-    $("#report-content").height(total_height);
-    var chart_one_height=Math.floor($("#report-content").height()/3-10),
-        chart_two_height=Math.floor($("#report-content").height()/3-10);
-    $("#data_container").height(total_height-chart_one_height-chart_two_height-15);
-    $("#data_container").width($("#report-content .left").width()-2);
+    $("#daily_dpv").height(total_height);
+    var chart_one_height=Math.floor($("#daily_dpv").height()/3-15),
+        chart_two_height=Math.floor($("#daily_dpv").height()/3-15);
+    $("#data_container").height(total_height-chart_one_height-chart_two_height-55);
+    $("#data_container").width($("#daily_dpv_left").width()-2);
     //chart height
     $("#chart_dpv_one").height(chart_one_height);
     $("#chart_dpv_two").height(chart_two_height);
     daily_dpv.chart_dpv.daily_resize($("#chart_dpv_one").width(),chart_one_height,"dpv");
     daily_dpv.chart_sdpv.daily_resize($("#chart_dpv_two").width(),chart_two_height,"sdpv");
     // left right same height
-    $("#report-content .right").height($("#report-content .left").height());
+    $("#daily_dpv .right").height($("#daily_dpv_left").height());
 }

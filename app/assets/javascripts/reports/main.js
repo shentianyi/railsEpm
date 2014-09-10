@@ -151,7 +151,7 @@ report_main.init_snap_btn=function(id){
                                     '<p>'+'right now'+'</p>'+
                                 '</div>'
                             $("#snap-groups").prepend(template);
-
+                            report_snap.indicate();
                         }
                     }, 'json');
             }

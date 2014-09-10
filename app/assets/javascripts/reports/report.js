@@ -93,7 +93,7 @@ Report.configure = function(){
                     "</div>" +
                     "<div class='dv-body'>" +
                     "<div class='left'>" +
-                    "<p>#FTQ#%</p>" +
+                    "<p style='color:"+"#COLOR#"+"'>#FTQ#%</p>" +
                     "</div>" +
                     "<div class='right'>" +
                     "<p>#Defects#</p>" +
@@ -211,11 +211,13 @@ Report.station_data_init = function(){
 }
 /*-----------------------------------------------*/
 Report.current_status_init = function(){
-    current_status.example_set_color();
+    $("#target").on("click",function(){
+    });
+
     $("#vehicle-select").change(function () {
         Report.r.clearAll();
         Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
-        current_status.example_set_color();
+
     });
     $("#quick-print").on("click",function(){
         html2canvas($("#data_container"), {
@@ -231,8 +233,10 @@ Report.current_status_init = function(){
         setTimeout(function(){
             Report.r.clearAll();
             Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
+
             current_status.loader_hide();
         },1500);
+
     });
 }
 
@@ -284,7 +288,6 @@ Report.daily_dpv_init = function(){
             || $("#deffect-date option:selected").length > 0){
             var data = SampleData.init_daily_dpv();
             Report.json_parse(data);
-            daily_dpv.flexible();
         }
 
     });
