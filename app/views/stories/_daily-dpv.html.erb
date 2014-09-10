@@ -3,11 +3,11 @@
     <div id="chart_dpv_one" class="chart_dpv_one"></div>
     <div id="data_container" class="data_container"></div>
     <div id="chart_dpv_two" class="chart_dpv_two"></div>
-
   </div>
   <div class="right">
   </div>
-  </section>
+</section>
+<input type="hidden" id="hidden-data" value="<%= @chart_conditions.first.data %>"/>
 <script>
     $(document).ready(function(){
         Report.init("daily_dpv");
