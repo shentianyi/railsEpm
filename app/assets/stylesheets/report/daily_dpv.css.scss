@@ -78,7 +78,7 @@
             white-space: normal;
             height:300px;
             overflow-y:auto;
-            &.snap-content:before,&.snap-content:after{
+            &:before,&.snap-content:after{
               display:none;
             }
             .snap-li{
