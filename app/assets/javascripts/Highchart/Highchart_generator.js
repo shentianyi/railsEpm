@@ -174,7 +174,6 @@ var Highchart_generator=function(option){
             this.basic.xAxis.categories=option.xArray;
         }
         this.basic.series=option.data;
-        console.log(this.basic)
         $target.highcharts(this.basic);
     };
     this.resize=function(width,height){

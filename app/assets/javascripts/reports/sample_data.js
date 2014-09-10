@@ -89,3 +89,11 @@ SampleData.init_daily_dpv = function(){
     };
     return  new_data;
 }
+
+SampleData.test = function(){
+    var a = {
+        "a":RAND.range_int(0,50)
+    };
+    a["b"] = RAND.range_int(0,50);
+    return a;
+}

@@ -54,12 +54,18 @@ Report.prepare = function(){
 
 /*parse json data*/
 Report.json_parse = function (jsondata) {
+    console.log(jsondata);
     this.r.parse(jsondata, 'json');
     var fn = Report[this.option.type_string+"_on_json_parse"]
     if(typeof fn === 'function'){
         fn();
     }
 };
+
+/*clear data*/
+Report.clear = function(){
+    this.r.clearAll();
+}
 
 /*get dhtmlx object*/
 Report.get_dhtmlx = function(){
@@ -114,7 +120,7 @@ Report.configure = function(){
             //mygrid.setColumnColor("white,#d5f1ff,#d5f1ff");
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.init();
-            //dhtmlxobj.enableMultiselect(true);
+            dhtmlxobj.enableMultiselect(true);
             break;
         case this.type["daily_dpv"]:
             var width=Math.floor($("#report-content .left").width()/16)-1;
@@ -266,7 +272,7 @@ Report.daily_dpv_init = function(){
         if($("#deffect-model option:selected").length > 0
             || $("#deffect-phase option:selected").length > 0
             || $("#deffect-date option:selected").length > 0){
-
+            Report.clear();
             var data = SampleData.init_daily_dpv();
             Report.json_parse(data);
         }
