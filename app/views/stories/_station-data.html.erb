@@ -1,0 +1,9 @@
+<div id="data_container" style="height:500px; background-color:white;"></div>
+<input id="hidden-data" type="hidden" value="<%= @chart_conditions.first.data %>"/>
+<script>
+    $(document).ready(function(){
+        Report.init("station_data");
+        var data = JSON.parse($("#hidden-data").val());
+        Report.json_parse(data);
+    })
+</script>

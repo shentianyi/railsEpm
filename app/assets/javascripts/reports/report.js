@@ -55,6 +55,7 @@ Report.prepare = function(){
 /*parse json data*/
 Report.json_parse = function (jsondata) {
     console.log(jsondata);
+    this.r.clearAll();
     this.r.parse(jsondata, 'json');
     var fn = Report[this.option.type_string+"_on_json_parse"]
     if(typeof fn === 'function'){
@@ -272,7 +273,6 @@ Report.daily_dpv_init = function(){
         if($("#deffect-model option:selected").length > 0
             || $("#deffect-phase option:selected").length > 0
             || $("#deffect-date option:selected").length > 0){
-            Report.clear();
             var data = SampleData.init_daily_dpv();
             Report.json_parse(data);
         }

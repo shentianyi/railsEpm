@@ -8,7 +8,7 @@
 <script>
     $(document).ready(function(){
         Report.init("current_status");
-        var json = JSON.parse($("#hidden-data").val());
-        Report.json_parse(json);
+        var data = JSON.parse($("#hidden-data").val());
+        Report.json_parse(data);
     })
 </script>
