@@ -211,9 +211,11 @@ Report.station_data_init = function(){
 }
 /*-----------------------------------------------*/
 Report.current_status_init = function(){
+    current_status.example_set_color();
     $("#vehicle-select").change(function () {
         Report.r.clearAll();
         Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
+        current_status.example_set_color();
     });
     $("#quick-print").on("click",function(){
         html2canvas($("#data_container"), {
