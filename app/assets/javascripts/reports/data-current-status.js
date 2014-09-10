@@ -165,6 +165,7 @@ var d_current_status = {
             "id":"21",
             "INQA":"Plant",
             "Defects":"20",
+            "Pass":"25",
             "FTQ":"90"
         }
     ],
@@ -312,6 +313,7 @@ var d_current_status = {
             "id":"21",
             "INQA":"Plant",
             "Defects":"20",
+            "Pass":"25",
             "FTQ":"90"
         }
     ],
@@ -456,10 +458,11 @@ var d_current_status = {
             "FTQ":"90"
         },
         {
-            "id":"21",
-            "INQA":"Plant",
-            "Defects":"20",
-            "FTQ":"90"
+            "id": "21",
+            "INQA": "Plant",
+            "Defects": "20",
+            "Pass": "25",
+            "FTQ": "90"
         }
     ]
 }
