@@ -94,4 +94,14 @@
       }
     }
   }
+  &.discussion{
+    .left{
+      width:100%;
+      overflow-x:hidden;
+      .chart_dpv_one{
+        border-width:0px;
+      }
+    }
+
+  }
 }
