@@ -10,7 +10,7 @@
   .left{
     float:left;
     @include box-sizing-border;
-    width:75%;
+    width:calc(100% - 250px);
     padding:0px 10px;
     $border:1px solid rgba(0,0,0,0.2);
     .chart_dpv_one{
@@ -33,18 +33,19 @@
   .right{
     float:left;
     @include box-sizing-border;
-    width:25%;
+    width:250px;
     background:#fff;
     padding:5px;
     height:100%;
     border-left:1px solid rgba(0,0,0,0.2);
     .condition{
+      height:100%;
       .condition_block{
         border-top:1px solid rgba(0,0,0,0.2);
         padding:5px 0px 0px 6px;
         &>label{
           display:block;
-          font-size:14px;
+          font-size:15px;
           color:#777;
         };
         &:first-of-type{
@@ -52,6 +53,9 @@
           p{
             margin:5px 0px 2px 0px;
             font-size:13px;
+            &:first-of-type{
+              margin-top:1px;
+            }
           }
           .retrieve_data{
             font-size:13px;
@@ -60,19 +64,24 @@
             margin:8px 0 12px;
           }
         }
+//        &:nth-of-type(2){
+//          .btn_excel{
+//            font-size:13px;
+//            padding:4px 8px;
+//            width:140px;
+//            margin:8px 0 12px;
+//          }
+//        }
         &:nth-of-type(2){
-          .btn_excel{
-            font-size:13px;
-            padding:4px 8px;
-            width:140px;
-            margin:8px 0 12px;
-          }
-        }
-        &:nth-of-type(3){
           .snap-groups{
             border-top-width:0;
-            .snap-li:first-of-type{
+            white-space: normal;
+            height:300px;
+            overflow-y:auto;
+//            width:180px;
+            .snap-li{
               margin-left:0px;
+              float:left;
             }
           }
         }
