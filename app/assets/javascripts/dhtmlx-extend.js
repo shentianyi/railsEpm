@@ -17,7 +17,7 @@ dhtmlXGridObject.prototype.serializeToReportXML = function(charts){
     //Head Start
     xml += "<table><head><columns>";
     for(var i = 0;i < headercount;i++){
-        xml += "<column width='60'>"+this.getColLabel()+"</column>";
+        xml += "<column width='60'><![CDATA["+this.getColLabel(i)+"]]</column>";
     }
     xml += "</columns></head>";
     //Head End
@@ -27,7 +27,7 @@ dhtmlXGridObject.prototype.serializeToReportXML = function(charts){
     for(var i = 0;i<data["rows"].length;i++){
         xml += "<row>";
         for(var j = 0;j<data["rows"][i]["data"].length;j++){
-            xml+= "<cell>"+data["rows"][i]["data"][j]+"</cell>";
+            xml+= "<cell><![CDATA["+data["rows"][i]["data"][j]+"]]</cell>";
         }
         xml += "</row>";
     }
@@ -40,11 +40,11 @@ dhtmlXGridObject.prototype.serializeToReportXML = function(charts){
         xml += "<chart title='"+charts[i]["title"]+"' height='"+charts[i]["height"]+"' width='"+charts[i]["width"]+"'>";
         xml += "<serie color='"+charts[i]["color"]+"' type='"+charts[i]["type"]+"'>";
 
-        xml +="<xstart_row>"+charts[i]["x"]+"</xstart_row><xstart_col>2</xstart_col>";
-        xml +="<xend_row>"+charts[i]["x"]+"</xend_row><xend_col>"+headercount+"</xend_col>";
+        xml +="<xstart_row><![CDATA["+charts[i]["x"]+"]]</xstart_row><xstart_col><![CDATA[2]]</xstart_col>";
+        xml +="<xend_row><![CDATA["+charts[i]["x"]+"]]</xend_row><xend_col><![CDATA["+headercount+"]]</xend_col>";
 
-        xml +="<xstart_row>"+charts[i]["y"]+"</xstart_row><xstart_col>2</xstart_col>";
-        xml +="<xend_row>"+charts[i]["y"]+"</xend_row><xend_col>"+headercount+"</xend_col>";
+        xml +="<xstart_row><![CDATA["+charts[i]["y"]+"]]</xstart_row><xstart_col><![CDATA[2]]</xstart_col>";
+        xml +="<xend_row><![CDATA["+charts[i]["y"]+"]]</xend_row><xend_col><![CDATA["+headercount+"]]</xend_col>";
 
         xml += "</serie>";
         xml += "</chart>";
