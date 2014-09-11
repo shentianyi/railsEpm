@@ -117,7 +117,7 @@ Report.configure = function(){
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader("Inspection,#cspan,Vechile Total,OK Vehicle,NOK Vehicle,FTQ,DPV,DPV Target,Defects,Vehs,FTQ Target,OK,NOK");
             //mygrid.attachHeader("full,short,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
-            dhtmlxobj.setInitWidths("150,80,80,80,80,80,80,80,80,80,80,80,80");
+            dhtmlxobj.setInitWidths("150,100,100,100,100,100,100,100,100,100,100,100,100");
             dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center");
             dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
             dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int");
