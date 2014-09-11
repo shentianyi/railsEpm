@@ -54,10 +54,10 @@ Report.prepare = function(){
 
 /*parse json data*/
 Report.json_parse = function (jsondata) {
-    console.log(jsondata);
+//    console.log(jsondata);
     this.r.clearAll();
     this.r.parse(jsondata, 'json');
-    var fn = Report[this.option.type_string+"_on_json_parse"]
+    var fn = Report[this.option.type_string+"_on_json_parse"];
     if(typeof fn === 'function'){
         fn();
     }
@@ -93,7 +93,7 @@ Report.configure = function(){
                     "</div>" +
                     "<div class='dv-body'>" +
                     "<div class='left'>" +
-                    "<p style='color:"+"#COLOR#"+"'>#FTQ#%</p>" +
+                    "<p id='ftq' style='color:"+"#COLOR#"+"'>#FTQ#%</p>" +
                     "</div>" +
                     "<div class='right'>" +
                     "<p>#Defects#</p>" +
@@ -107,6 +107,9 @@ Report.configure = function(){
                 width: 230,
                 margin: 5,
                 padding: 8
+            });
+            dhtmlxobj.attachEvent("onAfterRender",function(){
+
             });
             current_status.init();
             break;
@@ -134,7 +137,7 @@ Report.configure = function(){
 
             dhtmlxobj.setColAlign("left,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
             dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
-            dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int");
+            //dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int");
             //dhtmlxobj.setNumberFormat("0,000.00", 0, ".", ",");
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.init();
@@ -189,7 +192,7 @@ Report.type = {
     "summary_report": 2,
     "station_data": 3,
     "tracking_report": 4,
-    "defect": 5,
+    "defects": 5,
     "vehicle_info": 6,
     "daily_dpv": 7
 };
