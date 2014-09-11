@@ -189,7 +189,7 @@ Report.type = {
     "summary_report": 2,
     "station_data": 3,
     "tracking_report": 4,
-    "defect": 5,
+    "defects": 5,
     "vehicle_info": 6,
     "daily_dpv": 7
 };
