@@ -59,8 +59,8 @@ dhtmlXGridObject.prototype.serializeChartExcelXml = function(){
     xml += "<charts>"
     for(var i = 0;i<charts.length;i++){
         xml += "<chart title='"+charts[i]["title"]+"' height='"+charts[i]["height"]+"' width='"+charts[i]["width"]+"'>";
-        for(var j=0;j<charts[i].series.length;j++) {
-            var serie=charts[i].series[j];
+        for(var j=0;j<charts[i].length;j++) {
+            var serie=charts[i][j];
             xml += "<serie color='" + serie["color"] + "' type='" + serie["type"] + "'>";
 
             xml += "<xstart_row><![CDATA[" +serie["xstart_row"] + "]]</xstart_row><xstart_col><![CDATA["+serie['xstart_col']+"]]</xstart_col>";
