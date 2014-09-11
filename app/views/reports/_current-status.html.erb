@@ -1,5 +1,5 @@
 <section class="current-status" id="current-status">
-  <section id="current-status-normal" >
+  <section id="current-status-normal">
     <div class="header" id="current-status-header">
       <div class="left">
         <p>First Time Quality (FTQ) Summary Percentage</p>
@@ -9,9 +9,9 @@
           <a class="btn btn-primary" id="refresh">Refresh</a>
           <a class="btn btn-primary" id="quick-print">Quick print</a>
           <a class="btn btn-primary" onclick="export_report_excel()">Excel</a>
-          <a class="btn btn-primary" id="target">Target</a>
-          <a class="btn btn-primary">All defects</a>
-          <a class="btn btn-primary">Key station defects</a>
+          <a class="btn btn-primary extra_func_btn" id="target" tag='target'>Target</a>
+          <a class="btn btn-primary extra_func_btn" tag='all_defects'>All defects</a>
+          <a class="btn btn-primary extra_func_btn" tag='key_defects'>Key station defects</a>
           <!--<a class="btn btn-func">Change data</a>-->
         </div>
       </div>
@@ -27,9 +27,10 @@
     <div id="data_container" class="data-container"></div>
     <%= render 'snap'%>
   </section>
-  <section id="current-status-target" class='current-status-wrapper' style="display:none">
+  <section id="current-status-target" class='current-status-wrapper'>
      <div class="wrapper-header">
-       <a class="back-btn"><span>FTQ  Summary  Percentage</span></a>
+       <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
+       <p>Target setting</p>
      </div>
   </section>
 </section>
