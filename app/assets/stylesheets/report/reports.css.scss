@@ -250,3 +250,14 @@ $list-width:220px;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
 }
+//set the table background
+div.gridbox.gridbox_dhx_skyblue{
+  .objbox{
+    table{
+      background:#fff;
+    }
+    background:rgba(0,0,0,0);
+    //background:-moz-linear-gradient(#e2efff, #d3e7ff);
+    //background:-webkit-linear-gradient(#e2efff, #d3e7ff);
+  }
+}
