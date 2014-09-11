@@ -22,7 +22,8 @@ current_status.init=function(){
                 $("#current-status-normal").css("display","block");
                 current_status.loader_hide();
             },1000);
-        })
+        });
+    defects.example_init();
 }
 current_status.flexible=function(){
     var total_height=$("#wrap-main").height()-$("header").height()-1;
@@ -63,10 +64,18 @@ current_status.show_extra_section=function(tag){
          },1000);
      }
     else if(tag==="all_defects"){
-
+         setTimeout(function(){
+             $("#current-status-normal").css("display","none");
+             $("#current-status-all-defects").css("display","block");
+             current_status.loader_hide();
+         },1000);
      }
     else if(tag==="key_defects"){
-
+         setTimeout(function(){
+             $("#current-status-normal").css("display","none");
+             $("#current-status-key-defects").css("display","block");
+             current_status.loader_hide();
+         },1000);
      }
 }
 
