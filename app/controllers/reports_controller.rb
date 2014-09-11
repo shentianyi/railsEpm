@@ -10,4 +10,9 @@ class ReportsController < ApplicationController
     @snaps=current_user.report_snaps.where(type: params[:part]).order('created_at desc').all
     render :partial => @partial if params[:ajax]
   end
+
+  def subscription
+    render :partial => "subscription"
+  end
+
 end

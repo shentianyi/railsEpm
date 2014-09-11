@@ -43,9 +43,9 @@ daily_dpv.init=function(){
     this.chart_sdpv = chart_two;
 
     daily_dpv.flex_init();
-    window.onresize=function(){
+    $(window).resize(function(){
         daily_dpv.flexible();
-    };
+    });
     setTimeout(function(){
         $("#data_container").width($("#daily_dpv_left").width()-2);
     },100);

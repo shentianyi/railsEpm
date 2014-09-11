@@ -151,13 +151,11 @@ defects.example_init=function(){
     defects.resize("all_defects");
     defects.resize("key_defects");
     defects.resize("target_setting");
-    window.onresize=function(){
+    $(window).resize(function(){
         defects.resize("all_defects");
         defects.resize("key_defects");
         defects.resize("target_setting");
-    }
-
-
+    });
 
 }
 defects.resize=function(target){
