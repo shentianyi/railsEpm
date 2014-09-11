@@ -117,7 +117,7 @@ Report.configure = function(){
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader("Inspection,#cspan,Vechile Total,OK Vehicle,NOK Vehicle,FTQ,DPV,DPV Target,Defects,Vehs,FTQ Target,OK,NOK");
             //mygrid.attachHeader("full,short,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
-            dhtmlxobj.setInitWidths("150,80,80,80,80,80,80,80,80,80,80,80,80");
+            dhtmlxobj.setInitWidths("150,100,100,100,100,100,100,100,100,100,100,100,100");
             dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center");
             dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
             dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int");
@@ -299,7 +299,9 @@ Report.daily_dpv_init = function(){
 /*----------------------------------------------------*/
 /*on_json_parse for current_status*/
 Report.current_status_on_json_parse = function(){
-    defects.example_init();
+    if( typeof defects != 'undefined'){
+        defects.example_init();
+    }
 }
 
 /*on_json_parse for different type*/
