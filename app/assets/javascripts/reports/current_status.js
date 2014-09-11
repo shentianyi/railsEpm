@@ -1,14 +1,15 @@
 var current_status={};
 current_status.init=function(){
+
     $("#current-date").text(format_time.current_time());
     $("#current-clock").text(format_time.current_time_clock());
     window.setInterval(function(){
         $("#current-clock").text(format_time.current_time_clock());
     },1000);
     current_status.flexible();
-    window.onresize=function(){
+    $(window).resize(function(){
         current_status.flexible();
-    }
+    })
     $("body")
         .on("click",".extra_func_btn",function(){
             var tag=$(this).attr("tag") ;
