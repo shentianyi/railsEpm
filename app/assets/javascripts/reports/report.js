@@ -57,7 +57,7 @@ Report.json_parse = function (jsondata) {
     console.log(jsondata);
     this.r.clearAll();
     this.r.parse(jsondata, 'json');
-    var fn = Report[this.option.type_string+"_on_json_parse"]
+    var fn = Report[this.option.type_string+"_on_json_parse"];
     if(typeof fn === 'function'){
         fn();
     }
@@ -134,7 +134,7 @@ Report.configure = function(){
 
             dhtmlxobj.setColAlign("left,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
             dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
-            dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int");
+            //dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int");
             //dhtmlxobj.setNumberFormat("0,000.00", 0, ".", ",");
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.init();
