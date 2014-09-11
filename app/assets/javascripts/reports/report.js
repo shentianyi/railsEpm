@@ -108,9 +108,6 @@ Report.configure = function(){
                 margin: 5,
                 padding: 8
             });
-            dhtmlxobj.attachEvent("onAfterRender",function(){
-
-            });
             current_status.init();
             break;
         case this.type["station_data"]:
