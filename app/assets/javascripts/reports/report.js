@@ -108,6 +108,9 @@ Report.configure = function(){
                 margin: 5,
                 padding: 8
             });
+            dhtmlxobj.attachEvent("onItemRender",function(obj){
+                console.log(obj);
+            });
             current_status.init();
             break;
         case this.type["station_data"]:
