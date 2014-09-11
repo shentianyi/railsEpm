@@ -44,7 +44,13 @@
 		    })
             // report subscription
             .on("click","#reports_subscribe",function(){
-
+                $.ajax({
+                    url:"/reports/subscription",
+                    type:"GET",
+                    success:function(data){
+                        $("#report-content").html(data);
+                    }
+                })
             })
             .on("click","#add-to-storyset",function(){
                 if($('#story-title').val()){
