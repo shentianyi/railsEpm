@@ -70,8 +70,7 @@ var Highchart_generator=function(option){
                 color: '#FFF'
             },
             formatter: function() {
-                var name=this.series.name==="Target"?"Target":"Current";
-                return '<b>'+name+'</b>'
+                return '<b>'+this.x+'</b>'
                     +'<br />Value: <span style="color:'+this.series.color+'">'+this.point.y
                     +'</span>'
 
@@ -132,6 +131,7 @@ var Highchart_generator=function(option){
             }
         }
     };
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> daily_dpv
     this.init_daily_dpv=function(){
         var $target=this.target.indexOf("#")===-1?$("#"+this.target):$(this.target);
         this.basic.title.text=option.title?option.title:null;
@@ -158,7 +158,6 @@ var Highchart_generator=function(option){
         this.basic.xAxis.categories=option.xArray;
         this.basic.title.margin=5;
         this.basic.series=option.data;
-//        this.basic.xAxis.offset=   offset: 5,
         if(option.height){
             this.basic.chart.height=option.height
         }
