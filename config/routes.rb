@@ -20,6 +20,7 @@ IFEpm::Application.routes.draw do
 
   resources :reports do
     collection do
+      get :subscription
       get ':part'=>:index
       get ':part/:ajax'=>:index
     end
