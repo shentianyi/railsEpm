@@ -54,7 +54,7 @@ Report.prepare = function(){
 
 /*parse json data*/
 Report.json_parse = function (jsondata) {
-    console.log(jsondata);
+//    console.log(jsondata);
     this.r.clearAll();
     this.r.parse(jsondata, 'json');
     var fn = Report[this.option.type_string+"_on_json_parse"];
