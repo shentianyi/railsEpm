@@ -18,11 +18,11 @@
             }
         }
     },5000);
-}())
+}());
 var data_current_color={
     "red":"#eb4848",
     "green":"#19cf22"
-}
+};
 var d_current_status = {
     CF11: [
         {
@@ -531,5 +531,5 @@ var d_current_status = {
             "COLOR":data_current_color["green"]
         }
     ]
-}
+};
 

@@ -53,4 +53,4 @@ var d_station_data = {
             data:["End of Line","EOL","","","",RAND.range_float(75,100),RAND.range_float(0,50),RAND.range_float(30,40),RAND.range_int(20,300),RAND.range_int(20,100),RAND.range_float(75,100),RAND.range_int(20,30),RAND.range_float(40,100)]
         }
     ]
-}
+};

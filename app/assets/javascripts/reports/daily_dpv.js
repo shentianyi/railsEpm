@@ -2,6 +2,20 @@ var daily_dpv={};
 daily_dpv.chart_dpv = {};
 daily_dpv.chart_sdpv = {};
 daily_dpv.init=function(){
+    Report.r.charts= [{x:0,y:1,title:'DPV',width:1000,height:300,type:'line',color:'#dasdas'}];
+    var charts = [
+        [
+            {xstart_row: 1, xstart_col: 2, xend_row: 1, xend_col: 16,
+             ystart_row: 4, ystart_col: 2, yend_row: 4, yend_col: 16,
+             title: 'DPV', width: 1000, height: 300, type: 'column', color: '#dasdas'}
+        ],
+        [
+            {xstart_row: 1, xstart_col: 2, xend_row: 1, xend_col: 16,
+                ystart_row: 5, ystart_col: 2, yend_row: 5, yend_col: 16,
+                title: 'SDPV', width: 1000, height: 300, type: 'column', color: '#dasdas'}
+        ]
+    ];
+    Report.r.set_charts(charts);
     var option_one={
         target:"chart_dpv_one",
         xArray:["iQ1","iQ2","iQ IP","iQ DR","iQ3","iQ4","iQ5","iQ6","iQ7","iQ8","iQ9","iQ10","iQ11","iQ12","iQ13","iQ14","iQ15"],
@@ -31,11 +45,11 @@ daily_dpv.init=function(){
     daily_dpv.flex_init();
     window.onresize=function(){
         daily_dpv.flexible();
-    }
+    };
     setTimeout(function(){
         $("#data_container").width($("#daily_dpv_left").width()-2);
     },100);
-}
+};
 daily_dpv.flex_init=function(){
     //set the content whole height
     var total_height=$("#wrap-main").height()-$("header").height()-1;
@@ -52,7 +66,7 @@ daily_dpv.flex_init=function(){
     $("#chart_dpv_two").highcharts().setSize($("#chart_dpv_two").width(),chart_two_height );
     // left right same height
     $("#daily_dpvt .right").height($("#daily_dpv_left").height());
-}
+};
 daily_dpv.flexible=function(){
     //set the content whole height
     var total_height=$("#wrap-main").height()-$("header").height()-1;
@@ -69,4 +83,4 @@ daily_dpv.flexible=function(){
     daily_dpv.chart_sdpv.daily_resize($("#chart_dpv_two").width(),chart_two_height,"sdpv");
     // left right same height
     $("#daily_dpv .right").height($("#daily_dpv_left").height());
-}
+};
