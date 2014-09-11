@@ -93,7 +93,7 @@ Report.configure = function(){
                     "</div>" +
                     "<div class='dv-body'>" +
                     "<div class='left'>" +
-                    "<p style='color:"+"#COLOR#"+"'>#FTQ#%</p>" +
+                    "<p id='ftq' style='color:"+"#COLOR#"+"'>#FTQ#%</p>" +
                     "</div>" +
                     "<div class='right'>" +
                     "<p>#Defects#</p>" +
@@ -108,8 +108,8 @@ Report.configure = function(){
                 margin: 5,
                 padding: 8
             });
-            dhtmlxobj.attachEvent("onItemRender",function(obj){
-                console.log(obj);
+            dhtmlxobj.attachEvent("onAfterRender",function(){
+                
             });
             current_status.init();
             break;
