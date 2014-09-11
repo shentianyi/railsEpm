@@ -42,6 +42,10 @@
 				    }
 			    })
 		    })
+            // report subscription
+            .on("click","#reports_subscribe",function(){
+
+            })
             .on("click","#add-to-storyset",function(){
                 if($('#story-title').val()){
                     $("#back-pop").addClass("show")

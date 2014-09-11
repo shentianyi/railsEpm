@@ -78,10 +78,18 @@ $list-width:220px;
       font-size:14px;
       width:140px;
       &.snap{
-        bottom:30px;
+        bottom:95px;
       }
       &.share{
-        bottom:80px;
+        bottom:140px;
+      }
+      &.subscribe{
+        bottom:30px;
+        color:#fff;
+        $bg_color:#888;
+        background:$bg_color;
+        background:-moz-linear-gradient(top,rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.2) 55%) $bg_color;
+        background:-webkit-linear-gradient(top,rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.2) 55%) $bg_color;
       }
     }
   }
