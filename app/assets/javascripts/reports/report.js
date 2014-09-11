@@ -1,6 +1,7 @@
 var Report = Report || {};
 Report.option = {};
 Report.r = {};
+Report.data = {};
 Report.export_excel_url = 'http://42.121.111.38:9003/DHXFileService/Excel';
 /*
 Report.init = function (type) {
@@ -57,6 +58,7 @@ Report.json_parse = function (jsondata) {
 //    console.log(jsondata);
     this.r.clearAll();
     this.r.parse(jsondata, 'json');
+    this.data = jsondata;
     var fn = Report[this.option.type_string+"_on_json_parse"];
     if(typeof fn === 'function'){
         fn();
@@ -66,6 +68,7 @@ Report.json_parse = function (jsondata) {
 /*clear data*/
 Report.clear = function(){
     this.r.clearAll();
+    this.data = {};
 }
 
 /*get dhtmlx object*/
@@ -294,6 +297,11 @@ Report.daily_dpv_init = function(){
     /*------------------------------------------------------------*/
 }
 /*----------------------------------------------------*/
+/*on_json_parse for current_status*/
+Report.current_status_on_json_parse = function(){
+    defects.example_init();
+}
+
 /*on_json_parse for different type*/
 Report.daily_dpv_on_json_parse = function(){
     /*------------------------------------------------------------*/

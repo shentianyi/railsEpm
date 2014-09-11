@@ -123,12 +123,43 @@ defects.example_init=function(){
     key_defectsgrid.clearAll();
     key_defectsgrid.parse(keydata,'json');
 
+    //Target Settings
+    var target_setting = new dhtmlXGridObject("target_setting");
+    target_setting.setImagePath("/assets/dhtmlx/");
+    target_setting.setHeader("Stations,FTQ,FTQ Target");
+    target_setting.setInitWidths("120,120,120");
+    target_setting.enableAutoWidth(false);
+    target_setting.setColAlign('center,center,center');
+    target_setting.setColTypes('ro,ro,ed');
+    target_setting.setSkin("dhx_skyblue");
+    target_setting.setColumnColor("#d5f1ff");
+    target_setting.enableSmartRendering(true);
+    target_setting.init();
+
+    var target_data = {
+        rows:[]
+    };
+
+    var current = Report.data;
+
+    for(var i =0;i<current.length;i++){
+        target_data["rows"][i] = {
+            id:i+1,
+            data:[current[i]["INQA"],current[i]["FTQ"],RAND.range_int(80,98)]
+        }
+    }
+
+    target_setting.parse(target_data,'json');
+
     defects.resize("all_defects");
     defects.resize("key_defects");
     window.onresize=function(){
         defects.resize("all_defects");
         defects.resize("key_defects");
     }
+
+
+
 }
 defects.resize=function(target){
    var $target=target.indexOf("#")===-1?$("#"+target):$(target),

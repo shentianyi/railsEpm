@@ -23,7 +23,7 @@ current_status.init=function(){
                 current_status.loader_hide();
             },1000);
         });
-    defects.example_init();
+
 }
 current_status.flexible=function(){
     var total_height=$("#wrap-main").height()-$("header").height()-1;
