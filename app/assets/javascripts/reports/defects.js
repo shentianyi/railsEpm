@@ -94,7 +94,7 @@ defects.example_init=function(){
         }]
     };
     var key_stations = ["iQ1","iQ2","iQ11","EOL"];
-    for(var i = 0;i<100;i++){
+    for(var i = 0;i<25;i++){
         keydata["rows"][i] ={
             id: i+1,
             data: [

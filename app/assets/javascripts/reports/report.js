@@ -109,7 +109,7 @@ Report.configure = function(){
                 padding: 8
             });
             dhtmlxobj.attachEvent("onAfterRender",function(){
-                
+
             });
             current_status.init();
             break;
