@@ -49,13 +49,12 @@
                 //=============
                 //load partial view
 
+
                 var href = this.href;
 
                 var left = document.getElementById("report-menu").getBoundingClientRect().right,
                     top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
-                $(".pageload-overlay svg").css('left', left);
-                $(".pageload-overlay svg").css('top', top);
-
+                $(".pageload-overlay svg").css('left', left).css("top",top);
                 loader.show();
                 window.location.href = this.href;
                 ReportMenu.click(part,function(data){
@@ -65,16 +64,26 @@
                         $("#report-content").html(data);
                         window.location.href = href;
                         loader.hide();
-                    },1500);
+                    },924);
                 });
+
 		    })
             // report subscription
             .on("click","#reports_subscribe",function(){
+                var left = document.getElementById("report-menu").getBoundingClientRect().right,
+                    top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
+                $(".pageload-overlay svg").css('left', left).css("top",top);
+                loader.show();
+                $("#my-reports li a").removeClass("active");
                 $.ajax({
                     url:"/reports/subscription",
                     type:"GET",
                     success:function(data){
-                        $("#report-content").html(data);
+                        setTimeout(function(){
+                            $("#report-content").html(data);
+                            report_subscription.init();
+                            loader.hide()
+                        },600);
                     }
                 })
             })
