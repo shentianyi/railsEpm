@@ -1,7 +1,6 @@
 <%= render "my-reports" %>
 
 <div class="report-content" id="report-content">
-  <%= render "current-status" %>
 </div>
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "func-module/format_time.js" %>
@@ -17,6 +16,7 @@
     <%= javascript_include_tag "func-module/chosen"%>
     <%= javascript_include_tag "dhtmlx.js"%>
     <%= javascript_include_tag "dhtmlx-extend.js"%>
+    <%= javascript_include_tag "reports/report_menu"%>
     <%= javascript_include_tag "reports/rand"%>
     <%= javascript_include_tag "reports/data-daily-dpv"%>
     <%= javascript_include_tag "reports/data-current-status" %>
