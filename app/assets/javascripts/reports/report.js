@@ -322,6 +322,23 @@ Report.daily_dpv_init = function(){
     /*------------------------------------------------------------*/
 };
 /*----------------------------------------------------*/
+/*on_json_parse for daily_ftq*/
+Report.daily_ftq_on_json_parse = function(){
+    var charts = [{
+        title: 'Daily FTQ', width: 1100, height: 300,
+        series: [
+            {
+                xaixs: "B1:S1", yaixs: "B4:S4",
+                type: 'column', color: '#D1E5FE'
+            },
+            {
+                xaixs: "B1:S1", yaixs: "B5:S5",
+                type: 'line', color: '#D1E5FE'
+            }
+    ]
+}];
+    Report.r.set_charts(charts);
+};
 /*on_json_parse for current_status*/
 Report.current_status_on_json_parse = function(){
     if( typeof defects != 'undefined'){
