@@ -201,7 +201,11 @@ Report.type = {
     "defects": 5,
     "vehicle_info": 6,
     "daily_dpv": 7,
-    'daily_ftq': 8
+    'daily_ftq': 8,
+    'defect_info' : 9,
+    'float' : 10,
+    'top_issue': 11,
+    'weekly_report' : 12
 };
 
 Report.headers = {

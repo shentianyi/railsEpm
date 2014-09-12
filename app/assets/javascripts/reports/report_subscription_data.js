@@ -44,6 +44,7 @@ var report_subscription_data=[
         name:"Defect Information",
         desc:"Phase is based on the select category and have the similar field as the defect information ",
         active_status:false,
+        menu:"defect_info",
         icon:"icon-plus"
     },
     {
@@ -51,7 +52,8 @@ var report_subscription_data=[
         name:"Float",
         desc:"There are 2 blocks info, the vehicle info and summary info",
         active_status:false,
-        icon:"icon-plus"
+        icon:"icon-plus",
+        menu:"float"
     },
     {
         id:7,
@@ -82,13 +84,15 @@ var report_subscription_data=[
         name:"TOP issue",
         desc:"Search and statistics for high frequency quality issue, more detailed and more accurate",
         active_status:false,
-        icon:"icon-plus"
+        icon:"icon-plus",
+        menu:"top_issue"
     },
     {
         id:11,
         name:"Weekly Report",
         desc:"This page will show the DPV & FTQ data in the chart for 15 iQ stations. The layout is shown as below picture",
         active_status:false,
-        icon:"icon-plus"
+        icon:"icon-plus",
+        menu:"weekly_report"
     }
 ];
