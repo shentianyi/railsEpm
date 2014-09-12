@@ -87,7 +87,7 @@ dhtmlXDataView.prototype.serializeToExcelXml = function () {
     // generate head
     xml += '<head><columns>';
     for (var h in data[0]) {
-        if (h != 'id' && h != 'value' && h.indexOf("style_") == -1) {
+        if (h != 'id' && h != 'value' && h.indexOf("STYLE_") == -1) {
             xml += "<column  color=''><![CDATA[" + $.trim(h) + ']]></column>';
         }
     }
@@ -96,7 +96,7 @@ dhtmlXDataView.prototype.serializeToExcelXml = function () {
     for (var i = 0; i < data.length; i++) {
         xml += '<row>';
         for (var d in data[i]) {
-            if (d != 'id' && d != 'value') {
+            if (d != 'id' && d != 'value' && h.indexOf("STYLE_") == -1) {
                 xml += '<cell><![CDATA[' + $.trim(data[i][d]) + ']]></cell>';
             }
         }
