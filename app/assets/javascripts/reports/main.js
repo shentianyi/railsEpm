@@ -4,7 +4,6 @@
         //Refresh Page
         var url = window.location.href.split('/');
         var report_part = url[url.length-1].split('#');
-        var href = this.href;
         if(report_part.length == 2){
             var part = Report.type[report_part[1]];
             ReportMenu.click(part,function(data){

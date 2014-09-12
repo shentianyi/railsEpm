@@ -6,14 +6,14 @@ daily_dpv.init = function () {
         {
             title: 'DPV', width: 1100, height: 300,
             series: [
-                {xaixs: "B1:P1", yaix: "B4:P4",
+                {xaixs: "B1:P1", yaixs: "B4:P4",
                     type: 'column', color: '#D1E5FE'}
             ]
         },
         {
             title: 'SDPV', width: 1100, height: 300,
             series: [
-                {xaixs: "B1:P1", yaix: "B5:P5",
+                {xaixs: "B1:P1", yaixs: "B5:P5",
                     type: 'column', color: '#D1E5FE'}
             ]
         }
