@@ -50,6 +50,7 @@
 *= require stories.css
 *= require report/current_status
 *= require report/report_subscription
+*= require report/station_data
 
 *= require popModal.min
 *= require dhtmlxgrid
