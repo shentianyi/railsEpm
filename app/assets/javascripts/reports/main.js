@@ -1,33 +1,33 @@
 (function(){
     $(document).ready(function(){
         loader = new SVGLoader( document.getElementById( 'preloader' ), { speedIn : 100 } );
+        //Refresh Page
         var url = window.location.href.split('/');
         var report_part = url[url.length-1].split('#');
         var href = this.href;
         if(report_part.length == 2){
             var part = Report.type[report_part[1]];
-
             ReportMenu.click(part,function(data){
-                $("#my-reports li a").removeClass("active");
+                //$("#my-reports li a").removeClass("active");
                 $("#my-reports a[menu="+report_part[1]+"]").addClass("active");
                 report_main.current_menu = part;
                 $("#report-content").html(data);
                 if(typeof href != 'undefined'){
                     window.location.href = href;
                 }
-
             });
         }else{
             var part = Report.type['current_status'];
 
             ReportMenu.click(part,function(data){
-                $("#my-reports li a").removeClass("active");
+                //$("#my-reports li a").removeClass("active");
                 $("#my-reports a[menu='current_status']").addClass("active");
                 report_main.current_menu = part;
                 $("#report-content").html(data);
                 window.location.href +="#current_status";
             });
         }
+        //
 
         $('body')
             .on("click","#my-reports a",function(event) {
