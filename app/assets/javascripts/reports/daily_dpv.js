@@ -6,16 +6,14 @@ daily_dpv.init = function () {
         {
             title: 'DPV', width: 1100, height: 300,
             series: [
-                {xstart_row: 1, xstart_col: 2, xend_row: 1, xend_col: 16,
-                    ystart_row: 4, ystart_col: 2, yend_row: 4, yend_col: 16,
+                {xaixs: "B1:P1", yaixs: "B4:P4",
                     type: 'column', color: '#D1E5FE'}
             ]
         },
         {
             title: 'SDPV', width: 1100, height: 300,
             series: [
-                {xstart_row: 1, xstart_col: 2, xend_row: 1, xend_col: 16,
-                    ystart_row: 5, ystart_col: 2, yend_row: 5, yend_col: 16,
+                {xaixs: "B1:P1", yaixs: "B5:P5",
                     type: 'column', color: '#D1E5FE'}
             ]
         }

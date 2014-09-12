@@ -57,17 +57,29 @@ dhtmlXGridObject.prototype.serializeChartExcelXml = function(){
     var charts=this.get_charts();
     //Chart Start
     xml += "<charts>"
-    for(var i = 0;i<charts.length;i++){
+//    for(var i = 0;i<charts.length;i++){
+//        xml += "<chart title='"+charts[i]["title"]+"' height='"+charts[i]["height"]+"' width='"+charts[i]["width"]+"'>";
+//        for(var j=0;j<charts[i].series.length;j++) {
+//            var serie=charts[i].series[j];
+//            xml += "<serie color='" + serie["color"] + "' type='" + serie["type"] + "'>";
+//
+//            xml += "<xstart_row><![CDATA[" +serie["xstart_row"] + "]]></xstart_row><xstart_col><![CDATA["+serie['xstart_col']+"]]></xstart_col>";
+//            xml += "<xend_row><![CDATA[" + serie["xend_row"] + "]]></xend_row><xend_col><![CDATA[" + serie['xend_col'] + "]]></xend_col>";
+//
+//            xml += "<ystart_row><![CDATA[" + serie["ystart_row"] + "]]></ystart_row><ystart_col><![CDATA["+serie['ystart_col']+"]]></ystart_col>";
+//            xml += "<yend_row><![CDATA[" + serie["yend_row"] + "]]></yend_row><yend_col><![CDATA[" +serie['yend_col'] + "]]></yend_col>";
+//
+//            xml += "</serie>";
+//        }
+//        xml += "</chart>";
+//    }
+        for(var i = 0;i<charts.length;i++){
         xml += "<chart title='"+charts[i]["title"]+"' height='"+charts[i]["height"]+"' width='"+charts[i]["width"]+"'>";
         for(var j=0;j<charts[i].series.length;j++) {
             var serie=charts[i].series[j];
             xml += "<serie color='" + serie["color"] + "' type='" + serie["type"] + "'>";
 
-            xml += "<xstart_row><![CDATA[" +serie["xstart_row"] + "]]></xstart_row><xstart_col><![CDATA["+serie['xstart_col']+"]]></xstart_col>";
-            xml += "<xend_row><![CDATA[" + serie["xend_row"] + "]]></xend_row><xend_col><![CDATA[" + serie['xend_col'] + "]]></xend_col>";
-
-            xml += "<ystart_row><![CDATA[" + serie["ystart_row"] + "]]></ystart_row><ystart_col><![CDATA["+serie['ystart_col']+"]]></ystart_col>";
-            xml += "<yend_row><![CDATA[" + serie["yend_row"] + "]]></yend_row><yend_col><![CDATA[" +serie['yend_col'] + "]]></yend_col>";
+            xml += "<xaixs><![CDATA[" +serie["xaixs"] + "]]></xaixs><yaixs><![CDATA["+serie['yaixs']+"]]></yaixs>";
 
             xml += "</serie>";
         }

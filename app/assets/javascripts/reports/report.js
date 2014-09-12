@@ -82,6 +82,7 @@ Report.get_dhtmlx = function(){
             return new dhtmlXDataView(container);
         case this.type["daily_dpv"]:
         case this.type["station_data"]:
+        case this.type["daily_ftq"]:
             return new dhtmlXGridObject(container);
         default:
             return null;
@@ -149,6 +150,17 @@ Report.configure = function(){
             dhtmlxobj.enableSmartRendering(true);
             daily_dpv.init();
             break;
+        case this.type["daily_ftq"]:
+            dhtmlxobj.setImagePath("/assets/dhtmlx/");
+            dhtmlxobj.setHeader("iQ Station,iQ1,iQ2,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15");
+            dhtmlxobj.setInitWidths("80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80");
+            dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
+            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+            dhtmlxobj.setSkin("dhx_skyblue");
+            dhtmlxobj.setColumnColor("#d5f1ff");
+            dhtmlxobj.init();
+            dhtmlxobj.enableMultiselect(true);
+            break;
         default:
             break;
     }
@@ -162,6 +174,8 @@ Report.get_json = function () {
             return  d_daily_dpv;
         case this.type["station_data"]:
             return d_station_data;
+        case this.type["daily_ftq"]:
+            return SampleData.init_daily_ftq();
         default :
             return null;
     }
@@ -202,7 +216,11 @@ Report.type = {
     "defects": 5,
     "vehicle_info": 6,
     "daily_dpv": 7,
-    'daily_ftq': 8
+    'daily_ftq': 8,
+    'defect_info' : 9,
+    'float' : 10,
+    'top_issue': 11,
+    'weekly_report' : 12
 };
 
 Report.headers = {
