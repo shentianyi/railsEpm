@@ -5,7 +5,7 @@ current_status.init=function(){
     $("#current-clock").text(format_time.current_time_clock());
     window.setInterval(function(){
         $("#current-clock").text(format_time.current_time_clock());
-    },1000);
+    },700);
     current_status.flexible();
     $(window).resize(function(){
         current_status.flexible();
@@ -22,7 +22,7 @@ current_status.init=function(){
                 $target.css("display","none");
                 $("#current-status-normal").css("display","block");
                 current_status.loader_hide();
-            },1000);
+            },700);
         });
 
 }
@@ -62,21 +62,21 @@ current_status.show_extra_section=function(tag){
              $("#current-status-normal").css("display","none");
              $("#current-status-target").css("display","block");
              current_status.loader_hide();
-         },1000);
+         },700);
      }
     else if(tag==="all_defects"){
          setTimeout(function(){
              $("#current-status-normal").css("display","none");
              $("#current-status-all-defects").css("display","block");
              current_status.loader_hide();
-         },1000);
+         },700);
      }
     else if(tag==="key_defects"){
          setTimeout(function(){
              $("#current-status-normal").css("display","none");
              $("#current-status-key-defects").css("display","block");
              current_status.loader_hide();
-         },1000);
+         },700);
      }
 }
 

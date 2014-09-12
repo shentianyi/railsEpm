@@ -20,35 +20,39 @@
                 $(this).addClass("active");
                 //=============
                 //load partial view
-
                 var left = document.getElementById("report-menu").getBoundingClientRect().right,
                     top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
-                $(".pageload-overlay svg").css('left', left);
-                $(".pageload-overlay svg").css('top', top);
-
+                $(".pageload-overlay svg").css('left', left).css("top",top);
                 loader.show();
-
 			    $.ajax({
 				    url:"/reports/"+part+"/ajax",
 				    type:"GET",
 				    success:function(data){
                         report_main.current_menu = part;
-					    //
                         setTimeout(function(){
                             $("#report-content").html(data);
                             loader.hide()
-                        },1500);
+                        },924);
 
 				    }
 			    })
 		    })
             // report subscription
             .on("click","#reports_subscribe",function(){
+                var left = document.getElementById("report-menu").getBoundingClientRect().right,
+                    top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
+                $(".pageload-overlay svg").css('left', left).css("top",top);
+                loader.show();
+                $("#my-reports li a").removeClass("active");
                 $.ajax({
                     url:"/reports/subscription",
                     type:"GET",
                     success:function(data){
-                        $("#report-content").html(data);
+                        setTimeout(function(){
+                            $("#report-content").html(data);
+                            report_subscription.init();
+                            loader.hide()
+                        },600);
                     }
                 })
             })

@@ -49,6 +49,7 @@
 *= require report/daily_dpv
 *= require stories.css
 *= require report/current_status
+*= require report/report_subscription
 
 *= require popModal.min
 *= require dhtmlxgrid
