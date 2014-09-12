@@ -1,6 +1,17 @@
-<input type="button" value="Retrieve" id="retrieve"/>
+<section class="station-data">
+<div class="header">
+  <div class="left">
+    <input type="text" id="date-begin" readonly=true/>
+    <input type="text" id="date-end" readonly=true/>
+    <input type="button" value="Retrieve" id="retrieve"/>
+  </div>
+  <div class="right">
+    <a class="btn btn-primary" onclick="export_report_excel()">Excel</a>
+  </div>
+</div>
 <div id="data_container" style="height:500px; background-color:white;"></div>
-<a class="btn btn-primary" onclick="export_report_excel()">Excel</a>
+</section>
+
 <script>
 $(document).ready(function(){
 	Report.init("station_data");

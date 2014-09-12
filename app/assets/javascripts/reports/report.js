@@ -128,6 +128,7 @@ Report.configure = function(){
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.init();
             dhtmlxobj.enableMultiselect(true);
+            station_data.init();
             break;
         case this.type["daily_dpv"]:
             var width=Math.floor($("#report-content .left").width()/16)-1;
