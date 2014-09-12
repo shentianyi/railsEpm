@@ -59,7 +59,7 @@ report_subscription.parse_data=function(dic){
 }
 report_subscription.add_to_list=function(dic){
     var html=Mustache.render('<li number="{{id}}">' +
-        '<a menu="{{menu}}">' +
+        '<a menu="{{menu}}" href="#{{menu}}">' +
         '<i class="{{icon}} mark"></i> {{name}}<i class="icon-chevron-right indicate"></i>' +
         '</a></li>',dic);
     return html;
