@@ -196,7 +196,7 @@ var Highchart_generator=function(option){
             },500);
     };
 
-}
+};
 daily_dpv_resize_count={
     "dpv":0,
     "sdpv":0

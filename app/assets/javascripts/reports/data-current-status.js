@@ -18,11 +18,11 @@
             }
         }
     },5000);
-}())
+}());
 var data_current_color={
     "red":"#eb4848",
     "green":"#19cf22"
-}
+};
 var d_current_status = {
     CF11: [
         {
@@ -31,7 +31,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "2",
@@ -39,7 +39,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "3",
@@ -47,7 +47,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "4",
@@ -55,7 +55,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "5",
@@ -63,7 +63,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "6",
@@ -71,7 +71,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "7",
@@ -79,7 +79,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "8",
@@ -87,7 +87,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "9",
@@ -95,7 +95,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "10",
@@ -103,14 +103,14 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },{
             "id": "11",
             "INQA": "iQ6 Mid-Chassis",
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "12",
@@ -118,7 +118,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "13",
@@ -126,7 +126,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "14",
@@ -134,7 +134,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "15",
@@ -142,7 +142,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "16",
@@ -150,7 +150,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "17",
@@ -158,7 +158,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "18",
@@ -166,7 +166,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "19",
@@ -174,7 +174,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "20",
@@ -182,7 +182,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id":"21",
@@ -190,7 +190,7 @@ var d_current_status = {
             "Defects":"20",
             "Pass":"25",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         }
     ],
     CF14: [
@@ -200,7 +200,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "2",
@@ -208,7 +208,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "3",
@@ -216,7 +216,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "4",
@@ -224,7 +224,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "5",
@@ -232,7 +232,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "6",
@@ -240,7 +240,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "7",
@@ -248,7 +248,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "8",
@@ -256,7 +256,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "9",
@@ -264,7 +264,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "10",
@@ -272,14 +272,14 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },{
             "id": "11",
             "INQA": "iQ6 Mid-Chassis",
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "12",
@@ -287,7 +287,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "13",
@@ -295,7 +295,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "14",
@@ -303,7 +303,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "15",
@@ -311,7 +311,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "16",
@@ -319,7 +319,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "17",
@@ -327,7 +327,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "18",
@@ -335,7 +335,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "19",
@@ -343,7 +343,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "20",
@@ -351,7 +351,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id":"21",
@@ -359,7 +359,7 @@ var d_current_status = {
             "Defects":"20",
             "Pass":"25",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         }
     ],
     CF16: [
@@ -369,7 +369,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "2",
@@ -377,7 +377,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "3",
@@ -385,7 +385,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "4",
@@ -393,7 +393,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "5",
@@ -401,7 +401,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "6",
@@ -409,7 +409,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "7",
@@ -417,7 +417,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "8",
@@ -425,7 +425,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "9",
@@ -433,7 +433,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "10",
@@ -441,14 +441,14 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },{
             "id": "11",
             "INQA": "iQ6 Mid-Chassis",
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "12",
@@ -456,7 +456,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "13",
@@ -464,7 +464,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "14",
@@ -472,7 +472,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "15",
@@ -480,7 +480,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "16",
@@ -488,7 +488,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "17",
@@ -496,7 +496,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "18",
@@ -504,7 +504,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "19",
@@ -512,7 +512,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ":"85",
-            "COLOR":data_current_color["red"]
+            "STYLE_COLOR":data_current_color["red"]
         },
         {
             "id": "20",
@@ -520,7 +520,7 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "23",
             "FTQ":"90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         },
         {
             "id": "21",
@@ -528,8 +528,8 @@ var d_current_status = {
             "Defects": "20",
             "Pass": "25",
             "FTQ": "90",
-            "COLOR":data_current_color["green"]
+            "STYLE_COLOR":data_current_color["green"]
         }
     ]
-}
+};
 

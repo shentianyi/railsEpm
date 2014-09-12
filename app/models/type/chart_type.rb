@@ -7,6 +7,7 @@ class ChartType
   Defect = 5
   VehicleInfo = 6
   DailyDPV = 7
+  DailyFTQ = 8
 
   def self.partial(type)
     case type
@@ -18,6 +19,8 @@ class ChartType
         'station-data'
       when DailyDPV
         'daily-dpv'
+      when DailyFTQ
+        'daily-ftq'
       else
         'demo'
     end

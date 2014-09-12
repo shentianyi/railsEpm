@@ -83,4 +83,4 @@ var d_daily_dpv = {
             ]
         }
     ]
-}
+};

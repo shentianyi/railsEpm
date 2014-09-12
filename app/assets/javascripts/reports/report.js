@@ -2,7 +2,10 @@ var Report = Report || {};
 Report.option = {};
 Report.r = {};
 Report.data = {};
-Report.export_excel_url = 'http://42.121.111.38:9003/DHXFileService/Excel';
+Report.host='http://42.121.111.38:9003/';
+//Report.host='http://192.168.1.112:9002/';
+Report.Url={export_excel_url:Report.host+'DHXFileService/Excel',
+    export_chart_excel_url:Report.host+'BTReportService/ChartExcel'};
 /*
 Report.init = function (type) {
     var option = this.get_option_by_type(type);
@@ -69,7 +72,7 @@ Report.json_parse = function (jsondata) {
 Report.clear = function(){
     this.r.clearAll();
     this.data = {};
-}
+};
 
 /*get dhtmlx object*/
 Report.get_dhtmlx = function(){
@@ -83,7 +86,7 @@ Report.get_dhtmlx = function(){
         default:
             return null;
     }
-}
+};
 
 Report.configure = function(){
     var dhtmlxobj = this.r;
@@ -96,7 +99,7 @@ Report.configure = function(){
                     "</div>" +
                     "<div class='dv-body'>" +
                     "<div class='left'>" +
-                    "<p id='ftq' style='color:"+"#COLOR#"+"'>#FTQ#%</p>" +
+                    "<p id='ftq' style='color:"+"#STYLE_COLOR#"+"'>#FTQ#%</p>" +
                     "</div>" +
                     "<div class='right'>" +
                     "<p>#Defects#</p>" +
@@ -148,7 +151,7 @@ Report.configure = function(){
         default:
             break;
     }
-}
+};
 
 Report.get_json = function () {
     switch (this.option.type) {
@@ -176,7 +179,10 @@ Report.reload = function () {
 };
 
 Report.toExcel = function () {
-    this.r.toExcel(this.export_excel_url);
+    this.r.toExcel(this.Url.export_excel_url);
+};
+Report.toChartExcel=function(){
+  this.r.toChartExcel(this.Url.export_chart_excel_url);
 };
 
 Report.get_option_by_type = function (type) {
@@ -194,7 +200,8 @@ Report.type = {
     "tracking_report": 4,
     "defects": 5,
     "vehicle_info": 6,
-    "daily_dpv": 7
+    "daily_dpv": 7,
+    'daily_ftq': 8
 };
 
 Report.headers = {
@@ -211,7 +218,7 @@ Report.station_data_init = function(){
     $("#retrieve").on('click',function(){
         Report.json_parse(SampleData.init_station_data());
     });
-}
+};
 /*-----------------------------------------------*/
 Report.current_status_init = function(){
     $("#target").on("click",function(){
@@ -241,7 +248,7 @@ Report.current_status_init = function(){
         },1500);
 
     });
-}
+};
 
 Report.daily_dpv_init = function(){
     /*------------------------------------------------------------*/
@@ -295,14 +302,14 @@ Report.daily_dpv_init = function(){
 
     });
     /*------------------------------------------------------------*/
-}
+};
 /*----------------------------------------------------*/
 /*on_json_parse for current_status*/
 Report.current_status_on_json_parse = function(){
     if( typeof defects != 'undefined'){
         defects.example_init();
     }
-}
+};
 
 /*on_json_parse for different type*/
 Report.daily_dpv_on_json_parse = function(){
@@ -348,9 +355,15 @@ Report.daily_dpv_on_json_parse = function(){
         }]
     };
     daily_dpv.chart_sdpv.reload_daily_dpv(option_two);
-}
+};
+
 
 // need to rewrite
+// default export excel
 function export_report_excel() {
     Report.toExcel();
-};
+}
+// default export chart excel
+function export_report_chart_excel(){
+    Report.toChartExcel();
+}
