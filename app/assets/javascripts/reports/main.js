@@ -1,9 +1,37 @@
 (function(){
     $(document).ready(function(){
         loader = new SVGLoader( document.getElementById( 'preloader' ), { speedIn : 100 } );
+        var url = window.location.href.split('/');
+        var report_part = url[url.length-1].split('#');
+        var href = this.href;
+        if(report_part.length == 2){
+            var part = Report.type[report_part[1]];
+
+            ReportMenu.click(part,function(data){
+                $("#my-reports li a").removeClass("active");
+                $("#my-reports a[menu="+report_part[1]+"]").addClass("active");
+                report_main.current_menu = part;
+                $("#report-content").html(data);
+                if(typeof href != 'undefined'){
+                    window.location.href = href;
+                }
+
+            });
+        }else{
+            var part = Report.type['current_status'];
+
+            ReportMenu.click(part,function(data){
+                $("#my-reports li a").removeClass("active");
+                $("#my-reports a[menu='current_status']").addClass("active");
+                report_main.current_menu = part;
+                $("#report-content").html(data);
+                window.location.href +="#current_status";
+            });
+        }
 
         $('body')
             .on("click","#my-reports a",function(event) {
+
                 var part = Report.type[$(this).attr("menu")];
 
                 if(part == report_main.current_menu){
@@ -21,26 +49,24 @@
                 //=============
                 //load partial view
 
+                var href = this.href;
+
                 var left = document.getElementById("report-menu").getBoundingClientRect().right,
                     top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
                 $(".pageload-overlay svg").css('left', left);
                 $(".pageload-overlay svg").css('top', top);
 
                 loader.show();
-
-			    $.ajax({
-				    url:"/reports/"+part+"/ajax",
-				    type:"GET",
-				    success:function(data){
-                        report_main.current_menu = part;
-					    //
-                        setTimeout(function(){
-                            $("#report-content").html(data);
-                            loader.hide()
-                        },1500);
-
-				    }
-			    })
+                window.location.href = this.href;
+                ReportMenu.click(part,function(data){
+                    report_main.current_menu = part;
+                    //
+                    setTimeout(function(){
+                        $("#report-content").html(data);
+                        window.location.href = href;
+                        loader.hide();
+                    },1500);
+                });
 		    })
             // report subscription
             .on("click","#reports_subscribe",function(){

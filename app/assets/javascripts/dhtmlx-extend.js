@@ -38,7 +38,7 @@ dhtmlXGridObject.prototype.serializeChartExcelXml = function(){
     //Head Start
     xml += "<table><head><columns>";
     for(var i = 0;i < headercount;i++){
-        xml += "<column width='60'><![CDATA["+this.getColLabel(i)+"]]</column>";
+        xml += "<column width='60'><![CDATA["+this.getColLabel(i)+"]]></column>";
     }
     xml += "</columns></head>";
     //Head End
@@ -48,7 +48,7 @@ dhtmlXGridObject.prototype.serializeChartExcelXml = function(){
     for(var i = 0;i<data["rows"].length;i++){
         xml += "<row>";
         for(var j = 0;j<data["rows"][i]["data"].length;j++){
-            xml+= "<cell><![CDATA["+data["rows"][i]["data"][j]+"]]</cell>";
+            xml+= "<cell><![CDATA["+data["rows"][i]["data"][j]+"]]></cell>";
         }
         xml += "</row>";
     }
@@ -59,15 +59,15 @@ dhtmlXGridObject.prototype.serializeChartExcelXml = function(){
     xml += "<charts>"
     for(var i = 0;i<charts.length;i++){
         xml += "<chart title='"+charts[i]["title"]+"' height='"+charts[i]["height"]+"' width='"+charts[i]["width"]+"'>";
-        for(var j=0;j<charts[i].length;j++) {
-            var serie=charts[i][j];
+        for(var j=0;j<charts[i].series.length;j++) {
+            var serie=charts[i].series[j];
             xml += "<serie color='" + serie["color"] + "' type='" + serie["type"] + "'>";
 
-            xml += "<xstart_row><![CDATA[" +serie["xstart_row"] + "]]</xstart_row><xstart_col><![CDATA["+serie['xstart_col']+"]]</xstart_col>";
-            xml += "<xend_row><![CDATA[" + serie["xend_row"] + "]]</xend_row><xend_col><![CDATA[" + serie['xend_col'] + "]]</xend_col>";
+            xml += "<xstart_row><![CDATA[" +serie["xstart_row"] + "]]></xstart_row><xstart_col><![CDATA["+serie['xstart_col']+"]]></xstart_col>";
+            xml += "<xend_row><![CDATA[" + serie["xend_row"] + "]]></xend_row><xend_col><![CDATA[" + serie['xend_col'] + "]]></xend_col>";
 
-            xml += "<ystart_row><![CDATA[" + serie["ystart_row"] + "]]</ystart_row><ystart_col><![CDATA["+serie['ystart_col']+"]]</ystart_col>";
-            xml += "<yend_row><![CDATA[" + serie["yend_row"] + "]]</yend_row><yend_col><![CDATA[" +serie['yend_col'] + "]]</yend_col>";
+            xml += "<ystart_row><![CDATA[" + serie["ystart_row"] + "]]></ystart_row><ystart_col><![CDATA["+serie['ystart_col']+"]]></ystart_col>";
+            xml += "<yend_row><![CDATA[" + serie["yend_row"] + "]]></yend_row><yend_col><![CDATA[" +serie['yend_col'] + "]]></yend_col>";
 
             xml += "</serie>";
         }
@@ -87,7 +87,7 @@ dhtmlXDataView.prototype.serializeToExcelXml = function () {
     // generate head
     xml += '<head><columns>';
     for (var h in data[0]) {
-        if (h != 'id' && h != 'value') {
+        if (h != 'id' && h != 'value' && h.indexOf("style_") == -1) {
             xml += "<column  color=''><![CDATA[" + $.trim(h) + ']]></column>';
         }
     }
@@ -115,6 +115,7 @@ dhtmlXDataView.prototype.toExcel=function(url){
 
 
 function processReportExcelRequest(url,xml){
+    console.log(xml);
    $('<form>', {
         action: url,
         method: 'post',

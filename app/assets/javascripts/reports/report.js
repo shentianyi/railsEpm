@@ -2,8 +2,8 @@ var Report = Report || {};
 Report.option = {};
 Report.r = {};
 Report.data = {};
-//Report.host='http://42.121.111.38:9003/';
-Report.host='http://192.168.0.100:6023/';
+Report.host='http://42.121.111.38:9003/';
+//Report.host='http://192.168.1.112:9002/';
 Report.Url={export_excel_url:Report.host+'DHXFileService/Excel',
     export_chart_excel_url:Report.host+'BTReportService/ChartExcel'};
 /*
@@ -185,7 +185,6 @@ Report.toChartExcel=function(){
   this.r.toChartExcel(this.Url.export_chart_excel_url);
 };
 
-
 Report.get_option_by_type = function (type) {
     var option = {};
     option.type = this.type[type];
@@ -201,7 +200,8 @@ Report.type = {
     "tracking_report": 4,
     "defects": 5,
     "vehicle_info": 6,
-    "daily_dpv": 7
+    "daily_dpv": 7,
+    'daily_ftq': 8
 };
 
 Report.headers = {
