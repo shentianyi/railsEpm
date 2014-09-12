@@ -57,8 +57,9 @@ var report_subscription_data=[
         id:7,
         name:"Daily FTQ",
         desc:"The data block only need one, which is iQ station/Vehicle Total/ NOK vehicle/ OK Vehicle/ FTQ fro the iQ station 1 to 15",
-        active_status:false,
-        icon:"icon-plus"
+        active_status:true,
+        menu:"daily_ftq",
+        icon:"icon-bar-chart"
     },
     {
         id:8,
