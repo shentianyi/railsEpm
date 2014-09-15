@@ -393,6 +393,30 @@ Report.daily_dpv_on_json_parse = function(){
     daily_dpv.chart_sdpv.reload_daily_dpv(option_two);
 };
 
+/*station data*/
+Report.station_data_on_json_parse = function () {
+    var obj = Report.r;
+    for (var i=0; i<obj.getRowsNum(); i++){
+        var row_id = obj.getRowId(i);
+        //FTQ
+        var ftq = obj.cells(row_id,5).getValue();
+        var ftq_targte = obj.cells(row_id,10).getValue();
+        if(ftq>=ftq_targte) {
+            obj.cells(row_id,5).setBgColor('green');
+        }else{
+            obj.cells(row_id,5).setBgColor('red');
+        }
+        //DPV
+        var dpv = obj.cells(row_id,6).getValue();
+        var dpv_target = obj.cells(row_id,7).getValue();
+        if(dpv < dpv_target){
+            obj.cells(row_id,6).setBgColor("green");
+        }else{
+            obj.cells(row_id,6).setBgColor("red");
+        }
+
+    };
+}
 
 // need to rewrite
 // default export excel
