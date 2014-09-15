@@ -38,8 +38,8 @@ daily_dpv.init = function () {
         title: "DPV"
     };
 
-    var chart_one = new Highchart_generator(option_one);
-    chart_one.init_daily_dpv();
+    var chart_one = new Highchart_dpv(option_one);
+    chart_one.init();
     var option_two = {
         target: "chart_dpv_two",
         xArray: ["iQ1", "iQ2", "iQ IP", "iQ DR", "iQ3", "iQ4", "iQ5", "iQ6", "iQ7", "iQ8", "iQ9", "iQ10", "iQ11", "iQ12", "iQ13", "iQ14", "iQ15"],
@@ -52,8 +52,8 @@ daily_dpv.init = function () {
         color: "purple",
         title: "SDPV"
     };
-    var chart_two = new Highchart_generator(option_two);
-    chart_two.init_daily_dpv();
+    var chart_two = new Highchart_dpv(option_two);
+    chart_two.init();
     this.chart_dpv = chart_one;
     this.chart_sdpv = chart_two;
 
