@@ -300,6 +300,11 @@ Report.current_status_init = function () {
         }, 1500);
 
     });
+
+    //bind color select btn
+    $("#refresh").on("click",function(){
+
+    });
 };
 
 Report.daily_dpv_init = function () {
@@ -400,7 +405,10 @@ Report.daily_ftq_on_json_parse = function(){
 
     colindx = 3;
     for (var j = 0; j < xArray.length; j++) {
-        ftq[j] = parseFloat(jsondata['rows'][colindx]['data'][j].replace("%",""));
+        var value = parseFloat(jsondata['rows'][colindx]['data'][j].replace("%",""));
+        value = isNaN(value) ? 0:value;
+        ftq[j] =value;
+        console.log(j);
     }
     ftq.shift();
     xArray.shift();
