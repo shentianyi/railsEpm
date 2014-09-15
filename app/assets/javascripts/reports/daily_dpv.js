@@ -18,6 +18,7 @@ daily_dpv.init = function () {
             ]
         }
     ];
+
     Report.r.set_charts(charts);
     var option_one = {
         target: "chart_dpv_one",
@@ -30,6 +31,7 @@ daily_dpv.init = function () {
         ],
         title: "DPV"
     };
+
     var chart_one = new Highchart_generator(option_one);
     chart_one.init_daily_dpv();
     var option_two = {

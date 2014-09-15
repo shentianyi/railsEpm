@@ -135,18 +135,15 @@ Report.configure = function(){
             station_data.init();
             break;
         case this.type["daily_dpv"]:
-            var width=Math.floor($("#report-content .left").width()/16)-1;
+            var width=Math.floor($("#report-content .left").width()/17)-2;
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader(this.headers["daily_dpv"]);
-            //dhtmlxobj.attachHeader("#text_search,#numeric_filter,#numeric_filter,#numeric_filter,#numeric_filter");
 
-            dhtmlxobj.setInitWidths(width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width);
+            dhtmlxobj.setInitWidths(width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width);
             dhtmlxobj.enableAutoWidth(false);
 
-            dhtmlxobj.setColAlign("left,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
-            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
-            //dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int");
-            //dhtmlxobj.setNumberFormat("0,000.00", 0, ".", ",");
+            dhtmlxobj.setColAlign("left,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
+            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.init();
             dhtmlxobj.setColumnColor("#d5f1ff");
@@ -174,7 +171,7 @@ Report.get_json = function () {
         case this.type["current_status"]:
             return d_current_status['CF11'];
         case this.type["daily_dpv"]:
-            return  d_daily_dpv;
+            return  SampleData.init_daily_dpv();
         case this.type["station_data"]:
             return SampleData.init_station_data();
         case this.type["daily_ftq"]:
@@ -227,7 +224,7 @@ Report.type = {
 };
 
 Report.headers = {
-    "daily_dpv" : "FALSE,iQ1,iQ2,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15"
+    "daily_dpv" : "FALSE,iQ1,iQ2,iQ IP,iQ DR,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15"
 };
 
 /*
@@ -358,7 +355,7 @@ Report.daily_dpv_on_json_parse = function(){
     var jsondata = Report.r.serializeToJson();
     var xArray = [],data = [],header  = [];
     header = Report.headers["daily_dpv"].split(",")
-    xArray = header;
+    xArray = header.slice(0);
     //DPV
     colindx = 2;
     for(var j = 0;j<xArray.length;j++){
@@ -377,7 +374,7 @@ Report.daily_dpv_on_json_parse = function(){
 
     daily_dpv.chart_dpv.reload_daily_dpv(option_one);
 
-    xArray = header;
+    xArray = header.slice(0);
     //SDPV
     colindx = 3;
     for(var j = 0;j<xArray.length;j++){

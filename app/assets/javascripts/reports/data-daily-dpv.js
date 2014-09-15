@@ -17,12 +17,16 @@ var d_daily_dpv = {
                 RAND.range_int(0,50),
                 RAND.range_int(0,50),
                 RAND.range_int(0,50),
+                RAND.range_int(0,50),
+                RAND.range_int(0,50),
                 RAND.range_int(0,50)
             ] },
         {
             id:2,
             data:[
                 "Defect",
+                RAND.range_int(0,250),
+                RAND.range_int(0,250),
                 RAND.range_int(0,250),
                 RAND.range_int(0,250),
                 RAND.range_int(0,250),
@@ -58,6 +62,8 @@ var d_daily_dpv = {
                 RAND.range_float(0,30),
                 RAND.range_float(0,30),
                 RAND.range_float(0,30),
+                RAND.range_float(0,30),
+                RAND.range_float(0,30),
                 RAND.range_float(0,30)
             ]
         },
@@ -65,6 +71,8 @@ var d_daily_dpv = {
             id:4,
             data:[
                 "SDPV",
+                RAND.range_float(0,100),
+                RAND.range_float(0,100),
                 RAND.range_float(0,100),
                 RAND.range_float(0,100),
                 RAND.range_float(0,100),
