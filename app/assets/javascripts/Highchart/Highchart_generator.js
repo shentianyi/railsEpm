@@ -247,7 +247,7 @@ var Highchart_generator=function(option){
         };
         this.basic.plotOptions.line.dataLabels={
             enabled: true,
-            color: "rgba(60,111,204,0.6)",
+            color: "rgba(60,111,204,0.8)",
             style: {
                 fontWeight: 'bold',
                 fontSize:'11px'
@@ -343,7 +343,7 @@ var Highchart_generator=function(option){
         ];
         $target.highcharts(this.basic);
     };
-    this.ftq_resize=function(width,height,type){
+    this.ftq_resize=function(width,height){
         var $target=this.target.indexOf("#")===-1?$("#"+this.target):$(this.target),
             chart=$target.highcharts();
         daily_ftq_resize_count++;
