@@ -224,7 +224,8 @@ Report.type = {
 };
 
 Report.headers = {
-    "daily_dpv" : "FALSE,iQ1,iQ2,iQ IP,iQ DR,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15"
+    "daily_dpv" : "FALSE,iQ1,iQ2,iQ IP,iQ DR,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15",
+    "daily_ftq" : "IQ Station, iQ1, iQ2, iQ3,iQ4,iQ5,iQ Dr,iQ IP,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15"
 };
 
 /*
@@ -402,17 +403,17 @@ Report.station_data_on_json_parse = function () {
         var ftq = obj.cells(row_id,5).getValue();
         var ftq_targte = obj.cells(row_id,10).getValue();
         if(ftq>=ftq_targte) {
-            obj.cells(row_id,5).setBgColor('green');
+            obj.cells(row_id,5).setBgColor('#00B85C');
         }else{
-            obj.cells(row_id,5).setBgColor('red');
+            obj.cells(row_id,5).setBgColor('#FF5050');
         }
         //DPV
         var dpv = obj.cells(row_id,6).getValue();
         var dpv_target = obj.cells(row_id,7).getValue();
         if(dpv < dpv_target){
-            obj.cells(row_id,6).setBgColor("green");
+            obj.cells(row_id,6).setBgColor('#00B85C');
         }else{
-            obj.cells(row_id,6).setBgColor("red");
+            obj.cells(row_id,6).setBgColor('#FF5050');
         }
 
     };
