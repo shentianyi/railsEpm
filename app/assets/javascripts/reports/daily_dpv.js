@@ -4,17 +4,23 @@ daily_dpv.chart_sdpv = {};
 daily_dpv.init = function () {
     var charts = [
         {
-            title: 'DPV', width: 1100, height: 300,
-            series: [
-                {xaixs: "B1:P1", yaixs: "B4:P4",
-                    type: 'column', color: '#D1E5FE'}
+            attr: { title: 'DPV', width: 1100, height: 300},
+            chart_types: [
+                {  type: 'column',
+                    series: [
+                        {xaixs: "B1:P1", yaixs: "B4:P4",
+                            attr: { color: 'D1E5FE'}}
+                    ]}
             ]
         },
         {
-            title: 'SDPV', width: 1100, height: 300,
-            series: [
-                {xaixs: "B1:P1", yaixs: "B5:P5",
-                    type: 'column', color: '#D1E5FE'}
+            attr: { title: 'SDPV', width: 1100, height: 300},
+            chart_types: [
+                {  type: 'column',
+                    series: [
+                        {xaixs: "B1:P1", yaixs: "B5:P5",
+                            attr: { color: 'D1E5FE'}}
+                    ]}
             ]
         }
     ];
