@@ -29,6 +29,7 @@ daily_ftq.init = function(){
     $(window).resize(function(){
         daily_ftq.flexible();
     });
+    init_snap();
 };
 daily_ftq.flexible_init=function(){
     var total_height = $("#wrap-main").height() - $("header").height() - 1,
