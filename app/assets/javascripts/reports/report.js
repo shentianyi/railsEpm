@@ -161,11 +161,22 @@ Report.configure = function () {
             daily_dpv.init();
             break;
         case this.type["daily_ftq"]:
-            var width = Math.floor($("#report-content .left").width() / 17) - 2;
+            var width = 62;
+            var widthstring = "";
+            var head_length = this.headers["daily_ftq"].split(",").length;
+            for(var i = 0 ;i <= head_length;i++){
+                if(i == head_length){
+                    widthstring = widthstring + width;
+                }else{
+                    widthstring =widthstring+width+",";
+                }
+
+            }
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader(this.headers["daily_ftq"]);
-            //dhtmlxobj.setInitWidths("80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80");
-            dhtmlxobj.setInitWidths(width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width);
+            //dhtmlxobj.setInitWidths("80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80");
+            dhtmlxobj.setInitWidths(widthstring);
+            dhtmlxobj.enableAutoWidth(false);
             dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
             dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
             dhtmlxobj.setSkin("dhx_skyblue");
@@ -262,6 +273,7 @@ Report.current_status_init = function () {
         Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
 
     });
+
     $("#quick-print").on("click", function () {
         html2canvas($("#data_container"), {
             onrendered: function (canvas) {
