@@ -147,6 +147,7 @@ defects.example_init=function(){
         }
     }
     target_setting.parse(target_data,'json');
+
     //setting table size and layout
     defects.resize("all_defects");
     defects.resize("key_defects");
