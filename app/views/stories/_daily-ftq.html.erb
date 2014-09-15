@@ -1,0 +1,9 @@
+<div id="data_container" class="data_container" style="height:500px"></div>
+<input id="hidden-data" type="hidden" value="<%= @chart_conditions.first.data %>"/>
+<script>
+    $(document).ready(function(){
+        Report.init("daily_ftq");
+        var data = JSON.parse($("#hidden-data").val());
+        Report.json_parse(data);
+    });
+</script>
