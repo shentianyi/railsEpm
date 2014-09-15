@@ -106,7 +106,7 @@ Report.get_dhtmlx = function () {
 Report.color = {
     "red":"#eb4848",
     "green":"#19cf22",
-    "yellow":"#19cf22"
+    "yellow":"#f3d02e"
 }
 
 Report.configure = function () {
