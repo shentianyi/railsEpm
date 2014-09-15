@@ -1,5 +1,11 @@
-<div id="data_container" class="data_container" style="height:500px"></div>
-<a class="btn btn-success btn_excel" onclick="export_report_chart_excel()">Excel</a>
+<section class="daily-ftq">
+  <div id="data_container" class="data_container" style="height:500px"></div>
+  <a class="btn btn-success btn_excel" onclick="export_report_chart_excel()">Excel</a>
+  <%= render 'snap'%>
+</section>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "reports/daily_ftq" %>
+<% end %>
 <script>
   $(document).ready(function(){
       Report.init("daily_ftq");
