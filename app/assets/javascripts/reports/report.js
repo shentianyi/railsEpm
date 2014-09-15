@@ -300,6 +300,11 @@ Report.current_status_init = function () {
         }, 1500);
 
     });
+
+    //bind color select btn
+    $("#refresh").on("click",function(){
+
+    });
 };
 
 Report.daily_dpv_init = function () {
