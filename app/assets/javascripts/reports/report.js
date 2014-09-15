@@ -2,44 +2,44 @@ var Report = Report || {};
 Report.option = {};
 Report.r = {};
 Report.data = {};
-Report.host='http://42.121.111.38:9003/';
+Report.host = 'http://42.121.111.38:9003/';
 //Report.host='http://192.168.1.112:9002/';
-Report.Url={export_excel_url:Report.host+'DHXFileService/Excel',
-    export_chart_excel_url:Report.host+'BTReportService/ChartExcel'};
+Report.Url = {export_excel_url: Report.host + 'DHXFileService/Excel',
+    export_chart_excel_url: Report.host + 'BTReportService/ChartExcel'};
 /*
-Report.init = function (type) {
-    var option = this.get_option_by_type(type);
+ Report.init = function (type) {
+ var option = this.get_option_by_type(type);
 
-    this.option = option;
-    switch (option.type) {
-        case this.type["current-status"]:
-            this.r = DV;
-            current_status.init();
-            break;
-        case this.type["summary-report"]:
-            break;
-        case this.type["station-data"]:
-            this.r = StationData;
-            break;
-        case this.type["tracking-report"]:
-            break;
-        case this.type["defect"]:
-            break;
-        case this.type["daily-dpv"]:
-            this.r = Grid;
-        default:
-            break;
-    }
-    this.r.init(option);
-    //load data
-    var data = this.get_json();
-    this.json_parse(data);
-    this.r.page_load();
-};
-*/
+ this.option = option;
+ switch (option.type) {
+ case this.type["current-status"]:
+ this.r = DV;
+ current_status.init();
+ break;
+ case this.type["summary-report"]:
+ break;
+ case this.type["station-data"]:
+ this.r = StationData;
+ break;
+ case this.type["tracking-report"]:
+ break;
+ case this.type["defect"]:
+ break;
+ case this.type["daily-dpv"]:
+ this.r = Grid;
+ default:
+ break;
+ }
+ this.r.init(option);
+ //load data
+ var data = this.get_json();
+ this.json_parse(data);
+ this.r.page_load();
+ };
+ */
 
 /*init report*/
-Report.init = function(type){
+Report.init = function (type) {
     this.option = this.get_option_by_type(type);
     delete this.r;
     this.r = this.get_dhtmlx();
@@ -48,10 +48,20 @@ Report.init = function(type){
     this.prepare();
 };
 
+Report.ChartAxisFormatType={
+ None:0,
+ IntPercent:1,
+ FloatPercent:2
+};
+Report.CellFormatType={
+    None:0,
+    IntPercent:1,
+    FloatPercent:2
+};
 /*prepare page*/
-Report.prepare = function(){
-    var fn = Report[this.option.type_string+"_init"];
-    if(typeof fn === "function"){
+Report.prepare = function () {
+    var fn = Report[this.option.type_string + "_init"];
+    if (typeof fn === "function") {
         fn();
     }
 };
@@ -59,28 +69,28 @@ Report.prepare = function(){
 /*parse json data*/
 Report.json_parse = function (jsondata) {
 //    console.log(jsondata);
-    if(typeof jsondata === 'string'){
+    if (typeof jsondata === 'string') {
         jsondata = JSON.parse(jsondata);
     }
     this.r.clearAll();
     this.r.parse(jsondata, 'json');
     this.data = jsondata;
-    var fn = Report[this.option.type_string+"_on_json_parse"];
-    if(typeof fn === 'function'){
+    var fn = Report[this.option.type_string + "_on_json_parse"];
+    if (typeof fn === 'function') {
         fn();
     }
 };
 
 /*clear data*/
-Report.clear = function(){
+Report.clear = function () {
     this.r.clearAll();
     this.data = {};
 };
 
 /*get dhtmlx object*/
-Report.get_dhtmlx = function(){
+Report.get_dhtmlx = function () {
     var container = "data_container";
-    switch(this.option.type){
+    switch (this.option.type) {
         case this.type["current_status"]:
             return new dhtmlXDataView(container);
         case this.type["daily_dpv"]:
@@ -92,18 +102,18 @@ Report.get_dhtmlx = function(){
     }
 };
 
-Report.configure = function(){
+Report.configure = function () {
     var dhtmlxobj = this.r;
     var type = this.option.type;
-    switch(type){
+    switch (type) {
         case this.type["current_status"]:
-            dhtmlxobj.define("type",{
+            dhtmlxobj.define("type", {
                 template: "<div class='dv-header'>" +
                     "<p>#INQA#</p>" +
                     "</div>" +
                     "<div class='dv-body'>" +
                     "<div class='left'>" +
-                    "<p id='ftq' style='color:"+"#STYLE_COLOR#"+"'>#FTQ#%</p>" +
+                    "<p id='ftq' style='color:" + "#STYLE_COLOR#" + "'>#FTQ#%</p>" +
                     "</div>" +
                     "<div class='right'>" +
                     "<p>#Defects#</p>" +
@@ -135,11 +145,11 @@ Report.configure = function(){
             station_data.init();
             break;
         case this.type["daily_dpv"]:
-            var width=Math.floor($("#report-content .left").width()/17)-2;
+            var width = Math.floor($("#report-content .left").width() / 17) - 2;
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader(this.headers["daily_dpv"]);
 
-            dhtmlxobj.setInitWidths(width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width);
+            dhtmlxobj.setInitWidths(width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width);
             dhtmlxobj.enableAutoWidth(false);
 
             dhtmlxobj.setColAlign("left,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
@@ -151,15 +161,18 @@ Report.configure = function(){
             daily_dpv.init();
             break;
         case this.type["daily_ftq"]:
+            var width = Math.floor($("#report-content .left").width() / 17) - 2;
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
-            dhtmlxobj.setHeader("iQ Station,iQ1,iQ2,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15");
-            dhtmlxobj.setInitWidths("80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80");
-            dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
-            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+            dhtmlxobj.setHeader(this.headers["daily_ftq"]);
+            //dhtmlxobj.setInitWidths("80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80");
+            dhtmlxobj.setInitWidths(width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width);
+            dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
+            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.setColumnColor("#d5f1ff");
             dhtmlxobj.init();
             dhtmlxobj.enableMultiselect(true);
+            daily_ftq.init();
             break;
         default:
             break;
@@ -196,8 +209,8 @@ Report.reload = function () {
 Report.toExcel = function () {
     this.r.toExcel(this.Url.export_excel_url);
 };
-Report.toChartExcel=function(){
-  this.r.toChartExcel(this.Url.export_chart_excel_url);
+Report.toChartExcel = function () {
+    this.r.toChartExcel(this.Url.export_chart_excel_url);
 };
 
 Report.get_option_by_type = function (type) {
@@ -217,30 +230,31 @@ Report.type = {
     "vehicle_info": 6,
     "daily_dpv": 7,
     'daily_ftq': 8,
-    'defect_info' : 9,
-    'float' : 10,
+    'defect_info': 9,
+    'float': 10,
     'top_issue': 11,
-    'weekly_report' : 12
+    'weekly_report': 12
 };
 
 Report.headers = {
-    "daily_dpv" : "FALSE,iQ1,iQ2,iQ IP,iQ DR,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15"
+    "daily_dpv": "FALSE,iQ1,iQ2,iQ IP,iQ DR,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15",
+    "daily_ftq": "IQ Station, iQ1, iQ2, iQ3,iQ4,iQ5,iQ Dr,iQ IP,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15"
 };
 
 /*
-* write your init code here
-* for different type
-* func name should be typename_init, like current-status_init
-* */
+ * write your init code here
+ * for different type
+ * func name should be typename_init, like current-status_init
+ * */
 /*-----------------------------------------------*/
-Report.station_data_init = function(){
-    $("#retrieve").on('click',function(){
+Report.station_data_init = function () {
+    $("#retrieve").on('click', function () {
         Report.json_parse(SampleData.init_station_data());
     });
 };
 /*-----------------------------------------------*/
-Report.current_status_init = function(){
-    $("#target").on("click",function(){
+Report.current_status_init = function () {
+    $("#target").on("click", function () {
     });
 
     $("#vehicle-select").change(function () {
@@ -248,28 +262,28 @@ Report.current_status_init = function(){
         Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
 
     });
-    $("#quick-print").on("click",function(){
+    $("#quick-print").on("click", function () {
         html2canvas($("#data_container"), {
-            onrendered: function(canvas) {
+            onrendered: function (canvas) {
                 // Convert and download as image
                 Canvas2Image.saveAsPNG(canvas);
             }
         });
     });
 
-    $("#refresh").on("click",function(){
+    $("#refresh").on("click", function () {
         current_status.loader_show();
-        setTimeout(function(){
+        setTimeout(function () {
             Report.r.clearAll();
             Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
 
             current_status.loader_hide();
-        },1500);
+        }, 1500);
 
     });
 };
 
-Report.daily_dpv_init = function(){
+Report.daily_dpv_init = function () {
     /*------------------------------------------------------------*/
     /*init chosen*/
     chosen.init(
@@ -278,7 +292,7 @@ Report.daily_dpv_init = function(){
     );
 
     //var models = Report.r.collectValues(1);
-    var models = ["CF11","CF14","CF16"];
+    var models = ["CF11", "CF14", "CF16"];
     $("#deffect-model option").remove();
     for (i = 0; i < models.length; i++) {
         $("#deffect-model").append("<option>" + models[i] + "</option>");
@@ -286,7 +300,7 @@ Report.daily_dpv_init = function(){
     chosen.single_update("deffect-model");
 
     //var phases = Report.r.collectValues(3);
-    var phases = ["MRD1","MRD10","MRD11","MRD2","MRD8","MRD9"]
+    var phases = ["MRD1", "MRD10", "MRD11", "MRD2", "MRD8", "MRD9"]
     $("#deffect-phase option").remove();
     for (i = 0; i < phases.length; i++) {
 
@@ -297,9 +311,9 @@ Report.daily_dpv_init = function(){
     //var dates = Report.r.collectValues(4);
     var dates = [];
     var j = 0;
-    for(var i=Date.parse('2014-09-01');i<(new Date()).getTime();i+=24*60*60*1000){
+    for (var i = Date.parse('2014-09-01'); i < (new Date()).getTime(); i += 24 * 60 * 60 * 1000) {
         d = new Date(i);
-        dates[j] = d.getMonth()+1+"/"+ d.getDate()+"/"+ d.getFullYear() ;
+        dates[j] = d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear();
         j++;
     }
 
@@ -311,10 +325,10 @@ Report.daily_dpv_init = function(){
 
     /*------------------------------------------------------------*/
     /*filter data*/
-    $("#retrieve-data").on('click',function() {
-        if($("#deffect-model option:selected").length > 0
+    $("#retrieve-data").on('click', function () {
+        if ($("#deffect-model option:selected").length > 0
             || $("#deffect-phase option:selected").length > 0
-            || $("#deffect-date option:selected").length > 0){
+            || $("#deffect-date option:selected").length > 0) {
             var data = SampleData.init_daily_dpv();
             Report.json_parse(data);
         }
@@ -325,52 +339,107 @@ Report.daily_dpv_init = function(){
 /*----------------------------------------------------*/
 /*on_json_parse for daily_ftq*/
 Report.daily_ftq_on_json_parse = function(){
-    var charts = [{
-        title: 'Daily FTQ', width: 1100, height: 300,
-        series: [
-            {
-                xaixs: "B1:S1", yaixs: "B4:S4",
-                type: 'column', color: '#D1E5FE'
-            },
-            {
-                xaixs: "B1:S1", yaixs: "B5:S5",
-                type: 'line', color: '#D1E5FE'
-            }
-    ]
-}];
+    var charts = [
+        {
+            attr: { title: 'Quality Buyoff station Vehicle status', width: 1200, height: 300, show_legend: true},
+            chart_types: [
+                {  type: 'column',
+                    series: [
+                        {xaixs: "B1:R1", yaixs: "B3:R3",
+                            attr: { color: 'D1E5FE', head_address: 'A3'}},
+                        {xaixs: "B1:R1", yaixs: "B4:R4",
+                            attr: { color: 'D1E5FE', head_address: 'A4'}}
+                    ]},
+                {  type: 'line',
+                    series: [
+                        {xaixs: "B1:R1", yaixs: "B5:R5",
+                            attr: { color: 'D1E5FE', head_address: 'A5', use_secondary_axis: true,
+                                yaxis_format_type: Report.ChartAxisFormatType.IntPercent}}
+                    ]}
+            ]
+        }
+    ];
     Report.r.set_charts(charts);
+    //load chart
+    var headers = Report.headers["daily_ftq"].split(",");
+    var jsondata = Report.r.serializeToJson();
+    var xArray = [], ok = [], nok = [], ftq = [];
+    //ok
+    xArray = headers.slice(0);
+    var colindx = 2;
+    for (var j = 0; j < xArray.length; j++) {
+        ok[j] = jsondata['rows'][colindx]['data'][j]
+    }
+    ok.shift();
+
+    colindx = 1;
+    for (var j = 0; j < xArray.length; j++) {
+        nok[j] = jsondata['rows'][colindx]['data'][j]
+    }
+    nok.shift();
+
+
+    colindx = 3;
+    for (var j = 0; j < xArray.length; j++) {
+        ftq[j] = parseFloat(jsondata['rows'][colindx]['data'][j].replace("%",""));
+    }
+    ftq.shift();
+    xArray.shift();
+
+    var option = {
+        xArray: xArray,
+        data: {
+            nok: {
+                data: nok
+            },
+            ok: {
+                data: ok
+            },
+            ftq: {
+                data: ftq
+            }
+        }
+    };
+
+    daily_ftq.chart.reload_daily_ftq(option);
+
+    //nok
+    //ftq
 };
 /*on_json_parse for current_status*/
-Report.current_status_on_json_parse = function(){
-    if( typeof defects != 'undefined'){
+Report.current_status_on_json_parse = function () {
+    if (typeof defects != 'undefined') {
         defects.example_init();
     }
 };
 
 /*on_json_parse for different type*/
-Report.daily_dpv_on_json_parse = function(){
+Report.daily_dpv_on_json_parse = function () {
     /*------------------------------------------------------------*/
     /*Tricky code, need to rewrite*/
     /*reload daily dpv and sdpv chart*/
     var jsondata = Report.r.serializeToJson();
-    var xArray = [],data = [],header  = [];
+    var xArray = [], data = [], header = [];
     header = Report.headers["daily_dpv"].split(",")
     xArray = header.slice(0);
     //DPV
     colindx = 2;
-    for(var j = 0;j<xArray.length;j++){
+    for (var j = 0; j < xArray.length; j++) {
         data[j] = jsondata['rows'][colindx]['data'][j]
     }
 
     xArray.shift();
     data.shift();
-    var option_one={
-        xArray:xArray,
-        data:[{
-            name: 'DPV',
-            data: data
-        }],
-        name:"dpv"
+
+    var option_one = {
+        xArray: xArray,
+        data: [
+            {
+                name: 'DPV',
+                data: data
+            }
+        ]
+
     };
 
     daily_dpv.chart_dpv.reload_daily_dpv(option_one);
@@ -378,19 +447,22 @@ Report.daily_dpv_on_json_parse = function(){
     xArray = header.slice(0);
     //SDPV
     colindx = 3;
-    for(var j = 0;j<xArray.length;j++){
+    for (var j = 0; j < xArray.length; j++) {
         data[j] = jsondata['rows'][colindx]['data'][j]
     }
     xArray.shift();
     data.shift();
 
-    var option_two={
-        xArray:xArray,
-        data:[{
-            name: 'SDPV',
-            data: data
-        }],
-        name:"sdpv"
+
+    var option_two = {
+        xArray: xArray,
+        data: [
+            {
+                name: 'SDPV',
+                data: data
+            }
+        ]
+
     };
     daily_dpv.chart_sdpv.reload_daily_dpv(option_two);
 };
@@ -398,26 +470,27 @@ Report.daily_dpv_on_json_parse = function(){
 /*station data*/
 Report.station_data_on_json_parse = function () {
     var obj = Report.r;
-    for (var i=0; i<obj.getRowsNum(); i++){
+    for (var i = 0; i < obj.getRowsNum(); i++) {
         var row_id = obj.getRowId(i);
         //FTQ
-        var ftq = obj.cells(row_id,5).getValue();
-        var ftq_targte = obj.cells(row_id,10).getValue();
-        if(ftq>=ftq_targte) {
-            obj.cells(row_id,5).setBgColor('green');
-        }else{
-            obj.cells(row_id,5).setBgColor('red');
+        var ftq = obj.cells(row_id, 5).getValue();
+        var ftq_targte = obj.cells(row_id, 10).getValue();
+        if (ftq >= ftq_targte) {
+            obj.cells(row_id, 5).setBgColor('#00B85C');
+        } else {
+            obj.cells(row_id, 5).setBgColor('#FF5050');
         }
         //DPV
-        var dpv = obj.cells(row_id,6).getValue();
-        var dpv_target = obj.cells(row_id,7).getValue();
-        if(dpv < dpv_target){
-            obj.cells(row_id,6).setBgColor("green");
-        }else{
-            obj.cells(row_id,6).setBgColor("red");
+        var dpv = obj.cells(row_id, 6).getValue();
+        var dpv_target = obj.cells(row_id, 7).getValue();
+        if (dpv < dpv_target) {
+            obj.cells(row_id, 6).setBgColor('#00B85C');
+        } else {
+            obj.cells(row_id, 6).setBgColor('#FF5050');
         }
 
-    };
+    }
+    ;
 }
 
 // need to rewrite
@@ -426,6 +499,6 @@ function export_report_excel() {
     Report.toExcel();
 }
 // default export chart excel
-function export_report_chart_excel(){
+function export_report_chart_excel() {
     Report.toChartExcel();
 }
