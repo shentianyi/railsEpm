@@ -96,7 +96,10 @@ Report.get_dhtmlx = function () {
         case this.type["daily_dpv"]:
         case this.type["station_data"]:
         case this.type["daily_ftq"]:
-            return new dhtmlXGridObject(container);
+            var o= new dhtmlXGridObject(container);
+            o.addCellAttributes(['value']);
+            return o;
+            //return new dhtmlXGridObject(container);
         default:
             return null;
     }
@@ -106,7 +109,7 @@ Report.get_dhtmlx = function () {
 Report.color = {
     "red":"#eb4848",
     "green":"#19cf22",
-    "yellow":"#19cf22"
+    "yellow":"#f3d02e"
 }
 
 Report.configure = function () {
@@ -215,9 +218,11 @@ Report.get_json = function () {
 Report.serializeToJson = function () {
     return  this.r.serializeToJson();
 };
-
+Report.serializeToDataJson = function () {
+    return  this.r.serializeToDataJson();
+};
 Report.serializeToJSONString = function () {
-    return JSON.stringify(this.serializeToJson());
+    return JSON.stringify(this.serializeToDataJson());
 };
 
 Report.reload = function () {
@@ -300,6 +305,11 @@ Report.current_status_init = function () {
         }, 1500);
 
     });
+
+    //bind color select btn
+    $("#refresh").on("click",function(){
+
+    });
 };
 
 Report.daily_dpv_init = function () {
@@ -379,9 +389,11 @@ Report.daily_ftq_on_json_parse = function(){
         }
     ];
     Report.r.set_charts(charts);
+
     //load chart
     var headers = Report.headers["daily_ftq"].split(",");
-    var jsondata = Report.r.serializeToJson();
+    Report.r.addValueToAttribute();
+    var jsondata = Report.r.serializeToDataJson();
     var xArray = [], ok = [], nok = [], ftq = [];
     //ok
     xArray = headers.slice(0);
@@ -400,7 +412,10 @@ Report.daily_ftq_on_json_parse = function(){
 
     colindx = 3;
     for (var j = 0; j < xArray.length; j++) {
-        ftq[j] = parseFloat(jsondata['rows'][colindx]['data'][j].replace("%",""));
+        var value = parseFloat(jsondata['rows'][colindx]['data'][j].replace("%",""));
+        value = isNaN(value) ? 0:value;
+        ftq[j] =value;
+        console.log(j);
     }
     ftq.shift();
     xArray.shift();
@@ -422,8 +437,7 @@ Report.daily_ftq_on_json_parse = function(){
 
     daily_ftq.chart.reload_daily_ftq(option);
 
-    //nok
-    //ftq
+
 };
 /*on_json_parse for current_status*/
 Report.current_status_on_json_parse = function () {
@@ -437,8 +451,12 @@ Report.daily_dpv_on_json_parse = function () {
     /*------------------------------------------------------------*/
     /*Tricky code, need to rewrite*/
     /*reload daily dpv and sdpv chart*/
-    var jsondata = Report.r.serializeToJson();
-    var xArray = [], data = [], header = [];
+
+    Report.r.addValueToAttribute();
+
+    var jsondata = Report.r.serializeToDataJson();
+
+    var xArray = [],data = [],header  = [];
     header = Report.headers["daily_dpv"].split(",")
     xArray = header.slice(0);
     //DPV
