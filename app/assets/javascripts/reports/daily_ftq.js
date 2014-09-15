@@ -32,23 +32,35 @@ daily_ftq.init = function(){
     init_snap();
 };
 daily_ftq.flexible_init=function(){
-    var total_height = $("#wrap-main").height() - $("header").height() - 1,
-        leaving_height=total_height-$("#snap-groups").height()-$("#daily-ftq-header").height()- 2,
-        part_height=Math.floor(leaving_height/2-6),
-        width=$("#wrap-main").width()-$("#report-menu").width()-1;
-    $("#chart_container").height(part_height).width(width);
-    $("#chart_container").highcharts().setSize(width, part_height);
-    $("#chart_container").highcharts().setSize(width, part_height);
-    $("#data_container").height(part_height);
-    $("#data_container").width(width);
+    if($("#report-menu").visible){
+        var total_height = $("#wrap-main").height() - $("header").height() - 1,
+            leaving_height=total_height-$("#snap-groups").height()-$("#daily-ftq-header").height()- 2,
+            part_height=Math.floor(leaving_height/2-6),
+            width=$("#wrap-main").width()-$("#report-menu").width()-1;
+        $("#chart_container").height(part_height).width(width);
+        $("#chart_container").highcharts().setSize(width, part_height);
+        $("#chart_container").highcharts().setSize(width, part_height);
+        $("#data_container").height(part_height);
+        $("#data_container").width(width);
+    }
+    else{
+        var width=$("#story-partial").width();
+        $("#data_container").width(width);
+    }
 }
 daily_ftq.flexible=function(){
-    var total_height = $("#wrap-main").height() - $("header").height() - 1,
-        leaving_height=total_height-$("#snap-groups").height()-$("#daily-ftq-header").height()- 2,
-        part_height=Math.floor(leaving_height/2-6),
-        width=$("#wrap-main").width()-$("#report-menu").width()-1;
-    $("#chart_container").height(part_height).width(width);
-    daily_ftq.chart.ftq_resize(width, part_height);
-    $("#data_container").height(part_height);
-    $("#data_container").width(width);
+    if($("#report-menu").visible){
+        var total_height = $("#wrap-main").height() - $("header").height() - 1,
+            leaving_height=total_height-$("#snap-groups").height()-$("#daily-ftq-header").height()- 2,
+            part_height=Math.floor(leaving_height/2-6),
+            width=$("#wrap-main").width()-$("#report-menu").width()-1;
+        $("#chart_container").height(part_height).width(width);
+        daily_ftq.chart.ftq_resize(width, part_height);
+        $("#data_container").height(part_height);
+        $("#data_container").width(width);
+    }
+    else{
+        var width=$("#story-partial").width();
+        $("#data_container").width(width);
+    }
 }
