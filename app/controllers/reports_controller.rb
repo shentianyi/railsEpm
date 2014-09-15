@@ -15,4 +15,8 @@ class ReportsController < ApplicationController
     render :partial => "subscription"
   end
 
+
+  def demo
+    render
+  end
 end

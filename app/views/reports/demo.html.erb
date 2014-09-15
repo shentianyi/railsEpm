@@ -1,0 +1,25 @@
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "dhtmlx" %>
+<% end %>
+
+<div>
+  <h2>Demo Test Grid API</h2>
+  <div id="grid" style="height:300px"></div>
+  <script>
+    var grid;
+    $(document).ready(function(){
+        grid = new dhtmlXGridObject("grid");
+        grid.setHeader("A,B");
+        grid.setInitWidths("100,100");
+        grid.init();
+
+        var data = {
+            rows : [
+                {id:1001,data:["1","2"]}
+            ]
+        };
+
+        grid.parse(data,'json');
+    });
+  </script>
+</div>

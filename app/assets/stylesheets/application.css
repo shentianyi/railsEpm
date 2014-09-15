@@ -53,8 +53,7 @@
 *= require report/station_data
 
 *= require popModal.min
-*= require dhtmlxgrid
-*= require dhtmlxdataview
+*= require dhtmlx
 
 
 *= require_self
