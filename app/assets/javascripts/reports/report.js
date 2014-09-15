@@ -102,6 +102,13 @@ Report.get_dhtmlx = function () {
     }
 };
 
+/*color*/
+Report.color = {
+    "red":"#eb4848",
+    "green":"#19cf22",
+    "yellow":"#19cf22"
+}
+
 Report.configure = function () {
     var dhtmlxobj = this.r;
     var type = this.option.type;
@@ -134,7 +141,7 @@ Report.configure = function () {
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
             dhtmlxobj.setHeader("Inspection,#cspan,Vechile Total,OK Vehicle,NOK Vehicle,FTQ,DPV,DPV Target,Defects,Vehs,FTQ Target,OK,NOK");
             //mygrid.attachHeader("full,short,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
-            dhtmlxobj.setInitWidths("150,100,100,100,100,100,100,100,100,100,100,100,100");
+            dhtmlxobj.setInitWidths("150,80,80,80,80,80,80,80,80,80,80,80,80");
             dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center");
             dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
             dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int");
@@ -488,17 +495,17 @@ Report.station_data_on_json_parse = function () {
         var ftq = obj.cells(row_id, 5).getValue();
         var ftq_targte = obj.cells(row_id, 10).getValue();
         if (ftq >= ftq_targte) {
-            obj.cells(row_id, 5).setBgColor('#00B85C');
+            obj.cells(row_id, 5).setBgColor(Report.color["red"]);
         } else {
-            obj.cells(row_id, 5).setBgColor('#FF5050');
+            obj.cells(row_id, 5).setBgColor(Report.color["green"]);
         }
         //DPV
         var dpv = obj.cells(row_id, 6).getValue();
         var dpv_target = obj.cells(row_id, 7).getValue();
         if (dpv < dpv_target) {
-            obj.cells(row_id, 6).setBgColor('#00B85C');
+            obj.cells(row_id, 6).setBgColor(Report.color["red"]);
         } else {
-            obj.cells(row_id, 6).setBgColor('#FF5050');
+            obj.cells(row_id, 6).setBgColor(Report.color["green"]);
         }
 
     }
