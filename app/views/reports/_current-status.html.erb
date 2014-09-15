@@ -28,10 +28,22 @@
     <%= render 'snap'%>
   </section>
   <section id="current-status-target" class='current-status-wrapper'>
-     <div class="wrapper-header">
+     <div class="wrapper-header" id="target-wrapper-header">
        <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
        <p>Target setting</p>
      </div>
+    <div id="target-setting-footer" class="target-setting-footer">
+      <div class="footer-left">
+        <p>Condition</p>
+        <p>When Target higher than current FTQ</p>
+        <p>When Target equal to current FTQ</p>
+        <p>When Target lower than current FTQ</p>
+      </div>
+      <div class="footer-right" id="footer-right">
+        <p>Color</p>
+        <label>FTQ color setting</label>
+      </div>
+    </div>
     <div id="target_setting" class="wrapper-current-body"></div>
   </section>
   <section id="current-status-all-defects" class='current-status-wrapper'>
