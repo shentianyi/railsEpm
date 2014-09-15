@@ -96,7 +96,10 @@ Report.get_dhtmlx = function(){
         case this.type["daily_dpv"]:
         case this.type["station_data"]:
         case this.type["daily_ftq"]:
-            return new dhtmlXGridObject(container);
+            var o= new dhtmlXGridObject(container);
+            o.addCellAttributes(['value']);
+            return o;
+            //return new dhtmlXGridObject(container);
         default:
             return null;
     }
@@ -194,9 +197,11 @@ Report.get_json = function () {
 Report.serializeToJson = function () {
     return  this.r.serializeToJson();
 };
-
+Report.serializeToDataJson = function () {
+    return  this.r.serializeToDataJson();
+};
 Report.serializeToJSONString = function () {
-    return JSON.stringify(this.serializeToJson());
+    return JSON.stringify(this.serializeToDataJson());
 };
 
 Report.reload = function () {
@@ -356,6 +361,9 @@ Report.daily_ftq_on_json_parse = function(){
         }
     ];
     Report.r.set_charts(charts);
+   // Report.r.cells("1001",1).setAttribute('invalid',false);
+   // Report.r.xml.cell_attrs.push('invalid');
+   Report.r.addValueToAttribute();
 };
 /*on_json_parse for current_status*/
 Report.current_status_on_json_parse = function(){
@@ -369,7 +377,10 @@ Report.daily_dpv_on_json_parse = function(){
     /*------------------------------------------------------------*/
     /*Tricky code, need to rewrite*/
     /*reload daily dpv and sdpv chart*/
-    var jsondata = Report.r.serializeToJson();
+    Report.r.addValueToAttribute();
+
+    var jsondata = Report.r.serializeToDataJson();
+
     var xArray = [],data = [],header  = [];
     header = Report.headers["daily_dpv"].split(",")
     xArray = header.slice(0);
