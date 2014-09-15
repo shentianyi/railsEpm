@@ -200,7 +200,7 @@ var Highchart_generator=function(option){
         setTimeout(function(){
             daily_dpv_resize_count[type]--;
             if(daily_dpv_resize_count[type]===0){
-                console.log( type+" "+that[type+"_series"][0].data);
+                basic.series[0].data=that[type+"_series"][0].data;
                 var $target=target_chart.indexOf("#")===-1?$("#"+target_chart):$(target_chart);
                 $target.highcharts().destroy();
                 $target.highcharts(basic);
