@@ -369,7 +369,8 @@ Report.daily_dpv_on_json_parse = function(){
         data:[{
             name: 'DPV',
             data: data
-        }]
+        }],
+        name:"dpv"
     };
 
     daily_dpv.chart_dpv.reload_daily_dpv(option_one);
@@ -388,7 +389,8 @@ Report.daily_dpv_on_json_parse = function(){
         data:[{
             name: 'SDPV',
             data: data
-        }]
+        }],
+        name:"sdpv"
     };
     daily_dpv.chart_sdpv.reload_daily_dpv(option_two);
 };
