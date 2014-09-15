@@ -441,6 +441,7 @@ Report.daily_dpv_on_json_parse = function () {
 
     xArray.shift();
     data.shift();
+
     var option_one = {
         xArray: xArray,
         data: [
@@ -448,7 +449,8 @@ Report.daily_dpv_on_json_parse = function () {
                 name: 'DPV',
                 data: data
             }
-        ]
+        ],
+        name:"dpv"
     };
 
     daily_dpv.chart_dpv.reload_daily_dpv(option_one);
@@ -462,6 +464,7 @@ Report.daily_dpv_on_json_parse = function () {
     xArray.shift();
     data.shift();
 
+
     var option_two = {
         xArray: xArray,
         data: [
@@ -469,7 +472,8 @@ Report.daily_dpv_on_json_parse = function () {
                 name: 'SDPV',
                 data: data
             }
-        ]
+        ],
+        name:"sdpv"
     };
     daily_dpv.chart_sdpv.reload_daily_dpv(option_two);
 };
