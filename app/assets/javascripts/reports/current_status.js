@@ -1,6 +1,5 @@
 var current_status={};
 current_status.init=function(){
-
     $("#current-date").text(format_time.current_time());
     $("#current-clock").text(format_time.current_time_clock());
     window.setInterval(function(){
@@ -14,6 +13,17 @@ current_status.init=function(){
         .on("click",".extra_func_btn",function(){
             var tag=$(this).attr("tag") ;
             current_status.show_extra_section(tag);
+            current_status.flexible();
+            if(tag==="target"){
+                for(var i=0;i<3;i++){
+                    var color_html='<div class="color-group">'+
+                        '<span class="color-item active" type="green" style="background:'+Report.color.green+'"></span>'+
+                        '<span class="color-item" type="red"  style="background:'+Report.color.red+'"></span>'+
+                        '<span class="color-item" type="yellow"  style="background:'+Report.color.yellow+'"></span>'+
+                        '</div>'
+                    $("#footer-right").append(color_html);
+                }
+            }
         })
         .on("click",".current-status-target-back-btn",function(){
             current_status.btn_loader_show();
@@ -23,6 +33,10 @@ current_status.init=function(){
                 $("#current-status-normal").css("display","block");
                 current_status.loader_hide();
             },700);
+        })
+        .on("click","#target-setting-footer .color-item",function(){
+            alert($(this).attr("type"))
+            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>click color
         });
 
 }
@@ -30,6 +44,8 @@ current_status.flexible=function(){
     var total_height=$("#wrap-main").height()-$("header").height()-1;
     var height=total_height-$("#current-status-header").height()-$("#snap-groups").height()-2;
     $("#data_container").height(height);
+    var target_height=total_height-$("#target-wrapper-header").height()-$("#target-setting-footer").height()-2;
+    $("#target_setting").height(target_height);
 
 }
 current_status.loader_show=function(){

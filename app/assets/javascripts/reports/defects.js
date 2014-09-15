@@ -127,7 +127,7 @@ defects.example_init=function(){
     var target_width = Math.floor(($("#report-content").width()-2)/3-0);
     var target_setting = new dhtmlXGridObject("target_setting");
     target_setting.setImagePath("/assets/dhtmlx/");
-    target_setting.setHeader("Stations,FTQ,FTQ Target (double click to modify)",null,["text-align:center;","text-align:center;","text-align:center"]);
+    target_setting.setHeader("Stations,FTQ Status,FTQ Target (double click to modify)",null,["text-align:center;","text-align:center;","text-align:center"]);
     target_setting.setInitWidths(target_width+","+target_width+","+target_width);
     target_setting.enableAutoWidth(false);
     target_setting.setColAlign('center,center,center');
@@ -147,6 +147,7 @@ defects.example_init=function(){
         }
     }
     target_setting.parse(target_data,'json');
+
     //setting table size and layout
     defects.resize("all_defects");
     defects.resize("key_defects");

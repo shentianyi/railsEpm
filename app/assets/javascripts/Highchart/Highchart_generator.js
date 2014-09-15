@@ -2,7 +2,7 @@ var Highchart_generator=function(option){
     this.target=option.target;
     this.color_system={
         "blue":"#97cbe4",
-      "purple":"#9b65de"
+        "purple":"#9b65de"
     };
     this.init=function(){
         var $target=this.target.indexOf("#")===-1?$("#"+this.target):$(this.target);
@@ -73,7 +73,6 @@ var Highchart_generator=function(option){
                 return '<b>'+this.x+'</b>'
                     +'<br />Value: <span style="color:'+this.series.color+'">'+this.point.y
                     +'</span>'
-
             }
         },
         legend: {
@@ -137,7 +136,7 @@ var Highchart_generator=function(option){
             }
         }
     };
-    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> daily_dpv
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> daily_dpv
     this.init_daily_dpv=function(){
         var $target=this.target.indexOf("#")===-1?$("#"+this.target):$(this.target);
         this.basic.title.text=option.title?option.title:null;
@@ -157,7 +156,6 @@ var Highchart_generator=function(option){
                 else{
                     return "" ;
                 }
-
             }
         }
         this.basic.subtitle.enabled=false;
@@ -178,6 +176,12 @@ var Highchart_generator=function(option){
         if(option.xArray){
             this.basic.xAxis.categories=option.xArray;
         }
+        if(option.name==="dpv"){
+            this.dpv_series=deepCopy(option.data,{});
+        }
+        else if(option.name==="sdpv"){
+            this.sdpv_series=deepCopy(option.data,{});
+        }
         this.basic.series=option.data;
         $target.highcharts(this.basic);
     };
@@ -185,24 +189,25 @@ var Highchart_generator=function(option){
         var $target=this.target.indexOf("#")===-1?$("#"+this.target):$(this.target),
             chart=$target.highcharts();
         daily_dpv_resize_count[type]++;
-            chart.setSize(
-                width,
-                height,
-                true
-            );
-
-            var basic=this.basic,
-                target_chart=this.target;
-            setTimeout(function(){
-                daily_dpv_resize_count[type]--;
-                if(daily_dpv_resize_count[type]===0){
-                    var $target=target_chart.indexOf("#")===-1?$("#"+target_chart):$(target_chart);
-                    $target.highcharts().destroy();
-                    $target.highcharts(basic);
-                }
-            },500);
+        chart.setSize(
+            width,
+            height,
+            true
+        );
+        var basic=this.basic,
+            target_chart=this.target,
+            that=this;
+        setTimeout(function(){
+            daily_dpv_resize_count[type]--;
+            if(daily_dpv_resize_count[type]===0){
+                basic.series[0].data=that[type+"_series"][0].data;
+                var $target=target_chart.indexOf("#")===-1?$("#"+target_chart):$(target_chart);
+                $target.highcharts().destroy();
+                $target.highcharts(basic);
+            }
+        },500);
     };
-    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> daily_ftq
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> daily_ftq
     this.init_daily_ftq=function(){
         var $target=this.target.indexOf("#")===-1?$("#"+this.target):$(this.target);
         this.basic.title.text=option.title?option.title:null;
@@ -212,49 +217,49 @@ var Highchart_generator=function(option){
         this.basic.subtitle.enabled=false;
         this.basic.xAxis.categories=option.xArray;
         this.basic.tooltip.backgroundColor={
-                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-                stops: [
-                    [0, 'rgba(255, 255, 255, .8)'],
-                    [1, 'rgba(255, 255, 255, .8)']
-                ]
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+            stops: [
+                [0, 'rgba(255, 255, 255, .8)'],
+                [1, 'rgba(255, 255, 255, .8)']
+            ]
         };
         this.basic.tooltip.style={
             color: '#222'
         };
         this.basic.plotOptions.column.dataLabels={
-                enabled: true,
-                color: "rgba(0,0,0,0.8)",
-                inside:false,
-                style: {
-                    fontWeight: 'bold',
-                    fontSize:'11px'
-                },
-                formatter: function() {
-                    if(this.series.index===0){
-                        if(this.total>0){
-                            return this.total ;
-                        }
-                        else{
-                            return "" ;
-                        }
+            enabled: true,
+            color: "rgba(0,0,0,0.8)",
+            inside:false,
+            style: {
+                fontWeight: 'bold',
+                fontSize:'11px'
+            },
+            formatter: function() {
+                if(this.series.index===0){
+                    if(this.total>0){
+                        return this.total ;
+                    }
+                    else{
+                        return "" ;
                     }
                 }
+            }
         };
         this.basic.plotOptions.line.dataLabels={
             enabled: true,
-            color: "rgba(60,111,204,0.6)",
+            color: "rgba(60,111,204,0.8)",
             style: {
                 fontWeight: 'bold',
                 fontSize:'11px'
             },
             align:"left",
             formatter: function() {
-                    if(this.y>0){
-                        return this.y+"%" ;
-                    }
-                    else{
-                        return "" ;
-                    }
+                if(this.y>0){
+                    return this.y+"%" ;
+                }
+                else{
+                    return "" ;
+                }
             }
         };
         this.basic.yAxis=[
@@ -265,9 +270,8 @@ var Highchart_generator=function(option){
                 title:{
                     enabled:false
                 }
-
             },
-            {  //Secondary yAxis
+            { //Secondary yAxis
                 labels: {
                     format: '{value} %',
                     style: {
@@ -339,7 +343,7 @@ var Highchart_generator=function(option){
         ];
         $target.highcharts(this.basic);
     };
-    this.ftq_resize=function(width,height,type){
+    this.ftq_resize=function(width,height){
         var $target=this.target.indexOf("#")===-1?$("#"+this.target):$(this.target),
             chart=$target.highcharts();
         daily_ftq_resize_count++;
