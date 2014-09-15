@@ -17,24 +17,40 @@
             target:"chart_container",
             xArray:["Jan","Feb","Mar","Jan","Feb","Mar","Jan","Feb","Mar","Jan","Feb","Mar"],
             height:"300",
-            data:[{
-                name: 'Tokyo',
-                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-            }],
-            color:"purple",
-            title:"SPV"
+            title:"Quality Buyoff station Vehicle status",
+            data:{
+                nok:{
+                    name:"NOK Vehicle",
+                    data:[0,0,0,7,8,0,0,0,0,6,11,11,14,6,0,4,0]
+                },
+                ok:{
+                    name:"OK Vehicle",
+                    data:[0,0,10,1,0,0,9,2,8,6,0,0,1,4,6,1,1]
+                },
+                ftq:{
+                    name:"FTQ",
+                    data:[0,0,100,13,0,0,100,100,100,50,0,0,7,40,100,20,100]
+                }
+            }
         }
         var chart=new Highchart_generator(option);
-        chart.init_daily_dpv();
+        chart.init_daily_ftq();
         setInterval(function(){
             var option={
                 xArray:["Jan","Feb","Mar","Jan","Feb","Mar","Jan","Feb","Mar","Jan","Feb","Mar"],
-                data:[{
-                    name: 'Summer',
-                    data: [parseInt(Math.random()*50), 20, 10, 12, 14, 17, 13, 14, 21, 19, 9, 5]
-                }]
+                data:{
+                    nok:{
+                        data:[0,0,0,7,8,0,0,0,0,6,11,11,14,6,0,4,0]
+                    },
+                    ok:{
+                        data:[0,0,10,1,0,0,9,2,8,6,0,0,1,4,6,1,1]
+                    },
+                    ftq:{
+                        data:[0,0,100,13,0,0,100,100,100,50,0,0,7,40,100,20,100]
+                    }
+                }
             }
-            chart.reload_daily_dpv(option);
+            chart.reload_daily_ftq(option);
         },5000);
     }
 
