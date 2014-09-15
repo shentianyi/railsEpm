@@ -1,0 +1,17 @@
+<section class="daily-ftq" >
+  <div class="header" id="daily-ftq-header">
+    <p>Export to:</p>
+    <a class="btn btn-success btn_excel" onclick="export_report_chart_excel()">Excel</a>
+  </div>
+  <div id="chart_container" ></div>
+  <div id="data_container" class="data_container"></div>
+  <%= render 'snap'%>
+</section>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "reports/daily_ftq" %>
+<% end %>
+<script>
+  $(document).ready(function(){
+      Report.init("daily_ftq");
+  });
+</script>

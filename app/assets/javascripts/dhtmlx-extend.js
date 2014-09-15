@@ -2,6 +2,7 @@
 dhtmlXGridObject.prototype.serializeToJson = function () {
     var data = xml2json.parser(this.serialize().replace(/\<cell\>/g, "<data>")
         .replace(/\<\/cell\>/g, "</data>"));
+//    var data = xml2json.parser(this.serialize());
     return {rows: data.rows.row};
 };
 
@@ -10,66 +11,89 @@ dhtmlXDataView.prototype.serializeToJson = function () {
     return this.serialize();
 };
 
-dhtmlXGridObject.prototype.get_charts=function(){
-  return this.charts;
+dhtmlXGridObject.prototype.get_charts = function () {
+    return this.charts;
 };
 
-//_charts=[
-//  [{xstart_row:0,xstart_col:0,xend_row:0,xend_col:0,
-//    ystart_row:0,ystart_col:0,yend_row:0,yend_col:0,
-//    title:'title',width:1000,height:300,type:'line',color:'#dasdas'},
-//   {xstart_row:0,xstart_col:0,xend_row:0,xend_col:0,
-//    ystart_row:0,ystart_col:0,yend_row:0,yend_col:0,
-//    title:'title',width:1000,height:300,type:'column',color:'#dasdas'}]
-// ]
-dhtmlXGridObject.prototype.set_charts=function(_charts){
-  this.charts=_charts;
+//var charts = [
+//    {
+//        title: 'DPV', width: 1100, height: 300,
+//        chart_type: {  type: 'column',
+//            series: [
+//                {xaixs: "B1:P1", yaixs: "B4:P4",
+//                    type: 'column', color: 'D1E5FE'}
+//            ]  }
+//    },
+//    {
+//        title: 'SDPV', width: 1100, height: 300,
+//        chart_type: {  type: 'column',
+//            series: [
+//                {xaixs: "B1:P1", yaixs: "B5:P5",
+//                    color: 'D1E5FE'}
+//            ]           }
+//    }
+//];
+dhtmlXGridObject.prototype.set_charts = function (_charts) {
+    this.charts = _charts;
 };
 //customized xml for excel
 //charts = [{x:0,y:1,title:title,width:1000,height:300,type:line,color:#dasdas}]
-dhtmlXGridObject.prototype.serializeChartExcelXml = function(){
+dhtmlXGridObject.prototype.serializeChartExcelXml = function () {
 //    if(charts == undefined){
 //        charts = [];
 //    }
-    var charts=this.get_charts();
+    var charts = this.get_charts();
     var data = this.serializeToJson();
     var headercount = data["rows"][0]["data"].length;
     var xml = "<report>";
     //Head Start
     xml += "<table><head><columns>";
-    for(var i = 0;i < headercount;i++){
-        xml += "<column width='60'><![CDATA["+this.getColLabel(i)+"]]></column>";
+    for (var i = 0; i < headercount; i++) {
+        xml += "<column width='60'><![CDATA[" + this.getColLabel(i) + "]]></column>";
     }
     xml += "</columns></head>";
     //Head End
 
     //Body Start
     xml += "<body>";
-    for(var i = 0;i<data["rows"].length;i++){
+    for (var i = 0; i < data["rows"].length; i++) {
         xml += "<row>";
-        for(var j = 0;j<data["rows"][i]["data"].length;j++){
-            xml+= "<cell><![CDATA["+data["rows"][i]["data"][j]+"]]></cell>";
+        for (var j = 0; j < data["rows"][i]["data"].length; j++) {
+            xml += "<cell><![CDATA[" + data["rows"][i]["data"][j] + "]]></cell>";
         }
         xml += "</row>";
     }
     xml += "</body></table>";
     //Body End
-    var charts=this.get_charts();
+    var charts = this.get_charts();
     //Chart Start
     xml += "<charts>"
-    for(var i = 0;i<charts.length;i++){
-        xml += "<chart title='"+charts[i]["title"]+"' height='"+charts[i]["height"]+"' width='"+charts[i]["width"]+"'>";
-        for(var j=0;j<charts[i].series.length;j++) {
-            var serie=charts[i].series[j];
-            xml += "<serie color='" + serie["color"] + "' type='" + serie["type"] + "'>";
+    for (var i = 0; i < charts.length; i++) {
+        var chart = charts[i];
 
-            xml += "<xstart_row><![CDATA[" +serie["xstart_row"] + "]]></xstart_row><xstart_col><![CDATA["+serie['xstart_col']+"]]></xstart_col>";
-            xml += "<xend_row><![CDATA[" + serie["xend_row"] + "]]></xend_row><xend_col><![CDATA[" + serie['xend_col'] + "]]></xend_col>";
+        xml += "<chart";
 
-            xml += "<ystart_row><![CDATA[" + serie["ystart_row"] + "]]></ystart_row><ystart_col><![CDATA["+serie['ystart_col']+"]]></ystart_col>";
-            xml += "<yend_row><![CDATA[" + serie["yend_row"] + "]]></yend_row><yend_col><![CDATA[" +serie['yend_col'] + "]]></yend_col>";
+        for (var a in chart.attr) {
+            xml += " " + a + "='" + chart.attr[a] + "'";
+        }
+        xml += ">";
 
-            xml += "</serie>";
+        for (var n = 0; n < chart.chart_types.length; n++) {
+            var chart_type = chart.chart_types[n];
+
+            xml += "<chart_type type='" + chart_type.type + "'>";
+            for (var j = 0; j < chart_type.series.length; j++) {
+                var serie = chart_type.series[j];
+                xml += "<serie";
+                for (var a in serie.attr) {
+                    xml += " " + a + "='" + serie.attr[a] + "'";
+                }
+                xml += ">";
+                xml += "<xaixs><![CDATA[" + serie["xaixs"] + "]]></xaixs><yaixs><![CDATA[" + serie['yaixs'] + "]]></yaixs>";
+
+                xml += "</serie>";
+            }
+            xml += "</chart_type>";
         }
         xml += "</chart>";
     }
@@ -106,17 +130,17 @@ dhtmlXDataView.prototype.serializeToExcelXml = function () {
     return xml;
 };
 
-dhtmlXGridObject.prototype.toChartExcel=function(url){
-    processReportExcelRequest(url,this.serializeChartExcelXml());
+dhtmlXGridObject.prototype.toChartExcel = function (url) {
+    processReportExcelRequest(url, this.serializeChartExcelXml());
 };
-dhtmlXDataView.prototype.toExcel=function(url){
- processReportExcelRequest(url,this.serializeToExcelXml());
+dhtmlXDataView.prototype.toExcel = function (url) {
+    processReportExcelRequest(url, this.serializeToExcelXml());
 };
 
 
-function processReportExcelRequest(url,xml){
+function processReportExcelRequest(url, xml) {
     console.log(xml);
-   $('<form>', {
+    $('<form>', {
         action: url,
         method: 'post',
         target: '_blank'

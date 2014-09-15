@@ -8,6 +8,10 @@ class ChartType
   VehicleInfo = 6
   DailyDPV = 7
   DailyFTQ = 8
+  DefectInfo = 9
+  Float = 10
+  TopIssue = 11
+  WeeklyReport = 12
 
   def self.partial(type)
     case type

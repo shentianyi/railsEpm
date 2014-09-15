@@ -4,22 +4,27 @@ daily_dpv.chart_sdpv = {};
 daily_dpv.init = function () {
     var charts = [
         {
-            title: 'DPV', width: 1100, height: 300,
-            series: [
-                {xstart_row: 1, xstart_col: 2, xend_row: 1, xend_col: 16,
-                    ystart_row: 4, ystart_col: 2, yend_row: 4, yend_col: 16,
-                    type: 'column', color: '#D1E5FE'}
+            attr: { title: 'DPV', width: 1200, height: 300},
+            chart_types: [
+                {  type: 'column',
+                    series: [
+                        {xaixs: "B1:R1", yaixs: "B4:R4",
+                            attr: { color: 'D1E5FE'}}
+                    ]}
             ]
         },
         {
-            title: 'SDPV', width: 1100, height: 300,
-            series: [
-                {xstart_row: 1, xstart_col: 2, xend_row: 1, xend_col: 16,
-                    ystart_row: 5, ystart_col: 2, yend_row: 5, yend_col: 16,
-                    type: 'column', color: '#D1E5FE'}
+            attr: { title: 'SDPV', width: 1200, height: 300},
+            chart_types: [
+                {  type: 'column',
+                    series: [
+                        {xaixs: "B1:R1", yaixs: "B5:R5",
+                            attr: { color: 'D1E5FE'}}
+                    ]}
             ]
         }
     ];
+
     Report.r.set_charts(charts);
     var option_one = {
         target: "chart_dpv_one",
@@ -32,6 +37,7 @@ daily_dpv.init = function () {
         ],
         title: "DPV"
     };
+
     var chart_one = new Highchart_generator(option_one);
     chart_one.init_daily_dpv();
     var option_two = {
