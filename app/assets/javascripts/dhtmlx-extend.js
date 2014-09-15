@@ -1,7 +1,7 @@
 // extend grid
 dhtmlXGridObject.prototype.serializeToJson = function () {
-    var data = xml2json.parser(this.serialize().replace(/\<cell\>/g, "<data>")
-        .replace(/\<\/cell\>/g, "</data>"));
+    var data = xml2json.parser(this.serialize());//.replace(/\<cell\>/g, "<data>")
+        //.replace(/\<\/cell\>/g, "</data>"));
     return {rows: data.rows.row};
 };
 

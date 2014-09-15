@@ -151,11 +151,13 @@ Report.configure = function(){
             daily_dpv.init();
             break;
         case this.type["daily_ftq"]:
+            var width=Math.floor($("#report-content .left").width()/17)-2;
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
-            dhtmlxobj.setHeader("iQ Station,iQ1,iQ2,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15");
-            dhtmlxobj.setInitWidths("80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80");
-            dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
-            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+            dhtmlxobj.setHeader(this.headers["daily_ftq"]);
+            //dhtmlxobj.setInitWidths("80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80");
+            dhtmlxobj.setInitWidths(width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width+","+width);
+            dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
+            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.setColumnColor("#d5f1ff");
             dhtmlxobj.init();
@@ -340,6 +342,8 @@ Report.daily_ftq_on_json_parse = function(){
     ]
 }];
     Report.r.set_charts(charts);
+
+    //
 };
 /*on_json_parse for current_status*/
 Report.current_status_on_json_parse = function(){

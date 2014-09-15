@@ -194,8 +194,9 @@ SampleData.init_daily_ftq = function () {
                 data: ["FTQ"]
             }
         ]
-    }
-    for (var i = 1; i < 16; i++) {
+    };
+
+    for (var i = 1; i <= 17; i++) {
         var nok = RAND.range_int(0, 15);
         var ok = RAND.range_int(0, 10);
         var total = nok + ok;
