@@ -59,6 +59,9 @@ Report.prepare = function(){
 /*parse json data*/
 Report.json_parse = function (jsondata) {
 //    console.log(jsondata);
+    if(typeof jsondata === 'string'){
+        jsondata = JSON.parse(jsondata);
+    }
     this.r.clearAll();
     this.r.parse(jsondata, 'json');
     this.data = jsondata;
@@ -173,7 +176,7 @@ Report.get_json = function () {
         case this.type["daily_dpv"]:
             return  d_daily_dpv;
         case this.type["station_data"]:
-            return d_station_data;
+            return SampleData.init_station_data();
         case this.type["daily_ftq"]:
             return SampleData.init_daily_ftq();
         default :
