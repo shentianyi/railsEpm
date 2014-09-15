@@ -4,21 +4,21 @@ daily_dpv.chart_sdpv = {};
 daily_dpv.init = function () {
     var charts = [
         {
-            attr: { title: 'DPV', width: 1100, height: 300},
+            attr: { title: 'DPV', width: 1200, height: 300},
             chart_types: [
                 {  type: 'column',
                     series: [
-                        {xaixs: "B1:P1", yaixs: "B4:P4",
+                        {xaixs: "B1:R1", yaixs: "B4:R4",
                             attr: { color: 'D1E5FE'}}
                     ]}
             ]
         },
         {
-            attr: { title: 'SDPV', width: 1100, height: 300},
+            attr: { title: 'SDPV', width: 1200, height: 300},
             chart_types: [
                 {  type: 'column',
                     series: [
-                        {xaixs: "B1:P1", yaixs: "B5:P5",
+                        {xaixs: "B1:R1", yaixs: "B5:R5",
                             attr: { color: 'D1E5FE'}}
                     ]}
             ]

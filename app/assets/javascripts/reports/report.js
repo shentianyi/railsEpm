@@ -48,6 +48,16 @@ Report.init = function(type){
     this.prepare();
 };
 
+Report.ChartAxisFormatType={
+ None:0,
+ IntPercent:1,
+ FloatPercent:2
+};
+Report.CellFormatType={
+    None:0,
+    IntPercent:1,
+    FloatPercent:2
+};
 /*prepare page*/
 Report.prepare = function(){
     var fn = Report[this.option.type_string+"_init"];
@@ -325,19 +335,26 @@ Report.daily_dpv_init = function(){
 /*----------------------------------------------------*/
 /*on_json_parse for daily_ftq*/
 Report.daily_ftq_on_json_parse = function(){
-    var charts = [{
-        title: 'Daily FTQ', width: 1100, height: 300,
-        series: [
-            {
-                xaixs: "B1:S1", yaixs: "B4:S4",
-                type: 'column', color: '#D1E5FE'
-            },
-            {
-                xaixs: "B1:S1", yaixs: "B5:S5",
-                type: 'line', color: '#D1E5FE'
-            }
-    ]
-}];
+    var charts = [
+        {
+            attr: { title: 'Quality Buyoff station Vehicle status', width: 1200, height: 300, show_legend: true},
+            chart_types: [
+                {  type: 'column',
+                    series: [
+                        {xaixs: "B1:R1", yaixs: "B3:R3",
+                            attr: { color: 'D1E5FE', head_address: 'A3'}},
+                        {xaixs: "B1:R1", yaixs: "B4:R4",
+                            attr: { color: 'D1E5FE', head_address: 'A4'}}
+                    ]},
+                {  type: 'line',
+                    series: [
+                        {xaixs: "B1:R1", yaixs: "B5:R5",
+                            attr: { color: 'D1E5FE', head_address: 'A5', use_secondary_axis: true,
+                                yaxis_format_type: Report.ChartAxisFormatType.IntPercent}}
+                    ]}
+            ]
+        }
+    ];
     Report.r.set_charts(charts);
 };
 /*on_json_parse for current_status*/
