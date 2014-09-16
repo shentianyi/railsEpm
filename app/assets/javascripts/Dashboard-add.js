@@ -8,7 +8,7 @@
 var DASHBOARD=DASHBOARD || {} ;
 DASHBOARD.add=DASHBOARD.add || {};
 
-
+DASHBOARD.qoros_table;
 var db_chartSeries = {
     count: 0,
     id_count:0,
@@ -457,19 +457,55 @@ DASHBOARD.add.prepare_form_chart=function() {
                    data_array[i].unit=msg.object.unit[i];
                    data_array[i].id=option.id
                }
-               if(option.type==="table"){
+               /*
+               datas = [{
+                  view:"Leoni",
+                  kpi_name: "E1",
+                  interval: "100",
+                  current:[1,2,3,4,5,6],
+                  date:["20130904z123","sds"]
+               }]
+               * */
+                 var datas;
+                 if(option.type==="table"){
+
                    if(chart_body_close_validate){
+                       addSeriesOption.qoros_data=deepCopy(msg.object.current,[]);
                        option.data=data_array;
                        addSeriesOption[interval]=data_array;
+                       addSeriesOption.date=msg.object.date;
                        db_chartSeries.addSeries(addSeriesOption);
-
                        DASHBOARD.add.show_chart_body(option);
+                       datas=[{
+                           view:addSeriesOption.view_text,
+                           kpi_name: addSeriesOption.kpi,
+                           interval: addSeriesOption.interval,
+                           current:addSeriesOption.qoros_data,
+                           date:addSeriesOption.date
+                       }];
+                       DASHBOARD.qoros_table = ifepm.dashboard.dhtmlxtable("chart-container",datas);
 
                    }
                    else{
                        option.data=data_array;
                        addSeriesOption[interval]=data_array;
+                       addSeriesOption.qoros_data=deepCopy(msg.object.current,[]);
+                       addSeriesOption.date=msg.object.date;
                        db_chartSeries.addSeries(addSeriesOption);
+                       DASHBOARD.qoros_table.clearAll();
+                       datas=[];
+                       var series=db_chartSeries.series;
+                       for(var i=0;i<series.length;i++){
+                           datas.push({
+                               view:series[i].view_text,
+                               kpi_name: series[i].kpi,
+                               interval: series[i].interval,
+                               current:series[i].qoros_data,
+                               date:series[i].date
+                           })
+                       }
+                       var d = ifepm.dashboard.parse2dhtmlxGridJson(datas);
+                       DASHBOARD.qoros_table.parse(d.json,"json");
 
                    }
                    option.total=msg.object.total;
@@ -477,8 +513,10 @@ DASHBOARD.add.prepare_form_chart=function() {
                }
                else{
                    if(chart_body_close_validate){
+
                        option.data=data_array;
                        addSeriesOption[interval]=data_array;
+                       addSeriesOption.date=msg.object.date;
                        db_chartSeries.addSeries(addSeriesOption);
 
                        DASHBOARD.add.show_chart_body(option);
@@ -501,6 +539,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                    else{
                        option.data=data_array;
                        addSeriesOption[interval]=data_array;
+                       addSeriesOption.date=msg.object.date;
                        db_chartSeries.addSeries(addSeriesOption);
                        add_series(option);
                        proper_type_for_chart(option);
@@ -555,7 +594,7 @@ DASHBOARD.add.show_chart_body=function(option){
 }
 //切换类型
 DASHBOARD.add.alternate_chart_type=function(event) {
-    if($("#db-chart-body:visible").length>0){
+    if($("#db-chart-body:visible").length>0 ){
         var target = adapt_event(event).target;
             var option = {
                 target: "chart-container",
@@ -564,11 +603,14 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 count: db_chartSeries.getCount(),
                 interval: $("#db-chart-interval-alternate li.active").attr("interval")
             }
-
         if(option.type==="table"){
-             console.log(option)
+             if($("#chart-container").highcharts()){
+                 $("#chart-container").highcharts().destroy();
+                 $("#chart-container").empty();
+             }
         }
         else{
+
             if($("#"+option.target).highcharts().get("line-target")!=undefined){
                 $("#"+option.target).highcharts().get("line-target").remove();
             }
