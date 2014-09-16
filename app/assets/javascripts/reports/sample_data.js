@@ -516,15 +516,17 @@ SampleData.init_current_status = function(){
         var model = models[j];
         for(var i = 0;i<d_current_status[model].length;i++){
             //var old = parseInt(d_current_status[model][i]["Defects"]);
-            d_current_status[model][i]["Defects"] = RAND.range_int(10,25).toString();//(old+RAND.rate(1,20,0)).toString();
+            //d_current_status[model][i]["Defects"] = RAND.range_int(10,25).toString();//(old+RAND.rate(1,20,0)).toString();
 
             //old = parseInt(d_current_status[model][i]["Pass"])
-            d_current_status[model][i]["Pass"] = RAND.range_int(20,35).toString();//(old + RAND.rate(1,80,0)).toString();
+            var pass = RAND.range_int(20,35)
+            d_current_status[model][i]["Pass"] = pass.toString();//(old + RAND.rate(1,80,0)).toString();
 
             var ftq = RAND.range_int(70,100);
             var ftq_target = RAND.range_int(70,98);
             d_current_status[model][i]["FTQ"] = ftq.toString();//(old+rate).toString();
             d_current_status[model][i]["FTQ_Target"] = ftq_target.toString();
+            d_current_status[model][i]["Defects"] = (pass * ftq/100).toFixed(0);
             if(ftq > ftq_target){
                 d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["higher"];
             }else if(ftq==ftq_target){
