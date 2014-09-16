@@ -18,10 +18,15 @@ current_status.init=function(){
                 var a = ["higher","equal","lower"];
                 $("#footer-right").find(".color-group").remove();
                 for(var i=0;i<3;i++){
+
                     var color_html='<div idx='+a[i]+' class="color-group">'+
-                        '<span class="color-item" type="green" style="background:#19cf22" ></span>'+
-                        '<span class="color-item" type="red"  style="background:#eb4848" ></span>'+
-                        '<span class="color-item" type="yellow"  style="background:#f3d02e" ></span>'+
+                        '<span class="color-item" style="background:#19cf22" ></span>'+
+                        '<span class="color-item" style="background:#eb4848" ></span>'+
+                        '<span class="color-item" style="background:#f3d02e" ></span>'+
+                        '<span class="color-item" style="background:#0fd9bf" ></span>'+
+                        '<span class="color-item" style="background:#c222ea" ></span>'+
+                        '<span class="color-item" style="background:#3a6be7" ></span>'+
+                        '<span class="color-item" style="background:#f56c22" ></span>'+
                         '</div>'
                     $("#footer-right").append(color_html);
                 }
@@ -40,12 +45,11 @@ current_status.init=function(){
         .on("click","#target-setting-footer .color-item",function(){
             $(this).siblings().removeClass("active");
             $(this).addClass("active");
+
             var col = $(this).parent().attr("idx");
             var color = $(this).css("backgroundColor");
             Report.color[col]=color;
-            console.log(col+" Color:"+color);
-            console.log(Report.color[col]);
-            console.log(Report.color);
+
             /*refresh data*/
             models = ["CF11","CF14","CF16"];
             for(var j = 0;j<models.length;j++){
