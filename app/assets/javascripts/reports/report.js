@@ -527,6 +527,7 @@ Report.daily_dpv_on_json_parse = function () {
 
 /*station data*/
 Report.station_data_on_json_parse = function () {
+    Report.r.addValueToAttribute();
     var obj = Report.r;
     for (var i = 0; i < obj.getRowsNum(); i++) {
         var row_id = obj.getRowId(i);
@@ -552,7 +553,7 @@ Report.station_data_on_json_parse = function () {
             obj.cells(row_id, 6).setBgColor(Report.color.dpv["lower"]);
         }
 
-        obj.cells(row_id,6).setAttribute('bgcolor', obj.cells(row_id,5).getBgColor());
+        obj.cells(row_id,6).setAttribute('bgcolor', obj.cells(row_id,6).getBgColor());
     }
     ;
 }

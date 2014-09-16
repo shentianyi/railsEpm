@@ -188,14 +188,14 @@ dhtmlXDataView.prototype.toExcel = function (url) {
 
 
 function processReportExcelRequest(url, xml) {
-    console.log(xml);
-//    $('<form>', {
-//        action: url,
-//        method: 'post',
-//        target: '_blank'
-//    }).append($('<input>', {
-//            type: 'hidden',
-//            name: 'grid_xml',
-//            value: xml
-//        })).appendTo('body').submit();
+//    console.log(xml);
+    $('<form>', {
+        action: url,
+        method: 'post',
+        target: '_blank'
+    }).append($('<input>', {
+            type: 'hidden',
+            name: 'grid_xml',
+            value: xml
+        })).appendTo('body').submit();
 }
