@@ -1,4 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////init select
+ANALYTICS.qoros_demo=true;
+ANALYTICS.qoros_demo_count=0;
 
 function init_analytics() {
     $("input[type='radio']").iCheck({
@@ -218,25 +220,157 @@ function prepare_form_chart() {
             kpi_property: kpi_property
         };
 
-
-       //find id
-        ANALYTICS.chartSeries.addCount();
-        ANALYTICS.chartSeries.id_give();
-        option.id = ANALYTICS.chartSeries.id;
-        // find color
-        option.color=ANALYTICS.series_colors[option.id % ANALYTICS.series_colors.length];
-
-        ANALYTICS.chartSeries.addSeries(option);
-        if (option.chart_body_close_validate) {
-            show_chart_body(option);
+       //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> demo for qoros
+        if(ANALYTICS.qoros_demo){
+            $("#chart-type-alternate tbody").css("display","none");
+            ANALYTICS.qoros_demo_count=3;
+            if($("#chart-container").highcharts()){
+                var length=$("#chart-container-item ul").children().length;
+                for(var i=length-1;i>=0;i--){
+                    $("#chart-container-item ul").children().eq(i).find("i").click();
+                }
+                option.chart_body_close_validate=true;
+                $("#chart-container").highcharts().destroy();
+            }
+            ANALYTICS.high_chart.plotOptions.column.stacking='normal';
+            ANALYTICS.high_chart.yAxis=[
+                { // Primary yAxis
+                    gridLineColor: '#ddd',
+                    gridLineDashStyle: 'Dot',
+                    offset: -25,
+                    showFirstLabel: false,
+                    min:0,
+                    title: {
+                        enabled: false
+                    },
+                    labels: {
+                        style: {
+                            color: "rgba(0,0,0,0.25)"
+                        },
+                        y: -2
+                    }
+                },
+                { //Secondary yAxis
+                    gridLineColor: '#ddd',
+                    gridLineDashStyle: 'Dot',
+                    labels: {
+                        format: '{value} %',
+                        style: {
+                            color: "rgba(0,0,0,0.25)"
+                        }
+                    },
+                    title:{
+                        enabled:false
+                    },
+                    min:0,
+                    max:100,
+                    tickInterval:20,
+                    opposite: false }
+            ];
+            if (option.chart_body_close_validate) {
+                show_chart_body(option);
+            }
+            var condition=$("#form-chart-btn").attr("condition");
+            if(condition=="discuss"){
+                $("#analytic-control-condition-visible").click();
+            }
+                ANALYTICS.chartSeries.addCount();
+                ANALYTICS.chartSeries.id_give();
+                option.id = ANALYTICS.chartSeries.id;
+                // find color
+                option.color=ANALYTICS.series_colors[option.id % ANALYTICS.series_colors.length];
+                ANALYTICS.chartSeries.addSeries(option);
+                ANALYTICS.form_chart(option);
+                ANALYTICS.legend.generateItem(option);
         }
-        ANALYTICS.form_chart(option);
-        ANALYTICS.legend.generateItem(option);
+        else{
+            $("#chart-type-alternate tbody").css("display","block");
+            //find id
+            ANALYTICS.chartSeries.addCount();
+            ANALYTICS.chartSeries.id_give();
+            option.id = ANALYTICS.chartSeries.id;
+            // find color
+            option.color=ANALYTICS.series_colors[option.id % ANALYTICS.series_colors.length];
 
-        var condition=$("#form-chart-btn").attr("condition");
-        if(condition=="discuss"){
-            $("#analytic-control-condition-visible").click();
+            ANALYTICS.chartSeries.addSeries(option);
+            if (option.chart_body_close_validate) {
+                show_chart_body(option);
+            }
+            ANALYTICS.form_chart(option);
+            ANALYTICS.legend.generateItem(option);
+
+            var condition=$("#form-chart-btn").attr("condition");
+            if(condition=="discuss"){
+                $("#analytic-control-condition-visible").click();
+            }
         }
+
+    }
+    else {
+        MessageBox(I18n.t('analytics.fill_all_blank'), "top", "warning")
+    }
+}
+ANALYTICS.prepare_form_chart_qoros=function(){
+    var kpi = $("#chart-kpi :selected").attr("value");
+    var view = $("#chart-view :selected").attr("value");
+    var view_text = $("#chart-view :selected").text();
+    var method = $("input[name='chartRadios']:checked").attr("value");
+    var interval, type, chart_body_close_validate
+    if ($("#chart-body").css("display") == "block") {
+        chart_body_close_validate = false;
+        interval = $("#chart-interval-alternate").find(".active").attr("interval");
+        type = $("#chart-type-alternate").find(".image").attr("type");
+    }
+    else {
+        chart_body_close_validate = true;
+        interval = $("#analy-begin-time").attr("interval") == undefined || $("#analy-begin-time").attr("interval").length == 0 ? $("#chart-kpi :selected").attr("interval") : $("#analy-begin-time").attr("interval");
+        type = "line";
+    }
+    var begin_time = $("#analy-begin-time").attr("hide_value"), end_time = $("#analy-end-time").attr("hide_value");
+    var kpi_property = get_selected_property();
+
+    if (kpi && begin_time && view) {
+        if (end_time) {
+            var compare_result = compare_time(begin_time, end_time);
+            begin_time = compare_result.begin;
+            end_time = compare_result.end;
+        }
+        else {
+            end_time = begin_time
+        }
+
+        var option = {
+            kpi: $("#chart-kpi :selected").text(),
+            kpi_id: kpi,
+            target: "chart-container",
+            begin_time: begin_time,
+            end_time: end_time,
+            type: "column",
+            interval: interval,
+            count: ANALYTICS.chartSeries.count + 1,
+            view: view,
+            view_text: view_text,
+            method: method,
+            chart_body_close_validate: chart_body_close_validate,
+            kpi_property: kpi_property
+        };
+
+
+            //find id
+            ANALYTICS.chartSeries.addCount();
+            ANALYTICS.chartSeries.id_give();
+            option.id = ANALYTICS.chartSeries.id;
+            // find color
+            option.color=ANALYTICS.series_colors[option.id % ANALYTICS.series_colors.length];
+
+            ANALYTICS.chartSeries.addSeries(option);
+            if (option.chart_body_close_validate) {
+                show_chart_body(option);
+            }
+            ANALYTICS.form_chart(option);
+            ANALYTICS.legend.generateItem(option);
+
+
     }
     else {
         MessageBox(I18n.t('analytics.fill_all_blank'), "top", "warning")

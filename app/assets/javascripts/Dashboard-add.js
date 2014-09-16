@@ -170,6 +170,7 @@ DASHBOARD.add.init=function(){
     $("#analytic-control-condition-visible,#add-one-series").on("click",DASHBOARD.add.initial.analytic_control_condition_visible);
 
     $("#db-add-type>li").on("click",function(event){
+
         var target=adapt_event(event).target;
         if($(this).hasClass("active")==false){
             if($(target).attr("type")=="line" && db_chartSeries.getCount()>1){
@@ -181,6 +182,7 @@ DASHBOARD.add.init=function(){
                 DASHBOARD.add.alternate_chart_type(event);
             }
         }
+
     });
     //删除一条线
     $("body").on("click","#db-add-kpi-list li i",function(){
