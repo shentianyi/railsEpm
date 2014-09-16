@@ -192,9 +192,9 @@ Report.configure = function () {
             daily_dpv.init();
             break;
         case this.type["daily_ftq"]:
-            var width = 62;
-            var widthstring = "";
             var head_length = this.headers["daily_ftq"].split(",").length;
+            var width = Math.floor($("#report-content").width() / head_length) - 2;
+            var widthstring = "";
             for(var i = 0 ;i <= head_length;i++){
                 if(i == head_length){
                     widthstring = widthstring + width;
