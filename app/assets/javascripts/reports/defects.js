@@ -51,11 +51,12 @@ defects.example_init=function(){
     var defectsgrid = new dhtmlXGridObject("all_defects");
     defectsgrid.setImagePath("/assets/dhtmlx/");
     defectsgrid.setHeader(headers);
+    defectsgrid.attachHeader("#select_filter,#text_filter,#text_filter");
     defectsgrid.setInitWidths(widthstring);
     defectsgrid.enableAutoWidth(false);
     defectsgrid.setColAlign(alienstring);
     defectsgrid.setColTypes(coltypestring);
-    defectsgrid.setColSorting(coltypestring);
+    defectsgrid.setColSorting(colsortstring);
     defectsgrid.setSkin("dhx_skyblue");
     defectsgrid.setColumnColor("#d5f1ff");
     defectsgrid.enableSmartRendering(true);
@@ -74,7 +75,7 @@ defects.example_init=function(){
             data: [
                 RAND.enum(["CF11","CF14","CF16"]),
                 "L"+RAND.randstr(10),
-                RAND.enum(["A","B","C","D","E","F","G","H","I"]),
+                RAND.enum(["A","B","C","D","E"])+RAND.randstr(5),
                 RAND.enum(["仪表盘","内饰","制动系统","发动机仓"]),
                 RAND.enum(["保险丝盒","发动机","左前轮","右前轮","侧饰版"]),
                 RAND.enum(["支架","右出风口","左出风口","侧围","ABS传感器","制动硬管","ECM"]),
@@ -102,11 +103,12 @@ defects.example_init=function(){
     var key_defectsgrid = new dhtmlXGridObject("key_defects");
     key_defectsgrid.setImagePath("/assets/dhtmlx/");
     key_defectsgrid.setHeader(headers);
+    key_defectsgrid.attachHeader("#select_filter,#text_filter,#text_filter");
     key_defectsgrid.setInitWidths(widthstring);
     key_defectsgrid.enableAutoWidth(false);
     key_defectsgrid.setColAlign(alienstring);
     key_defectsgrid.setColTypes(coltypestring);
-    key_defectsgrid.setColSorting(coltypestring);
+    key_defectsgrid.setColSorting(colsortstring);
     key_defectsgrid.setSkin("dhx_skyblue");
     key_defectsgrid.setColumnColor("#d5f1ff");
     key_defectsgrid.enableSmartRendering(true);
