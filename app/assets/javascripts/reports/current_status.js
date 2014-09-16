@@ -46,6 +46,7 @@ current_status.init=function(){
                 $("#current-status-normal").css("display","block");
                 $("#footer-right div.color-group").remove();
                 current_status.loader_hide();
+                Report.refresh();
             },700);
         })
         .on("click","#target-setting-footer .color-item",function(){
