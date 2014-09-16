@@ -103,7 +103,7 @@ Report.get_dhtmlx = function () {
         case this.type["station_data"]:
         case this.type["daily_ftq"]:
             var o= new dhtmlXGridObject(container);
-            o.addCellAttributes(['value']);
+            o.addCellAttributes(['value','format','bgcolor']);
             return o;
             //return new dhtmlXGridObject(container);
         default:
@@ -391,14 +391,14 @@ Report.daily_ftq_on_json_parse = function(){
                 {  type: 'column',
                     series: [
                         {xaixs: "B1:R1", yaixs: "B3:R3",
-                            attr: { color: 'D1E5FE', head_address: 'A3'}},
+                            attr: { color: 'fd0e0e', header_address: 'A3'}},
                         {xaixs: "B1:R1", yaixs: "B4:R4",
-                            attr: { color: 'D1E5FE', head_address: 'A4'}}
+                            attr: { color: '25ad38', header_address: 'A4'}}
                     ]},
                 {  type: 'line',
                     series: [
                         {xaixs: "B1:R1", yaixs: "B5:R5",
-                            attr: { color: 'D1E5FE', head_address: 'A5', use_secondary_axis: true,
+                            attr: { color: '3c6fcc', header_address: 'A5', use_secondary_axis: true,
                                 yaxis_format_type: Report.ChartAxisFormatType.IntPercent}}
                     ]}
             ]
@@ -409,6 +409,7 @@ Report.daily_ftq_on_json_parse = function(){
     //load chart
     var headers = Report.headers["daily_ftq"].split(",");
     Report.r.addValueToAttribute();
+    Report.r.setAttributeByRow(1004,{format:Report.CellFormatType.IntPercent})
     var jsondata = Report.data;//Report.r.serializeToDataJson();
     var xArray = [], ok = [], nok = [], ftq = [];
     //ok
