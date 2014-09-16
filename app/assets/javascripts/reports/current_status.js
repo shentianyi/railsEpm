@@ -18,7 +18,6 @@ current_status.init=function(){
                 var a = ["higher","equal","lower"];
                 $("#footer-right").find(".color-group").remove();
                 for(var i=0;i<3;i++){
-
                     var color_html='<div idx='+a[i]+' class="color-group">'+
                         '<span class="color-item" style="background:#19cf22" ></span>'+
                         '<span class="color-item" style="background:#eb4848" ></span>'+

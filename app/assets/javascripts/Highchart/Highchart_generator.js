@@ -184,7 +184,7 @@ var Highchart_generator=function(option){
         else if(option.name==="sdpv"){
             this.sdpv_series=deepCopy(option.data,{});
         }
-        this.basic.series=option.data[0].data;
+        this.basic.series=option.data;
         $target.highcharts(this.basic);
     };
     this.daily_resize=function(width,height,type){
