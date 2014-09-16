@@ -4,26 +4,29 @@
         for(var j = 0;j<models.length;j++){
             var model = models[j];
             for(var i = 0;i<d_current_status[model].length;i++){
-                var old = parseInt(d_current_status[model][i]["Defects"]);
-                d_current_status[model][i]["Defects"] = (old+RAND.rate(1,20,0)).toString();
+                //var old = parseInt(d_current_status[model][i]["Defects"]);
+                //d_current_status[model][i]["Defects"] = (old+RAND.rate(1,20,0)).toString();
 
-                old = parseInt(d_current_status[model][i]["Pass"])
-                d_current_status[model][i]["Pass"] = (old + RAND.rate(1,80,0)).toString();
+                var pass = parseInt(d_current_status[model][i]["Pass"])
+                d_current_status[model][i]["Pass"] = (pass + RAND.rate(1,80,0)).toString();
 
                 var rate = Math.floor(Math.random()*3-1);
-                old = parseInt(d_current_status[model][i]["FTQ"]);
+                var ftq = parseInt(d_current_status[model][i]["FTQ"]);
                 var target = parseInt(d_current_status[model][i]["FTQ_Target"]);
-                if(old+rate<100){
-                    d_current_status[model][i]["FTQ"] = (old+rate).toString();
+                if(ftq+rate<100){
+                    d_current_status[model][i]["FTQ"] = (ftq+rate).toString();
                 }
 
-                if(old > target){
+                if(ftq > target){
                     d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["higher"];
-                }else if(old==target){
+                }else if(ftq==target){
                     d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["equal"];
                 }else{
                     d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["lower"];
                 }
+
+                var defects = (pass * ftq/100).toFixed(0);
+                d_current_status[model][i]["Defects"] = defects.toString();
             }
         }
         Report.refresh();

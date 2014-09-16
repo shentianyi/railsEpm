@@ -166,6 +166,7 @@ ANALYTICS.high_chart={
 
             }
         },
+        column:{},
         arearange:{
             fillOpacity:0.1,
             fillColor:"rgba(177,211,221,0.2)",
@@ -286,10 +287,7 @@ ANALYTICS.form_chart=function(option){
     bar_fix_from=Date.parse(begin_time_utc);
     bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1)) <= end_time_utc ?
                            Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1))) : Date.parse(end_time_utc) ;
-
     var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
-//    console.log(new Date(bar_fix_from).toISOString() );
-//    console.log(new Date(bar_fix_to).toISOString());
     show_loading(top,0,0,0);
 
     ANALYTICS.base_option={
@@ -302,7 +300,7 @@ ANALYTICS.form_chart=function(option){
         kpi_property: option.kpi_property
     };
 
-
+    console.log(ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null))
     $.post('/kpi_entries/analyse',{
         kpi_id : option.kpi_id,
         average: option.method=="0",
@@ -310,7 +308,8 @@ ANALYTICS.form_chart=function(option){
         start_time : new Date(bar_fix_from).toISOString() ,
         end_time : new Date(bar_fix_to).toISOString(),
         frequency:option.interval,
-        property:option.kpi_property
+        property:option.kpi_property,
+        report:ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null)
     },function(msg){
           if(option.show_loading==null || option.show_loading)
          remove_loading()
@@ -346,7 +345,11 @@ ANALYTICS.form_chart=function(option){
             else{
                 ANALYTICS.loading_data=false;
                 ANALYTICS.currentThreadLoading=false;
-                console.log("loading over");
+                ANALYTICS.qoros_demo_count--;
+                console.log("loading over from form_chart");
+                if(ANALYTICS.qoros_demo_count>0){
+                    ANALYTICS.prepare_form_chart_qoros();
+                }
             }
         }
         else{
@@ -428,7 +431,8 @@ ANALYTICS.add_data=function(option){
         entity_group_id: option.view,
         start_time : begin_time_utc.toISOString() ,
         end_time : next_date.toISOString(),
-        frequency:option.interval
+        frequency:option.interval,
+        report:ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null)
     },function(msg){
         if(msg.result){
             var data_length=msg.object.current.length;
@@ -467,7 +471,11 @@ ANALYTICS.add_data=function(option){
             else{
                 ANALYTICS.loading_data=false;
                 ANALYTICS.currentThreadLoading=false;
-                console.log("loading over");
+                ANALYTICS.qoros_demo_count--;
+                console.log("loading over from add data");
+                if(ANALYTICS.qoros_demo_count>0){
+                    ANALYTICS.prepare_form_chart_qoros();
+                }
             }
         }
         else{
@@ -536,7 +544,8 @@ ANALYTICS.add_series=function(option) {
         name: series_name,
         id: series_id,
         color:color,
-        data: data
+        data: data,
+        yAxis: ANALYTICS.qoros_demo_count===3?1:0
     })
 
 
