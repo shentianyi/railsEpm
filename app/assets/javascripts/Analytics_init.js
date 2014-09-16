@@ -245,7 +245,8 @@ function prepare_form_chart() {
                     fontSize:'11px'
                 },
                 formatter: function() {
-                    if(this.series.index===1){
+                    console.log(this)
+                    if(this.series.index===2){
                         if(this.total>0){
                             return this.total ;
                         }
