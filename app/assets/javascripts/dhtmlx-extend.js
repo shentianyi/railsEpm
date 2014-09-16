@@ -6,27 +6,35 @@ dhtmlXGridObject.prototype.serializeToJson = function () {
 };
 
 dhtmlXGridObject.prototype.serializeToDataJson = function () {
-    var data= xml2json.parser( this.serialize().replace(/<cell*.[^>]*/g, "<data")
+    var data = xml2json.parser(this.serialize().replace(/<cell*.[^>]*/g, "<data")
         .replace(/\<\/cell/g, "</data"));
     return {rows: data.rows.row};
 };
 //attrs=['abc']
-dhtmlXGridObject.prototype.addCellAttributes=function(attrs){
-   for(var i=0;i<attrs.length;i++){
-       if(this.xml.cell_attrs==null || $.inArray(attrs[i],this.xml.cell_attrs)){
-           console.log('*********');
-             this.xml.cell_attrs.push(attrs[i]);
-       }
-   }
+dhtmlXGridObject.prototype.addCellAttributes = function (attrs) {
+    for (var i = 0; i < attrs.length; i++) {
+        if (this.xml.cell_attrs == null || $.inArray(attrs[i], this.xml.cell_attrs)) {
+            this.xml.cell_attrs.push(attrs[i]);
+        }
+    }
     //this.addValueToAttribute();
 };
 
-dhtmlXGridObject.prototype.addValueToAttribute=function(){
-this.forEachRow(function(rowId){
-       this.forEachCell(rowId,function(cell,colIndex){
-          cell.setAttribute('value',cell.getValue());
-       });
-});
+dhtmlXGridObject.prototype.addValueToAttribute = function () {
+    this.forEachRow(function (rowId) {
+        this.forEachCell(rowId, function (cell, colIndex) {
+            cell.setAttribute('value', cell.getValue());
+        });
+    });
+};
+
+dhtmlXGridObject.prototype.setAttributeByRow = function (rowId, attr) {
+    this.forEachCell(rowId, function (cell, colIndex) {
+       // cell.setAttribute(attr.name, attr.value);
+        for(var a in attr){
+            cell.setAttribute(a, attr[a]);
+        }
+    });
 };
 
 
@@ -70,9 +78,6 @@ dhtmlXGridObject.prototype.serializeChartExcelXml = function () {
 //    }
     var charts = this.get_charts();
     var data = this.serializeToJson();
-    console.log('---------------------');
-    console.log(data);
-
     var headercount = data["rows"][0]["data"].length;
     var xml = "<report>";
     //Head Start
@@ -88,15 +93,16 @@ dhtmlXGridObject.prototype.serializeChartExcelXml = function () {
     for (var i = 0; i < data["rows"].length; i++) {
         xml += "<row>";
         for (var j = 0; j < data["rows"][i]["data"].length; j++) {
-             xml+="<cell"
-            var cell=     data["rows"][i]["data"][j];
-            for(var a in cell){
-                xml += " " + a + "='" + cell[a] + "'";
-                        //          console.log(a);
-
+            xml += "<cell"
+            var cell = data["rows"][i]["data"][j];
+            for (var a in cell) {
+                if (cell[a] != null && cell[a] != 'undefined') {
+                    xml += " " + a + "='" + cell[a] + "'";
+                }
+                //          console.log(a);
             }
-            xml+="></cell>"
-           // xml += "<cell><![CDATA[" + data["rows"][i]["data"][j] + "]]></cell>";
+            xml += "></cell>"
+            // xml += "<cell><![CDATA[" + data["rows"][i]["data"][j] + "]]></cell>";
         }
         xml += "</row>";
     }
@@ -177,13 +183,13 @@ dhtmlXDataView.prototype.toExcel = function (url) {
 
 function processReportExcelRequest(url, xml) {
     console.log(xml);
-//    $('<form>', {
-//        action: url,
-//        method: 'post',
-//        target: '_blank'
-//    }).append($('<input>', {
-//            type: 'hidden',
-//            name: 'grid_xml',
-//            value: xml
-//        })).appendTo('body').submit();
+    $('<form>', {
+        action: url,
+        method: 'post',
+        target: '_blank'
+    }).append($('<input>', {
+            type: 'hidden',
+            name: 'grid_xml',
+            value: xml
+        })).appendTo('body').submit();
 }
