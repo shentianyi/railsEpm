@@ -305,6 +305,7 @@ ifepm.dashboard.dhtmlxtable = function(container,datas){
     table.setSkin("dhx_skyblue");
     table.init();
     table.parse(d.json,"json");
+    return table;
 }
 
 var intervals = [];
