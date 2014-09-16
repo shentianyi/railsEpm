@@ -12,8 +12,14 @@ dhtmlXGridObject.prototype.serializeToDataJson = function () {
 };
 //attrs=['abc']
 dhtmlXGridObject.prototype.addCellAttributes = function (attrs) {
+    console.log(this.xml.cell_attrs);
+
     for (var i = 0; i < attrs.length; i++) {
-        if (this.xml.cell_attrs == null || $.inArray(attrs[i], this.xml.cell_attrs)) {
+
+        if (this.xml.cell_attrs == null || $.inArray(attrs[i], this.xml.cell_attrs) == -1) {
+            console.log('-----------------------')
+            console.log(attrs[i]);
+            console.log($.inArray(attrs[i], this.xml.cell_attrs));
             this.xml.cell_attrs.push(attrs[i]);
         }
     }
@@ -30,8 +36,8 @@ dhtmlXGridObject.prototype.addValueToAttribute = function () {
 
 dhtmlXGridObject.prototype.setAttributeByRow = function (rowId, attr) {
     this.forEachCell(rowId, function (cell, colIndex) {
-       // cell.setAttribute(attr.name, attr.value);
-        for(var a in attr){
+        // cell.setAttribute(attr.name, attr.value);
+        for (var a in attr) {
             cell.setAttribute(a, attr[a]);
         }
     });
@@ -76,7 +82,6 @@ dhtmlXGridObject.prototype.serializeChartExcelXml = function () {
 //    if(charts == undefined){
 //        charts = [];
 //    }
-    var charts = this.get_charts();
     var data = this.serializeToJson();
     var headercount = data["rows"][0]["data"].length;
     var xml = "<report>";
@@ -109,38 +114,40 @@ dhtmlXGridObject.prototype.serializeChartExcelXml = function () {
     xml += "</body></table>";
     //Body End
     var charts = this.get_charts();
-    //Chart Start
-    xml += "<charts>"
-    for (var i = 0; i < charts.length; i++) {
-        var chart = charts[i];
+    if (charts != null) {
+        //Chart Start
+        xml += "<charts>"
+        for (var i = 0; i < charts.length; i++) {
+            var chart = charts[i];
 
-        xml += "<chart";
+            xml += "<chart";
 
-        for (var a in chart.attr) {
-            xml += " " + a + "='" + chart.attr[a] + "'";
-        }
-        xml += ">";
-
-        for (var n = 0; n < chart.chart_types.length; n++) {
-            var chart_type = chart.chart_types[n];
-
-            xml += "<chart_type type='" + chart_type.type + "'>";
-            for (var j = 0; j < chart_type.series.length; j++) {
-                var serie = chart_type.series[j];
-                xml += "<serie";
-                for (var a in serie.attr) {
-                    xml += " " + a + "='" + serie.attr[a] + "'";
-                }
-                xml += ">";
-                xml += "<xaixs><![CDATA[" + serie["xaixs"] + "]]></xaixs><yaixs><![CDATA[" + serie['yaixs'] + "]]></yaixs>";
-
-                xml += "</serie>";
+            for (var a in chart.attr) {
+                xml += " " + a + "='" + chart.attr[a] + "'";
             }
-            xml += "</chart_type>";
+            xml += ">";
+
+            for (var n = 0; n < chart.chart_types.length; n++) {
+                var chart_type = chart.chart_types[n];
+
+                xml += "<chart_type type='" + chart_type.type + "'>";
+                for (var j = 0; j < chart_type.series.length; j++) {
+                    var serie = chart_type.series[j];
+                    xml += "<serie";
+                    for (var a in serie.attr) {
+                        xml += " " + a + "='" + serie.attr[a] + "'";
+                    }
+                    xml += ">";
+                    xml += "<xaixs><![CDATA[" + serie["xaixs"] + "]]></xaixs><yaixs><![CDATA[" + serie['yaixs'] + "]]></yaixs>";
+
+                    xml += "</serie>";
+                }
+                xml += "</chart_type>";
+            }
+            xml += "</chart>";
         }
-        xml += "</chart>";
+        xml += "</charts>";
     }
-    xml += "</charts>";
     //Chart End
     xml += "</report>";
     return xml;
