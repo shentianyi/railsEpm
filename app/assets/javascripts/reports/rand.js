@@ -30,3 +30,14 @@ RAND.time = function(start,end){
     var now = new Date(Math.random()*(end_time-start_time)+1+start_time);
     return now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+now.getHours()+":"+now.getMinutes();
 }
+
+/*rand string*/
+RAND.randstr = function(length){
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        for( var i=0; i < length; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+}

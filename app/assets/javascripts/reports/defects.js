@@ -1,4 +1,29 @@
 var defects={};
+defects.target = {};
+
+defects.refresh_color = function(){
+//    var data = Report.data;
+//    var obj = this.target;
+//    console.log(obj.getRowsNum());
+//    var target_data = {
+//        rows:[]
+//    };
+//    for(var i =0;i<data.length;i++){
+//        target_data["rows"][i] = {
+//            id:i+1,
+//            data:[data[i]["INQA"],data[i]["FTQ"],data[i]["FTQ_Target"]]
+//        }
+//    }
+//
+//    obj.parse(target_data,'json');
+//
+//    obj.forEachRow(function(row_id){
+//        var rinx = obj.getRowIndex(row_id);
+//        obj.cells(row_id,1).setBgColor(data[rinx]["STYLE_COLOR"]);
+//    })
+//    obj.refresh();
+};
+
 defects.example_init=function(){
     var width = Math.floor(($("#report-content").width()-2)/19-0);
     var widthstring = "";
@@ -26,11 +51,12 @@ defects.example_init=function(){
     var defectsgrid = new dhtmlXGridObject("all_defects");
     defectsgrid.setImagePath("/assets/dhtmlx/");
     defectsgrid.setHeader(headers);
+    //defectsgrid.attachHeader("#select_filter,#text_filter,#text_filter");
     defectsgrid.setInitWidths(widthstring);
     defectsgrid.enableAutoWidth(false);
     defectsgrid.setColAlign(alienstring);
     defectsgrid.setColTypes(coltypestring);
-    defectsgrid.setColSorting(coltypestring);
+    defectsgrid.setColSorting(colsortstring);
     defectsgrid.setSkin("dhx_skyblue");
     defectsgrid.setColumnColor("#d5f1ff");
     defectsgrid.enableSmartRendering(true);
@@ -48,8 +74,8 @@ defects.example_init=function(){
             id: i+1,
             data: [
                 RAND.enum(["CF11","CF14","CF16"]),
-                'LXXXXXXXXXXXXX',
-                'XXXX',
+                "L"+RAND.randstr(10),
+                RAND.enum(["A","B","C","D","E"])+RAND.randstr(5),
                 RAND.enum(["仪表盘","内饰","制动系统","发动机仓"]),
                 RAND.enum(["保险丝盒","发动机","左前轮","右前轮","侧饰版"]),
                 RAND.enum(["支架","右出风口","左出风口","侧围","ABS传感器","制动硬管","ECM"]),
@@ -77,11 +103,12 @@ defects.example_init=function(){
     var key_defectsgrid = new dhtmlXGridObject("key_defects");
     key_defectsgrid.setImagePath("/assets/dhtmlx/");
     key_defectsgrid.setHeader(headers);
+    //key_defectsgrid.attachHeader("#select_filter,#text_filter,#text_filter");
     key_defectsgrid.setInitWidths(widthstring);
     key_defectsgrid.enableAutoWidth(false);
     key_defectsgrid.setColAlign(alienstring);
     key_defectsgrid.setColTypes(coltypestring);
-    key_defectsgrid.setColSorting(coltypestring);
+    key_defectsgrid.setColSorting(colsortstring);
     key_defectsgrid.setSkin("dhx_skyblue");
     key_defectsgrid.setColumnColor("#d5f1ff");
     key_defectsgrid.enableSmartRendering(true);
@@ -99,8 +126,8 @@ defects.example_init=function(){
             id: i+1,
             data: [
                 RAND.enum(["CF11","CF14","CF16"]),
-                'LXXXXXXXXXXXXX',
-                'XXXX',
+                    "L"+RAND.randstr(10),
+                RAND.enum(["A","B","C","D","E","F","G","H","I"]),
                 RAND.enum(["仪表盘","内饰","制动系统","发动机仓"]),
                 RAND.enum(["保险丝盒","发动机","左前轮","右前轮","侧饰版"]),
                 RAND.enum(["支架","右出风口","左出风口","侧围","ABS传感器","制动硬管","ECM"]),
@@ -143,10 +170,11 @@ defects.example_init=function(){
     for(var i =0;i<current.length;i++){
         target_data["rows"][i] = {
             id:i+1,
-            data:[current[i]["INQA"],current[i]["FTQ"],RAND.range_int(80,98)]
+            data:[current[i]["INQA"],current[i]["FTQ"],current[i]["FTQ_Target"]]
         }
     }
     target_setting.parse(target_data,'json');
+    this.target = target_setting;
 
     //setting table size and layout
     defects.resize("all_defects");
