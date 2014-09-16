@@ -25,7 +25,7 @@ defects.refresh_color = function(){
 };
 
 defects.example_init=function(){
-    var width = Math.floor(($("#report-content").width()-2)/19-0);
+    var width = Math.floor(($("#report-content").width())/18);
     var widthstring = "";
     var alienstring = "";
     var coltypestring = "";
@@ -34,7 +34,13 @@ defects.example_init=function(){
         ",Station,Rank,Res.Dep,Inspector,repaired by,confirmed by,input date/time,Shift,Package code,Pilot";
     var length = headers.split(",").length;
     for(var i = 0;i<length;i++){
-        if(i<18){
+        if(i<3){
+            alienstring = alienstring+"center,"
+            widthstring = widthstring+150+",";
+            coltypestring = coltypestring + "ro,";
+            colsortstring = colsortstring + "str,";
+        }
+        else if(i<18){
             alienstring = alienstring+"center,"
             widthstring = widthstring+width+",";
             coltypestring = coltypestring + "ro,";
@@ -51,7 +57,7 @@ defects.example_init=function(){
     var defectsgrid = new dhtmlXGridObject("all_defects");
     defectsgrid.setImagePath("/assets/dhtmlx/");
     defectsgrid.setHeader(headers);
-    //defectsgrid.attachHeader("#select_filter,#text_filter,#text_filter");
+    defectsgrid.attachHeader("#select_filter,#text_filter,#text_filter");
     defectsgrid.setInitWidths(widthstring);
     defectsgrid.enableAutoWidth(false);
     defectsgrid.setColAlign(alienstring);
@@ -103,7 +109,7 @@ defects.example_init=function(){
     var key_defectsgrid = new dhtmlXGridObject("key_defects");
     key_defectsgrid.setImagePath("/assets/dhtmlx/");
     key_defectsgrid.setHeader(headers);
-    //key_defectsgrid.attachHeader("#select_filter,#text_filter,#text_filter");
+    key_defectsgrid.attachHeader("#select_filter,#text_filter,#text_filter");
     key_defectsgrid.setInitWidths(widthstring);
     key_defectsgrid.enableAutoWidth(false);
     key_defectsgrid.setColAlign(alienstring);
