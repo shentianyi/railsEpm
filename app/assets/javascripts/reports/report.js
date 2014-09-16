@@ -89,7 +89,7 @@ Report.clear = function () {
 
 /*refresh*/
 Report.refresh = function(){
-    console.log("refresh()");
+//    console.log("refresh()");
     this.r.refresh();
 };
 

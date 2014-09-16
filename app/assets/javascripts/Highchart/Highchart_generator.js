@@ -4,6 +4,8 @@ var Highchart_generator=function(option){
         "blue":"#97cbe4",
         "purple":"#9b65de"
     };
+    this.dpv_series;
+    this.sdpv_series;
     this.init=function(){
         var $target=this.target.indexOf("#")===-1?$("#"+this.target):$(this.target);
         this.basic.title.text=option.kpi?option.kpi:null;
@@ -182,7 +184,7 @@ var Highchart_generator=function(option){
         else if(option.name==="sdpv"){
             this.sdpv_series=deepCopy(option.data,{});
         }
-        this.basic.series=option.data;
+        this.basic.series=option.data[0].data;
         $target.highcharts(this.basic);
     };
     this.daily_resize=function(width,height,type){

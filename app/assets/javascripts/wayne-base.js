@@ -177,8 +177,8 @@ function compare_time(begin_time,end_time){
 function deepCopy(p,c){
     var c= c || {};
     for(var i in p){
-        if(typeof p[i]=='object' && p[i] !== null){
-            c[i] = (p[i].constructor==Array) ? [] : {};
+        if(typeof p[i]==='object' && p[i] !== null){
+            c[i] = (p[i].constructor===Array) ? [] : {};
             deepCopy(p[i],c[i])
         }
         else{
