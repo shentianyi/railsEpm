@@ -147,9 +147,15 @@ Report.configure = function () {
             current_status.init();
             break;
         case this.type["station_data"]:
+            var width = Math.floor($("#report-content").width() / 17) - 2;
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
+            var widstring = (width*2);
+            for(var i = 0;i<=12;i++){
+
+            }
             dhtmlxobj.setHeader("Inspection,#cspan,Vechile Total,OK Vehicle,NOK Vehicle,FTQ,DPV,DPV Target,Defects,Vehs,FTQ Target,OK,NOK");
             //mygrid.attachHeader("full,short,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
+            dhtmlxobj.setInitWidths((width*2)+",")
             dhtmlxobj.setInitWidths("150,80,80,80,80,80,80,80,80,80,80,80,80");
             dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center");
             dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");

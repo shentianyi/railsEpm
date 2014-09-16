@@ -74,7 +74,7 @@ defects.example_init=function(){
             data: [
                 RAND.enum(["CF11","CF14","CF16"]),
                 'LXXXXXXXXXXXXX',
-                'XXXX',
+                RAND.enum(["A","B","C","D","E","F","G","H","I"]),
                 RAND.enum(["仪表盘","内饰","制动系统","发动机仓"]),
                 RAND.enum(["保险丝盒","发动机","左前轮","右前轮","侧饰版"]),
                 RAND.enum(["支架","右出风口","左出风口","侧围","ABS传感器","制动硬管","ECM"]),
@@ -125,7 +125,7 @@ defects.example_init=function(){
             data: [
                 RAND.enum(["CF11","CF14","CF16"]),
                 'LXXXXXXXXXXXXX',
-                'XXXX',
+                RAND.enum(["A","B","C","D","E","F","G","H","I"]),
                 RAND.enum(["仪表盘","内饰","制动系统","发动机仓"]),
                 RAND.enum(["保险丝盒","发动机","左前轮","右前轮","侧饰版"]),
                 RAND.enum(["支架","右出风口","左出风口","侧围","ABS传感器","制动硬管","ECM"]),
