@@ -1,27 +1,35 @@
 <section class="current-status" id="current-status">
   <section id="current-status-normal">
     <div class="header" id="current-status-header">
-      <div class="left">
+      <div class="header-block">
+        <label>Condition</label>
         <p>First Time Quality (FTQ) Summary Percentage</p>
         <p id="current-date"></p>
         <p>Early shift</p>
-        <div class="btn-groups">
-          <a class="btn btn-primary" id="refresh">Refresh</a>
-          <a class="btn btn-primary" id="quick-print">Quick print</a>
-          <a class="btn btn-primary" onclick="export_report_excel()">Excel</a>
-          <a class="btn btn-primary extra_func_btn" id="target" tag='target'>Target</a>
-          <a class="btn btn-primary extra_func_btn" tag='all_defects'>All defects</a>
-          <a class="btn btn-primary extra_func_btn" tag='key_defects'>Key station defects</a>
-          <!--<a class="btn btn-func">Change data</a>-->
-        </div>
-      </div>
-      <div class="right">
-        <p><span>Current time:</span><span id="current-clock"></span></p>
         <select id="vehicle-select">
-          <option>CF11</option>
-          <option>CF14</option>
-          <option>CF16</option>
+        <option>CF11</option>
+        <option>CF14</option>
+        <option>CF16</option>
         </select>
+      </div>
+      <div class="header-block">
+        <label>Export</label>
+        <a class="btn btn-success" id="quick-print">Quick print</a>
+        <a class="btn btn-success" onclick="export_report_excel()">Excel</a>
+      </div>
+      <div class="header-block">
+        <label>Setting</label>
+        <a class="btn btn-primary" id="refresh">Refresh</a>
+        <a class="btn btn-primary extra_func_btn" id="target" tag='target'>Target</a>
+      </div>
+      <div class="header-block">
+        <label>Custom</label>
+        <a class="btn btn-primary extra_func_btn" tag='all_defects'>All defects</a>
+        <a class="btn btn-primary extra_func_btn" tag='key_defects'>Key station defects</a>
+      </div>
+      <div class="header-block">
+        <label>Current time</label>
+        <p id="current-clock"></p>
       </div>
     </div>
     <div id="data_container" class="data-container"></div>
