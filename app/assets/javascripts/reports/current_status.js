@@ -8,7 +8,8 @@ current_status.init=function(){
     current_status.flexible();
     $(window).resize(function(){
         current_status.flexible();
-    })
+    });
+    init_snap();
     $("body")
         .on("click",".extra_func_btn",function(){
             var tag=$(this).attr("tag") ;

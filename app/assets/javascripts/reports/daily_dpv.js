@@ -64,6 +64,7 @@ daily_dpv.init = function () {
     setTimeout(function () {
         $("#data_container").width($("#daily_dpv_left").width() - 2);
     }, 100);
+    init_snap();
 };
 daily_dpv.flex_init = function () {
     //set the content whole height
