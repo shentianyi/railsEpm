@@ -540,6 +540,7 @@ Report.station_data_on_json_parse = function () {
         } else {
             obj.cells(row_id, 5).setBgColor(Report.color.ftq["lower"]);
         }
+        obj.cells(row_id,5).setAttribute('bgcolor', obj.cells(row_id,5).getBgColor());
         //DPV
         var dpv = parseFloat(obj.cells(row_id, 6).getValue());
         var dpv_target = parseFloat(obj.cells(row_id, 7).getValue());
@@ -551,6 +552,7 @@ Report.station_data_on_json_parse = function () {
             obj.cells(row_id, 6).setBgColor(Report.color.dpv["lower"]);
         }
 
+        obj.cells(row_id,6).setAttribute('bgcolor', obj.cells(row_id,5).getBgColor());
     }
     ;
 }
