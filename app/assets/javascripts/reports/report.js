@@ -90,8 +90,13 @@ Report.clear = function () {
 
 /*refresh*/
 Report.refresh = function () {
-//    console.log("refresh()");
+   console.log("refresh()");
     this.r.refresh();
+
+    var fn = Report[this.option.type_string + "_on_refresh"];
+    if (typeof fn === 'function') {
+        fn();
+    }
 };
 
 /*get dhtmlx object*/
@@ -559,8 +564,39 @@ Report.station_data_on_json_parse = function () {
 
         obj.cells(row_id,6).setAttribute('bgcolor', obj.cells(row_id,6).getBgColor());
     }
-    ;
-}
+
+};
+
+/*station_on_refresh*/
+Report.station_data_on_refresh = function(){
+    var obj = Report.r;
+    for (var i = 0; i < obj.getRowsNum(); i++) {
+        var row_id = obj.getRowId(i);
+        //FTQ
+        var ftq = parseFloat(obj.cells(row_id, 5).getValue());
+        var ftq_targte = parseFloat(obj.cells(row_id, 10).getValue());
+        if (ftq > ftq_targte) {
+            obj.cells(row_id, 5).setBgColor(Report.color.ftq["higher"]);
+        } else if (ftq == ftq_targte) {
+            obj.cells(row_id, 5).setBgColor(Report.color.ftq["equal"]);
+        } else {
+            obj.cells(row_id, 5).setBgColor(Report.color.ftq["lower"]);
+        }
+        obj.cells(row_id,5).setAttribute('bgcolor', obj.cells(row_id,5).getBgColor());
+        //DPV
+        var dpv = parseFloat(obj.cells(row_id, 6).getValue());
+        var dpv_target = parseFloat(obj.cells(row_id, 7).getValue());
+        if (dpv > dpv_target) {
+            obj.cells(row_id, 6).setBgColor(Report.color.dpv["higher"]);
+        } else if (dpv == dpv_target) {
+            obj.cells(row_id, 6).setBgColor(Report.color.dpv["equal"]);
+        } else {
+            obj.cells(row_id, 6).setBgColor(Report.color.dpv["lower"]);
+        }
+
+        obj.cells(row_id,6).setAttribute('bgcolor', obj.cells(row_id,6).getBgColor());
+    }
+};
 
 // need to rewrite
 // default export excel
