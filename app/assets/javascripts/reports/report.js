@@ -326,6 +326,10 @@ Report.current_status_init = function () {
         }, 1500);
 
     });
+
+    Report.r.attachEvent("onAfterSelect",function(id){
+        console.log("Selected:"+id);
+    });
 };
 
 Report.daily_dpv_init = function () {
