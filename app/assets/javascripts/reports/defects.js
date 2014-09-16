@@ -2,12 +2,26 @@ var defects={};
 defects.target = {};
 
 defects.refresh_color = function(){
-    var data = Report.data;
-    var obj = this.target;
-    obj.forEachRow(function(row_id){
-        var rinx = obj.getRowIndex(row_id);
-        obj.cells(row_id,1).setBgColor(data[rinx]["STYLE_COLOR"]);
-    })
+//    var data = Report.data;
+//    var obj = this.target;
+//    console.log(obj.getRowsNum());
+//    var target_data = {
+//        rows:[]
+//    };
+//    for(var i =0;i<data.length;i++){
+//        target_data["rows"][i] = {
+//            id:i+1,
+//            data:[data[i]["INQA"],data[i]["FTQ"],data[i]["FTQ_Target"]]
+//        }
+//    }
+//
+//    obj.parse(target_data,'json');
+//
+//    obj.forEachRow(function(row_id){
+//        var rinx = obj.getRowIndex(row_id);
+//        obj.cells(row_id,1).setBgColor(data[rinx]["STYLE_COLOR"]);
+//    })
+//    obj.refresh();
 };
 
 defects.example_init=function(){
