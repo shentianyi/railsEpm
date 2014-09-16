@@ -391,11 +391,6 @@ DASHBOARD.add.prepare_form_chart=function() {
                 end_post=standardParse(end_time).date.toISOString();
             }
 
-
-
-
-
-
         if(is_datetime_outrange(begin_time,end_time,interval)){
             MessageBox("对不起，时间范围太大了！","top","warning")
             return;
@@ -441,6 +436,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                db_chartSeries.id_give();
                option.id=db_chartSeries.id;
                addSeriesOption.id=db_chartSeries.id;
+
                var color=option.theme ?
                    HIGH_CHART.chart_color[option.theme][option.id % HIGH_CHART.chart_color[option.theme].length]
                    :HIGH_CHART.chart_color["default"][option.id % HIGH_CHART.chart_color["default"].length];
@@ -461,39 +457,58 @@ DASHBOARD.add.prepare_form_chart=function() {
                    data_array[i].unit=msg.object.unit[i];
                    data_array[i].id=option.id
                }
+               if(option.type==="table"){
+                   if(chart_body_close_validate){
+                       option.data=data_array;
+                       addSeriesOption[interval]=data_array;
+                       db_chartSeries.addSeries(addSeriesOption);
 
-               if(chart_body_close_validate){
-                   option.data=data_array;
-                   addSeriesOption[interval]=data_array;
-                   db_chartSeries.addSeries(addSeriesOption);
+                       DASHBOARD.add.show_chart_body(option);
 
-                   DASHBOARD.add.show_chart_body(option);
-                   render_to(option);
-                   create_environment_for_data(option);
-                   new Highcharts.Chart(high_chart);
-                   add_series(option);
-                   proper_type_for_chart(option);
+                   }
+                   else{
+                       option.data=data_array;
+                       addSeriesOption[interval]=data_array;
+                       db_chartSeries.addSeries(addSeriesOption);
 
-                   if(option.type=="line"&&db_chartSeries.getCount()==1){
-                        var option_area={};
-                        option_area=deepCopy(option,option_area);
-                        option_area.type="arearange";
-                        option_area.id="line-target";
-                        option_area.count=db_chartSeries.getCount() + 1;
-                        add_series(option_area);
-                        proper_type_for_chart(option_area);
-                    }
+                   }
+                   option.total=msg.object.total;
+
                }
                else{
-                   option.data=data_array;
-                   addSeriesOption[interval]=data_array;
-                   db_chartSeries.addSeries(addSeriesOption);
-                   add_series(option);
-                   proper_type_for_chart(option);
+                   if(chart_body_close_validate){
+                       option.data=data_array;
+                       addSeriesOption[interval]=data_array;
+                       db_chartSeries.addSeries(addSeriesOption);
+
+                       DASHBOARD.add.show_chart_body(option);
+                       render_to(option);
+                       create_environment_for_data(option);
+                       new Highcharts.Chart(high_chart);
+                       add_series(option);
+                       proper_type_for_chart(option);
+
+                       if(option.type=="line"&&db_chartSeries.getCount()==1){
+                           var option_area={};
+                           option_area=deepCopy(option,option_area);
+                           option_area.type="arearange";
+                           option_area.id="line-target";
+                           option_area.count=db_chartSeries.getCount() + 1;
+                           add_series(option_area);
+                           proper_type_for_chart(option_area);
+                       }
+                   }
+                   else{
+                       option.data=data_array;
+                       addSeriesOption[interval]=data_array;
+                       db_chartSeries.addSeries(addSeriesOption);
+                       add_series(option);
+                       proper_type_for_chart(option);
+                   }
+                   option.total=msg.object.total;
+                   limit_pointer_number(option);
+                   DASHBOARD.add.generate(option);
                }
-               option.total=msg.object.total;
-               limit_pointer_number(option);
-               DASHBOARD.add.generate(option);
            }
            else{
                MessageBox("sorry , something wrong" , "top", "warning") ;
@@ -550,6 +565,10 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 interval: $("#db-chart-interval-alternate li.active").attr("interval")
             }
 
+        if(option.type==="table"){
+             console.log(option)
+        }
+        else{
             if($("#"+option.target).highcharts().get("line-target")!=undefined){
                 $("#"+option.target).highcharts().get("line-target").remove();
             }
@@ -579,6 +598,7 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 proper_type_for_chart(option);
             }
             limit_pointer_number(option);
+        }
     }
 }
 //切换周期
