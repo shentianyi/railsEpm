@@ -329,7 +329,7 @@ ifepm.dashboard_widget.get_pos = function(filter){
 * */
 ifepm.dashboard_widget.initsize = function(type){
     var defsize = {
-        sizex:1,
+        sizex:2,
         sizey:1,
     };
     switch (type)
@@ -347,6 +347,10 @@ ifepm.dashboard_widget.initsize = function(type){
             defsize.sizey = 1;
             break;
         case "scatter":
+            defsize.sizex = 2;
+            defsize.sizey = 1;
+            break;
+        case "table":
             defsize.sizex = 2;
             defsize.sizey = 1;
             break;
