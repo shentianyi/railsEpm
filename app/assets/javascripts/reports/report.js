@@ -90,7 +90,10 @@ Report.clear = function () {
 
 /*refresh*/
 Report.refresh = function () {
-   console.log("refresh()");
+    if(this.r.refresh == undefined){
+        return;
+    }
+    console.log("refresh()");
     this.r.refresh();
 
     var fn = Report[this.option.type_string + "_on_refresh"];

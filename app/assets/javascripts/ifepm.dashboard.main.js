@@ -30,7 +30,24 @@ if (!Date.prototype.toArray) {
             this.getMilliseconds()];
     };
 }
-;
+
+if(!Date.prototype.getWeekNumber){
+    Date.prototype.getWeekNumber = function(){
+        var d = new Date(+this);
+        d.setHours(0,0,0);
+        d.setDate(d.getDate()+4-(d.getDay()||7));
+        return Math.ceil((((d-new Date(d.getFullYear(),0,1))/8.64e7)+1)/7);
+    };
+}
+
+if(!Date.prototype.getQuarter){
+    Date.prototype.getQuarter = function(){
+        d = new Date(+this);
+        var q = [4,1,2,3];
+        return q[Math.floor(d.getMonth() / 3)];
+    };
+}
+
 
 
 //load or initialize the ifepm object
@@ -157,36 +174,12 @@ ifepm.dashboard.form_graph = function (datas, id) {
     }
 
     var type = ifepm.dashboard.graphs[id].chart_type;
+    type= 'table';
+
     if (type == 'table'){
         /*-------------------------table----------------------------------*/
         window.setTimeout(function(){
-            var d = ifepm.dashboard.parse2dhtmlxGridJson(datas);
-            var width = $("#"+container).width()/ d.colcount;
-            width = width < 60 ? 60 : width;
-            var widthstring = "";
-            var alistr = "";
-
-            for(var i =0;i< d.colcount;i++){
-                if(i<2){
-                    widthstring = widthstring+150+",";
-                    alistr= alistr + "center";
-                }
-                else if(i== d.colcount-1){
-                    widthstring = widthstring+width;
-                    alistr= alistr + "center";
-                }else{
-                    widthstring = widthstring +width+",";
-                    alistr = alistr + "center,";
-                }
-            }
-
-            var table = new dhtmlXGridObject(container);
-            table.setImagePath("/assets/dhtmlx/");
-            table.setHeader(d.headers);
-            table.setInitWidths(widthstring);
-            table.setSkin("dhx_skyblue");
-            table.init();
-            table.parse(d.json,"json");
+            ifepm.dashboard.dhtmlxtable(container,datas);
         },1000);
 
         /*-------------------------table----------------------------------*/
@@ -201,9 +194,35 @@ ifepm.dashboard.form_graph = function (datas, id) {
         return;
     }
 
-
     dashboard_remove_loading(outer);
     ifepm.dashboard.on_finish_load();
+};
+
+ifepm.dashboard.parseDateTime = function(interval,time){
+    var now = new Date(time);
+    switch(interval){
+        case "90":
+            return now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+now.getHours()+":00";
+            break;
+        case "100":
+            return now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate();
+            break;
+        case "200":
+            return "Week "+now.getWeekNumber()
+            break;
+        case "300":
+            now.getFullYear()+"/"+(now.getMonth()+1);
+            break;
+        case "400":
+            now.getQuarter().toString();
+            break;
+        case "500":
+            now.getFullYear().toString();
+            break;
+        default:
+            break;
+    }
+    return "/";
 }
 
 ifepm.dashboard.parse2dhtmlxGridJson = function(datas){
@@ -242,12 +261,52 @@ ifepm.dashboard.parse2dhtmlxGridJson = function(datas){
 
     var headers = "";
 
+    var interval = datas[0].interval;
+
     $.each(Object.keys(h_keys),function(index,value){
-        headers = headers + value+",";
+        var v = null;
+        if(index < 2){
+            v = value
+        }
+        else{
+            v  =ifepm.dashboard.parseDateTime(interval,value);
+        }
+        headers = headers + v+",";
     });
 
     return {json:djson,headers:headers,colcount:Object.keys(h_keys).length};
 };
+
+ifepm.dashboard.dhtmlxtable = function(container,datas){
+    var d = ifepm.dashboard.parse2dhtmlxGridJson(datas);
+    var width = $("#"+container).width()/ d.colcount;
+    width = width < 60 ? 60 : width;
+    var widthstring = "";
+    var alistr = "";
+
+    for(var i =0;i< d.colcount;i++){
+        if(i<2){
+            widthstring = widthstring+150+",";
+            alistr= alistr + "center";
+        }
+        else if(i== d.colcount-1){
+            widthstring = widthstring+width;
+            alistr= alistr + "center";
+        }else{
+            widthstring = widthstring +width+",";
+            alistr = alistr + "center,";
+        }
+    }
+
+    var table = new dhtmlXGridObject(container);
+    table.setImagePath("/assets/dhtmlx/");
+    table.setHeader(d.headers);
+    table.setInitWidths(widthstring);
+    table.setSkin("dhx_skyblue");
+    table.init();
+    table.parse(d.json,"json");
+    return table;
+}
 
 var intervals = [];
 /*
