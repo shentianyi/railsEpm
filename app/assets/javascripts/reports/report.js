@@ -89,7 +89,7 @@ Report.clear = function () {
 
 /*refresh*/
 Report.refresh = function(){
-    console.log("refresh()");
+//    console.log("refresh()");
     this.r.refresh();
 };
 
@@ -113,9 +113,17 @@ Report.get_dhtmlx = function () {
 
 /*color*/
 Report.color = {
-    "higher":"#19cf22",
-    "equal":"#f3d02e",
-    "lower":"#eb4848"
+    ftq:{
+        "higher":"#19cf22",
+        "equal":"#f3d02e",
+        "lower":"#eb4848"
+    },
+    dpv:{
+        "higher":"#eb4848",
+        "equal":"#f3d02e",
+        "lower":"#19cf22"
+    }
+
 }
 
 Report.configure = function () {
@@ -147,14 +155,21 @@ Report.configure = function () {
             current_status.init();
             break;
         case this.type["station_data"]:
+            var width = Math.floor($("#report-content").width() / 14) - 2;
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
+            var widstring = (width*2)+",";
+            for(var i = 0;i<12;i++){
+                if(i==12){
+                    widstring = widstring +width;
+                }else {
+                    widstring = widstring + width + ",";
+                }
+            }
             dhtmlxobj.setHeader("Inspection,#cspan,Vechile Total,OK Vehicle,NOK Vehicle,FTQ,DPV,DPV Target,Defects,Vehs,FTQ Target,OK,NOK");
-            //mygrid.attachHeader("full,short,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
-            dhtmlxobj.setInitWidths("150,80,80,80,80,80,80,80,80,80,80,80,80");
+            dhtmlxobj.setInitWidths(widstring);
             dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center");
             dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
             dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int");
-            //mygrid.setColumnColor("white,#d5f1ff,#d5f1ff");
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.init();
             dhtmlxobj.enableMultiselect(true);
@@ -459,12 +474,12 @@ Report.daily_dpv_on_json_parse = function () {
     var jsondata = Report.data;//Report.r.serializeToDataJson();
 
     var xArray = [],data = [],header  = [];
-    header = Report.headers["daily_dpv"].split(",")
+    header = Report.headers["daily_dpv"].split(",");
     xArray = header.slice(0);
     //DPV
     colindx = 2;
     for (var j = 0; j < xArray.length; j++) {
-        data[j] = jsondata['rows'][colindx]['data'][j]
+        data[j] = parseFloat(jsondata['rows'][colindx]['data'][j]);
     }
 
     xArray.shift();
@@ -487,7 +502,7 @@ Report.daily_dpv_on_json_parse = function () {
     //SDPV
     colindx = 3;
     for (var j = 0; j < xArray.length; j++) {
-        data[j] = jsondata['rows'][colindx]['data'][j]
+        data[j] = parseFloat(jsondata['rows'][colindx]['data'][j]);
     }
     xArray.shift();
     data.shift();
@@ -512,24 +527,24 @@ Report.station_data_on_json_parse = function () {
     for (var i = 0; i < obj.getRowsNum(); i++) {
         var row_id = obj.getRowId(i);
         //FTQ
-        var ftq = obj.cells(row_id, 5).getValue();
-        var ftq_targte = obj.cells(row_id, 10).getValue();
+        var ftq = parseFloat(obj.cells(row_id, 5).getValue());
+        var ftq_targte = parseFloat(obj.cells(row_id, 10).getValue());
         if (ftq > ftq_targte) {
-            obj.cells(row_id, 5).setBgColor(Report.color["higher"]);
+            obj.cells(row_id, 5).setBgColor(Report.color.ftq["higher"]);
         } else if (ftq == ftq_targte){
-            obj.cells(row_id, 5).setBgColor(Report.color["equal"]);
+            obj.cells(row_id, 5).setBgColor(Report.color.ftq["equal"]);
         }else {
-            obj.cells(row_id, 5).setBgColor(Report.color["lower"]);
+            obj.cells(row_id, 5).setBgColor(Report.color.ftq["lower"]);
         }
         //DPV
-        var dpv = obj.cells(row_id, 6).getValue();
-        var dpv_target = obj.cells(row_id, 7).getValue();
+        var dpv = parseFloat(obj.cells(row_id, 6).getValue());
+        var dpv_target = parseFloat(obj.cells(row_id, 7).getValue());
         if (dpv > dpv_target) {
-            obj.cells(row_id, 6).setBgColor(Report.color["lower"]);
+            obj.cells(row_id, 6).setBgColor(Report.color.dpv["higher"]);
         } else if (dpv == dpv_target){
-            obj.cells(row_id, 6).setBgColor(Report.color["equal"]);
+            obj.cells(row_id, 6).setBgColor(Report.color.dpv["equal"]);
         }else{
-            obj.cells(row_id, 6).setBgColor(Report.color["higher"]);
+            obj.cells(row_id, 6).setBgColor(Report.color.dpv["lower"]);
         }
 
     }

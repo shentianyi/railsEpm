@@ -15,14 +15,26 @@ current_status.init=function(){
             current_status.show_extra_section(tag);
             current_status.flexible();
             if(tag==="target"){
+                var a = ["higher","equal","lower"];
                 $("#footer-right").find(".color-group").remove();
+                var color_html,color_type;
                 for(var i=0;i<3;i++){
-                    var color_html='<div class="color-group">'+
-                        '<span class="color-item" type="green" style="background:#19cf22" col="higher"></span>'+
-                        '<span class="color-item" type="red"  style="background:#eb4848" col="equal"></span>'+
-                        '<span class="color-item" type="yellow"  style="background:#f3d02e" col="lower"></span>'+
-                        '</div>'
+                    color_html='<div idx='+a[i]+' class="color-group">'+
+                        '<span class="color-item" style="background:#19cf22" ></span>'+
+                        '<span class="color-item" style="background:#eb4848" ></span>'+
+                        '<span class="color-item" style="background:#f3d02e" ></span>'+
+                        '<span class="color-item" style="background:#0fd9bf" ></span>'+
+                        '<span class="color-item" style="background:#c222ea" ></span>'+
+                        '<span class="color-item" style="background:#3a6be7" ></span>'+
+                        '<span class="color-item" style="background:#f56c22" ></span>'+
+                        '</div>';
+                    color_type=Report.color.ftq[a[i]];
                     $("#footer-right").append(color_html);
+                    $("div[idx="+a[i]+"]").find(".color-item").each(function(index,value){
+                        if($(value).css("backgroundColor")===color_type){
+                            $(value).addClass("active");
+                        }
+                    });
                 }
             }
         })
@@ -39,10 +51,11 @@ current_status.init=function(){
         .on("click","#target-setting-footer .color-item",function(){
             $(this).siblings().removeClass("active");
             $(this).addClass("active");
-            var col = $(this).attr("col");
+
+            var col = $(this).parent().attr("idx");
             var color = $(this).css("backgroundColor");
-            Report.color[col]=color;
-            console.log("Color:"+color);
+            Report.color.ftq[col]=color;
+
             /*refresh data*/
             models = ["CF11","CF14","CF16"];
             for(var j = 0;j<models.length;j++){
