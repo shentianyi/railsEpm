@@ -75,6 +75,7 @@ module Entry
       ok=get_ok_result
       nok=get_nok_result
       percents=[]
+      unit=[]
       ok[:current].each_with_index do |v,i|
        total=v+nok[:current][i]
        if total==0
@@ -82,8 +83,10 @@ module Entry
        else
          percents << ((v*100/total))
        end
+        unit << '%'
       end
       ok[:current]=percents
+      ok[:unit]=unit
       return ok
     end
 
