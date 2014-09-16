@@ -51,7 +51,7 @@ defects.example_init=function(){
     var defectsgrid = new dhtmlXGridObject("all_defects");
     defectsgrid.setImagePath("/assets/dhtmlx/");
     defectsgrid.setHeader(headers);
-    defectsgrid.attachHeader("#select_filter,#text_filter,#text_filter");
+    //defectsgrid.attachHeader("#select_filter,#text_filter,#text_filter");
     defectsgrid.setInitWidths(widthstring);
     defectsgrid.enableAutoWidth(false);
     defectsgrid.setColAlign(alienstring);
@@ -103,7 +103,7 @@ defects.example_init=function(){
     var key_defectsgrid = new dhtmlXGridObject("key_defects");
     key_defectsgrid.setImagePath("/assets/dhtmlx/");
     key_defectsgrid.setHeader(headers);
-    key_defectsgrid.attachHeader("#select_filter,#text_filter,#text_filter");
+    //key_defectsgrid.attachHeader("#select_filter,#text_filter,#text_filter");
     key_defectsgrid.setInitWidths(widthstring);
     key_defectsgrid.enableAutoWidth(false);
     key_defectsgrid.setColAlign(alienstring);
