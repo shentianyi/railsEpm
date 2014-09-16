@@ -163,7 +163,7 @@ dhtmlXDataView.prototype.serializeToExcelXml = function () {
     for (var i = 0; i < data.length; i++) {
         xml += '<row>';
         for (var d in data[i]) {
-            if (d != 'id' && d != 'value' && h.indexOf("STYLE_") == -1) {
+            if (d != 'id' && d != 'value' && d.indexOf("STYLE_") == -1) {
                 xml += '<cell><![CDATA[' + $.trim(data[i][d]) + ']]></cell>';
             }
         }
