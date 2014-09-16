@@ -458,12 +458,12 @@ Report.daily_dpv_on_json_parse = function () {
     var jsondata = Report.data;//Report.r.serializeToDataJson();
 
     var xArray = [],data = [],header  = [];
-    header = Report.headers["daily_dpv"].split(",")
+    header = Report.headers["daily_dpv"].split(",");
     xArray = header.slice(0);
     //DPV
     colindx = 2;
     for (var j = 0; j < xArray.length; j++) {
-        data[j] = jsondata['rows'][colindx]['data'][j]
+        data[j] = parseFloat(jsondata['rows'][colindx]['data'][j]);
     }
 
     xArray.shift();
@@ -486,7 +486,7 @@ Report.daily_dpv_on_json_parse = function () {
     //SDPV
     colindx = 3;
     for (var j = 0; j < xArray.length; j++) {
-        data[j] = jsondata['rows'][colindx]['data'][j]
+        data[j] = parseFloat(jsondata['rows'][colindx]['data'][j]);
     }
     xArray.shift();
     data.shift();
