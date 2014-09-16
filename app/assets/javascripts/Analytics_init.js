@@ -270,6 +270,42 @@ function prepare_form_chart() {
                     tickInterval:20,
                     opposite: false }
             ];
+            ANALYTICS.high_chart.plotOptions.column.dataLabels={
+                enabled: true,
+                color: "rgba(0,0,0,0.8)",
+                inside:false,
+                style: {
+                    fontWeight: 'bold',
+                    fontSize:'11px'
+                },
+                formatter: function() {
+                    if(this.series.index===0){
+                        if(this.total>0){
+                            return this.total ;
+                        }
+                        else{
+                            return "" ;
+                        }
+                    }
+                }
+            };
+            ANALYTICS.high_chart.plotOptions.line.dataLabels={
+                enabled: true,
+                color: "rgba(60,111,204,0.8)",
+                style: {
+                    fontWeight: 'bold',
+                    fontSize:'11px'
+                },
+                align:"left",
+                formatter: function() {
+                    if(this.y>0){
+                        return this.y+"%" ;
+                    }
+                    else{
+                        return "" ;
+                    }
+                }
+            };
             if (option.chart_body_close_validate) {
                 show_chart_body(option);
             }

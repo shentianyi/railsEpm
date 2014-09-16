@@ -210,13 +210,13 @@ ifepm.dashboard.parseDateTime = function(interval,time){
             return "Week "+now.getWeekNumber()
             break;
         case "300":
-            now.getFullYear()+"/"+(now.getMonth()+1);
+            return now.getFullYear()+"/"+(now.getMonth()+1);
             break;
         case "400":
-            now.getQuarter().toString();
+            return "Quarter "+now.getQuarter().toString();
             break;
         case "500":
-            now.getFullYear().toString();
+            return now.getFullYear().toString();
             break;
         default:
             break;
