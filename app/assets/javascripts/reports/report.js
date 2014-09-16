@@ -193,11 +193,12 @@ Report.configure = function () {
             daily_dpv.init();
             break;
         case this.type["daily_ftq"]:
-            var width = 62;
-            var widthstring = "";
             var head_length = this.headers["daily_ftq"].split(",").length;
-            for (var i = 0; i <= head_length; i++) {
-                if (i == head_length) {
+
+            var width = Math.floor($("#report-content").width() / head_length) - 2;
+            var widthstring = "";
+            for(var i = 0 ;i <= head_length;i++){
+                if(i == head_length){
                     widthstring = widthstring + width;
                 } else {
                     widthstring = widthstring + width + ",";
@@ -329,6 +330,10 @@ Report.current_status_init = function () {
             current_status.loader_hide();
         }, 1500);
 
+    });
+
+    Report.r.attachEvent("onAfterSelect",function(id){
+        console.log("Selected:"+id);
     });
 };
 
