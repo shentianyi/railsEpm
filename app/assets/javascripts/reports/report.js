@@ -87,6 +87,12 @@ Report.clear = function () {
     this.data = {};
 };
 
+/*refresh*/
+Report.refresh = function(){
+    console.log("refresh()");
+    this.r.refresh();
+};
+
 /*get dhtmlx object*/
 Report.get_dhtmlx = function () {
     var container = "data_container";
@@ -107,9 +113,9 @@ Report.get_dhtmlx = function () {
 
 /*color*/
 Report.color = {
-    "red":"#eb4848",
-    "green":"#19cf22",
-    "yellow":"#f3d02e"
+    "higher":"#19cf22",
+    "equal":"#f3d02e",
+    "lower":"#eb4848"
 }
 
 Report.configure = function () {
@@ -203,7 +209,7 @@ Report.configure = function () {
 Report.get_json = function () {
     switch (this.option.type) {
         case this.type["current_status"]:
-            return d_current_status['CF11'];
+            return d_current_status["CF11"];
         case this.type["daily_dpv"]:
             return  SampleData.init_daily_dpv();
         case this.type["station_data"]:
@@ -305,11 +311,6 @@ Report.current_status_init = function () {
         }, 1500);
 
     });
-
-    //bind color select btn
-    $("#refresh").on("click",function(){
-
-    });
 };
 
 Report.daily_dpv_init = function () {
@@ -393,7 +394,7 @@ Report.daily_ftq_on_json_parse = function(){
     //load chart
     var headers = Report.headers["daily_ftq"].split(",");
     Report.r.addValueToAttribute();
-    var jsondata = Report.r.serializeToDataJson();
+    var jsondata = Report.data;//Report.r.serializeToDataJson();
     var xArray = [], ok = [], nok = [], ftq = [];
     //ok
     xArray = headers.slice(0);
@@ -454,7 +455,7 @@ Report.daily_dpv_on_json_parse = function () {
 
     Report.r.addValueToAttribute();
 
-    var jsondata = Report.r.serializeToDataJson();
+    var jsondata = Report.data;//Report.r.serializeToDataJson();
 
     var xArray = [],data = [],header  = [];
     header = Report.headers["daily_dpv"].split(",")
@@ -512,18 +513,22 @@ Report.station_data_on_json_parse = function () {
         //FTQ
         var ftq = obj.cells(row_id, 5).getValue();
         var ftq_targte = obj.cells(row_id, 10).getValue();
-        if (ftq >= ftq_targte) {
-            obj.cells(row_id, 5).setBgColor(Report.color["red"]);
-        } else {
-            obj.cells(row_id, 5).setBgColor(Report.color["green"]);
+        if (ftq > ftq_targte) {
+            obj.cells(row_id, 5).setBgColor(Report.color["higher"]);
+        } else if (ftq == ftq_targte){
+            obj.cells(row_id, 5).setBgColor(Report.color["equal"]);
+        }else {
+            obj.cells(row_id, 5).setBgColor(Report.color["lower"]);
         }
         //DPV
         var dpv = obj.cells(row_id, 6).getValue();
         var dpv_target = obj.cells(row_id, 7).getValue();
-        if (dpv < dpv_target) {
-            obj.cells(row_id, 6).setBgColor(Report.color["red"]);
-        } else {
-            obj.cells(row_id, 6).setBgColor(Report.color["green"]);
+        if (dpv > dpv_target) {
+            obj.cells(row_id, 6).setBgColor(Report.color["lower"]);
+        } else if (dpv == dpv_target){
+            obj.cells(row_id, 6).setBgColor(Report.color["equal"]);
+        }else{
+            obj.cells(row_id, 6).setBgColor(Report.color["higher"]);
         }
 
     }

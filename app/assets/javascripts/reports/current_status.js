@@ -17,9 +17,9 @@ current_status.init=function(){
             if(tag==="target"){
                 for(var i=0;i<3;i++){
                     var color_html='<div class="color-group">'+
-                        '<span class="color-item active" type="green" style="background:'+Report.color.green+'"></span>'+
-                        '<span class="color-item" type="red"  style="background:'+Report.color.red+'"></span>'+
-                        '<span class="color-item" type="yellow"  style="background:'+Report.color.yellow+'"></span>'+
+                        '<span class="color-item" type="green" style="background:#19cf22" col="higher"></span>'+
+                        '<span class="color-item" type="red"  style="background:#eb4848" col="equal"></span>'+
+                        '<span class="color-item" type="yellow"  style="background:#f3d02e" col="lower"></span>'+
                         '</div>'
                     $("#footer-right").append(color_html);
                 }
@@ -31,12 +31,36 @@ current_status.init=function(){
             setTimeout(function(){
                 $target.css("display","none");
                 $("#current-status-normal").css("display","block");
+                $("#footer-right div.color-group").remove();
                 current_status.loader_hide();
             },700);
         })
         .on("click","#target-setting-footer .color-item",function(){
-            alert($(this).attr("type"))
-            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>click color
+            $(this).siblings().removeClass("active");
+            $(this).addClass("active");
+            var col = $(this).attr("col");
+            var color = $(this).css("backgroundColor");
+            Report.color[col]=color;
+            console.log("Color:"+color);
+            /*refresh data*/
+            models = ["CF11","CF14","CF16"];
+            for(var j = 0;j<models.length;j++){
+                var model = models[j];
+                for(var i = 0;i<d_current_status[model].length;i++){
+                    var old = parseInt(d_current_status[model][i]["Defects"]);
+                    d_current_status[model][i]["Defects"] = (old+RAND.rate(1,20,0)).toString();
+
+                    old = parseInt(d_current_status[model][i]["Pass"])
+                    d_current_status[model][i]["Pass"] = (old + RAND.rate(1,80,0)).toString();
+
+                    var rate = Math.floor(Math.random()*3-1);
+                    old = parseInt(d_current_status[model][i]["FTQ"])
+                    if(old+rate<100){
+                        d_current_status[model][i]["FTQ"] = (old+rate).toString();
+                    }
+                }
+            }
+            Report.refresh();
         });
 
 }
@@ -78,6 +102,7 @@ current_status.show_extra_section=function(tag){
              $("#current-status-normal").css("display","none");
              $("#current-status-target").css("display","block");
              current_status.loader_hide();
+             defects.refresh_color();
          },700);
      }
     else if(tag==="all_defects"){

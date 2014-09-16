@@ -1,4 +1,15 @@
 var defects={};
+defects.target = {};
+
+defects.refresh_color = function(){
+    var data = Report.data;
+    var obj = this.target;
+    obj.forEachRow(function(row_id){
+        var rinx = obj.getRowIndex(row_id);
+        obj.cells(row_id,1).setBgColor(data[rinx]["STYLE_COLOR"]);
+    })
+};
+
 defects.example_init=function(){
     var width = Math.floor(($("#report-content").width()-2)/19-0);
     var widthstring = "";
@@ -143,10 +154,11 @@ defects.example_init=function(){
     for(var i =0;i<current.length;i++){
         target_data["rows"][i] = {
             id:i+1,
-            data:[current[i]["INQA"],current[i]["FTQ"],RAND.range_int(80,98)]
+            data:[current[i]["INQA"],current[i]["FTQ"],current[i]["FTQ_Target"]]
         }
     }
     target_setting.parse(target_data,'json');
+    this.target = target_setting;
 
     //setting table size and layout
     defects.resize("all_defects");
