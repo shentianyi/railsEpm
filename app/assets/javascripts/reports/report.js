@@ -511,8 +511,8 @@ Report.station_data_on_json_parse = function () {
     for (var i = 0; i < obj.getRowsNum(); i++) {
         var row_id = obj.getRowId(i);
         //FTQ
-        var ftq = obj.cells(row_id, 5).getValue();
-        var ftq_targte = obj.cells(row_id, 10).getValue();
+        var ftq = parseFloat(obj.cells(row_id, 5).getValue());
+        var ftq_targte = parseFloat(obj.cells(row_id, 10).getValue());
         if (ftq > ftq_targte) {
             obj.cells(row_id, 5).setBgColor(Report.color["higher"]);
         } else if (ftq == ftq_targte){
@@ -521,8 +521,8 @@ Report.station_data_on_json_parse = function () {
             obj.cells(row_id, 5).setBgColor(Report.color["lower"]);
         }
         //DPV
-        var dpv = obj.cells(row_id, 6).getValue();
-        var dpv_target = obj.cells(row_id, 7).getValue();
+        var dpv = parseFloat(obj.cells(row_id, 6).getValue());
+        var dpv_target = parseFloat(obj.cells(row_id, 7).getValue());
         if (dpv > dpv_target) {
             obj.cells(row_id, 6).setBgColor(Report.color["lower"]);
         } else if (dpv == dpv_target){
