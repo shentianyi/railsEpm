@@ -126,7 +126,7 @@
     list-style-type: none;
     display:block;
     padding-left:10px;
-    margin:0px 0 10px;
+    margin:0px 0 0px;
 }
 .dashboard-add-type>ul>li{
     display:inline-block;
@@ -165,6 +165,11 @@
     background-position:center -144px;
     opacity:0.4;
 }
+.dashboard-add-type>ul>li:nth-of-type(5){
+    background-position:center -194px;
+    opacity:0.4;
+    margin-top:13px;
+}
 .dashboard-add-type>ul>li:after{
     position:absolute;
     font-size:11px;
@@ -184,6 +189,9 @@
 }
 .dashboard-add-type>ul>li:nth-of-type(4):after{
     content:"Scatter"
+}
+.dashboard-add-type>ul>li:nth-of-type(5):after{
+    content:"Table"
 }
 /*内容*/
 .db-add-kpi-list{
