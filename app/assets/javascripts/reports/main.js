@@ -183,7 +183,7 @@ report_main.init_snap_btn=function(id){
                         report_snap: {
                             desc: value ,
                             type: Report.option.type,
-                            data: JSON.stringify(Report.serializeToJson())
+                            data: JSON.stringify(Report.serializeToDataJson())
                         }
                     },
                     function (data) {
