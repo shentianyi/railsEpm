@@ -119,7 +119,9 @@ Report.color = {
         "lower":"#eb4848"
     },
     dpv:{
-
+        "higher":"#eb4848",
+        "equal":"#f3d02e",
+        "lower":"#19cf22"
     }
 
 }
@@ -526,21 +528,21 @@ Report.station_data_on_json_parse = function () {
         var ftq = parseFloat(obj.cells(row_id, 5).getValue());
         var ftq_targte = parseFloat(obj.cells(row_id, 10).getValue());
         if (ftq > ftq_targte) {
-            obj.cells(row_id, 5).setBgColor(Report.color["higher"]);
+            obj.cells(row_id, 5).setBgColor(Report.color.ftq["higher"]);
         } else if (ftq == ftq_targte){
-            obj.cells(row_id, 5).setBgColor(Report.color["equal"]);
+            obj.cells(row_id, 5).setBgColor(Report.color.ftq["equal"]);
         }else {
-            obj.cells(row_id, 5).setBgColor(Report.color["lower"]);
+            obj.cells(row_id, 5).setBgColor(Report.color.ftq["lower"]);
         }
         //DPV
         var dpv = parseFloat(obj.cells(row_id, 6).getValue());
         var dpv_target = parseFloat(obj.cells(row_id, 7).getValue());
         if (dpv > dpv_target) {
-            obj.cells(row_id, 6).setBgColor(Report.color["lower"]);
+            obj.cells(row_id, 6).setBgColor(Report.color.dpv["higher"]);
         } else if (dpv == dpv_target){
-            obj.cells(row_id, 6).setBgColor(Report.color["equal"]);
+            obj.cells(row_id, 6).setBgColor(Report.color.dpv["equal"]);
         }else{
-            obj.cells(row_id, 6).setBgColor(Report.color["higher"]);
+            obj.cells(row_id, 6).setBgColor(Report.color.dpv["lower"]);
         }
 
     }
