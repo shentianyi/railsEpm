@@ -236,6 +236,25 @@ function prepare_form_chart() {
                 $("#chart-container").highcharts().destroy();
             }
             ANALYTICS.high_chart.plotOptions.column.stacking='normal';
+            ANALYTICS.high_chart.plotOptions.column.dataLabels={
+                enabled: true,
+                color: "rgba(0,0,0,0.8)",
+                inside:false,
+                style: {
+                    fontWeight: 'bold',
+                    fontSize:'11px'
+                },
+                formatter: function() {
+                    if(this.series.index===1){
+                        if(this.total>0){
+                            return this.total ;
+                        }
+                        else{
+                            return "" ;
+                        }
+                    }
+                }
+            };
             ANALYTICS.high_chart.yAxis=[
                 { // Primary yAxis
                     gridLineColor: '#ddd',
@@ -270,25 +289,6 @@ function prepare_form_chart() {
                     tickInterval:20,
                     opposite: false }
             ];
-            ANALYTICS.high_chart.plotOptions.column.dataLabels={
-                enabled: true,
-                color: "rgba(0,0,0,0.8)",
-                inside:false,
-                style: {
-                    fontWeight: 'bold',
-                    fontSize:'11px'
-                },
-                formatter: function() {
-                    if(this.series.index===0){
-                        if(this.total>0){
-                            return this.total ;
-                        }
-                        else{
-                            return "" ;
-                        }
-                    }
-                }
-            };
             ANALYTICS.high_chart.plotOptions.line.dataLabels={
                 enabled: true,
                 color: "rgba(60,111,204,0.8)",
@@ -538,7 +538,7 @@ function change_interval(option) {
                 ANALYTICS.render_to(option);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
             }
-            console.log(option)
+
             ANALYTICS.add_series(option);
             ANALYTICS.proper_type_for_chart(option);
         }
