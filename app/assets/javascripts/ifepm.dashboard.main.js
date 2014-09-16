@@ -179,33 +179,7 @@ ifepm.dashboard.form_graph = function (datas, id) {
     if (type == 'table'){
         /*-------------------------table----------------------------------*/
         window.setTimeout(function(){
-            var d = ifepm.dashboard.parse2dhtmlxGridJson(datas);
-            var width = $("#"+container).width()/ d.colcount;
-            width = width < 60 ? 60 : width;
-            var widthstring = "";
-            var alistr = "";
-
-            for(var i =0;i< d.colcount;i++){
-                if(i<2){
-                    widthstring = widthstring+150+",";
-                    alistr= alistr + "center";
-                }
-                else if(i== d.colcount-1){
-                    widthstring = widthstring+width;
-                    alistr= alistr + "center";
-                }else{
-                    widthstring = widthstring +width+",";
-                    alistr = alistr + "center,";
-                }
-            }
-
-            var table = new dhtmlXGridObject(container);
-            table.setImagePath("/assets/dhtmlx/");
-            table.setHeader(d.headers);
-            table.setInitWidths(widthstring);
-            table.setSkin("dhx_skyblue");
-            table.init();
-            table.parse(d.json,"json");
+            ifepm.dashboard.dhtmlxtable(container,datas);
         },1000);
 
         /*-------------------------table----------------------------------*/
@@ -302,6 +276,36 @@ ifepm.dashboard.parse2dhtmlxGridJson = function(datas){
 
     return {json:djson,headers:headers,colcount:Object.keys(h_keys).length};
 };
+
+ifepm.dashboard.dhtmlxtable = function(container,datas){
+    var d = ifepm.dashboard.parse2dhtmlxGridJson(datas);
+    var width = $("#"+container).width()/ d.colcount;
+    width = width < 60 ? 60 : width;
+    var widthstring = "";
+    var alistr = "";
+
+    for(var i =0;i< d.colcount;i++){
+        if(i<2){
+            widthstring = widthstring+150+",";
+            alistr= alistr + "center";
+        }
+        else if(i== d.colcount-1){
+            widthstring = widthstring+width;
+            alistr= alistr + "center";
+        }else{
+            widthstring = widthstring +width+",";
+            alistr = alistr + "center,";
+        }
+    }
+
+    var table = new dhtmlXGridObject(container);
+    table.setImagePath("/assets/dhtmlx/");
+    table.setHeader(d.headers);
+    table.setInitWidths(widthstring);
+    table.setSkin("dhx_skyblue");
+    table.init();
+    table.parse(d.json,"json");
+}
 
 var intervals = [];
 /*
