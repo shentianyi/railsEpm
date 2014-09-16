@@ -15,6 +15,7 @@ current_status.init=function(){
             current_status.show_extra_section(tag);
             current_status.flexible();
             if(tag==="target"){
+                $("#footer-right").find(".color-group").remove();
                 for(var i=0;i<3;i++){
                     var color_html='<div class="color-group">'+
                         '<span class="color-item" type="green" style="background:#19cf22" col="higher"></span>'+

@@ -32,7 +32,8 @@ daily_ftq.init = function(){
     init_snap();
 };
 daily_ftq.flexible_init=function(){
-    if($("#report-menu").visible){
+    if($("#report-menu").is(":visible")){
+        console.log("here");
         var total_height = $("#wrap-main").height() - $("header").height() - 1,
             leaving_height=total_height-$("#snap-groups").height()-$("#daily-ftq-header").height()- 2,
             part_height=Math.floor(leaving_height/2-6),
@@ -49,7 +50,7 @@ daily_ftq.flexible_init=function(){
     }
 }
 daily_ftq.flexible=function(){
-    if($("#report-menu").visible){
+    if($("#report-menu").is(":visible")){
         var total_height = $("#wrap-main").height() - $("header").height() - 1,
             leaving_height=total_height-$("#snap-groups").height()-$("#daily-ftq-header").height()- 2,
             part_height=Math.floor(leaving_height/2-6),
