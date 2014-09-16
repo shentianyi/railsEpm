@@ -113,9 +113,15 @@ Report.get_dhtmlx = function () {
 
 /*color*/
 Report.color = {
-    "higher":"#19cf22",
-    "equal":"#f3d02e",
-    "lower":"#eb4848"
+    ftq:{
+        "higher":"#19cf22",
+        "equal":"#f3d02e",
+        "lower":"#eb4848"
+    },
+    dpv:{
+
+    }
+
 }
 
 Report.configure = function () {

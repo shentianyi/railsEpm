@@ -17,9 +17,9 @@ current_status.init=function(){
             if(tag==="target"){
                 var a = ["higher","equal","lower"];
                 $("#footer-right").find(".color-group").remove();
+                var color_html,color_type;
                 for(var i=0;i<3;i++){
-
-                    var color_html='<div idx='+a[i]+' class="color-group">'+
+                    color_html='<div idx='+a[i]+' class="color-group">'+
                         '<span class="color-item" style="background:#19cf22" ></span>'+
                         '<span class="color-item" style="background:#eb4848" ></span>'+
                         '<span class="color-item" style="background:#f3d02e" ></span>'+
@@ -27,8 +27,14 @@ current_status.init=function(){
                         '<span class="color-item" style="background:#c222ea" ></span>'+
                         '<span class="color-item" style="background:#3a6be7" ></span>'+
                         '<span class="color-item" style="background:#f56c22" ></span>'+
-                        '</div>'
+                        '</div>';
+                    color_type=Report.color.ftq[a[i]];
                     $("#footer-right").append(color_html);
+                    $("div[idx="+a[i]+"]").find(".color-item").each(function(index,value){
+                        if($(value).css("backgroundColor")===color_type){
+                            $(value).addClass("active");
+                        }
+                    });
                 }
             }
         })
@@ -48,7 +54,7 @@ current_status.init=function(){
 
             var col = $(this).parent().attr("idx");
             var color = $(this).css("backgroundColor");
-            Report.color[col]=color;
+            Report.color.ftq[col]=color;
 
             /*refresh data*/
             models = ["CF11","CF14","CF16"];
