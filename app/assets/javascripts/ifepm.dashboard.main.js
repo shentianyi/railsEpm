@@ -70,26 +70,9 @@ var isformchart = false;
  * @function form_graph
  * form highchart
  * */
-ifepm.dashboard.form_graph = function (datas, id) {
-    var container, outer;
-    if (isfullsize) {
-        container = ifepm.dashboard.make_item_container_id_full(id);
-        outer = ifepm.dashboard.make_item_outer_id_full(id);
-    }
-    else {
-        container = ifepm.dashboard.make_item_container_id(id);
-        outer = ifepm.dashboard.make_item_outer_id(id);
-    }
-    var type = ifepm.dashboard.graphs[id].chart_type;
+ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
     var chart = null;
     var data, series_id, option;
-
-    if (datas.length < 1) {
-        dashboard_remove_loading(outer);
-        ifepm.dashboard.on_finish_load();
-        window.clearTimeout(constraintFullSizeHeight);
-        return;
-    }
 
     for (var i = 0; i < datas.length; ++i) {
         data = [];
@@ -159,12 +142,112 @@ ifepm.dashboard.form_graph = function (datas, id) {
             }
         }
     }
+};
+
+ifepm.dashboard.form_graph = function (datas, id) {
+
+    var container, outer;
+    if (isfullsize) {
+        container = ifepm.dashboard.make_item_container_id_full(id);
+        outer = ifepm.dashboard.make_item_outer_id_full(id);
+    }
+    else {
+        container = ifepm.dashboard.make_item_container_id(id);
+        outer = ifepm.dashboard.make_item_outer_id(id);
+    }
+
+    var type = ifepm.dashboard.graphs[id].chart_type;
+    if (type == 'table'){
+        /*-------------------------table----------------------------------*/
+        window.setTimeout(function(){
+            var d = ifepm.dashboard.parse2dhtmlxGridJson(datas);
+            var width = $("#"+container).width()/ d.colcount;
+            width = width < 60 ? 60 : width;
+            var widthstring = "";
+            var alistr = "";
+
+            for(var i =0;i< d.colcount;i++){
+                if(i<2){
+                    widthstring = widthstring+150+",";
+                    alistr= alistr + "center";
+                }
+                else if(i== d.colcount-1){
+                    widthstring = widthstring+width;
+                    alistr= alistr + "center";
+                }else{
+                    widthstring = widthstring +width+",";
+                    alistr = alistr + "center,";
+                }
+            }
+
+            var table = new dhtmlXGridObject(container);
+            table.setImagePath("/assets/dhtmlx/");
+            table.setHeader(d.headers);
+            table.setInitWidths(widthstring);
+            table.setSkin("dhx_skyblue");
+            table.init();
+            table.parse(d.json,"json");
+        },1000);
+
+        /*-------------------------table----------------------------------*/
+    }else{
+        ifepm.dashboard.form_highchart(datas, container, outer, type);
+    }
+
+    if (datas.length < 1) {
+        dashboard_remove_loading(outer);
+        ifepm.dashboard.on_finish_load();
+        window.clearTimeout(constraintFullSizeHeight);
+        return;
+    }
 
 
     dashboard_remove_loading(outer);
     ifepm.dashboard.on_finish_load();
 }
 
+ifepm.dashboard.parse2dhtmlxGridJson = function(datas){
+    var h_keys = {"View":0,"Kpi":0};
+    var data = []
+    //mearge header
+    for(var i =0; i<datas.length ;i++){
+        var d = datas[i];
+        data[i] = {};
+        data[i]["View"] = d.view;
+        data[i]["Kpi"] = d.kpi_name;
+        for(var j = 0;j< d.date.length;j++){
+            h_keys[d.date[j]] = 0;
+            data[i][d.date[j]] = d.current[j];
+        }
+    }
+
+    var djson = {
+        rows:[{
+            id:1001,
+            data:[]
+        }]
+    }
+
+    for(var i =0;i<data.length;i++){
+        djson.rows[i] = {id:0,data:[]};
+        djson.rows[i].id = i+1;
+        $.each(Object.keys(h_keys),function(index,value){
+            if(data[i][value] == undefined){
+                djson.rows[i].data.push(0);
+            }else{
+                djson.rows[i].data.push(data[i][value]);
+            }
+        });
+    }
+
+    var headers = "";
+
+    $.each(Object.keys(h_keys),function(index,value){
+        headers = headers + value+",";
+    });
+
+    return {json:djson,headers:headers,colcount:Object.keys(h_keys).length};
+};
 
 var intervals = [];
 /*
@@ -271,6 +354,7 @@ ifepm.dashboard.getInteral = function (interval) {
  * */
 ifepm.dashboard.update_graph = function (datas, id) {
 
+
     var container;
     if (isfullsize) {
         container = ifepm.dashboard.make_item_container_id_full(id);
@@ -278,6 +362,9 @@ ifepm.dashboard.update_graph = function (datas, id) {
         container = ifepm.dashboard.make_item_container_id(id);
     }
     //console.log("update dashboard id: "+id+" "+container);
+    //table
+
+    //highchart
     var type = ifepm.dashboard.graphs[id].chart_type;
     var chart = $('#' + container).highcharts();
     if (chart) {
@@ -485,7 +572,7 @@ ifepm.dashboard.on_finish_load = function () {
     ++current_index;
     if (current_index >= ifepm.dashboard.graph_sequence.length) {
         ifepm.dashboard_widget.enable(true);
-        constraintFullSizeHeight=window.setTimeout(function () {
+        constraintFullSizeHeight = window.setTimeout(function () {
             var height = $(document).height();
             console.log("timeout")
             $("#dashboard-content-full").css("height", height + "px");
@@ -728,7 +815,7 @@ ifepm.dashboard.init = function (id, callback) {
             success: function (data) {
                 ifepm.dashboard_widget.enable(false);
                 ifepm.dashboard.clear_all_timer();
-                for (var i = 0;i<data.length;i++) {
+                for (var i = 0; i < data.length; i++) {
                     var graph_item = new Graph();
                     graph_item.id = data[i].id;
                     //graph_item.name = data[i].name;
