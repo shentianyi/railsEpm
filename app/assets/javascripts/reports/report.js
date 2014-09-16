@@ -2,8 +2,8 @@ var Report = Report || {};
 Report.option = {};
 Report.r = {};
 Report.data = {};
-Report.host = 'http://42.121.111.38:9003/';
-//Report.host='http://192.168.1.112:9002/';
+//Report.host = 'http://42.121.111.38:9003/';
+Report.host='http://192.168.1.101:9003/';
 Report.Url = {export_excel_url: Report.host + 'DHXFileService/Excel',
     export_bt_chart_excel_url: Report.host + 'BTReportService/ChartExcel',
     export_bt_excel_url: Report.host + 'BTReportService/Excel'};
@@ -341,6 +341,12 @@ Report.current_status_init = function () {
     });
 
     Report.r.attachEvent("onItemDblClick", function (id, ev, html){
+        console.log(id);
+        console.log(ev);
+        console.log(html);
+        console.log(Report.r.get(id));
+        window.location="kpi_entries/analyse?view="+Report.r.get(id).INQA;
+        return true;
     });
 };
 
