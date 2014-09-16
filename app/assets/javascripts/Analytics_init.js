@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////init select
-ANALYTICS.qoros_demo=true;
+ANALYTICS.qoros_demo=false;
 ANALYTICS.qoros_demo_count=0;
 
 function init_analytics() {
@@ -101,6 +101,9 @@ function init_analytics() {
     ANALYTICS.demo=false;
     if($("#s_subscribe_id").val()){
         ANALYTICS.demo=true;
+        if($("#s_qoros_demo").val()){
+            ANALYTICS.qoros_demo=true;
+        }
        var kpi_category_id=$("#s_kpi_category_id").val();
         var kpi_id = $("#s_kpi_id").val();
         var entity_grop_id = $("#s_entity_group_id").val();
