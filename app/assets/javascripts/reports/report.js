@@ -332,8 +332,7 @@ Report.current_status_init = function () {
 
     });
 
-    Report.r.attachEvent("onAfterSelect",function(id){
-        console.log("Selected:"+id);
+    Report.r.attachEvent("onItemDblClick", function (id, ev, html){
     });
 };
 
