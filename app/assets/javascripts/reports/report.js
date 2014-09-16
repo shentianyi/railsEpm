@@ -5,7 +5,8 @@ Report.data = {};
 Report.host = 'http://42.121.111.38:9003/';
 //Report.host='http://192.168.1.112:9002/';
 Report.Url = {export_excel_url: Report.host + 'DHXFileService/Excel',
-    export_chart_excel_url: Report.host + 'BTReportService/ChartExcel'};
+    export_bt_chart_excel_url: Report.host + 'BTReportService/ChartExcel',
+    export_bt_excel_url: Report.host + 'BTReportService/Excel'};
 /*
  Report.init = function (type) {
  var option = this.get_option_by_type(type);
@@ -48,15 +49,15 @@ Report.init = function (type) {
     this.prepare();
 };
 
-Report.ChartAxisFormatType={
- None:0,
- IntPercent:1,
- FloatPercent:2
+Report.ChartAxisFormatType = {
+    None: 0,
+    IntPercent: 1,
+    FloatPercent: 2
 };
-Report.CellFormatType={
-    None:0,
-    IntPercent:1,
-    FloatPercent:2
+Report.CellFormatType = {
+    None: 0,
+    IntPercent: 1,
+    FloatPercent: 2
 };
 /*prepare page*/
 Report.prepare = function () {
@@ -88,7 +89,7 @@ Report.clear = function () {
 };
 
 /*refresh*/
-Report.refresh = function(){
+Report.refresh = function () {
 //    console.log("refresh()");
     this.r.refresh();
 };
@@ -102,10 +103,10 @@ Report.get_dhtmlx = function () {
         case this.type["daily_dpv"]:
         case this.type["station_data"]:
         case this.type["daily_ftq"]:
-            var o= new dhtmlXGridObject(container);
-            o.addCellAttributes(['value']);
+            var o = new dhtmlXGridObject(container);
+            o.addCellAttributes(['value', 'format', 'bgcolor']);
             return o;
-            //return new dhtmlXGridObject(container);
+        //return new dhtmlXGridObject(container);
         default:
             return null;
     }
@@ -113,13 +114,15 @@ Report.get_dhtmlx = function () {
 
 /*color*/
 Report.color = {
-    ftq:{
-        "higher":"#19cf22",
-        "equal":"#f3d02e",
-        "lower":"#eb4848"
+    ftq: {
+        "higher": "#19cf22",
+        "equal": "#f3d02e",
+        "lower": "#eb4848"
     },
-    dpv:{
-
+    dpv: {
+        "higher": "#eb4848",
+        "equal": "#f3d02e",
+        "lower": "#19cf22"
     }
 
 }
@@ -153,14 +156,21 @@ Report.configure = function () {
             current_status.init();
             break;
         case this.type["station_data"]:
+            var width = Math.floor($("#report-content").width() / 14) - 2;
             dhtmlxobj.setImagePath("/assets/dhtmlx/");
+            var widstring = (width * 2) + ",";
+            for (var i = 0; i < 12; i++) {
+                if (i == 12) {
+                    widstring = widstring + width;
+                } else {
+                    widstring = widstring + width + ",";
+                }
+            }
             dhtmlxobj.setHeader("Inspection,#cspan,Vechile Total,OK Vehicle,NOK Vehicle,FTQ,DPV,DPV Target,Defects,Vehs,FTQ Target,OK,NOK");
-            //mygrid.attachHeader("full,short,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan,#rspan");
-            dhtmlxobj.setInitWidths("150,80,80,80,80,80,80,80,80,80,80,80,80");
+            dhtmlxobj.setInitWidths(widstring);
             dhtmlxobj.setColAlign("center,center,center,center,center,center,center,center,center,center,center,center,center");
             dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
             dhtmlxobj.setColSorting("str,int,int,int,int,int,int,int,int,int,int,int,int");
-            //mygrid.setColumnColor("white,#d5f1ff,#d5f1ff");
             dhtmlxobj.setSkin("dhx_skyblue");
             dhtmlxobj.init();
             dhtmlxobj.enableMultiselect(true);
@@ -183,14 +193,15 @@ Report.configure = function () {
             daily_dpv.init();
             break;
         case this.type["daily_ftq"]:
-            var width = 62;
-            var widthstring = "";
             var head_length = this.headers["daily_ftq"].split(",").length;
+
+            var width = Math.floor($("#report-content").width() / head_length) - 2;
+            var widthstring = "";
             for(var i = 0 ;i <= head_length;i++){
                 if(i == head_length){
                     widthstring = widthstring + width;
-                }else{
-                    widthstring =widthstring+width+",";
+                } else {
+                    widthstring = widthstring + width + ",";
                 }
 
             }
@@ -244,8 +255,11 @@ Report.reload = function () {
 Report.toExcel = function () {
     this.r.toExcel(this.Url.export_excel_url);
 };
-Report.toChartExcel = function () {
-    this.r.toChartExcel(this.Url.export_chart_excel_url);
+Report.toBTChartExcel = function () {
+    this.r.toChartExcel(this.Url.export_bt_chart_excel_url);
+};
+Report.toBTExcel = function () {
+  this.r.toChartExcel(this.Url.export_bt_excel_url);
 };
 
 Report.get_option_by_type = function (type) {
@@ -317,6 +331,10 @@ Report.current_status_init = function () {
         }, 1500);
 
     });
+
+    Report.r.attachEvent("onAfterSelect",function(id){
+        console.log("Selected:"+id);
+    });
 };
 
 Report.daily_dpv_init = function () {
@@ -374,7 +392,7 @@ Report.daily_dpv_init = function () {
 };
 /*----------------------------------------------------*/
 /*on_json_parse for daily_ftq*/
-Report.daily_ftq_on_json_parse = function(){
+Report.daily_ftq_on_json_parse = function () {
     var charts = [
         {
             attr: { title: 'Quality Buyoff station Vehicle status', width: 1200, height: 300, show_legend: true},
@@ -382,14 +400,14 @@ Report.daily_ftq_on_json_parse = function(){
                 {  type: 'column',
                     series: [
                         {xaixs: "B1:R1", yaixs: "B3:R3",
-                            attr: { color: 'D1E5FE', head_address: 'A3'}},
+                            attr: { color: 'fd0e0e', header_address: 'A3'}},
                         {xaixs: "B1:R1", yaixs: "B4:R4",
-                            attr: { color: 'D1E5FE', head_address: 'A4'}}
+                            attr: { color: '25ad38', header_address: 'A4'}}
                     ]},
                 {  type: 'line',
                     series: [
                         {xaixs: "B1:R1", yaixs: "B5:R5",
-                            attr: { color: 'D1E5FE', head_address: 'A5', use_secondary_axis: true,
+                            attr: { color: '3c6fcc', header_address: 'A5', use_secondary_axis: true,
                                 yaxis_format_type: Report.ChartAxisFormatType.IntPercent}}
                     ]}
             ]
@@ -400,6 +418,7 @@ Report.daily_ftq_on_json_parse = function(){
     //load chart
     var headers = Report.headers["daily_ftq"].split(",");
     Report.r.addValueToAttribute();
+    Report.r.setAttributeByRow(1004, {format: Report.CellFormatType.IntPercent})
     var jsondata = Report.data;//Report.r.serializeToDataJson();
     var xArray = [], ok = [], nok = [], ftq = [];
     //ok
@@ -419,9 +438,9 @@ Report.daily_ftq_on_json_parse = function(){
 
     colindx = 3;
     for (var j = 0; j < xArray.length; j++) {
-        var value = parseFloat(jsondata['rows'][colindx]['data'][j].replace("%",""));
-        value = isNaN(value) ? 0:value;
-        ftq[j] =value;
+        var value = parseFloat(jsondata['rows'][colindx]['data'][j].replace("%", ""));
+        value = isNaN(value) ? 0 : value;
+        ftq[j] = value;
         console.log(j);
     }
     ftq.shift();
@@ -463,7 +482,7 @@ Report.daily_dpv_on_json_parse = function () {
 
     var jsondata = Report.data;//Report.r.serializeToDataJson();
 
-    var xArray = [],data = [],header  = [];
+    var xArray = [], data = [], header = [];
     header = Report.headers["daily_dpv"].split(",");
     xArray = header.slice(0);
     //DPV
@@ -483,7 +502,7 @@ Report.daily_dpv_on_json_parse = function () {
                 data: data
             }
         ],
-        name:"dpv"
+        name: "dpv"
     };
 
     daily_dpv.chart_dpv.reload_daily_dpv(option_one);
@@ -506,37 +525,40 @@ Report.daily_dpv_on_json_parse = function () {
                 data: data
             }
         ],
-        name:"sdpv"
+        name: "sdpv"
     };
     daily_dpv.chart_sdpv.reload_daily_dpv(option_two);
 };
 
 /*station data*/
 Report.station_data_on_json_parse = function () {
+    Report.r.addValueToAttribute();
     var obj = Report.r;
     for (var i = 0; i < obj.getRowsNum(); i++) {
         var row_id = obj.getRowId(i);
         //FTQ
-        var ftq = obj.cells(row_id, 5).getValue();
-        var ftq_targte = obj.cells(row_id, 10).getValue();
+        var ftq = parseFloat(obj.cells(row_id, 5).getValue());
+        var ftq_targte = parseFloat(obj.cells(row_id, 10).getValue());
         if (ftq > ftq_targte) {
-            obj.cells(row_id, 5).setBgColor(Report.color["higher"]);
-        } else if (ftq == ftq_targte){
-            obj.cells(row_id, 5).setBgColor(Report.color["equal"]);
-        }else {
-            obj.cells(row_id, 5).setBgColor(Report.color["lower"]);
+            obj.cells(row_id, 5).setBgColor(Report.color.ftq["higher"]);
+        } else if (ftq == ftq_targte) {
+            obj.cells(row_id, 5).setBgColor(Report.color.ftq["equal"]);
+        } else {
+            obj.cells(row_id, 5).setBgColor(Report.color.ftq["lower"]);
         }
+        obj.cells(row_id,5).setAttribute('bgcolor', obj.cells(row_id,5).getBgColor());
         //DPV
-        var dpv = obj.cells(row_id, 6).getValue();
-        var dpv_target = obj.cells(row_id, 7).getValue();
+        var dpv = parseFloat(obj.cells(row_id, 6).getValue());
+        var dpv_target = parseFloat(obj.cells(row_id, 7).getValue());
         if (dpv > dpv_target) {
-            obj.cells(row_id, 6).setBgColor(Report.color["lower"]);
-        } else if (dpv == dpv_target){
-            obj.cells(row_id, 6).setBgColor(Report.color["equal"]);
-        }else{
-            obj.cells(row_id, 6).setBgColor(Report.color["higher"]);
+            obj.cells(row_id, 6).setBgColor(Report.color.dpv["higher"]);
+        } else if (dpv == dpv_target) {
+            obj.cells(row_id, 6).setBgColor(Report.color.dpv["equal"]);
+        } else {
+            obj.cells(row_id, 6).setBgColor(Report.color.dpv["lower"]);
         }
 
+        obj.cells(row_id,6).setAttribute('bgcolor', obj.cells(row_id,6).getBgColor());
     }
     ;
 }
@@ -546,7 +568,12 @@ Report.station_data_on_json_parse = function () {
 function export_report_excel() {
     Report.toExcel();
 }
-// default export chart excel
-function export_report_chart_excel() {
-    Report.toChartExcel();
+// default export bt chart excel
+function export_bt_report_chart_excel() {
+    Report.toBTChartExcel();
+}
+
+// default export bt excel
+function export_bt_report_excel(){
+    Report.toBTExcel();
 }

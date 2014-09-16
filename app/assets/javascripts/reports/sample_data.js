@@ -526,11 +526,11 @@ SampleData.init_current_status = function(){
             d_current_status[model][i]["FTQ"] = ftq.toString();//(old+rate).toString();
             d_current_status[model][i]["FTQ_Target"] = ftq_target.toString();
             if(ftq > ftq_target){
-                d_current_status[model][i]["STYLE_COLOR"] = Report.color["higher"];
+                d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["higher"];
             }else if(ftq==ftq_target){
-                d_current_status[model][i]["STYLE_COLOR"] = Report.color["equal"];
+                d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["equal"];
             }else{
-                d_current_status[model][i]["STYLE_COLOR"] = Report.color["lower"];
+                d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["lower"];
             }
         }
     }

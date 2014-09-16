@@ -6,27 +6,40 @@ dhtmlXGridObject.prototype.serializeToJson = function () {
 };
 
 dhtmlXGridObject.prototype.serializeToDataJson = function () {
-    var data= xml2json.parser( this.serialize().replace(/<cell*.[^>]*/g, "<data")
+    var data = xml2json.parser(this.serialize().replace(/<cell*.[^>]*/g, "<data")
         .replace(/\<\/cell/g, "</data"));
     return {rows: data.rows.row};
 };
 //attrs=['abc']
-dhtmlXGridObject.prototype.addCellAttributes=function(attrs){
-   for(var i=0;i<attrs.length;i++){
-       if(this.xml.cell_attrs==null || $.inArray(attrs[i],this.xml.cell_attrs)){
-           console.log('*********');
-             this.xml.cell_attrs.push(attrs[i]);
-       }
-   }
+dhtmlXGridObject.prototype.addCellAttributes = function (attrs) {
+    console.log(this.xml.cell_attrs);
+
+    for (var i = 0; i < attrs.length; i++) {
+
+        if (this.xml.cell_attrs == null || $.inArray(attrs[i], this.xml.cell_attrs) == -1) {
+            console.log('-----------------------')
+            console.log(attrs[i]);
+            console.log($.inArray(attrs[i], this.xml.cell_attrs));
+            this.xml.cell_attrs.push(attrs[i]);
+        }
+    }
     //this.addValueToAttribute();
 };
 
-dhtmlXGridObject.prototype.addValueToAttribute=function(){
-this.forEachRow(function(rowId){
-       this.forEachCell(rowId,function(cell,colIndex){
-          cell.setAttribute('value',cell.getValue());
-       });
-});
+dhtmlXGridObject.prototype.addValueToAttribute = function () {
+    this.forEachRow(function (rowId) {
+        this.forEachCell(rowId, function (cell, colIndex) {
+            cell.setAttribute('value', cell.getValue());
+        });
+    });
+};
+
+dhtmlXGridObject.prototype.setAttributeByRow = function (rowId, attr) {
+    this.forEachCell(rowId, function (cell, colIndex) {
+        for (var a in attr) {
+            cell.setAttribute(a, attr[a]);
+        }
+    });
 };
 
 
@@ -68,11 +81,7 @@ dhtmlXGridObject.prototype.serializeChartExcelXml = function () {
 //    if(charts == undefined){
 //        charts = [];
 //    }
-    var charts = this.get_charts();
     var data = this.serializeToJson();
-    console.log('---------------------');
-    console.log(data);
-
     var headercount = data["rows"][0]["data"].length;
     var xml = "<report>";
     //Head Start
@@ -88,53 +97,56 @@ dhtmlXGridObject.prototype.serializeChartExcelXml = function () {
     for (var i = 0; i < data["rows"].length; i++) {
         xml += "<row>";
         for (var j = 0; j < data["rows"][i]["data"].length; j++) {
-             xml+="<cell"
-            var cell=     data["rows"][i]["data"][j];
-            for(var a in cell){
-                xml += " " + a + "='" + cell[a] + "'";
-                        //          console.log(a);
-
+            xml += "<cell"
+            var cell = data["rows"][i]["data"][j];
+            for (var a in cell) {
+                if (cell[a] != null && cell[a] != 'undefined') {
+                    xml += " " + a + "='" + cell[a] + "'";
+                }
+                //          console.log(a);
             }
-            xml+="></cell>"
-           // xml += "<cell><![CDATA[" + data["rows"][i]["data"][j] + "]]></cell>";
+            xml += "></cell>"
+            // xml += "<cell><![CDATA[" + data["rows"][i]["data"][j] + "]]></cell>";
         }
         xml += "</row>";
     }
     xml += "</body></table>";
     //Body End
     var charts = this.get_charts();
-    //Chart Start
-    xml += "<charts>"
-    for (var i = 0; i < charts.length; i++) {
-        var chart = charts[i];
+    if (charts != null) {
+        //Chart Start
+        xml += "<charts>"
+        for (var i = 0; i < charts.length; i++) {
+            var chart = charts[i];
 
-        xml += "<chart";
+            xml += "<chart";
 
-        for (var a in chart.attr) {
-            xml += " " + a + "='" + chart.attr[a] + "'";
-        }
-        xml += ">";
-
-        for (var n = 0; n < chart.chart_types.length; n++) {
-            var chart_type = chart.chart_types[n];
-
-            xml += "<chart_type type='" + chart_type.type + "'>";
-            for (var j = 0; j < chart_type.series.length; j++) {
-                var serie = chart_type.series[j];
-                xml += "<serie";
-                for (var a in serie.attr) {
-                    xml += " " + a + "='" + serie.attr[a] + "'";
-                }
-                xml += ">";
-                xml += "<xaixs><![CDATA[" + serie["xaixs"] + "]]></xaixs><yaixs><![CDATA[" + serie['yaixs'] + "]]></yaixs>";
-
-                xml += "</serie>";
+            for (var a in chart.attr) {
+                xml += " " + a + "='" + chart.attr[a] + "'";
             }
-            xml += "</chart_type>";
+            xml += ">";
+
+            for (var n = 0; n < chart.chart_types.length; n++) {
+                var chart_type = chart.chart_types[n];
+
+                xml += "<chart_type type='" + chart_type.type + "'>";
+                for (var j = 0; j < chart_type.series.length; j++) {
+                    var serie = chart_type.series[j];
+                    xml += "<serie";
+                    for (var a in serie.attr) {
+                        xml += " " + a + "='" + serie.attr[a] + "'";
+                    }
+                    xml += ">";
+                    xml += "<xaixs><![CDATA[" + serie["xaixs"] + "]]></xaixs><yaixs><![CDATA[" + serie['yaixs'] + "]]></yaixs>";
+
+                    xml += "</serie>";
+                }
+                xml += "</chart_type>";
+            }
+            xml += "</chart>";
         }
-        xml += "</chart>";
+        xml += "</charts>";
     }
-    xml += "</charts>";
     //Chart End
     xml += "</report>";
     return xml;
@@ -157,7 +169,7 @@ dhtmlXDataView.prototype.serializeToExcelXml = function () {
     for (var i = 0; i < data.length; i++) {
         xml += '<row>';
         for (var d in data[i]) {
-            if (d != 'id' && d != 'value' && h.indexOf("STYLE_") == -1) {
+            if (d != 'id' && d != 'value' && d.indexOf("STYLE_") == -1) {
                 xml += '<cell><![CDATA[' + $.trim(data[i][d]) + ']]></cell>';
             }
         }
@@ -176,14 +188,14 @@ dhtmlXDataView.prototype.toExcel = function (url) {
 
 
 function processReportExcelRequest(url, xml) {
-    console.log(xml);
-//    $('<form>', {
-//        action: url,
-//        method: 'post',
-//        target: '_blank'
-//    }).append($('<input>', {
-//            type: 'hidden',
-//            name: 'grid_xml',
-//            value: xml
-//        })).appendTo('body').submit();
+//    console.log(xml);
+    $('<form>', {
+        action: url,
+        method: 'post',
+        target: '_blank'
+    }).append($('<input>', {
+            type: 'hidden',
+            name: 'grid_xml',
+            value: xml
+        })).appendTo('body').submit();
 }
