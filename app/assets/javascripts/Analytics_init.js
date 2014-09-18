@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////init select
-ANALYTICS.qoros_demo=true;
+ANALYTICS.qoros_demo=false;
 ANALYTICS.qoros_demo_count=0;
 
 function init_analytics() {
@@ -101,6 +101,9 @@ function init_analytics() {
     ANALYTICS.demo=false;
     if($("#s_subscribe_id").val()){
         ANALYTICS.demo=true;
+        if($("#s_qoros_demo").val()){
+            ANALYTICS.qoros_demo=true;
+        }
        var kpi_category_id=$("#s_kpi_category_id").val();
         var kpi_id = $("#s_kpi_id").val();
         var entity_grop_id = $("#s_entity_group_id").val();
@@ -233,6 +236,26 @@ function prepare_form_chart() {
                 $("#chart-container").highcharts().destroy();
             }
             ANALYTICS.high_chart.plotOptions.column.stacking='normal';
+            ANALYTICS.high_chart.plotOptions.column.dataLabels={
+                enabled: true,
+                color: "rgba(0,0,0,0.8)",
+                inside:false,
+                style: {
+                    fontWeight: 'bold',
+                    fontSize:'11px'
+                },
+                formatter: function() {
+                    console.log(this)
+                    if(this.series.index===2){
+                        if(this.total>0){
+                            return this.total ;
+                        }
+                        else{
+                            return "" ;
+                        }
+                    }
+                }
+            };
             ANALYTICS.high_chart.yAxis=[
                 { // Primary yAxis
                     gridLineColor: '#ddd',
@@ -267,6 +290,23 @@ function prepare_form_chart() {
                     tickInterval:20,
                     opposite: false }
             ];
+            ANALYTICS.high_chart.plotOptions.line.dataLabels={
+                enabled: true,
+                color: "rgba(60,111,204,0.8)",
+                style: {
+                    fontWeight: 'bold',
+                    fontSize:'11px'
+                },
+                align:"left",
+                formatter: function() {
+                    if(this.y>0){
+                        return this.y+"%" ;
+                    }
+                    else{
+                        return "" ;
+                    }
+                }
+            };
             if (option.chart_body_close_validate) {
                 show_chart_body(option);
             }
@@ -499,7 +539,7 @@ function change_interval(option) {
                 ANALYTICS.render_to(option);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
             }
-            console.log(option)
+
             ANALYTICS.add_series(option);
             ANALYTICS.proper_type_for_chart(option);
         }

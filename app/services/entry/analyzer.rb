@@ -45,9 +45,56 @@ module Entry
 
     private
     def call_data_service
-      parameter=Entry::Parameter::AnalyseParameter.new(self.params)
-      Entry::DataService.new(parameter).aggregate
+      if self.params[:report].blank?
+        call_meta_data_service
+      else
+       if self.params[:property].blank?
+         self.params[:property]={}
+       end
+        if self.params[:report]=='ok'
+          return get_ok_result
+        elsif self.params[:report]=='nok'
+          return get_nok_result
+        elsif self.params[:report]=='ftq'
+          return get_ftq_result
+        end
+      end
     end
+
+    def get_ok_result
+      self.params[:property]['19']=['success']
+      return call_meta_data_service
+    end
+
+    def get_nok_result
+      self.params[:property]['19']=['fail']
+      return call_meta_data_service
+    end
+
+    def get_ftq_result
+      ok=get_ok_result
+      nok=get_nok_result
+      percents=[]
+      unit=[]
+      ok[:current].each_with_index do |v,i|
+       total=v+nok[:current][i]
+       if total==0
+         percents << 0
+       else
+         percents << ((v*100/total))
+       end
+        unit << '%'
+      end
+      ok[:current]=percents
+      ok[:unit]=unit
+      return ok
+    end
+
+    def call_meta_data_service
+      parameter=Entry::Parameter::AnalyseParameter.new(self.params)
+      return Entry::DataService.new(parameter).aggregate
+    end
+
 
     def call_compare_data_service
       unless self.params[:base_time].has_key?(:end_time)

@@ -6,6 +6,7 @@ module Entry
       attr_accessor :frequency
       attr_accessor :average, :data_module # sum,average
       attr_accessor :valid
+      attr_accessor :report
       attr_accessor :property_map_group, :reduce_func
 
       def initialize(args)
@@ -18,6 +19,8 @@ module Entry
         self.average=args[:average]
         self.data_module = args[:data_module] || DataService::WEB_HIGHSTOCK
         self.property = args[:property]
+        # for qoros demo
+        self.report=args[:report] unless args[:report].blank?
         self.property_map_group=args[:property_map_group]
         #self.map_group =args[:map_group]
         self.reduce_func=args[:reduce_func] if args[:reduce_func]
