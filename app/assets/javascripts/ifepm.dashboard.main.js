@@ -157,6 +157,7 @@ ifepm.dashboard.form_graph = function (datas, id) {
     }
 
     var type = ifepm.dashboard.graphs[id].chart_type;
+    type = 'table';
     if (type == 'table'){
         /*-------------------------table----------------------------------*/
         window.setTimeout(function(){
@@ -243,6 +244,7 @@ ifepm.dashboard.parse2dhtmlxGridJson = function(datas){
     var headers = "";
 
     $.each(Object.keys(h_keys),function(index,value){
+        
         headers = headers + value+",";
     });
 
