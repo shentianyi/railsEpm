@@ -48,6 +48,21 @@ class UsersController < ApplicationController
     render partial: 'list'
   end
 
+  def fast_search
+    items=[]
+    Redis::Search.complete('User', params[:q], :conditions => {tenant_id: current_user_tenant.id, role_id: Role.director}).each do |item|
+      unless item['id'].to_i==current_user.id
+        items<<{id: item['id'], name: item['title'], email: item['email']}
+      end
+    end
+    render json: items
+  end
+
+
+  def message
+    render json: UserMessage.all(current_user.id)
+  end
+
   private
 
   def get_ability_entity

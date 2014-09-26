@@ -1,0 +1,50 @@
+<div class="story-set-show">
+  <div class="left">
+    <div class="header">
+      <a href="<%= story_sets_path %>"><i class=" icon-chevron-left"></i> back</a>
+    </div>
+    <div class="content">
+      <p><%= @story_set.title %></p>
+      <hr />
+      <div id="story-partial" class="story-partial">
+        <div class="chart"></div>
+        <a id="comments-btn"><i class="icon  icon-comments-alt"></i> comments()</a>
+        <%=render "comment" %>
+      </div>
+
+    </div>
+  </div>
+  <div class="right">
+     <div class="holder">
+       <div class="avatar">
+
+       </div>
+       <div class="title">
+         <p><%= @story_set.tenant.super_user.first_name %></p>
+         <p><%= @story_set.tenant.super_user.title %></p>
+       </div>
+       <div class="btn-area">
+         <a class="btn btn-success">publish</a>
+       </div>
+     </div>
+    <div class="participate">
+      <p>Project participator</p>
+
+      <div class="item">
+        <div class="avatar">
+          <a></a>
+        </div>
+        <div class="title">
+          <p><span>jim.guo</span><span>leoni asia</span></p>
+          <p>title</p>
+          <p><span>graph(1)</span><span>comments(21)</span></p>
+        </div>
+        <div class="btn-area">
+          <a class="btn btn-primary">check</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

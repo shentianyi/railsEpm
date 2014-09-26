@@ -3,8 +3,8 @@ class EntityGroupPresenter<Presenter
   Delegators=[:id, :name, :code, :description, :user_id]
   def_delegators :@entity_group, *Delegators
 
-  def initialize(email)
-    @entity_group=email
+  def initialize(entity_group)
+    @entity_group=entity_group
     self.delegators =Delegators
   end
 

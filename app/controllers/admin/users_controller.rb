@@ -56,7 +56,6 @@ class Admin::UsersController < Admin::ApplicationController
         end
       end
       if !row['Avatar'].blank? && File.exist?(File.join(path, 'avatar', row['Avatar']))
-        puts '***************'+row['Avatar']
         data[:image_url]=save_photo(File.join(path, 'avatar', row['Avatar']), row['Avatar'])
       end
       query[:email]=row['Email'] if query
@@ -70,7 +69,11 @@ class Admin::UsersController < Admin::ApplicationController
   private
   def save_photo photo_src, photo_name
     uuid_name=SecureRandom.uuid+File.extname(photo_name)
-    return AliyunOssService.store_avatar(uuid_name, photo_src, false)
+    path=File.join($AVATARPATH, uuid_name)
+    FileUtils.cp(photo_src, path)
+    return path
+    #puts    photo_src
+    #return AliyunOssService.store_avatar(uuid_name, photo_src, false)
   end
 
 end

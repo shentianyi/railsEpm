@@ -9,7 +9,11 @@ var MANAGE = MANAGE || {};
 MANAGE.kpi = {};
 MANAGE.attribute = {};
 MANAGE.kpi.library = {};
+MANAGE.kpi_subscribe = {}
 MANAGE.kpi.init = function () {
+
+    MANAGE.kpi_subscribe.init();
+
     $("#manage-left-menu").on("click", "li", function () {
         var li = $(this);
         var id = li.attr('number');
@@ -27,3 +31,24 @@ MANAGE.kpi.init = function () {
     });
 };
 
+//订阅KPI相关
+MANAGE.kpi_subscribe.init = function(){
+    $("body")
+        .on("click",".subscribe-kpi",function(){
+        MANAGE.kpi_subscribe.open(this);
+        })
+        .on("click","#subscribe-kpi-block-remove",function(){
+            MANAGE.kpi_subscribe.close(this);
+        })
+    ;
+}
+
+MANAGE.kpi_subscribe.open = function(obj){
+    $("#subscribe-kpi-block").css("display","block");
+    $("#subscribe-kpi-block>div").css("display","block");
+}
+
+MANAGE.kpi_subscribe.close = function(obj){
+    $("#subscribe-kpi-block").css("display","none");
+    $("#subscribe-kpi-block>div").css("display","none");
+}

@@ -28,4 +28,8 @@ class DepartmentObserver<ActiveRecord::Observer
       eg.update_attribute("name", department.name)
     end
   end
+
+  def before_destroy department
+
+  end
 end

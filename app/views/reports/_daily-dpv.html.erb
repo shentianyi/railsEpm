@@ -1,0 +1,39 @@
+<section class="daily_dpv" id="daily_dpv">
+  <div class="left" id="daily_dpv_left">
+      <div id="chart_dpv_one" class="chart_dpv_one"></div>
+      <div id="data_container" class="data_container" style="height: 200px"></div>
+      <div id="chart_dpv_two" class="chart_dpv_two"></div>
+
+  </div>
+  <div class="right">
+    <div class="condition">
+      <div class="condition_block">
+        <label>Condition</label>
+        <p>Model</p>
+        <select multiple class="chosen-select" data-placeholder=" " id="deffect-model">
+        </select>
+        <p>Phase</p>
+        <select multiple class="chosen-select" data-placeholder=" " id="deffect-phase">
+        </select>
+        <p>Deffect Date</p>
+        <select multiple class="chosen-select" data-placeholder=" " id="deffect-date">
+        </select>
+        <a id="retrieve-data" class="btn btn-primary retrieve_data">Retrieve Data</a>
+      </div>
+      <div class="condition_block">
+        <label>Export to</label>
+        <a class="btn btn-success btn_excel" onclick="export_bt_report_chart_excel()">Excel</a>
+      </div>
+      <div class="condition_block">
+        <label>Snapshot</label>
+        <%= render 'snap'%>
+      </div>
+    </div>
+
+  </div>
+</section>
+<script>
+  $(document).ready(function(){
+      Report.init("daily_dpv");
+  })
+</script>

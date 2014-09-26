@@ -83,7 +83,7 @@ jiangnan:
   encoding: utf8
   reconnect: false
   database: epmdb_jiangnan
-  pool: 5
+  pool: 15
   username: epmer
   password: epmer@
   socket: /var/run/mysqld/mysqld.sock

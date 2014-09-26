@@ -5,11 +5,13 @@ class KpiEntryObserver<Mongoid::Observer
   def after_save kpi_entry
     if kpi_entry.entry_type == 1
       kpi = Kpi.find_by_id(kpi_entry.kpi_id)
-      #if kpi
-      KpiCalculateQueue.push(kpi_entry.attributes) unless kpi.is_calculated
-      #end
-      #KpiEntriesHelper.calculate_kpi_parent_value kpi_entry.id unless kpi.is_calculated
-      return
+      #resque
+      Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi.is_calculated
+      #sidekiq
+      #CalculateWorker.perform_async(kpi_entry.id) unless kpi.is_calculated
+    end
+    Kpi.find_by_id(kpi_entry.kpi_id).kpi_subscribes.each do |ks|
+      ks.execute kpi_entry
     end
   end
 

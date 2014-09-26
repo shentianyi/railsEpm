@@ -1,12 +1,15 @@
 #encoding: utf-8
 class User < ActiveRecord::Base
+  include Redis::Search
   belongs_to :tenant
   belongs_to :entity
   belongs_to :department
+  has_many :kpi_subscribes, :dependent => :destroy
+  has_many :kpi_subscribe_users, :dependent => :destroy
+  has_many :kpi_notifier, :through => :kpi_subscribe_users, :source => :kpi_subscribes
   has_many :user_departments, :dependent => :destroy
   has_many :departments, :through => :user_departments
   has_many :create_departs, :class_name => 'Department'
-
   has_many :user_entity_groups, :dependent => :destroy
   has_many :entity_groups, :through => :user_entity_groups
   has_many :kpis, :through => :user_kpi_items
@@ -14,6 +17,12 @@ class User < ActiveRecord::Base
   has_many :entity_contacts
   #has_many :kpi_entries, :through => :user_kpi_items
   has_many :emails, :dependent => :destroy
+  #
+  has_many :story_sets, :dependent => :destroy
+  has_many :stories, :dependent => :destroy
+  has_many :story_set_users
+  has_many :collaborated_story_sets, :through => :story_set_users
+  has_many :report_snaps
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -33,6 +42,11 @@ class User < ActiveRecord::Base
   #end
   # acts as tenant
   acts_as_tenant(:tenant)
+
+  redis_search_index(:title_field => :first_name,
+                     :condition_fields => [:tenant_id, :is_sys, :role_id, :entity_id],
+                     :prefix_index_enable => true,
+                     :ext_fields => [:email])
 
   def method_missing(method_name, *args, &block)
     if Role::RoleMethods.include?(method_name)
@@ -60,13 +74,29 @@ class User < ActiveRecord::Base
     end
   end
 
-  def image_name
-    unless self.image_url.blank?
-      arr= self.image_url.match(/(avatar\/)(.*)\?/)
+
+  def image
+    User.get_image(User.get_image_name(self.image_url))
+  end
+
+  def self.get_avatar (image_url)
+    get_image(get_image_name(image_url))
+  end
+
+  def self.get_image_name(image_url)
+    unless image_url.blank?
+      #arr= self.image_url.match(/(avatar\/)(.*)\?/)
+      #local
+      arr= image_url.match(/(avatar\/)(.*)/)
       return arr[2] if arr && arr.size==3
+    else
+      return ''
     end
   end
 
+  def self.get_image(image_name)
+    '/avatars/'+ image_name
+  end
 
   def deliver_user_confirmation!
     reset_perishable_token!

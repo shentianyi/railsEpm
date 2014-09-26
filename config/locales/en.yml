@@ -343,6 +343,8 @@ en:
     entry_kpi: KPI Entry
     department: Data Point
     entity: Department
+    story_set: My Discussion
+    subscription: My Subscription
   analytics:
     title: Analytics
     kpi_category: KPI Category
@@ -658,3 +660,35 @@ en:
     current: Current
     target_min: Target Min
     target_max: Target Max
+  user_message:
+    add_to_story_set: You are invited to a discussion
+    story_comment: Your insight was commented
+    new_story: Your discussion set has new insight
+    subscription_alert: Your KPI subscription has a new alert
+  event_message:
+    add_to_story_set: invited you to a disscussion
+    story_comment: commented your insight
+    new_story: created a new insight
+  subscription:
+    subscription: Subscription
+    add: Subscribe
+    create: Create
+    cancel: Cancel
+    kpi: KPI
+    add-sub:
+      department: Department
+      time: Time Range
+      cal_type: Calculate Type
+      alert_by: Alert by
+      alert_type: Alert When
+      alert_type_exit: Same alert type exits
+      start-time: Start Time
+      end-time: End Time
+      value: Please Enter to add an alert
+      average: AVERAGE
+      total: TOTAL
+      alert: Alert
+    alert-type:
+      max: Should not larger than
+      min: Should not smaller than
+      error: Alert type error

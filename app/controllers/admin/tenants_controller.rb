@@ -32,6 +32,7 @@ class Admin::TenantsController < Admin::ApplicationController
     begin
       @user=User.new
       @user.status=0
+      @user.first_name=params[:user][:first_name]
       @user.create_tenant_user!(params[:user][:email], params[:user][:password], params[:user][:password], params[:tenant][:company_name])
       @tenant=@user.tenant
       redirect_to  [:admin,@tenant], notice: 'Tenant was successfully created.'

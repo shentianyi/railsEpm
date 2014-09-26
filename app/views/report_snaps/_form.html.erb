@@ -1,0 +1,41 @@
+<%= form_for(@report_snap) do |f| %>
+  <% if @report_snap.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@report_snap.errors.count, "error") %> prohibited this report_snap from being saved:</h2>
+
+      <ul>
+      <% @report_snap.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :desc %><br />
+    <%= f.text_field :desc %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br />
+    <%= f.number_field :type %>
+  </div>
+  <div class="field">
+    <%= f.label :type_string %><br />
+    <%= f.text_field :type_string %>
+  </div>
+  <div class="field">
+    <%= f.label :user %><br />
+    <%= f.text_field :user %>
+  </div>
+  <div class="field">
+    <%= f.label :data %><br />
+    <%= f.text_area :data %>
+  </div>
+  <div class="field">
+    <%= f.label :tenant %><br />
+    <%= f.text_field :tenant %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

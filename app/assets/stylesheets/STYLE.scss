@@ -4,7 +4,8 @@ $red:#f75460;
 $red-hover:#f59b9b;
 $green:#0cb156;
 $green-hover:transparentize($green,0.4);
-
+$nav-dark:#353a46;
+$golden-text:#f2c54a;
 @mixin transition($element){
   transition:$element ease-out 0.25s
 }
@@ -27,6 +28,11 @@ $green-hover:transparentize($green,0.4);
   -moz-box-shadow:$x $y $shadow $color;
   -webkit-box-shadow:$x $y $shadow $color;
 }
+@mixin box-shadow-inset($x,$y,$shadow,$color){
+  box-shadow:$x $y $shadow $color inset;
+  -moz-box-shadow:$x $y $shadow $color inset;
+  -webkit-box-shadow:$x $y $shadow $color inset;
+}
 @mixin text-shadow($x,$y,$shadow,$color){
   text-shadow:$x $y $shadow $color;
   -moz-text-shadow:$x $y $shadow $color;
@@ -42,6 +48,16 @@ $green-hover:transparentize($green,0.4);
   display:block;
   clear: both;
 }
+@mixin box-sizing-border{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@mixin after-clear{
+  content:"";
+  display:block;
+  clear:both;
+}
 /*************************************************************  button style
 *********************************************************************************************************/
 .btn{
@@ -51,6 +67,8 @@ $green-hover:transparentize($green,0.4);
   transition: background-color 0.25s ease 0s,color 0.25s ease 0s;
   -moz-transition: background-color 0.25s ease 0s;
   -webkit-transition: background-color 0.25s ease 0s;
+  background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.3) 55%) #e4e4e4;
+  background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.3) 55%) #e4e4e4;
   cursor:pointer;
   padding:8px 8px;
   margin:0 20px;
@@ -63,6 +81,8 @@ $green-hover:transparentize($green,0.4);
   font-weight:lighter;
   &:hover{
     background:rgba(238,238,238,0.7);
+    background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.5) 55%) #eee;
+    background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.5) 55%) #eee;
     color:rgba(0,0,0,0.4)
   }
   & i{
@@ -79,13 +99,13 @@ $green-hover:transparentize($green,0.4);
   }
   &.btn-primary{
     background:#5fa9da;
-    //background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
-    //background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
+    background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
+    background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
     color:#fff;
     &:hover{
       background:#69aef5;
-      //background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
-      //background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
+      background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
+      background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
     }
   }
   &.btn-dark{
@@ -97,14 +117,26 @@ $green-hover:transparentize($green,0.4);
   }
   &.btn-success{
     background:$green;
-    color:white;
+    color:#fff;
+    background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(43, 207, 66, 0.2) 55%) $green;
+    background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(43, 207, 66, 0.2) 55%) $green;
     &:hover{
-      background:$green-hover
+      background:$green-hover;
+      background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(43, 207, 66, 0.5) 55%) $green;
+      background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(43, 207, 66, 0.5) 55%) $green;
     }
   }
   &.btn-warning{
     background:#eb9541;
-    color:white;
+    color:#fff;
+    &.linear{
+      background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(235, 149, 65, 0.2) 55%) #eb9541;
+      background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(235, 149, 65, 0.2) 55%) #eb9541;
+      &:hover{
+        background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(235, 149, 65, 0.5) 55%) #eb9541;
+        background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(235, 149, 65, 0.5) 55%) #eb9541;
+      }
+    }
     &:hover{
       background:#f6af6a
     }

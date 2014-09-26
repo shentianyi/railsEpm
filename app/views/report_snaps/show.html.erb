@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Desc:</b>
+  <%= @report_snap.desc %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @report_snap.type %>
+</p>
+
+<p>
+  <b>Type string:</b>
+  <%= @report_snap.type_string %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @report_snap.user %>
+</p>
+
+<p>
+  <b>Data:</b>
+  <%= @report_snap.data %>
+</p>
+
+<p>
+  <b>Tenant:</b>
+  <%= @report_snap.tenant %>
+</p>
+
+
+<%= link_to 'Edit', edit_report_snap_path(@report_snap) %> |
+<%= link_to 'Back', report_snaps_path %>

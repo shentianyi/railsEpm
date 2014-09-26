@@ -346,6 +346,8 @@ zh:
       entry_kpi: KPI输入
       department: 输入点
       entity: 部门
+      story_set: 我的讨论组
+      subscription: 我的订阅
   analytics:
     title: 分析
     kpi_category: KPI类别
@@ -663,3 +665,35 @@ zh:
     current: 当前值
     target_min: 目标值下限
     target_max: 目标值上限
+  user_message:
+    add_to_story_set: 你被加入了新讨论组
+    story_comment: 你的主题有了新评论
+    new_story: 你参与的讨论组有了新主题
+    subscription_alert: 你的订阅中有一个新的提醒
+  event_message:
+    add_to_story_set: 将你加入新讨论组
+    story_comment: 评论了你的主题
+    new_story: 新建了主题
+  subscription:
+    subscription: 订阅
+    add: 订阅
+    create: 添加
+    cancel: 取消
+    kpi: KPI
+    add-sub:
+      department: 部门
+      time: 时间范围
+      cal_type: 计算方式
+      alert_by: 提醒方式
+      alert_type: 何时提醒
+      alert_type_exit: 同一种提醒方式不能重复添加
+      start-time: 开始时间
+      end-time: 结束时间
+      value: 按回车来添加一个提醒
+      average: 平均
+      total: 总计
+      alert: 异常
+    alert-type:
+      max: 不能超过
+      min: 不能低于
+      error: 错误的提醒方式

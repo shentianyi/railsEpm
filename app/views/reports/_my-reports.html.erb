@@ -1,0 +1,170 @@
+<div class="report-menu" id="report-menu">
+
+<section>
+  <div class="header">
+    <p>App Center</p>
+  </div>
+  <ul id="my-reports">
+    <p>Quality Gate</p>
+
+    <li number="0"><a menu="current_status" href="#current_status"><i class="icon-adjust mark"></i> Current Status<i class="icon-chevron-right indicate"></i></a></li>
+    <li number="8"><a menu="daily_dpv" href="#daily_dpv"><i class="icon-columns mark"></i> Daily DPV&SDPV<i class="icon-chevron-right indicate"></i></a></li>
+    <li number="7"><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i> Daily FTQ<i class="icon-chevron-right indicate"></i></a></li>
+    <li number="2"><a menu="station_data" href="#station_data"><i class="icon-list mark" menu="station-data" href="#station-data"></i> Station Data<i class="icon-chevron-right indicate"></i></a></li>
+	<li number="1"><a menu="summary_report" href="#summary_report"><i class="icon-columns mark"></i> Summary Report<i class="icon-chevron-right indicate"></i></a></li>
+    <li number="9"><a menu="tracking_report" href="#tracking_report"><i class="icon-screenshot mark" ></i> Daily KPI Tracking<i class="icon-chevron-right indicate"></i></a></li>
+    <li number="4"><a menu="defects" href="#defects"><i class="icon-remove-sign mark" ></i> Defect<i class="icon-chevron-right indicate"></i></a></li>
+    <li number="3"><a menu="vehicle_info" href="#vehicle_info"><i class="icon-dashboard mark" ></i> Vehicle Information<i class="icon-chevron-right indicate"></i></a></li>
+
+  </ul>
+  <a class="btn btn-primary share" id="share_to_discussion_btn">Share to discussion</a>
+  <a class="btn btn-success snap" id="snap-shot-button">Snapshot</a>
+  <a class="btn subscribe" id="reports_subscribe">App subscription</a>
+</section>
+
+</div>
+<div id="preloader" class="pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z">
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none">
+    <path d="M30,30 50,30 50,30 30,30 Z"/>
+  </svg>
+</div><!-- /pageload-overlay -->
+
+<section class="snap_block" id="snap_block">
+  <i class="icon icon-remove" id="snap-shot-remove"></i>
+  <p>Snap description</p>
+  <input type="text" id="snap-shot-desc"/>
+  <a class="btn btn-success" id="snap-shot-btn">finish</a>
+</section>
+
+
+<input type="hidden" id="report-story-type-hidden">
+
+<div class="back-pop report_center_back_pop" id='back-pop'>
+  <div class="choose-project-team">
+    <i class="icon icon-remove" id="remove-back-pop"></i>
+    <p>Share to discussion</p>
+    <div class="basic_info">
+      <div class="basic_left">
+        <p>Title</p>
+        <input type="text" id="story-title"/>
+        <p>Attachment</p>
+        <input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
+        <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
+      </div>
+      <div class="basic_right">
+        <p>Description</p>
+        <textarea id="story-desc"></textarea>
+      </div>
+    </div>
+    <div class="choose-by-select">
+      <p>Add to a discussion</p>
+      <select data-placeholder="discussion list" class="chosen-select" id="story-sets">
+        <% current_user.collaborated_story_sets.all.each do |set| %>
+            <option value="<%= set.id %>"><%= set.title %></option>
+        <% end %>
+      </select>
+      <a class="btn btn-primary" id="add-to-storyset">Add</a>
+    </div>
+    <div class="choose-by-create">
+      <p>Create new discussion</p>
+      <input type="text" id="storyset-title" placeholder="discussion name"/>
+      <input type="text" id="storyset-desc" placeholder="discussion description"/>
+      <select multiple class="chosen-select" data-placeholder="invite people" id="storyset-users">
+        <% @users.each do |u| %>
+            <option user="<%= u.id %>"><%= u.first_name %></option>
+        <% end %>
+      </select>
+      <a class="btn btn-primary" id="create-add-to-storyset">Create and Add</a>
+    </div>
+  </div>
+</div>
+
+
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
+    <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
+    <%= javascript_include_tag "Manage-story.js" %>
+    <%= javascript_include_tag "Manage-storyset.js"%>
+<% end %>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        attach_upload("item-data-uploader");
+        $("body")
+                .on("click", ".attachment-item-remove", function (event) {
+                    if (confirm('Sure to delelte?')) {
+                        var e = event ? event : (window.event ? window.event : null);
+                        var obj = e.srcElement || e.target;
+                        e.stopPropagation();
+                        $(".attachment-item[path-name='" + $(obj).attr("path-name") + "']").remove();
+                    }
+                })
+                .on("click", "#create-discuss-btn", function () {
+                    show_project_block();
+                    if ($("#analytic-control-condition-visible").attr("state") == "open") {
+                        $("#analytic-control-condition-visible").click();
+                    }
+                })
+                .on("click", "#cancel-fro-project", function () {
+                    hide_project_block();
+                })
+                .on("click", "#share_to_discussion_btn", function () {
+                    $("#back-pop").addClass("show")
+                })
+                .on("click", "#remove-back-pop", function () {
+                    $("#back-pop").removeClass("show")
+                })
+                .on("click", "#add-to-storyset", function () {
+                    var story = prepare_for_create_report_story();
+                    if (story.story_set_id == null) {
+                        MessageBox('No Story Set,Please use select one or Use create and add button', 'top', 'warning');
+                        return;
+                    }
+                    MANAGE.story.create(story, function (data) {
+                        if (data.result) {
+                            window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
+                        } else {
+                            MessageBox(data.content, 'top', 'warning');
+                        }
+
+                    });
+                })
+                .on("click", "#create-add-to-storyset", function () {
+                    var story = prepare_for_create_report_story();
+                    var story_set = {};
+                    story_set.title = $("#storyset-title").val();
+                    story_set.description = $("#storyset-desc").val();
+                    story_set.users = $("#storyset-users option:selected").map(function () {
+                        return $(this).attr("user")
+                    }).get();
+                    MANAGE.story_set.create(story_set, function (data) {
+                        if (data.result) {
+                            story.story_set_id = data.content.id;
+                            MANAGE.story.create(story, function (data) {
+                                if (data.result) {
+                                    window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
+                                } else {
+                                    MessageBox(data.content, 'top', 'warning');
+                                }
+                            })
+                        }
+                        else {
+
+                        }
+                    })
+                })
+                .on("click", "#direct-publish-fro-project", function () {
+                    var story = prepare_for_create_report_story();
+                    story.story_set_id = $(this).attr("value");
+                    MANAGE.story.create(story, function (data) {
+                        if (data.result) {
+                            window.location.href = '/story_sets/' + data.content.id + '/story?story';
+                        } else {
+                            MessageBox(data.content, 'top', 'warning');
+                        }
+                    });
+                });
+    });
+</script>
+

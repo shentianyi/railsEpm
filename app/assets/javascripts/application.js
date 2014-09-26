@@ -13,6 +13,7 @@
 //=require jquery-1.8.2.min
 //=require jquery_ujs
 //=require jquery.tipsy
+//=require jquery-csshooks
 //=require brilliantech.base
 //=require Template
 //=require chosen.jquery.min
@@ -25,3 +26,4 @@
 //=require Log
 //=require jquery.scrollUp.min
 //=require mustache.min
+//=require popModal.min

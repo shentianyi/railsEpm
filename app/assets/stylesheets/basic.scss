@@ -1,12 +1,20 @@
-ul{
-  list-style-type:none;
-  padding:0px;
-  margin:0px;
-}
-a{
-  text-decoration:none;
-  color:inherit;
-}
+
+//////////////////////////////////////// 变量
+$static-p:rgba(255,255,255,0.45);
+$golden:#ad9f73;
+$red:#d9514f;
+$min-width:1024px;
+$light-white:rgba(255,255,255,0.5);
+$glass-bg:rgba(255,255,255,0.65);
+$glass-p:rgba(0, 0, 0, 0.53);
+$nav-dark:#353a46;
+$background-grey:#f3f3f3;
+$layout-border-color:#ddd;
+$blue:#5fa9da;
+$orange:#eb9541;
+$alert-orange:#ff921e;
+
+$nav-height:70px;
 //////////////////////////////////////// 通用函数
 @mixin transition($element){
   transition:$element ease-out 0.3s
@@ -54,11 +62,30 @@ a{
   -moz-text-shadow:1px 1px 2px #666;
   -webkit-text-shadow:1px 1px 2px #666;
 }
-//////////////////////////////////////// 变量
-$static-p:rgba(255,255,255,0.45);
-$golden:#ad9f73;
-$red:#d9514f;
-$min-width:1024px;
-$light-white:rgba(255,255,255,0.5);
-$glass-bg:rgba(255,255,255,0.65);
-$glass-p:rgba(0, 0, 0, 0.53);
+//////////////////////////////////////// 通用组件
+
+ul{
+  list-style-type:none;
+  padding:0px;
+  margin:0px;
+}
+a{
+  text-decoration:none;
+  color:inherit;
+}
+body{
+  background:$background-grey;
+}
+.back-pop{
+  background:rgba(0,0,0,0.8);
+  position:fixed;
+  top:0px;
+  right:auto;
+  bottom:0px;
+  left:-999em;
+  z-index:999;
+}
+.back-pop.show{
+  left:0px !important;
+  right:0px !important;
+}

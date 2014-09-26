@@ -1,0 +1,48 @@
+<section class="station-data">
+<div class="header" id="station-data-header">
+  <div class="header-block">
+    <label>Time interval</label>
+    <input type="text" id="date-begin" readonly=true/>
+    <label>-</label>
+    <input type="text" id="date-end" readonly=true/>
+    <br>
+    <input type="button" value="Retrieve" id="retrieve" class="btn btn-primary"/>
+  </div>
+  <div class="header-block">
+    <label>Export to</label>
+    <a class="btn btn-success" onclick="export_bt_report_excel()">Excel</a>
+
+  </div>
+  <div class="header-block">
+    <label>Setting</label>
+    <div class="a-block">
+      <div class="block-left">
+        <p>FTQ > FTQ Target</p>
+        <p>FTQ = FTQ Target</p>
+        <p>FTQ < FTQ Target</p>
+      </div>
+      <div class="block-right" id="station-data-color-ftq">
+      </div>
+    </div>
+    <div class="a-block">
+      <div class="block-left">
+        <p>DPV > DPV Target</p>
+        <p>DPV = DPV Target</p>
+        <p>DPV < DPV Target</p>
+      </div>
+      <div class="block-right" id="station-data-color-dpv">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="station-data-body" id="station-data-body">
+  <div id="data_container" ></div>
+</div>
+<%= render 'snap'%>
+</section>
+
+<script>
+$(document).ready(function(){
+	Report.init("station_data");
+})
+</script>

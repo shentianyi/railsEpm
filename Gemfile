@@ -1,5 +1,5 @@
 #source 'https://rubygems.org'
-source 'http://ruby.taobao.org'
+source 'https://ruby.taobao.org'
 
 gem 'rails', '3.2.13'
 
@@ -103,3 +103,11 @@ gem 'ancestry'#,:git => "git://github.com/stefankroes/ancestry.git"
 #mongodb
 gem 'mongoid', '~> 3.1.6'
 gem 'bson_ext'
+
+# redis search
+gem 'ruby-pinyin'
+gem 'chinese_pinyin'
+#gem 'redis-search'
+
+# Front-end module
+gem "seajs-rails"

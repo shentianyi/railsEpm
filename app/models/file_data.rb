@@ -19,6 +19,7 @@ class FileData<CZ::BaseClass
         else
           f.write(@data.read)
         end
+        @type=FileData.get_type(@full_path)
       end
       return @pathName
     rescue

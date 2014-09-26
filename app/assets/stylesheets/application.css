@@ -37,10 +37,25 @@
 *= require Log
 *= require treeview
 
-*= require STYLE
 *= require Manage-attribute
 *= require Analytics
 *= require EntryScss
+*= require layout
+*= require story_sets
+*= require kpi_subscribes
+*= require report/reports
+*= require report/snap.css.scss
+*= require dataview/dataview_tiem
+*= require report/daily_dpv
+*= require stories.css
+*= require report/current_status
+*= require report/report_subscription
+*= require report/station_data
+*= require report/daily_ftq
+
+*= require popModal.min
+*= require dhtmlx
+
 
 *= require_self
 

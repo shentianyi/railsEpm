@@ -25,6 +25,7 @@
             <% else %>
                 <td><%= t 'manage.kpi.not_calculate_type' %></td>
             <% end %>
+            <td><a class="btn btn-success" href="/kpi_subscribes/new/<%= kpi.id%>" style="font-size:13px;padding:6px 8px;"><%= t 'subscription.add'%></a></td>
           </tr>
           <tr>
             <td title='<%= kpi.description %>'><%= kpi.description %></td>
@@ -34,6 +35,7 @@
             <td><%= t 'manage.kpi.target' %></td>
             <td><%= t 'manage.kpi.target_min' %></td>
             <td><%= t 'manage.kpi.is_calculate_type' %></td>
+            <td></td>
           </tr>
         </table>
         <div class="attribute-position" type="myKPI">
@@ -46,3 +48,4 @@
       </li>
   <% end if @kpis %>
 </ul>
+

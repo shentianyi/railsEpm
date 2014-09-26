@@ -1,0 +1,62 @@
+<ul id="manage-sort-list" class="manage-sort-list">
+  <% @kpi_subscribes.each do |ks| %>
+      <a href="/kpi_entries/analyse?s=<%= ks.id %>">
+        <li id="<%= ks.id %>">
+          <table class="category" special="my-kpi">
+            <tr>
+              <% query = AnalyseService.chart_condition_filter(ks.chart_condition) %>
+              <td><%= ks.chart_condition.kpi.name %></td>
+              <td><%= ks.chart_condition.entity_group.name %></td>
+              <td><%= KpiEntriesHelper.parse_entry_date(query[:frequency], Time.parse(query[:start_time])) %>
+                | <%= KpiEntriesHelper.parse_entry_date(query[:frequency], Time.parse(query[:end_time])) %></td>
+              <td>
+                <div class="subscribe-wrap" style="width:100%;overflow-x:auto">
+                  <% ks.kpi_subscribe_alerts.each do |alert| %>
+                      <span><%= alert.display %></span>
+                  <% end %>
+                </div>
+              </td>
+              <td>
+                <% if ks.alert_by_sms %>
+                    <span>SMS</span>
+                <% end %>
+                <% if ks.alert_by_email %>
+                    <span>EMAIL</span>
+                <% end %>
+              </td>
+              <td>
+                <% if ks.is_alert %>
+                    <a class="btn btn-danger"><%= t 'subscription.add-sub.alert' %></a>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td><%= t 'subscription.kpi' %></td>
+              <td><%= t 'subscription.add-sub.department' %></td>
+              <td><%= t 'subscription.add-sub.time' %></td>
+              <td><%= t 'subscription.add-sub.alert_type' %></td>
+              <td><%= t 'subscription.add-sub.alert_by' %></td>
+              <td></td>
+            </tr>
+          </table>
+        </li>
+      </a>
+  <% end %>
+</ul>
+
+<script>
+    $(document).ready(function () {
+        $("body")
+                .on("click", ".subscribe-remove", function (event) {
+                    var target = adapt_event(event).target;
+                    MANAGE.kpi_subscribe.destroy($(target).attr("value"), function (data) {
+                        if (data.result) {
+                            $(target).parent().remove();
+                        } else {
+
+                        }
+                    });
+                })
+    })
+</script>
+

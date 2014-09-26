@@ -35,6 +35,7 @@ ANALYTICS.high_chart={
         baseSeries:0
     },
     tooltip:{
+            enabled: true,
             formatter: function() {
                 var targetString="",
                     target,new_target,name,view;
@@ -44,6 +45,7 @@ ANALYTICS.high_chart={
                         new_target=target.series.name.replace("(","#").replace(")","#").split("#");
                         name=new_target[0];
                         view=new_target[1];
+<<<<<<< HEAD
 //                        console.log(target.point )
                         if(target.point.unit){
                             if(target.point.kpi_property.length>0){
@@ -52,6 +54,25 @@ ANALYTICS.high_chart={
                             else{
                                 targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+" "+target.point.unit+'<br />';
                             }
+=======
+
+                        var y=(parseInt(target.y)).length;
+                        var dotCount=Math.ceil(y/3)-1;
+
+                        if(dotCount>0){
+                            var tempY,tempArray;
+                            tempY=target.y+"";
+                            tempArray= tempY.split("");
+                            for(var i=0;i<dotCount;i++){
+                                tempArray.splice(3*(i+1)+i,0,",");
+                                console.log(y)
+                            }
+                            y= tempArray.join("");
+                        }
+                        else{
+                            y=target.y
+                        }
+>>>>>>> qoros-demo
 
 
                         }
@@ -68,21 +89,11 @@ ANALYTICS.high_chart={
                         return '<b>'+target.key+'</b>'
                             +'<br />'
                             +targetString;
-//                            +'<br />KPI: <span style="color:'+target.series.color+'">'+name
-//                            +'</span>'
-//                            +'<br />'+I18n.t('chart.view')+': '+view
-//                            +'<br />'+I18n.t('chart.value')+': '+target.y+" "+target.point.unit
-//                            +"<br />"+I18n.t('chart.target_range')+": "+target.point.target_min+"-"+target.point.high
                     }
                     else{
                         return '<b>'+target.key+'</b>'
                             +'<br />'
                             +targetString;
-//                            +'<br />KPI: <span style="color:'+target.series.color+'">'+name
-//                            +'</span>'
-//                            +'<br />'+I18n.t('chart.view')+': '+view
-//                            +'<br />'+I18n.t('chart.value')+': '+target.y+" "+target.point.unit
-//                            +"<br />"+I18n.t('chart.target_range')+": "+target.point.low+"-"+target.point.high
                     }
                 }
                 else if(this.point){
@@ -171,6 +182,7 @@ ANALYTICS.high_chart={
 
             }
         },
+        column:{},
         arearange:{
             fillOpacity:0.1,
             fillColor:"rgba(177,211,221,0.2)",
@@ -291,10 +303,7 @@ ANALYTICS.form_chart=function(option){
     bar_fix_from=Date.parse(begin_time_utc);
     bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1)) <= end_time_utc ?
                            Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1))) : Date.parse(end_time_utc) ;
-
     var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
-//    console.log(new Date(bar_fix_from).toISOString() );
-//    console.log(new Date(bar_fix_to).toISOString());
     show_loading(top,0,0,0);
 
     ANALYTICS.base_option={
@@ -307,7 +316,7 @@ ANALYTICS.form_chart=function(option){
         kpi_property: option.kpi_property
     };
 
-
+    console.log(ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null))
     $.post('/kpi_entries/analyse',{
         kpi_id : option.kpi_id,
         average: option.method=="0",
@@ -315,7 +324,8 @@ ANALYTICS.form_chart=function(option){
         start_time : new Date(bar_fix_from).toISOString() ,
         end_time : new Date(bar_fix_to).toISOString(),
         frequency:option.interval,
-        property:option.kpi_property
+        property:option.kpi_property,
+        report:ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null)
     },function(msg){
           if(option.show_loading==null || option.show_loading)
          remove_loading()
@@ -352,7 +362,11 @@ ANALYTICS.form_chart=function(option){
             else{
                 ANALYTICS.loading_data=false;
                 ANALYTICS.currentThreadLoading=false;
-                console.log("loading over");
+                ANALYTICS.qoros_demo_count--;
+                console.log("loading over from form_chart");
+                if(ANALYTICS.qoros_demo_count>0){
+                    ANALYTICS.prepare_form_chart_qoros();
+                }
             }
         }
         else{
@@ -435,7 +449,11 @@ ANALYTICS.add_data=function(option){
         start_time : begin_time_utc.toISOString() ,
         end_time : next_date.toISOString(),
         frequency:option.interval,
+<<<<<<< HEAD
         property:option.kpi_property
+=======
+        report:ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null)
+>>>>>>> qoros-demo
     },function(msg){
         if(msg.result){
             var data_length=msg.object.current.length;
@@ -462,7 +480,7 @@ ANALYTICS.add_data=function(option){
             point = point.concat(data_array);
             option.data=point;
             var new_data=ANALYTICS.deal_data(option);
-//            console.log(new_data  )
+
 
             chart.series[option.id+1].setData(new_data, false);
 //            console.log(chart.series[0])
@@ -473,11 +491,15 @@ ANALYTICS.add_data=function(option){
                 $("#chart-container").highcharts().get("navigator").setData(new_data, false);
             }
 
+<<<<<<< HEAD
 //            console.log(ANALYTICS.chartSeries.series[0][option.interval]);
 //            console.log(option.id)
+=======
+
+>>>>>>> qoros-demo
 
             chart.redraw();
-//            chart.xAxis[0].setExtremes(option.bar_fix_from, option.bar_fix_to);
+
             if(option.data_too_long) {
                 option.begin_time_utc=begin_time_utc;
                 ANALYTICS.add_data(option);
@@ -485,7 +507,11 @@ ANALYTICS.add_data=function(option){
             else{
                 ANALYTICS.loading_data=false;
                 ANALYTICS.currentThreadLoading=false;
-                console.log("loading over");
+                ANALYTICS.qoros_demo_count--;
+                console.log("loading over from add data");
+                if(ANALYTICS.qoros_demo_count>0){
+                    ANALYTICS.prepare_form_chart_qoros();
+                }
             }
         }
         else{
@@ -556,7 +582,8 @@ ANALYTICS.add_series=function(option) {
         name: series_name,
         id: series_id,
         color:color,
-        data: data
+        data: data,
+        yAxis: ANALYTICS.qoros_demo_count===3?1:0
     })
 
 
@@ -666,7 +693,7 @@ ANALYTICS.proper_type_for_chart=function(){
         p.data=ANALYTICS.chartSeries.series[p.id][obj.interval];
     }
 //    console.log(p.id)
-//    console.log(p.data.length)
+//    console.log(p.data)
 
     var new_series=deepCopy(p,c);
     if(this.type=="column"){

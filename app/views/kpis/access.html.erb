@@ -18,11 +18,21 @@
           <div id="kpi-item-container">
             <%= render partial: 'access' %>
           </div>
+          <div class="kpi-library" id="subscribe-kpi-block" type="attribute">
+            <div>
+              <i class="icon icon-remove" id="subscribe-kpi-block-remove"></i>
+              <div class="attribute-block" type="edit">
+
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         MANAGE.kpi.init();

@@ -82,10 +82,9 @@ body{
 *******************************************************************************************************************/
 header{
     height:70px;
-    background-color:#f2f2f2;
     z-index:30;
     position:relative;
-    background-color:#5fa9da;
+    background-color:#272a32;
     box-shadow:0 2px 5px rgba(71, 71, 71, 0.3);
     -moz-shadow:0 2px 5px rgba(71, 71, 71, 0.3);
     -webki-shadow:0 2px 5px rgba(71, 71, 71, 0.3);
@@ -97,23 +96,23 @@ header{
     cursor:default;
 }
 .user-portrait-brand{
-    background:url("/assets/logo.png") no-repeat 3px -5px;
+    background:url("/assets/logo.png") no-repeat  -1px -7px ;
     /*background:url("../images/logo2.png") no-repeat center center;*/
-    width:45px;
-    height:45px;
+    width:60px;
+    height:58px;
     padding-top:0px;
     margin-top:12px;
     margin-left:13px;
     position:relative;
 }
-.user-portrait-brand:after{
-    content:"ClearInsight";
-    position:absolute;
-    bottom:0px;
-    font-size:10px;
-    color:rgba(255,255,255,0.55);
-    left:-3px;
-}
+/*.user-portrait-brand:after{*/
+    /*content:"ClearInsight";*/
+    /*position:absolute;*/
+    /*font-size:10px;*/
+    /*color:rgba(255,255,255,0.85);*/
+    /*left:3px;*/
+    /*bottom:6px;*/
+/*}*/
 nav{
     height:100%;
 }
@@ -134,7 +133,6 @@ nav>ul>li.active a span{
 nav>ul>li>a{
     display:block;
 
-    color:white;
     font-size:13px;
     height:46px;
     text-align:center;
@@ -529,4 +527,79 @@ nav ul li a:hover ~ .nav-manage-sub{
     height: 38px;  /* Height of image */
     width: 38px; /* Width of image */
     background: url('/assets/top.png') no-repeat;
+}
+
+.atta-line{
+    margin-bottom:8px;
+    min-height:15px;
+    border:2px dashed #ddd;
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    padding:5px;
+    min-width:200px;
+    max-height:352px;
+    overflow-y:scroll;
+}
+.attachment-item{
+    margin-right:5px;
+    cursor:pointer;
+}
+.attachment-sign{
+    position:relative;
+    width:60px;
+    height:65px;
+    background-position:center top;
+    background-repeat:no-repeat;
+}
+.attachment-p{
+    width:60px;
+    word-break:break-all;
+    word-wrap:break-word;
+    margin-bottom:0px;
+    margin-top:-1px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size:13px;
+}
+.attachment-sign:hover .attachment-operate{
+    display:block
+}
+.atta-image{
+    /*background-image:url("../images/atta-jpg.png");*/
+    background-image:url("/assets/atta-jpg.png")
+}
+.atta-doc{
+    /*background-image:url("../images/atta-doc.png")*/
+    background-image:url("/assets/atta-doc.png")
+}
+.atta-pdf{
+    /*background-image:url("../images/atta-pdf.png")*/
+    background-image:url("/assets/atta-pdf.png")
+}
+.atta-excel{
+    /*background-image:url("../images/atta-excel.png")*/
+    background-image:url("/assets/atta-excel.png")
+}
+.atta-rar{
+    /*background-image:url("../images/atta-rar.png")*/
+    background-image:url("/assets/atta-rar.png")
+}
+.atta-zip{
+    /*background-image:url("../images/atta-zip.png")*/
+    background-image:url("/assets/atta-zip.png")
+}
+.atta-default{
+    /*background-image:url("../images/atta-default.png")*/
+    background-image:url("/assets/atta-default.png")
+}
+.attachment-operate{
+    position:absolute;
+    bottom:0;
+    background-color:black;
+    opacity:0.6;
+    width:100%;
+    height:15px;
+    display:none;
 }

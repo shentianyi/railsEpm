@@ -1,0 +1,161 @@
+<div class="create-story">
+
+  <div class="left">
+      <div class="header">
+        <p>New publish</p>
+      </div>
+      <p>Title</p>
+    <input type="text"/>
+    <p>Description</p>
+    <textarea></textarea>
+    <p>Attachments</p>
+    <!--附件-->
+    <div>
+      <p>Attachment</p>
+      <input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
+      <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="analytics-condition clearfix" id="analytics-condition">
+      <div class="analytics-mark pull-left" style="width:123px;">
+        <h2 class="normal-blue text-center pointer" onclick="analytic_control_condition_visible()"><%= t 'analytics.title' %></h2>
+      </div>
+      <div class="pull-left analytics-condition-choose" style="padding: 18px 0 5px 11px;">
+
+        <div class="index-condition-group">
+          <select data-placeholder="<%= t 'analytics.kpi_category' %> *" style="width:130px;" class="chosen-select" title="analy-entity-select" id="chart-group">
+            <% @categories.each do |catetory| %>
+                <option value="<%= catetory.id %>"><%= catetory.name %></option>
+            <% end %>
+          </select>
+          <select data-placeholder="<%= t 'analytics.kpi' %> *" style="width:130px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
+            <option value=""></option>
+          </select>
+          <select data-placeholder="<%= t 'analytics.view' %> *" style="width:130px;" class="chosen-select" title="analy-view-select" id="chart-view">
+            <% @entity_groups.each do |entity_group| %>
+                <option value="<%= entity_group.id %>"><%= entity_group.name %></option>
+            <% end %>
+          </select>
+
+        </div>
+
+        <div class="index-condition-group" style="width:222px">
+          <input style="margin-left:13px;width:120px !important;" type="text" class="index-pick-date" placeholder="<%= t 'analytics.begin_time' %> *" id="analy-begin-time"
+                 readonly=true/>
+          <label class="index-date-extra-info"></label>
+          <input style="margin-left:13px;width:120px !important;" type="text" class="index-pick-date" placeholder="<%= t 'analytics.end_time' %>" id="analy-end-time"
+                 readonly=true/>
+          <label class="index-date-extra-info"></label>
+        </div>
+
+        <div class="index-condition-group" style="width:77px;margin-left:-25px;">
+          <label class="analytics-radio-label">
+            <input type="radio" name="chartRadios" value="1">
+            <%= t 'analytics.sum' %> </label>
+          <label class="analytics-radio-label">
+            <input type="radio" name="chartRadios" value="0" checked>
+            <%= t 'analytics.average' %> </label>
+        </div>
+        <div class="chosen-attribute" style="display:none">
+          <select data-placeholder="<%= t 'analytics.select-dim'%>" multiple style="width:250px;" class="chosen-select " title="analy-attribute-select" id="kpi-property-select">
+          </select>
+        </div>
+
+
+        <a class="btn btn-primary btn-normal pull-left" style="margin:14px 0 0 3px" onclick="prepare_form_chart()"><%= t 'analytics.add_chart' %></a>
+
+
+
+      </div>
+
+      <i class="icon-chevron-up analytic-control-condition-visible" id="analytic-control-condition-visible"
+         state="open" onclick="analytic_control_condition_visible()"> </i>
+
+      <p class="analytics-condition-invisible-mark pointer" id="analytics-condition-invisible-mark"
+         style="display:none" onclick="analytic_control_condition_visible()">
+        <%= t 'analytics.title' %>
+      </p>
+    </div>
+
+    <div class="chart-body chart-body-sass" id="chart-body" style="display:none">
+      <div class="clearfix" id="chart-interval-alternate" my_height="28">
+
+        <ul class="pull-right control-chart-interval-group">
+          <li interval="90">
+            <a>Hr</a>
+          </li>
+          <li interval="100">
+            <a>D</a>
+          </li>
+          <li interval="200">
+            <a>W</a>
+          </li>
+          <li interval="300">
+            <a>M</a>
+          </li>
+          <li interval="400">
+            <a>Qr</a>
+          </li>
+          <li interval="500">
+            <a>Y</a>
+          </li>
+        </ul>
+        <!--<a class="btn btn-success compare-current-btn" id="compare-current-btn">进行同期对比</a>-->
+      </div>
+
+
+      <div class="relative" id="chart-main-middle">
+        <div class="chart-container " id="chart-container"></div>
+        <div class="chart-container-item" id="chart-container-item">
+          <ul class="items">
+
+          </ul>
+        </div>
+      </div>
+
+      <table class="chart-type-alternate" id="chart-type-alternate" my_height="70">
+        <tr>
+          <td class="analytics-chart-line image" type="line">
+            <p style="display:block">
+              Line
+            </p></td>
+          <td class="analytics-chart-column" type="column">
+            <p>
+              Column
+            </p></td>
+
+          <td class="analytics-chart-scatter" type="scatter">
+            <p>
+              Scatter
+            </p></td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+</div>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "moment.min.js" %>
+    <%= javascript_include_tag "highcharts-3d.js" %>
+    <%= javascript_include_tag "exporting.js" %>
+    <%= javascript_include_tag "exporting.extend.src.js" %>
+    <%= javascript_include_tag "high_chart_template_analytic.js" %>
+    <%= javascript_include_tag "high_chart_template_detail.js" %>
+    <%= javascript_include_tag "Analytics_init.js" %>
+    <%= javascript_include_tag "bootstrap-datepicker.js" %>
+    <%= javascript_include_tag "date_picker_template.js" %>
+    <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
+    <%= javascript_include_tag "jquery.ui/jquery-ui-wayne.min.js" %>
+<% end %>
+
+<script>
+    $(document).ready(function () {
+        init_analytics();
+    });
+    $(window).resize(function () {
+        resize_chart.body();
+        resize_chart.container();
+    });
+</script>

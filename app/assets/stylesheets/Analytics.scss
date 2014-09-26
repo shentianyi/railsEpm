@@ -1,5 +1,5 @@
 @import "STYLE";
-
+@import "basic";
 .analytics-mark{
   h2{
     @include word-break;
@@ -87,7 +87,77 @@
       }
     }
   }
+  .project-block{
+    height:210px;
+    box-sizing:border-box;
+    margin-top:70px;
+    padding:0px 10px 8px;
+    .inner{
+      width:100%;
+      height:100%;
+      border:1px solid $layout-border-color;
+      background:#fff;
+      position:relative;
+      @include box-shadow(1px,1px,2px,rgba(0,0,0,0.9));
+      @include border-radius-same(10px);
+      .btn-for-project{
+        position:absolute;
+        width:100px;
+        bottom:8px;
+        font-size:13px;
+        &:nth-of-type(1){
+          right:150px;
+        }
+        &:nth-of-type(2){
+          right: 20px;
+        }
+      }
+      .left,.right{
+        float:left;
+        box-sizing:border-box;
+        width:50%;
+        overflow-y:auto;
+      }
+      p{
+        font-size:13px;
+        color:#777;
+        padding-left:15px;
+        margin:8px 0 2px;
+        font-weight: 500;
+      }
+      input,textarea{
+        margin-left:15px;
+      }
+      input{
+         width:210px;
+      }
+      textarea{
+         width:80%;
+         resize:none;
+      }
+      .right{
+        position:relative;
+        .abstractblock{
+          height:100px;
+          overflow-y:auto;
+        }
+
+      }
+
+    }
+  }
+  .chart-interval-alternate{
+     .compare-current-btn{
+        width:140px;
+       float:right;
+       font-size: 13px;
+       padding: 6px 8px;
+     }
+  }
 }
+//////////////////////////////////////////////////  chart body part
+
+
 
 .detail-block{
   position:absolute;
@@ -550,6 +620,84 @@
           padding-left:19px;
         }
       }
+    }
+  }
+}
+
+//弹出选择组
+.choose-project-team{
+  $width:500px;
+  $height:380px;
+   position:absolute;
+  width:$width;
+  background:#fff;
+  left:50%;
+  margin-left:- ( $width / 2 );
+  height:$height;
+  margin-top:- ( $height / 2 );;
+  top:50%;
+  overflow-y:auto;
+  i.icon-remove{
+    position:absolute;
+    font-size:18px;
+    color:#666;
+    pointer-events:auto;
+    cursor:pointer;
+    right:12px;
+    top:9px;
+    @include transition(color);
+    &:hover{
+       color:#222;
+    }
+  }
+  &>p{
+    font-weight:500;
+    font-size:16px;
+    padding-top:8px;
+    padding-left:8px;
+    margin-bottom:8px;
+  }
+  input,.chosen-container{
+    width:200px;
+    display:block;
+    margin-left:8px;
+  }
+  input{
+    padding:4px 5px;
+    margin-bottom:6px;
+    font-size:12px;
+  }
+  .chosen-container{
+    width:211px !important;
+  }
+  &>div{
+    border-top:1px solid rgba(0,0,0,0.2);
+    position:relative;
+    padding:8px 0px;
+    p{
+      font-weight:500;
+      font-size:12px;
+      padding:5px 9px;
+      margin:0px;
+    }
+    .btn{
+      padding:5px 8px;
+      width:120px;
+      font-size:12px;
+      position:absolute;
+      right:10px;
+      bottom:10px;
+    }
+  }
+  .choose-by-select{
+    //padding:6px 0px;
+  }
+  .choose-by-create{
+    input:first-of-type{
+      width:130px;
+    }
+    .chosen-container .chosen-results{
+      max-height: 128px;
     }
   }
 }

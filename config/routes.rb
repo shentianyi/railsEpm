@@ -1,8 +1,56 @@
 IFEpm::Application.routes.draw do
+
+
+
+  resources :report_snaps
+
+
+  #show notification list for ipad temporily
+  #get "/notification/list" => "push_notifications#list"
+  match "/notification/list", to: 'push_notifications#list', via: :get
+
+  resources :kpi_subscribes do
+    collection do
+      get 'mine/:id' => :mine
+      get 'new/:id' => :new
+      get 'mine' => :mine
+      get 'my_subscribe/:id' => :my_subscribe
+    end
+  end
+
+  resources :reports do
+    collection do
+      get :subscription
+      get ':part'=>:index
+      get ':part/:ajax'=>:index
+    end
+  end
+
+  resources :comments
+
+
+  resources :chart_conditions
+
+
+  resources :stories do
+    member do
+      post :comment
+      get :detail
+    end
+  end
+
+
+  resources :story_sets do
+    member do
+      get :story
+    end
+  end
+
+
   resources :kpi_properties
 
   require 'sidekiq/web'
-  authenticate :user, lambda {|u| u.is_sys } do
+  authenticate :user, lambda { |u| u.is_sys } do
     mount Sidekiq::Web => '/sidekiq'
   end
 
@@ -36,6 +84,11 @@ IFEpm::Application.routes.draw do
   resources :avatars
   resources :user_entity_groups
   resources :files do
+    collection do
+      match :upload
+      get :attach
+      get :avatar
+    end
     member do
       get :template
     end
@@ -55,6 +108,8 @@ IFEpm::Application.routes.draw do
       post :add
       put :update
       get :applications
+      get :fast_search
+      get :message
     end
   end
 
@@ -105,6 +160,7 @@ IFEpm::Application.routes.draw do
   resources :kpi_entries do
     collection do
       match :analyse
+      match 'analyse/:setting' => :analyse
       match :compare
       match :compares
       get :recents
@@ -190,12 +246,6 @@ IFEpm::Application.routes.draw do
     resources :emails do
       collection do
         get 'analyse/:id' => :analyse, :defaults => {:format => 'html'}
-      end
-    end
-
-    resources :files do
-      collection do
-        match :upload
       end
     end
 

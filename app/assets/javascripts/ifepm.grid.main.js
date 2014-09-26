@@ -160,10 +160,10 @@ ifepm.dashboard_widget.init_fullsize = function(){
          var height = ifepm.dashboard_widget.config.full.height;
          gridster_full = $("#dash-fullsize ul").gridster({
              namespace:'#dash-fullsize',
-             widget_margins: [10,10],
+             widget_margins: [25,10],
              widget_base_dimensions: [width,height] ,
              draggable:{
-                 stop: ifepm.dashboard_widget.drag_stop,
+                 stop: ifepm.dashboard_widget.drag_stop
              },
          }).data('gridster');
          isinit_fullsize = false;
@@ -329,7 +329,7 @@ ifepm.dashboard_widget.get_pos = function(filter){
 * */
 ifepm.dashboard_widget.initsize = function(type){
     var defsize = {
-        sizex:1,
+        sizex:2,
         sizey:1,
     };
     switch (type)
@@ -347,6 +347,10 @@ ifepm.dashboard_widget.initsize = function(type){
             defsize.sizey = 1;
             break;
         case "scatter":
+            defsize.sizex = 2;
+            defsize.sizey = 1;
+            break;
+        case "table":
             defsize.sizex = 2;
             defsize.sizey = 1;
             break;

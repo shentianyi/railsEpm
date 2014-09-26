@@ -6,6 +6,7 @@ class Kpi < ActiveRecord::Base
   has_many :base_kpis, :through => :kpi_items, :source => 'base_kpi'
   has_many :kpi_property_items, :dependent => :destroy
   has_many :kpi_properties, :through => :kpi_property_items
+  has_many :kpi_subscribes, :dependent => :destroy
 
   has_many :department_kpis, :dependent => :destroy
   has_many :departments, :through => :department_kpis

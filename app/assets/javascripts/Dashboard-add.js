@@ -8,7 +8,7 @@
 var DASHBOARD=DASHBOARD || {} ;
 DASHBOARD.add=DASHBOARD.add || {};
 
-
+DASHBOARD.qoros_table;
 var db_chartSeries = {
     count: 0,
     id_count:0,
@@ -170,6 +170,7 @@ DASHBOARD.add.init=function(){
     $("#analytic-control-condition-visible,#add-one-series").on("click",DASHBOARD.add.initial.analytic_control_condition_visible);
 
     $("#db-add-type>li").on("click",function(event){
+
         var target=adapt_event(event).target;
         if($(this).hasClass("active")==false){
             if($(target).attr("type")=="line" && db_chartSeries.getCount()>1){
@@ -181,6 +182,7 @@ DASHBOARD.add.init=function(){
                 DASHBOARD.add.alternate_chart_type(event);
             }
         }
+
     });
     //删除一条线
     $("body").on("click","#db-add-kpi-list li i",function(){
@@ -325,6 +327,28 @@ DASHBOARD.add.init=function(){
 
 };
 
+DASHBOARD.add.prepare_to_add_item = function(callback){
+    var post={},i;
+    post.dashboard_name=$("#dashboard-name-input").val();
+    post.type=$("#db-add-type li.active").attr("type");
+    post.interval=$("#db-chart-interval-alternate li.active").attr("interval");
+    post.dashboard_id = $("#dashboard-group-name :selected").attr("value");
+    post.series=[];
+    for(i=0;i<db_chartSeries.series.length;i++){
+        post.series[i]={};
+        post.series[i].kpi=db_chartSeries.series[i].kpi_id;
+        post.series[i].view=db_chartSeries.series[i].view;
+        post.series[i].view_text=db_chartSeries.series[i].view_text;
+        post.series[i].average=db_chartSeries.series[i].method;
+        post.series[i].begin_time=db_chartSeries.series[i].begin_post ;
+        post.series[i].end_time=db_chartSeries.series[i].end_post;
+        post.series[i].count=i+1;
+    }
+    if(callback){
+        callback(post)
+    }
+}
+
 DASHBOARD.add.prepare_form_chart=function() {
     var kpi = $("#chart-kpi :selected").attr("value");
     var view = $("#chart-view :selected").attr("value");
@@ -366,11 +390,6 @@ DASHBOARD.add.prepare_form_chart=function() {
                 begin_post=standardParse(begin_time).date.toISOString();
                 end_post=standardParse(end_time).date.toISOString();
             }
-
-
-
-
-
 
         if(is_datetime_outrange(begin_time,end_time,interval)){
             MessageBox("对不起，时间范围太大了！","top","warning")
@@ -417,6 +436,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                db_chartSeries.id_give();
                option.id=db_chartSeries.id;
                addSeriesOption.id=db_chartSeries.id;
+
                var color=option.theme ?
                    HIGH_CHART.chart_color[option.theme][option.id % HIGH_CHART.chart_color[option.theme].length]
                    :HIGH_CHART.chart_color["default"][option.id % HIGH_CHART.chart_color["default"].length];
@@ -437,39 +457,97 @@ DASHBOARD.add.prepare_form_chart=function() {
                    data_array[i].unit=msg.object.unit[i];
                    data_array[i].id=option.id
                }
+               /*
+               datas = [{
+                  view:"Leoni",
+                  kpi_name: "E1",
+                  interval: "100",
+                  current:[1,2,3,4,5,6],
+                  date:["20130904z123","sds"]
+               }]
+               * */
+                 var datas;
+                 if(option.type==="table"){
 
-               if(chart_body_close_validate){
-                   option.data=data_array;
-                   addSeriesOption[interval]=data_array;
-                   db_chartSeries.addSeries(addSeriesOption);
+                   if(chart_body_close_validate){
+                       addSeriesOption.qoros_data=deepCopy(msg.object.current,[]);
+                       option.data=data_array;
+                       addSeriesOption[interval]=data_array;
+                       addSeriesOption.date=msg.object.date;
+                       db_chartSeries.addSeries(addSeriesOption);
+                       DASHBOARD.add.show_chart_body(option);
+                       datas=[{
+                           view:addSeriesOption.view_text,
+                           kpi_name: addSeriesOption.kpi,
+                           interval: addSeriesOption.interval,
+                           current:addSeriesOption.qoros_data,
+                           date:addSeriesOption.date
+                       }];
+                       DASHBOARD.qoros_table = ifepm.dashboard.dhtmlxtable("chart-container",datas);
 
-                   DASHBOARD.add.show_chart_body(option);
-                   render_to(option);
-                   create_environment_for_data(option);
-                   new Highcharts.Chart(high_chart);
-                   add_series(option);
-                   proper_type_for_chart(option);
+                   }
+                   else{
+                       option.data=data_array;
+                       addSeriesOption[interval]=data_array;
+                       addSeriesOption.qoros_data=deepCopy(msg.object.current,[]);
+                       addSeriesOption.date=msg.object.date;
+                       db_chartSeries.addSeries(addSeriesOption);
+                       DASHBOARD.qoros_table.clearAll();
+                       datas=[];
+                       var series=db_chartSeries.series;
+                       for(var i=0;i<series.length;i++){
+                           datas.push({
+                               view:series[i].view_text,
+                               kpi_name: series[i].kpi,
+                               interval: series[i].interval,
+                               current:series[i].qoros_data,
+                               date:series[i].date
+                           })
+                       }
+                       var d = ifepm.dashboard.parse2dhtmlxGridJson(datas);
+                       DASHBOARD.qoros_table.parse(d.json,"json");
 
-                   if(option.type=="line"&&db_chartSeries.getCount()==1){
-                        var option_area={};
-                        option_area=deepCopy(option,option_area);
-                        option_area.type="arearange";
-                        option_area.id="line-target";
-                        option_area.count=db_chartSeries.getCount() + 1;
-                        add_series(option_area);
-                        proper_type_for_chart(option_area);
-                    }
+                   }
+                   option.total=msg.object.total;
+
                }
                else{
-                   option.data=data_array;
-                   addSeriesOption[interval]=data_array;
-                   db_chartSeries.addSeries(addSeriesOption);
-                   add_series(option);
-                   proper_type_for_chart(option);
+                   if(chart_body_close_validate){
+
+                       option.data=data_array;
+                       addSeriesOption[interval]=data_array;
+                       addSeriesOption.date=msg.object.date;
+                       db_chartSeries.addSeries(addSeriesOption);
+
+                       DASHBOARD.add.show_chart_body(option);
+                       render_to(option);
+                       create_environment_for_data(option);
+                       new Highcharts.Chart(high_chart);
+                       add_series(option);
+                       proper_type_for_chart(option);
+
+                       if(option.type=="line"&&db_chartSeries.getCount()==1){
+                           var option_area={};
+                           option_area=deepCopy(option,option_area);
+                           option_area.type="arearange";
+                           option_area.id="line-target";
+                           option_area.count=db_chartSeries.getCount() + 1;
+                           add_series(option_area);
+                           proper_type_for_chart(option_area);
+                       }
+                   }
+                   else{
+                       option.data=data_array;
+                       addSeriesOption[interval]=data_array;
+                       addSeriesOption.date=msg.object.date;
+                       db_chartSeries.addSeries(addSeriesOption);
+                       add_series(option);
+                       proper_type_for_chart(option);
+                   }
+                   option.total=msg.object.total;
+                   limit_pointer_number(option);
+                   DASHBOARD.add.generate(option);
                }
-               option.total=msg.object.total;
-               limit_pointer_number(option);
-               DASHBOARD.add.generate(option);
            }
            else{
                MessageBox("sorry , something wrong" , "top", "warning") ;
@@ -516,7 +594,7 @@ DASHBOARD.add.show_chart_body=function(option){
 }
 //切换类型
 DASHBOARD.add.alternate_chart_type=function(event) {
-    if($("#db-chart-body:visible").length>0){
+    if($("#db-chart-body:visible").length>0 ){
         var target = adapt_event(event).target;
             var option = {
                 target: "chart-container",
@@ -525,6 +603,13 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 count: db_chartSeries.getCount(),
                 interval: $("#db-chart-interval-alternate li.active").attr("interval")
             }
+        if(option.type==="table"){
+             if($("#chart-container").highcharts()){
+                 $("#chart-container").highcharts().destroy();
+                 $("#chart-container").empty();
+             }
+        }
+        else{
 
             if($("#"+option.target).highcharts().get("line-target")!=undefined){
                 $("#"+option.target).highcharts().get("line-target").remove();
@@ -555,6 +640,7 @@ DASHBOARD.add.alternate_chart_type=function(event) {
                 proper_type_for_chart(option);
             }
             limit_pointer_number(option);
+        }
     }
 }
 //切换周期
@@ -584,7 +670,7 @@ DASHBOARD.add.change_interval=function(option) {
                     entity_group_id: series_object.view,
                     start_time : standardParse(series_object.begin_time).date.toISOString() ,
                     end_time : standardParse(series_object.end_time).date.toISOString(),
-                    frequency: option.interval,
+                    frequency: option.interval
 
                 },
                 type:'POST',

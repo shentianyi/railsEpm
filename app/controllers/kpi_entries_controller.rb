@@ -71,8 +71,42 @@ class KpiEntriesController < ApplicationController
   end
 
   def analyse
+    @qoros_demo=nil
+
     if request.get?
       @entity_groups=get_user_entity_groups
+      @setting = params[:setting].nil? ? 'analyse' : params[:setting]
+      @current_story_set = StorySet.find_by_id(@setting)
+      @users=User.where('id <> ?', current_user.id).where(role_id: Role.director).all
+      # from kpi subscribes
+      if params.has_key?(:s)
+        @subscribe=KpiSubscribe.detail_by_id(params[:s]).first
+        @subscribe.is_alert = false
+        @subscribe.save
+        @condition= ChartConditionPresenter.new(@subscribe.chart_condition)
+        # condition for sub
+        @s_subscribe_id=@subscribe.id
+        @s_kpi_category_id=@subscribe.kpi_category_id
+        @s_kpi_id=@subscribe.kpi_id
+        @s_entity_group_id=@condition.entity_group_id
+        @s_start_time= @condition.start_time
+        @s_end_time=@condition.end_time
+        @s_interval= @condition.interval
+        @s_calculate_type=@condition.calculate_type
+      elsif params.has_key?(:view)
+        kpi=Kpi.find_by_name('Inspect Data')
+        @qoros_demo=true
+        if kpi
+          @s_subscribe_id=0
+          @s_entity_group_id=EntityGroup.find_by_name(params[:view]).id
+          @s_kpi_category_id=kpi.kpi_category_id
+          @s_kpi_id=kpi.id
+          @s_start_time=Date.today.to_time.utc
+          @s_end_time=Time.parse(Time.now.strftime('%Y-%m-%d %H:00:00')).utc+1.hours
+          @s_interval= kpi.frequency
+          @s_calculate_type='ACCUNULATE'
+        end
+      end
     else
       msg=Message.new
       if data=Entry::Analyzer.new(params).analyse

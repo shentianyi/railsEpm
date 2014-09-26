@@ -1,0 +1,55 @@
+<p><%= @story.title %></p>
+<p><%= @story.description %></p>
+<hr/>
+
+<div id="story-partial" class="story-partial">
+  <%= render partial: @partial %>
+  <div style="width:100%;overflow-x:auto;">
+    <% if @story.attachments.count>0 %>
+        <p style="font-size:13px;color:#666;margin-top:8px;margin-bottom:2px;">Attachments:</p>
+        <% @story.attachments.each do |attach| %>
+            <div class="attachment-item inline-block" title="<%= attach.name %>">
+              <div class="attachment-sign atta-<%= attach.type %>" href="/files/attach?f=<%= attach.path %>">
+                <a href="/files/attach?f=<%= attach.path %>" class='attach-download' target="_blank">
+                  <div class="attachment-operate" style="background:#000;text-align:center">
+                    <p style="text-align:center;margin:0px;font-size:10px;color:#fff">download</p>
+                  </div>
+                </a>
+              </div>
+              <p class="attachment-p">
+                <%= attach.name %>
+              </p>
+            </div>
+        <% end %>
+    <% end %>
+
+  </div>
+
+  <a id="comments-btn" state="close"><i class="icon  icon-comments-alt"></i>
+    comments(<span><%= @comments.count %></span>)</a>
+
+  <div class="comment-area" id="comment-area">
+    <div class="form">
+      <textarea placeholder="leave your comment here ..." class="form-control my_post_comment" id="comment-content"></textarea>
+      <input type="button" class="btn btn-warning comment-submit-button" value="comment" onclick="create_comment();"/>
+    </div>
+
+    <ul class="comment-content-list" id="comment-content-list">
+      <% @comments.each_with_index do |comment, i| %>
+          <li>
+            <p><a><%= comment.user_name %>:</a><%= comment.content %></p>
+            <span><%= time_ago_in_words(comment.created_at.localtime) %> ago</span>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        attach_upload("comment-item-data-uploader");
+        //$('.atta-image').magnificPopup({type: 'image'});
+    });
+
+</script>
+<input type="hidden" id="current-story" value="<%= @story.id %>"/>
