@@ -4,8 +4,9 @@
   <title>ClearInsight</title>
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= yield :stylesheet_includes %>
-  <%= javascript_include_tag "application" %>
+  <%= requirejs_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <meta charse='utf-8'>
 </head>
 <body>
 
@@ -35,13 +36,8 @@
             404: function () {
                 location.href = '/404';
             },
-<<<<<<< HEAD
-            500:function(){
-               location.href='/500';
-=======
             500: function () {
-                location.href = '/500';
->>>>>>> qoros-demo
+               location.href = '/500';
             }
         }
     });

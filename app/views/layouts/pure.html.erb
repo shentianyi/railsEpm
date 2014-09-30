@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html>
      <head>
-
           <title>ClearInsight</title>
-          <%= javascript_include_tag "jquery-1.8.2.min.js"%>
-          <%= javascript_include_tag "wayne-base.js"%>
-          <%= javascript_include_tag "i18n.js"%>
-          <%= javascript_include_tag "i18n/translations.js"%>
+          <%= requirejs_include_tag "application" %>
           <%= csrf_meta_tags %>
      </head>
      <body>

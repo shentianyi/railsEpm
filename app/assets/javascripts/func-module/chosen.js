@@ -9,7 +9,7 @@ chosen.init=function(idArray,lengthArray){
         $(target).width(parseInt(lengthArray[i]));
     }
 }
-chosen.single_update=function(id,placeholder){
+chosen.single_update=function(id){
     var id=id.indexOf("#")===-1?"#"+id:id;
     $(id).val('').trigger('chosen:updated');
 }

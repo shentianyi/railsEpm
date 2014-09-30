@@ -27,35 +27,10 @@
 //        stop_propagation(event);
 //    });
     $(document).ready(function(){
-        $("body").on("click", "#login-operate .language-btn", function () {
-            if ($("#default_lan").attr("lan") != $(this).attr("lan")) {
-                var value = $(this).attr("lan");
-                changelocale(value, function (data) {
-                    if (data.result) {
-                        window.location = '/user_sessions/new';
-                    }
-                });
-            }
-        });
+
     });
 })()
 
 
-function changelocale(value, callback) {
-    var data = {
-        locale: value
-    }
 
-    $.ajax({
-        url: '/user_sessions/locale',
-        data: data,
-        type: 'POST',
-        async: false,
-        success: function (data) {
-            if (callback) {
-                callback(data);
-            }
-        }
-    });
-}
 

@@ -1,6 +1,8 @@
 IFEpm::Application.routes.draw do
 
 
+  #only for js module test
+  match "/moduletest",to: 'js_module#test',via: :get
 
   resources :report_snaps
 
