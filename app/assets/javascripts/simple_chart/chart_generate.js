@@ -66,7 +66,7 @@ define(["jquery","chart"],function($){
                var canvas = $("#"+target_wrap).find("canvas")[0];
                canvas.width=canvas.width;
                canvas.height=canvas.height;
-                                                                  console.log(I18n.t('welcome.statistics.item.kpi'))
+               console.log(I18n.t('welcome.statistics.item.kpi'))
                var data = {
 //                   labels : [I18n.t('welcome.statistics.item.kpi'),
 //                       I18n.t('welcome.statistics.item.entity'),
