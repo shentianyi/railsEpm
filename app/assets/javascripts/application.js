@@ -10,12 +10,9 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-require.config({
-    basicUrl:'/assets/javascripts/libs',
-    path:{
-        "jquery":"jquery-1.8.2.min"
+
+require(["./route","./share"],function(route,share){
+    if(window.location.href.indexOf("user_sessions/new")===-1){
+        share.init();
     }
 });
-require(["./Login"],function(login){
-    login.init();
-})

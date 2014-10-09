@@ -41,6 +41,7 @@
 <div class="wrap-page">
   <%= yield %>
 </div>
-<%= yield :javascript_includes%>
+<%= javascript_include_tag "i18n/i18n" %>
+<%= javascript_include_tag "i18n/translations" %>
 </body>
 </html>

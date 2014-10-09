@@ -45,17 +45,6 @@ ANALYTICS.high_chart={
                         new_target=target.series.name.replace("(","#").replace(")","#").split("#");
                         name=new_target[0];
                         view=new_target[1];
-<<<<<<< HEAD
-//                        console.log(target.point )
-                        if(target.point.unit){
-                            if(target.point.kpi_property.length>0){
-                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']'+'('+target.point.kpi_property+')'+':'+target.y+" "+target.point.unit+'<br />';
-                            }
-                            else{
-                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+" "+target.point.unit+'<br />';
-                            }
-=======
-
                         var y=(parseInt(target.y)).length;
                         var dotCount=Math.ceil(y/3)-1;
 
@@ -68,13 +57,6 @@ ANALYTICS.high_chart={
                                 console.log(y)
                             }
                             y= tempArray.join("");
-                        }
-                        else{
-                            y=target.y
-                        }
->>>>>>> qoros-demo
-
-
                         }
                         else{
                             if(target.point.kpi_property.length>0){
@@ -449,11 +431,7 @@ ANALYTICS.add_data=function(option){
         start_time : begin_time_utc.toISOString() ,
         end_time : next_date.toISOString(),
         frequency:option.interval,
-<<<<<<< HEAD
-        property:option.kpi_property
-=======
         report:ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null)
->>>>>>> qoros-demo
     },function(msg){
         if(msg.result){
             var data_length=msg.object.current.length;
@@ -490,14 +468,6 @@ ANALYTICS.add_data=function(option){
             if(ANALYTICS.chartSeries.count<=1){
                 $("#chart-container").highcharts().get("navigator").setData(new_data, false);
             }
-
-<<<<<<< HEAD
-//            console.log(ANALYTICS.chartSeries.series[0][option.interval]);
-//            console.log(option.id)
-=======
-
->>>>>>> qoros-demo
-
             chart.redraw();
 
             if(option.data_too_long) {
