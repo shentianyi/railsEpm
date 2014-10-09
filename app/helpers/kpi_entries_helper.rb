@@ -128,7 +128,6 @@ module KpiEntriesHelper
     KpiCalculateQueue.process(kpi_id,entry["user_id"],Time.parse(entry["parsed_entry_at"]).to_milli)
     kpi = Kpi.includes(:user_kpi_items).find_by_id(kpi_id)
 
-
     kpi_entry_at = entry["entry_at"]
     kpi_parsed_entry_at = parse_entry_string_date(kpi.frequency,Time.parse(kpi_entry_at))
 
