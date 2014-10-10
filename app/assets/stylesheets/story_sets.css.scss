@@ -1,8 +1,7 @@
 // Place all the styles related to the StorySets controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import "basic";
-@import "STYLE";
+@import "help.css.scss";
 .story-set-index{
   height:calc(100% - 70px);
   height:-moz-calc(100% - 70px);

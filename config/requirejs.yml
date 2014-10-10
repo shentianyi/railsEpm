@@ -2,6 +2,7 @@ paths:
    jquery: "libs/jquery-1.8.2.min"
    mustache: "libs/mustache"
    chart: "libs/Chart.min"
+   lowchart: "simple_chart/chart_generate"
    base: "func-module/wayne_base"
 shim:
    chart:

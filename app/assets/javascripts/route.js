@@ -18,4 +18,10 @@ define(function(require){
             app.init()
         })
     }
+    <!---------- entity_groups -->
+    else if(url_parameters[0]==="entity_groups/"){
+        require(["./app/Entity_group"],function(app){
+            app.init()
+        })
+    }
 })

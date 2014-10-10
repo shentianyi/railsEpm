@@ -5,11 +5,10 @@
  * Time: 下午12:17
  * To change this template use File | Settings | File Templates.
  */
-define(["jquery","../simple_chart/chart_generate","base"],function($,chart,Base){
+define(["jquery","lowchart","base"],function($,Lowchart){
    return{
        init:function(){
-           Base.expand_date_prototype();
-           chart.init();
+           var chart=new Lowchart();
            $.get("/welcome/users",{},function(data){
                if(data.result){
                    chart.pie.scores=[data.content.user,data.content.director,data.content.admin];

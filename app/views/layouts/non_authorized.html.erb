@@ -8,28 +8,7 @@
      </head>
      <body>
      <%= render :partial=>'shares/message_box'%>
-          <!--<article class="wrap-main">-->
-               <!--<div class="log-general">-->
-                    <!--<header>-->
-                         <!--<div class="log-header-image">-->
-                              <!--<div class="log-logo"></div>-->
-                              <!--<a href="<%= @href%>"><%= @title %></a>-->
-                              <!--<div class="language-select">-->
-                                   <!--<select class="chosen-select">-->
-                                        <!--<option>English</option>-->
-                                        <!--<option>中文</option>-->
-                                   <!--</select>-->
-                              <!--</div>-->
-                         <!--</div>-->
-                    <!--</header>-->
-                    <!--<div class="log-body">-->
-                         <!--<div class="log-btn-group">-->
-                              <!--<%= yield %>-->
-                         <!--</div>-->
-                    <!--</div>-->
-               <!--</div>-->
-          <!--</article>-->
-
+        <%= yield %>
      <%= javascript_include_tag "i18n/i18n" %>
      <%= javascript_include_tag "i18n/translations" %>
      <script type="text/javascript">

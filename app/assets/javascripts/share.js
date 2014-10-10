@@ -71,8 +71,6 @@ define(["jquery"],function($){
     }
     return{
         init:function(){
-            I18n.defaultLocale = "<%= I18n.default_locale %>";
-            I18n.locale = "<%= I18n.locale %>";
             $.ajaxSetup({
                 statusCode: {
                     403: function () {

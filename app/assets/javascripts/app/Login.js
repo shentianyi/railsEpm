@@ -6,14 +6,14 @@
  * To change this template use File | Settings | File Templates.
  */
 define(["jquery","base"],function($,Base){
-    function error_dis() {
-        if (errors != '') {
-            Base.MessageBox(errors, "top", "warning");
-        }
-        if (notice != '') {
-            Base.MessageBox(notice, "top", "success");
-        }
-    }
+//    function error_dis() {
+//        if (errors != '') {
+//            Base.MessageBox(errors, "top", "warning");
+//        }
+//        if (notice != '') {
+//            Base.MessageBox(notice, "top", "success");
+//        }
+//    }
     function changelocale(value, callback) {
         var data = {
             locale: value
@@ -83,6 +83,7 @@ define(["jquery","base"],function($,Base){
             }
         });
     }
+
     return {
         init:function(){
                 $("#sign-in").on("click", function () {
@@ -140,7 +141,7 @@ define(["jquery","base"],function($,Base){
                         signup();
                     })
                 ;
-                error_dis();
+//                error_dis();
         }
     }
-});
+})

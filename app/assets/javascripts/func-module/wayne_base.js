@@ -1,80 +1,75 @@
 define(["jquery"],function($){
+    if(!Date.prototype.monthToQuarter){
+        Date.prototype.monthToQuarter=function(){
+            switch(Math.floor(this.getMonth()/3)){
+                case 0:
+                    return 1;
+                    break;
+                case 1:
+                    return 2;
+                    break;
+                case 2:
+                    return 3;
+                    break;
+                case 3:
+                    return 4;
+                    break;
+            }
+        }
+    }
+    if(!Date.prototype.toWayneString){
+        Date.prototype.toWayneString=function(){
+            var second=this.getSeconds()<10?"0"+this.getSeconds():this.getSeconds();
+            var minute=this.getMinutes()<10?"0"+this.getMinutes():this.getMinutes();
+            var hour=this.getHours()<10?"0"+this.getHours():this.getHours();
+            var day=this.getDate()<10?"0"+this.getDate():this.getDate();
+            var month=this.getMonth()+1<10?"0"+(this.getMonth()+1):this.getMonth()+1;
+            var year=this.getFullYear();
+            return{
+                second: year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second,
+                minute: year+"-"+month+"-"+day+" "+hour+":"+minute,
+                hour:year+"-"+month+"-"+day+" "+hour+":00",
+                day:year+"-"+month+"-"+day,
+                week:year+"-"+month+"-"+day,
+                month:year+"-"+month,
+                quarter:year+"-"+month,
+                year:year.toString()
+            }
+        }
+    }
+    if(!Date.prototype.toWangString){
+        Date.prototype.toWangString=function(interval){
+            var second=this.getSeconds()<10?"0"+this.getSeconds():this.getSeconds();
+            var minute=this.getMinutes()<10?"0"+this.getMinutes():this.getMinutes();
+            var hour=this.getHours()<10?"0"+this.getHours():this.getHours();
+            var day=this.getDate()<10?"0"+this.getDate():this.getDate();
+            var month=this.getMonth()+1<10?"0"+(this.getMonth()+1):this.getMonth()+1;
+            var year=this.getFullYear();
+            var string="";
+            switch(interval){
+                case "90":
+                    string= year+"-"+month+"-"+day+" "+hour+":00";
+                    break;
+                case "100":
+                    string= year+"-"+month+"-"+day;
+                    break;
+                case "200":
+                    string= year+"-"+month+"-"+day;
+                    break;
+                case "300":
+                    string= year+"-"+month;
+                    break;
+                case "400":
+                    string= year+"-"+month;
+                    break;
+                case "500":
+                    string= year.toString();
+                    break;
+            }
+            return string;
+        }
+    }
     return{
-        expand_date_prototype:function(){
-            //从月份转化为季度
-            if(!Date.prototype.monthToQuarter){
-                Date.prototype.monthToQuarter=function(){
-                    switch(Math.floor(this.getMonth()/3)){
-                        case 0:
-                            return 1;
-                            break;
-                        case 1:
-                            return 2;
-                            break;
-                        case 2:
-                            return 3;
-                            break;
-                        case 3:
-                            return 4;
-                            break;
-                    }
-                }
-            }
-            //化为标准格式显示用
-            if(!Date.prototype.toWayneString){
-                Date.prototype.toWayneString=function(){
-                    var second=this.getSeconds()<10?"0"+this.getSeconds():this.getSeconds();
-                    var minute=this.getMinutes()<10?"0"+this.getMinutes():this.getMinutes();
-                    var hour=this.getHours()<10?"0"+this.getHours():this.getHours();
-                    var day=this.getDate()<10?"0"+this.getDate():this.getDate();
-                    var month=this.getMonth()+1<10?"0"+(this.getMonth()+1):this.getMonth()+1;
-                    var year=this.getFullYear();
-                    return{
-                        second: year+"-"+month+"-"+day+" "+hour+":"+minute+":"+second,
-                        minute: year+"-"+month+"-"+day+" "+hour+":"+minute,
-                        hour:year+"-"+month+"-"+day+" "+hour+":00",
-                        day:year+"-"+month+"-"+day,
-                        week:year+"-"+month+"-"+day,
-                        month:year+"-"+month,
-                        quarter:year+"-"+month,
-                        year:year.toString()
-                    }
-                }
-            }
-            //化为标准格式显示用
-            if(!Date.prototype.toWangString){
-                Date.prototype.toWangString=function(interval){
-                    var second=this.getSeconds()<10?"0"+this.getSeconds():this.getSeconds();
-                    var minute=this.getMinutes()<10?"0"+this.getMinutes():this.getMinutes();
-                    var hour=this.getHours()<10?"0"+this.getHours():this.getHours();
-                    var day=this.getDate()<10?"0"+this.getDate():this.getDate();
-                    var month=this.getMonth()+1<10?"0"+(this.getMonth()+1):this.getMonth()+1;
-                    var year=this.getFullYear();
-                    var string="";
-                    switch(interval){
-                        case "90":
-                            string= year+"-"+month+"-"+day+" "+hour+":00";
-                            break;
-                        case "100":
-                            string= year+"-"+month+"-"+day;
-                            break;
-                        case "200":
-                            string= year+"-"+month+"-"+day;
-                            break;
-                        case "300":
-                            string= year+"-"+month;
-                            break;
-                        case "400":
-                            string= year+"-"+month;
-                            break;
-                        case "500":
-                            string= year.toString();
-                            break;
-                    }
-                    return string;
-                }
-            }
-        },
         MessageBox:function(str, position, type) {
             $('#MessageBox').addClass(type).addClass(position).find("p").text(str);
             $('#MessageBox').slideDown("2500");
