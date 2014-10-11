@@ -7,6 +7,160 @@
     @include box-sizing-border;
     width:calc(100% - 260px);
     float:left;
+    height:100%;
+    &>.header{
+      height:49px;
+      background-color:#5688A9;
+      position:relative;
+      z-index:20;
+      @include box-shadow-inset(0,-1px,1px,rgba(0,0,0,0.35));
+      .current-group-item{
+        display:inline-block;
+        max-width:700px;
+        text-overflow:ellipsis;
+        overflow:hidden;
+        white-space:nowrap;
+        margin:11px 0 0 18px;
+        font-family:"maven";
+        font-size:25px;
+        color:white;
+      }
+    }
+    .manage-left-content{
+      background-color:white;
+      &>.left{
+        height:100%;
+        @include box-border(180px);
+        border-right:1px solid #DCDCDC;
+        .manage-left-menu{
+          height:100%;
+          background-color:#fafafa;
+          margin:0;
+          padding:0 ;
+          list-style-type: none;
+          z-index:20;
+          width:100%;
+          li{
+            text-align:center;
+            color:rgba(0,0,0,0.2);
+            padding:7px 24px;
+            cursor:pointer;
+            transition:padding 0.3s ease-out;
+            position:relative;
+            a{
+              width:104px;
+              display:block;
+              overflow:hidden;
+              text-overflow:ellipsis;
+              white-space:nowrap;
+              font-size:13px;
+              color:rgba(0,0,0,0.3);
+            }
+            i.icon-columns{
+              position:absolute;
+              top:10px;
+              left:6px;
+              color:rgba(0,0,0,0.4);
+              font-size:13px;
+              pointer-events:auto;
+            }
+            i.icon-item{
+              position:absolute;
+              top:9px;
+              color:rgba(0,0,0,0.4);
+              display:none;
+              pointer-events:auto;
+              transition:color 0.2s ease;
+            }
+            .icon-trash{
+              right:6px;
+            }
+            &:nth-of-type(1){
+              cursor:default !important;
+              &:hover{
+                background-color:rgba(0,0,0,0);
+              }
+            }
+            &:nth-of-type(2){
+              $width:123px;
+              position:relative;
+              text-align:center;
+              font-size:11px;
+              color:rgba(103,103,103,0.9);
+              background-color:rgba(209,209,209,0.1);
+              padding:0px;
+              width:$width;
+              height:30px;
+              left:50%;
+              margin-top:0px;
+              margin-bottom:34px;
+              margin-left:- $width / 2;
+              border-radius:3px;
+              -webkit-border-radius:3px;
+              -moz-border-radius:3px;
+              cursor:pointer;
+              transition:all 0.35s ease-out;
+              span{
+                position:absolute;
+                top:0px;
+                bottom:0px;
+                left:0px;
+                right:0px;
+                line-height:30px;
+                background:rgba(0,0,0,0.1);
+              }
+              input{
+                position:absolute;
+                width:100px;
+                height:20px;
+                font-size:13px;
+                padding:0px 2px;
+                top:4px;
+                left:-999em;
+              }
+              .manage-add-tooltip{
+                position:absolute;
+                text-align:left;
+                left:1px;
+                top:32px;
+                font-size:13px;
+                line-height:17px;
+                display:none;
+              }
+              &:hover{
+                padding:0px;
+                color:rgba(0,0,0,0.6);
+                background-color:rgba(209,209,209,0.35);
+              }
+            }
+            &:hover{
+              background-color:#e2e7ef;
+            }
+            &:hover a{
+              color:rgba(0,0,0,0.5);
+            }
+            &:hover i.icon-item{
+              display:block;
+            }
+            :hover i.icon-item:hover{
+              color:#f05c5c;
+            }
+            &.active{
+              background-color:#e2e7ef;
+              a{
+                color:rgba(0,0,0,0.65);
+              }
+            }
+          }
+        }
+      }
+      &>.right{
+        height:100%;
+        @include box-sizing-border;
+        width:calc(100% - 180px);
+        float:left;
+      }
+    }
   }
   &>.right{
     @include box-border(260px);

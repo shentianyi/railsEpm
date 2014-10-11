@@ -1,4 +1,4 @@
-define(["jquery"],function($){
+define(["jquery","base"],function($,Base){
     function changelocale(value, callback) {
         var data = {
             locale: value
@@ -104,7 +104,7 @@ define(["jquery"],function($){
                     $(".nav-user-part>li.select-language .menu-select-language").css("left","2px");
                 })
                 .on("click",function(event){
-                    var target=adapt_event(event).target;
+                    var target=Base.adapt_event(event).target;
                     if(!$(target).hasClass("select-language") && !$(target).parent().hasClass("select-language") ){
                         $(".nav-user-part>li.select-language .menu-select-language").css("left","-999em");
                     }

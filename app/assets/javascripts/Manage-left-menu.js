@@ -79,6 +79,7 @@ function category_add(){
 }
 category_add.prototype=MANAGE.manage_menu_left_add.prototype;
 category_add.prototype.constructor=category_add;
+
 function group_add(){
     this.name=I18n.t('manage.department.desc.dep');
     this.href="/users/index/";

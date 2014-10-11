@@ -1,18 +1,20 @@
-<section class="manage_three_column">
+<section class="manage_three_column" id="manage_three_column">
   <div class="left">
-    <div class="left-content-title" id="left-content-title">
+    <div class="header" id="left-content-title">
       <p class="current-group-item">
         <%= t 'manage.kpi.title'%>
       </p>
     </div>
-    <!--<div class="manage-left-content" id="manage-left-content">-->
-      <!--<%= render :partial=>'kpi_categories/left_menu'%>-->
+    <div class="manage-left-content manage-left-content-kpi" id="manage-left-content">
+      <%= render :partial=>'kpi_categories/left_menu'%>
+      <div class="right">
+
+      </div>
       <!--<div class="manage-right-content" id="manage-right-content">-->
         <!--<div class="manage-btn-group" id="manage-btn-group">-->
           <!--<p id="manage-edit-target" ></p>-->
           <!--<input type="text"/>-->
           <!--<i class="icon-pencil"></i>-->
-
         <!--</div>-->
         <!--<div class="manage-right-list">-->
           <!--<div class="right-list-top-control" id="right-list-top-control">-->
@@ -25,7 +27,7 @@
           <!--</div>-->
         <!--</div>-->
       <!--</div>-->
-    <!--</div>-->
+    </div>
   </div>
   <div class="right">
     <section class="solid">
@@ -174,15 +176,5 @@
 
 
 
-<script type="text/javascript">
-     $(document).ready(function() {
-          MANAGE.init();
-          MANAGE.kpi.init();
-     })
-</script> 
-<% content_for :javascript_includes do%>
-  <%= javascript_include_tag "Manage.js"%>
-  <%= javascript_include_tag "Manage-left-menu.js"%>
-  <%= javascript_include_tag "Manage-right-list.js"%>
-  <%= javascript_include_tag "Manage-kpi.js"%>
-<%end%>
+
+

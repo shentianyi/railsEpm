@@ -12,3 +12,41 @@
   text-align: center;
   top: 0;
 }
+.manage-left-content.manage-left-content-kpi{
+   .manage-left-menu{
+     li{
+       &:first-of-type{
+         text-align:center !important;
+         font-weight:lighter;
+         font-size:15px;
+         color:rgba(0, 0, 0, 0.65) !important;
+         padding:29px 0 1px !important;
+
+       }
+       &:nth-of-type(2){
+         text-align:center;
+         color:rgba(0,0,0,0.2);
+         padding:7px 24px;
+         cursor:pointer;
+         transition:padding 0.3s ease-out;
+         position:relative;
+         width:auto;
+         margin:auto;
+         height:auto;
+         border-radius:0px;
+         -moz-border-radius:0px;
+         -webkit-border-radius:0px;
+         background-color:rgba(0,0,0,0);
+         &:hover{
+           background-color:#e2e7ef;
+         }
+         &:hover a{
+           color:rgba(0,0,0,0.5);
+         }
+         &.active{
+           background-color:#e2e7ef
+         }
+       }
+     }
+   }
+}

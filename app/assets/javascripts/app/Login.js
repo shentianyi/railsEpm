@@ -28,7 +28,7 @@ define(["jquery","base"],function($,Base){
                     callback(data);
                 }
             }
-        });
+        })
     }
     function show_signup() {
         if ($("#sign-up-now").attr("state") == "open") {
@@ -58,7 +58,7 @@ define(["jquery","base"],function($,Base){
                     Base.MessageBox(data.content, "top", "warning");
                 }
             }
-        });
+        })
     }
     function signup() {
         var data = {

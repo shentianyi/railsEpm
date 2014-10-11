@@ -18,6 +18,12 @@ define(function(require){
             app.init()
         })
     }
+    <!---------- kpis -->
+    else if(url_parameters[0]==="kpis"){
+        require(["./app/Kpis"],function(app){
+            app.init()
+        })
+    }
     <!---------- entity_groups -->
     else if(url_parameters[0]==="entity_groups/"){
         require(["./app/Entity_group"],function(app){
