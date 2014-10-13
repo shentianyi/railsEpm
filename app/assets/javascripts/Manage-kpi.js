@@ -16,21 +16,21 @@ MANAGE.kpi.init = function() {
      MANAGE.kpi.kpi_add_box_bind();
      MANAGE.kpi.kpi_add_clear();
 
-     $("#manage-left-menu").on("click", "li", function() {
-          var li = $(this);
-          var id = li.attr('number');
-          if(id) {
-               $("#manage-left-menu>li").removeClass('active');
-               li.addClass('active');
-               $.get('/kpis/list/' + id, function(data) {
-                    $("#manage-edit-target").text(li.attr('title'));
-                    $('#kpi-item-container').html(data);
-                    window.history.pushState(id, null, "/kpis/c/" + id);
-                    MANAGE.widget_init();
-                   MANAGE.kpi.isCalcuCheck();
-               });
-          }
-     });
+//     $("#manage-left-menu").on("click", "li", function() {
+//          var li = $(this);
+//          var id = li.attr('number');
+//          if(id) {
+//               $("#manage-left-menu>li").removeClass('active');
+//               li.addClass('active');
+//               $.get('/kpis/list/' + id, function(data) {
+//                    $("#manage-edit-target").text(li.attr('title'));
+//                    $('#kpi-item-container').html(data);
+//                    window.history.pushState(id, null, "/kpis/c/" + id);
+//                    MANAGE.widget_init();
+//                   MANAGE.kpi.isCalcuCheck();
+//               });
+//          }
+//     });
 
     //点击添加KPI的按钮
      $("body")

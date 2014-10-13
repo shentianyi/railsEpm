@@ -346,10 +346,6 @@ MANAGE.left.manage_left_edit_init=function(){
             }
             else{
                 $(this).blur();
-//                if(MANAGE[MANAGE.type].edit.edit_check(e)){
-//
-//                    MANAGE[MANAGE.type].edit.edit_update();
-//                }
             }
         }
         else if(e.keyCode==27){

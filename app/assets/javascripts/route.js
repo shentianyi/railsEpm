@@ -20,7 +20,7 @@ define(function(require){
     }
     <!---------- kpis -->
     else if(url_parameters[0]==="kpis"){
-        require(["./app/Kpis"],function(app){
+        require(["./app/Kpis/index"],function(app){
             app.init()
         })
     }

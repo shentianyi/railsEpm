@@ -1,10 +1,9 @@
-define(["jquery","base"],function($,Base){
+define(["jquery","base","./manage_share_control"],function($,Base,Manage){
     function add(name,href,postHref,type){
         this.name=name;
         this.href=href;
         this.postHref=postHref;
         this.type=type;
-        this.left_count=0;
         this.add_show=function(){
             $("#manage-left-menu li:nth-of-type(2) span").css("left","-999em");
             $("#manage-left-menu li:nth-of-type(2) input").val("").css("left","8px").attr("placeholder",this.name).focus();
@@ -36,7 +35,7 @@ define(["jquery","base"],function($,Base){
                         if(data.result) {
                             $("#manage-menu-add input").val("");
                             this.add_hide();
-                            this.left_count++;
+                            Manage.left_count++;
                             if(this.type==="kpis"){
                                 $("#manage-left-menu").append($("<li />").attr("title",name).attr("number", data.object)
                                     .append($("<i />").addClass("icon-trash icon-item")).append($("<a/>").text(name)));

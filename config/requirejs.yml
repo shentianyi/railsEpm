@@ -4,6 +4,19 @@ paths:
    chart: "libs/Chart.min"
    lowchart: "simple_chart/chart_generate"
    base: "func-module/wayne_base"
+   jquery.icheck: "libs/jquery.icheck.min"
+   icheck: "func-module/icheck"
+   jquery.sortable: "libs/jquery.sortable.min"
+   jquery.tipsy: "libs/jquery.tipsy"
 shim:
    chart:
       exports: "Chart"
+   jquery.icheck:
+      deps: ["jquery"]
+      exports: "jQuery.fn.iCheck"
+   jquery.sortable:
+      deps: ["jquery"]
+      exports: "jQuery.fn.sortable"
+   jquery.tipsy:
+      deps: ["jquery"]
+      exports: "jQuery.fn.tipsy"

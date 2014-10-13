@@ -7,26 +7,24 @@
     </div>
     <div class="manage-left-content manage-left-content-kpi" id="manage-left-content">
       <%= render :partial=>'kpi_categories/left_menu'%>
-      <div class="right">
-
+      <div class="right"  id="manage-right-content">
+        <div class="manage-btn-group" id="manage-btn-group">
+          <p id="manage-edit-target" ></p>
+          <input type="text"/>
+          <i class="icon-pencil"></i>
+        </div>
+        <div class="manage-right-list">
+          <div class="right-list-top-control" id="right-list-top-control">
+            <input type="checkbox" id="manage-total-check"/>
+            <a class="btn" id="manage-item-remove"><%= t 'manage.base.delete_btn'%></a>
+            <a class="btn" id="manage-item-edit"><%= t 'manage.base.edit_btn'%></a>
+          </div>
+          <div id="kpi-item-container">
+            <%= render :partial=>'list'%>
+          </div>
+        </div>
       </div>
-      <!--<div class="manage-right-content" id="manage-right-content">-->
-        <!--<div class="manage-btn-group" id="manage-btn-group">-->
-          <!--<p id="manage-edit-target" ></p>-->
-          <!--<input type="text"/>-->
-          <!--<i class="icon-pencil"></i>-->
-        <!--</div>-->
-        <!--<div class="manage-right-list">-->
-          <!--<div class="right-list-top-control" id="right-list-top-control">-->
-            <!--<input type="checkbox" id="manage-total-check"/>-->
-            <!--<a class="btn" id="manage-item-remove"><%= t 'manage.base.delete_btn'%></a>-->
-            <!--<a class="btn" id="manage-item-edit"><%= t 'manage.base.edit_btn'%></a>-->
-          <!--</div>-->
-          <!--<div id="kpi-item-container">-->
-            <!--<%= render :partial=>'list'%>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
+
     </div>
   </div>
   <div class="right">

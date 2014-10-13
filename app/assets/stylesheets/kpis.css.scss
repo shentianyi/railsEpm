@@ -50,3 +50,439 @@
      }
    }
 }
+/********************************************************************************************************* 分类系列
+*******************************************************************************************************************/
+.manage-left-menu[type="category"] li:first-of-type{
+  text-align:center;
+  font-weight:lighter;
+  font-size:15px;
+  color:rgba(0, 0, 0, 0.65);
+  padding:29px 0 1px;
+}
+.manage-left-menu[type="category"][special="my-kpi"] li:first-of-type{
+  margin-bottom:21px;
+}
+.manage-left-menu[type="category"][special="my-kpi"] li:nth-of-type(2){
+  text-align:center;
+  color:rgba(0,0,0,0.2);
+  padding:7px 24px;
+  cursor:pointer;
+  transition:padding 0.3s ease-out;
+  position:relative;
+  width:auto;
+  margin:auto;
+  height:auto;
+  border-radius:0px;
+  -moz-border-radius:0px;
+  -webkit-border-radius:0px;
+  background-color:rgba(0,0,0,0);
+}
+.manage-left-menu[type="category"][special="my-kpi"] li:nth-of-type(2):hover{
+  background-color:#e2e7ef;
+}
+.manage-left-menu[type="category"][special="my-kpi"] li:nth-of-type(2):hover a{
+  color:rgba(0,0,0,0.5);
+}
+.manage-left-menu[type="category"][special="my-kpi"] li:nth-of-type(2).active{
+  background-color:#e2e7ef
+}
+/********************************************************************************************************* 右边的内容部分
+*******************************************************************************************************************/
+.manage-btn-group>a.kpi-library-btn{
+  left:130px;
+  width:120px;
+}
+.manage-btn-group>a.kpi-library-btn i{
+  left:-3px;
+}
+.next-manage-department-btn{
+  font-size:11px !important;
+}
+/***************************************************** 右边的list
+*********************************************************/
+.manage-sort-list li>table.category{
+  table-layout:fixed
+}
+.manage-sort-list li>table.category tr td{
+  width:12%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  cursor:default;
+
+}
+.manage-sort-list li>table.category tr:first-of-type{
+  font-size:21px;
+  color:rgba(0,0,0,0.5);
+}
+.manage-sort-list li>table.category tr:first-of-type td{
+  padding:10px 0 0px;
+}
+/*first column*/
+.manage-sort-list li>table.category tr:first-of-type td:first-of-type{
+  color:#5FA9DA;
+  width:35%;
+  padding-right:10px;
+}
+/*third column*/
+.manage-sort-list li>table.category tr:first-of-type td:nth-of-type(3){
+  width:10%;
+}
+/*forth column*/
+.manage-sort-list li>table.category tr:first-of-type td:nth-of-type(4){
+  width:15%;
+  color:#5FA9DA;
+  padding-right:15px;
+}
+/*fifth column*/
+.manage-sort-list li>table.category tr:first-of-type td:nth-of-type(5){
+  width:15%;
+  color:#47BBB3;
+  padding-right:15px;
+}
+/*last column*/
+.manage-sort-list li>table.category tr:first-of-type td:last-of-type{
+  width:13%;
+  text-align:center;
+  cursor:help;
+}
+.manage-sort-list li>table.category tr:nth-of-type(2) td:last-of-type{
+  text-align:center;
+}
+.manage-sort-list li>table.category tr:nth-of-type(2){
+  color:rgba(0,0,0,0.3);
+  font-size:13px;
+}
+.manage-kpi-target>div{
+  position:relative;
+  overflow-x:hidden;
+  overflow-y:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  height:100%;
+}
+.manage-kpi-target input{
+  position:absolute;
+  height:11px;
+  left:-999em;
+  width:87%;
+  top:0px;
+  padding:7px 5px 5px;
+  border:1px solid #f89d3b;
+}
+/********************************************************************************************************* 添加 KPI
+*******************************************************************************************************************/
+.manage-kpi-add{
+  position:absolute;
+  height:100%;
+  margin-top:-71px;
+  right:999em;
+  width:200px;
+  overflow-x:hidden;
+  background:#FAFAFA;
+  border-left:1px solid #DCDCDC
+
+}
+.manage-kpi-add>i{
+  pointer-events:auto;
+  position:relative;
+  left:170px;
+  top:6px;
+  cursor:pointer;
+  font-size:18px;
+  color:rgba(0,0,0,0.25)
+}
+.manage-kpi-add>div{
+  position:relative;
+  top:15px;
+  bottom:0;
+  left:0;
+  right:0;
+}
+.manage-kpi-add>div .chosen-container-single .chosen-single{
+  background:white !important;
+  border:1px solid #ddd;
+  box-shadow:none !important;
+}
+.manage-kpi-add>div .chosen-container-single .chosen-single div{
+  background:white !important;
+  border-left:none !important;
+}
+/*select*/
+.manage-kpi-add>div>.select-div{
+  width:150px;
+  margin-left:25px;
+  margin-bottom:10px;
+}
+.manage-kpi-add>div>.select-div select{
+  width:150px;
+}
+/*input*/
+.manage-kpi-add>div>input{
+  width:140px;
+  margin-left:25px;
+  margin-bottom:10px;
+  padding:5px 4px;
+  font-size:13px;
+  font-weight:lighter;
+  font-family:"open-sans";
+}
+.manage-kpi-add>div>input:first-of-type{
+  margin-bottom:76px;
+}
+/*textarea*/
+.manage-kpi-add>div>textarea{
+  width:140px;
+  min-width:140px;
+  max-width:140px;
+  margin-top:-16px;
+  margin-left:25px;
+  height:17px;
+  min-height:17px;
+  max-height:52px;
+  word-break:break-all;
+  word-wrap:break-word;
+  padding:6px 4px 5px;
+  font-size:13px;
+  font-weight:lighter;
+  font-family:"open-sans";
+  position:absolute;
+  top:90px;
+  left:0px;
+}
+/*checkbox and calculate*/
+.manage-kpi-add>div>.icheckbox_minimal-aero{
+  margin-left:25px;
+}
+.manage-kpi-add>div>label{
+  font-size:13px;
+  color:rgba(0,0,0,0.4);
+  position:relative;
+  left:2px;
+  top:-2px;
+}
+
+/* btn */
+.manage-kpi-add>div>.btn{
+  margin-top:45px;
+  width:133px;
+  margin-left:26px;
+  font-size:14px;
+}
+/********************************************************************************************************* kpi library
+*******************************************************************************************************************/
+.kpi-library{
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  z-index:90;
+  background-color:rgba(0,0,0,0.55);
+  display:none;
+}
+.kpi-library>div{
+  position:fixed;
+  border-radius:3px;
+  -webkit-border-radius:3px;
+  -moz-border-radius:3px;
+  width:750px;
+  height:540px;
+  left:50%;
+  margin-left:-375px;
+  top:50%;
+  margin-top:-275px;
+  background-color:white;
+  display:none;
+}
+.kpi-library>div:before{
+  content:"KPI\00a0\00a0LIBRARY";
+  position:absolute;
+  font-size:40px;
+  color:white;
+  top:-38px;
+}
+.kpi-library-inner{
+  position:absolute;
+  top:30px;
+  right:30px;
+  bottom:30px;
+  left:30px;
+  border:2px solid #ddd;
+}
+/***************************************************************** accordion
+*********************************************************************/
+.Accordion>.accordion-header{
+  cursor:pointer;
+}
+.Accordion>.accordion-body{
+  display:none;
+}
+.Accordion>.accordion-header.in + .accordion-body{
+  display:block
+}
+/***************************************************************** accordion style (left part)
+*********************************************************************/
+.kpi-library-inner>.left{
+  width:55%;
+  height:100%;
+  float:left;
+  overflow-y:auto;
+}
+.kpi-library-inner>.left .accordion-header{
+  padding:12px 10px;
+  color:#9d9d9d;
+  font-size:17px;
+  border-style:solid;
+  border-color:#ddd;
+  border-width:0px 0px 1px 0;
+  transition:color 0.25s ease-out;
+}
+.kpi-library-inner>.left .accordion-header:hover{
+  color:rgba(0,0,0,0.7);
+}
+.kpi-library-inner>.left .accordion-header.accordion-in{
+  background:#5fa9da;
+  border-color:#5fa9da;
+  color:white;
+}
+.kpi-library-inner>.left ul{
+  list-style:none;
+  padding:0px;
+  margin:0px;
+  border-bottom:1px solid #ddd;
+}
+.kpi-library-inner>.left ul>li{
+  position:relative;
+  padding:10px 12px 2px;
+}
+.kpi-library-inner>.left ul>li:last-of-type{
+  padding:10px 12px;
+}
+.kpi-library-inner>.left ul li input[type="checkbox"]{
+  position:absolute;
+}
+.kpi-library-inner>.left ul li h3{
+  position:absolute;
+  top:7px;
+  left:41px;
+  margin:0px;
+  width:319px;
+  color:#5fa9da;
+  font-size:15px;
+  font-weight:lighter;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.kpi-library-inner>.left ul li p{
+  position:absolute;
+  left:42px;
+  top:24px;
+  margin:0px;
+  width:319px;
+  font-size:13px;
+  font-weight:lighter;
+  color:#9d9d9d;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.kpi-library-inner>.left ul li>i{
+  position:absolute;
+  right:6px;
+  top:9px;
+  color:#5fa9da;
+  font-size:16px;
+  pointer-events:auto;
+  cursor:default;
+  transition:color 0.55s ease-out;
+}
+.kpi-library-inner>.left ul li>i:hover{
+  color:#F5A133;
+}
+/*****************************************************************  (right part)
+*********************************************************************/
+.kpi-library-inner>.right{
+  width:306px;
+  height:100%;
+  float:left;
+  border-left:2px solid #ddd;
+  position:relative;
+}
+.kpi-library-inner>.right .library-chosen-kpi{
+  width:100%;
+  height:90%;
+  list-style:none;
+  padding:0px;
+  margin:0px;
+  overflow-y:auto;
+}
+.kpi-library-inner>.right .library-chosen-kpi>li{
+  padding:3px 5px;
+  cursor:pointer;
+}
+.kpi-library-inner>.right .library-chosen-kpi>li:hover{
+  background:rgba(234,237,236,0.4);
+}
+.kpi-library-inner>.right .library-chosen-kpi>li h3{
+  margin:0px;
+  width:299px;
+  color:#5fa9da;
+  font-size:15px;
+  font-weight:lighter;
+  pointer-events:none;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.kpi-library-inner>.right .library-chosen-kpi>li p{
+  margin:-3px 0 0;
+  width:299px;
+  font-size:13px;
+  font-weight:lighter;
+  color:#9d9d9d;
+  pointer-events:none;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.kpi-library-inner>.right div:last-of-type{
+  width:309px;
+  height:45px;
+  border-top:2px solid #ddd;
+  position:absolute;
+  bottom:0px;
+}
+.kpi-library-inner>.right div:last-of-type>a{
+  display:inline-block;
+  width:65px;
+  float:right;
+  font-size:13px;
+  padding:6px 0px;
+  margin:8px 12px 0 2px;
+}
+/*14.3.20*/
+.manage-kpi-navi>section:first-of-type{
+  position:relative;
+}
+.manage-kpi-navi .or-sign{
+  position:relative;
+  top:0px;
+  left:0px;
+  right:0px;
+  color:#9d9d9d;
+  display:block;
+  text-align:center;
+  font-size:15px;
+}
+
+.manage-kpi-navi>section:nth-of-type(2){
+  border-top:none;
+}
+
+.subscribe-kpi-select{
+  width:70%;
+  padding: 15px;
+  position: absolute;
+}

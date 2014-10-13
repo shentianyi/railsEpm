@@ -23,11 +23,6 @@ MANAGE.totalChecked = 0;
 MANAGE.item_remove.prototype = {
      constructor : MANAGE.item_remove,
      remove_complete : function(id) {
-//                  $("#manage-sort-list").find("#"+id).remove();
-//                  MANAGE.totalChecked-=1;
-//                  total_check_listener();
-//                  MANAGE.judge_kpi_count();
-
           $.ajax({
                url : this.url + id,
                type : 'DELETE',
@@ -67,7 +62,6 @@ department_item_remove.prototype.constructor = department_item_remove;
 MANAGE.department.item_remove = new department_item_remove();
 
 function manage_item_remove() {
-//     if(confirm('view.manage.base.delete_confirm')) {
      if(confirm(I18n.t('manage.base.delete_confirm'))) {
           $("#manage-sort-list :checked").each(function() {
                var id = $(this).parent().parent().attr("id");
@@ -81,7 +75,6 @@ function manage_item_remove() {
                     $("#is-calcu-relate").find("[value='"+id+"']").remove();
                     $("#is-calcu-relate").val('').trigger('chosen:updated');
                }
-
           });
      }
 }

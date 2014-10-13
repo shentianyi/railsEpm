@@ -87,7 +87,7 @@
               text-align:center;
               font-size:11px;
               color:rgba(103,103,103,0.9);
-              background-color:rgba(209,209,209,0.1);
+              background-color:rgba(209,209,209,0.45);
               padding:0px;
               width:$width;
               height:30px;
@@ -107,7 +107,6 @@
                 left:0px;
                 right:0px;
                 line-height:30px;
-                background:rgba(0,0,0,0.1);
               }
               input{
                 position:absolute;
@@ -159,6 +158,79 @@
         @include box-sizing-border;
         width:calc(100% - 180px);
         float:left;
+        overflow-y:auto;
+        overflow-x:hidden;
+        .manage-btn-group{
+          left: 33px;
+          position: relative;
+          top: 23px;
+          &>a{
+            width:100px;
+            margin-right:20px;
+            margin-left:0;
+            position:absolute;
+            bottom:2px;
+            padding:7px 6px;
+            font-size:13px;
+          }
+          &>p{
+            margin-top:6px;
+            color:rgba(0, 0, 0, 0.5);
+            cursor:pointer;
+            display:inline-block;
+            transition:color 0.35s ease-out;
+            font-size:21px;
+            /*display:none;*/
+          }
+          &>i{
+            color:rgba(0, 0, 0, 0.65);
+            position:relative;
+            left:6px;
+            display:none;
+          }
+          &>p:hover ~ i{
+            display:inline-block;
+          }
+          &>input{
+            padding:3px 5px;
+            height:22px;
+            width:150px;
+            font-size:13px;
+            position:relative;
+            top:0px;
+            margin-top:2px;
+            display:none;
+          }
+          &>span{
+            font-size:13px;
+            position:absolute;
+            left:0px;
+            top:68px;
+            color:rgba(0,0,0,0.4);
+            display:none;
+          }
+        }
+        .manage-right-list{
+          margin-top:20px;
+          padding-bottom:40px;
+          .right-list-top-control{
+            height:39px;
+            &>.icheckbox_minimal-aero{
+              left:33px;
+              top:12px;
+            }
+            &>a {
+              display:inline-block;
+              width:80px;
+              font-size:13px;
+              display:none;
+              &:first-of-type{
+                margin-left:55px;
+                margin-right:-10px;
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -273,4 +345,78 @@
       }
     }
   }
+}
+.sortable-dragging{
+  opacity:0.9
+}
+.sortable-placeholder{
+  border:1px dashed #ddd !important;
+  background-color:rgba(242,196,84,0.7);
+}
+.sortable-placeholder:after{
+  content:"Drop Here";
+  font-size:20px;
+  color:rgba(0,0,0,0.4);
+  position:relative;
+  width:100px;
+  height:80px;
+  line-height:80px;
+  left:50%;
+  margin-left:-50px;
+}
+.manage-sort-list{
+  list-style:none;
+  padding-left:33px;
+  margin-top:15px;
+}
+.manage-sort-list li{
+  width:97%;
+  height:80px;
+  border:1px solid #ddd;
+  border-radius:3px;
+  -webkit-border-radius:3px;
+  -moz-border-radius:3px;
+  margin-bottom:15px;
+  position:relative;
+
+}
+.manage-sort-list[type="kpi"] li{
+  height:90px;
+}
+.manage-sort-list li>p{
+  font-family:"Arial";
+  font-weight:bold;
+  font-size:40px;
+  color:rgba(0,0,0,0.25);
+  margin:0;
+  padding-left:5px;
+  width:15px;
+  float:left;
+  height:80px;
+  line-height:80px;
+  cursor:move
+}
+.manage-sort-list li>.icheckbox_minimal-aero{
+  top:31px;
+  float:left;
+}
+.manage-sort-list li>table{
+  position:absolute;
+  left:68px;
+  top:5px;
+  bottom:5px;
+  width:inherit;
+  transition:width 0.45s ease-out 0.1s;
+}
+.manage-sort-list li>table[special='my-kpi']{
+  left:21px;
+}
+/********************************************************************************************************* 针对右边有导航的
+*******************************************************************************************************************/
+.manage-left-content{
+  background-color:white;
+  position:relative;
+}
+.manage-left-content[name='department']{
+  padding-top:20px;
 }

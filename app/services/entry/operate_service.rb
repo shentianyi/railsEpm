@@ -169,7 +169,7 @@ module Entry
       records[:kpi_ids].each_index do |index|
         records[:attr_vals].each_index do |val_index|
           entry_attrs = []
-          kpi_name = records[:kpis][index]
+          kpi_name = records[:Kpis][index]
           #1. find all kpi properties with name and id
           kpi = Kpi.find_by_name(kpi_name)
           kpi.kpi_properties.each {|attr|
@@ -219,7 +219,7 @@ module Entry
       records[:kpi_ids].each_index do |index|
         records[:attr_vals].each_index do |val_index|
           entry_attrs = []
-          kpi_name = records[:kpis][index]
+          kpi_name = records[:Kpis][index]
           #1. find all kpi properties with name and id
           kpi = Kpi.find_by_name(kpi_name)
           kpi.kpi_properties.each {|attr|
