@@ -1,4 +1,4 @@
-define(["jquery","./manage_right_list_drag","./manage_right_list_edit","./manage_right_list_remove","base"],function($,Drag,Edit,Remove,Base){
+define(["jquery","./manage_right_list_drag","./manage_right_list_edit","./manage_right_list_remove","base","icheck","./manage_share_control","jquery.sortable","jquery.tipsy","jquery.baresize"],function($,Drag,Edit,Remove,Base,iCheck,MANAGE){
     function edit_init(target,url,complete_callback,edit_check_callback,type){
         var edit=new Edit(target,url,complete_callback,edit_check_callback);
         $("body")
@@ -45,7 +45,7 @@ define(["jquery","./manage_right_list_drag","./manage_right_list_edit","./manage
                     $("#manage-sort-list :checked").each(function() {
                         var id = $(this).parent().parent().attr("id");
                         remove.remove_complete(id);
-                        if(type === "group" && $("#user-edit").css("left") != "0px") {
+                        if(type === "users" && $("#user-edit").css("left") != "0px") {
                             $("#user-edit").css("left", "-250px");
                             $("#manage-right-content").css("padding-left", "0px");
 //                            MANAGE.user.user_add_clear();
@@ -64,38 +64,106 @@ define(["jquery","./manage_right_list_drag","./manage_right_list_edit","./manage
             handle: '.sort-handle'
         });
         $.event.props.push("dataTransfer");
-        $("#manage-sort-list").on("dragstart","li",function(event){
-            var e=Base.adapt_event(event).event;
-            e.dataTransfer.setData("id", $(this).attr("id"));
-        });
-        $("#manage-left-menu").on("dragover","li[number]:not('.active')",function(event){
-            this.style.color="rgba(0,0,0,0.4)";
-            this.style.backgroundColor="rgba(242,196,84,0.7)";
-            event.preventDefault();
-        }).on("dragleave","li[number]:not('.active')",function(){
+        $("#manage-sort-list")
+            .on("dragstart","li",function(event){
+                var e=Base.adapt_event(event).event;
+                e.dataTransfer.setData("id", $(this).attr("id"));
+            })
+        ;
+        $("#manage-left-menu")
+            .on("dragover","li[number]:not('.active')",function(event){
+                this.style.color="rgba(0,0,0,0.4)";
+                this.style.backgroundColor="rgba(242,196,84,0.7)";
+                event.preventDefault();
+            })
+            .on("dragleave","li[number]:not('.active')",function(){
                 this.style.color="rgba(0, 0, 0, 0.2)";
                 this.style.backgroundColor=null;
-            }).on("drop","li[number]:not('.active')",function(event){
+            })
+            .on("drop","li[number]:not('.active')",function(event){
                 this.style.color="rgba(0, 0, 0, 0.2)";
                 this.style.backgroundColor=null;
                 var e=Base.adapt_event(event).event;
                 var id = e.dataTransfer.getData("id");
                 var belong = $(this).attr("number");
-                drag.drag_complete_post(id,belong);
+                drag.drag_complete_post(id,belong,drag.drag_complete);
                 Base.adapt_event(event).event.preventDefault();
                 Base.stop_propagation(event);
-            });
+            })
+        ;
         $("#manage-sort-list li table input[type='text']").on("focus",function(){
             $('#manage-sort-list').sortable("disable");
         }).on("blur",function(){
                 $('#manage-sort-list').sortable("enable");
             });
     }
+    function initial(){
+        $("#manage-total-check")
+            .on("ifChecked",function(){
+                $("#right-list-top-control>a").css("display","inline-block")
+            })
+            .on("ifUnchecked",function(){
+                $("#right-list-top-control>a").css("display","none")
+            })
+            .on("ifClicked",function(){
+                if(!$(this).parent().hasClass("checked")){
+                    $("#manage-sort-list input[type='checkbox']").not(":checked").iCheck("check");
+                }
+                else{
+                    $("#manage-sort-list input[type='checkbox']").filter(":checked").iCheck("uncheck")
+
+                }
+            })
+        ;
+        $("#manage-sort-list input[type='checkbox']").on("ifChanged",function(){
+            if(!$(this).parent().hasClass("checked")){
+                MANAGE.totalChecked+=1;
+                MANAGE.total_check_listener();
+            }
+            else{
+                MANAGE.totalChecked-=1;
+                MANAGE.total_check_listener();
+            }
+        });
+        MANAGE.judge_kpi_count();
+        MANAGE.left_count_observable();
+        resize_sort_table();
+        $("#manage-sort-list li").on("resize",function(){
+            resize_sort_table();
+        });
+        $("#manage-sort-list li").each(function() {
+            $(this).find("table tr td").tipsy({
+                gravity : 'se'
+            });
+        });
+    }
+    function resize_sort_table(){
+        var table_size=$("#manage-sort-list li").width()-70;
+        $("#manage-sort-list table").width(table_size)
+        if(".attribute-position"){
+            $("#manage-sort-list .attribute-position").width(table_size+40)
+            $("#manage-sort-list .attribute-position>p").width(table_size-180)
+        }
+    }
     return {
         init:function(option_right_edit,option_right_remove,option_right_drag,type){
             remove_init(option_right_remove.url,type);
             edit_init(option_right_edit.target,option_right_edit.url,option_right_edit.complete,option_right_edit.edit_check,type);
             drag_init(option_right_drag.url,option_right_drag.drag_complete_post,type);
+            initial();
+            if($("#user-edit").length>0){
+                var right_content_height=$("#manage-left-content").height(),
+                    list_height=$("#manage-right-content .manage-right-list").height()+58,
+                    height=right_content_height>list_height?right_content_height:list_height;
+                $("#user-edit").height(height);
+                $("body").on("resize",function(){
+                    $("#user-edit").height(height);
+                })
+            }
+        },
+        refresh:function(){
+            iCheck.init();
+            initial();
         }
     }
 })

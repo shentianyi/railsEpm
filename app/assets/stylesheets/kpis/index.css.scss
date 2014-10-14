@@ -1,4 +1,5 @@
-@import "manage/manage_three_column.css.scss";
+@import "../manage/manage_three_column.css.scss";
+@import "../manage_attribute.css.scss";
 .manage_three_column > .right > section:nth-of-type(2){
   border-top-width:0;
 }

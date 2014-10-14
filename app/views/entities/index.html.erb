@@ -1,11 +1,9 @@
-<div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
-  <div class="content-left-main" id="content-left-main">
-    <div style="width:auto;height:71px;"></div>
-    <div class="left-content-title" id="left-content-title">
+<section class="manage_two_column" id="manage_two_column">
+  <div class="left">
+    <div class="header" id="left-content-title">
       <p class="current-group-item"><%= t 'manage.department.desc.manage' %></p>
     </div>
-
-    <div class="manage-left-content" id="dashboard-content" name="department">
+    <div class="manage-left-content" id="manage-left-content" name="department">
       <div class="manage-right-content" id="manage-right-content">
         <div class="manage-right-list">
           <div class="right-list-top-control" id="right-list-top-control" name="group">
@@ -36,7 +34,6 @@
             <% end %>
           </ul>
         </div>
-
         <div class="manage-user-add" id="user-edit" general="manage-user-add">
           <i class="icon-remove" id="close-user-edit" general="close-user"></i>
           <div>
@@ -46,20 +43,14 @@
             <input type="submit" value="Ok" class="btn btn-primary" id="manage-entity-edit-old"/>
           </div>
         </div>
-
       </div>
     </div>
-
   </div>
-
-  <aside class="content-right-nav" name='department' id="content-right-nav">
-    <div style="width:auto;height:71px;"></div>
+  <div class="right">
     <section class="solid" style="position:relative">
       <h3><%= t 'manage.department.desc.create' %></h3>
-
       <p></p>
       <a class="btn btn-primary" id="add-department"><%= t 'manage.department.desc.create_now' %></a>
-
       <div class="content-right-nav-add-block" id="content-right-nav-add-block" name="department">
         <p><%= t 'manage.department.desc.give_name' %></p>
         <input type='text'/>
@@ -68,11 +59,11 @@
     <section class="solid">
       <h3><%= t 'manage.department.desc.what-is-entity-title'%></h3>
       <p><%= t 'manage.department.desc.what-is-entity'%></p>
-
     </section>
+  </div>
+</section>
 
-  </aside>
-</div>
+
 
 
 <div class="manage-user-add create-user" id="manage-entity-add">
@@ -81,23 +72,9 @@
   <div class="add-entity-block">
     <input type="text" placeholder="* <%= t 'manage.department.desc.name' %>" id="entity-name" general="user-name"/>
     <input type="text" placeholder="<%= t 'manage.department.desc.code' %>" id="entity-code" general="user-mail"/>
-    <!--<input type="text" placeholder="用户数目" id="new-user-title" general="user-title"/>-->
+
     <textarea type="text" placeholder="<%= t 'manage.department.desc.description' %>" id="entity-description"></textarea>
 
     <input type="submit" value="<%= t 'manage.base.add_btn' %>" class="btn btn-primary" id="add-entity-new"/>
   </div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        MANAGE.init();
-        MANAGE.department.init();
-    })
-</script>
-<% content_for :javascript_includes do%>
-    <%= javascript_include_tag "Manage.js"%>
-    <%= javascript_include_tag "Manage-left-menu.js"%>
-    <%= javascript_include_tag "Manage-right-list.js"%>
-
-    <%= javascript_include_tag "Manage-department.js"%>
-<%end%>

@@ -9,27 +9,13 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
 
-*= require datepicker
-*= require datetimepicker
-*= require chosen
 *= require Analytic-main
-*= require font-awesome
-*= require aero
-
-*= require jquery.gridster
 *= require account
-
-
-*= require Manage-user
-*= require Manage-department
 *= require Manage-part
 *= require Dashboard
 *= require Dashboard-add
-*= require tipsy
 *= require Entry
-*= require Log
 *= require treeview
-*= require Manage-attribute
 *= require Analytics
 *= require EntryScss
 *= require story_sets
@@ -48,11 +34,12 @@
 
 
 *= require basic
+*= require log
 *= require welcome
 *= require entity_group
-*= require kpis
+*= require kpis/index
+*= require users/index
+*= require entities/index
 
 *= require_self
-
-
  */

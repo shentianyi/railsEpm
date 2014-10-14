@@ -8,6 +8,9 @@ paths:
    icheck: "func-module/icheck"
    jquery.sortable: "libs/jquery.sortable.min"
    jquery.tipsy: "libs/jquery.tipsy"
+   jquery.baresize: "libs/jquery.ba-resize.min"
+   jquery.chosen: "libs/chosen.jquery.min"
+   chosen: "func-module/chosen"
 shim:
    chart:
       exports: "Chart"
@@ -20,3 +23,9 @@ shim:
    jquery.tipsy:
       deps: ["jquery"]
       exports: "jQuery.fn.tipsy"
+   jquery.baresize:
+      deps: ["jquery"]
+      exports: "jQuery.fn.resize"
+   jquery.chosen:
+      deps: ["jquery"]
+      exports: "jQuery.fn.chosen"

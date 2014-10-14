@@ -1,5 +1,5 @@
-define(["jquery","../../manage/manage_left_menu","../../manage/manage_right_list","icheck","base","../../manage/manage_share","../../manage/manage_three_column","jquery.tipsy"],
-    function($,Leftmenu,Rightlist,icheck,Base){
+define(["jquery","../../manage/manage_left_menu","../../manage/manage_right_list","base","./isCalcuCheck","./create","./library","./attribute","../../manage/manage_three_column","jquery.tipsy"],
+    function($,Leftmenu,Rightlist,Base,isCalcuCheck){
     var option_add={
             name:I18n.t('manage.kpi.category'),
             href:"/kpis/",
@@ -48,11 +48,10 @@ define(["jquery","../../manage/manage_left_menu","../../manage/manage_right_list
         },
         option_right_drag={
              url : '/kpis',
-             drag_complete_post : function(id, belong) {
+             drag_complete_post : function(id, belong,callback) {
                 var option = {
                     id : id,
                     belong : belong
-                    //target : $("#" + id).find(".can-change").text()
                 }
                 $.ajax({
                     url : this.url,
@@ -61,14 +60,12 @@ define(["jquery","../../manage/manage_left_menu","../../manage/manage_right_list
                         kpi : {
                             id : option.id,
                             kpi_category_id : option.belong
-                            //target : option.target
                         }
                     },
                     success : function(data) {
-                        MANAGE.item_drag.prototype.drag_complete(option.id);
+                        callback(option.id);
                     }
                 });
-               //this.drag_complete(id);
              }
         }
 
@@ -87,11 +84,27 @@ define(["jquery","../../manage/manage_left_menu","../../manage/manage_right_list
                         $("#manage-edit-target").text(li.attr('title'));
                         $('#kpi-item-container').html(data);
                         window.history.pushState(id, null, "/kpis/c/" + id);
-//                        MANAGE.widget_init();
-//                        MANAGE.kpi.isCalcuCheck();
+                        Rightlist.refresh();
+                        isCalcuCheck();
                     });
                 }
             });
+            $("body")
+                .on("keydown", "#manage-sort-list>li>table input[type='text']", function() {
+                    var $this = $(this), number = $this.getCursorPosition();
+                    $this.data('cursor-position', number);
+                })
+                .on('keyup', "#manage-sort-list>li>table input[type='text']", function(event) {
+                    var keyCode = Base.adapt_event(event).event.keyCode >= 39 ? (Base.adapt_event(event).event.keyCode == 40 ? 40 : 39) : Base.adapt_event(event).event.keyCode;
+                    if(keyCode == 8) {
+                        var number = parseInt($(this).data('cursor-position')) - 1;
+                    } else {
+                        var number = keyCode - 38 == 0 ? 0 : (keyCode - 40 == 0 ? $(Base.adapt_event(event).target).val().length : parseInt($(this).data('cursor-position')) + (keyCode - 38));
+                    }
+                    Base.setCaretToPos($(this).get(0), number);
+
+                })
+            ;
         }
     }
 })

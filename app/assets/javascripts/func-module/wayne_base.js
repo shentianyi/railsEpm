@@ -37,6 +37,16 @@ define(["jquery"],function($){
             }
         }
     }
+    //得到日期，返回所在周
+    if(!Date.prototype.toWeekNumber){
+        Date.prototype.toWeekNumber=function(){
+            this.setHours(0, 0, 0);
+            this.setDate(this.getDate() + 4 - (this.getDay() || 7));
+            var yearStart = new Date(this.getFullYear(), 0, 1);
+            var weekNo = Math.ceil(( ( (this - yearStart) / 86400000) + 1) / 7);
+            return  weekNo;
+        }
+    }
     if(!Date.prototype.toWangString){
         Date.prototype.toWangString=function(interval){
             var second=this.getSeconds()<10?"0"+this.getSeconds():this.getSeconds();
@@ -67,6 +77,38 @@ define(["jquery"],function($){
                     break;
             }
             return string;
+        }
+    }
+    //数组中去除重复元素
+    Array.prototype.strip = function(){
+        if (this.length<2) return [this[0]] || [];
+        var arr = [];
+        for (var i=0;i<this.length;i++)
+        {
+            arr.push(this.splice(i--,1));
+            for (var j=0; j<this.length; j++)
+            {
+                if (this[j] == arr[arr.length -1])
+                {
+                    this.splice(j--,1);
+                }
+            }
+        }
+        return arr;
+    }
+    $.fn.getCursorPosition = function() {
+        var input = this.get(0);
+        if (!input) return; // No (input) element found
+        if ('selectionStart' in input) {
+            // Standard-compliant browsers
+            return input.selectionStart;
+        } else if (document.selection) {
+            // IE
+            input.focus();
+            var sel = document.selection.createRange();
+            var selLen = document.selection.createRange().text.length;
+            sel.moveStart('character', -input.value.length);
+            return sel.text.length - selLen;
         }
     }
     return{
@@ -109,6 +151,26 @@ define(["jquery"],function($){
             obj.value = obj.value.replace(/^0\d+/g, "0");
             //保证.只出现一次，而不能出现两次以上
             obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
+        },
+        setSelectionRange:function(input, selectionStart, selectionEnd) {
+            if (input.setSelectionRange) {
+                input.focus();
+                input.setSelectionRange(selectionStart, selectionEnd);
+            }
+            else if (input.createTextRange) {
+                var range = input.createTextRange();
+                range.collapse(true);
+                range.moveEnd('character', selectionEnd);
+                range.moveStart('character', selectionStart);
+                range.select();
+            }
+        },
+        setCaretToPos:function (input, pos) {
+            this.setSelectionRange(input, pos, pos);
+        },
+        isEmail:function(v) {
+            var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.|\-]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+            return reg.test(v);
         }
     }
 })
@@ -177,16 +239,7 @@ function first_date_of_week(date_value){
         year:beginDate.getFullYear()
     }
 }
-//得到日期，返回所在周
-if(!Date.prototype.toWeekNumber){
-    Date.prototype.toWeekNumber=function(){
-        this.setHours(0, 0, 0);
-        this.setDate(this.getDate() + 4 - (this.getDay() || 7));
-        var yearStart = new Date(this.getFullYear(), 0, 1);
-        var weekNo = Math.ceil(( ( (this - yearStart) / 86400000) + 1) / 7);
-        return  weekNo;
-    }
-}
+
 //compare time,return first and last
 function compare_time(begin_time,end_time){
     var begin=standardParse(begin_time).date-standardParse(end_time).date<=0?begin_time:end_time;
@@ -250,23 +303,7 @@ function dashboard_show_loading(out_id){
 function dashboard_remove_loading(out_id){
     $("#"+out_id).find(".dashboard-show-loading").remove();
 }
-//数组中去除重复元素
-Array.prototype.strip = function(){
-    if (this.length<2) return [this[0]] || [];
-    var arr = [];
-    for (var i=0;i<this.length;i++)
-    {
-        arr.push(this.splice(i--,1));
-        for (var j=0; j<this.length; j++)
-        {
-            if (this[j] == arr[arr.length -1])
-            {
-                this.splice(j--,1);
-            }
-        }
-    }
-    return arr;
-}
+
 // ws: 判断数字是否是非负数
 function isNotNegaNum(v) {
     if (!isNaN(v)) {
@@ -295,10 +332,7 @@ function isPositiveNum(v) {
 }
 
 // ws : 验证邮件
-function isEmail(v) {
-    var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.|\-]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
-    return reg.test(v);
-}
+
 
 // ws : 显示处理窗口
 function show_handle_dialog() {

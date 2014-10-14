@@ -52,124 +52,113 @@
   </div>
 </section>
 
-<!--<div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">-->
-     <!--<div class="content-left-main" name="category" id="content-left-main">-->
-          <!--<div style="width:auto;height:71px;"></div>-->
-          <!---->
-          <!---->
-     <!--</div>-->
-
-     <!--<aside class="content-right-nav manage-kpi-navi" name='category' id="content-right-nav">-->
-         <!---->
-     <!--</aside>-->
-<!--</div>-->
 
 
 
-<!--<div class="kpi-library" id="kpi-library">-->
-     <!--<div>-->
-          <!--<div class="kpi-library-inner">-->
-               <!--<div class="left Accordion" id="kpi-library-inner-left">-->
+<div class="kpi-library" id="kpi-library">
+     <div>
+          <div class="kpi-library-inner">
+               <div class="left Accordion" id="kpi-library-inner-left">
 
-               <!--</div>-->
-               <!--<div class="right">-->
-                    <!--<ul class="library-chosen-kpi" id="library-chosen-kpi">-->
+               </div>
+               <div class="right">
+                    <ul class="library-chosen-kpi" id="library-chosen-kpi">
 
-                    <!--</ul>-->
-                    <!--<div>-->
-                         <!--<a class="btn" id="library-cancel"><%= t 'manage.base.cancel_btn'%></a>-->
-                         <!--<a class="btn btn-primary" id="library-add"><%= t 'manage.base.add_btn'%></a>-->
-                    <!--</div>-->
-               <!--</div>-->
-          <!--</div>-->
-     <!--</div>-->
-<!--</div>-->
+                    </ul>
+                    <div>
+                         <a class="btn" id="library-cancel"><%= t 'manage.base.cancel_btn'%></a>
+                         <a class="btn btn-primary" id="library-add"><%= t 'manage.base.add_btn'%></a>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>
 
-<!--<div class="kpi-library"  type="attribute" for="kpi" id="add-new-kpi-block">-->
-  <!--<div >-->
-    <!--<i class="icon icon-remove" id="remove-new-kpi-block"></i>-->
-    <!--<div class="select-div">-->
-      <!--<select style="width:242px;" data-placeholder="* <%= t 'manage.kpi.category'%>" class="chosen-select"  id="new-kpi-category" >-->
+<div class="kpi-library"  type="attribute" for="kpi" id="add-new-kpi-block">
+  <div >
+    <i class="icon icon-remove" id="remove-new-kpi-block"></i>
+    <div class="select-div">
+      <select style="width:242px;" data-placeholder="* <%= t 'manage.kpi.category'%>" class="chosen-select"  id="new-kpi-category" >
 
-      <!--</select>-->
-    <!--</div>-->
-    <!--<input type="text" placeholder="* <%= t 'manage.kpi.name'%>" id="new-kpi-name"/>-->
-    <!--<textarea placeholder=" <%= t 'manage.kpi.description'%>" id="new-kpi-desc"></textarea>-->
-    <!--<div class="select-div">-->
-      <!--<select style="width:242px;" class="chosen-select" data-placeholder="* <%= t 'manage.kpi.frequency'%>" id="add-interval" name="frequency"></select>-->
-    <!--</div>-->
-    <!--<input type="text" placeholder="* <%= t 'manage.kpi.target'%>" id="new-kpi-target"/>-->
-    <!--<input type="text" placeholder="* <%= t 'manage.kpi.target_min'%>" id="new-kpi-target-low"/>-->
-    <!--<div class="select-div">-->
-      <!--<select style="width:242px;" class="chosen-select" data-placeholder="* <%= t 'manage.kpi.unit'%>" id="add-unit" name="unit">-->
+      </select>
+    </div>
+    <input type="text" placeholder="* <%= t 'manage.kpi.name'%>" id="new-kpi-name"/>
+    <textarea placeholder=" <%= t 'manage.kpi.description'%>" id="new-kpi-desc"></textarea>
+    <div class="select-div">
+      <select style="width:242px;" class="chosen-select" data-placeholder="* <%= t 'manage.kpi.frequency'%>" id="add-interval" name="frequency"></select>
+    </div>
+    <input type="text" placeholder="* <%= t 'manage.kpi.target'%>" id="new-kpi-target"/>
+    <input type="text" placeholder="* <%= t 'manage.kpi.target_min'%>" id="new-kpi-target-low"/>
+    <div class="select-div">
+      <select style="width:242px;" class="chosen-select" data-placeholder="* <%= t 'manage.kpi.unit'%>" id="add-unit" name="unit">
 
-      <!--</select>-->
-    <!--</div>-->
+      </select>
+    </div>
 
-    <!--<div class="select-div">-->
-      <!--<select style="width:242px;" class="chosen-select" data-placeholder="* <%= t 'manage.kpi.trend'%>" id="add-trend" name="direction">-->
+    <div class="select-div">
+      <select style="width:242px;" class="chosen-select" data-placeholder="* <%= t 'manage.kpi.trend'%>" id="add-trend" name="direction">
 
-      <!--</select>-->
-    <!--</div>-->
+      </select>
+    </div>
 
-    <!--<div class="auto-form-label" id="auto-form-label">-->
-      <!--<ul>-->
-        <!--<li><input placeholder="<%= t 'manage.kpi.dimensions'%>"/></li>-->
-      <!--</ul>-->
-    <!--</div>-->
-    <!--<label class="instrument-form-label"><%= t 'manage.kpi.dimensions-enter'%></label>-->
-    <!--<div class="is-calculate-block">-->
+    <div class="auto-form-label" id="auto-form-label">
+      <ul>
+        <li><input placeholder="<%= t 'manage.kpi.dimensions'%>"/></li>
+      </ul>
+    </div>
+    <label class="instrument-form-label"><%= t 'manage.kpi.dimensions-enter'%></label>
+    <div class="is-calculate-block">
 
-      <!--<input type="checkbox" id="is-calcu-check"/>-->
-      <!--<label><%= t 'manage.kpi.is_calculate_type'%></label>-->
+      <input type="checkbox" id="is-calcu-check"/>
+      <label><%= t 'manage.kpi.is_calculate_type'%></label>
 
-      <!--<div class="calculate-type-box" id="calculate-type-box">-->
-        <!--<div class="select-div">-->
-          <!--<select class="chosen-select" data-placeholder="* <%= t 'manage.kpi.list'%>" id="is-calcu-relate" name="base">-->
+      <div class="calculate-type-box" id="calculate-type-box">
+        <div class="select-div">
+          <select class="chosen-select" data-placeholder="* <%= t 'manage.kpi.list'%>" id="is-calcu-relate" name="base">
 
-          <!--</select>-->
-        <!--</div>-->
-        <!--<label sign="+">+</label>-->
-        <!--<label sign="-">-</label>-->
-        <!--<label sign="*">x</label>-->
-        <!--<label sign="/">/</label>-->
-        <!--<label sign="(">(</label>-->
-        <!--<label sign=")">)</label>-->
-        <!--<textarea type="text" placeholder="* <%= t 'manage.kpi.formula'%>" id="calcuType-input"></textarea>-->
-        <!--<div style="display:none" id="takeCal" cal></div>-->
-      <!--</div>-->
+          </select>
+        </div>
+        <label sign="+">+</label>
+        <label sign="-">-</label>
+        <label sign="*">x</label>
+        <label sign="/">/</label>
+        <label sign="(">(</label>
+        <label sign=")">)</label>
+        <textarea type="text" placeholder="* <%= t 'manage.kpi.formula'%>" id="edit-kpi-attribute"></textarea>
+        <div style="display:none" id="takeCal" cal></div>
+      </div>
 
-    <!--</div>-->
+    </div>
 
 
-    <!--<div class="btn-group">-->
-      <!--<a class="btn btn-small"  id="cancel-new-kpi-block"><%= t 'manage.base.cancel_btn' %></a>-->
-      <!--<a class="btn btn-primary btn-small" id="manage-kpi-add-new"><%= t 'manage.base.add_btn' %></a>-->
-    <!--</div>-->
+    <div class="btn-group">
+      <a class="btn btn-small"  id="cancel-new-kpi-block"><%= t 'manage.base.cancel_btn' %></a>
+      <a class="btn btn-primary btn-small" id="manage-kpi-add-new"><%= t 'manage.base.add_btn' %></a>
+    </div>
 
-  <!--</div>-->
-<!--</div>-->
+  </div>
+</div>
 
 
 
 
-<!--<div class="kpi-library" id="edit-attribute-block" type="attribute">-->
-  <!--<div>-->
-    <!--<i class="icon icon-remove" id="edit-attribute-block-remove"></i>-->
+<div class="kpi-library" id="edit-attribute-block" type="attribute">
+  <div>
+    <i class="icon icon-remove" id="edit-attribute-block-remove"></i>
 
-    <!--<div class="attribute-block" type="edit">-->
-      <!--<ul id="kpi-properties">-->
-        <!--<li><label>某个属性</label><i class="icon icon-trash"></i></li>-->
-        <!--<li><label>某个属性</label><i class="icon icon-trash"></i></li>-->
-      <!--</ul>-->
-    <!--</div>-->
+    <div class="attribute-block" type="edit">
+      <ul id="kpi-properties">
+        <li><label>某个属性</label><i class="icon icon-trash"></i></li>
+        <li><label>某个属性</label><i class="icon icon-trash"></i></li>
+      </ul>
+    </div>
 
-    <!--<div class="add-attribute">-->
-      <!--<input id="add-kpi-property" placeholder="<%= t 'manage.kpi.dimensions-inputname'%>"/>-->
-      <!--<a class="btn btn-normal btn-success" id="edit-attribute-block-add"><%= t 'manage.kpi.dimensions-add'%></a>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
+    <div class="add-attribute">
+      <input id="add-kpi-property" placeholder="<%= t 'manage.kpi.dimensions-inputname'%>"/>
+      <a class="btn btn-normal btn-success" id="edit-attribute-block-add"><%= t 'manage.kpi.dimensions-add'%></a>
+    </div>
+  </div>
+</div>
 
 
 

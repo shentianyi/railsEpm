@@ -1,0 +1,50 @@
+@import "../manage/manage_two_column.css.scss";
+@import "./edit.css.scss";
+.content-right-nav-add-block[name="department"]{
+  top:145px;
+}
+/********************************************************************************************************* right content
+*******************************************************************************************************************/
+.manage-left-content[name="department"] .manage-right-content{
+  left:0px;
+}
+.right-list-top-control[name="department"]>.icheckbox_minimal-aero{
+  left:18px;
+}
+.right-list-top-control[name="department"] > a:first-of-type{
+  margin-left:40px;
+}
+.manage-sort-list[name="department"]{
+  padding-left:18px;
+}
+/*新建输入点那一块*/
+.add-entity-block textarea{
+  width:140px;
+  min-width:140px;
+  max-width:140px;
+  height:50px;
+  min-height:50px;
+  max-height:200px;
+  margin-left: 25px;
+  padding: 5px 4px;
+  font-family: "open-sans";
+  font-size: 13px;
+  font-weight: lighter;
+}
+/********************************************************************************************************* 新建
+*******************************************************************************************************************/
+.modal-department{
+  width:600px;
+  height:450px;
+  position:absolute;
+  left:50%;
+  top:15%;
+  margin-left:-300px;
+}
+.modal-department .title{
+  text-align:center;
+  height:25px;
+  line-height:25px;
+  background:#5FA9DA;
+  color:#fff;
+}

@@ -21,6 +21,15 @@ define(["jquery",'jquery.icheck'],function($){
             else{
                 $("#manage-total-check").iCheck("uncheck");
             }
+        },
+        left_count_observable:function(){
+            if(this.left_count==0){
+                $("#manage-right-content").children().css("display","none");
+            }
+            else{
+                $("#manage-right-content #manage-btn-group").css("display","inline-block");
+                $("#manage-right-content .manage-right-list").css("display","block");
+            }
         }
     }
 })
