@@ -1,21 +1,4 @@
-<div class="part-right" id="part-graph">
-  <div class="inner" id="tree">
-    <% @roots.each do |e|%>
-        <div class="tree">
-          <ul class="draggable">
-            <li entity_group="<%= e.id %>" class="entity_root" >
-              <a entity_group="<%= e.id %>"><i class="icon-globe"></i> <%= e.name%></a>
-              <div class="add-block">
-                <label class="add-block-part"><i class="icon-plus-sign"></i><%= t 'manage.departments.desc.add-department'%></label>
-                <label class="add-block-entity"><i class="icon-plus-sign"></i> <%= t 'manage.departments.desc.add-entity'%></label>
-              </div>
-            </li>
-          </ul>
-        </div>
-    <% end %>
-  </div>
 
-</div>
 <div class="part-left" id="part-info">
   <section class="title">
     <div class="inner">
@@ -42,6 +25,24 @@
       <a id="btn-add-user" class="btn btn-primary" href="#"><%= t 'manage.departments.desc.add-user'%></a>
     </div>
   </section>
+</div>
+<div class="part-right" id="part-graph">
+  <div class="inner" id="tree">
+    <% @roots.each do |e|%>
+        <div class="tree">
+          <ul class="draggable">
+            <li entity_group="<%= e.id %>" class="entity_root" >
+              <a entity_group="<%= e.id %>"><i class="icon-globe"></i> <%= e.name%></a>
+              <div class="add-block">
+                <label class="add-block-part"><i class="icon-plus-sign"></i><%= t 'manage.departments.desc.add-department'%></label>
+                <label class="add-block-entity"><i class="icon-plus-sign"></i> <%= t 'manage.departments.desc.add-entity'%></label>
+              </div>
+            </li>
+          </ul>
+        </div>
+    <% end %>
+  </div>
+
 </div>
 
 <div id="add-user" class="add-entity">
@@ -78,11 +79,4 @@
   <%end%>
 </ul>
 
-<% content_for :javascript_includes do%>
-    <%= javascript_include_tag "Manage.js"%>
 
-
-    <%= javascript_include_tag "Manage-part.js"%>
-    <%= javascript_include_tag "jquery-collision.min.js"%>
-    <%= javascript_include_tag "jquery.ui/jquery.draggable.js"%>
-<%end%>

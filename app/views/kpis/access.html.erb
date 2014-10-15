@@ -1,14 +1,13 @@
-<div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
+<section class="manage_no_aside" id="manage_no_aside">
   <div class="content-left-main" name="category" id="content-left-main">
-    <div style="width:auto;height:71px;"></div>
-    <div class="left-content-title" id="left-content-title">
+    <div class="header" id="left-content-title">
       <p class="current-group-item">
         <%= t 'menu.my_kpi' %>
       </p>
     </div>
     <div class="manage-left-content" id="manage-left-content">
       <%= render :partial => 'kpi_categories/left_readonly_menu' %>
-      <div class="manage-right-content" id="manage-right-content">
+      <div class="right" id="manage-right-content">
         <div class="manage-btn-group" id="manage-btn-group">
           <p id="manage-edit-target"></p>
           <i class="icon-pencil"></i>
@@ -30,14 +29,5 @@
       </div>
     </div>
   </div>
-</div>
+</section>
 
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        MANAGE.kpi.init();
-    })
-</script>
-<% content_for :javascript_includes do %>
-    <%= javascript_include_tag "user.kpi.js" %>
-<% end %>

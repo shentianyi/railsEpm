@@ -68,7 +68,7 @@ define(["jquery","base","icheck","./isCalcuCheck"],function($,Base,iCheck,isCalc
                                     .append($("<i />").addClass("icon-lightbulb").attr("title", data[i].formula_string))
                             }
                         }
-                        iCheck.init();
+                        iCheck.init_inside("kpi-library-inner-left");
                     }
                 });
             }

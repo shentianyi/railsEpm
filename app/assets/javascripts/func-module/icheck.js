@@ -13,6 +13,15 @@ define(["jquery.icheck"],function(){
             $("input[type='radio']").iCheck({
                 radioClass: 'iradio_minimal-aero'
             });
+        },
+        init_inside:function(id){
+            var target=id.indexOf("#")===-1?"#"+id:id;
+            $(target).find("input[type='checkbox']").iCheck({
+                checkboxClass: 'icheckbox_minimal-aero'
+            });
+            $(target).find("input[type='radio']").iCheck({
+                radioClass: 'iradio_minimal-aero'
+            });
         }
     }
 })

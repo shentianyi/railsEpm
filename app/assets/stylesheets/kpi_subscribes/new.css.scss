@@ -1,0 +1,144 @@
+// Place all the styles related to the KpiSubscribes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "help.css.scss";
+.kpi-subscribes{
+  .manage-sort-list{
+    li{
+      table{
+        tr{
+          &:first-of-type{
+            td{
+              width:25%;
+              font-size:15px;
+              &:nth-of-type(1){
+                width:20%;
+              }
+              &:nth-of-type(2){
+                width:20%;
+              }
+              &:nth-of-type(3){
+                width:33%;
+              }
+              &:nth-of-type(4){
+                width:20%;
+              }
+              &:nth-of-type(5){
+                width:8%;
+              }
+              a.btn{
+                font-size:12px;
+                padding:5px 8px;
+              }
+              .subscribe-wrap{
+                span{
+                  display:block;
+                  color:#ef9f2c;
+                }
+              }
+            }
+          }
+
+        }
+      }
+    }
+  }
+}
+
+.kpi-subscribes-new.story-set-new{
+
+  .form{
+    position:relative;
+    padding:0px 40px;
+    .kpi-title{
+      font-size:25px;
+      font-weight:500;
+      border-bottom:1px solid rgba(0,0,0,0.3);
+      padding:18px 3px 5px;
+      margin:0px 18px;
+      color:$blue;
+    }
+    input{
+      margin-left:20px;
+      margin-top:5px;
+      font-size:14px;
+      padding:5px 5px;
+      width:410px;
+    }
+    .chosen-container{
+      width:420px;
+    }
+    .extreme{
+      &:after{
+        @include after-clear;
+      }
+      .chosen-container,input{
+
+      }
+      .alert-list{
+        li{
+          width:200px;
+          text-align: center;
+          padding:5px 0px;
+          @include border-radius-same(4px);
+          background:$blue;
+          color:#fff;
+          margin-top:8px;
+        }
+      }
+    }
+    .time-range{
+      position:relative;
+      label{
+        position:absolute;
+        font-size:13px;
+        color:#9d9d9d;
+        left:260px;
+        &:first-of-type{
+          top:7px;
+        }
+        &:last-of-type{
+          top:40px;
+        }
+      }
+    }
+    .checkbox-group{
+      &:after{
+        @include after-clear;
+      }
+      .checkbox-item{
+        float:left;
+        &:after{
+          @include after-clear;
+        }
+        input{
+          width:auto;
+          float:left;
+          margin-top:0px;
+        }
+        label{
+          display:inline-block;
+          float:left;
+          font-size:12px;
+          position:relative;
+          left:5px;
+          top:0px;
+          color:$blue;
+        }
+      }
+    }
+    &>.btn{
+      margin-top:30px;
+      width:150px;
+      padding:8px 10px;
+      margin-bottom:20px;
+      &:first-of-type{
+        bottom:40px;
+      }
+      &:last-of-type{
+        bottom:10px;
+      }
+    }
+  }
+
+}

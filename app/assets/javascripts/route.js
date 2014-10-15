@@ -9,6 +9,7 @@ define(function(require){
             require(["./app/Login"],function(app){
                 app.init()
             })
+            return
         }
     }
     else if(url_parameters[0]==="welcome" || url_parameters[0].length===0){
@@ -17,12 +18,18 @@ define(function(require){
         })
     }
     else if(url_parameters[0]==="kpis"){
+        if(url_parameters[1]==="access"){
+            require(["./app/Kpis/access"],function(app){
+                app.init()
+            })
+            return
+        }
         require(["./app/Kpis/index"],function(app){
             app.init()
         })
     }
     else if(url_parameters[0]==="entity_groups"){
-        require(["./app/Entity_group"],function(app){
+        require(["./app/Entity_groups/index"],function(app){
             app.init()
         })
     }
@@ -35,5 +42,18 @@ define(function(require){
         require(["./app/Entities/index"],function(app){
             app.init()
         })
+    }
+    else if(url_parameters[0].indexOf("departments")!==-1){
+        require(["./app/Departments/index"],function(app){
+            app.init()
+        })
+    }
+    else if(url_parameters[0]==="kpi_subscribes"){
+        if(url_parameters[1]==="new"){
+            require(["./app/Kpi_subscribes/new"],function(app){
+                app.init()
+            })
+            return
+        }
     }
 })
