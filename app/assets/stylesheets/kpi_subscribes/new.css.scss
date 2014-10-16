@@ -58,7 +58,14 @@
       margin:0px 18px;
       color:$blue;
     }
-    input{
+    .chosen-drop{
+      .chosen-search{
+        input{
+          margin-left:0px;
+        }
+      }
+    }
+    input:not(.chosen-search){
       margin-left:20px;
       margin-top:5px;
       font-size:14px;

@@ -55,5 +55,19 @@ define(function(require){
             })
             return
         }
+        else if(url_parameters[1]==="mine"){
+            require(["./app/Kpi_subscribes/mine"],function(app){
+                app.init()
+            })
+            return
+        }
+    }
+    else if(url_parameters[0]==="kpi_entries"){
+        if(url_parameters[1]==="new"){
+            require(["./app/Kpi_entries/index"],function(app){
+                app.init()
+            })
+            return
+        }
     }
 })

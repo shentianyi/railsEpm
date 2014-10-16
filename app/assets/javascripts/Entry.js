@@ -8,10 +8,6 @@
 var ENTRY=ENTRY || {};
 ENTRY.datepicker={};
 
-
-
-
-
 ENTRY.init=function(){
    $("#entry-date-picker").val(new Date().toWayneString()[$("#entry-left-menu li.active").attr("show_section")]);
    ENTRY.datepicker.init();

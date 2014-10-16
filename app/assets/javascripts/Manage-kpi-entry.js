@@ -6,11 +6,6 @@ MANAGE.entry.init = function(){
         .on("click",".show-entry-detail",function(){
             var id = $(this).attr("id");
             var $target = $("li#"+id).find(".box");
-            //if($target.hasClass("down")){
-            //    $target.removeClass("down");
-            //    return;
-            //}
-
             var interval=$("#entry-left-menu li.active").attr("interval"),
                 date=$("#entry-date-picker").val(),entry_at,d=standardParse(date).date;
             if(interval=="200"){
@@ -38,8 +33,6 @@ MANAGE.entry.init = function(){
         })
         .on("click",".box .icon-remove",function(event){
             stop_propagation(event);
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////  在这里写detail 点击删除的事件
             var $target = $(this);
             var id = $(this).attr("target");
             $.ajax({

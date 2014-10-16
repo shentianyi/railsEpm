@@ -56,48 +56,8 @@
     </div>
 
 
-    <a class="btn btn-primary" id="story-create-btn" onclick="MANAGE.kpi_subscribe.create()"> <%= t 'subscription.create'%> </a>
+    <a class="btn btn-primary" id="story-create-btn"> <%= t 'subscription.create'%> </a>
     <%= link_to (t 'subscription.cancel'), mine_kpi_subscribes_path,:class=>"btn" %>
   </div>
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        MANAGE.kpi_subscribe.init_new();
-
-        var target = "#start-time,#end-time";
-        var interval= $("#kpi-id").attr("kpi-interval");
-
-        new DATE_PICKER[interval](target, "date").datePicker();
-
-        $("body").on("change", "#start-time",function () {
-            var interval = $("#kpi-id").attr("kpi-interval");
-            if (interval == "200") {
-                var week = standardParse($(this).val()).date.toWeekNumber();
-                $(this).next().text("week " + week);
-            }
-            else if (interval == "400") {
-                var quarter = standardParse($(this).val()).date.monthToQuarter();
-                $(this).next().text("quarter " + quarter);
-            }
-        }).on("change", "#end-time", function () {
-                    var interval = $("#kpi-id").attr("kpi-interval");
-                    if (interval == "200") {
-                        var week = standardParse($(this).val()).date.toWeekNumber();
-                        $(this).next().text("week " + week);
-                    }
-                    else if (interval == "400") {
-                        var quarter = standardParse($(this).val()).date.monthToQuarter();
-                        $(this).next().text("quarter " + quarter);
-                    }
-                });
-
-    })
-</script>
-<% content_for :javascript_includes do %>
-    <%= javascript_include_tag "kpi_subscribe_manage.js" %>
-    <%= javascript_include_tag "bootstrap-datepicker.js" %>
-    <%= javascript_include_tag "date_picker_template.js" %>
-    <%= javascript_include_tag "chart-util.js" %>
-    <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
-<% end %>

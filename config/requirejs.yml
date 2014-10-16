@@ -11,6 +11,9 @@ paths:
    jquery.baresize: "libs/jquery.ba-resize.min"
    jquery.chosen: "libs/chosen.jquery.min"
    chosen: "func-module/chosen"
+   bootstrap.datepicker: "libs/bootstrap-datepicker"
+   datepicker: "func-module/datepicker"
+   jquery.fileupload: "libs/jquery.fileupload"
 shim:
    chart:
       exports: "Chart"
@@ -29,3 +32,9 @@ shim:
    jquery.chosen:
       deps: ["jquery"]
       exports: "jQuery.fn.chosen"
+   bootstrap.datepicker:
+      deps: ["jquery"]
+      exports: "jQuery.fn.datepicker"
+   jquery.fileupload:
+      deps: ["jquery"]
+      exports: "jQuery.fn.fileupload"

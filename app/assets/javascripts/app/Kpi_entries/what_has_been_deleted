@@ -1,0 +1,20 @@
+<script>
+     $(document).ready(function() {
+          ENTRY.init();
+          kpi_entry_upload();
+
+     })
+</script>
+
+<% content_for :javascript_includes do%>
+    <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js"%>
+    <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js"%>
+
+    <%= javascript_include_tag "jquery.sparkline.min.js"%>
+    <%= javascript_include_tag "kpi_entry_upload.js"%>
+    <%= javascript_include_tag "Entry.js"%>
+    <%= javascript_include_tag "bootstrap-datepicker.js"%>
+    <%= javascript_include_tag "date_picker_template.js"%>
+    <%= javascript_include_tag "bootstrap-datetimepicker.min.js"%>
+    <%= javascript_include_tag "Manage-kpi-entry.js"%>
+<% end %>

@@ -13,10 +13,8 @@
 *= require account
 *= require Dashboard
 *= require Dashboard-add
-*= require Entry
 *= require treeview
 *= require Analytics
-*= require EntryScss
 *= require story_sets
 *= require report/reports
 *= require report/snap.css.scss
@@ -41,6 +39,8 @@
 *= require entity_groups/index
 *= require kpis/access
 *= require kpi_subscribes/new
+*= require kpi_subscribes/mine
+*= require kpi_entries/index
 
 *= require_self
  */
