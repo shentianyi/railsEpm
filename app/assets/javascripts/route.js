@@ -63,11 +63,9 @@ define(function(require){
         }
     }
     else if(url_parameters[0]==="kpi_entries"){
-        if(url_parameters[1]==="new"){
-            require(["./app/Kpi_entries/index"],function(app){
-                app.init()
-            })
-            return
-        }
+        require(["./app/Kpi_entries/index"],function(app){
+            app.init()
+        })
+        return
     }
 })

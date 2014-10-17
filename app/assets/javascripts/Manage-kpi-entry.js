@@ -17,8 +17,6 @@ MANAGE.entry.init = function(){
             else{
                 entry_at=standardParse(date).date.toISOString()
             }
-        
-
             $.ajax({
                 url:"/kpi_entries/details",
                 type:'POST',

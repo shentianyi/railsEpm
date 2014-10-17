@@ -37,7 +37,7 @@ define(["jquery","base","jquery.fileupload"],function($,Base){
                 if (data.result) {
                     prev.find(".template").remove();
                     $("#upload-kpi-close").click();
-                    location.reload();
+                    window.location.reload();
                     Base.MessageBox("SUCCESS", "top", "success");
 
                 } else {
@@ -62,7 +62,7 @@ define(["jquery","base","jquery.fileupload"],function($,Base){
                     $("#task-attach-uploader-preview").css("display", "none");
                 }
             } else {
-                Base.MessageBox_content(data.content);
+                Base.MessageBox(data.content,"top","warning");
             }
         });
     }
@@ -107,6 +107,11 @@ define(["jquery","base","jquery.fileupload"],function($,Base){
     $("body")
         .on("click","#upload-kpi-btn",function(){
             $("#upload-kpi").css("left","0px").css("right","0px");
+        })
+        .on("click","#upload-kpi-close",function(){
+            var $upload=$("#upload-kpi");
+            $upload.css("left","-999em").css("right","auto");
+            $upload.find(".upload-file p").remove();
         })
         .on("click", "#false-close", function () {
             $("#false-alert").css("left", "-999em").css("right", "auto");

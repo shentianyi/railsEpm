@@ -212,59 +212,60 @@
   left:50%;
   margin-top:-175px;
   margin-left:-250px;
+  hr{
+    margin:15px 20px;
+    color:rgba(0,0,0,0.4);
+  }
+  .upload-btn,.download-btn{
+    width:120px;
+    font-weight:lighter;
+    font-size:11px;
+  }
+  .download-btn{
+    margin-top:20px;
+  }
+  .upload-btn{
+    width:160px;
+    margin:0px;
+  }
+  .content{
+    .upload-file{
+      height:200px;
+      overflow-y:auto;
+      margin:0 20px;
+    }
+    p{
+      &:first-of-type{
+        margin-top:5px;
+      };
+      margin-bottom:4px;
+    }
+  }
+  .upload-finish{
+    margin-top:15px;
+    width:100px;
+    float:right;
+  }
+  .upload-parsing{
+    display:inline-block;
+    font-size:13px;
+    width:250px;
+    background:#E6F4F9;
+    color:#4D8796;
+    padding:6px 5px;
+    margin-left:20px;
+    margin-top:15px;
+  }
+  .template-info{
+    color:#7f7f7f;
+    display:inline-block;
+    font-size:12px;
+    position:absolute;
+    top:37px;
+    left:170px;
+  }
 }
-.upload-kpi hr{
-  margin:15px 20px;
-  color:rgba(0,0,0,0.4);
-}
-.upload-kpi .upload-btn,
-.upload-kpi .download-btn{
-  width:120px;
-  font-weight:lighter;
-  font-size:13px;
-}
-.upload-kpi .download-btn{
-  margin-top:20px;
-}
-.upload-kpi .upload-btn{
-  width:160px;
-  margin:0px;
-}
-.upload-kpi .content .upload-file{
-  height:200px;
-  overflow-y:auto;
-  margin:0 20px;
-}
-.upload-kpi .content p{
-  margin-bottom:4px;
-}
-.upload-kpi .content p:first-of-type{
-  margin-top:5px;
-}
-.upload-kpi .upload-finish{
-  margin-top:15px;
-  width:100px;
-  float:right;
-}
-.upload-kpi .upload-parsing{
-  display:inline-block;
-  font-size:13px;
-  width:250px;
-  background:#E6F4F9;
-  color:#4D8796;
 
-  padding:6px 5px;
-  margin-left:20px;
-  margin-top:15px;
-}
-.upload-kpi .template-info{
-  color:#7f7f7f;
-  display:inline-block;
-  font-size:12px;
-  position:absolute;
-  top:37px;
-  left:170px;
-}
 /******************************************************************** 上传失败跳出来的div
 ***************************************************************************************/
 .modal-outer.false-alert{
