@@ -171,32 +171,45 @@ define(["jquery"],function($){
         isEmail:function(v) {
             var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.|\-]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
             return reg.test(v);
+        },
+        //yy-mm-dd hh:ii格式解析
+        standardParse:function(date_value){
+            var date_value=(date_value.replace(/\s/g,"-").replace(/:/g,"-").replace(/T/g,"-")).split("-");
+            var date_template={
+                "0":'0000',
+                "1":'00',
+                "2":'01',
+                "3":'00',
+                "4":'00'
+            };
+            for (var i=0;i<date_value.length;i++){
+                date_template[i.toString()]=date_value[i];
+            }
+            if(date_template["1"]!="00"){
+                date_template["1"]=(parseInt(date_template["1"])-1).toString();
+            }
+            return {
+                date:new Date(date_template["0"],date_template["1"],date_template["2"],date_template["3"],date_template["4"]),
+                template:date_template
+            }
+        },
+        //深度拷贝
+        deepCopy:function(p,c){
+            var c= c || {};
+            for(var i in p){
+                if(typeof p[i]==='object' && p[i] !== null){
+                    c[i] = (p[i].constructor===Array) ? [] : {};
+                    deepCopy(p[i],c[i])
+                }
+                else{
+                    c[i]=p[i]
+                }
+            }
+            return c
         }
     }
 })
 
-
-//yy-mm-dd hh:ii格式解析
-function standardParse(date_value){
-    var date_value=(date_value.replace(/\s/g,"-").replace(/:/g,"-").replace(/T/g,"-")).split("-");
-    var date_template={
-        "0":'0000',
-        "1":'00',
-        "2":'01',
-        "3":'00',
-        "4":'00'
-    };
-    for (var i=0;i<date_value.length;i++){
-        date_template[i.toString()]=date_value[i];
-    }
-    if(date_template["1"]!="00"){
-        date_template["1"]=(parseInt(date_template["1"])-1).toString();
-    }
-    return {
-        date:new Date(date_template["0"],date_template["1"],date_template["2"],date_template["3"],date_template["4"]),
-        template:date_template
-    }
-}
 //获取窗口可视部分的宽、高
 function inner_size(){
     var width,height
@@ -249,20 +262,7 @@ function compare_time(begin_time,end_time){
         end:end
     }
 }
-//深度拷贝
-function deepCopy(p,c){
-    var c= c || {};
-    for(var i in p){
-        if(typeof p[i]==='object' && p[i] !== null){
-            c[i] = (p[i].constructor===Array) ? [] : {};
-            deepCopy(p[i],c[i])
-        }
-        else{
-            c[i]=p[i]
-        }
-    }
-    return c
-}
+
 
 //计算百分率
 function TCR(a,t){

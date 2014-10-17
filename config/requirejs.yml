@@ -15,6 +15,8 @@ paths:
    datepicker: "func-module/datepicker"
    jquery.fileupload: "libs/jquery.fileupload"
    jquery.ui.widget: "libs/jquery.ui.widget"
+   bootstrap.datetimepicker: "libs/bootstrap-datetimepicker.min"
+   jquery.sparkline: "libs/jquery.sparkline.min"
 shim:
    chart:
       exports: "Chart"
@@ -36,6 +38,12 @@ shim:
    bootstrap.datepicker:
       deps: ["jquery"]
       exports: "jQuery.fn.datepicker"
+   bootstrap.datetimepicker:
+      deps: ["jquery"]
+      exports: "jQuery.fn.datetimepicker"
    jquery.fileupload:
       deps: ["jquery",jquery.ui.widget]
       exports: "jQuery.fn.fileupload"
+   jquery.sparkline:
+      deps: ["jquery"]
+      exports: "jQuery.fn.sparkline"

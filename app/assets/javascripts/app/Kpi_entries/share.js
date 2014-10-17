@@ -1,0 +1,3 @@
+define({
+    recent_array:{}
+})

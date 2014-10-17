@@ -119,6 +119,9 @@ define(["jquery","base","jquery.fileupload"],function($,Base){
         .on("click", "#false-close-btn", function () {
             $("#false-alert").css("left", "-999em").css("right", "auto");
         })
+        .on("click","#upload-kpi-finish",function(){
+            $("#upload-kpi-close").click();
+        })
     ;
     kpi_entry_upload();
 })

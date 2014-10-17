@@ -1,4 +1,4 @@
-define(["jquery","./upload"],function($){
+define(["jquery","./upload","./layout","./list","./datepick"],function($){
     return{
         init:function(){
 
