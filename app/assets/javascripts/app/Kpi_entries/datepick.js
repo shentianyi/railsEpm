@@ -1,4 +1,4 @@
-define(["jquery","base","./layout","./share","jquery.sparkline","bootstrap.datepicker","bootstrap.datetimepicker","jquery.tipsy"],function($,Base,Layout,Share){
+define(["jquery","base","./layout","./share","sparkline","jquery.tipsy"],function($,Base,Layout,Share,Sparkline){
     function extra_convert(interval){
         var target=$("#entry-date-picker").val();
         if(interval=="200"){
@@ -84,18 +84,14 @@ define(["jquery","base","./layout","./share","jquery.sparkline","bootstrap.datep
         }
     }
     function trend_form(id,values){
-        var colorMap=[], i,length=values.length+1,complete_value=[],
+        var complete_value=[],
             current_value=$("#"+id).find(".entry-actual").val().length>0?$("#"+id).find(".entry-actual").val(): 0,
             $target=$("#"+id).find(".kpi-entry-trend");
-        for(i=0;i<length;i++){
-            colorMap.push("#5FA9DA");
-        }
-        colorMap[length-1]="#F5A133";
         complete_value=Base.deepCopy(complete_value,values);
         complete_value.push(current_value);
-        $target.sparkline(complete_value, { type: 'bar',chartRangeMin:0,colorMap:colorMap,barWidth:"6px"});
+        Sparkline.bar($target,complete_value);
         Share.recent_array[id]=complete_value;
-    };
+    }
     var ENTRY={
         datepicker:{
             "90":function(){;
@@ -175,27 +171,54 @@ define(["jquery","base","./layout","./share","jquery.sparkline","bootstrap.datep
 
     $("#entry-date-picker").val(new Date().toWayneString()[$("#entry-left-menu li.active").attr("show_section")]);
     var interval=$("#entry-left-menu li.active").attr("interval");
-    extra_convert(interval);
     if(interval==="90"){
-        $("#entry-date-picker").datetimepicker().on("changeDate", function () {
-            post();
-        });
+        require(["datetimepicker"],function(Datetimepicker){
+            Datetimepicker.datetimepicker("#entry-date-picker");
+            $("#entry-date-picker").datetimepicker().on("changeDate", function () {
+                post();
+            })
+        })
     }
     else{
-        $("#entry-date-picker").datepicker().on("changeDate", function () {
-            if (interval == "200") {
-                var week = $(".datepicker").find(".active").prevAll(".cw").text();
-                $("#entry-date-extra").text("Week: " + week).css("left","127px");
+        require(["datepicker"],function(Datepicker){
+            switch(interval){
+                case "100":
+                    Datepicker.datepicker_daily("#entry-date-picker");
+                    $("#entry-date-picker").datepicker().on("changeDate", function () {
+                        post();
+                    });
+                    break;
+                case "200":
+                    Datepicker.datepicker_weekly("#entry-date-picker");
+                    $("#entry-date-picker").datepicker().on("changeDate", function () {
+                        var week = $(".datepicker").find(".active").prevAll(".cw").text();
+                        $("#entry-date-extra").text("Week: " + week).css("left","127px");
+                        post();
+                    });
+                    break;
+                case "300":
+                    Datepicker.datepicker_monthly("#entry-date-picker");
+                    $("#entry-date-picker").datepicker().on("changeDate", function () {
+                        post();
+                    });
+                    break;
+                case "400":
+                    Datepicker.datepicker_quarterly("#entry-date-picker");
+                    $("#entry-date-picker").datepicker().on("changeDate", function () {
+                        var quarter = new Date($(this).val()).monthToQuarter();
+                        $("#entry-date-extra").text("Quarter: " + quarter);
+                        post();
+                    });
+                    break;
+                case "500":
+                    Datepicker.datepicker_yearly("#entry-date-picker");
+                    $("#entry-date-picker").datepicker().on("changeDate", function () {
+                        post();
+                    });
+                    break;
             }
-            else if (interval == "400") {
-                var quarter = new Date($(this).val()).monthToQuarter();
-                $("#entry-date-extra").text("Quarter: " + quarter);
-            }
-            post();
-        });
+        })
     }
-
-    new DATE_PICKER[interval]("#entry-date-picker").datePicker();
     var entry=new ENTRY.datepicker[interval]();
     $("#entry-minus").on("click",function(){
         if($("#entry-date-picker").val().length>0){
@@ -219,4 +242,6 @@ define(["jquery","base","./layout","./share","jquery.sparkline","bootstrap.datep
             post();
         }
     });
+    extra_convert(interval);
+    post();
 })

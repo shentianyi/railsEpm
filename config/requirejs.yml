@@ -12,11 +12,13 @@ paths:
    jquery.chosen: "libs/chosen.jquery.min"
    chosen: "func-module/chosen"
    bootstrap.datepicker: "libs/bootstrap-datepicker"
+   bootstrap.datetimepicker: "libs/bootstrap-datetimepicker.min"
    datepicker: "func-module/datepicker"
+   datetimepicker: "func-module/datetimepicker"
    jquery.fileupload: "libs/jquery.fileupload"
    jquery.ui.widget: "libs/jquery.ui.widget"
-   bootstrap.datetimepicker: "libs/bootstrap-datetimepicker.min"
    jquery.sparkline: "libs/jquery.sparkline.min"
+   sparkline: "func-module/sparkline"
 shim:
    chart:
       exports: "Chart"

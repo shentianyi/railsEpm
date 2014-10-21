@@ -183,7 +183,7 @@ define(["jquery","base","./share"],function($,Base,Share){
         .on("click","#charge-man>li>i",function(event){
             Base.stop_propagation(event);
             var user_id  = $(this).parent().attr("user_id");
-            var department_id = TREE.current_entitygroup_id;
+            var department_id = Share.current_entitygroup_id;
             if (confirm(I18n.t('manage.departments.desc.delete-user'))){
                 $.ajax({
                     url:"/departments/remove_user",

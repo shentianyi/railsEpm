@@ -26,7 +26,8 @@ define(["jquery","base","./manage_share_control"],function($,Base,Manage){
                 });
                 if(validate){
                     var href=this.href,
-                        postHref=this.postHref;
+                        postHref=this.postHref,
+                        that=this;
                     $.post(postHref, {
                         data : {
                             name : name
@@ -34,7 +35,7 @@ define(["jquery","base","./manage_share_control"],function($,Base,Manage){
                     }, function(data) {
                         if(data.result) {
                             $("#manage-menu-add input").val("");
-                            this.add_hide();
+                            that.add_hide();
                             Manage.left_count++;
                             if(this.type==="kpis"){
                                 $("#manage-left-menu").append($("<li />").attr("title",name).attr("number", data.object)

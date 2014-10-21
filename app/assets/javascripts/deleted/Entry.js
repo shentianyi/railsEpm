@@ -16,55 +16,55 @@ ENTRY.init=function(){
 //   $("#entry-sort-list li").on("resize",function(){
 //        ENTRY.resize_sort_table()
 //   });
-   $("body").on("keyup",".entry-actual",function(event){
-       var object=adapt_event(event).target;
-       clearNoNumZero(object);
-   }).on("keydown",".entry-actual",function(event){
-       var e=adapt_event(event).event;
-       if(e.keyCode==13){
-           $(e.target).blur();
-       }
-   }).on("blur",".entry-actual",function(event){
-           var e=adapt_event(event).event,
-               actual= $(e.target).val(),
-               interval=$("#entry-left-menu li.active").attr("interval"),
-               date=$("#entry-date-picker").val(),entry_at,d=standardParse(date).date;
-           if(interval=="200"){
-               entry_at=new Date(d.setDate(d.getDate()- d.getDay()+1)).toISOString();
-           }
-           else if(interval=="400"){
-               entry_at=new Date(d.setMonth(Math.floor(d.getMonth()/3)*3)).toISOString();
-           }
-           else{
-               entry_at=standardParse(date).date.toISOString()
-           }
-           var kpi_id=$(e.target).attr("user_kpi_item_id"),value=$(e.target).val();
-               $.ajax({
-                  url:"/kpi_entries",
-                  type:'POST',
-                  data:{
-                      user_kpi_item_id:kpi_id,
-                      entry_at:entry_at,
-                      value:value,
-                      kpi_id:$(e.target).attr("kpi_id")
-                  },
-                  success:function(data){
-                      if(data.result){
-                          var length=ENTRY.recent_array[kpi_id].length,colorMap=[],i;
-                          ENTRY.recent_array[kpi_id][length-1]=value;
-                          $target=$("#"+kpi_id).find(".kpi-entry-trend");
-                          for(i=0;i<length;i++){
-                              colorMap.push("#5FA9DA");
-                          }
-                          colorMap[length-1]="#F5A133";
-                          $target.sparkline(ENTRY.recent_array[kpi_id], { type: 'bar',chartRangeMin:0,colorMap:colorMap,barWidth:"6px"});
-                      }
-                      else{
-                          MessageBox(data.content,"top","warning");
-                      }
-                  }
-               });
-   });
+//   $("body").on("keyup",".entry-actual",function(event){
+//       var object=adapt_event(event).target;
+//       clearNoNumZero(object);
+//   }).on("keydown",".entry-actual",function(event){
+//       var e=adapt_event(event).event;
+//       if(e.keyCode==13){
+//           $(e.target).blur();
+//       }
+//   }).on("blur",".entry-actual",function(event){
+//           var e=adapt_event(event).event,
+//               actual= $(e.target).val(),
+//               interval=$("#entry-left-menu li.active").attr("interval"),
+//               date=$("#entry-date-picker").val(),entry_at,d=standardParse(date).date;
+//           if(interval=="200"){
+//               entry_at=new Date(d.setDate(d.getDate()- d.getDay()+1)).toISOString();
+//           }
+//           else if(interval=="400"){
+//               entry_at=new Date(d.setMonth(Math.floor(d.getMonth()/3)*3)).toISOString();
+//           }
+//           else{
+//               entry_at=standardParse(date).date.toISOString()
+//           }
+//           var kpi_id=$(e.target).attr("user_kpi_item_id"),value=$(e.target).val();
+//               $.ajax({
+//                  url:"/kpi_entries",
+//                  type:'POST',
+//                  data:{
+//                      user_kpi_item_id:kpi_id,
+//                      entry_at:entry_at,
+//                      value:value,
+//                      kpi_id:$(e.target).attr("kpi_id")
+//                  },
+//                  success:function(data){
+//                      if(data.result){
+//                          var length=ENTRY.recent_array[kpi_id].length,colorMap=[],i;
+//                          ENTRY.recent_array[kpi_id][length-1]=value;
+//                          $target=$("#"+kpi_id).find(".kpi-entry-trend");
+//                          for(i=0;i<length;i++){
+//                              colorMap.push("#5FA9DA");
+//                          }
+//                          colorMap[length-1]="#F5A133";
+//                          $target.sparkline(ENTRY.recent_array[kpi_id], { type: 'bar',chartRangeMin:0,colorMap:colorMap,barWidth:"6px"});
+//                      }
+//                      else{
+//                          MessageBox(data.content,"top","warning");
+//                      }
+//                  }
+//               });
+//   });
    //上传kpi
 //   $("body")
 //       .on("click","#upload-kpi-btn",function(){

@@ -21,7 +21,7 @@ define(["jquery","./manage_left_menu_add","./manage_left_menu_edit","./manage_le
             add_model.add_hide();
         });
     }
-    function edit_init(url){
+    function edit_init(url,type){
         var edit_model=new Edit(url);
         $("#manage-edit-target")
             .text($("#manage-left-menu li.active").find("a").text())
