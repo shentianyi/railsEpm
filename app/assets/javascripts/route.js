@@ -34,6 +34,12 @@ define(function(require){
         })
     }
     else if(url_parameters[0]==="users"){
+        if(url_parameters[1]!==undefined && isNaN(url_parameters[1])==false){
+            require(["./app/Users/show"],function(app){
+                app.init()
+            })
+            return ;
+        }
         require(["./app/Users/index"],function(app){
             app.init()
         })

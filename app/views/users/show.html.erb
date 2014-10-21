@@ -2,33 +2,5 @@
   <input id="old-pwd" type="text" placeholder="<%= I18n.t "auth.view.old_pwd"%>"/>
   <input id="new-pwd" type="password" placeholder="<%= I18n.t "auth.view.new_pwd"%>"/>
   <input id="new-pwd-cfm" type="password" placeholder="<%= I18n.t "auth.view.new_pwd_cfm"%>"/>
-  <a class="btn btn-primary finish-change" onclick="change_password()"><%= I18n.t "auth.view.cfm_change"%></a>
+  <a class="btn btn-primary finish-change" id="finish-change"><%= I18n.t "auth.view.cfm_change"%></a>
 </div>
-<script language="JavaScript" type="text/javascript">
-  function change_password(){
-      var data = {};
-      data.password = $("#old-pwd").val();
-      data.new_password = $("#new-pwd").val();
-      data.new_password_confirmation = $("#new-pwd-cfm").val();
-
-      if(!data.password || !data.new_password || !data.new_password_confirmation)
-      {
-          MessageBox(I18n.t('auth.msg.fill_blank'),"top","warning");
-      }else{
-          $.ajax({
-              url:"/subscriptions/change_password",
-              data:data,
-              type:"POST",
-              dataType:"json",
-              success:function(data){
-                  if(data.result){
-                      MessageBox(data.content,"top","success");
-                      location.reload();
-                  }else{
-                      MessageBox(data.content,"top","warning");
-                  }
-              }
-          });
-      }
-  }
-</script>

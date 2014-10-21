@@ -10,7 +10,6 @@
  *
 
 *= require Analytic-main
-*= require account
 *= require Dashboard
 *= require Dashboard-add
 *= require treeview
@@ -41,6 +40,7 @@
 *= require kpi_subscribes/new
 *= require kpi_subscribes/mine
 *= require kpi_entries/index
+*= require users/setting
 
 *= require_self
  */
