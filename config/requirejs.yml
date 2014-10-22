@@ -19,6 +19,10 @@ paths:
    jquery.ui.widget: "libs/jquery.ui.widget"
    jquery.sparkline: "libs/jquery.sparkline.min"
    sparkline: "func-module/sparkline"
+   jquery.highcharts: "libs/highcharts"
+   jquery.highstock: "libs/highstock"
+   highcharts: "highchart/highcharts"
+   highstock: "highchart/highstock"
 shim:
    chart:
       exports: "Chart"
@@ -49,3 +53,9 @@ shim:
    jquery.sparkline:
       deps: ["jquery"]
       exports: "jQuery.fn.sparkline"
+   jquery.highcharts:
+      deps: ["jquery"]
+      exports: "jQuery.fn.highcharts"
+   jquery.highstock:
+      deps: ["jquery"]
+      exports: "jQuery.fn.highcharts"
