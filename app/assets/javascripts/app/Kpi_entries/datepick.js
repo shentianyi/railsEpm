@@ -225,7 +225,9 @@ define(["jquery","base","./layout","./share","sparkline","jquery.tipsy"],functio
             var target=$("#entry-date-picker").val();
             $("#entry-date-picker").val(entry.minus(target));
             if(interval!="90"){
-                $("#entry-date-picker").datepicker("update",entry.minus(target));
+                require(['bootstrap.datepicker'],function(){
+                    $("#entry-date-picker").datepicker("update",entry.minus(target));
+                })
             }
             extra_convert(interval);
             post();
@@ -236,7 +238,9 @@ define(["jquery","base","./layout","./share","sparkline","jquery.tipsy"],functio
             var target=$("#entry-date-picker").val();
             $("#entry-date-picker").val(entry.plus(target));
             if(interval!="90"){
-                $("#entry-date-picker").datepicker("update",entry.plus(target));
+                require(['bootstrap.datepicker'],function(){
+                    $("#entry-date-picker").datepicker("update",entry.plus(target));
+                })
             }
             extra_convert(interval);
             post();

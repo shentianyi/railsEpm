@@ -1,4 +1,5 @@
 @import "help.css.scss";
+@import "../manage/manage_three_column.css.scss";
 /********************************************************************************************************* 分类系列
 *******************************************************************************************************************/
 .manage-left-menu[type="entity"] li:first-of-type{
@@ -135,8 +136,24 @@
     }
   }
 }
-
-
+.manage-user-add.manage-entity-add{
+  &>i{
+    cursor:pointer;
+    float:right;
+    pointer-events:auto;
+    margin-right:10px;
+    margin-top:5px;
+  }
+}
+.manage-user-add.user-share-list{
+  &>i{
+    cursor:pointer;
+    float:right;
+    pointer-events:auto;
+    margin-right:10px;
+    margin-top:5px;
+  }
+}
 .manage-entity-add>ul{
   padding-top:5px !important;
 }
