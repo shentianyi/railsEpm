@@ -74,4 +74,16 @@ define(function(require){
         })
         return
     }
+    else if(url_parameters[0]==="story_sets"){
+        if(url_parameters[1]==="new"){
+            require(["./app/Story_sets/new"],function(app){
+                app.init()
+            })
+            return
+        }
+        require(["./app/Story_sets/index"],function(app){
+            app.init()
+        })
+        return
+    }
 })
