@@ -84,24 +84,51 @@
           border-bottom:1px solid rgba(0,0,0,0.1);
           padding:10px 15px;
           background:#fff;
+          position:relative;
           @include transition(background);
           &:hover{
             background:lighten($blue,33%);
           }
-          p{
-            margin:0px;
-            width:100%;
-            pointer-events:none;
+          &:after{
+            @include after-clear;
+          }
+          &>span{
+            @include box-sizing-border;
+
+            display:inline-block;
             &:first-of-type{
-               font-size:26px;
-               color:$blue;
-              font-weight:bold;
+              width:60px;
+              position:absolute;
+              $height:22px;
+              height:$height;
+              top:50%;
+              margin-top:- $height/2 ;
+              padding-left:10px;
+              i{
+                font-size:20px;
+                color:rgba(0,0,0,0.2);
+              }
             }
             &:last-of-type{
-               font-size:14px;
-               color:#9d9d9d;
+              padding-left:60px;
+              width:calc(100% - 60px);
+            }
+            p{
+              margin:0px;
+              width:100%;
+              pointer-events:none;
+              &:first-of-type{
+                font-size:26px;
+                color:$blue;
+                font-weight:bold;
+              }
+              &:last-of-type{
+                font-size:14px;
+                color:#9d9d9d;
+              }
             }
           }
+
         }
       }
     }

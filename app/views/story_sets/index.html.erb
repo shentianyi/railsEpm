@@ -11,8 +11,13 @@
       <div class="projects">
         <% @story_sets.each do |story_set| %>
             <a class="item" href="<%= story_story_set_path(story_set) %>">
-              <p title="<%= story_set.title %>"><%= story_set.title %></p>
-              <p title="<%= story_set.description %>"><%= story_set.description %></p>
+              <span>
+                <i class="ico icon-comments"></i>
+              </span>
+              <span>
+                <p title="<%= story_set.title %>"><%= story_set.title %></p>
+                <p title="<%= story_set.description %>"><%= story_set.description %></p>
+              </span>
             </a>
         <% end %>
       </div>
