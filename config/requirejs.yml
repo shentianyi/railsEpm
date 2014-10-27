@@ -23,6 +23,11 @@ paths:
    jquery.highstock: "libs/highstock"
    highcharts: "highchart/highcharts"
    highstock: "highchart/highstock"
+   dhtmlx.origin.dataview: "libs/dhtmlxdataview"
+   dhtmlx.origin.grid: "libs/dhtmlxgrid"
+   dhtmlx.dataview: "dhtmlx/dataview"
+   dhtmlx.grid: "dhtmlx/grid"
+   format_time: "func-module/format_time"
 shim:
    chart:
       exports: "Chart"
@@ -59,3 +64,10 @@ shim:
    jquery.highstock:
       deps: ["jquery"]
       exports: "jQuery.fn.highcharts"
+   dhtml.origin.dataview:
+      exports: "dhtmlXDataView"
+   dhtml.origin.grid:
+      exports: "dhtmlXGridObject"
+
+
+

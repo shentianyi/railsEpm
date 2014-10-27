@@ -1,36 +1,5 @@
+<%=stylesheet_link_tag "reports/index" %>
 <%= render "my-reports" %>
-
 <div class="report-content" id="report-content">
 </div>
-<% content_for :javascript_includes do %>
-    <%= javascript_include_tag "func-module/format_time.js" %>
-    <%= javascript_include_tag "func-module/i_check" %>
-    <%= javascript_include_tag "preload/classie.js" %>
-    <%= javascript_include_tag "preload/snap.svg-min.js" %>
-    <%= javascript_include_tag "preload/svgLoader.js" %>
-    <%= javascript_include_tag "xml2json"%>
-    <%= javascript_include_tag "reports/report.js" %>
-    <%= javascript_include_tag "reports/report_center" %>
-    <%= javascript_include_tag "reports/main.js" %>
-    <%= javascript_include_tag "reports/snap" %>
-    <%= javascript_include_tag "func-module/chosen"%>
-    <%= javascript_include_tag "dhtmlx"%>
-    <%= javascript_include_tag "dhtmlx-extend"%>
-    <%= javascript_include_tag "reports/report_menu"%>
-    <%= javascript_include_tag "reports/rand"%>
-    <%= javascript_include_tag "reports/data-current-status" %>
-    <%= javascript_include_tag "reports/sample_data" %>
-    <%= javascript_include_tag "reports/html2canvas" %>
-    <%= javascript_include_tag "reports/canvas2image" %>
-    <%= javascript_include_tag "reports/base64" %>
-    <%= javascript_include_tag "reports/current_status" %>
-    <%= javascript_include_tag "reports/defects" %>
-    <%= javascript_include_tag "highstock" %>
-    <%= javascript_include_tag "Highchart/Highchart_generator" %>
-    <%= javascript_include_tag "reports/daily_dpv" %>
-    <%= javascript_include_tag "reports/daily_ftq" %>
-    <%= javascript_include_tag "reports/report_subscription" %>
-    <%= javascript_include_tag "reports/report_subscription_data" %>
-    <%= javascript_include_tag "reports/station_data" %>
-    <%= javascript_include_tag "bootstrap-datepicker" %>
-<% end %>
+

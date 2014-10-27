@@ -1,3 +1,4 @@
+<%=stylesheet_link_tag "reports/current_status" %>
 <section class="current-status" id="current-status">
   <section id="current-status-normal">
     <div class="header" id="current-status-header">
@@ -79,14 +80,3 @@
   </svg>
 </div><!-- /pageload-overlay -->
 
-
-<% content_for :javascript_includes do %>
-    <%= javascript_include_tag "reports/current_status" %>
-    <%= javascript_include_tag "reports/defects" %>
-<% end %>
-
-<script>
-    $(document).ready(function(){
-        Report.init("current_status");
-    })
-</script>

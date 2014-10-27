@@ -86,4 +86,10 @@ define(function(require){
         })
         return
     }
+    else if(url_parameters[0].indexOf("reports")!==-1){
+        require(["./app/Reports/index"],function(app){
+            app.init()
+        })
+        return
+    }
 })

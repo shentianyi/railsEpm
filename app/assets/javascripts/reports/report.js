@@ -2,45 +2,17 @@ var Report = Report || {};
 Report.option = {};
 Report.r = {};
 Report.data = {};
-//Report.host = 'http://42.121.111.38:9003/';
+Report.host = 'http://42.121.111.38:9003/';
 Report.host='http://192.168.1.101:9003/';
-Report.Url = {export_excel_url: Report.host + 'DHXFileService/Excel',
+Report.Url = {
+    export_excel_url: Report.host + 'DHXFileService/Excel',
     export_bt_chart_excel_url: Report.host + 'BTReportService/ChartExcel',
-    export_bt_excel_url: Report.host + 'BTReportService/Excel'};
-/*
- Report.init = function (type) {
- var option = this.get_option_by_type(type);
+    export_bt_excel_url: Report.host + 'BTReportService/Excel'
+};
 
- this.option = option;
- switch (option.type) {
- case this.type["current-status"]:
- this.r = DV;
- current_status.init();
- break;
- case this.type["summary-report"]:
- break;
- case this.type["station-data"]:
- this.r = StationData;
- break;
- case this.type["tracking-report"]:
- break;
- case this.type["defect"]:
- break;
- case this.type["daily-dpv"]:
- this.r = Grid;
- default:
- break;
- }
- this.r.init(option);
- //load data
- var data = this.get_json();
- this.json_parse(data);
- this.r.page_load();
- };
- */
 
 /*init report*/
-Report.init = function (type) {
+Report. init = function (type) {
     this.option = this.get_option_by_type(type);
     delete this.r;
     this.r = this.get_dhtmlx();
@@ -106,8 +78,8 @@ Report.refresh = function () {
 Report.get_dhtmlx = function () {
     var container = "data_container";
     switch (this.option.type) {
-        case this.type["current_status"]:
-            return new dhtmlXDataView(container);
+//        case this.type["current_status"]:
+//            return new dhtmlXDataView(container);
         case this.type["daily_dpv"]:
         case this.type["station_data"]:
         case this.type["daily_ftq"]:
@@ -140,28 +112,28 @@ Report.configure = function () {
     var type = this.option.type;
     switch (type) {
         case this.type["current_status"]:
-            dhtmlxobj.define("type", {
-                template: "<div class='dv-header'>" +
-                    "<p>#INQA#</p>" +
-                    "</div>" +
-                    "<div class='dv-body'>" +
-                    "<div class='left'>" +
-                    "<p id='ftq' style='color:" + "#STYLE_COLOR#" + "'>#FTQ#%</p>" +
-                    "</div>" +
-                    "<div class='right'>" +
-                    "<p>#Defects#</p>" +
-                    "<p>OPEN DEFECTS</p>" +
-                    "<p>#Pass#</p>" +
-                    "<p>VEHICLE PASS</p>" +
-                    "</div>" +
-                    "</div>",
-                css: "dv-item",
-                height: 150,
-                width: 230,
-                margin: 5,
-                padding: 8
-            });
-            current_status.init();
+//            dhtmlxobj.define("type", {
+//                template: "<div class='dv-header'>" +
+//                    "<p>#INQA#</p>" +
+//                    "</div>" +
+//                    "<div class='dv-body'>" +
+//                    "<div class='left'>" +
+//                    "<p id='ftq' style='color:" + "#STYLE_COLOR#" + "'>#FTQ#%</p>" +
+//                    "</div>" +
+//                    "<div class='right'>" +
+//                    "<p>#Defects#</p>" +
+//                    "<p>OPEN DEFECTS</p>" +
+//                    "<p>#Pass#</p>" +
+//                    "<p>VEHICLE PASS</p>" +
+//                    "</div>" +
+//                    "</div>",
+//                css: "dv-item",
+//                height: 150,
+//                width: 230,
+//                margin: 5,
+//                padding: 8
+//            });
+//            current_status.init();
             break;
         case this.type["station_data"]:
             var width = Math.floor($("#report-content").width() / 14) - 2;
@@ -270,33 +242,33 @@ Report.toBTExcel = function () {
   this.r.toChartExcel(this.Url.export_bt_excel_url);
 };
 
-Report.get_option_by_type = function (type) {
-    var option = {};
-    option.type = this.type[type];
-    option.type_string = type;
-    return option;
-};
+//Report.get_option_by_type = function (type) {
+//    var option = {};
+//    option.type = this.type[type];
+//    option.type_string = type;
+//    return option;
+//};
 
-Report.type = {
-    "high_chart": 0,
-    "current_status": 1,
-    "summary_report": 2,
-    "station_data": 3,
-    "tracking_report": 4,
-    "defects": 5,
-    "vehicle_info": 6,
-    "daily_dpv": 7,
-    'daily_ftq': 8,
-    'defect_info': 9,
-    'float': 10,
-    'top_issue': 11,
-    'weekly_report': 12
-};
-
-Report.headers = {
-    "daily_dpv": "FALSE,iQ1,iQ2,iQ IP,iQ DR,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15",
-    "daily_ftq": "IQ Station, iQ1, iQ2, iQ3,iQ4,iQ5,iQ Dr,iQ IP,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15"
-};
+//Report.type = {
+//    "high_chart": 0,
+//    "current_status": 1,
+//    "summary_report": 2,
+//    "station_data": 3,
+//    "tracking_report": 4,
+//    "defects": 5,
+//    "vehicle_info": 6,
+//    "daily_dpv": 7,
+//    'daily_ftq': 8,
+//    'defect_info': 9,
+//    'float': 10,
+//    'top_issue': 11,
+//    'weekly_report': 12
+//};
+//
+//Report.headers = {
+//    "daily_dpv": "FALSE,iQ1,iQ2,iQ IP,iQ DR,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15",
+//    "daily_ftq": "IQ Station, iQ1, iQ2, iQ3,iQ4,iQ5,iQ Dr,iQ IP,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15"
+//};
 
 /*
  * write your init code here
