@@ -93,19 +93,19 @@ Report.get_dhtmlx = function () {
 };
 
 /*color*/
-Report.color = {
-    ftq: {
-        "higher": "#19cf22",
-        "equal": "#f3d02e",
-        "lower": "#eb4848"
-    },
-    dpv: {
-        "higher": "#eb4848",
-        "equal": "#f3d02e",
-        "lower": "#19cf22"
-    }
-
-}
+//Report.color = {
+//    ftq: {
+//        "higher": "#19cf22",
+//        "equal": "#f3d02e",
+//        "lower": "#eb4848"
+//    },
+//    dpv: {
+//        "higher": "#eb4848",
+//        "equal": "#f3d02e",
+//        "lower": "#19cf22"
+//    }
+//
+//}
 
 Report.configure = function () {
     var dhtmlxobj = this.r;

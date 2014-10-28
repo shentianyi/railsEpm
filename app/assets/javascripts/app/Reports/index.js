@@ -14,8 +14,8 @@ define(["jquery","./share"],function($,Share){
             delete Share.r;
             switch(Share.option.type){
                 case Share.type["current_status"]:
-                    require(["Reports/current_status"],function(app){
-                        app.int();
+                    require(["app/Reports/current_status"],function(app){
+                        app.init();
                     })
                 case Share.type["daily_dpv"]:
                 case Share.type["station_data"]:

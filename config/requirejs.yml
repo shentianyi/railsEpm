@@ -28,6 +28,9 @@ paths:
    dhtmlx.dataview: "dhtmlx/dataview"
    dhtmlx.grid: "dhtmlx/grid"
    format_time: "func-module/format_time"
+   svgLoader: "preload/svgLoader"
+   svgLoader.classie: "preload/classie"
+   svgLoader.snap: "preload/snap.svg-min"
 shim:
    chart:
       exports: "Chart"
@@ -64,10 +67,13 @@ shim:
    jquery.highstock:
       deps: ["jquery"]
       exports: "jQuery.fn.highcharts"
-   dhtml.origin.dataview:
+   dhtmlx.origin.dataview:
       exports: "dhtmlXDataView"
-   dhtml.origin.grid:
+   dhtmlx.origin.grid:
       exports: "dhtmlXGridObject"
+   svgLoader:
+      deps: ["svgLoader.classie","svgLoader.snap"]
+      exports: "SVGLoader"
 
 
 

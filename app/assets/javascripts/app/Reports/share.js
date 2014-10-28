@@ -26,5 +26,18 @@ define({
     headers : {
         "daily_dpv": "FALSE,iQ1,iQ2,iQ IP,iQ DR,iQ3,iQ4,iQ5,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15",
         "daily_ftq": "IQ Station, iQ1, iQ2, iQ3,iQ4,iQ5,iQ Dr,iQ IP,iQ6,iQ7,iQ8,iQ9,iQ10,iQ11,iQ12,iQ13,iQ14,iQ15"
-    }
+    },
+    color:{
+        ftq: {
+            "higher": "#19cf22",
+            "equal": "#f3d02e",
+            "lower": "#eb4848"
+        },
+        dpv: {
+            "higher": "#eb4848",
+            "equal": "#f3d02e",
+            "lower": "#19cf22"
+        }
+    },
+    current_status_loader:""
 })

@@ -1,4 +1,4 @@
-define(["./share","dhtml.origin.dataview"],function(Share){
+define(["./share","dhtmlx.origin.dataview"],function(Share){
     dhtmlXDataView.prototype.serializeToDataJson = function () {
         return this.serialize();
     };
