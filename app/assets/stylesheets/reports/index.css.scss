@@ -31,6 +31,7 @@ $list-width:220px;
     &>ul{
       $li-padding:10px;
       height:calc(100% - 109px);
+      //scroll
       overflow-y:auto;
       p{
         color:lighten($nav-dark,25%);
