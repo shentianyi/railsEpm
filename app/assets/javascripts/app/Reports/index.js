@@ -1,4 +1,4 @@
-define(["jquery","./share"],function($,Share){
+define(["jquery","./share","jquery.scroll"],function($,Share){
     function get_option_by_type(type) {
         var option = {};
         option.type = Share.type[type];
@@ -6,6 +6,9 @@ define(["jquery","./share"],function($,Share){
         return option;
     }
 
+    $("#my-reports").mCustomScrollbar({
+        axis:"y"
+    });
     return{
         init:function(){
             var type=window.location.hash.slice(1);

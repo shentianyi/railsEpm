@@ -17,6 +17,7 @@ paths:
    datetimepicker: "func-module/datetimepicker"
    jquery.fileupload: "libs/jquery.fileupload"
    jquery.ui.widget: "libs/jquery.ui.widget"
+   jquery.scroll: "libs/jquery.mCustomScrollbar"
    jquery.sparkline: "libs/jquery.sparkline.min"
    sparkline: "func-module/sparkline"
    jquery.highcharts: "libs/highcharts"
@@ -74,6 +75,9 @@ shim:
    svgLoader:
       deps: ["svgLoader.classie","svgLoader.snap"]
       exports: "SVGLoader"
+   jquery.scroll:
+      deps: ["jquery"]
+      exports: "jQuery.fn.mCustomScrollbar"
 
 
 
