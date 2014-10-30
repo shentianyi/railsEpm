@@ -13,8 +13,8 @@ Report.Url = {
 
 /*init report*/
 Report. init = function (type) {
-    this.option = this.get_option_by_type(type);
-    delete this.r;
+//    this.option = this.get_option_by_type(type);
+//    delete this.r;
     this.r = this.get_dhtmlx();
     this.configure();
     this.json_parse(this.get_json());

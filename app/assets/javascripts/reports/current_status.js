@@ -1,5 +1,5 @@
 var current_status={};
-//current_status.init=function(){
+current_status.init=function(){
 //    $("#current-date").text(format_time.current_time());
 //    $("#current-clock").text(format_time.current_time_clock());
 //    window.setInterval(function(){
@@ -78,63 +78,63 @@ var current_status={};
 //            }
 //            Report.refresh();
 //        });
-//
-//}
-//current_status.flexible=function(){
+
+}
+current_status.flexible=function(){
 //    var total_height=$("#wrap-main").height()-$("header").height()-1;
 //    var height=total_height-$("#current-status-header").height()-$("#snap-groups").height()-2;
 //    $("#data_container").height(height);
 //    var target_height=total_height-$("#target-wrapper-header").height()-$("#target-setting-footer").height()-2;
 //    $("#target_setting").height(target_height);
-//
-//}
-//current_status.loader_show=function(){
-//    current_status.loader = new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
-//    var left = document.getElementById("report-menu").getBoundingClientRect().right,
-//        top = document.getElementById("current-status-header").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0,
-//        height=$("#data_container").height();
-//    $(".current-status-pageload-overlay svg").css('left', left);
-//    $(".current-status-pageload-overlay svg").css('top', top);
-//    $(".current-status-pageload-overlay svg").css("height",height+"px");
-//    current_status.loader.show();
-//}
-//current_status.loader_hide=function(){
-//    current_status.loader.hide();
-//}
-//current_status.btn_loader_show=function(){
-//    current_status.loader = new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
-//    var left = document.getElementById("report-menu").getBoundingClientRect().right,
-//        top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
-//        height=$("#report-content").height();
-//    $(".current-status-pageload-overlay svg").css('left', left);
-//    $(".current-status-pageload-overlay svg").css('top', top);
-//    $(".current-status-pageload-overlay svg").css("height",height+"px");
-//    current_status.loader.show();
-//}
-//current_status.show_extra_section=function(tag){
-//    current_status.btn_loader_show();
-//     if(tag==="target"){
-//         setTimeout(function(){
-//             $("#current-status-normal").css("display","none");
-//             $("#current-status-target").css("display","block");
-//             current_status.loader_hide();
-//             defects.refresh_color();
-//         },700);
-//     }
-//    else if(tag==="all_defects"){
-//         setTimeout(function(){
-//             $("#current-status-normal").css("display","none");
-//             $("#current-status-all-defects").css("display","block");
-//             current_status.loader_hide();
-//         },700);
-//     }
-//    else if(tag==="key_defects"){
-//         setTimeout(function(){
-//             $("#current-status-normal").css("display","none");
-//             $("#current-status-key-defects").css("display","block");
-//             current_status.loader_hide();
-//         },700);
-//     }
-//}
+
+}
+current_status.loader_show=function(){
+    current_status.loader = new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
+    var left = document.getElementById("report-menu").getBoundingClientRect().right,
+        top = document.getElementById("current-status-header").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0,
+        height=$("#data_container").height();
+    $(".current-status-pageload-overlay svg").css('left', left);
+    $(".current-status-pageload-overlay svg").css('top', top);
+    $(".current-status-pageload-overlay svg").css("height",height+"px");
+    current_status.loader.show();
+}
+current_status.loader_hide=function(){
+    current_status.loader.hide();
+}
+current_status.btn_loader_show=function(){
+    current_status.loader = new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
+    var left = document.getElementById("report-menu").getBoundingClientRect().right,
+        top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
+        height=$("#report-content").height();
+    $(".current-status-pageload-overlay svg").css('left', left);
+    $(".current-status-pageload-overlay svg").css('top', top);
+    $(".current-status-pageload-overlay svg").css("height",height+"px");
+    current_status.loader.show();
+}
+current_status.show_extra_section=function(tag){
+    current_status.btn_loader_show();
+     if(tag==="target"){
+         setTimeout(function(){
+             $("#current-status-normal").css("display","none");
+             $("#current-status-target").css("display","block");
+             current_status.loader_hide();
+             defects.refresh_color();
+         },700);
+     }
+    else if(tag==="all_defects"){
+         setTimeout(function(){
+             $("#current-status-normal").css("display","none");
+             $("#current-status-all-defects").css("display","block");
+             current_status.loader_hide();
+         },700);
+     }
+    else if(tag==="key_defects"){
+         setTimeout(function(){
+             $("#current-status-normal").css("display","none");
+             $("#current-status-key-defects").css("display","block");
+             current_status.loader_hide();
+         },700);
+     }
+}
 
 

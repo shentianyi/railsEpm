@@ -1,10 +1,58 @@
 @import "../help.css.scss";
 @import "../libs/dhtmlxdataview.css";
-.current-status{
-  .header{
-    background:rgba(255,255,255,0.3);
+.header-block{
+  float:left;
+  @include box-sizing-border;
+  padding:3px 0 0 8px;
+  border-left:1px solid rgba(0,0,0,0.1);
+  width:15%;
+  margin:5px 0;
+  &>label{
+    display:block;
+    font-size:14px;
+    color:rgba(0,0,0,0.4);
+  }
+  &>.btn{
+    padding:5px 8px;
+    font-size:13px;
+    width:115px;
+    margin:5px auto;
+  }
+  &:first-of-type{
+    width:400px;
+    border-left-width:0px;
+    p{
+      margin:0px;
+      font-size:14px;
+      display: inline-block;
+      &:first-of-type{
+        font-size:18px;
+        display:block;
+      }
+      &:nth-of-type(3){
+        color:$golden-text;
+      }
+    }
+    select{
+      width:280px;
+      paddding:5px 6px;
+      margin-top:4px;
+    }
+  }
+  &:nth-of-type(4){
+    width:200px;
+  }
+  &:last-of-type{
+    width:calc(70% - 600px);
+    height:85px;
+    p{
+      padding:10px 0 0 17px;
+      font-size:29px;
+      color:#333
+    }
   }
 }
+
 .current-status-pageload-overlay {
   position: fixed;
   width: 100%;
