@@ -1,7 +1,7 @@
 var defects={};
 defects.target = {};
 
-defects.refresh_color = function(){
+//defects.refresh_color = function(){
 //    var data = Report.data;
 //    var obj = this.target;
 //    console.log(obj.getRowsNum());
@@ -22,7 +22,7 @@ defects.refresh_color = function(){
 //        obj.cells(row_id,1).setBgColor(data[rinx]["STYLE_COLOR"]);
 //    })
 //    obj.refresh();
-};
+//};
 
 defects.example_init=function(){
     var width = Math.floor(($("#report-content").width())/18);

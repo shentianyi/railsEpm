@@ -1,4 +1,4 @@
-define(["jquery.icheck"],function(){
+define(["base","jquery.icheck"],function(Base){
     $("input[type='checkbox']").iCheck({
         checkboxClass: 'icheckbox_minimal-aero'
     });
@@ -22,34 +22,35 @@ define(["jquery.icheck"],function(){
             $(target).find("input[type='radio']").iCheck({
                 radioClass: 'iradio_minimal-aero'
             });
+        },
+        if_checked:function(target,callback){
+            var $target=$(target);
+            $target.on("ifChecked",function(event){
+                var target=Base.adapt_event(event).target;
+                callback($(target));
+            });
+        },
+        if_unchecked:function(target,callback){
+            var $target=$(target);
+            $target.on("ifUnchecked",function(event){
+                var target=Base.adapt_event(event).target;
+                callback($(target));
+            });
+        },
+        if_click:function(target,callback){
+            var $target=$(target);
+            $target.on("ifClicked",function(event){
+                var target=Base.adapt_event(event).target;
+                callback($(target));
+            });
+        },
+        if_changed:function(target,callback){
+            var $target=$(target);
+            $target.on("ifChanged",function(event){
+                var target=Base.adapt_event(event).target;
+                callback($(target));
+            });
         }
     }
 })
-//i_check.if_checked=function(target,callback){
-//    var $target=$(target);
-//    $target.on("ifChecked",function(event){
-//        var target=adapt_event(event).target;
-//        callback($(target));
-//    });
-//}
-//i_check.if_unchecked=function(target,callback){
-//    var $target=$(target);
-//    $target.on("ifUnchecked",function(event){
-//        var target=adapt_event(event).target;
-//        callback($(target));
-//    });
-//}
-//i_check.if_click=function(target,callback){
-//    var $target=$(target);
-//    $target.on("ifClicked",function(event){
-//        var target=adapt_event(event).target;
-//        callback($(target));
-//    });
-//}
-//i_check.if_changed=function(target,callback){
-//    var $target=$(target);
-//    $target.on("ifChanged",function(event){
-//        var target=adapt_event(event).target;
-//        callback($(target));
-//    });
-//}
+

@@ -1,4 +1,4 @@
-define(["./share","dhtmlx.origin.dataview"],function(Share){
+define(["./share",",.to_get_data","dhtmlx.origin.dataview"],function(Share){
     dhtmlXDataView.prototype.serializeToDataJson = function () {
         return this.serialize();
     };
@@ -28,8 +28,44 @@ define(["./share","dhtmlx.origin.dataview"],function(Share){
         return xml;
     };
     dhtmlXDataView.prototype.toExcel = function (url) {
-        Share.processReportExcelRequest(url, this.serializeToExcelXml());
-    }
+        Share.processReportExcelRequest(url, dhtmlXDataView.prototype.serializeToExcelXml());
+    };
 
-    return  dhtmlXDataView
+    return  {
+        object:"",
+        render:function(config){
+            config.container=config.container!=undefined?config.container:"data_container";
+            var dataView=new dhtmlXDataView(config.container),
+                default_template="<div class='dv-header'>" +
+                                    "<p>#INQA#</p>" +
+                                 "</div>" +
+                                 "<div class='dv-body'>" +
+                                    "<div class='left'>" +
+                                        "<p id='ftq' style='color:" + "#STYLE_COLOR#" + "'>#FTQ#%</p>" +
+                                    "</div>" +
+                                    "<div class='right'>" +
+                                        "<p>#Defects#</p>" +
+                                        "<p>OPEN DEFECTS</p>" +
+                                        "<p>#Pass#</p>" +
+                                        "<p>VEHICLE PASS</p>" +
+                                    "</div>" +
+                                "</div>"
+                ;
+            dataView.define("type", {
+                template: config.template?config.template:default_template,
+                css: config.css?config.css:"dv-item",
+                height: config.height?config.height:150,
+                width: config.width?config.width:230,
+                margin: config.margin?config.margin:5,
+                padding: config.padding?config.padding:8
+            });
+            this.object=dataView;
+            return dataView;
+        },
+        add:function(params){
+            if(this.object!==""){
+                this.object.add(params);
+            }
+        }
+    }
 })

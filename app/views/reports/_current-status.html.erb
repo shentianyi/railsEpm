@@ -1,82 +1,96 @@
 <%=stylesheet_link_tag "reports/current_status" %>
-<!--<section class="current-status" id="current-status">-->
-  <!--<section id="current-status-normal">-->
-    <!--<div class="header" id="current-status-header">-->
-      <!--<div class="header-block">-->
-        <!--<label>Condition</label>-->
-        <!--<p>First Time Quality (FTQ) Summary Percentage</p>-->
-        <!--<p id="current-date"></p>-->
-        <!--<p>Early shift</p>-->
-        <!--<select id="vehicle-select">-->
-        <!--<option>CF11</option>-->
-        <!--<option>CF14</option>-->
-        <!--<option>CF16</option>-->
-        <!--</select>-->
-      <!--</div>-->
-      <!--<div class="header-block">-->
-        <!--<label>Export</label>-->
-        <!--<a class="btn btn-success" id="quick-print">Quick print</a>-->
-        <!--<a class="btn btn-success" onclick="export_report_excel()">Excel</a>-->
-      <!--</div>-->
-      <!--<div class="header-block">-->
-        <!--<label>Setting</label>-->
-        <!--<a class="btn btn-primary" id="refresh">Refresh</a>-->
-        <!--<a class="btn btn-primary extra_func_btn" id="target" tag='target'>Target</a>-->
-      <!--</div>-->
-      <!--<div class="header-block">-->
-        <!--<label>Custom</label>-->
-        <!--<a class="btn btn-primary extra_func_btn" tag='all_defects'>All defects</a>-->
-        <!--<a class="btn btn-primary extra_func_btn" tag='key_defects'>Key station defects</a>-->
-      <!--</div>-->
-      <!--<div class="header-block">-->
-        <!--<label>Current time</label>-->
-        <!--<p id="current-clock"></p>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<div id="data_container" class="data-container"></div>-->
-    <!--<%= render 'snap'%>-->
-  <!--</section>-->
-  <!--<section id="current-status-target" class='current-status-wrapper'>-->
-     <!--<div class="wrapper-header" id="target-wrapper-header">-->
-       <!--<a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>-->
-       <!--<p>Target setting</p>-->
-     <!--</div>-->
-    <!--<div id="target-setting-footer" class="target-setting-footer">-->
-      <!--<div class="footer-left">-->
-        <!--<p>Condition</p>-->
-        <!--<p>When Target higher than current FTQ</p>-->
-        <!--<p>When Target equal to current FTQ</p>-->
-        <!--<p>When Target lower than current FTQ</p>-->
-      <!--</div>-->
-      <!--<div class="footer-right" id="footer-right">-->
-        <!--<p>Color</p>-->
-        <!--<label>FTQ color setting</label>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<div id="target_setting" class="wrapper-current-body"></div>-->
-  <!--</section>-->
-  <!--<section id="current-status-all-defects" class='current-status-wrapper'>-->
-    <!--<div class="wrapper-header">-->
-      <!--<a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>-->
-      <!--<p>All defects</p>-->
-    <!--</div>-->
-    <!--<div class="wrapper-current-body">-->
-      <!--<div id="all_defects" class="data_container"></div>-->
-    <!--</div>-->
-  <!--</section>-->
-  <!--<section id="current-status-key-defects" class='current-status-wrapper'>-->
-    <!--<div class="wrapper-header">-->
-      <!--<a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>-->
-      <!--<p>Key station defects</p>-->
-    <!--</div>-->
-    <!--<div class="wrapper-current-body">-->
-      <!--<div id="key_defects" class="data_container"></div>-->
-    <!--</div>-->
-  <!--</section>-->
-<!--</section>-->
-<!--<div id="current_status_loader" class="current-status-pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z">-->
-  <!--<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none">-->
-    <!--<path d="M30,30 50,30 50,30 30,30 Z"/>-->
-  <!--</svg>-->
-<!--</div>&lt;!&ndash; /pageload-overlay &ndash;&gt;-->
+<div class="template1">
+  <section class="condition"  id="condition">
+    <p>Condition</p>
+    <div class="header-block">
+      <p>First Time Quality (FTQ) Summary Percentage</p>
+      <p id="current-date"></p>
+      <p>Early shift</p>
+      <select id="vehicle-select">
+        <option>CF11</option>
+        <option>CF14</option>
+        <option>CF16</option>
+      </select>
+    </div>
+    <div class="header-block">
+      <label>Export</label>
+      <a class="btn btn-success" id="quick-print">Quick print</a>
+      <a class="btn btn-success" onclick="export_report_excel()">Excel</a>
+    </div>
+    <div class="header-block">
+      <label>Setting</label>
+      <a class="btn btn-primary" id="refresh">Refresh</a>
+      <a class="btn btn-primary extra_func_btn" id="target" tag='target'>Target</a>
+    </div>
+    <div class="header-block">
+      <label>Custom</label>
+      <a class="btn btn-primary extra_func_btn" tag='all_defects'>All defects</a>
+      <a class="btn btn-primary extra_func_btn" tag='key_defects'>Key station defects</a>
+    </div>
+    <div class="header-block">
+      <label>Current time</label>
+      <p id="current-clock"></p>
+    </div>
+  </section>
+  <section class="content" id="data_container">
+
+  </section>
+  <section class="snaps" id="snap-groups">
+    <% @snaps.each do |snap| %>
+        <div class="snap-li" snap="<%= snap.id %>" type="<%= snap.type_string %>">
+          <p><%= snap.desc %></p>
+          <p><%= time_ago_in_words(snap.created_at.localtime) %> ago</p>
+        </div>
+    <% end %>
+  </section>
+</div>
+
+<section id="current-status-target" class='current-status-wrapper'>
+  <div class="wrapper-header" id="target-wrapper-header">
+    <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
+    <p>Target setting</p>
+  </div>
+  <div id="target-setting-footer" class="target-setting-footer">
+    <div class="footer-left">
+      <p>Condition</p>
+      <p>When Target higher than current FTQ</p>
+      <p>When Target equal to current FTQ</p>
+      <p>When Target lower than current FTQ</p>
+    </div>
+    <div class="footer-right" id="footer-right">
+      <p>Color</p>
+      <label>FTQ color setting</label>
+    </div>
+  </div>
+  <div id="target_setting" class="wrapper-current-body"></div>
+</section>
+
+<section id="current-status-all-defects" class='current-status-wrapper'>
+  <div class="wrapper-header">
+    <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
+    <p>All defects</p>
+  </div>
+  <div class="wrapper-current-body">
+    <div id="all_defects" class="data_container"></div>
+  </div>
+</section>
+
+<section id="current-status-key-defects" class='current-status-wrapper'>
+  <div class="wrapper-header">
+    <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
+    <p>Key station defects</p>
+  </div>
+  <div class="wrapper-current-body">
+    <div id="key_defects" class="data_container"></div>
+  </div>
+</section>
+
+<div id="current_status_loader" class="current-status-pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z">
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none">
+    <path d="M30,30 50,30 50,30 30,30 Z"/>
+  </svg>
+</div><!-- /pageload-overlay -->
+
+</section>
+
 

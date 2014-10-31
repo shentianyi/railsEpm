@@ -218,15 +218,15 @@ Report.get_json = function () {
     }
 };
 
-Report.serializeToJson = function () {
-    return  this.r.serializeToJson();
-};
-Report.serializeToDataJson = function () {
-    return  this.r.serializeToDataJson();
-};
-Report.serializeToJSONString = function () {
-    return JSON.stringify(this.serializeToDataJson());
-};
+//Report.serializeToJson = function () {
+//    return  this.r.serializeToJson();
+//};
+//Report.serializeToDataJson = function () {
+//    return  this.r.serializeToDataJson();
+//};
+//Report.serializeToJSONString = function () {
+//    return JSON.stringify(this.serializeToDataJson());
+//};
 
 Report.reload = function () {
     this.init(this.option);

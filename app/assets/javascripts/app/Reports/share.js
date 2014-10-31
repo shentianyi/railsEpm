@@ -6,7 +6,16 @@ define({
         export_bt_excel_url: this.host + 'BTReportService/Excel'
     },
     option : {},
-    r : {},
+    report : {},
+    serializeToJson : function () {
+        return  this.report.serializeToJson();
+    },
+    serializeToDataJson : function () {
+        return  this.report.serializeToDataJson();
+    },
+    serializeToJSONString : function () {
+        return JSON.stringify(this.serializeToDataJson());
+    },
     data : {},
     type : {
         "high_chart": 0,
@@ -39,5 +48,6 @@ define({
             "lower": "#19cf22"
         }
     },
-    current_status_loader:""
+    current_menu:"",
+    loader:""
 })

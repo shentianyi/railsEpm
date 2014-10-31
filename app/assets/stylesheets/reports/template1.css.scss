@@ -1,5 +1,6 @@
 @import "../help.css.scss";
 .template1{
+  height:100%;
   .condition{
     background:rgba(255,255,255,0.3);
     width:100%;
@@ -9,11 +10,18 @@
     &:after{
       @include after-clear;
     }
+    &>p{
+      font-size:15px;
+      color:#666;
+      padding:7px 0 0 10px;
+      margin:0px;
+    }
   }
   .content{
     background-color:#fff;
     width:100%;
     overflow-y:auto;
+    height:calc(100% - 212px);
   }
   .snaps{
     height:110px;
@@ -26,7 +34,7 @@
     &:before{
       content:"Snapshot";
       position:absolute;
-      font-size:17px;
+      font-size:15px;
       color:#666;
       left:10px;
       top:5px;

@@ -98,43 +98,43 @@ current_status.loader_show=function(){
     $(".current-status-pageload-overlay svg").css("height",height+"px");
     current_status.loader.show();
 }
-current_status.loader_hide=function(){
-    current_status.loader.hide();
-}
-current_status.btn_loader_show=function(){
-    current_status.loader = new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
-    var left = document.getElementById("report-menu").getBoundingClientRect().right,
-        top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
-        height=$("#report-content").height();
-    $(".current-status-pageload-overlay svg").css('left', left);
-    $(".current-status-pageload-overlay svg").css('top', top);
-    $(".current-status-pageload-overlay svg").css("height",height+"px");
-    current_status.loader.show();
-}
-current_status.show_extra_section=function(tag){
-    current_status.btn_loader_show();
-     if(tag==="target"){
-         setTimeout(function(){
-             $("#current-status-normal").css("display","none");
-             $("#current-status-target").css("display","block");
-             current_status.loader_hide();
-             defects.refresh_color();
-         },700);
-     }
-    else if(tag==="all_defects"){
-         setTimeout(function(){
-             $("#current-status-normal").css("display","none");
-             $("#current-status-all-defects").css("display","block");
-             current_status.loader_hide();
-         },700);
-     }
-    else if(tag==="key_defects"){
-         setTimeout(function(){
-             $("#current-status-normal").css("display","none");
-             $("#current-status-key-defects").css("display","block");
-             current_status.loader_hide();
-         },700);
-     }
-}
+//current_status.loader_hide=function(){
+//    current_status.loader.hide();
+//}
+//current_status.btn_loader_show=function(){
+//    current_status.loader = new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
+//    var left = document.getElementById("report-menu").getBoundingClientRect().right,
+//        top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
+//        height=$("#report-content").height();
+//    $(".current-status-pageload-overlay svg").css('left', left);
+//    $(".current-status-pageload-overlay svg").css('top', top);
+//    $(".current-status-pageload-overlay svg").css("height",height+"px");
+//    current_status.loader.show();
+//}
+//current_status.show_extra_section=function(tag){
+//    current_status.btn_loader_show();
+//     if(tag==="target"){
+//         setTimeout(function(){
+//             $("#current-status-normal").css("display","none");
+//             $("#current-status-target").css("display","block");
+//             current_status.loader_hide();
+//             defects.refresh_color();
+//         },700);
+//     }
+//    else if(tag==="all_defects"){
+//         setTimeout(function(){
+//             $("#current-status-normal").css("display","none");
+//             $("#current-status-all-defects").css("display","block");
+//             current_status.loader_hide();
+//         },700);
+//     }
+//    else if(tag==="key_defects"){
+//         setTimeout(function(){
+//             $("#current-status-normal").css("display","none");
+//             $("#current-status-key-defects").css("display","block");
+//             current_status.loader_hide();
+//         },700);
+//     }
+//}
 
 

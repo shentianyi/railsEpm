@@ -1,12 +1,13 @@
 @import "../help.css.scss";
 @import "../libs/dhtmlxdataview.css";
+@import "./template1.css.scss";
 .header-block{
   float:left;
   @include box-sizing-border;
   padding:3px 0 0 8px;
   border-left:1px solid rgba(0,0,0,0.1);
   width:15%;
-  margin:5px 0;
+  margin:0;
   &>label{
     display:block;
     font-size:14px;
@@ -17,6 +18,9 @@
     font-size:13px;
     width:115px;
     margin:5px auto;
+  }
+  &:not(:first-of-type){
+    margin-top:-23px;
   }
   &:first-of-type{
     width:400px;

@@ -30,8 +30,6 @@ paths:
    dhtmlx.grid: "dhtmlx/grid"
    format_time: "func-module/format_time"
    svgLoader: "preload/svgLoader"
-   svgLoader.classie: "preload/classie"
-   svgLoader.snap: "preload/snap.svg-min"
 shim:
    chart:
       exports: "Chart"
@@ -72,9 +70,6 @@ shim:
       exports: "dhtmlXDataView"
    dhtmlx.origin.grid:
       exports: "dhtmlXGridObject"
-   svgLoader:
-      deps: ["svgLoader.classie","svgLoader.snap"]
-      exports: "SVGLoader"
    jquery.scroll:
       deps: ["jquery"]
       exports: "jQuery.fn.mCustomScrollbar"
