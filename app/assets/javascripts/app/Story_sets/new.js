@@ -1,4 +1,4 @@
-define(["jquery","base"],function($,Base){
+define(["jquery","base","chosen"],function($,Base){
     function create(storyset, callback) {
         if (storyset.title.length > 0) {
             if (storyset.users.length > 0) {

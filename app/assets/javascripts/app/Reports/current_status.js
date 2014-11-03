@@ -1,92 +1,116 @@
-define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","svgLoader","./current_status_data"],function($,Dataview,Share,format_time){
-      var template={};
-      Dataview.init(template);
+define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","reportsData","svgLoader"],function($,Dataview,Share,format_time,MyData,SVGLoader){
+    var current_status_loader=new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
+    var left = document.getElementById("report-menu").getBoundingClientRect().right,
+        top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
+        height=$("#report-content").height();
+    $(".current-status-pageload-overlay svg").css('left', left);
+    $(".current-status-pageload-overlay svg").css('top', top);
+    $(".current-status-pageload-overlay svg").css("height",height+"px");
+    $(window).resize(function(){
+        var left = document.getElementById("report-menu").getBoundingClientRect().right,
+            top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
+            height=$("#report-content").height();
+        $(".current-status-pageload-overlay svg").css('left', left);
+        $(".current-status-pageload-overlay svg").css('top', top);
+        $(".current-status-pageload-overlay svg").css("height",height+"px");
+    });
+    function show_extra_section(tag){
+        current_status_loader.show();
+        if(tag==="target"){
+            var a = ["higher","equal","lower"];
+            $("#footer-right").find(".color-group").remove();
+            var color_html,color_type;
+            for(var i=0;i<3;i++){
+                color_html='<div idx='+a[i]+' class="color-group">'+
+                    '<span class="color-item" style="background:#19cf22" ></span>'+
+                    '<span class="color-item" style="background:#eb4848" ></span>'+
+                    '<span class="color-item" style="background:#f3d02e" ></span>'+
+                    '<span class="color-item" style="background:#0fd9bf" ></span>'+
+                    '<span class="color-item" style="background:#c222ea" ></span>'+
+                    '<span class="color-item" style="background:#3a6be7" ></span>'+
+                    '<span class="color-item" style="background:#f56c22" ></span>'+
+                    '</div>';
+//                color_type=Report.color.ftq[a[i]];
+                $("#footer-right").append(color_html);
+                $("div[idx="+a[i]+"]").find(".color-item").each(function(index,value){
+                    if($(value).css("backgroundColor")===color_type){
+                        $(value).addClass("active");
+                    }
+                });
+            }
+            setTimeout(function(){
+                $("#current-status-normal").css("display","none");
+                $("#current-status-target").css("display","block");
+                current_status_loader.hide();
+            },700);
+        }
+        else if(tag==="all_defects"){
+            setTimeout(function(){
+                $("#current-status-normal").css("display","none");
+                $("#current-status-all-defects").css("display","block");
+                current_status_loader.hide();
+            },700);
+        }
+        else if(tag==="key_defects"){
+            setTimeout(function(){
+                $("#current-status-normal").css("display","none");
+                $("#current-status-key-defects").css("display","block");
+                current_status_loader.hide();
+            },700);
+        }
+    }
+    function self_init(){
+        var template={},
+            data=MyData.current_status();
+        Dataview.render(data["CF11"],template);
+        function dataview_click_event(id, ev, html){
+                window.location="kpi_entries/analyse?view="+this.get(id).INQA;
+                return true;
+        }
+        Dataview.itemClick(dataview_click_event);
 
-//    function show_extra_section(tag){
-//        btn_loader_show();
-//        if(tag==="target"){
-//            setTimeout(function(){
-//                $("#current-status-normal").css("display","none");
-//                $("#current-status-target").css("display","block");
-//                loader_hide();
-//                Data.refresh_color();
-//            },700);
-//        }
-//        else if(tag==="all_defects"){
-//            setTimeout(function(){
-//                $("#current-status-normal").css("display","none");
-//                $("#current-status-all-defects").css("display","block");
-//                loader_hide();
-//            },700);
-//        }
-//        else if(tag==="key_defects"){
-//            setTimeout(function(){
-//                $("#current-status-normal").css("display","none");
-//                $("#current-status-key-defects").css("display","block");
-//                loader_hide();
-//            },700);
-//        }
-//    }
-//    function btn_loader_show(){
-//        current_status_loader = new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
-//        var left = document.getElementById("report-menu").getBoundingClientRect().right,
-//            top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
-//            height=$("#report-content").height();
-//        $(".current-status-pageload-overlay svg").css('left', left);
-//        $(".current-status-pageload-overlay svg").css('top', top);
-//        $(".current-status-pageload-overlay svg").css("height",height+"px");
-//        current_status_loader.show();
-//    }
-//    function loader_hide(){
-//        current_status_loader.hide();
-//    }
-//    function self_init(){
-//        //set the date
-//        $("#current-date").text(format_time.current_time());
-//        $("#current-clock").text(format_time.current_time_clock());
-//        window.setInterval(function(){
-//            $("#current-clock").text(format_time.current_time_clock());
-//        },1000);
-//
-//        $("body")
-//            .on("click",".extra_func_btn",function(){
-//                var tag=$(this).attr("tag") ;
-//                show_extra_section(tag);
-//                if(tag==="target"){
-//                    var a = ["higher","equal","lower"];
-//                    $("#footer-right").find(".color-group").remove();
-//                    var color_html,color_type;
-//                    for(var i=0;i<3;i++){
-//                        color_html='<div idx='+a[i]+' class="color-group">'+
-//                            '<span class="color-item" style="background:#19cf22" ></span>'+
-//                            '<span class="color-item" style="background:#eb4848" ></span>'+
-//                            '<span class="color-item" style="background:#f3d02e" ></span>'+
-//                            '<span class="color-item" style="background:#0fd9bf" ></span>'+
-//                            '<span class="color-item" style="background:#c222ea" ></span>'+
-//                            '<span class="color-item" style="background:#3a6be7" ></span>'+
-//                            '<span class="color-item" style="background:#f56c22" ></span>'+
-//                            '</div>';
-//                        color_type=Report.color.ftq[a[i]];
-//                        $("#footer-right").append(color_html);
-//                        $("div[idx="+a[i]+"]").find(".color-item").each(function(index,value){
-//                            if($(value).css("backgroundColor")===color_type){
-//                                $(value).addClass("active");
-//                            }
-//                        });
+        $("#current-date").text(format_time.current_time());
+        $("#current-clock").text(format_time.current_time_clock());
+        window.setInterval(function(){
+            $("#current-clock").text(format_time.current_time_clock());
+        },1000);
+        $("#vehicle-select").change(function () {
+            Dataview.clear();
+            Dataview.render(data[$("#vehicle-select option:selected").text()],template);
+            Dataview.itemClick(dataview_click_event);
+        });
+        $("body")
+            .on("click","#quick-print",function(){
+//                html2canvas($("#data_container"), {
+//                    onrendered: function (canvas) {
+//                        // Convert and download as image
+//                        Canvas2Image.saveAsPNG(canvas);
 //                    }
-//                }
-//            })
-//            .on("click",".current-status-target-back-btn",function(){
-//                current_status.btn_loader_show();
-//                var $target=$(this).parents(".current-status-wrapper").eq(0);
-//                setTimeout(function(){
-//                    $target.css("display","none");
-//                    $("#current-status-normal").css("display","block");
-//                    $("#footer-right div.color-group").remove();
-//                    current_status.loader_hide();
-//                    Report.refresh();
-//                },700);
-//            })
+//                });
+            })
+            .on("click","#refresh",function(){
+                current_status_loader.show();
+                setTimeout(function () {
+                    Dataview.clear();
+                    Dataview.render(data[$("#vehicle-select option:selected").text()],template);
+                    Dataview.itemClick(dataview_click_event);
+                    current_status_loader.hide();
+                }, 1500);
+            })
+            .on("click",".extra_func_btn",function(){
+                var tag=$(this).attr("tag") ;
+                show_extra_section(tag);
+            })
+            .on("click",".current-status-target-back-btn",function(){
+                current_status_loader.show();
+                var $target=$(this).parents(".current-status-wrapper").eq(0);
+                setTimeout(function(){
+                    $target.css("display","none");
+                    $("#current-status-normal").css("display","block");
+                    $("#footer-right div.color-group").remove();
+                    current_status_loader.hide();
+                },700);
+            })
 //            .on("click","#target-setting-footer .color-item",function(){
 //                $(this).siblings().removeClass("active");
 //                $(this).addClass("active");
@@ -115,17 +139,12 @@ define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","sv
 //                }
 //                Report.refresh();
 //            });
-//    }
-//    var current_status_loader="";
+    }
+
 
     return {
         init:function(){
-//            get_dhtmlx();
-//            configure();
-//            self_init();
-
-//            this.json_parse(this.get_json());
-//            this.prepare();
+            self_init();
         }
     }
 })

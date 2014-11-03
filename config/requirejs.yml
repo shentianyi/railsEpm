@@ -30,6 +30,7 @@ paths:
    dhtmlx.grid: "dhtmlx/grid"
    format_time: "func-module/format_time"
    svgLoader: "preload/svgLoader"
+   reportsData: "data_pipe/reports"
 shim:
    chart:
       exports: "Chart"

@@ -283,43 +283,43 @@ Report.station_data_init = function () {
 };
 /*-----------------------------------------------*/
 Report.current_status_init = function () {
-    $("#target").on("click", function () {
-    });
+//    $("#target").on("click", function () {
+//    });
 
-    $("#vehicle-select").change(function () {
-        Report.r.clearAll();
-        Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
-
-    });
-
-    $("#quick-print").on("click", function () {
-        html2canvas($("#data_container"), {
-            onrendered: function (canvas) {
-                // Convert and download as image
-                Canvas2Image.saveAsPNG(canvas);
-            }
-        });
-    });
-
-    $("#refresh").on("click", function () {
-        current_status.loader_show();
-        setTimeout(function () {
-            Report.r.clearAll();
-            Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
-
-            current_status.loader_hide();
-        }, 1500);
-
-    });
-
-    Report.r.attachEvent("onItemDblClick", function (id, ev, html){
-        console.log(id);
-        console.log(ev);
-        console.log(html);
-        console.log(Report.r.get(id));
-        window.location="kpi_entries/analyse?view="+Report.r.get(id).INQA;
-        return true;
-    });
+//    $("#vehicle-select").change(function () {
+//        Report.r.clearAll();
+//        Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
+//
+//    });
+//
+//    $("#quick-print").on("click", function () {
+//        html2canvas($("#data_container"), {
+//            onrendered: function (canvas) {
+//                // Convert and download as image
+//                Canvas2Image.saveAsPNG(canvas);
+//            }
+//        });
+//    });
+//
+//    $("#refresh").on("click", function () {
+//        current_status.loader_show();
+//        setTimeout(function () {
+//            Report.r.clearAll();
+//            Report.json_parse(d_current_status[$("#vehicle-select option:selected").text()]);
+//
+//            current_status.loader_hide();
+//        }, 1500);
+//
+//    });
+//
+//    Report.r.attachEvent("onItemDblClick", function (id, ev, html){
+//        console.log(id);
+//        console.log(ev);
+//        console.log(html);
+//        console.log(Report.r.get(id));
+//        window.location="kpi_entries/analyse?view="+Report.r.get(id).INQA;
+//        return true;
+//    });
 };
 
 Report.daily_dpv_init = function () {

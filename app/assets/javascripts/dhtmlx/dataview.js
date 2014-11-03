@@ -1,4 +1,4 @@
-define(["./share",",.to_get_data","dhtmlx.origin.dataview"],function(Share){
+define(["./share","dhtmlx.origin.dataview"],function(Share){
     dhtmlXDataView.prototype.serializeToDataJson = function () {
         return this.serialize();
     };
@@ -30,35 +30,47 @@ define(["./share",",.to_get_data","dhtmlx.origin.dataview"],function(Share){
     dhtmlXDataView.prototype.toExcel = function (url) {
         Share.processReportExcelRequest(url, dhtmlXDataView.prototype.serializeToExcelXml());
     };
+    function init(config){
+        config.container=config.container!=undefined?config.container:"data_container";
+        var dataView=new dhtmlXDataView(config.container),
+            default_template="<div class='dv-header'>" +
+                "<p>#INQA#</p>" +
+                "</div>" +
+                "<div class='dv-body'>" +
+                "<div class='left'>" +
+                "<p id='ftq' style='color:" + "#STYLE_COLOR#" + "'>#FTQ#%</p>" +
+                "</div>" +
+                "<div class='right'>" +
+                "<p>#Defects#</p>" +
+                "<p>OPEN DEFECTS</p>" +
+                "<p>#Pass#</p>" +
+                "<p>VEHICLE PASS</p>" +
+                "</div>" +
+                "</div>"
+            ;
+        dataView.define("type", {
+            template: config.template?config.template:default_template,
+            css: config.css?config.css:"dv-item",
+            height: config.height?config.height:150,
+            width: config.width?config.width:230,
+            margin: config.margin?config.margin:5,
+            padding: config.padding?config.padding:8
+        });
+        this.object=dataView;
+        return dataView;
+    }
 
     return  {
         object:"",
-        render:function(config){
-            config.container=config.container!=undefined?config.container:"data_container";
-            var dataView=new dhtmlXDataView(config.container),
-                default_template="<div class='dv-header'>" +
-                                    "<p>#INQA#</p>" +
-                                 "</div>" +
-                                 "<div class='dv-body'>" +
-                                    "<div class='left'>" +
-                                        "<p id='ftq' style='color:" + "#STYLE_COLOR#" + "'>#FTQ#%</p>" +
-                                    "</div>" +
-                                    "<div class='right'>" +
-                                        "<p>#Defects#</p>" +
-                                        "<p>OPEN DEFECTS</p>" +
-                                        "<p>#Pass#</p>" +
-                                        "<p>VEHICLE PASS</p>" +
-                                    "</div>" +
-                                "</div>"
-                ;
-            dataView.define("type", {
-                template: config.template?config.template:default_template,
-                css: config.css?config.css:"dv-item",
-                height: config.height?config.height:150,
-                width: config.width?config.width:230,
-                margin: config.margin?config.margin:5,
-                padding: config.padding?config.padding:8
-            });
+        init:function(config){
+            init(config);
+        },
+        render:function(data,config){
+            var dataView=init(config);
+            if(typeof data==="string"){
+                data=JSON.parse(data);
+            }
+            dataView.parse(data,'json');
             this.object=dataView;
             return dataView;
         },
@@ -66,6 +78,12 @@ define(["./share",",.to_get_data","dhtmlx.origin.dataview"],function(Share){
             if(this.object!==""){
                 this.object.add(params);
             }
+        },
+        itemClick:function(callback){
+            this.object.attachEvent("onItemDblClick",callback);
+        },
+        clear:function(){
+            this.object.clearAll();
         }
     }
 })

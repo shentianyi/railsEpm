@@ -53,7 +53,6 @@ define(["./share","dhtml.origin.grid"],function(Share){
         }
         xml += "</columns></head>";
         //Head End
-
         //Body Start
         xml += "<body>";
         for (var i = 0; i < data["rows"].length; i++) {
@@ -80,17 +79,13 @@ define(["./share","dhtml.origin.grid"],function(Share){
             xml += "<charts>"
             for (var i = 0; i < charts.length; i++) {
                 var chart = charts[i];
-
                 xml += "<chart";
-
                 for (var a in chart.attr) {
                     xml += " " + a + "='" + chart.attr[a] + "'";
                 }
                 xml += ">";
-
                 for (var n = 0; n < chart.chart_types.length; n++) {
                     var chart_type = chart.chart_types[n];
-
                     xml += "<chart_type type='" + chart_type.type + "'>";
                     for (var j = 0; j < chart_type.series.length; j++) {
                         var serie = chart_type.series[j];
@@ -100,7 +95,6 @@ define(["./share","dhtml.origin.grid"],function(Share){
                         }
                         xml += ">";
                         xml += "<xaixs><![CDATA[" + serie["xaixs"] + "]]></xaixs><yaixs><![CDATA[" + serie['yaixs'] + "]]></yaixs>";
-
                         xml += "</serie>";
                     }
                     xml += "</chart_type>";
@@ -116,6 +110,34 @@ define(["./share","dhtml.origin.grid"],function(Share){
     dhtmlXGridObject.prototype.toChartExcel = function (url) {
         Share.processReportExcelRequest(url, this.serializeChartExcelXml());
     };
+    function init(config){
+        config.container=config.container!=undefined?config.container:"data_container";
+        var dataGrid=new dhtmlXGridObject(config.container);
+        this.object=dataGrid;
+        return dataGrid;
+    }
 
-    return dhtmlXGridObject;
+    return {
+        object:"",
+        init:function(config){
+            init(config);
+        },
+        render:function(config){
+            var dataGrid=init(config);
+            dataGrid.setImagePath("/assets/dhtmlx/");
+            dataGrid.setHeader(headers);
+            dataGrid.attachHeader("#select_filter,#text_filter,#text_filter");
+            dataGrid.setInitWidths(widthstring);
+            dataGrid.enableAutoWidth(false);
+            dataGrid.setColAlign(alienstring);
+            dataGrid.setColTypes(coltypestring);
+            dataGrid.setColSorting(colsortstring);
+            dataGrid.setSkin("dhx_skyblue");
+            dataGrid.setColumnColor("#d5f1ff");
+            dataGrid.enableSmartRendering(true);
+            dataGrid.enableAutoWidth(true);
+            dataGrid.init();
+
+        }
+    }
 })

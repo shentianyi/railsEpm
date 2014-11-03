@@ -252,3 +252,59 @@
     }
   }
 }
+$item-bg:rgba(255,255,255,0.8);
+$bg-click:#f2edeb;
+.dhx_dataview_dv-item_item{
+  background:$item-bg;
+  background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.2) 55%) $item-bg;
+  background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.2) 55%) $item-bg;
+}
+.dhx_dataview_dv-item_item_selected {
+  background:$bg-click;
+  background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.5) 55%) $bg-click;
+  background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.5) 55%) $bg-click;
+}
+.dhx_dataview_item{
+  border:1px solid rgba(0,0,0,0.2);
+  @include border-radius-same(5px);
+  .dv-header{
+    p{
+      text-align:center;
+      padding:7px 0px;
+      @include border-radius-same(2px);
+      background:lighten($nav-dark,14%);
+      color:$golden-text;
+      font-size:16px;
+    }
+  }
+  .dv-body{
+    .left{
+      @include box-sizing-border;
+      width:60%;
+      float:left;
+      p{
+        text-align:center;
+        padding:23px 0;
+        font-size:50px;
+        font-family:"avenir"
+      }
+    }
+    .right{
+      @include box-sizing-border;
+      width:40%;
+      float:left;
+      padding-top:8px;
+      p{
+        text-align:right;
+        padding-right:3px;
+        &:nth-of-type(odd){
+          font-size:15px;
+          margin:0px;
+        }
+        &:nth-of-type(even){
+          color:#9f9f9f;
+        }
+      }
+    }
+  }
+}

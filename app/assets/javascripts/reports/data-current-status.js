@@ -33,10 +33,7 @@
     },5000);
 }());
 
-var data_current_color={
-    "red":"#eb4848",
-    "green":"#19cf22"
-};
+
 var d_current_status = {};
 $(document).ready(function(){
     d_current_status = SampleData.init_current_status();
