@@ -1,4 +1,4 @@
-define(["./share","dhtml.origin.grid"],function(Share){
+define(["jquery","./share","dhtmlx.origin.grid"],function($,Share){
     dhtmlXGridObject.prototype.serializeToJson = function () {
         var data = xml2json.parser(this.serialize().replace(/\<cell/g, "<data")
             .replace(/\<\/cell/g, "</data"));
@@ -32,9 +32,6 @@ define(["./share","dhtml.origin.grid"],function(Share){
                 cell.setAttribute(a, attr[a]);
             }
         });
-    };
-    dhtmlXDataView.prototype.serializeToJson = function () {
-        return this.serialize();
     };
     dhtmlXGridObject.prototype.get_charts = function () {
         return this.charts;
@@ -123,21 +120,44 @@ define(["./share","dhtml.origin.grid"],function(Share){
             init(config);
         },
         render:function(config){
-            var dataGrid=init(config);
+            var dataGrid=init(config),
+                config_colAlign="",
+                init_widths="",
+                sum_width=$("#"+config.container).width(),
+                length=config.header.length,
+                average_row_width=Math.floor(sum_width / length)+"";
+            for(var i=0;i<length;i++){
+                if(!config.colAlign){
+                   if(i===0){
+                       config_colAlign+="center"
+                   }
+                    else{
+                       config_colAlign+=",center"
+                   }
+                }
+                if(!config.initWidths){
+                    if(i===0){
+                        init_widths+=average_row_width
+                    }
+                    else{
+                        init_widths+=","+average_row_width
+                    }
+                }
+            }
             dataGrid.setImagePath("/assets/dhtmlx/");
-            dataGrid.setHeader(headers);
-            dataGrid.attachHeader("#select_filter,#text_filter,#text_filter");
-            dataGrid.setInitWidths(widthstring);
+            dataGrid.setHeader(config.header);
+//            dataGrid.attachHeader("#select_filter,#text_filter,#text_filter");
+            dataGrid.setColTypes(config.colTypes);
+//            dataGrid.setColSorting(config.colSorting);
+            dataGrid.setInitWidths(init_widths!==""?init_widths:config.initWidths);
+            dataGrid.setColAlign(config_colAlign!==""?config_colAlign:config.colAlign);
             dataGrid.enableAutoWidth(false);
-            dataGrid.setColAlign(alienstring);
-            dataGrid.setColTypes(coltypestring);
-            dataGrid.setColSorting(colsortstring);
             dataGrid.setSkin("dhx_skyblue");
             dataGrid.setColumnColor("#d5f1ff");
-            dataGrid.enableSmartRendering(true);
-            dataGrid.enableAutoWidth(true);
+            dataGrid.enableSmartRendering(config.enableSmartRendering?config.enableSmartRendering:true);
+            dataGrid.enableAutoWidth(config.enableAutoWidth?config.enableAutoWidth:true);
             dataGrid.init();
-
+            return dataGrid;
         }
     }
 })

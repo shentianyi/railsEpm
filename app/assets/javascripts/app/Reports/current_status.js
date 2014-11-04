@@ -1,4 +1,4 @@
-define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","reportsData","svgLoader"],function($,Dataview,Share,format_time,MyData,SVGLoader){
+define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","reportsData","svgLoader","dhtmlx.grid"],function($,Dataview,Share,format_time,MyData,SVGLoader,Grid){
     var current_status_loader=new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
     var left = document.getElementById("report-menu").getBoundingClientRect().right,
         top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
@@ -17,30 +17,16 @@ define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","re
     function show_extra_section(tag){
         current_status_loader.show();
         if(tag==="target"){
-            var a = ["higher","equal","lower"];
-            $("#footer-right").find(".color-group").remove();
-            var color_html,color_type;
-            for(var i=0;i<3;i++){
-                color_html='<div idx='+a[i]+' class="color-group">'+
-                    '<span class="color-item" style="background:#19cf22" ></span>'+
-                    '<span class="color-item" style="background:#eb4848" ></span>'+
-                    '<span class="color-item" style="background:#f3d02e" ></span>'+
-                    '<span class="color-item" style="background:#0fd9bf" ></span>'+
-                    '<span class="color-item" style="background:#c222ea" ></span>'+
-                    '<span class="color-item" style="background:#3a6be7" ></span>'+
-                    '<span class="color-item" style="background:#f56c22" ></span>'+
-                    '</div>';
-//                color_type=Report.color.ftq[a[i]];
-                $("#footer-right").append(color_html);
-                $("div[idx="+a[i]+"]").find(".color-item").each(function(index,value){
-                    if($(value).css("backgroundColor")===color_type){
-                        $(value).addClass("active");
-                    }
-                });
+            var target_config={
+                container:"target_setting",
+                header:"Stations,FTQ Status,FTQ Target (double click to modify)",
+                colTypes:'ro,ro,ed'
             }
             setTimeout(function(){
                 $("#current-status-normal").css("display","none");
                 $("#current-status-target").css("display","block");
+                var data=MyData.current_status_target();
+                Grid.render(data,target_config);
                 current_status_loader.hide();
             },700);
         }

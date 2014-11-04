@@ -28,7 +28,13 @@ define([],function(){
             }
         },
         current_status_target:function(){
-
+            return{
+                rows:[
+                    { id:1, data: ["A Time to Kill", "John Grisham", "100"]},
+                    { id:2, data: ["Blood and Smoke", "Stephen King", "1000"]},
+                    { id:3, data: ["The Rainmaker", "John Grisham", "-200"]}
+                ]
+            }
         },
         current_status_all_defects:function(){
 

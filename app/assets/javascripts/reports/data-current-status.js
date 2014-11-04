@@ -19,9 +19,11 @@
 
                 if(ftq > target){
                     d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["higher"];
-                }else if(ftq==target){
+                }
+                else if(ftq==target){
                     d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["equal"];
-                }else{
+                }
+                else{
                     d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["lower"];
                 }
 

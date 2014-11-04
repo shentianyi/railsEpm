@@ -42,7 +42,8 @@ define([],function(){
                     widthstring = widthstring+width+",";
                     coltypestring = coltypestring + "ro,";
                     colsortstring = colsortstring + "str,";
-                }else{
+                }
+                else{
                     alienstring = alienstring+"center";
                     widthstring = widthstring+width;
                     coltypestring = coltypestring + "ro";
@@ -161,8 +162,8 @@ define([],function(){
             target_setting.enableAutoWidth(false);
             target_setting.setColAlign('center,center,center');
             target_setting.setColTypes('ro,ro,ed');
-            target_setting.setSkin("dhx_skyblue");
-            target_setting.setColumnColor("#d5f1ff");
+//            target_setting.setSkin("dhx_skyblue");
+//            target_setting.setColumnColor("#d5f1ff");
             target_setting.enableSmartRendering(true);
             target_setting.init();
             var target_data = {

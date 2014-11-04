@@ -27,6 +27,9 @@ define(["./share","dhtmlx.origin.dataview"],function(Share){
         xml += '</rows>';
         return xml;
     };
+    dhtmlXDataView.prototype.serializeToJson = function () {
+        return this.serialize();
+    };
     dhtmlXDataView.prototype.toExcel = function (url) {
         Share.processReportExcelRequest(url, dhtmlXDataView.prototype.serializeToExcelXml());
     };
