@@ -116,16 +116,18 @@ define(["jquery","./share","dhtmlx.origin.grid"],function($,Share){
 
     return {
         object:"",
+        container:"",
         init:function(config){
             init(config);
         },
-        render:function(config){
+        render:function(data,config){
             var dataGrid=init(config),
                 config_colAlign="",
                 init_widths="",
                 sum_width=$("#"+config.container).width(),
                 length=config.header.length,
-                average_row_width=Math.floor(sum_width / length)+"";
+                average_row_width=(Math.floor(sum_width / length)-0.01)+"",
+                config_header="";
             for(var i=0;i<length;i++){
                 if(!config.colAlign){
                    if(i===0){
@@ -143,20 +145,28 @@ define(["jquery","./share","dhtmlx.origin.grid"],function($,Share){
                         init_widths+=","+average_row_width
                     }
                 }
+                if(i===0){
+                    config_header+=config.header[i];
+                }
+                else{
+                    config_header+=","+config.header[i];
+                }
             }
-            dataGrid.setImagePath("/assets/dhtmlx/");
-            dataGrid.setHeader(config.header);
+            dataGrid.setImagePath("/assets/dhtmlx/dhxgrid_skyblue");
+            dataGrid.setHeader(config_header);
 //            dataGrid.attachHeader("#select_filter,#text_filter,#text_filter");
             dataGrid.setColTypes(config.colTypes);
 //            dataGrid.setColSorting(config.colSorting);
             dataGrid.setInitWidths(init_widths!==""?init_widths:config.initWidths);
             dataGrid.setColAlign(config_colAlign!==""?config_colAlign:config.colAlign);
-            dataGrid.enableAutoWidth(false);
             dataGrid.setSkin("dhx_skyblue");
-            dataGrid.setColumnColor("#d5f1ff");
-            dataGrid.enableSmartRendering(config.enableSmartRendering?config.enableSmartRendering:true);
-            dataGrid.enableAutoWidth(config.enableAutoWidth?config.enableAutoWidth:true);
+            dataGrid.enableAlterCss("even","uneven");
             dataGrid.init();
+            if(typeof data==="string"){
+                data=JSON.parse(data);
+            }
+            dataGrid.parse(data,'json');
+            this.object=dataGrid;
             return dataGrid;
         }
     }

@@ -1,4 +1,4 @@
-define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","reportsData","svgLoader","dhtmlx.grid"],function($,Dataview,Share,format_time,MyData,SVGLoader,Grid){
+define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","reportsData","svgLoader","jquery.colorPicker"],function($,Dataview,Share,format_time,MyData,SVGLoader){
     var current_status_loader=new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
     var left = document.getElementById("report-menu").getBoundingClientRect().right,
         top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
@@ -18,16 +18,18 @@ define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","re
         current_status_loader.show();
         if(tag==="target"){
             var target_config={
-                container:"target_setting",
-                header:"Stations,FTQ Status,FTQ Target (double click to modify)",
+                container:"target_grid_container",
+                header:["Stations","FTQ Status","FTQ Target (double click to modify)"],
                 colTypes:'ro,ro,ed'
             }
             setTimeout(function(){
                 $("#current-status-normal").css("display","none");
                 $("#current-status-target").css("display","block");
-                var data=MyData.current_status_target();
-                Grid.render(data,target_config);
-                current_status_loader.hide();
+                require(["dhtmlx.grid"],function(Grid){
+                    var data=MyData.current_status_target();
+                    Grid.render(data,target_config);
+                    current_status_loader.hide();
+                })
             },700);
         }
         else if(tag==="all_defects"){
@@ -65,6 +67,7 @@ define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","re
             Dataview.render(data[$("#vehicle-select option:selected").text()],template);
             Dataview.itemClick(dataview_click_event);
         });
+        $("#target_footer").find(".color-picker").colorPicker();
         $("body")
             .on("click","#quick-print",function(){
 //                html2canvas($("#data_container"), {

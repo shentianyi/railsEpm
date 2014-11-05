@@ -1,6 +1,8 @@
 @import "../help.css.scss";
 @import "../libs/dhtmlxdataview.css";
+@import "../libs/dhtmlxgrid.css";
 @import "./template1.css.scss";
+@import "../libs/colorPicker.css.scss";
 .header-block{
   float:left;
   @include box-sizing-border;
@@ -179,6 +181,9 @@
     &.target{
       height:calc(100% - 142px);
     }
+    .grid_container{
+      border-width:0px !important;
+    }
   }
   .wrap-current-footer{
     height:70px;
@@ -200,9 +205,20 @@
         border:1px solid rgba(0,0,0,0.2);
         color:#222;
         display:inline-block;
+        float:left;
+        background:#fff;
         .grey{
           color:#888;
         }
+      }
+      input{
+        width:0px;
+      }
+      .colorPicker-picker{
+         float:left;
+        position:relative;
+        left:-30px;
+        top:5px;
       }
     }
   }
@@ -262,4 +278,11 @@ $bg-click:#f2edeb;
       }
     }
   }
+}
+
+.even{
+  background-color:#E6E6FA;
+}
+.uneven{
+  background-color:#F0F8FF;
 }

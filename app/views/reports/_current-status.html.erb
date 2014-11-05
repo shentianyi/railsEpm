@@ -50,17 +50,22 @@
     <a class="back-btn current-status-target-back-btn"><i class="icon icon-angle-left"></i> FTQ</a>
     <p>Target setting</p>
   </div>
-  <div id="target_setting" class="wrapper-current-body target"></div>
-  <div class="wrap-current-footer">
+  <div id="target_setting" class="wrapper-current-body target">
+    <div id="target_grid_container" class="grid_container" style="width:100%;height:100%"></div>
+  </div>
+  <div class="wrap-current-footer" id="target_footer">
     <p><i class="icon icon-cog"></i> setting</p>
     <div class="item-block">
       <p><span class="grey">when</span> Target > Current FTQ</p>
+      <input type='text' class='color-picker' id="color1"/>
     </div>
     <div class="item-block">
       <p><span class="grey">when</span> Target = Current FTQ</p>
+      <input type='text' class='color-picker' id="color2"/>
     </div>
     <div class="item-block">
       <p><span class="grey">when</span> Target < Current FTQ</p>
+      <input type='text' class='color-picker' id="color3"/>
     </div>
   </div>
 </section>

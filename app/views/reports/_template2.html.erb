@@ -1,0 +1,19 @@
+<%=stylesheet_link_tag "reports/template2" %>
+<div class="template2">
+  <div class="left">
+    <section class="content" id="data_container"></section>
+  </div>
+  <div class="right">
+    <section class="condition" id="condition">
+      <p>Condition</p>
+    </section>
+    <section class="snaps" id="snap-groups">
+      <% @snaps.each do |snap| %>
+          <div class="snap-li" snap="<%= snap.id %>" type="<%= snap.type_string %>">
+            <p><%= snap.desc %></p>
+            <p><%= time_ago_in_words(snap.created_at.localtime) %> ago</p>
+          </div>
+      <% end %>
+    </section>
+  </div>
+</div>

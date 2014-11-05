@@ -31,6 +31,7 @@ paths:
    format_time: "func-module/format_time"
    svgLoader: "preload/svgLoader"
    reportsData: "data_pipe/reports"
+   jquery.colorPicker: "libs/jquery.colorPicker"
 shim:
    chart:
       exports: "Chart"
@@ -74,6 +75,9 @@ shim:
    jquery.scroll:
       deps: ["jquery"]
       exports: "jQuery.fn.mCustomScrollbar"
+   jquery.colorPicker:
+      deps: ["jquery"]
+      exports: "jQuery.fn.colorPicker"
 
 
 

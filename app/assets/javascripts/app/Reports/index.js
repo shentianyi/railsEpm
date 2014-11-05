@@ -18,8 +18,13 @@ define(["jquery","./share","svgLoader","jquery.scroll","./menu"],function($,Shar
                 case Share.type["current_status"]:
                     require(["app/Reports/current_status"],function(app){
                         app.init();
-                    })
+                    });
+                    break;
                 case Share.type["daily_dpv"]:
+                    require(["app/Reports/daily_dpv"],function(app){
+                        app.init();
+                    });
+                    break;
                 case Share.type["station_data"]:
                 case Share.type["daily_ftq"]:
                 default:
