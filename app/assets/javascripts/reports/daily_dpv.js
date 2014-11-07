@@ -53,6 +53,7 @@ daily_dpv.init = function () {
         title: "SDPV"
     };
     var chart_two = new Highchart_generator(option_two);
+
     chart_two.init_daily_dpv();
     this.chart_dpv = chart_one;
     this.chart_sdpv = chart_two;

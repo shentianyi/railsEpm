@@ -447,6 +447,7 @@ if (typeof(window.dhx4._eventable) == "undefined") {
 //    }
 //    return dhtmlx
 //};
+var dhtmlx = dhtmlx || {};
 dhtmlx.extend_api = function (a, d, c) {
     var b = window[a];
     if (!b) {

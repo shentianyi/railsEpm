@@ -156,22 +156,22 @@ Report.configure = function () {
             dhtmlxobj.enableMultiselect(true);
             station_data.init();
             break;
-        case this.type["daily_dpv"]:
-            var width = Math.floor($("#report-content .left").width() / 17) - 2;
-            dhtmlxobj.setImagePath("/assets/dhtmlx/");
-            dhtmlxobj.setHeader(this.headers["daily_dpv"]);
-
-            dhtmlxobj.setInitWidths(width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width);
-            dhtmlxobj.enableAutoWidth(false);
-
-            dhtmlxobj.setColAlign("left,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
-            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
-            dhtmlxobj.setSkin("dhx_skyblue");
-            dhtmlxobj.init();
-            dhtmlxobj.setColumnColor("#d5f1ff");
-            dhtmlxobj.enableSmartRendering(true);
-            daily_dpv.init();
-            break;
+//        case this.type["daily_dpv"]:
+//            var width = Math.floor($("#report-content .left").width() / 17) - 2;
+//            dhtmlxobj.setImagePath("/assets/dhtmlx/");
+//            dhtmlxobj.setHeader(this.headers["daily_dpv"]);
+//
+//            dhtmlxobj.setInitWidths(width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width + "," + width);
+//            dhtmlxobj.enableAutoWidth(false);
+//
+//            dhtmlxobj.setColAlign("left,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center,center");
+//            dhtmlxobj.setColTypes("ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro,ro");
+//            dhtmlxobj.setSkin("dhx_skyblue");
+//            dhtmlxobj.init();
+//            dhtmlxobj.setColumnColor("#d5f1ff");
+//            dhtmlxobj.enableSmartRendering(true);
+//            daily_dpv.init();
+//            break;
         case this.type["daily_ftq"]:
             var head_length = this.headers["daily_ftq"].split(",").length;
 
@@ -325,54 +325,54 @@ Report.current_status_init = function () {
 Report.daily_dpv_init = function () {
     /*------------------------------------------------------------*/
     /*init chosen*/
-    chosen.init(
-        ["deffect-model", "deffect-phase", "deffect-date"],
-        [220, 220, 220]
-    );
-
-    //var models = Report.r.collectValues(1);
-    var models = ["CF11", "CF14", "CF16"];
-    $("#deffect-model option").remove();
-    for (i = 0; i < models.length; i++) {
-        $("#deffect-model").append("<option>" + models[i] + "</option>");
-    }
-    chosen.single_update("deffect-model");
-
-    //var phases = Report.r.collectValues(3);
-    var phases = ["MRD1", "MRD10", "MRD11", "MRD2", "MRD8", "MRD9"]
-    $("#deffect-phase option").remove();
-    for (i = 0; i < phases.length; i++) {
-
-        $("#deffect-phase").append("<option>" + phases[i] + "</option>");
-    }
-    chosen.single_update("deffect-phase");
-
-    //var dates = Report.r.collectValues(4);
-    var dates = [];
-    var j = 0;
-    for (var i = Date.parse('2014-09-01'); i < (new Date()).getTime(); i += 24 * 60 * 60 * 1000) {
-        d = new Date(i);
-        dates[j] = d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear();
-        j++;
-    }
-
-    $("#deffect-date option").remove();
-    for (i = 0; i < dates.length; i++) {
-        $("#deffect-date").append("<option>" + dates[i] + "</option>");
-    }
-    chosen.single_update("deffect-date");
+//    chosen.init(
+//        ["deffect-model", "deffect-phase", "deffect-date"],
+//        [220, 220, 220]
+//    );
+//
+//    //var models = Report.r.collectValues(1);
+//    var models = ["CF11", "CF14", "CF16"];
+//    $("#deffect-model option").remove();
+//    for (i = 0; i < models.length; i++) {
+//        $("#deffect-model").append("<option>" + models[i] + "</option>");
+//    }
+//    chosen.single_update("deffect-model");
+//
+//    //var phases = Report.r.collectValues(3);
+//    var phases = ["MRD1", "MRD10", "MRD11", "MRD2", "MRD8", "MRD9"]
+//    $("#deffect-phase option").remove();
+//    for (i = 0; i < phases.length; i++) {
+//
+//        $("#deffect-phase").append("<option>" + phases[i] + "</option>");
+//    }
+//    chosen.single_update("deffect-phase");
+//
+//    //var dates = Report.r.collectValues(4);
+//    var dates = [];
+//    var j = 0;
+//    for (var i = Date.parse('2014-09-01'); i < (new Date()).getTime(); i += 24 * 60 * 60 * 1000) {
+//        d = new Date(i);
+//        dates[j] = d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear();
+//        j++;
+//    }
+//
+//    $("#deffect-date option").remove();
+//    for (i = 0; i < dates.length; i++) {
+//        $("#deffect-date").append("<option>" + dates[i] + "</option>");
+//    }
+//    chosen.single_update("deffect-date");
 
     /*------------------------------------------------------------*/
     /*filter data*/
-    $("#retrieve-data").on('click', function () {
-        if ($("#deffect-model option:selected").length > 0
-            || $("#deffect-phase option:selected").length > 0
-            || $("#deffect-date option:selected").length > 0) {
-            var data = SampleData.init_daily_dpv();
-            Report.json_parse(data);
-        }
-
-    });
+//    $("#retrieve-data").on('click', function () {
+//        if ($("#deffect-model option:selected").length > 0
+//            || $("#deffect-phase option:selected").length > 0
+//            || $("#deffect-date option:selected").length > 0) {
+//            var data = SampleData.init_daily_dpv();
+//            Report.json_parse(data);
+//        }
+//
+//    });
     /*------------------------------------------------------------*/
 };
 /*----------------------------------------------------*/

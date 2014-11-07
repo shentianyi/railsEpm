@@ -160,7 +160,7 @@ define(["jquery","./share","dhtmlx.origin.grid"],function($,Share){
             dataGrid.setInitWidths(init_widths!==""?init_widths:config.initWidths);
             dataGrid.setColAlign(config_colAlign!==""?config_colAlign:config.colAlign);
             dataGrid.setSkin("dhx_skyblue");
-            dataGrid.enableAlterCss("even","uneven");
+            dataGrid.enableAlterCss("grid-even","grid-uneven");
             dataGrid.init();
             if(typeof data==="string"){
                 data=JSON.parse(data);

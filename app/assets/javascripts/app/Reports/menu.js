@@ -55,6 +55,11 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                 setTimeout(function(){
                     $("#report-content").html(data);
                     window.location.href = href;
+                    var target_js=href.substring(1),
+                        file_href="app/Reports/"+target_js;
+                    require([file_href],function(app){
+                        app.init();
+                    });
                     Share.loader.hide();
                 },924);
             });
