@@ -12,7 +12,7 @@ define(["jquery","jquery.chosen"],function($){
                    $("#"+target[i]).chosen({
                        'disable_search_threshold': 7
                    });
-                   $("#"+target[i]+"_chosen").width(width[i]);
+                   $("#"+target[i].replace("-","_")+"_chosen").width(width[i]);
                }
            }
            else{

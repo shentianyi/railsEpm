@@ -1,5 +1,3 @@
-
-
 <%=stylesheet_link_tag "reports/daily_dpv" %>
 <div class="template2">
   <div class="left">
@@ -20,16 +18,20 @@
   <div class="right">
     <section class="condition" id="condition">
       <p>Condition</p>
-      <p>Model</p>
+      <p class="intro">Model</p>
       <select multiple class="chosen-select" data-placeholder=" " id="deffect-model"></select>
-      <p>Phase</p>
+      <p class="intro">Phase</p>
       <select multiple class="chosen-select" data-placeholder=" " id="deffect-phase">
       </select>
-      <p>Deffect Date</p>
+      <p class="intro">Deffect Date</p>
       <select multiple class="chosen-select" data-placeholder=" " id="deffect-date">
       </select>
       <a id="retrieve-data" class="btn btn-primary retrieve_data">Retrieve Data</a>
-      <a class="btn btn-success btn_excel" onclick="export_bt_report_chart_excel()">Excel</a>
+      <div class="export">
+        <p>Export to</p>
+        <a class="btn btn-success btn_excel" id="to-excel">Excel</a>
+      </div>
+
     </section>
     <section class="snaps" id="snap-groups">
       <% @snaps.each do |snap| %>

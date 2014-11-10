@@ -11938,6 +11938,7 @@ function dhtmlXGridObject(id) {
         this.selMultiRows = convertStringToBoolean(state)
     };
     this.setImagePath = function (path) {
+
         this._imgURL = path;
         this.imgURL = path + "dhxgrid_" + (this.skin_name || "dhx_skyblue").replace("dhx_", "") + "/";
         this.iconTree = this.imgURL + "tree/"

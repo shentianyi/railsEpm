@@ -1,18 +1,7 @@
 @import "../help.css.scss";
 @import "../libs/dhtmlxgrid.css";
 @import "./template2.css.scss";
-.retrieve_data{
-  font-size:13px;
-  padding:4px 8px;
-  width:140px;
-  margin:8px 0 12px;
-}
-.btn_excel{
-  font-size:13px;
-  padding:4px 8px;
-  width:140px;
-  margin:8px 0 12px;
-}
+
 .content{
   &>.block{
     @include box-sizing-border;
@@ -30,6 +19,33 @@
       margin-top:1%;
       margin-left:- $width / 2;
       @include border-radius-same(3px);
+    }
+  }
+}
+.condition{
+  select+div{
+    margin-left:10px;
+  }
+  p.intro{
+    font-size:13px !important;
+    color:#9d9d9d !important;
+  }
+  a.btn{
+    font-size:13px;
+    padding:7px 8px;
+    width:140px;
+    margin:13px 0 8px 25px;
+  }
+  .export{
+    padding:7px 0px;
+    border-top:1px solid rgba(0,0,0,0.2);
+    p{
+      font-size:13px !important;
+      color:#9d9d9d !important;
+      margin: 0 0 0 10px;
+    }
+    .btn{
+      margin:3px 0 8px 25px;
     }
   }
 }

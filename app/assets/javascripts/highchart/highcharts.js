@@ -1,4 +1,4 @@
-define(["jquery.highcharts"],function(){
+define(["base","jquery.highcharts"],function(Base){
     Highcharts.dateFormats = {
         W: function (timestamp) {
             var d = new Date(timestamp);
@@ -24,9 +24,7 @@ define(["jquery.highcharts"],function(){
                 duration: 800
             }
         },
-        title: {
-            text: null
-        },
+        title:{},
         credits: {
             enabled: false
         },
@@ -45,24 +43,45 @@ define(["jquery.highcharts"],function(){
             baseSeries:0
         },
         tooltip:{
-            enabled: true
-//            formatter: function() {
-//
-//            }
+            enabled: true,
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, 'rgba(96, 96, 96, .8)'],
+                    [1, 'rgba(16, 16, 16, .8)']
+                ]
+            },
+            borderWidth: 0,
+            style: {
+                color: '#FFF'
+            },
+            formatter: function() {
+                return '<b>'+this.x+'</b>'
+                    +'<br />Value: <span style="color:'+this.series.color+'">'+this.point.y
+                    +'</span>'
+            }
         },
         legend: {
-            enabled: false,
+            enabled: true,
             borderRadius: 2,
             borderColor: "rgba(0,0,0,0)",
-            itemStyle: {
-                color: 'rgba(0,0,0,0.8)'
-            },
             animation: true,
             maxHeight: 40,
-            itemMarginBottom: -2
+            margin:0,
+            itemMarginBottom: -2,
+            itemStyle: {
+                color: '#777'
+            },
+            itemHoverStyle: {
+                color: '#bbb'
+            },
+            itemHiddenStyle: {
+                color: '#ccc'
+            }
         },
         plotOptions: {
             series: {
+                shadow: true,
                 animation: {
                     duration: 1000
                 },
@@ -89,7 +108,10 @@ define(["jquery.highcharts"],function(){
 
                 }
             },
-            column:{},
+            column:{
+                pointPadding: 0.2,
+                borderWidth: 0
+            },
             arearange:{
                 fillOpacity:0.1,
                 fillColor:"rgba(177,211,221,0.2)",
@@ -149,14 +171,15 @@ define(["jquery.highcharts"],function(){
                 }
             }
         },
+        series:{},
         xAxis: {
             lineWidth: 0,
-            tickWidth: 0,
-            offset: 5,
-            ordinal: true,
+            tickWidth: 1,
+            offset: 0,
             labels: {
                 style: {
-                    color: "rgba(0,0,0,0.4)"
+                    color:'rgba(0,0,0,0.4)',
+                    fontWeight:"bold"
                 }
             },
             minPadding: 0.02,
@@ -172,8 +195,8 @@ define(["jquery.highcharts"],function(){
 //            }
         },
         yAxis: {
-            gridLineColor: '#ddd',
-            gridLineDashStyle: 'Dot',
+            gridLineColor: 'rgba(0,0,0,0.1)',
+            gridLineDashStyle: 'solid',
             offset: -25,
             showFirstLabel: false,
             min:0,
@@ -182,29 +205,80 @@ define(["jquery.highcharts"],function(){
             },
             labels: {
                 style: {
-                    color: "rgba(0,0,0,0.25)"
+                    color:'rgba(0,0,0,0.4)',
+                    fontWeight: 'bold'
                 },
-                y: -2
-            }
+                y:-2
+            },
+            tickPixelInterval: 30
         }
     }
-    var colors=[
-        '#97cbe4',
-        '#f99c92',
-        '#81dfcd',
-        '#ffdb6d',
-        '#82d9e7',
-        '#dabeea',
-        '#6485a7',
-        '#f9b360',
-        '#94cd7b',
-        '#69b0bd'
-    ];
+    var color_template={
+        template1:[
+            '#97cbe4',
+            '#f99c92',
+            '#81dfcd',
+            '#ffdb6d',
+            '#82d9e7',
+            '#dabeea',
+            '#6485a7',
+            '#f9b360',
+            '#94cd7b',
+            '#69b0bd'
+        ],
+        blue:["#97cbe4"],
+        purple:["#9b65de"]
+    }
     return{
         line:function(config){
-
+            var my_setting_option=Base.deepCopy(setting_option,{});
+            my_setting_option.chart.type="line";
+            my_setting_option.title.text=config.title?config:null;
+            my_setting_option.xAxis.categories=config.categories;
+            if(arguments[1]!==undefined){
+                //arguments[1] is the data
+                my_setting_option.series.data=arguments[1];
+            }
+            else{
+                my_setting_option.series.data=config.data;
+            }
+            my_setting_option.colors=config.colors?color_template[config.colors]:color_template["template1"];
+            var highCharts=$("#"+config.container).highcharts(my_setting_option);
+            return highCharts;
         },
         column:function(config){
+            var my_setting_option=Base.deepCopy(setting_option,{});
+            my_setting_option.chart.type="column";
+            my_setting_option.title.text=config.title?config.title:null;
+            my_setting_option.xAxis.categories=config.categories;
+            if(arguments[1]!==undefined){
+                //arguments[1] is the data
+                my_setting_option.series=arguments[1];
+            }
+            else{
+                my_setting_option.series=config.data;
+            }
+            if(config.dataLabels){
+                my_setting_option.plotOptions.column.dataLabels={
+                    enabled: true,
+                    color: "rgba(0,0,0,0.6)",
+                    style: {
+                        fontWeight: 'bold',
+                        fontSize:'11px'
+                    },
+                    formatter: function() {
+                        if(this.y>0){
+                            return this.y ;
+                        }
+                        else{
+                            return "" ;
+                        }
+                    }
+                };
+            }
+            my_setting_option.colors=config.colors?color_template[config.colors]:color_template["template1"];
+            var highCharts=$("#"+config.container).highcharts(my_setting_option);
+            return highCharts;
 
         }
     }

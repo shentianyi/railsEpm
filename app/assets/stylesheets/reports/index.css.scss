@@ -112,7 +112,7 @@ $list-width:220px;
         &.share{
            float:right;
           right:25px;
-          width:36px;
+          width:48px;
           &:after{
             @include after_content("DISCUSS");
           }

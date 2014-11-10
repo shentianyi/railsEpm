@@ -141,13 +141,49 @@ define(["app/Reports/rand"],function(RAND){
                     ]
                 },
                 dpv_chart:{
-
+                    container: "chart_dpv_one",
+                    categories: ["iQ1", "iQ2", "iQ IP", "iQ DR", "iQ3", "iQ4", "iQ5", "iQ6", "iQ7", "iQ8", "iQ9", "iQ10", "iQ11", "iQ12", "iQ13", "iQ14", "iQ15"],
+                    data: [
+                        {
+                            name: 'DPV',
+                            data:  [RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50)]
+                        }
+                    ],
+                    title: "DPV",
+                    colors:"blue",
+                    dataLabels:true
                 },
                 sdpv_chart:{
-
+                    container: "chart_dpv_two",
+                    categories: ["iQ1", "iQ2", "iQ IP", "iQ DR", "iQ3", "iQ4", "iQ5", "iQ6", "iQ7", "iQ8", "iQ9", "iQ10", "iQ11", "iQ12", "iQ13", "iQ14", "iQ15"],
+                    data: [
+                        {
+                            name: 'SDPV',
+                            data: [RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50)]
+                        }
+                    ],
+                    colors: "purple",
+                    title: "SDPV",
+                    dataLabels:true
                 }
-
             }
+        },
+        daily_ftq:function(){
+             return{
+                 chart:{
+                     container: "chart_container",
+                     categories: ["iQ1", "iQ2", "iQ IP", "iQ DR", "iQ3", "iQ4", "iQ5", "iQ6", "iQ7", "iQ8", "iQ9", "iQ10", "iQ11", "iQ12", "iQ13", "iQ14", "iQ15"],
+                     data: [
+                         {
+                             name: 'DPV',
+                             data:  [RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50)]
+                         }
+                     ],
+                     title: "DPV",
+                     colors:"blue",
+                     dataLabels:true
+                 }
+             }
         }
     }
 })
