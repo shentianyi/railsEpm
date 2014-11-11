@@ -110,7 +110,16 @@ define(["base","jquery.highcharts"],function(Base){
             },
             column:{
                 pointPadding: 0.2,
-                borderWidth: 0
+                borderWidth: 0,
+                dataLabels:{
+                    enabled: false,
+                    inside:false,
+                    color: "rgba(0,0,0,0.6)",
+                    style: {
+                        fontWeight: 'bold',
+                        fontSize:'11px'
+                    }
+                }
             },
             arearange:{
                 fillOpacity:0.1,
@@ -145,8 +154,16 @@ define(["base","jquery.highcharts"],function(Base){
                             this.graph.attr('zIndex', this.index);
                         }
                     }
+                },
+                dataLabels:{
+                    enabled: false,
+                    color:"rgba(0,0,0,0.6)",
+                    style: {
+                        fontWeight: 'bold',
+                        fontSize:'11px'
+                    },
+                    align:"left"
                 }
-
             },
             scatter: {
                 marker: {
@@ -194,24 +211,39 @@ define(["base","jquery.highcharts"],function(Base){
 //                year: '%Y'
 //            }
         },
-        yAxis: {
-            gridLineColor: 'rgba(0,0,0,0.1)',
-            gridLineDashStyle: 'solid',
-            offset: -25,
-            showFirstLabel: false,
-            min:0,
-            title: {
-                enabled: false
-            },
-            labels: {
-                style: {
-                    color:'rgba(0,0,0,0.4)',
-                    fontWeight: 'bold'
+        yAxis:[
+            { // Primary yAxis
+                gridLineColor: 'rgba(0,0,0,0.1)',
+                gridLineDashStyle: 'solid',
+                offset: -25,
+                showFirstLabel: false,
+                min:0,
+                title: {
+                    enabled: false
                 },
-                y:-2
+                labels: {
+                    style: {
+                        color:'rgba(0,0,0,0.4)',
+                        fontWeight: 'bold'
+                    },
+                    y:-2
+                },
+                tickInterval:10
             },
-            tickPixelInterval: 30
-        }
+            { //Secondary yAxis
+                labels: {
+                    enabled:false,
+                    format: '{value} %',
+                    style: {
+                        color: 'rgba(0,0,0,0.4)' }
+                },
+                title:{
+                    enabled:false
+                },
+                tickInterval:10,
+                opposite: true
+            }
+        ]
     }
     var color_template={
         template1:[
@@ -227,59 +259,109 @@ define(["base","jquery.highcharts"],function(Base){
             '#69b0bd'
         ],
         blue:["#97cbe4"],
-        purple:["#9b65de"]
+        purple:["#9b65de"],
+        green:["#25ad38"],
+        red:["#fd0e0e"],
+        darkblue:["#3c6fcc"]
     }
+    function procedure(config,data,my_setting_option){
+        my_setting_option.title.text=config.title?config:null;
+        my_setting_option.xAxis.categories=config.categories;
+        my_setting_option.colors=config.colors?color_template[config.colors]:color_template["template1"];
+        if(data!==undefined){
+            //arguments[1] is the data
+            my_setting_option.series=data;
+        }
+        else{
+            my_setting_option.series=config.data?config.data:{};
+        }
+        if(config.twoYAxis){
+            my_setting_option.yAxis[1].labels.enabled=true;
+            for(var key in config.twoYAxis){
+                my_setting_option.yAxis[1].labels[key]=config.twoYAxis[key];
+            }
+        }
+        if(config.column_dataLabels){
+            my_setting_option.plotOptions.column.dataLabels.enabled=true;
+            for(var key in config.column_dataLabels){
+                my_setting_option.plotOptions.column.dataLabels[key]=config.column_dataLabels[key];
+            }
+        }
+        if(config.line_dataLabels){
+            my_setting_option.plotOptions.line.dataLabels.enabled=true;
+            for(var key in config.line_dataLabels){
+                my_setting_option.plotOptions.line.dataLabels[key]=config.line_dataLabels[key];
+            }
+        }
+        if(config.special_option){
+            change_attribute(my_setting_option,config.special_option);
+        }
+        $("#"+config.container).highcharts(my_setting_option);
+        return $("#"+config.container).highcharts();
+    }
+    function change_attribute(original,change){
+        for(var key in change){
+           if(Object.prototype.toString.apply(change[key])==="[object Object]"){
+               change_attribute(original[key],change[key]);
+           }
+            else{
+               original[key]=change[key];
+           }
+        }
+    }
+
     return{
-        line:function(config){
+        addSeries:function(highcharts,data,type,color,marker,secondYaxis){
+            if(type){
+                if(Object.prototype.toString.apply(data)==="[object Array]"){
+                    data={
+                        data:data,
+                        type:type
+                    }
+                }
+                else{
+                    data.type=type;
+                }
+            }
+            if(color){
+                if(Object.prototype.toString.apply(data)==="[object Array]"){
+                    data={
+                        data:data,
+                        color:color_template[color][0]
+                    }
+                }
+                else{
+                    data.color=color_template[color][0];
+                }
+            }
+            if(secondYaxis){
+                if(Object.prototype.toString.apply(data)==="[object Array]"){
+                    data={
+                        data:data,
+                        yAxis:1
+                    }
+                }
+                else{
+                    data.yAxis=1;
+                }
+            }
+            highcharts.addSeries(data);
+        },
+        //for common type of chart , all parameters are optional except container and category
+        line:function(config,data){
             var my_setting_option=Base.deepCopy(setting_option,{});
             my_setting_option.chart.type="line";
-            my_setting_option.title.text=config.title?config:null;
-            my_setting_option.xAxis.categories=config.categories;
-            if(arguments[1]!==undefined){
-                //arguments[1] is the data
-                my_setting_option.series.data=arguments[1];
-            }
-            else{
-                my_setting_option.series.data=config.data;
-            }
-            my_setting_option.colors=config.colors?color_template[config.colors]:color_template["template1"];
-            var highCharts=$("#"+config.container).highcharts(my_setting_option);
-            return highCharts;
+            var chart=procedure(config,data,my_setting_option);
+            return chart;
         },
-        column:function(config){
+        column:function(config,data){
             var my_setting_option=Base.deepCopy(setting_option,{});
             my_setting_option.chart.type="column";
-            my_setting_option.title.text=config.title?config.title:null;
-            my_setting_option.xAxis.categories=config.categories;
-            if(arguments[1]!==undefined){
-                //arguments[1] is the data
-                my_setting_option.series=arguments[1];
+            if(config.stacking){
+                my_setting_option.plotOptions.column.stacking='normal';
             }
-            else{
-                my_setting_option.series=config.data;
-            }
-            if(config.dataLabels){
-                my_setting_option.plotOptions.column.dataLabels={
-                    enabled: true,
-                    color: "rgba(0,0,0,0.6)",
-                    style: {
-                        fontWeight: 'bold',
-                        fontSize:'11px'
-                    },
-                    formatter: function() {
-                        if(this.y>0){
-                            return this.y ;
-                        }
-                        else{
-                            return "" ;
-                        }
-                    }
-                };
-            }
-            my_setting_option.colors=config.colors?color_template[config.colors]:color_template["template1"];
-            var highCharts=$("#"+config.container).highcharts(my_setting_option);
-            return highCharts;
-
+            var chart=procedure(config,data,my_setting_option);
+            return chart;
         }
     }
 })

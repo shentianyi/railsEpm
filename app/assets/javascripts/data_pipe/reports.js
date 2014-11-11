@@ -173,15 +173,67 @@ define(["app/Reports/rand"],function(RAND){
                  chart:{
                      container: "chart_container",
                      categories: ["iQ1", "iQ2", "iQ IP", "iQ DR", "iQ3", "iQ4", "iQ5", "iQ6", "iQ7", "iQ8", "iQ9", "iQ10", "iQ11", "iQ12", "iQ13", "iQ14", "iQ15"],
-                     data: [
-                         {
-                             name: 'DPV',
-                             data:  [RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50)]
+                     title: "Daily_FTQ",
+                     stacking:true,
+                     dataLabels:true,
+                     twoYAxis:{
+                         enabled:false
+                     },
+                     line_dataLabels:{
+                         formatter:function(){
+                             if(this.y>0){
+                                 return this.y+"%" ;
+                             }
+                             else{
+                                 return "" ;
+                             }
+                         },
+                         color:"rgba(60,111,204,0.8)"
+                     },
+                     column_dataLabels:{
+                         formatter:function(){
+                             if(this.series.index===0){
+                                 if(!this.total){
+                                     if(this.y>0){
+                                         return this.y ;
+                                     }
+                                     else{
+                                         return "" ;
+                                     }
+                                 }
+                                 else{
+                                     if(this.total>0){
+                                         return this.total ;
+                                     }
+                                     else{
+                                         return "" ;
+                                     }
+                                 }
+                             }
                          }
-                     ],
-                     title: "DPV",
-                     colors:"blue",
-                     dataLabels:true
+                     },
+                     special_option:{
+                         plotOptions:{
+                             line:{
+                                 marker:{
+                                     radius:3,
+                                     lineWidth:1
+                                 }
+                            }
+                         }
+                     }
+                 },
+                 data_nok:{
+                     name: 'not_ok',
+                     data:  [RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50)]
+                 },
+                 data_ok:{
+                     name: 'ok',
+                     data:  [RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50)]
+                 },
+                 data_ftq:{
+                     name: 'ftq',
+                     data:  [RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50),RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50), RAND.range_int(0, 50)]
                  }
              }
         }

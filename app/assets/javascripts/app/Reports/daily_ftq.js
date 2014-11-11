@@ -7,14 +7,18 @@ define(["jquery","reportsData","dhtmlx.grid","highcharts"],function($,Data,Grid,
         };
         Grid.render(data,template)
     }
-    function generate_column(config){
-        Highcharts.column(config);
+    function generate_chart(){
+        var data_ftq=Data.daily_ftq();
+        var chart=Highcharts.column(data_ftq.chart);
+        Highcharts.addSeries(chart,data_ftq.data_nok,"column","red");
+        Highcharts.addSeries(chart,data_ftq.data_ok,"column","green");
+        Highcharts.addSeries(chart,data_ftq.data_ftq,"line","darkblue",true);
     }
     return{
         init:function(){
             var data_for_grid=Data.daily_dpv().grid;
             generate_grid(data_for_grid);
-            generate_column(Data.daily_ftq().chart);
+            generate_chart();
         }
     }
 })

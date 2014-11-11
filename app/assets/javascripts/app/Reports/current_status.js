@@ -1,20 +1,5 @@
 define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","reportsData","svgLoader","jquery.colorPicker"],function($,Dataview,Share,format_time,MyData,SVGLoader){
-    var current_status_loader=new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
-    var left = document.getElementById("report-menu").getBoundingClientRect().right,
-        top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
-        height=$("#report-content").height();
-    $(".current-status-pageload-overlay svg").css('left', left);
-    $(".current-status-pageload-overlay svg").css('top', top);
-    $(".current-status-pageload-overlay svg").css("height",height+"px");
-    $(window).resize(function(){
-        var left = document.getElementById("report-menu").getBoundingClientRect().right,
-            top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
-            height=$("#report-content").height();
-        $(".current-status-pageload-overlay svg").css('left', left);
-        $(".current-status-pageload-overlay svg").css('top', top);
-        $(".current-status-pageload-overlay svg").css("height",height+"px");
-    });
-    function show_extra_section(tag){
+    function show_extra_section(tag,current_status_loader){
         current_status_loader.show();
         if(tag==="target"){
             var target_config={
@@ -50,6 +35,21 @@ define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","re
     function self_init(){
         var template={},
             data=MyData.current_status();
+        var current_status_loader=new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
+        var left = document.getElementById("report-menu").getBoundingClientRect().right,
+            top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
+            height=$("#report-content").height();
+        $(".current-status-pageload-overlay svg").css('left', left);
+        $(".current-status-pageload-overlay svg").css('top', top);
+        $(".current-status-pageload-overlay svg").css("height",height+"px");
+        $(window).resize(function(){
+            var left = document.getElementById("report-menu").getBoundingClientRect().right,
+                top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
+                height=$("#report-content").height();
+            $(".current-status-pageload-overlay svg").css('left', left);
+            $(".current-status-pageload-overlay svg").css('top', top);
+            $(".current-status-pageload-overlay svg").css("height",height+"px");
+        });
         Dataview.render(data["CF11"],template);
         function dataview_click_event(id, ev, html){
                 window.location="kpi_entries/analyse?view="+this.get(id).INQA;
@@ -88,7 +88,7 @@ define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","re
             })
             .on("click",".extra_func_btn",function(){
                 var tag=$(this).attr("tag") ;
-                show_extra_section(tag);
+                show_extra_section(tag,current_status_loader);
             })
             .on("click",".current-status-target-back-btn",function(){
                 current_status_loader.show();
