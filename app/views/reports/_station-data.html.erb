@@ -1,48 +1,46 @@
-<section class="station-data">
-<div class="header" id="station-data-header">
-  <div class="header-block">
-    <label>Time interval</label>
-    <input type="text" id="date-begin" readonly=true/>
-    <label>-</label>
-    <input type="text" id="date-end" readonly=true/>
-    <br>
-    <input type="button" value="Retrieve" id="retrieve" class="btn btn-primary"/>
-  </div>
-  <div class="header-block">
-    <label>Export to</label>
-    <a class="btn btn-success" onclick="export_bt_report_excel()">Excel</a>
-
-  </div>
-  <div class="header-block">
-    <label>Setting</label>
-    <div class="a-block">
-      <div class="block-left">
-        <p>FTQ > FTQ Target</p>
-        <p>FTQ = FTQ Target</p>
-        <p>FTQ < FTQ Target</p>
-      </div>
-      <div class="block-right" id="station-data-color-ftq">
-      </div>
+<%=stylesheet_link_tag "reports/station_data" %>
+<div class="template1">
+  <section class="condition" id="condition">
+    <div class="left">
+      <p>Retrieve interval</p>
+      <input type="text" id="date-begin" readonly=true/>
+      <label>-</label>
+      <input type="text" id="date-end" readonly=true/>
+      <input type="button" value="Retrieve" id="retrieve" class="btn btn-primary"/>
     </div>
-    <div class="a-block">
-      <div class="block-left">
-        <p>DPV > DPV Target</p>
-        <p>DPV = DPV Target</p>
-        <p>DPV < DPV Target</p>
-      </div>
-      <div class="block-right" id="station-data-color-dpv">
-      </div>
+    <div class="right">
+      <label>Export to</label>
+      <a class="btn btn-success" id="export_to_excel">Excel</a>
     </div>
-  </div>
+  </section>
+  <section class="content">
+       <div  id="data_container" style="width:100%;height:100%;border-width: 0px;"></div>
+       <a class="setting-btn" id="setting-btn"><i class="icon icon-chevron-left"></i></a>
+       <div class="setting-block" id="setting-block">
+         <p><i class="icon icon-cog"></i> setting</p>
+         <p>FTQ > FTQ target</p>
+         <input type='text' class='color-picker' id="color1"/>
+         <p>FTQ = FTQ target</p>
+         <input type='text' class='color-picker' id="color2"/>
+         <p>FTQ < FTQ target</p>
+         <input type='text' class='color-picker' id="color3"/>
+         <br />
+         <p>DPV > DPV target</p>
+         <input type='text' class='color-picker' id="color4"/>
+         <p>DPV = DPV target</p>
+         <input type='text' class='color-picker' id="color5"/>
+         <p>DPV < DPV target</p>
+         <input type='text' class='color-picker' id="color6"/>
+       </div>
+  </section>
+  <section class="snaps" id="snap-groups">
+    <% @snaps.each do |snap| %>
+        <div class="snap-li" snap="<%= snap.id %>" type="<%= snap.type_string %>">
+          <p><%= snap.desc %></p>
+          <p><%= time_ago_in_words(snap.created_at.localtime) %> ago</p>
+        </div>
+    <% end %>
+  </section>
 </div>
-<div class="station-data-body" id="station-data-body">
-  <div id="data_container" ></div>
-</div>
-<%= render 'snap'%>
-</section>
 
-<script>
-$(document).ready(function(){
-	Report.init("station_data");
-})
-</script>
+

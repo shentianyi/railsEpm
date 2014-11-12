@@ -32,6 +32,7 @@ paths:
    svgLoader: "preload/svgLoader"
    reportsData: "data_pipe/reports"
    jquery.colorPicker: "libs/jquery.colorPicker"
+   colorPicker: "func-module/colorPicker"
 shim:
    chart:
       exports: "Chart"

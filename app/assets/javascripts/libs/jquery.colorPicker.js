@@ -120,8 +120,9 @@
             newControl.css("background-color", defaultColor);
 
             newControl.bind("click", function () {
+                var direction=$(this).attr("direction");
                 if( element.is( ':not(:disabled)' ) ) {
-                                    $.fn.colorPicker.togglePalette($('#' + paletteId), $(this));
+                                    $.fn.colorPicker.togglePalette($('#' + paletteId), $(this),direction);
                 }
             });
 
@@ -227,13 +228,22 @@
         /**
          * Show the color palette modal.
         **/
-        showPalette : function (palette) {
+        showPalette : function (palette,direction) {
             var hexColor = selectorOwner.prev("input").val();
 
-            palette.css({
-                top: selectorOwner.offset().top + (selectorOwner.outerHeight()) -$(".colorPicker-palette").height()-25,
-                left: selectorOwner.offset().left
-            });
+            if(direction==="up"){
+                palette.css({
+                    top: selectorOwner.offset().top + (selectorOwner.outerHeight()) -$(".colorPicker-palette").height()-25,
+                    left: selectorOwner.offset().left
+                });
+            }
+            else if(direction==="down"){
+
+                palette.css({
+                    top: selectorOwner.offset().top + (selectorOwner.outerHeight()),
+                    left: selectorOwner.offset().left
+                });
+            }
 
             $("#color_value").val(hexColor);
 
@@ -245,7 +255,7 @@
         /**
          * Toggle visibility of the colorPicker palette.
         **/
-        togglePalette : function (palette, origin) {
+        togglePalette : function (palette, origin,direction) {
             // selectorOwner is the clicked .colorPicker-picker.
             if (origin) {
                 selectorOwner = origin;
@@ -257,7 +267,7 @@
                 $.fn.colorPicker.hidePalette();
 
             } else {
-                $.fn.colorPicker.showPalette(palette);
+                $.fn.colorPicker.showPalette(palette,direction);
 
             }
         },
@@ -290,6 +300,7 @@
 
             element.bind({
                 click : function (ev) {
+
                     lastColor = color;
 
                     $.fn.colorPicker.changeColor(color);
