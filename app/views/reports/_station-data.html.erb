@@ -18,19 +18,22 @@
        <a class="setting-btn" id="setting-btn"><i class="icon icon-chevron-left"></i></a>
        <div class="setting-block" id="setting-block">
          <p><i class="icon icon-cog"></i> setting</p>
-         <p>FTQ > FTQ target</p>
-         <input type='text' class='color-picker' id="color1"/>
-         <p>FTQ = FTQ target</p>
-         <input type='text' class='color-picker' id="color2"/>
-         <p>FTQ < FTQ target</p>
-         <input type='text' class='color-picker' id="color3"/>
-         <br />
-         <p>DPV > DPV target</p>
-         <input type='text' class='color-picker' id="color4"/>
-         <p>DPV = DPV target</p>
-         <input type='text' class='color-picker' id="color5"/>
-         <p>DPV < DPV target</p>
-         <input type='text' class='color-picker' id="color6"/>
+         <div class="block">
+           <p>FTQ <span class="mark">></span> FTQ target</p>
+           <input type='text' class='color-picker' id="color1"/>
+           <p>FTQ <span class="mark">=</span> FTQ target</p>
+           <input type='text' class='color-picker' id="color2"/>
+           <p>FTQ <span class="mark"><</span> FTQ target</p>
+           <input type='text' class='color-picker' id="color3"/>
+         </div>
+         <div class="block">
+           <p>DPV <span class="mark">></span> DPV target</p>
+           <input type='text' class='color-picker' id="color4"/>
+           <p>DPV <span class="mark">=</span> DPV target</p>
+           <input type='text' class='color-picker' id="color5"/>
+           <p>DPV <span class="mark"><</span> DPV target</p>
+           <input type='text' class='color-picker' id="color6"/>
+         </div>
        </div>
   </section>
   <section class="snaps" id="snap-groups">

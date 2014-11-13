@@ -15,7 +15,21 @@ define(["jquery","dhtmlx.grid","datepicker","reportsData","./share","colorPicker
             $("export_tp_excel").on("click",function(){
                 grid.toChartExcel(Share.export_bt_chart_excel_url);
             });
-            ColorPicker.colorPicker(["#color1","#color2","#color3","#color4","#color5","#color6"]);
+            ColorPicker.colorPicker(
+                ["#color1","#color2","#color3","#color4","#color5","#color6"],
+                "leftup",
+                function(id,newValue){
+                    console.log(id+" "+newValue)
+                },
+                ["000"]
+            );
+            $("#setting-btn").on("click",function(){
+                var $i=$(this).find("i");
+                $i.toggleClass("icon-chevron-left").toggleClass("icon-chevron-right");
+                var right=parseInt($(this).css("right"));
+                $(this).css("right",right===0?$("#setting-block").width()+3:0);
+                $("#setting-block").css("right",right===0?0:-($("#setting-block").width()+10));
+            })
         }
     }
 })

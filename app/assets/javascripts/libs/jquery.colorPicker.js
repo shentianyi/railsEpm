@@ -224,13 +224,12 @@
 
             $('.colorPicker-palette').hide();
         },
-
         /**
          * Show the color palette modal.
         **/
         showPalette : function (palette,direction) {
             var hexColor = selectorOwner.prev("input").val();
-
+            console.log(selectorOwner)
             if(direction==="up"){
                 palette.css({
                     top: selectorOwner.offset().top + (selectorOwner.outerHeight()) -$(".colorPicker-palette").height()-25,
@@ -238,20 +237,27 @@
                 });
             }
             else if(direction==="down"){
-
                 palette.css({
                     top: selectorOwner.offset().top + (selectorOwner.outerHeight()),
                     left: selectorOwner.offset().left
                 });
             }
-
+            else if(direction=="leftdown"){
+                palette.css({
+                    top: selectorOwner.offset().top + (selectorOwner.outerHeight()),
+                    left: selectorOwner.offset().left -$(".colorPicker-palette").width()+12
+                });
+            }
+            else if(direction=="leftup"){
+                palette.css({
+                    top: selectorOwner.offset().top + (selectorOwner.outerHeight()) -$(".colorPicker-palette").height()-25,
+                    left: selectorOwner.offset().left -$(".colorPicker-palette").width()+12
+                });
+            }
             $("#color_value").val(hexColor);
-
             palette.show();
-
             $(document).bind("mousedown", $.fn.colorPicker.checkMouse);
         },
-
         /**
          * Toggle visibility of the colorPicker palette.
         **/

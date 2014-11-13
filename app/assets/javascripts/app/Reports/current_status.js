@@ -1,4 +1,4 @@
-define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","reportsData","svgLoader","jquery.colorPicker"],function($,Dataview,Share,format_time,MyData,SVGLoader){
+define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","reportsData","svgLoader","colorPicker"],function($,Dataview,Share,format_time,MyData,SVGLoader,ColorPicker){
     function show_extra_section(tag,current_status_loader){
         current_status_loader.show();
         if(tag==="target"){
@@ -67,7 +67,7 @@ define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","re
             Dataview.render(data[$("#vehicle-select option:selected").text()],template);
             Dataview.itemClick(dataview_click_event);
         });
-        $("#target_footer").find(".color-picker").colorPicker();
+        ColorPicker.colorPicker(["#color1","#color2","#color3"],["up","up","up"]);
         $("body")
             .on("click","#quick-print",function(){
 //                html2canvas($("#data_container"), {
