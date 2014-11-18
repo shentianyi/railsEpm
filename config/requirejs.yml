@@ -21,9 +21,11 @@ paths:
    jquery.sparkline: "libs/jquery.sparkline.min"
    sparkline: "func-module/sparkline"
    jquery.highcharts: "libs/highcharts"
+   jquery.highmaps: "libs/highmaps"
    jquery.highstock: "libs/highstock"
    highcharts: "highchart/highcharts"
    highstock: "highchart/highstock"
+   highmaps: "highchart/highmaps"
    dhtmlx.origin.dataview: "libs/dhtmlxdataview"
    dhtmlx.origin.grid: "libs/dhtmlxgrid"
    dhtmlx.dataview: "dhtmlx/dataview"
@@ -33,6 +35,7 @@ paths:
    reportsData: "data_pipe/reports"
    jquery.colorPicker: "libs/jquery.colorPicker"
    colorPicker: "func-module/colorPicker"
+
 shim:
    chart:
       exports: "Chart"
@@ -65,10 +68,13 @@ shim:
       exports: "jQuery.fn.sparkline"
    jquery.highcharts:
       deps: ["jquery"]
-      exports: "jQuery.fn.highcharts"
+      exports: "Highcharts"
    jquery.highstock:
       deps: ["jquery"]
-      exports: "jQuery.fn.highcharts"
+      exports: "Highcharts"
+   jquery.highmaps:
+      deps: ["jquery"]
+      exports: "Highcharts"
    dhtmlx.origin.dataview:
       exports: "dhtmlXDataView"
    dhtmlx.origin.grid:

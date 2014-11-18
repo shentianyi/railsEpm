@@ -311,7 +311,7 @@ define(["base","jquery.highcharts"],function(Base){
     }
 
     return{
-        addSeries:function(highcharts,data,type,color,marker,secondYaxis){
+        addSeries:function(highcharts,data,type,color,secondYaxis){
             if(type){
                 if(Object.prototype.toString.apply(data)==="[object Array]"){
                     data={

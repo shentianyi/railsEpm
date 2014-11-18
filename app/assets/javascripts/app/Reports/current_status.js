@@ -1,4 +1,4 @@
-define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","reportsData","svgLoader","colorPicker"],function($,Dataview,Share,format_time,MyData,SVGLoader,ColorPicker){
+define(["jquery","./share","../../func-module/format_time","reportsData","svgLoader","colorPicker","highmaps"],function($,Share,format_time,MyData,SVGLoader,ColorPicker,Highmaps){
     function show_extra_section(tag,current_status_loader){
         current_status_loader.show();
         if(tag==="target"){
@@ -50,22 +50,38 @@ define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","re
             $(".current-status-pageload-overlay svg").css('top', top);
             $(".current-status-pageload-overlay svg").css("height",height+"px");
         });
-        Dataview.render(data["CF11"],template);
-        function dataview_click_event(id, ev, html){
-                window.location="kpi_entries/analyse?view="+this.get(id).INQA;
-                return true;
-        }
-        Dataview.itemClick(dataview_click_event);
-
+        Highmaps.heatmap(
+            {
+                row:6,
+                container:"data_container",
+                nameArray:["CF1","CF2","CF3","CF4"],
+                special_option:{
+                    plotOptions:{
+                        heatmap:{
+                            dataLabels: {
+                                formatter:function(){
+                                    return "<span class='w'>"+this.point.name+"</span><br />"
+                                            +"<b>"+this.point.value+"</b>"
+                                }
+                            }
+                        }
+                    },
+                    tooltip: {
+                        formatter: function () {
+                            return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
+                                this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
+                        }
+                    }
+                }
+            },
+            data);
         $("#current-date").text(format_time.current_time());
         $("#current-clock").text(format_time.current_time_clock());
         window.setInterval(function(){
             $("#current-clock").text(format_time.current_time_clock());
         },1000);
         $("#vehicle-select").change(function () {
-            Dataview.clear();
-            Dataview.render(data[$("#vehicle-select option:selected").text()],template);
-            Dataview.itemClick(dataview_click_event);
+
         });
         ColorPicker.colorPicker(["#color1","#color2","#color3"],["up","up","up"]);
         $("body")
@@ -80,9 +96,9 @@ define(["jquery","dhtmlx.dataview","./share","../../func-module/format_time","re
             .on("click","#refresh",function(){
                 current_status_loader.show();
                 setTimeout(function () {
-                    Dataview.clear();
-                    Dataview.render(data[$("#vehicle-select option:selected").text()],template);
-                    Dataview.itemClick(dataview_click_event);
+//                    Dataview.clear();
+//                    Dataview.render(data[$("#vehicle-select option:selected").text()],template);
+//                    Dataview.itemClick(dataview_click_event);
                     current_status_loader.hide();
                 }, 1500);
             })

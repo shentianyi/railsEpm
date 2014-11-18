@@ -5,27 +5,27 @@ define(["app/Reports/rand"],function(RAND){
     };
     return{
         current_status:function(){
-            return {
-                CF11: [
-                    {
-                        "id": "1",
-                        "INQA": "iQ1 Body",
-                        "Defects": "20",
-                        "Pass": "25",
-                        "FTQ":"85",
-                        "STYLE_COLOR":data_current_color["red"]
-                    }],
-                CF14: [
-                    {
-                        "id": "1",
-                        "INQA": "iQ1 Body",
-                        "Defects": "20",
-                        "Pass": "25",
-                        "FTQ":"55",
-                        "STYLE_COLOR":data_current_color["red"]
-                    }
-                ]
-            }
+            return [10,20,30,40,50,0,100,27,0,18,46,2,1,5,1,26,57,29,19,20,100,40,50,0,100,27,0,18,46,2,1,5,1,26,57,29,19,20,100]
+//                CF11: [
+//                    {
+//                        "id": "1",
+//                        "INQA": "iQ1 Body",
+//                        "Defects": "20",
+//                        "Pass": "25",
+//                        "FTQ":"85",
+//                        "STYLE_COLOR":data_current_color["red"]
+//                    }],
+//                CF14: [
+//                    {
+//                        "id": "1",
+//                        "INQA": "iQ1 Body",
+//                        "Defects": "20",
+//                        "Pass": "25",
+//                        "FTQ":"55",
+//                        "STYLE_COLOR":data_current_color["red"]
+//                    }
+//                ]
+
         },
         current_status_target:function(){
             return{
