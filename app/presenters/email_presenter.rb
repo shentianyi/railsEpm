@@ -10,26 +10,26 @@ class EmailPresenter<Presenter
     self.time_group = TimeGroup.new(self.created_at)
   end
 
-  def to_detail_json
+  def to_detail_json pre_url=''
     json=self.to_json
     json[:attachments]=[]
-    @email.attachments.where(type:'image').each do |att|
-      json[:attachments]<<{name: att.name, path: att.path}
+    @email.attachments.where(type: 'image').each do |att|
+      json[:attachments]<<{name: att.name, path: pre_url+att.path}
     end
     return json
   end
 
 
-  def self.group_by_time emails
+  def self.group_by_time emails, pre_url=''
     groupd_emails={}
     emails.each do |email|
       if groupd_emails.has_key?(email.time_group.key)
-        groupd_emails[email.time_group.key]<<email.to_detail_json
+        groupd_emails[email.time_group.key]<<email.to_detail_json(pre_url)
       else
-        groupd_emails[email.time_group.key]=[email.to_detail_json]
+        groupd_emails[email.time_group.key]=[email.to_detail_json(pre_url)]
       end
     end
-    return {titles:groupd_emails.keys,values:groupd_emails.values}
+    return {titles: groupd_emails.keys, values: groupd_emails.values}
   end
 end
 

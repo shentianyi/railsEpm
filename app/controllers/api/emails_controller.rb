@@ -10,7 +10,7 @@ module Api
       conditions=params[:conditions]||{}
       conditions[:user_id]=current_user.id
       @emails = Email.search(conditions).paginate(page: params[:page], per_page: 30).order('created_at desc').all
-      @emails=EmailPresenter.group_by_time(EmailPresenter.init_presenters(@emails))
+      @emails=EmailPresenter.group_by_time(EmailPresenter.init_presenters(@emails),request.protocol+request.host_with_port)
       respond_to do |t|
         t.json { render :json => @emails }
         t.js { render :js => jsonp_str(@emails) }
