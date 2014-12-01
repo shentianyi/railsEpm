@@ -30,7 +30,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def real_path(pre_url)
-    self.path.nil? ? (self.path.include?('http') ? self.path : "#{pre_url}/#{self.path}") : ''
+    self.path.nil? ?  '' : (self.path.include?('http') ? self.path : "#{pre_url}/#{self.path}")
   end
 
   private
