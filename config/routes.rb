@@ -209,6 +209,18 @@ IFEpm::Application.routes.draw do
   # api routes
   mount ApplicationAPI => '/api'
   namespace :api, :defaults => {:format => 'json'} do
+    
+    resources :files do
++    collection do
++      match :upload
++      get :attach
++      get :avatar
++    end
++    member do
++      get :template
++    end
++  end
+
     resources :kpi_entries do
       collection do
         match :analyse, :defaults => {:format => 'html'}

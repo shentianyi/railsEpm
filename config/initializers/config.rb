@@ -20,3 +20,5 @@ $AttachPath=path_config[:attach_path]
 $DEFAULT_TIME_ZONE='+08:00'
 $ZONE_HOUR_OFFSET=Time.zone_offset($DEFAULT_TIME_ZONE)/(3600)
 
+$BACKGROUND_TASK=BackgroundTaskType::RESQUE
+

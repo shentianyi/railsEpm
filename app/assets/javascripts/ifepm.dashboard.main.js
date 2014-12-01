@@ -174,7 +174,6 @@ ifepm.dashboard.form_graph = function (datas, id) {
     }
 
     var type = ifepm.dashboard.graphs[id].chart_type;
-
     if (type == 'table'){
         /*-------------------------table----------------------------------*/
         window.setTimeout(function(){
