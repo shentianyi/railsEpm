@@ -29,6 +29,10 @@ class Attachment < ActiveRecord::Base
     self.type=='image'
   end
 
+  def real_path(pre_url)
+    self.path.nil? ? (self.path.include?('http') ? self.path : "#{pre_url}/#{self.path}") : ''
+  end
+
   private
   def delete_attach_file
     AliyunOssService.delete_attachments self.pathname
