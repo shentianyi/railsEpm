@@ -38,7 +38,8 @@ class KpiEntryValidatorCollection
     self.validators.each do |v|
       entries<<v.params_to_hash if v.valid
     end
-    Resque.enqueue(KpiEntryCreateJob, entries)
+    #Resque.enqueue(KpiEntryCreateJob, entries)
+    BackgroundTask.create_kpi_entry(entries)
     #KpiEntryCreateWorker.perform_async(entries)
 
     #entries.each do |k|

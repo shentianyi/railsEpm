@@ -6,7 +6,8 @@ class KpiEntryObserver<Mongoid::Observer
     if kpi_entry.entry_type == 1
       kpi = Kpi.find_by_id(kpi_entry.kpi_id)
       #resque
-      Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi.is_calculated
+      #Resque.enqueue(KpiEntryCalculator, kpi_entry.id) unless kpi.is_calculated
+      BackgroundTask.calculate_kpi(kpi_entry) unless kpi.is_calculated
       #sidekiq
       #CalculateWorker.perform_async(kpi_entry.id) unless kpi.is_calculated
     end

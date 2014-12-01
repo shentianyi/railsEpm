@@ -187,6 +187,7 @@ GEM
     ruby-ole (1.2.11.7)
     ruby-pinyin (0.4.1)
       rmmseg-cpp (~> 0.2.9)
+    ruby-prof (0.11.3)
     rubyzip (1.0.0)
     rufus-scheduler (3.0.7)
       tzinfo
@@ -287,6 +288,7 @@ DEPENDENCIES
   rest-client
   roo
   ruby-pinyin
+  ruby-prof (~> 0.11.2)
   rufus-scheduler
   sass-rails (~> 3.2.3)
   seajs-rails
