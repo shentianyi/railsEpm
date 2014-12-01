@@ -44,7 +44,7 @@ class Email < ActiveRecord::Base
                       from_mail: self.sender,
                       to: self.receivers.split(';'),
                       subject: self.title,
-                      text: self.content.blank? ? 'From EPM' : self.content,
+                      text: self.content.blank? ? 'From ClearInsight' : self.content,
                       attachment: self.attachments.pluck(:pathname),
                       file_path: $AttachTmpPath).send
   end
