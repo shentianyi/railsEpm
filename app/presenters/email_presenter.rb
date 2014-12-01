@@ -14,7 +14,7 @@ class EmailPresenter<Presenter
     json=self.to_json
     json[:attachments]=[]
     @email.attachments.where(type: 'image').each do |att|
-      json[:attachments]<<{name: att.name, path: pre_url+att.path}
+      json[:attachments]<<{name: att.name, path: att.real_path(pre_url)}
     end
     return json
   end
