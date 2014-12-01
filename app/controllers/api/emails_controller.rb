@@ -31,8 +31,8 @@ module Api
       @email=Email.new(params[:email])
       @email.init_user_info current_user
       if msg.result = @email.save
-        Resque.enqueue(EmailSender, @email.id, params)
-        #BackgroundTask.send_email(@email.id,params)
+        #Resque.enqueue(EmailSender, @email.id, params)
+        BackgroundTask.send_email(@email.id,params)
         #EmailWorker.perform_async(@email.id,params)
         #Email.handle_email_process  @email.id, params
       else
