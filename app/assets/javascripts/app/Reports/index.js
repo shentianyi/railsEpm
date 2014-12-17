@@ -5,7 +5,6 @@ define(["jquery","./share","svgLoader","jquery.scroll","./menu"],function($,Shar
         option.type_string = type;
         return option;
     }
-
     $("#my-reports").mCustomScrollbar({axis:"y"});
     Share.loader=new SVGLoader( document.getElementById( 'preloader' ), { speedIn : 100 } );
     return{

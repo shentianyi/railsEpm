@@ -1,5 +1,5 @@
 @import "../manage/manage_three_column.css.scss";
-@import "../manage_attribute.css.scss";
+
 .manage_three_column > .right > section:nth-of-type(2){
   border-top-width:0;
 }
@@ -460,4 +460,379 @@
   width:70%;
   padding: 15px;
   position: absolute;
+}
+
+.kpi-library[type="attribute"]{
+  &>div{
+    $height:450px;
+    $width:550px;
+    width:$width;
+    height:$height;
+    margin-left:- $width/2;
+    margin-top:- $height/2;
+    &:before{
+      content:"";
+    }
+    &:after{
+      clear:both;
+      display:block;
+      content:"";
+    }
+    &>i{
+      cursor:pointer;
+      pointer-events:auto;
+      float:right;
+      margin-top:10px;
+      margin-right:10px;
+      font-size:18px;
+      color:#000;
+      @include transition(color);
+      &:hover{
+        color: rgba(0,0,0,0.6);
+      }
+    }
+    .attribute-block{
+      position:absolute;
+      left:50%;
+      top:50px;
+      margin-left:-40%;
+      width:80%;
+      height:340px;
+      overflow-y:auto;
+      &>ul{
+        li{
+          padding:5px 4px;
+          input{
+            width:210px;
+            margin-left:100px;
+            padding:3px;
+          }
+          i{
+            color:$red;
+            float:right;
+            margin-right:70px;
+            margin-top:3px;
+            pointer-events:auto;
+            cursor:pointer;
+            @include transition(color);
+            &:hover{
+              color:transparentize($red,0.3);
+            }
+          }
+        }
+      }
+      &>a{
+        font-size:11px;
+        width:60px;
+        padding:4px 5px;
+        margin-left:255px;
+        margin-top:3px;
+      }
+    }
+
+    .btn-group{
+      position:absolute;
+      bottom:0px;
+      left:0px;
+      right:0px;
+      height:40px;
+      border-top:1px solid #ddd;
+
+      .btn{
+        float:right;
+        margin-right:25px;
+        margin-top:5px;
+        &:last-of-type{
+          margin-right:0px;
+        }
+      }
+    }
+  }
+}
+/*****************************************************************  manage attribute
+*********************************************************************/
+.kpi-library[type="attribute"][for="kpi"]{
+  right:auto;
+  left:-999em;
+  display: block !important;
+  &>div{
+    left:-999em;
+    right:auto;
+    display:block !important;
+    $height:450px;
+    $width:550px;
+    $margin-left:18px;
+    $margin-bottom:10px;
+    $border:1px solid #C8C8C8;
+    $box-shadow:0 0 3px #FFFFFF inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+    width:$width;
+    height:$height;
+    margin-left:- $width/2;
+    margin-top:- $height/2;
+    .select-div{
+      width:300px;
+      display:block;
+      margin-left:$margin-left;
+      margin-bottom:$margin-bottom;
+      &:first-of-type{
+        margin-top:40px;
+      }
+    }
+    textarea{
+      $width:230px;
+      $height:43px;
+      min-width:$width;
+      width:$width;
+      max-width:$width;
+      min-height:$height;
+      height:$height;
+      max-height:$height;
+      margin-left:$margin-left;
+      margin-bottom:$margin-bottom;
+      border:$border;
+      box-shadow:$box-shadow;
+    }
+    &>input{
+      border:1px solid #9d9d9d;
+      display:block;
+      margin-left:$margin-left;
+      margin-bottom:$margin-bottom;
+      padding:6px 5px;
+      border:$border;
+      box-shadow:$box-shadow;
+    }
+
+    .auto-form-label{
+      $font-size:13px;
+      position:absolute;
+      right:15px;
+      top:40px;
+      width:240px;
+      border:$border;
+      height:68px;
+      overflow-y:auto;
+      @include border-radius-same(4px);
+      box-shadow:$box-shadow;
+      ul{
+        display:block;
+        li{
+          display:inline-block;
+          margin-right:6px;
+          //margin-bottom:2px;
+          height:15px;
+          span{
+            font-size:$font-size;
+            color:$blue;
+          }
+          i{
+            margin-left:2px;
+            pointer-events:auto;
+            cursor:pointer;
+            color:#222;
+            font-size:$font-size - 2;
+            &:hover{
+              color:$red;
+            }
+          }
+          input{
+            font-size:$font-size;
+            border:none;
+            box-shadow:none;
+            -moz-box-shadow:none;
+            -webkit-box-shadow:none;
+            width:100px;
+            margin:0px;
+            padding:2px 3px;
+
+
+          }
+        }
+
+      }
+    }
+    .instrument-form-label{
+      position:absolute;
+      right:15px;
+      top:112px;
+      font-size:11px;
+      color:#9d9d9d;
+    }
+    .is-calculate-block{
+      position:absolute;
+      right:15px;
+      top:120px;
+      width:240px;
+      &>label{
+        font-size:13px;
+        position:relative;
+        top:-3px;
+      }
+
+      .calculate-type-box{
+        //border:1px solid #ddd;
+        border-radius:3px;
+        -webkit-border-radius:3px;
+        -moz-border-radius:3px;
+        width:230px;
+        margin-left:0;
+        height:124px;
+        display:none;
+
+        .select-div{
+          $width:220px;
+          width:$width;
+          margin-left:0px;
+          margin-top:5px;
+          margin-bottom:2px;
+          select{
+            width:$width;
+          }
+        }
+
+        label{
+          color:rgba(255,255,255,1);
+          background-color:$blue;
+          $width:20px;
+          text-align:center;
+          width:$width;
+          height:$width;
+          display:inline-block;
+          cursor:pointer;
+          margin-right:3px;
+          transition:color 0.25s ease-out;
+          font-size:18px;
+          position:relative;
+          @include border-radius-same(3px);
+          top:4px;
+          &:hover{
+            background:$blue-hover;
+          }
+          &:nth-of-type(1){
+            margin-left:0px;
+            top:7px;
+          }
+          &:nth-of-type(2){
+            top:7px;
+          }
+          &:nth-of-type(3){
+            top:4px;
+            font-size:15px;
+          }
+          &:nth-of-type(4){
+            top:7px;
+          }
+          &:nth-of-type(5){
+            font-size:15px;
+          }
+          &:nth-of-type(6){
+            font-size:15px;
+          }
+        }
+
+        textarea{
+          $width:210px;
+          $height:100px;
+          min-width:$width;
+          width:$width;
+          max-width:$width;
+
+          height:$height;
+          min-height:$height;
+          max-height:$height+110;
+
+          margin-left:0px;
+          margin-top:21px;
+          padding:5px 4px;
+          font-size:13px;
+          font-weight:lighter;
+          font-family:"open-sans";
+          background-color:white;
+        }
+
+      }
+    }
+  }
+}
+
+
+
+.attribute-position{
+  position:absolute;
+  height:24px;
+  bottom:0px;
+  left:0px;
+  p{
+    width:70%;
+    overflow-x:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    display:inline-block;
+    float:left;
+    font-size:11px;
+    color:$green;
+    line-height:20px;
+    span{
+      margin-right:5px;
+    }
+  }
+  .btn{
+    float:left;
+    display:inline-block;
+    padding:3px 8px;
+    font-size:10px;
+    margin-left:70px;
+  }
+  &[type="myKPI"]{
+    right:0px;
+    bottom:-6px;
+    left:23px;
+    p{
+      width:90%;
+    }
+  }
+}
+
+.attribute-block[type="edit"]
+{
+  height:230px !important;
+  border:1px solid #ddd;
+  padding:8px;
+  ul{
+
+    li{
+      padding:0px 4px !important;
+      border-bottom:1px solid #ddd;
+      label{
+        display:inline-block;
+        width:380px;
+        font-size:12px;
+        line-height:19px;
+        margin-top:5px;
+        @include text-overflow;
+      }
+      i{
+        margin-top:5px !important;
+        margin-right:20px !important;
+      }
+    }
+  }
+}
+.add-attribute{
+  position:absolute;
+  top:305px;
+  width:290px;
+  left:156px;
+  input{
+    padding:4px 5px;
+    float:left;
+    font-size:13px;
+  }
+  .btn{
+    padding:7px;
+    height:15px;
+    float:left;
+    font-size:12px;
+    margin:0px;
+    @include border-radius-same(0px);
+  }
 }
