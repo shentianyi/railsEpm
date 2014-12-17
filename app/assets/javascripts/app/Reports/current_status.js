@@ -33,8 +33,8 @@ define(["jquery","./share","../../func-module/format_time","reportsData","svgLoa
         }
     }
     function self_init(){
-        var template={},
-            data=MyData.current_status();
+        var data=MyData.current_status();
+
         var current_status_loader=new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
         var left = document.getElementById("report-menu").getBoundingClientRect().right,
             top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
