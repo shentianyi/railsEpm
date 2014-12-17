@@ -85,6 +85,11 @@ shim:
    jquery.colorPicker:
       deps: ["jquery"]
       exports: "jQuery.fn.colorPicker"
-
+   highmaps:
+      deps: ["jquery.highmaps"]
+   highcharts:
+      deps: ["jquery.highcharts"]
+   highstock:
+      deps: ["jquery.highstock"]
 
 

@@ -1,4 +1,4 @@
-define(["base","jquery.highcharts"],function(Base){
+define(["base","jquery.highmaps","jquery.highcharts"],function(Base){
     Highcharts.dateFormats = {
         W: function (timestamp) {
             var d = new Date(timestamp);

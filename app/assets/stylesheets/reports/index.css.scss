@@ -13,7 +13,7 @@ $list-width:220px;
   height:calc( 100% - 70px );
   position:relative;
   section{
-    background:lighten($nav-dark,4%);
+    background:$sidebar;
     @include box-shadow-inset(-3px,0px,8px,rgba(0,0,0,0.1));
     height:100%;
     position:relative;

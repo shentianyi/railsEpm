@@ -2,21 +2,23 @@
 <div class="story-set-index">
   <div class="left-part">
     <div class="area">
-      <div class="header"></div>
       <div class="title">
-        <!--<a><i class="icon icon-folder-open"></i></a>-->
-        <p><a><i class="icon icon-folder-open"></i></a> All My Discussions</p>
-        <a class="btn btn-primary" href="/story_sets/new"><i class="icon icon-plus"></i> Create Discussion</a>
+        <p>All My Discussions</p>
+        <a class="btn btn-primary" href="/story_sets/new">Create Discussion</a>
       </div>
+
       <div class="projects">
         <% @story_sets.each do |story_set| %>
             <a class="item" href="<%= story_story_set_path(story_set) %>">
               <span>
-                <i class="ico icon-comments"></i>
+                <i class="icon icon-comments"></i>
               </span>
               <span>
                 <p title="<%= story_set.title %>"><%= story_set.title %></p>
                 <p title="<%= story_set.description %>"><%= story_set.description %></p>
+              </span>
+              <span>
+                <i class="icon icon-chevron-right"></i>
               </span>
             </a>
         <% end %>

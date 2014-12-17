@@ -1,8 +1,8 @@
 define(["base","jquery.highmaps"],function(Base){
+
     var setting_option={
         chart: {
             type: 'heatmap'
-
         },
         credits:{
             enabled:false
