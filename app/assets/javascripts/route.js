@@ -81,6 +81,12 @@ define(function(require){
             })
             return
         }
+        if(url_parameters[2]==="story"){
+            require(["./app/Story_sets/story"],function(app){
+                app.init()
+            })
+            return
+        }
         require(["./app/Story_sets/index"],function(app){
             app.init()
         })
