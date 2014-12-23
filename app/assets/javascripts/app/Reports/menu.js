@@ -177,7 +177,7 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                     {
                         report_snap: {
                             desc: value ,
-                            type: Report.option.type,
+                            type: Share.option.type,
                             data: JSON.stringify( Share.serializeToDataJson() )
                         }
                     },
@@ -185,11 +185,18 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                         if (data.result) {
                             $("#snap-shot-remove").click();
                             var type=data.content.type+"";
-                            var template='<div class="snap-li" snap="'+data.content.id+'" type="'+type+'">'+
+                            var template=' <div class="snap-li" snap="'+data.content.id+'" type="'+type+'">'+
+                                '<div class="left">'+
                                 '<p>'+data.content.desc+'</p>'+
-                                '<p>'+'right now'+'</p>'+
-                                '</div>'
-                            $("#snap-groups").prepend(template);
+                                    '<p>'+'right now'+'</p>'+
+                                    '</div>'+
+                                        '<div class="right">'+
+                                            '<span class="big"></span>'+
+                                            '<span class="small"></span>'+
+                                            '<span class="small"></span>'+
+                                        '</div>'+
+                                    '</div>'
+                            $("#snap-groups .snap-li").last.after(template);
                             Snap.init();
                         }
                     }, 'json');

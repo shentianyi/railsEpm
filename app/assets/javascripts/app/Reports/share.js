@@ -14,7 +14,8 @@ define({
         return  this.report.serializeToDataJson();
     },
     serializeToJSONString : function () {
-        return JSON.stringify(this.serializeToDataJson());
+        var DataJson=this.report.serializeToDataJson();
+        return JSON.stringify(DataJson);
     },
     data : {},
     type : {

@@ -56,21 +56,12 @@ define(["jquery","./share","../../func-module/format_time","reportsData","svgLoa
                 container:"data_container",
                 nameArray:["CF1","CF2","CF3","CF4"],
                 special_option:{
-                    plotOptions:{
-                        heatmap:{
-                            dataLabels: {
-                                formatter:function(){
-                                    return "<span class='w'>"+this.point.name+"</span><br />"
-                                            +"<b>"+this.point.value+"</b>"
-                                }
-                            }
-                        }
-                    },
-                    tooltip: {
-                        formatter: function () {
-                            return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
-                                this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
-                        }
+                    colorAxis: {
+                        stops: [
+                            [0, 'rgb(244,109,67)'],
+                            [0.5, 'rgb(255,255,191)'],
+                            [1, 'rgb(102,189,99)']
+                        ]
                     }
                 }
             },

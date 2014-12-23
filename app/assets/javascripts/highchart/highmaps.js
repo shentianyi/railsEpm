@@ -45,9 +45,14 @@ define(["base","jquery.highmaps"],function(Base){
                     style: {
                         textShadow: 'none',
                         HcTextStroke: null
+                    },
+                    formatter:function(){
+                        return "<span class='w'>"+this.point.name+"</span><br />"
+                            +"<b>"+this.point.value+"</b>"
                     }
                 }
-            }
+            },
+
         },
         series: [{
 

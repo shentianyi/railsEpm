@@ -1,4 +1,4 @@
-define(["base","jquery.highmaps","jquery.highcharts"],function(Base){
+define(["base","jquery.highcharts"],function(Base){
     Highcharts.dateFormats = {
         W: function (timestamp) {
             var d = new Date(timestamp);
@@ -171,6 +171,14 @@ define(["base","jquery.highmaps","jquery.highcharts"],function(Base){
                     symbol: "circle"
                 }
             },
+            heatmap:{
+                dataLabels: {
+                    formatter:function(){
+                        return "<span class='w'>"+this.point.name+"</span><br />"
+                            +"<b>"+this.point.value+"</b>"
+                    }
+                }
+            },
             area:{
                 fillColor : {
                     linearGradient : {
@@ -188,7 +196,7 @@ define(["base","jquery.highmaps","jquery.highcharts"],function(Base){
                 }
             }
         },
-        series:{},
+        series: [{}],
         xAxis: {
             lineWidth: 0,
             tickWidth: 1,
@@ -360,6 +368,55 @@ define(["base","jquery.highmaps","jquery.highcharts"],function(Base){
             if(config.stacking){
                 my_setting_option.plotOptions.column.stacking='normal';
             }
+            var chart=procedure(config,data,my_setting_option);
+            return chart;
+        },
+        heatmap:function(config,data){
+            config.row=config.row==undefined?5:config.row;
+            var my_setting_option=Base.deepCopy(setting_option,{}),
+                myData=[],
+                myDataItem={},
+                column=Math.ceil(data.length/config.row),
+                lastCount=data.length % config.row,
+                dataCount= 0,
+                xCategrioesArray=[],
+                yCategrioesArray=[];
+            for(var i=config.row-1;i>=0;i--){
+                myDataItem.y=i;
+                yCategrioesArray.push("");
+                if(i===0){
+                    column=lastCount===0?column:lastCount;
+                }
+                for(var j=0;j<column;j++){
+                    dataCount++;
+                    myDataItem.x=j;
+                    myDataItem.value=data[dataCount];
+                    myDataItem.name=config.nameArray?(config.nameArray[dataCount]?config.nameArray[dataCount]:""):"";
+                    var dataItem=Base.deepCopy(myDataItem,{});
+                    myData.push(dataItem);
+                }
+            }
+            var columnLength=Math.ceil(data.length/config.row);
+            for(var i=0;i<columnLength;i++){
+                xCategrioesArray.push("");
+            }
+            my_setting_option.series[0].data=myData;
+            my_setting_option.xAxis.categories=xCategrioesArray;
+            my_setting_option.yAxis.categories=yCategrioesArray;
+            my_setting_option.chart.type="heatmap";
+            my_setting_option.yAxis={
+                title: null,
+                gridLineColor:"rgba(0,0,0,0)"
+            };
+            my_setting_option.colorAxis={
+                stops: [
+                    [0, 'rgb(244,109,67)'],
+                    [0.5, 'rgb(255,255,191)'],
+                    [1, 'rgb(102,189,99)']
+                ],
+                    min: 0,
+                    max:100
+            };
             var chart=procedure(config,data,my_setting_option);
             return chart;
         }

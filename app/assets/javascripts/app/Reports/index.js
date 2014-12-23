@@ -5,7 +5,10 @@ define(["jquery","./share","svgLoader","jquery.scroll","./menu"],function($,Shar
         option.type_string = type;
         return option;
     }
-    $("#my-reports").mCustomScrollbar({axis:"y"});
+    $("#my-reports").mCustomScrollbar({
+        axis:"y",
+        theme:"dark"
+    });
     Share.loader=new SVGLoader( document.getElementById( 'preloader' ), { speedIn : 100 } );
     return{
         init:function(){
@@ -15,6 +18,10 @@ define(["jquery","./share","svgLoader","jquery.scroll","./menu"],function($,Shar
             Share.option = get_option_by_type(type);
             require([file_route],function(app){
                 app.init();
+                $("#snap-groups").mCustomScrollbar({
+                    axis:"y",
+                    theme:"dark"
+                });
             });
         }
     }
