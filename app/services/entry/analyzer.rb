@@ -45,6 +45,10 @@ module Entry
 
     private
     def call_data_service
+      #
+      # puts '-----------------------------------params'
+      # puts self.params
+      # puts '-----------------------------------*'
       if self.params[:report].blank?
         call_meta_data_service
       else
