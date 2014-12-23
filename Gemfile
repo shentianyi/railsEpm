@@ -112,6 +112,6 @@ gem 'chinese_pinyin'
 # Front-end module
 gem 'seajs-rails'
 
-# gem 'thrift'
-# gem 'thrift_client'
-# gem 'clear_insight'
+gem 'thrift'
+gem 'thrift_client'
+gem 'clear_insight'
