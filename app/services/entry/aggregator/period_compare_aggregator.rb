@@ -66,7 +66,6 @@ module Entry
 
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
         property_ids=properties.keys
-        puts self.data_module
         self.data.each do |d|
           key=[]
           property_ids.each do |id|
@@ -74,7 +73,6 @@ module Entry
           end
 
           date=date_parse_proc.call(d['_id']['date'])
-          puts date
           self.data_module[key].each { |v|
 
             v[date]= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value']) } if self.data_module.has_key?(key)

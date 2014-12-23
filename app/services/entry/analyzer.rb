@@ -10,7 +10,15 @@ module Entry
     # almost for old apis
     # it would be changed by ui requires
     def analyse
-      call_data_service
+      puts '-----------------------------------analyse params'
+      puts self.params
+      puts '-----------------------------------*'
+       a= call_data_service
+      puts a
+      puts '-------'
+    #  puts analyse_with_table.to_json
+    #   puts detail.to_json
+      a
     end
 
     # chart and table data
@@ -32,29 +40,45 @@ module Entry
       end
       self.params[:property_map_group]=ordered
       self.params[:data_module]=Entry::DataService::PERIOD_COMPARE_TABLE
-      call_compare_data_service
+
+      puts '-----------------------------------analyse params'
+      puts self.params
+      puts '-----------------------------------*'
+      a= call_compare_data_service
+      puts a.to_json
+      puts '-------'
+      #  puts analyse_with_table.to_json
+      #   puts detail.to_json
+      a
+
     end
 
     def period_compares
       self.params[:data_module]=Entry::DataService::PERIOD_COMPARE_CHART
       self.params[:compare_size]=self.params[:compare_size] || 10
       self.params.delete(:property_map_group) if self.params.has_key?(:property_map_group)
-      call_compare_data_service
+      # call_compare_data_service
+      puts '-----------------------------------analyse params'
+      puts self.params
+      puts '-----------------------------------*'
+      a= call_compare_data_service
+      puts a.to_json
+      puts '-------'
+      #  puts analyse_with_table.to_json
+      #   puts detail.to_json
+      a
     end
 
 
     private
     def call_data_service
 
-      puts '-----------------------------------params'
-      puts self.params
-      puts '-----------------------------------*'
       if self.params[:report].blank?
         call_meta_data_service
       else
-       if self.params[:property].blank?
-         self.params[:property]={}
-       end
+        if self.params[:property].blank?
+          self.params[:property]={}
+        end
         if self.params[:report]=='ok'
           return get_ok_result
         elsif self.params[:report]=='nok'
@@ -80,13 +104,13 @@ module Entry
       nok=get_nok_result
       percents=[]
       unit=[]
-      ok[:current].each_with_index do |v,i|
-       total=v+nok[:current][i]
-       if total==0
-         percents << 0
-       else
-         percents << ((v*100/total))
-       end
+      ok[:current].each_with_index do |v, i|
+        total=v+nok[:current][i]
+        if total==0
+          percents << 0
+        else
+          percents << ((v*100/total))
+        end
         unit << '%'
       end
       ok[:current]=percents
