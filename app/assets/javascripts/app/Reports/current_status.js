@@ -1,4 +1,4 @@
-define(["jquery","./share","../../func-module/format_time","reportsData","svgLoader","colorPicker","highmaps"],function($,Share,format_time,MyData,SVGLoader,ColorPicker,Highmaps){
+define(["jquery","../../func-module/format_time","reportsData","svgLoader","colorPicker","highmaps"],function($,format_time,MyData,SVGLoader,ColorPicker,Highmaps){
     function show_extra_section(tag,current_status_loader){
         current_status_loader.show();
         if(tag==="target"){

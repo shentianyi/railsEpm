@@ -1,69 +1,21 @@
-define(["base","jquery.highmaps"],function(Base){
-
-    var setting_option={
-        chart: {
-            type: 'heatmap'
-        },
-        credits:{
-            enabled:false
-        },
-        title: {
-            text:""
-        },
-        xAxis: {
-            lineColor:"rgba(0,0,0,0)",
-            tickWidth: 0
-        },
-        yAxis: {
-            title: null,
-            gridLineColor:"rgba(0,0,0,0)"
-        },
-        colorAxis: {
-            stops: [
-                [0, 'rgb(244,109,67)'],
-                [0.5, 'rgb(255,255,191)'],
-                [1, 'rgb(102,189,99)']
-            ],
-            min: 0,
-            max:100
-        },
-        tooltip: {
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
-                        this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
-                }
+define(["base","./highchart/highmaps_standard_option","jquery.highmaps"],function(Base,Standard){
+    function change_attribute(original,change){
+        for(var key in change){
+            if(Object.prototype.toString.apply(change[key])==="[object Object]"){
+                change_attribute(original[key],change[key]);
             }
-        },
-        plotOptions:{
-            heatmap:{
-                borderWidth: 1,
-                borderColor:"rgba(0,0,0,0.3)",
-                dataLabels: {
-                    enabled: true,
-                    color: '#222',
-                    style: {
-                        textShadow: 'none',
-                        HcTextStroke: null
-                    },
-                    formatter:function(){
-                        return "<span class='w'>"+this.point.name+"</span><br />"
-                            +"<b>"+this.point.value+"</b>"
-                    }
-                }
-            },
-
-        },
-        series: [{
-
-        }]
+            else{
+                original[key]=change[key];
+            }
+        }
     }
     return{
         //data is an array
         //config:{ row:integer , data:array , nameArray:array , special_option:same to official doc}
         heatmap:function(config,data){
+            //to construct row and line
             config.row=config.row==undefined?5:config.row;
-            var my_setting_option=Base.deepCopy(setting_option,{}),
+            var my_setting_option=Base.deepCopy(Standard.setting_option,{}),
                 myData=[],
                 myDataItem={},
                 column=Math.ceil(data.length/config.row),
@@ -93,18 +45,9 @@ define(["base","jquery.highmaps"],function(Base){
             my_setting_option.series[0].data=myData;
             my_setting_option.xAxis.categories=xCategrioesArray;
             my_setting_option.yAxis.categories=yCategrioesArray;
+            my_setting_option.chart.type="heatmap";
             if(config.special_option){
                 change_attribute(my_setting_option,config.special_option);
-            }
-            function change_attribute(original,change){
-                for(var key in change){
-                    if(Object.prototype.toString.apply(change[key])==="[object Object]"){
-                        change_attribute(original[key],change[key]);
-                    }
-                    else{
-                        original[key]=change[key];
-                    }
-                }
             }
             $("#"+config.container).highcharts(my_setting_option);
             return $("#"+config.container).highcharts();

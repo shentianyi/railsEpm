@@ -1,4 +1,4 @@
-define(["jquery","dhtmlx.grid","highcharts","reportsData","chosen","./share"],function($,Grid,Highcharts,Data,Chosen,Share){
+define(["jquery","dhtmlx.grid","highcharts","reportsData","chosen"],function($,Grid,Highcharts,Data,Chosen){
     function generate_grid(data){
         var dpv_grid_template={
             container:"data_container",
@@ -52,7 +52,7 @@ define(["jquery","dhtmlx.grid","highcharts","reportsData","chosen","./share"],fu
             Chosen.single_update("deffect-date");
 
             $("#to-excel").on("click",function(){
-                grid.toChartExcel(Share.export_bt_chart_excel_url);
+
             });
             $("#retrieve-data").on('click', function () {
 

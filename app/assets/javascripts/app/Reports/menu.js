@@ -1,9 +1,11 @@
 define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
-    function click(type,callback){
+    function render(type,callback){
         $.ajax({
             url:"/reports/"+type+"/ajax",
             type:"GET",
             success:function(data){
+                $("#my-reports li[number="+type+"]").find("a").addClass("active");
+                Share.current_type = type;
                 if(callback){
                     callback(data);
                 }
@@ -11,82 +13,6 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
         })
     }
 
-    var url = window.location.href.split('/');
-    var report_part = url[url.length-1].split('#');
-    if(report_part.length == 2){
-        var part = Share.type[report_part[1]];
-        click(part,function(data){
-            $("#my-reports a[menu="+report_part[1]+"]").addClass("active");
-            Share.current_menu = part;
-            $("#report-content").html(data);
-        });
-    }
-    else{
-        var part = Share.type['current_status'];
-        click(part,function(data){
-            $("#my-reports a[menu='current_status']").addClass("active");
-            Share.current_menu = part;
-            $("#report-content").html(data);
-            window.location.href +="#current_status";
-        });
-    }
-    $('body')
-        .on("click","#my-reports a",function(event) {
-            var part = Share.type[$(this).attr("menu")];
-            if(part == Share.current_menu){
-                return;
-            }
-            if(event.preventDefault){
-                event.preventDefault()
-            }
-            else{
-                window.event.returnValue=false;
-            }
-            $("#my-reports li a").removeClass("active");
-            $(this).addClass("active");
-            var href = $(this).attr("href");
-            var left = document.getElementById("report-menu").getBoundingClientRect().right,
-                top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
-            $(".pageload-overlay svg").css('left', left).css("top",top);
-            Share.loader.show();
-            window.location.href =  $(this).attr("href");
-            click(part,function(data){
-                Share.current_menu = part;
-                setTimeout(function(){
-                    $("#report-content").html(data);
-                    window.location.href = href;
-                    setTimeout(function(){
-                        var target_js=href.substring(1),
-                            file_href="app/Reports/"+target_js;
-                        require([file_href],function(app){
-                            app.init();
-                        });
-                        Share.loader.hide();
-                    },200)
-
-                },924);
-            });
-        })
-        .on("click","#reports_subscribe",function(){
-            var left = document.getElementById("report-menu").getBoundingClientRect().right,
-                top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
-            $(".pageload-overlay svg").css('left', left).css("top",top);
-            Share.loader.show();
-            $("#my-reports li a").removeClass("active");
-            $.ajax({
-                url:"/reports/subscription",
-                type:"GET",
-                success:function(data){
-                    setTimeout(function(){
-                        $("#report-content").html(data);
-                        require(["app/Reports/subscription"],function(app){
-                            app.init();
-                        })
-                        Share.loader.hide()
-                    },600);
-                }
-            })
-        })
 //        .on("click","#add-to-storyset",function(){
 //            if($('#story-title').val()){
 //                $("#back-pop").addClass("show")
@@ -147,63 +73,145 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
 //                }
 //            });
 //        });
-//snap
-    $('body')
-        .on("click","#snap-shot-button",function(event){
-            var e=Base.adapt_event(event).event;
-            var left= e.clientX,
-                top= e.clientY;
-            $("#snap_block").css("left",left).css("top",top-170);
-            $("#snap-shot-desc").focus();
-        })
-        .on("keyup","#snap-shot-desc",function(event){
-            var e=Base.adapt_event(event).event;
-            if(e.keyCode===13){
-                $("#snap-shot-btn").click();
-            }
-            else if(e.keyCode===27){
-                $("#snap-shot-remove").click();
-            }
-        })
-        .on("click","#snap-shot-remove",function(){
-            $("#snap-shot-desc").val("").blur();
-            $("#snap_block").css("left","-999em");
-        })
-        .on("click","#snap-shot-btn",function(){
-            var value=$.trim($('#snap-shot-desc').val());
-            if(value.length>0){
-                $.post(
-                    '/report_snaps',
-                    {
-                        report_snap: {
-                            desc: value ,
-                            type: Share.option.type,
-                            data: JSON.stringify( Share.serializeToDataJson() )
-                        }
-                    },
-                    function (data) {
-                        if (data.result) {
-                            $("#snap-shot-remove").click();
-                            var type=data.content.type+"";
-                            var template=' <div class="snap-li" snap="'+data.content.id+'" type="'+type+'">'+
-                                '<div class="left">'+
-                                '<p>'+data.content.desc+'</p>'+
-                                    '<p>'+'right now'+'</p>'+
-                                    '</div>'+
-                                        '<div class="right">'+
-                                            '<span class="big"></span>'+
-                                            '<span class="small"></span>'+
-                                            '<span class="small"></span>'+
-                                        '</div>'+
-                                    '</div>'
-                            $("#snap-groups .snap-li").last.after(template);
-                            Snap.init();
-                        }
-                    }, 'json');
-            }
-            else{
-                Base.MessageBox("Please fill the description", "top", "warning");
-            }
-        });
 
+
+//        .on("click","#snap-shot-btn",function(){
+//            var value=$.trim($('#snap-shot-desc').val());
+//            if(value.length>0){
+//                $.post(
+//                    '/report_snaps',
+//                    {
+//                        report_snap: {
+//                            desc: value ,
+//                            type: Share.option.type,
+//                            data: JSON.stringify( Share.serializeToDataJson() )
+//                        }
+//                    },
+//                    function (data) {
+//                        if (data.result) {
+//                            $("#snap-shot-remove").click();
+//                            var type=data.content.type+"";
+//                            var template=' <div class="snap-li" snap="'+data.content.id+'" type="'+type+'">'+
+//                                '<div class="left">'+
+//                                '<p>'+data.content.desc+'</p>'+
+//                                    '<p>'+'right now'+'</p>'+
+//                                    '</div>'+
+//                                        '<div class="right">'+
+//                                            '<span class="big"></span>'+
+//                                            '<span class="small"></span>'+
+//                                            '<span class="small"></span>'+
+//                                        '</div>'+
+//                                    '</div>'
+//                            $("#snap-groups .snap-li").last.after(template);
+//                            Snap.init();
+//                        }
+//                    }, 'json');
+//            }
+//            else{
+//                Base.MessageBox("Please fill the description", "top", "warning");
+//            }
+//        });
+     return{
+         init:function(){
+             $(document).ready(function(){
+                 var url = window.location.href.split('/');
+                 var report_part = url[url.length-1].split('#'),
+                     type;
+                 if(report_part.length == 2){
+                     var href_for_match="";
+                     for(var i=0;i<$("#my-reports li").length;i++){
+                         href_for_match=$("#my-reports li").eq(i).find("a").attr("href");
+                         if(href_for_match.indexOf(report_part[1])!==-1){
+                             type=$("#my-reports li").eq(i).attr("number");
+                             render(type,function(data){
+                                 $("#report-content").html(data);
+                             });
+                             return ;
+                         }
+                     }
+                 }
+                 else{
+                     type=$("#my-reports li").eq(0).attr("number");
+                     render(type,function(data){
+                         $("#report-content").html(data);
+                     });
+                 }
+             });
+             $('body')
+                 .on("click","#my-reports a",function(event) {
+                     console.log("here")
+                     Base.stop_propagation(event);
+                     if($(this).hasClass("active")){
+                         return ;
+                     }
+                     $("#my-reports li a").removeClass("active");
+                     $(this).addClass("active");
+                     //to show slider animation
+                     var left = document.getElementById("report-menu").getBoundingClientRect().right,
+                         top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
+                     $(".pageload-overlay svg").css('left', left).css("top",top);
+                     Share.loader.show();
+                     //render content
+                     var type=$(this).parent("li").attr("number"),
+                         href=$(this).attr("href");
+
+                     render(type,function(data){
+                         setTimeout(function(){
+
+                             $("#report-content").html(data);
+                             setTimeout(function(){
+                                 var target_js=href.substring(1),
+                                     file_href="app/Reports/"+target_js;
+                                 require([file_href],function(app){
+                                     app.init();
+                                 });
+                                 Share.loader.hide();
+                             },200)
+                         },924);
+                     })
+                 })
+                 .on("click","#reports_subscribe",function(){
+                     var left = document.getElementById("report-menu").getBoundingClientRect().right,
+                         top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
+                     $(".pageload-overlay svg").css('left', left).css("top",top);
+                     Share.loader.show();
+                     $("#my-reports li a").removeClass("active");
+                     $.ajax({
+                         url:"/reports/subscription",
+                         type:"GET",
+                         success:function(data){
+                             setTimeout(function(){
+                                 $("#report-content").html(data);
+                                 require(["app/Reports/subscription"],function(app){
+                                     app.init();
+                                 })
+                                 Share.loader.hide()
+                             },600);
+                         }
+                     })
+                 })
+                 // >>>>>>>>>>>>>>>>>>>>>>  snap
+                 .on("click","#snap-shot-button",function(event){
+                     var e=Base.adapt_event(event).event;
+                     var left= e.clientX,
+                         top= e.clientY;
+                     $("#snap_block").css("left",left).css("top",top-170);
+                     $("#snap-shot-desc").focus();
+                 })
+                 .on("keyup","#snap-shot-desc",function(event){
+                     var e=Base.adapt_event(event).event;
+                     if(e.keyCode===13){
+                         $("#snap-shot-btn").click();
+                     }
+                     else if(e.keyCode===27){
+                         $("#snap-shot-remove").click();
+                     }
+                 })
+                 .on("click","#snap-shot-remove",function(){
+                     $("#snap-shot-desc").val("").blur();
+                     $("#snap_block").css("left","-999em");
+                 })
+             ;
+         }
+     }
 })
