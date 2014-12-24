@@ -53,74 +53,6 @@ module Entry
       return attrs
     end
 
-    #function upload_doc
-    #params
-    #@records:Hash ,kpi ids,values and attributes
-    #e.g. not need every kpis match the attribute,it will fetch
-    #create and update
-    #records:{
-    #    attrs:["attr1","attr2","attr3"],
-    #    attr_vals:[["1","2","3"],["2","4","6"]],
-    #    kpis:["2","3","5"],
-    #    values:[["1","3","5"],["2","3","43"]],
-    #    email:"IT_User@cz-tek.com"
-    #}
-    #remove
-    #records:{
-    #    entry_ids:["1","2","3"]
-    #}
-    #@operator:String
-    #"create","update","remove"
-    def upload_doc records, operator
-      #need to validate all kpis and attributes
-      #msg = validate_records(records,operator)
-      #if !msg.result
-      #  return msg
-      #end
-      kpi_entries = filter(records, operator)
-      case operator
-        when 'create'
-          insert_entries(kpi_entries, KpiEntry)
-        when 'update'
-          update_entries(kpi_entries, KpiEntry)
-        when 'remove'
-          remove_entries(kpi_entries, KpiEntry)
-        else
-      end
-    end
-
-    #@function api_insert
-    #call this func before validation
-    #@params records
-    #record : {
-    # attr1:val,
-    # attr2:val,
-    # kpi_id: 1
-    # date: date
-    # value: 100
-    # email: IT@cz-tek.com
-    # ...
-    # }
-    def api_insert record
-      kpi = Kpi.find_by_id record['kpi_id']
-      fetch_attrs = kpi.kpi_properties.pluck(:name) & record.keys
-      #default we think this is true
-      k = KpiEntry.new
-      #base fileds
-      k.fields.keys.each {
-        |attr|
-        puts attr
-        k[attr] = record[attr] if record[attr]
-      }
-      #kpi_properties
-      attr = {}
-      kpi.kpi_properties.each {|p| attr[p.name] = p.id}
-      fetch_attrs.each {|f|
-        k[attr[f]] = record[f]
-      }
-      k.save
-    end
-
     #@function
     #insert or update an entry
     #call this before validate
@@ -139,7 +71,7 @@ module Entry
       attrs = attrs.merge(entry[:base_attrs])
 
       #fetch kpi_properties
-      kpi = Kpi.find_by_id(attrs['kpi_id'])
+      kpi = Kpi.includes(:kpi_properties).find_by_id(attrs['kpi_id'])
       if kpi && !entry[:kpi_properties].nil?
         properties = {}
         kpi.kpi_properties.each {|p|
@@ -237,7 +169,7 @@ module Entry
       records[:kpi_ids].each_index do |index|
         records[:attr_vals].each_index do |val_index|
           entry_attrs = []
-          kpi_name = records[:kpis][index]
+          kpi_name = records[:Kpis][index]
           #1. find all kpi properties with name and id
           kpi = Kpi.find_by_name(kpi_name)
           kpi.kpi_properties.each {|attr|
@@ -287,7 +219,7 @@ module Entry
       records[:kpi_ids].each_index do |index|
         records[:attr_vals].each_index do |val_index|
           entry_attrs = []
-          kpi_name = records[:kpis][index]
+          kpi_name = records[:Kpis][index]
           #1. find all kpi properties with name and id
           kpi = Kpi.find_by_name(kpi_name)
           kpi.kpi_properties.each {|attr|

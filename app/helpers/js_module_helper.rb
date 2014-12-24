@@ -1,0 +1,2 @@
+module JsModuleHelper
+end

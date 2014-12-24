@@ -1,39 +1,45 @@
-<section class="daily_dpv" id="daily_dpv">
-  <div class="left" id="daily_dpv_left">
-      <div id="chart_dpv_one" class="chart_dpv_one"></div>
-      <div id="data_container" class="data_container" style="height: 200px"></div>
-      <div id="chart_dpv_two" class="chart_dpv_two"></div>
-
+<%=stylesheet_link_tag "reports/daily_dpv" %>
+<div class="template2">
+  <div class="left">
+    <section class="content">
+      <div class="block">
+        <div id="chart_dpv_one" class="inner"></div>
+      </div>
+      <div class="block">
+        <div  class="inner">
+          <div id="data_container" style="width:100%;height:100%"></div>
+        </div>
+      </div>
+      <div class="block">
+        <div id="chart_dpv_two"  class="inner"></div>
+      </div>
+    </section>
   </div>
   <div class="right">
-    <div class="condition">
-      <div class="condition_block">
-        <label>Condition</label>
-        <p>Model</p>
-        <select multiple class="chosen-select" data-placeholder=" " id="deffect-model">
-        </select>
-        <p>Phase</p>
-        <select multiple class="chosen-select" data-placeholder=" " id="deffect-phase">
-        </select>
-        <p>Deffect Date</p>
-        <select multiple class="chosen-select" data-placeholder=" " id="deffect-date">
-        </select>
-        <a id="retrieve-data" class="btn btn-primary retrieve_data">Retrieve Data</a>
+    <section class="condition" id="condition">
+      <p>Condition</p>
+      <p class="intro">Model</p>
+      <select multiple class="chosen-select" data-placeholder=" " id="deffect-model"></select>
+      <p class="intro">Phase</p>
+      <select multiple class="chosen-select" data-placeholder=" " id="deffect-phase">
+      </select>
+      <p class="intro">Deffect Date</p>
+      <select multiple class="chosen-select" data-placeholder=" " id="deffect-date">
+      </select>
+      <a id="retrieve-data" class="btn btn-primary retrieve_data">Retrieve Data</a>
+      <div class="export">
+        <p>Export to</p>
+        <a class="excel-btn excel-btn-normal" id="to-excel"></a>
       </div>
-      <div class="condition_block">
-        <label>Export to</label>
-        <a class="btn btn-success btn_excel" onclick="export_bt_report_chart_excel()">Excel</a>
-      </div>
-      <div class="condition_block">
-        <label>Snapshot</label>
-        <%= render 'snap'%>
-      </div>
-    </div>
 
+    </section>
+    <section class="snaps" id="snap-groups">
+      <% @snaps.each do |snap| %>
+          <div class="snap-li" snap="<%= snap.id %>" type="<%= snap.type_string %>">
+            <p><%= snap.desc %></p>
+            <p><%= time_ago_in_words(snap.created_at.localtime) %> ago</p>
+          </div>
+      <% end %>
+    </section>
   </div>
-</section>
-<script>
-  $(document).ready(function(){
-      Report.init("daily_dpv");
-  })
-</script>
+</div>

@@ -10,20 +10,9 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//=require jquery-1.8.2.min
-//=require jquery_ujs
-//=require jquery.tipsy
-//=require jquery-csshooks
-//=require brilliantech.base
-//=require Template
-//=require chosen.jquery.min
-//=require wayne-base
-//=require jquery.icheck.min
-//=require jquery.sortable.min
-//=require jquery.ba-resize.min
-//=require i18n
-//=require i18n/translations
-//=require Log
-//=require jquery.scrollUp.min
-//=require mustache.min
-//=require popModal.min
+
+require(["./route","./share"],function(route,share){
+    if(window.location.href.indexOf("user_sessions/new")===-1){
+        share.init();
+    }
+});

@@ -1,0 +1,21 @@
+@import "../help.css.scss";
+.manage-left-content{
+  &>.right{
+    position:relative;
+
+  }
+}
+.manage-user-add[id="user-edit"]{
+  $width:200px;
+  width:$width;
+  position:absolute;
+  z-index:10;
+  left:- $width;
+  top:0px;
+  bottom:0px;
+  width:200px;
+  background:rgba(251,251,251,0.8);
+  transition:left 0.35s ease-out;
+  @include box-sizing-border;
+  border-right:1px solid rgba(0,0,0,0.1);
+}

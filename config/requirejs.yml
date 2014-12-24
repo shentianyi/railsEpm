@@ -1,0 +1,95 @@
+paths:
+   jquery: "libs/jquery-1.8.2.min"
+   mustache: "libs/mustache"
+   chart: "libs/Chart.min"
+   lowchart: "simple_chart/chart_generate"
+   base: "func-module/wayne_base"
+   jquery.icheck: "libs/jquery.icheck.min"
+   icheck: "func-module/icheck"
+   jquery.sortable: "libs/jquery.sortable.min"
+   jquery.tipsy: "libs/jquery.tipsy"
+   jquery.baresize: "libs/jquery.ba-resize.min"
+   jquery.chosen: "libs/chosen.jquery.min"
+   chosen: "func-module/chosen"
+   bootstrap.datepicker: "libs/bootstrap-datepicker"
+   bootstrap.datetimepicker: "libs/bootstrap-datetimepicker.min"
+   datepicker: "func-module/datepicker"
+   datetimepicker: "func-module/datetimepicker"
+   jquery.fileupload: "libs/jquery.fileupload"
+   jquery.ui.widget: "libs/jquery.ui.widget"
+   jquery.scroll: "libs/jquery.mCustomScrollbar"
+   jquery.sparkline: "libs/jquery.sparkline.min"
+   sparkline: "func-module/sparkline"
+   jquery.highcharts: "libs/highcharts"
+   jquery.highmaps: "libs/highmaps"
+   jquery.highstock: "libs/highstock"
+   highcharts: "highchart/highcharts"
+   highstock: "highchart/highstock"
+   highmaps: "highchart/highmaps"
+   dhtmlx.origin.dataview: "libs/dhtmlxdataview"
+   dhtmlx.origin.grid: "libs/dhtmlxgrid"
+   dhtmlx.dataview: "dhtmlx/dataview"
+   dhtmlx.grid: "dhtmlx/grid"
+   format_time: "func-module/format_time"
+   svgLoader: "preload/svgLoader"
+   reportsData: "data_pipe/reports"
+   jquery.colorPicker: "libs/jquery.colorPicker"
+   colorPicker: "func-module/colorPicker"
+
+shim:
+   chart:
+      exports: "Chart"
+   jquery.icheck:
+      deps: ["jquery"]
+      exports: "jQuery.fn.iCheck"
+   jquery.sortable:
+      deps: ["jquery"]
+      exports: "jQuery.fn.sortable"
+   jquery.tipsy:
+      deps: ["jquery"]
+      exports: "jQuery.fn.tipsy"
+   jquery.baresize:
+      deps: ["jquery"]
+      exports: "jQuery.fn.resize"
+   jquery.chosen:
+      deps: ["jquery"]
+      exports: "jQuery.fn.chosen"
+   bootstrap.datepicker:
+      deps: ["jquery"]
+      exports: "jQuery.fn.datepicker"
+   bootstrap.datetimepicker:
+      deps: ["jquery"]
+      exports: "jQuery.fn.datetimepicker"
+   jquery.fileupload:
+      deps: ["jquery",jquery.ui.widget]
+      exports: "jQuery.fn.fileupload"
+   jquery.sparkline:
+      deps: ["jquery"]
+      exports: "jQuery.fn.sparkline"
+   jquery.highcharts:
+      deps: ["jquery"]
+      exports: "Highcharts"
+   jquery.highstock:
+      deps: ["jquery"]
+      exports: "Highcharts"
+   jquery.highmaps:
+      deps: ["jquery"]
+      exports: "Highcharts"
+   dhtmlx.origin.dataview:
+      exports: "dhtmlXDataView"
+   dhtmlx.origin.grid:
+      exports: "dhtmlXGridObject"
+   jquery.scroll:
+      deps: ["jquery"]
+      exports: "jQuery.fn.mCustomScrollbar"
+   jquery.colorPicker:
+      deps: ["jquery"]
+      exports: "jQuery.fn.colorPicker"
+   highmaps:
+      deps: ["jquery.highmaps"]
+   highcharts:
+      deps: ["jquery.highcharts"]
+   highstock:
+      deps: ["jquery.highstock"]
+
+

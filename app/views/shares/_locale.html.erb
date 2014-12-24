@@ -7,18 +7,3 @@
     <!--<li lan="de">Deutsch</li>-->
   </ul>
 </li>
-
-<script type="text/javascript">
-  $("body").on("click","#menu-select-language li",function(){
-      var value=$(this).attr("lan"),text=$(this).text();
-      if(value!=$("#select-language>span").attr("lan")){
-          changelocale(value,function(data){
-              if(data.result){
-                  $("#select-language>span").attr("lan",value);
-                  $("#select-language>span").text(text).attr("value",value);
-                  window.location = '/welcome';
-              }
-          });
-      }
-  });
-</script>

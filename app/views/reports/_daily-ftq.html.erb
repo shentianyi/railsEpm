@@ -1,17 +1,24 @@
-<section class="daily-ftq" >
-  <div class="header" id="daily-ftq-header">
+<%=stylesheet_link_tag "reports/daily_ftq" %>
+<div class="template1">
+  <section class="condition" id="condition">
+    <p>Condition</p>
     <p>Export to:</p>
     <a class="btn btn-success btn_excel" onclick="export_bt_report_chart_excel()">Excel</a>
-  </div>
-  <div id="chart_container" ></div>
-  <div id="data_container" class="data_container" height="160px"></div>
-  <%= render 'snap'%>
-</section>
-<% content_for :javascript_includes do %>
-    <%= javascript_include_tag "reports/daily_ftq" %>
-<% end %>
-<script>
-  $(document).ready(function(){
-      Report.init("daily_ftq");
-  });
-</script>
+  </section>
+  <section class="content">
+    <div id="chart_container" class='chart'>
+
+    </div>
+    <div class="grid">
+      <div id="data_container" style="width:100%;height:100%; border-width:0px !important;"></div>
+    </div>
+  </section>
+  <section class="snaps" id="snap-groups">
+    <% @snaps.each do |snap| %>
+        <div class="snap-li" snap="<%= snap.id %>" type="<%= snap.type_string %>">
+          <p><%= snap.desc %></p>
+          <p><%= time_ago_in_words(snap.created_at.localtime) %> ago</p>
+        </div>
+    <% end %>
+  </section>
+</div>

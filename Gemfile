@@ -115,3 +115,4 @@ gem 'seajs-rails'
 gem 'thrift'
 gem 'thrift_client'
 gem 'clear_insight'
+

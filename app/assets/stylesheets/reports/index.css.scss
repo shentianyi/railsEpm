@@ -1,0 +1,127 @@
+// Place all the styles related to the Reports controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "../help.css.scss";
+@import "../libs/jquery.mCustomScrollbar.min.css";
+@import "./menu.css.scss";
+// #left part
+$main-height:600px - 70px;
+$list-width:220px;
+.snap_block{
+  position:fixed;
+  z-index:9999;
+  height:120px;
+  width:240px;
+  background:#fff;
+  padding:8px;
+  left:-999em;
+  @include box-shadow(3px,3px,4px,rgba(0,0,0,0.9));
+  @include border-radius-same(4px);
+  border:1px solid rgba(0,0,0,0.4);
+  .icon-remove{
+    color:$red;
+    pointer-events:auto;
+    cursor:pointer;
+    font-size:16px;
+    float:right;
+    &:hover{
+      color:$red-hover;
+    }
+  }
+  p{
+    clear:both;
+    text-align: left;
+    padding-left:3px;
+    font-size:13px;
+    color:#666;
+    margin-bottom:1px;
+  }
+  .btn{
+    font-size:13px;
+    padding:7px 14px;
+    margin-top:9px;
+  }
+}
+
+// #right part
+.report-content{
+  @include box-sizing-border;
+  float:left;
+  height:calc( 100% - 70px );
+  width:calc( 100% - 230px );
+}
+
+//set the table background
+div.gridbox.gridbox_dhx_skyblue{
+  .objbox{
+    table{
+      background:#fff;
+    }
+    background:rgba(0,0,0,0);
+    //background:-moz-linear-gradient(#e2efff, #d3e7ff);
+    //background:-webkit-linear-gradient(#e2efff, #d3e7ff);
+  }
+}
+//add to discussion
+.report_center_back_pop{
+  .choose-project-team{
+    $width:540px;
+    $height:410px;
+    margin-top:- $height / 2;
+    margin-left:- $width / 2;
+    width:$width;
+    height:$height;
+    @include border-radius-same(3px);
+    &>div{
+      padding:8px 6px;
+    }
+    .basic_info{
+      &:after{
+        @include after-clear;
+      }
+      .basic_left{
+        @include box-sizing-border;
+        width:50%;
+        float:left;
+        overflow-y:auto;
+      }
+      .basic_right{
+        @include box-sizing-border;
+        width:50%;
+        float:left;
+        overflow-y:auto;
+        p{
+          padding-left:0px;
+        }
+        textarea{
+          $width:225px;
+          width:$width;
+          max-width:$width;
+          min-width:$width;
+        }
+      }
+    }
+    .choose-by-select{
+      &>p{
+        color:$blue;
+      }
+    }
+    .choose-by-create{
+      border-top-width:0px;
+      position:relative;
+      &:before{
+        content:"-------------------------------------------------------------------- OR --------------------------------------------------------------------";
+        position:absolute;
+        top:0px;
+        left:0px;
+        right:8px;
+        text-align:center;
+        color:#9d9d9d;
+        font-size:11px;
+      }
+      &>p{
+        color:$blue;
+      }
+    }
+  }
+}

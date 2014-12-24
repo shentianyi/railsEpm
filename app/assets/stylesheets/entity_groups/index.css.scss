@@ -1,0 +1,179 @@
+@import "help.css.scss";
+@import "../manage/manage_three_column.css.scss";
+/********************************************************************************************************* 分类系列
+*******************************************************************************************************************/
+.manage-left-menu[type="entity"] li:first-of-type{
+  text-align:center;
+  font-weight:lighter;
+  font-size:15px;
+  color:rgba(0, 0, 0, 0.65);
+  padding:29px 0 1px;
+}
+/********************************************************************************************************* 右边的头部
+*******************************************************************************************************************/
+.manage_three_column{
+  &>.left{
+    .manage-left-content{
+      &>.right{
+        .manage-btn-group[special='view']{
+          top:18px;
+          a{
+            width:120px;
+            bottom:-30px;
+            left:-2px;
+          }
+        }
+      }
+    }
+  }
+}
+.entity_groups_right{
+  position:relative;
+}
+/********************************************************************************************************* 右边的内容部分
+*******************************************************************************************************************/
+.assign-entity-wrap{
+  position:relative;
+  top:75px;
+}
+.assign-entity-wrap>ul{
+  list-style-type:none;
+  padding:0 0 0 60px;
+  margin:0px;
+}
+.assign-entity-wrap>ul>li{
+  padding:8px 0;
+  border-bottom:1px solid #ddd;
+  width:50%;
+  position:relative;
+}
+.assign-entity-wrap>ul>li:first-of-type{
+  padding:6px 0 8px;
+}
+.assign-entity-wrap>ul>li>h3{
+  font-weight:lighter;
+  font-size:18px;
+  color:#5FA9DA;
+  margin:0px;
+  cursor:pointer;
+  transition:color 0.35s ease-out;
+}
+.assign-entity-wrap>ul>li>h3:hover{
+  color:#F5A133;
+}
+.assign-entity-wrap>ul>li>h3:hover+i{
+  display:block;
+}
+.assign-entity-wrap>ul>li>i{
+  position:absolute;
+  left:-29px;
+  top:11px;
+  color:rgba(0,0,0,0.3);
+  /*display:none;*/
+  pointer-events:auto;
+  cursor:pointer;
+}
+.assign-entity-wrap>ul>li>i:hover{
+  display:block;
+  color:rgba(0,0,0,0.7)
+}
+/*********************************************************************************************************  添加部分
+*******************************************************************************************************************/
+.manage-user-add[special="entity"]{
+  background-color:#333;
+  transition:left 0.35s ease-out;
+  top:0px;
+  position: absolute;
+  left:-200px;
+  width:200px;
+  height:100%;
+  overflow-y: auto;
+  &>i{
+    color:white;
+  }
+  &>p{
+    margin-top:32px;
+    cursor:default;
+    text-align:center;
+    color:#ddd;
+    font-size:22px;
+  }
+  &>ul{
+    margin:0;
+    padding:37px 0 0 0px;
+    list-style-type: none;
+    h3{
+      font-weight:lighter;
+      font-size:16px;
+      color:#5194CD;
+      margin:0px;
+      padding:12px 5px;
+      word-break:break-all;
+      word-wrap:break-word;
+      text-align:center;
+      cursor:pointer;
+      transition:color 0.3s ease-out;
+      &:hover{
+        color:#F5A133;
+      }
+    }
+  }
+}
+
+/*2014.2 new add(my view)*/
+.manage_three_column{
+  &>.left .manage-left-content{
+    &>.left{
+      .manage-left-menu[type="entity_groups"]{
+        li:first-of-type{
+          text-align:center;
+          font-weight:lighter;
+          font-size:15px;
+          color:rgba(0, 0, 0, 0.65);
+          padding:29px 0 1px;
+        }
+      }
+    }
+  }
+}
+.manage-user-add.manage-entity-add{
+  &>i{
+    cursor:pointer;
+    float:right;
+    pointer-events:auto;
+    margin-right:10px;
+    margin-top:5px;
+  }
+}
+.manage-user-add.user-share-list{
+  &>i{
+    cursor:pointer;
+    float:right;
+    pointer-events:auto;
+    margin-right:10px;
+    margin-top:5px;
+  }
+}
+.manage-entity-add>ul{
+  padding-top:5px !important;
+}
+
+.user-share-list>h4{
+  color:rgba(255,255,255,0.8);
+  text-align:center;
+  font-size:17px;
+  font-weight:200;
+}
+.user-share-list>h4:first-of-type{
+  margin-top:50px !important;
+}
+.user-share-list>h4:nth-of-type(2){
+  margin-top:25px !important;
+}
+.user-share-list>ul{
+  padding-top:5px !important;
+}
+.user-share-list>ul>li>h3{
+  padding:6px 5px !important;
+  font-size:14px !important;
+}

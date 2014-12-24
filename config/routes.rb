@@ -1,6 +1,8 @@
 IFEpm::Application.routes.draw do
 
 
+  #only for js module test
+  match "/moduletest",to: 'js_module#test',via: :get
 
   resources :report_snaps
 
@@ -269,7 +271,7 @@ IFEpm::Application.routes.draw do
       match 'kpi_properties/property_value' => :property_value
     end
 
-    controller :kpis do
+    controller :Kpis do
       match 'kpis/kpis_by_category' => :kpis_by_category
       match 'kpis/properties' => :properties
       get :group_properties
@@ -278,7 +280,7 @@ IFEpm::Application.routes.draw do
     resources :entity_groups do
       member do
         get :contacts
-        get :kpis
+        get :Kpis
         get :detail
       end
     end

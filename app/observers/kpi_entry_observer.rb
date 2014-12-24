@@ -69,7 +69,7 @@ class KpiEntryObserver<Mongoid::Observer
     end
 
     #add property val
-    kpi = Kpi.find_by_id(kpi_entry.kpi_id)
+    kpi = Kpi.includes(:kpi_property_items).find_by_id(kpi_entry.kpi_id)
     kpi_entry.dynamic_attributes.each{|attr_id|
       item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first if kpi
       KpiPropertyValue.add_property_value(item.id,kpi_entry[attr_id]) if item
@@ -93,7 +93,7 @@ class KpiEntryObserver<Mongoid::Observer
     end
 
     #desc property val
-    kpi = Kpi.find_by_id(kpi_entry.kpi_id)
+    kpi = Kpi.includes(:kpi_property_items).find_by_id(kpi_entry.kpi_id)
     unless kpi.nil?
       kpi_entry.dynamic_attributes.each{|attr_id|
         item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first
@@ -126,7 +126,7 @@ class KpiEntryObserver<Mongoid::Observer
       collect_entry.update_attribute("original_value",total)
     end
 
-    kpi = Kpi.find_by_id(kpi_entry.kpi_id)
+    kpi = Kpi.includes(:kpi_property_items).find_by_id(kpi_entry.kpi_id)
     (kpi_entry.changed&kpi_entry.dynamic_attributes).each { |attr_id|
       item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first
       if item
