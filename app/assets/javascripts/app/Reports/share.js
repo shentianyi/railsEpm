@@ -5,6 +5,8 @@ define({
         export_bt_chart_excel_url: this.host + 'BTReportService/ChartExcel',
         export_bt_excel_url: this.host + 'BTReportService/Excel'
     },
+    current_type:"",
+    loader:""
 //    option : {},
 //    report : {},
 //    serializeToJson : function () {
@@ -50,6 +52,4 @@ define({
 //        }
 //    },
 //    current_menu:"",
-    current_type:"",
-    loader:""
 })

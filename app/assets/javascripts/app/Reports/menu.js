@@ -75,45 +75,11 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
 //        });
 
 
-//        .on("click","#snap-shot-btn",function(){
-//            var value=$.trim($('#snap-shot-desc').val());
-//            if(value.length>0){
-//                $.post(
-//                    '/report_snaps',
-//                    {
-//                        report_snap: {
-//                            desc: value ,
-//                            type: Share.option.type,
-//                            data: JSON.stringify( Share.serializeToDataJson() )
-//                        }
-//                    },
-//                    function (data) {
-//                        if (data.result) {
-//                            $("#snap-shot-remove").click();
-//                            var type=data.content.type+"";
-//                            var template=' <div class="snap-li" snap="'+data.content.id+'" type="'+type+'">'+
-//                                '<div class="left">'+
-//                                '<p>'+data.content.desc+'</p>'+
-//                                    '<p>'+'right now'+'</p>'+
-//                                    '</div>'+
-//                                        '<div class="right">'+
-//                                            '<span class="big"></span>'+
-//                                            '<span class="small"></span>'+
-//                                            '<span class="small"></span>'+
-//                                        '</div>'+
-//                                    '</div>'
-//                            $("#snap-groups .snap-li").last.after(template);
-//                            Snap.init();
-//                        }
-//                    }, 'json');
-//            }
-//            else{
-//                Base.MessageBox("Please fill the description", "top", "warning");
-//            }
-//        });
+
      return{
          init:function(){
              $(document).ready(function(){
+                 // get current type
                  var url = window.location.href.split('/');
                  var report_part = url[url.length-1].split('#'),
                      type;
@@ -136,10 +102,11 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                          $("#report-content").html(data);
                      });
                  }
+                 //init snap
+                 Snap.init();
              });
              $('body')
                  .on("click","#my-reports a",function(event) {
-                     console.log("here")
                      Base.stop_propagation(event);
                      if($(this).hasClass("active")){
                          return ;
@@ -154,7 +121,6 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                      //render content
                      var type=$(this).parent("li").attr("number"),
                          href=$(this).attr("href");
-
                      render(type,function(data){
                          setTimeout(function(){
 
@@ -164,6 +130,7 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                                      file_href="app/Reports/"+target_js;
                                  require([file_href],function(app){
                                      app.init();
+                                     Share.current_type=type;
                                  });
                                  Share.loader.hide();
                              },200)
@@ -210,6 +177,41 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                  .on("click","#snap-shot-remove",function(){
                      $("#snap-shot-desc").val("").blur();
                      $("#snap_block").css("left","-999em");
+                 })
+                 .on("click","#snap-shot-btn",function(){
+                     var value=$.trim($('#snap-shot-desc').val());
+                     if(value.length>0){
+                         $.post(
+                             '/report_snaps',
+                             {
+                                 report_snap: {
+                                     desc: value ,
+                                     type: Share.current_type,
+                                     data: JSON.stringify( Share.serializeToDataJson() )
+                                 }
+                             },
+                             function (data) {
+                                 if (data.result) {
+                                     $("#snap-shot-remove").click();
+                                     var type=data.content.type+"";
+                                     var template=' <div class="snap-li" snap="'+data.content.id+'" type="'+type+'">'+
+                                         '<div class="left">'+
+                                         '<p>'+data.content.desc+'</p>'+
+                                         '<p>'+'right now'+'</p>'+
+                                         '</div>'+
+                                         '<div class="right">'+
+                                         '<span class="big"></span>'+
+                                         '<span class="small"></span>'+
+                                         '<span class="small"></span>'+
+                                         '</div>'+
+                                         '</div>'
+                                     $("#snap-groups .snap-li").last.after(template);
+                                 }
+                             }, 'json');
+                     }
+                     else{
+                         Base.MessageBox("Please fill the description", "top", "warning");
+                     }
                  })
              ;
          }

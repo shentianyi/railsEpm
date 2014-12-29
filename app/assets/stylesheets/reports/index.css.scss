@@ -15,9 +15,9 @@ $list-width:220px;
   background:#fff;
   padding:8px;
   left:-999em;
-  @include box-shadow(3px,3px,4px,rgba(0,0,0,0.9));
+  @include box-shadow(3px,3px,4px,rgba(0,0,0,0.5));
   @include border-radius-same(4px);
-  border:1px solid rgba(0,0,0,0.4);
+  border:1px solid $border-color;
   .icon-remove{
     color:$red;
     pointer-events:auto;

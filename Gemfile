@@ -114,5 +114,5 @@ gem 'requirejs-rails' , '0.9.3'
 
 gem 'thrift'
 gem 'thrift_client'
-gem 'clear_insight'
+#gem 'clear_insight'
 

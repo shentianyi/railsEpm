@@ -58,8 +58,6 @@ GEM
     chartkick (1.2.4)
     chinese_pinyin (0.6.1.1)
     chronic (0.10.2)
-    clear_insight (0.1.0)
-      thrift (~> 0.9.0)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     coffee-rails (3.2.2)
@@ -191,6 +189,7 @@ GEM
     ruby-ole (1.2.11.7)
     ruby-pinyin (0.4.1)
       rmmseg-cpp (~> 0.2.9)
+    ruby-prof (0.11.3)
     rubyzip (1.0.0)
     rufus-scheduler (3.0.7)
       tzinfo
@@ -271,7 +270,6 @@ DEPENDENCIES
   bson_ext
   cancan
   chinese_pinyin
-  clear_insight
   coffee-rails (~> 3.2.1)
   colorize
   daemons
@@ -293,6 +291,7 @@ DEPENDENCIES
   rest-client
   roo
   ruby-pinyin
+  ruby-prof (~> 0.11.2)
   rufus-scheduler
   sass-rails (~> 3.2.3)
   sidekiq
