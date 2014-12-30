@@ -99,6 +99,12 @@ define(["base","./highchart/highcharts_standard_option","jquery.highcharts"],fun
             highcharts.addSeries(data);
         },
         //for common type of chart , all parameters are optional except container and category
+        Chart:function(config,data){
+            var my_setting_option=Base.deepCopy(Standard.setting_option,{});
+            my_setting_option.chart.type=config.type;
+            var chart=procedure(config,data,my_setting_option);
+            return chart;
+        },
         line:function(config,data){
             var my_setting_option=Base.deepCopy(Standard.setting_option,{});
             my_setting_option.chart.type="line";

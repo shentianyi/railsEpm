@@ -1,4 +1,4 @@
-define(["jquery","../../func-module/format_time","reportsData","svgLoader","colorPicker","highmaps"],function($,format_time,MyData,SVGLoader,ColorPicker,Highmaps){
+define(["jquery","../../func-module/format_time","./report_url","svgLoader","colorPicker","highmaps"],function($,format_time,MyData,SVGLoader,ColorPicker,Highmaps){
     function show_extra_section(tag,current_status_loader){
         current_status_loader.show();
         if(tag==="target"){
@@ -33,8 +33,8 @@ define(["jquery","../../func-module/format_time","reportsData","svgLoader","colo
         }
     }
     function self_init(){
-        var data=MyData.current_status();
-
+        generateChart();
+        //initialize self slide animation
         var current_status_loader=new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
         var left = document.getElementById("report-menu").getBoundingClientRect().right,
             top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
@@ -50,22 +50,6 @@ define(["jquery","../../func-module/format_time","reportsData","svgLoader","colo
             $(".current-status-pageload-overlay svg").css('top', top);
             $(".current-status-pageload-overlay svg").css("height",height+"px");
         });
-        Highmaps.heatmap(
-            {
-                row:6,
-                container:"data_container",
-                nameArray:["CF1","CF2","CF3","CF4"],
-                special_option:{
-                    colorAxis: {
-                        stops: [
-                            [0, 'rgb(244,109,67)'],
-                            [0.5, 'rgb(255,255,191)'],
-                            [1, 'rgb(102,189,99)']
-                        ]
-                    }
-                }
-            },
-            data);
         $("#current-date").text(format_time.current_time());
         $("#current-clock").text(format_time.current_time_clock());
         window.setInterval(function(){
@@ -114,7 +98,6 @@ define(["jquery","../../func-module/format_time","reportsData","svgLoader","colo
 //                var col = $(this).parent().attr("idx");
 //                var color = $(this).css("backgroundColor");
 //                Report.color.ftq[col]=color;
-//
 //                /*refresh data*/
 //                models = ["CF11","CF14","CF16"];
 //                for(var j = 0;j<models.length;j++){
@@ -136,11 +119,39 @@ define(["jquery","../../func-module/format_time","reportsData","svgLoader","colo
 //                Report.refresh();
 //            });
     }
-
+    function generateChart(container,data){
+        var data=data?data:MyData.currentStatus();
+        Highmaps.heatmap(
+            {
+                row:6,
+                container:container?container:"data_container",
+                nameArray:["CF1","CF2","CF3","CF4"],
+                special_option:{
+                    colorAxis: {
+                        stops: [
+                            [0, 'rgb(244,109,67)'],
+                            [0.5, 'rgb(255,255,191)'],
+                            [1, 'rgb(102,189,99)']
+                        ]
+                    }
+                }
+            },
+            data);
+    }
 
     return {
         init:function(){
             self_init();
+        },
+        setSnap:function(){
+
+        },
+        snap:function(data){
+            //需要去存tag，如果是current_status还要存是哪个线
+            generateChart(null,data);
+        },
+        chart:function(container,data){
+            generateChart(container,data);
         }
     }
 })

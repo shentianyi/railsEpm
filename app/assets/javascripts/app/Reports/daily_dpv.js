@@ -17,12 +17,11 @@ define(["jquery","dhtmlx.grid","highcharts","reportsData","chosen"],function($,G
                 grid=generate_grid(data.grid);
                 generate_column(data.dpv_chart);
                 generate_column(data.sdpv_chart);
-
+            //initalize the choose module
             Chosen.init_with_width(
                 ["deffect-model", "deffect-phase", "deffect-date"],
                 [180, 180, 180]
             );
-            //var models = Report.r.collectValues(1);
             var models = ["CF11", "CF14", "CF16"];
             $("#deffect-model option").remove();
             for (i = 0; i < models.length; i++) {

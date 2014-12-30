@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140907170057) do
+ActiveRecord::Schema.define(:version => 20141230080745) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -421,6 +421,7 @@ ActiveRecord::Schema.define(:version => 20140907170057) do
     t.integer  "tenant_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "extra_info"
   end
 
   add_index "report_snaps", ["tenant_id"], :name => "index_report_snaps_on_tenant_id"
