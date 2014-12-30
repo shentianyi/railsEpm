@@ -144,7 +144,17 @@ define(["jquery","../../func-module/format_time","./report_url","svgLoader","col
             self_init();
         },
         setSnap:function(){
-
+            var tag_index,
+                $tags=$("#tags").children(),
+                vehicle_index=document.getElementById("vehicle-select").selectedIndex,
+                i;
+            for(i=0;i<$tags.length;i++){
+                if($tags.eq(i).hasClass("active")){
+                    tag_index=i;
+                    break ;
+                }
+            }
+            return tag_index
         },
         snap:function(data){
             //需要去存tag，如果是current_status还要存是哪个线

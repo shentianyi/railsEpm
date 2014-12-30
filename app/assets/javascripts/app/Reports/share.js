@@ -6,7 +6,8 @@ define({
         export_bt_excel_url: this.host + 'BTReportService/Excel'
     },
     current_type:"",
-    loader:""
+    loader:"",
+    getSnapExtraInfo:null
 //    option : {},
 //    report : {},
 //    serializeToJson : function () {

@@ -13,6 +13,7 @@ define(["jquery","./share","svgLoader","./menu","jquery.scroll"],function($,Shar
             Menu.init();
             require([file_route],function(app){
                 app.init();
+                Share.getSnapExtraInfo=app.setSnap;
                 $("#snap-groups").mCustomScrollbar({
                     axis:"y",
                     theme:"dark"

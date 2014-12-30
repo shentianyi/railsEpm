@@ -157,7 +157,7 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                          }
                      })
                  })
-                 // >>>>>>>>>>>>>>>>>>>>>>  snap
+                 // snap
                  .on("click","#snap-shot-button",function(event){
                      var e=Base.adapt_event(event).event;
                      var left= e.clientX,
@@ -179,6 +179,7 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                      $("#snap_block").css("left","-999em");
                  })
                  .on("click","#snap-shot-btn",function(){
+                     Share.get_snap_extra_info()
                      var value=$.trim($('#snap-shot-desc').val());
                      if(value.length>0){
                          $.post(
@@ -187,6 +188,7 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                                  report_snap: {
                                      desc: value ,
                                      type: Share.current_type,
+                                     extra_info:Share.get_snap_extra_info(),
                                      data: JSON.stringify( Share.serializeToDataJson() )
                                  }
                              },
