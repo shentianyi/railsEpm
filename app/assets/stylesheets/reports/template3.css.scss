@@ -116,10 +116,11 @@ $tag-top:53px;
             @include border-radius-same($width);
           }
         }
-        &:hover span{
+        &:hover span,&.active span{
           background:lighten($yellow,25%);
             @include box-shadow(0px,0px,0px,rgba(0,0,0,0));
         }
+
       }
     }
     .function{

@@ -11,7 +11,7 @@ define(["jquery","../../func-module/format_time","./report_url","svgLoader","col
                 $("#current-status-normal").css("display","none");
                 $("#current-status-target").css("display","block");
                 require(["dhtmlx.grid"],function(Grid){
-                    var data=MyData.current_status_target();
+                    var data=MyData.currentStatusTarget();
                     Grid.render(data,target_config);
                     current_status_loader.hide();
                 })
@@ -31,14 +31,24 @@ define(["jquery","../../func-module/format_time","./report_url","svgLoader","col
                 current_status_loader.hide();
             },700);
         }
+        else if(tag==="current_status"){
+            var $target=$(this).parents(".current-status-wrapper").eq(0);
+            setTimeout(function(){
+                $target.css("display","none");
+                $("#current-status-normal").css("display","block");
+                $("#footer-right div.color-group").remove();
+                current_status_loader.hide();
+            },700);
+        }
     }
     function self_init(){
         generateChart();
         //initialize self slide animation
         var current_status_loader=new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
-        var left = document.getElementById("report-menu").getBoundingClientRect().right,
-            top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
-            height=$("#report-content").height();
+        var left = document.getElementById("content").getBoundingClientRect().left,
+            top = document.getElementById("content").getBoundingClientRect().top,
+            height=$("#content").height(),
+            width=$("#content").width();
         $(".current-status-pageload-overlay svg").css('left', left);
         $(".current-status-pageload-overlay svg").css('top', top);
         $(".current-status-pageload-overlay svg").css("height",height+"px");
@@ -55,6 +65,7 @@ define(["jquery","../../func-module/format_time","./report_url","svgLoader","col
         window.setInterval(function(){
             $("#current-clock").text(format_time.current_time_clock());
         },1000);
+
         $("#vehicle-select").change(function () {
 
         });
@@ -77,19 +88,14 @@ define(["jquery","../../func-module/format_time","./report_url","svgLoader","col
                     current_status_loader.hide();
                 }, 1500);
             })
-            .on("click",".extra_func_btn",function(){
-                var tag=$(this).attr("tag") ;
-                show_extra_section(tag,current_status_loader);
-            })
-            .on("click",".current-status-target-back-btn",function(){
-                current_status_loader.show();
-                var $target=$(this).parents(".current-status-wrapper").eq(0);
-                setTimeout(function(){
-                    $target.css("display","none");
-                    $("#current-status-normal").css("display","block");
-                    $("#footer-right div.color-group").remove();
-                    current_status_loader.hide();
-                },700);
+            //click top menu tag
+            .on("click",".tagItem",function(){
+                if(!$(this).hasClass("active")){
+                    $("#tags").children().removeClass("active");
+                    $(this).addClass("active");
+                    var tag=$(this).attr("tag") ;
+                    show_extra_section(tag,current_status_loader);
+                }
             })
 //            .on("click","#target-setting-footer .color-item",function(){
 //                $(this).siblings().removeClass("active");
@@ -154,11 +160,15 @@ define(["jquery","../../func-module/format_time","./report_url","svgLoader","col
                     break ;
                 }
             }
-            return tag_index
+            return tag_index+"#"+vehicle_index;
         },
-        snap:function(data){
+        snap:function(snap){
             //需要去存tag，如果是current_status还要存是哪个线
-            generateChart(null,data);
+            generateChart(null,snap.data);
+            var indexArray=snap.extra_info.split("#"),
+                tag_index=indexArray[0],
+                vehicle_index=indexArray[1];
+
         },
         chart:function(container,data){
             generateChart(container,data);

@@ -137,43 +137,7 @@
   transition: opacity 0.3s;
 }
 .current-status-wrapper{
-  display:none;
-  height:100%;
-  .wrapper-header{
-    width:100%;
-    height:69px;
-    border-bottom:1px solid rgba(0,0,0,0.2);
-    position:relative;
-    .current-status-target-back-btn{
-      i{
-        font-size:45px;
-        position:relative;
-        top:5px;
-        margin-right:7px;
-      }
-      font-size:25px;
-      font-weight:lighter;
-      color:$blue;
-      cursor:pointer;
-      position:relative;
-      top:5px;
-      left:15px;
-      @include transition(color);
-      &:hover{
-         color:$golden-text;
-      }
-    }
-    &>p{
-      text-align:right;
-      position:absolute;
-      top:21px;
-      right:15px;
-      left:0px;
-      font-size:23px;
-      color:#9d9d9d;
-      pointer-events:none;
-    }
-  }
+  display: none;
   .wrapper-current-body{
     border-width:0px !important;
     background:#fff;
