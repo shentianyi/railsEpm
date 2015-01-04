@@ -179,7 +179,6 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                      $("#snap_block").css("left","-999em");
                  })
                  .on("click","#snap-shot-btn",function(){
-                     Share.get_snap_extra_info()
                      var value=$.trim($('#snap-shot-desc').val());
                      if(value.length>0){
                          $.post(
@@ -188,26 +187,26 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                                  report_snap: {
                                      desc: value ,
                                      type: Share.current_type,
-                                     extra_info:Share.get_snap_extra_info(),
+                                     extra_info:Share.getSnapExtraInfo(),
                                      data: JSON.stringify( Share.serializeToDataJson() )
                                  }
                              },
                              function (data) {
                                  if (data.result) {
-                                     $("#snap-shot-remove").click();
-                                     var type=data.content.type+"";
-                                     var template=' <div class="snap-li" snap="'+data.content.id+'" type="'+type+'">'+
-                                         '<div class="left">'+
-                                         '<p>'+data.content.desc+'</p>'+
-                                         '<p>'+'right now'+'</p>'+
-                                         '</div>'+
-                                         '<div class="right">'+
-                                         '<span class="big"></span>'+
-                                         '<span class="small"></span>'+
-                                         '<span class="small"></span>'+
-                                         '</div>'+
-                                         '</div>'
-                                     $("#snap-groups .snap-li").last.after(template);
+                                     console.log(data)
+//                                     var type=data.content.type+"";
+//                                     var template=' <div class="snap-li" snap="'+data.content.id+'" type="'+type+'">'+
+//                                         '<div class="left">'+
+//                                         '<p>'+data.content.desc+'</p>'+
+//                                         '<p>'+'right now'+'</p>'+
+//                                         '</div>'+
+//                                         '<div class="right">'+
+//                                         '<span class="big"></span>'+
+//                                         '<span class="small"></span>'+
+//                                         '<span class="small"></span>'+
+//                                         '</div>'+
+//                                         '</div>'
+//                                     $("#snap-groups .snap-li").last.after(template);
                                  }
                              }, 'json');
                      }

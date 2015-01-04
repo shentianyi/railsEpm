@@ -7,6 +7,7 @@ define({
     },
     current_type:"",
     loader:"",
+    partial_loader:"",
     getSnapExtraInfo:null
 //    option : {},
 //    report : {},

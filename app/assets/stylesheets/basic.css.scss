@@ -480,12 +480,12 @@ label,p,h1,h2,h3,h4,h5{
 /*********************************************************************************************************  office btn
 *******************************************************************************************************************/
 .excel-btn{
-  background:url("/assets/office-btn/excel-btn");
-  background-size:contain;
-  display:inline-block;
-  &.excel-btn-normal{
-    $width:40px;
-    width:$width;
-    height:$width;
-  }
+  //background:url("/assets/office-btn/excel-btn");
+  //background-size:contain;
+  //display:inline-block;
+  //&.excel-btn-normal{
+  //  $width:40px;
+  //  width:$width;
+  //  height:$width;
+  //}
 }

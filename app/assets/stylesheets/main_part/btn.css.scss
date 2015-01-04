@@ -1,3 +1,4 @@
+@import "../help.css.scss";
 .btn{
   display:block;
   text-align:center;
@@ -65,19 +66,13 @@
     }
   }
   &.btn-warning{
-    background:#eb9541;
     color:#fff;
-    &.linear{
-      background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(235, 149, 65, 0.2) 55%) #eb9541;
-      background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(235, 149, 65, 0.2) 55%) #eb9541;
+      background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(237,180,49, 0.2) 55%) $yellow;
+      background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(237,180,49, 0.2) 55%) $yellow;
       &:hover{
-        background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(235, 149, 65, 0.5) 55%) #eb9541;
-        background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(235, 149, 65, 0.5) 55%) #eb9541;
+        background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(237,180,49, 0.5) 55%) $yellow;
+        background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(237,180,49, 0.5) 55%) $yellow;
       }
-    }
-    &:hover{
-      background:#f6af6a
-    }
   }
   &.btn-small{
     display:inline-block;

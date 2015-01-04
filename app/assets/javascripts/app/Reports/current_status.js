@@ -1,71 +1,51 @@
-define(["jquery","../../func-module/format_time","./report_url","svgLoader","colorPicker","highmaps"],function($,format_time,MyData,SVGLoader,ColorPicker,Highmaps){
-    function show_extra_section(tag,current_status_loader){
-        current_status_loader.show();
-        if(tag==="target"){
+define(["jquery","../../func-module/format_time","./report_url","svgLoader","colorPicker","highmaps","./share"],function($,format_time,MyData,SVGLoader,ColorPicker,Highmaps,Share){
+    function show_extra_section(old_tag,new_tag){
+        Share.partial_loader.show();
+        $("#snap-groups .snap-li").removeClass("active");
+        $(".current-status-wrapper[tag='"+old_tag+"']").css("display","none");
+        $(".current-status-wrapper[tag='"+new_tag+"']").css("display","block");
+        $("#tags").children().removeClass("active");
+        $("#tags").find("[tag='"+new_tag+"']").addClass("active");
+        if(new_tag==="target"){
             var target_config={
                 container:"target_grid_container",
                 header:["Stations","FTQ Status","FTQ Target (double click to modify)"],
                 colTypes:'ro,ro,ed'
             }
             setTimeout(function(){
-                $("#current-status-normal").css("display","none");
-                $("#current-status-target").css("display","block");
-                require(["dhtmlx.grid"],function(Grid){
-                    var data=MyData.currentStatusTarget();
-                    Grid.render(data,target_config);
-                    current_status_loader.hide();
-                })
+//                require(["dhtmlx.grid"],function(Grid){
+//                    var data=MyData.currentStatusTarget();
+//                    Grid.render(data,target_config);
+                    Share.partial_loader.hide();
+//                })
             },700);
         }
-        else if(tag==="all_defects"){
-            setTimeout(function(){
-                $("#current-status-normal").css("display","none");
-                $("#current-status-all-defects").css("display","block");
-                current_status_loader.hide();
-            },700);
+        else if(new_tag==="all_defects"){
+//            setTimeout(function(){
+//
+//                Share.partial_loader.hide();
+//            },700);
         }
-        else if(tag==="key_defects"){
-            setTimeout(function(){
-                $("#current-status-normal").css("display","none");
-                $("#current-status-key-defects").css("display","block");
-                current_status_loader.hide();
-            },700);
+        else if(new_tag==="key_defects"){
+//            setTimeout(function(){
+//
+//                Share.partial_loader.hide();
+//            },700);
         }
-        else if(tag==="current_status"){
-            var $target=$(this).parents(".current-status-wrapper").eq(0);
+        else if(new_tag==="current_status"){
             setTimeout(function(){
-                $target.css("display","none");
-                $("#current-status-normal").css("display","block");
-                $("#footer-right div.color-group").remove();
-                current_status_loader.hide();
+                Share.partial_loader.hide();
             },700);
         }
     }
     function self_init(){
-        generateChart();
-        //initialize self slide animation
-        var current_status_loader=new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
-        var left = document.getElementById("content").getBoundingClientRect().left,
-            top = document.getElementById("content").getBoundingClientRect().top,
-            height=$("#content").height(),
-            width=$("#content").width();
-        $(".current-status-pageload-overlay svg").css('left', left);
-        $(".current-status-pageload-overlay svg").css('top', top);
-        $(".current-status-pageload-overlay svg").css("height",height+"px");
-        $(window).resize(function(){
-            var left = document.getElementById("report-menu").getBoundingClientRect().right,
-                top = document.getElementsByTagName("header")[0].getBoundingClientRect().bottom >= 0 ? document.getElementsByTagName("header")[0].getBoundingClientRect().bottom : 0,
-                height=$("#report-content").height();
-            $(".current-status-pageload-overlay svg").css('left', left);
-            $(".current-status-pageload-overlay svg").css('top', top);
-            $(".current-status-pageload-overlay svg").css("height",height+"px");
-        });
         $("#current-date").text(format_time.current_time());
         $("#current-clock").text(format_time.current_time_clock());
         window.setInterval(function(){
             $("#current-clock").text(format_time.current_time_clock());
         },1000);
-
+        var first_tag=$("#tags .active").attr("tag");
+        $(".current-status-wrapper[tag='"+first_tag+"']").css("display","block");
         $("#vehicle-select").change(function () {
 
         });
@@ -80,21 +60,20 @@ define(["jquery","../../func-module/format_time","./report_url","svgLoader","col
 //                });
             })
             .on("click","#refresh",function(){
-                current_status_loader.show();
+                Share.partial_loader.show();
                 setTimeout(function () {
 //                    Dataview.clear();
 //                    Dataview.render(data[$("#vehicle-select option:selected").text()],template);
 //                    Dataview.itemClick(dataview_click_event);
-                    current_status_loader.hide();
+                    Share.partial_loader.hide();
                 }, 1500);
             })
             //click top menu tag
             .on("click",".tagItem",function(){
                 if(!$(this).hasClass("active")){
-                    $("#tags").children().removeClass("active");
-                    $(this).addClass("active");
-                    var tag=$(this).attr("tag") ;
-                    show_extra_section(tag,current_status_loader);
+                    var old_tag=$("#tags .active").attr("tag"),
+                        new_tag=$(this).attr("tag") ;
+                    show_extra_section(old_tag,new_tag);
                 }
             })
 //            .on("click","#target-setting-footer .color-item",function(){
@@ -124,6 +103,7 @@ define(["jquery","../../func-module/format_time","./report_url","svgLoader","col
 //                }
 //                Report.refresh();
 //            });
+        generateChart();
     }
     function generateChart(container,data){
         var data=data?data:MyData.currentStatus();

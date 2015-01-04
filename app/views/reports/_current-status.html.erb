@@ -8,7 +8,7 @@
       <div class="tagItem" tag="key_station_defects">KEY STATION DEFECTS</div>
     </div>
     <!--current status-->
-    <section id="current_status"  class='current-status-wrapper'>
+    <section class='current-status-wrapper' tag="current_status">
       <div class="condition">
         <div class="header-block">
           <p>First Time Quality (FTQ) Summary Percentage</p>
@@ -33,7 +33,7 @@
       </div>
     </section>
     <!--target-->
-    <section id="target" class='current-status-wrapper'>
+    <section class='current-status-wrapper' tag="target">
       <div id="target_setting" class="wrapper-current-body target">
         <div id="target_grid_container" class="grid_container" style="width:100%;height:100%"></div>
       </div>
@@ -54,13 +54,13 @@
       </div>
     </section>
     <!--all defects-->
-    <section id="all-defects" class='current-status-wrapper'>
+    <section class='current-status-wrapper' tag="all_defects">
       <div class="wrapper-current-body">
         <div id="all_defects" class="data_container"></div>
       </div>
     </section>
     <!--key defects-->
-    <section id="key-defects" class='current-status-wrapper'>
+    <section class='current-status-wrapper' tag="key_station_defects">
       <div class="wrapper-current-body">
         <div id="key_defects" class="data_container"></div>
       </div>
@@ -69,6 +69,7 @@
   <section class="helper">
     <div class="snaps" id="snap-groups">
       <p class="title">Snapshots</p>
+      <a class="btn btn-warning" id="snap-to-now">reset to current</a>
       <% @snaps.each do |snap| %>
           <div class="snap-li" snap="<%= snap.id %>" type="<%= snap.type_string %>">
             <div class="left">
@@ -80,6 +81,7 @@
               <span class="small"></span>
               <span class="small"></span>
             </div>
+            <a class="remove"><i class="icon icon-trash"></i></a>
           </div>
       <% end %>
     </div>
@@ -89,12 +91,7 @@
   </section>
 </div>
 
-<!-- /pageload-overlay -->
-<div id="current_status_loader" class="current-status-pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z">
-  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none">
-    <path d="M30,30 50,30 50,30 30,30 Z"/>
-  </svg>
-</div>
+
 
 </section>
 

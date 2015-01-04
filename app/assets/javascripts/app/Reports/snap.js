@@ -1,4 +1,4 @@
-define(["jquery","base"],function($,Base){
+define(["jquery","base","jquery.scroll"],function($,Base){
     return{
         init:function(){
              $(document).ready(function(){
@@ -12,6 +12,7 @@ define(["jquery","base"],function($,Base){
                         }, 'json');
                     })
                  ;
+
              })
         }
     }

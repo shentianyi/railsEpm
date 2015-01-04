@@ -1,10 +1,8 @@
 define(["jquery","./share","svgLoader","./menu","jquery.scroll"],function($,Share,SVGLoader,Menu){
-
     $("#my-reports").mCustomScrollbar({
         axis:"y",
         theme:"dark"
     });
-    Share.loader=new SVGLoader( document.getElementById( 'preloader' ), { speedIn : 100 } );
     return{
         init:function(){
             var type=window.location.hash.slice(1);
@@ -12,6 +10,23 @@ define(["jquery","./share","svgLoader","./menu","jquery.scroll"],function($,Shar
             var file_route="app/Reports/"+type;
             Menu.init();
             require([file_route],function(app){
+                //initail svg loader
+                Share.loader=new SVGLoader( document.getElementById( 'preloader' ), { speedIn : 100 } );
+                Share.partial_loader=new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
+                var left = document.getElementById("content").getBoundingClientRect().left,
+                    top = document.getElementById("content").getBoundingClientRect().top+1,
+                    height=$("#content").height(),
+                    width=$("#content").width();
+                $(".current-status-pageload-overlay svg").css('left', left);
+                $(".current-status-pageload-overlay svg").css('top', top);
+                $(".current-status-pageload-overlay svg").css("height",height+"px");
+                $(".current-status-pageload-overlay svg").css("width",width+"px");
+                $(window).resize(function(){
+                    var  height=$("#content").height(),
+                        width=$("#content").width();
+                    $(".current-status-pageload-overlay svg").css("height",height+"px");
+                    $(".current-status-pageload-overlay svg").css("width",width+"px");
+                });
                 app.init();
                 Share.getSnapExtraInfo=app.setSnap;
                 $("#snap-groups").mCustomScrollbar({

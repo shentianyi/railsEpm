@@ -59,21 +59,39 @@ $tag-top:53px;
         text-align:right;
         margin:0px;
         font-size:20px;
-        padding-bottom:8px;
         padding-right:3px;
+        padding-bottom:0px;
+      }
+      .btn{
+        font-size: 13px;
+        padding: 5px 19px;
+        margin:0px 0px 14px 0px;
+        float:right;
+
       }
       .snap-li{
         height:80px;
         cursor:pointer;
+        clear:both;
+
+        &.active{
+          .left{
+            p{
+              color:$yellow;
+            }
+          }
+        }
         .left{
           @include box-border(80%);
           padding-top:7px;
           overflow-y:auto;
+          height:100%;
           p{
             margin:0px;
             padding-right:6px;
             text-align:right;
             @include transition(color);
+            @include word-break;
             cursor:pointer;
             &:first-of-type{
               color:#555;
@@ -115,6 +133,12 @@ $tag-top:53px;
             height:$width;
             @include border-radius-same($width);
           }
+        }
+        .remove{
+          position:absolute;
+          top:0px;
+          right:-10px;
+          font-size:12px;
         }
         &:hover span,&.active span{
           background:lighten($yellow,25%);
