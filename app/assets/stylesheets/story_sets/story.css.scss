@@ -1,37 +1,89 @@
 @import "help.css.scss";
 .outer{
   height:calc(100% - 70px);
-  $header-height:50px;
-  $bottom-height:80px;
-  $header-color:lighten($nav-dark,10%);
-  .left{
-     min-height:1px;
+  &>.left{
+    height:calc(100% - 25px);
     @include box-sizing-border;
     float:left;
-    width:calc(100% - 320px);
-    .header{
-      height:$header-height;
-      background: #fff;
-      border-bottom:1px solid $border-color;
+    width:calc(100% - 310px);
+    .canvas-header{
+      height:50px;
+    }
+    .canvas-operation{
+      height:calc(100% - 50px);
+      width:160px;
+      float:left;
+      @include box-sizing-border;
+    }
+    .canvas-main{
+      height:calc(100% - 50px);
+      width:calc(100% - 160px);
+      float:left;
+      @include box-sizing-border;
     }
   }
-  .right{
-    height:100%;
-    @include box-border(320px);
+  &>.right{
+    height:calc(100% - 25px);
+    @include box-border(310px);
     background:#fff;
     border-left:1px solid $border-color;
     .header{
-      height:$header-height;
+      height:140px;
       background: #fff;
       border-bottom:1px solid $border-color;
+      .left{
+        @include box-border(40%);
+        height:100%;
+        position:relative;
+        .avatar{
+          $width:70px;
+          width:$width;
+          height:$width;
+          @include border-radius-same($width);
+          background:url("/assets/403.png") no-repeat center center;
+          position:relative;
+          left:50%;
+          top:20px;
+          margin-left:- $width / 2;
+        }
+        p{
+          text-align: center;
+          margin:0px;
+        }
+      }
+      .right{
+        @include box-border(60%);
+        height:100%;
+      }
     }
     .list{
-      height:calc(100% - 131px);
-
+      height:calc(100% - 221px);
+      .item{
+        height:100px;
+        &:after{
+          @include after-clear;
+        }
+        .avatar{
+          @include box-border(20%);
+        }
+        &.conversation{
+          .content{
+            @include box-border(70%);
+          }
+        }
+        &.attachment{
+          .attachments{
+            @include box-border(70%);
+          }
+        }
+        .operation{
+          @include box-border(10%);
+        }
+      }
     }
     .bottom{
       position:relative;
-      height:$bottom-height;
+      height:80px;
       background:lighten(#9d9d9d,21%);
       a{
         display: inline-block;
@@ -56,6 +108,16 @@
         left: 271px;
         color:rgba(0,0,0,0.12);
       }
+    }
+  }
+  &>.bottom{
+    clear:both;
+    height:25px;
+    background:#222;
+    width:100%;
+    p{
+      margin:0px;
+      color:#fff;
     }
   }
 }

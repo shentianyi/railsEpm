@@ -187,26 +187,32 @@ define(["jquery","./share","base","./snap"],function($,Share,Base,Snap){
                                  report_snap: {
                                      desc: value ,
                                      type: Share.current_type,
-                                     extra_info:Share.getSnapExtraInfo(),
-                                     data: JSON.stringify( Share.serializeToDataJson() )
+                                     extra_info:Share.getSnapInfo().extra_info,
+                                     data: Share.getSnapInfo().data
                                  }
                              },
                              function (data) {
                                  if (data.result) {
-                                     console.log(data)
-//                                     var type=data.content.type+"";
-//                                     var template=' <div class="snap-li" snap="'+data.content.id+'" type="'+type+'">'+
-//                                         '<div class="left">'+
-//                                         '<p>'+data.content.desc+'</p>'+
-//                                         '<p>'+'right now'+'</p>'+
-//                                         '</div>'+
-//                                         '<div class="right">'+
-//                                         '<span class="big"></span>'+
-//                                         '<span class="small"></span>'+
-//                                         '<span class="small"></span>'+
-//                                         '</div>'+
-//                                         '</div>'
-//                                     $("#snap-groups .snap-li").last.after(template);
+                                     var type=data.content.type+"";
+                                     var template=' <div class="snap-li" snap="'+data.content.id+'" type="'+type+'">'+
+                                         '<div class="left">'+
+                                         '<p>'+data.content.desc+'</p>'+
+                                         '<p>'+'right now'+'</p>'+
+                                         '</div>'+
+                                         '<div class="right">'+
+                                         '<span class="big"></span>'+
+                                         '<span class="small"></span>'+
+                                         '<span class="small"></span>'+
+                                         '</div>'+
+                                         '</div>'
+                                     ;
+                                     if($("#snap-groups .snap-li").length===0){
+                                       $("#snap-groups #snap-to-now").after(template);
+                                     }
+                                     else{
+                                         $("#snap-groups .snap-li").eq(0).before(template);
+                                     }
+                                     $("#snap-shot-remove").click();
                                  }
                              }, 'json');
                      }

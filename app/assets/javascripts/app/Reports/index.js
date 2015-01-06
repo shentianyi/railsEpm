@@ -1,7 +1,7 @@
 define(["jquery","./share","svgLoader","./menu","jquery.scroll"],function($,Share,SVGLoader,Menu){
     $("#my-reports").mCustomScrollbar({
         axis:"y",
-        theme:"dark"
+        theme:"minimal-dark"
     });
     return{
         init:function(){
@@ -10,6 +10,15 @@ define(["jquery","./share","svgLoader","./menu","jquery.scroll"],function($,Shar
             var file_route="app/Reports/"+type;
             Menu.init();
             require([file_route],function(app){
+                app.init();
+                //snap method bundle to different type of app
+                Share.getSnapInfo=app.setSnap;
+                Share.getSnap=app.snap;
+                //snap scroll bar
+                $("#snap-groups").mCustomScrollbar({
+                    axis:"y",
+                    theme:"minimal"
+                });
                 //initail svg loader
                 Share.loader=new SVGLoader( document.getElementById( 'preloader' ), { speedIn : 100 } );
                 Share.partial_loader=new SVGLoader( document.getElementById( 'current_status_loader' ), { speedIn : 100 } );
@@ -26,12 +35,6 @@ define(["jquery","./share","svgLoader","./menu","jquery.scroll"],function($,Shar
                         width=$("#content").width();
                     $(".current-status-pageload-overlay svg").css("height",height+"px");
                     $(".current-status-pageload-overlay svg").css("width",width+"px");
-                });
-                app.init();
-                Share.getSnapExtraInfo=app.setSnap;
-                $("#snap-groups").mCustomScrollbar({
-                    axis:"y",
-                    theme:"dark"
                 });
             });
         }

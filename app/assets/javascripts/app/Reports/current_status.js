@@ -6,7 +6,7 @@ define(["jquery","../../func-module/format_time","./report_url","svgLoader","col
         $(".current-status-wrapper[tag='"+new_tag+"']").css("display","block");
         $("#tags").children().removeClass("active");
         $("#tags").find("[tag='"+new_tag+"']").addClass("active");
-        if(new_tag==="target"){
+        if(new_tag==="current_status_target"){
             var target_config={
                 container:"target_grid_container",
                 header:["Stations","FTQ Status","FTQ Target (double click to modify)"],
@@ -127,30 +127,40 @@ define(["jquery","../../func-module/format_time","./report_url","svgLoader","col
 
     return {
         init:function(){
+            //for init
             self_init();
         },
         setSnap:function(){
+            // for get extra info when set snap
             var tag_index,
                 $tags=$("#tags").children(),
                 vehicle_index=document.getElementById("vehicle-select").selectedIndex,
+                current_tag,
                 i;
             for(i=0;i<$tags.length;i++){
                 if($tags.eq(i).hasClass("active")){
                     tag_index=i;
+                    current_tag=$tags.eq(i).attr("tag");
                     break ;
                 }
             }
-            return tag_index+"#"+vehicle_index;
+            return {
+                extra_info:tag_index+"#"+vehicle_index,
+                data:window.sessionStorage[current_tag]
+            };
         },
         snap:function(snap){
+            // for get snap
             //需要去存tag，如果是current_status还要存是哪个线
-            generateChart(null,snap.data);
+            generateChart(null,JSON.parse(snap.data));
             var indexArray=snap.extra_info.split("#"),
                 tag_index=indexArray[0],
                 vehicle_index=indexArray[1];
 
+
         },
         chart:function(container,data){
+            // for generate chart in other part
             generateChart(container,data);
         }
     }

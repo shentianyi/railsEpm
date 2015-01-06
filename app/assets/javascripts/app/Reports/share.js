@@ -8,7 +8,8 @@ define({
     current_type:"",
     loader:"",
     partial_loader:"",
-    getSnapExtraInfo:null
+    getSnapInfo:null,
+    getSnap:null
 //    option : {},
 //    report : {},
 //    serializeToJson : function () {
