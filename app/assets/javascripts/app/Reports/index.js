@@ -1,7 +1,7 @@
 define(["jquery","./share","svgLoader","./menu","jquery.scroll"],function($,Share,SVGLoader,Menu){
     $("#my-reports").mCustomScrollbar({
         axis:"y",
-        theme:"minimal-dark"
+        theme:"dark"
     });
     return{
         init:function(){

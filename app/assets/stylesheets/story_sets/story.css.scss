@@ -1,4 +1,5 @@
 @import "help.css.scss";
+@import "../libs/jquery.mCustomScrollbar.min.css";
 .outer{
   height:calc(100% - 70px);
   &>.left{
@@ -23,101 +24,171 @@
     }
   }
   &>.right{
-    height:calc(100% - 25px);
+    $background:lighten(#a7c0c4,20%);
+    margin-top:5px;
+    height:calc(100% - 30px);
+    background:$background;
+    border-top:1px solid rgba(0,0,0,0.1);
+    @include border-radius(4px,0,0,0);
+    @include box-shadow(-2px,0px,1px,rgba(0,0,0,0.25));
     @include box-border(310px);
-    background:#fff;
-    border-left:1px solid $border-color;
-    .header{
-      height:140px;
-      background: #fff;
-      border-bottom:1px solid $border-color;
-      .left{
-        @include box-border(40%);
-        height:100%;
-        position:relative;
-        .avatar{
-          $width:70px;
-          width:$width;
-          height:$width;
-          @include border-radius-same($width);
-          background:url("/assets/403.png") no-repeat center center;
-          position:relative;
-          left:50%;
-          top:20px;
-          margin-left:- $width / 2;
-        }
-        p{
-          text-align: center;
-          margin:0px;
-        }
-      }
-      .right{
-        @include box-border(60%);
-        height:100%;
-      }
-    }
-    .list{
-      height:calc(100% - 221px);
-      .item{
-        height:100px;
-        &:after{
-          @include after-clear;
-        }
-        .avatar{
+      .header{
+        height:90px;
+        border-bottom:2px solid $blue;
+        .left{
           @include box-border(20%);
-        }
-        &.conversation{
-          .content{
-            @include box-border(70%);
+          height:100%;
+          position:relative;
+          .avatar{
+            $width:48px;
+            width:$width;
+            height:$width;
+            @include border-radius-same(5px);
+            background:url("/assets/placeholdAvatar.png") no-repeat center center;
+            margin:13px auto 2px;
+          }
+          .name{
+            font-size:14px;
+            color:#888;
+            text-align: center;
+            width:100%;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
           }
         }
-        &.attachment{
-          .attachments{
-            @include box-border(70%);
+        .right{
+          @include box-border(80%);
+          height:100%;
+          padding:8px 5px;
+          .project-desc{
+            margin:0px;
+            font-size:14px;
+            width:220px;
+            height:64px;
+            background:rgba(0,0,0,0.05);
+            padding:3px 7px;
+            @include border-radius-same(4px);
+            overflow-y:auto;
           }
         }
-        .operation{
-          @include box-border(10%);
+      }
+      .list{
+        height:calc(100% - 221px);
+        padding:5px 10px;
+        @include box-sizing-border;
+        .item{
+          background:rgba(255,255,255,0.6);
+          border:1px solid rgba(0,0,0,0.2);
+          @include border-radius-same(5px);
+          padding:5px 3px;
+          &.chat{
+            height:100px;
+            .info{
+              table-layout:fixed;
+              height:40%;
+              width:100%;
+              &>div{
+                float:left;
+                position:relative;
+                @include box-sizing-border;
+              }
+              &>div:nth-of-type(1){
+                width:50px;
+                height:100%;
+                .avatar{
+                  $width:35px;
+                  display: block;
+                  width:$width;
+                  height:$width;
+                  @include border-radius-same(5px);
+                  position:relative;
+                  left:50%;
+                  top:50%;
+                  margin-top:- $width / 2;
+                  margin-left: - $width/ 2;
+                  background:url("/assets/placeholdAvatar.png") no-repeat center center;
+                }
+              }
+              &>div:nth-of-type(2){
+                width:150px;
+                p{
+                  margin:0px;
+                  font-size:14px;
+                  @include text-overflow-ellipsis;
+                  &:last-of-type{
+                     color:#999;
+                  }
+                }
+              }
+              &>div:nth-of-type(3){
+                width:calc(100% - 200px);
+                .delete{
+                  color:#999;
+                  float:right;
+                  position:relative;
+                  top:3px;
+                  right:5px;
+                  cursor: pointer;
+                  pointer-events:auto;
+                  @include transition(color);
+                  &:hover{
+                    color:$red;
+                  }
+                }
+
+              }
+            }
+            .chat-content{
+              width:100%;
+              height:60%;
+              font-size:14px;
+              color:#555;
+              padding:4px 3px;
+            }
+          }
         }
       }
-    }
-    .bottom{
-      position:relative;
-      height:80px;
-      background:lighten(#9d9d9d,21%);
-      a{
-        display: inline-block;
-        float:left;
-        margin: 25px 0 0 20px;
-        padding: 5px 9px;
-        @include border-radius(4px,0px,0px,4px);
-        i{
-          font-size:25px;
+      .bottom{
+        position:relative;
+        height:80px;
+        //background:lighten(#9d9d9d,21%);
+        a{
+          display: inline-block;
+          float:left;
+          margin: 25px 0 0 20px;
+          padding: 5px 9px;
+          @include border-radius(4px,0px,0px,4px);
+          i{
+            font-size:25px;
+          }
+        }
+        input{
+          float:left;
+          margin-top:25px;
+          margin-left:0px;
+          @include border-radius(0px,4px,4px,0px);
+        }
+        i.reply{
+          position:absolute;
+          font-size:20px;
+          top: 34px;
+          left: 271px;
+          color:rgba(0,0,0,0.12);
         }
       }
-      input{
-        float:left;
-        margin-top:25px;
-        margin-left:0px;
-        @include border-radius(0px,4px,4px,0px);
-      }
-      i.reply{
-        position:absolute;
-        font-size:20px;
-        top: 34px;
-        left: 271px;
-        color:rgba(0,0,0,0.12);
-      }
-    }
   }
   &>.bottom{
     clear:both;
     height:25px;
-    background:#222;
+    background:#586874;
     width:100%;
     p{
       margin:0px;
-      color:#fff;
+      color:rgba(255,255,255,0.7);
+      font-size:14px;
+      padding-top:3px;
+      padding-left:10px;
     }
   }
 }
