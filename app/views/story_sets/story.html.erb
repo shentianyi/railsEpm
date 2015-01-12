@@ -1,8 +1,26 @@
 <%=stylesheet_link_tag "story_sets/story" %>
 <div class="outer">
   <section class="left">
-    <div class="canvas-header"></div>
-    <div class="canvas-operation"></div>
+    <div class="canvas-header">
+      <div class="left">
+        <a class="btn btn-primary">Back</a>
+        <p>This is a Discussion name</p>
+        <p>Current state: <span class="open">Open</span></p>
+      </div>
+      <div class="right">
+        <p>1 people participate</p>
+        <div class="people" id="people">
+          <div class="item"></div>
+
+        </div>
+      </div>
+    </div>
+    <div class="canvas-info">
+      <p class="attachment">附件 <span>1</span></p>
+      <p class="chart">图表 <span>2</span></p>
+      <p class="weekday">Tuesday</p>
+      <p class="date">2014-01-12</p>
+    </div>
     <div class="canvas-main"></div>
   </section>
   <aside class="right" >
@@ -17,7 +35,8 @@
           malesuada magna mollis euismod. Donec sed odio dui. </div>
       </div>
     </div>
-    <div class='list'>
+    <div class='list' id="conversation-list">
+      <p class="title">All activities</p>
       <div class="item chat">
         <div class="info">
           <div><a class="avatar"></a></div>
@@ -26,7 +45,7 @@
             <p>2015-01-01</p>
           </div>
           <div>
-            <a class="delete"><i class="icon icon-remove"></i></a>
+            <a class="minimal-btn delete"><i class="icon icon-trash"></i></a>
           </div>
         </div>
         <div class="chat-content">
@@ -36,19 +55,21 @@
         </div>
       </div>
       <div class="item attachment">
-        <div class="avatar">
-          <p class="name">wangzixiao</p>
-          <p class="time">2014-01-01</p>
+        <div class="content">
+          <div><i class="icon icon-inbox"></i></div>
+          <div><p>the file name.txt</p></div>
+          <div>
+            <a class="minimal-btn delete"><i class="icon icon-trash"></i></a>
+          </div>
         </div>
-        <div class="attachments"></div>
-        <div class="operate"><i class="icon icon-remove"></i></div>
+        <div class="intro"><p>Wayne upload in 2015-01-02</p></div>
       </div>
     </div>
-    <!--<div class='bottom'>-->
-      <!--<a class="btn"><i class="icon  icon-upload"></i></a>-->
-      <!--<input type="text" />-->
-      <!--<i class="icon icon-reply reply"></i>-->
-    <!--</div>-->
+    <div class='bottom'>
+      <a class="btn"><i class="icon  icon-upload"></i></a>
+      <input type="text" />
+      <i class="icon icon-reply reply"></i>
+    </div>
   </aside>
   <div class="bottom">
     <p>The project was created in 2015.1.1 by Wayne</p>
