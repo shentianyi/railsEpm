@@ -1,5 +1,7 @@
 @import "help.css.scss";
 @import "../libs/jquery.mCustomScrollbar.min.css";
+@import "./listItem.css.scss";
+@import "./canvasMain.css.scss";
 .outer{
   height:calc(100% - 70px);
   &>.left{
@@ -18,15 +20,15 @@
           padding:4px 10px;
           width:150px;
           display:inline-block;
-          margin:5px 10px 3px 10px;
+          margin:9px 10px 3px 10px;
         }
         p{
           font-size:14px;
           color:#444;
           padding-left:10px;
-          margin-bottom:1px;
+          margin-bottom:0px;
           &:first-of-type{
-            font-size:28px;
+            font-size:25px;
           }
           &:last-of-type{
             span{
@@ -70,21 +72,39 @@
       }
     }
     .canvas-info{
-       height:50px;
-       border-top:1px solid $border-color;
-       border-bottom:1px solid $border-color;
-       background:lighten(#a7c0c4,10%);
+      height:50px;
+      width:calc(100% - 2px);
+      border-top:1px solid $border-color;
+      border-bottom:1px solid $border-color;
+      position:relative;
+      background:linear-gradient(top,rgba(167,192,196,0.8) 0%,rgba(167,192,196,0.3) 50%,rgba(255,255,255,0.5) 100%) rgba(167,192,196,0.7);
+      background:-moz-linear-gradient(top,rgba(167,192,196,0.8) 0%,rgba(167,192,196,0.3) 50%,rgba(255,255,255,0.5) 100%) rgba(167,192,196,0.7);
+      background:-webkit-linear-gradient(top,rgba(167,192,196,0.8) 0%,rgba(167,192,196,0.3) 50%,rgba(255,255,255,0.5) 100%) rgba(167,192,196,0.7);
+      @include border-radius(0px,25px,0px,0px);
+      $font-color:darken(#a7c0c4,21%);
       .attachment,.chart{
         float:left;
+        padding:0px 20px 0 0;
+        margin:17px 0 0 10px;
+        color:$font-color;
+        font-size:14px;
       }
       .weekday,.date{
         float:right;
+        color:$font-color;
+        font-size:14px;
+        width:150px;
+        text-align:center;
+        margin-top:6px;
       }
-       //background:linear-gradient(top,#a7c0c4 0%,rgba(255,255,255,0.3) 50%,rgba(255,255,255,0.7) 100%) #a7c0c4;
-       //background:-moz-linear-gradient(top,#a7c0c4 0%,rgba(255,255,255,0.3) 50%,rgba(255,255,255,0.7) 100%) #a7c0c4;
-       //background:-webkit-linear-gradient(top,#a7c0c4 0%,rgba(255,255,255,0.3) 50%,rgba(255,255,255,0.7) 100%) #a7c0c4;
+      .date{
+        position:absolute;
+        right:0px;
+        top:20px;
+      }
     }
     .canvas-main{
+      height:calc(100% - 148px);
 
     }
   }
@@ -97,7 +117,7 @@
     border-left:1px solid rgba(0,0,0,0.1);
     @include border-radius(4px,0,0,0);
     @include box-border(310px);
-    @include box-shadow(-1px,0px,3px,rgba(0,0,0,0.2));
+    @include box-shadow(-1px,0px,2px,#777);
       .header{
         height:90px;
         border-bottom:3px solid $orange;
@@ -150,134 +170,6 @@
           margin-bottom:2px;
           padding-top:3px;
           padding-left:3px;
-        }
-        .item{
-          border-top:1px solid rgba(0,0,0,0.15);
-          border-bottom:1px solid rgba(0,0,0,0.15);
-          background:rgba(255,255,255,0.6);
-          padding:5px 3px;
-          margin-bottom:3px;
-          .minimal-btn{
-            $width:20px;
-            width:$width;
-            height:$width;
-            @include border-radius-same(3px);
-            display:block;
-            float:right;
-            color:#fff;
-            text-align: center;
-            cursor:pointer;
-            @include transition(background);
-            margin-right:5px;
-            margin-top:3px;
-            &.delete{
-              background:$red;
-              &:hover{
-                background:lighten($red,10%);
-              }
-            }
-          }
-          &.chat{
-            height:86px;
-            .info{
-              height:40%;
-              width:100%;
-              @include box-sizing-border;
-              &>div{
-                float:left;
-                position:relative;
-                @include box-sizing-border;
-              }
-              &>div:nth-of-type(1){
-                width:50px;
-                height:100%;
-                .avatar{
-                  $width:35px;
-                  display: block;
-                  width:$width;
-                  height:$width;
-                  @include border-radius-same(5px);
-                  position:relative;
-                  left:50%;
-                  top:50%;
-                  margin-top:- $width / 2;
-                  margin-left: - $width/ 2;
-                  background:url("/assets/placeholdAvatar.png") no-repeat center center;
-                }
-              }
-              &>div:nth-of-type(2){
-                width:150px;
-                p{
-                  margin:0px;
-                  font-size:14px;
-                  @include text-overflow-ellipsis;
-                  &:last-of-type{
-                     color:#666;
-                     font-size:13px;
-                  }
-                }
-              }
-              &>div:nth-of-type(3){
-                width:calc(100% - 200px);
-              }
-            }
-            .chat-content{
-              width:100%;
-              height:60%;
-              font-size:14px;
-              color:#555;
-              padding:4px 3px;
-            }
-          }
-          &.attachment{
-            height:45px;
-            .content{
-              height:70%;
-              width:100%;
-              @include box-sizing-border;
-              &>div{
-                float:left;
-                position:relative;
-                @include box-sizing-border;
-              }
-              &>div:nth-of-type(1){
-                width:50px;
-                height:100%;
-                text-align:center;
-                i{
-                  font-size:27px;
-                  color:$orange;
-                  position:relative;
-                  top:2px;
-                }
-              }
-              &>div:nth-of-type(2){
-                width:200px;
-                height:100%;
-                p{
-                  padding-top:6px;
-                  font-size:15px;
-                  margin:0px;
-                  color:$orange;
-                  text-decoration: underline ;
-                  cursor:pointer;
-                  @include transition(color);
-                  &:hover{
-                    color:$red;
-                  }
-                }
-              }
-              &>div:nth-of-type(3){
-                width:calc(100% - 250px);
-              }
-            }
-            .intro{
-              width:100%;
-              height:30%;
-              font-size:13px;
-              color:#666;
-            }
-          }
         }
       }
       .bottom{

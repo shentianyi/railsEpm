@@ -1,16 +1,12 @@
 define(["jquery","jquery.scroll"],function($){
     function initScroll(){
-        $("#project-desc").mCustomScrollbar({
+        $("#project-desc,#conversation-list,#canvas-main-left,#canvas-main-right").mCustomScrollbar({
             axis:"y",
             theme:"dark"
         });
         $(".chat-content").mCustomScrollbar({
             axis:"y",
             theme:"minimal-dark"
-        });
-        $("#conversation-list").mCustomScrollbar({
-            axis:"y",
-            theme:"dark"
         });
         $("#people").mCustomScrollbar({
             axis:"x", // horizontal scrollbar

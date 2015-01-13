@@ -45,6 +45,7 @@ IFEpm::Application.routes.draw do
   resources :story_sets do
     member do
       get :story
+      get :add_chart
     end
   end
 

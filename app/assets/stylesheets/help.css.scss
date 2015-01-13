@@ -14,6 +14,8 @@ $nav-dark:#353a46;
 $sidebar:lighten($nav-dark,10%);
 $border-color:#e8e8e8;
 $background-grey:#f9f9f9;
+$cyanine:#a7c0c4;
+$discussion-bg:lighten(#a7c0c4,20%);
 @mixin transition($element){
   transition:$element ease-out 0.25s
 }

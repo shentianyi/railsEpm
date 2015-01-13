@@ -11,17 +11,32 @@
         <p>1 people participate</p>
         <div class="people" id="people">
           <div class="item"></div>
-
         </div>
       </div>
     </div>
     <div class="canvas-info">
-      <p class="attachment">附件 <span>1</span></p>
-      <p class="chart">图表 <span>2</span></p>
+      <p class="attachment">Attachments: <span>1</span></p>
+      <p class="chart">Charts: <span>2</span></p>
       <p class="weekday">Tuesday</p>
       <p class="date">2014-01-12</p>
     </div>
-    <div class="canvas-main"></div>
+    <div class="canvas-main">
+      <div class="left" id="canvas-main-left">
+        <p class="title">Operations</p>
+        <ul class="operation-list">
+          <li><a class="yellow" href="/story_sets/<%= @story_set_id %>/add_chart"><i class="icon icon-plus"></i> ADD CHART</a></li>
+          <li><a class="blue"><i class="icon icon-group"></i>INVITE PEOPLE</a></li>
+          <li><a class="blue"><i class="icon icon-ban-circle"></i>CLOSE ISSUE</a></li>
+          <li><a class="red"><i class="icon icon-minus"></i>DELETE</a></li>
+        </ul>
+        <p class="title">Attachments</p>
+        <ul class="attachment-list">
+          <li><a>attachment experiment 1.pdf</a><i class="icon icon-remove"></i></li>
+          <li><a>attachment experiment 2.page</a><i class="icon icon-remove"></i></li>
+        </ul>
+      </div>
+      <div class="right" id="canvas-main-right"></div>
+    </div>
   </section>
   <aside class="right" >
     <div class="header">

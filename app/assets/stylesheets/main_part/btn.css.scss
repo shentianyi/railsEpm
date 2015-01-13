@@ -31,9 +31,13 @@
   }
   &.btn-danger{
     background:#f75460;
-    color:white;
+    background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(247,84,96, 0.2) 55%) #f75460;
+    background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(247,84,96, 0.2) 55%) #f75460;
+    color:#fff;
     &:hover{
-      background:#f56969;
+      background:#f75460;
+      background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(247,84,96, 0.2) 55%) #f75460;
+      background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(247,84,96, 0.2) 55%) #f75460;
     }
   }
   &.btn-primary{

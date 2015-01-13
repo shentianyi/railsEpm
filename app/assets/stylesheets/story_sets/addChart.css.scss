@@ -1,0 +1,64 @@
+@import "../help.css.scss";
+@import "../basic.css.scss";
+.outer{
+  height:calc(100% - 70px);
+  height:-moz-calc(100% - 70px);
+  height:-webkit-calc(100% - 70px);
+  .left{
+    height:100%;
+    position:relative;
+    @include box-border(320px);
+    .panel{
+      position:relative;
+      left:0px;
+      top:1%;
+      height:99%;
+      border-top:1px solid $border-color;
+      border-right:1px solid $border-color;
+      background:$discussion-bg;
+      @include border-radius(0px,10px,0px,0px);
+      .back-btn{
+         margin:15px auto 15px;
+         width:200px;
+      }
+      .title{
+        border-top:1px solid rgba(0,0,0,0.1);
+        border-bottom:1px solid rgba(0,0,0,0.1);
+        padding:6px 0px;
+        text-align:left;
+        font-family:"maven" ;
+        font-size:32px;
+        margin:15px 12px 5px;
+        color:darken($cyanine,10%);
+      }
+      &>input{
+        display:block;
+        margin:12px auto;
+        position:relative;
+        width:260px;
+      }
+      .date-box{
+        width:100%;
+        height:200px;
+        position:absolute;
+        z-index:30;
+        .range{
+          width:100px;
+          height:100px;
+          background: yellow;
+          position:absolute;
+          right:-10px;
+          z-index:10;
+        }
+      }
+    }
+  }
+  .right{
+    float:left;
+    width:calc(100% - 320px);
+    height:100%;
+    @include box-sizing-border;
+    position:relative;
+    z-index:20;
+  }
+}
