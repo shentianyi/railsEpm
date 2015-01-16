@@ -56,6 +56,12 @@
             color:darken($red,20%);
           }
         }
+        .cyanine{
+          color:darken($cyanine,10%);
+          &:hover{
+            color:darken($cyanine,40%);
+          }
+        }
       }
     }
   }

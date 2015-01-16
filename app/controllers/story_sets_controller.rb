@@ -108,5 +108,6 @@ class StorySetsController < ApplicationController
   end
 
   def add_chart
+    @story_set_id=params[:id]
   end
 end

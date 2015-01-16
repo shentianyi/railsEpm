@@ -1,5 +1,7 @@
 @import "../help.css.scss";
 @import "../basic.css.scss";
+@import "../libs/datepicker.css";
+@import "../libs/tipsy.css";
 .outer{
   height:calc(100% - 70px);
   height:-moz-calc(100% - 70px);
@@ -37,18 +39,54 @@
         position:relative;
         width:260px;
       }
+      .date-mark{
+        font-size:18px;
+        color:darken($cyanine,10%);
+        padding-left:23px;
+        margin-top:5px;
+        marign-bottom:0px;
+      }
       .date-box{
         width:100%;
-        height:200px;
-        position:absolute;
-        z-index:30;
-        .range{
-          width:100px;
-          height:100px;
-          background: yellow;
+        height:100px;
+        padding-top:6px;
+        position:relative;
+        .switch-btn{
+          font-size:13px;
+          padding:5px 15px;
+          margin-right:25px;
           position:absolute;
-          right:-10px;
-          z-index:10;
+          right:0px;
+          top:-32px;
+          background:$blue;
+          color:#fff;
+          cursor:pointer;
+          @include border-radius-same(5px);
+        }
+        .range{
+          margin-left:23px;
+          clear:right;
+          &:after{
+            @include after-clear;
+          }
+           input{
+             text-align: left;
+             float:left;
+             width:108px;
+           }
+          span{
+            float:left;
+            display: block;
+            padding:7px 0px;
+            width:32px;
+            text-align:center;
+            background:darken($cyanine,5%);
+            font-size:16px;
+            color:#fff;
+          }
+        }
+        .precise{
+
         }
       }
     }

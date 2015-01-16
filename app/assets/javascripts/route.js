@@ -87,6 +87,12 @@ define(function(require){
             })
             return
         }
+        else if(url_parameters[2]==="add_chart"){
+            require(["./app/Story_sets/add_chart"],function(app){
+                app.init()
+            })
+            return
+        }
         require(["./app/Story_sets/index"],function(app){
             app.init()
         })

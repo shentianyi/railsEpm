@@ -2,16 +2,26 @@
 <section class="outer">
   <div class="left">
     <div class="panel">
-      <a class="btn btn-primary back-btn">Back</a>
+      <a class="btn btn-primary back-btn" href="/story_sets/<%= @story_set_id %>/story">Back</a>
       <p class="title">Generate Chart</p>
       <input placeholder="Type" type="text" />
       <input placeholder="KPI" type="text"  />
       <input placeholder="View" type="text" />
+      <p class="date-mark">Date range</p>
       <div class="date-box">
-        <div class="range">
+        <a class="switch-btn" original-title="switch date type" id="switch-btn"><i class="icon icon-refresh"></i></a>
+        <div class="input-daterange input-group range" id="range-datepicker">
+            <input type="text" class="input-sm form-control" name="start" />
+            <span class="input-group-addon">to</span>
+            <input type="text" class="input-sm form-control" name="end" />
+        </div>
+        <div class="precise">
 
         </div>
       </div>
+      <a class="btn btn-discussion"><i class="icon icon-plus"></i>Add chart</a>
+      <a class="btn btn-discussion"><i class="icon  icon-ban-circle"></i>Clear all</a>
+      <a class="btn btn-success">Generate chart</a>
     </div>
   </div>
   <div class="right"></div>
