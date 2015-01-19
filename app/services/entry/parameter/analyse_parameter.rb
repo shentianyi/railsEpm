@@ -7,7 +7,7 @@ module Entry
       attr_accessor :average, :data_module # sum,average
       attr_accessor :valid
       attr_accessor :report
-      attr_accessor :property_map_group, :reduce_func
+      attr_accessor :base_map_group, :property_map_group, :reduce_func
 
       def initialize(args)
         self.kpi=Kpi.find(args[:kpi_id])
@@ -22,6 +22,7 @@ module Entry
         # for qoros demo
         self.report=args[:report] unless args[:report].blank?
         self.property_map_group=args[:property_map_group]
+        self.base_map_group=['parsed_entry_at']
         #self.map_group =args[:map_group]
         self.reduce_func=args[:reduce_func] if args[:reduce_func]
         self.valid=false
@@ -71,9 +72,14 @@ module Entry
         @total_map_group=self.property_map_group
       end
 
+      def all_map_group
+        return @all_map_group if @all_map_group
+        @all_map_group=self.base_map_group+(self.map_group.nil? ? [] : self.map_group.values)
+      end
+
       def kpi_ids
         return @kpi_ids if @kpi_ids
-        @kpi_ids=self.kpi.is_calculated ? (self.property.blank? ? self.kpi.id : self.kpi.kpi_item_ids): self.kpi.id
+        @kpi_ids=self.kpi.is_calculated ? (self.property.blank? ? self.kpi.id : self.kpi.kpi_item_ids) : self.kpi.id
         return kpi_ids
       end
 
