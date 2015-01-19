@@ -1,0 +1,45 @@
+@import "../manage/manage_no_aside.css.scss";
+@import "../kpis/index.css.scss";
+.manage_no_aside{
+  .manage-left-content{
+    &>.left{
+      .manage-left-menu[type="category"][special="my-kpi"]{
+        li{
+          &:first-of-type{
+            margin-bottom:21px;
+            color: rgba(0, 0, 0, 0.65);
+            font-size: 15px;
+            font-weight: lighter;
+            padding: 29px 0 1px;
+            text-align: center;
+          }
+          &:nth-of-type(2){
+            text-align:center;
+            color:rgba(0,0,0,0.2);
+            padding:7px 24px;
+            cursor:pointer;
+            transition:padding 0.3s ease-out;
+            position:relative;
+            width:auto;
+            margin:auto;
+            height:auto;
+            border-radius:0px;
+            -moz-border-radius:0px;
+            -webkit-border-radius:0px;
+            background-color:rgba(0,0,0,0);
+            left:0px;
+            &:hover{
+              background-color:#e2e7ef;
+            }
+            &:hover a{
+              color:rgba(0,0,0,0.5);
+            }
+            &.active{
+              background-color:#e2e7ef
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,19 +1,22 @@
-<ul class="manage-left-menu" id="manage-left-menu" type="entity_groups">
-  <li><%= t 'manage.view.desc.name' %></li>
-  <li id="manage-menu-add">
-    <input type="text"/>
-    <span><i class="icon-plus"></i> <%= t 'manage.view.desc.name' %></span>
+<div class="left">
+  <ul class="manage-left-menu" id="manage-left-menu" type="entity_groups">
+    <li><%= t 'manage.view.desc.name' %></li>
+    <li id="manage-menu-add">
+      <input type="text"/>
+      <span><i class="icon-plus"></i> <%= t 'manage.view.desc.name' %></span>
 
-    <p class="manage-add-tooltip"><%= t 'manage.base.enter_confirm' %> <br/><%= t 'manage.base.esc_cancel' %></p>
-  </li>
-  <% @entity_groups.each do |entity_group| %>
-      <li class="<%= entity_group.id==@active_entity_group_id ? 'active' : '' %>" title="<%= entity_group.name %>" number="<%= entity_group.id %>">
-        <% if entity_group.can_destroy_by_user(current_user) %>
-            <i class="icon-trash icon-item"></i>
-        <% else %>
-            <i class="icon icon-columns" title="<%= t 'manage.view.desc.share' %>"></i>
-        <% end %>
-        <a href="/entity_groups/index/<%= entity_group.id %>" public='<%= entity_group.is_public %>'><%= entity_group.name %></a>
-      </li>
-  <% end %>
-</ul>
+      <p class="manage-add-tooltip"><%= t 'manage.base.enter_confirm' %> <br/><%= t 'manage.base.esc_cancel' %></p>
+    </li>
+    <% @entity_groups.each do |entity_group| %>
+        <li class="<%= entity_group.id==@active_entity_group_id ? 'active' : '' %>" title="<%= entity_group.name %>" number="<%= entity_group.id %>">
+          <% if entity_group.can_destroy_by_user(current_user) %>
+              <i class="icon-trash icon-item"></i>
+          <% else %>
+              <i class="icon icon-columns" title="<%= t 'manage.view.desc.share' %>"></i>
+          <% end %>
+          <a href="/entity_groups/index/<%= entity_group.id %>" public='<%= entity_group.is_public %>'><%= entity_group.name %></a>
+        </li>
+    <% end %>
+  </ul>
+</div>
+

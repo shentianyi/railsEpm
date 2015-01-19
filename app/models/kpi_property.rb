@@ -12,7 +12,7 @@ class KpiProperty < ActiveRecord::Base
   validates :name, :presence => true
 
   def self.property_values kpi_id,kpi_property_id
-    item = KpiPropertyItem.where("kpi_id = ? AND kpi_property_id = ?",kpi_id,kpi_property_id)
+    item = KpiPropertyItem.includes(:kpi_property_values).where("kpi_id = ? AND kpi_property_id = ?",kpi_id,kpi_property_id)
     if item.nil?
       nil
     else

@@ -1,0 +1,138 @@
+@import "help.css.scss";
+.station-data{
+  .header{
+    background:#fff;
+    height:105px;
+    border-bottom:1px solid rgba(0,0,0,0.2);
+    &:after{
+      @include after-clear;
+    }
+    .header-block{
+      float:left;
+      @include box-sizing-border;
+      padding:0px 0 0 8px;
+      border-left:1px solid rgba(0,0,0,0.1);
+      width:15%;
+      margin:10px 0 6px;
+      height:86px;
+      &>label:first-of-type{
+        display:block;
+        font-size:14px;
+        color:rgba(0,0,0,0.4);
+      }
+      &>.btn{
+        padding:5px 8px;
+        font-size:13px;
+        margin-top:5px;
+        width:135px;
+      }
+      &:first-of-type{
+        width:350px;
+        p{
+          margin:11px 0 2px 0;
+          color:#222
+        }
+        input[type='text']{
+          font-size:13px;
+          padding:5px 5px;
+          width:130px;
+          &:first-of-type{
+            margin-top:0px;
+            margin-right:21px;
+            position:relative;
+          }
+        }
+        label:nth-of-type(2){
+          font-size:26px;
+          margin-left: -16px;
+          margin-top: -5px;
+          color:#777;
+          position:absolute;
+        }
+        .btn{
+          padding:4px 8px;
+          font-size:13px;
+          margin:9px 0 0 189px;
+          width:120px
+        }
+      }
+      &:nth-of-type(2){
+        .btn{
+          width:100px;
+        }
+        width:160px;
+      }
+      &:last-of-type{
+        width:calc(100% - 510px);
+        &:after{
+          @include after-clear;
+        }
+        .a-block{
+          float:left;
+          width:270px;
+          &:last-of-type{
+            padding-left:8px;
+            border-left:1px solid rgba(0,0,0,0.1);
+          }
+          .block-left{
+            @include box-sizing-border;
+            float:left;
+            width:40%;
+            p{
+              margin:0 0 5px;
+              font-size:13px;
+              color:$blue;
+              &:first-of-type{
+                margin-top:3px;
+              }
+            }
+          }
+          .block-right{
+            @include box-sizing-border;
+            float:left;
+            width:60%;
+            .color-group{
+              display:block;
+              margin-top:5px;
+              margin-left: 8px;
+              &:first-of-type{
+                margin-top:3px;
+              }
+              &:after{
+                @include after-clear;
+              }
+              .color-item{
+                $width:15px;
+                float:left;
+                display:inline-block;
+                margin-right:5px;
+                width:$width;
+                height:$width;
+                cursor:pointer;
+                border:1px solid #fff;
+                &.active{
+                  border:1px solid #555;
+                }
+              }
+            }
+          }
+        }
+
+
+
+
+
+
+      }
+    }
+
+  }
+  .station-data-body{
+    background:#fff;
+    .gridbox{
+      border-width:0px !important;
+
+    }
+  }
+
+}

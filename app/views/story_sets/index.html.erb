@@ -1,21 +1,25 @@
+<%=stylesheet_link_tag "story_sets/index" %>
 <div class="story-set-index">
   <div class="left-part">
     <div class="area">
-      <div class="header"></div>
       <div class="title">
-        <!--<a><i class="icon icon-folder-open"></i></a>-->
-        <p><a><i class="icon icon-folder-open"></i></a> All My Discussions</p>
-        <a class="btn btn-primary" href="/story_sets/new"><i class="icon icon-plus"></i> Create Discussion</a>
+        <p>All My Discussions</p>
+        <a class="btn btn-primary" href="/story_sets/new">Create Discussion</a>
       </div>
+
       <div class="projects">
         <% @story_sets.each do |story_set| %>
             <a class="item" href="<%= story_story_set_path(story_set) %>">
-              <div class="left">
+              <span>
+                <i class="icon icon-comments"></i>
+              </span>
+              <span>
                 <p title="<%= story_set.title %>"><%= story_set.title %></p>
-
                 <p title="<%= story_set.description %>"><%= story_set.description %></p>
-              </div>
-              <div class="right"></div>
+              </span>
+              <span>
+                <i class="icon icon-chevron-right"></i>
+              </span>
             </a>
         <% end %>
       </div>
@@ -36,18 +40,4 @@
     </div>
   </div>
 </div>
-<script>
- $(document).ready(function(){
-      var $targets=$("#latest-notice .item");
-     for(var i=0;i<$targets.length;i++){
-         var $target=$targets.eq(i),
-             content=$target.attr("content");
-         var name=content.split(",")[0];
-         var word=content.split(",")[1].split(":")[0];
-         var mark=content.split(",")[1].split(":")[1];
-         $target.find(".name").text(name+" :");
-         $target.find(".word").html("<span>"+word+"</span><span class='mark'>"+mark+"</span>");
-     }
- })
-</script>
 

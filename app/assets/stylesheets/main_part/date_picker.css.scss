@@ -1,0 +1,89 @@
+.date-picker-shortcut{
+  text-align:center;
+  cursor:pointer;
+  font-size:14px;
+  padding:0px;
+  text-align:center;
+  color:#5fa9da;
+}
+.date-picker-shortcut:hover{
+  background-color:#eee
+}
+.date-picker-shortcut:after{
+  content:'Dynamic Date Pick';
+}
+.date-picker-shortcut+i{
+  float:right;
+  position:absolute;
+  bottom:16px;
+  right:16px;
+  color:rgba(0,0,0,0.55);
+
+}
+.table-condensed tfoot{
+  position:relative
+}
+.date-pick-dynamic{
+  background-color:white;
+  border:1px solid rgba(0, 0, 0, 0.2);
+  border-radius:5px;
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
+  box-shadow: 9px 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 9px 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 9px 5px 10px rgba(0, 0, 0, 0.2);
+  position:absolute;
+  left:234px;
+  bottom:-1px;
+  padding:8px;
+  display:none;
+  /*width:150px;*/
+}
+.date-pick-dynamic[interval="week"]{
+  left:261px;
+}
+.date-pick-dynamic>i{
+  position:absolute;
+  right:5px;
+  top:3px;
+  pointer-events:auto;
+  color:rgba(0,0,0,0.4);
+  transition:color 0.35s ease-out;
+  cursor:pointer;
+  font-size:15px;
+  z-index:10;
+}
+.date-pick-dynamic>div{
+  position:relative;
+  width:100px ;
+  padding:10px 20px 0;
+}
+.date-pick-dynamic>div>p{
+  display:inline;
+  font-size:25px;
+  color:rgba(0,0,0,0.4);
+  position:absolute;
+  top:19px;
+}
+.date-pick-dynamic>div>input[type='text']{
+  width:35px;
+  padding:5px 2px;
+  float:right;
+}
+.date-pick-dynamic>div>select{
+  clear:both;
+  margin:5px 0 25px;
+  padding:4px 5px 4px 2px;
+  background-color:white;
+  border:1px solid #ddd;
+  font-size:14px;
+  color:rgba(0,0,0,0.7);
+}
+.date-pick-dynamic>a{
+  padding:6px 10px !important;
+}
+.date-pick-dynamic-today{
+  color:#5fa9da;
+  font-size:14px;
+  cursor:pointer;
+}

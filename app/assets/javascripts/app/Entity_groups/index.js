@@ -1,0 +1,21 @@
+define(["jquery","../../manage/manage_left_menu","./assign","./share","./content","../../manage/manage_three_column"],function($,Leftmenu){
+    var option_add={
+            name:I18n.t('manage.view.desc.name'),
+            href:"/entity_groups/index/",
+            postHref:'/entity_groups'
+        },
+        option_edit={
+            url:"/entity_groups"
+        },
+        option_delete={
+            url:"/entity_groups/",
+            local:"/entity_groups",
+            name:"entity_groups"
+        }
+        ;
+    return{
+        init:function(){
+            Leftmenu.init(option_add,option_edit,option_delete,"entity_groups");
+        }
+    }
+})

@@ -1,11 +1,4 @@
-
-<!--
-<div class="get-start-middle  clearfix startup-middle">
-    <div style="width:880px;position:relative;margin-left:-440px;left:50%;padding:30px 0;">
-          <%= image_tag "naviPage.png" %>
-    </div>
-</div>
--->
+<%=stylesheet_link_tag "welcome" %>
 <section class="index-welcome">
   <!--<div class="left-image"></div>-->
   <div class="right-info">
@@ -74,8 +67,4 @@
     </div>
   </div>
 </section>
-<% content_for :javascript_includes do %>
-    <%= javascript_include_tag "Chart.min.js" %>
-    <%= javascript_include_tag "Chart_generate.js" %>
-    <%= javascript_include_tag "Index.js" %>
-<% end %>
+

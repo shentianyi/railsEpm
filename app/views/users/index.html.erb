@@ -1,14 +1,12 @@
-<div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
-  <div class="content-left-main" name="dashboard" id="content-left-main">
-    <div style="width:auto;height:71px;"></div>
-    <div class="left-content-title" id="left-content-title">
+<%=stylesheet_link_tag "users/index" %>
+<section class="manage_three_column" id="manage_three_column">
+  <div class="left">
+    <div class="header" id="left-content-title">
       <p class="current-group-item"><%= t 'manage.user.desc.manage' %></p>
     </div>
-
     <div class="manage-left-content" id="manage-left-content">
       <%= render :partial => 'roles/left_menu' %>
-
-      <div class="manage-right-content" id="manage-right-content">
+      <div class="right"  id="manage-right-content">
         <div class="manage-right-list">
           <div class="right-list-top-control" id="right-list-top-control" name="group">
             <input type="checkbox" id="manage-total-check"/>
@@ -19,9 +17,9 @@
             <%= render partial: 'list' %>
           </div>
         </div>
+
         <div class="manage-user-add" id="user-edit" general="manage-user-add" style="display: none">
           <i class="icon-remove" id="close-user-edit" general="close-user"></i>
-
           <div>
             <input type="text" placeholder="* <%= t 'manage.user.new.name' %>" id="edit-user-name" general="user-name"/>
             <input type="text" placeholder="* <%= t 'manage.user.new.email' %>" id="edit-user-mail" general="user-mail"/>
@@ -29,7 +27,6 @@
             <input type="text" placeholder="<%= t 'manage.user.new.tel' %>" id="edit-user-tel" general="user-tel"/>
             <input type="text" placeholder="<%= t 'manage.user.new.phone' %>" id="edit-user-phone" general="user-phone"/>
             <input type="password" placeholder="<%= t 'manage.user.new.pwd' %>" id="edit-user-password" general="user-password"/>
-
             <div class="div-select">
               <select data-placeholder="<%= t 'manage.user.new.entity' %>" id="edit-entity-for-kpi" class="single-select">
                 <option value=""></option>
@@ -53,37 +50,40 @@
             <input type="submit" value="Ok" class="btn btn-primary" id="manage-user-edit-old"/>
           </div>
         </div>
+
       </div>
+
     </div>
   </div>
-
-  <aside class="content-right-nav" name='group' id="content-right-nav">
+  <div class="right">
     <section class="solid">
       <h3><%= t 'manage.user.desc.create' %></h3>
-
       <p><%= t 'manage.user.desc.create_desc' %></p>
       <a class="btn btn-primary" id="add-user-show"><%= t 'manage.user.desc.create_now' %></a>
     </section>
     <section class="solid">
       <h3><%= t 'manage.user.desc.assign' %></h3>
-
       <p><%= t 'manage.user.desc.assign_desc' %></p>
       <a class="btn btn-primary" id="manage-user-delivery"><%= t 'manage.user.desc.assign_now' %></a>
     </section>
     <section class="solid">
       <h3><%= t 'manage.user.desc.what-is-manager-title' %></h3>
-
       <p><%= t 'manage.user.desc.what-is-manager' %></p>
-
     </section>
     <section class="solid">
       <h3><%= t 'manage.user.desc.what-is-user-title' %></h3>
-
       <p><%= t 'manage.user.desc.what-is-user' %></p>
-
     </section>
-  </aside>
-</div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
 
 <div class="manage-user-add create-user" id="manage-user-add" general="manage-user-add">
   <i class="icon-remove" id="close-add-user" general="close-user"></i>
@@ -156,15 +156,4 @@
   </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        MANAGE.init();
-        MANAGE.user.init();
-    })
-</script>
-<% content_for :javascript_includes do %>
-    <%= javascript_include_tag "Manage.js" %>
-    <%= javascript_include_tag "Manage-left-menu.js" %>
-    <%= javascript_include_tag "Manage-right-list.js" %>
-    <%= javascript_include_tag "Manage-user.js" %>
-<% end %>
+
