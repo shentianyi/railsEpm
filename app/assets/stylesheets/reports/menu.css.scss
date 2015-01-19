@@ -1,0 +1,257 @@
+@import "../help.css.scss";
+$li-padding:16px;
+$vertical-padding:6px;
+$main-height:600px - 70px;
+$list-width:230px;
+.report-menu{
+  @include box-sizing-border;
+  float:left;
+  width:$list-width;
+  height:calc( 100% - 70px );
+  position:relative;
+  section{
+    height:100%;
+    position:relative;
+    &>.header{
+      width:100%;
+      height:60px;
+      p{
+        text-align:left;
+        color:#222;
+        font-family:'maven';
+        padding:14px 0px 14px 12px;
+        font-size:30px;
+      }
+    }
+    &>ul{
+      height:370px;
+      //scroll
+      overflow-y:auto;
+      li{
+        a{
+          i{
+            font-size:14px;
+            display:inline-block;
+            &.indicate{
+              float:right;
+              margin-top:2px;
+              display: none;
+              color:$blue;
+            }
+          }
+          cursor:pointer;
+          color:#888;
+          font-size:14px;
+          display:block;
+          padding:$vertical-padding $li-padding;
+          width:100%;
+          font-weight:400;
+          @include box-sizing-border;
+          @include transition(padding-left);
+          &:hover{
+            color:$blue;
+            padding-left:22px;
+          }
+          &.active{
+            color:$blue;
+            font-weight:bold;
+            i{
+              &.indicate{
+                display:inline-block;
+              }
+            }
+          }
+        }
+      }
+    }
+    &>.footer{
+      &>p{
+        color:#222;
+        font-family:'maven';
+        padding:14px 0px 3px 12px;
+        font-size:20px;
+        margin:0px;
+      }
+      padding:6px 0;
+      a{
+        position:relative;
+        font-size:18px;
+        bottom:0px;
+        display:block;
+        width:100%;
+        cursor:pointer;
+        color:#888;
+        text-align:left;
+        padding:$vertical-padding $li-padding;
+        @include transition(padding-left);
+        &:hover{
+          padding-left:22px;
+        }
+        @mixin after_content($content){
+          content:$content;
+          position:absolute;
+          top: 9px;
+          left: 52px;
+          right:0px;
+          text-align:left;
+          font-size:12px;
+        };
+        &.share{
+          i{
+            color:$green;
+          }
+          &:after{
+            @include after_content("DISCUSSION");
+          }
+        }
+        &.snap{
+          i{
+            color:$yellow;
+          }
+          &:after{
+            @include after_content("SNAP");
+          }
+        }
+        &.subscribe{
+          i{
+            color:$blue;
+          }
+          &:after{
+            @include after_content("SUBSCRIBE");
+          }
+        }
+      }
+    }
+  }
+}
+//.report-menu{
+//  @include box-sizing-border;
+//  float:left;
+//  width:$list-width;
+//  height:calc( 100% - 70px );
+//  position:relative;
+//  section{
+//    background:$sidebar;
+//    @include box-shadow-inset(-3px,0px,8px,rgba(0,0,0,0.1));
+//    height:100%;
+//    position:relative;
+//    &>.header{
+//      width:100%;
+//      height:50px;
+//      p{
+//        text-align:center;
+//        color:#fff;
+//        font-family:'avenir';
+//        padding:14px 0px;
+//        font-size:18px;
+//      }
+//    }
+//    &>ul{
+//      $li-padding:10px;
+//      height:calc(100% - 109px);
+//      //scroll
+//      overflow-y:auto;
+//      p{
+//        color:lighten($nav-dark,25%);
+//        font-size:13px;
+//        padding-left:$li-padding;
+//        margin:5px 0 0px;
+//      }
+//      li{
+//        a{
+//          $vertical-padding:6px;
+//          i{
+//            font-size:10px;
+//            display:inline-block;
+//            &.mark{
+//              margin-right:10px;
+//              position:relative;
+//              top:-1px;
+//            }
+//            &.indicate{
+//              float:right;
+//              margin-top:2px;
+//              display: none;
+//            }
+//          }
+//          cursor:pointer;
+//          color:rgba(255,255,255,0.8);
+//          font-size:12px;
+//          display:block;
+//          padding:$vertical-padding $li-padding;
+//          width:100%;
+//          @include box-sizing-border;
+//          &:hover{
+//            color:#fff;
+//            background:lighten($nav-dark,25%);
+//          }
+//          &.active{
+//            color:#fff;
+//            background:lighten($nav-dark,25%);
+//            i{
+//              &.indicate{
+//                display:inline-block;
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
+//    &>.footer{
+//      position:absolute;
+//      bottom:0;
+//      left:0px;
+//      right:0px;
+//      height:40px;
+//      padding:6px 0;
+//      border-top:1px solid lighten($nav-dark,10%);
+//      a{
+//        position:relative;
+//        font-size:21px;
+//        bottom:0px;
+//        @include transition(bottom);
+//        cursor:pointer;
+//        color:rgba(255,255,255,0.5);
+//        display: inline-block;
+//        text-align:center;
+//        &:hover{
+//          bottom:8px;
+//          color:#fff;
+//        }
+//        @mixin after_content($content){
+//          content:$content;
+//          position:absolute;
+//          top:24px;
+//          left:0px;
+//          right:0px;
+//          text-align:center;
+//          font-size:9px;
+//        };
+//        &.share{
+//           float:right;
+//          right:25px;
+//          width:48px;
+//          &:after{
+//            @include after_content("DISCUSS");
+//          }
+//        }
+//        &.snap{
+//           float:right;
+//          right:15px;
+//          width:36px;
+//          &:after{
+//            @include after_content("SNAP");
+//          }
+//        }
+//        &.subscribe{
+//           float:left;
+//           left:10px;
+//          width:50px;
+//          &:after{
+//            @include after_content("SUBSCRIBE");
+//          }
+//        }
+//      }
+//    }
+//  }
+//}

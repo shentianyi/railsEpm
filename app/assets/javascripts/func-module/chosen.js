@@ -1,18 +1,33 @@
-var chosen={};
-chosen.init=function(idArray,lengthArray){
-    $(".chosen-select").chosen();
-    var target,id;
-    for(var i=0;i<idArray.length;i++){
-       id=idArray[i].indexOf("#")===-1?"#"+idArray[i]:idArray[i];
-       id=id.replace(/-/g,"_");
-       target=id+"_chosen";
-        $(target).width(parseInt(lengthArray[i]));
+define(["jquery","jquery.chosen"],function($){
+    $(".chosen-select").chosen({
+        'disable_search_threshold': 7
+    });
+    $(".single-select").chosen(
+        { allow_single_deselect: true }
+    );
+    return{
+       init_with_width:function(target,width){
+           if(Object.prototype.toString.apply(target)==="[object Array]"){
+                 for(var i=0;i<target.length;i++){
+                   $("#"+target[i]).chosen({
+                       'disable_search_threshold': 7
+                   });
+                   $("#"+target[i].replace("-","_")+"_chosen").width(width[i]);
+               }
+           }
+           else{
+               $("#"+target).chosen({
+                   'disable_search_threshold': 7
+               });
+               $("#"+target+"_chosen").width(width);
+           }
+       },
+       single_update:function(id){
+           var id=id.indexOf("#")===-1?"#"+id:id;
+           $(id).val('').trigger('chosen:updated');
+       },
+       all_update:function(){
+           $(".chosen-select").val('').trigger('chosen:updated');
+       }
     }
-}
-chosen.single_update=function(id,placeholder){
-    var id=id.indexOf("#")===-1?"#"+id:id;
-    $(id).val('').trigger('chosen:updated');
-}
-chosen.all_update=function(){
-    $(".chosen-select").val('').trigger('chosen:updated');
-}
+})

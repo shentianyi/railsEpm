@@ -6,7 +6,8 @@ module Entry
         c=Entry::ConditionService.new(self.parameter)
         query_condition=c.build_base_query_condition
         mr_condition=c.build_map_reduce_condition
-        query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 0)
+        query_serivice= Entry::QueryService.new
+        query=query_serivice.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 0)
         query=query.any_of(c.build_or_condition)
         data_mr="date:format(this.parsed_entry_at,'#{self.parameter.date_format}')"
         puts '*******************************************************'
@@ -25,19 +26,8 @@ module Entry
         group_keys=self.parameter.map_group.values
         ClearInsight::Service.new.base_query(equal_condition, group_keys, self.parameter.kpi)
 
-        map=%Q{
-           function(){
-                  #{Mongo::Date.date_format}
-                  emit({#{mr_condition[:map_group]}},parseFloat(this.value));
-              };
-        }
-
-        func=self.parameter.average ? 'avg' : 'sum'
-        reduce=%Q{
-           function(key,values){return Array.#{func}(values);};
-        }
-        self.data=query.map_reduce(map, reduce).out(inline: true)
-        aggregate_type_data
+        self.data=query_serivice.map_reduce(query, mr_condition[:map_group])
+        return aggregate_type_data
       end
 
       private
@@ -57,9 +47,9 @@ module Entry
         return nil if values.size==0
         properties={}
         ids.each do |id|
-          values.select{|vv| vv.kpi_property_id==id}.each do |v|
-              properties[v.kpi_property_id]||=[]
-              properties[v.kpi_property_id]<< v.value
+          values.select { |vv| vv.kpi_property_id==id }.each do |v|
+            properties[v.kpi_property_id]||=[]
+            properties[v.kpi_property_id]<< v.value
           end
         end
         self.parameter.clean_property_values(properties)
@@ -76,7 +66,6 @@ module Entry
                                 {self.parameter.compare_times.first[:start_time] => 0}]
         end
 
-
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
         property_ids=properties.keys
         self.data.each do |d|
@@ -87,8 +76,7 @@ module Entry
 
           date=date_parse_proc.call(d['_id']['date'])
           self.data_module[key].each { |v|
-
-            v[date]= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value']) } if self.data_module.has_key?(key)
+            v[date]= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value'][self.value_key]) } if self.data_module.has_key?(key)
         end
         data=[]
         self.data_module.each do |k, v|
@@ -105,7 +93,7 @@ module Entry
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
         self.data.each do |d|
           date=date_parse_proc.call(d['_id']['date'])
-          self.data_module[date]= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value'])
+          self.data_module[date]= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value'][self.value_key])
         end
         return {keys: self.data_module.keys, values: self.data_module.values}
       end

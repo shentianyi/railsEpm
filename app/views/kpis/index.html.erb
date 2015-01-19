@@ -1,59 +1,58 @@
-<div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
-     <div class="content-left-main" name="category" id="content-left-main">
-          <div style="width:auto;height:71px;"></div>
-          <div class="left-content-title" id="left-content-title">
-               <p class="current-group-item">
-                    <%= t 'manage.kpi.title'%>
-               </p>
+<%=stylesheet_link_tag "kpis/index" %>
+<section class="manage_three_column" id="manage_three_column">
+  <div class="left">
+    <div class="header" id="left-content-title">
+      <p class="current-group-item">
+        <%= t 'manage.kpi.title'%>
+      </p>
+    </div>
+    <div class="manage-left-content manage-left-content-kpi" id="manage-left-content">
+      <%= render :partial=>'kpi_categories/left_menu'%>
+      <div class="right"  id="manage-right-content">
+        <div class="manage-btn-group" id="manage-btn-group">
+          <p id="manage-edit-target" ></p>
+          <input type="text"/>
+          <i class="icon-pencil"></i>
+        </div>
+        <div class="manage-right-list">
+          <div class="right-list-top-control" id="right-list-top-control">
+            <input type="checkbox" id="manage-total-check"/>
+            <a class="btn" id="manage-item-remove"><%= t 'manage.base.delete_btn'%></a>
+            <a class="btn" id="manage-item-edit"><%= t 'manage.base.edit_btn'%></a>
           </div>
-          <div class="manage-left-content" id="manage-left-content">
-               <%= render :partial=>'kpi_categories/left_menu'%>
-               <div class="manage-right-content" id="manage-right-content">
-                    <div class="manage-btn-group" id="manage-btn-group">
-                         <p id="manage-edit-target" ></p>
-                         <input type="text"/>
-                         <i class="icon-pencil"></i>
-
-                    </div>
-                    <div class="manage-right-list">
-                         <div class="right-list-top-control" id="right-list-top-control">
-                              <input type="checkbox" id="manage-total-check"/>
-                              <a class="btn" id="manage-item-remove"><%= t 'manage.base.delete_btn'%></a>
-                              <a class="btn" id="manage-item-edit"><%= t 'manage.base.edit_btn'%></a>
-                         </div>
-                         <div id="kpi-item-container">
-                              <%= render :partial=>'list'%>
-                         </div>
-                    </div>
-               </div>
+          <div id="kpi-item-container">
+            <%= render :partial=>'list'%>
           </div>
-     </div>
+        </div>
+      </div>
 
-     <aside class="content-right-nav manage-kpi-navi" name='category' id="content-right-nav">
-          <section class="solid">
-               <h3><%= t 'manage.kpi.desc.create'%></h3>
-               <p>
-                 <%= t 'manage.kpi.desc.create_desc'%>
-               </p>
-               <a class="btn btn-primary" id="kpi-add-show"><%= t 'manage.kpi.desc.create_now'%></a>
-          </section>
-          <label class="or-sign">------------------ <%= t 'manage.kpi.desc.or'%> ------------------</label>
-          <section class="solid">
-               <h3><%= t 'manage.kpi.kpi_library'%></h3>
-               <p>
-                 <%= t 'manage.kpi.desc.kpi_library_desc'%>
-               </p>
-               <a class="btn btn-primary" id="kpi-library-btn"><%= t 'manage.kpi.desc.choose_now'%></a>
-          </section>
-          <section class="solid">
-               <h3><%= t 'manage.kpi.desc.what-is-kpi-title'%></h3>
-               <p>
-                 <%= t 'manage.kpi.desc.what-is-kpi'%>
-               </p>
+    </div>
+  </div>
+  <div class="right">
+    <section class="solid">
+      <h3><%= t 'manage.kpi.desc.create'%></h3>
+      <p>
+        <%= t 'manage.kpi.desc.create_desc'%>
+      </p>
+      <a class="btn btn-primary" id="kpi-add-show"><%= t 'manage.kpi.desc.create_now'%></a>
+    </section>
+    <label class="or-sign">------------------ <%= t 'manage.kpi.desc.or'%> ------------------</label>
+    <section class="solid">
+      <h3><%= t 'manage.kpi.kpi_library'%></h3>
+      <p>
+        <%= t 'manage.kpi.desc.kpi_library_desc'%>
+      </p>
+      <a class="btn btn-primary" id="kpi-library-btn"><%= t 'manage.kpi.desc.choose_now'%></a>
+    </section>
+    <section class="solid">
+      <h3><%= t 'manage.kpi.desc.what-is-kpi-title'%></h3>
+      <p>
+        <%= t 'manage.kpi.desc.what-is-kpi'%>
+      </p>
+    </section>
+  </div>
+</section>
 
-          </section>
-     </aside>
-</div>
 
 
 
@@ -126,7 +125,7 @@
         <label sign="/">/</label>
         <label sign="(">(</label>
         <label sign=")">)</label>
-        <textarea type="text" placeholder="* <%= t 'manage.kpi.formula'%>" id="calcuType-input"></textarea>
+        <textarea type="text" placeholder="* <%= t 'manage.kpi.formula'%>" id="edit-kpi-attribute"></textarea>
         <div style="display:none" id="takeCal" cal></div>
       </div>
 
@@ -165,15 +164,5 @@
 
 
 
-<script type="text/javascript">
-     $(document).ready(function() {
-          MANAGE.init();
-          MANAGE.kpi.init();
-     })
-</script> 
-<% content_for :javascript_includes do%>
-  <%= javascript_include_tag "Manage.js"%>
-  <%= javascript_include_tag "Manage-left-menu.js"%>
-  <%= javascript_include_tag "Manage-right-list.js"%>
-  <%= javascript_include_tag "Manage-kpi.js"%>
-<%end%>
+
+

@@ -157,7 +157,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_tenant_function
-    unless ($tenant_editions[current_user_tenant.edition][:functions].include?("#{params[:controller]}##{params[:action]}"))
+    unless ($tenant_editions[current_user_tenant.edition][:functions].include?("#{params[:app]}##{params[:action]}"))
       store_location
       flash[:alert]='Your edition does not support the function, you may upgrade your plan'
       redirect_back_or_default billing_url

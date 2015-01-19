@@ -29,11 +29,19 @@ module Entry
       end
 
       def start_time=(value)
-        @start_time=Time.parse(value).utc if value
+        if value.is_a?(String)
+          @start_time=Time.parse(value).utc
+        elsif value.is_a?(Time)
+          @start_time=value
+        end if value
       end
 
       def end_time=(value)
-        @end_time=Time.parse(value).utc if value
+        if value.is_a?(String)
+          @end_time=Time.parse(value).utc
+        elsif value.is_a?(Time)
+          @end_time=value
+        end if value
       end
 
       def property=(value)

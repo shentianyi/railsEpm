@@ -106,4 +106,8 @@ class StorySetsController < ApplicationController
     end
     @default_story_id =@default_story.id if @default_story
   end
+
+  def add_chart
+    @story_set_id=params[:id]
+  end
 end

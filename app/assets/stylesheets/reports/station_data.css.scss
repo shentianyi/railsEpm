@@ -1,0 +1,122 @@
+@import "../help.css.scss";
+@import "./template1.css.scss";
+@import "../libs/datepicker.css";
+@import "../libs/colorPicker.css.scss";
+@import "../libs/dhtmlxgrid.css";
+.condition{
+  .left{
+    p{
+      margin-bottom:0px;
+      padding-top: 13px;
+      padding-left: 13px;
+      color:#9d9d9d;
+    }
+    float:left;
+    input[type="text"]{
+      float:left;
+      margin-top:7px;
+      display: inline-block;
+      &:first-of-type{
+        margin-left:13px;
+      }
+    }
+    label{
+      float:left;
+      margin-top:5px;
+      font-size:30px;
+      margin-left:10px;
+      margin-right:10px;
+    }
+    .btn{
+      display: inline-block;
+      margin-top:9px;
+      margin-left:32px;
+      font-size: 13px;
+      padding: 8px 34px;
+      font-weight:lighter;
+    }
+  }
+  .right{
+    float:right;
+  }
+}
+.content{
+  position:relative;
+  overflow-x:hidden;
+  $bottom:10px;
+  .setting-btn{
+    position:absolute;
+    $width:46px;
+    right:0px;
+    bottom:$bottom;
+    display:block;
+    width:$width;
+    height:$width + 10;
+    background:$light-blue;
+    @include transition(background);
+    @include transition(right);
+    cursor:pointer;
+    &:hover{
+      background:darken($light-blue,5%);
+    }
+    i{
+      color:$blue;
+      margin-left:$width/2 - 5px;
+      position:absolute;
+      top:19px;
+      font-size:20px;
+      pointer-events:none;
+    }
+  }
+  .setting-block{
+    &>p{
+      &:first-of-type{
+        color:rgba(0,0,0,0.7);
+        font-size:14px;
+        padding-top:8px;
+        padding-left:10px;
+        margin-bottom:18px;
+        border-bottom:1px solid rgba(0,0,0,0.1);
+        padding-bottom:6px;
+      }
+    }
+    .block{
+      margin-bottom:20px;
+      &:after{
+        @include after-clear;
+      }
+      $margin-bottom:10px;
+      p{
+        color:#777;
+        padding-left:10px;
+        font-size:16px;
+        margin:0px;
+        display:inline-block;
+        float:left;
+        margin-bottom:$margin-bottom;
+        .mark{
+          color:$blue-hover;
+        }
+      }
+      .colorPicker-picker{
+        float:left;
+        display: inline-block;
+        margin-bottom:$margin-bottom;
+        margin-left:13px;
+      }
+      input{
+        width:0px;
+      }
+    }
+    $width:200px;
+    position:absolute;
+    height:270px;
+    bottom:$bottom;
+    width:$width;
+    background:$light-blue;
+    right:- ($width + 10);
+    //border:1px solid rgba(0,0,0,0.1);
+    //@include box-shadow(-2px,2px,2px,rgba(0,0,0,0.4));
+    @include transition(right);
+  }
+}

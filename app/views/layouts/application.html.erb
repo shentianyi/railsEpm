@@ -4,11 +4,11 @@
   <title>ClearInsight</title>
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= yield :stylesheet_includes %>
-  <%= javascript_include_tag "application" %>
+  <%= requirejs_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <meta charse='utf-8'>
 </head>
 <body>
-
 
 <%= render :partial => 'shares/user_message' %>
 <article class="wrap-main" id="wrap-main">
@@ -16,13 +16,10 @@
   <%= yield %>
 </article>
 
-
-
 <%= render :partial => 'shares/message_box' %>
 <%= render :partial => 'shares/slide_box' %>
-
-
-</body>
+<%= javascript_include_tag "i18n/i18n" %>
+<%= javascript_include_tag "i18n/translations" %>
 <script type="text/javascript">
     I18n.defaultLocale = "<%= I18n.default_locale %>";
     I18n.locale = "<%= I18n.locale %>";
@@ -96,5 +93,5 @@
 //    })();
 
 </script>
-<%= yield :javascript_includes %>
+</body>
 </html>

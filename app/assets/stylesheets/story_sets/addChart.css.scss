@@ -1,0 +1,102 @@
+@import "../help.css.scss";
+@import "../basic.css.scss";
+@import "../libs/datepicker.css";
+@import "../libs/tipsy.css";
+.outer{
+  height:calc(100% - 70px);
+  height:-moz-calc(100% - 70px);
+  height:-webkit-calc(100% - 70px);
+  .left{
+    height:100%;
+    position:relative;
+    @include box-border(320px);
+    .panel{
+      position:relative;
+      left:0px;
+      top:1%;
+      height:99%;
+      border-top:1px solid $border-color;
+      border-right:1px solid $border-color;
+      background:$discussion-bg;
+      @include border-radius(0px,10px,0px,0px);
+      .back-btn{
+         margin:15px auto 15px;
+         width:200px;
+      }
+      .title{
+        border-top:1px solid rgba(0,0,0,0.1);
+        border-bottom:1px solid rgba(0,0,0,0.1);
+        padding:6px 0px;
+        text-align:left;
+        font-family:"maven" ;
+        font-size:32px;
+        margin:15px 12px 5px;
+        color:darken($cyanine,10%);
+      }
+      &>input{
+        display:block;
+        margin:12px auto;
+        position:relative;
+        width:260px;
+      }
+      .date-mark{
+        font-size:18px;
+        color:darken($cyanine,10%);
+        padding-left:23px;
+        margin-top:5px;
+        marign-bottom:0px;
+      }
+      .date-box{
+        width:100%;
+        height:100px;
+        padding-top:6px;
+        position:relative;
+        .switch-btn{
+          font-size:13px;
+          padding:5px 15px;
+          margin-right:25px;
+          position:absolute;
+          right:0px;
+          top:-32px;
+          background:$blue;
+          color:#fff;
+          cursor:pointer;
+          @include border-radius-same(5px);
+        }
+        .range{
+          margin-left:23px;
+          clear:right;
+          &:after{
+            @include after-clear;
+          }
+           input{
+             text-align: left;
+             float:left;
+             width:108px;
+           }
+          span{
+            float:left;
+            display: block;
+            padding:7px 0px;
+            width:32px;
+            text-align:center;
+            background:darken($cyanine,5%);
+            font-size:16px;
+            color:#fff;
+          }
+        }
+        .precise{
+
+        }
+      }
+    }
+  }
+  .right{
+    float:left;
+    width:calc(100% - 320px);
+    height:100%;
+    @include box-sizing-border;
+    position:relative;
+    z-index:20;
+  }
+}

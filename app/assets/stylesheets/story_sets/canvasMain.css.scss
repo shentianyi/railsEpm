@@ -1,0 +1,110 @@
+@import "../help.css.scss";
+@import "../font.css.scss";
+.canvas-main{
+  background:lighten($discussion-bg,4%);
+  .left{
+    @include box-border(250px);
+    height:100%;
+    border-right:1px solid rgba(0,0,0,0.1);
+    .title{
+      border-top:1px solid rgba(0,0,0,0.1);
+      border-bottom:1px solid rgba(0,0,0,0.1);
+      padding:10px 0px;
+      text-align:left;
+      font-family:"maven" ;
+      font-size:32px;
+      margin:15px 12px 5px;
+    }
+    ul{
+      padding-left:12px;
+    }
+    .operation-list{
+      li{
+        a{
+          display:block;
+          padding:6px 0px;
+          cursor:pointer;
+          font-weight: 400;
+          @include transition(color);
+          i{
+            display:inline-block;
+            width:38px;
+            text-align:center;
+          }
+        }
+        .blue{
+          color:$blue;
+          &:hover{
+            color:darken($blue,20%);
+          }
+        }
+        .grey{
+          color:#666;
+          &:hover{
+            color:darken(#666,20%);
+          }
+        }
+        .yellow{
+          color:$yellow;
+          &:hover{
+            color:darken($yellow,20%);
+          }
+        }
+        .red{
+          color:$red;
+          &:hover{
+            color:darken($red,20%);
+          }
+        }
+        .cyanine{
+          color:darken($cyanine,10%);
+          &:hover{
+            color:darken($cyanine,40%);
+          }
+        }
+      }
+    }
+  }
+  .attachment-list{
+    li{
+      width:100%;
+      padding:4px 0px;
+      color:#777;
+      &:after{
+        @include after-clear;
+      }
+      &:hover i{
+         display: block;
+      }
+      a{
+        float:left;
+        width:calc(100% - 30px);
+        @include box-sizing-border;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor:pointer;
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+      i{
+        @include box-border(30px);
+        margin-top:3px;
+        text-align:center;
+        display: none;
+        pointer-events:auto;
+        cursor:pointer;
+        &:hover{
+          color:$red;
+        }
+      }
+    }
+  }
+  .right{
+    float:left;
+    height:100%;
+    width:calc(100% - 250px);
+    @include box-sizing-border;
+  }
+}

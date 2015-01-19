@@ -180,7 +180,7 @@ class KpisController < ApplicationController
         category=KpiCategory.new(:name => name, :description => template_category.description)
         category.tenant=current_tenant
         check={}
-        params[:kpis].each do |kpi_id|
+        params[:Kpis].each do |kpi_id|
           t= Admin::KpiTemplate.find_by_id(kpi_id)
           formula=t.formula
           if t.is_calculated

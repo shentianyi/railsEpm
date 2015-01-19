@@ -43,20 +43,3 @@
       </a>
   <% end %>
 </ul>
-
-<script>
-    $(document).ready(function () {
-        $("body")
-                .on("click", ".subscribe-remove", function (event) {
-                    var target = adapt_event(event).target;
-                    MANAGE.kpi_subscribe.destroy($(target).attr("value"), function (data) {
-                        if (data.result) {
-                            $(target).parent().remove();
-                        } else {
-
-                        }
-                    });
-                })
-    })
-</script>
-

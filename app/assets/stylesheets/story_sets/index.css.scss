@@ -1,0 +1,228 @@
+// Place all the styles related to the StorySets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "help.css.scss";
+.story-set-index{
+  height:calc(100% - 70px);
+  height:-moz-calc(100% - 70px);
+  height:-webkit-calc(100% - 70px);
+  &:after{
+    @include after-clear;
+  }
+  .left-part{
+    @include box-sizing-border;
+    float:left;
+    height:100%;
+    width:calc(100% - 260px);
+    width:-moz-calc(100% - 260px);
+    width:-webkit-calc(100% - 260px);
+    position:relative;
+    .area{
+      width:90%;
+      height:93%;
+      position:relative;
+      left:50%;
+      margin-left:-45%;
+      margin-top:30px;
+      .title{
+        height:55px;
+        padding-top:20px;
+        p{
+          display:inline-block;
+          float:left;
+          font-family: "maven";
+          font-size:35px;
+        }
+        .btn{
+          float:right;
+          font-size:14px;
+          padding:12px 40px;
+          margin:0px;
+        }
+      }
+      .projects{
+        height:calc(100% - 75px);
+        height:-moz-calc(100% - 75px);
+        height:-webkit-calc(100% - 75px);
+        background:#fff;
+        position:absolute;
+        bottom:0px;
+        left:0px;
+        right:0px;
+        overflow-y:auto;
+        border:1px solid $layout-border-color;
+        @include border-radius-block;
+        @include box-shadow(0px,1px,0px,rgba(0,0,0,0.25));
+        $margin-left:15px;
+        $width:220px;
+        $after-width:$margin-left * 2 + $width * 3;
+        &:after{
+          @include after-clear;
+        }
+        .item{
+          display:block;
+          margin:5px 25px;
+          background:#fff;
+          padding:8px 5px;
+          position:relative;
+          border:1px solid rgba(0,0,0,0);
+          transition:background 0.15s ease-out;
+          &:hover{
+            background:lighten($blue,33%);
+            border:1px solid rgba(0,0,0,0.05);
+          }
+          &:after{
+            @include after-clear;
+          }
+          &:first-of-type{
+            margin:20px 25px 5px;
+          }
+          &:nth-of-type(3n+1){
+            &>span{
+              &:first-of-type{
+                 background:$blue;
+              }
+            }
+          }
+          &:nth-of-type(3n+2){
+            &>span{
+              &:first-of-type{
+                background:$yellow;
+              }
+            }
+          }
+          &:nth-of-type(3n+3){
+            &>span{
+              &:first-of-type{
+                background:$green;
+              }
+            }
+          }
+          &>span{
+            @include box-sizing-border;
+            display:inline-block;
+            &:first-of-type{
+              width:45px;
+              position:absolute;
+              $height:45px;
+              height:$height;
+              top:50%;
+              margin-top:- $height/2 ;
+              padding-left:10px;
+              @include border-radius-block;
+              i{
+                font-size:23px;
+                color:rgba(255,255,255,0.9);
+                position:relative;
+                top:10px;
+                left:1px;
+              }
+            }
+            &:nth-of-type(2){
+              margin-left:60px;
+              width:calc(100% - 105px);
+            }
+            &:last-of-type{
+              float:right;
+              display:block;
+              position:absolute;
+              right:0px;
+              $height:45px;
+              height:$height;
+              top:50%;
+              margin-top:- $height/2 ;
+              width:45px;
+              i{
+                font-size:25px;
+                color:rgba(0,0,0,0.1);
+                position:relative;
+                top:12px;
+                left:3px;
+              }
+            }
+            p{
+              margin:0px;
+              width:100%;
+              pointer-events:none;
+              &:first-of-type{
+                font-size:27px;
+                color:#222;
+                font-weight:normal;
+              }
+              &:last-of-type{
+                font-size:17px;
+                color:#9d9d9d;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .right-part{
+    @include box-sizing-border;
+    float:left;
+    height:100%;
+    width:260px;
+    border-left:1px solid $layout-border-color;
+    background:#fff;
+    .area{
+      box-sizing:border-box;
+      height:50%;
+      width:100%;
+      padding:8px 6px 0;
+      .title{
+        font-size:20px;
+        padding-top:16px;
+        padding-left:2px;
+        padding-bottom:5px;
+        color:$green;
+        border-bottom:1px solid rgba(0,0,0,0.3);
+      }
+      .item{
+        display:table;
+        width:100%;
+        padding:10px 0px ;
+        background:#fff;
+        border-bottom:1px dashed rgba(0,0,0,0.2);
+        cursor:default;
+        &>p{
+          font-size:13px;
+          display:table-cell;
+          padding:0px 5px;
+          width:calc(100% - 120px);
+          width:-moz-calc(100% - 120px);
+          width:-webkit-calc(100% - 120px);
+          @include word-break;
+          &:first-of-type{
+            vertical-align:middle;
+            color:#666;
+            a{
+              display:block;
+              .mark{
+                color:$blue;
+              }
+              &.name{
+                color:#222;
+              }
+              &.word{
+                 color:#888;
+              }
+            }
+          }
+          &:last-of-type{
+            width:120px;
+            text-align: right;
+            padding-right:5px;
+            font-size:11px;
+            color:#999;
+            vertical-align:bottom;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+
