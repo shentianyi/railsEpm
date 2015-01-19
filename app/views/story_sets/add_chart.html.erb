@@ -4,24 +4,46 @@
     <div class="panel">
       <a class="btn btn-primary back-btn" href="/story_sets/<%= @story_set_id %>/story">Back</a>
       <p class="title">Generate Chart</p>
-      <input placeholder="Type" type="text" />
-      <input placeholder="KPI" type="text"  />
-      <input placeholder="View" type="text" />
+      <select class="chosen-select" data-placeholder="type" id="type">
+        <option></option>
+        <option>TYPE1</option>
+        <option>TYPE2</option>
+        <option>TYPE3</option>
+      </select>
+      <select class="chosen-select" data-placeholder="kpi" id="kpi">
+        <option></option>
+        <option>KPI1</option>
+        <option>KPI2</option>
+        <option>KPI3</option>
+      </select>
+      <select class="chosen-select" data-placeholder="view" id="view">
+        <option></option>
+        <option>VIEW1</option>
+        <option>VIEW2</option>
+        <option>VIEW3</option>
+      </select>
       <p class="date-mark">Date range</p>
       <div class="date-box">
         <a class="switch-btn" original-title="switch date type" id="switch-btn"><i class="icon icon-refresh"></i></a>
-        <div class="input-daterange input-group range" id="range-datepicker">
+        <div class="input-daterange input-group range" id="date-range">
             <input type="text" class="input-sm form-control" name="start" />
             <span class="input-group-addon">to</span>
             <input type="text" class="input-sm form-control" name="end" />
         </div>
-        <div class="precise">
-
+        <div class="precise disappear" id="date-precise">
+            <label>Last</label>
+            <input type="number" value="1"/>
+          <select class="chosen-select" style="width:100px;">
+            <option vlaue="1">Days</option>
+            <option>Months</option>
+            <option>Quarters</option>
+            <option>Years</option>
+          </select>
         </div>
       </div>
-      <a class="btn btn-discussion"><i class="icon icon-plus"></i>Add chart</a>
-      <a class="btn btn-discussion"><i class="icon  icon-ban-circle"></i>Clear all</a>
-      <a class="btn btn-success">Generate chart</a>
+      <a class="btn btn-discussion chart-btn" id="add-chart"><i class="icon icon-plus"></i> Add chart</a>
+      <a class="btn btn-discussion chart-btn" id="clear-all"><i class="icon  icon-ban-circle"></i> Clear all</a>
+      <a class="btn btn-success general-btn">Save</a>
     </div>
   </div>
   <div class="right"></div>

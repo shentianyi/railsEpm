@@ -9,18 +9,19 @@ define(["jquery","jquery.chosen"],function($){
        init_with_width:function(target,width){
            if(Object.prototype.toString.apply(target)==="[object Array]"){
                  for(var i=0;i<target.length;i++){
-                   $("#"+target[i]).chosen({
+                   $(target[i]).chosen({
                        'disable_search_threshold': 7
                    });
-                   $("#"+target[i].replace("-","_")+"_chosen").width(width[i]);
+                   $(target[i].replace("-","_")+"_chosen").width(width[i]);
                }
            }
            else{
-               $("#"+target).chosen({
+               $(target).chosen({
                    'disable_search_threshold': 7
                });
-               $("#"+target+"_chosen").width(width);
+               $(target+"_chosen").width(width);
            }
+
        },
        single_update:function(id){
            var id=id.indexOf("#")===-1?"#"+id:id;
@@ -28,6 +29,9 @@ define(["jquery","jquery.chosen"],function($){
        },
        all_update:function(){
            $(".chosen-select").val('').trigger('chosen:updated');
+       },
+       change:function(target,callback){
+          $(target).chosen().change(callback);
        }
     }
 })

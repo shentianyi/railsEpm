@@ -146,8 +146,8 @@ define(["jquery"],function($){
             //必须保证第一个为数字而不是.
             obj.value = obj.value.replace(/^\./g, "");
             //保证只有出现一个.而没有多个.
-            obj.value = obj.value.replace(/\.{2,}/g, ".");
-            obj.value = obj.value.replace(/^0{2,}/g, "0");
+            obj.value = obj.value.replace(/\.{2}/g, ".");
+            obj.value = obj.value.replace(/^0{2}/g, "0");
             obj.value = obj.value.replace(/^0\d+/g, "0");
             //保证.只出现一次，而不能出现两次以上
             obj.value = obj.value.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
@@ -206,7 +206,14 @@ define(["jquery"],function($){
                 }
             }
             return c
-        }
+        },
+        //只能输入数字,不能0开头
+        inputOnlyPositiveNumber:function(obj) {
+        //先把非数字的都替换掉，除了数字
+        obj.value = obj.value.replace(/[^\d]/g, "");
+        //不能0开头
+        obj.value = obj.value.replace(/^0+/g, "");
+    }
     }
 })
 
@@ -412,13 +419,7 @@ function flash_hidden_message(obj, times) {
     }, 300);
 }
 
-//只能输入数字和小数点,不能0开头
-function clearNoNum(obj) {
-    //先把非数字的都替换掉，除了数字
-    obj.value = obj.value.replace(/[^\d]/g, "");
-    //保证只有出现一个.而没有多个.
-    obj.value = obj.value.replace(/^0+/g, "");
-}
+
 
 Date.prototype.format = function (format) {
     var o = {
@@ -442,56 +443,7 @@ Date.prototype.format = function (format) {
     }
     return format;
 }
-//need to be moved to base lib
-//if (!Date.prototype.toISOString) {
-//    Date.prototype.toISOString = function () {
-//        function pad(n) {
-//            return n < 10 ? '0' + n : n
-//        }
-//
-//        return this.getUTCFullYear() + '-'
-//            + pad(this.getUTCMonth() + 1) + '-'
-//            + pad(this.getUTCDate()) + 'T'
-//            + pad(this.getUTCHours()) + ':'
-//            + pad(this.getUTCMinutes()) + ':'
-//            + pad(this.getUTCSeconds()) + 'Z';
-//    };
-//};
 
-//
-//if (!Date.prototype.nextHour) {
-//    Date.prototype.nextHour = function () {
-//        return new Date(this.getFullYear(), this.getMonth(), this.getDate(), this.getHours() + 1)
-//    }
-//}
-//if (!Date.prototype.nextDate) {
-//    Date.prototype.nextDate = function () {
-//        return new Date(this.getFullYear(), this.getMonth(), this.getDate() + 1)
-//    }
-//}
-//if (!Date.prototype.nextWeekDate) {
-//    Date.prototype.nextWeekDate = function () {
-//        return new Date(this.getFullYear(), this.getMonth(), this.getDate() + 7)
-//    }
-//}
-//
-//if (!Date.prototype.nextMonthDate) {
-//    Date.prototype.nextMonthDate = function () {
-//        return new Date(this.getFullYear(), this.getMonth() + 1)
-//    }
-//}
-//
-//if (!Date.prototype.nextQuarterDate) {
-//    Date.prototype.nextQuarterDate = function () {
-//        return new Date(this.getFullYear(), this.getMonth() + 4)
-//    }
-//}
-//
-//if (!Date.prototype.nextYearDate) {
-//    Date.prototype.nextYearDate = function () {
-//        return new Date(this.getFullYear())
-//    }
-//}
 
 function slide_box(text, success) {
     var message_selector = "#slide_box";
