@@ -19,10 +19,25 @@ module Entry
         else
           query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base]).where(entry_type: 1)
         end
+        puts '-----------------------------------------------------query condition'
+        puts query_condition
+        puts '-----------------------------------------------------equal condition'
+
+        puts self.parameter.date_format
+
+        puts '-----------------------------------------------------query parameter end  '
 
         data_mr="date:format(this.parsed_entry_at,'#{self.parameter.date_format}')"
+        puts '*******************************************************'
+        puts mr_condition[:map_group]
+        puts '*******************************************************'
         mr_condition[:map_group]=
             mr_condition[:map_group].nil? ? data_mr : "#{mr_condition[:map_group]},#{data_mr}"
+        puts mr_condition[:map_group]
+        puts '*******************************************************'
+        equal_condition=query_condition[:base].merge(query_condition[:property]||{})
+        group_keys=self.parameter.map_group.values
+        ClearInsightService.new.base_query(equal_condition, group_keys, self.parameter.kpi)
         map=%Q{
            function(){
                   #{Mongo::Date.date_format}
