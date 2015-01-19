@@ -20,12 +20,44 @@ module Entry
         else
           query=query_serivice.base_query(KpiEntry, query_condition[:base]).where(entry_type: 1)
         end
+        puts '-----------------------------------------------------query condition'
+        puts query_condition
+        puts '-----------------------------------------------------equal condition'
+
+        puts self.parameter.date_format
+
+        puts '-----------------------------------------------------query parameter end  '
 
         data_mr="date:format(this.parsed_entry_at,'#{self.parameter.date_format}')"
+        puts '*******************************************************'
+        puts mr_condition[:map_group]
+        puts '*******************************************************'
         mr_condition[:map_group]=
             mr_condition[:map_group].nil? ? data_mr : "#{mr_condition[:map_group]},#{data_mr}"
+        puts mr_condition[:map_group]
+        puts '*******************************************************'
+        equal_condition=query_condition[:base].merge(query_condition[:property]||{})
+        group_keys=self.parameter.all_map_group
+        ClearInsight::Service.new.base_query(equal_condition, group_keys, self.parameter.kpi)
+        map=%Q{
+           function(){
+                  #{Mongo::Date.date_format}
+                  emit({#{mr_condition[:map_group]}},parseFloat(this.value));
+              };
+        }
+        func=self.parameter.average ? 'avg' : 'sum'
+        reduce=%Q{
+           function(key,values){
+            return Array.#{func}(values);};
+        }
 
-        self.data=query_serivice.map_reduce(query, mr_condition[:map_group])
+        self.data= query.map_reduce(map, reduce).out(inline: true)
+
+
+        puts ')))))))))))))))))))))))))))))))))))))))))'
+        puts data.to_json
+        puts ')))))))))))))))))))))))))))))))))))))))))'
+
         return aggregate_type_data
       end
 
@@ -47,6 +79,7 @@ module Entry
             end
           end
         else
+
           self.data.each do |d|
             self.current[date_parse_proc.call(d['_id']['date'])]=d['value'][self.value_key]
           end
@@ -56,6 +89,7 @@ module Entry
                            :target_max => self.target_max,
                            :target_min => self.target_min,
                            :unit => self.unit}
+
         self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
         #puts '*****'
         #puts self.data_module[:current].keys.to_json
