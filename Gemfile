@@ -110,22 +110,9 @@ gem 'chinese_pinyin'
 #gem 'redis-search'
 
 # Front-end module
-<<<<<<< HEAD
-gem 'seajs-rails'
-gem 'thin'
-gem 'thrift','0.9.1'
-<<<<<<< HEAD
-gem 'thrift_client'
-gem 'clear_insight'
-=======
-gem 'thrift_client'
-gem 'clear_insight'
-=======
 gem 'requirejs-rails' , '0.9.3'
 
 gem 'thrift'
 gem 'thrift_client'
 #gem 'clear_insight'
 
->>>>>>> 17eca4d12676328820042c058b1cd915c08b5fb4
->>>>>>> 3167ed3bfa9beaf68ce248aae496b97b11317185
