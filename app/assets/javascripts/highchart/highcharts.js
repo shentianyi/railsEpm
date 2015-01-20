@@ -1,4 +1,4 @@
-define(["base","./highcharts_standard_option","jquery.highcharts"],function(Base,Standard){
+define(["base","/assets/highchart/highcharts_standard_option","jquery.highcharts"],function(Base,Standard){
     Highcharts.dateFormats = {
         W: function (timestamp) {
             var d = new Date(timestamp);
@@ -19,12 +19,13 @@ define(["base","./highcharts_standard_option","jquery.highcharts"],function(Base
         my_setting_option.title.text=config.title?config:null;
         my_setting_option.xAxis.categories=config.categories;
         my_setting_option.colors=config.colors?Standard.color_template[config.colors]:Standard.color_template["template1"];
+        var data_fixed;
         if(data!==undefined){
             //arguments[1] is the data
-            my_setting_option.series=data;
+            my_setting_option.series=[data];
         }
         else{
-            my_setting_option.series=config.data?config.data:{};
+            my_setting_option.series=[config.data]?[config.data]:[];
         }
         if(config.twoYAxis){
             my_setting_option.yAxis[1].labels.enabled=true;
@@ -98,7 +99,7 @@ define(["base","./highcharts_standard_option","jquery.highcharts"],function(Base
             }
             highcharts.addSeries(data);
         },
-        //for common type of chart , all parameters are optional except container and category
+        //for common type of chart , all parameters are optional except container and categories
         Chart:function(config,data){
             var my_setting_option=Base.deepCopy(Standard.setting_option,{});
             my_setting_option.chart.type=config.type;
@@ -119,6 +120,12 @@ define(["base","./highcharts_standard_option","jquery.highcharts"],function(Base
             }
             var chart=procedure(config,data,my_setting_option);
             return chart;
+        },
+        changeType:function(highchart,type){
+            for(var i=0;i<highchart.series.length;i++){
+                 highchart.series[i].update({type:type},false);
+            }
+            highchart.redraw();
         }
     }
 })

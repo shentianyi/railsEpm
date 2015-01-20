@@ -1,5 +1,5 @@
 class StorySetsController < ApplicationController
-  before_filter :get_ability_category, :get_kpis_by_category, :get_user_entity_groups, :only => [:story]
+  before_filter :get_ability_category, :get_kpis_by_category, :get_user_entity_groups, :only => [:story,:add_chart]
   # GET /story_sets
   # GET /story_sets.json
   def index

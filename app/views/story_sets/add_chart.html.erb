@@ -6,21 +6,18 @@
       <p class="title">Generate Chart</p>
       <select class="chosen-select" data-placeholder="type" id="type">
         <option></option>
-        <option>TYPE1</option>
-        <option>TYPE2</option>
-        <option>TYPE3</option>
+        <% @categories.each do |catetory| %>
+            <option value="<%= catetory.id %>"><%= catetory.name %></option>
+        <% end %>
       </select>
       <select class="chosen-select" data-placeholder="kpi" id="kpi">
         <option></option>
-        <option>KPI1</option>
-        <option>KPI2</option>
-        <option>KPI3</option>
       </select>
       <select class="chosen-select" data-placeholder="view" id="view">
         <option></option>
-        <option>VIEW1</option>
-        <option>VIEW2</option>
-        <option>VIEW3</option>
+        <% @entity_groups.each do |entity_group| %>
+            <option value="<%= entity_group.id %>"><%= entity_group.name %></option>
+        <% end %>
       </select>
       <p class="date-mark">Date range</p>
       <div class="date-box">
@@ -46,5 +43,19 @@
       <a class="btn btn-success general-btn">Save</a>
     </div>
   </div>
-  <div class="right"></div>
+  <div class="right" id="add-chart-right">
+    <div class="info">
+      <p class="date-mark">time begin - time end</p>
+      <ul class="chart-type" id="chart-type">
+        <li name="line"><a></a></li>
+        <li name="column"><a></a></li>
+        <li name="pie"><a></a></li>
+        <li name="scatter"><a></a></li>
+      </ul>
+    </div>
+    <div class="chart">
+      <div id="chart-container" style="width:99%;height:99%"></div>
+    </div>
+    </div>
+  </div>
 </section>
