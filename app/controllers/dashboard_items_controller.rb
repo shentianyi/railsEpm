@@ -21,21 +21,21 @@ class DashboardItemsController < ApplicationController
     msg = new_message
     cansave = true
     @conditions = params[:conditions]
-    @conditions.each{|condition|
-    @new_condition = DashboardCondition.new(condition[1])
-    if @new_condition.time_string.nil?
-      next
-    end
-    ##check if time out of range
-    time_span = DashboardItem.time_string_to_time_span @new_condition.time_string
-    count = DashboardCondition.time_range_count(time_span[:start].iso8601.to_s,time_span[:end].iso8601.to_s,@new_item.interval)
-    if count > 150
-      cansave = false
-      break
-    end
-    ##
+    @conditions.each { |condition|
+      @new_condition = DashboardCondition.new(condition[1])
+      if @new_condition.time_string.nil?
+        next
+      end
+      ##check if time out of range
+      time_span = DashboardItem.time_string_to_time_span @new_condition.time_string
+      count = DashboardCondition.time_range_count(time_span[:start].iso8601.to_s, time_span[:end].iso8601.to_s, @new_item.interval)
+      if count > 150
+        cansave = false
+        break
+      end
+      ##
 
-    @new_item.dashboard_conditions<<@new_condition
+      @new_item.dashboard_conditions<<@new_condition
     }
     if cansave
       if @new_item.save
@@ -52,8 +52,8 @@ class DashboardItemsController < ApplicationController
 
 
     respond_to do |t|
-      t.json {render :json=> msg }
-      t.js {render :js=> jsonp_str(msg)}
+      t.json { render :json => msg }
+      t.js { render :js => jsonp_str(msg) }
     end
   end
 
@@ -61,14 +61,14 @@ class DashboardItemsController < ApplicationController
   def destroy
     DashboardItem.destroy(params[:id])
     respond_to do |t|
-      t.json {render :json=>{:result=>true,:id=>params[:id]}}
-      t.js {render :js=> jsonp_str({:result=>true,id=>params[:id]})}
+      t.json { render :json => {:result => true, :id => params[:id]} }
+      t.js { render :js => jsonp_str({:result => true, id => params[:id]}) }
     end
   end
 
   def save_grid
     @sequence = params[:sequence]
-    @sequence.each {|data|
+    @sequence.each { |data|
       @item = DashboardItem.find(data[1][:id])
       @item.update_attributes(data[1])
 
@@ -76,16 +76,16 @@ class DashboardItemsController < ApplicationController
     }
 
     respond_to do |t|
-      t.json {render :json=>{:result=>true}}
-      t.js {render :js=> jsonp_str({:result=>true})}
+      t.json { render :json => {:result => true} }
+      t.js { render :js => jsonp_str({:result => true}) }
     end
   end
 
   def items_by_dashboard_id
     formatted_items = DashboardItem::get_formatted_items_by_dashboard_id(params[:id])
     respond_to do |t|
-      t.json {render :json=>formatted_items}
-      t.js {render :js => jsonp_str(formatted_items)}
+      t.json { render :json => formatted_items }
+      t.js { render :js => jsonp_str(formatted_items) }
     end
   end
 
@@ -94,146 +94,41 @@ class DashboardItemsController < ApplicationController
 
     @item = DashboardItem.find(params[:id])
     if @item
-      @item.update_attribute("last_update",params[:last_update])
+      @item.update_attribute("last_update", params[:last_update])
     end
 
     respond_to do |t|
-      t.json {render :json=>datas.to_json}
-      t.js {render :js=>jsonp_str(datas)}
+      t.json { render :json => datas.to_json }
+      t.js { render :js => jsonp_str(datas) }
     end
   end
+
   # GET /dashboard_items/fake_data_time
   def fake_data_time
     #kpi
-    kpi_name = params[:kpi]
-    target_name = kpi_name+"_Target"
-    kpi = Kpi.find_by_name(kpi_name)
-    kpi_target = Kpi.find_by_name(target_name)
-    kpi_target = kpi_target.nil? ? kpi : kpi_target
-    #department
-    department = params[:department]
-    #interval
-    interval = params[:interval]
-    #time range
-    time_range = params[:time_range]
-
-    time_span = DashboardItem.time_string_to_time_span time_range
-    start_time = time_span[:start].iso8601.to_s
-    end_time = time_span[:end].iso8601.to_s
-
-    cal = true
-    title = 'test'
-
-
-
-    e = EntityGroup.find_by_name(department)
-    data = Entry::Analyzer.new(
-        kpi_id: kpi.id,
-        entity_group_id: e.id,
-        start_time: start_time,
-        end_time: end_time,
-        average: cal,
-        frequency: interval).analyse
-    current = data[:current]
-
-    data_target = Entry::Analyzer.new(
-        kpi_id: kpi_target.id,
-        entity_group_id: e.id,
-        start_time: start_time,
-        end_time: end_time,
-        average: cal,
-        frequency: interval).analyse
-
-    target = data_target[:current]
-
-    date = []
-
-    data[:date] = data[:date].collect { |d| d.localtime }
-    count = 1
-
-    case interval
-      when '90'
-        count = time_span[:end].hour - time_span[:start].hour
-        title = "Last #{count} hours "
-        date = data[:date].collect{|d| d.strftime("%H:%M")}
-      when '100'
-        count = time_span[:end].yday - time_span[:start].yday
-        title =  "Last #{count} days "
-        date = data[:date].collect { |d| d.strftime("%m-%d") }
-      when '200'
-        count = time_span[:end].strftime("%W").to_i - time_span[:start].strftime("%W").to_i
-        title = "Last #{count} weeks "
-        date = data[:date].collect { |d| d.strftime("Week %W") }
-      when '300'
-        count = time_span[:end].month - time_span[:start].month
-        title = "Last #{count} months"
-        date = data[:date].collect { |d| d.strftime("%b") }
-      when '400'
-        count = time_span[:end].year - time_span[:start].year
-        title = "Last #{count} years"
-        date = data[:date].collect { |d| d.strftime("%y") }
-    end
-
     result = {}
-    result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]-24.hours).strftime("%m-%d")
-    result[:title] = "#{kpi.name.gsub('_L','')}/"+department+" "+title+"Performance"
-    result[:department] = department
-    result[:value] = current
-    result[:target] = target
-    axis = date
-    result[:axis]=axis
+    begin
+      kpi_name = params[:kpi]
+      target_name = kpi_name+"_Target"
+      kpi = Kpi.find_by_name(kpi_name)
+      kpi_target = Kpi.find_by_name(target_name)
+      kpi_target = kpi_target.nil? ? kpi : kpi_target
+      #department
+      department = params[:department]
+      #interval
+      interval = params[:interval]
+      #time range
+      time_range = params[:time_range]
 
-    render :json=>result
-  end
+      time_span = DashboardItem.time_string_to_time_span time_range
+      start_time = time_span[:start].iso8601.to_s
+      end_time = time_span[:end].iso8601.to_s
 
-  # GET /dashboard_items/fake_data
-  # Params kpi
-  # Param departments
-  def fake_data
-    #kpi
-    kpi_name = params[:kpi]
-    target_name = kpi_name+"_Target"
-    kpi = Kpi.find_by_name(kpi_name)
-    kpi_target = Kpi.find_by_name(target_name)
-    kpi_target = kpi_target.nil? ? kpi : kpi_target
-    #departments
-    deps = params[:department]
-    #interval
-    interval = params[:interval]
-    #time range
+      cal = true
+      title = 'test'
 
-    time_string = 'LAST1DAY'
-    title = 'Test'
-    case interval
-      when '90'
-        time_string = 'LAST1HOUR'
-        title = 'Hourly'
-      when '100'
-        time_string = 'LAST1DAY'
-        title =  'Daily'
-      when '200'
-        time_string = 'LAST1WEEK'
-        title = 'Weekly'
-      when '300'
-        time_string = 'LAST1MONTH'
-        title = 'Monthly'
-      when '400'
-        time_string = 'LAST1YEAR'
-        title = 'Yearly'
-    end
-    time_span = DashboardItem.time_string_to_time_span time_string
-    start_time = time_span[:start].iso8601.to_s
-    end_time = time_span[:end].iso8601.to_s
 
-    #
-    cal = true
-
-    departments = []
-    value = []
-    target = []
-
-    deps.each do |dep|
-      e = EntityGroup.find_by_name(dep)
+      e = EntityGroup.find_by_name(department)
       data = Entry::Analyzer.new(
           kpi_id: kpi.id,
           entity_group_id: e.id,
@@ -241,6 +136,8 @@ class DashboardItemsController < ApplicationController
           end_time: end_time,
           average: cal,
           frequency: interval).analyse
+      current = data[:current]
+
       data_target = Entry::Analyzer.new(
           kpi_id: kpi_target.id,
           entity_group_id: e.id,
@@ -248,32 +145,152 @@ class DashboardItemsController < ApplicationController
           end_time: end_time,
           average: cal,
           frequency: interval).analyse
-      departments << e.name
-      value<<data[:current][0]
-      target<<data_target[:current][0]
+
+      target = data_target[:current]
+
+      date = []
+
+      data[:date] = data[:date].collect { |d| d.localtime }
+      count = 1
+
+      case interval
+        when '90'
+          count = time_span[:end].hour - time_span[:start].hour
+          title = "Last #{count} hours "
+          date = data[:date].collect { |d| d.strftime("%H:%M") }
+        when '100'
+          count = time_span[:end].yday - time_span[:start].yday
+          title = "Last #{count} days "
+          date = data[:date].collect { |d| d.strftime("%m-%d") }
+        when '200'
+          count = time_span[:end].strftime("%W").to_i - time_span[:start].strftime("%W").to_i
+          title = "Last #{count} weeks "
+          date = data[:date].collect { |d| d.strftime("Week %W") }
+        when '300'
+          count = time_span[:end].month - time_span[:start].month
+          title = "Last #{count} months"
+          date = data[:date].collect { |d| d.strftime("%b") }
+        when '400'
+          count = time_span[:end].year - time_span[:start].year
+          title = "Last #{count} years"
+          date = data[:date].collect { |d| d.strftime("%y") }
+      end
+
+
+      result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]-24.hours).strftime("%m-%d")
+      result[:title] = "#{kpi.name.gsub('_L', '')}/"+department+" "+title+"Performance"
+      result[:department] = department
+      result[:value] = current
+      result[:target] = target
+      axis = date
+      result[:axis]=axis
+    rescue
+      rresult = {}
+      result[:time] = "error"
+      result[:title] = "Data of / #{kpi_name} / not found"
+      result[:axis] = ["LL"]
+      result[:value] = 90
+      result[:target] = 100
+      result[:department] = ["LL"]
     end
-    result = {}
-    result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]).strftime("%m-%d")
-    result[:title] = "#{kpi.name.gsub('_L','')}/"+title+" Performance"
-    result[:axis] = departments
-    result[:value] = value
-    result[:target] = target
-    render :json=>result
+    render :json => result
   end
 
+  # GET /dashboard_items/fake_data
+  # Params kpi
+  # Param departments
+  def fake_data
+    #kpi
+    result = {}
+    begin
+      kpi_name = params[:kpi]
+      target_name = kpi_name+"_Target"
+      kpi = Kpi.find_by_name(kpi_name)
+      kpi_target = Kpi.find_by_name(target_name)
+      kpi_target = kpi_target.nil? ? kpi : kpi_target
+      #departments
+      deps = params[:department]
+      #interval
+      interval = params[:interval]
+      #time range
 
+      time_string = 'LAST1DAY'
+      title = 'Test'
+      case interval
+        when '90'
+          time_string = 'LAST1HOUR'
+          title = 'Hourly'
+        when '100'
+          time_string = 'LAST1DAY'
+          title = 'Daily'
+        when '200'
+          time_string = 'LAST1WEEK'
+          title = 'Weekly'
+        when '300'
+          time_string = 'LAST1MONTH'
+          title = 'Monthly'
+        when '400'
+          time_string = 'LAST1YEAR'
+          title = 'Yearly'
+      end
+      time_span = DashboardItem.time_string_to_time_span time_string
+      start_time = time_span[:start].iso8601.to_s
+      end_time = time_span[:end].iso8601.to_s
+
+      #
+      cal = true
+
+      departments = []
+      value = []
+      target = []
+
+      deps.each do |dep|
+        e = EntityGroup.find_by_name(dep)
+        data = Entry::Analyzer.new(
+            kpi_id: kpi.id,
+            entity_group_id: e.id,
+            start_time: start_time,
+            end_time: end_time,
+            average: cal,
+            frequency: interval).analyse
+        data_target = Entry::Analyzer.new(
+            kpi_id: kpi_target.id,
+            entity_group_id: e.id,
+            start_time: start_time,
+            end_time: end_time,
+            average: cal,
+            frequency: interval).analyse
+        departments << e.name
+        value<<data[:current][0]
+        target<<data_target[:current][0]
+      end
+      result[:time] = time_span[:start].strftime("%m-%d")+"~"+(time_span[:end]).strftime("%m-%d")
+      result[:title] = "#{kpi.name.gsub('_L', '')}/"+title+" Performance"
+      result[:axis] = departments
+      result[:value] = value
+      result[:target] = target
+    rescue
+      result = {}
+      result[:time] = "error"
+      result[:title] = "Data of / #{kpi_name} / not found"
+      result[:axis] = ["LL"]
+      result[:value] = 90
+      result[:target] = 100
+    end
+    render :json => result
+  end
 
 
   def update_sequence
     seq_arr=params[:sequence]
     if seq_arr && seq_arr.kind_of?(Array)
       for i in 0..seq_arr.length-1
-        DashboardItem.find(seq_arr[i].to_i).update_attributes(:sequence=>i)
+        DashboardItem.find(seq_arr[i].to_i).update_attributes(:sequence => i)
       end
     end
     respond_to do |t|
-      t.json {render :json=>true}
-      t.js {render :js=>jsonp_str(true)}
+      t.json { render :json => true }
+      t.js { render :js => jsonp_str(true) }
     end
   end
 end
