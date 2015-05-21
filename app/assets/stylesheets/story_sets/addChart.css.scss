@@ -2,6 +2,7 @@
 @import "../basic.css.scss";
 @import "../libs/datepicker.css";
 @import "../libs/tipsy.css";
+@import "../libs/chosen.css";
 .outer{
   height:calc(100% - 70px);
   height:-moz-calc(100% - 70px);
@@ -18,9 +19,10 @@
       border-top:1px solid $border-color;
       border-right:1px solid $border-color;
       background:$discussion-bg;
+      @include box-sizing-border;
       @include border-radius(0px,10px,0px,0px);
       .back-btn{
-         margin:15px auto 15px;
+         margin:25px auto 30px;
          width:200px;
       }
       .title{
@@ -30,41 +32,66 @@
         text-align:left;
         font-family:"maven" ;
         font-size:32px;
-        margin:15px 12px 5px;
+        margin:15px 12px 20px;
         color:darken($cyanine,10%);
       }
-      &>input{
-        display:block;
-        margin:12px auto;
-        position:relative;
-        width:260px;
+      &>select+div{
+        margin-left:23px;
+        margin-bottom:10px;
+        &>a.chosen-single{
+          padding:6px 5px;
+          div{
+            b{
+              background-position:3px 9px;
+            }
+          }
+        }
       }
       .date-mark{
         font-size:18px;
-        color:darken($cyanine,10%);
+        color:$cyanine;
         padding-left:23px;
         margin-top:5px;
-        marign-bottom:0px;
+        margin-bottom:7px;
       }
       .date-box{
         width:100%;
-        height:100px;
+        height:77px;
         padding-top:6px;
         position:relative;
+        &:after{
+          content:"";
+          position:absolute;
+          bottom:10px;
+          left:15px;
+          right:15px;
+          height:1px;
+          background:rgba(0,0,0,0.1);
+        }
         .switch-btn{
           font-size:13px;
           padding:5px 15px;
           margin-right:25px;
           position:absolute;
           right:0px;
-          top:-32px;
+          top:-30px;
           background:$blue;
           color:#fff;
           cursor:pointer;
           @include border-radius-same(5px);
         }
+        .appear{
+          left:0px !important;
+        }
+        .disappear{
+          left:-320px !important;
+        }
         .range{
           margin-left:23px;
+          position:absolute;
+          left:0px;
+          padding-top:6px;
+          transition:left 0.35s ease-out;
           clear:right;
           &:after{
             @include after-clear;
@@ -86,8 +113,40 @@
           }
         }
         .precise{
-
+          position:absolute;
+          left:0px;
+          padding-left:35px;
+          transition:left 0.35s ease-out;
+          label{
+            font-size:29px;
+            display:inline-block;
+            position:relative;
+            top:4px;
+            margin-right:5px;
+            color:darken($cyanine,10%);
+          }
+          input{
+            width:60px;
+            padding: 3px 5px;
+            height: 21px;
+            position:relative;
+            top:1px;
+            border:1px solid #c8c8c8;
+          }
         }
+      }
+      .chart-btn{
+        margin-top:8px;
+        font-size:14px;
+      }
+      .general-btn{
+        position:absolute;
+        left:0px;
+        right:0px;
+        bottom:40px;
+        padding-top: 13px;
+        padding-bottom: 13px;
+        font-size: 18px;
       }
     }
   }
@@ -95,8 +154,72 @@
     float:left;
     width:calc(100% - 320px);
     height:100%;
+    display:none;
     @include box-sizing-border;
-    position:relative;
-    z-index:20;
+    .info{
+      height:100px;
+      width:100%;
+      @include box-sizing-border;
+      .date-mark{
+        text-align: right;
+        padding-right:10px;
+      }
+      .chart-type{
+        float:right;
+        display: block;
+        padding-right:10px;
+        li{
+          $width:48px;
+          float:left;
+          display: inline-block;
+          width:$width;
+          height:$width;
+          margin-right:6px;
+          @include border-radius-same(5px);
+          background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
+          background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(95, 169, 218, 0.2) 55%) #5fa9da;
+          @include transition(background);
+          cursor:pointer;
+          &:hover,&.active{
+            background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
+            background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(105, 174, 245, 0.2) 55%) #69aef5;
+          }
+          a{
+            width:100%;
+            height:100%;
+            display:block;
+            background-image:url(/assets/dashboard-add-type.png);
+            background-repeat:no-repeat;
+            pointer-events:none;
+          }
+          &[name="line"]{
+            a{
+              background-position:center 3px;
+            }
+          }
+          &[name="column"]{
+            a{
+              background-position:center -44px;
+            }
+          }
+          &[name="pie"]{
+            a{
+              background-position:center -91px;
+            }
+          }
+          &[name="scatter"]{
+            a{
+              background-position:center -140px;
+            }
+          }
+        }
+      }
+    }
+    .chart{
+      height:calc(100% - 100px);
+      width:100%;
+      @include box-sizing-border;
+      background:#fff;
+    }
   }
 }
