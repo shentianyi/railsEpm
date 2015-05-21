@@ -108,7 +108,8 @@ class User < ActiveRecord::Base
     UserConfirmationMailer.deliver_password_reset(self).deliver
   end
 
-  def create_tenant_user!(email, password, password_confirmation, company_name)
+  def create_tenant_user!(first_name,email, password, password_confirmation, company_name)
+    self.first_name=first_name
     self.email=email
     self.password=password
     self.password_confirmation=password_confirmation
