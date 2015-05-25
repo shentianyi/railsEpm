@@ -63,7 +63,7 @@ module APIGuard
 
     private
     def guard_by_basic
-      auth_header = env['HTTP_AUTHORIZATION'].split(' ')
+      auth_header = env['cd '].split(' ')
       user, pass = Base64.decode64(auth_header[1]).split(':')
 
       if (user=User.find_for_database_authentication(:email => user)) && user.valid_password?(pass)
