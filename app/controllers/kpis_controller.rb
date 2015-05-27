@@ -219,6 +219,12 @@ class KpisController < ApplicationController
     end
   end
 
+  def download_entry_template
+    kpi=current_user.kpis.first
+    msg=FileHandler::Excel::KpiHandler.download_entry_template(current_user,kpi)
+    send_file msg.content
+  end
+
   private
 
   def generate_kpi_by_template t, category, formula

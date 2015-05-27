@@ -14,3 +14,4 @@ path:
  :email_file_path: 'uploadfiles/emails'
  :attach_tmp_path: 'uploadfiles/attach/tmp'
  :attach_path: 'uploadfiles/attach/uped'
+ :tmp_file_path: 'uploadfiels/tmp'
