@@ -105,6 +105,7 @@ DASHBOARD.add.init=function(){
        $("#dashboard-group-name+div").css("width","140px");
        $("#chart-group+div").css("width","130px");
        $("#chart-kpi+div").css("width","130px");
+        $("#kpi-property-select+div").css("width","130px");
        $("#chart-view+div").css("width","130px");
        db_chartSeries = {
             count: 0,
@@ -327,6 +328,34 @@ DASHBOARD.add.init=function(){
 
 };
 
+$('#chart-kpi').on('change', function (event,id) {
+    $.get('/kpis/group_properties/' + id.selected, function (data) {
+        $("#kpi-property-select").empty().trigger('chosen:updated');
+        if (data) {
+            var properties = {};
+            $.each(data, function (k, v) {
+                $.each(v, function (kk, vv) {
+                    properties[k] = kk;
+                    var gp = $('<optgroup/>').attr('label', kk);
+                    for (var i = 0; i < vv.length; i++) {
+                        gp.append($('<option/>').attr('value', vv[i].id).attr('property', k).text(vv[i].value));
+                    }
+                    $("#kpi-property-select").append(gp);
+                });
+            });
+            $("#kpi-property-select").val('').trigger('chosen:updated');
+            groupDetailInit(data);
+            if(ANALYTICS.demo){
+                var interval =  $("#s_interval").val();
+                var start_time =new Date($("#s_start_time").val()).toWangString(interval);
+                var end_time =new Date($("#s_end_time").val()).toWangString(interval);
+                $("#analy-begin-time").val(start_time).attr("hide_value",start_time).attr("hide_post",start_time);
+                $("#analy-end-time").val(end_time).attr("hide_value",end_time).attr("hide_post",end_time);
+                prepare_form_chart();
+            }
+        }
+    }, 'json');
+});
 DASHBOARD.add.prepare_to_add_item = function(callback){
     var post={},i;
     post.dashboard_name=$("#dashboard-name-input").val();
@@ -349,6 +378,21 @@ DASHBOARD.add.prepare_to_add_item = function(callback){
     }
 }
 
+function get_selected_property() {
+    var properties = $("#kpi-property-select").find("option:selected");
+    var kpi_property = null;
+    if (properties.length > 0) {
+        kpi_property = {};
+        for (var i = 0; i < properties.length; i++) {
+            var _property = $(properties[i]).attr('property');
+            if (kpi_property[_property] == null)
+                kpi_property[_property] = [];
+            kpi_property[_property].push($(properties[i]).text());
+        }
+    }
+    return kpi_property;
+}
+
 DASHBOARD.add.prepare_form_chart=function() {
     var kpi = $("#chart-kpi :selected").attr("value");
     var view = $("#chart-view :selected").attr("value");
@@ -356,7 +400,7 @@ DASHBOARD.add.prepare_form_chart=function() {
     var method = $("input[name='chartRadios']:checked").attr("value");
     var type=$("#db-add-type>.active").attr("type");
     var interval, chart_body_close_validate;
-
+    var kpi_property = get_selected_property();
     if ($("#db-chart-body").css("display") == "block") {
         chart_body_close_validate = false;
         interval=$("#db-chart-interval-alternate li.active").attr("interval")
@@ -402,7 +446,8 @@ DASHBOARD.add.prepare_form_chart=function() {
            entity_group_id: view,
            start_time : standardParse(begin_time).date.toISOString() ,
            end_time : standardParse(end_time).date.toISOString(),
-           frequency:interval
+           frequency:interval,
+           property: kpi_property
        },function(msg){
            dashboard_remove_loading("dashboard-add-inner");
            if(msg.result){
