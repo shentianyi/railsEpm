@@ -22,3 +22,4 @@ $ZONE_HOUR_OFFSET=Time.zone_offset($DEFAULT_TIME_ZONE)/(3600)
 
 $BACKGROUND_TASK=BackgroundTaskType::RESQUE
 
+$tmp_file_path=path_config[:tmp_file_path]

@@ -141,6 +141,7 @@ IFEpm::Application.routes.draw do
       get :condition
       get :parameter
       get :access
+      get :download_entry_template
 
       [:categoried, :user, :list, :access_list, :properties, :group_properties].each do |a|
         get "#{a}/:id" => a
