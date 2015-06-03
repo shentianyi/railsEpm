@@ -9,6 +9,7 @@ class DashboardCondition < ActiveRecord::Base
   validates :kpi_id, :presence => true
   validates :calculate_type, :presence => true
 
+
   #
   # move from DashboardItem::get_item_formatted_data(id)
   # return the array of conditions

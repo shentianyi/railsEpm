@@ -22,6 +22,9 @@ class DashboardItemsController < ApplicationController
     cansave = true
     @conditions = params[:conditions]
     @conditions.each{|condition|
+      puts condition.to_json
+      puts condition[1].to_json
+      raise 'i'
     @new_condition = DashboardCondition.new(condition[1])
     if @new_condition.time_string.nil?
       next
