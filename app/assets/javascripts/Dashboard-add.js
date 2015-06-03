@@ -309,7 +309,7 @@ DASHBOARD.add.init=function(){
                         post.series[i].average=db_chartSeries.series[i].method;
                         post.series[i].begin_time=db_chartSeries.series[i].begin_post ;
                         post.series[i].end_time=db_chartSeries.series[i].end_post;
-                        post.series[i].property=db_chartSeries.series[i].property;
+                        post.series[i].kpi_property=db_chartSeries.series[i].kpi_property;
                         post.series[i].count=i+1;
                     }
 //                    DASHBOARD.init_high_chart();
@@ -463,7 +463,8 @@ DASHBOARD.add.prepare_form_chart=function() {
                    interval:interval,
                    view:view,
                    view_text:view_text,
-                   count:db_chartSeries.getCount()+1
+                   count:db_chartSeries.getCount()+1,
+                   kpi_property: kpi_property
                };
                var addSeriesOption={
                    kpi:$("#chart-kpi :selected").text(),
@@ -478,7 +479,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                    end_time:end_time,
                    begin_post:begin_post,
                    end_post:end_post,
-                   property: kpi_property
+                   kpi_property: kpi_property
                };
 
                db_chartSeries.addCount();

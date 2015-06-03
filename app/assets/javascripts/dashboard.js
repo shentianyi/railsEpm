@@ -171,7 +171,7 @@ function prepare_to_create_db_view(post){
         condition.time_string = get_time_string_by_twocar(post.series[i].begin_time,post.series[i].end_time);
         condition.dashboard_item_id = null;
         condition.count = post.series[i].count;
-        condition.property=post.series[i].property;
+        condition.kpi_property=post.series[i].kpi_property;
         dashboard_item.conditions.push(condition);
     }
     //return dashboard_item;

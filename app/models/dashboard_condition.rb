@@ -1,7 +1,7 @@
 class DashboardCondition < ActiveRecord::Base
   # attr_accessible :title, :body
   belongs_to :dashboard_item
-  attr_accessible :dashboard_item_id, :entity_group, :kpi_id, :calculate_type, :time_string, :count
+  attr_accessible :dashboard_item_id, :entity_group, :kpi_id, :calculate_type, :time_string, :count,:kpi_property
 
   validates_with TimeStringValidator
   #validates :dashboard_item_id,:presence => true
