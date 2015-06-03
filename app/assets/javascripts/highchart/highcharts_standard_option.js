@@ -168,6 +168,11 @@ define({
                     align:"left"
                 }
             },
+            pie:{
+                allowPointSelect: true,
+                cursor: 'pointer',
+                size:"85%"
+            },
             scatter: {
                 marker: {
                     radius: 4,
@@ -239,7 +244,7 @@ define({
                     },
                     y:-2
                 },
-                tickInterval:10
+//                tickInterval:10
             },
             { //Secondary yAxis
                 labels: {
