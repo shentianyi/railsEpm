@@ -298,7 +298,9 @@ DASHBOARD.add.init=function(){
                     post.type=$("#db-add-type li.active").attr("type");
                     post.interval=$("#db-chart-interval-alternate li.active").attr("interval");
                     post.dashboard_id = $("#dashboard-group-name :selected").attr("value");
-                    post.series=[];
+                    post.series=[]; console.log('----------------');
+                    console.log(db_chartSeries);
+                    console.log('----------------');
                     for(i=0;i<db_chartSeries.series.length;i++){
                         post.series[i]={};
                         post.series[i].kpi=db_chartSeries.series[i].kpi_id;
@@ -307,6 +309,7 @@ DASHBOARD.add.init=function(){
                         post.series[i].average=db_chartSeries.series[i].method;
                         post.series[i].begin_time=db_chartSeries.series[i].begin_post ;
                         post.series[i].end_time=db_chartSeries.series[i].end_post;
+                        post.series[i].property=db_chartSeries.series[i].property;
                         post.series[i].count=i+1;
                     }
 //                    DASHBOARD.init_high_chart();
@@ -461,7 +464,7 @@ DASHBOARD.add.prepare_form_chart=function() {
                    view:view,
                    view_text:view_text,
                    count:db_chartSeries.getCount()+1
-               }
+               };
                var addSeriesOption={
                    kpi:$("#chart-kpi :selected").text(),
                    kpi_id:kpi,
@@ -474,8 +477,9 @@ DASHBOARD.add.prepare_form_chart=function() {
                    begin_time:begin_time,
                    end_time:end_time,
                    begin_post:begin_post,
-                   end_post:end_post
-               }
+                   end_post:end_post,
+                   property: kpi_property
+               };
 
                db_chartSeries.addCount();
                db_chartSeries.id_give();
