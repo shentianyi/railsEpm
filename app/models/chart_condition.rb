@@ -24,7 +24,13 @@ class ChartCondition < ActiveRecord::Base
   #
   def check kpi_entry
     query = AnalyseService.chart_condition_filter self
-    department = EntityGroup.find_by_id(query[:entity_group_id]).department
+ eg = EntityGroup.find_by_id(query[:entity_group_id])
+return false if eg.nil?
+
+#    department = EntityGroup.find_by_id(query[:entity_group_id]).department
+
+    department=eg.department
+
     entity = Entity.find_by_id(kpi_entry.entity_id)
 
     if entity && entity.department && department && entity.department.path_ids.include?(department.id)
