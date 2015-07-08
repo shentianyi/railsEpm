@@ -1,14 +1,14 @@
 class DashboardCondition < ActiveRecord::Base
   # attr_accessible :title, :body
   belongs_to :dashboard_item
-  attr_accessible :dashboard_item_id, :entity_group, :kpi_id, :calculate_type, :time_string, :count,:kpi_property
+  attr_accessible :dashboard_item_id, :entity_group, :kpi_id, :calculate_type, :time_string, :count, :kpi_property
 
   validates_with TimeStringValidator
   #validates :dashboard_item_id,:presence => true
   validates :entity_group, :presence => true
   validates :kpi_id, :presence => true
   validates :calculate_type, :presence => true
-
+  before_save :reset_field_value
 
   #
   # move from DashboardItem::get_item_formatted_data(id)
@@ -36,7 +36,8 @@ class DashboardCondition < ActiveRecord::Base
             start_time: time_span[:start].iso8601.to_s,
             end_time: time_span[:end].iso8601.to_s,
             average: condition.calculate_type=='AVERAGE' ? true : false,
-            frequency: dashboard_itme.interval).analyse
+            frequency: dashboard_itme.interval,
+            property: JSON.parse(condition.kpi_property)).analyse
 
         if data
           data[:result]=true
@@ -92,6 +93,7 @@ class DashboardCondition < ActiveRecord::Base
     return result
   end
 
+
   def self.time_range_count(starttime, endtime, interval)
     startt = Time.parse(starttime).to_i
     endt = Time.parse(endtime).to_i
@@ -110,5 +112,12 @@ class DashboardCondition < ActiveRecord::Base
         count = (endt - startt)/(60*60*24*365)
     end
     return count
+  end
+
+  private
+  def reset_field_value
+    if self.kpi_property.is_a?(Hash)
+      self.kpi_property=self.kpi_property.to_json
+    end
   end
 end

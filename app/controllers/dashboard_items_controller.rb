@@ -24,11 +24,19 @@ class DashboardItemsController < ApplicationController
     @conditions.each{|condition|
       puts condition.to_json
       puts condition[1].to_json
-      raise 'i'
+
     @new_condition = DashboardCondition.new(condition[1])
+
+      puts @new_condition.kpi_property.class
+
+      puts @new_condition.kpi_property
+      puts @new_condition.kpi_property.is_a?(Hash)
+      puts '-------------'
     if @new_condition.time_string.nil?
       next
     end
+
+
     ##check if time out of range
     time_span = DashboardItem.time_string_to_time_span @new_condition.time_string
     count = DashboardCondition.time_range_count(time_span[:start].iso8601.to_s,time_span[:end].iso8601.to_s,@new_item.interval)
@@ -54,7 +62,6 @@ class DashboardItemsController < ApplicationController
       msg[:result] = false
       msg[:errors] = I18n.t "fix.zone_too_large"
     end
-
 
     respond_to do |t|
       t.json {render :json=> msg }
