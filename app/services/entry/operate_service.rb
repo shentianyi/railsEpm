@@ -108,14 +108,14 @@ module Entry
       k = KpiEntry.new
       #base fileds
       k.fields.keys.each {
-        |attr|
+          |attr|
         puts attr
         k[attr] = record[attr] if record[attr]
       }
       #kpi_properties
       attr = {}
-      kpi.kpi_properties.each {|p| attr[p.name] = p.id}
-      fetch_attrs.each {|f|
+      kpi.kpi_properties.each { |p| attr[p.name] = p.id }
+      fetch_attrs.each { |f|
         k[attr[f]] = record[f]
       }
       k.save
@@ -142,29 +142,41 @@ module Entry
       kpi = Kpi.find_by_id(attrs['kpi_id'])
       if kpi && !entry[:kpi_properties].nil?
         properties = {}
-        kpi.kpi_properties.each {|p|
+        kpi.kpi_properties.each { |p|
           properties[p.name] = p.id
         }
         fetch_attrs = properties.keys.to_a
         fetch_attrs = fetch_attrs & entry[:kpi_properties].keys.to_a
-        fetch_attrs.each {|f|
+        query_properties={}
+        fetch_attrs.each { |f|
           if !entry[:kpi_properties][f].blank?
             if entry[:kpi_properties][f].is_a?(String)
               attrs["a"+properties[f].to_s] = entry[:kpi_properties][f].strip
+              query_properties["a"+properties[f].to_s]= entry[:kpi_properties][f].strip
             else
               attrs["a"+properties[f].to_s] = entry[:kpi_properties][f]
+              query_properties["a"+properties[f].to_s]= entry[:kpi_properties][f]
             end
 
           end
         }
       end
+      puts "#{attrs}-------------"
+
       #dependet on entry_type
       case attrs['entry_type']
         when 0
-          kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], entry_at: attrs['entry_at'], entity_id: attrs['entity_id'],entry_type: attrs['entry_type']).first
+          kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], entry_at: attrs['entry_at'], entity_id: attrs['entity_id'], entry_type: attrs['entry_type'])
+          # puts entry[:kpi_properties]
+          # puts query_properties
+          query_properties.each do |k, v|
+            kpi_entry=kpi_entry.where({k => v})
+          end
+          kpi_entry=kpi_entry.first
         when 1
-          kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], parsed_entry_at: attrs['parsed_entry_at'], entity_id: attrs['entity_id'],entry_type: attrs['entry_type']).first
+          kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], parsed_entry_at: attrs['parsed_entry_at'], entity_id: attrs['entity_id'], entry_type: attrs['entry_type']).first
       end
+      # raise
       #update
       if kpi_entry
         #puts "update!"
@@ -182,7 +194,7 @@ module Entry
         return kpi_entry
       end
     end
-    
+
     def remove_entry id
 
     end
@@ -240,8 +252,8 @@ module Entry
           kpi_name = records[:kpis][index]
           #1. find all kpi properties with name and id
           kpi = Kpi.find_by_name(kpi_name)
-          kpi.kpi_properties.each {|attr|
-            entry_attrs << Hash[attr.name,attr.id]
+          kpi.kpi_properties.each { |attr|
+            entry_attrs << Hash[attr.name, attr.id]
           }
           #2. combine base properties to kpi attributes
           full_attrs = kpi.kpi_properties.pluck(:name) + @base_attrs
@@ -257,7 +269,7 @@ module Entry
           # and set to hg
           h = Hash[Hash[records[:attrs].zip(records[:attr_vals][val_index])].select { |k, v| fetch_attrs.include?(k) }.to_a | h.to_a]
           #7. transfer all properties' name to id
-          h.keys.each {|key|
+          h.keys.each { |key|
             #replace kpi properties' name wtih id, not base properties
             key = entry_attrs[key] if entry_attrs.keys.include?(key)
           }
@@ -266,7 +278,7 @@ module Entry
           attrs << h
         end
         #9. fill all the properties value and kpi value
-        fill_attrs(attrs, kpi.id ,records[:email])
+        fill_attrs(attrs, kpi.id, records[:email])
       end
       attrs
     end
@@ -290,8 +302,8 @@ module Entry
           kpi_name = records[:kpis][index]
           #1. find all kpi properties with name and id
           kpi = Kpi.find_by_name(kpi_name)
-          kpi.kpi_properties.each {|attr|
-            entry_attrs << Hash[attr.name,attr.id]
+          kpi.kpi_properties.each { |attr|
+            entry_attrs << Hash[attr.name, attr.id]
           }
           #2. combine base properties to kpi attributes
           full_attrs = kpi.kpi_properties.pluck(:name) + @base_attrs
@@ -307,7 +319,7 @@ module Entry
           # and set to hg
           h = Hash[records[:attrs].zip(records[:attr_vals][val_index])].select { |k, v| fetch_attrs.include?(k) }.to_a
           #7. transfer all properties' name to id
-          h.keys.each {|key|
+          h.keys.each { |key|
             #replace kpi properties' name wtih id, not base properties
             key = entry_attrs[key] if entry_attrs.keys.include?(key)
           }
@@ -351,14 +363,14 @@ module Entry
       nonillattr["tenant_id"] = user.tenant_id
       nonillattr["target_max"] = kpi.target_max
       nonillattr["target_min"] = kpi.target_min
-      nonillattr["user_kpi_item_id"] = UserKpiItem.where("user_id = ? AND kpi_id = ?",user.id,kpi.id).first
+      nonillattr["user_kpi_item_id"] = UserKpiItem.where("user_id = ? AND kpi_id = ?", user.id, kpi.id).first
       #defaule entry_type is 0 means this is a detail
       #nonillattr["entrytype"] = 0
       nonillattr["frequency"] = kpi.frequency
 
       #fill all the attrs
-      attrs.each {|attr|
-        attr.each {|key,val|
+      attrs.each { |attr|
+        attr.each { |key, val|
           if key == "entry_at" && !val.nil?
             attr["parsed_entry_at"] = KpiEntriesHelper.parse_entry_date(kpi.frequency, val)
           end
@@ -409,7 +421,7 @@ module Entry
     #records:{
     #    entry_ids:["1","2","3"]
     #}
-    def validate_records records,operator
+    def validate_records records, operator
       msg = Message.new
       msg.result = false
       if (user = User.find_by_email(records.email)).nil?
@@ -423,7 +435,7 @@ module Entry
     end
 
     def doc_attr
-      [:kpi_id,:kpi_name,:date,:value,:email,:entry_type]
+      [:kpi_id, :kpi_name, :date, :value, :email, :entry_type]
     end
   end
 end

@@ -142,7 +142,7 @@ function is_datetime_outrange(start,end,interval){
 }
 
 function prepare_to_create_db_view(post){
-    console.log(post);
+     console.log(post);
     var dashboard_item = {};
     dashboard_item.conditions = [];
 
@@ -171,6 +171,7 @@ function prepare_to_create_db_view(post){
         condition.time_string = get_time_string_by_twocar(post.series[i].begin_time,post.series[i].end_time);
         condition.dashboard_item_id = null;
         condition.count = post.series[i].count;
+        condition.kpi_property=post.series[i].kpi_property;
         dashboard_item.conditions.push(condition);
     }
     //return dashboard_item;

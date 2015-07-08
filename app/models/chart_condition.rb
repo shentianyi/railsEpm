@@ -1,7 +1,7 @@
 class ChartCondition < ActiveRecord::Base
   attr_accessible :entity_group_id, :kpi_id, :calculate_type,
                   :time_string, :chartable_id, :chartable_type, :interval, :chart_type, :kpi_property,
-                  :query,:data
+                  :query, :data
   belongs_to :chartable, :polymorphic => true
   belongs_to :kpi
   belongs_to :entity_group
@@ -18,7 +18,7 @@ class ChartCondition < ActiveRecord::Base
 
   def self.detail_by_chartable(chartable)
     chartable.chart_conditions.joins(:kpi).joins(:entity_group)
-    .select('kpis.name as kpi_name,entity_groups.name as entity_group_name,chart_conditions.*')
+        .select('kpis.name as kpi_name,entity_groups.name as entity_group_name,chart_conditions.*')
   end
 
   #
@@ -32,9 +32,7 @@ return false if eg.nil?
     department=eg.department
 
     entity = Entity.find_by_id(kpi_entry.entity_id)
-
     if entity && entity.department && department && entity.department.path_ids.include?(department.id)
-
       if kpi_entry.entry_at >= query[:start_time] && kpi_entry.entry_at <= query[:end_time]
         return true
       end
@@ -45,7 +43,7 @@ return false if eg.nil?
   private
   def clean_data_cache
     if cache= KpiEntryAnalyseCache.find_by_id(self.id, self.class.name)
-     cache.destroy
+      cache.destroy
     end
   end
 end

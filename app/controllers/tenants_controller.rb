@@ -8,6 +8,6 @@ class TenantsController < ApplicationController
 
   else
 
-  end   
+  end
  end
 end
