@@ -536,6 +536,7 @@ MANAGE.user.assign.input = function (event) {
 
 ///////////////
 MANAGE.user.init_assign_user = function() {
+    console.log('---------assign')
     $("#assign-kpi-user option").remove();
     var target = $("#assign-kpi-user");
     target.append("<option></option>");
@@ -547,4 +548,5 @@ MANAGE.user.init_assign_user = function() {
 
         target.append("<option value="+user_id+">"+email+"</option>");
     });
+    $("#assign-kpi-user").val('').trigger('chosen:updated');
 }
