@@ -1,40 +1,40 @@
 <ul class="entry-left-menu" id="entry-left-menu">
-     <li>
-          <%= t 'entry.desc.entry'%>
-     </li>
-     <div class="btn btn-primary upload-kpi-btn" id="upload-kpi-btn">
-           <%= I18n.t('fix.upload_kpi')%>
-     </div>
-     <li class="<%= 'active' if @f==KpiFrequency::Hourly%>" interval="<%=KpiFrequency::Hourly%>" show_section="hour">
-          <a  href="/kpi_entries/index/<%= KpiFrequency::Hourly%>"><%= t 'manage.kpi.freq_item.hourly'%></a>
-     </li>
-     <li class="<%= 'active' if @f==KpiFrequency::Daily%>" interval="<%=KpiFrequency::Daily%>" show_section="day">
-          <a  href="/kpi_entries/index/<%= KpiFrequency::Daily%>"><%= t 'manage.kpi.freq_item.daily'%></a>
-     </li>
-     <li class="<%= 'active' if @f==KpiFrequency::Weekly%>" interval="<%=KpiFrequency::Weekly%>" show_section="day">
-          <a  href="/kpi_entries/index/<%= KpiFrequency::Weekly%>"><%= t 'manage.kpi.freq_item.weekly'%></a>
-     </li>
-     <li class="<%= 'active' if @f==KpiFrequency::Monthly%>" interval="<%=KpiFrequency::Monthly%>" show_section="month">
-          <a  href="/kpi_entries/index/<%= KpiFrequency::Monthly%>"><%= t 'manage.kpi.freq_item.monthly'%></a>
-     </li>
-     <li class="<%= 'active' if @f==KpiFrequency::Quarterly%>" interval="<%=KpiFrequency::Quarterly%>" show_section="month">
-          <a  href="/kpi_entries/index/<%= KpiFrequency::Quarterly%>"><%= t 'manage.kpi.freq_item.quarterly'%></a>
-     </li>
-     <li class="<%= 'active' if @f==KpiFrequency::Yearly%>" interval="<%=KpiFrequency::Yearly%>" show_section="year">
-          <a   href="/kpi_entries/index/<%= KpiFrequency::Yearly%>" ><%= t 'manage.kpi.freq_item.yearly'%></a>
-     </li>
+  <li>
+    <%= t 'entry.desc.entry' %>
+  </li>
+  <div class="btn btn-primary upload-kpi-btn" id="upload-kpi-btn">
+    <%= I18n.t('fix.upload_kpi') %>
+  </div>
+  <li class="<%= 'active' if @f==KpiFrequency::Hourly %>" interval="<%= KpiFrequency::Hourly %>" show_section="hour">
+    <a href="/kpi_entries/index/<%= KpiFrequency::Hourly %>"><%= t 'manage.kpi.freq_item.hourly' %></a>
+  </li>
+  <li class="<%= 'active' if @f==KpiFrequency::Daily %>" interval="<%= KpiFrequency::Daily %>" show_section="day">
+    <a href="/kpi_entries/index/<%= KpiFrequency::Daily %>"><%= t 'manage.kpi.freq_item.daily' %></a>
+  </li>
+  <li class="<%= 'active' if @f==KpiFrequency::Weekly %>" interval="<%= KpiFrequency::Weekly %>" show_section="day">
+    <a href="/kpi_entries/index/<%= KpiFrequency::Weekly %>"><%= t 'manage.kpi.freq_item.weekly' %></a>
+  </li>
+  <li class="<%= 'active' if @f==KpiFrequency::Monthly %>" interval="<%= KpiFrequency::Monthly %>" show_section="month">
+    <a href="/kpi_entries/index/<%= KpiFrequency::Monthly %>"><%= t 'manage.kpi.freq_item.monthly' %></a>
+  </li>
+  <li class="<%= 'active' if @f==KpiFrequency::Quarterly %>" interval="<%= KpiFrequency::Quarterly %>" show_section="month">
+    <a href="/kpi_entries/index/<%= KpiFrequency::Quarterly %>"><%= t 'manage.kpi.freq_item.quarterly' %></a>
+  </li>
+  <li class="<%= 'active' if @f==KpiFrequency::Yearly %>" interval="<%= KpiFrequency::Yearly %>" show_section="year">
+    <a href="/kpi_entries/index/<%= KpiFrequency::Yearly %>"><%= t 'manage.kpi.freq_item.yearly' %></a>
+  </li>
 </ul>
 
 <div class="entry-right-content">
-     <div class="entry-block">
-          <i class="icon-chevron-left" id="entry-minus"></i>
-          <input type="text" readonly=true id="entry-date-picker"/>
-          <i class="icon-chevron-right" id="entry-plus"></i>
-          <span id="entry-date-extra"></span>
-     </div>
-     <ul class="entry-sort-list" id="entry-sort-list">
+  <div class="entry-block">
+    <i class="icon-chevron-left" id="entry-minus"></i>
+    <input type="text" readonly=true id="entry-date-picker"/>
+    <i class="icon-chevron-right" id="entry-plus"></i>
+    <span id="entry-date-extra"></span>
+  </div>
+  <ul class="entry-sort-list" id="entry-sort-list">
 
-     </ul>
+  </ul>
 </div>
 
 <div class="modal-outer" id="upload-kpi">
@@ -65,33 +65,36 @@
 <div class="modal-outer false-alert" id="false-alert">
   <div class="modal-inner false-alert-inner">
     <i class="icon-remove" id="false-close"></i>
-    <label class="title"><%= I18n.t('fix.error_title')%></label>
-    <p><%= I18n.t('fix.upload_error')%></p>
-    <p><a href="" id="error-report"><%= I18n.t('fix.click_download_error')%></a></p>
+    <label class="title"><%= I18n.t('fix.error_title') %></label>
+
+    <p><%= I18n.t('fix.upload_error') %></p>
+
+    <p><a href="" id="error-report"><%= I18n.t('fix.click_download_error') %></a></p>
+
     <div class="btn false-close-btn" id="false-close-btn">
-      <%= I18n.t('fix.close')%>
+      <%= I18n.t('fix.close') %>
     </div>
   </div>
 </div>
 
-<input type="hidden" value="<%= @f%>" id="kpi-type-hidden" />
+<input type="hidden" value="<%= @f %>" id="kpi-type-hidden"/>
 <script>
-     $(document).ready(function() {
-          ENTRY.init();
-          kpi_entry_upload();
+    $(document).ready(function () {
+        ENTRY.init();
+        kpi_entry_upload();
 
-     })
+    })
 </script>
 
-<% content_for :javascript_includes do%>
-    <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js"%>
-    <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js"%>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
+    <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
 
-    <%= javascript_include_tag "jquery.sparkline.min.js"%>
-    <%= javascript_include_tag "kpi_entry_upload.js"%>
-    <%= javascript_include_tag "Entry.js"%>
-    <%= javascript_include_tag "bootstrap-datepicker.js"%>
-    <%= javascript_include_tag "date_picker_template.js"%>
-    <%= javascript_include_tag "bootstrap-datetimepicker.min.js"%>
-    <%= javascript_include_tag "Manage-kpi-entry.js"%>
+    <%= javascript_include_tag "jquery.sparkline.min.js" %>
+    <%= javascript_include_tag "kpi_entry_upload.js" %>
+    <%= javascript_include_tag "Entry.js" %>
+    <%= javascript_include_tag "bootstrap-datepicker.js" %>
+    <%= javascript_include_tag "date_picker_template.js" %>
+    <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
+    <%= javascript_include_tag "Manage-kpi-entry.js" %>
 <% end %>

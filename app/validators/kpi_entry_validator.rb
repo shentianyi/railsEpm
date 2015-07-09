@@ -109,6 +109,7 @@ class KpiEntryValidator
   end
 
   def prepare_params
+    puts '----------------'
     source = self.valid_by_cache ? self.source : self
     self.kpi_id=source.kpi_id
     self.frequency=source.kpi.frequency

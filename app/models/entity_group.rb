@@ -11,7 +11,7 @@ class EntityGroup < ActiveRecord::Base
   has_many :entities, :through => :entity_group_items
   has_many :entity_contacts, :as => :contactable, :dependent => :destroy
   has_many :contacts, :through => :entity_contacts, :source => :user
-
+  has_many :chart_conditions, dependent: :destroy
 
   attr_accessible :name, :is_public, :description, :code, :department_id, :user_id, :tenant_id
   acts_as_tenant(:tenant)
@@ -30,11 +30,11 @@ class EntityGroup < ActiveRecord::Base
 
   def shared_user
     user_entity_groups.joins(:user).where(UserEntityGroup.arel_table[:user_id].not_eq(self.user_id))
-    .select('users.id,users.first_name,users.email,user_entity_groups.id as user_entity_group_id')
+        .select('users.id,users.first_name,users.email,user_entity_groups.id as user_entity_group_id')
   end
 
   def unshared_user
     User.where(role_id: Role.director).where(User.arel_table[:id].not_in(self.user_entity_groups.pluck(:user_id)))
-    .select('users.first_name,users.email,users.id')
+        .select('users.first_name,users.email,users.id')
   end
 end

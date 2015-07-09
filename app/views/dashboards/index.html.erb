@@ -135,16 +135,16 @@
                                readonly=true/>
                         <label class="index-date-extra-info"></label>
                       </div>
-                      <!--<div class="index-condition-group" style="width:100px">-->
-                        <!--<label class="analytics-radio-label">-->
-                          <!--<input type="radio" name="chartRadios" value="1" checked>-->
-                          <!--<%= t 'dashboard_group.dashboard.serie.total' %>-->
-                        <!--</label>-->
-                        <!--<label class="analytics-radio-label">-->
-                          <!--<input type="radio" name="chartRadios" value="0">-->
-                          <!--<%= t 'dashboard_group.dashboard.serie.average' %>-->
-                        <!--</label>-->
-                      <!--</div>-->
+                      <div class="index-condition-group" style="width:100px;display: none">
+                        <label class="analytics-radio-label">
+                          <input type="radio" name="chartRadios" value="1" checked>
+                          <%= t 'dashboard_group.dashboard.serie.total' %>
+                        </label>
+                        <label class="analytics-radio-label">
+                          <input type="radio" name="chartRadios" value="0">
+                          <%= t 'dashboard_group.dashboard.serie.average' %>
+                        </label>
+                      </div>
                    <div class="index-condition-group chosen-attribute" style="width:100px;height: 500px">
                      <select data-placeholder="<%= t 'analytics.select-dim'%>" multiple style="width:120px;"    class="chosen-select" title="analy-attribute-select" id="kpi-property-select">
 
