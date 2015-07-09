@@ -220,8 +220,8 @@ class KpisController < ApplicationController
   end
 
   def download_entry_template
-    kpi=current_user.kpis.first
-    msg=FileHandler::Excel::KpiHandler.download_entry_template(current_user,kpi)
+    kpis=current_user.kpis
+    msg=FileHandler::Excel::KpiHandler.download_entry_template(current_user, kpis)
     send_file msg.content
   end
 

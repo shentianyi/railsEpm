@@ -55,53 +55,57 @@ module KpiEntryImportHelper
   def self.import_xlsx file, extention
     book=Roo::Excelx.new file
 
-    book.default_sheet=book.sheets.first
-
     # error file
     error_book=Axlsx::Package.new
     error_sheet=error_book.workbook
     error_header_length=error_header.length
     error_format=error_sheet.styles.add_style excelx_error_format
+
     valid=true
-    error_sheet.add_worksheet do |sheet|
-      sheet.add_row error_header
-      2.upto(book.last_row) do |line|
-        params={}
-        entry_param_keys.each_with_index do |key, i|
-          params[key]=book.cell(line, i+1)
-        end
-        #fetch attrs
-        i = entry_param_keys.length+1
-        while !book.cell(1,i).nil?
-          params[book.cell(1,i)] = book.cell(line,i)
-          i = i+1
-        end
+    book.sheets.each do |ssheet|
+      book.default_sheet=ssheet
 
-        row_values=params.values
-        #params["entry_type"] = 1
-        #date
-        #params[:date] = params[:date].to_s
-        #puts params[:date]
+      error_sheet.add_worksheet do |sheet|
+        sheet.add_row error_header
+        2.upto(book.last_row) do |line|
+          params={}
+          entry_param_keys.each_with_index do |key, i|
+            params[key]=book.cell(line, i+1)
+          end
+          #fetch attrs
+          i = entry_param_keys.length+1
+          while !book.cell(1,i).nil?
+            params[book.cell(1,i)] = book.cell(line,i)
+            i = i+1
+          end
 
-        if params[:date].is_a?(String)
-          params[:date] = Time.parse(params[:date])
-        else
-          params[:date] = params[:date].change(:offset => "+0800") if params[:date]#&&params[:date].utc?
+          row_values=params.values
+          #params["entry_type"] = 1
+          #date
+          #params[:date] = params[:date].to_s
+          #puts params[:date]
+
+          if params[:date].is_a?(String)
+            params[:date] = Time.parse(params[:date])
+          else
+            params[:date] = params[:date].change(:offset => "+0800") if params[:date]#&&params[:date].utc?
+          end
+          params = Entry::OperateService.new.doc_upload_filter(params)
+          validator=KpiEntryValidator.new(params)
+          validator.validate
+          unless validator.valid
+            valid=false
+            row_values<<validator.content.length
+            row_values<< validator.content.join(' # ')
+          else
+            validator.entry
+          end
+          sheet.add_row row_values
+          #puts "line:#{line}"
+          sheet.rows[line-1].cells[error_header_length-1].style=error_format unless validator.valid
         end
-        params = Entry::OperateService.new.doc_upload_filter(params)
-        validator=KpiEntryValidator.new(params)
-        validator.validate
-        unless validator.valid
-          valid=false
-          row_values<<validator.content.length
-          row_values<< validator.content.join(' # ')
-        else
-          validator.entry
-        end
-        sheet.add_row row_values
-        #puts "line:#{line}"
-        sheet.rows[line-1].cells[error_header_length-1].style=error_format unless validator.valid
       end
+
     end
     return write_excel(error_book, SecureRandom.uuid+extention, extention) unless valid
   end
