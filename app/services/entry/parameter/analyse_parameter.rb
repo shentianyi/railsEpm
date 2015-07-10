@@ -39,7 +39,7 @@ module Entry
         return @property=nil if value.nil? || value.size==0
         @property={}
         value.each do |k, v|
-          @property["a#{k}"]=v
+          @property["a#{k}"]=v.map{|m| m.is_number? ? m.to_f : m }
         end
       end
 

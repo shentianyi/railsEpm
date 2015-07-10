@@ -58,7 +58,7 @@ module KpiEntryImportHelper
     # error file
     error_book=Axlsx::Package.new
     error_sheet=error_book.workbook
-    error_header_length=error_header.length
+    #error_header_length=error_header.length
     error_format=error_sheet.styles.add_style excelx_error_format
 
     valid=true
@@ -66,7 +66,18 @@ module KpiEntryImportHelper
       book.default_sheet=ssheet
 
       error_sheet.add_worksheet do |sheet|
-        sheet.add_row error_header
+
+        column_num = 1
+        error_headers = []
+        while !book.cell(1, column_num).nil?
+          ss = book.cell(1, column_num)
+          error_headers += [ss]
+          column_num = column_num + 1
+        end
+        error_headers += ['ErrorCount', 'Error']
+        error_header_length=error_headers.length
+        sheet.add_row error_headers
+
         2.upto(book.last_row) do |line|
           params={}
           entry_param_keys.each_with_index do |key, i|
@@ -90,6 +101,7 @@ module KpiEntryImportHelper
           else
             params[:date] = params[:date].change(:offset => "+0800") if params[:date]#&&params[:date].utc?
           end
+
           params = Entry::OperateService.new.doc_upload_filter(params)
           validator=KpiEntryValidator.new(params)
           validator.validate
