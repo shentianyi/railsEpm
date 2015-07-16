@@ -8,7 +8,7 @@ module Entry
         mr_condition=c.build_map_reduce_condition
         query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 0)
         query=query.any_of(c.build_or_condition)
-        data_mr="date:format(this.parsed_entry_at,'#{self.parameter.date_format}')"
+        data_mr="date:format(this.entry_at,'#{self.parameter.date_format}')"
         mr_condition[:map_group]=
             mr_condition[:map_group].nil? ? data_mr : "#{mr_condition[:map_group]},#{data_mr}"
 

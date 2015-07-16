@@ -20,7 +20,7 @@ module Entry
           query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base]).where(entry_type: 0)
         end
 
-        data_mr="date:format(this.parsed_entry_at,'#{self.parameter.date_format}')"
+        data_mr="date:format(this.entry_at,'#{self.parameter.date_format}')"
         mr_condition[:map_group]=
             mr_condition[:map_group].nil? ? data_mr : "#{mr_condition[:map_group]},#{data_mr}"
         map=%Q{
@@ -35,6 +35,7 @@ module Entry
             return Array.#{func}(values);};
         }
         self.data= query.map_reduce(map, reduce).out(inline: true)
+        puts "###################{self.data.to_json}"
         return aggregate_type_data
       end
 

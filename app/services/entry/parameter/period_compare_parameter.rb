@@ -59,7 +59,7 @@ module Entry
       def build_or_condition
         conditions=[]
         self.times.each do |t|
-          conditions<<{parsed_entry_at: t[:start_time]..t[:end_time]}
+          conditions<<{entry_at: t[:start_time]..t[:end_time]}
         end
         return conditions
       end

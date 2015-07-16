@@ -109,7 +109,7 @@ module Entry
       def base_query_condition
         {kpi_id: self.kpi_ids,
          entity_id: self.entities,
-         parsed_entry_at: self.start_time..self.end_time}
+         entry_at: self.start_time..self.end_time}
       end
 
       def map_reduce_condition
