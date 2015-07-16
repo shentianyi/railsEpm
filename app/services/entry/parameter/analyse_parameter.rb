@@ -100,6 +100,7 @@ module Entry
 
 
       def self.is_true(value, default=true)
+        return default
         return default if value.nil?
         return value=='true' || value=='1' if value.is_a?(String)
         return value if value.is_a?(TrueClass) || value.is_a?(FalseClass)

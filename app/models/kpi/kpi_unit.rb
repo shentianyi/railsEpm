@@ -26,4 +26,8 @@ class KpiUnit
                ''
            end
   end
+
+  def self.is_percent(unit)
+    [KpiUnit::IntPercentUnit,KpiUnit::FloatPercentUnit].include?(unit)
+  end
 end
