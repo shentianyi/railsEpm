@@ -4,7 +4,7 @@ class UserKpiItem < ActiveRecord::Base
   belongs_to :user
   belongs_to :kpi
   has_many :kpi_entry
-  delegate :department, :to => :entity
+  delegate :department, :to => :entity,:allow_nil=>true
   attr_accessible :target_max, :target_min, :kpi_id, :user_id, :entity_id
 
   after_create :create_department_kpi

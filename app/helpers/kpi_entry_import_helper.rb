@@ -34,7 +34,6 @@ module KpiEntryImportHelper
         params[:date] = params[:date].change(:offset => "+0800") if params[:date] #&& params[:date].utc?
       end
 
-      #params[:entry_type] = 1
       #
       params = Entry::OperateService.new.doc_upload_filter(params)
       #
@@ -63,7 +62,10 @@ module KpiEntryImportHelper
 
     valid=true
     book.sheets.each do |ssheet|
+
       book.default_sheet=ssheet
+
+      next if book.first_row.blank?
 
       error_sheet.add_worksheet do |sheet|
 
@@ -91,10 +93,6 @@ module KpiEntryImportHelper
           end
 
           row_values=params.values
-          #params["entry_type"] = 1
-          #date
-          #params[:date] = params[:date].to_s
-          #puts params[:date]
 
           if params[:date].is_a?(String)
             params[:date] = Time.parse(params[:date])
@@ -113,7 +111,6 @@ module KpiEntryImportHelper
             validator.entry
           end
           sheet.add_row row_values
-          #puts "line:#{line}"
           sheet.rows[line-1].cells[error_header_length-1].style=error_format unless validator.valid
         end
       end

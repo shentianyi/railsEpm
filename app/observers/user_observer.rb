@@ -43,6 +43,6 @@ class UserObserver<ActiveRecord::Observer
   end
 
   def after_destroy user
-    AliyunOssService.delete_avatar(user.image_name)
+  #  AliyunOssService.delete_avatar(user.image_name)
   end
 end

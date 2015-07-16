@@ -43,7 +43,7 @@ module Entry
       attrs[:date] = params[:date]
       attrs[:value] = params[:value]
       attrs[:email] = params[:email]
-      attrs[:entry_type] = params[:entry_type].nil? ? 1 : params[:entry_type]
+      attrs[:entry_type] = params[:entry_type]
       attrs[:kpi_properties] = {}
       #fillter attributes
       (params.keys-doc_attr).each { |k|
@@ -53,41 +53,6 @@ module Entry
       return attrs
     end
 
-    #function upload_doc
-    #params
-    #@records:Hash ,kpi ids,values and attributes
-    #e.g. not need every kpis match the attribute,it will fetch
-    #create and update
-    #records:{
-    #    attrs:["attr1","attr2","attr3"],
-    #    attr_vals:[["1","2","3"],["2","4","6"]],
-    #    kpis:["2","3","5"],
-    #    values:[["1","3","5"],["2","3","43"]],
-    #    email:"IT_User@cz-tek.com"
-    #}
-    #remove
-    #records:{
-    #    entry_ids:["1","2","3"]
-    #}
-    #@operator:String
-    #"create","update","remove"
-    def upload_doc records, operator
-      #need to validate all kpis and attributes
-      #msg = validate_records(records,operator)
-      #if !msg.result
-      #  return msg
-      #end
-      kpi_entries = filter(records, operator)
-      case operator
-        when 'create'
-          insert_entries(kpi_entries, KpiEntry)
-        when 'update'
-          update_entries(kpi_entries, KpiEntry)
-        when 'remove'
-          remove_entries(kpi_entries, KpiEntry)
-        else
-      end
-    end
 
     #@function api_insert
     #call this func before validation
@@ -164,31 +129,18 @@ module Entry
       puts "#{attrs}-------------"
 
       #dependet on entry_type
-      case attrs['entry_type']
-        when 0
-          kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], entry_at: attrs['entry_at'], entity_id: attrs['entity_id'], entry_type: attrs['entry_type'])
-          # puts entry[:kpi_properties]
-          # puts query_properties
-          query_properties.each do |k, v|
-            kpi_entry=kpi_entry.where({k => v})
-          end
-          kpi_entry=kpi_entry.first
-        when 1
-          kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], parsed_entry_at: attrs['parsed_entry_at'], entity_id: attrs['entity_id'], entry_type: attrs['entry_type']).first
+      kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], entry_at: attrs['entry_at'], entity_id: attrs['entity_id'], entry_type: attrs['entry_type'])
+      # puts entry[:kpi_properties]
+      # puts query_properties
+      query_properties.each do |k, v|
+        kpi_entry=kpi_entry.where({k => v})
       end
+      kpi_entry=kpi_entry.first
       # raise
       #update
       if kpi_entry
-        #puts "update!"
-        case attrs['entry_type']
-          when 0
-            kpi_entry.update_attributes(attrs);
-          when 1
-            kpi_entry.update_attribute(:original_value, attrs['original_value'])
-        end
-
+        kpi_entry.update_attributes(attrs)
       else
-        #puts "new!"
         kpi_entry = KpiEntry.new(attrs)
         kpi_entry.save
         return kpi_entry
@@ -200,38 +152,6 @@ module Entry
     end
 
     private
-    #function filter
-    #filter and return hash of kpientries
-    #@records:Hash ,kpi ids,values and attributes
-    #e.g. not need every kpis match the attribute,it will fetch
-    #create and update
-    #records:{
-    #    attrs:["attr1","attr2","attr3"],
-    #    attr_vals:[["1","2","3"],["2","4","6"]],
-    #    kpis:["2","3","5"],
-    #    values:[["1","3","5"],["2","3","43"]],
-    #    email:"IT_User@cz-tek.com"
-    #}
-    #remove
-    #records:{
-    #    entry_ids:["1","2","3"]
-    #}
-    #@operator:String
-    #"creata","update","remove"
-    #return create
-    #[{kpi_id}]
-    def filter records, operator
-      case operator
-        when "create"
-          create_filter(records)
-        when "update"
-          update_filter(records)
-        when "remove"
-          remove_filter(records)
-        else
-          nil
-      end
-    end
 
     #function create_filter
     #params
