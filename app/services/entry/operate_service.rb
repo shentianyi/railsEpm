@@ -5,9 +5,9 @@ module Entry
 
     #base attributes
     #these attributes must be set when create a entry
-    #user_id,entity_id,entry_at,parsed_entry_at,tenant_id,target_max,target_min,user_kpi_item_id
-    @base_attrs = ["value", "user_id", "entity_id", "entry_at", "parsed_entry_at", "kpi_id", "frequency", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
-    @fill_attrs = ["user_id", "entity_id", "entry_at", "parsed_entry_at", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
+    #user_id,entity_id,entry_at,tenant_id,target_max,target_min,user_kpi_item_id
+    @base_attrs = ["value", "user_id", "entity_id", "entry_at", "kpi_id", "frequency", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
+    @fill_attrs = ["user_id", "entity_id", "entry_at", "tenant_id", "target_max", "target_min", "user_kpi_item_id"]
 
     #function doc_upload_filter
     # filter for xsl or xsls upload
@@ -279,7 +279,6 @@ module Entry
       nonillattr["tenant_id"] = user.tenant_id
       nonillattr["entity_id"] = user.entity_id
       nonillattr["entry_at"] = Time.now.utc
-      nonillattr["parsed_entry_at"] = KpiEntriesHelper.parse_entry_date(kpi.frequency, nonillattr["entry_at"])
       nonillattr["tenant_id"] = user.tenant_id
       nonillattr["target_max"] = kpi.target_max
       nonillattr["target_min"] = kpi.target_min
@@ -291,9 +290,6 @@ module Entry
       #fill all the attrs
       attrs.each { |attr|
         attr.each { |key, val|
-          if key == "entry_at" && !val.nil?
-            attr["parsed_entry_at"] = KpiEntriesHelper.parse_entry_date(kpi.frequency, val)
-          end
           val = nonillattr[key] if @fill_attrs.include?(key) && val.nil?
         }
       }
