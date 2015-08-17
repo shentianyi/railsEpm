@@ -119,18 +119,13 @@ ANALYTICS.high_chart={
         maxHeight: 40,
         itemMarginBottom: -2
     },
-//    exporting : {
-//        buttons:{
-//            contextButton:{
-////               symbol:'ANALYTICS.url(images/down.png)'
-//                symbol:'ANALYTICS.url(/assets/down.png)'
-//            }
-//        },
-//        url : ANALYTICS.url,
-//        filename : 'MyChart',
-//        width : 700, // chart width
-//        exportTypes : ['chart', 'png', 'jpeg', 'pdf', 'svg', 'doc', 'docx', 'pptx', 'xls', 'xlsx'] // set download file type
-//    },
+    exporting : {
+        url : ANALYTICS.url,
+        filename : 'MyChart',
+        width : 700, // chart width
+        exportTypes:['xlsx']
+        //exportTypes : ['chart', 'png', 'jpeg', 'pdf', 'svg', 'doc', 'docx', 'pptx', 'xls', 'xlsx'] // set download file type
+    },
     plotOptions: {
         series: {
             animation: {
@@ -299,8 +294,8 @@ ANALYTICS.form_chart=function(option){
         frequency: option.interval,
         kpi_property: option.kpi_property
     };
-
-    console.log(ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null))
+  //console.log(ANALYTICS.qoros_demo_count);
+  //  console.log(ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null))
     $.post('/kpi_entries/analyse',{
         kpi_id : option.kpi_id,
         average: option.method=="0",
@@ -312,7 +307,7 @@ ANALYTICS.form_chart=function(option){
         report:ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null)
     },function(msg){
           if(option.show_loading==null || option.show_loading)
-         remove_loading()
+         remove_loading();
         if(msg.result){
             var data_length=msg.object.current.length;
             var data_array=[];
@@ -450,7 +445,9 @@ ANALYTICS.add_data=function(option){
             var c={},p=option.data;
             ANALYTICS.chartSeries.series[option.id][option.interval]=ANALYTICS.chartSeries.series[option.id][option.interval].concat(deepCopy(c,p));
             var chart=$("#"+option.target).highcharts();
-
+            console.log('-------------------------------------------');
+            console.log(chart.series[option.id+1]);
+            console.log('-------------------------------------------');
             var point = chart.series[option.id+1].options.data;
             point = point.concat(data_array);
             option.data=point;

@@ -15,6 +15,7 @@
 //=require jquery.tipsy
 //=require jquery-csshooks
 //=require brilliantech.base
+//=require brilliantech.export.src.js
 //=require Template
 //=require chosen.jquery.min
 //=require wayne-base

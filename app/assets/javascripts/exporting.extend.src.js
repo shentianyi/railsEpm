@@ -118,6 +118,8 @@
                   //  var tabled = exportTableFileTypes.indexOf(options.type) != -1;
                     if(tabled)
                          table = chart.generateTableData();
+                   console.log(table);
+
                     // if (exportTableFileTypes.indexOf(options.type) != -1) {
                     // table = chart.generateTableData();
                     // }
