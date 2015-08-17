@@ -2,8 +2,8 @@ var Report = Report || {};
 Report.option = {};
 Report.r = {};
 Report.data = {};
-//Report.host = 'http://42.121.111.38:9003/';
-Report.host='http://192.168.0.101:6023/';
+Report.host = 'http://42.121.111.38:9003/';
+//Report.host='http://192.168.0.101:6023/';
 Report.Url = {export_excel_url: Report.host + 'DHXFileService/Excel',
     export_bt_chart_excel_url: Report.host + 'BTReportService/ChartExcel',
     export_bt_excel_url: Report.host + 'BTReportService/Excel'};
@@ -454,7 +454,7 @@ Report.daily_ftq_on_json_parse = function () {
         var value = parseFloat(jsondata['rows'][colindx]['data'][j].replace("%", ""));
         value = isNaN(value) ? 0 : value;
         ftq[j] = value;
-        console.log(j);
+       // console.log(j);
     }
     ftq.shift();
     xArray.shift();

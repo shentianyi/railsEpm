@@ -1,0 +1,42 @@
+<report>
+  <table>
+    <head>
+      <columns>
+        <column width='90'><![CDATA[ ]]></column>
+        <column width='60'><![CDATA[2015-08-01]]></column>
+        <column width='60'><![CDATA[2015-08-02]]></column>
+        <column width='60'><![CDATA[2015-08-03]]></column>
+        <column width='60'><![CDATA[2015-08-04]]></column>
+        <column width='60'><![CDATA[2015-08-05]]></column>
+        <column width='60'><![CDATA[2015-08-06]]></column>
+        <column width='60'><![CDATA[2015-08-07]]></column>
+        <column width='60'><![CDATA[2015-08-08]]></column>
+        <column width='60'><![CDATA[2015-08-09]]></column>
+      </columns>
+    </head>
+    <body>
+      <row>
+        <cell value='LOVE(ClearInsight)'></cell>
+        <cell value='1'></cell>
+        <cell value='1'></cell>
+        <cell value='1'></cell>
+        <cell value='1'></cell>
+        <cell value='1'></cell>
+        <cell value='1'></cell>
+        <cell value='1'></cell>
+        <cell value='1'></cell>
+        <cell value='1'></cell>
+      </row>
+    </body>
+  </table>
+  <charts>
+    <chart chart_types='[object Object]' title='LOVE(ClearInsight)' height='300' width='630'>
+      <chart_type type='column'>
+        <serie xaixs='A1:J1' yaixs='B2:J2' color='D1E5FE' header_address='A2'>
+          <xaixs><![CDATA[A1:J1]]></xaixs>
+          <yaixs><![CDATA[B2:J2]]></yaixs>
+        </serie>
+      </chart_type>
+    </chart>
+  </charts>
+</report>

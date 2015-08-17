@@ -1,0 +1,128 @@
+<report>
+  <table>
+    <head>
+      <columns>
+        <column width='60'><![CDATA[IQ Station]]></column>
+        <column width='60'><![CDATA[ iQ1]]></column>
+        <column width='60'><![CDATA[ iQ2]]></column>
+        <column width='60'><![CDATA[ iQ3]]></column>
+        <column width='60'><![CDATA[iQ4]]></column>
+        <column width='60'><![CDATA[iQ5]]></column>
+        <column width='60'><![CDATA[iQ Dr]]></column>
+        <column width='60'><![CDATA[iQ IP]]></column>
+        <column width='60'><![CDATA[iQ6]]></column>
+        <column width='60'><![CDATA[iQ7]]></column>
+        <column width='60'><![CDATA[iQ8]]></column>
+        <column width='60'><![CDATA[iQ9]]></column>
+        <column width='60'><![CDATA[iQ10]]></column>
+        <column width='60'><![CDATA[iQ11]]></column>
+        <column width='60'><![CDATA[iQ12]]></column>
+        <column width='60'><![CDATA[iQ13]]></column>
+        <column width='60'><![CDATA[iQ14]]></column>
+        <column width='60'><![CDATA[iQ15]]></column>
+      </columns>
+    </head>
+    <body>
+      <row>
+        <cell value='Vehicle Total'></cell>
+        <cell value='18'></cell>
+        <cell value='10'></cell>
+        <cell value='18'></cell>
+        <cell value='12'></cell>
+        <cell value='12'></cell>
+        <cell value='9'></cell>
+        <cell value='11'></cell>
+        <cell value='15'></cell>
+        <cell value='10'></cell>
+        <cell value='11'></cell>
+        <cell value='2'></cell>
+        <cell value='8'></cell>
+        <cell value='18'></cell>
+        <cell value='1'></cell>
+        <cell value='4'></cell>
+        <cell value='6'></cell>
+        <cell value='10'></cell>
+      </row>
+      <row>
+        <cell value='NOK Vehicle'></cell>
+        <cell value='9'></cell>
+        <cell value='9'></cell>
+        <cell value='13'></cell>
+        <cell value='7'></cell>
+        <cell value='8'></cell>
+        <cell value='2'></cell>
+        <cell value='6'></cell>
+        <cell value='6'></cell>
+        <cell value='1'></cell>
+        <cell value='11'></cell>
+        <cell value='0'></cell>
+        <cell value='3'></cell>
+        <cell value='12'></cell>
+        <cell value='0'></cell>
+        <cell value='4'></cell>
+        <cell value='2'></cell>
+        <cell value='10'></cell>
+      </row>
+      <row>
+        <cell value='OK Vehicle'></cell>
+        <cell value='9'></cell>
+        <cell value='1'></cell>
+        <cell value='5'></cell>
+        <cell value='5'></cell>
+        <cell value='4'></cell>
+        <cell value='7'></cell>
+        <cell value='5'></cell>
+        <cell value='9'></cell>
+        <cell value='9'></cell>
+        <cell value='0'></cell>
+        <cell value='2'></cell>
+        <cell value='5'></cell>
+        <cell value='6'></cell>
+        <cell value='1'></cell>
+        <cell value='0'></cell>
+        <cell value='4'></cell>
+        <cell value='0'></cell>
+      </row>
+      <row>
+        <cell value='FTQ' format='1'></cell>
+        <cell value='50%' format='1'></cell>
+        <cell value='90%' format='1'></cell>
+        <cell value='72%' format='1'></cell>
+        <cell value='58%' format='1'></cell>
+        <cell value='67%' format='1'></cell>
+        <cell value='22%' format='1'></cell>
+        <cell value='55%' format='1'></cell>
+        <cell value='40%' format='1'></cell>
+        <cell value='10%' format='1'></cell>
+        <cell value='100%' format='1'></cell>
+        <cell value='0%' format='1'></cell>
+        <cell value='38%' format='1'></cell>
+        <cell value='67%' format='1'></cell>
+        <cell value='0%' format='1'></cell>
+        <cell value='100%' format='1'></cell>
+        <cell value='33%' format='1'></cell>
+        <cell value='100%' format='1'></cell>
+      </row>
+    </body>
+  </table>
+  <charts>
+    <chart title='Quality Buyoff station Vehicle status' width='1200' height='300' show_legend='true'>
+      <chart_type type='column'>
+        <serie color='fd0e0e' header_address='A3'>
+          <xaixs><![CDATA[B1:R1]]></xaixs>
+          <yaixs><![CDATA[B3:R3]]></yaixs>
+        </serie>
+        <serie color='25ad38' header_address='A4'>
+          <xaixs><![CDATA[B1:R1]]></xaixs>
+          <yaixs><![CDATA[B4:R4]]></yaixs>
+        </serie>
+      </chart_type>
+      <chart_type type='line'>
+        <serie color='3c6fcc' header_address='A5' use_secondary_axis='true' yaxis_format_type='1'>
+          <xaixs><![CDATA[B1:R1]]></xaixs>
+          <yaixs><![CDATA[B5:R5]]></yaixs>
+        </serie>
+      </chart_type>
+    </chart>
+  </charts>
+</report>

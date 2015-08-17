@@ -45,8 +45,10 @@
             <a href="<%= mine_kpi_subscribes_path %>" guide-name="analyze_menu">
               <span><%= t 'menu.subscription' %></span> </a>
           </li>
+      <% end %>
+      <% if current_user.admin? || current_user.director? %>
           <li>
-            <a href="<%= reports_path%>"><span>App Center</span></a>
+            <a href="<%= reports_path %>"><span>App Center</span></a>
           </li>
       <% end %>
       <li>
