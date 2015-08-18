@@ -18,11 +18,14 @@ class BackgroundTask
   end
 
   def self.create_kpi_entry(entries)
+    puts '---------task'
+    puts $BACKGROUND_TASK
+    puts '---------------------------------task'
     case $BACKGROUND_TASK
       when BackgroundTaskType::SIDEKIQ
-        Resque.enqueue(KpiEntryCreateJob, entries)
-      when BackgroundTaskType::RESQUE
         KpiEntryCreateWorker.perform_async(entries)
+      when BackgroundTaskType::RESQUE
+        Resque.enqueue(KpiEntryCreateJob, entries)
     end
   end
 end

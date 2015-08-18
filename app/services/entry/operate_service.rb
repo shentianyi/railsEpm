@@ -99,6 +99,7 @@ module Entry
     # }
     # }
     def insert_entry entry
+      puts 'insert========================='
       entry.symbolize_keys!
       attrs = {}
       attrs = attrs.merge(entry[:base_attrs])

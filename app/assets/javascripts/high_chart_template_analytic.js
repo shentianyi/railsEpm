@@ -1,4 +1,5 @@
 var ANALYTICS=ANALYTICS||{};
+ANALYTICS.max_length=100;
 ANALYTICS.base_option=null;
 ANALYTICS.loading_data=false;
 ANALYTICS.url='http://42.121.111.38:9002/HighChartsFileService/';
@@ -277,7 +278,7 @@ ANALYTICS.form_chart=function(option){
         end_time_utc=standardParse(option.end_time).date,
         bar_fix_from,
         bar_fix_to,
-        length=24,
+        length=ANALYTICS.max_length,
         data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
     bar_fix_from=Date.parse(begin_time_utc);
     bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1)) <= end_time_utc ?
@@ -334,7 +335,7 @@ ANALYTICS.form_chart=function(option){
                 option.end_time_utc=end_time_utc;
                 option.bar_fix_from=bar_fix_from;
                 option.bar_fix_to=bar_fix_to;
-                option.add_length=24;
+                option.add_length=ANALYTICS.max_length;
                 ANALYTICS.add_data(option);
             }
             else{
@@ -362,7 +363,7 @@ ANALYTICS.form_chart_without_ajax=function(option,data){
             end_time_utc=standardParse(option.end_time).date,
             bar_fix_from,
             bar_fix_to,
-            length=24,
+            length=ANALYTICS.max_length,
             data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
         bar_fix_from=Date.parse(begin_time_utc);
         bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,length) <= end_time_utc ?

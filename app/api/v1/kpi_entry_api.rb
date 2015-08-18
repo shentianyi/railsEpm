@@ -1,10 +1,13 @@
 module V1
   class KpiEntryAPI < Base
     namespace 'kpi_entry'
-    guard_all!
+    # guard_all!
     include KpiEntryGuard
 
     post :entry do
+      puts '----------------------'
+      puts params
+      puts '------------------------'
       guard_entry! &do_entry
     end
 
@@ -16,6 +19,7 @@ module V1
     helpers do
       def do_entry
         Proc.new { |validator_collection|
+          puts '---------------------------------sdfsdf'
           validator_collection.entry
         }
       end

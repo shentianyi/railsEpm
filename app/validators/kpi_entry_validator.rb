@@ -71,7 +71,7 @@ class KpiEntryValidator
       end
       self.validator_collection.add_base_validator(self)  if self.validator_collection
     end
-
+puts "#{valid}----------------------------------"
     prepare_params if self.valid
   end
 
@@ -91,7 +91,7 @@ class KpiEntryValidator
     self.target_min=source.user_kpi_item.target_min
     self.entry_at = Time.parse(self.date).utc #KpiEntriesHelper.parse_entry_string_date self.frequency,self.date
     #Here we got some problems of transfer time
-    self.entry_type = 0#self.entry_type.nil? ? 0 : self.entry_type
+     self.entry_type = 0#self.entry_type.nil? ? 0 : self.entry_type
   end
 
   def params_to_hash

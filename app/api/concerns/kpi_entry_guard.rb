@@ -32,6 +32,7 @@ module KpiEntryGuard
       validator=KpiEntryValidator.new(entry_p)
       validator.validate
       if validator.valid
+        puts '-----------------------------------------------dddd'
         yield(vc) if block_given?
       else
         raise ArgumentError, validator.invalid_message

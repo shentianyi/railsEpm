@@ -189,7 +189,7 @@
             var charts = [];
             var chart={chart_types: []};
             for (var i = 0; i < table.rows.length; i++) {
-                var c = {type: 'column', series: []};
+                var c = {type: 'line', series: []};
                 for (var i = 0; i < this.series.length; i++) {
                     c.series.push({});
                 }
@@ -198,7 +198,7 @@
             charts.push(chart);
 
             tcdata.charts = charts;
-            // console.log(table);
+            console.log(tcdata);
             return tcdata;
         },
         generateTableData: function () {

@@ -11,7 +11,7 @@ var FileGen = FileGen || {
             chart_min_width: 600,
             show_legend: true,
         },
-        excelColumn: 'ABCDEFGHIJKLMNOPQSTUVWXYZ',
+        excelColumn: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         url: {},
         initialize_url: function () {
             this.url = {
@@ -115,11 +115,19 @@ var FileGen = FileGen || {
                         _xml += "<chart_type type='" + chart_type.type + "'>";
                         for (var j = 0; j < chart_type.series.length; j++) {
                             var serie = chart_type.series[j];
+                            var end_column_index='';
+                            if(table.heads.length<=this.excelColumn.length){
+                                end_column_index=this.excelColumn[table.heads.length-1];
+                            }else{
+                                var l=table.heads.length;
+                                end_column_index=this.excelColumn[parseInt(l/this.excelColumn.length)-1]+this.excelColumn[l%this.excelColumn.length-1]
+                            }
+
                             if (serie.xaixs == null) {
-                                serie.xaixs = this.excelColumn[1] + 1 + ':' + this.excelColumn[table.heads.length - 1] + 1;
+                                serie.xaixs = this.excelColumn[1] + 1 + ':' + end_column_index + 1;
                             }
                             if (serie.yaixs == null) {
-                                serie.yaixs = this.excelColumn[1] + (j + 2) + ':' + this.excelColumn[table.heads.length - 1] + (j + 2);
+                                serie.yaixs = this.excelColumn[1] + (j + 2) + ':' + end_column_index + (j + 2);
                             }
                             if (serie.color == null) {
                                 serie.color = this.options.chart_colors[(j % this.options.chart_colors.length)];
