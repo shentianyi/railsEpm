@@ -5,6 +5,8 @@ class Ability
     alias_action :read, :show, :update, :destroy, :to => :basic_modify
     alias_action :update, :destroy, :to => :modify
 
+
+    can :download_entry_template,Kpi
     if user.admin?
       can :manage, [User, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem,
                     UserKpiItem, UserSession, Dashboard, DashboardItem, DashboardCondition, Email,
