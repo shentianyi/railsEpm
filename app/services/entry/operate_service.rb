@@ -48,7 +48,6 @@ module Entry
       #fillter attributes
       (params.keys-doc_attr).each { |k|
         attrs[:kpi_properties][k] = params[k]
-        #attrs[k] = params[k]
       }
       return attrs
     end

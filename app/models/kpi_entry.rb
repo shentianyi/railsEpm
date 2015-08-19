@@ -25,6 +25,11 @@ class KpiEntry
   #field :properties, type: Hash
   #embeds_many :properties
 
+  # 在处理文件或API时，KEY_MARKS是保留字段
+  KEY_MARKS=%w(DELETE)
+
+
+
   def self.dynamic_field_name
     'properties'
   end

@@ -100,7 +100,8 @@ module KpiEntryImportHelper
             params[:date] = params[:date].change(:offset => "+0800") if params[:date]#&&params[:date].utc?
           end
 
-          params = Entry::OperateService.new.doc_upload_filter(params)
+          operator=Entry::OperateService.new
+          params = operator.doc_upload_filter(params)
           validator=KpiEntryValidator.new(params)
           validator.validate
           unless validator.valid

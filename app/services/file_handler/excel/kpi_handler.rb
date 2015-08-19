@@ -21,8 +21,7 @@ module FileHandler
             kpi.kpi_properties.each do |property|
               column << property.name.to_s
             end
-            sheet.add_row column
-
+            sheet.add_row column#+KpiEntry::KEY_MARKS
             # 写动态数据:用户信息和KPI信息
             sheet.add_row [
                               user.email,
