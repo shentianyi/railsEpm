@@ -1282,11 +1282,19 @@ ANALYTICS.legend.init=function(){
        })
 }
 ANALYTICS.legend.generateItem=function(option){
+    var legend_prev=option.view_text;
+    if(option.kpi_property!=null){
+        $.each(option.kpi_property,function(k,v){
+            $.each(v,function(i,vv){
+                legend_prev+='-'+vv;
+            });
+        });
+    }
     //option里要有线的kpi view_text id color
     $("#chart-container-item .items").append(
         $("<li />").attr("series-id",option.id).css("background",option.color).attr("originBG",option.color)
+            .append($("<label />").text("[ "+legend_prev+" ]"+"["+$('.iradio_minimal-aero.checked').parent().text().trim()+"]"))
             .append($("<label />").text(option.kpi))
-            .append($("<label />").text("[ "+option.view_text+" ]"))
             .append($("<i />").addClass("icon icon-remove").attr("series-id",option.id))
     )
     ANALYTICS.legend.generateLayout();
