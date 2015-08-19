@@ -220,8 +220,10 @@ function prepare_form_chart() {
             view_text: view_text,
             method: method,
             chart_body_close_validate: chart_body_close_validate,
-            kpi_property: kpi_property
+            kpi_property: kpi_property,
         };
+
+        option.legend_text=ANALYTICS.legend.generate_text(option);
 
        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> demo for qoros
         if(ANALYTICS.qoros_demo){
@@ -1282,23 +1284,27 @@ ANALYTICS.legend.init=function(){
        })
 }
 ANALYTICS.legend.generateItem=function(option){
-    var legend_prev=option.view_text;
-    if(option.kpi_property!=null){
-        $.each(option.kpi_property,function(k,v){
-            $.each(v,function(i,vv){
-                legend_prev+='-'+vv;
-            });
-        });
-    }
     //option里要有线的kpi view_text id color
     $("#chart-container-item .items").append(
         $("<li />").attr("series-id",option.id).css("background",option.color).attr("originBG",option.color)
-            .append($("<label />").text("[ "+legend_prev+" ]"+"["+$('.iradio_minimal-aero.checked').parent().text().trim()+"]"))
-            .append($("<label />").text(option.kpi))
+            .append($("<label/>").text(option.legend_text))
             .append($("<i />").addClass("icon icon-remove").attr("series-id",option.id))
     )
     ANALYTICS.legend.generateLayout();
-}
+};
+
+ANALYTICS.legend.generate_text = function (option) {
+    var legend_prev = "[" + option.view_text;
+    if (option.kpi_property != null) {
+        $.each(option.kpi_property, function (k, v) {
+            $.each(v, function (i, vv) {
+                legend_prev += '-' + vv;
+            });
+        });
+    }
+    legend_prev += "][" + $('.iradio_minimal-aero.checked').parent().text().trim() + "]" + option.kpi;
+    return legend_prev;
+};
 ANALYTICS.legend.generateLayout=function(){
     var count=ANALYTICS.chartSeries.getCount(),
         $target=$("#chart-container-item .items").children(),

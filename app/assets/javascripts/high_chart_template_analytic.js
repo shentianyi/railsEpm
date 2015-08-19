@@ -511,6 +511,8 @@ ANALYTICS.set_data=function(option) {
     this.kpi_name=option.kpi ? option.kpi:null;
     this.changeType=option.changeType ? option.changeType:null;
     this.visible=option.visible ? option.visible:null;
+    this.legend_text=option.legend_text;
+
 };
 ANALYTICS.render_to=function(option) {
     ANALYTICS.high_chart.chart.renderTo = option.target;
@@ -532,8 +534,7 @@ ANALYTICS.render_to=function(option) {
     };
 };
 ANALYTICS.add_series=function(option) {
-
-    var series_name = option.kpi;
+    var series_name = option.legend_text;
     var series_id = option.id;
     var chart_container = option.target;
     var data = ANALYTICS.deal_data(option);
@@ -622,9 +623,8 @@ ANALYTICS.proper_type_for_chart=function(){
     ANALYTICS.set_data.apply(this,arguments);
 
     var obj=this;
-    var name=obj.kpi_name===null?this.chart.get(this.id).options.name:obj.kpi_name+"("+obj.view_text+")";
     var p={
-        name:name ,
+        name:obj.legend_text ,
         id: obj.id,
         color:this.chart.get(this.id).color,
         data: this.chart.get(this.id).options.data
