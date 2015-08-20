@@ -38,6 +38,9 @@ class KpiEntryValidatorCollection
     self.validators.each do |v|
       entries<<v.params_to_hash if v.valid
     end
-    BackgroundTask.create_kpi_entry(entries)
+    # BackgroundTask.create_kpi_entry(entries)
+    entries.each do |k|
+      Entry::OperateService.new.insert_entry(k)
+    end
   end
 end

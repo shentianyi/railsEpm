@@ -15,16 +15,21 @@ class KpiEntryObserver<Mongoid::Observer
 
     #add property val
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
-    kpi_entry.dynamic_attributes.each{|attr_id|
-      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first if kpi
-      KpiPropertyValue.add_property_value(item.id,kpi_entry[attr_id]) if item
+
+    # kpi.kpi_property_items.where(kpi_property_id: kpi_entry.dynamic_attributes.collect { |attr_id| attr_id.sub(/a/, '') }).all.each do |item|
+    #   KpiPropertyValue.add_property_value(item.id, item.kpi_property_id) if item
+    # end if kpi
+
+    kpi_entry.dynamic_attributes.each { |attr_id|
+      item = kpi.kpi_property_items.where("kpi_property_id = ?", attr_id.tr("a", "")).first if kpi
+      KpiPropertyValue.add_property_value(item.id, kpi_entry[attr_id]) if item
     }
   end
 
   def after_update kpi_entry
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
     (kpi_entry.changed&kpi_entry.dynamic_attributes).each { |attr_id|
-      item = kpi.kpi_property_items.where("kpi_property_id = ?",attr_id.tr("a","")).first
+      item = kpi.kpi_property_items.where("kpi_property_id = ?", attr_id.tr("a", "")).first
       if item
         KpiPropertyValue.desc_property_value(item.id, kpi_entry.changes[attr_id][0])
         KpiPropertyValue.add_property_value(item.id, kpi_entry.changes[attr_id][1])
@@ -56,7 +61,7 @@ class KpiEntryObserver<Mongoid::Observer
     end
 
     if kpi_entry.original_value && kpi_entry.original_value.finite?
-      kpi_entry.value = KpiUnit.parse_entry_value(kpi.unit,kpi_entry.original_value)
+      kpi_entry.value = KpiUnit.parse_entry_value(kpi.unit, kpi_entry.original_value)
       kpi_entry.abnormal = false
     else
       kpi_entry.value = kpi_entry.original_value = 0

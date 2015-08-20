@@ -30,7 +30,7 @@ module KpiEntryGuard
       vc= KpiEntryValidatorCollection.new
       entry_p[:validator_collection]=vc
       validator=KpiEntryValidator.new(entry_p)
-      validator.validate
+      validator.validate if params[:entry][:validate]==false
       if validator.valid
         puts '-----------------------------------------------dddd'
         yield(vc) if block_given?

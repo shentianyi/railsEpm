@@ -7,6 +7,8 @@ module V1
     post :entry do
       puts '----------------------'
       puts params
+      puts params[:entry]
+      puts params[:entry].class
       puts '------------------------'
       guard_entry! &do_entry
     end

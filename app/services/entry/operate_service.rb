@@ -129,13 +129,16 @@ module Entry
       puts "#{attrs}-------------"
 
       #dependet on entry_type
-      kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], entry_at: attrs['entry_at'], entity_id: attrs['entity_id'], entry_type: attrs['entry_type'])
-      # puts entry[:kpi_properties]
-      # puts query_properties
-      query_properties.each do |k, v|
-        kpi_entry=kpi_entry.where({k => v})
+      if attrs['entry_id'].blank?
+        kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], entry_at: attrs['entry_at'], entity_id: attrs['entity_id'], entry_type: attrs['entry_type'])
+        query_properties.each do |k, v|
+          kpi_entry=kpi_entry.where({k => v})
+        end
+        kpi_entry=kpi_entry.first
+      else
+        kpi_entry=KpiEntry.where(entry_id: attrs['entry_id']).first
       end
-      kpi_entry=kpi_entry.first
+
       # raise
       #update
       if kpi_entry
@@ -145,10 +148,6 @@ module Entry
         kpi_entry.save
         return kpi_entry
       end
-    end
-
-    def remove_entry id
-
     end
 
     private
