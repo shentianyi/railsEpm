@@ -220,7 +220,7 @@ function prepare_form_chart() {
             view_text: view_text,
             method: method,
             chart_body_close_validate: chart_body_close_validate,
-            kpi_property: kpi_property,
+            kpi_property: kpi_property
         };
 
         option.legend_text=ANALYTICS.legend.generate_text(option);
@@ -432,6 +432,7 @@ function show_chart_body(option) {
                     target: 'chart-container',
                     type: $("#chart-type-alternate").find(".image").attr("type")
                 }
+
                 change_interval(option);
                 $("#chart-interval-alternate").find("li").removeClass("active");
                 $(target).addClass("active");
@@ -441,10 +442,10 @@ function show_chart_body(option) {
     $("#chart-interval-alternate").find("li[interval='" + option.interval + "']").addClass("active");
 }
 ANALYTICS.changeTypeLoad=false;
-ANALYTICS.changeTypeInterval;
+//ANALYTICS.changeTypeInterval;
 ANALYTICS.changeTypeOption;
 ANALYTICS.changeTypeIDs=[];
-ANALYTICS.changeTypeCurrentOrder;
+//ANALYTICS.changeTypeCurrentOrder;
 //改变图表的类型
 function alternate_chart_type(event) {
     if (ANALYTICS.loading_data == true) {
