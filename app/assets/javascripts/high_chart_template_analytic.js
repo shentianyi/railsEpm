@@ -100,7 +100,7 @@ ANALYTICS.high_chart={
                         y=target.y
                     }
 
-                    targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']:'+y+" "+target.unit+'<br />';
+                    targetString+='<span>'+target.series.name+':'+y+" "+target.unit+'<br />';
                     return '<b>'+target.name+'</b>'
                         +'<br />'
                         +targetString;
@@ -446,9 +446,9 @@ ANALYTICS.add_data=function(option){
             var c={},p=option.data;
             ANALYTICS.chartSeries.series[option.id][option.interval]=ANALYTICS.chartSeries.series[option.id][option.interval].concat(deepCopy(c,p));
             var chart=$("#"+option.target).highcharts();
-            console.log('-------------------------------------------');
-            console.log(chart.series[option.id+1]);
-            console.log('-------------------------------------------');
+            //console.log('-------------------------------------------');
+            //console.log(chart.series[option.id+1]);
+            //console.log('-------------------------------------------');
             var point = chart.series[option.id+1].options.data;
             point = point.concat(data_array);
             option.data=point;
@@ -561,6 +561,7 @@ ANALYTICS.deal_data=function() {
                 data[i].kpi=this.kpi_name;
 
                 data[i].view=this.view_text;
+                data[i].legend_text=this.legend_text;
             }
             return data;
             break;
@@ -571,8 +572,8 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + i).toWayneString().day;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
-
-                console.log(data[i]);
+                data[i].legend_text=this.legend_text;
+                //console.log(data[i]);
             }
             return data;
             break;
@@ -585,6 +586,7 @@ ANALYTICS.deal_data=function() {
                     + " week" + new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWeekNumber();
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].legend_text=this.legend_text;
             }
             return data;
             break;
@@ -595,6 +597,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + i).toWayneString().month;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].legend_text=this.legend_text;
             }
             return data;
             break;
@@ -606,6 +609,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + 3 * i).getFullYear()+" quarter " + new Date(this.template[0], parseInt(this.template[1]) + 3 * i).monthToQuarter();
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].legend_text=this.legend_text;
             }
             return data;
             break;
@@ -616,6 +620,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(parseInt(this.template[0]) + i, 0).toWayneString().year;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
+                data[i].legend_text=this.legend_text;
             }
             return data;
             break;

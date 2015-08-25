@@ -467,6 +467,8 @@ function alternate_chart_type(event) {
                     continue
                 }
                 else {
+
+                    option.legend_text=ANALYTICS.chartSeries.series[i].legend_text;
                     option.id=i;
                     option.changeTypeLoad=true;
                     ANALYTICS.proper_type_for_chart(option);
@@ -833,8 +835,8 @@ function chart_point_click(object) {
     $("#detail-block").css("left", "0").css("right","0");
     $("#detail-date").text(object.name);
     var method=object.method=="0"? I18n.t('analytics.average'):I18n.t('analytics.sum');
-    $("#detail-kpi").text(object.kpi+"["+method+"]");
-    $("#detail-view").text(object.view);
+    $("#detail-kpi").text(object.legend_text);
+    $("#detail-view").text('');
     //table同比中的
     $("#table-compare-kpi").text(object.kpi);
     $("#table-compare-view").text(object.view);
