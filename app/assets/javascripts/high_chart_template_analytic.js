@@ -43,9 +43,9 @@ ANALYTICS.high_chart={
                 if(this.points){
                     for(var i=0;i<this.points.length;i++){
                         target=this.points[i];
-                        new_target=target.series.name.replace("(","#").replace(")","#").split("#");
-                        name=new_target[0];
-                        view=new_target[1];
+                        //new_target=target.series.name.replace("(","#").replace(")","#").split("#");
+                        //name=new_target[0];
+                        //view=new_target[1];
 
                         var y=(parseInt(target.y)).length;
                         var dotCount=Math.ceil(y/3)-1;

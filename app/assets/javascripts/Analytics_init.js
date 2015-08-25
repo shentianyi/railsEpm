@@ -526,10 +526,12 @@ function change_interval(option) {
             option.kpi = ANALYTICS.chartSeries.series[j].kpi;
             option.id = ANALYTICS.chartSeries.series[j].id;
             option.begin_time = ANALYTICS.chartSeries.series[j].begin_time;
+            option.end_time = ANALYTICS.chartSeries.series[j].end_time;
             option.data = ANALYTICS.chartSeries.series[j][option.interval] ;
             option.view = ANALYTICS.chartSeries.series[j].view;
             option.view_text = ANALYTICS.chartSeries.series[j].view_text;
             option.kpi_property = ANALYTICS.chartSeries.series[j].kpi_property;
+            option.legend_text=ANALYTICS.chartSeries.series[j].legend_text;
             option.visible="";
             for(var k=0 ;k<invisible.length;k++){
                 if(have_data[j]==invisible[k]){
@@ -577,6 +579,8 @@ function singleThreadRequest(){
             ANALYTICS.currentThreadPreCondition.begin_time = ANALYTICS.chartSeries.series[series_id].begin_time;
             ANALYTICS.currentThreadPreCondition.end_time = ANALYTICS.chartSeries.series[series_id].end_time;
             ANALYTICS.currentThreadPreCondition.kpi_property = ANALYTICS.chartSeries.series[series_id].kpi_property;
+            ANALYTICS.currentThreadPreCondition.legend_text=ANALYTICS.chartSeries.series[series_id].legend_text;
+
             ANALYTICS.currentThreadPreCondition.visible="";
             for(var k=0 ;k<ANALYTICS.currentThreadInvisible.length;k++){
                 if(series_id==ANALYTICS.currentThreadInvisible[k]){
