@@ -37,7 +37,7 @@ class DashboardCondition < ActiveRecord::Base
             end_time: time_span[:end].iso8601.to_s,
             average: condition.calculate_type=='AVERAGE' ? true : false,
             frequency: dashboard_itme.interval,
-            property: JSON.parse(condition.kpi_property)).analyse
+            property: condition.kpi_property.blank? ? nil : JSON.parse(condition.kpi_property)).analyse
 
         if data
           data[:result]=true
