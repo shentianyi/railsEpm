@@ -63,6 +63,7 @@ class Ability
       can :manage, Email, :user_id => user.id
       can :read, [KpiProperty, KpiPropertyItem, StorySet, Story, Comment, ChartCondition, StorySetUser, KpiSubscribe, KpiSubscribeUser, KpiSubscribeAlert]
       can :manage, KpiPropertyValue
+      can :download_entry_template,Kpi
     end
   end
 end
