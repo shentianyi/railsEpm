@@ -31,7 +31,7 @@ class ChartCondition < ActiveRecord::Base
           data= Entry::Analyzer.new(query).analyse
           KpiEntryAnalyseCache.new(id: self.id, cacheable_type: self.class.name, query: query.to_json, chart_data: data).save
           self.update_attributes(data: data.to_json)
-          return data
+          return self.data
         end
       end
     end
