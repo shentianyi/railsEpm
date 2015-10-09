@@ -94,16 +94,20 @@ module KpiEntryImportHelper
 
           row_values=params.values
 
-          if params[:date].is_a?(String)
-            params[:date] = Time.parse(params[:date])
-          else
-            params[:date] = params[:date].change(:offset => "+0800") if params[:date]#&&params[:date].utc?
-          end
 
           operator=Entry::OperateService.new
           params = operator.doc_upload_filter(params)
           validator=KpiEntryValidator.new(params)
           validator.validate
+
+
+          # if params[:date].is_a?(String)
+          #   params[:date] = Time.parse(params[:date])
+          # else
+          #   params[:date] = params[:date].change(:offset => "+0800") if params[:date]#&&params[:date].utc?
+          # end
+
+
           unless validator.valid
             valid=false
             row_values<<validator.content.length

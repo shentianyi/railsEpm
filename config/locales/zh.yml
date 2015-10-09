@@ -694,6 +694,6 @@ zh:
       total: 总计
       alert: 异常
     alert-type:
-      max: 不能超过
-      min: 不能低于
+      max: 最大值
+      min: 最小值
       error: 错误的提醒方式
