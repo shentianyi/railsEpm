@@ -57,6 +57,14 @@ module Entry
           end
         else
           self.data.each do |d|
+            # puts '-----****'
+            # puts d['_id']['date']
+            # key=date_parse_proc.call(d['_id']['date'])
+
+            # puts key
+            # puts '-----****'
+
+
             self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
           end
         end
@@ -89,8 +97,14 @@ module Entry
         @target_max_current= self.parameter.average ? (avg=target_relation.average(:target_max)).nil? ? 0 : avg.round(2).to_f : target_relation.sum(:target_max)
         @target_min_current= self.parameter.average ? (avg=target_relation.average(:target_min)).nil? ? 0 : avg.round(2).to_f : target_relation.sum(:target_min)
         frequency=self.parameter.frequency
+
         start_time=self.parameter.start_time
         end_time=self.parameter.end_time
+
+        # puts '---------------------------'
+        # puts start_time
+        # puts end_time
+        # puts '-----------------------------'
 
         case frequency
           when KpiFrequency::Hourly, KpiFrequency::Daily, KpiFrequency::Weekly
@@ -99,6 +113,10 @@ module Entry
                 step=3600 #60*60
               when KpiFrequency::Daily
                 step=1.day #60*60*24
+                start_time=start_time.localtime.at_beginning_of_day.utc
+                end_time=end_time.localtime.at_beginning_of_day.utc
+                # start_time+=8.hours
+                # end_time+=8.hours
               when KpiFrequency::Weekly
                 start_time+=8.hours
                 end_time+=8.hours
@@ -111,6 +129,7 @@ module Entry
             while start_time<=end_time do
               next_time=start_time+step
               generate_init_frequency(start_time)
+              # puts "$$$$#{self.current}"
               start_time=next_time
             end
           when KpiFrequency::Monthly
