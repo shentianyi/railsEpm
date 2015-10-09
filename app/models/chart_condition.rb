@@ -14,13 +14,17 @@ class ChartCondition < ActiveRecord::Base
 
   def cache_data
     if (cache=KpiEntryAnalyseCache.find_by_id(self.id, self.class.name)) && cache.chart_data
+      puts '1-----------------'
       cache.chart_data
     else
-      if self.data
+      unless self.data.blank?
+        puts '2-----------------'
         return self.data
       else
+        puts '3-----------------'
         query = AnalyseService.chart_condition_filter(self)
         if query
+          puts '4-----------------'
           return Entry::Analyzer.new(query).analyse
         end
       end
