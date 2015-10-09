@@ -13,7 +13,9 @@ class ChartCondition < ActiveRecord::Base
   end
 
   def cache_data
-    if (cache=KpiEntryAnalyseCache.find_by_id(self.id, self.class.name)) && cache.chart_data
+    puts '0-----------------'
+
+    if (cache=KpiEntryAnalyseCache.find_by_id(self.id, self.class.name)) #&& cache.chart_data
       puts '1-----------------'
       cache.chart_data
     else
