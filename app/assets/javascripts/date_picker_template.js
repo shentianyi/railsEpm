@@ -65,14 +65,14 @@ DATE_PICKER.date_picker_template.prototype={
                 $(this.target).datepicker('remove');
                 $(".datepicker").remove();
             });
-            //$(target).datetimepicker().on("change", function(){
-            //    $(this).attr("hide_value",$(target).val());
-            //    $(this).attr("hide_post",$(target).val());
-            //    if($(this).attr("string_model","yes")){
-            //        $(this).attr("string_model","no");
-            //        DATE_PICKER.shortcut_supervise(target);
-            //    }
-            //});
+            $(target).datetimepicker().on("change", function(){
+                $(this).attr("hide_value",$(target).val());
+                $(this).attr("hide_post",$(target).val());
+                if($(this).attr("string_model","yes")){
+                    $(this).attr("string_model","no");
+                    DATE_PICKER.shortcut_supervise(target);
+                }
+            });
         }
         else{
             $(target).datepicker().one("show", function(){
