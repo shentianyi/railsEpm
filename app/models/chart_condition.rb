@@ -20,13 +20,18 @@ class ChartCondition < ActiveRecord::Base
     else
       if self.data.present?
         puts '2-----------------'
+        query = AnalyseService.chart_condition_filter(self)
+        KpiEntryAnalyseCache.new(id: self.id, cacheable_type: self.class.name, query: query.to_json, chart_data: self.data).save
         return self.data
       else
         puts '3-----------------'
         query = AnalyseService.chart_condition_filter(self)
         if query
           puts '4-----------------'
-          return Entry::Analyzer.new(query).analyse
+          data= Entry::Analyzer.new(query).analyse
+          KpiEntryAnalyseCache.new(id: self.id, cacheable_type: self.class.name, query: query.to_json, chart_data: data).save
+          self.update_attributes(data: data.to_json)
+          return data
         end
       end
     end
