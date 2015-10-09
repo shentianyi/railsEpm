@@ -65,14 +65,14 @@ DATE_PICKER.date_picker_template.prototype={
                 $(this.target).datepicker('remove');
                 $(".datepicker").remove();
             });
-            $(target).datetimepicker().on("change", function(){
-                $(this).attr("hide_value",$(this).val());
-                $(this).attr("hide_post",$(this).val());
-                if($(this).attr("string_model","yes")){
-                    $(this).attr("string_model","no");
-                    DATE_PICKER.shortcut_supervise(target);
-                }
-            });
+            //$(target).datetimepicker().on("change", function(){
+            //    $(this).attr("hide_value",$(target).val());
+            //    $(this).attr("hide_post",$(target).val());
+            //    if($(this).attr("string_model","yes")){
+            //        $(this).attr("string_model","no");
+            //        DATE_PICKER.shortcut_supervise(target);
+            //    }
+            //});
         }
         else{
             $(target).datepicker().one("show", function(){
@@ -314,6 +314,7 @@ function date_shortcut_today(target,shortcut,name){
     }
 }
 function date_shortcut(name,target,shortcut,index){
+    //shortcut="string";
     var lastIndex=parseInt($("#date-pick-dynamic-div:visible :selected").attr("index")),
         gap_count=$("#date-pick-dynamic-div:visible>input").val(),
         lastIndexName=$("#date-pick-dynamic-div :selected").attr("value"),
@@ -400,12 +401,20 @@ DATE_PICKER.shortcut_model=function(endIndex,gap_count,lastIndexName){
                     return [postBegin,postEnd,"90"];
                 },
                 string:"Last "+gap_count+" "+lastIndexName,
-                update:function(target,value){
-                    if($(".datetimepicker").length==0){
-                        $(target).datepicker("update",value);
-                    }
-                    else{
-                        $(target).datetimepicker("update",value);
+                //update:function(target,value){
+                    //if($(".datetimepicker").length==0){
+                    //    $(target).datepicker("update",value);
+                    //}
+                    //else{
+                    //    $(target).datetimepicker("update",value);
+                    //}
+                //}
+                update: function (target, value) {
+                    $(target).attr("hide_value", value);
+                    $(target).attr("hide_post", value);
+                    if ($(target).attr("string_model", "yes")) {
+                        $(target).attr("string_model", "no");
+                        DATE_PICKER.shortcut_supervise(target);
                     }
                 }
             },
