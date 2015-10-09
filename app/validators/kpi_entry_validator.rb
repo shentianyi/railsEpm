@@ -1,6 +1,6 @@
 #encoding: utf-8
 class KpiEntryValidator
-  attr_accessor :entry_id,:email, :kpi_id, :kpi_name, :frequency, :date, :value, :entry_at, :user_kpi_item_id, :value, :item_cache_key, :valid, :content, :entry_type
+  attr_accessor :entry_id, :email, :kpi_id, :kpi_name, :frequency, :date, :value, :entry_at, :user_kpi_item_id, :value, :item_cache_key, :valid, :content, :entry_type
   attr_accessor :validator_collection, :user_kpi_item, :kpi, :valid_by_cache
   attr_accessor :entity_id, :user_id, :target_max, :target_min
   attr_accessor :kpi_properties
@@ -19,8 +19,11 @@ class KpiEntryValidator
     #2014-4-18
     #get should be a local time
     if self.date
-      self.date = self.date.to_s
-      self.date=Time.parse(self.date).to_s
+      if self.date.is_a?(Date)
+        self.date=self.date.change(:offset => "+0800").to_s
+      elsif !self.date.is_a?(String)
+        self.date=self.date.to_s
+      end
     end
 
     if self.value
@@ -69,9 +72,9 @@ class KpiEntryValidator
         self.valid=false
         self.content<<I18n.t('vali_msg.invalid_user_email')
       end
-      self.validator_collection.add_base_validator(self)  if self.validator_collection
+      self.validator_collection.add_base_validator(self) if self.validator_collection
     end
-puts "#{valid}----------------------------------"
+    puts "#{valid}----------------------------------"
     prepare_params if self.valid
   end
 
@@ -92,14 +95,14 @@ puts "#{valid}----------------------------------"
     self.target_min=source.user_kpi_item.target_min
     self.entry_at = Time.parse(self.date).utc #KpiEntriesHelper.parse_entry_string_date self.frequency,self.date
     #Here we got some problems of transfer time
-     self.entry_type = 0#self.entry_type.nil? ? 0 : self.entry_type
+    self.entry_type = 0 #self.entry_type.nil? ? 0 : self.entry_type
   end
 
   def params_to_hash
-    {"base_attrs"=> {"entry_id"=>self.entry_id,"original_value"=>self.value,"kpi_id"=> self.kpi_id, "frequency"=> self.frequency, "user_kpi_item_id"=> self.user_kpi_item_id,
-     "user_id"=> self.user_id, "entity_id"=> self.entity_id, "target_max"=> self.target_max,
-     "target_min"=> self.target_min, "entry_at"=> self.entry_at, "entry_type"=> self.entry_type},
-     "kpi_properties"=>self.kpi_properties
+    {"base_attrs" => {"entry_id" => self.entry_id, "original_value" => self.value, "kpi_id" => self.kpi_id, "frequency" => self.frequency, "user_kpi_item_id" => self.user_kpi_item_id,
+                      "user_id" => self.user_id, "entity_id" => self.entity_id, "target_max" => self.target_max,
+                      "target_min" => self.target_min, "entry_at" => self.entry_at, "entry_type" => self.entry_type},
+     "kpi_properties" => self.kpi_properties
     }
   end
 

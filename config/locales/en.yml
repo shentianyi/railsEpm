@@ -689,6 +689,6 @@ en:
       total: TOTAL
       alert: Alert
     alert-type:
-      max: Should not larger than
-      min: Should not smaller than
+      max: Max value
+      min: Min value
       error: Alert type error
