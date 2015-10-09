@@ -13,7 +13,18 @@ class ChartCondition < ActiveRecord::Base
   end
 
   def cache_data
-    KpiEntryAnalyseCache.find_by_id(self.id, self.class.name).chart_data
+    if (cache=KpiEntryAnalyseCache.find_by_id(self.id, self.class.name)) && cache.chart_data
+      cache.chart_data
+    else
+      if self.data
+        return self.data
+      else
+        query = AnalyseService.chart_condition_filter(self)
+        if query
+          return Entry::Analyzer.new(query).analyse
+        end
+      end
+    end
   end
 
   def self.detail_by_chartable(chartable)
@@ -24,8 +35,8 @@ class ChartCondition < ActiveRecord::Base
   #
   def check kpi_entry
     query = AnalyseService.chart_condition_filter self
- eg = EntityGroup.find_by_id(query[:entity_group_id])
-return false if eg.nil?
+    eg = EntityGroup.find_by_id(query[:entity_group_id])
+    return false if eg.nil?
 
 #    department = EntityGroup.find_by_id(query[:entity_group_id]).department
 
