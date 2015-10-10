@@ -8,7 +8,9 @@ module FileHandler
         msg=Message.new
 
         # 初始化临时文件的路径
-        tmp_file = "#{$UPDATAPATH}/#{SecureRandom.hex}_#{user.first_name}_kpis_template.xlsx"
+        # tmp_file = "#{$UPDATAPATH}/#{SecureRandom.hex}_#{user.first_name}_kpis_template.xlsx"
+        tmp_file = "#{$UPDATAPATH}/#{user.first_name}_kpis_template.xlsx"
+
         # 新建一个Excel文件
         begin
           p=Axlsx::Package.new
