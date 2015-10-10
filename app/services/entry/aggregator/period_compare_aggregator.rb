@@ -81,6 +81,7 @@ module Entry
           date=date_parse_proc.call(d['_id']['date'])
           p '------------'
 		  p d['_id']
+		  puts date
 		  d['_id'].values.each{|v| p v.class}
 		  p d['value']
 		  p '-------------'
