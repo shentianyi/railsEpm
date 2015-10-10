@@ -538,14 +538,16 @@ ANALYTICS.add_series=function(option) {
     var chart_container = option.target;
     var data = ANALYTICS.deal_data(option);
     var color=option.color?option.color:ANALYTICS.series_colors[series_id % ANALYTICS.series_colors.length];
-    $("#" + chart_container).highcharts().addSeries({
+    var obj=	$("#" + chart_container).highcharts();
+if(obj){
+	obj.addSeries({
         name: series_name,
         id: series_id,
         color:color,
         data: data,
         yAxis: ANALYTICS.qoros_demo_count===3?1:0
     })
-
+}
 
 };
 ANALYTICS.deal_data=function() {

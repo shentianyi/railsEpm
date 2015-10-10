@@ -525,6 +525,7 @@ function change_interval(option) {
         ANALYTICS.currentThreadPreCondition=option;
         //有数据的直接拿来生成
         for (j = 0; j < have_data.length; j++) {
+			if(ANALYTICS.chartSeries.series[j]){
             option.kpi = ANALYTICS.chartSeries.series[j].kpi;
             option.id = ANALYTICS.chartSeries.series[j].id;
             option.begin_time = ANALYTICS.chartSeries.series[j].begin_time;
@@ -549,6 +550,7 @@ function change_interval(option) {
 
             ANALYTICS.add_series(option);
             ANALYTICS.proper_type_for_chart(option);
+			}
         }
         //没有数据的再去请求
         ANALYTICS.currentThread=[];
