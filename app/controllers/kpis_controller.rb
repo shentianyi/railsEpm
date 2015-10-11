@@ -222,7 +222,7 @@ class KpisController < ApplicationController
   def download_entry_template
     kpis=current_user.kpis
     msg=FileHandler::Excel::KpiHandler.download_entry_template(current_user, kpis)
-    send_file msg.content,filename:"#{current_user.first_name}_KPI输入模版.xlsx"
+    send_file msg.content,filename:"#{current_user.first_name}_#{t 'fix.user_template_name'}.xlsx"
   end
 
   private
