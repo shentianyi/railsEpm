@@ -31,23 +31,22 @@ if (!Date.prototype.toArray) {
     };
 }
 
-if(!Date.prototype.getWeekNumber){
-    Date.prototype.getWeekNumber = function(){
+if (!Date.prototype.getWeekNumber) {
+    Date.prototype.getWeekNumber = function () {
         var d = new Date(+this);
-        d.setHours(0,0,0);
-        d.setDate(d.getDate()+4-(d.getDay()||7));
-        return Math.ceil((((d-new Date(d.getFullYear(),0,1))/8.64e7)+1)/7);
+        d.setHours(0, 0, 0);
+        d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+        return Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 8.64e7) + 1) / 7);
     };
 }
 
-if(!Date.prototype.getQuarter){
-    Date.prototype.getQuarter = function(){
+if (!Date.prototype.getQuarter) {
+    Date.prototype.getQuarter = function () {
         d = new Date(+this);
-        var q = [4,1,2,3];
+        var q = [4, 1, 2, 3];
         return q[Math.floor(d.getMonth() / 3)];
     };
 }
-
 
 
 //load or initialize the ifepm object
@@ -174,14 +173,14 @@ ifepm.dashboard.form_graph = function (datas, id) {
     }
 
     var type = ifepm.dashboard.graphs[id].chart_type;
-    if (type == 'table'){
+    if (type == 'table') {
         /*-------------------------table----------------------------------*/
-        window.setTimeout(function(){
-            ifepm.dashboard.dhtmlxtable(container,datas);
-        },1000);
+        window.setTimeout(function () {
+            ifepm.dashboard.dhtmlxtable(container, datas);
+        }, 100);
 
         /*-------------------------table----------------------------------*/
-    }else{
+    } else {
         ifepm.dashboard.form_highchart(datas, container, outer, type);
     }
 
@@ -196,23 +195,23 @@ ifepm.dashboard.form_graph = function (datas, id) {
     ifepm.dashboard.on_finish_load();
 };
 
-ifepm.dashboard.parseDateTime = function(interval,time){
+ifepm.dashboard.parseDateTime = function (interval, time) {
     var now = new Date(time);
-    switch(interval){
+    switch (interval) {
         case "90":
-            return now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+now.getHours()+":00";
+            return now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate() + " " + now.getHours() + ":00";
             break;
         case "100":
-            return now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate();
+            return now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate();
             break;
         case "200":
-            return "Week "+now.getWeekNumber()
+            return "Week " + now.getWeekNumber()
             break;
         case "300":
-            return now.getFullYear()+"/"+(now.getMonth()+1);
+            return now.getFullYear() + "/" + (now.getMonth() + 1);
             break;
         case "400":
-            return "Quarter "+now.getQuarter().toString();
+            return "Quarter " + now.getQuarter().toString();
             break;
         case "500":
             return now.getFullYear().toString();
@@ -223,35 +222,35 @@ ifepm.dashboard.parseDateTime = function(interval,time){
     return "/";
 }
 
-ifepm.dashboard.parse2dhtmlxGridJson = function(datas){
-    var h_keys = {"View":0,"Kpi":0};
+ifepm.dashboard.parse2dhtmlxGridJson = function (datas) {
+    var h_keys = {"View": 0, "Kpi": 0};
     var data = []
     //mearge header
-    for(var i =0; i<datas.length ;i++){
+    for (var i = 0; i < datas.length; i++) {
         var d = datas[i];
         data[i] = {};
         data[i]["View"] = d.view;
         data[i]["Kpi"] = d.kpi_name;
-        for(var j = 0;j< d.date.length;j++){
+        for (var j = 0; j < d.date.length; j++) {
             h_keys[d.date[j]] = 0;
             data[i][d.date[j]] = d.current[j];
         }
     }
 
     var djson = {
-        rows:[{
-            id:1001,
-            data:[]
+        rows: [{
+            id: 1001,
+            data: []
         }]
     }
 
-    for(var i =0;i<data.length;i++){
-        djson.rows[i] = {id:0,data:[]};
-        djson.rows[i].id = i+1;
-        $.each(Object.keys(h_keys),function(index,value){
-            if(data[i][value] == undefined){
+    for (var i = 0; i < data.length; i++) {
+        djson.rows[i] = {id: 0, data: []};
+        djson.rows[i].id = i + 1;
+        $.each(Object.keys(h_keys), function (index, value) {
+            if (data[i][value] == undefined) {
                 djson.rows[i].data.push(0);
-            }else{
+            } else {
                 djson.rows[i].data.push(data[i][value]);
             }
         });
@@ -261,37 +260,37 @@ ifepm.dashboard.parse2dhtmlxGridJson = function(datas){
 
     var interval = datas[0].interval;
 
-    $.each(Object.keys(h_keys),function(index,value){
+    $.each(Object.keys(h_keys), function (index, value) {
         var v = null;
-        if(index < 2){
+        if (index < 2) {
             v = value
         }
-        else{
-            v  =ifepm.dashboard.parseDateTime(interval,value);
+        else {
+            v = ifepm.dashboard.parseDateTime(interval, value);
         }
-        headers = headers + v+",";
+        headers = headers + v + ",";
     });
 
-    return {json:djson,headers:headers,colcount:Object.keys(h_keys).length};
+    return {json: djson, headers: headers, colcount: Object.keys(h_keys).length};
 };
 
-ifepm.dashboard.dhtmlxtable = function(container,datas){
+ifepm.dashboard.dhtmlxtable = function (container, datas) {
     var d = ifepm.dashboard.parse2dhtmlxGridJson(datas);
-    var width = $("#"+container).width()/ d.colcount;
+    var width = $("#" + container).width() / d.colcount;
     width = width < 60 ? 60 : width;
     var widthstring = "";
     var alistr = "";
 
-    for(var i =0;i< d.colcount;i++){
-        if(i<2){
-            widthstring = widthstring+150+",";
-            alistr= alistr + "center";
+    for (var i = 0; i < d.colcount; i++) {
+        if (i < 2) {
+            widthstring = widthstring + 150 + ",";
+            alistr = alistr + "center";
         }
-        else if(i== d.colcount-1){
-            widthstring = widthstring+width;
-            alistr= alistr + "center";
-        }else{
-            widthstring = widthstring +width+",";
+        else if (i == d.colcount - 1) {
+            widthstring = widthstring + width;
+            alistr = alistr + "center";
+        } else {
+            widthstring = widthstring + width + ",";
             alistr = alistr + "center,";
         }
     }
@@ -302,7 +301,7 @@ ifepm.dashboard.dhtmlxtable = function(container,datas){
     table.setInitWidths(widthstring);
     table.setSkin("dhx_skyblue");
     table.init();
-    table.parse(d.json,"json");
+    table.parse(d.json, "json");
     return table;
 }
 
@@ -627,13 +626,24 @@ ifepm.dashboard.on_finish_load = function () {
 
     var container_selector = ifepm.config.container_selector;
     ++current_index;
+    console.log(current_index + "=====" + ifepm.dashboard.graph_sequence.length);
     if (current_index >= ifepm.dashboard.graph_sequence.length) {
         ifepm.dashboard_widget.enable(true);
         constraintFullSizeHeight = window.setTimeout(function () {
-            var height = $(document).height();
-            console.log("timeout")
+            //var height = $(document).height();
+            //get screen avaliable height
+            var height = document.body.clientHeight;
+            //var height = window.screen.availHeight;
+            console.log("timeout" + "===height=" + height)
             $("#dashboard-content-full").css("height", height + "px");
+
+            var ClientHeight = document.documentElement.clientHeight;
+            ClientHeight_left = ClientHeight / 2 - 110;
+            console.log("dashboard-content-full-bg-left:" + ClientHeight_left + "px");
+            $("#dashboard-content-full-bg-left").css("height", ClientHeight_left + "px");
         }, 100)
+
+
         if (isfullsize) {
             //add a full size title
             /*$(container_selector).append(ifepm.template.title.replace(/!title!/g, current_dashboard_name));
@@ -650,8 +660,11 @@ ifepm.dashboard.on_finish_load = function () {
             ifepm.dashboard.on_drag_stop();
             $("#dash-fullsize").height()
             window.setTimeout(function () {
-                var height = $(document).height();
-                console.log("timeout")
+                //var height = $(document).height();
+                //get screen avaliable height
+                //  var height = window.screen.availHeight;
+                var height = document.body.clientHeight;
+                console.log("timeout" + "isfullsize===" + height)
                 $("#dashboard-content-full").css("height", height + "px");
             }, 100)
         }
@@ -904,7 +917,8 @@ ifepm.dashboard.init = function (id, callback) {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("Oops, something went wrong, please try again");
-            }}
+            }
+        }
     );
 
 };
@@ -960,8 +974,10 @@ ifepm.dashboard.on_view_added = function (data) {
     opt.col = graph_item.col;
     opt.row = graph_item.row;
     options.push(opt);
-    ifepm.dashboard.save_grid_pos(options, {success: function () {
-    }});
+    ifepm.dashboard.save_grid_pos(options, {
+        success: function () {
+        }
+    });
 }
 
 /*
@@ -995,8 +1011,10 @@ ifepm.dashboard.on_drag_stop = function () {
     }
     //
     if (options.length > 0) {
-        ifepm.dashboard.save_grid_pos(options, {success: function () {
-        }});
+        ifepm.dashboard.save_grid_pos(options, {
+            success: function () {
+            }
+        });
     }
 }
 
@@ -1050,7 +1068,8 @@ ifepm.dashboard.add = function (dashboard, options) {
         crossDomain: ifepm.config.dashboard_create_url.crossDomain,
         dataType: ifepm.config.dashboard_create_url.dataType,
         data: {
-            "data": dashboard},
+            "data": dashboard
+        },
         success: options.success,
         error: options.error,
         complete: options.complete

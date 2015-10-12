@@ -14,13 +14,13 @@
  */
 
 /*
-* Gridster extention
-* */
-var RESIZE=RESIZE||{};
+ * Gridster extention
+ * */
+var RESIZE = RESIZE || {};
 
 (function ($) {
 
-    $.Gridster.resize_widget_dimensions = function(options) {
+    $.Gridster.resize_widget_dimensions = function (options) {
         if (options.widget_margins) {
             this.options.widget_margins = options.widget_margins;
         }
@@ -29,18 +29,18 @@ var RESIZE=RESIZE||{};
             this.options.widget_base_dimensions = options.widget_base_dimensions;
         }
 
-        this.min_widget_width  = (this.options.widget_margins[0] * 2)
-            + this.options.widget_base_dimensions[0];
+        this.min_widget_width = (this.options.widget_margins[0] * 2)
+        + this.options.widget_base_dimensions[0];
         this.min_widget_height = (this.options.widget_margins[1] * 2)
-            + this.options.widget_base_dimensions[1];
+        + this.options.widget_base_dimensions[1];
 
         var serializedGrid = this.serialize();
 
-        if(arguments[1]=="dashboard"){
-            this.$widgets.each($.proxy(function(i, widget) {
+        if (arguments[1] == "dashboard") {
+            this.$widgets.each($.proxy(function (i, widget) {
                 var $widget = $(widget);
                 var data = serializedGrid[i];
-                this.resize_widget($widget, data.size_x, data.size_y,null,null,true);
+                this.resize_widget($widget, data.size_x, data.size_y, null, null, true);
 //                window.setTimeout(function(){
 //
 //                        var id = $widget.attr("id");
@@ -53,8 +53,8 @@ var RESIZE=RESIZE||{};
 //                },100)
             }, this));
         }
-        else{
-            this.$widgets.each($.proxy(function(i, widget) {
+        else {
+            this.$widgets.each($.proxy(function (i, widget) {
                 var $widget = $(widget);
                 var data = serializedGrid[i];
                 this.resize_widget($widget, data.size_x, data.size_y);
@@ -83,48 +83,48 @@ var RESIZE=RESIZE||{};
     };
 })(jQuery);
 /*
-* base variable
-* */
+ * base variable
+ * */
 var ifepm = ifepm || {};
 
 ifepm.dashboard_widget = ifepm.dashboard_widget || {};
 
 ifepm.dashboard_widget.config = {
-    normal:{
-        height:0,
-        width:0,
-        max_col:5,
-        max_row:3,
+    normal: {
+        height: 0,
+        width: 0,
+        max_col: 5,
+        max_row: 3
     },
-    full:{
-        height:0,
-        width:0,
-        max_col:5,
-        max_row:3,
+    full: {
+        height: 0,
+        width: 0,
+        max_col: 5,
+        max_row: 3
     }
 };
 
 /*
-* @gridster,normal size Gridster
-* @gridster_full,full size Gridster
-* */
+ * @gridster,normal size Gridster
+ * @gridster_full,full size Gridster
+ * */
 var gridster;
 var gridster_full;
 var current_gridster;
 /*
-* initialize the grid size
-* */
-ifepm.dashboard_widget.height = 0,ifepm.dashboard_widget.width = 0;
+ * initialize the grid size
+ * */
+ifepm.dashboard_widget.height = 0, ifepm.dashboard_widget.width = 0;
 
 /*
-* @function init
-* --init gridster
-* @params option
-* option = {
-* normal:{height,width,max_col,max_row},
-* full:{height,width,max_col,max_row}}
-* */
-ifepm.dashboard_widget.init = function(option){
+ * @function init
+ * --init gridster
+ * @params option
+ * option = {
+ * normal:{height,width,max_col,max_row},
+ * full:{height,width,max_col,max_row}}
+ * */
+ifepm.dashboard_widget.init = function (option) {
 
     ifepm.dashboard_widget.setconfig(option);
     //====log====//
@@ -141,44 +141,44 @@ ifepm.dashboard_widget.init = function(option){
     }).data('gridster');
     current_gridster = gridster;
     /*
-    gridster_full = $("#dash-fullsize ul").gridster({
-        namespace:'#dash-fullsize',
-        widget_margins: [10,10],
-        widget_base_dimensions: [200,200],
-    }).data('gridster');
-    */
+     gridster_full = $("#dash-fullsize ul").gridster({
+     namespace:'#dash-fullsize',
+     widget_margins: [10,10],
+     widget_base_dimensions: [200,200],
+     }).data('gridster');
+     */
 };
 
 /*
-* @function init full size gridster
-* */
+ * @function init full size gridster
+ * */
 var isinit_fullsize = true;
 
-ifepm.dashboard_widget.init_fullsize = function(){
-     if(isinit_fullsize){
-         var width = ifepm.dashboard_widget.config.full.width;
-         var height = ifepm.dashboard_widget.config.full.height;
-         gridster_full = $("#dash-fullsize ul").gridster({
-             namespace:'#dash-fullsize',
-             widget_margins: [25,10],
-             widget_base_dimensions: [width,height] ,
-             draggable:{
-                 stop: ifepm.dashboard_widget.drag_stop
-             },
-         }).data('gridster');
-         isinit_fullsize = false;
-         gridster_full.disable();
-     }
+ifepm.dashboard_widget.init_fullsize = function () {
+    if (isinit_fullsize) {
+        var width = ifepm.dashboard_widget.config.full.width;
+        var height = ifepm.dashboard_widget.config.full.height;
+        gridster_full = $("#dash-fullsize ul").gridster({
+            namespace: '#dash-fullsize',
+            widget_margins: [25, 10],
+            widget_base_dimensions: [width, height],
+            draggable: {
+                stop: ifepm.dashboard_widget.drag_stop
+            }
+        }).data('gridster');
+        isinit_fullsize = false;
+        gridster_full.disable();
+    }
 }
 
 /*
-* @function setconfig
-* @params option
-* option = {
-* normal:{height,width,max_col,max_row},
-* full:{height,width,max_col,max_row}}
-* */
-ifepm.dashboard_widget.setconfig = function(option){
+ * @function setconfig
+ * @params option
+ * option = {
+ * normal:{height,width,max_col,max_row},
+ * full:{height,width,max_col,max_row}}
+ * */
+ifepm.dashboard_widget.setconfig = function (option) {
     //normal size config
     ifepm.dashboard_widget.config.normal.max_col = option.normal.max_col;
     ifepm.dashboard_widget.config.normal.max_row = option.normal.max_row;
@@ -192,41 +192,41 @@ ifepm.dashboard_widget.setconfig = function(option){
     ifepm.dashboard_widget.config.full.width = option.full.width / option.full.max_col - 50;
 }
 /*
-* @function enable(bool)
-* */
-ifepm.dashboard_widget.enable = function(enable){
-    if(enable){
+ * @function enable(bool)
+ * */
+ifepm.dashboard_widget.enable = function (enable) {
+    if (enable) {
         gridster.enable();
     }
-    else{
+    else {
         gridster.disable();
     }
 }
 
 /*
-* @function full_size
-* */
+ * @function full_size
+ * */
 var isfullsize = false;
 
-ifepm.dashboard_widget.resize_window = function(option){
+ifepm.dashboard_widget.resize_window = function (option) {
     ifepm.dashboard_widget.setconfig(option);
-    var dashboard=arguments.length>1?true:false;
+    var dashboard = arguments.length > 1 ? true : false;
     var option = {};
-    if(isfullsize){
-        option.widget_base_dimensions = [ifepm.dashboard_widget.config.full.width,ifepm.dashboard_widget.config.full.height];
-        if(dashboard){
-            current_gridster.resize_widget_dimensions(option,"dashboard");
+    if (isfullsize) {
+        option.widget_base_dimensions = [ifepm.dashboard_widget.config.full.width, ifepm.dashboard_widget.config.full.height];
+        if (dashboard) {
+            current_gridster.resize_widget_dimensions(option, "dashboard");
         }
-        else{
+        else {
             current_gridster.resize_widget_dimensions(option);
         }
     }
-    else{
-        option.widget_base_dimensions = [ifepm.dashboard_widget.config.normal.width,ifepm.dashboard_widget.config.normal.height];
-        if(dashboard){
-            current_gridster.resize_widget_dimensions(option,"dashboard");
+    else {
+        option.widget_base_dimensions = [ifepm.dashboard_widget.config.normal.width, ifepm.dashboard_widget.config.normal.height];
+        if (dashboard) {
+            current_gridster.resize_widget_dimensions(option, "dashboard");
         }
-        else{
+        else {
             current_gridster.resize_widget_dimensions(option);
         }
     }
@@ -234,48 +234,48 @@ ifepm.dashboard_widget.resize_window = function(option){
     return current_gridster;
 }
 
- ifepm.dashboard_widget.full_size = function(option){
-    if(option){
+ifepm.dashboard_widget.full_size = function (option) {
+    if (option) {
         isfullsize = true;
         current_gridster = gridster_full;
-    }else{
+    } else {
         isfullsize = false;
         current_gridster = gridster;
     }
 }
 
 /*
-* @function add_w
-* @params option = {id,container_selector,chart_type}
-* */
-ifepm.dashboard_widget.add_w = function(option){
+ * @function add_w
+ * @params option = {id,container_selector,chart_type}
+ * */
+ifepm.dashboard_widget.add_w = function (option) {
 
     var selector = "";
-    if(isfullsize){
-        selector =" li#full_"+option.id ;
+    if (isfullsize) {
+        selector = " li#full_" + option.id;
     }
-    else{
-        selector=" li#"+option.id;
+    else {
+        selector = " li#" + option.id;
     }
 
-    if(isfullsize && option.chart_type == "pie" ){
+    if (isfullsize && option.chart_type == "pie") {
         option.sizex = 2;
         option.sizey = 2;
         option.isnew = false;
     }
 
-    if(option.isnew){
+    if (option.isnew) {
         var default_size = ifepm.dashboard_widget.initsize(option.chart_type);
-        current_gridster.add_widget(option.container_selector+selector,default_size.sizex,default_size.sizey)
-    }else{
-        current_gridster.add_widget(option.container_selector+selector,option.sizex,option.sizey,option.col,option.row)
+        current_gridster.add_widget(option.container_selector + selector, default_size.sizex, default_size.sizey)
+    } else {
+        current_gridster.add_widget(option.container_selector + selector, option.sizex, option.sizey, option.col, option.row)
     }
 
-    var pos={};
+    var pos = {};
     pos = current_gridster.serialize($(selector));
 
-    pos[0].col = pos[0].col == NaN ? 1:pos[0].col;
-    pos[0].row = pos[0].col == NaN ? 1:pos[0].row;
+    pos[0].col = pos[0].col == NaN ? 1 : pos[0].col;
+    pos[0].row = pos[0].col == NaN ? 1 : pos[0].row;
     var result = {};
     result.sizex = pos[0].size_x;
     result.sizey = pos[0].size_y;
@@ -286,35 +286,35 @@ ifepm.dashboard_widget.add_w = function(option){
 }
 
 /*
-* @function remove_w
-* */
-ifepm.dashboard_widget.remove_w = function(filter,fullsize){
+ * @function remove_w
+ * */
+ifepm.dashboard_widget.remove_w = function (filter, fullsize) {
     var grid;
-    if(fullsize){
+    if (fullsize) {
         grid = gridster_full;
     }
-    else{
+    else {
         grid = gridster;
     }
-    if(grid){
+    if (grid) {
         grid.remove_widget($(filter));
         $(filter).remove();
-        if(!isfullsize){
+        if (!isfullsize) {
             ifepm.dashboard_widget.drag_stop();
         }
     }
 }
 
 /*
-* @function get_pos
-* return the gridster position depend on the html filter
-* */
-ifepm.dashboard_widget.get_pos = function(filter){
+ * @function get_pos
+ * return the gridster position depend on the html filter
+ * */
+ifepm.dashboard_widget.get_pos = function (filter) {
     var pos = {};
     pos = current_gridster.serialize($(filter));
 
-    pos[0].col = pos[0].col == NaN ? 1:pos[0].col;
-    pos[0].row = pos[0].col == NaN ? 1:pos[0].row;
+    pos[0].col = pos[0].col == NaN ? 1 : pos[0].col;
+    pos[0].row = pos[0].col == NaN ? 1 : pos[0].row;
 
 
     var result = {};
@@ -324,16 +324,15 @@ ifepm.dashboard_widget.get_pos = function(filter){
 }
 
 /*
-* @function initsize
-* return the default size from specific chart type
-* */
-ifepm.dashboard_widget.initsize = function(type){
+ * @function initsize
+ * return the default size from specific chart type
+ * */
+ifepm.dashboard_widget.initsize = function (type) {
     var defsize = {
-        sizex:2,
-        sizey:1,
+        sizex: 2,
+        sizey: 1
     };
-    switch (type)
-    {
+    switch (type) {
         case "line":
             defsize.sizex = 2;
             defsize.sizey = 1;
@@ -361,15 +360,15 @@ ifepm.dashboard_widget.initsize = function(type){
 };
 
 /*
-* @function remove_all_widgets
-* remove all the grids
-* */
-ifepm.dashboard_widget.remove_all_widgets =function(fullsize){
+ * @function remove_all_widgets
+ * remove all the grids
+ * */
+ifepm.dashboard_widget.remove_all_widgets = function (fullsize) {
     var grid;
-    if(fullsize){
-         grid = gridster_full;
+    if (fullsize) {
+        grid = gridster_full;
     }
-    else{
+    else {
         grid = gridster;
     }
 
@@ -377,17 +376,17 @@ ifepm.dashboard_widget.remove_all_widgets =function(fullsize){
 };
 
 /*
-* @function drag_stop
-* callback after drag stop
-* */
-ifepm.dashboard_widget.drag_stop = function(event,ui){
+ * @function drag_stop
+ * callback after drag stop
+ * */
+ifepm.dashboard_widget.drag_stop = function (event, ui) {
     //if(isfullsize){
     //    return;
     //}
-    if($("#dash-fullsize").height()>$("#dashboard-content-full").height()){
+    if ($("#dash-fullsize").height() > $("#dashboard-content-full").height()) {
         $("#dashboard-content-full").height($("#dash-fullsize").height());
     }
-    else{
+    else {
         $("#dashboard-content-full").height($(document).height());
     }
     ifepm.dashboard.on_drag_stop();
