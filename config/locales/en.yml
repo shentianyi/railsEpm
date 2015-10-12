@@ -638,6 +638,7 @@ en:
     upload_format_error: File format is not supported
     upload_size_error: File size is over 20M
     download_template: Download Template
+    user_template_name: KPIEntryTemplate
     upload_data_file: Upload Data File(Max is 20M)
     upload_finish: Finish
     kpi_upload_support_format: support Excel(.xls and .xlsx)
