@@ -1,222 +1,229 @@
- <div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
-        <div class="content-left-main" name="dashboard" id="content-left-main">
-            <div style="width:auto;height:71px;"></div>
-            <div class="left-content-title" id="left-content-title" name="dashboard">
-                <p id="current-group-item" class="current-group-item"></p>
-                <i class="icon-edit current-group-item-edit" id="current-group-item-edit"></i>
-                <div class="content-right-nav-add-block" name="left-content" id="content-left-content-edit-block">
-                    <p>编辑名字</p>
-                    <input type='text' />
-                </div>
-            </div>
+<div style="display:table;width:100%;table-layout:fixed;height:100%;margin-top:-71px;position:absolute">
+  <div class="content-left-main" name="dashboard" id="content-left-main">
+    <div style="width:auto;height:71px;"></div>
+    <div class="left-content-title" id="left-content-title" name="dashboard">
+      <p id="current-group-item" class="current-group-item"></p>
+      <i class="icon-edit current-group-item-edit" id="current-group-item-edit"></i>
 
-            <div class="dashboard-content" id="dashboard-content">
-                <div id="dash-normalsize" class="gridster dash-content">
-                    <ul class="dashBoard-show" id="dashBoard-show">
-                    </ul>
-                </div>
-            </div>
+      <div class="content-right-nav-add-block" name="left-content" id="content-left-content-edit-block">
+        <p>编辑名字</p>
+        <input type='text'/>
+      </div>
+    </div>
 
-        </div>
+    <div class="dashboard-content" id="dashboard-content">
+      <div id="dash-normalsize" class="gridster dash-content">
+        <ul class="dashBoard-show" id="dashBoard-show">
+        </ul>
+      </div>
+    </div>
 
-        <aside class="content-right-nav" name='dashboard' id="content-right-nav">
-            <div style="width:auto;height:71px;"></div>
-            <section class="adaptable" style="max-height:320px;overflow-y:auto">
-                <h3><%= t 'dashboard_group.group.name' %></h3>
-                <i class="icon-plus" id="content-right-nav-add-button"></i>
-                <ul id="content-right-nav-group">
-                    <%@dashboards.each do |dashboard| %>
-                              <li class="sty-db-node" number=<%=dashboard.id%>  >
-                                <i class="icon-remove"  onclick="dashboard_delete(<%=dashboard.id%>)"></i>
-                                <a href="#" onclick="select_dashboard(<%=dashboard.id%>)"><%=dashboard.name%></a>
-                              </li>
-                    <%end%>
-                </ul>
-                <div class="content-right-nav-add-block" id="content-right-nav-add-block">
-                    <p><%= t 'dashboard_group.group.give_name'%> </p>
-                    <input type='text' />
-                </div>
-            </section>
-            <section class="solid">
-                <h3><%= t 'dashboard_group.dashboard.add' %></h3>
-                <p><%= t 'dashboard_group.dashboard.add_desc' %></p>
-                <a class="btn btn-primary" id="add-dashboard-show"><%= t 'dashboard_group.dashboard.add_now' %></a>
-            </section>
-            <section class="solid">
-                <h3><%= t 'dashboard_group.dashboard.full' %></h3>
-                <p><%= t 'dashboard_group.dashboard.full_desc' %></p>
-                <a class="btn btn-primary" id="dashboard-full-size"><%= t 'dashboard_group.dashboard.full_now' %></a>
-            </section>
+  </div>
 
-        </aside>
+  <aside class="content-right-nav" name='dashboard' id="content-right-nav">
+    <div style="width:auto;height:71px;"></div>
+    <section class="adaptable" style="max-height:320px;overflow-y:auto">
+      <h3><%= t 'dashboard_group.group.name' %></h3>
+      <i class="icon-plus" id="content-right-nav-add-button"></i>
+      <ul id="content-right-nav-group">
+        <% @dashboards.each do |dashboard| %>
+            <li class="sty-db-node" number=<%= dashboard.id %>>
+              <i class="icon-remove" onclick="dashboard_delete(<%=dashboard.id%>)"></i>
+              <a href="#" onclick="select_dashboard(<%=dashboard.id%>)"><%= dashboard.name %></a>
+            </li>
+        <% end %>
+      </ul>
+      <div class="content-right-nav-add-block" id="content-right-nav-add-block">
+        <p><%= t 'dashboard_group.group.give_name' %> </p>
+        <input type='text'/>
+      </div>
+    </section>
+    <section class="solid">
+      <h3><%= t 'dashboard_group.dashboard.add' %></h3>
+
+      <p><%= t 'dashboard_group.dashboard.add_desc' %></p>
+      <a class="btn btn-primary" id="add-dashboard-show"><%= t 'dashboard_group.dashboard.add_now' %></a>
+    </section>
+    <section class="solid">
+      <h3><%= t 'dashboard_group.dashboard.full' %></h3>
+
+      <p><%= t 'dashboard_group.dashboard.full_desc' %></p>
+      <a class="btn btn-primary" id="dashboard-full-size"><%= t 'dashboard_group.dashboard.full_now' %></a>
+    </section>
+
+  </aside>
 </div>
 
 
 
 <div class="dashboard-add-wrap" id="dashboard-add-wrap">
-    <div class="dashboard-add-inner" id="dashboard-add-inner">
-      <div class="dashboard-add-sub-menu" id="dashboard-add-sub-menu">
-        <ul>
-          <li>
+  <div class="dashboard-add-inner" id="dashboard-add-inner">
+    <div class="dashboard-add-sub-menu" id="dashboard-add-sub-menu">
+      <ul>
+        <li>
 
-          </li>
-          <li class="active">
-                <a><%= t 'dashboard_group.dashboard.add_type.cus' %></a>
-          </li>
-          <!--<li>
+        </li>
+        <li class="active">
+          <a><%= t 'dashboard_group.dashboard.add_type.cus' %></a>
+        </li>
+        <!--<li>
                 <a><%= t 'dashboard_group.dashboard.add_type.temp' %></a>
           </li>-->
-        </ul>
-        <a class="icon-remove" id="close-add-dashboard"> <%= t 'dashboard_group.dashboard.close' %></a>
-      </div>
-      <aside class="content-right-nav" name='dashboard-add'>
-            <section class="solid dashboard-add-name">
-                  <h3><%= t 'dashboard_group.dashboard.name' %></h3>
-                  <p><%= t 'dashboard_group.dashboard.name_desc' %></p>
-                  <input type='text' placeholder="<%= t 'dashboard_group.dashboard.name' %>" id="dashboard-name-input"/>
-            </section>
-            <section class="solid dashboard-add-type">
-                  <h3><%= t 'dashboard_group.dashboard.choose_type' %></h3>
-                  <ul id="db-add-type">
-                    <li type="line"></li>
-                    <li class="active"type="column"></li>
-                    <li type="pie"></li>
-                    <li type="scatter"></li>
-                    <li type="table"></li>
-                  </ul>
-            </section>
-            <section class="solid">
-                  <h3><%= t 'dashboard_group.dashboard.content' %></h3>
-                  <p><%= t 'dashboard_group.dashboard.content_desc' %></p>
-                  <ul class="db-add-kpi-list" id="db-add-kpi-list"></ul>
-                  <a class="btn btn-primary" id="add-one-series" style="width:140px;margin-left:-76px;"><%= t 'dashboard_group.dashboard.add_series' %></a>
-            </section>
-            <section class="solid">
-                  <h3><%= t 'dashboard_group.dashboard.group' %></h3>
-                  <p><%= t 'dashboard_group.dashboard.group_desc' %></p>
-                  <div class="dashboard-add-select-div">
-                    <select data-placeholder="<%= t 'dashboard_group.group.name'%>" style="width:140px;" class="chosen-select" id="dashboard-group-name">
-                      <option ></option>
-                      <%@dashboards.each do |dashboard| %>
-                          <option value="<%= dashboard.id%>"><%= dashboard.name%></option>
-                      <%end%>
-                    </select>
-                  </div>
-            </section>
-            <section class="solid">
-                  <h3><%= t 'dashboard_group.dashboard.finish' %></h3>
-                  <p><%= t 'dashboard_group.dashboard.finish_desc' %></p>
-                  <a class="btn btn-primary" id="add-dashboard"><%= t 'dashboard_group.dashboard.create' %></a>
-            </section>
-      </aside>
-      <div class="content-left-main" name="dashboard-add">
-            <div class="left-content-title" name="dashboard-add" id="left-content-title-add">
-                 <div class="pull-left analytics-condition-choose" name="dashboard-add">
-                      <div class="index-condition-group">
-                        <select data-placeholder="<%= t 'analytics.kpi_category'%> *" style="width:120px;" class="chosen-select"   title="analy-entity-select" id="chart-group">
-                          <%@categories.each_with_index do |catetory,i|%>
-                              <option value="<%= catetory.id%>"><%= catetory.name%></option>
-                          <%end %>
-                        </select>
-                        <select data-placeholder="<%= t 'analytics.kpi'%> *" style="width:120px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
-                          <option value=""></option>
-                        </select>
-                        <select data-placeholder="<%= t 'analytics.view'%> *" style="width:120px;" class="chosen-select" title="analy-view-select"  id="chart-view">
-                          <%@entity_groups.each_with_index do |entity_group,i|%>
-                              <option value="<%= entity_group.id%>" ><%= entity_group.name%></option>
-                          <%end %>
-                        </select>
-                      </div>
-                      <div class="index-condition-group">
-                        <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.start_time' %> *" id="analy-begin-time"
-                               readonly=true/>
-                        <label class="index-date-extra-info"></label>
-                        <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.end_time' %>" id="analy-end-time"
-                               readonly=true/>
-                        <label class="index-date-extra-info"></label>
-                      </div>
-                      <div class="index-condition-group" style="width:100px;display: none">
-                        <label class="analytics-radio-label">
-                          <input type="radio" name="chartRadios" value="1" checked>
-                          <%= t 'dashboard_group.dashboard.serie.total' %>
-                        </label>
-                        <label class="analytics-radio-label">
-                          <input type="radio" name="chartRadios" value="0">
-                          <%= t 'dashboard_group.dashboard.serie.average' %>
-                        </label>
-                      </div>
-                   <div class="index-condition-group chosen-attribute" style="width:100px;height: 500px">
-                     <select data-placeholder="<%= t 'analytics.select-dim'%>" multiple style="width:120px;"    class="chosen-select" title="analy-attribute-select" id="kpi-property-select">
+      </ul>
+      <a class="icon-remove" id="close-add-dashboard"> <%= t 'dashboard_group.dashboard.close' %></a>
+    </div>
+    <aside class="content-right-nav" name='dashboard-add'>
+      <section class="solid dashboard-add-name">
+        <h3><%= t 'dashboard_group.dashboard.name' %></h3>
 
-                     </select>
-                   </div>
-                      <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px; margin-left: 60px" id="db-add-chart">Add</a>
-                 </div>
-                 <i class="icon-chevron-down analytic-control-condition-visible" id="analytic-control-condition-visible" state="close"> </i>
-            </div>
-            <div class="db-chart-body" id="db-chart-body">
-                 <div class="clearfix" id="db-chart-interval-alternate" my_height="28">
-                     <ul class="pull-right db-control-chart-interval-group">
-                        <li interval="90"><a>Hr</a></li>
-                        <li interval="100"><a>D</a></li>
-                        <li interval="200"><a>W</a></li>
-                        <li interval="300"><a>M</a></li>
-                        <li interval="400"><a>Qr</a></li>
-                        <li interval="500"><a>Y</a></li>
-                     </ul>
-                 </div>
-                 <div class="put-db-chart" id="put-db-chart">
-                    <table class="dashboard-item-extra-info"></table>
-                    <div class="db-chart-container" id="chart-container"></div>
-                 </div>
-            </div>
+        <p><%= t 'dashboard_group.dashboard.name_desc' %></p>
+        <input type='text' placeholder="<%= t 'dashboard_group.dashboard.name' %>" id="dashboard-name-input"/>
+      </section>
+      <section class="solid dashboard-add-type">
+        <h3><%= t 'dashboard_group.dashboard.choose_type' %></h3>
+        <ul id="db-add-type">
+          <li type="line"></li>
+          <li class="active" type="column"></li>
+          <li type="pie"></li>
+          <li type="scatter"></li>
+          <li type="table"></li>
+        </ul>
+      </section>
+      <section class="solid">
+        <h3><%= t 'dashboard_group.dashboard.content' %></h3>
+
+        <p><%= t 'dashboard_group.dashboard.content_desc' %></p>
+        <ul class="db-add-kpi-list" id="db-add-kpi-list"></ul>
+        <a class="btn btn-primary" id="add-one-series" style="width:140px;margin-left:-76px;"><%= t 'dashboard_group.dashboard.add_series' %></a>
+      </section>
+      <section class="solid">
+        <h3><%= t 'dashboard_group.dashboard.group' %></h3>
+
+        <p><%= t 'dashboard_group.dashboard.group_desc' %></p>
+
+        <div class="dashboard-add-select-div">
+          <select data-placeholder="<%= t 'dashboard_group.group.name' %>" style="width:140px;" class="chosen-select" id="dashboard-group-name">
+            <option></option>
+            <% @dashboards.each do |dashboard| %>
+                <option value="<%= dashboard.id %>"><%= dashboard.name %></option>
+            <% end %>
+          </select>
+        </div>
+      </section>
+      <section class="solid">
+        <h3><%= t 'dashboard_group.dashboard.finish' %></h3>
+
+        <p><%= t 'dashboard_group.dashboard.finish_desc' %></p>
+        <a class="btn btn-primary" id="add-dashboard"><%= t 'dashboard_group.dashboard.create' %></a>
+      </section>
+    </aside>
+    <div class="content-left-main" name="dashboard-add">
+      <div class="left-content-title" name="dashboard-add" id="left-content-title-add">
+        <div class="pull-left analytics-condition-choose" name="dashboard-add">
+          <div class="index-condition-group">
+            <select data-placeholder="<%= t 'analytics.kpi_category' %> *" style="width:120px;" class="chosen-select" title="analy-entity-select" id="chart-group">
+              <% @categories.each_with_index do |catetory, i| %>
+                  <option value="<%= catetory.id %>"><%= catetory.name %></option>
+              <% end %>
+            </select>
+            <select data-placeholder="<%= t 'analytics.kpi' %> *" style="width:120px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
+              <option value=""></option>
+            </select>
+            <select data-placeholder="<%= t 'analytics.view' %> *" style="width:120px;" class="chosen-select" title="analy-view-select" id="chart-view">
+              <% @entity_groups.each_with_index do |entity_group, i| %>
+                  <option value="<%= entity_group.id %>"><%= entity_group.name %></option>
+              <% end %>
+            </select>
+          </div>
+          <div class="index-condition-group">
+            <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.start_time' %> *" id="analy-begin-time"
+                   readonly=true/>
+            <label class="index-date-extra-info"></label>
+            <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.end_time' %>" id="analy-end-time"
+                   readonly=true/>
+            <label class="index-date-extra-info"></label>
+          </div>
+          <div class="index-condition-group" style="width:100px;display: none">
+            <label class="analytics-radio-label">
+              <input type="radio" name="chartRadios" value="1" checked>
+              <%= t 'dashboard_group.dashboard.serie.total' %>
+            </label>
+            <label class="analytics-radio-label">
+              <input type="radio" name="chartRadios" value="0">
+              <%= t 'dashboard_group.dashboard.serie.average' %>
+            </label>
+          </div>
+          <div class="index-condition-group chosen-attribute" style="width:100px;height: 500px">
+            <select data-placeholder="<%= t 'analytics.select-dim' %>" multiple style="width:120px;" class="chosen-select" title="analy-attribute-select" id="kpi-property-select">
+
+            </select>
+          </div>
+          <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px; margin-left: 60px" id="db-add-chart">Add</a>
+        </div>
+        <i class="icon-chevron-down analytic-control-condition-visible" id="analytic-control-condition-visible" state="close"> </i>
+      </div>
+      <div class="db-chart-body" id="db-chart-body">
+        <div class="clearfix" id="db-chart-interval-alternate" my_height="28">
+          <ul class="pull-right db-control-chart-interval-group">
+            <li interval="90"><a>Hr</a></li>
+            <li interval="100"><a>D</a></li>
+            <li interval="200"><a>W</a></li>
+            <li interval="300"><a>M</a></li>
+            <li interval="400"><a>Qr</a></li>
+            <li interval="500"><a>Y</a></li>
+          </ul>
+        </div>
+        <div class="put-db-chart" id="put-db-chart">
+          <table class="dashboard-item-extra-info"></table>
+          <div class="db-chart-container" id="chart-container"></div>
+        </div>
       </div>
     </div>
+  </div>
 </div>
 
- <div class="dashboard-content-full" id="dashboard-content-full">
-   <div id="full-size-title" class="full-size-title">
-     <p class="full-size-label"></p>
-     <a id="full-size-btn" class="btn full-size-btn"><%= t 'dashboard_group.base.restore'%></a>
-   </div>
-   <div id="dash-fullsize" class="gridster black">
-     <ul class="dashBoard-show" id="dashBoard-show-full">
+<div class="dashboard-content-full" id="dashboard-content-full">
+  <div id="full-size-title" class="full-size-title  dashboard-content-full-bg">
+    <p class="full-size-label"></p>
+    <a id="full-size-btn" class="btn full-size-btn"><%= t 'dashboard_group.base.restore' %></a>
+  </div>
+  <div id="dash-fullsize" class="gridster black dashboard-content-full-bg">
+    <ul class="dashBoard-show" id="dashBoard-show-full">
+    </ul>
+  </div>
+  <div class="dashboard-content-full-bg" id="dashboard-content-full-bg-left"></div>
+</div>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "Manage-left-menu" %>
+    <%= javascript_include_tag "2_column_right_nav" %>
+    <%= javascript_include_tag "highcharts.js" %>
+    <%= javascript_include_tag "highcharts-more.js" %>
+    <%= javascript_include_tag "exporting.js" %>
+    <%= javascript_include_tag "exporting.extend.src.js" %>
+    <%= javascript_include_tag "jquery.gridster.js" %>
+    <%= javascript_include_tag "jquery.gridster.with-extras.js" %>
+    <%= javascript_include_tag "bootstrap-datepicker.js" %>
+    <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
+    <%= javascript_include_tag "date_picker_template.js" %>
 
-     </ul>
-   </div>
- </div>
+    <%= javascript_include_tag "ifepm.activeSelector.js" %>
+    <%= javascript_include_tag "ifepm.text.js" %>
+    <%= javascript_include_tag "ifepm.config.js" %>
+    <%= javascript_include_tag "dashboard.js" %>
+    <%= javascript_include_tag "ifepm.grid.main.js" %>
+    <%= javascript_include_tag "ifepm.dashboard.template.js" %>
+    <%= javascript_include_tag "ifepm.dashboard.main.js" %>
 
-<% content_for :javascript_includes do%>
-  <%= javascript_include_tag "Manage-left-menu"%>
-  <%= javascript_include_tag "2_column_right_nav"%>
-  <%= javascript_include_tag "highcharts.js"%>
-  <%= javascript_include_tag "highcharts-more.js"%>
-  <%= javascript_include_tag "exporting.js"%>
-  <%= javascript_include_tag "exporting.extend.src.js"%>
-  <%= javascript_include_tag "jquery.gridster.js"%>
-  <%= javascript_include_tag "jquery.gridster.with-extras.js"%>
-  <%= javascript_include_tag "bootstrap-datepicker.js"%>
-  <%= javascript_include_tag "bootstrap-datetimepicker.min.js"%>
-  <%= javascript_include_tag "date_picker_template.js"%>
-
-  <%= javascript_include_tag "ifepm.activeSelector.js"%>
-  <%= javascript_include_tag "ifepm.text.js"%>
-  <%= javascript_include_tag "ifepm.config.js"%>
-  <%= javascript_include_tag "dashboard.js"%>
-  <%= javascript_include_tag "ifepm.grid.main.js"%>
-  <%= javascript_include_tag "ifepm.dashboard.template.js"%>
-  <%= javascript_include_tag "ifepm.dashboard.main.js"%>
-
-  <%= javascript_include_tag "high_chart_template.js"%>
-  <%= javascript_include_tag "high_chart_theme.js"%>
-  <%= javascript_include_tag "Dashboard-add.js"%>
-  <%= javascript_include_tag "Dashboard-init.js"%>
-  <%= javascript_include_tag "dashboard_type_special.js"%>
-  <%= javascript_include_tag "dhtmlx" %>
-<%end%>
+    <%= javascript_include_tag "high_chart_template.js" %>
+    <%= javascript_include_tag "high_chart_theme.js" %>
+    <%= javascript_include_tag "Dashboard-add.js" %>
+    <%= javascript_include_tag "Dashboard-init.js" %>
+    <%= javascript_include_tag "dashboard_type_special.js" %>
+    <%= javascript_include_tag "dhtmlx" %>
+<% end %>
 
 <script type="text/javascript">
-    $(document).ready(function (){
+    $(document).ready(function () {
         init_component();
         DASHBOARD.init();
         right_nav_main.init();
