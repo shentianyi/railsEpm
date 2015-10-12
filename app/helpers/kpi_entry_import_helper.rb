@@ -28,18 +28,18 @@ module KpiEntryImportHelper
       params=excel_xls_param row,headers
       params.values.each { |v| error_sheet.row(i+1).push v }
       #date
-      if params[:date].is_a?(String)
-        params[:date] = Time.parse(params[:date])
-      else
-        params[:date] = params[:date].change(:offset => "+0800") if params[:date] #&& params[:date].utc?
-      end
+     # if params[:date].is_a?(String)
+        #params[:date] = Time.parse(params[:date])
+      #else
+        #params[:date] = params[:date].change(:offset => "+0800") if params[:date] #&& params[:date].utc?
+      #end
 
       #
       params = Entry::OperateService.new.doc_upload_filter(params)
-      #
       validator=KpiEntryValidator.new(params)
       validator.validate
-      unless validator.valid
+      
+	  unless validator.valid
         valid=false
         error_sheet.row(i+1).push validator.content.length
         error_sheet.row(i+1).push validator.content.join(' # ')
@@ -95,17 +95,10 @@ module KpiEntryImportHelper
           row_values=params.values
 
 
-          operator=Entry::OperateService.new
-          params = operator.doc_upload_filter(params)
+          params = Entry::OperateService.new.doc_upload_filter(params)
           validator=KpiEntryValidator.new(params)
           validator.validate
 
-
-          # if params[:date].is_a?(String)
-          #   params[:date] = Time.parse(params[:date])
-          # else
-          #   params[:date] = params[:date].change(:offset => "+0800") if params[:date]#&&params[:date].utc?
-          # end
 
 
           unless validator.valid

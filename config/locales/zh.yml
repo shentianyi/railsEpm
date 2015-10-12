@@ -640,6 +640,7 @@ zh:
     cannot_repeat: 已存在此项，不可重复
     upload_kpi: 上传KPI
     download_template: 下载模板
+    user_template_name: KPI输入模板
     upload_data_file: 上传数据文件(最大为20M)
     upload_info: 请根据模板上传数据文件
     upload_format_error: 文件格式错误

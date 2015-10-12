@@ -49,6 +49,7 @@ module Entry
               properties[v.kpi_property_id]<< v.value
           end
         end
+		puts '-------------'
         self.parameter.clean_property_values(properties)
         metrix=[]
         size=properties.size
@@ -66,15 +67,24 @@ module Entry
 
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
         property_ids=properties.keys
-        puts self.data_module
-        self.data.each do |d|
+        
+		puts '***********'
+		puts self.data_module
+        puts '***********'
+
+		self.data.each do |d|
           key=[]
           property_ids.each do |id|
             key<<d['_id'][id.to_s]
           end
 
           date=date_parse_proc.call(d['_id']['date'])
-          puts date
+          p '------------'
+		  p d['_id']
+		  puts date
+		  d['_id'].values.each{|v| p v.class}
+		  p d['value']
+		  p '-------------'
           self.data_module[key].each { |v|
 
             v[date]= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value']) } if self.data_module.has_key?(key)

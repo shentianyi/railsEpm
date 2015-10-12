@@ -13,28 +13,23 @@ class ChartCondition < ActiveRecord::Base
   end
 
   def cache_data
-    # KpiEntryAnalyseCache.find_by_id(self.id, self.class.name).chart_data
-    if (cache=KpiEntryAnalyseCache.find_by_id(self.id, self.class.name)) #&& cache.chart_data
-      puts '1-----------------'
-      return cache.chart_data
-    else
-      if self.data.present?
-        puts '2-----------------'
-        query = AnalyseService.chart_condition_filter(self)
-        KpiEntryAnalyseCache.new(id: self.id, cacheable_type: self.class.name, query: query.to_json, chart_data: self.data).save
-        return self.data
-      else
-        puts '3-----------------'
-        query = AnalyseService.chart_condition_filter(self)
-        if query
-          puts '4-----------------'
-          data= Entry::Analyzer.new(query).analyse
-          KpiEntryAnalyseCache.new(id: self.id, cacheable_type: self.class.name, query: query.to_json, chart_data: data).save
-          self.update_attributes(data: data.to_json)
-          return self.data
-        end
-      end
-    end
+	  cache=KpiEntryAnalyseCache.find_by_id(self.id, self.class.name)
+	  if cache && cache.chart_data
+		  puts '1-----------------'
+		  return cache.chart_data
+	  else
+		  cache.destroy	if cache
+		  puts '3-----------------'
+		  query = AnalyseService.chart_condition_filter(self)
+		  if query
+			  puts '4-----------------'
+			  data= Entry::Analyzer.new(query).analyse
+			  KpiEntryAnalyseCache.new(id: self.id, cacheable_type: self.class.name, query: query.to_json, chart_data: data).save
+			  self.update_attributes(data: data.to_json)
+			  return KpiEntryAnalyseCache.find_by_id(self.id,self.class.name).chart_data
+		  end
+
+	  end
   end
 
   def self.detail_by_chartable(chartable)
