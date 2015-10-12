@@ -1181,7 +1181,7 @@ function generatePie(source) {
            y:source[i].value ,
            order:i
        })
-       ANALYTICS.DETAIL.sum+=parseInt(source[i].value);
+       ANALYTICS.DETAIL.sum+=parseFloat(source[i].value);
        ANALYTICS.DETAIL.max=ANALYTICS.DETAIL.max>source[i].value?ANALYTICS.DETAIL.max:source[i].value;
        ANALYTICS.DETAIL.maxOrder=ANALYTICS.DETAIL.max>source[i].value?ANALYTICS.DETAIL.maxOrder:i;
        ANALYTICS.DETAIL.min=ANALYTICS.DETAIL.min<source[i].value?ANALYTICS.DETAIL.min:source[i].value;
