@@ -1181,7 +1181,7 @@ function generatePie(source) {
            y:source[i].value ,
            order:i
        })
-       ANALYTICS.DETAIL.sum+=parseInt(source[i].value);
+       ANALYTICS.DETAIL.sum+=parseFloat(source[i].value);
        ANALYTICS.DETAIL.max=ANALYTICS.DETAIL.max>source[i].value?ANALYTICS.DETAIL.max:source[i].value;
        ANALYTICS.DETAIL.maxOrder=ANALYTICS.DETAIL.max>source[i].value?ANALYTICS.DETAIL.maxOrder:i;
        ANALYTICS.DETAIL.min=ANALYTICS.DETAIL.min<source[i].value?ANALYTICS.DETAIL.min:source[i].value;
@@ -1224,11 +1224,11 @@ function generateDetailTable(source,property_group) {
     var templateData={};
     templateData.data=source;
     templateData.percent= function(){
-        return sum==0?0:(parseInt(this.value)/sum*100).toFixed(1)+"%";
+        return sum==0?0:(parseFloat(this.value)/sum*100).toFixed(1)+"%";
     }
     templateData.compare=function(){
-        var current=parseInt(this.value),
-            last=parseInt(this.last_value);
+        var current=parseFloat(this.value),
+            last=parseFloat(this.last_value);
         var compare=Math.abs(current-last);
         if(last==0){
             return current;
@@ -1238,8 +1238,8 @@ function generateDetailTable(source,property_group) {
         }
     }
     templateData.icon=function(){
-        var current=parseInt(this.value),
-            last=parseInt(this.last_value);
+        var current=parseFloat(this.value),
+            last=parseFloat(this.last_value);
         return current>last?"icon-arrow-up":(current==last?"":"icon-arrow-down");
     }
     var render =Mustache.render('{{#data}}<tr>'+
