@@ -1,7 +1,7 @@
 <div class="chart">
   <div class="chart-body" id="chart-body" style="display:none">
     <div class="relative" id="chart-main-middle">
-      <div class="chart-container " id="chart-container" ></div>
+      <div class="chart-container " id="chart-container"></div>
     </div>
   </div>
   <div class="chart-conditions">
@@ -14,6 +14,7 @@
           <input type="hidden" value="<%= cc.start_time %>" id="start-time-hidden-<%= i %>"/>
           <input type="hidden" value="<%= cc.end_time %>" id="end-time-hidden-<%= i %>"/>
           <input type="hidden" value="<%= cc.interval %>" id="frequency-hidden-<%= i %>"/>
+          <input type="hidden" value="<%= cc.kpi_property %>" id="kpi-property-hidden-<%= i %>"/>
           <input type="hidden" value="<%= cc.chart_type %>" id="type-hidden-<%= i %>"/>
           <input type="hidden" value="<%= cc.cache_data %>" id="data-hidden-<%= i %>"/>
         </div>
@@ -27,13 +28,18 @@
             prepare_form_cchart(i);
     });
     function prepare_form_cchart(i) {
-        var data = jQuery.parseJSON($("#data-hidden-"+i).val());
-        var kpi = $("#kpi-id-hidden-"+i).val();
-        var kpi_name = $("#kpi-name-hidden-"+i).val();
-        var view = $("#entity-group-id-hidden-"+i).val();
-        var view_text = $("#entity-group-name-hidden-"+i).val();
-        var interval = $("#frequency-hidden-"+i).val(), type = $("#type-hidden-"+i).val(), chart_body_close_validate;
-        var begin_time = $("#start-time-hidden-"+i).val(), end_time = $("#end-time-hidden-"+i).val();
+        var data = jQuery.parseJSON($("#data-hidden-" + i).val());
+        var kpi = $("#kpi-id-hidden-" + i).val();
+        var kpi_name = $("#kpi-name-hidden-" + i).val();
+        var view = $("#entity-group-id-hidden-" + i).val();
+        var view_text = $("#entity-group-name-hidden-" + i).val();
+        var interval = $("#frequency-hidden-" + i).val(), type = $("#type-hidden-" + i).val(), chart_body_close_validate;
+        var begin_time = $("#start-time-hidden-" + i).val(), end_time = $("#end-time-hidden-" + i).val();
+        var kpi_property=null;
+        if($("#kpi-property-hidden-" + i).val() && $("#kpi-property-hidden-" + i).val().length>0) {
+            kpi_property = JSON.parse($("#kpi-property-hidden-" + i).val());
+        }
+        console.log(kpi_property);
 
         if ($("#chart-body").css("display") == "block") {
             chart_body_close_validate = false;
@@ -60,8 +66,10 @@
                 count: ANALYTICS.chartSeries.count + 1,
                 view: view,
                 view_text: view_text,
+                kpi_property: kpi_property,
                 chart_body_close_validate: chart_body_close_validate
             };
+            option.legend_text = ANALYTICS.legend.generate_text(option);
 
             ANALYTICS.chartSeries.addCount();
             ANALYTICS.chartSeries.id_give();

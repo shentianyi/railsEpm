@@ -164,7 +164,13 @@ function analytic_control_condition_visible() {
     resize_chart.container();
 }
 
-function get_selected_property() {
+function
+
+
+
+
+
+get_selected_property() {
     var properties = $("#kpi-property-select").find("option:selected");
     var kpi_property = null;
     if (properties.length > 0) {

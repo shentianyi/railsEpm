@@ -12,15 +12,13 @@ class Story < ActiveRecord::Base
   after_create :save_chart_data_and_pub_message
 
   def save_chart_data_and_pub_message
-    if  self.chart_type== ChartType::Highchart
+    if self.chart_type== ChartType::Highchart
       self.chart_conditions.each do |c|
         query = AnalyseService.chart_condition_filter(c)
         if query
           data = Entry::Analyzer.new(query).analyse
           KpiEntryAnalyseCache.new(id: c.id, cacheable_type: c.class.name, query: query.to_json, chart_data: data).save
-          #c.query=query
-          #c.data=data
-          c.update_attributes(query: query.to_json, data: data.to_json)
+          c.update_attributes(query: query.to_json)
         end
       end
     end

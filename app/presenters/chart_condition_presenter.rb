@@ -1,6 +1,6 @@
 #encoding: utf-8
 class ChartConditionPresenter<Presenter
-  Delegators=[:id, :entity_group_id, :entity_group_name, :kpi_id, :kpi_name, :time_span, :calculate_type, :interval, :cache_data,:chart_type]
+  Delegators=[:id, :entity_group_id, :entity_group_name, :kpi_id, :kpi_name,:kpi_property, :time_span, :calculate_type, :interval, :cache_data,:chart_type]
   def_delegators :@chart_condition, *Delegators
   attr_accessor :start_time, :end_time, :time_span
 
