@@ -4,63 +4,64 @@ module KpiEntryGuard
   ParamKeys=[:email, :kpi_id, :date, :value]
   extend ActiveSupport::Concern
 
-
   included do |base|
     helpers HelperMethods
     install_error_responders(base)
   end
 
   module HelperMethods
-    include BaseGuard
+    def validate_params_integrated params, keys, raise_error=true
+      p=params
+      msgs=[]
+      keys.each do |k|
+        if params[k].blank?
+          msgs<< "#{k} cannot be blank"
+        end
+        p[k]=params[k]
+      end
+      raise ArgumentError, msgs if msgs.length>0
+      p
+    end
 
     # validate single input
     def guard_entry!
-      #entry_p=validate_params_integrated(params, ParamKeys)
-      raise ArgumentError unless params.has_key?(:entry)
-      #if params[:entry].is_a?(Hashie::Mash)
-      #else
-      params[:entry] = JSON.parse(params[:entry])
-      #end
+      entry_params=validate_params_integrated(params, ParamKeys)
+      puts entry_params#[:kpi_properties]
+      puts entry_params[:email]
+      puts entry_params[:kpi_properties]
 
-      entry_p = params[:entry]
-      unless params[:entry][:kpi_properties].is_a?(Hashie::Mash)
-        entry_p.kpi_properties = JSON.parse(params[:entry][:kpi_properties])
-      end
+
+      unless entry_params[:kpi_properties].is_a?(Hashie::Mash)
+        entry_params[:kpi_properties] = JSON.parse(entry_params[:kpi_properties])
+      end if entry_params[:kpi_properties]
 
       vc= KpiEntryValidatorCollection.new
-      entry_p[:validator_collection]=vc
-      validator=KpiEntryValidator.new(entry_p)
-      validator.validate if params[:entry][:validate]==false
+      entry_params[:validator_collection]=vc
+      validator=KpiEntryValidator.new(entry_params)
+      validator.validate #if params[:entry][:validate]==false
       if validator.valid
-        puts '-----------------------------------------------dddd'
         yield(vc) if block_given?
       else
-        raise ArgumentError, validator.invalid_message
+        raise ArgumentError, validator.invalid_messages
       end
 
     end
 
     # validate batch entries
     def guard_entries!(in_batch=false)
-      raise ArgumentError unless params.has_key?(:entries)
-      #if params[:entries].is_a?(Array)
-
-      #else
+      raise ArgumentError, 'api argument error' unless params.has_key?(:entries)
       params[:entries] = JSON.parse(params[:entries])
-      #end
-
       raise ArgumentError unless params[:entries].is_a?(Array)
       indexes=[]
       vc= KpiEntryValidatorCollection.new
       params[:entries].each_with_index do |entry, i|
-        if  entry_p=validate_params_integrated(entry, ParamKeys, false)
+        if entry_p=validate_params_integrated(entry, ParamKeys, false)
           entry_p[:validator_collection]=vc
           KpiEntryValidator.new(entry_p)
         else
           indexes<<i+1
         end
       end
-      # argument error
       if indexes.size>0
         raise ArgumentError, "data index:#{indexes.join(',')} Argument Error}"
       else
@@ -93,10 +94,64 @@ module KpiEntryGuard
       Proc.new { |e|
         response=case e
                    when ArgumentError
-                     Rack::OAuth2::Server::Abstract::Error.new(422, e.message)
+                     # p e.instance_variables
+                     # p e.methods.sort
+                     # p e.hash
+                     msg=begin
+                       JSON.parse(e.message)
+                     rescue
+                       e.message
+                     end
+                     KpiEntryArgumentError.new(msg)
                  end
         response.finish
       }
+    end
+  end
+
+  class KpiEntryError<StandardError
+    # description is array
+    attr_accessor :status, :error, :description, :uri, :realm
+
+    def initialize(status, error, description = nil, options = {})
+      @status = status
+      @error = error.is_a?(Array) ? error : [error.to_s]
+      @description = description
+      @uri = options[:uri]
+      @realm = options[:realm]
+      super [error, description].compact.join(' :: ')
+    end
+
+    def protocol_params
+      {
+          result_code: '0',
+          msg: @error
+      }
+    end
+
+    def finish
+      response = Rack::Response.new
+      response.status = status
+      yield response if block_given?
+      unless response.redirect?
+        response.header['Content-Type'] = 'application/json'
+        response.write MultiJson.dump(compact_hash(protocol_params))
+      end
+      response.finish
+    end
+
+    def compact_hash(hash)
+      hash.reject do |key, value|
+        value.blank?
+      end
+    end
+
+  end
+
+
+  class KpiEntryArgumentError<KpiEntryError
+    def initialize(error = :kpi_entry_argument_error, description = nil, options = {})
+      super 200, error, description, options
     end
   end
 end

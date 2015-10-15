@@ -11,13 +11,6 @@ module APIGuard
       puts 'api request'
       request.access_token
     end
-
-    #use Grape::Middleware::Auth::Basic do |user,pwd|
-    #  puts 'api user pwd'
-    #  @user=user
-    #  @pwd=pwd
-    #end
-
     helpers HelperMethods
 
     install_error_responders(base)
@@ -46,10 +39,14 @@ module APIGuard
     #           Defaults to empty array.
     #
     def guard!(scopes= [])
-      if request.env['HTTP_AUTHORIZATION'].split(' ')[0]=='Bearer'
-        guard_by_token(scopes)
+      if request.env['HTTP_AUTHORIZATION'].present?
+        if request.env['HTTP_AUTHORIZATION'].split(' ')[0]=='Bearer'
+          guard_by_token(scopes)
+        else
+          guard_by_basic
+        end
       else
-        guard_by_basic
+        raise NoAuthError
       end
     end
 
@@ -131,7 +128,7 @@ module APIGuard
 
     private
     def install_error_responders(base)
-      error_classes = [BasicAuthError, MissingTokenError, TokenNotFoundError,
+      error_classes = [NoAuthError, BasicAuthError, MissingTokenError, TokenNotFoundError,
                        ExpiredError, RevokedError, InsufficientScopeError]
 
       base.send :rescue_from, *error_classes, oauth2_bearer_token_error_handler
@@ -140,6 +137,10 @@ module APIGuard
     def oauth2_bearer_token_error_handler
       Proc.new { |e|
         response = case e
+                     when NoAuthError
+                       Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
+                           :invalid_tokens,
+                           "Invalid User Info.")
                      when BasicAuthError
                        Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
                            :invalid_token,
@@ -179,6 +180,8 @@ module APIGuard
 # Exceptions
 #
 
+  class NoAuthError<StandardError;
+  end
   class BasicAuthError<StandardError;
   end
   class MissingTokenError < StandardError;

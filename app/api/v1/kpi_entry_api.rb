@@ -1,22 +1,31 @@
 module V1
   class KpiEntryAPI < Base
-    namespace 'kpi_entry'
-    # guard_all!
+
+    guard_all!
     include KpiEntryGuard
+    namespace :kpi_entry do
+      post :entry do
+        puts '----------------------'
+        puts params
+        puts params[:entry]
+        puts params[:entry].class
+        puts '------------------------'
+        if guard_entry! &do_entry
+          {result_code: '1'}
+        else
+          {result_code: '0',
+           msg: ['system error, please contact ci staff']}
+        end
+      end
 
-    post :entry do
-      puts '----------------------'
-      puts params
-      puts params[:entry]
-      puts params[:entry].class
-      puts '------------------------'
-      guard_entry! &do_entry
+      post :entries do
+        batch_insert=params[:in_batch].nil? ? false : params[:in_batch]=='true'
+        guard_entries!(batch_insert, &do_entry)
+      end
+
+
     end
 
-    post :entries do
-      batch_insert=params[:in_batch].nil? ? false : params[:in_batch]=='true'
-      guard_entries!(batch_insert, &do_entry)
-    end
 
     helpers do
       def do_entry

@@ -133,7 +133,7 @@ module Entry
         kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], entry_at: attrs['entry_at'], entity_id: attrs['entity_id'], entry_type: attrs['entry_type'])
         query_properties.each do |k, v|
           kpi_entry=kpi_entry.where({k => v})
-        end
+        end if query_properties
         kpi_entry=kpi_entry.first
       else
         kpi_entry=KpiEntry.where(entry_id: attrs['entry_id']).first

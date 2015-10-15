@@ -3,6 +3,7 @@ module V1
     version 'v1', :using => :path
 
     mount KpiEntryAPI
+    mount SystemAPI
     #mount TestAPI
   end
 end

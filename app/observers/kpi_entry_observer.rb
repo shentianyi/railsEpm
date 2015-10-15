@@ -3,9 +3,9 @@ class KpiEntryObserver<Mongoid::Observer
   observe :kpi_entry
 
   def after_save kpi_entry
-    Kpi.find_by_id(kpi_entry.kpi_id).kpi_subscribes.each do |ks|
-      ks.execute kpi_entry
-    end
+    # Kpi.find_by_id(kpi_entry.kpi_id).kpi_subscribes.each do |ks|
+    #   ks.execute kpi_entry
+    # end
   end
 
   def after_create kpi_entry
