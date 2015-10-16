@@ -10,20 +10,28 @@ module V1
       get :cities do
         # params
         puts params[:country_code]
-        [
-            {
-                city_id: 1,
-                name: '北京市',
-                pro_id: 1,
-                city_sort: 1
-            },
-            {
-                city_id: 2,
-                name: '天津市',
-                pro_id: 2,
-                city_sort: 2
-            }
-        ]
+        {
+            A: [
+                {
+                    name: '阿坝',
+                    key: 'A'
+                },
+                {
+                    name: '阿拉善',
+                    key: 'A'
+                }
+            ],
+            B: [
+                {
+                    name: '百色',
+                    key: 'B'
+                },
+                {
+                    name: '亳州',
+                    key: 'B'
+                }
+            ]
+        }
       end
     end
   end
