@@ -66,7 +66,7 @@ module V1
 	  optional :location, type: String, desc: 'current location(city) of user'
 	  optional :page, type: String, desc: 'page to shou greeting'
 	  end
-	  get :greeting do
+	  get :greetings do
 	   {
 		   greeting: '天气真好啊，不是吗？'
 	   }
