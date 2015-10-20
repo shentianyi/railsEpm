@@ -53,7 +53,6 @@ module APIGuard
 
     def guard_locale
       I18n.locale=locale
-      puts locale
     end
 
     def locale
@@ -122,8 +121,8 @@ module APIGuard
     end
 
     def get_locale
-      puts '********************888'
-      if request.env['HTTP_LOCALIZATION'].present?
+        Rails.logger.debug("***http localization header:#{request.env['HTTP_LOCALIZATION']}")
+		if request.env['HTTP_LOCALIZATION'].present?
         LOCALE_MAP[request.env['HTTP_LOCALIZATION'].to_sym] || 'zh'
       else
         'zh'
