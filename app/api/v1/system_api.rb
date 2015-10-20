@@ -2,12 +2,12 @@ module V1
   class SystemAPI < Base
     guard_all!
 
-    namespace : system do
-      get : utc do
+    namespace :system do
+      get :utc do
         {date: Time.now.utc.to_s}
       end
 
-      get : cities do
+      get :cities do
         # params
         puts params[:country_code]
 
