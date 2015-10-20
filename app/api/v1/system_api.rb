@@ -726,541 +726,528 @@ module V1
                     key: 'N'
                 },
                 {
-                    name: '那曲 ',
+                    name: '那曲',
                     key: 'N'},
                 {
-                    name: '内江 ',
+                    name: '内江',
                     key: 'N'},
                 {
-                    name: '宁德 ',
+                    name: '宁德',
                     key: 'N'},
                 {
-                    name: '怒江 ',
+                    name: '怒江',
                     key: 'N'}
 
 
             ],
-            P : [
+            P: [
 
-            {
-                name: '盘锦 ',
-                key: 'P'},
-            {
-                name: '攀枝花 ',
-                key: 'P'},
-            {
-                name: '平顶山 ',
-                key: 'P'},
-            {
-                name: '平凉 ',
-                key: 'P'},
-            {
-                name: '萍乡 ',
-                key: 'P'},
-            {
-                name: '莆田 ',
-                key: 'P'},
-            {
-                name: '濮阳 ',
-                key: 'P'}
+                {
+                    name: '盘锦',
+                    key: 'P'},
+                {
+                    name: '攀枝花',
+                    key: 'P'},
+                {
+                    name: '平顶山',
+                    key: 'P'},
+                {
+                    name: '平凉',
+                    key: 'P'},
+                {
+                    name: '萍乡',
+                    key: 'P'},
+                {
+                    name: '莆田',
+                    key: 'P'},
+                {
+                    name: '濮阳',
+                    key: 'P'}
 
-        ],
-            Q : [
+            ],
+            Q: [
 
-            {
-                name: '青岛 ',
-                key: 'Q'},
-            {
-                name: '黔东南 ',
-                key: 'Q'},
-            {
-                name: '黔南 ',
-                key: 'Q'},
-            {
-                name: '黔西南 ',
-                key: 'Q'},
-            {
-                name: '庆阳 ',
-                key: 'Q'},
-            {
-                name: '清远 ',
-                key: 'Q'},
-            {
-                name: '秦皇岛 ',
-                key: 'Q'},
-            {
-                name: '钦州 ',
-                key: 'Q'},
-            {
-                name: '齐齐哈尔 ',
-                key: 'Q'},
-            {
-                name: '泉州 ',
-                key: 'Q'},
-            {
-                name: '曲靖 ',
-                key: 'Q'},
-            {
-                name: '衢州 ',
-                key: 'Q'}
+                {
+                    name: '青岛',
+                    key: 'Q'},
+                {
+                    name: '黔东南',
+                    key: 'Q'},
+                {
+                    name: '黔南',
+                    key: 'Q'},
+                {
+                    name: '黔西南',
+                    key: 'Q'},
+                {
+                    name: '庆阳',
+                    key: 'Q'},
+                {
+                    name: '清远',
+                    key: 'Q'},
+                {
+                    name: '秦皇岛',
+                    key: 'Q'},
+                {
+                    name: '钦州',
+                    key: 'Q'},
+                {
+                    name: '齐齐哈尔',
+                    key: 'Q'},
+                {
+                    name: '泉州',
+                    key: 'Q'},
+                {
+                    name: '曲靖',
+                    key: 'Q'},
+                {
+                    name: '衢州',
+                    key: 'Q'}
+            ],
+            R: [
+                {
+                    name: '日喀则',
+                    key: 'R'},
+                {
+                    name: '日照',
+                    key: 'R'}
+            ],
+            S: [
+                {
+                    name: '上海',
+                    key: 'S'},
+                {
+                    name: '深圳',
+                    key: 'S'},
+                {
+                    name: '苏州',
+                    key: 'S'},
+                {
+                    name: '沈阳',
+                    key: 'S'},
+                {
+                    name: '石家庄',
+                    key: 'S'},
+                {
+                    name: '三门峡',
+                    key: 'S'},
+                {
+                    name: '三明',
+                    key: 'S'},
+                {
+                    name: '三亚',
+                    key: 'S'},
+                {
+                    name: '商洛',
+                    key: 'S'},
+                {
+                    name: '商丘',
+                    key: 'S'},
+                {
+                    name: '上饶',
+                    key: 'S'},
+                {
+                    name: '山南',
+                    key: 'S'},
+                {
+                    name: '汕头',
+                    key: 'S'},
+                {
+                    name: '汕尾',
+                    key: 'S'},
+                {
+                    name: '韶关',
+                    key: 'S'},
 
+                {
+                    name: '绍兴',
+                    key: 'S'},
+                {
+                    name: '邵阳',
+                    key: 'S'},
+                {
+                    name: '十堰',
+                    key: 'S'},
+                {
+                    name: '朔州',
+                    key: 'S'},
+                {
+                    name: '四平',
+                    key: 'S'},
+                {
+                    name: '绥化',
+                    key: 'S'},
+                {
+                    name: '遂宁',
+                    key: 'S'},
 
-        ],
+                {
+                    name: '随州',
+                    key: 'S'},
 
-            R : [
-            {
-                name: '日喀则 ',
-                key: 'R'},
-            {
-                name: '日照 ',
-                key: 'R'}
-        ],
+                {
+                    name: '娄底',
+                    key: 'S'},
+                {
+                    name: '宿迁',
+                    key: 'S'},
+                {
+                    name: '宿州',
+                    key: 'S'}
+            ],
+            T: [
 
-            S : [
-            {
-                name: '上海 ',
-                key: 'S'},
-            {
-                name: '深圳 ',
-                key: 'S'},
-            {
-                name: '苏州 ',
-                key: 'S'},
-            {
-                name: '沈阳 ',
-                key: 'S'},
-            {
-                name: '石家庄 ',
-                key: 'S'},
-            {
-                name: '三门峡 ',
-                key: 'S'},
-            {
-                name: '三明 ',
-                key: 'S'},
-            {
-                name: '三亚 ',
-                key: 'S'},
-            {
-                name: '商洛 ',
-                key: 'S'},
-            {
-                name: '商丘 ',
-                key: 'S'},
-            {
-                name: '上饶 ',
-                key: 'S'},
-            {
-                name: '山南 ',
-                key: 'S'},
-            {
-                name: '汕头 ',
-                key: 'S'},
-            {
-                name: '汕尾 ',
-                key: 'S'},
-            {
-                name: '韶关 ',
-                key: 'S'},
+                {
+                    name: '天津',
+                    key: 'T'},
+                {
+                    name: '太原',
+                    key: 'T'},
+                {
+                    name: '泰安',
+                    key: 'T'},
+                {
+                    name: '泰州',
+                    key: 'T'},
+                {
+                    name: '唐山',
+                    key: 'T'},
+                {
+                    name: '天水',
+                    key: 'T'},
+                {
+                    name: '铁岭',
+                    key: 'T'},
+                {
+                    name: '铜川',
+                    key: 'T'},
 
-            {
-                name: '绍兴 ',
-                key: 'S'},
-            {
-                name: '邵阳 ',
-                key: 'S'},
-            {
-                name: '十堰 ',
-                key: 'S'},
-            {
-                name: '朔州 ',
-                key: 'S'},
-            {
-                name: '四平 ',
-                key: 'S'},
-            {
-                name: '绥化 ',
-                key: 'S'},
-            {
-                name: '遂宁 ',
-                key: 'S'},
+                {
+                    name: '通化',
+                    key: 'T'},
+                {
+                    name: '通辽',
+                    key: 'T'},
+                {
+                    name: '铜陵',
+                    key: 'T'},
+                {
+                    name: '铜仁',
+                    key: 'T'},
+                {
+                    name: '台湾',
+                    key: 'T'}
+            ],
+            W: [
 
-            {
-                name: '随州 ',
-                key: 'S'},
+                {
+                    name: '武汉',
+                    key: 'W'},
+                {
+                    name: '乌鲁木齐',
+                    key: 'W'},
+                {
+                    name: '无锡',
+                    key: 'W'},
+                {
+                    name: '威海',
+                    key: 'W'},
+                {
+                    name: '潍坊',
+                    key: 'W'},
+                {
+                    name: '文山',
+                    key: 'W'},
+                {
+                    name: '温州',
+                    key: 'W'},
+                {
+                    name: '乌海',
+                    key: 'W'},
 
-            {
-                name: '娄底 ',
-                key: 'S'},
-            {
-                name: '宿迁 ',
-                key: 'S'},
-            {
-                name: '宿州 ',
-                key: 'S'}
+                {
+                    name: '芜湖',
+                    key: 'W'},
+                {
+                    name: '乌兰察布',
+                    key: 'W'},
+                {
+                    name: '武威',
+                    key: 'W'},
+                {
+                    name: '梧州',
+                    key: 'W'}
 
-        ],
-            T : [
+            ],
+            X: [
 
-            {
-                name: '天津 ',
-                key: 'T'},
-            {
-                name: '太原 ',
-                key: 'T'},
-            {
-                name: '泰安 ',
-                key: 'T'},
-            {
-                name: '泰州 ',
-                key: 'T'},
-            {
-                name: '唐山 ',
-                key: 'T'},
-            {
-                name: '天水 ',
-                key: 'T'},
-            {
-                name: '铁岭 ',
-                key: 'T'},
-            {
-                name: '铜川 ',
-                key: 'T'},
+                {
+                    name: '厦门',
+                    key: 'X'},
+                {
+                    name: '西安',
+                    key: 'X'},
+                {
+                    name: '西宁',
+                    key: 'X'},
+                {
+                    name: '襄樊',
+                    key: 'X'},
+                {
+                    name: '湘潭',
+                    key: 'X'},
+                {
+                    name: '湘西',
+                    key: 'X'},
+                {
+                    name: '咸宁',
+                    key: 'X'},
+                {
+                    name: '咸阳',
+                    key: 'X'},
 
-            {
-                name: '通化 ',
-                key: 'T'},
-            {
-                name: '通辽 ',
-                key: 'T'},
-            {
-                name: '铜陵 ',
-                key: 'T'},
-            {
-                name: '铜仁 ',
-                key: 'T'},
-            {
-                name: '台湾 ',
-                key: 'T'}
+                {
+                    name: '孝感',
+                    key: 'X'},
+                {
+                    name: '邢台',
+                    key: 'X'},
+                {
+                    name: '新乡',
+                    key: 'X'},
+                {
+                    name: '信阳',
+                    key: 'X'},
+                {
+                    name: '新余',
+                    key: 'X'},
+                {
+                    name: '忻州',
+                    key: 'X'},
+                {
+                    name: '西双版纳',
+                    key: 'X'},
+                {
+                    name: '宣城',
+                    key: 'X'},
 
+                {
+                    name: '许昌',
+                    key: 'X'},
+                {
+                    name: '徐州',
+                    key: 'X'},
+                {
+                    name: '香港',
+                    key: 'X'},
+                {
+                    name: '锡林郭勒',
+                    key: 'X'},
+                {
+                    name: '兴安',
+                    key: 'X'}
+            ],
+            Y: [
 
-        ],
-            W : [
+                {
+                    name: '银川',
+                    key: 'Y'},
+                {
+                    name: '雅安',
+                    key: 'Y'},
+                {
+                    name: '延安',
+                    key: 'Y'},
+                {
+                    name: '延边',
+                    key: 'Y'},
+                {
+                    name: '盐城',
+                    key: 'Y'},
+                {
+                    name: '阳江',
+                    key: 'Y'},
 
-            {
-                name: '武汉 ',
-                key: 'W'},
-            {
-                name: '乌鲁木齐 ',
-                key: 'W'},
-            {
-                name: '无锡 ',
-                key: 'W'},
-            {
-                name: '威海 ',
-                key: 'W'},
-            {
-                name: '潍坊 ',
-                key: 'W'},
-            {
-                name: '文山 ',
-                key: 'W'},
-            {
-                name: '温州 ',
-                key: 'W'},
-            {
-                name: '乌海 ',
-                key: 'W'},
+                {
+                    name: '阳泉',
+                    key: 'Y'},
+                {
+                    name: '扬州',
+                    key: 'Y'},
+                {
+                    name: '烟台',
+                    key: 'Y'},
+                {
+                    name: '宜宾',
+                    key: 'Y'},
+                {
+                    name: '宜昌',
+                    key: 'Y'},
+                {
+                    name: '宜春',
+                    key: 'Y'},
+                {
+                    name: '营口',
+                    key: 'Y'},
 
-            {
-                name: '芜湖 ',
-                key: 'W'},
-            {
-                name: '乌兰察布 ',
-                key: 'W'},
-            {
-                name: '武威 ',
-                key: 'W'},
-            {
-                name: '梧州 ',
-                key: 'W'}
+                {
+                    name: '益阳',
+                    key: 'Y'},
+                {
+                    name: '永州',
+                    key: 'Y'},
+                {
+                    name: '岳阳',
+                    key: 'Y'},
 
-        ],
-            X : [
+                {
+                    name: '榆林',
+                    key: 'Y'},
+                {
+                    name: '运城',
+                    key: 'Y'},
+                {
+                    name: '云浮',
+                    key: 'Y'},
+                {
+                    name: '玉树',
+                    key: 'Y'},
+                {
+                    name: '玉溪',
+                    key: 'Y'},
+                {
+                    name: '玉林',
+                    key: 'Y'}
+            ],
+            Z: [
+                {
+                    name: '杂多县',
+                    key: 'Z'},
+                {
+                    name: '赞皇县',
+                    key: 'Z'},
+                {
+                    name: '枣强县',
+                    key: 'Z'},
+                {
+                    name: '枣阳市',
+                    key: 'Z'},
+                {
+                    name: '枣庄',
+                    key: 'Z'},
+                {
+                    name: '泽库县',
+                    key: 'Z'},
+                {
+                    name: '增城市',
+                    key: 'Z'},
+                {
+                    name: '曾都区',
+                    key: 'Z'},
+                {
+                    name: '泽普县',
+                    key: 'Z'},
+                {
+                    name: '泽州县',
+                    key: 'Z'},
+                {
+                    name: '札达县',
+                    key: 'Z'},
+                {
+                    name: '扎赉特旗',
+                    key: 'Z'},
+                {
+                    name: '扎兰屯市',
+                    key: 'Z'},
+                {
+                    name: '扎鲁特旗',
+                    key: 'Z'},
 
-            {
-                name: '厦门 ',
-                key: 'X'},
-            {
-                name: '西安 ',
-                key: 'X'},
-            {
-                name: '西宁 ',
-                key: 'X'},
-            {
-                name: '襄樊 ',
-                key: 'X'},
-            {
-                name: '湘潭 ',
-                key: 'X'},
-            {
-                name: '湘西 ',
-                key: 'X'},
-            {
-                name: '咸宁 ',
-                key: 'X'},
-            {
-                name: '咸阳 ',
-                key: 'X'},
+                {
+                    name: '扎囊县',
+                    key: 'Z'},
+                {
+                    name: '张北县',
+                    key: 'Z'},
+                {
+                    name: '张店区',
+                    key: 'Z'},
+                {
+                    name: '章贡区',
+                    key: 'Z'},
+                {
+                    name: '张家港',
+                    key: 'Z'},
+                {
+                    name: '张家界',
+                    key: 'Z'},
+                {
+                    name: '张家口',
+                    key: 'Z'},
+                {
+                    name: '漳平市',
+                    key: 'Z'},
 
-            {
-                name: '孝感 ',
-                key: 'X'},
-            {
-                name: '邢台 ',
-                key: 'X'},
-            {
-                name: '新乡 ',
-                key: 'X'},
-            {
-                name: '信阳 ',
-                key: 'X'},
-            {
-                name: '新余 ',
-                key: 'X'},
-            {
-                name: '忻州 ',
-                key: 'X'},
-            {
-                name: '西双版纳 ',
-                key: 'X'},
-            {
-                name: '宣城 ',
-                key: 'X'},
+                {
+                    name: '漳浦县',
+                    key: 'Z'},
 
-            {
-                name: '许昌 ',
-                key: 'X'},
-            {
-                name: '徐州 ',
-                key: 'X'},
-            {
-                name: '香港 ',
-                key: 'X'},
-            {
-                name: '锡林郭勒 ',
-                key: 'X'},
-            {
-                name: '兴安 ',
-                key: 'X'}
-        ],
-            Y : [
+                {
+                    name: '章丘市',
+                    key: 'Z'},
+                {
+                    name: '樟树市',
+                    key: 'Z'},
+                {
+                    name: '张湾区',
+                    key: 'Z'},
+                {
+                    name: '彰武县',
+                    key: 'Z'},
+                {
+                    name: '漳县',
+                    key: 'Z'},
+                {
+                    name: '张掖',
+                    key: 'Z'},
+                {
+                    name: '漳州',
+                    key: 'Z'},
+                {
+                    name: '长子县',
+                    key: 'Z'},
 
-            {
-                name: '银川 ',
-                key: 'Y'},
-            {
-                name: '雅安 ',
-                key: 'Y'},
-            {
-                name: '延安 ',
-                key: 'Y'},
-            {
-                name: '延边 ',
-                key: 'Y'},
-            {
-                name: '盐城 ',
-                key: 'Y'},
-            {
-                name: '阳江 ',
-                key: 'Y'},
-
-            {
-                name: '阳泉 ',
-                key: 'Y'},
-            {
-                name: '扬州 ',
-                key: 'Y'},
-
-            {
-                name: '烟台 ',
-                key: 'Y'},
-            {
-                name: '宜宾 ',
-                key: 'Y'},
-            {
-                name: '宜昌 ',
-                key: 'Y'},
-            {
-                name: '宜春 ',
-                key: 'Y'},
-            {
-                name: '营口 ',
-                key: 'Y'},
-
-            {
-                name: '益阳 ',
-                key: 'Y'},
-            {
-                name: '永州 ',
-                key: 'Y'},
-            {
-                name: '岳阳 ',
-                key: 'Y'},
-
-            {
-                name: '榆林 ',
-                key: 'Y'},
-            {
-                name: '运城 ',
-                key: 'Y'},
-            {
-                name: '云浮 ',
-                key: 'Y'},
-            {
-                name: '玉树 ',
-                key: 'Y'},
-            {
-                name: '玉溪 ',
-                key: 'Y'},
-            {
-                name: '玉林 ',
-                key: 'Y'}
-
-        ],
-
-            Z : [
-            {
-                name: '杂多县 ',
-                key: 'Z'},
-            {
-                name: '赞皇县 ',
-                key: 'Z'},
-            {
-                name: '枣强县 ',
-                key: 'Z'},
-            {
-                name: '枣阳市 ',
-                key: 'Z'},
-            {
-                name: '枣庄 ',
-                key: 'Z'},
-            {
-                name: '泽库县 ',
-                key: 'Z'},
-            {
-                name: '增城市 ',
-                key: 'Z'},
-
-            {
-                name: '曾都区 ',
-                key: 'Z'},
-            {
-                name: '泽普县 ',
-                key: 'Z'},
-            {
-                name: '泽州县 ',
-                key: 'Z'},
-            {
-                name: '札达县 ',
-                key: 'Z'},
-            {
-                name: '扎赉特旗 ',
-                key: 'Z'},
-            {
-                name: '扎兰屯市 ',
-                key: 'Z'},
-            {
-                name: '扎鲁特旗 ',
-                key: 'Z'},
-
-            {
-                name: '扎囊县 ',
-                key: 'Z'},
-            {
-                name: '张北县 ',
-                key: 'Z'},
-            {
-                name: '张店区 ',
-                key: 'Z'},
-            {
-                name: '章贡区 ',
-                key: 'Z'},
-            {
-                name: '张家港 ',
-                key: 'Z'},
-            {
-                name: '张家界 ',
-                key: 'Z'},
-            {
-                name: '张家口 ',
-                key: 'Z'},
-            {
-                name: '漳平市 ',
-                key: 'Z'},
-
-            {
-                name: '漳浦县 ',
-                key: 'Z'},
-
-            {
-                name: '章丘市 ',
-                key: 'Z'},
-            {
-                name: '樟树市 ',
-                key: 'Z'},
-            {
-                name: '张湾区 ',
-                key: 'Z'},
-            {
-                name: '彰武县 ',
-                key: 'Z'},
-            {
-                name: '漳县 ',
-                key: 'Z'},
-            {
-                name: '张掖 ',
-                key: 'Z'},
-            {
-                name: '漳州 ',
-                key: 'Z'},
-            {
-                name: '长子县 ',
-                key: 'Z'},
-
-            {
-                name: '湛河区 ',
-                key: 'Z'},
-            {
-                name: '湛江 ',
-                key: 'Z'},
-
-            {
-                name: '站前区 ',
-                key: 'Z'},
-            {
-                name: '沾益县 ',
-                key: 'Z'},
-            {
-                name: '诏安县 ',
-                key: 'Z'},
-            {
-                name: '召陵区 ',
-                key: 'Z'},
-            {
-                name: '昭平县 ',
-                key: 'Z'},
-            {
-                name: '肇庆 ',
-                key: 'Z'},
-            {
-                name: '昭通 ',
-                key: 'Z'},
-            {
-                name: '赵县 ',
-                key: 'Z'}
-
-        ]
+                {
+                    name: '湛河区',
+                    key: 'Z'},
+                {
+                    name: '湛江',
+                    key: 'Z'},
+                {
+                    name: '站前区',
+                    key: 'Z'},
+                {
+                    name: '沾益县',
+                    key: 'Z'},
+                {
+                    name: '诏安县',
+                    key: 'Z'},
+                {
+                    name: '召陵区',
+                    key: 'Z'},
+                {
+                    name: '昭平县',
+                    key: 'Z'},
+                {
+                    name: '肇庆',
+                    key: 'Z'},
+                {
+                    name: '昭通',
+                    key: 'Z'},
+                {
+                    name: '赵县',
+                    key: 'Z'}
+            ]
         }
       end
     end
