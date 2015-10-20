@@ -16,6 +16,7 @@ $AVATARPATH=path_config[:avatar_file_path]
 $EMAILATTACHPATH=path_config[:email_file_path]
 $AttachTmpPath=path_config[:attach_tmp_path]
 $AttachPath=path_config[:attach_path]
+$StaticDataPath=path_config[:static_data_path]
 
 $DEFAULT_TIME_ZONE='+08:00'
 $ZONE_HOUR_OFFSET=Time.zone_offset($DEFAULT_TIME_ZONE)/(3600)
