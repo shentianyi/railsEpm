@@ -15,3 +15,4 @@ path:
  :attach_tmp_path: 'uploadfiles/attach/tmp'
  :attach_path: 'uploadfiles/attach/uped'
  :tmp_file_path: 'uploadfiels/tmp'
+ :static_data_path: 'data/city.txt'
