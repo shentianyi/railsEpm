@@ -10,6 +10,7 @@ module APIGuard
     use Rack::OAuth2::Server::Resource::Bearer, 'The API' do |request|
       request.access_token
     end
+
     helpers HelperMethods
 
     install_error_responders(base)
@@ -17,6 +18,7 @@ module APIGuard
 
 # Helper Methods for Grape Endpoint
   module HelperMethods
+    LOCALE_MAP={CN: 'zh', EN: 'en', DE: 'de'}
     # Invokes the doorkeeper guard.
     #
     # If token string is blank, then it raises MissingTokenError.
@@ -38,25 +40,21 @@ module APIGuard
     #           Defaults to empty array.
     #
     def guard!(scopes= [])
+      I18n.locale=locale
       if request.env['HTTP_AUTHORIZATION'].present?
         if request.env['HTTP_AUTHORIZATION'].split(' ')[0]=='Bearer'
           guard_by_token(scopes)
         else
           guard_by_basic
         end
-	  else
+      else
         raise NoAuthError
       end
     end
 
-
-	def set_locale
-	
-	end
-
-	def locale
-	  @locale||=request.env['Localization']||'zh'
-	end
+    def locale
+      @locale||= get_locale
+    end
 
     def current_user
       @current_user
@@ -117,6 +115,14 @@ module APIGuard
 
     def validate_access_token(access_token, scopes)
       Oauth2::AccessTokenValidationService.validate(access_token, scopes: scopes)
+    end
+
+    def get_locale
+      if request.env['HTTP_LOCALIZATION'].present?
+        LOCALE_MAP[request.env['HTTP_LOCALIZATION'].to_sym] || 'zh'
+      else
+        'zh'
+      end
     end
   end
 
