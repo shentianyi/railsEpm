@@ -8,7 +8,6 @@ module APIGuard
   included do |base|
     # OAuth2 Resource Server Authentication
     use Rack::OAuth2::Server::Resource::Bearer, 'The API' do |request|
-      puts 'api request'
       request.access_token
     end
     helpers HelperMethods
@@ -45,10 +44,19 @@ module APIGuard
         else
           guard_by_basic
         end
-      else
+	  else
         raise NoAuthError
       end
     end
+
+
+	def set_locale
+	
+	end
+
+	def locale
+	  @locale||=request.env['Localization']||'zh'
+	end
 
     def current_user
       @current_user
