@@ -1,1366 +1,1366 @@
 {
   "A": [
     {
-      "name": "阿坝",
+      "name": "Aba",
       "key": "A"
     },
     {
-      "name": "阿拉善",
+      "name": "Alashan",
       "key": "A"
     },
     {
-      "name": "阿里",
+      "name": "Ali",
       "key": "A"
     },
     {
-      "name": "安康",
+      "name": "Ankang",
       "key": "A"
     },
     {
-      "name": "安庆",
+      "name": "Anqing",
       "key": "A"
     },
     {
-      "name": "鞍山",
+      "name": "Anshan",
       "key": "A"
     },
     {
-      "name": "安顺",
+      "name": "Anshun",
       "key": "A"
     },
     {
-      "name": "安阳",
+      "name": "Anyang",
       "key": "A"
     },
     {
-      "name": "澳门",
+      "name": "Aomen",
       "key": "A"
     }
   ],
   "B": [
     {
-      "name": "北京",
+      "name": "Beijing",
       "key": "B"
     },
     {
-      "name": "白银",
+      "name": "Baiyin",
       "key": "B"
     },
     {
-      "name": "保定",
+      "name": "Baoding",
       "key": "B"
     },
     {
-      "name": "宝鸡",
+      "name": "Baoji",
       "key": "B"
     },
     {
-      "name": "保山",
+      "name": "Baoshan",
       "key": "B"
     },
     {
-      "name": "包头",
+      "name": "Baotou",
       "key": "B"
     },
     {
-      "name": "巴中",
+      "name": "Bazhong",
       "key": "B"
     },
     {
-      "name": "北海",
+      "name": "Beihai",
       "key": "B"
     },
     {
-      "name": "蚌埠",
+      "name": "Bengbu",
       "key": "B"
     },
     {
-      "name": "本溪",
+      "name": "Benxi",
       "key": "B"
     },
     {
-      "name": "毕节",
+      "name": "Bijie",
       "key": "B"
     },
     {
-      "name": "滨州",
+      "name": "Binzhou",
       "key": "B"
     },
     {
-      "name": "百色",
+      "name": "Bose",
       "key": "B"
     },
     {
-      "name": "亳州",
+      "name": "Bozhou",
       "key": "B"
     }
   ],
   "C": [
     {
-      "name": "重庆",
+      "name": "Chongqing",
       "key": "C"
     },
     {
-      "name": "成都",
+      "name": "Chengdu",
       "key": "C"
     },
     {
-      "name": "长沙",
+      "name": "Changsha",
       "key": "C"
     },
     {
-      "name": "长春",
+      "name": "Changchun",
       "key": "C"
     },
     {
-      "name": "沧州",
+      "name": "Cangzhou",
       "key": "C"
     },
     {
-      "name": "常德",
+      "name": "Changde",
       "key": "C"
     },
     {
-      "name": "昌都",
+      "name": "Changdu",
       "key": "C"
     },
     {
-      "name": "长治",
+      "name": "Changzhi",
       "key": "C"
     },
     {
-      "name": "常州",
+      "name": "Changzhou",
       "key": "C"
     },
     {
-      "name": "巢湖",
+      "name": "Chaohu",
       "key": "C"
     },
     {
-      "name": "潮州",
+      "name": "Chaozhou",
       "key": "C"
     },
     {
-      "name": "承德",
+      "name": "Chengde",
       "key": "C"
     },
     {
-      "name": "郴州",
+      "name": "Chenzhou",
       "key": "C"
     },
     {
-      "name": "赤峰",
+      "name": "Chifeng",
       "key": "C"
     },
     {
-      "name": "池州",
+      "name": "Chizhou",
       "key": "C"
     },
     {
-      "name": "崇左",
+      "name": "Chongzuo",
       "key": "C"
     },
     {
-      "name": "楚雄",
+      "name": "Chuxiong",
       "key": "C"
     },
     {
-      "name": "滁州",
+      "name": "Chuzhou",
       "key": "C"
     },
     {
-      "name": "朝阳",
+      "name": "Zhaoyang",
       "key": "C"
     }
   ],
   "D": [
     {
-      "name": "大连",
+      "name": "Dalian",
       "key": "D"
     },
     {
-      "name": "东莞",
+      "name": "Dongguan",
       "key": "D"
     },
     {
-      "name": "大理",
+      "name": "Dali",
       "key": "D"
     },
     {
-      "name": "丹东",
+      "name": "Dandong",
       "key": "D"
     },
     {
-      "name": "大庆",
+      "name": "Daqing",
       "key": "D"
     },
     {
-      "name": "大同",
+      "name": "Datong",
       "key": "D"
     },
     {
-      "name": "大兴安岭",
+      "name": "Daxinganling",
       "key": "D"
     },
     {
-      "name": "德宏",
+      "name": "Dehong",
       "key": "D"
     },
     {
-      "name": "德阳",
+      "name": "Deyang",
       "key": "D"
     },
     {
-      "name": "德州",
+      "name": "Dezhou",
       "key": "D"
     },
     {
-      "name": "定西",
+      "name": "Dingxi",
       "key": "D"
     },
     {
-      "name": "迪庆",
+      "name": "Diqing",
       "key": "D"
     },
     {
-      "name": "东营",
+      "name": "Dongying",
       "key": "D"
     }
   ],
   "E": [
     {
-      "name": "鄂尔多斯",
+      "name": "Eerduosi",
       "key": "E"
     },
     {
-      "name": "恩施",
+      "name": "Enshi",
       "key": "E"
     },
     {
-      "name": "鄂州",
+      "name": "Ezhou",
       "key": "E"
     }
   ],
   "F": [
     {
-      "name": "福州",
+      "name": "Fuzhou",
       "key": "F"
     },
     {
-      "name": "防城港",
+      "name": "Fangchenggang",
       "key": "F"
     },
     {
-      "name": "佛山",
+      "name": "Foshan",
       "key": "F"
     },
     {
-      "name": "抚顺",
+      "name": "Fushun",
       "key": "F"
     },
     {
-      "name": "抚州",
+      "name": "Fuzhou",
       "key": "F"
     },
     {
-      "name": "阜新",
+      "name": "Fuxin",
       "key": "F"
     },
     {
-      "name": "阜阳",
+      "name": "Fuyang",
       "key": "F"
     }
   ],
   "G": [
     {
-      "name": "广州",
+      "name": "Guangzhou",
       "key": "G"
     },
     {
-      "name": "赣州",
+      "name": "Ganzhou",
       "key": "G"
     },
     {
-      "name": "桂林",
+      "name": "Guilin",
       "key": "G"
     },
     {
-      "name": "贵阳",
+      "name": "Guiyang",
       "key": "G"
     },
     {
-      "name": "甘南",
+      "name": "Gannan",
       "key": "G"
     },
     {
-      "name": "甘孜",
+      "name": "Ganzi",
       "key": "G"
     },
     {
-      "name": "广安",
+      "name": "Guangan",
       "key": "G"
     },
     {
-      "name": "广元",
+      "name": "Guangyuan",
       "key": "G"
     },
     {
-      "name": "果洛",
+      "name": "Guoluo",
       "key": "G"
     },
     {
-      "name": "贵港",
+      "name": "Guigang",
       "key": "G"
     }
   ],
   "H": [
     {
-      "name": "杭州",
+      "name": "Hangzhou",
       "key": "H"
     },
     {
-      "name": "哈尔滨",
+      "name": "Haerbin",
       "key": "H"
     },
     {
-      "name": "合肥",
+      "name": "Hefei",
       "key": "H"
     },
     {
-      "name": "海口",
+      "name": "Haikou",
       "key": "H"
     },
     {
-      "name": "海东",
+      "name": "Haidong",
       "key": "H"
     },
     {
-      "name": "海北",
+      "name": "Haibei",
       "key": "H"
     },
     {
-      "name": "海南",
+      "name": "Hainan",
       "key": "H"
     },
     {
-      "name": "海西",
+      "name": "Haixi",
       "key": "H"
     },
     {
-      "name": "邯郸",
+      "name": "Handan",
       "key": "H"
     },
     {
-      "name": "汉中",
+      "name": "Hanzhong",
       "key": "H"
     },
     {
-      "name": "鹤壁",
+      "name": "Hebi",
       "key": "H"
     },
     {
-      "name": "河池",
+      "name": "Hechi",
       "key": "H"
     },
     {
-      "name": "鹤岗",
+      "name": "Hegang",
       "key": "H"
     },
     {
-      "name": "黑河",
+      "name": "Heihe",
       "key": "H"
     },
     {
-      "name": "衡水",
+      "name": "Hengshui",
       "key": "H"
     },
     {
-      "name": "衡阳",
+      "name": "Hengyang",
       "key": "H"
     },
     {
-      "name": "河源",
+      "name": "Heyuan",
       "key": "H"
     },
     {
-      "name": "贺州",
+      "name": "Hezhou",
       "key": "H"
     },
     {
-      "name": "红河",
+      "name": "Honghe",
       "key": "H"
     },
     {
-      "name": "淮安",
+      "name": "Huaian",
       "key": "H"
     },
     {
-      "name": "淮北",
+      "name": "Huaibei",
       "key": "H"
     },
     {
-      "name": "怀化",
+      "name": "Huaihua",
       "key": "H"
     },
     {
-      "name": "淮南",
+      "name": "Huainan",
       "key": "H"
     },
     {
-      "name": "黄冈",
+      "name": "Huanggang",
       "key": "H"
     },
     {
-      "name": "黄南",
+      "name": "Huangnan",
       "key": "H"
     },
     {
-      "name": "黄山",
+      "name": "Huangshan",
       "key": "H"
     },
     {
-      "name": "黄石",
+      "name": "Huangshi",
       "key": "H"
     },
     {
-      "name": "惠州",
+      "name": "Huizhou",
       "key": "H"
     },
     {
-      "name": "葫芦岛",
+      "name": "Huludao",
       "key": "H"
     },
     {
-      "name": "呼伦贝尔",
+      "name": "Hulunbeier",
       "key": "H"
     },
     {
-      "name": "湖州",
+      "name": "Huzhou",
       "key": "H"
     },
     {
-      "name": "菏泽",
+      "name": "Heze",
       "key": "H"
     }
   ],
   "J": [
     {
-      "name": "济南",
+      "name": "Jinan",
       "key": "J"
     },
     {
-      "name": "佳木斯",
+      "name": "Jiamusi",
       "key": "J"
     },
     {
-      "name": "吉安",
+      "name": "Jian",
       "key": "J"
     },
     {
-      "name": "江门",
+      "name": "Jiangmen",
       "key": "J"
     },
     {
-      "name": "焦作",
+      "name": "Jiaozuo",
       "key": "J"
     },
     {
-      "name": "嘉兴",
+      "name": "Jiaxing",
       "key": "J"
     },
     {
-      "name": "嘉峪关",
+      "name": "Jiayuguan",
       "key": "J"
     },
     {
-      "name": "揭阳",
+      "name": "Jieyang",
       "key": "J"
     },
     {
-      "name": "吉林",
+      "name": "Jilin",
       "key": "J"
     },
     {
-      "name": "金昌",
+      "name": "Jinchang",
       "key": "J"
     },
     {
-      "name": "晋城",
+      "name": "Jincheng",
       "key": "J"
     },
     {
-      "name": "景德镇",
+      "name": "Jingdezhen",
       "key": "J"
     },
     {
-      "name": "荆门",
+      "name": "Jingmen",
       "key": "J"
     },
     {
-      "name": "荆州",
+      "name": "Jingzhou",
       "key": "J"
     },
     {
-      "name": "金华",
+      "name": "Jinhua",
       "key": "J"
     },
     {
-      "name": "济宁",
+      "name": "Jining",
       "key": "J"
     },
     {
-      "name": "晋中",
+      "name": "Jinzhong",
       "key": "J"
     },
     {
-      "name": "锦州",
+      "name": "Jinzhou",
       "key": "J"
     },
     {
-      "name": "九江",
+      "name": "Jiujiang",
       "key": "J"
     },
     {
-      "name": "酒泉",
+      "name": "Jiuquan",
       "key": "J"
     }
   ],
   "K": [
     {
-      "name": "昆明",
+      "name": "Kunming",
       "key": "K"
     },
     {
-      "name": "开封",
+      "name": "Kaifeng",
       "key": "K"
     }
   ],
   "L": [
     {
-      "name": "兰州",
+      "name": "Lanzhou",
       "key": "L"
     },
     {
-      "name": "拉萨",
+      "name": "Lasa",
       "key": "L"
     },
     {
-      "name": "来宾",
+      "name": "Laibin",
       "key": "L"
     },
     {
-      "name": "莱芜",
+      "name": "Laiwu",
       "key": "L"
     },
     {
-      "name": "廊坊",
+      "name": "Langfang",
       "key": "L"
     },
     {
-      "name": "乐山",
+      "name": "Leshan",
       "key": "L"
     },
     {
-      "name": "凉山",
+      "name": "Liangshan",
       "key": "L"
     },
     {
-      "name": "连云港",
+      "name": "Lianyungang",
       "key": "L"
     },
     {
-      "name": "聊城",
+      "name": "Liaocheng",
       "key": "L"
     },
     {
-      "name": "辽阳",
+      "name": "Liaoyang",
       "key": "L"
     },
     {
-      "name": "辽源",
+      "name": "Liaoyuan",
       "key": "L"
     },
     {
-      "name": "丽江",
+      "name": "Lijiang",
       "key": "L"
     },
     {
-      "name": "临沧",
+      "name": "Lincang",
       "key": "L"
     },
     {
-      "name": "临汾",
+      "name": "Linfen",
       "key": "L"
     },
     {
-      "name": "临夏",
+      "name": "Linxia",
       "key": "L"
     },
     {
-      "name": "临沂",
+      "name": "Linyi",
       "key": "L"
     },
     {
-      "name": "林芝",
+      "name": "Linzhi",
       "key": "L"
     },
     {
-      "name": "丽水",
+      "name": "Lishui",
       "key": "L"
     },
     {
-      "name": "六安",
+      "name": "Luan",
       "key": "L"
     },
     {
-      "name": "六盘水",
+      "name": "Liupanshui",
       "key": "L"
     },
     {
-      "name": "柳州",
+      "name": "Liuzhou",
       "key": "L"
     },
     {
-      "name": "陇南",
+      "name": "Longnan",
       "key": "L"
     },
     {
-      "name": "龙岩",
+      "name": "Longyan",
       "key": "L"
     },
     {
-      "name": "娄底",
+      "name": "Loudi",
       "key": "L"
     },
     {
-      "name": "漯河",
+      "name": "Tahe",
       "key": "L"
     },
     {
-      "name": "洛阳",
+      "name": "Luoyang",
       "key": "L"
     },
     {
-      "name": "泸州",
+      "name": "Luzhou",
       "key": "L"
     },
     {
-      "name": "吕梁",
+      "name": "Lvliang",
       "key": "L"
     }
   ],
   "M": [
     {
-      "name": "马鞍山",
+      "name": "Maanshan",
       "key": "M"
     },
     {
-      "name": "茂名",
+      "name": "Maoming",
       "key": "M"
     },
     {
-      "name": "眉山",
+      "name": "Meishan",
       "key": "M"
     },
     {
-      "name": "梅州",
+      "name": "Meizhou",
       "key": "M"
     },
     {
-      "name": "绵阳",
+      "name": "Mianyang",
       "key": "M"
     },
     {
-      "name": "牡丹江",
+      "name": "Mudanjiang",
       "key": "M"
     }
   ],
   "N": [
     {
-      "name": "南京",
+      "name": "Nanjing",
       "key": "N"
     },
     {
-      "name": "南昌",
+      "name": "Nanchang",
       "key": "N"
     },
     {
-      "name": "南宁",
+      "name": "Nanning",
       "key": "N"
     },
     {
-      "name": "南充",
+      "name": "Nanchong",
       "key": "N"
     },
     {
-      "name": "南平",
+      "name": "Nanping",
       "key": "N"
     },
     {
-      "name": "南通",
+      "name": "Nantong",
       "key": "N"
     },
     {
-      "name": "南阳",
+      "name": "Nanyang",
       "key": "N"
     },
     {
-      "name": "那曲",
+      "name": "Naqu",
       "key": "N"
     },
     {
-      "name": "内江",
+      "name": "Neijiang",
       "key": "N"
     },
     {
-      "name": "宁德",
+      "name": "Ningde",
       "key": "N"
     },
     {
-      "name": "怒江",
+      "name": "Nujiang",
       "key": "N"
     }
   ],
   "P": [
     {
-      "name": "盘锦",
+      "name": "Panjin",
       "key": "P"
     },
     {
-      "name": "攀枝花",
+      "name": "Panzhihua",
       "key": "P"
     },
     {
-      "name": "平顶山",
+      "name": "Pingdingshan",
       "key": "P"
     },
     {
-      "name": "平凉",
+      "name": "Pingliang",
       "key": "P"
     },
     {
-      "name": "萍乡",
+      "name": "Pingxiang",
       "key": "P"
     },
     {
-      "name": "莆田",
+      "name": "Putian",
       "key": "P"
     },
     {
-      "name": "濮阳",
+      "name": "Puyang",
       "key": "P"
     }
   ],
   "Q": [
     {
-      "name": "青岛",
+      "name": "Qingdao",
       "key": "Q"
     },
     {
-      "name": "黔东南",
+      "name": "Qiandongnan",
       "key": "Q"
     },
     {
-      "name": "黔南",
+      "name": "Qiannan",
       "key": "Q"
     },
     {
-      "name": "黔西南",
+      "name": "Qianxinan",
       "key": "Q"
     },
     {
-      "name": "庆阳",
+      "name": "Qingyang",
       "key": "Q"
     },
     {
-      "name": "清远",
+      "name": "Qingyuan",
       "key": "Q"
     },
     {
-      "name": "秦皇岛",
+      "name": "Qinhuangdao",
       "key": "Q"
     },
     {
-      "name": "钦州",
+      "name": "Qinzhou",
       "key": "Q"
     },
     {
-      "name": "齐齐哈尔",
+      "name": "Qiqihaer",
       "key": "Q"
     },
     {
-      "name": "泉州",
+      "name": "Quanzhou",
       "key": "Q"
     },
     {
-      "name": "曲靖",
+      "name": "Qujing",
       "key": "Q"
     },
     {
-      "name": "衢州",
+      "name": "Quzhou",
       "key": "Q"
     }
   ],
   "R": [
     {
-      "name": "日喀则",
+      "name": "Rikaze",
       "key": "R"
     },
     {
-      "name": "日照",
+      "name": "Rizhao",
       "key": "R"
     }
   ],
   "S": [
     {
-      "name": "上海",
+      "name": "Shanghai",
       "key": "S"
     },
     {
-      "name": "深圳",
+      "name": "Shenzhen",
       "key": "S"
     },
     {
-      "name": "苏州",
+      "name": "Suzhou",
       "key": "S"
     },
     {
-      "name": "沈阳",
+      "name": "Shenyang",
       "key": "S"
     },
     {
-      "name": "石家庄",
+      "name": "Shijiazhuang",
       "key": "S"
     },
     {
-      "name": "三门峡",
+      "name": "Sanmenxia",
       "key": "S"
     },
     {
-      "name": "三明",
+      "name": "Sanming",
       "key": "S"
     },
     {
-      "name": "三亚",
+      "name": "Sanya",
       "key": "S"
     },
     {
-      "name": "商洛",
+      "name": "Shangluo",
       "key": "S"
     },
     {
-      "name": "商丘",
+      "name": "Shangqiu",
       "key": "S"
     },
     {
-      "name": "上饶",
+      "name": "Shangrao",
       "key": "S"
     },
     {
-      "name": "山南",
+      "name": "Shannan",
       "key": "S"
     },
     {
-      "name": "汕头",
+      "name": "Shantou",
       "key": "S"
     },
     {
-      "name": "汕尾",
+      "name": "Shanwei",
       "key": "S"
     },
     {
-      "name": "韶关",
+      "name": "Shaoguan",
       "key": "S"
     },
     {
-      "name": "绍兴",
+      "name": "Shaoxing",
       "key": "S"
     },
     {
-      "name": "邵阳",
+      "name": "Shaoyang",
       "key": "S"
     },
     {
-      "name": "十堰",
+      "name": "Shiyan",
       "key": "S"
     },
     {
-      "name": "朔州",
+      "name": "Shuozhou",
       "key": "S"
     },
     {
-      "name": "四平",
+      "name": "Siping",
       "key": "S"
     },
     {
-      "name": "绥化",
+      "name": "Suihua",
       "key": "S"
     },
     {
-      "name": "遂宁",
+      "name": "Suining",
       "key": "S"
     },
     {
-      "name": "随州",
+      "name": "Suizhou",
       "key": "S"
     },
     {
-      "name": "娄底",
+      "name": "Loudi",
       "key": "S"
     },
     {
-      "name": "宿迁",
+      "name": "Suqian",
       "key": "S"
     },
     {
-      "name": "宿州",
+      "name": "Suzhou",
       "key": "S"
     }
   ],
   "T": [
     {
-      "name": "天津",
+      "name": "Tianjin",
       "key": "T"
     },
     {
-      "name": "太原",
+      "name": "Taiyuan",
       "key": "T"
     },
     {
-      "name": "泰安",
+      "name": "Taian",
       "key": "T"
     },
     {
-      "name": "泰州",
+      "name": "Taizhou",
       "key": "T"
     },
     {
-      "name": "唐山",
+      "name": "Tangshan",
       "key": "T"
     },
     {
-      "name": "天水",
+      "name": "Tianshui",
       "key": "T"
     },
     {
-      "name": "铁岭",
+      "name": "Tieling",
       "key": "T"
     },
     {
-      "name": "铜川",
+      "name": "Tongchuan",
       "key": "T"
     },
     {
-      "name": "通化",
+      "name": "Tonghua",
       "key": "T"
     },
     {
-      "name": "通辽",
+      "name": "Tongliao",
       "key": "T"
     },
     {
-      "name": "铜陵",
+      "name": "Tongling",
       "key": "T"
     },
     {
-      "name": "铜仁",
+      "name": "Tongren",
       "key": "T"
     },
     {
-      "name": "台湾",
+      "name": "Taiwan",
       "key": "T"
     }
   ],
   "W": [
     {
-      "name": "武汉",
+      "name": "Wuhan",
       "key": "W"
     },
     {
-      "name": "乌鲁木齐",
+      "name": "Wulumuqi",
       "key": "W"
     },
     {
-      "name": "无锡",
+      "name": "Wuxi",
       "key": "W"
     },
     {
-      "name": "威海",
+      "name": "Weihai",
       "key": "W"
     },
     {
-      "name": "潍坊",
+      "name": "Weifang",
       "key": "W"
     },
     {
-      "name": "文山",
+      "name": "Wenshan",
       "key": "W"
     },
     {
-      "name": "温州",
+      "name": "Wenzhou",
       "key": "W"
     },
     {
-      "name": "乌海",
+      "name": "Wuhai",
       "key": "W"
     },
     {
-      "name": "芜湖",
+      "name": "Wuhu",
       "key": "W"
     },
     {
-      "name": "乌兰察布",
+      "name": "Wulanchabu",
       "key": "W"
     },
     {
-      "name": "武威",
+      "name": "Wuwei",
       "key": "W"
     },
     {
-      "name": "梧州",
+      "name": "Wuzhou",
       "key": "W"
     }
   ],
   "X": [
     {
-      "name": "厦门",
+      "name": "Xiamen",
       "key": "X"
     },
     {
-      "name": "西安",
+      "name": "Xian",
       "key": "X"
     },
     {
-      "name": "西宁",
+      "name": "Xining",
       "key": "X"
     },
     {
-      "name": "襄樊",
+      "name": "Xiangfan",
       "key": "X"
     },
     {
-      "name": "湘潭",
+      "name": "Xiangtan",
       "key": "X"
     },
     {
-      "name": "湘西",
+      "name": "Xiangxi",
       "key": "X"
     },
     {
-      "name": "咸宁",
+      "name": "Xianning",
       "key": "X"
     },
     {
-      "name": "咸阳",
+      "name": "Xianyang",
       "key": "X"
     },
     {
-      "name": "孝感",
+      "name": "Xiaogan",
       "key": "X"
     },
     {
-      "name": "邢台",
+      "name": "Xingtai",
       "key": "X"
     },
     {
-      "name": "新乡",
+      "name": "Xinxiang",
       "key": "X"
     },
     {
-      "name": "信阳",
+      "name": "Xinyang",
       "key": "X"
     },
     {
-      "name": "新余",
+      "name": "Xinyu",
       "key": "X"
     },
     {
-      "name": "忻州",
+      "name": "Xinzhou",
       "key": "X"
     },
     {
-      "name": "西双版纳",
+      "name": "Xishuangbanna",
       "key": "X"
     },
     {
-      "name": "宣城",
+      "name": "Xuancheng",
       "key": "X"
     },
     {
-      "name": "许昌",
+      "name": "Xuchang",
       "key": "X"
     },
     {
-      "name": "徐州",
+      "name": "Xuzhou",
       "key": "X"
     },
     {
-      "name": "香港",
+      "name": "Xianggang",
       "key": "X"
     },
     {
-      "name": "锡林郭勒",
+      "name": "Xilinguole",
       "key": "X"
     },
     {
-      "name": "兴安",
+      "name": "Xingan",
       "key": "X"
     }
   ],
   "Y": [
     {
-      "name": "银川",
+      "name": "Yinchuan",
       "key": "Y"
     },
     {
-      "name": "雅安",
+      "name": "Yaan",
       "key": "Y"
     },
     {
-      "name": "延安",
+      "name": "Yanan",
       "key": "Y"
     },
     {
-      "name": "延边",
+      "name": "Yanbian",
       "key": "Y"
     },
     {
-      "name": "盐城",
+      "name": "Yancheng",
       "key": "Y"
     },
     {
-      "name": "阳江",
+      "name": "Yangjiang",
       "key": "Y"
     },
     {
-      "name": "阳泉",
+      "name": "Yangquan",
       "key": "Y"
     },
     {
-      "name": "扬州",
+      "name": "Yangzhou",
       "key": "Y"
     },
     {
-      "name": "烟台",
+      "name": "Yantai",
       "key": "Y"
     },
     {
-      "name": "宜宾",
+      "name": "Yibin",
       "key": "Y"
     },
     {
-      "name": "宜昌",
+      "name": "Yichang",
       "key": "Y"
     },
     {
-      "name": "宜春",
+      "name": "Yichun",
       "key": "Y"
     },
     {
-      "name": "营口",
+      "name": "Yingkou",
       "key": "Y"
     },
     {
-      "name": "益阳",
+      "name": "Yiyang",
       "key": "Y"
     },
     {
-      "name": "永州",
+      "name": "Yongzhou",
       "key": "Y"
     },
     {
-      "name": "岳阳",
+      "name": "Yueyang",
       "key": "Y"
     },
     {
-      "name": "榆林",
+      "name": "Yulin",
       "key": "Y"
     },
     {
-      "name": "运城",
+      "name": "Yuncheng",
       "key": "Y"
     },
     {
-      "name": "云浮",
+      "name": "Yunfu",
       "key": "Y"
     },
     {
-      "name": "玉树",
+      "name": "Yushu",
       "key": "Y"
     },
     {
-      "name": "玉溪",
+      "name": "Yuxi",
       "key": "Y"
     },
     {
-      "name": "玉林",
+      "name": "Yulin",
       "key": "Y"
     }
   ],
   "Z": [
     {
-      "name": "杂多县",
+      "name": "Zaduoxian",
       "key": "Z"
     },
     {
-      "name": "赞皇县",
+      "name": "Zanhuangxian",
       "key": "Z"
     },
     {
-      "name": "枣强县",
+      "name": "Zaoqiangxian",
       "key": "Z"
     },
     {
-      "name": "枣阳市",
+      "name": "Zaoyangshi",
       "key": "Z"
     },
     {
-      "name": "枣庄",
+      "name": "Zaozhuang",
       "key": "Z"
     },
     {
-      "name": "泽库县",
+      "name": "Zekuxian",
       "key": "Z"
     },
     {
-      "name": "增城市",
+      "name": "Zengchengshi",
       "key": "Z"
     },
     {
-      "name": "曾都区",
+      "name": "Zengduqu",
       "key": "Z"
     },
     {
-      "name": "泽普县",
+      "name": "Zepuxian",
       "key": "Z"
     },
     {
-      "name": "泽州县",
+      "name": "Zezhouxian",
       "key": "Z"
     },
     {
-      "name": "札达县",
+      "name": "Zhadaxian",
       "key": "Z"
     },
     {
-      "name": "扎赉特旗",
+      "name": "Zhalaiteqi",
       "key": "Z"
     },
     {
-      "name": "扎兰屯市",
+      "name": "Zhalantunshi",
       "key": "Z"
     },
     {
-      "name": "扎鲁特旗",
+      "name": "Zaluteqi",
       "key": "Z"
     },
     {
-      "name": "扎囊县",
+      "name": "Zanangxian",
       "key": "Z"
     },
     {
-      "name": "张北县",
+      "name": "Zhangbeixian",
       "key": "Z"
     },
     {
-      "name": "张店区",
+      "name": "Zhangdianqu",
       "key": "Z"
     },
     {
-      "name": "章贡区",
+      "name": "Zhanggongqu",
       "key": "Z"
     },
     {
-      "name": "张家港",
+      "name": "Zhangjiagang",
       "key": "Z"
     },
     {
-      "name": "张家界",
+      "name": "Zhangjiajie",
       "key": "Z"
     },
     {
-      "name": "张家口",
+      "name": "Zhangjiakou",
       "key": "Z"
     },
     {
-      "name": "漳平市",
+      "name": "Zhangpingshi",
       "key": "Z"
     },
     {
-      "name": "漳浦县",
+      "name": "Zhangpuxian",
       "key": "Z"
     },
     {
-      "name": "章丘市",
+      "name": "Zhangqiushi",
       "key": "Z"
     },
     {
-      "name": "樟树市",
+      "name": "Zhangshushi",
       "key": "Z"
     },
     {
-      "name": "张湾区",
+      "name": "Zhangwanqu",
       "key": "Z"
     },
     {
-      "name": "彰武县",
+      "name": "Zhangwuxian",
       "key": "Z"
     },
     {
-      "name": "漳县",
+      "name": "Zhangxian",
       "key": "Z"
     },
     {
-      "name": "张掖",
+      "name": "Zhangye",
       "key": "Z"
     },
     {
-      "name": "漳州",
+      "name": "Zhangzhou",
       "key": "Z"
     },
     {
-      "name": "长子县",
+      "name": "Changzixian",
       "key": "Z"
     },
     {
-      "name": "湛河区",
+      "name": "Zhanhequ",
       "key": "Z"
     },
     {
-      "name": "湛江",
+      "name": "Zhanjiang",
       "key": "Z"
     },
     {
-      "name": "站前区",
+      "name": "Zhanqianqu",
       "key": "Z"
     },
     {
-      "name": "沾益县",
+      "name": "Zhanyixian",
       "key": "Z"
     },
     {
-      "name": "诏安县",
+      "name": "Zhaoanxian",
       "key": "Z"
     },
     {
-      "name": "召陵区",
+      "name": "Shaolingqu",
       "key": "Z"
     },
     {
-      "name": "昭平县",
+      "name": "Zhaopingxian",
       "key": "Z"
     },
     {
-      "name": "肇庆",
+      "name": "Zhaoqing",
       "key": "Z"
     },
     {
-      "name": "昭通",
+      "name": "Zhaotong",
       "key": "Z"
     },
     {
-      "name": "赵县",
+      "name": "Zhaoxian",
       "key": "Z"
     }
   ]
-
+}
