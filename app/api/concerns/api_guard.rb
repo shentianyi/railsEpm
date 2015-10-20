@@ -40,7 +40,6 @@ module APIGuard
     #           Defaults to empty array.
     #
     def guard!(scopes= [])
-      guard_locale!
       if request.env['HTTP_AUTHORIZATION'].present?
         if request.env['HTTP_AUTHORIZATION'].split(' ')[0]=='Bearer'
           guard_by_token(scopes)
@@ -142,6 +141,7 @@ module APIGuard
     #
     def guard_all!(scopes=[])
       before do
+        guard_locale
         guard! scopes: scopes
       end
     end

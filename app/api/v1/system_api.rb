@@ -14,7 +14,7 @@ module V1
         # params
         puts params[:country_code]
 
-        JSON.parse(File.read($StaticDataPath))
+        JSON.parse(File.read("data/cities_#{locale}.json"))
       end
     end
   end
