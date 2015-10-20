@@ -29,7 +29,6 @@ module V1
     helpers do
       def do_entry
         Proc.new { |validator_collection|
-          puts '---------------------------------sdfsdf'
           validator_collection.entry
         }
       end

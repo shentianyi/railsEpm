@@ -40,7 +40,7 @@ module APIGuard
     #           Defaults to empty array.
     #
     def guard!(scopes= [])
-      I18n.locale=locale
+      guard_locale!
       if request.env['HTTP_AUTHORIZATION'].present?
         if request.env['HTTP_AUTHORIZATION'].split(' ')[0]=='Bearer'
           guard_by_token(scopes)
@@ -50,6 +50,11 @@ module APIGuard
       else
         raise NoAuthError
       end
+    end
+
+    def guard_locale
+      I18n.locale=locale
+      puts  locale
     end
 
     def locale
@@ -118,6 +123,7 @@ module APIGuard
     end
 
     def get_locale
+      puts '********************888'
       if request.env['HTTP_LOCALIZATION'].present?
         LOCALE_MAP[request.env['HTTP_LOCALIZATION'].to_sym] || 'zh'
       else
@@ -137,6 +143,12 @@ module APIGuard
     def guard_all!(scopes=[])
       before do
         guard! scopes: scopes
+      end
+    end
+
+    def guard_locale!
+      before do
+        guard_locale
       end
     end
 

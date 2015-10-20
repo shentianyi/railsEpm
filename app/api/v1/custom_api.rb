@@ -60,17 +60,17 @@ module V1
         }
       end
 
-	  desc 'get greeting'
-	  params do
-	  requires :user_id, type: String, desc: 'user id, same as login email'
-	  optional :location, type: String, desc: 'current location(city) of user'
-	  optional :page, type: String, desc: 'page to shou greeting'
-	  end
-	  get :greetings do
-	   {
-		   greeting: '天气真好啊，不是吗？'
-	   }
-	  end
+      desc 'get greeting'
+      params do
+        requires :user_id, type: String, desc: 'user id, same as login email'
+        optional :location, type: String, desc: 'current location(city) of user'
+        optional :page, type: String, desc: 'page to show greeting'
+      end
+      get :greetings do
+        {
+            greeting: '天气真好啊，不是吗？'
+        }
+      end
     end
   end
 end
