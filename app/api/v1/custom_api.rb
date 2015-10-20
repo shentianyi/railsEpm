@@ -4,48 +4,11 @@ module V1
 
     namespace :custom do
       get :task_ids do
-        [
-            {
-                code: 'CO',
-                name: 'CO Task'
-            },
-            {
-                code: 'INS',
-                name: 'INS Task'
-            },
-            {
-                code: 'INS 10A',
-                name: 'INS 10A Task'
-            }
-        ]
+        JSON.parse(File.read("data/tasks_#{locale}.json"))
       end
 
-
       get :working_types do
-        [
-            {
-                code: 'A',
-                check_in_validate: 'BLE',
-                validate_content: 'LOCATION',
-                check_out_validate: 'BLE',
-                name: 'Working Time'
-            },
-            {
-                code: 'R',
-                check_in_validate: 'GPS',
-                validate_content: 'LOCATION',
-                check_out_validate: 'GPS',
-                name: 'Travel Time'
-            },
-            {
-                code: 'P',
-                check_in_validate: 'NON',
-                validate_content: '',
-                check_out_validate: 'NON',
-                name: 'Break time'
-            }
-        ]
-
+        JSON.parse(File.read("data/working_types_#{locale}.json"))
       end
 
       get :user_info do
@@ -67,8 +30,9 @@ module V1
         optional :page, type: String, desc: 'page to show greeting'
       end
       get :greetings do
+        greetings= JSON.parse(File.read("data/greetings_#{locale}.json"))
         {
-            greeting: '天气真好啊，不是吗？'
+            greeting: greetings[rand(greetings.length+1)]
         }
       end
     end

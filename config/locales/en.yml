@@ -400,6 +400,8 @@ en:
       value: Value
       del-error: Can not delete total value!
       del-success: Delete details successfully!
+    failure:
+      system: System error, please contact ClearInsight staff
   #manage
   manage:
     base:

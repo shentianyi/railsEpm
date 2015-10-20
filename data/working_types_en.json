@@ -1,0 +1,23 @@
+[
+  {
+    "code": "A",
+    "check_in_validate": "BLE",
+    "validate_content": "LOCATION",
+    "check_out_validate": "BLE",
+    "name": "Working Time"
+  },
+  {
+    "code": "R",
+    "check_in_validate": "GPS",
+    "validate_content": "LOCATION",
+    "check_out_validate": "GPS",
+    "name": "Travel Time"
+  },
+  {
+    "code": "P",
+    "check_in_validate": "NON",
+    "validate_content": "",
+    "check_out_validate": "NON",
+    "name": "Break time"
+  }
+]

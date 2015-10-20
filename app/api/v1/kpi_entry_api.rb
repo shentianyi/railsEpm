@@ -12,7 +12,7 @@ module V1
         else
           {
               result_code: '0',
-              msg: ['system error, please contact ci staff']
+              msg: [I18n.t('entry.failure.system')]
           }
         end
       end

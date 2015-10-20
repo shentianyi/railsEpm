@@ -28,9 +28,9 @@ class KpiEntryValidatorCollection
   def invalid_message
     message=[]
     self.validators.each_with_index do |v, i|
-      message<<"data index:#{i+1} error: #{v.content.join(';')}" unless v.valid
+      message<<"#{i+1} : #{v.content.join(';')}" unless v.valid
     end
-    return message
+    message
   end
 
   def entry

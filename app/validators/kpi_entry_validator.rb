@@ -88,7 +88,6 @@ class KpiEntryValidator
       end
       self.validator_collection.add_base_validator(self) if self.validator_collection
     end
-    puts "#{valid}----------------------------------"
     prepare_params if self.valid
   end
 

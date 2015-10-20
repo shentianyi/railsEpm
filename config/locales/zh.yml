@@ -403,6 +403,8 @@ zh:
       value: 值
       del-error: 不能删除总值!
       del-success: 删除成功!
+    failure:
+      system: 系统错误，请联系ClearInsight管理员
   #manage
   manage:
       base:
