@@ -160,6 +160,9 @@ class KpiEntriesController < ApplicationController
     rescue Zip::ZipError => e
       msg.result=false
       msg.content="文件不可以打开，可能损坏，请检查！"
+    rescue => e
+      msg.result =false
+      msg.content=e.message
     end
     render json: msg
   end
