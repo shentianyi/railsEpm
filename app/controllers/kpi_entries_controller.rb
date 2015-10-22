@@ -148,7 +148,7 @@ class KpiEntriesController < ApplicationController
           if f.saveFile
             if error=KpiEntryImportHelper.import(f.full_path, f.extention)
               msg.result=false
-              msg.url_result=false
+              msg.url_result=true
               msg.content=error
             end
           end
