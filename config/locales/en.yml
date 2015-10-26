@@ -645,7 +645,7 @@ en:
     user_template_name: KPIEntryTemplate
     upload_data_file: Upload Data File(Max is 20M)
     upload_finish: Finish
-    kpi_upload_support_format: support Excel(.xls and .xlsx)
+    kpi_upload_support_format: support Excel(.xlsx)
     error_title: ERROR
     upload_error: Some invalid values in your file.
     click_download_error: Click the link to download the error file to help reset your values:)

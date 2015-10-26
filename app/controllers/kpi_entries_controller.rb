@@ -140,20 +140,29 @@ class KpiEntriesController < ApplicationController
   end
 
   def import
-    msg=Message.new(result: true)
-    params[:files].each do |file|
-      if file.size<$FILE_MAX_SIZE
-        f=FileData.new(data: file, oriName: file.original_filename, path: $KPI_ENTRY_PATH)
-        if f.saveFile
-          if error=KpiEntryImportHelper.import(f.full_path, f.extention)
-            msg.result=false
-            msg.content=error
+    msg=UrlMessage.new(result: true)
+    begin
+      params[:files].each do |file|
+        if file.size<$FILE_MAX_SIZE
+          f=FileData.new(data: file, oriName: file.original_filename, path: $KPI_ENTRY_PATH)
+          if f.saveFile
+            if error=KpiEntryImportHelper.import(f.full_path, f.extention)
+              msg.result=false
+              msg.url_result=true
+              msg.content=error
+            end
           end
+        else
+          msg.result=false
+          msg.content="文件大小超过20M"
         end
-      else
-        msg.result=false
-        msg.content="文件大小超过20M"
       end
+    rescue Zip::ZipError => e
+      msg.result=false
+      msg.content="文件不可以打开，可能损坏，请检查！"
+    rescue => e
+      msg.result =false
+      msg.content=e.message
     end
     render json: msg
   end
