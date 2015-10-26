@@ -32,7 +32,7 @@ module V1
       get :greetings do
         greetings= JSON.parse(File.read("data/greetings_#{locale}.json"))
         {
-            greeting: greetings[0]
+            greeting: greetings[rand(greetings.length)]
         }
       end
     end
