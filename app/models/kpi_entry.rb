@@ -1,4 +1,5 @@
 class KpiEntry
+
   include Mongoid::Document
   include Mongoid::Timestamps
   include DynamicAttributeSupport
@@ -117,23 +118,26 @@ class KpiEntry
   def self.do_search params
     puts params
     msg=Message.new
-    msg.result =true
+    msg.result = false
 
+    return msg if (kpi = Kpi.find(params[:kpi_id])).nil?
     time_range = params[:from_time]..params[:to_time]
-    entities = KpiEntry.where(kpi_id: params[:kpi_id], created_at: time_range)
-    entities.each do |entry|
+    entities = KpiEntry.where(kpi_id: params[:kpi_id], created_at: time_range).offset(params[:page] * params[:size]).limit(params[:size])
+
+    records = []
+    entities.each_with_index do |entry, index|
       record = {}
-      property = {}
       record[:id] = entry._id
       record[:value] = entry.value.to_s
       record[:date] = entry.entry_at
-      property["#{entry.a32}"] = entry.a37
-      record[:kpi_properties] = property
-
-      puts '-------------------------------------------------------------------------------'
-      puts record
+      record[:kpi_properties] = {}
+      kpi.kpi_properties.each do |property|
+        record[:kpi_properties][:"#{property.name}"] = entry.send("a#{property.id.to_s}")
+      end
+      records[index] = record
     end
-    msg.content = entities.inspect
+    msg.result = true
+    msg.content = records
 
     return msg
   end

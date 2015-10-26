@@ -20,6 +20,8 @@ module V1
       get :entry do
         status 200
 
+        params[:page] = 0 if params[:page].nil?
+        params[:size] = 30 if params[:size].nil?
         msg = KpiEntry.do_search params
         if msg.result
           {

@@ -8,7 +8,7 @@ gem 'rails', '3.2.13'
 
 gem 'mysql2'
 #gem 'sqlite3'
- 
+
 gem 'acts_as_tenant'
 gem 'cancan'
 # gem for backgroud jobs based on redis
@@ -27,10 +27,10 @@ gem 'rufus-scheduler'
 gem 'daemons'
 # gem 'guard-resque'
 
-gem 'will_paginate'
+gem 'will_paginate', '~> 3.0'
 gem 'i18n-js'
 gem 'spreadsheet'
-gem 'roo' 
+gem 'roo'
 gem 'axlsx','>2.0.0'
 # gem 'rubyzip'
 # gem 'nokogiri'
