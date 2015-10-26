@@ -17,6 +17,23 @@ module V1
         end
       end
 
+      get :entry do
+        status 200
+
+        msg = KpiEntry.do_search params
+        if msg.result
+          {
+              result_code: '1',
+              msg: msg.content
+          }
+        else
+          {
+              result_code: '0',
+              msg: [I18n.t('there is no data in the request')]
+          }
+        end
+      end
+
       post :entries do
         batch_insert=params[:in_batch].nil? ? false : params[:in_batch]=='true'
         guard_entries!(batch_insert, &do_entry)

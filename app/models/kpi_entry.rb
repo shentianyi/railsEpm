@@ -29,7 +29,6 @@ class KpiEntry
   KEY_MARKS=%w(DELETE)
 
 
-
   def self.dynamic_field_name
     'properties'
   end
@@ -48,32 +47,32 @@ class KpiEntry
   end
 
 
-    def self.map
-      map=%Q{
+  def self.map
+    map=%Q{
            function(){
   emit({kpi_id:this.kpi_id,entity_id:this.entity_id},parseFloat(this.value));
       };
      }
-      map1=%Q{
+    map1=%Q{
        function(){
            emit({date:this.parsed_entry_at.getFullYear()+'-'+(this.parsed_entry_at.getMonth()+1)+'-'+this.parsed_entry_at.getDate()},
                parseFloat(this.value));
         };
       }
 
-      map=%Q{
+    map=%Q{
            function(){
   emit({property:this.:1},parseFloat(this.value));
       };
      }
 
-      reduce=%Q{
+    reduce=%Q{
           function(key,values){
   return Array.sum(values);
   }
       }
-      KpiEntry.where(kpi_id:1,entry_type:1).map_reduce(map1, reduce).out(inline: true)
-    end
+    KpiEntry.where(kpi_id: 1, entry_type: 1).map_reduce(map1, reduce).out(inline: true)
+  end
 
 
   RECENT_INPUT_NUM = 5
@@ -103,7 +102,7 @@ class KpiEntry
   end
 
   def last_detail?
-    KpiEntry.where(user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.parsed_entry_at, entity_id: self.entity_id,entry_type: self.entry_type).first.nil?
+    KpiEntry.where(user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.parsed_entry_at, entity_id: self.entity_id, entry_type: self.entry_type).first.nil?
   end
 
   def property_val property_id
@@ -113,6 +112,30 @@ class KpiEntry
     else
       self[key]
     end
+  end
+
+  def self.do_search params
+    puts params
+    msg=Message.new
+    msg.result =true
+
+    time_range = params[:from_time]..params[:to_time]
+    entities = KpiEntry.where(kpi_id: params[:kpi_id], created_at: time_range)
+    entities.each do |entry|
+      record = {}
+      property = {}
+      record[:id] = entry._id
+      record[:value] = entry.value.to_s
+      record[:date] = entry.entry_at
+      property["#{entry.a32}"] = entry.a37
+      record[:kpi_properties] = property
+
+      puts '-------------------------------------------------------------------------------'
+      puts record
+    end
+    msg.content = entities.inspect
+
+    return msg
   end
 
   private
