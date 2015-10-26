@@ -11,6 +11,7 @@ module KpiEntryImportHelper
   end
 
   def self.import_xls file, extention
+    raise 'Sorry,Excel 2003 not support anymore'
     book=Spreadsheet.open file
 
     # error file
@@ -25,21 +26,21 @@ module KpiEntryImportHelper
     headers = sheet.rows[0]
     valid=true
     sheet.rows[1..-1].each_with_index do |row, i|
-      params=excel_xls_param row,headers
+      params=excel_xls_param row, headers
       params.values.each { |v| error_sheet.row(i+1).push v }
       #date
-     # if params[:date].is_a?(String)
-        #params[:date] = Time.parse(params[:date])
+      # if params[:date].is_a?(String)
+      #params[:date] = Time.parse(params[:date])
       #else
-        #params[:date] = params[:date].change(:offset => "+0800") if params[:date] #&& params[:date].utc?
+      #params[:date] = params[:date].change(:offset => "+0800") if params[:date] #&& params[:date].utc?
       #end
 
       #
       params = Entry::OperateService.new.doc_upload_filter(params)
       validator=KpiEntryValidator.new(params)
       validator.validate
-      
-	  unless validator.valid
+
+      unless validator.valid
         valid=false
         error_sheet.row(i+1).push validator.content.length
         error_sheet.row(i+1).push validator.content.join(' # ')
@@ -86,8 +87,8 @@ module KpiEntryImportHelper
           end
           #fetch attrs
           i = entry_param_keys.length+1
-          while !book.cell(1,i).nil?
-            params[book.cell(1,i)] = book.cell(line,i)
+          while !book.cell(1, i).nil?
+            params[book.cell(1, i)] = book.cell(line, i)
             i = i+1
           end
 
@@ -97,7 +98,6 @@ module KpiEntryImportHelper
           params = Entry::OperateService.new.doc_upload_filter(params)
           validator=KpiEntryValidator.new(params)
           validator.validate
-
 
 
           unless validator.valid

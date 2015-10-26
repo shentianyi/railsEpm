@@ -27,3 +27,4 @@
 //=require jquery.scrollUp.min
 //=require mustache.min
 //=require popModal.min
+//=require brilliantech.export.src.js

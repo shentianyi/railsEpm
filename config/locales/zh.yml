@@ -650,7 +650,7 @@ zh:
     upload_format_error: 文件格式错误
     upload_size_error: 文件大小已超出20M
     upload_finish: 完成
-    kpi_upload_support_format: 支持格式 Excel(.xls and .xlsx)
+    kpi_upload_support_format: 支持格式 Excel(.xlsx)
     error_title: 错误
     upload_error: 您在上传中出现了错误，无法完成上传
     click_download_error: 点击连接下载错误提示文件，帮助您正确上传:)
