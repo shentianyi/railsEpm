@@ -8,14 +8,7 @@ module V1
       post :entry do
         status 200
         # if is single kpi entry
-
-        Rails.logger.debug '--------------------------'
-        Rails.logger.debug params
-        Rails.logger.debug '--------------------------'
-
-
-
-        if  params[:entries].blank?
+        if params[0].nil?
           if guard_entry! &do_entry
             {
                 result_code: '1',
