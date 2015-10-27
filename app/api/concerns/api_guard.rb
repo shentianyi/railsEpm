@@ -125,9 +125,9 @@ module APIGuard
     
 		Rails.logger.debug("***http localization header:#{request.env['HTTP_LOCALIZATION']}")
 		if request.env['HTTP_LOCALIZATION'].present?
-        LOCALE_MAP[request.env['HTTP_LOCALIZATION'].to_sym] || 'zh'
+        LOCALE_MAP[request.env['HTTP_LOCALIZATION'].to_sym] || 'en'
       else
-        'zh'
+        'en'
       end
     end
   end
