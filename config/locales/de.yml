@@ -201,3 +201,493 @@ de:
   activerecord:
     errors:
       <<: *errors
+  devise:
+      confirmations:
+        confirmed: "Your account was successfully confirmed."
+        send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+        send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes."
+      failure:
+        already_authenticated: "You are already signed in."
+        inactive: "Your account is not activated yet."
+        invalid: "Ungültige E-Mail oder Passwort."
+        invalid_email: "Ungültige E-Mail"
+        invalid_password: "Ungültiges Passwort"
+        locked: "Ihr Konto ist gesperrt."
+        last_attempt: "You have one more attempt before your account will be locked."
+        not_found_in_database: "Invalid email or password."
+        timeout: "Your session expired. Please sign in again to continue."
+        unauthenticated: "You need to sign in or sign up before continuing."
+        unconfirmed: "You have to confirm your account before continuing."
+      sessions:
+        signed_in: "Erfolgreich unterzeichnet."
+        signed_out: "Erfolgreich unterzeichnet."
+  doorkeeper:
+      errors:
+        messages:
+          # Common error messages
+          invalid_request: 'The request is missing a required parameter, includes an unsupported parameter value, or is otherwise malformed.'
+          invalid_redirect_uri: 'The redirect uri included is not valid.'
+          unauthorized_client: 'The client is not authorized to perform this request using this method.'
+          access_denied: 'The resource owner or authorization server denied the request.'
+          invalid_scope: 'The requested scope is invalid, unknown, or malformed.'
+          server_error: 'The authorization server encountered an unexpected condition which prevented it from fulfilling the request.'
+          temporarily_unavailable: 'The authorization server is currently unable to handle the request due to a temporary overloading or maintenance of the server.'
+
+          #configuration error messages
+          credential_flow_not_configured: 'Resource Owner Password Credentials flow failed due to Doorkeeper.configure.resource_owner_from_credentials being unconfigured.'
+          resource_owner_authenticator_not_configured: 'Resource Owner find failed due to Doorkeeper.configure.resource_owner_authenticator being unconfiged.'
+
+          # Access grant errors
+          unsupported_response_type: 'The authorization server does not support this response type.'
+
+          # Access token errors
+          invalid_client: 'Client authentication failed due to unknown client, no client authentication included, or unsupported authentication method.'
+          invalid_grant: 'The provided authorization grant is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.'
+          unsupported_grant_type: 'The authorization grant type is not supported by the authorization server.'
+
+          # Password Access token errors
+          invalid_resource_owner: 'The provided resource owner credentials are not valid, or resource owner cannot be found'
+
+          invalid_token:
+            revoked: "The access token was revoked"
+            expired: "The access token expired"
+            unknown: "The access token is invalid"
+
+      flash:
+        applications:
+          create:
+            notice: 'Application created.'
+          destroy:
+            notice: 'Application deleted.'
+          update:
+            notice: 'Application updated.'
+        authorized_applications:
+          destroy:
+            notice: 'Application revoked.'
+  # brilliantech project
+  welcome:
+    title: Welcome
+    sub_title: Welcome ClearInsight
+    entrys:
+      title: Entrance of your role
+      kpi_entry: Entry KPI
+      analyse: Analytics
+      dashboard: Dashboard
+      manage_kpi: Manage KPI
+    statistics:
+      title: Current statistics
+      staff: Staff structure
+      table: Statistics
+      item:
+        kpi: KPI
+        entity: Data Point
+        user: User
+        view: View
+  epm:
+    base:
+      title: ClearInsight
+      name: IntelligentFactory
+      desc: Secure, quick and accurate, ClearInsight uncovers the potential of data
+      language: Language
+      welcome: Welcome
+      403: Sorry you do not have permission!
+  auth:
+    view:
+      login_title: Sign In
+      login_btn: Sign in
+      sign_title: Sign up Now
+      sign_btn: Sign up
+      signout_btn: Logout
+      submit_btn: Ok
+      email: Email
+      pwd: Password
+      confirm: Ok
+      con_pwd: Password Confirmation
+      company: Company Name
+      old_pwd: Old password
+      new_pwd: New password
+      new_pwd_cfm: Confirm new password
+      cfm_change: Change
+    msg:
+      login_success: Login successfully!
+      login_fail: Error Login Info!
+      login_require: Please Login!
+      logout_success: Logout successfully!
+      logout_require: Please Sign up!
+      email_token: Email has been Signed up!
+      sign_success: Sign up successfully!
+      sign_close: Registration is not open!
+      sign_fail: Sign up failed!
+      local_account: We're sorry, but we could not locate your account.If you are having issues try copying and pasting the URL from your email into your browser or restarting the reset password process.
+      pwd_changed: Password changed!
+      old_pwd_error: Original password error!
+      fill_blank: Please fill in all the blank!
+  menu:
+    start: Start
+    dashboard: Dashboard
+    analytics: Analytics
+    reports: Report
+    manage: Manage
+    kpi: KPI
+    user: User
+    view: View
+    my_view: My View
+    my_kpi: My KPI
+    billing: Account
+    entry_kpi: KPI Entry
+    department: Data Point
+    entity: Department
+    story_set: My Discussion
+    subscription: My Subscription
+  analytics:
+    title: Analytics
+    kpi_category: KPI Category
+    kpi: KPI
+    view: Views
+    begin_time: Start Time
+    end_time: End Time
+    sum: Total
+    average: Average
+    add_chart: Analyse
+    date: Data
+    percent: Percent
+    target: Target
+    sum_target: Target Total
+    aver_target: Target Average
+    value: Actual Value
+    sum_value: Actual Value Total
+    aver_value: Actual Value Average
+    tcr: TCR
+    close_btn: Close
+    select-dim: Select Dimensions
+    fill_all_blank: Star should not be blank
+    detail:
+      drag: Drag dimension or dimension value
+      back: Back to Analytics
+      dimensions: All Dimensions
+      dimensions-selected: Selected Dimensions
+      aggredated-analyse: Aggregated Analysis
+      current-val: Value
+      last-period: Last Period
+      yearly: Year-on-year
+      agg-sum: Aggregated total
+      agg-average: Aggregated average
+      count: Details Count
+      max: Maximum
+      min: Minimum
+      sum: Total
+      average: Average
+      rate: Rate
+      year-analyse: Year of Year
+      choose_one_dim: Please choose at least one dimension or dimension value
+  #kpi entry
+  entry:
+    desc:
+      entry: KPI Entry
+      category: Category
+      trend: Trend
+      actual: Actual Value
+      recent: Recent Value
+      date: Time
+      value: Value
+      del-error: Can not delete total value!
+      del-success: Delete details successfully!
+    failure:
+      system: Systemfehler, bitte kontaktieren Sie ClearInsight Mitarbeiter
+    sucesss:
+      data: Eintrag Daten Erfolg
+  #manage
+  manage:
+    base:
+      delete_btn: Delete
+      edit_btn: Edit
+      add_btn: Add
+      cancel_btn: Cancel
+      enter_confirm: Enter：  Confirm
+      esc_cancel: ESC： Cancel
+      delete_confirm:  Are you sure to delete？
+      next: Next
+      finish: Finish
+      assign_all_kpi: Assign All
+      star: Star should not be empty
+      not-empty: should not be empty
+      fix-red: please fix the red input
+      sth-wrong: Sorry, Something get wrong
+    kpi:
+      desc:
+        create: Create KPI
+        create_desc: Create kpi in different category,then you can edit it's max target and min target
+        create_now: Create Now
+        kpi_library_desc: Create kpi in different category,then you can edit it's max target and min target
+        choose_now: Choose Now
+        or: OR
+        next_desc: Create kpi in different category,then you can edit it's max target and min target
+        what-is-kpi-title: What is KPI?
+        what-is-kpi: A Key performance indicator is a business metric used to evaluate factors that are crucial to the success of an organization. Kpis differ per organization.
+      title: Manage KPI
+      category: KPI Category
+      kpi_library: KPI Library
+      name: Name
+      description: Description
+      frequency: Frequency
+      target: Target Max
+      target_min: Target Min
+      unit: Unit
+      trend: Trend
+      is_calculate_type: Is need calculate
+      not_calculate_type: N
+      calculate_type: Y
+      list: Choose KPI
+      formula: Formula
+      invalid: Formula is not valid
+      cannot_repeat: Can not repeat
+      ok: Create
+      cancle: Cancle
+      freq_item:
+        hourly: Hourly
+        daily: Daily
+        weekly: Weekly
+        monthly: Monthly
+        quarterly: Quarterly
+        yearly: Yearly
+      trend_item:
+        none: None
+        up: Up
+        down: Down
+      dimensions: Dimensions
+      dimensions-inputname: Enter Dimension name
+      dimensions-not-null: Dimension name should not be blank
+      dimensions-edit: Edit Dimensions
+      dimensions-add: Add Dimension
+      dimensions-enter: Enter to add Dimension
+      dimensions-same-error: Kpi already has the same dimension!
+      dimensions-kpi-not-fount: Kpi or Kpi Dimension not found, please check!
+      details: Details
+      category-not-repeat: Category could not be repeated!
+    department:
+      desc:
+        dep: Data Point
+        manage: Manage Data Point
+        name: Data Point Name
+        code: Code
+        description: Descripion
+        user_quantity: User Quantity
+        create: Create Data Point
+        create_now: Create Now
+        create_desc: Department is the place to put your staff and the view is made up of data points
+        give_name: Give it a name
+        next_desc: After creating data point , it's time to create user(staff) to your data point so that they can contribute to their data point KPI
+        what-is-entity-title: What is Data Point?
+        what-is-entity: Date point is the minimum depart which manager can monitor and analysis their kpis’ actual data.
+        argument-err: Argument Error
+        not-found: User or Department not fount
+        already-assign: You have already add this user to higher department
+    user:
+      desc:
+        manage: Manage User
+        create: Create User
+        create_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
+        create_now: Create Now
+        assign: Assign KPI
+        assign_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
+        assign_now: Assign Now
+        next_desc: User as well as your staff in different data point who created by you and then entry the kpi assigned
+        no_kpi_category_selected: Please select a kpi category
+        no_user_selected: Please select a user
+        select_kpi_categroy: select a kpi category
+        select_user: select a user
+        what-is-manager-title: The Director’s right
+        what-is-manager: Monitor the kpis’actual data which based on the data point or their combination
+        what-is-user-title: The User’s right
+        what-is-user: Input the kpis’actual data which the director assigned to him
+      role:
+        admin: System Admin
+        director: Director
+        manager: Manager
+        user: User
+      new:
+        authority: Authority
+        name: Name
+        email: Email
+        pwd: Password
+        pwd_con: Password Confirmation
+        entity: Data Point
+        department: Department
+        departments: In Charge
+        title: Title
+        tel: Tel
+        phone: Phone
+        image_url: Avatar
+    view:
+      desc:
+        name: View
+        manage: Manage View
+        dep_list: Data Point List
+        user_list: User List
+        assign_dep: Assign Data Point
+        assign_desc: Creating view first , then assign data point to the view ,view is the base condition in analytics
+        share: Share
+        share_desc: Share the view.......
+        share_now: Share Now
+        next_desc: Creating view first , then assign data point to the view,view is the base condition in analytics
+        already_shared: Shared user list
+        not_shared: Unshared user list
+      validate:
+        already_shared: Already shared to this user!
+      already_assigned: Data point has been assigned!
+      unassign_confirm: Sure to unassign this data point?
+    departments:
+      desc:
+        name: Department
+        manage: Manage Department
+        basic: Basic Information
+        basic-name: Name
+        users: Department Heads
+        add-entity: Add Data Point
+        add-user: Add Leader
+        add-department: Add Department
+        delete-department: Delete Department
+        del-department-confirm: You are deleting a department, which is operating an unrecoverable, are you sure?
+        add-ok: Add
+        add-cancle: Cancel
+        delete-depart-confirm: Delete this Data Point?
+        delete-user: Delete Department Head?
+  #dashboard
+  dashboard_group:
+    base:
+      restore: Restore
+    group:
+      name: Dashboard Group
+      add: Add
+      give_name: Give it a name
+      edit: Edit Group Name
+    dashboard:
+      add: Add Dashboard
+      add_desc: Choose and create a dashboard ,add it to a dashboard group, so that you can look it over
+      add_now: Add Now
+
+      full: Full Screen
+      full_desc: Show dashboards on the left in full screen mode, Press 'ESC' to quit
+      full_now: Enter Full Screen
+
+      name: Dashboard Name
+      name_desc: Give your dashboard a name
+      choose_type: Choose dashboard type
+      type:
+        line: Line
+        column: Column
+        pie: Pie
+        Scatter: Scatter
+      content: Create Dashboard Content
+      content_desc: Add one or more series of data to your dashboard
+      add_series: Add one series of data
+      select_group: Choose Dashboard Group
+      create: Create Now
+      serie:
+        category: KPI Category
+        view: View
+        start_time: Start Time
+        end_time: End Time
+        total: Total
+        average: Average
+        add: Add
+      close: Close
+
+      add_type:
+        cus: Custom
+        temp: Template
+
+      group: Choose Dashboard Group
+      group_desc: Choose the dashboard group you want to put your dashboard
+
+      finish: Finish
+      finish_desc: Publish the dashboard you just created
+
+    item:
+      out_of_target: Out of Target
+  chart:
+    value: Value
+    target_range: Target Range
+    percent: Percentage
+    view: View
+    line:
+      out_of_target: Out of Target
+      kpi_name: KPI Name
+      total: Total
+      record: Record
+      average: Average
+      max: Max
+    pie:
+       select: Select
+       total: Total
+    column:
+       max: Max Value
+       min: Min Value
+  fix:
+    not_empty: should not be epmty!
+    zone_too_large: zone to large error!
+    cannot_destroy: can not delete
+    add_fail: add fail
+    cannot_destroy_contain_kpi: it is base kpi, cannot delete!
+    not_exists: not exists
+    cannot_repeat: Already exits, names can not be repeated!
+    upload_kpi: Upload KPI
+    upload_info: Upload the data file based on the template
+    upload_format_error: File format is not supported
+    upload_size_error: File size is over 20M
+    download_template: Download Template
+    user_template_name: KPIEntryTemplate
+    upload_data_file: Upload Data File(Max is 20M)
+    upload_finish: Finish
+    kpi_upload_support_format: support Excel(.xlsx)
+    error_title: ERROR
+    upload_error: Some invalid values in your file.
+    click_download_error: Click the link to download the error file to help reset your values:)
+    close: Close
+    handing_file: handing the file, please wait a minute...
+    user_entity_is_blank: User not in any Entity
+    kpi_assign_fail: Same KPI has been assigned
+    user_no_exists: User not exists
+  vali_msg:
+    invalid_date: Ungültiges Datumsformat
+    invalid_value: ungültiger Wert
+    kpi_not_assign: KPI keine Benutzer zugeordnet
+    invalid_kpi: ungültige KPI info
+    invalid_user_email: ungültige E-Mail
+  epm_report:
+    title: ClearInsight Report
+    current: Current
+    target_min: Target Min
+    target_max: Target Max
+  user_message:
+    add_to_story_set: You are invited to a discussion
+    story_comment: Your insight was commented
+    new_story: Your discussion set has new insight
+    subscription_alert: Your KPI subscription has a new alert
+  event_message:
+    add_to_story_set: invited you to a disscussion
+    story_comment: commented your insight
+    new_story: created a new insight
+  subscription:
+    subscription: Subscription
+    add: Subscribe
+    create: Create
+    cancel: Cancel
+    kpi: KPI
+    add-sub:
+      department: Department
+      time: Time Range
+      cal_type: Calculate Type
+      alert_by: Alert by
+      alert_type: Alert When
+      alert_type_exit: Same alert type exits
+      start-time: Start Time
+      end-time: End Time
+      value: Please Enter to add an alert
+      average: AVERAGE
+      total: TOTAL
+      alert: Alert
+    alert-type:
+      max: Max value
+      min: Min value
+      error: Alert type error

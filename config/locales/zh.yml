@@ -405,6 +405,8 @@ zh:
       del-success: 删除成功!
     failure:
       system: 系统错误，请联系ClearInsight管理员
+    success:
+      data: 数据发送成功
   #manage
   manage:
       base:

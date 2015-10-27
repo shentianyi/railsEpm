@@ -8,8 +8,10 @@ module V1
       post :entry do
         status 200
         if guard_entry! &do_entry
-
-          {result_code: '1'}
+          {
+              result_code: '1',
+              msg: [I18n.t('entry.success.data')]
+          }
         else
           {
               result_code: '0',
@@ -18,11 +20,21 @@ module V1
         end
       end
 
+
+      desc 'get kpi entry api'
+      params do
+        requires :kpi_id, type: Integer, desc: 'kpi id'
+      end
       get :entry do
         status 200
 
-        params[:page] = 0 if params[:page].nil?
-        params[:size] = 30 if params[:size].nil?
+        params[:page] = 0 if params[:page].blank? || params[:page].to_i < 0
+        params[:size] = 30 if params[:size].blank? || params[:size].to_i < 0
+        params[:from_time]=7.days.ago.utc if params[:from_time].blank?
+        params[:to_time]=Time.now.utc if params[:to_time].blank?
+
+        p params
+
         msg = KpiEntry.do_search params
         if msg.result
           {
@@ -32,7 +44,7 @@ module V1
         else
           {
               result_code: '0',
-              msg: [I18n.t('there is no data in the request')]
+              msg: ['there is no data in the request']
           }
         end
       end
