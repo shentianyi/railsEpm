@@ -7,16 +7,31 @@ module V1
     namespace :kpi_entry do
       post :entry do
         status 200
-        if guard_entry! &do_entry
-          {
-              result_code: '1',
-              msg: [I18n.t('entry.success.data')]
-          }
+        # if is single kpi entry
+        if params[0].nil?
+          if guard_entry! &do_entry
+            {
+                result_code: '1',
+                msg: [I18n.t('entry.success.data')]
+            }
+          else
+            {
+                result_code: '0',
+                msg: [I18n.t('entry.failure.system')]
+            }
+          end
         else
-          {
-              result_code: '0',
-              msg: [I18n.t('entry.failure.system')]
-          }
+         if guard_entries!(true, &do_entry)
+           {
+               result_code: '1',
+               msg: [I18n.t('entry.success.data')]
+           }
+         else
+           {
+               result_code: '0',
+               msg: [I18n.t('entry.failure.system')]
+           }
+         end
         end
       end
 

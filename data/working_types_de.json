@@ -1,23 +1,23 @@
-﻿[
+[
   {
-    "code": "EIN",
-    "einchecken_bestätigen": "BLE",
-    "bestätigen_Inhalt": "Lage",
-    "prüfen_out_bestätigen": "BLE",
+    "code": "A",
+    "check_in_validate": "BLE",
+    "validate_content": "LOCATION",
+    "check_out_validate": "BLE",
     "name": "Arbeitszeit"
   },
   {
     "code": "R",
-    "einchecken_bestätigen": "GPS",
-    "bestätigen_Inhalt": "Lage",
-    "prüfen_out_bestätigen": "GPS",
+    "check_in_validate": "GPS",
+    "validate_content": "LOCATION",
+    "check_out_validate": "GPS",
     "name": "Reisezeit"
   },
   {
     "code": "P",
-    "einchecken_bestätigen": "nicht",
-    "bestätigen_Inhalt": "",
-    "prüfen_out_bestätigen": "NON",
+    "check_in_validate": "NON",
+    "validate_content": "",
+    "check_out_validate": "NON",
     "name": "Reißzeit"
   }
 ]

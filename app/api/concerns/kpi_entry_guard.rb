@@ -12,21 +12,33 @@ module KpiEntryGuard
   module HelperMethods
     def validate_params_integrated params, keys, raise_error=true
       p=params
-      msgs=[]
+      messages=[]
       keys.each do |k|
         if params[k].blank?
-          msgs<< "#{k} cannot be blank"
+          messages<< "#{k} cannot be blank"
         end
         p[k]=params[k]
       end
-      raise ArgumentError, msgs if msgs.length>0
+      raise ArgumentError, messages if messages.length>0
       p
     end
 
     # validate single input
     def guard_entry!
+
+      p params
+      p '-----------------------------------99'
+      p params[0]
+      p params[1]
+      params.each do |pp|
+        puts '-----------------------**'
+        puts pp
+        puts '-----------------------**'
+      end
+      p params.length
+      p '-----------------------------------99'
       entry_params=validate_params_integrated(params, ParamKeys)
-      puts entry_params#[:kpi_properties]
+      puts entry_params #[:kpi_properties]
       puts entry_params[:email]
       puts entry_params[:kpi_properties]
 
@@ -48,14 +60,31 @@ module KpiEntryGuard
     end
 
     # validate batch entries
-    def guard_entries!(in_batch=false)
-      raise ArgumentError, 'api argument error' unless params.has_key?(:entries)
-      params[:entries] = JSON.parse(params[:entries])
+    def guard_entries!(in_batch=true)
+      if params[:entries].blank?
+        puts '1......'
+        params[:entries]=[]
+        params.each do |p|
+          puts '2-......'
+          p p
+          p p.class
+          p p.second
+          p p.second.class
+
+          params[:entries] <<p.second if p.second.is_a?(Hash)
+        end
+      else
+        params[:entries] = JSON.parse(params[:entries])
+      end
+
+      p params[:entries]
+
       raise ArgumentError unless params[:entries].is_a?(Array)
+      raise ArgumentError, 'api argument error' unless params.has_key?(:entries)
       indexes=[]
       vc= KpiEntryValidatorCollection.new
       params[:entries].each_with_index do |entry, i|
-        if entry_p=validate_params_integrated(entry, ParamKeys, false)
+        if entry_p=validate_params_integrated(entry, ParamKeys, true)
           entry_p[:validator_collection]=vc
           KpiEntryValidator.new(entry_p)
         else

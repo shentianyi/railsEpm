@@ -18,7 +18,7 @@ module APIGuard
 
 # Helper Methods for Grape Endpoint
   module HelperMethods
-    LOCALE_MAP={CN: 'zh', EN: 'en', DE: nil}
+    LOCALE_MAP={CN: 'zh', EN: 'en', DE: 'de'}
     # Invokes the doorkeeper guard.
     #
     # If token string is blank, then it raises MissingTokenError.
