@@ -138,6 +138,12 @@ module APIGuard
     #   scopes: (optional) scopes required for this guard.
     #           Defaults to empty array.
     #
+    def guard_auth!(scopes=[])
+      before do
+        guard! scopes: scopes
+      end
+    end
+
     def guard_all!(scopes=[])
       before do
         guard_locale

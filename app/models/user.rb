@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   attr_accessible :status, :perishable_token, :confirmed, :first_name, :last_name, :is_tenant
   attr_accessible :tenant_id, :role_id, :entity_id, :department_id, :is_sys, :title #, :department_group_id
   attr_accessible :tel, :phone, :image_url
+  attr_accessible :stuff_id, :current_project_id, :current_location, :device_id, :is_online, :last_request_at
 
   #acts_as_authentic do |c|
   #  c.login_field = :email

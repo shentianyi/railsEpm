@@ -8,6 +8,7 @@ module V1
       post :entry do
         status 200
         if guard_entry! &do_entry
+
           {result_code: '1'}
         else
           {

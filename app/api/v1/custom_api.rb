@@ -14,11 +14,11 @@ module V1
       get :user_info do
         puts params[:user_id]
         {
-            user_id: 'solulab@demo.com',
-            name: 'Dev Demo',
-            stuff_id: '00232',
-            project_id: '24231',
-            current_location: 'bbac',
+            user_id: current_user.email,
+            name: current_user.first_name.to_s + " " + current_user.last_name.to_s,
+            stuff_id: current_user.stuff_id,
+            project_id: current_user.current_project_id,
+            current_location: current_user.current_location,
             exception: 'YES'
         }
       end

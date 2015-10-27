@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150603021900) do
+ActiveRecord::Schema.define(:version => 20151026063723) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -561,6 +561,11 @@ ActiveRecord::Schema.define(:version => 20150603021900) do
     t.string   "tel"
     t.string   "phone"
     t.string   "image_url"
+    t.string   "stuff_id"
+    t.string   "current_project_id",   :default => ""
+    t.string   "current_location",     :default => ""
+    t.string   "device_id",            :default => ""
+    t.boolean  "is_online",            :default => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
