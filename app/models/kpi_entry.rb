@@ -118,14 +118,14 @@ class KpiEntry
   def self.do_search params
     puts params
     puts params[:from_time]
-puts params[:to_time]
+    puts params[:to_time]
 
     msg=Message.new
     msg.result = false
 
-    return msg if (kpi = Kpi.find(params[:kpi_id])).nil?
+    return msg if (kpi = Kpi.find_by_id(params[:kpi_id])).nil?
     time_range = params[:from_time]..params[:to_time]
-    entities = KpiEntry.where(kpi_id: params[:kpi_id], entry_at: params[:from_time]..params[:to_time]).offset(params[:page] * params[:size]).limit(params[:size])
+    entities = KpiEntry.where(kpi_id: params[:kpi_id], entry_at: params[:from_time]..params[:to_time]).offset(params[:page].to_i * params[:size].to_i).limit(params[:size].to_i)
 
     records = []
     entities.each_with_index do |entry, index|

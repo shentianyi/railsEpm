@@ -1,0 +1,23 @@
+﻿[
+  {
+    "code": "EIN",
+    "einchecken_bestätigen": "BLE",
+    "bestätigen_Inhalt": "Lage",
+    "prüfen_out_bestätigen": "BLE",
+    "name": "Arbeitszeit"
+  },
+  {
+    "code": "R",
+    "einchecken_bestätigen": "GPS",
+    "bestätigen_Inhalt": "Lage",
+    "prüfen_out_bestätigen": "GPS",
+    "name": "Reisezeit"
+  },
+  {
+    "code": "P",
+    "einchecken_bestätigen": "nicht",
+    "bestätigen_Inhalt": "",
+    "prüfen_out_bestätigen": "NON",
+    "name": "Reißzeit"
+  }
+]
