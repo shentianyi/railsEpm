@@ -298,5 +298,5 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   whenever
   wicked_pdf
-  will_paginate
+  will_paginate (~> 3.0)
   wkhtmltopdf-binary

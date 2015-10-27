@@ -9,13 +9,32 @@ module V1
         status 200
         if guard_entry! &do_entry
           {
-			  result_code: '1',
-			  msg: [I18n.t('entry.success.data')]
-		  }
+              result_code: '1',
+              msg: [I18n.t('entry.success.data')]
+          }
         else
           {
               result_code: '0',
               msg: [I18n.t('entry.failure.system')]
+          }
+        end
+      end
+
+      get :entry do
+        status 200
+
+        params[:page] = 0 if params[:page].nil?
+        params[:size] = 30 if params[:size].nil?
+        msg = KpiEntry.do_search params
+        if msg.result
+          {
+              result_code: '1',
+              msg: msg.content
+          }
+        else
+          {
+              result_code: '0',
+              msg: [I18n.t('there is no data in the request')]
           }
         end
       end

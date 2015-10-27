@@ -54,7 +54,6 @@ module KpiEntryImportHelper
 
   def self.import_xlsx file, extention
     book=Roo::Excelx.new file
-
     # error file
     error_book=Axlsx::Package.new
     error_sheet=error_book.workbook
