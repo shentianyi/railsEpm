@@ -61,6 +61,9 @@ module KpiEntryGuard
 
     # validate batch entries
     def guard_entries!(in_batch=true)
+      Rails.logger.debug '--------------------------'
+      Rails.logger.debug params
+      Rails.logger.debug '--------------------------'
       if params[:entries].blank?
         puts '1......'
         params[:entries]=[]
