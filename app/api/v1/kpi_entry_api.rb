@@ -8,7 +8,10 @@ module V1
       post :entry do
         status 200
         if guard_entry! &do_entry
-          {result_code: '1'}
+          {
+			  result_code: '1',
+			  msg: [I18n.t('entry.success.data')]
+		  }
         else
           {
               result_code: '0',

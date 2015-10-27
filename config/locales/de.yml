@@ -394,6 +394,8 @@ de:
       del-success: Delete details successfully!
     failure:
       system: Systemfehler, bitte kontaktieren Sie ClearInsight Mitarbeiter
+    sucesss:
+      data: Eintrag Daten Erfolg
   #manage
   manage:
     base:

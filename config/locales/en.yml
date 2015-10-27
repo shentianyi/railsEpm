@@ -402,6 +402,8 @@ en:
       del-success: Delete details successfully!
     failure:
       system: System error, please contact ClearInsight staff
+    success:
+      data: Entry Data Success
   #manage
   manage:
     base:
