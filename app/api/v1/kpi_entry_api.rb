@@ -14,8 +14,8 @@ module V1
         Rails.logger.debug '--------------------------'
 
 
-        
-        if params[0].nil?
+
+        if  params[:entries].blank?
           if guard_entry! &do_entry
             {
                 result_code: '1',
