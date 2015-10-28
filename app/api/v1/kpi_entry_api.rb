@@ -7,10 +7,19 @@ module V1
     namespace :kpi_entry do
       post :entry do
         status 200
+
         Rails.logger.debug 'log entry data.................'
         Rails.logger.debug params
         Rails.logger.debug 'log entry data.................'
-        # if is single kpi entry
+
+        HEADS = ["working_type", "task_id"]
+        #entry data display-->code
+        HEADS.each do |case_value|
+          unless params[:kpi_properties][case_value].blank?
+            params[:kpi_properties][case_value] = ParseLanguage.parse_code(params[:kpi_properties][case_value], case_value)
+          end
+        end
+
         if params[0].nil?
           if guard_entry! &do_entry
             {
@@ -18,23 +27,18 @@ module V1
                 msg: [I18n.t('entry.success.data')]
             }
           else
-            {
-                result_code: '0',
-                msg: [I18n.t('entry.failure.system')]
-            }
+            if guard_entries!(true, &do_entry)
+              {
+                  result_code: '1',
+                  msg: [I18n.t('entry.success.data')]
+              }
+            else
+              {
+                  result_code: '0',
+                  msg: [I18n.t('entry.failure.system')]
+              }
+            end
           end
-        else
-         if guard_entries!(true, &do_entry)
-           {
-               result_code: '1',
-               msg: [I18n.t('entry.success.data')]
-           }
-         else
-           {
-               result_code: '0',
-               msg: [I18n.t('entry.failure.system')]
-           }
-         end
         end
       end
 

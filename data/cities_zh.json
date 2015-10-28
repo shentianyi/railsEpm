@@ -2,1365 +2,1695 @@
   "A": [
     {
       "name": "阿坝",
-      "key": "A"
+      "key": "A",
+      "code": "Acity0"
     },
     {
       "name": "阿拉善",
-      "key": "A"
+      "key": "A",
+      "code": "Acity1"
     },
     {
       "name": "阿里",
-      "key": "A"
+      "key": "A",
+      "code": "Acity2"
     },
     {
       "name": "安康",
-      "key": "A"
+      "key": "A",
+      "code": "Acity3"
     },
     {
       "name": "安庆",
-      "key": "A"
+      "key": "A",
+      "code": "Acity4"
     },
     {
       "name": "鞍山",
-      "key": "A"
+      "key": "A",
+      "code": "Acity5"
     },
     {
       "name": "安顺",
-      "key": "A"
+      "key": "A",
+      "code": "Acity6"
     },
     {
       "name": "安阳",
-      "key": "A"
+      "key": "A",
+      "code": "Acity7"
     },
     {
       "name": "澳门",
-      "key": "A"
+      "key": "A",
+      "code": "Acity8"
     }
   ],
   "B": [
     {
       "name": "北京",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity0"
     },
     {
       "name": "白银",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity1"
     },
     {
       "name": "保定",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity2"
     },
     {
       "name": "宝鸡",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity3"
     },
     {
       "name": "保山",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity4"
     },
     {
       "name": "包头",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity5"
     },
     {
       "name": "巴中",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity6"
     },
     {
       "name": "北海",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity7"
     },
     {
       "name": "蚌埠",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity8"
     },
     {
       "name": "本溪",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity9"
     },
     {
       "name": "毕节",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity10"
     },
     {
       "name": "滨州",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity11"
     },
     {
       "name": "百色",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity12"
     },
     {
       "name": "亳州",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity13"
     }
   ],
   "C": [
     {
       "name": "重庆",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity0"
     },
     {
       "name": "成都",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity1"
     },
     {
       "name": "长沙",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity2"
     },
     {
       "name": "长春",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity3"
     },
     {
       "name": "沧州",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity4"
     },
     {
       "name": "常德",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity5"
     },
     {
       "name": "昌都",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity6"
     },
     {
       "name": "长治",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity7"
     },
     {
       "name": "常州",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity8"
     },
     {
       "name": "巢湖",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity9"
     },
     {
       "name": "潮州",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity10"
     },
     {
       "name": "承德",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity11"
     },
     {
       "name": "郴州",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity12"
     },
     {
       "name": "赤峰",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity13"
     },
     {
       "name": "池州",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity14"
     },
     {
       "name": "崇左",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity15"
     },
     {
       "name": "楚雄",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity16"
     },
     {
       "name": "滁州",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity17"
     },
     {
       "name": "朝阳",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity18"
     }
   ],
   "D": [
     {
       "name": "大连",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity0"
     },
     {
       "name": "东莞",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity1"
     },
     {
       "name": "大理",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity2"
     },
     {
       "name": "丹东",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity3"
     },
     {
       "name": "大庆",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity4"
     },
     {
       "name": "大同",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity5"
     },
     {
       "name": "大兴安岭",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity6"
     },
     {
       "name": "德宏",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity7"
     },
     {
       "name": "德阳",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity8"
     },
     {
       "name": "德州",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity9"
     },
     {
       "name": "定西",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity10"
     },
     {
       "name": "迪庆",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity11"
     },
     {
       "name": "东营",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity12"
     }
   ],
   "E": [
     {
       "name": "鄂尔多斯",
-      "key": "E"
+      "key": "E",
+      "code": "Ecity0"
     },
     {
       "name": "恩施",
-      "key": "E"
+      "key": "E",
+      "code": "Ecity1"
     },
     {
       "name": "鄂州",
-      "key": "E"
+      "key": "E",
+      "code": "Ecity2"
     }
   ],
   "F": [
     {
       "name": "福州",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity0"
     },
     {
       "name": "防城港",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity1"
     },
     {
       "name": "佛山",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity2"
     },
     {
       "name": "抚顺",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity3"
     },
     {
       "name": "抚州",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity4"
     },
     {
       "name": "阜新",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity5"
     },
     {
       "name": "阜阳",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity6"
     }
   ],
   "G": [
     {
       "name": "广州",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity0"
     },
     {
       "name": "赣州",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity1"
     },
     {
       "name": "桂林",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity2"
     },
     {
       "name": "贵阳",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity3"
     },
     {
       "name": "甘南",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity4"
     },
     {
       "name": "甘孜",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity5"
     },
     {
       "name": "广安",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity6"
     },
     {
       "name": "广元",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity7"
     },
     {
       "name": "果洛",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity8"
     },
     {
       "name": "贵港",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity9"
     }
   ],
   "H": [
     {
       "name": "杭州",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity0"
     },
     {
       "name": "哈尔滨",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity1"
     },
     {
       "name": "合肥",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity2"
     },
     {
       "name": "海口",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity3"
     },
     {
       "name": "海东",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity4"
     },
     {
       "name": "海北",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity5"
     },
     {
       "name": "海南",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity6"
     },
     {
       "name": "海西",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity7"
     },
     {
       "name": "邯郸",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity8"
     },
     {
       "name": "汉中",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity9"
     },
     {
       "name": "鹤壁",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity10"
     },
     {
       "name": "河池",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity11"
     },
     {
       "name": "鹤岗",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity12"
     },
     {
       "name": "黑河",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity13"
     },
     {
       "name": "衡水",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity14"
     },
     {
       "name": "衡阳",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity15"
     },
     {
       "name": "河源",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity16"
     },
     {
       "name": "贺州",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity17"
     },
     {
       "name": "红河",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity18"
     },
     {
       "name": "淮安",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity19"
     },
     {
       "name": "淮北",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity20"
     },
     {
       "name": "怀化",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity21"
     },
     {
       "name": "淮南",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity22"
     },
     {
       "name": "黄冈",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity23"
     },
     {
       "name": "黄南",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity24"
     },
     {
       "name": "黄山",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity25"
     },
     {
       "name": "黄石",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity26"
     },
     {
       "name": "惠州",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity27"
     },
     {
       "name": "葫芦岛",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity28"
     },
     {
       "name": "呼伦贝尔",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity29"
     },
     {
       "name": "湖州",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity30"
     },
     {
       "name": "菏泽",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity31"
     }
   ],
   "J": [
     {
       "name": "济南",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity0"
     },
     {
       "name": "佳木斯",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity1"
     },
     {
       "name": "吉安",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity2"
     },
     {
       "name": "江门",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity3"
     },
     {
       "name": "焦作",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity4"
     },
     {
       "name": "嘉兴",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity5"
     },
     {
       "name": "嘉峪关",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity6"
     },
     {
       "name": "揭阳",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity7"
     },
     {
       "name": "吉林",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity8"
     },
     {
       "name": "金昌",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity9"
     },
     {
       "name": "晋城",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity10"
     },
     {
       "name": "景德镇",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity11"
     },
     {
       "name": "荆门",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity12"
     },
     {
       "name": "荆州",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity13"
     },
     {
       "name": "金华",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity14"
     },
     {
       "name": "济宁",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity15"
     },
     {
       "name": "晋中",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity16"
     },
     {
       "name": "锦州",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity17"
     },
     {
       "name": "九江",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity18"
     },
     {
       "name": "酒泉",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity19"
     }
   ],
   "K": [
     {
       "name": "昆明",
-      "key": "K"
+      "key": "K",
+      "code": "Kcity0"
     },
     {
       "name": "开封",
-      "key": "K"
+      "key": "K",
+      "code": "Kcity1"
     }
   ],
   "L": [
     {
       "name": "兰州",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity0"
     },
     {
       "name": "拉萨",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity1"
     },
     {
       "name": "来宾",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity2"
     },
     {
       "name": "莱芜",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity3"
     },
     {
       "name": "廊坊",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity4"
     },
     {
       "name": "乐山",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity5"
     },
     {
       "name": "凉山",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity6"
     },
     {
       "name": "连云港",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity7"
     },
     {
       "name": "聊城",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity8"
     },
     {
       "name": "辽阳",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity9"
     },
     {
       "name": "辽源",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity10"
     },
     {
       "name": "丽江",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity11"
     },
     {
       "name": "临沧",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity12"
     },
     {
       "name": "临汾",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity13"
     },
     {
       "name": "临夏",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity14"
     },
     {
       "name": "临沂",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity15"
     },
     {
       "name": "林芝",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity16"
     },
     {
       "name": "丽水",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity17"
     },
     {
       "name": "六安",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity18"
     },
     {
       "name": "六盘水",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity19"
     },
     {
       "name": "柳州",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity20"
     },
     {
       "name": "陇南",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity21"
     },
     {
       "name": "龙岩",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity22"
     },
     {
       "name": "娄底",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity23"
     },
     {
       "name": "漯河",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity24"
     },
     {
       "name": "洛阳",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity25"
     },
     {
       "name": "泸州",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity26"
     },
     {
       "name": "吕梁",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity27"
     }
   ],
   "M": [
     {
       "name": "马鞍山",
-      "key": "M"
+      "key": "M",
+      "code": "Mcity0"
     },
     {
       "name": "茂名",
-      "key": "M"
+      "key": "M",
+      "code": "Mcity1"
     },
     {
       "name": "眉山",
-      "key": "M"
+      "key": "M",
+      "code": "Mcity2"
     },
     {
       "name": "梅州",
-      "key": "M"
+      "key": "M",
+      "code": "Mcity3"
     },
     {
       "name": "绵阳",
-      "key": "M"
+      "key": "M",
+      "code": "Mcity4"
     },
     {
       "name": "牡丹江",
-      "key": "M"
+      "key": "M",
+      "code": "Mcity5"
     }
   ],
   "N": [
     {
       "name": "南京",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity0"
     },
     {
       "name": "南昌",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity1"
     },
     {
       "name": "南宁",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity2"
     },
     {
       "name": "南充",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity3"
     },
     {
       "name": "南平",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity4"
     },
     {
       "name": "南通",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity5"
     },
     {
       "name": "南阳",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity6"
     },
     {
       "name": "那曲",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity7"
     },
     {
       "name": "内江",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity8"
     },
     {
       "name": "宁德",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity9"
     },
     {
       "name": "怒江",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity10"
     }
   ],
   "P": [
     {
       "name": "盘锦",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity0"
     },
     {
       "name": "攀枝花",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity1"
     },
     {
       "name": "平顶山",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity2"
     },
     {
       "name": "平凉",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity3"
     },
     {
       "name": "萍乡",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity4"
     },
     {
       "name": "莆田",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity5"
     },
     {
       "name": "濮阳",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity6"
     }
   ],
   "Q": [
     {
       "name": "青岛",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity0"
     },
     {
       "name": "黔东南",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity1"
     },
     {
       "name": "黔南",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity2"
     },
     {
       "name": "黔西南",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity3"
     },
     {
       "name": "庆阳",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity4"
     },
     {
       "name": "清远",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity5"
     },
     {
       "name": "秦皇岛",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity6"
     },
     {
       "name": "钦州",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity7"
     },
     {
       "name": "齐齐哈尔",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity8"
     },
     {
       "name": "泉州",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity9"
     },
     {
       "name": "曲靖",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity10"
     },
     {
       "name": "衢州",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity11"
     }
   ],
   "R": [
     {
       "name": "日喀则",
-      "key": "R"
+      "key": "R",
+      "code": "Rcity0"
     },
     {
       "name": "日照",
-      "key": "R"
+      "key": "R",
+      "code": "Rcity1"
     }
   ],
   "S": [
     {
       "name": "上海",
-      "key": "S"
+      "key": "S",
+      "code": "Scity0"
     },
     {
       "name": "深圳",
-      "key": "S"
+      "key": "S",
+      "code": "Scity1"
     },
     {
       "name": "苏州",
-      "key": "S"
+      "key": "S",
+      "code": "Scity2"
     },
     {
       "name": "沈阳",
-      "key": "S"
+      "key": "S",
+      "code": "Scity3"
     },
     {
       "name": "石家庄",
-      "key": "S"
+      "key": "S",
+      "code": "Scity4"
     },
     {
       "name": "三门峡",
-      "key": "S"
+      "key": "S",
+      "code": "Scity5"
     },
     {
       "name": "三明",
-      "key": "S"
+      "key": "S",
+      "code": "Scity6"
     },
     {
       "name": "三亚",
-      "key": "S"
+      "key": "S",
+      "code": "Scity7"
     },
     {
       "name": "商洛",
-      "key": "S"
+      "key": "S",
+      "code": "Scity8"
     },
     {
       "name": "商丘",
-      "key": "S"
+      "key": "S",
+      "code": "Scity9"
     },
     {
       "name": "上饶",
-      "key": "S"
+      "key": "S",
+      "code": "Scity10"
     },
     {
       "name": "山南",
-      "key": "S"
+      "key": "S",
+      "code": "Scity11"
     },
     {
       "name": "汕头",
-      "key": "S"
+      "key": "S",
+      "code": "Scity12"
     },
     {
       "name": "汕尾",
-      "key": "S"
+      "key": "S",
+      "code": "Scity13"
     },
     {
       "name": "韶关",
-      "key": "S"
+      "key": "S",
+      "code": "Scity14"
     },
     {
       "name": "绍兴",
-      "key": "S"
+      "key": "S",
+      "code": "Scity15"
     },
     {
       "name": "邵阳",
-      "key": "S"
+      "key": "S",
+      "code": "Scity16"
     },
     {
       "name": "十堰",
-      "key": "S"
+      "key": "S",
+      "code": "Scity17"
     },
     {
       "name": "朔州",
-      "key": "S"
+      "key": "S",
+      "code": "Scity18"
     },
     {
       "name": "四平",
-      "key": "S"
+      "key": "S",
+      "code": "Scity19"
     },
     {
       "name": "绥化",
-      "key": "S"
+      "key": "S",
+      "code": "Scity20"
     },
     {
       "name": "遂宁",
-      "key": "S"
+      "key": "S",
+      "code": "Scity21"
     },
     {
       "name": "随州",
-      "key": "S"
+      "key": "S",
+      "code": "Scity22"
     },
     {
       "name": "娄底",
-      "key": "S"
+      "key": "S",
+      "code": "Scity23"
     },
     {
       "name": "宿迁",
-      "key": "S"
+      "key": "S",
+      "code": "Scity24"
     },
     {
       "name": "宿州",
-      "key": "S"
+      "key": "S",
+      "code": "Scity25"
     }
   ],
   "T": [
     {
       "name": "天津",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity0"
     },
     {
       "name": "太原",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity1"
     },
     {
       "name": "泰安",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity2"
     },
     {
       "name": "泰州",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity3"
     },
     {
       "name": "唐山",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity4"
     },
     {
       "name": "天水",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity5"
     },
     {
       "name": "铁岭",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity6"
     },
     {
       "name": "铜川",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity7"
     },
     {
       "name": "通化",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity8"
     },
     {
       "name": "通辽",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity9"
     },
     {
       "name": "铜陵",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity10"
     },
     {
       "name": "铜仁",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity11"
     },
     {
       "name": "台湾",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity12"
     }
   ],
   "W": [
     {
       "name": "武汉",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity0"
     },
     {
       "name": "乌鲁木齐",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity1"
     },
     {
       "name": "无锡",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity2"
     },
     {
       "name": "威海",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity3"
     },
     {
       "name": "潍坊",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity4"
     },
     {
       "name": "文山",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity5"
     },
     {
       "name": "温州",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity6"
     },
     {
       "name": "乌海",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity7"
     },
     {
       "name": "芜湖",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity8"
     },
     {
       "name": "乌兰察布",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity9"
     },
     {
       "name": "武威",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity10"
     },
     {
       "name": "梧州",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity11"
     }
   ],
   "X": [
     {
       "name": "厦门",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity0"
     },
     {
       "name": "西安",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity1"
     },
     {
       "name": "西宁",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity2"
     },
     {
       "name": "襄樊",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity3"
     },
     {
       "name": "湘潭",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity4"
     },
     {
       "name": "湘西",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity5"
     },
     {
       "name": "咸宁",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity6"
     },
     {
       "name": "咸阳",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity7"
     },
     {
       "name": "孝感",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity8"
     },
     {
       "name": "邢台",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity9"
     },
     {
       "name": "新乡",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity10"
     },
     {
       "name": "信阳",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity11"
     },
     {
       "name": "新余",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity12"
     },
     {
       "name": "忻州",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity13"
     },
     {
       "name": "西双版纳",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity14"
     },
     {
       "name": "宣城",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity15"
     },
     {
       "name": "许昌",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity16"
     },
     {
       "name": "徐州",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity17"
     },
     {
       "name": "香港",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity18"
     },
     {
       "name": "锡林郭勒",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity19"
     },
     {
       "name": "兴安",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity20"
     }
   ],
   "Y": [
     {
       "name": "银川",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity0"
     },
     {
       "name": "雅安",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity1"
     },
     {
       "name": "延安",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity2"
     },
     {
       "name": "延边",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity3"
     },
     {
       "name": "盐城",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity4"
     },
     {
       "name": "阳江",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity5"
     },
     {
       "name": "阳泉",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity6"
     },
     {
       "name": "扬州",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity7"
     },
     {
       "name": "烟台",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity8"
     },
     {
       "name": "宜宾",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity9"
     },
     {
       "name": "宜昌",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity10"
     },
     {
       "name": "宜春",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity11"
     },
     {
       "name": "营口",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity12"
     },
     {
       "name": "益阳",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity13"
     },
     {
       "name": "永州",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity14"
     },
     {
       "name": "岳阳",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity15"
     },
     {
       "name": "榆林",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity16"
     },
     {
       "name": "运城",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity17"
     },
     {
       "name": "云浮",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity18"
     },
     {
       "name": "玉树",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity19"
     },
     {
       "name": "玉溪",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity20"
     },
     {
       "name": "玉林",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity21"
     }
   ],
   "Z": [
     {
       "name": "杂多县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity0"
     },
     {
       "name": "赞皇县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity1"
     },
     {
       "name": "枣强县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity2"
     },
     {
       "name": "枣阳市",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity3"
     },
     {
       "name": "枣庄",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity4"
     },
     {
       "name": "泽库县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity5"
     },
     {
       "name": "增城市",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity6"
     },
     {
       "name": "曾都区",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity7"
     },
     {
       "name": "泽普县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity8"
     },
     {
       "name": "泽州县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity9"
     },
     {
       "name": "札达县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity10"
     },
     {
       "name": "扎赉特旗",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity11"
     },
     {
       "name": "扎兰屯市",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity12"
     },
     {
       "name": "扎鲁特旗",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity13"
     },
     {
       "name": "扎囊县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity14"
     },
     {
       "name": "张北县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity15"
     },
     {
       "name": "张店区",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity16"
     },
     {
       "name": "章贡区",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity17"
     },
     {
       "name": "张家港",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity18"
     },
     {
       "name": "张家界",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity19"
     },
     {
       "name": "张家口",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity20"
     },
     {
       "name": "漳平市",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity21"
     },
     {
       "name": "漳浦县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity22"
     },
     {
       "name": "章丘市",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity23"
     },
     {
       "name": "樟树市",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity24"
     },
     {
       "name": "张湾区",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity25"
     },
     {
       "name": "彰武县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity26"
     },
     {
       "name": "漳县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity27"
     },
     {
       "name": "张掖",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity28"
     },
     {
       "name": "漳州",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity29"
     },
     {
       "name": "长子县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity30"
     },
     {
       "name": "湛河区",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity31"
     },
     {
       "name": "湛江",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity32"
     },
     {
       "name": "站前区",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity33"
     },
     {
       "name": "沾益县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity34"
     },
     {
       "name": "诏安县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity35"
     },
     {
       "name": "召陵区",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity36"
     },
     {
       "name": "昭平县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity37"
     },
     {
       "name": "肇庆",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity38"
     },
     {
       "name": "昭通",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity39"
     },
     {
       "name": "赵县",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity40"
     }
   ]
 }

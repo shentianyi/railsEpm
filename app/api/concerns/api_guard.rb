@@ -121,10 +121,10 @@ module APIGuard
     end
 
     def get_locale
-        Rails.logger.debug("***http localization header:#{request.env['HTTP_LOCALIZATION'].present?}")
-    
-		Rails.logger.debug("***http localization header:#{request.env['HTTP_LOCALIZATION']}")
-		if request.env['HTTP_LOCALIZATION'].present?
+      Rails.logger.debug("***http localization header:#{request.env['HTTP_LOCALIZATION'].present?}")
+
+      Rails.logger.debug("***http localization header:#{request.env['HTTP_LOCALIZATION']}")
+      if request.env['HTTP_LOCALIZATION'].present?
         LOCALE_MAP[request.env['HTTP_LOCALIZATION'].to_sym] || 'en'
       else
         'en'

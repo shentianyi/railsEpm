@@ -42,7 +42,6 @@ module KpiEntryGuard
       puts entry_params[:email]
       puts entry_params[:kpi_properties]
 
-
       unless entry_params[:kpi_properties].is_a?(Hashie::Mash)
         entry_params[:kpi_properties] = JSON.parse(entry_params[:kpi_properties])
       end if entry_params[:kpi_properties]
