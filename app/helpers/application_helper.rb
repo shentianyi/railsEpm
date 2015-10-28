@@ -17,7 +17,9 @@ module ApplicationHelper
 
   def get_user_entity_groups
     #@entity_groups=current_user.entity_groups
+    puts 'log------------------------------'.red
     @entity_groups=EntityGroup.accessible_by(current_ability).uniq
+
   end
 
   def get_ability_entity

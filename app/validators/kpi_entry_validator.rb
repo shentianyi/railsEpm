@@ -11,7 +11,6 @@ class KpiEntryValidator
     self.valid=true
     self.valid_by_cache=false
     puts '--------------------------------'
-    puts args
 
     puts '--------------------------------666666666666'
     args.each do |k, v|

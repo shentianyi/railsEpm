@@ -2,1365 +2,1695 @@
   "A": [
     {
       "name": "Aba",
-      "key": "A"
+      "key": "A",
+      "code": "Acity0"
     },
     {
       "name": "Alashan",
-      "key": "A"
+      "key": "A",
+      "code": "Acity1"
     },
     {
       "name": "Ali",
-      "key": "A"
+      "key": "A",
+      "code": "Acity2"
     },
     {
       "name": "Ankang",
-      "key": "A"
+      "key": "A",
+      "code": "Acity3"
     },
     {
       "name": "Anqing",
-      "key": "A"
+      "key": "A",
+      "code": "Acity4"
     },
     {
       "name": "Anshan",
-      "key": "A"
+      "key": "A",
+      "code": "Acity5"
     },
     {
       "name": "Anshun",
-      "key": "A"
+      "key": "A",
+      "code": "Acity6"
     },
     {
       "name": "Anyang",
-      "key": "A"
+      "key": "A",
+      "code": "Acity7"
     },
     {
       "name": "Aomen",
-      "key": "A"
+      "key": "A",
+      "code": "Acity8"
     }
   ],
   "B": [
     {
       "name": "Beijing",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity0"
     },
     {
       "name": "Baiyin",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity1"
     },
     {
       "name": "Baoding",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity2"
     },
     {
       "name": "Baoji",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity3"
     },
     {
       "name": "Baoshan",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity4"
     },
     {
       "name": "Baotou",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity5"
     },
     {
       "name": "Bazhong",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity6"
     },
     {
       "name": "Beihai",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity7"
     },
     {
       "name": "Bengbu",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity8"
     },
     {
       "name": "Benxi",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity9"
     },
     {
       "name": "Bijie",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity10"
     },
     {
       "name": "Binzhou",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity11"
     },
     {
       "name": "Bose",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity12"
     },
     {
       "name": "Bozhou",
-      "key": "B"
+      "key": "B",
+      "code": "Bcity13"
     }
   ],
   "C": [
     {
       "name": "Chongqing",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity0"
     },
     {
       "name": "Chengdu",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity1"
     },
     {
       "name": "Changsha",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity2"
     },
     {
       "name": "Changchun",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity3"
     },
     {
       "name": "Cangzhou",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity4"
     },
     {
       "name": "Changde",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity5"
     },
     {
       "name": "Changdu",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity6"
     },
     {
       "name": "Changzhi",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity7"
     },
     {
       "name": "Changzhou",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity8"
     },
     {
       "name": "Chaohu",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity9"
     },
     {
       "name": "Chaozhou",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity10"
     },
     {
       "name": "Chengde",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity11"
     },
     {
       "name": "Chenzhou",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity12"
     },
     {
       "name": "Chifeng",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity13"
     },
     {
       "name": "Chizhou",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity14"
     },
     {
       "name": "Chongzuo",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity15"
     },
     {
       "name": "Chuxiong",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity16"
     },
     {
       "name": "Chuzhou",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity17"
     },
     {
       "name": "Zhaoyang",
-      "key": "C"
+      "key": "C",
+      "code": "Ccity18"
     }
   ],
   "D": [
     {
       "name": "Dalian",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity0"
     },
     {
       "name": "Dongguan",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity1"
     },
     {
       "name": "Dali",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity2"
     },
     {
       "name": "Dandong",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity3"
     },
     {
       "name": "Daqing",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity4"
     },
     {
       "name": "Datong",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity5"
     },
     {
       "name": "Daxinganling",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity6"
     },
     {
       "name": "Dehong",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity7"
     },
     {
       "name": "Deyang",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity8"
     },
     {
       "name": "Dezhou",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity9"
     },
     {
       "name": "Dingxi",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity10"
     },
     {
       "name": "Diqing",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity11"
     },
     {
       "name": "Dongying",
-      "key": "D"
+      "key": "D",
+      "code": "Dcity12"
     }
   ],
   "E": [
     {
       "name": "Eerduosi",
-      "key": "E"
+      "key": "E",
+      "code": "Ecity0"
     },
     {
       "name": "Enshi",
-      "key": "E"
+      "key": "E",
+      "code": "Ecity1"
     },
     {
       "name": "Ezhou",
-      "key": "E"
+      "key": "E",
+      "code": "Ecity2"
     }
   ],
   "F": [
     {
       "name": "Fuzhou",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity0"
     },
     {
       "name": "Fangchenggang",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity1"
     },
     {
       "name": "Foshan",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity2"
     },
     {
       "name": "Fushun",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity3"
     },
     {
       "name": "Fuzhou",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity4"
     },
     {
       "name": "Fuxin",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity5"
     },
     {
       "name": "Fuyang",
-      "key": "F"
+      "key": "F",
+      "code": "Fcity6"
     }
   ],
   "G": [
     {
       "name": "Guangzhou",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity0"
     },
     {
       "name": "Ganzhou",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity1"
     },
     {
       "name": "Guilin",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity2"
     },
     {
       "name": "Guiyang",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity3"
     },
     {
       "name": "Gannan",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity4"
     },
     {
       "name": "Ganzi",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity5"
     },
     {
       "name": "Guangan",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity6"
     },
     {
       "name": "Guangyuan",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity7"
     },
     {
       "name": "Guoluo",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity8"
     },
     {
       "name": "Guigang",
-      "key": "G"
+      "key": "G",
+      "code": "Gcity9"
     }
   ],
   "H": [
     {
       "name": "Hangzhou",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity0"
     },
     {
       "name": "Haerbin",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity1"
     },
     {
       "name": "Hefei",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity2"
     },
     {
       "name": "Haikou",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity3"
     },
     {
       "name": "Haidong",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity4"
     },
     {
       "name": "Haibei",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity5"
     },
     {
       "name": "Hainan",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity6"
     },
     {
       "name": "Haixi",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity7"
     },
     {
       "name": "Handan",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity8"
     },
     {
       "name": "Hanzhong",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity9"
     },
     {
       "name": "Hebi",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity10"
     },
     {
       "name": "Hechi",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity11"
     },
     {
       "name": "Hegang",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity12"
     },
     {
       "name": "Heihe",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity13"
     },
     {
       "name": "Hengshui",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity14"
     },
     {
       "name": "Hengyang",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity15"
     },
     {
       "name": "Heyuan",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity16"
     },
     {
       "name": "Hezhou",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity17"
     },
     {
       "name": "Honghe",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity18"
     },
     {
       "name": "Huaian",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity19"
     },
     {
       "name": "Huaibei",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity20"
     },
     {
       "name": "Huaihua",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity21"
     },
     {
       "name": "Huainan",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity22"
     },
     {
       "name": "Huanggang",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity23"
     },
     {
       "name": "Huangnan",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity24"
     },
     {
       "name": "Huangshan",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity25"
     },
     {
       "name": "Huangshi",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity26"
     },
     {
       "name": "Huizhou",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity27"
     },
     {
       "name": "Huludao",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity28"
     },
     {
       "name": "Hulunbeier",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity29"
     },
     {
       "name": "Huzhou",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity30"
     },
     {
       "name": "Heze",
-      "key": "H"
+      "key": "H",
+      "code": "Hcity31"
     }
   ],
   "J": [
     {
       "name": "Jinan",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity0"
     },
     {
       "name": "Jiamusi",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity1"
     },
     {
       "name": "Jian",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity2"
     },
     {
       "name": "Jiangmen",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity3"
     },
     {
       "name": "Jiaozuo",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity4"
     },
     {
       "name": "Jiaxing",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity5"
     },
     {
       "name": "Jiayuguan",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity6"
     },
     {
       "name": "Jieyang",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity7"
     },
     {
       "name": "Jilin",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity8"
     },
     {
       "name": "Jinchang",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity9"
     },
     {
       "name": "Jincheng",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity10"
     },
     {
       "name": "Jingdezhen",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity11"
     },
     {
       "name": "Jingmen",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity12"
     },
     {
       "name": "Jingzhou",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity13"
     },
     {
       "name": "Jinhua",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity14"
     },
     {
       "name": "Jining",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity15"
     },
     {
       "name": "Jinzhong",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity16"
     },
     {
       "name": "Jinzhou",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity17"
     },
     {
       "name": "Jiujiang",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity18"
     },
     {
       "name": "Jiuquan",
-      "key": "J"
+      "key": "J",
+      "code": "Jcity19"
     }
   ],
   "K": [
     {
       "name": "Kunming",
-      "key": "K"
+      "key": "K",
+      "code": "Kcity0"
     },
     {
       "name": "Kaifeng",
-      "key": "K"
+      "key": "K",
+      "code": "Kcity1"
     }
   ],
   "L": [
     {
       "name": "Lanzhou",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity0"
     },
     {
       "name": "Lasa",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity1"
     },
     {
       "name": "Laibin",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity2"
     },
     {
       "name": "Laiwu",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity3"
     },
     {
       "name": "Langfang",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity4"
     },
     {
       "name": "Leshan",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity5"
     },
     {
       "name": "Liangshan",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity6"
     },
     {
       "name": "Lianyungang",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity7"
     },
     {
       "name": "Liaocheng",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity8"
     },
     {
       "name": "Liaoyang",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity9"
     },
     {
       "name": "Liaoyuan",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity10"
     },
     {
       "name": "Lijiang",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity11"
     },
     {
       "name": "Lincang",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity12"
     },
     {
       "name": "Linfen",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity13"
     },
     {
       "name": "Linxia",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity14"
     },
     {
       "name": "Linyi",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity15"
     },
     {
       "name": "Linzhi",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity16"
     },
     {
       "name": "Lishui",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity17"
     },
     {
       "name": "Luan",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity18"
     },
     {
       "name": "Liupanshui",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity19"
     },
     {
       "name": "Liuzhou",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity20"
     },
     {
       "name": "Longnan",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity21"
     },
     {
       "name": "Longyan",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity22"
     },
     {
       "name": "Loudi",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity23"
     },
     {
       "name": "Tahe",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity24"
     },
     {
       "name": "Luoyang",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity25"
     },
     {
       "name": "Luzhou",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity26"
     },
     {
       "name": "Lvliang",
-      "key": "L"
+      "key": "L",
+      "code": "Lcity27"
     }
   ],
   "M": [
     {
       "name": "Maanshan",
-      "key": "M"
+      "key": "M",
+      "code": "Mcity0"
     },
     {
       "name": "Maoming",
-      "key": "M"
+      "key": "M",
+      "code": "Mcity1"
     },
     {
       "name": "Meishan",
-      "key": "M"
+      "key": "M",
+      "code": "Mcity2"
     },
     {
       "name": "Meizhou",
-      "key": "M"
+      "key": "M",
+      "code": "Mcity3"
     },
     {
       "name": "Mianyang",
-      "key": "M"
+      "key": "M",
+      "code": "Mcity4"
     },
     {
       "name": "Mudanjiang",
-      "key": "M"
+      "key": "M",
+      "code": "Mcity5"
     }
   ],
   "N": [
     {
       "name": "Nanjing",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity0"
     },
     {
       "name": "Nanchang",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity1"
     },
     {
       "name": "Nanning",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity2"
     },
     {
       "name": "Nanchong",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity3"
     },
     {
       "name": "Nanping",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity4"
     },
     {
       "name": "Nantong",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity5"
     },
     {
       "name": "Nanyang",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity6"
     },
     {
       "name": "Naqu",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity7"
     },
     {
       "name": "Neijiang",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity8"
     },
     {
       "name": "Ningde",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity9"
     },
     {
       "name": "Nujiang",
-      "key": "N"
+      "key": "N",
+      "code": "Ncity10"
     }
   ],
   "P": [
     {
       "name": "Panjin",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity0"
     },
     {
       "name": "Panzhihua",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity1"
     },
     {
       "name": "Pingdingshan",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity2"
     },
     {
       "name": "Pingliang",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity3"
     },
     {
       "name": "Pingxiang",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity4"
     },
     {
       "name": "Putian",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity5"
     },
     {
       "name": "Puyang",
-      "key": "P"
+      "key": "P",
+      "code": "Pcity6"
     }
   ],
   "Q": [
     {
       "name": "Qingdao",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity0"
     },
     {
       "name": "Qiandongnan",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity1"
     },
     {
       "name": "Qiannan",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity2"
     },
     {
       "name": "Qianxinan",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity3"
     },
     {
       "name": "Qingyang",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity4"
     },
     {
       "name": "Qingyuan",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity5"
     },
     {
       "name": "Qinhuangdao",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity6"
     },
     {
       "name": "Qinzhou",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity7"
     },
     {
       "name": "Qiqihaer",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity8"
     },
     {
       "name": "Quanzhou",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity9"
     },
     {
       "name": "Qujing",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity10"
     },
     {
       "name": "Quzhou",
-      "key": "Q"
+      "key": "Q",
+      "code": "Qcity11"
     }
   ],
   "R": [
     {
       "name": "Rikaze",
-      "key": "R"
+      "key": "R",
+      "code": "Rcity0"
     },
     {
       "name": "Rizhao",
-      "key": "R"
+      "key": "R",
+      "code": "Rcity1"
     }
   ],
   "S": [
     {
       "name": "Shanghai",
-      "key": "S"
+      "key": "S",
+      "code": "Scity0"
     },
     {
       "name": "Shenzhen",
-      "key": "S"
+      "key": "S",
+      "code": "Scity1"
     },
     {
       "name": "Suzhou",
-      "key": "S"
+      "key": "S",
+      "code": "Scity2"
     },
     {
       "name": "Shenyang",
-      "key": "S"
+      "key": "S",
+      "code": "Scity3"
     },
     {
       "name": "Shijiazhuang",
-      "key": "S"
+      "key": "S",
+      "code": "Scity4"
     },
     {
       "name": "Sanmenxia",
-      "key": "S"
+      "key": "S",
+      "code": "Scity5"
     },
     {
       "name": "Sanming",
-      "key": "S"
+      "key": "S",
+      "code": "Scity6"
     },
     {
       "name": "Sanya",
-      "key": "S"
+      "key": "S",
+      "code": "Scity7"
     },
     {
       "name": "Shangluo",
-      "key": "S"
+      "key": "S",
+      "code": "Scity8"
     },
     {
       "name": "Shangqiu",
-      "key": "S"
+      "key": "S",
+      "code": "Scity9"
     },
     {
       "name": "Shangrao",
-      "key": "S"
+      "key": "S",
+      "code": "Scity10"
     },
     {
       "name": "Shannan",
-      "key": "S"
+      "key": "S",
+      "code": "Scity11"
     },
     {
       "name": "Shantou",
-      "key": "S"
+      "key": "S",
+      "code": "Scity12"
     },
     {
       "name": "Shanwei",
-      "key": "S"
+      "key": "S",
+      "code": "Scity13"
     },
     {
       "name": "Shaoguan",
-      "key": "S"
+      "key": "S",
+      "code": "Scity14"
     },
     {
       "name": "Shaoxing",
-      "key": "S"
+      "key": "S",
+      "code": "Scity15"
     },
     {
       "name": "Shaoyang",
-      "key": "S"
+      "key": "S",
+      "code": "Scity16"
     },
     {
       "name": "Shiyan",
-      "key": "S"
+      "key": "S",
+      "code": "Scity17"
     },
     {
       "name": "Shuozhou",
-      "key": "S"
+      "key": "S",
+      "code": "Scity18"
     },
     {
       "name": "Siping",
-      "key": "S"
+      "key": "S",
+      "code": "Scity19"
     },
     {
       "name": "Suihua",
-      "key": "S"
+      "key": "S",
+      "code": "Scity20"
     },
     {
       "name": "Suining",
-      "key": "S"
+      "key": "S",
+      "code": "Scity21"
     },
     {
       "name": "Suizhou",
-      "key": "S"
+      "key": "S",
+      "code": "Scity22"
     },
     {
       "name": "Loudi",
-      "key": "S"
+      "key": "S",
+      "code": "Scity23"
     },
     {
       "name": "Suqian",
-      "key": "S"
+      "key": "S",
+      "code": "Scity24"
     },
     {
       "name": "Suzhou",
-      "key": "S"
+      "key": "S",
+      "code": "Scity25"
     }
   ],
   "T": [
     {
       "name": "Tianjin",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity0"
     },
     {
       "name": "Taiyuan",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity1"
     },
     {
       "name": "Taian",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity2"
     },
     {
       "name": "Taizhou",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity3"
     },
     {
       "name": "Tangshan",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity4"
     },
     {
       "name": "Tianshui",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity5"
     },
     {
       "name": "Tieling",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity6"
     },
     {
       "name": "Tongchuan",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity7"
     },
     {
       "name": "Tonghua",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity8"
     },
     {
       "name": "Tongliao",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity9"
     },
     {
       "name": "Tongling",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity10"
     },
     {
       "name": "Tongren",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity11"
     },
     {
       "name": "Taiwan",
-      "key": "T"
+      "key": "T",
+      "code": "Tcity12"
     }
   ],
   "W": [
     {
       "name": "Wuhan",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity0"
     },
     {
       "name": "Wulumuqi",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity1"
     },
     {
       "name": "Wuxi",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity2"
     },
     {
       "name": "Weihai",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity3"
     },
     {
       "name": "Weifang",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity4"
     },
     {
       "name": "Wenshan",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity5"
     },
     {
       "name": "Wenzhou",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity6"
     },
     {
       "name": "Wuhai",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity7"
     },
     {
       "name": "Wuhu",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity8"
     },
     {
       "name": "Wulanchabu",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity9"
     },
     {
       "name": "Wuwei",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity10"
     },
     {
       "name": "Wuzhou",
-      "key": "W"
+      "key": "W",
+      "code": "Wcity11"
     }
   ],
   "X": [
     {
       "name": "Xiamen",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity0"
     },
     {
       "name": "Xian",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity1"
     },
     {
       "name": "Xining",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity2"
     },
     {
       "name": "Xiangfan",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity3"
     },
     {
       "name": "Xiangtan",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity4"
     },
     {
       "name": "Xiangxi",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity5"
     },
     {
       "name": "Xianning",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity6"
     },
     {
       "name": "Xianyang",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity7"
     },
     {
       "name": "Xiaogan",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity8"
     },
     {
       "name": "Xingtai",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity9"
     },
     {
       "name": "Xinxiang",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity10"
     },
     {
       "name": "Xinyang",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity11"
     },
     {
       "name": "Xinyu",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity12"
     },
     {
       "name": "Xinzhou",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity13"
     },
     {
       "name": "Xishuangbanna",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity14"
     },
     {
       "name": "Xuancheng",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity15"
     },
     {
       "name": "Xuchang",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity16"
     },
     {
       "name": "Xuzhou",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity17"
     },
     {
       "name": "Xianggang",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity18"
     },
     {
       "name": "Xilinguole",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity19"
     },
     {
       "name": "Xingan",
-      "key": "X"
+      "key": "X",
+      "code": "Xcity20"
     }
   ],
   "Y": [
     {
       "name": "Yinchuan",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity0"
     },
     {
       "name": "Yaan",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity1"
     },
     {
       "name": "Yanan",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity2"
     },
     {
       "name": "Yanbian",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity3"
     },
     {
       "name": "Yancheng",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity4"
     },
     {
       "name": "Yangjiang",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity5"
     },
     {
       "name": "Yangquan",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity6"
     },
     {
       "name": "Yangzhou",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity7"
     },
     {
       "name": "Yantai",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity8"
     },
     {
       "name": "Yibin",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity9"
     },
     {
       "name": "Yichang",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity10"
     },
     {
       "name": "Yichun",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity11"
     },
     {
       "name": "Yingkou",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity12"
     },
     {
       "name": "Yiyang",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity13"
     },
     {
       "name": "Yongzhou",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity14"
     },
     {
       "name": "Yueyang",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity15"
     },
     {
       "name": "Yulin",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity16"
     },
     {
       "name": "Yuncheng",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity17"
     },
     {
       "name": "Yunfu",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity18"
     },
     {
       "name": "Yushu",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity19"
     },
     {
       "name": "Yuxi",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity20"
     },
     {
       "name": "Yulin",
-      "key": "Y"
+      "key": "Y",
+      "code": "Ycity21"
     }
   ],
   "Z": [
     {
       "name": "Zaduoxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity0"
     },
     {
       "name": "Zanhuangxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity1"
     },
     {
       "name": "Zaoqiangxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity2"
     },
     {
       "name": "Zaoyangshi",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity3"
     },
     {
       "name": "Zaozhuang",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity4"
     },
     {
       "name": "Zekuxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity5"
     },
     {
       "name": "Zengchengshi",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity6"
     },
     {
       "name": "Zengduqu",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity7"
     },
     {
       "name": "Zepuxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity8"
     },
     {
       "name": "Zezhouxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity9"
     },
     {
       "name": "Zhadaxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity10"
     },
     {
       "name": "Zhalaiteqi",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity11"
     },
     {
       "name": "Zhalantunshi",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity12"
     },
     {
       "name": "Zaluteqi",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity13"
     },
     {
       "name": "Zanangxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity14"
     },
     {
       "name": "Zhangbeixian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity15"
     },
     {
       "name": "Zhangdianqu",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity16"
     },
     {
       "name": "Zhanggongqu",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity17"
     },
     {
       "name": "Zhangjiagang",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity18"
     },
     {
       "name": "Zhangjiajie",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity19"
     },
     {
       "name": "Zhangjiakou",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity20"
     },
     {
       "name": "Zhangpingshi",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity21"
     },
     {
       "name": "Zhangpuxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity22"
     },
     {
       "name": "Zhangqiushi",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity23"
     },
     {
       "name": "Zhangshushi",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity24"
     },
     {
       "name": "Zhangwanqu",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity25"
     },
     {
       "name": "Zhangwuxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity26"
     },
     {
       "name": "Zhangxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity27"
     },
     {
       "name": "Zhangye",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity28"
     },
     {
       "name": "Zhangzhou",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity29"
     },
     {
       "name": "Changzixian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity30"
     },
     {
       "name": "Zhanhequ",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity31"
     },
     {
       "name": "Zhanjiang",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity32"
     },
     {
       "name": "Zhanqianqu",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity33"
     },
     {
       "name": "Zhanyixian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity34"
     },
     {
       "name": "Zhaoanxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity35"
     },
     {
       "name": "Shaolingqu",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity36"
     },
     {
       "name": "Zhaopingxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity37"
     },
     {
       "name": "Zhaoqing",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity38"
     },
     {
       "name": "Zhaotong",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity39"
     },
     {
       "name": "Zhaoxian",
-      "key": "Z"
+      "key": "Z",
+      "code": "Zcity40"
     }
   ]
 }
