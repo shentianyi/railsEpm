@@ -6,20 +6,11 @@ class KpiEntryValidator
   attr_accessor :kpi_properties
   attr_accessor :source
 
-  HEADS = ["location", "working_type", "task_id"]
-
   #all the time we accept is utc time
   def initialize args={}
     self.valid=true
     self.valid_by_cache=false
     puts '--------------------------------'
-
-    #entry data display-->code
-    HEADS.each do |case_value|
-      unless args[:kpi_properties][case_value].blank?
-        args[:kpi_properties][case_value] = ParseLanguage.parse_display(args[:kpi_properties][case_value], case_value, args[:language])
-      end
-    end
 
     puts '--------------------------------666666666666'
     args.each do |k, v|

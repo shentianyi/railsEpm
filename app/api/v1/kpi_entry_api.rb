@@ -7,6 +7,18 @@ module V1
     namespace :kpi_entry do
       post :entry do
         status 200
+
+        puts '------------------------'.red
+        params[:language] = @locale
+        puts params
+        HEADS = ["location", "working_type", "task_id"]
+        #entry data display-->code
+        HEADS.each do |case_value|
+          unless params[:kpi_properties][case_value].blank?
+            params[:kpi_properties][case_value] = ParseLanguage.parse_display(params[:kpi_properties][case_value], case_value, params[:language])
+          end
+        end
+
         if guard_entry! &do_entry
           {
               result_code: '1',
