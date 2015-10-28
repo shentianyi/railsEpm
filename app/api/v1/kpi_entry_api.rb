@@ -11,11 +11,11 @@ module V1
         puts '------------------------'.red
         params[:language] = @locale
         puts params
-        HEADS = ["location", "working_type", "task_id"]
+        HEADS = ["working_type", "task_id"]
         #entry data display-->code
         HEADS.each do |case_value|
           unless params[:kpi_properties][case_value].blank?
-            params[:kpi_properties][case_value] = ParseLanguage.parse_display(params[:kpi_properties][case_value], case_value, params[:language])
+            params[:kpi_properties][case_value] = ParseLanguage.parse_code(params[:kpi_properties][case_value], case_value)
           end
         end
 
