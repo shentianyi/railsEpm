@@ -7,6 +7,9 @@ module V1
     namespace :kpi_entry do
       post :entry do
         status 200
+        Rails.logger.debug 'log entry data.................'
+        Rails.logger.debug params
+        Rails.logger.debug 'log entry data.................'
         # if is single kpi entry
         if params[0].nil?
           if guard_entry! &do_entry
