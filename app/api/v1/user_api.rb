@@ -7,6 +7,9 @@ module V1
       post do
         status 200
         puts params
+        Rails.logger.debug '------login params....start'
+        Rails.logger.debug params
+        Rails.logger.debug '----------login params....end'
         user = User.find_for_database_authentication(email: params[:user_id])
         if user
           if user.valid_password?(params[:password])
