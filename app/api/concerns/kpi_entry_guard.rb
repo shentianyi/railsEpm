@@ -60,26 +60,6 @@ module KpiEntryGuard
 
     # validate batch entries
     def guard_entries!(in_batch=true)
-      Rails.logger.debug '--------------------------'
-      Rails.logger.info params
-      Rails.logger.debug '--------------------------'
-      if params[:entries].blank?
-        puts '1......'
-        params[:entries]=[]
-        params.each do |p|
-          puts '2-......'
-          p p
-          p p.class
-          p p.second
-          p p.second.class
-
-          params[:entries] <<p.second if p.second.is_a?(Hash)
-        end
-      else
-        params[:entries] = JSON.parse(params[:entries])
-      end
-
-      p params[:entries]
 
       raise ArgumentError unless params[:entries].is_a?(Array)
       raise ArgumentError, 'api argument error' unless params.has_key?(:entries)

@@ -13,31 +13,55 @@ module V1
         Rails.logger.debug 'log entry data.................'
 
         HEADS = ["working_type", "task_id"]
-        #entry data display-->code
-        HEADS.each do |case_value|
-          unless params[:kpi_properties][case_value].blank?
-            params[:kpi_properties][case_value] = ParseLanguage.parse_code(params[:kpi_properties][case_value], case_value)
-          end if params[:kpi_properties].present?
-        end
-
         if params[0].nil?
+          HEADS.each do |case_value|
+            unless params[:kpi_properties][case_value].blank?
+              params[:kpi_properties][case_value] = ParseLanguage.parse_code(params[:kpi_properties][case_value], case_value)
+            end if params[:kpi_properties].present?
+          end
           if guard_entry! &do_entry
             {
                 result_code: '1',
                 msg: [I18n.t('entry.success.data')]
             }
           else
-            if guard_entries!(true, &do_entry)
-              {
-                  result_code: '1',
-                  msg: [I18n.t('entry.success.data')]
-              }
-            else
-              {
-                  result_code: '0',
-                  msg: [I18n.t('entry.failure.system')]
-              }
+            {
+                result_code: '0',
+                msg: [I18n.t('entry.failure.system')]
+            }
+          end
+        else
+          if params[:entries].blank?
+            puts '1......'
+            params[:entries]=[]
+            params.each do |p|
+              if p.second.is_a?(Hash)
+                HEADS.each do |case_value|
+                  unless p.second[:kpi_properties][case_value].blank?
+                    p.second[:kpi_properties][case_value] = ParseLanguage.parse_code(p.second[:kpi_properties][case_value], case_value)
+                  end if p.second[:kpi_properties].present?
+                end
+                params[:entries] <<p.second
+              end
             end
+          else
+            params[:entries] = JSON.parse(params[:entries])
+          end
+
+
+          p params[:entries]
+
+
+          if guard_entries!(true, &do_entry)
+            {
+                result_code: '1',
+                msg: [I18n.t('entry.success.data')]
+            }
+          else
+            {
+                result_code: '0',
+                msg: [I18n.t('entry.failure.system')]
+            }
           end
         end
       end
