@@ -17,7 +17,7 @@ module V1
         HEADS.each do |case_value|
           unless params[:kpi_properties][case_value].blank?
             params[:kpi_properties][case_value] = ParseLanguage.parse_code(params[:kpi_properties][case_value], case_value)
-          end
+          end if params[:kpi_properties].present?
         end
 
         if params[0].nil?
