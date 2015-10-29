@@ -10,12 +10,8 @@ class KpiEntryValidator
   def initialize args={}
     self.valid=true
     self.valid_by_cache=false
-    puts '--------------------------------'
 
-    puts '--------------------------------666666666666'
     args.each do |k, v|
-      p k
-      p v
       instance_variable_set "@#{k}", v
     end
     self.item_cache_key="kpi_entry_validator:#{self.email}:#{self.kpi_id}:#{self.date}:#{self.value}"
