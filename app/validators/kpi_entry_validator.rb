@@ -18,7 +18,7 @@ class KpiEntryValidator
       p v
       instance_variable_set "@#{k}", v
     end
-    self.item_cache_key="kpi_entry_validator:#{self.email}:#{self.kpi_id}"
+    self.item_cache_key="kpi_entry_validator:#{self.email}:#{self.kpi_id}:#{self.date}:#{self.value}"
 
 
     #2014-4-18
@@ -53,6 +53,7 @@ class KpiEntryValidator
   end
 
   def validate
+    puts "-----------------------#{self.date}".yellow
     if self.date.nil? || !self.date.is_date?
       self.valid=false
       self.content<<I18n.t('vali_msg.invalid_date')
@@ -87,6 +88,7 @@ class KpiEntryValidator
       end
       self.validator_collection.add_base_validator(self) if self.validator_collection
     end
+    puts "#{self.valid}----------------------------".blue
     prepare_params if self.valid
   end
 
