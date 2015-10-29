@@ -73,6 +73,7 @@ module KpiEntryGuard
           indexes<<i+1
         end
       end
+
       if indexes.size>0
         raise ArgumentError, "data index:#{indexes.join(',')} Argument Error}"
       else
@@ -80,6 +81,7 @@ module KpiEntryGuard
           v.validate
           vc.valid=false unless v.valid
         end
+
         if vc.valid
           yield(vc) if block_given?
         else

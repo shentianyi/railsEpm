@@ -109,6 +109,8 @@ GEM
       thor (>= 0.14, < 2.0)
     jsmin (1.0.1)
     json (1.8.1)
+    ledermann-rails-settings (2.4.0)
+      activerecord (>= 3.1)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -276,6 +278,7 @@ DEPENDENCIES
   grape
   i18n-js
   jquery-rails
+  ledermann-rails-settings
   mongoid (~> 3.1.6)
   multimap
   mysql2
@@ -300,3 +303,6 @@ DEPENDENCIES
   wicked_pdf
   will_paginate (~> 3.0)
   wkhtmltopdf-binary
+
+BUNDLED WITH
+   1.10.6

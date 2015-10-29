@@ -11,4 +11,12 @@ class Tenant < ActiveRecord::Base
 
   attr_accessible :company_name, :edition, :subscription_reference, :expire_at,:subscription_status
   attr_accessible :customer_first_name, :customer_last_name,:customer_email,:customer_phone,:user_id,:access_key
+
+  # 使用方法: Tenant.first.settings(:entity).auto_create_for_general_user
+  has_settings do |s|
+    s.key :entity ,:defaults=>{:auto_create_for_general_user=>true}
+    s.key :entity_group ,:defaults=>{:auto_create_for_general_user=>true}
+  end
+
+
 end

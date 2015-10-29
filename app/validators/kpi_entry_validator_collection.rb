@@ -28,6 +28,11 @@ class KpiEntryValidatorCollection
   def invalid_message
     message=[]
     self.validators.each_with_index do |v, i|
+      puts v.class
+
+      p v.valid
+      p v.content
+
       message<<"#{i+1} : #{v.content.join(';')}" unless v.valid
     end
     message
