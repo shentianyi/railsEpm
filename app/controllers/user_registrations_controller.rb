@@ -4,18 +4,8 @@ class UserRegistrationsController<Devise::RegistrationsController
   skip_authorize_resource
 
   def create
-    puts '-------------------------------'.red
-    puts params
-    puts '-------------------------------'.red
-    puts sign_up_params
-    puts '-------------------------------'.red
-
-
     msg=Message.new(result: true)
     build_resource(sign_up_params)
-    puts '-------------------------------'.blue
-    puts resource
-    puts '-------------------------------'.yellow
     if resource.save
       msg.object = UserPresenter.new(resource).to_json
     else
@@ -32,7 +22,6 @@ class UserRegistrationsController<Devise::RegistrationsController
 
 
   def update
-    puts '-----------------update--------------'.yellow
     msg=Message.new
     @user=User.accessible_by(current_ability).find_by_id(params[:id])
     if params[:user][:password].blank?

@@ -53,31 +53,32 @@ class User < ActiveRecord::Base
                      :ext_fields => [:email])
 
   def create_view_and_entity_for_general_user
-    puts '--------------entry_group-----entity----------------'.red
-
     #name code description tenant_id
     if self.entity.nil?
       #create entity
       args = {}
       args[:description] = args[:code] = args[:name] = self.first_name
-      #args[:tenant_id] = self.tenant.id
       entity = Entity.new(args)
       if entity.save
         #update user
-        puts '-------------------entity----------------'.red
-
-        puts self.id
-        puts entity.id
-        puts '-------------------self----------------'.red
-
-        self.update_attributes(entity_id: entity.id)
-
+        user = User.find_by_id(self.id)
+        raise "Sorry, Update User's Entity failed!" if user.blank?
+        user.update_attributes :entity_id => entity.id
+      else
+        raise "Sorry, Build default Entity failed!"
       end
     end
 
     #name user_id tenant_id
-    if self.entity_groups.nil?
-
+    if self.entity_groups.blank?
+      args = {}
+      args[:name] = self.first_name
+      args[:user_id] = self.id
+      args[:tenant_id] = self.tenant.id
+      entity_group = EntityGroup.new(args)
+      unless entity_group.save
+        raise "Sorry, Build default Entity Groups failed!"
+      end
     end
   end
 
