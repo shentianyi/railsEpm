@@ -8,12 +8,14 @@ module V1
       post :entry do
         status 200
 
+        p request.env['api.request.body'].class
+        puts '---------------------------------------'
         Rails.logger.debug 'log entry data.................'
         Rails.logger.debug params
         Rails.logger.debug 'log entry data.................'
 
-        HEADS = ["working_type", "task_id"]
-        if params[0].nil?
+        HEADS = ['working_type', 'task_id']
+        if request.env['api.request.body'].is_a?(Hash)
           HEADS.each do |case_value|
             unless params[:kpi_properties][case_value].blank?
               params[:kpi_properties][case_value] = ParseLanguage.parse_code(params[:kpi_properties][case_value], case_value)
@@ -30,18 +32,28 @@ module V1
                 msg: [I18n.t('entry.failure.system')]
             }
           end
-        else
+        elsif request.env['api.request.body'].is_a?(Array)
+
           if params[:entries].blank?
             puts '1......'
-            params[:entries]=[]
-            params.each do |p|
-              if p.second.is_a?(Hash)
+            params[:entries]=request.env['api.request.body']
+            params[:entries].each do |p|
+
+              if p.is_a?(Hash)
+                puts '8*8*****************'
+                p p[:kpi_properties]
+                p p[:kpi_properties].class
+                p  p['kpi_properties']
+                p  p['kpi_properties'].class
+
+                puts '8*8*****************'
                 HEADS.each do |case_value|
-                  unless p.second[:kpi_properties][case_value].blank?
-                    p.second[:kpi_properties][case_value] = ParseLanguage.parse_code(p.second[:kpi_properties][case_value], case_value)
-                  end if p.second[:kpi_properties].present?
+
+                  unless p[:kpi_properties][case_value].blank?
+                    puts '_______________'.blue
+                    p[:kpi_properties][case_value] = ParseLanguage.parse_code(p[:kpi_properties][case_value], case_value)
+                  end if p[:kpi_properties].present?
                 end
-                params[:entries] <<p.second
               end
             end
           else
