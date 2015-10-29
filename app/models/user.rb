@@ -36,6 +36,9 @@ class User < ActiveRecord::Base
   attr_accessible :tel, :phone, :image_url
   attr_accessible :stuff_id, :current_project_id, :current_location, :device_id, :is_online, :last_request_at
 
+
+  after_create :create_view_and_entity_for_general_user
+
   #acts_as_authentic do |c|
   #  c.login_field = :email
   #  c.validate_email_field = false
@@ -48,6 +51,35 @@ class User < ActiveRecord::Base
                      :condition_fields => [:tenant_id, :is_sys, :role_id, :entity_id],
                      :prefix_index_enable => true,
                      :ext_fields => [:email])
+
+  def create_view_and_entity_for_general_user
+    puts '--------------entry_group-----entity----------------'.red
+
+    #name code description tenant_id
+    if self.entity.nil?
+      #create entity
+      args = {}
+      args[:description] = args[:code] = args[:name] = self.first_name
+      #args[:tenant_id] = self.tenant.id
+      entity = Entity.new(args)
+      if entity.save
+        #update user
+        puts '-------------------entity----------------'.red
+
+        puts self.id
+        puts entity.id
+        puts '-------------------self----------------'.red
+
+        self.update_attributes(entity_id: entity.id)
+
+      end
+    end
+
+    #name user_id tenant_id
+    if self.entity_groups.nil?
+
+    end
+  end
 
   def method_missing(method_name, *args, &block)
     if Role::RoleMethods.include?(method_name)

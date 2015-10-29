@@ -11,6 +11,8 @@ class EntitiesController < ApplicationController
   # create entity
   def create
     contacts=params[:entity].slice(:contacts)[:contacts].values if params[:entity].has_key?(:contacts)
+    puts '-------------c----------------'.red
+    puts params[:entity]
     @entity=Entity.new(params[:entity])
     contacts.each do |contact|
       @entity.entity_contacts<<contact
