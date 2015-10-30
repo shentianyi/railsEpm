@@ -1,5 +1,6 @@
 module V1
   class KpiEntryAPI < Base
+    HEADS = ['working_type', 'task_id']
 
     guard_all!
     include KpiEntryGuard
@@ -8,19 +9,18 @@ module V1
       post :entry do
         status 200
 
-        p request.env['api.request.body'].class
-        puts '---------------------------------------'
+
         Rails.logger.debug 'log entry data.................'
         Rails.logger.debug params
         Rails.logger.debug 'log entry data.................'
 
-        HEADS = ['working_type', 'task_id']
-        if request.env['api.request.body'].is_a?(Hash)
+
           HEADS.each do |case_value|
             unless params[:kpi_properties][case_value].blank?
               params[:kpi_properties][case_value] = ParseLanguage.parse_code(params[:kpi_properties][case_value], case_value)
             end if params[:kpi_properties].present?
           end
+
           if guard_entry! &do_entry
             {
                 result_code: '1',
@@ -32,51 +32,8 @@ module V1
                 msg: [I18n.t('entry.failure.system')]
             }
           end
-        elsif request.env['api.request.body'].is_a?(Array)
 
-          if params[:entries].blank?
-            puts '1......'
-            params[:entries]=request.env['api.request.body']
-            params[:entries].each do |p|
-
-              if p.is_a?(Hash)
-                puts '8*8*****************'
-                p p[:kpi_properties]
-                p p[:kpi_properties].class
-                p  p['kpi_properties']
-                p  p['kpi_properties'].class
-
-                puts '8*8*****************'
-                HEADS.each do |case_value|
-
-                  unless p[:kpi_properties][case_value].blank?
-                    puts '_______________'.blue
-                    p[:kpi_properties][case_value] = ParseLanguage.parse_code(p[:kpi_properties][case_value], case_value)
-                  end if p[:kpi_properties].present?
-                end
-              end
-            end
-          else
-            params[:entries] = JSON.parse(params[:entries])
-          end
-
-
-          p params[:entries]
-
-
-          if guard_entries!(true, &do_entry)
-            {
-                result_code: '1',
-                msg: [I18n.t('entry.success.data')]
-            }
-          else
-            {
-                result_code: '0',
-                msg: [I18n.t('entry.failure.system')]
-            }
-          end
         end
-      end
 
 
       desc 'get kpi entry api'
