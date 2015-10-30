@@ -8,6 +8,7 @@ module V1
       post :entry do
         status 200
 
+        puts '000000000000'.blue
         p request.env['api.request.body'].class
         puts '---------------------------------------'
         Rails.logger.debug 'log entry data.................'
@@ -15,7 +16,7 @@ module V1
         Rails.logger.debug 'log entry data.................'
 
         HEADS = ['working_type', 'task_id']
-        if request.env['api.request.body'].is_a?(Hash)
+        if request.env['api.request.body'].nil? || request.env['api.request.body'].is_a?(Hash)
           HEADS.each do |case_value|
             unless params[:kpi_properties][case_value].blank?
               params[:kpi_properties][case_value] = ParseLanguage.parse_code(params[:kpi_properties][case_value], case_value)
