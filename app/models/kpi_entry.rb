@@ -135,7 +135,7 @@ class KpiEntry
       record = {}
       record[:id] = entry._id
       record[:value] = entry.value.to_s
-      record[:date] = entry.entry_at
+      record[:date] = entry.entry_at.utc
       record[:kpi_properties] = {}
       kpi.kpi_properties.each do |property|
         record[:kpi_properties][:"#{property.name}"] = entry.send("a#{property.id.to_s}") if entry.respond_to?("a#{property.id.to_s}")
