@@ -26,4 +26,4 @@ $tmp_file_path=path_config[:tmp_file_path]
 
 $APP_ID='clearinsight'
 
-$API_AUTH=false
+$API_AUTH=true
