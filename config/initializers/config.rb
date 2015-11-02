@@ -24,6 +24,6 @@ $BACKGROUND_TASK=BackgroundTaskType::SIDEKIQ
 
 $tmp_file_path=path_config[:tmp_file_path]
 
-$APP_ID='clearinsight'
+$APP_ID='Spider Man'
 
-$API_AUTH=true
+$API_AUTH=false

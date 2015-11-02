@@ -19,7 +19,7 @@ module V1
         end
         templates<<{
             app_id: $APP_ID,
-            invoke_address: 'http://112.124.28.10:8000/api/v1/upload',
+            invoke_address: 'https://cz-tek.com:8085/api/v1/upload',
             template_id: kpi.id,
             template_name: kpi.name,
             template_description: kpi.description,
@@ -46,7 +46,7 @@ module V1
                 },
                 kpi_properties: kpi_properties.blank? ? nil : kpi_properties
             },
-            auth: true
+            auth: false
         }
       end
 
