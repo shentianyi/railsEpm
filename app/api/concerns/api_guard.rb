@@ -40,14 +40,20 @@ module APIGuard
     #           Defaults to empty array.
     #
     def guard!(scopes= [])
-      if request.env['HTTP_AUTHORIZATION'].present?
-        if request.env['HTTP_AUTHORIZATION'].split(' ')[0]=='Bearer'
-          guard_by_token(scopes)
+      if $API_AUTH
+        if request.env['HTTP_AUTHORIZATION'].present?
+          if request.env['HTTP_AUTHORIZATION'].split(' ')[0]=='Bearer'
+            guard_by_token(scopes)
+          else
+            guard_by_basic
+          end
         else
-          guard_by_basic
+          raise NoAuthError
         end
       else
-        raise NoAuthError
+        user=User.find_for_database_authentication(:email => 'excel@ci.com')
+        @current_user=user
+        @current_tenant=user.tenant
       end
     end
 
