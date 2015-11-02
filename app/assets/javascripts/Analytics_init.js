@@ -928,6 +928,23 @@ function get_next_date(date, frequency) {
             return  m.add('years', 1);
     }
 }
+
+
+
+function get_end_of_date(date,frequency){
+  switch (parseInt(frequency)){
+      case 90:
+          return new Date(date.setMinutes(59,59,999));
+      case 100:
+          return new Date(date.setHours(23,59,59,59,999));
+      case 200:
+          return moment(date).add('days',7)
+      default :
+          return date;
+  }
+}
+
+
 function close_chart_detail() {
     $("#chart-point-detail").css("left", "-400px");
     $("#chart-main-middle").css("left", "0px");

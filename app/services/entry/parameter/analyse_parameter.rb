@@ -32,7 +32,7 @@ module Entry
       end
 
       def end_time=(value)
-        @end_time=Time.parse(value).end_of_day.utc if value
+        @end_time=Time.parse(value).utc if value
       end
 
       def property=(value)

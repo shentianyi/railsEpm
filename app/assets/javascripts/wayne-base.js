@@ -164,6 +164,11 @@ if(!Date.prototype.toWeekNumber){
         return  weekNo;
     }
 }
+
+// get end of day
+if(!Date.prototype.endOfDay){
+
+}
 //compare time,return first and last
 function compare_time(begin_time,end_time){
     var begin=standardParse(begin_time).date-standardParse(end_time).date<=0?begin_time:end_time;

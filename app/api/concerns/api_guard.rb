@@ -72,6 +72,11 @@ module APIGuard
       auth_header = env['HTTP_AUTHORIZATION'].split(' ')
       user, pass = Base64.decode64(auth_header[1]).split(':')
 
+      Rails.logger.debug '*************use auth basic'
+      Rails.logger.debug user
+      Rails.logger.debug pass
+      Rails.logger.debug '*************use auth basic'
+
       if (user=User.find_for_database_authentication(:email => user)) && user.valid_password?(pass)
         @current_user=user
         @current_tenant=user.tenant

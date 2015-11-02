@@ -270,7 +270,6 @@ ANALYTICS.high_chart={
     }
 };
 
-
 ANALYTICS.form_chart=function(option){
     //ANALYTICS.loading_data 表示正在加载数据
     ANALYTICS.loading_data=true;
@@ -286,12 +285,13 @@ ANALYTICS.form_chart=function(option){
     var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
     show_loading(top,0,0,0);
 
+      end_time_utc=get_end_of_date(new Date(bar_fix_to),option.interval).toISOString();
     ANALYTICS.base_option={
         kpi_id : option.kpi_id,
         average: option.method=="0",
         entity_group_id: option.view,
         start_time : new Date(bar_fix_from).toISOString() ,
-        end_time : new Date(bar_fix_to).toISOString(),
+        end_time : end_time_utc,
         frequency: option.interval,
         kpi_property: option.kpi_property
     };
@@ -302,7 +302,7 @@ ANALYTICS.form_chart=function(option){
         average: option.method=="0",
         entity_group_id: option.view,
         start_time : new Date(bar_fix_from).toISOString() ,
-        end_time : new Date(bar_fix_to).toISOString(),
+        end_time : end_time_utc,
         frequency:option.interval,
         property:option.kpi_property,
         report:ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null)
