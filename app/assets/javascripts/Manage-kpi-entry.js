@@ -27,7 +27,7 @@ MANAGE.entry.init = function(){
             $.ajax({
                 url:"/kpi_entries/details",
                 type:'POST',
-                data:{user_kpi_item_id:id,parsed_entry_at:entry_at},
+                data:{user_kpi_item_id:id,entry_at:entry_at},
                 dataType:'html',
                 success : function(data){
                     $target.html(data);

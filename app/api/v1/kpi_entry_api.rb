@@ -18,11 +18,11 @@ module V1
         Rails.logger.debug 'log entry data.................'
         if request.env['api.request.body'].nil? || request.env['api.request.body'].is_a?(Hash)
 
-          HEADS.each do |case_value|
-            unless params[:kpi_properties][case_value].blank?
-              params[:kpi_properties][case_value] = ParseLanguage.parse_code(params[:kpi_properties][case_value], case_value)
-            end if params[:kpi_properties].present?
-          end
+          # HEADS.each do |case_value|
+          #   unless params[:kpi_properties][case_value].blank?
+          #     params[:kpi_properties][case_value] = ParseLanguage.parse_code(params[:kpi_properties][case_value], case_value)
+          #   end if params[:kpi_properties].present?
+          # end
 
           if guard_entry! &do_entry
             {
@@ -50,13 +50,13 @@ module V1
                 p p['kpi_properties'].class
 
                 puts '8*8*****************'
-                HEADS.each do |case_value|
-
-                  unless p[:kpi_properties][case_value].blank?
-                    puts '_______________'.blue
-                    p[:kpi_properties][case_value] = ParseLanguage.parse_code(p[:kpi_properties][case_value], case_value)
-                  end if p[:kpi_properties].present?
-                end
+                # HEADS.each do |case_value|
+                #
+                #   unless p[:kpi_properties][case_value].blank?
+                #     puts '_______________'.blue
+                #     p[:kpi_properties][case_value] = ParseLanguage.parse_code(p[:kpi_properties][case_value], case_value)
+                #   end if p[:kpi_properties].present?
+                # end
               end
             end
           else
