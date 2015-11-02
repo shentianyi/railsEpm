@@ -7,8 +7,9 @@ module V1
       p current_user
 
       templates=[]
-      kpi_properties={}
+
       current_user.kpis.each do |kpi|
+        kpi_properties={}
         kpi.kpi_properties.each do |kp|
           kpi_properties[kp.name] = {
               type: 'string',
