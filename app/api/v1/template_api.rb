@@ -43,7 +43,7 @@ module V1
                     allow_null: false,
                     default_value: nil
                 },
-                kpi_properties: kpi_properties
+                kpi_properties: kpi_properties.blank? ? nil : kpi_properties
             },
             auth: true
         }
