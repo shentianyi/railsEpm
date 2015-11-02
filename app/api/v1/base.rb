@@ -7,5 +7,6 @@ module V1
     mount SystemAPI
     mount UserAPI
     mount CustomAPI
+    mount TemplateAPI
   end
 end
