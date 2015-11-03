@@ -1,12 +1,14 @@
 #encoding: utf-8
 class KpiEntryValidatorCollection
   attr_accessor :cache_key, :valid, :validators, :base_validators
+  attr_accessor :has_data_key
 
-  def initialize
+  def initialize(has_data_key=false)
     self.cache_key="validator_collection:#{SecureRandom.uuid}"
     self.valid=true
     self.validators=[]
     self.base_validators={}
+    self.has_data_key = has_data_key
   end
 
   def destroy
@@ -26,16 +28,21 @@ class KpiEntryValidatorCollection
   end
 
   def invalid_message
-    message=[]
-    self.validators.each_with_index do |v, i|
-      puts v.class
-
-      p v.valid
-      p v.content
-
-      message<<"#{i+1} : #{v.content.join(';')}" unless v.valid
+    messages=[]
+    if self.has_data_key
+      self.validators.each { |v|
+        unless v.valid
+          message={}
+          message[v.data_key]=v.content
+          messages<<message
+        end
+      }
+    else
+      self.validators.each_with_index do |v, i|
+        messages<<"#{v.content.join(';')}" unless v.valid
+      end
     end
-    message
+    messages
   end
 
   def entry
