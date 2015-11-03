@@ -934,12 +934,18 @@ function get_next_date(date, frequency) {
 function get_end_of_date(date,frequency){
   switch (parseInt(frequency)){
       case 90:
-          return new Date(date.setMinutes(59,59,999));
+		  return date.endOfHour();
       case 100:
-          return new Date(date.setHours(23,59,59,59,999));
+		  return date.endOfDay();
       case 200:
-          return moment(date).add('days',7)
-      default :
+          return date.endOfWeek();
+	  case 300:
+		  return date.endOfMonth();
+	  case 400:
+		  return date.endOfQuarter();
+	  case 500:
+		  return date.endOfYear();
+	  default :
           return date;
   }
 }

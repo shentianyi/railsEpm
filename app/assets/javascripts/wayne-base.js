@@ -165,10 +165,53 @@ if(!Date.prototype.toWeekNumber){
     }
 }
 
+if(!Date.prototype.endOfHour){
+ Date.prototype.endOfHour=function(){
+   this.setMinutes(59,59,999);
+   return this;
+ }
+}
+
 // get end of day
 if(!Date.prototype.endOfDay){
-
+   Date.prototype.endOfDay=function(){
+     this.setHours(23,59,59,999);
+	 return this;
+   }
 }
+// get end of week
+if(!Date.prototype.endOfWeek){
+ Date.prototype.endOfWeek=function(){
+   var day=this.getDay()==0 ? 7 : (this.getDay());
+  var first=this.getDate()-day+1;
+  var last=first+6;
+  return new Date(this.setDate(last)).endOfDay();
+ }
+}
+
+// get end of month
+if(!Date.prototype.endOfMonth){
+  Date.prototype.endOfMonth=function(){
+    var year=this.getFullYear();
+	var month=this.getMonth();
+    return new Date(new Date(this.getFullYear(),this.getMonth()+1,1)-1).endOfDay();
+  }
+}
+
+// get end of quarter
+if(!Date.prototype.endOfQuarter){
+  Date.prototype.endOfQuarter=function(){
+   return  new Date(this.getFullYear(),Math.ceil(this.getMonth()/3)*3-1,1).endOfMonth();
+  }
+}
+
+// get end of year
+if(!Date.prototype.endOfYear){
+ Date.prototype.endOfYear=function(){
+   return new Date(this.getFullYear(),11,31).endOfDay();
+ }
+}
+
 //compare time,return first and last
 function compare_time(begin_time,end_time){
     var begin=standardParse(begin_time).date-standardParse(end_time).date<=0?begin_time:end_time;
