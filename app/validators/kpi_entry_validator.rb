@@ -5,6 +5,7 @@ class KpiEntryValidator
   attr_accessor :entity_id, :user_id, :target_max, :target_min
   attr_accessor :kpi_properties
   attr_accessor :source
+  attr_accessor :data_key
 
   #all the time we accept is utc time
   def initialize args={}
@@ -37,7 +38,6 @@ class KpiEntryValidator
     puts '************'
     self.kpi_properties
     puts '************'
-
   end
 
   def invalid_message

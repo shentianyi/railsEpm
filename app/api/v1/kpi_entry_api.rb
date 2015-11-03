@@ -17,13 +17,6 @@ module V1
         Rails.logger.debug params
         Rails.logger.debug 'log entry data.................'
         if request.env['api.request.body'].nil? || request.env['api.request.body'].is_a?(Hash)
-
-          # HEADS.each do |case_value|
-          #   unless params[:kpi_properties][case_value].blank?
-          #     params[:kpi_properties][case_value] = ParseLanguage.parse_code(params[:kpi_properties][case_value], case_value)
-          #   end if params[:kpi_properties].present?
-          # end
-
           if guard_entry! &do_entry
             {
                 result_code: '1',
@@ -38,27 +31,7 @@ module V1
         elsif request.env['api.request.body'].is_a?(Array)
 
           if params[:entries].blank?
-            puts '1......'
             params[:entries]=request.env['api.request.body']
-            params[:entries].each do |p|
-
-              if p.is_a?(Hash)
-                puts '8*8*****************'
-                p p[:kpi_properties]
-                p p[:kpi_properties].class
-                p p['kpi_properties']
-                p p['kpi_properties'].class
-
-                puts '8*8*****************'
-                # HEADS.each do |case_value|
-                #
-                #   unless p[:kpi_properties][case_value].blank?
-                #     puts '_______________'.blue
-                #     p[:kpi_properties][case_value] = ParseLanguage.parse_code(p[:kpi_properties][case_value], case_value)
-                #   end if p[:kpi_properties].present?
-                # end
-              end
-            end
           else
             params[:entries] = JSON.parse(params[:entries])
           end
@@ -115,7 +88,48 @@ module V1
         guard_entries!(batch_insert, &do_entry)
       end
 
+    end
 
+    desc 'upload excel add in data'
+    params do
+      requires :app_id, type: String, desc: 'App Id'
+      requires :template_id, type: String, desc: 'Template Id'
+      optional :file_name, type: String, desc: 'File name of excel'
+      requires :data, type: Hash, desc: 'File Data'
+    end
+    post :upload do
+      Rails.logger.debug '**************** excel logger'
+      Rails.logger.debug params
+      Rails.logger.debug '**************** excel logger'
+
+      params[:entries]=[]
+      params[:has_data_key]=true
+      #raise ArgumentError,'App Id Error' if params[:app_id]!=$APP_ID
+
+
+      params[:data].each do |k,entry|
+        entry[:data_key]=k
+        params[:entries]<<entry
+      end
+
+
+
+      Rails.logger.debug '**************** 33excel logger'
+      p params[:entries]
+
+      Rails.logger.debug '**************** 33excel logger'
+
+      if guard_entries!(true, &do_entry)
+        {
+            result_code: '1',
+            msg: [I18n.t('entry.success.data')]
+        }
+      else
+        {
+            result_code: '0',
+            msg: [I18n.t('entry.failure.system')]
+        }
+      end
     end
 
 
