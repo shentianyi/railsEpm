@@ -11,6 +11,9 @@ module V1
 
         puts '000000000000'.blue
         p request.env['api.request.body'].class
+        Rails.logger.debug "*************************** coming data"
+        Rails.logger.debug request.env['api.request.body']
+        Rails.logger.debug "*************************** coming data"
         puts '---------------------------------------'
 
         Rails.logger.debug 'log entry data.................'
@@ -62,6 +65,7 @@ module V1
 
         params[:page] = 0 if params[:page].blank? || params[:page].to_i < 0
         params[:size] = 30 if params[:size].blank? || params[:size].to_i < 0
+        params[:page]=params[:page].to_i-1
         if params[:from_time].blank? || params[:to_time].blank?
           params[:from_time]=7.days.ago.utc
           params[:to_time]=Time.now.utc
