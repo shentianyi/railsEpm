@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
       else
         raise "Sorry, Build default Entity failed!"
       end
-    end
+    end if self.tenant.settings(:entity).auto_create_for_general_user
 
     #name user_id tenant_id
     if self.entity_groups.blank?
@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
       unless entity_group.save
         raise "Sorry, Build default Entity Groups failed!"
       end
-    end
+    end if self.tenant.settings(:entity_group).auto_create_for_general_user
   end
 
   def method_missing(method_name, *args, &block)
