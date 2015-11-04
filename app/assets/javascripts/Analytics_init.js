@@ -857,7 +857,8 @@ function chart_point_click(object) {
     };
     var current_date = object.UTCDate;
     console.log(current_date);
-    var end_time = get_next_date(current_date, ANALYTICS.base_option.frequency).add('milliseconds', -1);
+    //var end_time = get_next_date(current_date, ANALYTICS.base_option.frequency).add('milliseconds', -1);
+    var end_time=get_end_of_date(new Date(current_date),ANALYTICS.base_option.frequency);
     condition.detail_condition.base_time = {start_time: new Date(current_date).toISOString(), end_time: end_time.toISOString()};
 }
 //在详细中生成pie以及table
