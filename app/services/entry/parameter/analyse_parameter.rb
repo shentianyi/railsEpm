@@ -39,8 +39,9 @@ module Entry
         return @property=nil if value.nil? || value.size==0
         @property={}
         value.each do |k, v|
-          @property["a#{k}"]=v.is_a?(Array) ? v.map{|m| m.is_number? ? m.to_f : m } : v
-        end
+         # @property["a#{k}"]=v.is_a?(Array) ? v.map{|m| m.is_number? ? m.to_f : m } : v
+          @property["a#{k}"]=v#.is_a?(Array) ? v.map{|m| m.is_number? ? m.to_f : m } : v
+		end
       end
 
 
