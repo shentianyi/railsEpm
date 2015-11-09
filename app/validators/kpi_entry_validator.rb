@@ -109,9 +109,17 @@ class KpiEntryValidator
   end
 
   def params_to_hash
-    {"base_attrs" => {"entry_id" => self.entry_id, "original_value" => self.value, "kpi_id" => self.kpi_id, "frequency" => self.frequency, "user_kpi_item_id" => self.user_kpi_item_id,
-                      "user_id" => self.user_id, "entity_id" => self.entity_id, "target_max" => self.target_max,
-                      "target_min" => self.target_min, "entry_at" => self.entry_at, "entry_type" => self.entry_type},
+    {"base_attrs" => {"entry_id" => self.entry_id,
+                      "original_value" => self.value,
+                      "kpi_id" => self.kpi_id,
+                      "frequency" => self.frequency,
+                      "user_kpi_item_id" => self.user_kpi_item_id,
+                      "user_id" => self.user_id,
+                      "entity_id" => self.entity_id,
+                      "target_max" => self.target_max,
+                      "target_min" => self.target_min,
+                      "entry_at" => self.entry_at,
+                      "entry_type" => self.entry_type},
      "kpi_properties" => self.kpi_properties
     }
   end

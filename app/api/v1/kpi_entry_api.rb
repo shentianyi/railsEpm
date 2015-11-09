@@ -9,16 +9,7 @@ module V1
       post :entry do
         status 200
 
-        puts '000000000000'.blue
-        p request.env['api.request.body'].class
-        Rails.logger.debug "*************************** coming data"
-        Rails.logger.debug request.env['api.request.body']
-        Rails.logger.debug "*************************** coming data"
-        puts '---------------------------------------'
 
-        Rails.logger.debug 'log entry data.................'
-        Rails.logger.debug params
-        Rails.logger.debug 'log entry data.................'
         if request.env['api.request.body'].nil? || request.env['api.request.body'].is_a?(Hash)
           if guard_entry! &do_entry
             {
@@ -92,6 +83,21 @@ module V1
         guard_entries!(batch_insert, &do_entry)
       end
 
+
+      desc 'get analyse kpi data'
+      get :analyse do
+        @kpi_id=params[:kpi_id]
+        @kpi_name=params[:kpi_name]
+        @entity_group_id=params[:entity_group_id]
+        @entity_group_name=params[:entity_group_name]
+        @start_time=params[:start_time]
+        @end_time=params[:end_time]
+        @frequency=params[:frequency].nil? ? nil : params[:frequency].to_i
+        @type='area'
+        @average= params[:average].nil? ? true : params[:average]=='true'
+        @data=Entry::Analyzer.new(params).analyse
+      end
+
     end
 
     desc 'upload excel add in data'
@@ -116,13 +122,6 @@ module V1
         params[:entries]<<entry
       end
 
-
-
-      Rails.logger.debug '**************** 33excel logger'
-      p params[:entries]
-
-      Rails.logger.debug '**************** 33excel logger'
-
       if guard_entries!(true, &do_entry)
         {
             result_code: '1',
@@ -135,6 +134,7 @@ module V1
         }
       end
     end
+
 
 
     helpers do
