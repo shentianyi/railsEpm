@@ -20,7 +20,7 @@ module V1
 	 # end
 	  post :validate_kpi do
 		  status 200
-        if Kpi.find_by_id(params[:id])
+        if Kpi.find_by_id(params[:id]) && current_user.kpis.where(id:params[:id]).first
 			{
 				result:1,
 			    msg:['kpi valid']
