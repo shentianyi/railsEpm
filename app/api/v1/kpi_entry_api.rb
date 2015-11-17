@@ -8,7 +8,9 @@ module V1
     namespace :kpi_entry do
       post :entry do
         status 200
-
+Rails.logger.log '***********************'
+  Rails.logger.log request.env['api.request.body']
+Rails.logger.log '***********************'
 
         if request.env['api.request.body'].nil? || request.env['api.request.body'].is_a?(Hash)
           if guard_entry! &do_entry
