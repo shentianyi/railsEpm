@@ -125,7 +125,7 @@ class KpiEntry
 
     return msg if (kpi = Kpi.find_by_id(params[:kpi_id])).nil?
     entities = KpiEntry.where(kpi_id: params[:kpi_id],
-                              entry_at: params[:from_time]..params[:to_time],
+                         #     entry_at: params[:from_time]..params[:to_time],
                               user_id:params[:user_id])
                    .offset(params[:page].to_i * params[:size].to_i)
                    .limit(params[:size].to_i).order_by(entry_at: :desc)

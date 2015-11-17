@@ -57,10 +57,10 @@ module V1
         params[:page] = 0 if params[:page].blank? || params[:page].to_i < 0
         params[:size] = 30 if params[:size].blank? || params[:size].to_i < 0
         #params[:page]=params[:page].to_i-1
-        if params[:from_time].blank? || params[:to_time].blank?
-          params[:from_time]=7.days.ago.utc
-          params[:to_time]=Time.now.utc
-        end
+#        if params[:from_time].blank? || params[:to_time].blank?
+ #         params[:from_time]=7.days.ago.utc
+  #        params[:to_time]=Time.now.utc
+   #     end
         params[:user_id]=current_user.id
         p params
 
