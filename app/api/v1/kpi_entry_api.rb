@@ -112,6 +112,7 @@ Rails.logger.debug '***********************'
     post :upload do
       Rails.logger.debug '**************** excel logger'
       Rails.logger.debug params
+Rails.logger.debug params[:template_id]
       Rails.logger.debug '**************** excel logger'
 
       params[:entries]=[]

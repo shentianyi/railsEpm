@@ -138,11 +138,11 @@ class KpiEntry
       record[:date] = entry.entry_at.to_time.to_s
       record[:kpi_properties] = {}
       kpi.kpi_properties.each do |property|
-        record[:kpi_properties][:"#{property.name}"] = entry.send("a#{property.id.to_s}") if entry.respond_to?("a#{property.id.to_s}")
+        record[:kpi_properties][:"#{property.name}"] =entry.respond_to?("a#{property.id.to_s}") ?  entry.send("a#{property.id.to_s}") : '' 
       end
       records[index] = record
     end
-    msg.result = true #if records.length>0
+    msg.result =true if records.length>0
     msg.content = records
 
     return msg
