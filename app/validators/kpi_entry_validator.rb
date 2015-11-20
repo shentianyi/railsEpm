@@ -60,11 +60,11 @@ class KpiEntryValidator
       self.content<<I18n.t('vali_msg.invalid_value')
     end
 
-    if self.validator_collection && (self.source=self.validator_collection.valid_validator(self))
-      self.valid_by_cache=true
-      self.valid=self.source.valid
-      self.content << self.source.content
-    else
+#    if self.validator_collection && (self.source=self.validator_collection.valid_validator(self))
+ #     self.valid_by_cache=true
+  #    self.valid=self.source.valid
+   #   self.content << self.source.content
+   # else
       if user=User.find_by_email(self.email)
         if kpi=Kpi.find_by_id(self.kpi_id)
           unless user_kpi_item=UserKpiItem.find_by_user_id_and_kpi_id(user.id, kpi.id)
@@ -82,8 +82,8 @@ class KpiEntryValidator
         self.valid=false
         self.content<<I18n.t('vali_msg.invalid_user_email')
       end
-      self.validator_collection.add_base_validator(self) if self.validator_collection
-    end
+    #  self.validator_collection.add_base_validator(self) if self.validator_collection
+   # end
     puts "#{self.valid}----------------------------".blue
     prepare_params if self.valid
   end
