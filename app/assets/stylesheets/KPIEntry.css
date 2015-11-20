@@ -1,0 +1,63 @@
+.upload-kpi .download-btn {
+    width: 140px;
+}
+
+.upload-kpi .upload-btn {
+    width: 190px;
+}
+
+.panel-heading {
+    background: #F2F2F2;
+    display: flex;
+}
+
+.ui-tabs-nav .ui-tabs-anchor {
+    outline: none;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    border: none;
+    background: #fff;
+}
+
+.ui-tabs .ui-tabs-panel {
+    padding: 0;
+}
+
+.ui-widget-header {
+    border: none;
+    background: #fff;
+}
+
+.ui-tabs-nav li.ui-tabs-active {
+    border-bottom: 5px solid #FF7F00;
+}
+
+hr {
+    background: #CDC5BF;
+    height: 2px;
+    margin-top: 0px;
+    margin-bottom: 4px;
+}
+
+.table > thead > tr > th, .table > tbody > tr > td {
+    text-align: center;
+    font-size: 12px;
+}
+
+.Search {
+    display: flex;
+    height: 60%;
+    margin-left: 65%;
+    margin-top: 20px;
+}
+
+.entry-block {
+    top: 1px;
+    margin-right: 40px;
+}
+
+.entry-block > input[type="text"] {
+    width: 160px;
+    height: auto;
+}

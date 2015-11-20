@@ -53,7 +53,7 @@
       -->
       <a class="log-btn language-btn" lan="zh">中文</a>
       <a class="log-btn language-btn" lan="en">English</a>
-     <!-- <a class="log-btn language-btn" lan="de">Deutsch</a>-->
+      <!-- <a class="log-btn language-btn" lan="de">Deutsch</a>-->
 
       <p id="default_lan" lan="<%= I18n.locale %>" style="display: none"></p>
     </div>
@@ -248,3 +248,9 @@
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "Log.js" %>
 <% end %>
+
+<style type="text/css">
+    .login-operate .language-btn {
+        width:90px;
+    }
+</style>

@@ -1,297 +1,336 @@
 /********************************************************************************************************* 分类系列
 *******************************************************************************************************************/
-.manage-left-menu{
-    background-color:#fafafa;
-    width:150px;
-    margin:0;
-    padding:0 0 10px;
+.manage-left-menu {
+    background-color: #fafafa;
+    width: 150px;
+    margin: 0;
+    /*padding:0 0 10px;*/
     list-style-type: none;
-    z-index:20;
-    border-right:1px solid #DCDCDC;
-    position:absolute;
-    top:0px;
-    bottom:0px;
+    z-index: 20;
+    border-right: 1px solid #DCDCDC;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
 }
-.manage-left-menu li:nth-of-type(2){
-    position:relative;
-    text-align:center;
-    font-size:11px;
-    color:rgba(103,103,103,0.9);
-    background-color:rgba(209,209,209,0.1);
-    padding:0px;
-    width:123px;
-    height:30px;
-    margin:0 14px 34px;
-    border-radius:3px;
-    -webkit-border-radius:3px;
-    -moz-border-radius:3px;
-    cursor:pointer;
-    transition:all 0.35s ease-out
+
+.manage-left-menu li:nth-of-type(2) {
+    position: relative;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(103, 103, 103, 0.9);
+    background-color: rgba(209, 209, 209, 0.1);
+    padding: 0px;
+    width: 123px;
+    height: 30px;
+    margin: 0 14px 34px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.35s ease-out
 }
-.manage-left-menu li:nth-of-type(2):hover{
-    padding:0px;
-    color:rgba(0,0,0,0.6);
-    background-color:rgba(209,209,209,0.35);
+
+.manage-left-menu li:nth-of-type(2):hover {
+    padding: 0px;
+    color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(209, 209, 209, 0.35);
 }
-.manage-left-menu li:nth-of-type(2) span{
-    position:absolute;
-    top:0px;
-    bottom:0px;
-    left:0px;
-    right:0px;
-    line-height:30px;
+
+.manage-left-menu li:nth-of-type(2) span {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    line-height: 30px;
 }
-.manage-left-menu li:nth-of-type(2) input{
-    position:absolute;
-    width:100px;
-    height:20px;
-    font-size:13px;
-    padding:0px 2px;
-    top:4px;
-    left:-999em;
+
+.manage-left-menu li:nth-of-type(2) input {
+    position: absolute;
+    width: 100px;
+    height: 20px;
+    font-size: 13px;
+    padding: 0px 2px;
+    top: 4px;
+    left: -999em;
 
 }
+
 /*.manage-left-menu li:nth-of-type(2) input:focus ~ .manage-add-tooltip{*/
-    /*color:rgba(0,0,0,0.4);*/
-    /*display:block;*/
+/*color:rgba(0,0,0,0.4);*/
+/*display:block;*/
 /*}*/
-.manage-left-menu li:nth-of-type(2) .manage-add-tooltip{
-    position:absolute;
-    text-align:left;
-    left:1px;
-    top:32px;
-    font-size:13px;
-    line-height:17px;
-    display:none;
+.manage-left-menu li:nth-of-type(2) .manage-add-tooltip {
+    position: absolute;
+    text-align: left;
+    left: 1px;
+    top: 32px;
+    font-size: 13px;
+    line-height: 17px;
+    display: none;
 }
 
-.manage-left-menu li{
-    text-align:center;
-    color:rgba(0,0,0,0.2);
-    padding:7px 24px;
-    cursor:pointer;
-    transition:padding 0.3s ease-out;
-    position:relative;
+.manage-left-menu li {
+    text-align: center;
+    color: rgba(0, 0, 0, 0.2);
+    padding: 7px 24px;
+    cursor: pointer;
+    transition: padding 0.3s ease-out;
+    position: relative;
 
 }
-.manage-left-menu li:nth-of-type(1){
-    cursor:default !important;
-}
-.manage-left-menu li:nth-of-type(1):hover{
-    background-color:rgba(0,0,0,0);
-}
-.manage-left-menu li:hover{
-    background-color:#e2e7ef;
-}
-.manage-left-menu li:hover a{
-    color:rgba(0,0,0,0.5);
-}
-.manage-left-menu li:hover i.icon-item{
-    display:block;
-}
-.manage-left-menu li.active{
-    background-color:#e2e7ef
-}
-.manage-left-menu li.active a{
-    color:rgba(0,0,0,0.65);
-}
-.manage-left-menu li a{
-    width:104px;
-    display:block;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    font-size:15px;
-}
-.manage-left-menu li i.icon-columns{
-    position:absolute;
-    top:10px;
-    left:6px;
-    color:rgba(0,0,0,0.4);
-    font-size:13px;
-    pointer-events:auto;
-}
-.manage-left-menu li i.icon-item{
-    position:absolute;
-    top:9px;
-    color:rgba(0,0,0,0.4);
-    display:none;
-    pointer-events:auto;
-    transition:color 0.2s ease;
-}
-.manage-left-menu li:hover i.icon-item:hover{
-    color:#f05c5c;
-}
-.manage-left-menu li .icon-trash{
-    right:6px;
+
+.manage-left-menu li:nth-of-type(1) {
+    cursor: default !important;
 }
 
+.manage-left-menu li:nth-of-type(1):hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.manage-left-menu li:hover {
+    background-color: #e2e7ef;
+}
+
+.manage-left-menu li:hover a {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.manage-left-menu li:hover i.icon-item {
+    display: block;
+}
+
+.manage-left-menu li.active {
+    background-color: #e2e7ef
+}
+
+.manage-left-menu li.active a {
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.manage-left-menu li a {
+    width: 104px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 15px;
+}
+
+.manage-left-menu li i.icon-columns {
+    position: absolute;
+    top: 10px;
+    left: 6px;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 13px;
+    pointer-events: auto;
+}
+
+.manage-left-menu li i.icon-item {
+    position: absolute;
+    top: 9px;
+    color: rgba(0, 0, 0, 0.4);
+    display: none;
+    pointer-events: auto;
+    transition: color 0.2s ease;
+}
+
+.manage-left-menu li:hover i.icon-item:hover {
+    color: #f05c5c;
+}
+
+.manage-left-menu li .icon-trash {
+    right: 6px;
+}
 
 /********************************************************************************************************* 右边的内容部分
 *******************************************************************************************************************/
-.manage-right-content{
-    padding-left:0px;
-    position:absolute;
-    left:150px;
-    top:0px;
-    bottom:0px;
-    right:0px;
-    transition:padding-left 0.4s ease-out,padding-right 0.4s ease-out;
+.manage-right-content {
+    padding-left: 0px;
+    position: absolute;
+    left: 150px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    transition: padding-left 0.4s ease-out, padding-right 0.4s ease-out;
 
 }
+
 /**************************************************** 上角的按钮
 *****************************************************************/
-.manage-btn-group{
-    position:relative;
-    display:inline-block;
-    top:23px;
-    left:33px;
+.manage-btn-group {
+    position: relative;
+    display: inline-block;
+    top: 23px;
+    left: 33px;
 }
-.manage-btn-group>a{
-    width:100px;
-    margin-right:20px;
-    margin-left:0;
-    position:absolute;
-    bottom:2px;
-    padding:7px 6px;
-    font-size:13px;
+
+.manage-btn-group > a {
+    width: 100px;
+    margin-right: 20px;
+    margin-left: 0;
+    position: absolute;
+    bottom: 2px;
+    padding: 7px 6px;
+    font-size: 13px;
 }
-.manage-btn-group>p{
-    margin-top:6px;
-    color:rgba(0, 0, 0, 0.5);
-    cursor:pointer;
-    display:inline-block;
-    transition:color 0.35s ease-out;
-    font-size:21px;
+
+.manage-btn-group > p {
+    margin-top: 6px;
+    color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    display: inline-block;
+    transition: color 0.35s ease-out;
+    font-size: 21px;
     /*display:none;*/
 }
 
-.manage-btn-group>i{
-    color:rgba(0, 0, 0, 0.65);
-    position:relative;
-    left:6px;
-    display:none;
+.manage-btn-group > i {
+    color: rgba(0, 0, 0, 0.65);
+    position: relative;
+    left: 6px;
+    display: none;
 }
-.manage-btn-group>p:hover ~ i{
-    display:inline-block;
+
+.manage-btn-group > p:hover ~ i {
+    display: inline-block;
 }
-.manage-btn-group>input{
-    padding:3px 5px;
-    height:22px;
-    width:150px;
-    font-size:13px;
-    position:relative;
-    top:0px;
-    margin-top:2px;
-    display:none;
+
+.manage-btn-group > input {
+    padding: 3px 5px;
+    height: 22px;
+    width: 150px;
+    font-size: 13px;
+    position: relative;
+    top: 0px;
+    margin-top: 2px;
+    display: none;
 
 }
+
 /*.manage-btn-group>input:focus + span{*/
-    /*display:inherit;*/
+/*display:inherit;*/
 /*}*/
-.manage-btn-group>span{
-    font-size:13px;
-    position:absolute;
-    left:0px;
-    top:68px;
-    color:rgba(0,0,0,0.4);
-    display:none;
+.manage-btn-group > span {
+    font-size: 13px;
+    position: absolute;
+    left: 0px;
+    top: 68px;
+    color: rgba(0, 0, 0, 0.4);
+    display: none;
 }
+
 /**************************************************** 下角的列表
 *****************************************************************/
-.manage-right-list{
-    margin-top:20px;
-    padding-bottom:40px;
+.manage-right-list {
+    margin-top: 20px;
+    padding-bottom: 40px;
 }
-.right-list-top-control{
-    height:39px;
+
+.right-list-top-control {
+    height: 39px;
 }
-.right-list-top-control>.icheckbox_minimal-aero{
-    left:33px;
-    top:12px;
+
+.right-list-top-control > .icheckbox_minimal-aero {
+    left: 33px;
+    top: 12px;
 }
-.right-list-top-control>a {
-    display:inline-block;
-    width:80px;
-    font-size:13px;
-    display:none;
+
+.right-list-top-control > a {
+    display: inline-block;
+    width: 80px;
+    font-size: 13px;
+    display: none;
 }
-.right-list-top-control>a:first-of-type{
-    margin-left:55px;
-    margin-right:-10px;
+
+.right-list-top-control > a:first-of-type {
+    margin-left: 55px;
+    margin-right: -10px;
 }
+
 /*sortable*/
-.sortable-dragging{
-    opacity:0.9
+.sortable-dragging {
+    opacity: 0.9
 }
-.sortable-placeholder{
-    border:1px dashed #ddd !important;
-    background-color:rgba(242,196,84,0.7);
+
+.sortable-placeholder {
+    border: 1px dashed #ddd !important;
+    background-color: rgba(242, 196, 84, 0.7);
 }
-.sortable-placeholder:after{
-    content:"Drop Here";
-    font-size:20px;
-    color:rgba(0,0,0,0.4);
-    position:relative;
-    width:100px;
-    height:80px;
-    line-height:80px;
-    left:50%;
-    margin-left:-50px;
+
+.sortable-placeholder:after {
+    content: "Drop Here";
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.4);
+    position: relative;
+    width: 100px;
+    height: 80px;
+    line-height: 80px;
+    left: 50%;
+    margin-left: -50px;
 }
-.manage-sort-list{
-    list-style:none;
-    padding-left:33px;
-    margin-top:15px;
+
+.manage-sort-list {
+    list-style: none;
+    padding-left: 33px;
+    margin-top: 15px;
 }
-.manage-sort-list li{
-    width:97%;
-    height:80px;
-    border:1px solid #ddd;
-    border-radius:3px;
-    -webkit-border-radius:3px;
-    -moz-border-radius:3px;
-    margin-bottom:15px;
-    position:relative;
+
+.manage-sort-list li {
+    width: 97%;
+    height: 80px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    margin-bottom: 15px;
+    position: relative;
 
 }
-.manage-sort-list[type="kpi"] li{
-    height:90px;
+
+.manage-sort-list[type="kpi"] li {
+    height: 90px;
 }
-.manage-sort-list li>p{
-    font-family:"Arial";
-    font-weight:bold;
-    font-size:40px;
-    color:rgba(0,0,0,0.25);
-    margin:0;
-    padding-left:5px;
-    width:15px;
-    float:left;
-    height:80px;
-    line-height:80px;
-    cursor:move
+
+.manage-sort-list li > p {
+    font-family: "Arial";
+    font-weight: bold;
+    font-size: 40px;
+    color: rgba(0, 0, 0, 0.25);
+    margin: 0;
+    padding-left: 5px;
+    width: 15px;
+    float: left;
+    height: 80px;
+    line-height: 80px;
+    cursor: move
 }
-.manage-sort-list li>.icheckbox_minimal-aero{
-    top:31px;
-    float:left;
+
+.manage-sort-list li > .icheckbox_minimal-aero {
+    top: 31px;
+    float: left;
 }
-.manage-sort-list li>table{
-    position:absolute;
-    left:68px;
-    top:5px;
-    bottom:5px;
-    width:inherit;
-    transition:width 0.45s ease-out 0.1s;
+
+.manage-sort-list li > table {
+    position: absolute;
+    left: 68px;
+    top: 5px;
+    bottom: 5px;
+    width: inherit;
+    transition: width 0.45s ease-out 0.1s;
 }
-.manage-sort-list li>table[special='my-kpi']{
-    left:21px;
+
+.manage-sort-list li > table[special='my-kpi'] {
+    left: 21px;
 }
+
 /********************************************************************************************************* 针对右边有导航的
 *******************************************************************************************************************/
-.manage-left-content{
-    background-color:white;
-    position:relative;
+.manage-left-content {
+    background-color: white;
+    position: relative;
 }
-.manage-left-content[name='department']{
-    padding-top:20px;
+
+.manage-left-content[name='department'] {
+    padding-top: 20px;
 }

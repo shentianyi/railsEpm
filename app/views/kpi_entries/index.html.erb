@@ -25,41 +25,512 @@
   </li>
 </ul>
 
-<div class="entry-right-content">
-  <div class="entry-block">
+<div class="entry-right-content" style="overflow: visible">
+  <!--<div class="entry-block">
     <i class="icon-chevron-left" id="entry-minus"></i>
     <input type="text" readonly=true id="entry-date-picker"/>
     <i class="icon-chevron-right" id="entry-plus"></i>
     <span id="entry-date-extra"></span>
-  </div>
+  </div>-->
   <ul class="entry-sort-list" id="entry-sort-list">
-
   </ul>
+
+  <div class="panel">
+    <div class="panel-heading">
+      <h3>KPI</h3>
+
+      <div class="Search">
+        <div class="entry-block">
+          <i class="icon-chevron-left" id="entry-minus"></i>
+          <input type="text" readonly=true id="entry-date-picker"/>
+          <i class="icon-chevron-right" id="entry-plus"></i>
+          <span id="entry-date-extra"></span>
+        </div>
+
+        <!--here is the search  en  and  cn-->
+        <input type="button" value="查询" class="btn btn-primary">
+      </div>
+    </div>
+
+    <div id="tabs">
+      <ul>
+        <li><a href="#tabs-1">KPI1</a></li>
+        <li><a href="#tabs-2">KPI2</a></li>
+        <li><a href="#tabs-3">KPI3</a></li>
+      </ul>
+      <hr/>
+
+      <div id="tabs-1">
+        <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+            <th>project_nr</th>
+            <th>location</th>
+            <th>working_type</th>
+            <th>task_id</th>
+            <th>exception</th>
+            <th>...</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr>
+            <td>11071125</td>
+            <td>Shanghai</td>
+            <td>working time</td>
+            <td>IS</td>
+            <td>YES</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071126</td>
+            <td>Shanghai</td>
+            <td>Release time</td>
+            <td>SNS</td>
+            <td>NO</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071127</td>
+            <td>Shanghai</td>
+            <td>Travel time</td>
+            <td>OS</td>
+            <td>NO</td>
+            <td>...</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div id="tabs-2">
+        <table class="table table-hover table-striped">
+          <thead>
+          <tr>
+            <th>project_nr</th>
+            <th>location</th>
+            <th>working_type</th>
+            <th>task_id</th>
+            <th>exception</th>
+            <th>others</th>
+            <th>here</th>
+            <th>...</th>
+            <th>...</th>
+            <th>...</th>
+            <th>...</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr>
+            <td>11071125</td>
+            <td>Shanghai</td>
+            <td>working time</td>
+            <td>IS</td>
+            <td>YES</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071126</td>
+            <td>Shanghai</td>
+            <td>Release time</td>
+            <td>SNS</td>
+            <td>NO</td>
+            <td>Others</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071127</td>
+            <td>Shanghai</td>
+            <td>Travel time</td>
+            <td>OS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="tabs-3">
+        <table class="table table-hover table-striped">
+          <thead>
+          <tr>
+            <th>project_nr</th>
+            <th>location</th>
+            <th>working_type</th>
+            <th>task_id</th>
+            <th>exception</th>
+            <th>others</th>
+            <th>here</th>
+            <th>Love</th>
+            <th>Script</th>
+            <th>IsScrap</th>
+            <th>...</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr>
+            <td>11071125</td>
+            <td>Shanghai</td>
+            <td>working time</td>
+            <td>IS</td>
+            <td>YES</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071126</td>
+            <td>Shanghai</td>
+            <td>Release time</td>
+            <td>SNS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>YES</td>
+            <td>Right Boy</td>
+            <td>YES</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071127</td>
+            <td>Shanghai</td>
+            <td>Travel time</td>
+            <td>OS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>Here is the remark.</td>
+          </tr>
+
+          <!--here is the copy-->
+          <tr>
+            <td>11071125</td>
+            <td>Shanghai</td>
+            <td>working time</td>
+            <td>IS</td>
+            <td>YES</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071126</td>
+            <td>Shanghai</td>
+            <td>Release time</td>
+            <td>SNS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>YES</td>
+            <td>Right Boy</td>
+            <td>YES</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071127</td>
+            <td>Shanghai</td>
+            <td>Travel time</td>
+            <td>OS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>Here is the remark.</td>
+          </tr>
+          <tr>
+            <td>11071125</td>
+            <td>Shanghai</td>
+            <td>working time</td>
+            <td>IS</td>
+            <td>YES</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071126</td>
+            <td>Shanghai</td>
+            <td>Release time</td>
+            <td>SNS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>YES</td>
+            <td>Right Boy</td>
+            <td>YES</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071127</td>
+            <td>Shanghai</td>
+            <td>Travel time</td>
+            <td>OS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>Here is the remark.</td>
+          </tr>
+          <tr>
+            <td>11071125</td>
+            <td>Shanghai</td>
+            <td>working time</td>
+            <td>IS</td>
+            <td>YES</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071126</td>
+            <td>Shanghai</td>
+            <td>Release time</td>
+            <td>SNS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>YES</td>
+            <td>Right Boy</td>
+            <td>YES</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071127</td>
+            <td>Shanghai</td>
+            <td>Travel time</td>
+            <td>OS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>Here is the remark.</td>
+          </tr>
+          <tr>
+            <td>11071125</td>
+            <td>Shanghai</td>
+            <td>working time</td>
+            <td>IS</td>
+            <td>YES</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071126</td>
+            <td>Shanghai</td>
+            <td>Release time</td>
+            <td>SNS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>YES</td>
+            <td>Right Boy</td>
+            <td>YES</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071127</td>
+            <td>Shanghai</td>
+            <td>Travel time</td>
+            <td>OS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>Here is the remark.</td>
+          </tr>
+          <tr>
+            <td>11071125</td>
+            <td>Shanghai</td>
+            <td>working time</td>
+            <td>IS</td>
+            <td>YES</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071126</td>
+            <td>Shanghai</td>
+            <td>Release time</td>
+            <td>SNS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>YES</td>
+            <td>Right Boy</td>
+            <td>YES</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071127</td>
+            <td>Shanghai</td>
+            <td>Travel time</td>
+            <td>OS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>Here is the remark.</td>
+          </tr>
+          <tr>
+            <td>11071125</td>
+            <td>Shanghai</td>
+            <td>working time</td>
+            <td>IS</td>
+            <td>YES</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071126</td>
+            <td>Shanghai</td>
+            <td>Release time</td>
+            <td>SNS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>YES</td>
+            <td>Right Boy</td>
+            <td>YES</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071127</td>
+            <td>Shanghai</td>
+            <td>Travel time</td>
+            <td>OS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>Here is the remark.</td>
+          </tr>
+          <tr>
+            <td>11071125</td>
+            <td>Shanghai</td>
+            <td>working time</td>
+            <td>IS</td>
+            <td>YES</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071126</td>
+            <td>Shanghai</td>
+            <td>Release time</td>
+            <td>SNS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>YES</td>
+            <td>Right Boy</td>
+            <td>YES</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <td>11071127</td>
+            <td>Shanghai</td>
+            <td>Travel time</td>
+            <td>OS</td>
+            <td>NO</td>
+            <td>...</td>
+            <td>Love</td>
+            <td>No</td>
+            <td>Right Boy</td>
+            <td>NO</td>
+            <td>Here is the remark.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="modal-outer" id="upload-kpi">
-     <div class="upload-kpi modal-inner">
-          <i class="icon-remove" id="upload-kpi-close"></i>
-          <a class="btn btn-primary download-btn" href="<%=download_entry_template_kpis_path%>">
-           <%= I18n.t('fix.download_template')%>
-          </a>
-          <p class="template-info"><i class="icon-info-sign"></i> <%= I18n.t('fix.upload_info')%></p>
-          <hr />
-          <div class="content">
-               <div class="upload-file">
-                    <a class="btn btn-primary upload-btn" onclick="$('#kpi-entry-uploader').click()">      <%= I18n.t('fix.upload_data_file')%></a>
-                    <input id="kpi-entry-uploader" class="kpi-entry-upload" type="file" style="display: none;"  data-url="/kpi_entries/import" name="files[]">
-                    <div id="kpi-entry-uploader-preview">
-                    </div>
-               </div>
-          </div>
-          <p class="upload-parsing" id="parsing-load">
-                <%= I18n.t('fix.kpi_upload_support_format')%>
-          </p>
-          <div class="btn upload-finish" id="upload-kpi-finish">
-              <%= I18n.t('fix.upload_finish')%>
-          </div>
-     </div>
+  <div class="upload-kpi modal-inner">
+    <i class="icon-remove" id="upload-kpi-close"></i>
+    <a class="btn btn-primary download-btn" href="<%= download_entry_template_kpis_path %>">
+      <%= I18n.t('fix.download_template') %>
+    </a>
+
+    <p class="template-info"><i class="icon-info-sign"></i> <%= I18n.t('fix.upload_info') %></p>
+    <hr/>
+    <div class="content">
+      <div class="upload-file">
+        <a class="btn btn-primary upload-btn" onclick="$('#kpi-entry-uploader').click()">      <%= I18n.t('fix.upload_data_file') %></a>
+        <input id="kpi-entry-uploader" class="kpi-entry-upload" type="file" style="display: none;" data-url="/kpi_entries/import" name="files[]">
+
+        <div id="kpi-entry-uploader-preview">
+        </div>
+      </div>
+    </div>
+    <p class="upload-parsing" id="parsing-load">
+      <%= I18n.t('fix.kpi_upload_support_format') %>
+    </p>
+
+    <div class="btn upload-finish" id="upload-kpi-finish">
+      <%= I18n.t('fix.upload_finish') %>
+    </div>
+  </div>
 </div>
 
 <div class="modal-outer false-alert" id="false-alert">
@@ -83,7 +554,12 @@
         ENTRY.init();
         kpi_entry_upload();
 
-    })
+    });
+    //get client Hight
+    var ClientHig = document.documentElement.clientHeight;
+    $('#tabs').tabs();
+    //set the min-Height for panel
+    $('#tabs').css({minHeight: ClientHig * 0.7 + 'px'});
 </script>
 
 <% content_for :javascript_includes do %>
@@ -97,4 +573,6 @@
     <%= javascript_include_tag "date_picker_template.js" %>
     <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
     <%= javascript_include_tag "Manage-kpi-entry.js" %>
+
+    <%= stylesheet_link_tag "KPIEntry.css" %>
 <% end %>
