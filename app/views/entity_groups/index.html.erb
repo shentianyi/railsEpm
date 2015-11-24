@@ -18,7 +18,7 @@
                   <p id="manage-edit-target"></p>
                   <i class="icon-pencil"></i>
                   <input type="text"/>
-                  <a class="btn btn-primary assign-department-btn" style="width:110px;" id="entity-add-show"><%= t 'manage.view.desc.assign_dep' %></a>
+                  <a class="btn btn-primary assign-department-btn" id="entity-add-show"><%= t 'manage.view.desc.assign_dep' %></a>
                   <a class="btn btn-success share-entity-group-btn" style="width:90px;left:130px" id="user-share-show"><%= t 'manage.view.desc.share' %></a>
               <% end %>
             </div>
@@ -58,15 +58,15 @@
                   <i class="icon-remove" id="close-user-share"></i>
 
 
-                  <h4><%= t 'manage.view.desc.already_shared'%></h4>
+                  <h4><%= t 'manage.view.desc.already_shared' %></h4>
                   <ul class="shared-user-list">
                     <% @shared_users.each do |user| %>
                         <li>
-                          <h3 id="<%= user.user_entity_group_id %>" user="<%=user.id%>"><%= user.first_name %></h3>
+                          <h3 id="<%= user.user_entity_group_id %>" user="<%= user.id %>"><%= user.first_name %></h3>
                         </li>
                     <% end %>
                   </ul>
-                  <h4><%= t 'manage.view.desc.not_shared'%></h4>
+                  <h4><%= t 'manage.view.desc.not_shared' %></h4>
                   <ul class="unshared-user-list">
                     <% @unshared_users.each do |user| %>
                         <li>
@@ -105,10 +105,10 @@
         MANAGE.view.init();
     })
 </script>
-<% content_for :javascript_includes do%>
-    <%= javascript_include_tag "Manage.js"%>
-    <%= javascript_include_tag "Manage-left-menu.js"%>
-    <%= javascript_include_tag "Manage-right-list.js"%>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "Manage.js" %>
+    <%= javascript_include_tag "Manage-left-menu.js" %>
+    <%= javascript_include_tag "Manage-right-list.js" %>
 
-    <%= javascript_include_tag "Manage-view.js"%>
-<%end%>
+    <%= javascript_include_tag "Manage-view.js" %>
+<% end %>

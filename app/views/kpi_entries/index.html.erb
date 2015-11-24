@@ -41,10 +41,15 @@
 
       <div class="Search">
         <div class="entry-block">
-          <i class="icon-chevron-left" id="entry-minus"></i>
+          <!--<i class="icon-chevron-left" id="entry-minus"></i>-->
           <input type="text" readonly=true id="entry-date-picker"/>
-          <i class="icon-chevron-right" id="entry-plus"></i>
           <span id="entry-date-extra"></span>
+          <!--<i class="icon-chevron-right" id="entry-plus"></i>-->
+        </div>
+
+        <div class="entry-block">
+          <input type="text" readonly=true id="entry-date-picker-to"/>
+          <span id="entry-date-extra-to"></span>
         </div>
 
         <!--here is the search  en  and  cn-->
@@ -552,6 +557,7 @@
 <script>
     $(document).ready(function () {
         ENTRY.init();
+        ENTRYTO.init();
         kpi_entry_upload();
 
     });
@@ -569,6 +575,7 @@
     <%= javascript_include_tag "jquery.sparkline.min.js" %>
     <%= javascript_include_tag "kpi_entry_upload.js" %>
     <%= javascript_include_tag "Entry.js" %>
+    <%= javascript_include_tag "Entry-to.js" %>
     <%= javascript_include_tag "bootstrap-datepicker.js" %>
     <%= javascript_include_tag "date_picker_template.js" %>
     <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
