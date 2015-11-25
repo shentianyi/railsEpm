@@ -50,65 +50,40 @@
       </table>
     </div>
 
-
     <div id="tabs-2">
       <table class="table table-hover table-striped">
         <thead>
         <tr>
-          <th>project_nr</th>
-          <th>location</th>
-          <th>working_type</th>
-          <th>task_id</th>
-          <th>exception</th>
-          <th>others</th>
-          <th>here</th>
-          <th>...</th>
-          <th>...</th>
-          <th>...</th>
-          <th>...</th>
+          <th>NO.</th>
+          <th>user_id</th>
+          <th>entity_id</th>
+          <th>target_max</th>
+          <th>target_min</th>
+          <th>original_value</th>
+          <th>value</th>
+          <th>entry_at</th>
+          <th>frequency</th>
+          <th>entry_type</th>
+          <th>abnormal</th>
         </tr>
         </thead>
-
+        <% @kpi_entries.each_with_index do |kpi_entry, i| %>
+            <tr>
+              <td><%= i + 1 %></td>
+              <td><%= kpi_entry.user_id %></td>
+              <td><%= kpi_entry.entity_id %></td>
+              <td><%= kpi_entry.target_max %></td>
+              <td><%= kpi_entry.target_min %></td>
+              <td><%= kpi_entry.original_value %></td>
+              <td><%= kpi_entry.value %></td>
+              <td><%= kpi_entry.entry_at %></td>
+              <td><%= kpi_entry.frequency %></td>
+              <td><%= kpi_entry.entry_type %></td>
+              <td><%= kpi_entry.abnormal %></td>
+            </tr>
+        <% end %>
         <tbody>
-        <tr>
-          <td>11071125</td>
-          <td>Shanghai</td>
-          <td>working time</td>
-          <td>IS</td>
-          <td>YES</td>
-          <td>...</td>
-          <td>...</td>
-          <td>...</td>
-          <td>...</td>
-          <td>...</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071126</td>
-          <td>Shanghai</td>
-          <td>Release time</td>
-          <td>SNS</td>
-          <td>NO</td>
-          <td>Others</td>
-          <td>...</td>
-          <td>...</td>
-          <td>...</td>
-          <td>...</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071127</td>
-          <td>Shanghai</td>
-          <td>Travel time</td>
-          <td>OS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>...</td>
-          <td>...</td>
-          <td>...</td>
-          <td>...</td>
-          <td>...</td>
-        </tr>
+
         </tbody>
       </table>
     </div>

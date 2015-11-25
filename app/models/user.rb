@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :create_departs, :class_name => 'Department'
   has_many :user_entity_groups, :dependent => :destroy
   has_many :entity_groups, :through => :user_entity_groups
+  has_many :entities,:through => :entity_groups
   has_many :kpis, :through => :user_kpi_items
   has_many :user_kpi_items, :dependent => :destroy
   has_many :entity_contacts

@@ -6,7 +6,7 @@ class Ability
     alias_action :update, :destroy, :to => :modify
 
 
-    can :download_entry_template,Kpi
+    can :download_entry_template, Kpi
     if user.admin?
       can :manage, [User, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem,
                     UserKpiItem, UserSession, Dashboard, DashboardItem, DashboardCondition, Email,
@@ -23,9 +23,10 @@ class Ability
       can :manage, KpiProperty, user_id: user.id
       #can :read,:all
     elsif user.director?
-      can :manage, [EntityGroupItem, UserKpiItem, KpiEntry, Dashboard, DashboardItem, DashboardCondition, Email,
+      can :manage, [EntityGroupItem, UserKpiItem, Dashboard, DashboardItem, DashboardCondition, Email,
                     KpiProperty, KpiPropertyItem, KpiPropertyValue, StorySet, Story, Comment, ChartCondition,
                     StorySetUser, KpiSubscribe, KpiSubscribeUser, KpiSubscribeAlert]
+      can :manage, KpiEntry, :entity_id.in=> user.entities.pluck(:id).uniq
       can :manage, User, :id => user.id
 
       can :manage, UserSession, :email => user.email
@@ -63,7 +64,7 @@ class Ability
       can :manage, Email, :user_id => user.id
       can :read, [KpiProperty, KpiPropertyItem, StorySet, Story, Comment, ChartCondition, StorySetUser, KpiSubscribe, KpiSubscribeUser, KpiSubscribeAlert]
       can :manage, KpiPropertyValue
-      can :download_entry_template,Kpi
+      can :download_entry_template, Kpi
     end
   end
 end
