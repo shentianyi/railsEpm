@@ -1,7 +1,6 @@
 IFEpm::Application.routes.draw do
 
 
-
   resources :report_snaps
 
 
@@ -21,8 +20,8 @@ IFEpm::Application.routes.draw do
   resources :reports do
     collection do
       get :subscription
-      get ':part'=>:index
-      get ':part/:ajax'=>:index
+      get ':part' => :index
+      get ':part/:ajax' => :index
     end
   end
 
@@ -210,17 +209,17 @@ IFEpm::Application.routes.draw do
   # api routes
   mount ApplicationAPI => '/api'
   namespace :api, :defaults => {:format => 'json'} do
-    
+
     resources :files do
-   collection do
-      match :upload
-      get :attach
-      get :avatar
+      collection do
+        match :upload
+        get :attach
+        get :avatar
+      end
+      member do
+        get :template
+      end
     end
-    member do
-      get :template
-    end
- end
 
     resources :kpi_entries do
       collection do
