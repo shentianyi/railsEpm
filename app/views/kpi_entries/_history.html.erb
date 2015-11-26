@@ -22,408 +22,60 @@
 
   <div id="tabs">
     <ul>
-      <li><a href="#tabs-1">KPI1</a></li>
-      <li><a href="#tabs-2">KPI2</a></li>
-      <li><a href="#tabs-3">KPI3</a></li>
+      <% @tabs.each_with_index do |tab, i| %>
+          <li><a><%= tab[:name] %></a>|</li>
+      <% end %>
     </ul>
     <hr/>
 
-    <div id="tabs-1">
-      <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-          <th>NO.</th>
-          <th>ID</th>
-          <th>Name</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <% @kpis.each_with_index do |kpi, i| %>
+    <% unless @kpi_entries.blank? %>
+        <div id="tabs-1">
+          <table class="table table-hover table-striped">
+            <thead>
             <tr>
-              <td><%= i + 1 %></td>
-              <td><%= kpi.id %></td>
-              <td><%= kpi.name %></td>
+              <th>NO.</th>
+              <th>user_id</th>
+              <th>entity_id</th>
+              <th>target_max</th>
+              <th>target_min</th>
+              <th>original_value</th>
+              <th>value</th>
+              <th>entry_at</th>
+              <th>frequency</th>
+              <th>entry_type</th>
+              <th>abnormal</th>
+
+              <% @kpi.kpi_properties.each do |property| %>
+                  <th><%= property.name %></th>
+              <% end %>
+
             </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
+            </thead>
+            <% @kpi_entries.each_with_index do |kpi_entry, i| %>
+                <tr>
+                  <td><%= i + 1 %></td>
+                  <td><%= kpi_entry.user_id %></td>
+                  <td><%= kpi_entry.entity_id %></td>
+                  <td><%= kpi_entry.target_max %></td>
+                  <td><%= kpi_entry.target_min %></td>
+                  <td><%= kpi_entry.original_value %></td>
+                  <td><%= kpi_entry.value %></td>
+                  <td><%= kpi_entry.entry_at %></td>
+                  <td><%= kpi_entry.frequency %></td>
+                  <td><%= kpi_entry.entry_type %></td>
+                  <td><%= kpi_entry.abnormal %></td>
 
-    <div id="tabs-2">
-      <table class="table table-hover table-striped">
-        <thead>
-        <tr>
-          <th>NO.</th>
-          <th>user_id</th>
-          <th>entity_id</th>
-          <th>target_max</th>
-          <th>target_min</th>
-          <th>original_value</th>
-          <th>value</th>
-          <th>entry_at</th>
-          <th>frequency</th>
-          <th>entry_type</th>
-          <th>abnormal</th>
-        </tr>
-        </thead>
-        <% @kpi_entries.each_with_index do |kpi_entry, i| %>
-            <tr>
-              <td><%= i + 1 %></td>
-              <td><%= kpi_entry.user_id %></td>
-              <td><%= kpi_entry.entity_id %></td>
-              <td><%= kpi_entry.target_max %></td>
-              <td><%= kpi_entry.target_min %></td>
-              <td><%= kpi_entry.original_value %></td>
-              <td><%= kpi_entry.value %></td>
-              <td><%= kpi_entry.entry_at %></td>
-              <td><%= kpi_entry.frequency %></td>
-              <td><%= kpi_entry.entry_type %></td>
-              <td><%= kpi_entry.abnormal %></td>
-            </tr>
-        <% end %>
-        <tbody>
+                  <% @kpi.kpi_properties.each do |property| %>
+                      <td><%= kpi_entry.respond_to?("a#{property.id.to_s}") ? kpi_entry.send("a#{property.id.to_s}") : '' %></td>
+                  <% end %>
+                </tr>
+            <% end %>
+            <tbody>
 
-        </tbody>
-      </table>
-    </div>
-
-    <div id="tabs-3">
-      <table class="table table-hover table-striped">
-        <thead>
-        <tr>
-          <th>project_nr</th>
-          <th>location</th>
-          <th>working_type</th>
-          <th>task_id</th>
-          <th>exception</th>
-          <th>others</th>
-          <th>here</th>
-          <th>Love</th>
-          <th>Script</th>
-          <th>IsScrap</th>
-          <th>...</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr>
-          <td>11071125</td>
-          <td>Shanghai</td>
-          <td>working time</td>
-          <td>IS</td>
-          <td>YES</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071126</td>
-          <td>Shanghai</td>
-          <td>Release time</td>
-          <td>SNS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>YES</td>
-          <td>Right Boy</td>
-          <td>YES</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071127</td>
-          <td>Shanghai</td>
-          <td>Travel time</td>
-          <td>OS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>Here is the remark.</td>
-        </tr>
-
-        <!--here is the copy-->
-        <tr>
-          <td>11071125</td>
-          <td>Shanghai</td>
-          <td>working time</td>
-          <td>IS</td>
-          <td>YES</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071126</td>
-          <td>Shanghai</td>
-          <td>Release time</td>
-          <td>SNS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>YES</td>
-          <td>Right Boy</td>
-          <td>YES</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071127</td>
-          <td>Shanghai</td>
-          <td>Travel time</td>
-          <td>OS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>Here is the remark.</td>
-        </tr>
-        <tr>
-          <td>11071125</td>
-          <td>Shanghai</td>
-          <td>working time</td>
-          <td>IS</td>
-          <td>YES</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071126</td>
-          <td>Shanghai</td>
-          <td>Release time</td>
-          <td>SNS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>YES</td>
-          <td>Right Boy</td>
-          <td>YES</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071127</td>
-          <td>Shanghai</td>
-          <td>Travel time</td>
-          <td>OS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>Here is the remark.</td>
-        </tr>
-        <tr>
-          <td>11071125</td>
-          <td>Shanghai</td>
-          <td>working time</td>
-          <td>IS</td>
-          <td>YES</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071126</td>
-          <td>Shanghai</td>
-          <td>Release time</td>
-          <td>SNS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>YES</td>
-          <td>Right Boy</td>
-          <td>YES</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071127</td>
-          <td>Shanghai</td>
-          <td>Travel time</td>
-          <td>OS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>Here is the remark.</td>
-        </tr>
-        <tr>
-          <td>11071125</td>
-          <td>Shanghai</td>
-          <td>working time</td>
-          <td>IS</td>
-          <td>YES</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071126</td>
-          <td>Shanghai</td>
-          <td>Release time</td>
-          <td>SNS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>YES</td>
-          <td>Right Boy</td>
-          <td>YES</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071127</td>
-          <td>Shanghai</td>
-          <td>Travel time</td>
-          <td>OS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>Here is the remark.</td>
-        </tr>
-        <tr>
-          <td>11071125</td>
-          <td>Shanghai</td>
-          <td>working time</td>
-          <td>IS</td>
-          <td>YES</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071126</td>
-          <td>Shanghai</td>
-          <td>Release time</td>
-          <td>SNS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>YES</td>
-          <td>Right Boy</td>
-          <td>YES</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071127</td>
-          <td>Shanghai</td>
-          <td>Travel time</td>
-          <td>OS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>Here is the remark.</td>
-        </tr>
-        <tr>
-          <td>11071125</td>
-          <td>Shanghai</td>
-          <td>working time</td>
-          <td>IS</td>
-          <td>YES</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071126</td>
-          <td>Shanghai</td>
-          <td>Release time</td>
-          <td>SNS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>YES</td>
-          <td>Right Boy</td>
-          <td>YES</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071127</td>
-          <td>Shanghai</td>
-          <td>Travel time</td>
-          <td>OS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>Here is the remark.</td>
-        </tr>
-        <tr>
-          <td>11071125</td>
-          <td>Shanghai</td>
-          <td>working time</td>
-          <td>IS</td>
-          <td>YES</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071126</td>
-          <td>Shanghai</td>
-          <td>Release time</td>
-          <td>SNS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>YES</td>
-          <td>Right Boy</td>
-          <td>YES</td>
-          <td>...</td>
-        </tr>
-        <tr>
-          <td>11071127</td>
-          <td>Shanghai</td>
-          <td>Travel time</td>
-          <td>OS</td>
-          <td>NO</td>
-          <td>...</td>
-          <td>Love</td>
-          <td>No</td>
-          <td>Right Boy</td>
-          <td>NO</td>
-          <td>Here is the remark.</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+            </tbody>
+          </table>
+        </div>
+    <% end %>
   </div>
 </div>
 

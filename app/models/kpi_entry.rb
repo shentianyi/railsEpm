@@ -149,6 +149,9 @@ class KpiEntry
   end
 
   def self.generated_history_data user, kpi
+    kpi_entries = []
+    return kpi_entries if kpi.blank?
+
     if user.admin?
       kpi_entries = KpiEntry.where({:user_id.in=>(User.where(tenant_id: 12).pluck(:id).uniq), kpi_id: kpi.id})
     elsif user.director?
@@ -157,8 +160,6 @@ class KpiEntry
       kpi_entries = KpiEntry.where(kpi_id: kpi.id, user_id: user.id)
     end
 
-    puts '----------------------------------'
-    puts kpi_entries.count
     kpi_entries
   end
 

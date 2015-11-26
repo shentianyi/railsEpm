@@ -167,6 +167,7 @@ IFEpm::Application.routes.draw do
       post :entry
       post :import
       post :details
+      get :history
     end
   end
 

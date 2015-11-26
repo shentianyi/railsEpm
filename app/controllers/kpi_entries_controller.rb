@@ -7,9 +7,18 @@ class KpiEntriesController < ApplicationController
 
   def index
     @f = params[:id].nil? ? KpiFrequency::Hourly : params[:id].to_i
-    @kpis = Kpi.accessible_by(Ability.new(current_user)).where(frequency: @f)
+    kpis = Kpi.accessible_by(Ability.new(current_user)).where(frequency: @f)
 
-    @kpi_entries = KpiEntry.generated_history_data(current_user, Kpi.first)
+    @tabs = Kpi.generated_kpi_tabs kpis
+    @kpi = kpis.first
+    @kpi_entries = KpiEntry.generated_history_data(current_user, @kpi)
+  end
+
+  def history
+    puts '00000000000000000000000000000000000000'
+    puts params
+    puts '00000000000000000000000000000000000000'
+
   end
 
   def create
