@@ -1,81 +1,45 @@
-<div class="panel">
-  <div class="panel-heading">
-    <h3>KPI</h3>
+<table class="table table-hover table-striped">
+  <thead>
+  <tr>
+    <th>NO.</th>
+    <th>user_id</th>
+    <th>entity_id</th>
+    <th>target_max</th>
+    <th>target_min</th>
+    <th>original_value</th>
+    <th>value</th>
+    <th>entry_at</th>
+    <th>frequency</th>
+    <th>entry_type</th>
+    <th>abnormal</th>
 
-    <div class="Search">
-      <div class="entry-block">
-        <!--<i class="icon-chevron-left" id="entry-minus"></i>-->
-        <input type="text" readonly=true id="entry-date-picker"/>
-        <span id="entry-date-extra"></span>
-        <!--<i class="icon-chevron-right" id="entry-plus"></i>-->
-      </div>
-
-      <div class="entry-block">
-        <input type="text" readonly=true id="entry-date-picker-to"/>
-        <span id="entry-date-extra-to"></span>
-      </div>
-
-      <!--here is the search  en  and  cn-->
-      <input type="button" value="查询" class="btn btn-primary">
-    </div>
-  </div>
-
-  <div id="tabs">
-    <ul>
-      <% @tabs.each_with_index do |tab, i| %>
-          <li><a><%= tab[:name] %></a>|</li>
-      <% end %>
-    </ul>
-    <hr/>
-
-    <% unless @kpi_entries.blank? %>
-        <div id="tabs-1">
-          <table class="table table-hover table-striped">
-            <thead>
-            <tr>
-              <th>NO.</th>
-              <th>user_id</th>
-              <th>entity_id</th>
-              <th>target_max</th>
-              <th>target_min</th>
-              <th>original_value</th>
-              <th>value</th>
-              <th>entry_at</th>
-              <th>frequency</th>
-              <th>entry_type</th>
-              <th>abnormal</th>
-
-              <% @kpi.kpi_properties.each do |property| %>
-                  <th><%= property.name %></th>
-              <% end %>
-
-            </tr>
-            </thead>
-            <% @kpi_entries.each_with_index do |kpi_entry, i| %>
-                <tr>
-                  <td><%= i + 1 %></td>
-                  <td><%= kpi_entry.user_id %></td>
-                  <td><%= kpi_entry.entity_id %></td>
-                  <td><%= kpi_entry.target_max %></td>
-                  <td><%= kpi_entry.target_min %></td>
-                  <td><%= kpi_entry.original_value %></td>
-                  <td><%= kpi_entry.value %></td>
-                  <td><%= kpi_entry.entry_at %></td>
-                  <td><%= kpi_entry.frequency %></td>
-                  <td><%= kpi_entry.entry_type %></td>
-                  <td><%= kpi_entry.abnormal %></td>
-
-                  <% @kpi.kpi_properties.each do |property| %>
-                      <td><%= kpi_entry.respond_to?("a#{property.id.to_s}") ? kpi_entry.send("a#{property.id.to_s}") : '' %></td>
-                  <% end %>
-                </tr>
-            <% end %>
-            <tbody>
-
-            </tbody>
-          </table>
-        </div>
+    <% @kpi.kpi_properties.each do |property| %>
+        <th><%= property.name %></th>
     <% end %>
-  </div>
-</div>
+
+  </tr>
+  </thead>
+  <% @kpi_entries.each_with_index do |kpi_entry, i| %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%= kpi_entry.user_id %></td>
+        <td><%= kpi_entry.entity_id %></td>
+        <td><%= kpi_entry.target_max %></td>
+        <td><%= kpi_entry.target_min %></td>
+        <td><%= kpi_entry.original_value %></td>
+        <td><%= kpi_entry.value %></td>
+        <td><%= kpi_entry.entry_at %></td>
+        <td><%= kpi_entry.frequency %></td>
+        <td><%= kpi_entry.entry_type %></td>
+        <td><%= kpi_entry.abnormal %></td>
+
+        <% @kpi.kpi_properties.each do |property| %>
+            <td><%= kpi_entry.respond_to?("a#{property.id.to_s}") ? kpi_entry.send("a#{property.id.to_s}") : '' %></td>
+        <% end %>
+      </tr>
+  <% end %>
+  <tbody>
+
+  </tbody>
+</table>
 

@@ -26,7 +26,42 @@
 </ul>
 
 <div class="entry-right-content" style="overflow: visible">
-  <%= render :partial => "kpi_entries/history" %>
+  <div class="panel">
+    <div class="panel-heading">
+      <h3>KPI</h3>
+
+      <div class="Search">
+        <div class="entry-block">
+          <!--<i class="icon-chevron-left" id="entry-minus"></i>-->
+          <input type="text" readonly=true id="entry-date-picker"/>
+          <span id="entry-date-extra"></span>
+          <!--<i class="icon-chevron-right" id="entry-plus"></i>-->
+        </div>
+
+        <div class="entry-block">
+          <input type="text" readonly=true id="entry-date-picker-to"/>
+          <span id="entry-date-extra-to"></span>
+        </div>
+
+        <!--here is the search  en  and  cn-->
+        <input type="button" value="查询" class="btn btn-primary">
+      </div>
+    </div>
+
+    <div id="tabs">
+      <ul>
+        <% @kpis.each_with_index do |kpi, i| %>
+            <li><a><%= kpi.name %></a>|</li>
+        <% end %>
+      </ul>
+      <hr/>
+
+      <div id="tabs-1">
+
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <div class="modal-outer" id="upload-kpi">

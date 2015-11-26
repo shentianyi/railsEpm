@@ -77,11 +77,4 @@ class Kpi < ActiveRecord::Base
     self.save
   end
 
-  def self.generated_kpi_tabs kpis
-    tabs = []
-    kpis.each_with_index do |kpi, index|
-      tabs[index] = {id: kpi.id, name: kpi.name}
-    end
-    tabs
-  end
 end
