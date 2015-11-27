@@ -148,16 +148,16 @@ class KpiEntry
     return msg
   end
 
-  def self.generated_history_data user, kpi
+  def self.generated_history_data(user, kpi, start_time, end_time)
     kpi_entries = []
     return kpi_entries if kpi.blank?
 
     if user.admin?
-      kpi_entries = KpiEntry.where({:user_id.in=>(User.where(tenant_id: 12).pluck(:id).uniq), kpi_id: kpi.id})
+      kpi_entries = KpiEntry.where({:user_id.in=>(User.where(tenant_id: 12).pluck(:id).uniq), kpi_id: kpi.id}).where(:entry_at.gte => start_time).where(:entry_at.lte => end_time)
     elsif user.director?
-      kpi_entries = KpiEntry.accessible_by(Ability.new(current_user))
+      kpi_entries = KpiEntry.accessible_by(Ability.new(user)).where(:entry_at.gte => start_time).where(:entry_at.lte => end_time)
     elsif user.user?
-      kpi_entries = KpiEntry.where(kpi_id: kpi.id, user_id: user.id)
+      kpi_entries = KpiEntry.where(kpi_id: kpi.id, user_id: user.id).where(:entry_at.gte => start_time).where(:entry_at.lte => end_time)
     end
 
     kpi_entries

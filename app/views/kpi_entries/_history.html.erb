@@ -2,16 +2,12 @@
   <thead>
   <tr>
     <th>NO.</th>
-    <th>user_id</th>
-    <th>entity_id</th>
-    <th>target_max</th>
-    <th>target_min</th>
-    <th>original_value</th>
-    <th>value</th>
-    <th>entry_at</th>
-    <th>frequency</th>
-    <th>entry_type</th>
-    <th>abnormal</th>
+    <th>用户</th>
+    <th>输入点</th>
+    <th>上限</th>
+    <th>下限</th>
+    <th>值</th>
+    <th>创建时间</th>
     <% @kpi.kpi_properties.each do |property| %>
         <th><%= property.name %></th>
     <% end %>
@@ -21,16 +17,12 @@
   <% @kpi_entries.each_with_index do |kpi_entry, i| %>
       <tr>
         <td><%= i + 1 %></td>
-        <td><%= kpi_entry.user_id %></td>
-        <td><%= kpi_entry.entity_id %></td>
+        <td title=<%= "#{User.find(kpi_entry.user_id).email}"%>><%= User.find(kpi_entry.user_id).first_name %></td>
+        <td><%= Entity.find(kpi_entry.entity_id).name %></td>
         <td><%= kpi_entry.target_max %></td>
         <td><%= kpi_entry.target_min %></td>
-        <td><%= kpi_entry.original_value %></td>
         <td><%= kpi_entry.value %></td>
         <td><%= kpi_entry.entry_at %></td>
-        <td><%= kpi_entry.frequency %></td>
-        <td><%= kpi_entry.entry_type %></td>
-        <td><%= kpi_entry.abnormal %></td>
 
         <% @kpi.kpi_properties.each do |property| %>
             <td><%= kpi_entry.respond_to?("a#{property.id.to_s}") ? kpi_entry.send("a#{property.id.to_s}") : '' %></td>

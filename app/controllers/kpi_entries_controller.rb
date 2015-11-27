@@ -11,11 +11,9 @@ class KpiEntriesController < ApplicationController
   end
 
   def history
-    puts '00000000000000000000000000000000000000'
     puts params
-    puts '00000000000000000000000000000000000000'
     @kpi = Kpi.find(params[:id])
-    @kpi_entries = KpiEntry.generated_history_data(current_user, @kpi)
+    @kpi_entries = KpiEntry.generated_history_data(current_user, @kpi, params[:start_date], params[:end_date])
 
     render :partial => "kpi_entries/history"
   end
