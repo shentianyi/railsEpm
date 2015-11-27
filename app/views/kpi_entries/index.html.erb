@@ -26,42 +26,39 @@
 </ul>
 
 <div class="entry-right-content" style="overflow: visible">
-  <div class="panel">
-    <div class="panel-heading">
-      <h3>KPI</h3>
+  <div class="Search">
+    <h3>KPI</h3>
 
-      <div class="Search">
-        <div class="entry-block">
-          <!--<i class="icon-chevron-left" id="entry-minus"></i>-->
-          <input type="text" readonly=true id="entry-date-picker"/>
-          <span id="entry-date-extra"></span>
-          <!--<i class="icon-chevron-right" id="entry-plus"></i>-->
-        </div>
-
-        <div class="entry-block">
-          <input type="text" readonly=true id="entry-date-picker-to"/>
-          <span id="entry-date-extra-to"></span>
-        </div>
-
-        <!--here is the search  en  and  cn-->
-        <input type="button" value="查询" class="btn btn-primary">
+    <div id="kpi_date">
+      <div class="entry-block">
+        <!--<i class="icon-chevron-left" id="entry-minus"></i>-->
+        <input type="text" readonly=true id="entry-date-picker"/>
+        <span id="entry-date-extra"></span>
+        <!--<i class="icon-chevron-right" id="entry-plus"></i>-->
       </div>
-    </div>
 
-    <div id="tabs">
-      <ul>
-        <% @kpis.each_with_index do |kpi, i| %>
-            <li><a><%= kpi.name %></a>|</li>
-        <% end %>
-      </ul>
-      <hr/>
-
-      <div id="tabs-1">
-
+      <div class="entry-block">
+        <input type="text" readonly=true id="entry-date-picker-to"/>
+        <span id="entry-date-extra-to"></span>
       </div>
+
+      <input type="button" id="searchkpi" value="查询" class="btn btn-primary" onclick="BtnSearchKpi()">
     </div>
   </div>
 
+  <div id="tabs">
+    <ul>
+      <% @kpis.each_with_index do |kpi, i| %>
+          <li title="<%= kpi.id %>">
+            <a href="#tabs-1"><%= kpi.name %></a>
+          </li>
+      <% end %>
+    </ul>
+    <hr id="kpi_hr"/>
+    <div id="tabs-1">
+
+    </div>
+  </div>
 </div>
 
 <div class="modal-outer" id="upload-kpi">
@@ -107,31 +104,138 @@
   </div>
 </div>
 
-<input type="hidden" value="<%= @f %>" id="kpi-type-hidden"/>
+<!--<input type="hidden" value="<%= @f %>" id="kpi-type-hidden"/>-->
 <script>
+
+    var ClientHig = document.documentElement.clientHeight;
+    var ClientWid = document.documentElement.clientWidth;
+
+    var kpi_ul = document.getElementById('tabs');
+    var kpi_li = kpi_ul.getElementsByTagName("li");
+
+    var DateFrom, DateTo;
+
     $(document).ready(function () {
-        ENTRY.init();
-        ENTRYTO.init();
+
         kpi_entry_upload();
 
+        //直接执行
+        OnloadShow(ENTRY.init(), ENTRYTO.init());
+
+        ClickKpi();
     });
-    //get client Hight
-    var ClientHig = document.documentElement.clientHeight;
+
     $('#tabs').tabs();
-    //set the min-Height for panel
-    $('#tabs').css({minHeight: ClientHig * 0.7 + 'px'});
+
+    //set the Height for panel
+    $('#tabs-1').css({height: ClientHig * 0.70 + 'px'}, {width: ClientWid * 0.8 + 'px'});
+
+    function kpi_ajax(id, startdate, enddate) {
+        $.ajax({
+            url: '/kpi_entries/history',
+            type: 'get',
+            data: {
+                id: id,
+                startdate: startdate,
+                enddate: enddate
+            },
+            dataType: "html",
+            success: function (data) {
+                $("#tabs-1").html(data);
+            }
+        });
+    }
+
+    //进入界面的时候 进行请求
+    function OnloadShow(startdate, enddate) {
+        if (kpi_li.length != 0) {
+            kpi_ajax(kpi_li[0].title, startdate, enddate);
+            console.log("here is the page onload..." + "kpi_li[0]---->" + kpi_li[0].title + ",startdate--->" + startdate + ",enddate--->" + enddate);
+        } else {
+            NothingToShow();
+        }
+    }
+
+    function ClickKpi() {
+        for (var i = 0; i < kpi_li.length; i++) {
+            kpi_li[i].onclick = (function (i) {
+                return function () {
+                    //Get date
+                    DateFrom = document.getElementById('entry-date-picker').value;
+                    DateTo = document.getElementById('entry-date-picker-to').value;
+
+                    kpi_ajax(kpi_li[i].title, DateFrom, DateTo);
+                    console.log("click kpi_li[i]----->" + kpi_li[i].title + ",startdate--->" + DateFrom + ",enddate--->" + DateTo);
+                }
+            }(i))
+        }
+    }
+
+
+    function NothingToShow() {
+        var tabshow = document.getElementById('tabs-1');
+        tabshow.innerHTML = "No Kpi to Show";
+        tabshow.className = 'NothingToShow';
+        tabshow.style.paddingTop = ClientHig / 3 + 'px';
+        document.getElementById('kpi_hr').style.display = "none";
+    }
+
+    function BtnSearchKpi() {
+        DateFrom = document.getElementById('entry-date-picker').value;
+        DateTo = document.getElementById('entry-date-picker-to').value;
+
+        for (var i = 0; i < kpi_li.length; i++) {
+            if (kpi_li[i].getAttribute("aria-selected") == "true") {
+                kpi_ajax(kpi_li[i].title, DateFrom, DateTo);
+                console.log("kpi_li[i]+search----->" + kpi_li[i].title + ",start_date--->" + DateFrom + ",end_date--->" + DateTo);
+            }
+        }
+    }
+
+    /* if (document.getElementById('entry-date-picker').value != "") {
+     DateFrom = document.getElementById('entry-date-picker').value;
+     DateTo = document.getElementById('entry-date-picker-to').value;
+     ClickKpi(DateFrom, DateTo);
+     console.log("ready DateFrom  DateTo--->" + DateFrom + "..." + DateTo);
+     } else {
+     console.log("here is the date first.")
+     DateFrom = ENTRY.init();
+     DateTo = ENTRYTO.init();
+     kpi_ajax(kpi_li[0].title, DateFrom, DateTo);
+     ClickKpi(DateFrom, DateTo);
+     }
+     */
+
+    /*
+     function ClickKpi(startdate, enddate) {
+     if (kpi_li.length != 0) {
+     kpi_ajax(kpi_li[0].title, startdate, enddate);
+     console.log("kpi_li[0]---->" + kpi_li[0].title + ",startdate--->" + startdate + ",enddate--->" + enddate);
+     for (var i = 0; i < kpi_li.length; i++) {
+     kpi_li[i].onclick = (function (i) {
+     return function () {
+     kpi_ajax(kpi_li[i].title, startdate, enddate);
+     console.log("kpi_li[i]----->" + kpi_li[i].title + ",startdate--->" + startdate + ",enddate--->" + enddate);
+     }
+     }(i))
+     }
+     } else {
+     NothingToShow();
+     }
+     }*/
 </script>
 
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
     <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
 
-    <%= javascript_include_tag "jquery.sparkline.min.js" %>
     <%= javascript_include_tag "kpi_entry_upload.js" %>
     <%= javascript_include_tag "Entry.js" %>
     <%= javascript_include_tag "Entry-to.js" %>
+
     <%= javascript_include_tag "bootstrap-datepicker.js" %>
     <%= javascript_include_tag "date_picker_template.js" %>
+
     <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
     <%= javascript_include_tag "Manage-kpi-entry.js" %>
 

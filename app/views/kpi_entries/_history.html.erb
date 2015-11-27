@@ -12,13 +12,12 @@
     <th>frequency</th>
     <th>entry_type</th>
     <th>abnormal</th>
-
     <% @kpi.kpi_properties.each do |property| %>
         <th><%= property.name %></th>
     <% end %>
-
   </tr>
   </thead>
+  <tbody>
   <% @kpi_entries.each_with_index do |kpi_entry, i| %>
       <tr>
         <td><%= i + 1 %></td>
@@ -38,8 +37,5 @@
         <% end %>
       </tr>
   <% end %>
-  <tbody>
-
   </tbody>
 </table>
-

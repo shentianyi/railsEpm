@@ -45,19 +45,44 @@ hr {
     font-size: 12px;
 }
 
+#tabs-1 {
+    overflow: auto;
+}
+
 .Search {
     display: flex;
-    height: 60%;
-    margin-left: 50%;
     margin-top: 20px;
+    height: 60px;
+}
+
+.Search > h3 {
+    margin-top: 0;
+    margin-left: 20px;
+    padding-top: 10px;
+}
+
+#kpi_date {
+    display: flex;
+    margin-left: 50%;
+}
+
+#kpi_date > input[type="button"] {
+    height: 35px;
+
 }
 
 .entry-block {
-    top: 1px;
+    top: 5px;
     margin-right: 20px;
 }
 
 .entry-block > input[type="text"] {
     width: 180px;
     height: auto;
+}
+
+.NothingToShow {
+    color: #e0e0e0;
+    font: 60px sans-serif;
+    text-align: center;
 }

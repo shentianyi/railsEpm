@@ -15,7 +15,8 @@ ENTRYTO.datepicker = {};
 
 
 ENTRYTO.init = function () {
-    $("#entry-date-picker-to").val(new Date().toWayneString()[$("#entry-left-menu li.active").attr("show_section")]);
+    var show_date = new Date().toWayneString()[$("#entry-left-menu li.active").attr("show_section")];
+    $("#entry-date-picker-to").val(show_date);
     ENTRYTO.datepicker.init();
     ENTRYTO.datepicker.extra_convert($("#entry-left-menu li.active").attr("interval"));
     ENTRYTO.resize_sort_table();
@@ -89,8 +90,7 @@ ENTRYTO.init = function () {
         .on("click", "#upload-kpi-finish", function () {
             $("#upload-kpi-close").click();
         })
-
-
+    return show_date;
 }
 
 ENTRYTO.datepicker.init = function () {
@@ -114,30 +114,31 @@ ENTRYTO.datepicker.init = function () {
         });
     }
     new DATE_PICKER[interval]("#entry-date-picker-to").datePicker();
-    var entry = new ENTRYTO.datepicker[interval]();
-    $("#entry-minus").on("click", function () {
-        if ($("#entry-date-picker-to").val().length > 0) {
-            var target = $("#entry-date-picker-to").val();
-            $("#entry-date-picker-to").val(entry.minus(target));
-            if (interval != "90") {
-                $("#entry-date-picker-to").datepicker("update", entry.minus(target));
-            }
-            ENTRYTO.datepicker.extra_convert(interval);
-            ENTRYTO.datepicker.post()
-        }
-    });
+    /*
+     var entry = new ENTRYTO.datepicker[interval]();
+     $("#entry-minus").on("click", function () {
+     if ($("#entry-date-picker-to").val().length > 0) {
+     var target = $("#entry-date-picker-to").val();
+     $("#entry-date-picker-to").val(entry.minus(target));
+     if (interval != "90") {
+     $("#entry-date-picker-to").datepicker("update", entry.minus(target));
+     }
+     ENTRYTO.datepicker.extra_convert(interval);
+     ENTRYTO.datepicker.post()
+     }
+     });
 
-    $("#entry-plus").on("click", function () {
-        if ($("#entry-date-picker-to").val().length > 0) {
-            var target = $("#entry-date-picker-to").val();
-            $("#entry-date-picker-to").val(entry.plus(target));
-            if (interval != "90") {
-                $("#entry-date-picker-to").datepicker("update", entry.plus(target));
-            }
-            ENTRYTO.datepicker.extra_convert(interval);
-            ENTRYTO.datepicker.post();
-        }
-    });
+     $("#entry-plus").on("click", function () {
+     if ($("#entry-date-picker-to").val().length > 0) {
+     var target = $("#entry-date-picker-to").val();
+     $("#entry-date-picker-to").val(entry.plus(target));
+     if (interval != "90") {
+     $("#entry-date-picker-to").datepicker("update", entry.plus(target));
+     }
+     ENTRYTO.datepicker.extra_convert(interval);
+     ENTRYTO.datepicker.post();
+     }
+     });*/
 }
 ENTRYTO.datepicker.extra_convert = function (interval) {
     var target = $("#entry-date-picker-to").val();
@@ -150,107 +151,109 @@ ENTRYTO.datepicker.extra_convert = function (interval) {
         $("#entry-date-extra-to").text("Quarter: " + quarter);
     }
 };
-ENTRYTO.datepicker["90"] = function () {
-    ;
-    this.minus = function (target) {
-        var d = standardParse(target).date;
-        var new_d = new Date(d.setHours(d.getHours() - 1)).toWayneString().hour;
-        return new_d
-    };
-    this.plus = function (target) {
-        var d = standardParse(target).date;
-        var new_d = new Date(d.setHours(d.getHours() + 1)).toWayneString().hour;
-        return new_d
-    }
-}
-ENTRYTO.datepicker["100"] = function () {
-    this.minus = function (target) {
-        var d = standardParse(target).date;
-        var new_d = new Date(d.setDate(d.getDate() - 1)).toWayneString().day;
-        return new_d
-    };
-    this.plus = function (target) {
-        var d = standardParse(target).date;
-        var new_d = new Date(d.setDate(d.getDate() + 1)).toWayneString().day;
-        return new_d
-    }
-}
-ENTRYTO.datepicker["200"] = function () {
-    this.minus = function (target) {
-        var d = standardParse(target).date;
-        var new_d = new Date(d.setDate(d.getDate() - 7)).toWayneString().day;
-        return new_d
-    };
-    this.plus = function (target) {
-        var d = standardParse(target).date;
-        var new_d = new Date(d.setDate(d.getDate() + 7)).toWayneString().day;
-        return new_d
-    }
-}
-ENTRYTO.datepicker["300"] = function () {
-    this.minus = function (target) {
-        var d = standardParse(target).date;
-        var new_d = new Date(d.setMonth(d.getMonth() - 1)).toWayneString().month;
-        return new_d
-    };
-    this.plus = function (target) {
-        var d = standardParse(target).date;
-        var new_d = new Date(d.setMonth(d.getMonth() + 1)).toWayneString().month;
-        return new_d
-    }
-}
-ENTRYTO.datepicker["400"] = function () {
-    this.minus = function (target) {
-        var d = standardParse(target).date;
-        var new_d = new Date(d.setMonth(d.getMonth() - 3)).toWayneString().month;
-        return new_d
-    };
-    this.plus = function (target) {
-        var d = standardParse(target).date;
-        var new_d = new Date(d.setMonth(d.getMonth() + 3)).toWayneString().month;
-        return new_d
-    }
-}
-ENTRYTO.datepicker["500"] = function () {
-    this.minus = function (target) {
-        var d = standardParse(target).date;
-        var new_d = new Date(d.setFullYear(d.getFullYear() - 1)).toWayneString().year;
-        return new_d
-    };
-    this.plus = function (target) {
-        var d = standardParse(target).date;
-        var new_d = new Date(d.setFullYear(d.getFullYear() + 1)).toWayneString().year;
-        return new_d
-    }
-}
+/*
+ ENTRYTO.datepicker["90"] = function () {
+ ;
+ this.minus = function (target) {
+ var d = standardParse(target).date;
+ var new_d = new Date(d.setHours(d.getHours() - 1)).toWayneString().hour;
+ return new_d
+ };
+ this.plus = function (target) {
+ var d = standardParse(target).date;
+ var new_d = new Date(d.setHours(d.getHours() + 1)).toWayneString().hour;
+ return new_d
+ }
+ }
+ ENTRYTO.datepicker["100"] = function () {
+ this.minus = function (target) {
+ var d = standardParse(target).date;
+ var new_d = new Date(d.setDate(d.getDate() - 1)).toWayneString().day;
+ return new_d
+ };
+ this.plus = function (target) {
+ var d = standardParse(target).date;
+ var new_d = new Date(d.setDate(d.getDate() + 1)).toWayneString().day;
+ return new_d
+ }
+ }
+ ENTRYTO.datepicker["200"] = function () {
+ this.minus = function (target) {
+ var d = standardParse(target).date;
+ var new_d = new Date(d.setDate(d.getDate() - 7)).toWayneString().day;
+ return new_d
+ };
+ this.plus = function (target) {
+ var d = standardParse(target).date;
+ var new_d = new Date(d.setDate(d.getDate() + 7)).toWayneString().day;
+ return new_d
+ }
+ }
+ ENTRYTO.datepicker["300"] = function () {
+ this.minus = function (target) {
+ var d = standardParse(target).date;
+ var new_d = new Date(d.setMonth(d.getMonth() - 1)).toWayneString().month;
+ return new_d
+ };
+ this.plus = function (target) {
+ var d = standardParse(target).date;
+ var new_d = new Date(d.setMonth(d.getMonth() + 1)).toWayneString().month;
+ return new_d
+ }
+ }
+ ENTRYTO.datepicker["400"] = function () {
+ this.minus = function (target) {
+ var d = standardParse(target).date;
+ var new_d = new Date(d.setMonth(d.getMonth() - 3)).toWayneString().month;
+ return new_d
+ };
+ this.plus = function (target) {
+ var d = standardParse(target).date;
+ var new_d = new Date(d.setMonth(d.getMonth() + 3)).toWayneString().month;
+ return new_d
+ }
+ }
+ ENTRYTO.datepicker["500"] = function () {
+ this.minus = function (target) {
+ var d = standardParse(target).date;
+ var new_d = new Date(d.setFullYear(d.getFullYear() - 1)).toWayneString().year;
+ return new_d
+ };
+ this.plus = function (target) {
+ var d = standardParse(target).date;
+ var new_d = new Date(d.setFullYear(d.getFullYear() + 1)).toWayneString().year;
+ return new_d
+ }
+ }*/
+
 ENTRYTO.datepicker.post = function () {
     var interval = $("#entry-left-menu li.active").attr("interval");
     var date_original = $("#entry-date-picker-to").val();
     var post_date = HIGH_CHART.postPrepare(date_original, interval);
 
-    $.ajax({
-        url: '/kpi_entries/show',
-        type: 'get',
-        data: {
-            f: $('#kpi-type-hidden').val(),
-            date: post_date.toISOString()
-        },
-        dataType: "html",
-        success: function (data) {
-            $("#entry-sort-list").html(data);
-            ENTRYTO.resize_sort_table();
-            $("#entry-sort-list li").on("resize", function () {
-                ENTRYTO.resize_sort_table()
-            });
-            $("#entry-sort-list td").tipsy({gravity: 'se'});
-            ENTRYTO.trend(post_date);
-            $("#entry-sort-list").find("table").css("table-layout", "auto");
-            window.setTimeout(function () {
-                $("#entry-sort-list").find("table").css("table-layout", "fixed");
-            }, 500);
-        }
-    });
-
+    /* $.ajax({
+     url: '/kpi_entries/show',
+     type: 'get',
+     data: {
+     f: $('#kpi-type-hidden').val(),
+     date: post_date.toISOString()
+     },
+     dataType: "html",
+     success: function (data) {
+     $("#entry-sort-list").html(data);
+     ENTRYTO.resize_sort_table();
+     $("#entry-sort-list li").on("resize", function () {
+     ENTRYTO.resize_sort_table()
+     });
+     $("#entry-sort-list td").tipsy({gravity: 'se'});
+     ENTRYTO.trend(post_date);
+     $("#entry-sort-list").find("table").css("table-layout", "auto");
+     window.setTimeout(function () {
+     $("#entry-sort-list").find("table").css("table-layout", "fixed");
+     }, 500);
+     }
+     });
+     */
 }
 ENTRYTO.trend = function (post_date) {
     var i, kpi_count = $("#entry-sort-list").children().length, kpi_id, ids = [];
@@ -287,7 +290,81 @@ ENTRYTO.trend_form = function (id, values) {
     ENTRYTO.recent_array[id] = complete_value;
 };
 ENTRYTO.resize_sort_table = function () {
-    var table_size = $("#entry-sort-list li").width() * 0.97;
+    var table_size = $("#entry-sort-list li").
+            /*
+             ENTRYTO.datepicker["90"] = function () {
+             ;
+             this.minus = function (target) {
+             var d = standardParse(target).date;
+             var new_d = new Date(d.setHours(d.getHours() - 1)).toWayneString().hour;
+             return new_d
+             };
+             this.plus = function (target) {
+             var d = standardParse(target).date;
+             var new_d = new Date(d.setHours(d.getHours() + 1)).toWayneString().hour;
+             return new_d
+             }
+             }
+             ENTRYTO.datepicker["100"] = function () {
+             this.minus = function (target) {
+             var d = standardParse(target).date;
+             var new_d = new Date(d.setDate(d.getDate() - 1)).toWayneString().day;
+             return new_d
+             };
+             this.plus = function (target) {
+             var d = standardParse(target).date;
+             var new_d = new Date(d.setDate(d.getDate() + 1)).toWayneString().day;
+             return new_d
+             }
+             }
+             ENTRYTO.datepicker["200"] = function () {
+             this.minus = function (target) {
+             var d = standardParse(target).date;
+             var new_d = new Date(d.setDate(d.getDate() - 7)).toWayneString().day;
+             return new_d
+             };
+             this.plus = function (target) {
+             var d = standardParse(target).date;
+             var new_d = new Date(d.setDate(d.getDate() + 7)).toWayneString().day;
+             return new_d
+             }
+             }
+             ENTRYTO.datepicker["300"] = function () {
+             this.minus = function (target) {
+             var d = standardParse(target).date;
+             var new_d = new Date(d.setMonth(d.getMonth() - 1)).toWayneString().month;
+             return new_d
+             };
+             this.plus = function (target) {
+             var d = standardParse(target).date;
+             var new_d = new Date(d.setMonth(d.getMonth() + 1)).toWayneString().month;
+             return new_d
+             }
+             }
+             ENTRYTO.datepicker["400"] = function () {
+             this.minus = function (target) {
+             var d = standardParse(target).date;
+             var new_d = new Date(d.setMonth(d.getMonth() - 3)).toWayneString().month;
+             return new_d
+             };
+             this.plus = function (target) {
+             var d = standardParse(target).date;
+             var new_d = new Date(d.setMonth(d.getMonth() + 3)).toWayneString().month;
+             return new_d
+             }
+             }
+             ENTRYTO.datepicker["500"] = function () {
+             this.minus = function (target) {
+             var d = standardParse(target).date;
+             var new_d = new Date(d.setFullYear(d.getFullYear() - 1)).toWayneString().year;
+             return new_d
+             };
+             this.plus = function (target) {
+             var d = standardParse(target).date;
+             var new_d = new Date(d.setFullYear(d.getFullYear() + 1)).toWayneString().year;
+             return new_d
+             }
+             }*/width() * 0.97;
     $("#entry-sort-list .table-outer-div>table").width(table_size)
 }
 ENTRYTO.recent_entry = {
