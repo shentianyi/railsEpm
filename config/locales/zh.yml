@@ -403,6 +403,11 @@ zh:
       value: 值
       del-error: 不能删除总值!
       del-success: 删除成功!
+      user-name: 用户名
+      entity: 输入点
+      max: 最大值
+      min: 最小值
+      entry-at: KPI输入时间
     failure:
       system: 系统错误，请联系ClearInsight管理员
     success:

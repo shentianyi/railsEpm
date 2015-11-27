@@ -2,12 +2,12 @@
   <thead>
   <tr>
     <th>NO.</th>
-    <th>用户</th>
-    <th>输入点</th>
-    <th>上限</th>
-    <th>下限</th>
-    <th>值</th>
-    <th>创建时间</th>
+    <th><%= t 'entry.desc.user-name' %></th>
+    <th><%= t 'entry.desc.entity' %></th>
+    <th><%= t 'entry.desc.max' %></th>
+    <th><%= t 'entry.desc.min' %></th>
+    <th><%= t 'entry.desc.value' %></th>
+    <th><%= t 'entry.desc.entry-at' %></th>
     <% @kpi.kpi_properties.each do |property| %>
         <th><%= property.name %></th>
     <% end %>
