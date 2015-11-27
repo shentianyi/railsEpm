@@ -405,6 +405,7 @@ en:
       max: Max Target
       min: Min Target
       entry-at: KPI Input Time
+      search: Search
     failure:
       system: System error, please contact ClearInsight staff
     success:

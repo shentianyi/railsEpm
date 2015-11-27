@@ -408,6 +408,7 @@ zh:
       max: 最大值
       min: 最小值
       entry-at: KPI输入时间
+      search: 查询
     failure:
       system: 系统错误，请联系ClearInsight管理员
     success:
