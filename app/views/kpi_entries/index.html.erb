@@ -121,8 +121,8 @@
 
         //直接执行
         OnloadShow(ENTRY.init(), ENTRYTO.init());
-
         ClickKpi();
+
     });
 
     $('#tabs').tabs();
@@ -131,6 +131,7 @@
     $('#tabs-1').css({height: ClientHig * 0.70 + 'px'}, {width: ClientWid * 0.8 + 'px'});
 
     function kpi_ajax(id, startdate, enddate) {
+        show_loading(150, 0, 0, 150); //显示覆盖显示
         $.ajax({
             url: '/kpi_entries/history',
             type: 'get',
@@ -142,6 +143,14 @@
             dataType: "html",
             success: function (data) {
                 $("#tabs-1").html(data);
+                remove_loading();
+
+                var Date = document.getElementsByClassName('ChangeToLocalTime');
+                for (var i = 0; i < Date.length; i++) {
+                    var ServerDate = Date[i].getAttribute("title").toString();
+                    Date[i].innerHTML = ChangeDate(ServerDate);
+                }
+
             }
         });
     }
@@ -150,7 +159,6 @@
     function OnloadShow(startdate, enddate) {
         if (kpi_li.length != 0) {
             kpi_ajax(kpi_li[0].title, startdate, enddate);
-            console.log("here is the page onload..." + "kpi_li[0]---->" + kpi_li[0].title + ",startdate--->" + startdate + ",enddate--->" + enddate);
         } else {
             NothingToShow();
         }
@@ -165,7 +173,6 @@
                     DateTo = document.getElementById('entry-date-picker-to').value;
 
                     kpi_ajax(kpi_li[i].title, DateFrom, DateTo);
-                    console.log("click kpi_li[i]----->" + kpi_li[i].title + ",startdate--->" + DateFrom + ",enddate--->" + DateTo);
                 }
             }(i))
         }
@@ -187,42 +194,15 @@
         for (var i = 0; i < kpi_li.length; i++) {
             if (kpi_li[i].getAttribute("aria-selected") == "true") {
                 kpi_ajax(kpi_li[i].title, DateFrom, DateTo);
-                console.log("kpi_li[i]+search----->" + kpi_li[i].title + ",start_date--->" + DateFrom + ",end_date--->" + DateTo);
             }
         }
     }
 
-    /* if (document.getElementById('entry-date-picker').value != "") {
-     DateFrom = document.getElementById('entry-date-picker').value;
-     DateTo = document.getElementById('entry-date-picker-to').value;
-     ClickKpi(DateFrom, DateTo);
-     console.log("ready DateFrom  DateTo--->" + DateFrom + "..." + DateTo);
-     } else {
-     console.log("here is the date first.")
-     DateFrom = ENTRY.init();
-     DateTo = ENTRYTO.init();
-     kpi_ajax(kpi_li[0].title, DateFrom, DateTo);
-     ClickKpi(DateFrom, DateTo);
-     }
-     */
-
-    /*
-     function ClickKpi(startdate, enddate) {
-     if (kpi_li.length != 0) {
-     kpi_ajax(kpi_li[0].title, startdate, enddate);
-     console.log("kpi_li[0]---->" + kpi_li[0].title + ",startdate--->" + startdate + ",enddate--->" + enddate);
-     for (var i = 0; i < kpi_li.length; i++) {
-     kpi_li[i].onclick = (function (i) {
-     return function () {
-     kpi_ajax(kpi_li[i].title, startdate, enddate);
-     console.log("kpi_li[i]----->" + kpi_li[i].title + ",startdate--->" + startdate + ",enddate--->" + enddate);
-     }
-     }(i))
-     }
-     } else {
-     NothingToShow();
-     }
-     }*/
+    function ChangeDate(date) {
+        var NewDate = new Date(date);
+        var FormatDate = NewDate.format("yyyy-MM-dd hh:mm:ss");
+        return FormatDate;
+    }
 </script>
 
 <% content_for :javascript_includes do %>

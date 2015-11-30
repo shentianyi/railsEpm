@@ -1,13 +1,17 @@
 <table class="table table-hover table-striped">
   <thead>
   <tr>
+    <th colspan="7" style="border-right: 1px solid #e0e0e0;font: 16px sans-serif"><%= t 'manage.departments.desc.basic' %></th>
+    <th id="dimensionforkpi" colspan="<%= @kpi.kpi_properties.count %>" style="font: 16px sans-serif;"><%= t 'manage.kpi.dimensions' %></th>
+  </tr>
+  <tr>
     <th>NO.</th>
     <th><%= t 'entry.desc.user-name' %></th>
     <th><%= t 'entry.desc.entity' %></th>
     <th><%= t 'entry.desc.max' %></th>
     <th><%= t 'entry.desc.min' %></th>
     <th><%= t 'entry.desc.value' %></th>
-    <th><%= t 'entry.desc.entry-at' %></th>
+    <th style="border-right: 1px solid #e0e0e0"><%= t 'entry.desc.entry-at' %></th>
     <% @kpi.kpi_properties.each do |property| %>
         <th><%= property.name %></th>
     <% end %>
@@ -17,12 +21,12 @@
   <% @kpi_entries.each_with_index do |kpi_entry, i| %>
       <tr>
         <td><%= i + 1 %></td>
-        <td title=<%= "#{User.find(kpi_entry.user_id).email}"%>><%= User.find(kpi_entry.user_id).first_name %></td>
+        <td title=<%= "#{User.find(kpi_entry.user_id).email}" %>><%= User.find(kpi_entry.user_id).first_name %></td>
         <td><%= Entity.find(kpi_entry.entity_id).name %></td>
         <td><%= kpi_entry.target_max %></td>
         <td><%= kpi_entry.target_min %></td>
         <td><%= kpi_entry.value %></td>
-        <td><%= kpi_entry.entry_at %></td>
+        <td style="border-right: 1px solid #e0e0e0" class="ChangeToLocalTime" title="<%= kpi_entry.entry_at %>"></td>
 
         <% @kpi.kpi_properties.each do |property| %>
             <td><%= kpi_entry.respond_to?("a#{property.id.to_s}") ? kpi_entry.send("a#{property.id.to_s}") : '' %></td>
@@ -31,3 +35,11 @@
   <% end %>
   </tbody>
 </table>
+
+<!--作出判断.如果没有dimensions,则设置不显示-->
+<script type="text/javascript" charset="utf-8">
+    var count =<%= @kpi.kpi_properties.count %>;
+    if (count == 0) {
+        document.getElementById('dimensionforkpi').style.display = "none";
+    }
+</script>

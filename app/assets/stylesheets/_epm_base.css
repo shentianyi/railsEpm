@@ -470,7 +470,7 @@ nav ul li a:hover ~ .nav-manage-sub {
     cursor: default;
     margin-bottom: 0px;
     font-family: 'open-sans';
-    height: 20px;
+    height: 28px;
 }
 
 .index-pick-date[type="text"]:nth-of-type(2) {
