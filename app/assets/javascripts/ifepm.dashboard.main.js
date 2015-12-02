@@ -637,11 +637,12 @@ ifepm.dashboard.on_finish_load = function () {
             console.log("timeout" + "===height=" + height)
             $("#dashboard-content-full").css("height", height + "px");
 
-            var ClientHeight = document.documentElement.clientHeight;
-            ClientHeight_left = ClientHeight / 2 - 110;
+            //here is get the right content Hight;
+            var ContentHig = document.getElementById('dashboard-content').offsetHeight;
+            var ClientHeight_left = ContentHig / 2 - 110;
             console.log("dashboard-content-full-bg-left:" + ClientHeight_left + "px");
             $("#dashboard-content-full-bg-left").css("height", ClientHeight_left + "px");
-        }, 100)
+        }, 100);
 
 
         if (isfullsize) {

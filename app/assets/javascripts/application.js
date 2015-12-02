@@ -11,6 +11,8 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //=require jquery-1.8.2.min
+
+//=require jquery.ui/jquery-ui.js
 //=require jquery_ujs
 //=require jquery.tipsy
 //=require jquery-csshooks

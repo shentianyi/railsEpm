@@ -191,7 +191,7 @@ module Entry
       def generate_web_highstock_data
         web_highstock_data={}
         self.data_module.each { |k, v| web_highstock_data[k]=v.kind_of?(Hash) ? v.values : v }
-        web_highstock_data[:date]=self.current.keys
+        web_highstock_data[:date]=self.current.keys.map{|k| k.to_time.utc.to_s}
         return web_highstock_data
       end
 

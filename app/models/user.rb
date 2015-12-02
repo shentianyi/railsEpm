@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :create_departs, :class_name => 'Department'
   has_many :user_entity_groups, :dependent => :destroy
   has_many :entity_groups, :through => :user_entity_groups
+  has_many :entities,:through => :entity_groups
   has_many :kpis, :through => :user_kpi_items
   has_many :user_kpi_items, :dependent => :destroy
   has_many :entity_contacts
@@ -67,7 +68,7 @@ class User < ActiveRecord::Base
       else
         raise "Sorry, Build default Entity failed!"
       end
-    end
+    end if self.tenant.settings(:entity).auto_create_for_general_user
 
     #name user_id tenant_id
     if self.entity_groups.blank?
@@ -79,7 +80,7 @@ class User < ActiveRecord::Base
       unless entity_group.save
         raise "Sorry, Build default Entity Groups failed!"
       end
-    end
+    end if self.tenant.settings(:entity_group).auto_create_for_general_user
   end
 
   def method_missing(method_name, *args, &block)

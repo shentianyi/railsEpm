@@ -8,17 +8,10 @@ module V1
     namespace :kpi_entry do
       post :entry do
         status 200
+Rails.logger.debug '***********************'
+  Rails.logger.debug request.env['api.request.body']
+Rails.logger.debug '***********************'
 
-        puts '000000000000'.blue
-        p request.env['api.request.body'].class
-        Rails.logger.debug "*************************** coming data"
-        Rails.logger.debug request.env['api.request.body']
-        Rails.logger.debug "*************************** coming data"
-        puts '---------------------------------------'
-
-        Rails.logger.debug 'log entry data.................'
-        Rails.logger.debug params
-        Rails.logger.debug 'log entry data.................'
         if request.env['api.request.body'].nil? || request.env['api.request.body'].is_a?(Hash)
           if guard_entry! &do_entry
             {
@@ -66,10 +59,10 @@ module V1
         params[:page] = 0 if params[:page].blank? || params[:page].to_i < 0
         params[:size] = 30 if params[:size].blank? || params[:size].to_i < 0
         #params[:page]=params[:page].to_i-1
-        if params[:from_time].blank? || params[:to_time].blank?
-          params[:from_time]=7.days.ago.utc
-          params[:to_time]=Time.now.utc
-        end
+#        if params[:from_time].blank? || params[:to_time].blank?
+ #         params[:from_time]=7.days.ago.utc
+  #        params[:to_time]=Time.now.utc
+   #     end
         params[:user_id]=current_user.id
         p params
 
@@ -92,6 +85,21 @@ module V1
         guard_entries!(batch_insert, &do_entry)
       end
 
+
+      desc 'get analyse kpi data'
+      get :analyse do
+        @kpi_id=params[:kpi_id]
+        @kpi_name=params[:kpi_name]
+        @entity_group_id=params[:entity_group_id]
+        @entity_group_name=params[:entity_group_name]
+        @start_time=params[:start_time]
+        @end_time=params[:end_time]
+        @frequency=params[:frequency].nil? ? nil : params[:frequency].to_i
+        @type='area'
+        @average= params[:average].nil? ? true : params[:average]=='true'
+        @data=Entry::Analyzer.new(params).analyse
+      end
+
     end
 
     desc 'upload excel add in data'
@@ -104,6 +112,7 @@ module V1
     post :upload do
       Rails.logger.debug '**************** excel logger'
       Rails.logger.debug params
+Rails.logger.debug params[:template_id]
       Rails.logger.debug '**************** excel logger'
 
       params[:entries]=[]
@@ -115,13 +124,6 @@ module V1
         entry[:data_key]=k
         params[:entries]<<entry
       end
-
-
-
-      Rails.logger.debug '**************** 33excel logger'
-      p params[:entries]
-
-      Rails.logger.debug '**************** 33excel logger'
 
       if guard_entries!(true, &do_entry)
         {
@@ -135,6 +137,7 @@ module V1
         }
       end
     end
+
 
 
     helpers do

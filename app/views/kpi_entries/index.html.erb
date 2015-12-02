@@ -25,41 +25,68 @@
   </li>
 </ul>
 
-<div class="entry-right-content">
-  <div class="entry-block">
-    <i class="icon-chevron-left" id="entry-minus"></i>
-    <input type="text" readonly=true id="entry-date-picker"/>
-    <i class="icon-chevron-right" id="entry-plus"></i>
-    <span id="entry-date-extra"></span>
-  </div>
-  <ul class="entry-sort-list" id="entry-sort-list">
+<div class="entry-right-content" style="overflow: visible">
+  <div class="Search">
+    <h3>KPI</h3>
 
-  </ul>
+    <div id="kpi_date">
+      <div class="entry-block">
+        <!--<i class="icon-chevron-left" id="entry-minus"></i>-->
+        <input type="text" readonly=true id="entry-date-picker"/>
+        <span id="entry-date-extra"></span>
+        <!--<i class="icon-chevron-right" id="entry-plus"></i>-->
+      </div>
+
+      <div class="entry-block">
+        <input type="text" readonly=true id="entry-date-picker-to"/>
+        <span id="entry-date-extra-to"></span>
+      </div>
+
+      <input type="button" id="searchkpi" value="<%= t 'entry.desc.search' %>" class="btn btn-primary" onclick="BtnSearchKpi()">
+    </div>
+  </div>
+
+  <div id="tabs">
+    <ul>
+      <% @kpis.each_with_index do |kpi, i| %>
+          <li title="<%= kpi.id %>">
+            <a href="#tabs-1"><%= kpi.name %></a>
+          </li>
+      <% end %>
+    </ul>
+    <hr id="kpi_hr"/>
+    <div id="tabs-1">
+
+    </div>
+  </div>
 </div>
 
 <div class="modal-outer" id="upload-kpi">
-     <div class="upload-kpi modal-inner">
-          <i class="icon-remove" id="upload-kpi-close"></i>
-          <a class="btn btn-primary download-btn" href="<%=download_entry_template_kpis_path%>">
-           <%= I18n.t('fix.download_template')%>
-          </a>
-          <p class="template-info"><i class="icon-info-sign"></i> <%= I18n.t('fix.upload_info')%></p>
-          <hr />
-          <div class="content">
-               <div class="upload-file">
-                    <a class="btn btn-primary upload-btn" onclick="$('#kpi-entry-uploader').click()">      <%= I18n.t('fix.upload_data_file')%></a>
-                    <input id="kpi-entry-uploader" class="kpi-entry-upload" type="file" style="display: none;"  data-url="/kpi_entries/import" name="files[]">
-                    <div id="kpi-entry-uploader-preview">
-                    </div>
-               </div>
-          </div>
-          <p class="upload-parsing" id="parsing-load">
-                <%= I18n.t('fix.kpi_upload_support_format')%>
-          </p>
-          <div class="btn upload-finish" id="upload-kpi-finish">
-              <%= I18n.t('fix.upload_finish')%>
-          </div>
-     </div>
+  <div class="upload-kpi modal-inner">
+    <i class="icon-remove" id="upload-kpi-close"></i>
+    <a class="btn btn-primary download-btn" href="<%= download_entry_template_kpis_path %>">
+      <%= I18n.t('fix.download_template') %>
+    </a>
+
+    <p class="template-info"><i class="icon-info-sign"></i> <%= I18n.t('fix.upload_info') %></p>
+    <hr/>
+    <div class="content">
+      <div class="upload-file">
+        <a class="btn btn-primary upload-btn" onclick="$('#kpi-entry-uploader').click()">      <%= I18n.t('fix.upload_data_file') %></a>
+        <input id="kpi-entry-uploader" class="kpi-entry-upload" type="file" style="display: none;" data-url="/kpi_entries/import" name="files[]">
+
+        <div id="kpi-entry-uploader-preview">
+        </div>
+      </div>
+    </div>
+    <p class="upload-parsing" id="parsing-load">
+      <%= I18n.t('fix.kpi_upload_support_format') %>
+    </p>
+
+    <div class="btn upload-finish" id="upload-kpi-finish">
+      <%= I18n.t('fix.upload_finish') %>
+    </div>
+  </div>
 </div>
 
 <div class="modal-outer false-alert" id="false-alert">
@@ -77,24 +104,120 @@
   </div>
 </div>
 
-<input type="hidden" value="<%= @f %>" id="kpi-type-hidden"/>
+<!--<input type="hidden" value="<%= @f %>" id="kpi-type-hidden"/>-->
 <script>
+
+    var ClientHig = document.documentElement.clientHeight;
+    var ClientWid = document.documentElement.clientWidth;
+
+    var kpi_ul = document.getElementById('tabs');
+    var kpi_li = kpi_ul.getElementsByTagName("li");
+
+    var DateFrom, DateTo;
+
     $(document).ready(function () {
-        ENTRY.init();
+
         kpi_entry_upload();
 
-    })
+        //直接执行
+        OnloadShow(ENTRY.init(), ENTRYTO.init());
+        ClickKpi();
+
+    });
+
+    $('#tabs').tabs();
+
+    //set the Height for panel
+    $('#tabs-1').css({height: ClientHig * 0.70 + 'px'}, {width: ClientWid * 0.8 + 'px'});
+
+    function kpi_ajax(id, startdate, enddate) {
+        show_loading(150, 0, 0, 150); //显示覆盖显示
+        $.ajax({
+            url: '/kpi_entries/history',
+            type: 'get',
+            data: {
+                id: id,
+                start_date: startdate,
+                end_date: enddate
+            },
+            dataType: "html",
+            success: function (data) {
+                $("#tabs-1").html(data);
+                remove_loading();
+
+                var Date = document.getElementsByClassName('ChangeToLocalTime');
+                for (var i = 0; i < Date.length; i++) {
+                    var ServerDate = Date[i].getAttribute("title").toString();
+                    Date[i].innerHTML = ChangeDate(ServerDate);
+                }
+
+            }
+        });
+    }
+
+    //进入界面的时候 进行请求
+    function OnloadShow(startdate, enddate) {
+        if (kpi_li.length != 0) {
+            kpi_ajax(kpi_li[0].title, startdate, enddate);
+        } else {
+            NothingToShow();
+        }
+    }
+
+    function ClickKpi() {
+        for (var i = 0; i < kpi_li.length; i++) {
+            kpi_li[i].onclick = (function (i) {
+                return function () {
+                    //Get date
+                    DateFrom = document.getElementById('entry-date-picker').value;
+                    DateTo = document.getElementById('entry-date-picker-to').value;
+
+                    kpi_ajax(kpi_li[i].title, DateFrom, DateTo);
+                }
+            }(i))
+        }
+    }
+
+
+    function NothingToShow() {
+        var tabshow = document.getElementById('tabs-1');
+        tabshow.innerHTML = "No Kpi to Show";
+        tabshow.className = 'NothingToShow';
+        tabshow.style.paddingTop = ClientHig / 3 + 'px';
+        document.getElementById('kpi_hr').style.display = "none";
+    }
+
+    function BtnSearchKpi() {
+        DateFrom = document.getElementById('entry-date-picker').value;
+        DateTo = document.getElementById('entry-date-picker-to').value;
+
+        for (var i = 0; i < kpi_li.length; i++) {
+            if (kpi_li[i].getAttribute("aria-selected") == "true") {
+                kpi_ajax(kpi_li[i].title, DateFrom, DateTo);
+            }
+        }
+    }
+
+    function ChangeDate(date) {
+        var NewDate = new Date(date);
+        var FormatDate = NewDate.format("yyyy-MM-dd hh:mm:ss");
+        return FormatDate;
+    }
 </script>
 
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
     <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
 
-    <%= javascript_include_tag "jquery.sparkline.min.js" %>
     <%= javascript_include_tag "kpi_entry_upload.js" %>
     <%= javascript_include_tag "Entry.js" %>
+    <%= javascript_include_tag "Entry-to.js" %>
+
     <%= javascript_include_tag "bootstrap-datepicker.js" %>
     <%= javascript_include_tag "date_picker_template.js" %>
+
     <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
     <%= javascript_include_tag "Manage-kpi-entry.js" %>
+
+    <%= stylesheet_link_tag "KPIEntry.css" %>
 <% end %>

@@ -76,4 +76,5 @@ class Kpi < ActiveRecord::Base
     }
     self.save
   end
+
 end
