@@ -840,7 +840,7 @@ function checkConditionHeight(){
 //点击某个点以后触发
 function chart_point_click(object) {
 //    console.log(object);
-    $("#detail-block").css("left", "0").css("right","0");
+    $("#detail-block").css("left".., "0").css("right","0");
     $("#detail-date").text(object.name);
     var method=object.method=="0"? I18n.t('analytics.average'):I18n.t('analytics.sum');
     $("#detail-kpi").text(object.legend_text);

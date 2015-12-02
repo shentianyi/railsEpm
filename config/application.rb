@@ -27,7 +27,11 @@ module IFEpm
     config.paths.add "app/services", glob: "**/*.rb"
     config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
     config.autoload_paths += Dir["#{Rails.root}/app/services/**/*.rb"]
-    # Only load the plugins named here, in the order given (default is alphabetical).
+
+config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
+config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
+	
+	# Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
