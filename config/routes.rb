@@ -1,6 +1,9 @@
 IFEpm::Application.routes.draw do
 
 
+  resources :user_invites
+
+
   resources :report_snaps
 
 
@@ -53,11 +56,12 @@ IFEpm::Application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  use_doorkeeper do
-    controllers :applications => 'oauth/applications'
-    controllers :authorizations => nil
-    controllers :tokens => nil
-  end
+
+   use_doorkeeper# do
+  #   controllers :applications => 'oauth/applications'
+  #   controllers :authorizations => nil
+  #   controllers :tokens => nil
+  # end
 
   devise_for :users, :controllers => {sessions: :user_sessions, registrations: :user_registrations}
   devise_scope :user do

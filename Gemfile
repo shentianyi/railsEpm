@@ -62,15 +62,13 @@ end
 
 gem 'jquery-rails'
 
-#gem 'authlogic'
-
 # user system
 gem 'devise'
 gem 'devise-encryptable'
 
 # OAuth 2 Authorization Server
+gem 'doorkeeper-jwt'
 gem 'doorkeeper'
-#gem 'oauth'
 
 # api framework
 gem 'grape'
@@ -119,3 +117,6 @@ gem 'seajs-rails'
 
 # setting
 gem 'ledermann-rails-settings'
+# gem 'figaro'
+gem 'settingslogic'
+

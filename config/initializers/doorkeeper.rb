@@ -9,24 +9,18 @@ Doorkeeper.configure do
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
-  admin_authenticator do
-    if !current_user || !current_user.admin?
-      redirect_to new_user_session_path
-    end
-  end
-
-  resource_owner_from_credentials do
-    request.params[:user]={email:request.params[:username],password:request.params[:password]}
-    request.env["devise.allow_params_authentication"] = true
-    request.env["warden"].authenticate!(:scope => :user)
-  end
+  # admin_authenticator do
+  #   # Put your admin authentication logic here.
+  #   # Example implementation:
+  #   Admin.find_by_id(session[:admin_id]) || redirect_to(new_admin_session_url)
+  # end
 
   # Authorization Code expiration time (default 10 minutes).
   # authorization_code_expires_in 10.minutes
 
   # Access token expiration time (default 2 hours).
   # If you want to disable expiration, set this to nil.
-  access_token_expires_in 10.years
+  # access_token_expires_in 2.hours
 
   # Issue access tokens with refresh token (disabled by default)
   # use_refresh_token
@@ -35,7 +29,7 @@ Doorkeeper.configure do
   # Optional parameter :confirmation => true (default false) if you want to enforce ownership of
   # a registered application
   # Note: you must also run the rails g doorkeeper:application_owner generator to provide the necessary support
-  enable_application_owner :confirmation => true
+   enable_application_owner :confirmation => true
 
   # Define access token scopes for your provider
   # For more information go to https://github.com/applicake/doorkeeper/wiki/Using-Scopes
@@ -64,10 +58,23 @@ Doorkeeper.configure do
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
   # For example if dealing with trusted a application.
-  # skip_authorization do |resource_owner, client|
-  #   client.superapp? or resource_owner.admin?
-  # end
+  skip_authorization do |resource_owner, client|
+    #client.superapp? or resource_owner.admin?
+    client.uid==Settings.oauth.application.uid
+  end
 
   # WWW-Authenticate Realm (default "Doorkeeper").
   # realm "Doorkeeper"
+
+  # Allow dynamic query parameters (disabled by default)
+  # Some applications require dynamic query parameters on their request_uri
+  # set to true if you want this to be allowed
+  # wildcard_redirect_uri false
+
+end
+
+module Doorkeeper
+  class Application
+    attr_accessible :uid
+  end
 end

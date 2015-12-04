@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_many :create_departs, :class_name => 'Department'
   has_many :user_entity_groups, :dependent => :destroy
   has_many :entity_groups, :through => :user_entity_groups
-  has_many :entities,:through => :entity_groups
+  has_many :entities, :through => :entity_groups
   has_many :kpis, :through => :user_kpi_items
   has_many :user_kpi_items, :dependent => :destroy
   has_many :entity_contacts
@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
 
 
   after_create :create_view_and_entity_for_general_user
+  after_create :generate_access_token
 
   #acts_as_authentic do |c|
   #  c.login_field = :email
@@ -96,7 +97,7 @@ class User < ActiveRecord::Base
   end
 
   def confirmed?
-    return true #self.confirmed
+    true #self.confirmed
   end
 
   def lock (email)
@@ -143,7 +144,7 @@ class User < ActiveRecord::Base
     UserConfirmationMailer.deliver_password_reset(self).deliver
   end
 
-  def create_tenant_user!(first_name,email, password, password_confirmation, company_name)
+  def create_tenant_user!(first_name, email, password, password_confirmation, company_name)
     self.first_name=first_name
     self.email=email
     self.password=password
@@ -172,9 +173,9 @@ class User < ActiveRecord::Base
 
   def self.by_role role
     joins('left join entities on users.entity_id=entities.id')
-    .joins('left join departments on users.department_id=departments.id')
-    .where(role_id: role)
-    .select('users.*,entities.name as entity_name,departments.name as department_name')
+        .joins('left join departments on users.department_id=departments.id')
+        .where(role_id: role)
+        .select('users.*,entities.name as entity_name,departments.name as department_name')
   end
 
   def role
@@ -210,30 +211,10 @@ class User < ActiveRecord::Base
   end
 
 
-  #待测试
-  def insert_guide_template
-    if self.id
-      $redis_guid.hmset(self.id, $user_guide_template)
-    end
+  def generate_access_token
+    p System::DEFAULT_OAUTH_APP
+    Doorkeeper::AccessToken.create!(application_id: System::DEFAULT_OAUTH_APP.id,
+                                    resource_owner_id: self.id,
+                                    expires_in: Doorkeeper.configuration.access_token_expires_in)
   end
-
-  def remove_guide_item(controller_name, action_name)
-    $redis_guid.hdel(self.id, make_guide_key(controller_name, action_name))
-  end
-
-  def add_guide_item (controller_name, action_name)
-    if !has_guide_item(controller_name, action_name)
-      $redis_guid.hset(self.id, make_guide_key(controller_name, action_name), nil)
-    end
-  end
-
-  def has_guide_item(controller_name, action_name)
-    return $redis_guid.hexists(self.id, make_guide_key(controller_name, action_name))
-  end
-
-  def make_guide_key(controller_name, action_name)
-    return controller_name.downcase + '/' + action_name.downcase
-  end
-
-
 end
