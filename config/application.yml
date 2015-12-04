@@ -6,6 +6,9 @@ development:
          redirect_uri: 'http://www.cz-tek.com'
          owner: admin@ci.com
       secret_key: 7381a978f7dd7f9a1117
+   application:
+       id: clearinsight
+
 demo:
    oauth:
       application:
@@ -14,3 +17,5 @@ demo:
          redirect_uri: 'http://www.cz-tek.com'
          owner: admin@ci.com
       secret_key: 7381a978f7dd7f9a1117
+   application:
+       id: clearinsight

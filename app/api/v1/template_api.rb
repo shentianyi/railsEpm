@@ -18,7 +18,7 @@ module V1
           }
         end
         templates<<{
-            app_id: $APP_ID,
+            app_id: Settings.application.id,
             invoke_address: 'http://112.124.28.10:8000/api/v1/upload',
             template_id: kpi.id,
             template_name: kpi.name,
