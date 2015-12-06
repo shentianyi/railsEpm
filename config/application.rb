@@ -4,8 +4,8 @@ require 'rails/all'
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
   Bundler.require(*Rails.groups(:assets => %w(development test)))
-# If you want your assets lazily compiled in production, use this line
-# Bundler.require(:default, :assets, Rails.env)
+  # If you want your assets lazily compiled in production, use this line
+  # Bundler.require(:default, :assets, Rails.env)
 end
 
 module IFEpm
@@ -16,27 +16,18 @@ module IFEpm
     self.paths["config/database"] = "config/database_wz.yml" if ENV["USER"] == 'wayne' || ENV["USER"]=='liqi' || /darwin\w+/.match(RbConfig::CONFIG['host_os'])
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
-    config.autoload_paths += Dir["#{config.root}/lib/**/"]
-    config.autoload_paths+=%W(#{config.root}/base)
-    config.autoload_paths+=%W(#{config.root}/validators)
-    config.autoload_paths+=Dir[Rails.root.join('app','models','{**}')]
-    config.autoload_paths+=Dir[Rails.root.join('app','presenters','{**}')]
-    config.autoload_paths += %W(#{config.root}/app/caches)
-    # for api
-    config.paths.add "app/api", glob: "**/*.rb"
-    config.paths.add "app/services", glob: "**/*.rb"
-    config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
-    config.autoload_paths += Dir["#{Rails.root}/app/services/**/*.rb"]
 
-config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
-config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
-	
-	# Only load the plugins named here, in the order given (default is alphabetical).
+    %w{models api workers services presenters}.each do |namespace|
+      config.paths.add File.join('app', namespace), glob: File.join('**', '*.rb')
+      config.autoload_paths += Dir[Rails.root.join('app', namespace, '**')]
+    end
+
+    # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
     # Activate observers that should always be running.
-    config.active_record.observers = :tenant_observer,:user_observer,:kpi_observer,:entity_observer,:entity_group_observer,:department_observer,:user_department_observer
+    config.active_record.observers = :tenant_observer, :user_observer, :kpi_observer, :entity_observer, :entity_group_observer, :department_observer, :user_department_observer
     config.active_record.observers+=['Admin::KpiTemplateObserver']
 
 

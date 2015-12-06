@@ -25,6 +25,9 @@ class User < ActiveRecord::Base
   has_many :collaborated_story_sets, :through => :story_set_users
   has_many :report_snaps
 
+  has_many :access_tokens, class_name: 'Doorkeeper::AccessToken',foreign_key: :resource_owner_id
+
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -191,30 +194,23 @@ class User < ActiveRecord::Base
   end
 
 
-  alias :devise_valid_password? :valid_password?
-
-  def valid_password?(password)
-    begin
-      super(password)
-    rescue BCrypt::Errors::InvalidHash
-      stretches = 20
-      digest = [password, self.password_salt].flatten.join('')
-      stretches.times { digest = Digest::SHA512.hexdigest(digest) }
-      if digest == self.encrypted_password
-        self.encrypted_password = self.password_digest(password)
-        self.save
-        return true
-      else
-        return false
-      end
-    end
+  # the last access token for user
+  def access_token
+    access_tokens.where(application_id: System::DEFAULT_OAUTH_APP.id,
+                        revoked_at: nil).where('date_add(created_at,interval expires_in second) > ?',Time.now.utc).
+        order('created_at desc').
+        limit(1).
+        first || generate_access_token
   end
 
 
+  private
+  # generate token
   def generate_access_token
-    p System::DEFAULT_OAUTH_APP
     Doorkeeper::AccessToken.create!(application_id: System::DEFAULT_OAUTH_APP.id,
                                     resource_owner_id: self.id,
                                     expires_in: Doorkeeper.configuration.access_token_expires_in)
   end
+
+
 end

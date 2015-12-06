@@ -8,4 +8,33 @@ class UserPresenter<Presenter
     self.delegators =Delegators
   end
 
+
+
+
+  def as_session_json
+    if @user.nil?
+      {
+          result_code: 0,
+          messages: [I18n.t('devise.failure.invalid')]
+      }
+    else
+      {
+          result_code: 1,
+          messages: [I18n.t('devise.sessions.signed_in')],
+          token: @user.access_token.token,
+          need_instruction: false,
+          customized_field: as_brief_json
+      }
+    end
+  end
+
+  def as_brief_json
+    {
+        id: @user.id,
+        email: @user.email,
+        nick_name: @user.first_name,
+        department: 'MB'
+    }
+  end
+
 end

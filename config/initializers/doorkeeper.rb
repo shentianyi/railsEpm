@@ -29,7 +29,7 @@ Doorkeeper.configure do
   # Optional parameter :confirmation => true (default false) if you want to enforce ownership of
   # a registered application
   # Note: you must also run the rails g doorkeeper:application_owner generator to provide the necessary support
-   enable_application_owner :confirmation => true
+  # enable_application_owner :confirmation => true
 
   # Define access token scopes for your provider
   # For more information go to https://github.com/applicake/doorkeeper/wiki/Using-Scopes
@@ -59,7 +59,6 @@ Doorkeeper.configure do
   # so that the user skips the authorization step.
   # For example if dealing with trusted a application.
   skip_authorization do |resource_owner, client|
-    #client.superapp? or resource_owner.admin?
     client.uid==Settings.oauth.application.uid
   end
 
@@ -71,6 +70,7 @@ Doorkeeper.configure do
   # set to true if you want this to be allowed
   # wildcard_redirect_uri false
 
+  # access_token_generator "Doorkeeper::JWT"
 end
 
 module Doorkeeper
