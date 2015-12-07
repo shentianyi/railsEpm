@@ -589,7 +589,7 @@ ActiveRecord::Schema.define(:version => 20151207172512) do
     t.string   "current_location",     :default => ""
     t.string   "device_id",            :default => ""
     t.boolean  "is_online",            :default => false
-    t.string   "nick_name",                               :null => false
+    t.string   "nick_name"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
