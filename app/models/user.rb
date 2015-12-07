@@ -210,9 +210,11 @@ class User < ActiveRecord::Base
   private
   # generate token
   def generate_access_token
-    Doorkeeper::AccessToken.create!(application_id: System.default_app.id,
-                                    resource_owner_id: self.id,
-                                    expires_in: Doorkeeper.configuration.access_token_expires_in)
+    if System.default_app
+      Doorkeeper::AccessToken.create!(application_id: System.default_app.id,
+                                      resource_owner_id: self.id,
+                                      expires_in: Doorkeeper.configuration.access_token_expires_in)
+    end
   end
 
 

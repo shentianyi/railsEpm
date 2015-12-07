@@ -2,8 +2,6 @@ class System
 
 
   def self.init
-
-
     # init oauth app
     unless app=default_app
       app=Doorkeeper::Application.new(name: Settings.oauth.application.name,
