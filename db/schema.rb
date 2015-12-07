@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151028094137) do
+ActiveRecord::Schema.define(:version => 20151207172512) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -400,12 +400,13 @@ ActiveRecord::Schema.define(:version => 20151028094137) do
   add_index "oauth_access_tokens", ["token"], :name => "index_oauth_access_tokens_on_token", :unique => true
 
   create_table "oauth_applications", :force => true do |t|
-    t.string   "name",         :null => false
-    t.string   "uid",          :null => false
-    t.string   "secret",       :null => false
-    t.text     "redirect_uri", :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.string   "name",                         :null => false
+    t.string   "uid",                          :null => false
+    t.string   "secret",                       :null => false
+    t.text     "redirect_uri",                 :null => false
+    t.string   "scopes",       :default => "", :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.integer  "owner_id"
     t.string   "owner_type"
   end
@@ -522,6 +523,17 @@ ActiveRecord::Schema.define(:version => 20151028094137) do
   add_index "user_entity_groups", ["entity_group_id"], :name => "index_user_entity_groups_on_entity_group_id"
   add_index "user_entity_groups", ["user_id"], :name => "index_user_entity_groups_on_user_id"
 
+  create_table "user_invites", :force => true do |t|
+    t.string   "email"
+    t.boolean  "sign_uped",  :default => false
+    t.integer  "user_id"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "user_invites", ["email"], :name => "index_user_invites_on_email"
+  add_index "user_invites", ["user_id"], :name => "index_user_invites_on_user_id"
+
   create_table "user_kpi_items", :force => true do |t|
     t.integer  "entity_id"
     t.integer  "user_id"
@@ -577,6 +589,7 @@ ActiveRecord::Schema.define(:version => 20151028094137) do
     t.string   "current_location",     :default => ""
     t.string   "device_id",            :default => ""
     t.boolean  "is_online",            :default => false
+    t.string   "nick_name",                               :null => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

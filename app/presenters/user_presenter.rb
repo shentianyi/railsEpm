@@ -1,14 +1,12 @@
 #encoding: utf-8
 class UserPresenter<Presenter
-  Delegators=[:id, :first_name, :last_name, :email, :role_id, :title,:tel,:phone,:is_tenant, :entity_id, :department_id,:role]
+  Delegators=[:id, :first_name,:nick_name, :last_name, :email, :role_id, :title,:tel,:phone,:is_tenant, :entity_id, :department_id,:role]
   def_delegators :@user,*Delegators
 
   def initialize(user)
     @user=user
     self.delegators =Delegators
   end
-
-
 
 
   def as_session_json
@@ -32,9 +30,22 @@ class UserPresenter<Presenter
     {
         id: @user.id,
         email: @user.email,
-        nick_name: @user.first_name,
+        nick_name: @user.nick_name,
         department: 'MB'
     }
   end
 
+  def as_sign_up_json
+    if @user.persisted?
+      {
+          result_code:1,
+          messages:['Sign Up Success']
+      }
+    else
+      {
+          result_code:0,
+          messages: @user.errors.full_messages
+      }
+    end
+  end
 end

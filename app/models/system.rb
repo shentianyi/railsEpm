@@ -10,15 +10,17 @@ class System
     end
     user.update_attributes(:is_sys => true)
 
+    # init oauth app
     unless DEFAULT_OAUTH_APP
-      # init oauth app
       app=Doorkeeper::Application.new(name: Settings.oauth.application.name,
                                       uid: Settings.oauth.application.uid,
                                       redirect_uri: Settings.oauth.application.redirect_uri)
       app.owner = user
       app.save
-
-      p app.errors
     end
+
+    # update nick name
+    User.where(nick_name: ['', nil]).each { |u| u.update_attributes(nick_name: u.first_name) }
+
   end
 end

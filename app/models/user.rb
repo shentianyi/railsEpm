@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   has_many :collaborated_story_sets, :through => :story_set_users
   has_many :report_snaps
 
-  has_many :access_tokens, class_name: 'Doorkeeper::AccessToken',foreign_key: :resource_owner_id
+  has_many :access_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id
 
 
   # Include default devise modules. Others available are:
@@ -35,13 +35,15 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation #, :remember_me
-  attr_accessible :status, :perishable_token, :confirmed, :first_name, :last_name, :is_tenant
+  attr_accessible :status, :perishable_token, :confirmed, :first_name, :last_name, :nick_name, :is_tenant
   attr_accessible :tenant_id, :role_id, :entity_id, :department_id, :is_sys, :title #, :department_group_id
   attr_accessible :tel, :phone, :image_url
   attr_accessible :stuff_id, :current_project_id, :current_location, :device_id, :is_online, :last_request_at
 
 
-  after_create :create_view_and_entity_for_general_user
+  validates_presence_of :nick_name, message: 'cannot be blank'
+
+  # after_create :create_view_and_entity_for_general_user
   after_create :generate_access_token
 
   #acts_as_authentic do |c|
@@ -52,40 +54,40 @@ class User < ActiveRecord::Base
   # acts as tenant
   acts_as_tenant(:tenant)
 
-  redis_search_index(:title_field => :first_name,
+  redis_search_index(:title_field => :nick_name,
                      :condition_fields => [:tenant_id, :is_sys, :role_id, :entity_id],
                      :prefix_index_enable => true,
                      :ext_fields => [:email])
 
-  def create_view_and_entity_for_general_user
-    #name code description tenant_id
-    if self.entity.nil?
-      #create entity
-      args = {}
-      args[:description] = args[:code] = args[:name] = self.first_name
-      entity = Entity.new(args)
-      if entity.save
-        #update user
-        user = User.find_by_id(self.id)
-        raise "Sorry, Update User's Entity failed!" if user.blank?
-        user.update_attributes :entity_id => entity.id
-      else
-        raise "Sorry, Build default Entity failed!"
-      end
-    end if self.tenant.settings(:entity).auto_create_for_general_user
-
-    #name user_id tenant_id
-    if self.entity_groups.blank?
-      args = {}
-      args[:name] = self.first_name
-      args[:user_id] = self.id
-      args[:tenant_id] = self.tenant.id
-      entity_group = EntityGroup.new(args)
-      unless entity_group.save
-        raise "Sorry, Build default Entity Groups failed!"
-      end
-    end if self.tenant.settings(:entity_group).auto_create_for_general_user
-  end
+  # def create_view_and_entity_for_general_user
+  #   #name code description tenant_id
+  #   if self.entity.nil?
+  #     #create entity
+  #     args = {}
+  #     args[:description] = args[:code] = args[:name] = self.first_name
+  #     entity = Entity.new(args)
+  #     if entity.save
+  #       #update user
+  #       user = User.find_by_id(self.id)
+  #       raise "Sorry, Update User's Entity failed!" if user.blank?
+  #       user.update_attributes :entity_id => entity.id
+  #     else
+  #       raise "Sorry, Build default Entity failed!"
+  #     end
+  #   end if self.tenant.settings(:entity).auto_create_for_general_user
+  #
+  #   #name user_id tenant_id
+  #   if self.entity_groups.blank?
+  #     args = {}
+  #     args[:name] = self.first_name
+  #     args[:user_id] = self.id
+  #     args[:tenant_id] = self.tenant.id
+  #     entity_group = EntityGroup.new(args)
+  #     unless entity_group.save
+  #       raise "Sorry, Build default Entity Groups failed!"
+  #     end
+  #   end if self.tenant.settings(:entity_group).auto_create_for_general_user
+  # end
 
   def method_missing(method_name, *args, &block)
     if Role::RoleMethods.include?(method_name)
@@ -149,6 +151,7 @@ class User < ActiveRecord::Base
 
   def create_tenant_user!(first_name, email, password, password_confirmation, company_name)
     self.first_name=first_name
+    self.nick_name=first_name
     self.email=email
     self.password=password
     self.password_confirmation=password_confirmation
@@ -190,14 +193,14 @@ class User < ActiveRecord::Base
   end
 
   def self.contact_attrs
-    'users.id,users.first_name as name,users.tel,users.phone,users.email,users.title,users.image_url'
+    'users.id,users.nick_name as name,users.tel,users.phone,users.email,users.title,users.image_url'
   end
 
 
   # the last access token for user
   def access_token
     access_tokens.where(application_id: System::DEFAULT_OAUTH_APP.id,
-                        revoked_at: nil).where('date_add(created_at,interval expires_in second) > ?',Time.now.utc).
+                        revoked_at: nil).where('date_add(created_at,interval expires_in second) > ?', Time.now.utc).
         order('created_at desc').
         limit(1).
         first || generate_access_token

@@ -1,6 +1,8 @@
 IFEpm::Application.routes.draw do
 
 
+  use_doorkeeper
+
   resources :user_invites
 
 

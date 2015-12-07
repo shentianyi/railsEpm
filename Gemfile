@@ -68,7 +68,7 @@ gem 'devise-encryptable'
 
 # OAuth 2 Authorization Server
 gem 'doorkeeper-jwt'
-gem 'doorkeeper'
+gem 'doorkeeper','~> 3.0.1'
 
 # api framework
 gem 'grape'

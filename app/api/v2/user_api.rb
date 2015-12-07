@@ -31,7 +31,15 @@ module V2
           requires :nick_name, type: String, desc: 'user nick name'
         end
         post do
-
+          UserService.sign_up({
+                                  user: {
+                                      email: params[:email],
+                                      password: params[:password],
+                                      password_confirmation: params[:password],
+                                      nick_name: params[:nick_name],
+                                      role_id: Role.user
+                                  }
+                              })
         end
       end
     end
