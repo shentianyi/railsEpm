@@ -9,7 +9,7 @@ class System
     user.update_attributes(:is_sys => true)
 
     # init oauth app
-    unless app=default_app
+    unless default_app
       app=Doorkeeper::Application.new(name: Settings.oauth.application.name,
                                       uid: Settings.oauth.application.uid,
                                       redirect_uri: Settings.oauth.application.redirect_uri)
