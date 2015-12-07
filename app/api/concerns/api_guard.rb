@@ -117,7 +117,7 @@ module APIGuard
     end
 
     def find_access_token(token_string)
-      Doorkeeper::AccessToken.authenticate(token_string)
+      Doorkeeper::AccessToken.by_token(token_string)
     end
 
     def validate_access_token(access_token, scopes)
@@ -193,10 +193,16 @@ module APIGuard
                            :invalid_token,
                            "Bad Access Token.")
                      when ExpiredError
-                       Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
-                           :invalid_token,
-                           "Token is expired. You can either do re-authorization or token refresh.")
+                       #Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
+                       #      :invalid_token,
+                       #     "Token is expired. You can either do re-authorization or token refresh.")
 
+                       r= Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
+                           :expired_token,
+                           "Token is expired. You can resign in to get new token.")
+
+                       r.status=403
+                       r
                      when RevokedError
                        Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
                            :invalid_token,
