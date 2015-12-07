@@ -207,7 +207,7 @@ class User < ActiveRecord::Base
   end
 
 
-  private
+  # private
   # generate token
   def generate_access_token
     if System.default_app
