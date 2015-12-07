@@ -5,11 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-unless user=User.find_by_email('admin@ci.com')
-  user=User.new.create_tenant_user!('admin','admin@ci.com','123456@','123456@','ClearInsight')
-end
-user.update_attributes(:is_sys=>true)
-
 
 #
 #print "test\n"

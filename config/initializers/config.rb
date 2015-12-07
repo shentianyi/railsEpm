@@ -23,7 +23,3 @@ $ZONE_HOUR_OFFSET=Time.zone_offset($DEFAULT_TIME_ZONE)/(3600)
 $BACKGROUND_TASK=BackgroundTaskType::SIDEKIQ
 
 $tmp_file_path=path_config[:tmp_file_path]
-
-$APP_ID='clearinsight'
-
-$API_AUTH=true

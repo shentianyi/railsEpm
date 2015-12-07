@@ -6,7 +6,7 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   before_filter :authenticate_resource_owner!
 
   def index
-    @applications = current_user.tenant.oauth_applications
+    @applications = current_user.oauth_applications
     #grants=@applications[0].access_grants
     #puts grants
     #
@@ -18,10 +18,12 @@ class Oauth::ApplicationsController < Doorkeeper::ApplicationsController
   def create
     params[:application][:redirect_uri]=default_url if application_params[:redirect_uri].blank?
     @application = Doorkeeper::Application.new(application_params)
-    @application.owner = current_user.tenant if Doorkeeper.configuration.confirm_application_owner?
+    @application.owner = current_user#.tenant if Doorkeeper.configuration.confirm_application_owner?
 
     if @application.save
-      Doorkeeper::AccessToken.create!(:application_id => @application.id, :resource_owner_id => current_user.tenant.id) if @application.access_tokens.count==0
+      Doorkeeper::AccessToken.create!(application_id: @application.id,
+                                      resource_owner_id: current_user.tenant.id,
+                                      expires_in: Doorkeeper.configuration.access_token_expires_in) if @application.access_tokens.count==0
 
       flash[:notice] = I18n.t(:notice, :scope => [:doorkeeper, :flash, :applications, :create])
       respond_with [:oauth, @application]

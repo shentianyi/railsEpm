@@ -14,24 +14,24 @@ module V1
         JSON.parse(File.read("data/cities_#{locale}.json"))
       end
 
-	  #desc 'validate kpi'
-	 # params do
-	#	  requries :id,type: Integer,desc:'kpi id'
-	 # end
-	  post :validate_kpi do
-		  status 200
-        if Kpi.find_by_id(params[:id]) && current_user.kpis.where(id:params[:id]).first
-			{
-				result:1,
-			    msg:['kpi valid']
-			}
-		else
-			{
-			 result:0,
-			 msg:['kpi invalid']
-			}
-		end
-	  end
+      #desc 'validate kpi'
+      # params do
+      #	  requries :id,type: Integer,desc:'kpi id'
+      # end
+      post :validate_kpi do
+        status 200
+        if Kpi.find_by_id(params[:id]) && current_user.kpis.where(id: params[:id]).first
+          {
+              result: 1,
+              msg: ['kpi valid']
+          }
+        else
+          {
+              result: 0,
+              msg: ['kpi invalid']
+          }
+        end
+      end
     end
   end
 end

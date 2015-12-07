@@ -18,7 +18,7 @@ module APIGuard
 
 # Helper Methods for Grape Endpoint
   module HelperMethods
-    LOCALE_MAP={CN: 'zh', EN: 'en', DE: 'de'}
+    LOCALE_MAP={ZH: 'zh', CN: 'zh', EN: 'en', DE: 'de'}
     # Invokes the doorkeeper guard.
     #
     # If token string is blank, then it raises MissingTokenError.
@@ -40,20 +40,14 @@ module APIGuard
     #           Defaults to empty array.
     #
     def guard!(scopes= [])
-      if $API_AUTH
-        if request.env['HTTP_AUTHORIZATION'].present?
-          if request.env['HTTP_AUTHORIZATION'].split(' ')[0]=='Bearer'
-            guard_by_token(scopes)
-          else
-            guard_by_basic
-          end
+      if request.env['HTTP_AUTHORIZATION'].present?
+        if request.env['HTTP_AUTHORIZATION'].split(' ')[0]=='Bearer'
+          guard_by_token(scopes)
         else
-          raise NoAuthError
+          guard_by_basic
         end
       else
-        user=User.find_for_database_authentication(:email => 'excel@ci.com')
-        @current_user=user
-        @current_tenant=user.tenant
+        raise NoAuthError
       end
     end
 
@@ -109,9 +103,8 @@ module APIGuard
           when Oauth2::AccessTokenValidationService::REVOKED
             raise RevokedError
           when Oauth2::AccessTokenValidationService::VALID
-            @current_tenant=Tenant.find(access_token.resource_owner_id)
-            raise ExpiredError if @current_tenant.expire_at.to_time.utc < Time.now.utc
-            @current_user = @current_tenant.super_user if @current_tenant
+            @current_user = User.find(access_token.resource_owner_id)
+            @current_tenant=@current_user.tenant
         end
       end
     end
@@ -124,7 +117,7 @@ module APIGuard
     end
 
     def find_access_token(token_string)
-      Doorkeeper::AccessToken.authenticate(token_string)
+      Doorkeeper::AccessToken.by_token(token_string)
     end
 
     def validate_access_token(access_token, scopes)
@@ -132,11 +125,14 @@ module APIGuard
     end
 
     def get_locale
-      Rails.logger.debug("***http localization header:#{request.env['HTTP_LOCALIZATION'].present?}")
+      Rails.logger.debug("***http localization header:#{request.env['HTTP_ACCEPT_LANGUAGE'].present?}")
 
-      Rails.logger.debug("***http localization header:#{request.env['HTTP_LOCALIZATION']}")
-      if request.env['HTTP_LOCALIZATION'].present?
-        LOCALE_MAP[request.env['HTTP_LOCALIZATION'].to_sym] || 'en'
+      Rails.logger.debug("***http localization header:#{request.env['HTTP_ACCEPT_LANGUAGE']}")
+
+      locale_header=request.env['HTTP_LOCALIZATION']||request.env['HTTP_ACCEPT_LANGUAGE']
+
+      if locale_header.present?
+        LOCALE_MAP[locale_header.upcase.to_sym] || 'en'
       else
         'en'
       end
@@ -197,10 +193,16 @@ module APIGuard
                            :invalid_token,
                            "Bad Access Token.")
                      when ExpiredError
-                       Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
-                           :invalid_token,
-                           "Token is expired. You can either do re-authorization or token refresh.")
+                       #Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
+                       #      :invalid_token,
+                       #     "Token is expired. You can either do re-authorization or token refresh.")
 
+                       r= Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
+                           :expired_token,
+                           "Token is expired. You can resign in to get new token.")
+
+                       r.status=403
+                       r
                      when RevokedError
                        Rack::OAuth2::Server::Resource::Bearer::Unauthorized.new(
                            :invalid_token,
