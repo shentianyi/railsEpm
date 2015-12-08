@@ -19,23 +19,23 @@ class Department < ActiveRecord::Base
   has_ancestry
   acts_as_tenant(:tenant)
 
-  validate :validate_create_update
-  validates :name, presence: true
-
+  #validate :validate_create_update
+  validates_presence_of :name, presence: true, message: 'can not be blank'
+  validates_uniqueness_to_tenant :name, message: 'should be uniq'
   #private
   #def create_entity_group
-    #create the entity_group belongs to the department
-    
+  #create the entity_group belongs to the department
+
   #end
 
-  def validate_create_update
-    errors.add(:name, I18n.t("fix.cannot_repeat")) if Department.where(:name => self.name, :tenant_id => self.tenant_id).first if new_record?
-    errors.add(:name, I18n.t("fix.cannot_repeat")) if Department.where(:name => self.name, :tenant_id => self.tenant_id).where('id <> ?', self.id).first unless new_record?
-  end
+  # def validate_create_update
+  #   errors.add(:name, I18n.t("fix.cannot_repeat")) if Department.where(:name => self.name, :tenant_id => self.tenant_id).first if new_record?
+  #   errors.add(:name, I18n.t("fix.cannot_repeat")) if Department.where(:name => self.name, :tenant_id => self.tenant_id).where('id <> ?', self.id).first unless new_record?
+  # end
 
   def self.json_tree(nodes)
     nodes.map do |node, sub_nodes|
-      {:id=>node.id,:name=>node.name,:data=>{},:children=> json_tree(sub_nodes).compact} 
+      {:id => node.id, :name => node.name, :data => {}, :children => json_tree(sub_nodes).compact}
     end
   end
 end

@@ -30,7 +30,13 @@ class UserService
         if ui=UserInvite.find_by_email(params[:user][:email])
           user=User.new(params[:user])
           user.tenant=ui.user.tenant
-          ui.update_attributes(sign_uped: true) if user.save
+          if user.save
+            ui.update_attributes(sign_uped: true)
+            if ui.department_id
+              # TODO
+              # add user to department
+            end
+          end
           UserPresenter.new(user).as_sign_up_json
         else
           {
