@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   attr_accessible :stuff_id, :current_project_id, :current_location, :device_id, :is_online, :last_request_at
 
 
-  validates_presence_of :nick_name, message: 'cannot be blank'
+  #validates_presence_of :nick_name, message: 'cannot be blank'
 
   # after_create :create_view_and_entity_for_general_user
   after_create :generate_access_token

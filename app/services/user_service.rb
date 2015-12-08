@@ -44,12 +44,18 @@ class UserService
 
   def self.set_password params
     if (user=User.find_for_database_authentication(id: params[:user_id])) && user.valid_password?(params[:old_password])
-      # user.update_attributes(encrypted_password: params[:new_password])
-      puts '11111111111111111111111111111111111'
-      user.password = params[:new_password]
-      user.password_confirmation = params[:new_password]
-      user.save
-      UserPresenter.new(user).as_set_password_json
+      if user.update_attributes(password: params[:new_password], password_confirmation: params[:new_password])
+        {
+            result_code: 1,
+            messages: ['Set Password Success']
+        }
+      else
+        puts user.errors.to_json
+        {
+            result_code: 0,
+            messages: ['Set Password Failed']
+        }
+      end
     else
       {
           result_code: 0,
