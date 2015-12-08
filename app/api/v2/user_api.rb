@@ -51,5 +51,20 @@ module V2
                             })
       end
     end
+
+    namespace :user_password do
+      guard_locale!
+      #set user password
+      params do
+        optional :old_password, type: String, desc: 'the current password'
+        optional :new_password, type: String, desc: 'the new password'
+        optional :user_id, type: String, desc: 'user to change password'
+      end
+      post do
+        UserService.set_password({old_password: params[:old_password],
+                                  new_password: params[:new_password],
+                                       user_id: params[:user_id]})
+      end
+    end
   end
 end

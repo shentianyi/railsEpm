@@ -54,4 +54,18 @@ class UserPresenter<Presenter
       }
     end
   end
+
+  def as_set_password_json
+    if @user.blank?
+      {
+          result_code: 0,
+          messages: ['Set Password Failed']
+      }
+    else
+      {
+          result_code: 1,
+          messages: ['Set Password Success']
+      }
+    end
+  end
 end
