@@ -4,9 +4,47 @@ module V2
     namespace :users do
       guard_all!
 
-      get :brief_info do
-        UserPresenter.new(current_user).as_brief_json
+      # get user list
+      params do
+        optional :page, type: Integer, default: 0, desc: 'page index start from 0'
+        optional :size, type: Integer, default: 20, desc: 'page size'
       end
+      get :brief_infos do
+        jsons=[]
+        current_tenant.users.offset(params[:page]*params[:size]).limit(params[:size]).each do |u|
+          jsons<< UserPresenter.new(u).as_brief_user_info
+        end
+        jsons
+      end
+
+      params do
+        optional :user_id, type: String, desc: 'user id'
+      end
+      get :infos do
+        user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
+        UserPresenter.new(user).as_basic_info
+      end
+
+      put :infos do
+
+      end
+      # set user api
+      params do
+        optional :old_password, type: String, desc: 'the current password'
+        requires :new_password, type: String, desc: 'the new password'
+        optional :user_id, type: String, desc: 'user id'
+        optional :new_password_confirmation, type: String, desc: 'the new password confirmation'
+      end
+      post :set_password do
+        user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
+        params[:new_password_confirmation]=params[:new_password] if params[:new_password_confirmation].blank?
+
+        UserService.set_password({old_password: params[:old_password],
+                                  new_password: params[:new_password],
+                                  new_password_confirmation: params[:new_password_confirmation]},
+                                 user)
+      end
+
 
     end
 
@@ -51,5 +89,6 @@ module V2
                             })
       end
     end
+
   end
 end

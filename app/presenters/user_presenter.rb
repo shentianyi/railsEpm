@@ -9,24 +9,24 @@ class UserPresenter<Presenter
   end
 
 
-  def as_session_json
+  def as_basic_feedback(messages=nil)
     if @user.nil?
       {
           result_code: 0,
-          messages: [I18n.t('devise.failure.invalid')]
+          messages: messages || [I18n.t('devise.failure.invalid')]
       }
     else
       {
           result_code: 1,
-          messages: [I18n.t('devise.sessions.signed_in')],
+          messages: messages || [I18n.t('devise.sessions.signed_in')],
           token: @user.access_token.token,
           need_instruction: false,
-          customized_field: as_brief_json
+          customized_field: as_brief_user_info
       }
     end
   end
 
-  def as_brief_json
+  def as_brief_user_info
     {
         id: @user.id,
         email: @user.email,
@@ -41,17 +41,10 @@ class UserPresenter<Presenter
     }
   end
 
-  def as_sign_up_json
-    if @user.persisted?
-      {
-          result_code: 1,
-          messages: ['Sign Up Success']
-      }
-    else
-      {
-          result_code: 0,
-          messages: @user.errors.full_messages
-      }
-    end
+  def as_basic_info
+    {
+        brief_user_info: as_brief_user_info
+    }
   end
+
 end

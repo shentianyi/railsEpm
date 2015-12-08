@@ -31,11 +31,15 @@ class UserRegistrationsController<Devise::RegistrationsController
     else
       params[:user][:password_confirmation]=params[:user][:password]
     end
+
+    # params[:user][:nick_name] = @user.nick_name.blank? ? @user.first_name : @user.nick_name
+
     if @user.update_attributes(params[:user])
       msg.result=true
       msg.object = UserPresenter.new(@user).to_json
     else
       msg.result=false
+      puts @user.errors.to_json
       msg.content=@user.errors
     end
     render :json => msg
