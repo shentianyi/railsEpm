@@ -53,6 +53,14 @@ module V2
                                  user)
       end
 
+      # get user departments
+      params do
+        optional :department_id, type: Integer, desc: 'department id'
+      end
+      get :departments do
+        DepartmentService.user_departments(current_user, params[:department_id])
+      end
+
 
     end
 
