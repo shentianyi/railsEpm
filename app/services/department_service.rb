@@ -50,7 +50,91 @@ class DepartmentService
           emails.reject { |x| reg_emails.include?(x) }.uniq.each do |email|
             user.user_invites.create(department_id: id, email: email) unless UserInvite.find_by_email(email)
           end
-          ApiMessage.new(messages: ['Users added or invited'],result_code: 1)
+          ApiMessage.new(messages: ['Users added or invited'], result_code: 1)
+        else
+          ApiMessage.new(messages: ['Department not found'])
+        end
+      end
+    rescue => e
+      ApiMessage.new(messages: [e.message])
+    end
+  end
+
+  # set user add department manager
+  # requires
+  # user_id:integer,requires
+  # id: integer, requires, department id
+  def self.set_manager(user_id, id)
+    set_unset_manager(user_id, id) { |ud|
+      if ud.update_attributes(is_manager: true)
+        ApiMessage.new(messages: ['Set Manager Success'], result_code: 1)
+      else
+        ApiMessage.new(messages: ['Set Manager Error'])
+      end
+    }
+    # begin
+    #   UserDepartment.transaction do
+    #     if Department.find_by_id(id)
+    #       if user=User.find_by_id(user_id)
+    #         if ud=user.user_departments.where(department_id: id).first
+    #           if ud.update_attributes(is_manager: true)
+    #             ApiMessage.new(messages: ['Set Manager Success'], result_code: 1)
+    #           else
+    #             ApiMessage.new(messages: ['Set Manager Error'])
+    #           end
+    #         else
+    #           ApiMessage.new(messages: ['User not added to Department yet'])
+    #         end
+    #       else
+    #         ApiMessage.new(messages: ['User not found'])
+    #       end
+    #     else
+    #       ApiMessage.new(messages: ['Department not found'])
+    #     end
+    #   end
+    # rescue => e
+    #   ApiMessage.new(messages: [e.message])
+    # end
+  end
+
+
+  # set user add department manager
+  # requires
+  # user_id:integer,requires
+  # id: integer, requires, department id
+  def self.unset_manager(user_id, id)
+    set_unset_manager(user_id, id) { |ud|
+      if ud.is_manager
+        if ud.update_attributes(is_manager: false)
+          ApiMessage.new(messages: ['Unset Manager Success'], result_code: 1)
+        else
+          ApiMessage.new(messages: ['Set Manager Error'])
+        end
+      else
+        ApiMessage.new(messages: ['User is not Manager can not Unset'])
+      end
+    }
+  end
+
+  private
+  def self.set_unset_manager(user_id, id)
+    begin
+      UserDepartment.transaction do
+        if Department.find_by_id(id)
+          if user=User.find_by_id(user_id)
+            if ud=user.user_departments.where(department_id: id).first
+              # if ud.update_attributes(is_manager: true)
+              #   ApiMessage.new(messages: ['Set Manager Success'],result_code:1)
+              # else
+              #   ApiMessage.new(messages: ['Set Manager Error'])
+              # end
+              yield(ud) if block_given?
+            else
+              ApiMessage.new(messages: ['User not added to Department yet'])
+            end
+          else
+            ApiMessage.new(messages: ['User not found'])
+          end
         else
           ApiMessage.new(messages: ['Department not found'])
         end

@@ -29,7 +29,7 @@ module V2
 
       end
 
-
+      # add users
       params do
         requires :emails, type: Array, desc: 'user emails'
         requires :id, type: Integer, desc: 'department id'
@@ -38,7 +38,23 @@ module V2
         DepartmentService.add_department_users(params[:emails], params[:id], current_user)
       end
 
+      # set manager
+      params do
+        requires :user_id, type: Integer, desc: 'user id'
+        requires :id, type: Integer, desc: 'department id'
+      end
+      post :set_manager do
+        DepartmentService.set_manager(params[:user_id],params[:id])
+      end
 
+      # unset manager
+      params do
+        requires :user_id, type: Integer, desc: 'user id'
+        requires :id, type: Integer, desc: 'department id'
+      end
+      post :unset_manager do
+        DepartmentService.unset_manager(params[:user_id],params[:id])
+      end
     end
   end
 end
