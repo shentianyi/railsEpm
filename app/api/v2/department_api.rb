@@ -38,13 +38,22 @@ module V2
         DepartmentService.add_department_users(params[:emails], params[:id], current_user)
       end
 
+      # remove user
+      params do
+        requires :user_id, type: Integer, desc: 'user id'
+        requires :id, type: Integer, desc: 'department id'
+      end
+      post :remove_user do
+        DepartmentService.remove_user(params[:user_id], params[:id])
+      end
+
       # set manager
       params do
         requires :user_id, type: Integer, desc: 'user id'
         requires :id, type: Integer, desc: 'department id'
       end
       post :set_manager do
-        DepartmentService.set_manager(params[:user_id],params[:id])
+        DepartmentService.set_manager(params[:user_id], params[:id])
       end
 
       # remove manager
@@ -53,7 +62,7 @@ module V2
         requires :id, type: Integer, desc: 'department id'
       end
       post :remove_manager do
-        DepartmentService.remove_manager(params[:user_id],params[:id])
+        DepartmentService.remove_manager(params[:user_id], params[:id])
       end
     end
   end
