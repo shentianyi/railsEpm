@@ -53,7 +53,7 @@ module V2
         requires :id, type: Integer, desc: 'department id'
       end
       post :remove_manager do
-        DepartmentService.unset_manager(params[:user_id],params[:id])
+        DepartmentService.remove_manager(params[:user_id],params[:id])
       end
     end
   end
