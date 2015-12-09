@@ -20,8 +20,19 @@ module V2
       end
 
       # update
+      params do
+        requires :id, type: Integer, desc: 'department id'
+        requires :name, type: String, desc: 'department name'
+        optional :description, type: String, desc: 'department desc'
+      end
       put do
-
+        DepartmentService.update_department(
+            {
+                name: params[:name],
+                description: params[:description],
+                id: params[:id]
+            },
+            current_user)
       end
 
       # delete

@@ -26,6 +26,31 @@ class DepartmentService
     end
   end
 
+# update department
+# requires
+#  department: hash
+#     name: string, requires
+#     description: string, optional
+#     id: integer, optional
+#  user: object, required
+  def self.update_department(params, user)
+    begin
+      UserDepartment.transaction do
+        if (department=Department.find_by_id(params[:id])) && (user.user_departments.where(department_id: department.id, is_manager: true).first)
+          if department.update_attributes(params.except(:id))
+            ApiMessage.new(messages: ['Department Update Success'], result_code: 1)
+          else
+            ApiMessage.new(messages: department.errors.full_messages)
+          end
+        else
+          ApiMessage.new(messages: ['Department not found or U cannot Update'])
+        end
+      end
+    rescue => e
+      ApiMessage.new(messages: [e.message])
+    end
+  end
+
   def self.delete_department(id, user)
     begin
       UserDepartment.transaction do
@@ -44,9 +69,9 @@ class DepartmentService
     end
   end
 
-  # get department members
-  # requires
-  # id:integer,requires
+# get department members
+# requires
+# id:integer,requires
   def self.members(id)
     begin
       UserDepartment.transaction do
@@ -61,11 +86,11 @@ class DepartmentService
     end
   end
 
-  # add users to department, and invite unreg users
-  # requires
-  #  emails: array
-  #  id: integer, department id
-  #  user: object, who add
+# add users to department, and invite unreg users
+# requires
+#  emails: array
+#  id: integer, department id
+#  user: object, who add
   def self.add_department_users(emails, id, user)
     begin
       UserDepartment.transaction do
@@ -95,10 +120,10 @@ class DepartmentService
     end
   end
 
-  # remove user from department
-  # requires
-  # user_id:integer,requires
-  # id: integer, requires, department id
+# remove user from department
+# requires
+# user_id:integer,requires
+# id: integer, requires, department id
   def self.remove_user(user_id, id)
     user_manager(user_id, id) { |ud|
       if ud.destroy
@@ -109,10 +134,10 @@ class DepartmentService
     }
   end
 
-  # set user add department manager
-  # requires
-  # user_id:integer,requires
-  # id: integer, requires, department id
+# set user add department manager
+# requires
+# user_id:integer,requires
+# id: integer, requires, department id
   def self.set_manager(user_id, id)
     user_manager(user_id, id) { |ud|
       if ud.update_attributes(is_manager: true)
@@ -124,10 +149,10 @@ class DepartmentService
   end
 
 
-  # remove user from department manager
-  # requires
-  # user_id:integer,requires
-  # id: integer, requires, department id
+# remove user from department manager
+# requires
+# user_id:integer,requires
+# id: integer, requires, department id
   def self.remove_manager(user_id, id)
     user_manager(user_id, id) { |ud|
       if ud.is_manager
@@ -142,9 +167,9 @@ class DepartmentService
     }
   end
 
-  # get user departments
-  # user: object, requires
-  # department_id: integer, optional
+# get user departments
+# user: object, requires
+# department_id: integer, optional
   def self.user_departments(user, department_id=nil)
     # get root departments
     if department_id.blank?
