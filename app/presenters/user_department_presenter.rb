@@ -14,7 +14,7 @@ class UserDepartmentPresenter<Presenter
         result_code: result_code||0,
         messages: messages,
         need_instruction: false,
-        customized_field: as_user_department_info
+        customized_field: as_user_department
     }
   end
 
@@ -23,23 +23,38 @@ class UserDepartmentPresenter<Presenter
         id: @user_department.department.id,
         name: @user_department.department.name,
         description: @user_department.department.description,
-        parent_id:@user_department.department.parent_id,
-        has_children: @user_department.department.new_record? ? false :  @user_department.department.has_children?
+        parent_id: @user_department.department.parent_id,
+        has_children: @user_department.department.new_record? ? false : @user_department.department.has_children?
     }
   end
 
-  def as_user_department_info
+  def as_user_department
     {
         managable: @user_department.is_manager,
         department: as_brief_info
     }
   end
 
-  def self.as_user_department_infos(uds)
+  def as_department_user
+    {
+        is_manager: @user_department.is_manager,
+        user: UserPresenter.new(@user_department.user).as_brief_info
+    }
+  end
+
+  def self.as_user_departments(uds)
     infos=[]
     uds.each do |ud|
-      infos<<self.new(ud).as_user_department_info
+      infos<<self.new(ud).as_user_department
     end
     infos
+  end
+
+  def self.as_department_users(uds)
+    users=[]
+    uds.each do |ud|
+      users<<self.new(ud).as_department_user
+    end
+    users
   end
 end

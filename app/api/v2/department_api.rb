@@ -29,6 +29,15 @@ module V2
 
       end
 
+      # get department members
+      params do
+        requires :id, type: Integer, desc: 'department id'
+      end
+      get :members do
+        DepartmentService.members(params[:id])
+      end
+
+
       # add users
       params do
         requires :emails, type: Array, desc: 'user emails'

@@ -26,6 +26,23 @@ class DepartmentService
     end
   end
 
+  # get department members
+  # requires
+  # id:integer,requires
+  def self.members(id)
+    begin
+      UserDepartment.transaction do
+        if department=Department.find_by_id(id)
+          UserDepartmentPresenter.as_department_users(department.user_departments.joins(:user))
+        else
+          ApiMessage.new(messages: ['Department not found'])
+        end
+      end
+    rescue => e
+      ApiMessage.new(messages: [e.message])
+    end
+  end
+
   # add users to department, and invite unreg users
   # requires
   #  emails: array
@@ -113,9 +130,9 @@ class DepartmentService
   def self.user_departments(user, department_id=nil)
     # get root departments
     if department_id.blank?
-      UserDepartmentPresenter.as_user_department_infos(user.root_user_departments)
+      UserDepartmentPresenter.as_user_departments(user.root_user_departments)
     else
-      UserDepartmentPresenter.as_user_department_infos(user.user_departments
+      UserDepartmentPresenter.as_user_departments(user.user_departments
                                                            .joins(:department)
                                                            .where(department_id: Department.find_by_id(department_id).children.pluck(:id)))
     end

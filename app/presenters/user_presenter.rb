@@ -31,7 +31,7 @@ class UserPresenter<Presenter
         id: @user.id,
         email: @user.email,
         nick_name: @user.nick_name,
-        departments: UserDepartmentPresenter.as_user_department_infos(@user.root_user_departments)
+        departments: UserDepartmentPresenter.as_user_departments(@user.root_user_departments)
     }
   end
 
