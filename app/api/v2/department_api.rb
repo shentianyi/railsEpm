@@ -47,12 +47,12 @@ module V2
         DepartmentService.set_manager(params[:user_id],params[:id])
       end
 
-      # unset manager
+      # remove manager
       params do
         requires :user_id, type: Integer, desc: 'user id'
         requires :id, type: Integer, desc: 'department id'
       end
-      post :unset_manager do
+      post :remove_manager do
         DepartmentService.unset_manager(params[:user_id],params[:id])
       end
     end

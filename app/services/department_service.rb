@@ -98,11 +98,11 @@ class DepartmentService
   end
 
 
-  # set user add department manager
+  # remove user from department manager
   # requires
   # user_id:integer,requires
   # id: integer, requires, department id
-  def self.unset_manager(user_id, id)
+  def self.remove_manager(user_id, id)
     set_unset_manager(user_id, id) { |ud|
       if ud.is_manager
         if ud.update_attributes(is_manager: false)
