@@ -26,14 +26,16 @@ class UserPresenter<Presenter
     end
   end
 
-  def as_brief_info
+  def as_brief_info(with_dep=true)
     {
         id: @user.id,
         email: @user.email,
         nick_name: @user.nick_name,
-        departments: UserDepartmentPresenter.as_user_departments(@user.root_user_departments)
+        departments: with_dep ? UserDepartmentPresenter.as_user_departments(@user.root_user_departments) : nil
     }
+
   end
+
 
   def as_basic_info
     {

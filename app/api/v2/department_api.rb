@@ -37,7 +37,6 @@ module V2
         DepartmentService.members(params[:id])
       end
 
-
       # add users
       params do
         requires :emails, type: Array, desc: 'user emails'

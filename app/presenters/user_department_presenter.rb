@@ -38,7 +38,7 @@ class UserDepartmentPresenter<Presenter
   def as_department_user
     {
         is_manager: @user_department.is_manager,
-        user: UserPresenter.new(@user_department.user).as_brief_info
+        user: UserPresenter.new(@user_department.user).as_brief_info(false)
     }
   end
 
