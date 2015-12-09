@@ -25,6 +25,9 @@ class User < ActiveRecord::Base
   has_many :collaborated_story_sets, :through => :story_set_users
   has_many :report_snaps
 
+  #
+  has_many :user_invites
+
   has_many :access_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id
 
 
@@ -63,7 +66,7 @@ class User < ActiveRecord::Base
     if self.entity.nil?
       #create entity
       args = {}
-      args[:description] = args[:code] = args[:name] = self.first_name
+      args[:description] = args[:code] = args[:name] = (self.first_name||self.nick_name)
       entity = Entity.new(args)
       if entity.save
         #update user

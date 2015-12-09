@@ -46,6 +46,11 @@ class UserService
             if ui.department_id
               # TODO
               # add user to department
+              unless user.user_departments.where(department_id:ui.department_id).first
+                ud=user.user_departments.build
+                ud.department_id=ui.department_id
+                ud.save
+              end
             end
             ApiMessage.new(result_code: 1, messages: ['Sign Up Success'])
           else
