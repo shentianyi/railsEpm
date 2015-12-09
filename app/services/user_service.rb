@@ -1,6 +1,20 @@
 class UserService
 
   # require
+  # user:{
+  #      email:string,
+  #     password:string}
+  # }
+  def self.update_basic(params,user)
+    if user.update_attributes(params)
+      UserPresenter.new(user).as_basic_feedback(['Set User Info Success'])
+    else
+      UserPresenter.new(user).as_basic_feedback(user.errors.full_messages,0)
+    end
+  end
+
+
+  # require
   #  email:string
   #  password: string
   def self.sign_in params

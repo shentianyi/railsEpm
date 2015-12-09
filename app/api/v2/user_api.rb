@@ -25,9 +25,17 @@ module V2
         UserPresenter.new(user).as_basic_info
       end
 
-      put :infos do
-
+      # update user info
+      params do
+        requires :email, type: String, desc: 'user email'
+        requires :nick_name, type: String, desc: 'user nick name'
       end
+      put :infos do
+        UserService.update_basic({email: params[:email],
+                                  nick_name: params[:nick_name]}, current_user)
+      end
+
+
       # set user api
       params do
         optional :old_password, type: String, desc: 'the current password'
@@ -65,7 +73,7 @@ module V2
         status 200
         user = User.find_by_email(current_user.email)
         user.update_attributes(last_request_at: Time.now.utc.to_s, is_online: false)
-        {result_code: '1', msg: [I18n.t('devise.sessions.signed_out')]}
+        {result_code: 1, msg: [I18n.t('devise.sessions.signed_out')]}
       end
     end
 

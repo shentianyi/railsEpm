@@ -9,15 +9,15 @@ class UserPresenter<Presenter
   end
 
 
-  def as_basic_feedback(messages=nil)
+  def as_basic_feedback(messages=nil, result_code=nil)
     if @user.nil?
       {
-          result_code: 0,
+          result_code: result_code||0,
           messages: messages || [I18n.t('devise.failure.invalid')]
       }
     else
       {
-          result_code: 1,
+          result_code: result_code||1,
           messages: messages || [I18n.t('devise.sessions.signed_in')],
           token: @user.access_token.token,
           need_instruction: false,
