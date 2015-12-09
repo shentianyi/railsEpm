@@ -12,7 +12,7 @@ module V2
       get :brief_infos do
         jsons=[]
         current_tenant.users.offset(params[:page]*params[:size]).limit(params[:size]).each do |u|
-          jsons<< UserPresenter.new(u).as_brief_user_info
+          jsons<< UserPresenter.new(u).as_brief_info
         end
         jsons
       end

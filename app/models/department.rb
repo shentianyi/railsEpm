@@ -1,7 +1,7 @@
 class Department < ActiveRecord::Base
   # attr_accessible :title, :body
 
-  attr_accessible :name, :parent, :ancestry, :user_id, :tenant_id
+  attr_accessible :name, :parent, :ancestry,:description, :user_id, :tenant_id
   attr_accessor :default_entity
   belongs_to :creator, :class_name => 'User', :foreign_key => :user_id
   belongs_to :tenant

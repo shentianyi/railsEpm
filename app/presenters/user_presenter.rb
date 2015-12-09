@@ -21,12 +21,12 @@ class UserPresenter<Presenter
           messages: messages || [I18n.t('devise.sessions.signed_in')],
           token: @user.access_token.token,
           need_instruction: false,
-          customized_field: as_brief_user_info
+          customized_field: as_brief_info
       }
     end
   end
 
-  def as_brief_user_info
+  def as_brief_info
     {
         id: @user.id,
         email: @user.email,
@@ -43,7 +43,7 @@ class UserPresenter<Presenter
 
   def as_basic_info
     {
-        brief_user_info: as_brief_user_info
+        brief_user_info: as_brief_info
     }
   end
 
