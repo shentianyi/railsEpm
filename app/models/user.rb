@@ -209,6 +209,13 @@ class User < ActiveRecord::Base
   end
 
 
+  # user root user_departments
+  def root_user_departments
+    uds=self.user_departments.joins(:department)
+    udids=uds.collect { |u| u.department_id }
+    uds.reject { |u| udids.include?(u.department.parent_id) }
+  end
+
   # private
   # generate token
   def generate_access_token

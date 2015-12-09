@@ -34,4 +34,12 @@ class UserDepartmentPresenter<Presenter
         department: as_brief_info
     }
   end
+
+  def self.as_user_department_infos(uds)
+    infos=[]
+    uds.each do |ud|
+      infos<<self.new(ud).as_user_department_info
+    end
+    infos
+  end
 end

@@ -31,13 +31,7 @@ class UserPresenter<Presenter
         id: @user.id,
         email: @user.email,
         nick_name: @user.nick_name,
-        department: {
-            id: 2,
-            name: 'demo',
-            description: 'not finish department yet',
-            parent: 1,
-            has_children: false
-        }
+        departments: UserDepartmentPresenter.as_user_department_infos(@user.root_user_departments)
     }
   end
 

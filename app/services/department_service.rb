@@ -120,20 +120,14 @@ class DepartmentService
   # user: object, requires
   # department_id: integer, optional
   def self.user_departments(user, department_id=nil)
-    jsons=[]
     # get root departments
     if department_id.blank?
-      uds=user.user_departments.joins(:department)
-      udids=uds.collect { |u| u.department_id }
-      uds.reject { |u| udids.include?(u.department.parent_id) }.each do |ud|
-        jsons<<UserDepartmentPresenter.new(ud).as_user_department_info
-      end
+      UserDepartmentPresenter.as_user_department_infos(user.root_user_departments)
     else
-      user.user_departments.where(department_id: Department.find_by_id(department_id).children.pluck(:id)).each do |ud|
-        jsons<<UserDepartmentPresenter.new(ud).as_user_department_info
-      end
+      UserDepartmentPresenter.as_user_department_infos(user.user_departments
+                                                           .joins(:department)
+                                                           .where(department_id: Department.find_by_id(department_id).children.pluck(:id)))
     end
-    jsons
   end
 
   private
