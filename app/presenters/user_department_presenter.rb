@@ -14,7 +14,7 @@ class UserDepartmentPresenter<Presenter
         result_code: result_code||0,
         messages: messages,
         need_instruction: false,
-        customized_field: as_brief_info
+        customized_field: as_user_department_info
     }
   end
 
