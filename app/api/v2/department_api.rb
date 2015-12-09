@@ -40,7 +40,7 @@ module V2
         requires :id, type: Integer, desc: 'department id'
       end
       delete do
-        DepartmentService.delete_department(params[:id],current_user)
+        DepartmentService.delete_department(params[:id], current_user)
       end
 
       # get department members
@@ -58,6 +58,15 @@ module V2
       end
       post :add_users do
         DepartmentService.add_department_users(params[:emails], params[:id], current_user)
+      end
+
+      # add user
+      params do
+        requires :user_id, type: Integer, desc: 'user id'
+        requires :id, type: Integer, desc: 'department id'
+      end
+      post :add_user do
+        DepartmentService.add_department_user(params[:user_id], params[:id], current_user)
       end
 
       # remove user

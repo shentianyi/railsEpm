@@ -120,6 +120,39 @@ class DepartmentService
     end
   end
 
+# add user to department
+# requires
+#  user_id: integer
+#  id: integer, department id
+#  user: object, who add
+  def self.add_department_user(user_id, id, user)
+    begin
+      UserDepartment.transaction do
+        if department=Department.find_by_id(id)
+          if (add_user=user.tenant.users.find_by_id(user_id))
+            if add_user.user_departments.where(department_id: id).first
+              ApiMessage.new(messages: ['User has been added to Department'])
+            else
+              ud=add_user.user_departments.build
+              ud.department=department
+              if ud.save
+                ApiMessage.new(messages: ['User added to Department'], result_code: 1)
+              else
+                ApiMessage.new(messages: ud.errors.full_messages)
+              end
+            end
+          else
+            ApiMessage.new(messages: ['User not found'])
+          end
+        else
+          ApiMessage.new(messages: ['Department not found'])
+        end
+      end
+    rescue => e
+      ApiMessage.new(messages: [e.message])
+    end
+  end
+
 # remove user from department
 # requires
 # user_id:integer,requires
