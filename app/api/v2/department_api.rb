@@ -25,8 +25,11 @@ module V2
       end
 
       # delete
+      params do
+        requires :id, type: Integer, desc: 'department id'
+      end
       delete do
-
+        DepartmentService.delete_department(params[:id],current_user)
       end
 
       # get department members

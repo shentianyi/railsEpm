@@ -26,6 +26,24 @@ class DepartmentService
     end
   end
 
+  def self.delete_department(id, user)
+    begin
+      UserDepartment.transaction do
+        if (department=Department.find_by_id(id)) && (user.user_departments.where(department_id: department.id, is_manager: true).first)
+          if department.destroy
+            ApiMessage.new(messages: ['Department Delete Success'], result_code: 1)
+          else
+            ApiMessage.new(messages: ['Department Delete Fail'])
+          end
+        else
+          ApiMessage.new(messages: ['Department not found or U cannot Delete'])
+        end
+      end
+    rescue => e
+      ApiMessage.new(messages: [e.message])
+    end
+  end
+
   # get department members
   # requires
   # id:integer,requires
@@ -133,8 +151,8 @@ class DepartmentService
       UserDepartmentPresenter.as_user_departments(user.root_user_departments)
     else
       UserDepartmentPresenter.as_user_departments(user.user_departments
-                                                           .joins(:department)
-                                                           .where(department_id: Department.find_by_id(department_id).children.pluck(:id)))
+                                                      .joins(:department)
+                                                      .where(department_id: Department.find_by_id(department_id).children.pluck(:id)))
     end
   end
 
