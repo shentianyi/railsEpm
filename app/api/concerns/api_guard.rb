@@ -67,6 +67,10 @@ module APIGuard
       @current_tenant
     end
 
+    def current_ability
+      @current_ability
+    end
+
     private
     def guard_by_basic
       auth_header = env['HTTP_AUTHORIZATION'].split(' ')
@@ -80,6 +84,7 @@ module APIGuard
       if (user=User.find_for_database_authentication(:email => user)) && user.valid_password?(pass)
         @current_user=user
         @current_tenant=user.tenant
+        @current_ability=Ability.new(@current_user)
       else
         raise BasicAuthError
       end
@@ -105,6 +110,7 @@ module APIGuard
           when Oauth2::AccessTokenValidationService::VALID
             @current_user = User.find(access_token.resource_owner_id)
             @current_tenant=@current_user.tenant
+            @current_ability=Ability.new(@current_user)
         end
       end
     end

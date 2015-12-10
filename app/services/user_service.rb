@@ -1,6 +1,20 @@
 class UserService
 
   # require
+  # user:{
+  #      email:string,
+  #     password:string}
+  # }
+  def self.update_basic(params,user)
+    if user.update_attributes(params)
+      UserPresenter.new(user).as_basic_feedback(['Set User Info Success'])
+    else
+      UserPresenter.new(user).as_basic_feedback(user.errors.full_messages,0)
+    end
+  end
+
+
+  # require
   #  email:string
   #  password: string
   def self.sign_in params
@@ -8,7 +22,7 @@ class UserService
                         user
                       else
                         nil
-                      end).as_session_json
+                      end).as_basic_feedback
   end
 
 
@@ -22,45 +36,71 @@ class UserService
   def self.sign_up params
     User.transaction do
       if User.find_by_email(params[:user][:email])
-        {
-            result_code: 0,
-            messages: ['Email has already been taken']
-        }
+        ApiMessage.new(result_code: 0, messages: ['Email has already been taken'])
       else
         if ui=UserInvite.find_by_email(params[:user][:email])
           user=User.new(params[:user])
           user.tenant=ui.user.tenant
-          ui.update_attributes(sign_uped: true) if user.save
-          UserPresenter.new(user).as_sign_up_json
+          if user.save
+            ui.update_attributes(sign_uped: true)
+            if ui.department_id
+              # TODO
+              # add user to department
+              unless user.user_departments.where(department_id:ui.department_id).first
+                ud=user.user_departments.build
+                ud.department_id=ui.department_id
+                ud.save
+              end
+            end
+            ApiMessage.new(result_code: 1, messages: ['Sign Up Success'])
+          else
+            ApiMessage.new( messages: user.errors.full_messages)
+          end
         else
-          {
-              result_code: 0,
-              messages: ['You are not invited']
-          }
+          ApiMessage.new( messages: ['You are not invited'])
         end
       end
     end
   end
 
-  def self.set_password params
-    if (user=User.find_for_database_authentication(id: params[:user_id])) && user.valid_password?(params[:old_password])
-      if user.update_attributes(password: params[:new_password], password_confirmation: params[:new_password])
-        {
-            result_code: 1,
-            messages: ['Set Password Success']
-        }
+
+  def self.set_password params, user
+
+    if user.present?
+      if params[:old_password].present?
+        if (u=User.find_for_database_authentication(id: user.id)).nil? || !u.valid_password?(params[:old_password])
+          return ApiMessage.new(messages: ['Invalid User Old Account'])
+        end
+      end
+
+      if user.update_attributes(password: params[:new_password], password_confirmation: params[:new_password_confirmation])
+        UserPresenter.new(user).as_basic_feedback(['Set Password Success'])
       else
-        puts user.errors.to_json
-        {
-            result_code: 0,
-            messages: ['Set Password Failed']
-        }
+        ApiMessage.new(messages: user.errors.full_messages)
       end
     else
-      {
-          result_code: 0,
-          messages: ['Old Password are not invited']
-      }
+      ApiMessage.new(messages: ['User not exists'])
     end
+
+
+    # if (user=User.find_for_database_authentication(id: params[:user_id])) && user.valid_password?(params[:old_password])
+    #   if user.update_attributes(password: params[:new_password], password_confirmation: params[:new_password_confirmation])
+    #     {
+    #         result_code: 1,
+    #         messages: ['Set Password Success']
+    #     }
+    #   else
+    #     puts user.errors.to_json
+    #     {
+    #         result_code: 0,
+    #         messages: ['Set Password Failed']
+    #     }
+    #   end
+    # else
+    #   {
+    #       result_code: 0,
+    #       messages: ['Old Password are not invited']
+    #   }
+    # end
   end
 end

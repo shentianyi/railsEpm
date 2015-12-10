@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151207172512) do
+ActiveRecord::Schema.define(:version => 20151208183845) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -152,8 +152,9 @@ ActiveRecord::Schema.define(:version => 20151207172512) do
     t.string   "ancestry"
     t.integer  "tenant_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.text     "description"
   end
 
   add_index "departments", ["ancestry"], :name => "index_departments_on_ancestry"
@@ -506,8 +507,9 @@ ActiveRecord::Schema.define(:version => 20151207172512) do
   create_table "user_departments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "department_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "is_manager",    :default => false
   end
 
   add_index "user_departments", ["department_id"], :name => "index_user_departments_on_department_id"
@@ -525,10 +527,11 @@ ActiveRecord::Schema.define(:version => 20151207172512) do
 
   create_table "user_invites", :force => true do |t|
     t.string   "email"
-    t.boolean  "sign_uped",  :default => false
+    t.boolean  "sign_uped",     :default => false
     t.integer  "user_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.integer  "department_id"
   end
 
   add_index "user_invites", ["email"], :name => "index_user_invites_on_email"

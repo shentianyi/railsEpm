@@ -9,50 +9,38 @@ class UserPresenter<Presenter
   end
 
 
-  def as_session_json
+  def as_basic_feedback(messages=nil, result_code=nil)
     if @user.nil?
       {
-          result_code: 0,
-          messages: [I18n.t('devise.failure.invalid')]
+          result_code: result_code||0,
+          messages: messages || [I18n.t('devise.failure.invalid')]
       }
     else
       {
-          result_code: 1,
-          messages: [I18n.t('devise.sessions.signed_in')],
+          result_code: result_code||1,
+          messages: messages || [I18n.t('devise.sessions.signed_in')],
           token: @user.access_token.token,
           need_instruction: false,
-          customized_field: as_brief_json
+          customized_field: as_brief_info
       }
     end
   end
 
-  def as_brief_json
+  def as_brief_info(with_dep=true)
     {
         id: @user.id,
         email: @user.email,
         nick_name: @user.nick_name,
-        department: {
-            id: 2,
-            name: 'demo',
-            description: 'not finish department yet',
-            parent: 1,
-            has_children: false
-        }
+        departments: with_dep ? UserDepartmentPresenter.as_user_departments(@user.root_user_departments) : nil
     }
+
   end
 
-  def as_sign_up_json
-    if @user.persisted?
-      {
-          result_code: 1,
-          messages: ['Sign Up Success']
-      }
-    else
-      {
-          result_code: 0,
-          messages: @user.errors.full_messages
-      }
-    end
+
+  def as_basic_info
+    {
+        brief_user_info: as_brief_info
+    }
   end
 
 end
