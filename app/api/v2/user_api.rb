@@ -53,12 +53,6 @@ module V2
                                  user)
       end
 
-      # forget password
-      post :forget_password do
-        UserPresenter.new(current_user).as_basic_feedback(['Forget Password Success, We will concat u soon'])
-      end
-
-
       # get user departments
       params do
         optional :department_id, type: Integer, desc: 'department id'
@@ -66,7 +60,17 @@ module V2
       get :departments do
         DepartmentService.user_departments(current_user, params[:department_id])
       end
+    end
 
+    namespace :users do
+
+      # forget password
+      params do
+        requires :email, type: String, desc: 'user email'
+      end
+      post :forget_password do
+        UserService.forget_password(params[:email])
+      end
 
     end
 
