@@ -55,6 +55,10 @@ module Enum
       @hash.values
     end
 
+    def as_select
+      all.map { |a| SelectItem.new(id: a.value, name: a.desc) }
+    end
+
     def include?(value)
       @hash.each do |k, v|
         if v.value==value
