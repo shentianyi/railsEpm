@@ -1,5 +1,5 @@
 module V2
-  class DepartmentApi<Base
+  class DepartmentAPI<Base
     guard_all!
     namespace :departments do
 

@@ -60,7 +60,17 @@ module V2
       get :departments do
         DepartmentService.user_departments(current_user, params[:department_id])
       end
+    end
 
+    namespace :users do
+
+      # forget password
+      params do
+        requires :email, type: String, desc: 'user email'
+      end
+      post :forget_password do
+        UserService.forget_password(params[:email])
+      end
 
     end
 

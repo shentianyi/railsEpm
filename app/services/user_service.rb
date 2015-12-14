@@ -5,11 +5,11 @@ class UserService
   #      email:string,
   #     password:string}
   # }
-  def self.update_basic(params,user)
+  def self.update_basic(params, user)
     if user.update_attributes(params)
       UserPresenter.new(user).as_basic_feedback(['Set User Info Success'])
     else
-      UserPresenter.new(user).as_basic_feedback(user.errors.full_messages,0)
+      UserPresenter.new(user).as_basic_feedback(user.errors.full_messages, 0)
     end
   end
 
@@ -46,7 +46,7 @@ class UserService
             if ui.department_id
               # TODO
               # add user to department
-              unless user.user_departments.where(department_id:ui.department_id).first
+              unless user.user_departments.where(department_id: ui.department_id).first
                 ud=user.user_departments.build
                 ud.department_id=ui.department_id
                 ud.save
@@ -54,10 +54,10 @@ class UserService
             end
             ApiMessage.new(result_code: 1, messages: ['Sign Up Success'])
           else
-            ApiMessage.new( messages: user.errors.full_messages)
+            ApiMessage.new(messages: user.errors.full_messages)
           end
         else
-          ApiMessage.new( messages: ['You are not invited'])
+          ApiMessage.new(messages: ['You are not invited'])
         end
       end
     end
@@ -79,7 +79,15 @@ class UserService
         ApiMessage.new(messages: user.errors.full_messages)
       end
     else
-      ApiMessage.new(messages: ['User not exists'])
+      ApiMessage.new(messages: user.errors.full_messages)
+    end
+  end
+
+  def self.forget_password email
+    if User.find_by_email(email)
+      ApiMessage.new(messages: ['Success! We will send you a reset password email.'],result_code:1)
+    else
+      ApiMessage.new(messages: ['Your Email Account not exists'])
     end
   end
 end

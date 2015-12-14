@@ -4,6 +4,7 @@ module V2
     version 'v2', :using => :path
 
     mount UserAPI
-    mount DepartmentApi
+    mount DepartmentAPI
+    mount KpiAPI
   end
 end
