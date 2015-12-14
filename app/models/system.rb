@@ -1,7 +1,5 @@
 class System
 
-  DEFAULT_OAUTH_APP=Doorkeeper::Application.by_uid(Settings.oauth.application.uid)
-
 
   def self.init
     # init first system user
@@ -10,15 +8,24 @@ class System
     end
     user.update_attributes(:is_sys => true)
 
-    unless DEFAULT_OAUTH_APP
-      # init oauth app
+    # init oauth app
+    unless default_app
       app=Doorkeeper::Application.new(name: Settings.oauth.application.name,
                                       uid: Settings.oauth.application.uid,
                                       redirect_uri: Settings.oauth.application.redirect_uri)
       app.owner = user
       app.save
-
-      p app.errors
     end
+
+    # init first system user access token
+    user.generate_access_token
+
+    # update nick name
+    User.where(nick_name: ['', nil]).each { |u| u.update_attributes(nick_name: u.first_name) }
+
+  end
+
+  def self.default_app
+    Doorkeeper::Application.by_uid(Settings.oauth.application.uid)
   end
 end

@@ -1,7 +1,7 @@
 #encoding: utf-8
 class UserPresenter<Presenter
-  Delegators=[:id, :first_name, :last_name, :email, :role_id, :title,:tel,:phone,:is_tenant, :entity_id, :department_id,:role]
-  def_delegators :@user,*Delegators
+  Delegators=[:id, :first_name, :nick_name, :last_name, :email, :role_id, :title, :tel, :phone, :is_tenant, :entity_id, :department_id, :role]
+  def_delegators :@user, *Delegators
 
   def initialize(user)
     @user=user
@@ -9,31 +9,37 @@ class UserPresenter<Presenter
   end
 
 
-
-
-  def as_session_json
+  def as_basic_feedback(messages=nil, result_code=nil)
     if @user.nil?
       {
-          result_code: 0,
-          messages: [I18n.t('devise.failure.invalid')]
+          result_code: result_code||0,
+          messages: messages || [I18n.t('devise.failure.invalid')]
       }
     else
       {
-          result_code: 1,
-          messages: [I18n.t('devise.sessions.signed_in')],
+          result_code: result_code||1,
+          messages: messages || [I18n.t('devise.sessions.signed_in')],
           token: @user.access_token.token,
           need_instruction: false,
-          customized_field: as_brief_json
+          customized_field: as_brief_info
       }
     end
   end
 
-  def as_brief_json
+  def as_brief_info(with_dep=true)
     {
         id: @user.id,
         email: @user.email,
-        nick_name: @user.first_name,
-        department: 'MB'
+        nick_name: @user.nick_name,
+        departments: with_dep ? UserDepartmentPresenter.as_user_departments(@user.root_user_departments) : nil
+    }
+
+  end
+
+
+  def as_basic_info
+    {
+        brief_user_info: as_brief_info
     }
   end
 

@@ -25,7 +25,10 @@ class User < ActiveRecord::Base
   has_many :collaborated_story_sets, :through => :story_set_users
   has_many :report_snaps
 
-  has_many :access_tokens, class_name: 'Doorkeeper::AccessToken',foreign_key: :resource_owner_id
+  #
+  has_many :user_invites
+
+  has_many :access_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id
 
 
   # Include default devise modules. Others available are:
@@ -35,11 +38,12 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation #, :remember_me
-  attr_accessible :status, :perishable_token, :confirmed, :first_name, :last_name, :is_tenant
+  attr_accessible :status, :perishable_token, :confirmed, :first_name, :last_name, :nick_name, :is_tenant
   attr_accessible :tenant_id, :role_id, :entity_id, :department_id, :is_sys, :title #, :department_group_id
   attr_accessible :tel, :phone, :image_url
   attr_accessible :stuff_id, :current_project_id, :current_location, :device_id, :is_online, :last_request_at
 
+  validates_presence_of :nick_name, message: 'can not be blank'
 
   after_create :create_view_and_entity_for_general_user
   after_create :generate_access_token
@@ -52,7 +56,7 @@ class User < ActiveRecord::Base
   # acts as tenant
   acts_as_tenant(:tenant)
 
-  redis_search_index(:title_field => :first_name,
+  redis_search_index(:title_field => :nick_name,
                      :condition_fields => [:tenant_id, :is_sys, :role_id, :entity_id],
                      :prefix_index_enable => true,
                      :ext_fields => [:email])
@@ -62,7 +66,7 @@ class User < ActiveRecord::Base
     if self.entity.nil?
       #create entity
       args = {}
-      args[:description] = args[:code] = args[:name] = self.first_name
+      args[:description] = args[:code] = args[:name] = (self.first_name||self.nick_name)
       entity = Entity.new(args)
       if entity.save
         #update user
@@ -149,6 +153,7 @@ class User < ActiveRecord::Base
 
   def create_tenant_user!(first_name, email, password, password_confirmation, company_name)
     self.first_name=first_name
+    self.nick_name=first_name
     self.email=email
     self.password=password
     self.password_confirmation=password_confirmation
@@ -190,26 +195,35 @@ class User < ActiveRecord::Base
   end
 
   def self.contact_attrs
-    'users.id,users.first_name as name,users.tel,users.phone,users.email,users.title,users.image_url'
+    'users.id,users.nick_name as name,users.tel,users.phone,users.email,users.title,users.image_url'
   end
 
 
   # the last access token for user
   def access_token
-    access_tokens.where(application_id: System::DEFAULT_OAUTH_APP.id,
-                        revoked_at: nil).where('date_add(created_at,interval expires_in second) > ?',Time.now.utc).
+    access_tokens.where(application_id: System.default_app.id,
+                        revoked_at: nil).where('date_add(created_at,interval expires_in second) > ?', Time.now.utc).
         order('created_at desc').
         limit(1).
         first || generate_access_token
   end
 
 
-  private
+  # user root user_departments
+  def root_user_departments
+    uds=self.user_departments.joins(:department)
+    udids=uds.collect { |u| u.department_id }
+    uds.reject { |u| udids.include?(u.department.parent_id) }
+  end
+
+  # private
   # generate token
   def generate_access_token
-    Doorkeeper::AccessToken.create!(application_id: System::DEFAULT_OAUTH_APP.id,
-                                    resource_owner_id: self.id,
-                                    expires_in: Doorkeeper.configuration.access_token_expires_in)
+    if System.default_app
+      Doorkeeper::AccessToken.create!(application_id: System.default_app.id,
+                                      resource_owner_id: self.id,
+                                      expires_in: Doorkeeper.configuration.access_token_expires_in)
+    end
   end
 
 

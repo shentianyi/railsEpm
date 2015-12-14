@@ -5,6 +5,7 @@ class UserRegistrationsController<Devise::RegistrationsController
 
   def create
     msg=Message.new(result: true)
+    params[:user][:nick_name]=params[:user][:first_name] if params[:user][:nick_name].blank?
     build_resource(sign_up_params)
     if resource.save
       msg.object = UserPresenter.new(resource).to_json
@@ -13,7 +14,8 @@ class UserRegistrationsController<Devise::RegistrationsController
       msg.result = false
       msg.content = ""
       #msg.content = resource.errors
-      resource.errors.messages.each do |key,value|
+      p resource.errors.messages
+      resource.errors.messages.each do |key, value|
         msg.content << key.to_s + ":" + value.first.to_s + ";"
       end
     end
@@ -29,11 +31,15 @@ class UserRegistrationsController<Devise::RegistrationsController
     else
       params[:user][:password_confirmation]=params[:user][:password]
     end
+
+    # params[:user][:nick_name] = @user.nick_name.blank? ? @user.first_name : @user.nick_name
+
     if @user.update_attributes(params[:user])
       msg.result=true
       msg.object = UserPresenter.new(@user).to_json
     else
       msg.result=false
+      puts @user.errors.to_json
       msg.content=@user.errors
     end
     render :json => msg

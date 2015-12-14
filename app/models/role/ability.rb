@@ -11,7 +11,7 @@ class Ability
       can :manage, [User, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem,
                     UserKpiItem, UserSession, Dashboard, DashboardItem, DashboardCondition, Email,
                     KpiProperty, KpiPropertyItem, KpiPropertyValue, StorySet, Story, Comment,
-                    ChartCondition, StorySetUser, KpiSubscribe, KpiSubscribeUser, KpiSubscribeAlert, ReportSnap]
+                    ChartCondition, StorySetUser, KpiSubscribe, KpiSubscribeUser, KpiSubscribeAlert, ReportSnap], tenant_id: user.tenant_id
       can :manage, UserSession, :email => user.email
 
       can :read, EntityGroup, user_entity_groups: {user_id: user.id}
@@ -26,7 +26,7 @@ class Ability
       can :manage, [EntityGroupItem, UserKpiItem, Dashboard, DashboardItem, DashboardCondition, Email,
                     KpiProperty, KpiPropertyItem, KpiPropertyValue, StorySet, Story, Comment, ChartCondition,
                     StorySetUser, KpiSubscribe, KpiSubscribeUser, KpiSubscribeAlert]
-      can :manage, KpiEntry, :entity_id.in=> user.entities.pluck(:id).uniq
+      can :manage, KpiEntry, :entity_id.in => user.entities.pluck(:id).uniq
       can :manage, User, :id => user.id
 
       can :manage, UserSession, :email => user.email
