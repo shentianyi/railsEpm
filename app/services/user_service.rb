@@ -81,26 +81,5 @@ class UserService
     else
       ApiMessage.new(messages: ['User not exists'])
     end
-
-
-    # if (user=User.find_for_database_authentication(id: params[:user_id])) && user.valid_password?(params[:old_password])
-    #   if user.update_attributes(password: params[:new_password], password_confirmation: params[:new_password_confirmation])
-    #     {
-    #         result_code: 1,
-    #         messages: ['Set Password Success']
-    #     }
-    #   else
-    #     puts user.errors.to_json
-    #     {
-    #         result_code: 0,
-    #         messages: ['Set Password Failed']
-    #     }
-    #   end
-    # else
-    #   {
-    #       result_code: 0,
-    #       messages: ['Old Password are not invited']
-    #   }
-    # end
   end
 end
