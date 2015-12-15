@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151208183845) do
+ActiveRecord::Schema.define(:version => 20151215095829) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -338,11 +338,13 @@ ActiveRecord::Schema.define(:version => 20151208183845) do
     t.integer  "user_id"
     t.integer  "kpi_id"
     t.integer  "tenant_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.boolean  "is_alert",       :default => false
-    t.boolean  "alert_by_sms",   :default => false
-    t.boolean  "alert_by_email", :default => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.boolean  "is_alert",          :default => false
+    t.boolean  "alert_by_sms",      :default => false
+    t.boolean  "alert_by_email",    :default => false
+    t.integer  "department_id"
+    t.boolean  "auto_notification", :default => false
   end
 
   add_index "kpi_subscribes", ["kpi_id"], :name => "index_kpi_subscribes_on_kpi_id"
