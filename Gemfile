@@ -108,6 +108,11 @@ gem 'ruby-pinyin'
 gem 'chinese_pinyin'
 #gem 'redis-search'
 
+# elasticsearch
+gem 'elasticsearch-model'
+# gem 'elasticsearch-persistence'
+gem 'elasticsearch-rails'
+
 # Front-end module
 gem 'seajs-rails'
 
