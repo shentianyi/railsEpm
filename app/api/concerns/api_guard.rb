@@ -52,6 +52,12 @@ module APIGuard
     end
 
     def guard_locale
+
+      puts '-----------------------------------------------'
+      puts request.env['CONTENT_TYPE']
+
+      puts '-----------------------------------------------'
+
       I18n.locale=locale
     end
 
