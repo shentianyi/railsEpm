@@ -190,11 +190,8 @@ GEM
       rubyzip
       spreadsheet (> 0.6.4)
     ruby-ole (1.2.11.7)
-<<<<<<< HEAD
     ruby-pinyin (0.4.1)
       rmmseg-cpp (~> 0.2.9)
-=======
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
     rubyzip (1.0.0)
     rufus-scheduler (3.0.7)
       tzinfo
@@ -297,11 +294,8 @@ DEPENDENCIES
   resque
   rest-client
   roo
-<<<<<<< HEAD
   ruby-pinyin
   rufus-scheduler
-=======
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
   sass-rails (~> 3.2.3)
   seajs-rails
   settingslogic

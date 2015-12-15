@@ -56,10 +56,10 @@ class User < ActiveRecord::Base
   # acts as tenant
   acts_as_tenant(:tenant)
 
-  redis_search_index(:title_field => :nick_name,
-                     :condition_fields => [:tenant_id, :is_sys, :role_id, :entity_id],
-                     :prefix_index_enable => true,
-                     :ext_fields => [:email])
+  # redis_search_index(:title_field => :nick_name,
+  #                    :condition_fields => [:tenant_id, :is_sys, :role_id, :entity_id],
+  #                    :prefix_index_enable => true,
+  #                    :ext_fields => [:email])
 
   def create_view_and_entity_for_general_user
     #name code description tenant_id
