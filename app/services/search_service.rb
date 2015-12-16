@@ -22,7 +22,7 @@ class SearchService
     []
   end
 
-  def self.full_text_followed_kpi q,user
+  def self.full_text_followed_kpi q, user
     []
   end
 end
