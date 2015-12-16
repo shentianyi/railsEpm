@@ -15,7 +15,7 @@ class Kpi < ActiveRecord::Base
 
   #has_many :kpi_entries, :through => :user_kpi_items
   belongs_to :tenant
-  attr_accessible :description, :direction, :frequency, :is_calculated, :period, :name, :target_max, :target_min, :unit, :formula, :formula_string
+  attr_accessible :description, :direction, :frequency, :is_calculated, :period, :name, :target_max, :target_min, :unit, :formula, :formula_string, :user_group_id, :viewable_code, :calculate_method
   attr_accessible :kpi_category_id, :tenant_id
 
   acts_as_tenant(:tenant)

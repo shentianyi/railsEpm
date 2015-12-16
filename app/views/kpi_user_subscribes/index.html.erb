@@ -1,0 +1,29 @@
+<h1>Listing kpi_user_subscribes</h1>
+
+<table>
+  <tr>
+    <th>Kpi</th>
+    <th>User</th>
+    <th>Tenant</th>
+    <th>Follow flag</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @kpi_user_subscribes.each do |kpi_user_subscribe| %>
+  <tr>
+    <td><%= kpi_user_subscribe.kpi %></td>
+    <td><%= kpi_user_subscribe.user %></td>
+    <td><%= kpi_user_subscribe.tenant %></td>
+    <td><%= kpi_user_subscribe.follow_flag %></td>
+    <td><%= link_to 'Show', kpi_user_subscribe %></td>
+    <td><%= link_to 'Edit', edit_kpi_user_subscribe_path(kpi_user_subscribe) %></td>
+    <td><%= link_to 'Destroy', kpi_user_subscribe, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Kpi user subscribe', new_kpi_user_subscribe_path %>

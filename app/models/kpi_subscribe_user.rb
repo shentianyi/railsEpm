@@ -4,4 +4,5 @@ class KpiSubscribeUser < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :kpi_subscribe
+  belongs_to :kpi_user_subscribe
 end

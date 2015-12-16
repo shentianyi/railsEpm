@@ -41,7 +41,11 @@ module V2
         requires :department_id, type: Integer, desc: 'department id'
       end
       post :unfollow do
-
+        KpiSubscribeService.unfollow_kpi({
+                                             user: current_user,
+                                             kpi_id: params[:kpi_id],
+                                             department_id: params[:department_id]
+                                         })
       end
 
       params do
@@ -49,7 +53,15 @@ module V2
       end
       get :user_followed do
         user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
-        KpiSubscribeService.generate_followed_kpis(user)
+        KpiSubscribeService.user_followed_kpis(user)
+      end
+
+      params do
+        optional :user_id, type: String, desc: 'user id'
+      end
+      get :user_created do
+        user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
+        KpiService.user_created_kpis(user)
       end
 
     end

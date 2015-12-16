@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151215095829) do
+ActiveRecord::Schema.define(:version => 20151216060337) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -357,17 +357,20 @@ ActiveRecord::Schema.define(:version => 20151215095829) do
     t.integer  "kpi_category_id"
     t.integer  "unit"
     t.integer  "frequency"
-    t.float    "target_max",      :default => 0.0
-    t.boolean  "is_calculated",   :default => false
+    t.float    "target_max",       :default => 0.0
+    t.boolean  "is_calculated",    :default => false
     t.integer  "direction"
     t.integer  "period"
     t.text     "formula"
     t.text     "formula_string"
     t.integer  "user_id"
     t.integer  "tenant_id"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
-    t.float    "target_min",      :default => 0.0
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.float    "target_min",       :default => 0.0
+    t.integer  "user_group_id"
+    t.integer  "viewable_code"
+    t.integer  "calculate_method"
   end
 
   add_index "kpis", ["kpi_category_id"], :name => "index_kpis_on_kpi_category_id"
@@ -526,6 +529,29 @@ ActiveRecord::Schema.define(:version => 20151215095829) do
 
   add_index "user_entity_groups", ["entity_group_id"], :name => "index_user_entity_groups_on_entity_group_id"
   add_index "user_entity_groups", ["user_id"], :name => "index_user_entity_groups_on_user_id"
+
+  create_table "user_group_items", :force => true do |t|
+    t.integer  "user_group_id"
+    t.integer  "tenant_id"
+    t.integer  "user_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "user_group_items", ["tenant_id"], :name => "index_user_group_items_on_tenant_id"
+  add_index "user_group_items", ["user_group_id"], :name => "index_user_group_items_on_user_group_id"
+
+  create_table "user_groups", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "tenant_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "user_groups", ["tenant_id"], :name => "index_user_groups_on_tenant_id"
+  add_index "user_groups", ["user_id"], :name => "index_user_groups_on_user_id"
 
   create_table "user_invites", :force => true do |t|
     t.string   "email"

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user: 
+  tenant: 
+  name: MyString
+  description: MyString
+
+two:
+  user: 
+  tenant: 
+  name: MyString
+  description: MyString

@@ -31,4 +31,23 @@ class KpiPresenter<Presenter
         properties: properties
     }
   end
+
+  def as_basic_info
+    {
+        kpi_id: @kpi.id,
+        kpi_name: @kpi.name,
+        description: @kpi.description,
+        creator: @kpi.user_id,
+        created_on: @kpi.created_at,
+        target_max: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max),
+        target_min: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min),
+        uom: @kpi.unit,
+        calculate_method: @kpi.calculate_method,
+        viewable: {
+            viewable_code: @kpi.viewable_code,
+            user_group_id: @kpi.user_group_id
+        },
+        attributes: properties
+    }
+  end
 end
