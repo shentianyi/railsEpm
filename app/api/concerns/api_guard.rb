@@ -40,13 +40,17 @@ module APIGuard
     #           Defaults to empty array.
     #
     def guard!(scopes= [])
-      if request.env['HTTP_AUTHORIZATION'].present?
-        if request.env['HTTP_AUTHORIZATION'].split(' ')[0]=='Bearer'
-          guard_by_token(scopes)
+      begin
+        if request.env['HTTP_AUTHORIZATION'].present?
+          if request.env['HTTP_AUTHORIZATION'].split(' ')[0]=='Bearer'
+            guard_by_token(scopes)
+          else
+            guard_by_basic
+          end
         else
-          guard_by_basic
+          raise NoAuthError
         end
-      else
+      rescue
         raise NoAuthError
       end
     end
