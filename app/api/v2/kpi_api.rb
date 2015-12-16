@@ -24,7 +24,7 @@ module V2
           return ApiMessage.new(messages: ['Invlid Auto Notification Value'])
         end
 
-        KpiSubscribeService.follow_kpi({
+        KpiService.follow_kpi({
                                            user: current_user,
                                            lower_boundary: params[:lower_boundary],
                                            upper_boundary: params[:upper_boundary],
@@ -41,7 +41,7 @@ module V2
         requires :department_id, type: Integer, desc: 'department id'
       end
       post :unfollow do
-        KpiSubscribeService.unfollow_kpi({
+        KpiService.unfollow_kpi({
                                              user: current_user,
                                              kpi_id: params[:kpi_id],
                                              department_id: params[:department_id]
@@ -59,7 +59,7 @@ module V2
         end
         get :followed do
           user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
-          KpiSubscribeService.user_followed_kpis(user)
+          KpiService.user_followed_kpis(user)
         end
 
         params do
