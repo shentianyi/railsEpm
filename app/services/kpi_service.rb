@@ -1,4 +1,5 @@
 class KpiService
+
   def self.unit_select
     KpiUnit.as_select
   end
@@ -65,6 +66,12 @@ class KpiService
     else
       ApiMessage.new(messages: ['Kpi Or Department Not Exist'])
     end
+  end
+
+  def self.accessable_list user
+    return []
+
+    Kpi.where(viewable: KpiViewable::PUBLIC)
   end
 
   def self.user_created_kpis user

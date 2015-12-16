@@ -1,16 +1,16 @@
 #encoding: utf-8
 class KpiViewable
-  PRIVATE=100
-  PUBLIC=200
+  PUBLIC=100
+  PRIVATE=200
   PARTIAL_ALLOW=300
   PARTIAL_BLOCK=400
 
   def self.display(v)
     case v
-      when PRIVATE
-        'private'
       when PUBLIC
         'public'
+      when PRIVATE
+        'private'
       when PARTIAL_ALLOW
         'partial_allow'
       when PARTIAL_BLOCK
@@ -22,10 +22,10 @@ class KpiViewable
 
   def self.code(v)
     case v
-      when PRIVATE
-        'private'
       when PUBLIC
         'public'
+      when PRIVATE
+        'private'
       when PARTIAL_ALLOW
         'partial_allow'
       when PARTIAL_BLOCK
