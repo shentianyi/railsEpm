@@ -17,11 +17,11 @@ module V2
 
       post :follow do
         if (params[:lower_boundary] > params[:upper_boundary]) || (params[:lower_boundary] < 0) || (params[:upper_boundary] < 0)
-          ApiMessage.new(messages: ['Invlid Upper Or Lower Boundary'])
+          return ApiMessage.new(messages: ['Invlid Upper Or Lower Boundary'])
         end
 
         unless params[:auto_notification].is_a?(Boolean)
-          ApiMessage.new(messages: ['Invlid Auto Notification Value'])
+          return ApiMessage.new(messages: ['Invlid Auto Notification Value'])
         end
 
         KpiSubscribeService.follow_kpi({
