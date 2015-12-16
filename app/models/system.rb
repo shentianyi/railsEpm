@@ -23,6 +23,11 @@ class System
     # update nick name
     User.where(nick_name: ['', nil]).each { |u| u.update_attributes(nick_name: u.first_name) }
 
+    if (tenant=Tenant.first) && (department=tenant.departments.first)
+      DepartmentService.add_department_user(user.id, department.id, user)
+      DepartmentService.set_manager(user.id, department.id)
+    end
+
   end
 
   def self.default_app
