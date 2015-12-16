@@ -15,20 +15,20 @@ class KpiService
   def self.user_created_kpis user
     user_kpis = Kpi.where(user_id: user.id)
 
-    kpi_on_user = {}
-    kpi_on_user[:user] = UserPresenter.new(user).as_brief_info
-    kpis = []
+    kpi_on_user = []
     user_kpis.each_with_index do |kpi, index|
-      kpis[index] = KpiPresenter.new(kpi).as_basic_info
+      kpi_on_user[index] = {}
+      creater = User.find_by_id(kpi.user_id).blank? ? user : User.find_by_id(kpi.user_id)
+      kpi_on_user[index][:kpi] = KpiPresenter.new(kpi).as_basic_info
+      kpi_on_user[index][:user] = UserPresenter.new(creater).as_brief_info
+      kpi_on_user[index][:follow_flag] = 1
+      kpi_on_user[index][:is_created] = user==creater
+      kpi_on_user[index][:is_managable] = true
+
     end
-    kpi_on_user[:kpis] = kpis
 
     puts kpi_on_user
     puts '------------------------------'
-    if kpis.count > 0
-      ApiMessage.new(result_code: 1, messages: kpi_on_user)
-    else
-      ApiMessage.new(messages: ['There Is No Requires Data'])
-    end
+    ApiMessage.new(result_code: 1, messages: kpi_on_user)
   end
 end
