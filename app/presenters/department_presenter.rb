@@ -5,7 +5,6 @@ class DepartmentPresenter<Presenter
 
   def initialize(department)
     @department=department
-    @user=user
     self.delegators =Delegators
   end
 
@@ -24,7 +23,18 @@ class DepartmentPresenter<Presenter
         id: @department.id,
         name: @department.name,
         description: @department.description,
-        creator_id: @department.user_id
+        creator_id: @department.user_id,
+        parent_id: @department.parent_id,
+        has_children: @department.has_children?
     }
   end
+
+  def self.as_brief_infos(departments)
+    infos=[]
+    departments.each do |department|
+      infos<<DepartmentPresenter.new(department).as_brief_info
+    end
+    infos
+  end
+
 end

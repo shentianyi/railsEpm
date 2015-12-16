@@ -1,6 +1,10 @@
 #encoding: utf-8
 class User < ActiveRecord::Base
   include Redis::Search
+
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   belongs_to :tenant
   belongs_to :entity
   belongs_to :department
@@ -56,10 +60,12 @@ class User < ActiveRecord::Base
   # acts as tenant
   acts_as_tenant(:tenant)
 
+  # redis search
   redis_search_index(:title_field => :nick_name,
                      :condition_fields => [:tenant_id, :is_sys, :role_id, :entity_id],
                      :prefix_index_enable => true,
                      :ext_fields => [:email])
+
 
   def create_view_and_entity_for_general_user
     #name code description tenant_id
