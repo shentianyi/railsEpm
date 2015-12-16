@@ -47,23 +47,29 @@ module V2
                                              department_id: params[:department_id]
                                          })
       end
+      
+      namespace :users do
+        get :accesses do
 
-      params do
-        optional :user_id, type: String, desc: 'user id'
-      end
-      get :user_followed do
-        user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
-        KpiSubscribeService.user_followed_kpis(user)
-      end
+        end
 
-      params do
-        optional :user_id, type: String, desc: 'user id'
-      end
-      get :user_created do
-        user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
-        KpiService.user_created_kpis(user)
-      end
 
+        params do
+          optional :user_id, type: String, desc: 'user id'
+        end
+        get :followed do
+          user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
+          KpiSubscribeService.user_followed_kpis(user)
+        end
+
+        params do
+          optional :user_id, type: String, desc: 'user id'
+        end
+        get :created do
+          user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
+          KpiService.user_created_kpis(user)
+        end
+      end
     end
   end
 end

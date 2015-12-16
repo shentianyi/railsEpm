@@ -1,8 +1,37 @@
 #encoding: utf-8
 class KpiViewable
-  include Enum
-  KpiViewable.define :Private, 100, 'Private'
-  KpiViewable.define :Public, 200, 'Public'
-  KpiViewable.define :PartialAllow, 300, 'PartialAllow'
-  KpiViewable.define :PartialBlock, 400, 'PartialBlock'
+  PRIVATE=100
+  PUBLIC=200
+  PARTIAL_ALLOW=300
+  PARTIAL_BLOCK=400
+
+  def self.display(v)
+    case v
+      when PRIVATE
+        'private'
+      when PUBLIC
+        'public'
+      when PARTIAL_ALLOW
+        'partial_allow'
+      when PARTIAL_BLOCK
+        'partial_block'
+      else
+        raise 'Error KpiViewable value'
+    end
+  end
+
+  def self.code(v)
+    case v
+      when PRIVATE
+        'private'
+      when PUBLIC
+        'public'
+      when PARTIAL_ALLOW
+        'partial_allow'
+      when PARTIAL_BLOCK
+        'partial_block'
+      else
+        raise 'Error KpiViewable value'
+    end
+  end
 end

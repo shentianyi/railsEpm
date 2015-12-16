@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151216060337) do
+ActiveRecord::Schema.define(:version => 20151216075334) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -351,6 +351,19 @@ ActiveRecord::Schema.define(:version => 20151216060337) do
   add_index "kpi_subscribes", ["tenant_id"], :name => "index_kpi_subscribes_on_tenant_id"
   add_index "kpi_subscribes", ["user_id"], :name => "index_kpi_subscribes_on_user_id"
 
+  create_table "kpi_user_subscribes", :force => true do |t|
+    t.integer  "kpi_id"
+    t.integer  "user_id"
+    t.integer  "tenant_id"
+    t.string   "follow_flag"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "kpi_user_subscribes", ["kpi_id"], :name => "index_kpi_user_subscribes_on_kpi_id"
+  add_index "kpi_user_subscribes", ["tenant_id"], :name => "index_kpi_user_subscribes_on_tenant_id"
+  add_index "kpi_user_subscribes", ["user_id"], :name => "index_kpi_user_subscribes_on_user_id"
+
   create_table "kpis", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -369,7 +382,7 @@ ActiveRecord::Schema.define(:version => 20151216060337) do
     t.datetime "updated_at",                          :null => false
     t.float    "target_min",       :default => 0.0
     t.integer  "user_group_id"
-    t.integer  "viewable_code"
+    t.integer  "viewable"
     t.integer  "calculate_method"
   end
 
