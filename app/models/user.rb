@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   # acts as tenant
   acts_as_tenant(:tenant)
 
-  redis search
+
   redis_search_index(:title_field => :nick_name,
                      :condition_fields => [:tenant_id, :is_sys, :role_id, :entity_id],
                      :prefix_index_enable => true,
