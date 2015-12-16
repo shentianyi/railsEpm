@@ -14,6 +14,44 @@ module V2
       get :timing_frequencies do
         KpiService.frequency_select
       end
+
+      post :follow do
+        if (params[:lower_boundary] > params[:upper_boundary]) || (params[:lower_boundary] < 0) || (params[:upper_boundary] < 0)
+          ApiMessage.new(messages: ['Invlid Upper Or Lower Boundary'])
+        end
+
+        unless params[:auto_notification].is_a?(Boolean)
+          ApiMessage.new(messages: ['Invlid Auto Notification Value'])
+        end
+
+        KpiSubscribeService.follow_kpi({
+                                           user: current_user,
+                                           lower_boundary: params[:lower_boundary],
+                                           upper_boundary: params[:upper_boundary],
+                                           ks: {
+                                               kpi_id: params[:kpi_id],
+                                               department_id: params[:department_id],
+                                               auto_notification: params[:auto_notification]
+                                           }
+                                       })
+      end
+
+      params do
+        requires :kpi_id, type: Integer, desc: 'kpi id'
+        requires :department_id, type: Integer, desc: 'department id'
+      end
+      post :unfollow do
+
+      end
+
+      params do
+        optional :user_id, type: String, desc: 'user id'
+      end
+      get :user_followed do
+        user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
+        KpiSubscribeService.generate_followed_kpis(user)
+      end
+
     end
   end
 end
