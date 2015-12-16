@@ -223,6 +223,7 @@ class User < ActiveRecord::Base
     uds.reject { |u| udids.include?(u.department.parent_id) }
   end
 
+
   # private
   # generate token
   def generate_access_token

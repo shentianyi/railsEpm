@@ -1,4 +1,5 @@
 class KpiService
+
   def self.unit_select
     KpiUnit.as_select
   end
@@ -11,6 +12,13 @@ class KpiService
   def self.frequency_select
     KpiFrequency.as_select
   end
+
+  def self.accessable_list user
+    return []
+
+    Kpi.where(viewable: KpiViewable::PUBLIC)
+  end
+
 
   def self.user_created_kpis user
     user_kpis = Kpi.where(user_id: user.id)

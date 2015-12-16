@@ -47,10 +47,11 @@ module V2
                                              department_id: params[:department_id]
                                          })
       end
-      
-      namespace :users do
-        get :accesses do
 
+      namespace :users do
+
+        get :accesses do
+          KpiService.accessable_list(current_user)
         end
 
 
