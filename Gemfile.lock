@@ -296,6 +296,7 @@ DEPENDENCIES
   devise-encryptable
   doorkeeper (~> 3.0.1)
   doorkeeper-jwt
+  elasticsearch
   elasticsearch-model
   elasticsearch-rails
   grape

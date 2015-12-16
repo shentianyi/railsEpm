@@ -109,6 +109,7 @@ gem 'chinese_pinyin'
 #gem 'redis-search'
 
 # elasticsearch
+gem 'elasticsearch'
 gem 'elasticsearch-model'
 # gem 'elasticsearch-persistence'
 gem 'elasticsearch-rails'

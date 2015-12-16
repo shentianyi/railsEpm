@@ -33,7 +33,6 @@ class UserPresenter<Presenter
         nick_name: @user.nick_name,
         departments: with_dep ? UserDepartmentPresenter.as_user_departments(@user.root_user_departments) : nil
     }
-
   end
 
 
@@ -41,6 +40,14 @@ class UserPresenter<Presenter
     {
         brief_user_info: as_brief_info
     }
+  end
+
+  def self.as_brief_infos(users,with_dep=true)
+    infos=[]
+    users.each do |user|
+      infos<<UserPresenter.new(user).as_brief_info(with_dep)
+    end
+    infos
   end
 
 end

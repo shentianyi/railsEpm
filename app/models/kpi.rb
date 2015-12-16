@@ -1,4 +1,10 @@
 class Kpi < ActiveRecord::Base
+
+
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
+
   belongs_to :kpi_category
   has_many :kpi_items, :dependent => :destroy
   has_many :kpi_parent_items, :class_name => 'KpiItem', :foreign_key => 'item_id'

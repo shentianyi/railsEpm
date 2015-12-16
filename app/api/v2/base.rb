@@ -6,5 +6,6 @@ module V2
     mount UserAPI
     mount DepartmentAPI
     mount KpiAPI
+    mount SearchAPI
   end
 end
