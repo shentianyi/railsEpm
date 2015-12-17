@@ -39,14 +39,19 @@ class KpiService
       if kpi.save
         ##assign
         params[:assignments].each do |assignment|
-          unless ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
-            KpisHelper.assign_kpi_to_department_user(kpi, to_user, department)
+          puts '0000000000000000000000000000000000000000000'
+          if ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
+            puts '222222222222222222222222222222222222222222222222'
+            KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment)
           end
         end
 
         #task
         #TODO
       else
+        puts '-------------------------------------'
+        puts kpi.errors.to_json
+        puts '-------------------------------------'
         return ApiMessage.new(messages: ['Kpi Created Error'])
       end
     end
@@ -115,15 +120,17 @@ class KpiService
       # if kpi.save
       #assign new update
       params[:assignments].each do |assignment|
-        unless ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
+        if ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
           if assignment[:assignment_id].blank?
-            KpisHelper.assign_kpi_to_department_user(kpi, to_user, department)
+            KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment)
           else
             UserKpiItem.find_by_id(assignment[:assignment_id]).update_attributes({
                                                                                      user_id: to_user.id,
                                                                                      department_id: department.id,
                                                                                      target_max: kpi.target_max,
-                                                                                     target_min: kpi.target_min
+                                                                                     target_min: kpi.target_min,
+                                                                                     remind_time: assignment[:time],
+                                                                                     frequency: assignment[:frequency]
                                                                                  })
           end
         end
@@ -217,5 +224,9 @@ class KpiService
 
   def self.user_followed_kpis user
     KpiPresenter.as_on_users(Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}), user, false)
+  end
+
+  def self.details kpi
+    KpiPresenter.new(kpi).as_kpi_details
   end
 end

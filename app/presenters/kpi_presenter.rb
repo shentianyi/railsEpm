@@ -51,23 +51,45 @@ class KpiPresenter<Presenter
     }
   end
 
+  def as_kpi_assignments kpi_id
+    assignments=[]
 
-  def as_on_user(user,with_properties=true)
+    UserKpiItem.where(kpi_id: kpi_id).each do |item|
+      assignments<<{
+          assignment_id: item.id,
+          user: User.find_by_id(item.user_id).email,
+          department_id: item.department_id,
+          time: item.remind_time,
+          frequency: item.frequency
+      }
+    end
+
+    assignments
+  end
+
+  def as_kpi_details
+    {
+        kpi: as_basic_info(false),
+        assignments: as_kpi_assignments(@kpi.id)
+    }
+  end
+
+  def as_on_user(user, with_properties=true)
     {
         user: UserPresenter.new(user).as_brief_info(false),
         kpi: as_basic_info(false),
         follow_flag: Kpi::KpiFollowFlag.display(Kpi::KpiFollowFlag::NONE),
-        follow_flag_value:Kpi::KpiFollowFlag::NONE,
+        follow_flag_value: Kpi::KpiFollowFlag::NONE,
         is_created: @kpi.user_id==user.id,
         is_managable: false
     }
   end
 
-  def self.as_on_users(kpis, user,with_properties=true)
+  def self.as_on_users(kpis, user, with_properties=true)
     infos=[]
 
     kpis.each do |kpi|
-      infos<<KpiPresenter.new(kpi).as_on_user(user,with_properties)
+      infos<<KpiPresenter.new(kpi).as_on_user(user, with_properties)
     end
 
     infos
