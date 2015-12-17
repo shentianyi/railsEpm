@@ -6,7 +6,7 @@ class DepartmentObserver<ActiveRecord::Observer
   def after_create department
     entity=department.default_entity
     if department.default_entity.blank?
-      entity=Entity.new(:name => department.name, is_default: true,department_id:department.id)
+      entity=Entity.new(:name => department.name, is_default: true, department_id: department.id)
       entity.tenant=department.tenant
     end
     entity_group = EntityGroup.new(:name => department.name, :department_id => department.id)
@@ -29,12 +29,21 @@ class DepartmentObserver<ActiveRecord::Observer
 
   def after_update department
     if department.name_changed?
-      eg = department.entity_group
-      eg.update_attributes(name: department.name)
+      if eg = department.entity_group
+        eg.update_attributes(name: department.name)
+      end
+      if entity=department.default_entity
+        entity.update_attributes(name: department.name)
+      end
     end
   end
 
-  def before_destroy department
-
+  def after_destroy department
+    if eg = department.entity_group
+      eg.destroy
+    end
+    if entity=department.default_entity
+      entity.destroy
+    end
   end
 end
