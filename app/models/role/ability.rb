@@ -69,7 +69,7 @@ class Ability
   # end
 
   def initialize(user)
-    can :manage, :all, tenant_id: user.id
+    can :manage, :all, tenant_id: user.tenant_id
 
   end
 end
