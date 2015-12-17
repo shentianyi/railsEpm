@@ -4,10 +4,14 @@ class DepartmentObserver<ActiveRecord::Observer
 
 
   def after_create department
+    entity=department.default_entity
+    if department.default_entity.blank?
+      entity=Entity.new(:name => department.name, is_default: true,department_id:department.id)
+    end
     entity_group = EntityGroup.new(:name => department.name, :department_id => department.id)
     entity_group.creator = department.creator
     entity_group.tenant=department.tenant
-    entity_group.entities<<department.default_entity if department.default_entity
+    entity_group.entities<<entity
     entity_group.save
 
     #share department.entity_group to all the ancestors' users
