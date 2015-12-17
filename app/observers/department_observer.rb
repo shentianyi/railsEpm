@@ -7,6 +7,7 @@ class DepartmentObserver<ActiveRecord::Observer
     entity=department.default_entity
     if department.default_entity.blank?
       entity=Entity.new(:name => department.name, is_default: true,department_id:department.id)
+      entity.tenant=department.tenant
     end
     entity_group = EntityGroup.new(:name => department.name, :department_id => department.id)
     entity_group.creator = department.creator
