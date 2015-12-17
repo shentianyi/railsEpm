@@ -36,77 +36,77 @@ ANALYTICS.high_chart={
         adaptToUpdatedData:false
     },
     tooltip:{
-        enabled: true,
-        formatter: function() {
-            var targetString="",
-                target,new_target,name,view;
-            if(this.points){
-                for(var i=0;i<this.points.length;i++){
-                    target=this.points[i];
-                    //new_target=target.series.name.replace("(","#").replace(")","#").split("#");
-                    //name=new_target[0];
-                    //view=new_target[1];
+            enabled: true,
+            formatter: function() {
+                var targetString="",
+                    target,new_target,name,view;
+                if(this.points){
+                    for(var i=0;i<this.points.length;i++){
+                        target=this.points[i];
+                        //new_target=target.series.name.replace("(","#").replace(")","#").split("#");
+                        //name=new_target[0];
+                        //view=new_target[1];
 
-                    var y=(parseInt(target.y)).length;
-                    var dotCount=Math.ceil(y/3)-1;
+                        var y=(parseInt(target.y)).length;
+                        var dotCount=Math.ceil(y/3)-1;
 
-                    if(dotCount>0){
-                        var tempY,tempArray;
-                        tempY=target.y+"";
-                        tempArray= tempY.split("");
-                        for(var i=0;i<dotCount;i++){
-                            tempArray.splice(3*(i+1)+i,0,",");
-                            console.log(y)
+                        if(dotCount>0){
+                            var tempY,tempArray;
+                            tempY=target.y+"";
+                            tempArray= tempY.split("");
+                            for(var i=0;i<dotCount;i++){
+                                tempArray.splice(3*(i+1)+i,0,",");
+                                console.log(y)
+                            }
+                            y= tempArray.join("");
                         }
-                        y= tempArray.join("");
+                        else{
+                            y=target.y
+                        }
+
+                        if(target.point.unit){
+                            targetString+='<span style="color:'+target.series.color+'">'+target.series.name+'</span>'+':'+y+" "+target.point.unit+'<br />';
+                        }
+                        else{
+                            targetString+='<span style="color:'+target.series.color+'">'+target.series.name+'</span>'+':'+y+'<br />';
+                        }
+                    }
+                    if(target.series.type=="column"){
+                        return '<b>'+target.key+'</b>'
+                            +'<br />'
+                            +targetString;
+                    }
+                    else{
+                        return '<b>'+target.key+'</b>'
+                            +'<br />'
+                            +targetString;
+                    }
+                }
+                else if(this.point){
+                    target=this.point;
+
+                    var y=(target.y+"").length;
+                    var dotCount=Math.ceil(y/3)-1;
+                    if(dotCount>0){
+                        y=target.y+"";
+                        y= y.split("");
+                        for(var i=0;i<dotCount;i++){
+                            y.splice(3*(i+1)+i,0,",");
+
+                        }
+                        y= y.join("");
                     }
                     else{
                         y=target.y
                     }
 
-                    if(target.point.unit){
-                        targetString+='<span style="color:'+target.series.color+'">'+target.series.name+'</span>'+':'+y+" "+target.point.unit+'<br />';
-                    }
-                    else{
-                        targetString+='<span style="color:'+target.series.color+'">'+target.series.name+'</span>'+':'+y+'<br />';
-                    }
-                }
-                if(target.series.type=="column"){
-                    return '<b>'+target.key+'</b>'
+                    targetString+='<span>'+target.series.name+':'+y+" "+target.unit+'<br />';
+                    return '<b>'+target.name+'</b>'
                         +'<br />'
                         +targetString;
                 }
-                else{
-                    return '<b>'+target.key+'</b>'
-                        +'<br />'
-                        +targetString;
-                }
+
             }
-            else if(this.point){
-                target=this.point;
-
-                var y=(target.y+"").length;
-                var dotCount=Math.ceil(y/3)-1;
-                if(dotCount>0){
-                    y=target.y+"";
-                    y= y.split("");
-                    for(var i=0;i<dotCount;i++){
-                        y.splice(3*(i+1)+i,0,",");
-
-                    }
-                    y= y.join("");
-                }
-                else{
-                    y=target.y
-                }
-
-                targetString+='<span>'+target.series.name+':'+y+" "+target.unit+'<br />';
-                return '<b>'+target.name+'</b>'
-                    +'<br />'
-                    +targetString;
-            }
-
-        }
 
     },
     legend: {
@@ -281,11 +281,11 @@ ANALYTICS.form_chart=function(option){
         data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
     bar_fix_from=Date.parse(begin_time_utc);
     bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1)) <= end_time_utc ?
-        Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1))) : Date.parse(end_time_utc) ;
+                           Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1))) : Date.parse(end_time_utc) ;
     var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
     show_loading(top,0,0,0);
 
-    end_time_utc=get_end_of_date(new Date(bar_fix_to),option.interval).toISOString();
+      end_time_utc=get_end_of_date(new Date(bar_fix_to),option.interval).toISOString();
     ANALYTICS.base_option={
         kpi_id : option.kpi_id,
         average: option.method=="0",
@@ -295,8 +295,8 @@ ANALYTICS.form_chart=function(option){
         frequency: option.interval,
         kpi_property: option.kpi_property
     };
-    //console.log(ANALYTICS.qoros_demo_count);
-    //  console.log(ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null))
+  //console.log(ANALYTICS.qoros_demo_count);
+  //  console.log(ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null))
     $.post('/kpi_entries/analyse',{
         kpi_id : option.kpi_id,
         average: option.method=="0",
@@ -307,8 +307,8 @@ ANALYTICS.form_chart=function(option){
         property:option.kpi_property,
         report:ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null)
     },function(msg){
-        if(option.show_loading==null || option.show_loading)
-            remove_loading();
+          if(option.show_loading==null || option.show_loading)
+         remove_loading();
         if(msg.result){
             var data_length=msg.object.current.length;
             var data_array=[];
@@ -358,52 +358,52 @@ ANALYTICS.form_chart=function(option){
 
 ANALYTICS.form_chart_without_ajax=function(option,data){
 
-    ANALYTICS.loading_data=true;
-    var begin_time_utc=standardParse(option.begin_time).date,
-        end_time_utc=standardParse(option.end_time).date,
-        bar_fix_from,
-        bar_fix_to,
-        length=ANALYTICS.max_length,
-        data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
-    bar_fix_from=Date.parse(begin_time_utc);
-    bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,length) <= end_time_utc ?
-        Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,length)) : Date.parse(end_time_utc) ;
+        ANALYTICS.loading_data=true;
+        var begin_time_utc=standardParse(option.begin_time).date,
+            end_time_utc=standardParse(option.end_time).date,
+            bar_fix_from,
+            bar_fix_to,
+            length=ANALYTICS.max_length,
+            data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
+        bar_fix_from=Date.parse(begin_time_utc);
+        bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,length) <= end_time_utc ?
+            Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,length)) : Date.parse(end_time_utc) ;
 
 
-    var data_length=data.current.length;
-    var data_array=[];
-    for(var i=0;i<data_length;i++){
-        data_array[i]={};
-        data_array[i].y=data.current[i];
-        data_array[i].high=data.target_max[i];
-        data_array[i].low=data.target_min[i];
-        data_array[i].unit=data.unit[i];
-        data_array[i].id=option.id
-        data_array[i].method=option.method;
-    }
-    option.data=data_array;
-    var c={},p=option.data;
-    ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
-    if(option.chart_body_close_validate){
-        ANALYTICS.render_to(option);
-        new Highcharts.StockChart(ANALYTICS.high_chart);
-    }
-    ANALYTICS.add_series(option);
-    ANALYTICS.proper_type_for_chart(option);
+                var data_length=data.current.length;
+                var data_array=[];
+                for(var i=0;i<data_length;i++){
+                    data_array[i]={};
+                    data_array[i].y=data.current[i];
+                    data_array[i].high=data.target_max[i];
+                    data_array[i].low=data.target_min[i];
+                    data_array[i].unit=data.unit[i];
+                    data_array[i].id=option.id
+                    data_array[i].method=option.method;
+                }
+                option.data=data_array;
+                var c={},p=option.data;
+                ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
+                if(option.chart_body_close_validate){
+                    ANALYTICS.render_to(option);
+                    new Highcharts.StockChart(ANALYTICS.high_chart);
+                }
+                ANALYTICS.add_series(option);
+                ANALYTICS.proper_type_for_chart(option);
 
-    if(data_too_long){
-        option.begin_time_utc=begin_time_utc;
-        option.end_time_utc=end_time_utc;
-        option.bar_fix_from=bar_fix_from;
-        option.bar_fix_to=bar_fix_to;
-        option.add_length=100;
-        ANALYTICS.add_data(option);
-    }
-    else{
-        ANALYTICS.loading_data=false;
-        ANALYTICS.currentThreadLoading=false;
-        console.log("loading over");
-    }
+                if(data_too_long){
+                    option.begin_time_utc=begin_time_utc;
+                    option.end_time_utc=end_time_utc;
+                    option.bar_fix_from=bar_fix_from;
+                    option.bar_fix_to=bar_fix_to;
+                    option.add_length=100;
+                    ANALYTICS.add_data(option);
+                }
+                else{
+                    ANALYTICS.loading_data=false;
+                    ANALYTICS.currentThreadLoading=false;
+                    console.log("loading over");
+                }
 
 
 };
@@ -415,7 +415,7 @@ ANALYTICS.add_data=function(option){
         length=option.add_length;
 
     var next_date =  ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1)) > option.end_time_utc ?
-        option.end_time_utc :  ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1));
+                     option.end_time_utc :  ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1));
     option.data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < option.end_time_utc?true:false;
 
 //    console.log(new Date(begin_time_utc).toISOString() );
@@ -539,15 +539,15 @@ ANALYTICS.add_series=function(option) {
     var data = ANALYTICS.deal_data(option);
     var color=option.color?option.color:ANALYTICS.series_colors[series_id % ANALYTICS.series_colors.length];
     var obj=	$("#" + chart_container).highcharts();
-    if(obj){
-        obj.addSeries({
-            name: series_name,
-            id: series_id,
-            color:color,
-            data: data,
-            yAxis: ANALYTICS.qoros_demo_count===3?1:0
-        })
-    }
+if(obj){
+	obj.addSeries({
+        name: series_name,
+        id: series_id,
+        color:color,
+        data: data,
+        yAxis: ANALYTICS.qoros_demo_count===3?1:0
+    })
+}
 
 };
 ANALYTICS.deal_data=function() {
