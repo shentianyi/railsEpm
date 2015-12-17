@@ -4,6 +4,17 @@ module V2
 
     namespace :kpis do
       params do
+        requires :kpi_id, type: Integer, desc: "kpi id"
+      end
+      get do
+        if kpi = Kpi.find_by_id(params[:kpi_id])
+          KpiService.details(kpi)
+        else
+          ApiMessage.new(messages: ['Kpi Not Exists'])
+        end
+      end
+
+      params do
         requires :kpi, type: Hash do
           requires :target_max, type: Float, desc: "kpi target max"
           requires :target_min, type: Float, desc: "kpi target min"

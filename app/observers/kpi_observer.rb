@@ -20,7 +20,7 @@ class KpiObserver<ActiveRecord::Observer
     # incr kpi category count
     kpi.kpi_category.increment!(:kpi_quantity) if kpi.kpi_category
     # default assgin kpi to creator
-    UserKpiItem.new(:user_id=>kpi.creator.id,:target_max=>kpi.target_max,:target_min=>kpi.target_min,:entity_id=>kpi.creator.entity_id,:kpi_id=>kpi.id).save if kpi.creator.entity
+    # UserKpiItem.new(:user_id=>kpi.creator.id,:target_max=>kpi.target_max,:target_min=>kpi.target_min,:entity_id=>kpi.creator.entity_id,:kpi_id=>kpi.id).save if kpi.creator.entity
     # init the calculate type kpi
     #Resque.enqueue(KpiEntryCalTypeInitor,kpi.id) if kpi.is_calculated
   end

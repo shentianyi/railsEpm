@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151217061322) do
+ActiveRecord::Schema.define(:version => 20151217105417) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -590,6 +590,8 @@ ActiveRecord::Schema.define(:version => 20151217061322) do
     t.datetime "updated_at",                     :null => false
     t.float    "target_min",    :default => 0.0
     t.integer  "department_id"
+    t.string   "remind_time"
+    t.integer  "frequency"
   end
 
   add_index "user_kpi_items", ["entity_id"], :name => "index_user_kpi_items_on_entity_id"
