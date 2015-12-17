@@ -48,7 +48,7 @@ module V2
         requires :id, type: Integer, desc: 'department id'
       end
       get :members do
-        DepartmentService.members(params[:id])
+        DepartmentService.members(params[:id],current_user)
       end
 
       # add users
