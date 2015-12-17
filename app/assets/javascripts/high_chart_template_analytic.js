@@ -32,132 +32,81 @@ ANALYTICS.high_chart={
         series : {
             id : 'navigator'
         },
-<<<<<<< HEAD
         baseSeries:0,
         adaptToUpdatedData:false
-=======
-        adaptToUpdatedData:true,
-        baseSeries:0
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
     },
     tooltip:{
-            enabled: true,
-            formatter: function() {
-                var targetString="",
-                    target,new_target,name,view;
-                if(this.points){
-                    for(var i=0;i<this.points.length;i++){
-                        target=this.points[i];
-<<<<<<< HEAD
-                        //new_target=target.series.name.replace("(","#").replace(")","#").split("#");
-                        //name=new_target[0];
-                        //view=new_target[1];
+        enabled: true,
+        formatter: function() {
+            var targetString="",
+                target,new_target,name,view;
+            if(this.points){
+                for(var i=0;i<this.points.length;i++){
+                    target=this.points[i];
+                    //new_target=target.series.name.replace("(","#").replace(")","#").split("#");
+                    //name=new_target[0];
+                    //view=new_target[1];
 
-                        var y=(parseInt(target.y)).length;
-                        var dotCount=Math.ceil(y/3)-1;
-
-                        if(dotCount>0){
-                            var tempY,tempArray;
-                            tempY=target.y+"";
-                            tempArray= tempY.split("");
-                            for(var i=0;i<dotCount;i++){
-                                tempArray.splice(3*(i+1)+i,0,",");
-                                console.log(y)
-                            }
-                            y= tempArray.join("");
-                        }
-                        else{
-                            y=target.y
-                        }
-
-                        if(target.point.unit){
-                            targetString+='<span style="color:'+target.series.color+'">'+target.series.name+'</span>'+':'+y+" "+target.point.unit+'<br />';
-                        }
-                        else{
-                            targetString+='<span style="color:'+target.series.color+'">'+target.series.name+'</span>'+':'+y+'<br />';
-=======
-                        new_target=target.series.name.replace("(","#").replace(")","#").split("#");
-                        name=new_target[0];
-                        view=new_target[1];
-//                        console.log(target.point )
-                        if(target.point.unit){
-                            if(target.point.kpi_property.length>0){
-                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']'+'('+target.point.kpi_property+')'+':'+target.y+" "+target.point.unit+'<br />';
-                            }
-                            else{
-                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+" "+target.point.unit+'<br />';
-                            }
-
-
-                        }
-                        else{
-                            if(target.point.kpi_property.length>0){
-                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']'+'('+target.point.kpi_property+')'+':'+target.y+" "+'<br />';
-                            }
-                            else{
-                                targetString+='<span style="color:'+target.series.color+'">'+name+'</span>'+'['+view+']:'+target.y+" "+'<br />';
-                            }
-
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
-                        }
-                    }
-                    if(target.series.type=="column"){
-                        return '<b>'+target.key+'</b>'
-                            +'<br />'
-                            +targetString;
-                    }
-                    else{
-                        return '<b>'+target.key+'</b>'
-                            +'<br />'
-                            +targetString;
-                    }
-                }
-                else if(this.point){
-                    target=this.point;
-
-<<<<<<< HEAD
-                    var y=(target.y+"").length;
+                    var y=(parseInt(target.y)).length;
                     var dotCount=Math.ceil(y/3)-1;
-                    if(dotCount>0){
-                        y=target.y+"";
-                        y= y.split("");
-                        for(var i=0;i<dotCount;i++){
-                            y.splice(3*(i+1)+i,0,",");
 
+                    if(dotCount>0){
+                        var tempY,tempArray;
+                        tempY=target.y+"";
+                        tempArray= tempY.split("");
+                        for(var i=0;i<dotCount;i++){
+                            tempArray.splice(3*(i+1)+i,0,",");
+                            console.log(y)
                         }
-                        y= y.join("");
+                        y= tempArray.join("");
                     }
                     else{
                         y=target.y
                     }
 
-                    targetString+='<span>'+target.series.name+':'+y+" "+target.unit+'<br />';
-=======
-                    if(target.unit){
-                        if(target.kpi_property.length>0){
-                            targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']'+'('+target.kpi_property+')'+':'+target.y+" "+target.unit+'<br />';
-                        }
-                        else{
-                            targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']:'+target.y+" "+target.unit+'<br />';
-                        }
-
+                    if(target.point.unit){
+                        targetString+='<span style="color:'+target.series.color+'">'+target.series.name+'</span>'+':'+y+" "+target.point.unit+'<br />';
                     }
                     else{
-                        if(target.kpi_property.length>0){
-                            targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']'+'('+target.kpi_property+')'+':'+target.y+" "+'<br />';
-                        }
-                        else{
-                            targetString+='<span>'+target.kpi+'</span>'+'['+target.view+']:'+target.y+" "+'<br />';
-                        }
-
+                        targetString+='<span style="color:'+target.series.color+'">'+target.series.name+'</span>'+':'+y+'<br />';
                     }
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
-                    return '<b>'+target.name+'</b>'
+                }
+                if(target.series.type=="column"){
+                    return '<b>'+target.key+'</b>'
                         +'<br />'
                         +targetString;
                 }
-
+                else{
+                    return '<b>'+target.key+'</b>'
+                        +'<br />'
+                        +targetString;
+                }
             }
+            else if(this.point){
+                target=this.point;
+
+                var y=(target.y+"").length;
+                var dotCount=Math.ceil(y/3)-1;
+                if(dotCount>0){
+                    y=target.y+"";
+                    y= y.split("");
+                    for(var i=0;i<dotCount;i++){
+                        y.splice(3*(i+1)+i,0,",");
+
+                    }
+                    y= y.join("");
+                }
+                else{
+                    y=target.y
+                }
+
+                targetString+='<span>'+target.series.name+':'+y+" "+target.unit+'<br />';
+                return '<b>'+target.name+'</b>'
+                    +'<br />'
+                    +targetString;
+            }
+
+        }
 
     },
     legend: {
@@ -332,11 +281,11 @@ ANALYTICS.form_chart=function(option){
         data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
     bar_fix_from=Date.parse(begin_time_utc);
     bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1)) <= end_time_utc ?
-                           Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1))) : Date.parse(end_time_utc) ;
+        Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1))) : Date.parse(end_time_utc) ;
     var top = parseInt($("#analytics-condition").height()) + parseInt($("#analytics-condition").css("top"));
     show_loading(top,0,0,0);
 
-      end_time_utc=get_end_of_date(new Date(bar_fix_to),option.interval).toISOString();
+    end_time_utc=get_end_of_date(new Date(bar_fix_to),option.interval).toISOString();
     ANALYTICS.base_option={
         kpi_id : option.kpi_id,
         average: option.method=="0",
@@ -346,8 +295,8 @@ ANALYTICS.form_chart=function(option){
         frequency: option.interval,
         kpi_property: option.kpi_property
     };
-  //console.log(ANALYTICS.qoros_demo_count);
-  //  console.log(ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null))
+    //console.log(ANALYTICS.qoros_demo_count);
+    //  console.log(ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null))
     $.post('/kpi_entries/analyse',{
         kpi_id : option.kpi_id,
         average: option.method=="0",
@@ -358,8 +307,8 @@ ANALYTICS.form_chart=function(option){
         property:option.kpi_property,
         report:ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null)
     },function(msg){
-          if(option.show_loading==null || option.show_loading)
-         remove_loading();
+        if(option.show_loading==null || option.show_loading)
+            remove_loading();
         if(msg.result){
             var data_length=msg.object.current.length;
             var data_array=[];
@@ -375,7 +324,6 @@ ANALYTICS.form_chart=function(option){
             option.data=data_array;
             var c={},p=option.data;
             ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
-//            console.log("optionID:"+option.id)
             if(option.chart_body_close_validate){
                 ANALYTICS.render_to(option);
                 new Highcharts.StockChart(ANALYTICS.high_chart);
@@ -410,52 +358,52 @@ ANALYTICS.form_chart=function(option){
 
 ANALYTICS.form_chart_without_ajax=function(option,data){
 
-        ANALYTICS.loading_data=true;
-        var begin_time_utc=standardParse(option.begin_time).date,
-            end_time_utc=standardParse(option.end_time).date,
-            bar_fix_from,
-            bar_fix_to,
-            length=ANALYTICS.max_length,
-            data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
-        bar_fix_from=Date.parse(begin_time_utc);
-        bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,length) <= end_time_utc ?
-            Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,length)) : Date.parse(end_time_utc) ;
+    ANALYTICS.loading_data=true;
+    var begin_time_utc=standardParse(option.begin_time).date,
+        end_time_utc=standardParse(option.end_time).date,
+        bar_fix_from,
+        bar_fix_to,
+        length=ANALYTICS.max_length,
+        data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < end_time_utc?true:false;
+    bar_fix_from=Date.parse(begin_time_utc);
+    bar_fix_to = ANALYTICS.add_observe[option.interval](begin_time_utc,length) <= end_time_utc ?
+        Date.parse(ANALYTICS.add_observe[option.interval](begin_time_utc,length)) : Date.parse(end_time_utc) ;
 
 
-                var data_length=data.current.length;
-                var data_array=[];
-                for(var i=0;i<data_length;i++){
-                    data_array[i]={};
-                    data_array[i].y=data.current[i];
-                    data_array[i].high=data.target_max[i];
-                    data_array[i].low=data.target_min[i];
-                    data_array[i].unit=data.unit[i];
-                    data_array[i].id=option.id
-                    data_array[i].method=option.method;
-                }
-                option.data=data_array;
-                var c={},p=option.data;
-                ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
-                if(option.chart_body_close_validate){
-                    ANALYTICS.render_to(option);
-                    new Highcharts.StockChart(ANALYTICS.high_chart);
-                }
-                ANALYTICS.add_series(option);
-                ANALYTICS.proper_type_for_chart(option);
+    var data_length=data.current.length;
+    var data_array=[];
+    for(var i=0;i<data_length;i++){
+        data_array[i]={};
+        data_array[i].y=data.current[i];
+        data_array[i].high=data.target_max[i];
+        data_array[i].low=data.target_min[i];
+        data_array[i].unit=data.unit[i];
+        data_array[i].id=option.id
+        data_array[i].method=option.method;
+    }
+    option.data=data_array;
+    var c={},p=option.data;
+    ANALYTICS.chartSeries.series[option.id][option.interval]=deepCopy(c,p);
+    if(option.chart_body_close_validate){
+        ANALYTICS.render_to(option);
+        new Highcharts.StockChart(ANALYTICS.high_chart);
+    }
+    ANALYTICS.add_series(option);
+    ANALYTICS.proper_type_for_chart(option);
 
-                if(data_too_long){
-                    option.begin_time_utc=begin_time_utc;
-                    option.end_time_utc=end_time_utc;
-                    option.bar_fix_from=bar_fix_from;
-                    option.bar_fix_to=bar_fix_to;
-                    option.add_length=100;
-                    ANALYTICS.add_data(option);
-                }
-                else{
-                    ANALYTICS.loading_data=false;
-                    ANALYTICS.currentThreadLoading=false;
-                    console.log("loading over");
-                }
+    if(data_too_long){
+        option.begin_time_utc=begin_time_utc;
+        option.end_time_utc=end_time_utc;
+        option.bar_fix_from=bar_fix_from;
+        option.bar_fix_to=bar_fix_to;
+        option.add_length=100;
+        ANALYTICS.add_data(option);
+    }
+    else{
+        ANALYTICS.loading_data=false;
+        ANALYTICS.currentThreadLoading=false;
+        console.log("loading over");
+    }
 
 
 };
@@ -467,7 +415,7 @@ ANALYTICS.add_data=function(option){
         length=option.add_length;
 
     var next_date =  ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1)) > option.end_time_utc ?
-                     option.end_time_utc :  ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1));
+        option.end_time_utc :  ANALYTICS.add_observe[option.interval](begin_time_utc,(length-1));
     option.data_too_long=ANALYTICS.add_observe[option.interval](begin_time_utc,length) < option.end_time_utc?true:false;
 
 //    console.log(new Date(begin_time_utc).toISOString() );
@@ -480,11 +428,7 @@ ANALYTICS.add_data=function(option){
         start_time : begin_time_utc.toISOString() ,
         end_time : next_date.toISOString(),
         frequency:option.interval,
-<<<<<<< HEAD
         report:ANALYTICS.qoros_demo_count===3?"ftq":(ANALYTICS.qoros_demo_count===2?"nok":ANALYTICS.qoros_demo_count===1?"ok":null)
-=======
-        property:option.kpi_property
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
     },function(msg){
         if(msg.result){
             var data_length=msg.object.current.length;
@@ -500,11 +444,7 @@ ANALYTICS.add_data=function(option){
             }
             option.data=data_array;
             var c={},p=option.data;
-
             ANALYTICS.chartSeries.series[option.id][option.interval]=ANALYTICS.chartSeries.series[option.id][option.interval].concat(deepCopy(c,p));
-//            console.log(ANALYTICS.chartSeries.series[option.id][option.interval])
-//            console.log("option.id+addDAate:"+[option.id]);
-
             var chart=$("#"+option.target).highcharts();
             //console.log('-------------------------------------------');
             //console.log(chart.series[option.id+1]);
@@ -516,20 +456,9 @@ ANALYTICS.add_data=function(option){
 
 
             chart.series[option.id+1].setData(new_data, false);
-//            console.log(chart.series[0])
-//            console.log("setData"+(option.id+1))
-//            console.log(ANALYTICS.chartSeries.series[0][option.interval]);
-//            alert(ANALYTICS.chartSeries.count)
-            if(ANALYTICS.chartSeries.count<=1){
-                $("#chart-container").highcharts().get("navigator").setData(new_data, false);
-            }
+            chart.series[0].setData(new_data, false);
 
-<<<<<<< HEAD
 
-=======
-//            console.log(ANALYTICS.chartSeries.series[0][option.interval]);
-//            console.log(option.id)
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
 
             chart.redraw();
 
@@ -581,12 +510,8 @@ ANALYTICS.set_data=function(option) {
     this.kpi_name=option.kpi ? option.kpi:null;
     this.changeType=option.changeType ? option.changeType:null;
     this.visible=option.visible ? option.visible:null;
-<<<<<<< HEAD
     this.legend_text=option.legend_text;
     this.view_text=option.view_text;
-=======
-    this.kpi_property=option.kpi_property?option.kpi_property:null;
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
 };
 ANALYTICS.render_to=function(option) {
     ANALYTICS.high_chart.chart.renderTo = option.target;
@@ -613,39 +538,22 @@ ANALYTICS.add_series=function(option) {
     var chart_container = option.target;
     var data = ANALYTICS.deal_data(option);
     var color=option.color?option.color:ANALYTICS.series_colors[series_id % ANALYTICS.series_colors.length];
-<<<<<<< HEAD
     var obj=	$("#" + chart_container).highcharts();
-if(obj){
-	obj.addSeries({
-=======
-
-    $("#" + chart_container).highcharts().addSeries({
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
-        name: series_name,
-        id: series_id,
-        color:color,
-        data: data,
-        yAxis: ANALYTICS.qoros_demo_count===3?1:0
-    })
-}
+    if(obj){
+        obj.addSeries({
+            name: series_name,
+            id: series_id,
+            color:color,
+            data: data,
+            yAxis: ANALYTICS.qoros_demo_count===3?1:0
+        })
+    }
 
 };
 ANALYTICS.deal_data=function() {
     ANALYTICS.set_data.apply(this, arguments);
     var i;
     var data = this.data;
-
-    var properties="",
-        item;
-    if(this.kpi_property){
-        for(var i in this.kpi_property){
-            item=this.kpi_property[i];
-            for(var j=0;j<item.length;j++){
-                properties+=item[j]+"/";
-            }
-        }
-    }
-//    console.log(properties)
     switch (this.interval) {
         case "90":
             for (i = 0; i < data.length; i++) {
@@ -655,11 +563,7 @@ ANALYTICS.deal_data=function() {
                 data[i].kpi=this.kpi_name;
 
                 data[i].view=this.view_text;
-<<<<<<< HEAD
                 data[i].legend_text=this.legend_text;
-=======
-                data[i].kpi_property=properties;
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
             }
             return data;
             break;
@@ -670,12 +574,8 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(this.template[0], this.template[1], parseInt(this.template[2]) + i).toWayneString().day;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
-<<<<<<< HEAD
                 data[i].legend_text=this.legend_text;
                 //console.log(data[i]);
-=======
-                data[i].kpi_property=properties;
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
             }
             return data;
             break;
@@ -688,11 +588,7 @@ ANALYTICS.deal_data=function() {
                     + " week" + new Date(this.template[0], this.template[1], parseInt(this.template[2]) + 7 * i).toWeekNumber();
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
-<<<<<<< HEAD
                 data[i].legend_text=this.legend_text;
-=======
-                data[i].kpi_property=properties;
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
             }
             return data;
             break;
@@ -703,11 +599,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + i).toWayneString().month;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
-<<<<<<< HEAD
                 data[i].legend_text=this.legend_text;
-=======
-                data[i].kpi_property=properties;
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
             }
             return data;
             break;
@@ -719,11 +611,7 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(this.template[0], parseInt(this.template[1]) + 3 * i).getFullYear()+" quarter " + new Date(this.template[0], parseInt(this.template[1]) + 3 * i).monthToQuarter();
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
-<<<<<<< HEAD
                 data[i].legend_text=this.legend_text;
-=======
-                data[i].kpi_property=properties;
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
             }
             return data;
             break;
@@ -734,19 +622,13 @@ ANALYTICS.deal_data=function() {
                 this.data[i].name = new Date(parseInt(this.template[0]) + i, 0).toWayneString().year;
                 data[i].kpi=this.kpi_name;
                 data[i].view=this.view_text;
-<<<<<<< HEAD
                 data[i].legend_text=this.legend_text;
-=======
-                data[i].kpi_property=properties;
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
             }
             return data;
             break;
     }
 };
 ANALYTICS.proper_type_for_chart=function(){
-//    alert("ds")
-//    console.log("chart-series",ANALYTICS.chartSeries.series[0])
     ANALYTICS.set_data.apply(this,arguments);
 
 
@@ -784,7 +666,6 @@ ANALYTICS.proper_type_for_chart=function(){
     if(!this.chart.get(this.id).visible || this.visible=="disable"){
         visible=false;
     }
-//    console.log("optionID"+this.id)
     this.chart.get(this.id).remove(false);
     this.chart.addSeries(new_series,false);
     this.chart.redraw();
