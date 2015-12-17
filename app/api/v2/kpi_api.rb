@@ -4,10 +4,17 @@ module V2
 
     namespace :kpis do
       params do
-        requires :kpi_settings, type: Hash, desc: 'kpi info'
+        requires :kpi_settings, type: Hash do
+          requires :kpi, type: Hash do
+            requires :target_max, type: Float, desc: "kpi target max"
+            requires :target_min, type: Float, desc: "kpi target min"
+            requires :viewable, type: Integer, desc: "kpi viewable"
+            requires :calculate_method, type: Integer, desc: "kpi calculate method"
+          end
+        end
       end
       post do
-        KpiService.building(params[:kpi_settings], current_user)
+        KpiService.building(params[:kpi], current_user)
       end
 
       get :unit_of_measurements do

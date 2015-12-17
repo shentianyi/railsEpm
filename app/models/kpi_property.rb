@@ -1,6 +1,6 @@
 class KpiProperty < ActiveRecord::Base
   # attr_accessible :title, :body
-  attr_accessible :name,:user_id,:tenant_id
+  attr_accessible :name,:user_id,:tenant_id,:type
   belongs_to :user
   belongs_to :tenant
   has_many :kpi_property_items, :dependent => :destroy

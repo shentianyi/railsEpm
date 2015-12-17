@@ -1,24 +1,9 @@
 class KpiService
-  # {"kpi"=>{
-  #     "kpi_category_id"=>"12",
-  #     "name"=>"a",
-  #     "description"=>"a",
-  #     "frequency"=>"90",
-  #     "direction"=>"100",
-  #     "target_max"=>"12",
-  #     "target_min"=>"1",
-  #     "unit"=>"100",
-  #     "is_calculated"=>"false",
-  #     "formula"=>"",
-  #     "formula_string"=>"",
-  #     "kpi_properties"=>["j", "s"]}}
-
   def self.building(params, user)
     Kpi.transaction do
       kpi = Kpi.new({
                         name: params[:kpi][:kpi_name],
                         description: params[:kpi][:description],
-                        user_id: user.id,
                         target_max: params[:kpi][:target_max],
                         target_min: params[:kpi][:target_min],
                         unit: params[:kpi][:uom],
@@ -27,40 +12,45 @@ class KpiService
                         user_group_id: params[:kpi][:viewable][:user_group_id]
                     })
       kpi.creator = user
-      kpi.tenant_id = user.tenant_id
+      kpi.tenant = user.tenant
 
       #kpi_properties
-      attrs = []
       unless params[:kpi][:attributes].blank?
-        params[:kpi][:attributes].uniq.each { |name|
-          if property = KpiProperty.find_by_name(name)
+        params[:kpi][:attributes].uniq.each { |attr|
+          if property = KpiProperty.find_by_name(attr[:attribute_id])
           else
-            property = KpiProperty.new(:name => name)
-            property.user = current_user
-            property.tenant = current_tenant
-            property.save
+            property = KpiProperty.new(:name => attr[:attribute_name], :type => attr[:attribute_type])
+            property.user = user
+            property.tenant = user.tenant
+            kpi.kpi_properties<<property
           end
-          attrs << property
         }
       end
 
+      if kpi.kpi_category.blank?
+        kpi.kpi_category=user.tenant.kpi_categories.first
+      end
+
       if kpi.save
-        kpi.add_properties(attrs)
+        #assign
+        unless params[:assignments].blank?
+          params[:assignments].each do |assignment|
+            if (to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id]))
+              KpisHelper.assign_kpi_to_department_user(kpi, to_user, assignment[:department_id])
+            else
+
+            end
+          end
+        end
+
+        #task
+        #TODO
       else
         return ApiMessage.new(messages: ['Kpi Created Error'])
       end
-
-      #assign
-
-      unless params[:assignments].blank?
-        params[:assignments].each do |assignment|
-          if to_user = user.tenant.users.find_by_email(assignment[:user])
-            KpisHelper.assign_kpi_to_user_by_id(kpi.id, to_user, false)
-          end
-        end
-      end
-
     end
+
+    ApiMessage.new(result_code: 1, messages: ['Kpi Create Success'])
   end
 
   def self.unit_select
