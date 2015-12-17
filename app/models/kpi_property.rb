@@ -1,6 +1,7 @@
 class KpiProperty < ActiveRecord::Base
   # attr_accessible :title, :body
-  attr_accessible :name,:user_id,:tenant_id
+  self.inheritance_column = nil
+  attr_accessible :name,:user_id,:tenant_id,:type
   belongs_to :user
   belongs_to :tenant
   has_many :kpi_property_items, :dependent => :destroy
@@ -8,7 +9,7 @@ class KpiProperty < ActiveRecord::Base
 
   acts_as_tenant(:tenant)
 
-  validate :validate_create_update
+  # validate :validate_create_update
   validates :name, :presence => true
 
   def self.property_values kpi_id,kpi_property_id
@@ -20,8 +21,8 @@ class KpiProperty < ActiveRecord::Base
     end
   end
 
-  def validate_create_update
-    errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where("BINARY name = ?",self.name).first if self.new_record?
-    errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where("BINARY name = ?",self.name).where('id<>?',self.id) unless new_record?
-  end
+  # def validate_create_update
+  #   errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where("BINARY name = ?",self.name).first if self.new_record?
+  #   errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where("BINARY name = ?",self.name).where('id<>?',self.id) unless new_record?
+  # end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151216075334) do
+ActiveRecord::Schema.define(:version => 20151217105417) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -183,14 +183,16 @@ ActiveRecord::Schema.define(:version => 20151216075334) do
     t.integer  "status"
     t.integer  "user_quantity", :default => 0
     t.integer  "tenant_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.string   "description"
     t.string   "code"
     t.integer  "department_id"
+    t.boolean  "is_default",    :default => false
   end
 
   add_index "entities", ["department_id"], :name => "index_entities_on_department_id"
+  add_index "entities", ["is_default"], :name => "index_entities_on_is_default"
   add_index "entities", ["tenant_id"], :name => "index_entities_on_tenant_id"
 
   create_table "entity_contacts", :force => true do |t|
@@ -287,6 +289,7 @@ ActiveRecord::Schema.define(:version => 20151216075334) do
     t.integer  "tenant_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "attr_type"
   end
 
   add_index "kpi_properties", ["tenant_id"], :name => "index_kpi_properties_on_tenant_id"
@@ -583,9 +586,12 @@ ActiveRecord::Schema.define(:version => 20151216075334) do
     t.integer  "user_id"
     t.integer  "kpi_id"
     t.float    "target_max"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-    t.float    "target_min", :default => 0.0
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.float    "target_min",    :default => 0.0
+    t.integer  "department_id"
+    t.string   "remind_time"
+    t.integer  "frequency"
   end
 
   add_index "user_kpi_items", ["entity_id"], :name => "index_user_kpi_items_on_entity_id"

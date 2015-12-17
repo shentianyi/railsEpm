@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :nick_name, message: 'can not be blank'
 
-  after_create :create_view_and_entity_for_general_user
+ # after_create :create_view_and_entity_for_general_user
   after_create :generate_access_token
 
   #acts_as_authentic do |c|
@@ -67,35 +67,35 @@ class User < ActiveRecord::Base
                      :ext_fields => [:email])
 
 
-  def create_view_and_entity_for_general_user
-    #name code description tenant_id
-    if self.entity.nil?
-      #create entity
-      args = {}
-      args[:description] = args[:code] = args[:name] = (self.first_name||self.nick_name)
-      entity = Entity.new(args)
-      if entity.save
-        #update user
-        user = User.find_by_id(self.id)
-        raise "Sorry, Update User's Entity failed!" if user.blank?
-        user.update_attributes :entity_id => entity.id
-      else
-        raise "Sorry, Build default Entity failed!"
-      end
-    end if self.tenant.settings(:entity).auto_create_for_general_user
-
-    #name user_id tenant_id
-    if self.entity_groups.blank?
-      args = {}
-      args[:name] = self.first_name
-      args[:user_id] = self.id
-      args[:tenant_id] = self.tenant.id
-      entity_group = EntityGroup.new(args)
-      unless entity_group.save
-        raise "Sorry, Build default Entity Groups failed!"
-      end
-    end if self.tenant.settings(:entity_group).auto_create_for_general_user
-  end
+  # def create_view_and_entity_for_general_user
+  #   #name code description tenant_id
+  #   if self.entity.nil?
+  #     #create entity
+  #     args = {}
+  #     args[:description] = args[:code] = args[:name] = (self.first_name||self.nick_name)
+  #     entity = Entity.new(args)
+  #     if entity.save
+  #       #update user
+  #       user = User.find_by_id(self.id)
+  #       raise "Sorry, Update User's Entity failed!" if user.blank?
+  #       user.update_attributes :entity_id => entity.id
+  #     else
+  #       raise "Sorry, Build default Entity failed!"
+  #     end
+  #   end if self.tenant.settings(:entity).auto_create_for_general_user
+  #
+  #   #name user_id tenant_id
+  #   if self.entity_groups.blank?
+  #     args = {}
+  #     args[:name] = self.first_name
+  #     args[:user_id] = self.id
+  #     args[:tenant_id] = self.tenant.id
+  #     entity_group = EntityGroup.new(args)
+  #     unless entity_group.save
+  #       raise "Sorry, Build default Entity Groups failed!"
+  #     end
+  #   end if self.tenant.settings(:entity_group).auto_create_for_general_user
+  # end
 
   def method_missing(method_name, *args, &block)
     if Role::RoleMethods.include?(method_name)
@@ -216,10 +216,10 @@ class User < ActiveRecord::Base
 
 
   # user root user_departments
-  def root_user_departments
-    uds=self.user_departments.joins(:department)
-    udids=uds.collect { |u| u.department_id }
-    uds.reject { |u| udids.include?(u.department.parent_id) }
+  def root_departments
+    departments=self.departments.all
+    dids=departments.collect { |d| d.id }
+    departments.reject { |d| (dids-d.ancestor_ids).size!=dids.size }
   end
 
 

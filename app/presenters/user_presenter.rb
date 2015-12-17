@@ -31,7 +31,7 @@ class UserPresenter<Presenter
         id: @user.id,
         email: @user.email,
         nick_name: @user.nick_name,
-        departments: with_dep ? UserDepartmentPresenter.as_user_departments(@user.root_user_departments) : nil
+        departments: with_dep ? DepartmentPresenter.as_user_departments(@user.root_departments,@user) : nil
     }
   end
 

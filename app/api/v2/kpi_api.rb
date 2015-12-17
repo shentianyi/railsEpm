@@ -3,6 +3,43 @@ module V2
     guard_all!
 
     namespace :kpis do
+      params do
+        requires :kpi_id, type: Integer, desc: "kpi id"
+      end
+      get do
+        if kpi = Kpi.find_by_id(params[:kpi_id])
+          KpiService.details(kpi)
+        else
+          ApiMessage.new(messages: ['Kpi Not Exists'])
+        end
+      end
+
+      params do
+        requires :kpi, type: Hash do
+          requires :target_max, type: Float, desc: "kpi target max"
+          requires :target_min, type: Float, desc: "kpi target min"
+          # requires :viewable, type: Integer, desc: "kpi viewable"
+          requires :calculate_method, type: Integer, desc: "kpi calculate method"
+        end
+      end
+      post do
+        KpiService.building(params, current_user)
+      end
+
+      params do
+        requires :kpi, type: Hash do
+          requires :target_max, type: Float, desc: "kpi target max"
+          requires :target_min, type: Float, desc: "kpi target min"
+          requires :kpi_id, type: Integer, desc: "kpi id"
+          requires :calculate_method, type: Integer, desc: "kpi calculate method"
+        end
+      end
+      put do
+        if params[:kpi][:kpi_id].present? && kpi=Kpi.find_by_id(params[:kpi][:kpi_id])
+          KpiService.updating(params, current_user, kpi)
+        end
+      end
+
       get :unit_of_measurements do
         KpiService.unit_select
       end
@@ -25,15 +62,15 @@ module V2
         end
 
         KpiService.follow_kpi({
-                                           user: current_user,
-                                           lower_boundary: params[:lower_boundary],
-                                           upper_boundary: params[:upper_boundary],
-                                           ks: {
-                                               kpi_id: params[:kpi_id],
-                                               department_id: params[:department_id],
-                                               auto_notification: params[:auto_notification]
-                                           }
-                                       })
+                                  user: current_user,
+                                  lower_boundary: params[:lower_boundary],
+                                  upper_boundary: params[:upper_boundary],
+                                  ks: {
+                                      kpi_id: params[:kpi_id],
+                                      department_id: params[:department_id],
+                                      auto_notification: params[:auto_notification]
+                                  }
+                              })
       end
 
       params do
@@ -42,10 +79,10 @@ module V2
       end
       post :unfollow do
         KpiService.unfollow_kpi({
-                                             user: current_user,
-                                             kpi_id: params[:kpi_id],
-                                             department_id: params[:department_id]
-                                         })
+                                    user: current_user,
+                                    kpi_id: params[:kpi_id],
+                                    department_id: params[:department_id]
+                                })
       end
 
       namespace :users do

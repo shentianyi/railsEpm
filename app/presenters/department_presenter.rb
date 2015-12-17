@@ -14,7 +14,7 @@ class DepartmentPresenter<Presenter
         result_code: result_code||1,
         messages: messages,
         need_instruction: false,
-        customized_field: as_brief_info
+        customized_field: result_code==1 ? as_user_department : nil
     }
   end
 
@@ -37,4 +37,18 @@ class DepartmentPresenter<Presenter
     infos
   end
 
+  def as_user_department(user=nil)
+    {
+        managable: user.nil? ? @department.creator : @department.manageable(user), #@department.is_manager,
+        department: as_brief_info
+    }
+  end
+
+  def self.as_user_departments(departments, user=nil)
+    infos=[]
+    departments.each do |department|
+      infos<<self.new(department).as_user_department(user)
+    end
+    infos
+  end
 end

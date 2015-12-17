@@ -46,6 +46,26 @@ module KpisHelper
     return nil
   end
 
+  # assign kpis to user for app api
+  def self.assign_kpi_to_department_user kpi, user, department, assignment
+    puts department
+    puts department.default_entity
+    puts '11111111111111111111111111111'
+    unless user.kpis.find_by_id(kpi.id)
+      item = UserKpiItem.new(:user_id => user.id,
+                             :kpi_id => kpi.id,
+                             :entity_id => department.default_entity.id,
+                             :department_id => department.id,
+                             :target_max => kpi.target_max,
+                             :target_min => kpi.target_min,
+                             :remind_time => assignment[:time],
+                             :frequency => assignment[:frequency])
+      item.save
+      return item
+    end
+    return nil
+  end
+
   # get user kpis by user id
   def self.get_kpis_by_user_id user_id, current_ability
     if user=User.accessible_by(current_ability).find_by_id(user_id)
@@ -66,7 +86,7 @@ module KpisHelper
 
   # get user unassigned kpi
   def self.get_user_unassigned_kpis user_id, current_ability
-    if  user=User.accessible_by(current_ability).find_by_id(user_id)
+    if user=User.accessible_by(current_ability).find_by_id(user_id)
       return user.tenant.kpis.joins('left join user_kpi_items item on item.kpi_id=kpis.id').where('item.kpi_id is null').all
     end
     return nil
@@ -75,7 +95,7 @@ module KpisHelper
   # get user unassign kpi categories
   ### this method is not completed
   def self.get_user_unassigned_kpi_categories user_id, current_ability
-    if   user=User.accessible_by(current_ability).find_by_id(user_id)
+    if user=User.accessible_by(current_ability).find_by_id(user_id)
       return user.tenant.kpi_categories
     end
     return nil

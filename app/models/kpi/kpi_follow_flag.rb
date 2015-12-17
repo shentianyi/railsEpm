@@ -1,16 +1,16 @@
-class KpiFollowFlag
-  NONE=100
-  PARTLY=200
-  ALL=300
-  NA=400
+class Kpi::KpiFollowFlag
+  NONE=0
+  PARTLY=1
+  ALL=2
+  NA=3
 
   def self.display(v)
     case v
-      when 100
+      when 0
         'NONE'
-      when 200
+      when 1
         'PARTLY'
-      when 300
+      when 2
         'ALL'
       else
         'NA'
@@ -19,11 +19,11 @@ class KpiFollowFlag
 
   def self.code(v)
     case v
-      when 100
+      when 0
         'NONE'
-      when 200
+      when 1
         'PARTLY'
-      when 300
+      when 2
         'ALL'
       else
         'NA'
