@@ -17,7 +17,6 @@ gem 'bson_ext'
 gem 'cancan'
 # gem for backgroud jobs based on redis
 gem 'redis'
-gem 'resque'
 #sidekiq
 gem 'sidekiq'
 gem 'sinatra',require: false# '>= 1.3.0', :require => nil
@@ -29,7 +28,6 @@ gem 'redis-namespace'
 
 gem 'rufus-scheduler'
 gem 'daemons'
-# gem 'guard-resque'
 
 gem 'will_paginate', '~> 3.0'
 gem 'i18n-js'

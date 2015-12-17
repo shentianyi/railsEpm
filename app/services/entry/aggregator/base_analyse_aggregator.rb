@@ -18,11 +18,7 @@ module Entry
         if query_condition[:property]
           query=query_serivice.base_query(KpiEntry, query_condition[:base], query_condition[:property]).where(entry_type: 0)
         else
-<<<<<<< HEAD
           query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base]).where(entry_type: 0)
-=======
-          query=query_serivice.base_query(KpiEntry, query_condition[:base]).where(entry_type: 1)
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
         end
 
         data_mr="date:format(this.entry_at,'#{self.parameter.date_format}')"
@@ -52,7 +48,6 @@ module Entry
           end
         else
           self.data.each do |d|
-<<<<<<< HEAD
             # puts '-----****'
             # puts d['_id']['date']
             # key=date_parse_proc.call(d['_id']['date'])
@@ -61,10 +56,8 @@ module Entry
             # puts '-----****'
 
 
-            self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
-=======
+            #self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
             self.current[date_parse_proc.call(d['_id']['date'])]=d['value'][self.value_key]
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
           end
         end
 
@@ -110,14 +103,11 @@ module Entry
                 end_time=end_time+1.hour-1.second
               when KpiFrequency::Daily
                 step=1.day #60*60*24
-<<<<<<< HEAD
                 start_time=start_time.localtime.at_beginning_of_day.utc
                 end_time=end_time.localtime.at_beginning_of_day.utc
                 # start_time+=8.hours
                 # end_time+=8.hours
-=======
                 end_time=end_time+1.day-1.second
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
               when KpiFrequency::Weekly
                 start_time+=8.hours
                 end_time+=8.hours

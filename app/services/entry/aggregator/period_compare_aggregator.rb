@@ -33,24 +33,13 @@ module Entry
         values=KpiPropertyValue.by_property_id(self.parameter.kpi.id, ids).all
         return nil if values.size==0
         properties={}
-<<<<<<< HEAD
-
-		puts "##ids...............#{ids}"
-		puts "#values............#{values}"
-
-		ids.each do |id|
-          values.select{|vv| vv.kpi_property_id==id}.each do |v|
-              properties[v.kpi_property_id]||=[]
-              properties[v.kpi_property_id]<< v.value#.upcase
-=======
         ids.each do |id|
           values.select { |vv| vv.kpi_property_id==id }.each do |v|
             properties[v.kpi_property_id]||=[]
             properties[v.kpi_property_id]<< v.value
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
           end
         end
-		puts '-------------'
+        puts '-------------'
         self.parameter.clean_property_values(properties)
         metrix=[]
         size=properties.size
@@ -60,9 +49,9 @@ module Entry
           metrix=properties.values[0].product(*properties.values[1...size])
         end
 
-		puts '********************'
-		p metrix
-		puts '********************'
+        puts '********************'
+        p metrix
+        puts '********************'
         metrix.each do |m|
           self.data_module[m]= [{self.parameter.base_time[:start_time] => 0},
                                 {self.parameter.compare_times.first[:start_time] => 0}]
@@ -70,48 +59,41 @@ module Entry
 
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
         property_ids=properties.keys
-<<<<<<< HEAD
-        
-		puts '***********'
-		puts self.data_module
+
         puts '***********'
-		
-		data_module_keys={}
-		self.data_module.keys.each do |key|
-		  data_module_keys[key.map{|kk| kk.downcase}]=key
-		end
-puts "%%%%%%%%%%%%%%%%%%%#{property_ids}---#{data_module_keys}"
-		self.data.each do |d|
-=======
+        puts self.data_module
+        puts '***********'
+
+        data_module_keys={}
+        self.data_module.keys.each do |key|
+          data_module_keys[key.map { |kk| kk.downcase }]=key
+        end
+        puts "%%%%%%%%%%%%%%%%%%%#{property_ids}---#{data_module_keys}"
         self.data.each do |d|
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
           key=[]
           property_ids.each do |id|
             key<<d['_id'][id.to_s].downcase
           end
 
           date=date_parse_proc.call(d['_id']['date'])
-<<<<<<< HEAD
           p '------------'
-		  p d['_id']
-		  puts date
-		  d['_id'].values.each{|v| p v.class}
-		  p d['value']
-		  p '-------------'
+          p d['_id']
+          puts date
+          d['_id'].values.each { |v| p v.class }
+          p d['value']
+          p '-------------'
 
           self.data_module[data_module_keys[key]].each { |v|
             puts 'OOOOOOOOOOOOOOOOOOOO'
-			puts v
-			puts date
-			puts v[date]
-			puts KpiUnit.parse_entry_value(self.parameter.kpi.unit,d['value'])
-			puts ')))))))))))))))))))))'
-			  v[date]+= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value']) if v.has_key?(date) 
-		  } if data_module_keys.keys.include?(key)
-=======
+            puts v
+            puts date
+            puts v[date]
+            puts KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value'])
+            puts ')))))))))))))))))))))'
+            v[date]+= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value']) if v.has_key?(date)
+          } if data_module_keys.keys.include?(key)
           self.data_module[key].each { |v|
             v[date]= KpiUnit.parse_entry_value(self.parameter.kpi.unit, d['value'][self.value_key]) } if self.data_module.has_key?(key)
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
         end
         data=[]
         self.data_module.each do |k, v|

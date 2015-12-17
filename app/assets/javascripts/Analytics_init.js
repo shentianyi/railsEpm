@@ -531,11 +531,7 @@ function change_interval(option) {
         ANALYTICS.currentThreadPreCondition=option;
         //有数据的直接拿来生成
         for (j = 0; j < have_data.length; j++) {
-<<<<<<< HEAD
 			if(ANALYTICS.chartSeries.series[j]){
-=======
-
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
             option.kpi = ANALYTICS.chartSeries.series[j].kpi;
             option.id = ANALYTICS.chartSeries.series[j].id;
             option.begin_time = ANALYTICS.chartSeries.series[j].begin_time;

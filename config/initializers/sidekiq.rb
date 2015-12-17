@@ -1,5 +1,5 @@
 sidekqi_redis_conn =proc {
-  Redis::Namespace.new("sidekiqworker", :redis => $redis)
+  Redis::Namespace.new("clearinsight-sidekiq", :redis => $redis)
 }
 #
 
@@ -9,5 +9,5 @@ end
 
 #
 Sidekiq.configure_client do |config|
-  config.redis = ConnectionPool.new(size: 5, &sidekqi_redis_conn)
+  config.redis = ConnectionPool.new(size: 25, &sidekqi_redis_conn)
 end
