@@ -15,7 +15,7 @@ class Entity < ActiveRecord::Base
 
   acts_as_tenant(:tenant)
 
-  validate :validate_create_update
+  # validate :validate_create_update
 
   def self.ability_find_by_id id, current_ability
     Entity.accessible_by(current_ability).find_by_id(id)
@@ -25,10 +25,10 @@ class Entity < ActiveRecord::Base
     joins('left join users on entities.id=users.entity_id').select('entities.*,count(users.id) as user_quantity').group('entities.id')
   end
 
-  private
-
-  def validate_create_update
-    errors.add(:name, I18n.t("fix.cannot_repeat")) if Entity.where(:name => self.name, :tenant_id => self.tenant_id).first if new_record?
-    errors.add(:name, I18n.t("fix.cannot_repeat")) if Entity.where(:name => self.name, :tenant_id => self.tenant_id).where('id<>?', self.id).first unless new_record?
-  end
+  # private
+  #
+  # def validate_create_update
+  #   errors.add(:name, I18n.t("fix.cannot_repeat")) if Entity.where(:name => self.name, :tenant_id => self.tenant_id).first if new_record?
+  #   errors.add(:name, I18n.t("fix.cannot_repeat")) if Entity.where(:name => self.name, :tenant_id => self.tenant_id).where('id<>?', self.id).first unless new_record?
+  # end
 end
