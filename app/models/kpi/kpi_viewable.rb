@@ -1,8 +1,8 @@
 #encoding: utf-8
-class KpiViewable
+class Kpi::KpiViewable
   PUBLIC=0
   PRIVATE=1
-  PARTIAL_ALLOW=2
+  PARTIAL_PUBLIC=2
   PARTIAL_BLOCK=3
 
   def self.display(v)
