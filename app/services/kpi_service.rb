@@ -1,4 +1,67 @@
 class KpiService
+  # {"kpi"=>{
+  #     "kpi_category_id"=>"12",
+  #     "name"=>"a",
+  #     "description"=>"a",
+  #     "frequency"=>"90",
+  #     "direction"=>"100",
+  #     "target_max"=>"12",
+  #     "target_min"=>"1",
+  #     "unit"=>"100",
+  #     "is_calculated"=>"false",
+  #     "formula"=>"",
+  #     "formula_string"=>"",
+  #     "kpi_properties"=>["j", "s"]}}
+
+  def self.building(params, user)
+    Kpi.transaction do
+      kpi = Kpi.new({
+                        name: params[:kpi][:kpi_name],
+                        description: params[:kpi][:description],
+                        user_id: user.id,
+                        target_max: params[:kpi][:target_max],
+                        target_min: params[:kpi][:target_min],
+                        unit: params[:kpi][:uom],
+                        viewable: params[:kpi][:viewable][:viewable_code],
+                        calculate_method: params[:kpi][:calculate_method],
+                        user_group_id: params[:kpi][:viewable][:user_group_id]
+                    })
+      kpi.creator = user
+      kpi.tenant_id = user.tenant_id
+
+      #kpi_properties
+      attrs = []
+      unless params[:kpi][:attributes].blank?
+        params[:kpi][:attributes].uniq.each { |name|
+          if property = KpiProperty.find_by_name(name)
+          else
+            property = KpiProperty.new(:name => name)
+            property.user = current_user
+            property.tenant = current_tenant
+            property.save
+          end
+          attrs << property
+        }
+      end
+
+      if kpi.save
+        kpi.add_properties(attrs)
+      else
+        return ApiMessage.new(messages: ['Kpi Created Error'])
+      end
+
+      #assign
+
+      unless params[:assignments].blank?
+        params[:assignments].each do |assignment|
+          if to_user = user.tenant.users.find_by_email(assignment[:user])
+            KpisHelper.assign_kpi_to_user_by_id(kpi.id, to_user, false)
+          end
+        end
+      end
+
+    end
+  end
 
   def self.unit_select
     KpiUnit.as_select
@@ -89,7 +152,7 @@ class KpiService
 
     puts kpi_on_user
     puts '------------------------------'
-    ApiMessage.new(result_code: 1, messages: kpi_on_user)
+    kpi_on_user
   end
 
   def self.user_followed_kpis user
@@ -108,6 +171,6 @@ class KpiService
 
     puts kpi_on_user
     puts '------------------------------'
-    ApiMessage.new(result_code: 1, messages: kpi_on_user)
+    kpi_on_user
   end
 end

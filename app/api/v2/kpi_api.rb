@@ -3,6 +3,13 @@ module V2
     guard_all!
 
     namespace :kpis do
+      params do
+        requires :kpi_settings, type: Hash, desc: 'kpi info'
+      end
+      post do
+        KpiService.building(params[:kpi_settings], current_user)
+      end
+
       get :unit_of_measurements do
         KpiService.unit_select
       end
@@ -25,15 +32,15 @@ module V2
         end
 
         KpiService.follow_kpi({
-                                           user: current_user,
-                                           lower_boundary: params[:lower_boundary],
-                                           upper_boundary: params[:upper_boundary],
-                                           ks: {
-                                               kpi_id: params[:kpi_id],
-                                               department_id: params[:department_id],
-                                               auto_notification: params[:auto_notification]
-                                           }
-                                       })
+                                  user: current_user,
+                                  lower_boundary: params[:lower_boundary],
+                                  upper_boundary: params[:upper_boundary],
+                                  ks: {
+                                      kpi_id: params[:kpi_id],
+                                      department_id: params[:department_id],
+                                      auto_notification: params[:auto_notification]
+                                  }
+                              })
       end
 
       params do
@@ -42,10 +49,10 @@ module V2
       end
       post :unfollow do
         KpiService.unfollow_kpi({
-                                             user: current_user,
-                                             kpi_id: params[:kpi_id],
-                                             department_id: params[:department_id]
-                                         })
+                                    user: current_user,
+                                    kpi_id: params[:kpi_id],
+                                    department_id: params[:department_id]
+                                })
       end
 
       namespace :users do
