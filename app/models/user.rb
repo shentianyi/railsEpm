@@ -217,10 +217,14 @@ class User < ActiveRecord::Base
 
 
   # user root user_departments
-  def root_user_departments
-    uds=self.user_departments.joins(:department)
-    udids=uds.collect { |u| u.department_id }
-    uds.reject { |u| udids.include?(u.department.parent_id) }
+  def root_departments
+    # uds=self.user_departments.joins(:department)
+    # udids=uds.collect { |u| u.department_id }
+    # uds.reject { |u| udids.include?(u.department.parent_id) }
+
+    departments=self.departments.all
+    dids=departments.collect { |d| d.id }
+    departments.reject { |d| (dids-d.ancestor_ids).size!=dids.size }
   end
 
 
