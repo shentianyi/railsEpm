@@ -18,21 +18,22 @@ class DepartmentPresenter<Presenter
     }
   end
 
-  def as_brief_info
+  def as_brief_info(with_members=true)
     {
         id: @department.id,
         name: @department.name,
         description: @department.description,
         creator_id: @department.user_id,
         parent_id: @department.parent_id,
-        has_children: @department.has_children?
+        has_children: @department.has_children?,
+        members: with_members ? @department.users.limit(5).pluck(:nick_name) : nil
     }
   end
 
-  def self.as_brief_infos(departments)
+  def self.as_brief_infos(departments,with_members=true)
     infos=[]
     departments.each do |department|
-      infos<<DepartmentPresenter.new(department).as_brief_info
+      infos<<DepartmentPresenter.new(department).as_brief_info(with_members)
     end
     infos
   end

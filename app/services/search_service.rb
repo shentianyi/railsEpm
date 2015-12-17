@@ -10,17 +10,17 @@ class SearchService
     #                                          }).records.where(tenant_id: user.tenant.id), false
     # )
     if q.blank?
-      UserPresenter.as_brief_infos(User.where(tenant_id: user.tenant.id).order(:nick_name => :asc).limit(30), false)
+      UserPresenter.as_brief_infos(User.where(tenant_id: user.tenant.id).order(:nick_name => :asc).limit(30))
     else
-      UserPresenter.as_brief_infos(User.search("*#{q}*").records.where(tenant_id: user.tenant.id).limit(30), false)
+      UserPresenter.as_brief_infos(User.search("*#{q}*").records.where(tenant_id: user.tenant.id).limit(30))
     end
   end
 
   def self.full_text_department q, user
     if q.blank?
-      DepartmentPresenter.as_brief_infos(Department.where(tenant_id: user.tenant.id).order(:name => :asc).limit(30))
+      DepartmentPresenter.as_brief_infos(Department.where(tenant_id: user.tenant.id).order(:name => :asc).limit(30),true)
     else
-      DepartmentPresenter.as_brief_infos(Department.search("*#{q}*").records.where(tenant_id: user.tenant.id).limit(30))
+      DepartmentPresenter.as_brief_infos(Department.search("*#{q}*").records.where(tenant_id: user.tenant.id).limit(30),true)
     end
   end
 
