@@ -40,7 +40,7 @@ class DepartmentPresenter<Presenter
 
   def as_user_department(user=nil)
     {
-        managable: user.nil? ? @department.creator : @department.manageable(user), #@department.is_manager,
+        managable: user.nil? ?  true : @department.manageable(user), #@department.is_manager,
         department: as_brief_info
     }
   end

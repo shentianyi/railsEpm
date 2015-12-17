@@ -17,9 +17,7 @@ class SearchService
   end
 
   def self.full_text_department q, user
-    if q.blank?
-      DepartmentPresenter.as_brief_infos(Department.where(tenant_id: user.tenant.id).order(:name => :asc).limit(30),true)
-    else
+    unless q.blank?
       DepartmentPresenter.as_brief_infos(Department.search("*#{q}*").records.where(tenant_id: user.tenant.id).limit(30),true)
     end
   end
