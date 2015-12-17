@@ -85,9 +85,21 @@ class UserService
 
   def self.forget_password email
     if User.find_by_email(email)
-      ApiMessage.new(messages: ['Success! We will send you a reset password email.'],result_code:1)
+      ApiMessage.new(messages: ['Success! We will send you a reset password email.'], result_code: 1)
     else
       ApiMessage.new(messages: ['Your Email Account not exists'])
+    end
+  end
+
+
+  # user is who call the method
+  # user_id is the user's info
+  def self.get_infos(user_id, user)
+    user=user_id.blank? ? user : user.tenant.users.find_by_id(user_id)
+    if user.blank?
+      ApiMessage.new(messages: ['User not Found'])
+    else
+      UserPresenter.new(user).as_basic_info
     end
   end
 end

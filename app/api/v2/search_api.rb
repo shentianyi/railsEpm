@@ -6,7 +6,7 @@ module V2
       namespace :full_text do
 
         params do
-          requires :input_chars, type: String, desc: 'query string'
+          optional :input_chars, type: String, desc: 'query string'
         end
         get :users do
           SearchService.full_text_user(params[:input_chars], current_user)
@@ -14,21 +14,21 @@ module V2
 
 
         params do
-          requires :input_chars, type: String, desc: 'query string'
+          optional :input_chars, type: String, desc: 'query string'
         end
         get :departments do
           SearchService.full_text_department(params[:input_chars], current_user)
         end
 
         params do
-          requires :input_chars, type: String, desc: 'query string'
+          optional :input_chars, type: String, desc: 'query string'
         end
         get :kpis do
-          SearchService.full_text_kpi(params[:input_chars], current_user)
+          SearchService.full_text_access_kpi(params[:input_chars], current_user)
         end
 
         params do
-          requires :input_chars, type: String, desc: 'query string'
+          optional :input_chars, type: String, desc: 'query string'
         end
         get :followed_kpis do
           SearchService.full_text_followed_kpi(params[:input_chars], current_user)

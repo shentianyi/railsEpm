@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Kpi:</b>
+  <%= @kpi_user_subscribe.kpi %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @kpi_user_subscribe.user %>
+</p>
+
+<p>
+  <b>Tenant:</b>
+  <%= @kpi_user_subscribe.tenant %>
+</p>
+
+<p>
+  <b>Follow flag:</b>
+  <%= @kpi_user_subscribe.follow_flag %>
+</p>
+
+
+<%= link_to 'Edit', edit_kpi_user_subscribe_path(@kpi_user_subscribe) %> |
+<%= link_to 'Back', kpi_user_subscribes_path %>

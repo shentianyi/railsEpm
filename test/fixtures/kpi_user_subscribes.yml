@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  kpi: 
+  user: 
+  tenant: 
+  follow_flag: MyString
+
+two:
+  kpi: 
+  user: 
+  tenant: 
+  follow_flag: MyString

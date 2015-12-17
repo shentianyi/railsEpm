@@ -1,6 +1,15 @@
 IFEpm::Application.routes.draw do
 
 
+  resources :kpi_user_subscribes
+
+
+  resources :user_group_items
+
+
+  resources :user_groups
+
+
   use_doorkeeper
 
   resources :user_invites

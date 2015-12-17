@@ -1,0 +1,33 @@
+<%= form_for(@kpi_user_subscribe) do |f| %>
+  <% if @kpi_user_subscribe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@kpi_user_subscribe.errors.count, "error") %> prohibited this kpi_user_subscribe from being saved:</h2>
+
+      <ul>
+      <% @kpi_user_subscribe.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :kpi %><br />
+    <%= f.text_field :kpi %>
+  </div>
+  <div class="field">
+    <%= f.label :user %><br />
+    <%= f.text_field :user %>
+  </div>
+  <div class="field">
+    <%= f.label :tenant %><br />
+    <%= f.text_field :tenant %>
+  </div>
+  <div class="field">
+    <%= f.label :follow_flag %><br />
+    <%= f.text_field :follow_flag %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

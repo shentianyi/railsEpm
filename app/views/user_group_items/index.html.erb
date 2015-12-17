@@ -1,0 +1,29 @@
+<h1>Listing user_group_items</h1>
+
+<table>
+  <tr>
+    <th>User group</th>
+    <th>Tenant</th>
+    <th>User group</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @user_group_items.each do |user_group_item| %>
+  <tr>
+    <td><%= user_group_item.user_group %></td>
+    <td><%= user_group_item.tenant %></td>
+    <td><%= user_group_item.user_group_id %></td>
+    <td><%= user_group_item.user_id %></td>
+    <td><%= link_to 'Show', user_group_item %></td>
+    <td><%= link_to 'Edit', edit_user_group_item_path(user_group_item) %></td>
+    <td><%= link_to 'Destroy', user_group_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New User group item', new_user_group_item_path %>
