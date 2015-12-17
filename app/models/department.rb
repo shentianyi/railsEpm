@@ -4,7 +4,7 @@ class Department < ActiveRecord::Base
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
-  attr_accessible :name, :parent, :ancestry,:description, :user_id, :tenant_id
+  attr_accessible :name, :parent, :ancestry, :description, :user_id, :tenant_id
   attr_accessor :default_entity
   belongs_to :creator, :class_name => 'User', :foreign_key => :user_id
   belongs_to :tenant
@@ -35,6 +35,10 @@ class Department < ActiveRecord::Base
   #   errors.add(:name, I18n.t("fix.cannot_repeat")) if Department.where(:name => self.name, :tenant_id => self.tenant_id).first if new_record?
   #   errors.add(:name, I18n.t("fix.cannot_repeat")) if Department.where(:name => self.name, :tenant_id => self.tenant_id).where('id <> ?', self.id).first unless new_record?
   # end
+
+  def manageable(user)
+    user.user_departments.joins(:department).where(department_id: self.path_ids, is_manager: true).count>0
+  end
 
   def self.json_tree(nodes)
     nodes.map do |node, sub_nodes|

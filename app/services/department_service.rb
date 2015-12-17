@@ -206,10 +206,10 @@ class DepartmentService
   def self.user_departments(user, department_id=nil)
     # get root departments
     if department_id.blank?
-      DepartmentPresenter.as_user_departments(user.root_departments)
+      DepartmentPresenter.as_user_departments(user.root_departments,user)
     else
       if department=get_department(user,department_id)
-        DepartmentPresenter.as_user_departments(department.children)
+        DepartmentPresenter.as_user_departments(department.children,user)
       else
         ApiMessage.new(messages: ['Department not found'])
       end

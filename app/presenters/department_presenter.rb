@@ -37,17 +37,17 @@ class DepartmentPresenter<Presenter
     infos
   end
 
-  def as_user_department
+  def as_user_department(user=nil)
     {
-        managable: true, #@department.is_manager,
+        managable: user.nil? ? @department.creator : @department.manageable(user), #@department.is_manager,
         department: as_brief_info
     }
   end
 
-  def self.as_user_departments(departments)
+  def self.as_user_departments(departments, user=nil)
     infos=[]
     departments.each do |department|
-      infos<<self.new(department).as_user_department
+      infos<<self.new(department).as_user_department(user)
     end
     infos
   end
