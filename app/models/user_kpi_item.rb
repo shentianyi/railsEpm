@@ -7,8 +7,8 @@ class UserKpiItem < ActiveRecord::Base
   delegate :department, :to => :entity,:allow_nil=>true
   attr_accessible :target_max, :target_min, :kpi_id, :user_id, :entity_id
 
-  after_create :create_department_kpi
-  after_destroy :destroy_department_kpi
+  #after_create :create_department_kpi
+  #after_destroy :destroy_department_kpi
 
   def self.reinit_department_kpis belong, department_id, department_id_was
     belong.send(:user_kpi_items).each do |user_kpi_item|

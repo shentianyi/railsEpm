@@ -1,8 +1,8 @@
 #encoding: utf-8
-class KpiViewable
+class Kpi::KpiViewable
   PUBLIC=100
   PRIVATE=200
-  PARTIAL_ALLOW=300
+  PARTIAL_PUBLIC=300
   PARTIAL_BLOCK=400
 
   def self.display(v)
@@ -11,8 +11,8 @@ class KpiViewable
         'public'
       when PRIVATE
         'private'
-      when PARTIAL_ALLOW
-        'partial_allow'
+      when PARTIAL_PUBLIC
+        'partial_public'
       when PARTIAL_BLOCK
         'partial_block'
       else
@@ -26,8 +26,8 @@ class KpiViewable
         'public'
       when PRIVATE
         'private'
-      when PARTIAL_ALLOW
-        'partial_allow'
+      when PARTIAL_APUBLIC
+        'partial_public'
       when PARTIAL_BLOCK
         'partial_block'
       else

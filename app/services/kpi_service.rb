@@ -69,9 +69,8 @@ class KpiService
   end
 
   def self.accessable_list user
-    return []
-
-    Kpi.where(viewable: KpiViewable::PUBLIC)
+    # return []
+    Kpi.accesses_by_user(user)
   end
 
   def self.user_created_kpis user
