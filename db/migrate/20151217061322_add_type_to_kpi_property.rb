@@ -1,5 +1,5 @@
 class AddTypeToKpiProperty < ActiveRecord::Migration
   def change
-    add_column :kpi_properties, :type, :integer
+    add_column :kpi_properties, :attr_type, :integer
   end
 end

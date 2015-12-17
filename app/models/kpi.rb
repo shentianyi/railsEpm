@@ -13,11 +13,14 @@ class Kpi < ActiveRecord::Base
   has_many :kpi_property_items, :dependent => :destroy
   has_many :kpi_properties, :through => :kpi_property_items
   has_many :kpi_subscribes, :dependent => :destroy
-  has_many :kpi_property_values,through: :kpi_property_items
+  has_many :kpi_property_values, through: :kpi_property_items
   has_many :department_kpis, :dependent => :destroy
   has_many :departments, :through => :department_kpis
 
   belongs_to :creator, :class_name => 'User', :foreign_key => 'user_id'
+
+  has_one :user_group
+  has_many :user_group_items, through: :user_group
 
   #has_many :kpi_entries, :through => :user_kpi_items
   belongs_to :tenant
@@ -29,7 +32,7 @@ class Kpi < ActiveRecord::Base
   validate :validate_create_update
 
   def validate_create_update
-    if  !self.formula.blank?
+    if !self.formula.blank?
       errors.add(:formula, I18n.t('manage.kpi.invalid')) if !FormulaValidator::complete_validate_infix(self.formula)
     end
     errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where(:name => self.name, :kpi_category_id => self.kpi_category_id).first if new_record? # for create
@@ -63,7 +66,7 @@ class Kpi < ActiveRecord::Base
 
   def self.by_entity_group entity_group_id
     joins(:user_kpi_items).where(user_kpi_items: {entity_id: EntityGroupItem.where(entity_group_id: entity_group_id).pluck(:entity_id)})
-    .uniq.select('kpis.id,name,description,kpis.target_max,kpis.target_min,kpi_category_id,kpis.frequency')
+        .uniq.select('kpis.id,name,description,kpis.target_max,kpis.target_min,kpi_category_id,kpis.frequency')
   end
 
   def unit_sym
@@ -71,11 +74,11 @@ class Kpi < ActiveRecord::Base
   end
 
   def add_properties attrs
-    attrs.each {|attr|
-      if item = KpiPropertyItem.where(kpi_id:self.id,kpi_property_id:attr.id).first
+    attrs.each { |attr|
+      if item = KpiPropertyItem.where(kpi_id: self.id, kpi_property_id: attr.id).first
 
       else
-        item = KpiPropertyItem.new(kpi_id:self.id,kpi_property_id:attr.id)
+        item = KpiPropertyItem.new(kpi_id: self.id, kpi_property_id: attr.id)
         item.save
         self.kpi_property_items<<item
       end
@@ -83,4 +86,14 @@ class Kpi < ActiveRecord::Base
     self.save
   end
 
+
+  def self.accesses_by_user(user)
+
+    #publics=Kpi.where(viewable: KpiViewable::PUBLIC).all
+    #privates=Kpi.where(viewable: KpiViewable::PRIVATE, user_id: user.id).all
+    #partial_publics=Kpi.where(viewable: KpiViewable::PARTIAL_PUBLIC).joins(:user_group_items).where(user_group_items: {user_id: user.id}).all
+
+    #(publics+privates).uniq
+    []
+  end
 end

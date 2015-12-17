@@ -183,14 +183,16 @@ ActiveRecord::Schema.define(:version => 20151217061322) do
     t.integer  "status"
     t.integer  "user_quantity", :default => 0
     t.integer  "tenant_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.string   "description"
     t.string   "code"
     t.integer  "department_id"
+    t.boolean  "is_default",    :default => false
   end
 
   add_index "entities", ["department_id"], :name => "index_entities_on_department_id"
+  add_index "entities", ["is_default"], :name => "index_entities_on_is_default"
   add_index "entities", ["tenant_id"], :name => "index_entities_on_tenant_id"
 
   create_table "entity_contacts", :force => true do |t|

@@ -1,31 +1,66 @@
 class KpiService
   def self.building(params, user)
+    puts params
     Kpi.transaction do
-      kpi = Kpi.new({
-                        name: params[:kpi][:kpi_name],
-                        description: params[:kpi][:description],
-                        target_max: params[:kpi][:target_max],
-                        target_min: params[:kpi][:target_min],
-                        unit: params[:kpi][:uom],
-                        viewable: params[:kpi][:viewable][:viewable_code],
-                        calculate_method: params[:kpi][:calculate_method],
-                        user_group_id: params[:kpi][:viewable][:user_group_id]
-                    })
-      kpi.creator = user
-      kpi.tenant = user.tenant
+      update_flag = false
+      if params[:kpi][:kpi_id].present? && kpi=Kpi.find_by_id(params[:kpi][:kpi_id])
+        #Update Kpi
+        update_flag = true
+        puts "update---------------------------------------------------------------------"
+        kpi.update_attributes({
+                                  name: params[:kpi][:kpi_name],
+                                  description: params[:kpi][:description],
+                                  target_max: params[:kpi][:target_max],
+                                  target_min: params[:kpi][:target_min],
+                                  unit: params[:kpi][:uom],
+                                  viewable: params[:kpi][:viewable][:viewable_code],
+                                  calculate_method: params[:kpi][:calculate_method],
+                                  user_group_id: params[:kpi][:viewable][:user_group_id]
+                              })
+      else
+        #Create Kpi
+        kpi = Kpi.new({
+                          name: params[:kpi][:kpi_name],
+                          description: params[:kpi][:description],
+                          target_max: params[:kpi][:target_max],
+                          target_min: params[:kpi][:target_min],
+                          unit: params[:kpi][:uom],
+                          viewable: params[:kpi][:viewable][:viewable_code],
+                          calculate_method: params[:kpi][:calculate_method],
+                          user_group_id: params[:kpi][:viewable][:user_group_id]
+                      })
+        kpi.creator = user
+        kpi.tenant = user.tenant
+      end
 
       #kpi_properties
-      unless params[:kpi][:attributes].blank?
-        params[:kpi][:attributes].uniq.each { |attr|
-          if property = KpiProperty.find_by_name(attr[:attribute_id])
-          else
-            property = KpiProperty.new(:name => attr[:attribute_name], :type => attr[:attribute_type])
-            property.user = user
-            property.tenant = user.tenant
-            kpi.kpi_properties<<property
-          end
-        }
+      if update_flag
+        p_ids =[]
+        params[:kpi][:attributes].each { |attr| p_ids<< attr[:attribute_id] unless attr[:attribute_id].blank? }
+        puts '---------------------------------------------------------'
+        puts p_ids
+        d_p_ids = kpi.kpr_properties.pluck(:id) - p_ids.uniq
+        puts d_p_ids
+        puts '---------------------------------------------------------'
+        d_p_ids.each do |i|
+          KpiProperty.find_by_id(i).destroy
+        end
       end
+
+      params[:kpi][:attributes].each do |attr|
+        if attr[:attribute_id].blank?
+          property = KpiProperty.new(:name => attr[:attribute_name], :type => attr[:attribute_type])
+          property.user = user
+          property.tenant = user.tenant
+          kpi.kpi_properties<<property
+        else
+          property = KpiProperty.find_by_id(attr[:attribute_id])
+          if property && ((property.name != attr[:attribute_name]) || (property.type != attr[:attribute_type]))
+            property.update_attributes({:name => attr[:attribute_name], :type => attr[:attribute_type]})
+          end
+        end
+      end
+
 
       if kpi.kpi_category.blank?
         kpi.kpi_category=user.tenant.kpi_categories.first
@@ -33,12 +68,30 @@ class KpiService
 
       if kpi.save
         #assign
-        unless params[:assignments].blank?
-          params[:assignments].each do |assignment|
-            if (to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id]))
-              KpisHelper.assign_kpi_to_department_user(kpi, to_user, assignment[:department_id])
-            else
+        if update_flag
+          a_ids =[]
+          params[:assignments].each { |assign| a_ids<< assign[:assignment_id] unless assign[:assignment_id].blank? }
+          puts '---------------------------------------------------------'
+          puts a_ids
+          d_a_ids = UserKpiItem.where(kpi_id: kpi.id).pluck(:id) - a_ids.uniq
+          puts d_a_ids
+          puts '---------------------------------------------------------'
+          d_a_ids.each do |i|
+            UserKpiItem.find_by_id(i).destroy
+          end
+        end
 
+        params[:assignments].each do |assignment|
+          unless ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
+            if assignment[:assignment_id].blank?
+              KpisHelper.assign_kpi_to_department_user(kpi, to_user, department)
+            else
+              UserKpiItem.find_by_id(assignment[:assignment_id]).update_attributes({
+                                                                                       user_id: to_user.id,
+                                                                                       department_id: department.id,
+                                                                                       target_max: kpi.target_max,
+                                                                                       target_min: kpi.target_min
+                                                                                   })
             end
           end
         end
@@ -122,9 +175,8 @@ class KpiService
   end
 
   def self.accessable_list user
-    return []
-
-    Kpi.where(viewable: KpiViewable::PUBLIC)
+    # return []
+    Kpi.accesses_by_user(user)
   end
 
   def self.user_created_kpis user

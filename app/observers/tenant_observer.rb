@@ -9,12 +9,12 @@ class TenantObserver<ActiveRecord::Observer
     tenant.kpi_categories<<KpiCategory.new
     # create default entity
     # set super user's entity be default entity
-    entity=Entity.new(:name => tenant.company_name.length==0 ? 'Default Entity' : tenant.company_name)
+    entity=Entity.new(:name => tenant.company_name.blank? ? 'Default Entity' : tenant.company_name, is_default: true)
     tenant.super_user.entity = entity
     tenant.super_user.role_id=400
     tenant.entities<<entity
 
-    department=Department.new(:name => tenant.company_name.length==0 ? 'Default Department' : tenant.company_name)
+    department=Department.new(:name => tenant.company_name.blank? ? 'Default Department' : tenant.company_name)
     department.creator =tenant.super_user
     tenant.departments<<department
 

@@ -11,8 +11,8 @@ class KpiViewable
         'public'
       when PRIVATE
         'private'
-      when PARTIAL_ALLOW
-        'partial_allow'
+      when PARTIAL_PUBLIC
+        'partial_public'
       when PARTIAL_BLOCK
         'partial_block'
       else
@@ -26,8 +26,8 @@ class KpiViewable
         'public'
       when PRIVATE
         'private'
-      when PARTIAL_ALLOW
-        'partial_allow'
+      when PARTIAL_APUBLIC
+        'partial_public'
       when PARTIAL_BLOCK
         'partial_block'
       else
