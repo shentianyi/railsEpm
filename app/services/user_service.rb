@@ -79,7 +79,7 @@ class UserService
         ApiMessage.new(messages: user.errors.full_messages)
       end
     else
-      ApiMessage.new(messages: user.errors.full_messages)
+      ApiMessage.new(messages: ["User Not Exists"])
     end
   end
 
