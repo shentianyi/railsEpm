@@ -25,7 +25,7 @@ class System
 
     if (tenant=Tenant.first) && (department=tenant.departments.first)
       DepartmentService.add_department_user(user.id, department.id, user)
-      DepartmentService.set_manager(user.id, department.id)
+      DepartmentService.set_manager(user.id, department.id,user)
     end
 
   end
