@@ -15,7 +15,8 @@ class Entity < ActiveRecord::Base
 
   acts_as_tenant(:tenant)
 
-  # validate :validate_create_update
+ # validate :validate_create_update
+
 
   def self.ability_find_by_id id, current_ability
     Entity.accessible_by(current_ability).find_by_id(id)
