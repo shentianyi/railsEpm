@@ -18,11 +18,10 @@ module V2
       end
 
       params do
-        optional :user_id, type: String, desc: 'user id'
+        optional :user_id, type: Integer, desc: 'user id'
       end
       get :infos do
-        user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
-        UserPresenter.new(user).as_basic_info
+        UserService.get_infos(params[:user_id], current_user)
       end
 
       # update user info
@@ -40,7 +39,7 @@ module V2
       params do
         optional :old_password, type: String, desc: 'the current password'
         requires :new_password, type: String, desc: 'the new password'
-        optional :user_id, type: String, desc: 'user id'
+        optional :user_id, type: Integer, desc: 'user id'
         optional :new_password_confirmation, type: String, desc: 'the new password confirmation'
       end
       post :set_password do

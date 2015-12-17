@@ -1,4 +1,23 @@
 class KpiService
+  # {"kpi"=>{
+  #     "kpi_category_id"=>"12",
+  #     "name"=>"a",
+  #     "description"=>"a",
+  #     "frequency"=>"90",
+  #     "direction"=>"100",
+  #     "target_max"=>"12",
+  #     "target_min"=>"1",
+  #     "unit"=>"100",
+  #     "is_calculated"=>"false",
+  #     "formula"=>"",
+  #     "formula_string"=>"",
+  #     "kpi_properties"=>["j", "s"]}}
+  def self.building(params, user)
+    kpi=Kpi.new({
+
+                })
+    kpi.creator=current_user
+  end
 
   def self.unit_select
     KpiUnit.as_select
