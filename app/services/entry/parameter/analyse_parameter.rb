@@ -28,19 +28,11 @@ module Entry
       end
 
       def start_time=(value)
-        if value.is_a?(String)
-          @start_time=Time.parse(value).utc
-        elsif value.is_a?(Time)
-          @start_time=value
-        end if value
+        @start_time=Time.parse(value).utc if value
       end
 
       def end_time=(value)
-        if value.is_a?(String)
-          @end_time=Time.parse(value).utc
-        elsif value.is_a?(Time)
-          @end_time=value
-        end if value
+        @end_time=Time.parse(value).utc if value
       end
 
       def property=(value)
@@ -82,7 +74,7 @@ module Entry
 
       def kpi_ids
         return @kpi_ids if @kpi_ids
-        @kpi_ids=self.kpi.is_calculated ? (self.property.blank? ? self.kpi.id : self.kpi.kpi_item_ids) : self.kpi.id
+        @kpi_ids=self.kpi.is_calculated ? (self.property.blank? ? self.kpi.id : self.kpi.kpi_item_ids): self.kpi.id
         return kpi_ids
       end
 

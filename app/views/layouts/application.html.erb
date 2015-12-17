@@ -26,8 +26,6 @@
 <script type="text/javascript">
     I18n.defaultLocale = "<%= I18n.default_locale %>";
     I18n.locale = "<%= I18n.locale %>";
-<<<<<<< HEAD
-
 //    $.ajaxSetup({
 //        statusCode: {
 //            403: function () {
@@ -96,21 +94,19 @@
 //        }, 5000);
 //    })();
 
-=======
-    $.ajaxSetup({
-        statusCode: {
-            403: function () {
-                location.href='/403';
-            },
-            404: function () {
-                location.href='/404';
-            },
-            500:function(){
-               location.href='/500';
-            }
-        }
-    });
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
+//    $.ajaxSetup({
+//        statusCode: {
+//            403: function () {
+//                location.href='/403';
+//            },
+//            404: function () {
+//                location.href='/404';
+//            },
+//            500:function(){
+//               location.href='/500';
+//            }
+//        }
+//    });
 </script>
 <%= yield :javascript_includes %>
 </html>

@@ -28,7 +28,7 @@ module Entry
     def period_compare
       ordered={}
       self.params[:property_map_group].each do |p|
-        ordered[p]= p
+        ordered[p]=p
       end
       self.params[:property_map_group]=ordered
       self.params[:data_module]=Entry::DataService::PERIOD_COMPARE_TABLE
@@ -102,7 +102,7 @@ module Entry
 
     def call_compare_data_service
       unless self.params[:base_time].has_key?(:end_time)
-        self.params[:base_time][:end_time]=KpiFrequency.get_next_end_date(self.params[:base_time][:start_time], self.params[:frequency].to_i).to_s
+        self.params[:base_time][:end_time]=(KpiFrequency.get_next_date(self.params[:base_time][:start_time], self.params[:frequency])-1.second).to_s
       end
       parameter=Entry::Parameter::PeriodCompareParameter.new(self.params)
 
