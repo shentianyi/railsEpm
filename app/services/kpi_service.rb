@@ -132,45 +132,14 @@ class KpiService
   end
 
   def self.accessable_list user
-    # return []
-    Kpi.accesses_by_user(user)
+    KpiPresenter.as_on_users(Kpi.accesses_by_user(user), user, false)
   end
 
   def self.user_created_kpis user
-    user_kpis = Kpi.where(user_id: user.id)
-
-    kpi_on_user = []
-    user_kpis.each_with_index do |kpi, index|
-      kpi_on_user[index] = {}
-      creater = User.find_by_id(kpi.user_id).blank? ? user : User.find_by_id(kpi.user_id)
-      kpi_on_user[index][:kpi] = KpiPresenter.new(kpi).as_basic_info
-      kpi_on_user[index][:user] = UserPresenter.new(creater).as_brief_info
-      kpi_on_user[index][:follow_flag] = 'ALL'
-      kpi_on_user[index][:is_created] = user==creater
-      kpi_on_user[index][:is_managable] = true
-    end
-
-    puts kpi_on_user
-    puts '------------------------------'
-    kpi_on_user
+    KpiPresenter.as_on_users(Kpi.where(user_id: user.id), user, false)
   end
 
   def self.user_followed_kpis user
-    kpi_subscribes = KpiSubscribe.where(user_id: user.id).group(:kpi_id)
-
-    kpi_on_user = []
-    kpi_subscribes.each_with_index do |kpi_subscribe, index|
-      kpi_on_user[index] = {}
-      creater = User.find_by_id(kpi_subscribe.kpi.user_id).blank? ? user : User.find_by_id(kpi_subscribe.kpi.user_id)
-      kpi_on_user[index][:kpi] = KpiPresenter.new(kpi_subscribe.kpi).as_basic_info
-      kpi_on_user[index][:user] = UserPresenter.new(creater).as_brief_info
-      kpi_on_user[index][:follow_flag] = 'ALL'
-      kpi_on_user[index][:is_created] = user==creater
-      kpi_on_user[index][:is_managable] = true
-    end
-
-    puts kpi_on_user
-    puts '------------------------------'
-    kpi_on_user
+    KpiPresenter.as_on_users(Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}), user, false)
   end
 end

@@ -1,9 +1,9 @@
 #encoding: utf-8
 class Kpi::KpiViewable
-  PUBLIC=100
-  PRIVATE=200
-  PARTIAL_PUBLIC=300
-  PARTIAL_BLOCK=400
+  PUBLIC=0
+  PRIVATE=1
+  PARTIAL_PUBLIC=2
+  PARTIAL_BLOCK=3
 
   def self.display(v)
     case v

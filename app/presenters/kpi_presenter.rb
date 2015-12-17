@@ -1,7 +1,7 @@
 #encoding: utf-8
 class KpiPresenter<Presenter
-  Delegators=[:id, :name, :is_calculated,:formula_string,:frequency,:direction,:unit,:target_max,:target_min,:description,:kpi_property_items]
-  def_delegators :@kpi,*Delegators
+  Delegators=[:id, :name, :is_calculated, :formula_string, :frequency, :direction, :unit, :target_max, :target_min, :description, :kpi_property_items]
+  def_delegators :@kpi, *Delegators
 
   def initialize(kpi)
     @kpi=kpi
@@ -10,8 +10,8 @@ class KpiPresenter<Presenter
 
   def properties
     attrs = []
-    @kpi.kpi_property_items.each {|item|
-      attrs << {id:item.id,name:item.kpi_property.name}
+    @kpi.kpi_property_items.each { |item|
+      attrs << {id: item.id, name: item.kpi_property.name}
     }
     attrs
   end
@@ -23,7 +23,7 @@ class KpiPresenter<Presenter
         is_calculated: @kpi.is_calculated,
         formula_string: @kpi.formula_string,
         interval: KpiFrequency.get_desc_by_value(@kpi.frequency),
-        trend:  KpiDirection.get_desc_by_value(@kpi.direction),
+        trend: KpiDirection.get_desc_by_value(@kpi.direction),
         target_max: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max),
         target_min: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min),
         section: KpiUnit.get_entry_unit_sym(@kpi.unit),
@@ -32,7 +32,7 @@ class KpiPresenter<Presenter
     }
   end
 
-  def as_basic_info
+  def as_basic_info(with_properties=true)
     {
         kpi_id: @kpi.id,
         kpi_name: @kpi.name,
@@ -44,10 +44,32 @@ class KpiPresenter<Presenter
         uom: @kpi.unit,
         calculate_method: @kpi.calculate_method,
         viewable: {
-            viewable_code: @kpi.viewable_code,
+            viewable_code: @kpi.viewable,
             user_group_id: @kpi.user_group_id
         },
-        attributes: properties
+        attributes: with_properties ? properties : nil
     }
+  end
+
+
+  def as_on_user(user,with_properties=true)
+    {
+        user: UserPresenter.new(user).as_brief_info(false),
+        kpi: as_basic_info(false),
+        follow_flag: Kpi::KpiFollowFlag.display(Kpi::KpiFollowFlag::NONE),
+        follow_flag_value:Kpi::KpiFollowFlag::NONE,
+        is_created: @kpi.user_id==user.id,
+        is_managable: false
+    }
+  end
+
+  def self.as_on_users(kpis, user,with_properties=true)
+    infos=[]
+
+    kpis.each do |kpi|
+      infos<<KpiPresenter.new(kpi).as_on_user(user,with_properties)
+    end
+
+    infos
   end
 end
