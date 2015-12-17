@@ -924,7 +924,7 @@ function get_next_date(date, frequency) {
         case 300:
             return   m.add('months', 1);
         case 400:
-            return  m.add('months', 3);
+            return  m.add('months', 4);
         case 500:
             return  m.add('years', 1);
     }

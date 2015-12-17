@@ -5,10 +5,10 @@ module Entry
       attr_accessor :base_time, :compare_times, :compare_size
 
       def initialize(args)
-        super
         self.base_time=args[:base_time] if args[:base_time]
         self.compare_size=args[:compare_size] || 1
         self.compare_times =nil
+        super
       end
 
       def base_time=(value)
@@ -22,22 +22,10 @@ module Entry
         return compare_times if @compare_times
         @compare_times=[]
         1.upto(self.compare_size).each do |i|
-          if self.frequency==KpiFrequency::Weekly
-            start_time=self.base_time[:start_time]+8.hours
-            year=start_time.year
-            week=start_time.strftime('%W').to_i+1
-            start_time=Time.parse(Date.commercial(year-i, week, 1).to_s).utc
-            end_time=Time.parse(Date.commercial(year-i, week+1, 1).to_s).utc-1.second
-            @compare_times<<{
-                start_time: start_time,
-                end_time: end_time
-            }
-          else
-            @compare_times<<{
-                start_time: self.base_time[:start_time]-i.year,
-                end_time: self.base_time[:end_time]-i.year
-            }
-          end
+          @compare_times<<{
+              start_time: self.base_time[:start_time]-i.year,
+              end_time: self.base_time[:end_time]-i.year
+          }
         end
         return @compare_times
       end

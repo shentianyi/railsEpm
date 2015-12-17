@@ -187,8 +187,6 @@ class Redis
   
     protected
       def self.split_pinyin(text)
-        puts '111111111111111111'
-        puts text
         # Pinyin search split as pinyin again
         _split(Pinyin.t(text))
       end
