@@ -157,8 +157,8 @@ class DepartmentService
 # requires
 # user_id:integer,requires
 # id: integer, requires, department id
-  def self.remove_user(user_id, id)
-    user_manager(user_id, id) { |ud|
+  def self.remove_user(user_id, id,user)
+    user_manager(user_id, id,user) { |ud|
       if ud.destroy
         ApiMessage.new(messages: ['Remove User Success'], result_code: 1)
       else
@@ -171,8 +171,8 @@ class DepartmentService
 # requires
 # user_id:integer,requires
 # id: integer, requires, department id
-  def self.set_manager(user_id, id)
-    user_manager(user_id, id) { |ud|
+  def self.set_manager(user_id, id,user)
+    user_manager(user_id, id,user) { |ud|
       if ud.update_attributes(is_manager: true)
         ApiMessage.new(messages: ['Set Manager Success'], result_code: 1)
       else
@@ -186,8 +186,8 @@ class DepartmentService
 # requires
 # user_id:integer,requires
 # id: integer, requires, department id
-  def self.remove_manager(user_id, id)
-    user_manager(user_id, id) { |ud|
+  def self.remove_manager(user_id, id,user)
+    user_manager(user_id, id,user) { |ud|
       if ud.is_manager
         if ud.update_attributes(is_manager: false)
           ApiMessage.new(messages: ['Unset Manager Success'], result_code: 1)
@@ -217,7 +217,7 @@ class DepartmentService
   end
 
   private
-  def self.user_manager(user_id, id)
+  def self.user_manager(user_id, id,user)
     begin
       UserDepartment.transaction do
         if get_department(user,id)

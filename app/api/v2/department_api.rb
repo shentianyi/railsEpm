@@ -75,7 +75,7 @@ module V2
         requires :id, type: Integer, desc: 'department id'
       end
       post :remove_user do
-        DepartmentService.remove_user(params[:user_id], params[:id])
+        DepartmentService.remove_user(params[:user_id], params[:id],current_user)
       end
 
       # set manager
@@ -84,7 +84,7 @@ module V2
         requires :id, type: Integer, desc: 'department id'
       end
       post :set_manager do
-        DepartmentService.set_manager(params[:user_id], params[:id])
+        DepartmentService.set_manager(params[:user_id], params[:id],current_user)
       end
 
       # remove manager
@@ -93,7 +93,7 @@ module V2
         requires :id, type: Integer, desc: 'department id'
       end
       post :remove_manager do
-        DepartmentService.remove_manager(params[:user_id], params[:id])
+        DepartmentService.remove_manager(params[:user_id], params[:id],current_user)
       end
     end
   end

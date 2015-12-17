@@ -11,7 +11,7 @@ class Entity < ActiveRecord::Base
   # has_many :entity_contacts
   has_many :entity_contacts, :as => :contactable, :dependent => :destroy
   has_many :contacts, :through => :entity_contacts
-  attr_accessible :name, :status, :user_quantity, :description, :code, :department_id,:is_default
+  attr_accessible :name, :status, :user_quantity, :description, :code, :department_id, :is_default
 
   acts_as_tenant(:tenant)
 
@@ -25,8 +25,6 @@ class Entity < ActiveRecord::Base
   def self.with_user_quantity
     joins('left join users on entities.id=users.entity_id').select('entities.*,count(users.id) as user_quantity').group('entities.id')
   end
-
-  private
 
   # def validate_create_update
   #   errors.add(:name, I18n.t("fix.cannot_repeat")) if Entity.where(:name => self.name, :tenant_id => self.tenant_id).first if new_record?
