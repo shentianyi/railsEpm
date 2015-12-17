@@ -2,51 +2,21 @@ class KpiService
   def self.building(params, user)
     puts params
     Kpi.transaction do
-      update_flag = false
-      if params[:kpi][:kpi_id].present? && kpi=Kpi.find_by_id(params[:kpi][:kpi_id])
-        #Update Kpi
-        update_flag = true
-        puts "update---------------------------------------------------------------------"
-        kpi.update_attributes({
-                                  name: params[:kpi][:kpi_name],
-                                  description: params[:kpi][:description],
-                                  target_max: params[:kpi][:target_max],
-                                  target_min: params[:kpi][:target_min],
-                                  unit: params[:kpi][:uom],
-                                  viewable: params[:kpi][:viewable][:viewable_code],
-                                  calculate_method: params[:kpi][:calculate_method],
-                                  user_group_id: params[:kpi][:viewable][:user_group_id]
-                              })
-      else
-        #Create Kpi
-        kpi = Kpi.new({
-                          name: params[:kpi][:kpi_name],
-                          description: params[:kpi][:description],
-                          target_max: params[:kpi][:target_max],
-                          target_min: params[:kpi][:target_min],
-                          unit: params[:kpi][:uom],
-                          viewable: params[:kpi][:viewable][:viewable_code],
-                          calculate_method: params[:kpi][:calculate_method],
-                          user_group_id: params[:kpi][:viewable][:user_group_id]
-                      })
-        kpi.creator = user
-        kpi.tenant = user.tenant
-      end
+      #Create Kpi
+      kpi = Kpi.new({
+                        name: params[:kpi][:kpi_name],
+                        description: params[:kpi][:description],
+                        target_max: params[:kpi][:target_max],
+                        target_min: params[:kpi][:target_min],
+                        unit: params[:kpi][:uom],
+                        viewable: params[:kpi][:viewable][:viewable_code],
+                        calculate_method: params[:kpi][:calculate_method],
+                        user_group_id: params[:kpi][:viewable][:user_group_id]
+                    })
+      kpi.creator = user
+      kpi.tenant = user.tenant
 
       #kpi_properties
-      if update_flag
-        p_ids =[]
-        params[:kpi][:attributes].each { |attr| p_ids<< attr[:attribute_id] unless attr[:attribute_id].blank? }
-        puts '---------------------------------------------------------'
-        puts p_ids
-        d_p_ids = kpi.kpr_properties.pluck(:id) - p_ids.uniq
-        puts d_p_ids
-        puts '---------------------------------------------------------'
-        d_p_ids.each do |i|
-          KpiProperty.find_by_id(i).destroy
-        end
-      end
-
       params[:kpi][:attributes].each do |attr|
         if attr[:attribute_id].blank?
           property = KpiProperty.new(:name => attr[:attribute_name], :type => attr[:attribute_type])
@@ -66,39 +36,16 @@ class KpiService
         kpi.kpi_category=user.tenant.kpi_categories.first
       end
 
-      #assign delete
-      if update_flag
-        a_ids =[]
-        params[:assignments].each { |assign| a_ids<< assign[:assignment_id] unless assign[:assignment_id].blank? }
-        puts '---------------------------------------------------------'
-        puts a_ids
-        d_a_ids = UserKpiItem.where(kpi_id: kpi.id).pluck(:id) - a_ids.uniq
-        puts d_a_ids
-        puts '---------------------------------------------------------'
-        d_a_ids.each do |i|
-          UserKpiItem.find_by_id(i).destroy
-        end
-      end
-
       if kpi.save
         ##assign
         params[:assignments].each do |assignment|
           unless ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
-            if assignment[:assignment_id].blank?
-              KpisHelper.assign_kpi_to_department_user(kpi, to_user, department)
-            else
-              UserKpiItem.find_by_id(assignment[:assignment_id]).update_attributes({
-                                                                                       user_id: to_user.id,
-                                                                                       department_id: department.id,
-                                                                                       target_max: kpi.target_max,
-                                                                                       target_min: kpi.target_min
-                                                                                   })
-            end
+            KpisHelper.assign_kpi_to_department_user(kpi, to_user, department)
           end
         end
 
-#task
-#TODO
+        #task
+        #TODO
       else
         return ApiMessage.new(messages: ['Kpi Created Error'])
       end
@@ -108,53 +55,36 @@ class KpiService
   end
 
 
-  def self.updating(params, user)
+  def self.updating(params, user, kpi)
     puts params
     Kpi.transaction do
-      if params[:kpi][:kpi_id].present? && kpi=Kpi.find_by_id(params[:kpi][:kpi_id])
-        #Update Kpi
-        update_flag = true
-        puts "update---------------------------------------------------------------------"
-        kpi.update_attributes({
-                                  name: params[:kpi][:kpi_name],
-                                  description: params[:kpi][:description],
-                                  target_max: params[:kpi][:target_max],
-                                  target_min: params[:kpi][:target_min],
-                                  unit: params[:kpi][:uom],
-                                  viewable: params[:kpi][:viewable][:viewable_code],
-                                  calculate_method: params[:kpi][:calculate_method],
-                                  user_group_id: params[:kpi][:viewable][:user_group_id]
-                              })
-      else
-        #Create Kpi
-        kpi = Kpi.new({
-                          name: params[:kpi][:kpi_name],
-                          description: params[:kpi][:description],
-                          target_max: params[:kpi][:target_max],
-                          target_min: params[:kpi][:target_min],
-                          unit: params[:kpi][:uom],
-                          viewable: params[:kpi][:viewable][:viewable_code],
-                          calculate_method: params[:kpi][:calculate_method],
-                          user_group_id: params[:kpi][:viewable][:user_group_id]
-                      })
-        kpi.creator = user
-        kpi.tenant = user.tenant
-      end
+      puts "update---------------------------------------------------------------------"
+      kpi.update_attributes({
+                                name: params[:kpi][:kpi_name],
+                                description: params[:kpi][:description],
+                                target_max: params[:kpi][:target_max],
+                                target_min: params[:kpi][:target_min],
+                                unit: params[:kpi][:uom],
+                                viewable: params[:kpi][:viewable][:viewable_code],
+                                calculate_method: params[:kpi][:calculate_method],
+                                user_group_id: params[:kpi][:viewable][:user_group_id]
+                            })
+
 
       #kpi_properties
-      if update_flag
-        p_ids =[]
-        params[:kpi][:attributes].each { |attr| p_ids<< attr[:attribute_id] unless attr[:attribute_id].blank? }
-        puts '---------------------------------------------------------'
-        puts p_ids
-        d_p_ids = kpi.kpr_properties.pluck(:id) - p_ids.uniq
-        puts d_p_ids
-        puts '---------------------------------------------------------'
-        d_p_ids.each do |i|
-          KpiProperty.find_by_id(i).destroy
-        end
+      #delete
+      p_ids =[]
+      params[:kpi][:attributes].each { |attr| p_ids<< attr[:attribute_id] unless attr[:attribute_id].blank? }
+      puts '---------------------------------------------------------'
+      puts p_ids
+      d_p_ids = kpi.kpi_properties.pluck(:id) - p_ids.uniq
+      puts d_p_ids
+      puts '---------------------------------------------------------'
+      d_p_ids.each do |i|
+        KpiProperty.find_by_id(i).destroy
       end
 
+      #new update
       params[:kpi][:attributes].each do |attr|
         if attr[:attribute_id].blank?
           property = KpiProperty.new(:name => attr[:attribute_name], :type => attr[:attribute_type])
@@ -169,47 +99,41 @@ class KpiService
         end
       end
 
-
-      if kpi.kpi_category.blank?
-        kpi.kpi_category=user.tenant.kpi_categories.first
+      #assign
+      #delete
+      a_ids =[]
+      params[:assignments].each { |assign| a_ids<< assign[:assignment_id] unless assign[:assignment_id].blank? }
+      puts '---------------------------------------------------------'
+      puts a_ids
+      d_a_ids = UserKpiItem.where(kpi_id: kpi.id).pluck(:id) - a_ids.uniq
+      puts d_a_ids
+      puts '---------------------------------------------------------'
+      d_a_ids.each do |i|
+        UserKpiItem.find_by_id(i).destroy
       end
 
-      #assign delete
-      if update_flag
-        a_ids =[]
-        params[:assignments].each { |assign| a_ids<< assign[:assignment_id] unless assign[:assignment_id].blank? }
-        puts '---------------------------------------------------------'
-        puts a_ids
-        d_a_ids = UserKpiItem.where(kpi_id: kpi.id).pluck(:id) - a_ids.uniq
-        puts d_a_ids
-        puts '---------------------------------------------------------'
-        d_a_ids.each do |i|
-          UserKpiItem.find_by_id(i).destroy
-        end
-      end
-
-      if kpi.save
-        ##assign
-        params[:assignments].each do |assignment|
-          unless ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
-            if assignment[:assignment_id].blank?
-              KpisHelper.assign_kpi_to_department_user(kpi, to_user, department)
-            else
-              UserKpiItem.find_by_id(assignment[:assignment_id]).update_attributes({
-                                                                                       user_id: to_user.id,
-                                                                                       department_id: department.id,
-                                                                                       target_max: kpi.target_max,
-                                                                                       target_min: kpi.target_min
-                                                                                   })
-            end
+      # if kpi.save
+      #assign new update
+      params[:assignments].each do |assignment|
+        unless ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
+          if assignment[:assignment_id].blank?
+            KpisHelper.assign_kpi_to_department_user(kpi, to_user, department)
+          else
+            UserKpiItem.find_by_id(assignment[:assignment_id]).update_attributes({
+                                                                                     user_id: to_user.id,
+                                                                                     department_id: department.id,
+                                                                                     target_max: kpi.target_max,
+                                                                                     target_min: kpi.target_min
+                                                                                 })
           end
         end
-
-        #task
-        #TODO
-      else
-        return ApiMessage.new(messages: ['Kpi Update Error'])
       end
+
+      #task
+      #TODO
+      # else
+      #   return ApiMessage.new(messages: ['Kpi Update Error'])
+      # end
     end
 
     ApiMessage.new(result_code: 1, messages: ['Kpi Update Success'])

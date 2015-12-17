@@ -15,6 +15,20 @@ module V2
         KpiService.building(params, current_user)
       end
 
+      params do
+        requires :kpi, type: Hash do
+          requires :target_max, type: Float, desc: "kpi target max"
+          requires :target_min, type: Float, desc: "kpi target min"
+          requires :kpi_id, type: Integer, desc: "kpi id"
+          requires :calculate_method, type: Integer, desc: "kpi calculate method"
+        end
+      end
+      put do
+        if params[:kpi][:kpi_id].present? && kpi=Kpi.find_by_id(params[:kpi][:kpi_id])
+          KpiService.updating(params, current_user, kpi)
+        end
+      end
+
       get :unit_of_measurements do
         KpiService.unit_select
       end
