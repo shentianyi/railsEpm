@@ -43,6 +43,10 @@ class Department < ActiveRecord::Base
     user.user_departments.joins(:department).where(department_id: self.path_ids, is_manager: true).count>0
   end
 
+  def access_childreable(user)
+    user.user_departments.joins(:department).where(department_id: self.path_ids).count>0
+  end
+
   def self.json_tree(nodes)
     nodes.map do |node, sub_nodes|
       {:id => node.id, :name => node.name, :data => {}, :children => json_tree(sub_nodes).compact}

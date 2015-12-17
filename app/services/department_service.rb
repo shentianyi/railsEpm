@@ -36,7 +36,7 @@ class DepartmentService
   def self.update_department(params, user)
     begin
       UserDepartment.transaction do
-        if (department=get_department(user,params[:id])) && (user.user_departments.where(department_id: department.id, is_manager: true).first)
+        if (department=get_department(user, params[:id])) && (user.user_departments.where(department_id: department.id, is_manager: true).first)
           if department.update_attributes(params.except(:id))
             ApiMessage.new(messages: ['Department Update Success'], result_code: 1)
           else
@@ -54,7 +54,7 @@ class DepartmentService
   def self.delete_department(id, user)
     begin
       UserDepartment.transaction do
-        if (department=get_department(user,id)) && (user.user_departments.where(department_id: department.id, is_manager: true).first)
+        if (department=get_department(user, id)) && (user.user_departments.where(department_id: department.id, is_manager: true).first)
           if department.destroy
             ApiMessage.new(messages: ['Department Delete Success'], result_code: 1)
           else
@@ -72,10 +72,10 @@ class DepartmentService
 # get department members
 # requires
 # id:integer,requires
-  def self.members(id,user)
+  def self.members(id, user)
     begin
       UserDepartment.transaction do
-        if department=get_department(user,id)
+        if department=get_department(user, id)
           UserDepartmentPresenter.as_department_users(department.user_departments.joins(:user))
         else
           ApiMessage.new(messages: ['Department not found'])
@@ -94,7 +94,7 @@ class DepartmentService
   def self.add_department_users(emails, id, user)
     begin
       UserDepartment.transaction do
-        if department=get_department(user,id)
+        if department=get_department(user, id)
           # find reg users
           users=user.tenant.users.where(email: emails).all
           users.each do |user|
@@ -128,7 +128,7 @@ class DepartmentService
   def self.add_department_user(user_id, id, user)
     begin
       UserDepartment.transaction do
-        if department=get_department(user,id)
+        if department=get_department(user, id)
           if (add_user=user.tenant.users.find_by_id(user_id))
             if add_user.user_departments.where(department_id: id).first
               ApiMessage.new(messages: ['User has been added to Department'])
@@ -157,8 +157,8 @@ class DepartmentService
 # requires
 # user_id:integer,requires
 # id: integer, requires, department id
-  def self.remove_user(user_id, id,user)
-    user_manager(user_id, id,user) { |ud|
+  def self.remove_user(user_id, id, user)
+    user_manager(user_id, id, user) { |ud|
       if ud.destroy
         ApiMessage.new(messages: ['Remove User Success'], result_code: 1)
       else
@@ -171,8 +171,8 @@ class DepartmentService
 # requires
 # user_id:integer,requires
 # id: integer, requires, department id
-  def self.set_manager(user_id, id,user)
-    user_manager(user_id, id,user) { |ud|
+  def self.set_manager(user_id, id, user)
+    user_manager(user_id, id, user) { |ud|
       if ud.update_attributes(is_manager: true)
         ApiMessage.new(messages: ['Set Manager Success'], result_code: 1)
       else
@@ -186,8 +186,8 @@ class DepartmentService
 # requires
 # user_id:integer,requires
 # id: integer, requires, department id
-  def self.remove_manager(user_id, id,user)
-    user_manager(user_id, id,user) { |ud|
+  def self.remove_manager(user_id, id, user)
+    user_manager(user_id, id, user) { |ud|
       if ud.is_manager
         if ud.update_attributes(is_manager: false)
           ApiMessage.new(messages: ['Unset Manager Success'], result_code: 1)
@@ -206,10 +206,14 @@ class DepartmentService
   def self.user_departments(user, department_id=nil)
     # get root departments
     if department_id.blank?
-      DepartmentPresenter.as_user_departments(user.root_departments,user)
+      DepartmentPresenter.as_user_departments(user.root_departments, user)
     else
-      if department=get_department(user,department_id)
-        DepartmentPresenter.as_user_departments(department.children,user)
+      if department=get_department(user, department_id)
+        if department.access_childreable(user)
+          DepartmentPresenter.as_user_departments(department.children, user)
+        else
+          ApiMessage.new(messages: ['Department You cannot access'])
+        end
       else
         ApiMessage.new(messages: ['Department not found'])
       end
@@ -217,10 +221,10 @@ class DepartmentService
   end
 
   private
-  def self.user_manager(user_id, id,user)
+  def self.user_manager(user_id, id, user)
     begin
       UserDepartment.transaction do
-        if get_department(user,id)
+        if get_department(user, id)
           if user=User.find_by_id(user_id)
             if ud=user.user_departments.where(department_id: id).first
               yield(ud) if block_given?
@@ -239,7 +243,7 @@ class DepartmentService
     end
   end
 
-  def self.get_department(user,department_id)
+  def self.get_department(user, department_id)
     user.tenant.departments.find_by_id(department_id)
   end
 end
