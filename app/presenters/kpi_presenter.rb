@@ -94,4 +94,14 @@ class KpiPresenter<Presenter
 
     infos
   end
+
+  def as_properties_info
+    infos=[]
+
+    @kpi.kpi_properties.each do |p|
+      infos<<{id: p.id, name: p.name, type: p.type}
+    end
+
+    infos
+  end
 end
