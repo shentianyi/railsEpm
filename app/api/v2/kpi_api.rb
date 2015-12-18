@@ -108,6 +108,36 @@ module V2
           KpiService.user_created_kpis(user)
         end
       end
+
+      namespace :properties do
+        params do
+          requires :kpi_id, type: Integer, desc: 'kpi id'
+        end
+        get do
+          KpiService.properties params[:kpi_id]
+        end
+
+        params do
+          requires :kpi_id, type: Integer, desc: 'kpi id'
+          requires :name, type: String, desc: 'property name'
+          requires :type, type: String, desc: 'property type'
+        end
+        post do
+          KpiService.add_properties params, current_user
+        end
+
+        params do
+          requires :kpi_id, type: Integer, desc: 'kpi id'
+          requires :property_id, type: Integer, desc: 'property id'
+          requires :name, type: String, desc: 'property name'
+          requires :type, type: String, desc: 'property type'
+        end
+        put do
+          KpiService.update_properties params
+        end
+
+      end
+
     end
   end
 end
