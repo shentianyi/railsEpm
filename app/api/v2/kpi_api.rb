@@ -135,6 +135,16 @@ module V2
         put do
           KpiService.update_properties params
         end
+      end
+
+      namespace :assigns do
+        params do
+          requires :kpi_id, type: Integer, desc: 'kpi id'
+        end
+        get do
+          KpiService.assigns params
+        end
+
 
       end
 

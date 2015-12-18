@@ -39,8 +39,8 @@ class KpiPresenter<Presenter
         description: @kpi.description,
         creator: @kpi.user_id,
         created_on: @kpi.created_at,
-        target_max: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max),
-        target_min: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min),
+        target_max: @kpi.target_max,#KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max),
+        target_min: @kpi.target_min,#KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min),
         uom: @kpi.unit,
         calculate_method: @kpi.calculate_method,
         viewable: {
@@ -104,4 +104,21 @@ class KpiPresenter<Presenter
 
     infos
   end
+
+  def as_assigns
+    infos=[]
+
+    @kpi.user_kpi_items.each do |item|
+      infos<<{
+          assignment_id: item.id,
+          department_id: item.department_id,
+          time: item.remind_time,
+          frequency: item.frequency,
+          user: UserPresenter.new(u).as_brief_info
+      }
+    end
+
+    infos
+  end
+
 end

@@ -258,4 +258,12 @@ class KpiService
     end
   end
 
+  def self.assigns params
+    if kpi=Kpi.find_by_id(params[:kpi_id])
+      KpiPresenter.new(kpi).as_assigns
+    else
+      ApiMessage.new(messages: ['Kpi Not Exist'])
+    end
+  end
+
 end
