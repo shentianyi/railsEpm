@@ -114,7 +114,7 @@ class KpiPresenter<Presenter
           department_id: item.department_id,
           time: item.remind_time,
           frequency: item.frequency,
-          user: UserPresenter.new(u).as_brief_info
+          user: UserPresenter.new(User.find_by_id(item.user_id)).as_brief_info
       }
     end
 

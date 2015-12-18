@@ -266,4 +266,31 @@ class KpiService
     end
   end
 
+  def self.add_assigns params, user
+    mmsg = KpisHelper.validate_assigns params[:assigns], user
+    unless mmsg.result
+      return ApiMessage.new(messages: [mmsg.contents])
+    end
+
+    if kpi=Kpi.find_by_id(params[:kpi_id])
+      params[:assigns].each do |assignment|
+        to_user = user.tenant.users.find_by_email(assignment[:user])
+        department = Department.find_by_id(assignment[:department_id])
+        KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment)
+      end
+
+      ApiMessage.new(result_code: 1, messages: ['Kpi Assign Sucess'])
+    else
+      ApiMessage.new(messages: ['Kpi Not Exist'])
+    end
+  end
+
+  def self.unassign params
+    if assign=UserKpiItem.find_by_id(params[:assignment_id])
+      assign.destroy
+    else
+      ApiMessage.new(messages: ['This Assign Not Exist'])
+    end
+  end
+
 end
