@@ -29,13 +29,13 @@ class Department < ActiveRecord::Base
   validates_presence_of :name, presence: true, message: 'can not be blank'
   validates_uniqueness_to_tenant :name, message: 'should be uniq'
 
-  mapping do
-    indexes :_id, index: :not_analyzed
-    indexes :name, index: :not_analyzed
-    indexes :description, index: :not_analyzed
-    indexes :user_id, index: :not_analyzed
-    indexes :tenant_id,index: :not_analyzed
-  end
+  # mapping do
+  #   indexes :id, index: :not_analyzed
+  #   indexes :name, index: :not_analyzed
+  #   indexes :description, index: :not_analyzed
+  #   indexes :user_id, index: :not_analyzed
+  #   indexes :tenant_id,index: :not_analyzed
+  # end
 
 
   # def validate_create_update
