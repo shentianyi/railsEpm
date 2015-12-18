@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151217105417) do
+ActiveRecord::Schema.define(:version => 20151218030332) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -556,6 +556,20 @@ ActiveRecord::Schema.define(:version => 20151217105417) do
 
   add_index "user_group_items", ["tenant_id"], :name => "index_user_group_items_on_tenant_id"
   add_index "user_group_items", ["user_group_id"], :name => "index_user_group_items_on_user_group_id"
+
+  create_table "user_group_relations", :force => true do |t|
+    t.integer  "user_group_id"
+    t.integer  "user_groupable_id"
+    t.integer  "tenant_id"
+    t.string   "user_groupable_type"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "user_group_relations", ["tenant_id"], :name => "index_user_group_relations_on_tenant_id"
+  add_index "user_group_relations", ["user_group_id"], :name => "index_user_group_relations_on_user_group_id"
+  add_index "user_group_relations", ["user_groupable_id"], :name => "index_user_group_relations_on_user_groupable_id"
+  add_index "user_group_relations", ["user_groupable_type"], :name => "index_user_group_relations_on_user_groupable_type"
 
   create_table "user_groups", :force => true do |t|
     t.integer  "user_id"
