@@ -12,7 +12,7 @@ class UserPresenter<Presenter
   def as_basic_feedback(messages=nil, result_code=nil)
     if @user.nil?
       {
-          result_code: result_code||0,
+          result_code: 0,
           messages: messages || [I18n.t('devise.failure.invalid')]
       }
     else
