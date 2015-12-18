@@ -63,9 +63,9 @@ class SearchService
 
   def self.full_text_access_kpi q, user
     if q.blank?
-      KpiPresenter.as_on_users(Kpi.accesses_by_user(user).order('name asc').limit(3000), user, false).count
+      KpiPresenter.as_on_users(Kpi.accesses_by_user(user).order('name asc').limit(30), user, false)
     else
-      KpiPresenter.as_on_users(full_text_kpi(q, Kpi.accesses_by_user(user).pluck(:id)), user, false).count
+      KpiPresenter.as_on_users(full_text_kpi(q, Kpi.accesses_by_user(user).pluck(:id)), user, false)
     end
   end
 
@@ -87,7 +87,7 @@ class SearchService
                     fields: [:name, :description]
                 }
             },
-            size: 3000,
+            size: 30,
             filter: {
                 terms: {id: ids}
             },
