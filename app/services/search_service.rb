@@ -40,7 +40,7 @@ class SearchService
     if q.blank?
       DepartmentPresenter.as_brief_infos(Department.all_departments(user).order('name asc').limit(30), true)
     else
-      Department.search(
+      DepartmentPresenter.as_brief_infos( Department.search(
           {
               query: {
                   query_string: {
@@ -56,7 +56,7 @@ class SearchService
                   name: {order: :asc}
               }
           }
-      ).records
+      ).records,true)
 
 
       #DepartmentPresenter.as_brief_infos(Department.search("*#{q}*").records.where(tenant_id: user.tenant.id).limit(30), true)
