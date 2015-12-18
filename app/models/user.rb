@@ -67,10 +67,7 @@ class User < ActiveRecord::Base
                      :ext_fields => [:email])
 
   mapping do
-    indexes :_id, index: :not_analyzed
-    indexes :nick_name, index: :not_analyzed
     indexes :email, index: :not_analyzed
-    indexes :tenant_id,index: :not_analyzed
   end
 
 

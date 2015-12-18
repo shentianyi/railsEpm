@@ -13,33 +13,32 @@ class SearchService
     # )
 
 
-
     if q.blank?
-      UserPresenter.as_brief_infos(User.where(tenant_id: user.tenant.id).order('nick_name asc').limit(30),false)
+      UserPresenter.as_brief_infos(User.where(tenant_id: user.tenant.id).order('nick_name asc').limit(30), false)
     else
       UserPresenter.as_brief_infos(User.search(
-                                        {
-                                            query: {
-                                                query_string: {
-                                                    query: "*#{q}*",
-                                                    fields: [:nick_name, :email]
-                                                }
-                                            },
-                                            size: 30,
-                                            filter: {
-                                                term: {tenant_id: user.tenant_id}
-                                            },
-                                            sort:{
-                                                nick_name:{order: :asc}
-                                            }
-                                        }
-                                    ).records,false)
+                                       {
+                                           query: {
+                                               query_string: {
+                                                   query: "*#{q}*",
+                                                   fields: [:nick_name, :email]
+                                               }
+                                           },
+                                           size: 30,
+                                           filter: {
+                                               term: {tenant_id: user.tenant_id}
+                                           },
+                                           sort: {
+                                               nick_name: {order: :asc}
+                                           }
+                                       }
+                                   ).records, false)
     end
   end
 
   def self.full_text_department q, user
     if q.blank?
-      DepartmentPresenter.as_brief_infos(Department.all_departments(user).order('name asc').limit(30),true)
+      DepartmentPresenter.as_brief_infos(Department.all_departments(user).order('name asc').limit(30), true)
     else
       Department.search(
           {
@@ -51,10 +50,10 @@ class SearchService
               },
               size: 30,
               filter: {
-                  term: {tenant_id: user.tenant_id,id:Department.all_departments(user).pluck(:id)}
+                  terms: {id: Department.all_departments(user).pluck(:id)}
               },
-              sort:{
-                  name:{order: :asc}
+              sort: {
+                  name: {order: :asc}
               }
           }
       ).records
