@@ -7,7 +7,7 @@ class UserService
   # }
   def self.update_basic(params, user)
     if user.update_attributes(params)
-      UserPresenter.new(user).as_basic_feedback(['Set User Info Success'])
+      UserPresenter.new(user).as_basic_feedback(['Set User Info Success'],1)
     else
       UserPresenter.new(user).as_basic_feedback(user.errors.full_messages, 0)
     end
@@ -22,7 +22,7 @@ class UserService
                         user
                       else
                         nil
-                      end).as_basic_feedback
+                      end).as_basic_feedback(nil,1)
   end
 
 
@@ -65,7 +65,6 @@ class UserService
 
 
   def self.set_password params, user
-
     if user.present?
       if params[:old_password].present?
         if (u=User.find_for_database_authentication(id: user.id)).nil? || !u.valid_password?(params[:old_password])
@@ -74,7 +73,7 @@ class UserService
       end
 
       if user.update_attributes(password: params[:new_password], password_confirmation: params[:new_password_confirmation])
-        UserPresenter.new(user).as_basic_feedback(['Set Password Success'])
+        UserPresenter.new(user).as_basic_feedback(['Set Password Success'],1)
       else
         ApiMessage.new(messages: user.errors.full_messages)
       end
