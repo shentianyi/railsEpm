@@ -10,9 +10,9 @@ class SearchService
     #                                          }).records.where(tenant_id: user.tenant.id), false
     # )
     if q.blank?
-      UserPresenter.as_brief_infos(User.where(tenant_id: user.tenant.id).order(:nick_name => :asc).limit(30))
+      UserPresenter.as_brief_infos(User.where(tenant_id: user.tenant.id).order(:nick_name => :asc).limit(30),false)
     else
-      UserPresenter.as_brief_infos(User.search("*#{q}*").records.where(tenant_id: user.tenant.id).limit(30))
+      UserPresenter.as_brief_infos(User.search("*#{q}*").records.where(tenant_id: user.tenant.id).limit(30),false)
     end
   end
 
