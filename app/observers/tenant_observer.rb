@@ -20,6 +20,9 @@ class TenantObserver<ActiveRecord::Observer
 
     #department.entity_group.entities << entity
     department.default_entity=entity
+    ud=UserDepartment.new(is_manager:true)
+    ud.user=tenant.super_user
+    department.user_departments<<ud
   end
 
 
