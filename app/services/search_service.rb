@@ -40,42 +40,61 @@ class SearchService
     if q.blank?
       DepartmentPresenter.as_brief_infos(Department.all_departments(user).order('name asc').limit(30), true)
     else
-      DepartmentPresenter.as_brief_infos( Department.search(
-          {
-              query: {
-                  query_string: {
-                      query: "*#{q}*",
-                      fields: [:name, :description]
-                  }
-              },
-              size: 30,
-              filter: {
-                  terms: {id: Department.all_departments(user).pluck(:id)}
-              },
-              sort: {
-                  name: {order: :asc}
-              }
-          }
-      ).records,true)
-
-
-      #DepartmentPresenter.as_brief_infos(Department.search("*#{q}*").records.where(tenant_id: user.tenant.id).limit(30), true)
+      DepartmentPresenter.as_brief_infos(Department.search(
+                                             {
+                                                 query: {
+                                                     query_string: {
+                                                         query: "*#{q}*",
+                                                         fields: [:name, :description]
+                                                     }
+                                                 },
+                                                 size: 30,
+                                                 filter: {
+                                                     terms: {id: Department.all_departments(user).pluck(:id)}
+                                                 },
+                                                 sort: {
+                                                     name: {order: :asc}
+                                                 }
+                                             }
+                                         ).records, true)
     end
   end
 
 
   def self.full_text_access_kpi q, user
-    ids= full_text_kpi(q, user).pluck(:id)
-    KpiPresenter.as_on_users(Kpi.accesses_by_user(user).select { |k| ids.include?(k.id) }, user, false)
+    if q.blank?
+      KpiPresenter.as_on_users(Kpi.accesses_by_user(user).order('name asc').limit(3000), user, false).count
+    else
+      KpiPresenter.as_on_users(full_text_kpi(q, Kpi.accesses_by_user(user).pluck(:id)), user, false).count
+    end
   end
 
   def self.full_text_followed_kpi q, user
-    ids= full_text_kpi(q, user).pluck(:id)
-    KpiPresenter.as_on_users(Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}).select { |k| ids.include?(k.id) }, user, false)
+    if q.blank?
+      KpiPresenter.as_on_users(full_text_kpi(q, Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}).pluck(:id)), user, false)
+    else
+      KpiPresenter.as_on_users(full_text_kpi(q, Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}).pluck(:id)), user, false)
+    end
   end
 
 
-  def self.full_text_kpi q, user
-    Kpi.search("*#{q}*").records.where(tenant_id: user.tenant.id)
+  def self.full_text_kpi q, ids
+    Kpi.search(
+        {
+            query: {
+                query_string: {
+                    query: "*#{q}*",
+                    fields: [:name, :description]
+                }
+            },
+            size: 3000,
+            filter: {
+                terms: {id: ids}
+            },
+            sort: {
+                name: {order: :asc}
+            }
+        }
+    ).records
   end
 end

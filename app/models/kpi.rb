@@ -93,20 +93,35 @@ class Kpi < ActiveRecord::Base
     #publics=Kpi.where(viewable: KpiViewable::PUBLIC,tenant_id: user.tenant_id).all
     #privates=Kpi.where(viewable: KpiViewable::PRIVATE, user_id: user.id,tenant_id: user.tenant_id).all
     # partial_publics=Kpi.where(viewable: KpiViewable::PARTIAL_PUBLIC).joins(:user_group_items).where(user_group_items: {user_id: user.id}).all
-    partial_publics=Kpi.joins('join user_groups on user_groups.id=kpis.user_group_id join user_group_items on user_group_items.user_group_id=user_groups.id')
-                        .where(viewable: KpiViewable::PARTIAL_PUBLIC)
-                        .where('user_group_items.user_id= ? and kpis.user_id!=?', user.id, user.id).all
-    partial_blocks=Kpi.joins('join user_groups on user_groups.id=kpis.user_group_id join user_group_items on user_group_items.user_group_id=user_groups.id')
-                       .where(viewable: KpiViewable::PARTIAL_BLOCK)
-                       .where('user_group_items.user_id= ? and kpis.user_id!=?', user.id, user.id).all
+    # partial_publics=Kpi.joins('join user_groups on user_groups.id=kpis.user_group_id join user_group_items on user_group_items.user_group_id=user_groups.id')
+    #                     .where(viewable: KpiViewable::PARTIAL_PUBLIC)
+    #                     .where('user_group_items.user_id= ? and kpis.user_id!=?', user.id, user.id).all
+    # partial_blocks=Kpi.joins('join user_groups on user_groups.id=kpis.user_group_id join user_group_items on user_group_items.user_group_id=user_groups.id')
+    #                    .where(viewable: KpiViewable::PARTIAL_BLOCK)
+    #                    .where('user_group_items.user_id= ? and kpis.user_id!=?', user.id, user.id).all
+    #
+    # public_private_partial_blocks=Kpi
+    #                                   .where(tenant_id: user.tenant_id)
+    #                                   .where("(viewable=?)  or (viewable=?) or (viewable=? and user_id=?) or (user_id=?)",
+    #                                                                          KpiViewable::PUBLIC,
+    #                                                                          KpiViewable::PARTIAL_BLOCK,
+    #                                                                          KpiViewable::PRIVATE,
+    #                                                                          user.id,
+    #                                                                          user.id).uniq-partial_blocks
+    #
+    # (public_private_partial_blocks+partial_publics).uniq
+    partial_public_ids=Kpi.joins({user_group: :user_group_items}).where(viewable:KpiViewable::PARTIAL_PUBLIC,user_group_items:{user_id:user.id}).pluck(:id)
+    partial_block_ids=Kpi.joins({user_group: :user_group_items}).where(viewable:KpiViewable::PARTIAL_BLOCK,user_group_items:{user_id:user.id}).pluck(:id)
 
-    public_private_partial_blocks=Kpi.where(tenant_id: user.tenant_id).where("(viewable=?)  or (viewable=?) or (viewable=? and user_id=?) or (user_id=?)",
-                                                                             KpiViewable::PUBLIC,
-                                                                             KpiViewable::PARTIAL_BLOCK,
-                                                                             KpiViewable::PRIVATE,
-                                                                             user.id,
-                                                                             user.id).uniq-partial_blocks
-
-    (public_private_partial_blocks+partial_publics).uniq
+    q=Kpi.where(tenant_id: user.tenant_id).where("(viewable=?) or (viewable=? and user_id=?) or (user_id=?) or (viewable=? and id in(?)) or (viewable=? and id not in(?))",
+                                                 KpiViewable::PUBLIC,
+                                                 KpiViewable::PRIVATE,
+                                                 user.id,
+                                                 user.id,
+                                                 KpiViewable::PARTIAL_PUBLIC,
+                                                 partial_public_ids,
+                                                 KpiViewable::PARTIAL_BLOCK,
+                                                 partial_block_ids
+                                               )
   end
 end
