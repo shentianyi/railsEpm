@@ -6,4 +6,7 @@ class UserGroup < ActiveRecord::Base
 
   acts_as_tenant
 
+  validates_presence_of :name, presence: true, message: 'can not be blank'
+  validates_uniqueness_to_tenant :name, message: 'should be uniq'
+
 end
