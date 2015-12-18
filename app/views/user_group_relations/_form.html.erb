@@ -1,0 +1,29 @@
+<%= form_for(@user_group_relation) do |f| %>
+  <% if @user_group_relation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_group_relation.errors.count, "error") %> prohibited this user_group_relation from being saved:</h2>
+
+      <ul>
+      <% @user_group_relation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_group %><br />
+    <%= f.text_field :user_group %>
+  </div>
+  <div class="field">
+    <%= f.label :user_groupable_id %><br />
+    <%= f.number_field :user_groupable_id %>
+  </div>
+  <div class="field">
+    <%= f.label :user_groupable_type %><br />
+    <%= f.text_field :user_groupable_type %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

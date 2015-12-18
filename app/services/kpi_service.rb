@@ -10,11 +10,12 @@ class KpiService
                         target_min: params[:kpi][:target_min],
                         unit: params[:kpi][:uom],
                         viewable: params[:kpi][:viewable][:viewable_code],
-                        calculate_method: params[:kpi][:calculate_method],
-                        user_group_id: params[:kpi][:viewable][:user_group_id]
+                        calculate_method: params[:kpi][:calculate_method]
+                        # user_group_id: params[:kpi][:viewable][:user_group_id]
                     })
       kpi.creator = user
       kpi.tenant = user.tenant
+      kpi.user_group = UserGroup.find_by_id(params[:kpi][:viewable][:user_group_id])
 
       #kpi_properties
       params[:kpi][:attributes].each do |attr|
@@ -39,9 +40,7 @@ class KpiService
       if kpi.save
         ##assign
         params[:assignments].each do |assignment|
-          puts '0000000000000000000000000000000000000000000'
           if ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
-            puts '222222222222222222222222222222222222222222222222'
             KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment)
           end
         end
@@ -71,10 +70,10 @@ class KpiService
                                 target_min: params[:kpi][:target_min],
                                 unit: params[:kpi][:uom],
                                 viewable: params[:kpi][:viewable][:viewable_code],
-                                calculate_method: params[:kpi][:calculate_method],
-                                user_group_id: params[:kpi][:viewable][:user_group_id]
+                                calculate_method: params[:kpi][:calculate_method]
+                                # user_group_id: params[:kpi][:viewable][:user_group_id]
                             })
-
+      kpi.user_group = UserGroup.find_by_id(params[:kpi][:viewable][:user_group_id])
 
       #kpi_properties
       #delete
