@@ -222,7 +222,7 @@ class KpiService
   end
 
   def self.user_followed_kpis user
-    KpiPresenter.as_on_users(Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}), user, false)
+    KpiPresenter.as_on_users(Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}).uniq, user, false)
   end
 
   def self.details kpi
