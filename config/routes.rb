@@ -1,6 +1,9 @@
 IFEpm::Application.routes.draw do
 
 
+  resources :user_group_relations
+
+
   resources :kpi_user_subscribes
 
 

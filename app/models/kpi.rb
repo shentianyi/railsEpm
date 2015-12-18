@@ -19,7 +19,8 @@ class Kpi < ActiveRecord::Base
 
   belongs_to :creator, :class_name => 'User', :foreign_key => 'user_id'
 
-  has_one :user_group
+  has_one :user_group_relation, as: :user_groupable, :dependent => :destroy
+  has_one :user_group, through: :user_group_relation
   has_many :user_group_items, through: :user_group
 
   #has_many :kpi_entries, :through => :user_kpi_items
