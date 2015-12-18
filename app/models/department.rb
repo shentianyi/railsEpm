@@ -28,11 +28,15 @@ class Department < ActiveRecord::Base
   #validate :validate_create_update
   validates_presence_of :name, presence: true, message: 'can not be blank'
   validates_uniqueness_to_tenant :name, message: 'should be uniq'
-  #private
-  #def create_entity_group
-  #create the entity_group belongs to the department
 
-  #end
+  mapping do
+    indexes :_id, index: :not_analyzed
+    indexes :name, index: :not_analyzed
+    indexes :description, index: :not_analyzed
+    indexes :user_id, index: :not_analyzed
+    indexes :tenant_id,index: :not_analyzed
+  end
+
 
   # def validate_create_update
   #   errors.add(:name, I18n.t("fix.cannot_repeat")) if Department.where(:name => self.name, :tenant_id => self.tenant_id).first if new_record?
@@ -45,6 +49,10 @@ class Department < ActiveRecord::Base
 
   def access_childreable(user)
     user.user_departments.joins(:department).where(department_id: self.path_ids).count>0
+  end
+
+  def self.all_departments(user)
+    Department.subtree_ofs(user.root_departments)
   end
 
   def self.json_tree(nodes)
