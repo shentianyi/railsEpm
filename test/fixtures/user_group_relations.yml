@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_group: 
+  user_groupable_id: 1
+  user_groupable_type: MyString
+
+two:
+  user_group: 
+  user_groupable_id: 1
+  user_groupable_type: MyString

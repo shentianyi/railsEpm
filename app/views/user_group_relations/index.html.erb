@@ -1,0 +1,27 @@
+<h1>Listing user_group_relations</h1>
+
+<table>
+  <tr>
+    <th>User group</th>
+    <th>User groupable</th>
+    <th>User groupable type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @user_group_relations.each do |user_group_relation| %>
+  <tr>
+    <td><%= user_group_relation.user_group %></td>
+    <td><%= user_group_relation.user_groupable_id %></td>
+    <td><%= user_group_relation.user_groupable_type %></td>
+    <td><%= link_to 'Show', user_group_relation %></td>
+    <td><%= link_to 'Edit', edit_user_group_relation_path(user_group_relation) %></td>
+    <td><%= link_to 'Destroy', user_group_relation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New User group relation', new_user_group_relation_path %>
