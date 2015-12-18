@@ -63,30 +63,19 @@ class KpiEntriesController < ApplicationController
   def destroy
     msg = Message.new
     msg.result = true
-<<<<<<< HEAD
     entry = KpiEntry.find_by(id: params[:id])
-=======
-    entry = KpiEntry.find_by(id:params[:id])
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
     if entry
       if entry.entry_type == 1
         msg.result =false
         msg.content = I18n.t "entry.desc.del-error"
       else
         entry.destroy
-<<<<<<< HEAD
-        total = KpiEntry.find_by(parsed_entry_at: entry.parsed_entry_at, entity_id: entry.entity_id, user_kpi_item_id: entry.user_kpi_item_id, entry_type: 1)
-        if total
-          msg.content = {item_id: entry.user_kpi_item_id, value: total.value}
-        else
-          msg.content = {item_id: entry.user_kpi_item_id, value: ""}
-=======
+
         total = KpiEntry.find_by(parsed_entry_at:entry.parsed_entry_at,entity_id:entry.entity_id,user_kpi_item_id:entry.user_kpi_item_id,entry_type:1)
         if total
           msg.content = {item_id:entry.user_kpi_item_id,value:total.value}
         else
           msg.content = {item_id:entry.user_kpi_item_id,value:""}
->>>>>>> bb4ab7fcb9b543356423fa70972b7bfbf3671f41
         end
       end
     end

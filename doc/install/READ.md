@@ -4,3 +4,7 @@
 bundle exec rake environment elasticsearch:import:model CLASS='User' FORCE=y
 bundle exec rake environment elasticsearch:import:model CLASS='Department' FORCE=y
 bundle exec rake environment elasticsearch:import:model CLASS='Kpi' FORCE=y
+
+
+2. god 作为sidekiq的监控
+2.1 安装 gem install god
