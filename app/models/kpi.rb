@@ -88,6 +88,7 @@ class Kpi < ActiveRecord::Base
   end
 
 
+
   def self.accesses_by_user(user)
 
     #publics=Kpi.where(viewable: KpiViewable::PUBLIC,tenant_id: user.tenant_id).all
@@ -122,6 +123,14 @@ class Kpi < ActiveRecord::Base
                                                  partial_public_ids,
                                                  KpiViewable::PARTIAL_BLOCK,
                                                  partial_block_ids
-                                               )
+                                               ).uniq
+  end
+
+  def self.created_by_user(user)
+    where(user_id:user.id)
+  end
+
+  def self.followed_by_user(user)
+    Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}).uniq
   end
 end
