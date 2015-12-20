@@ -14,7 +14,7 @@ class SearchService
 
 
     if q.blank?
-      UserPresenter.as_brief_infos(User.where(tenant_id: user.tenant.id).order('nick_name asc').limit(30), false)
+      UserPresenter.as_brief_infos(User.where(tenant_id: user.tenant.id).order('nick_name asc').limit(20), false)
     else
       UserPresenter.as_brief_infos(User.search(
                                        {
@@ -24,7 +24,7 @@ class SearchService
                                                    fields: [:nick_name, :email]
                                                }
                                            },
-                                           size: 30,
+                                           size: 20,
                                            filter: {
                                                term: {tenant_id: user.tenant_id}
                                            },
@@ -38,7 +38,7 @@ class SearchService
 
   def self.full_text_department q, user
     if q.blank?
-      DepartmentPresenter.as_brief_infos(Department.all_departments(user).order('name asc').limit(30), true)
+      DepartmentPresenter.as_brief_infos(Department.all_departments(user).order('name asc').limit(20), true)
     else
       DepartmentPresenter.as_brief_infos(Department.search(
                                              {
@@ -48,7 +48,7 @@ class SearchService
                                                          fields: [:name, :description]
                                                      }
                                                  },
-                                                 size: 30,
+                                                 size: 20,
                                                  filter: {
                                                      terms: {id: Department.all_departments(user).pluck(:id)}
                                                  },
@@ -63,7 +63,7 @@ class SearchService
 
   def self.full_text_access_kpi q, user
     if q.blank?
-      KpiPresenter.as_on_users(Kpi.accesses_by_user(user).order('name asc').limit(30), user, false)
+      KpiPresenter.as_on_users(Kpi.accesses_by_user(user).order('name asc').limit(20), user, false)
     else
       KpiPresenter.as_on_users(full_text_kpi(q, Kpi.accesses_by_user(user).pluck(:id)), user, false)
     end
@@ -71,9 +71,9 @@ class SearchService
 
   def self.full_text_followed_kpi q, user
     if q.blank?
-      KpiPresenter.as_on_users(full_text_kpi(q, Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}).pluck(:id)), user, false)
+      KpiPresenter.as_on_users(Kpi.followed_by_user(user).order('name asc').limit(20), user, false)
     else
-      KpiPresenter.as_on_users(full_text_kpi(q, Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}).pluck(:id)), user, false)
+      KpiPresenter.as_on_users(full_text_kpi(q, Kpi.followed_by_user(user).pluck(:id)), user, false)
     end
   end
 
@@ -87,7 +87,7 @@ class SearchService
                     fields: [:name, :description]
                 }
             },
-            size: 30,
+            size: 20,
             filter: {
                 terms: {id: ids}
             },

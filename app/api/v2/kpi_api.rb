@@ -87,25 +87,29 @@ module V2
 
       namespace :users do
 
+        params do
+          optional :page, type: Integer, default: 0, desc: 'page index start from 0'
+          optional :size, type: Integer, default: 20, desc: 'page size'
+        end
         get :accesses do
-          KpiService.accessable_list(current_user)
+          KpiService.user_accessable_kpis(current_user,params[:page],params[:size])
         end
 
 
         params do
-          optional :user_id, type: String, desc: 'user id'
+          optional :page, type: Integer, default: 0, desc: 'page index start from 0'
+          optional :size, type: Integer, default: 20, desc: 'page size'
         end
         get :followed do
-          user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
-          KpiService.user_followed_kpis(user)
+          KpiService.user_followed_kpis(current_user,params[:page],params[:size])
         end
 
         params do
-          optional :user_id, type: String, desc: 'user id'
+          optional :page, type: Integer, default: 0, desc: 'page index start from 0'
+          optional :size, type: Integer, default: 20, desc: 'page size'
         end
         get :created do
-          user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
-          KpiService.user_created_kpis(user)
+          KpiService.user_created_kpis(current_user,params[:page],params[:size])
         end
       end
 

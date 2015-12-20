@@ -213,16 +213,16 @@ class KpiService
     end
   end
 
-  def self.accessable_list user
-    KpiPresenter.as_on_users(Kpi.accesses_by_user(user), user, false)
+  def self.user_accessable_kpis user,page=0,size=20
+    KpiPresenter.as_on_users(Kpi.accesses_by_user(user).offset(page*size).limit(size), user, false)
   end
 
-  def self.user_created_kpis user
-    KpiPresenter.as_on_users(Kpi.where(user_id: user.id), user, false)
+  def self.user_created_kpis user,page=0,size=20
+    KpiPresenter.as_on_users(Kpi.created_by_user(user).offset(page*size).limit(size), user, false)
   end
 
-  def self.user_followed_kpis user
-    KpiPresenter.as_on_users(Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}), user, false)
+  def self.user_followed_kpis user,page=0,size=20
+    KpiPresenter.as_on_users(Kpi.followed_by_user(user).offset(page*size).limit(size), user, false)
   end
 
   def self.details kpi
