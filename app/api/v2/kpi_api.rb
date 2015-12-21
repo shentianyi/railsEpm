@@ -53,13 +53,13 @@ module V2
       end
 
       post :follow do
-        if (params[:lower_boundary] > params[:upper_boundary]) || (params[:lower_boundary] < 0) || (params[:upper_boundary] < 0)
+        if (params[:lower_boundary].to_f > params[:upper_boundary].to_f) || (params[:lower_boundary].to_f < 0) || (params[:upper_boundary].to_f < 0)
           return ApiMessage.new(messages: ['Invlid Upper Or Lower Boundary'])
         end
 
-        unless params[:auto_notification].is_a?(Boolean)
-          return ApiMessage.new(messages: ['Invlid Auto Notification Value'])
-        end
+        # unless params[:auto_notification].is_a?(Boolean)
+        #   return ApiMessage.new(messages: ['Invlid Auto Notification Value'])
+        # end
 
         KpiService.follow_kpi({
                                   user: current_user,
@@ -139,7 +139,35 @@ module V2
         put do
           KpiService.update_properties params
         end
+      end
 
+      namespace :assigns do
+        params do
+          requires :kpi_id, type: Integer, desc: 'kpi id'
+        end
+        get do
+          KpiService.assigns params
+        end
+
+        params do
+          requires :kpi_id, type: Integer, desc: 'kpi id'
+          requires :assigns, type: Array do
+            requires :user, type: String, desc: 'user email'
+            requires :department_id, type: String, desc: 'department id'
+            requires :time, type: String, desc: 'task time'
+            requires :frequency, type: String, desc: 'task frequency'
+          end
+        end
+        post do
+          KpiService.add_assigns params, current_user
+        end
+
+        params do
+          requires :assignment_id, type: Integer, desc: 'assignment id'
+        end
+        delete do
+          KpiService.unassign params
+        end
       end
 
     end
