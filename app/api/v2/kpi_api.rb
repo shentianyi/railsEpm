@@ -53,7 +53,7 @@ module V2
           return ApiMessage.new(messages: ['Invlid Max Or Min Target'])
         end
 
-        if params[:kpi][:kpi_id].present? && kpi=Kpi.find_by_id(params[:kpi][:kpi_id])
+        if params[:kpi][:kpi_id].present? && kpi=current_user.kpis.find_by_id(params[:kpi][:kpi_id])
           KpiService.updating(params, current_user, kpi)
         else
           ApiMessage.new(messages: ['The Kpi Not Found'])
@@ -203,6 +203,16 @@ module V2
         end
         delete do
           KpiService.unassign params
+        end
+      end
+
+      namespace :departments do
+        params do
+          optional :department_id, type: String, desc: 'the start department id'
+          requires :kpi_id, type: Integer, desc: 'the kpi id'
+        end
+        get do
+          KpiService.department_select(current_user, params)
         end
       end
 

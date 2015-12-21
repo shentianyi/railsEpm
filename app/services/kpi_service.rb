@@ -337,4 +337,36 @@ class KpiService
     end
   end
 
+  def self.department_select user, params
+    departments=[]
+
+    kpi=user.tenant.kpis.find_by_id(params[:kpi_id])
+    unless kpi
+      return ApiMessage.new(messages: ['Kpi Not Found'])
+    end
+
+    # get root departments
+    if params[:department_id].blank?
+      departments = user.root_departments
+    else
+      if department = DepartmentService.get_department(user, params[:department_id])
+        if department.access_childreable(user)
+          departments = department.children
+        else
+          ApiMessage.new(messages: ['Department You cannot access'])
+        end
+      else
+        ApiMessage.new(messages: ['Department not found'])
+      end
+    end
+
+    #return infos
+    {
+        user: UserPresenter.new(user).as_brief_info(false),
+        kpi: KpiPresenter.new(kpi).as_basic_info(false),
+        department_follow_states: KpiPresenter.as_on_kpi_departments(user, kpi, departments)
+    }
+  end
+
+
 end

@@ -137,4 +137,21 @@ class KpiPresenter<Presenter
     infos
   end
 
+  def as_on_kpi_departments(user, department)
+    {
+        department: DepartmentPresenter.new(department).as_brief_info(true),
+        followed: @kpi.followed?(user,department),
+        follow_flag: Kpi::KpiFollowFlag.display(@kpi.follow_flag(user).follow_flag)
+    }
+  end
+
+  def self.as_on_kpi_departments(user, kpi, departments)
+    infos=[]
+    departments.each do |department|
+      infos<<KpiPresenter.new(kpi).as_on_kpi_departments(user, department)
+    end
+
+    infos
+  end
+
 end
