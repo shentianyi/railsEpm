@@ -67,7 +67,7 @@ IFEpm::Application.routes.draw do
 
   require 'sidekiq/web'
   authenticate :user, lambda { |u| u.is_sys } do
-    mount Sidekiq::Web => '/sidekiq'
+    mount Sidekiq::Web => '/admin/sidekiq'
   end
 
 
@@ -309,11 +309,7 @@ IFEpm::Application.routes.draw do
 
   #mount Resque::Server.new, :at => "/admin/resque"
 
-  require 'sidekiq/web'
-  # authenticate :user, lambda { |u| u.is_sys } do
-  mount Sidekiq::Web => '/admin/sidekiq'
-  #end
-
+ 
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # match 'DashboardItems/item_by_dashboard_id' => 'DashboardItems#item_by_dashboard_id'
