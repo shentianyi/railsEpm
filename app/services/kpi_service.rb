@@ -353,10 +353,10 @@ class KpiService
         if department.access_childreable(user)
           departments = department.children
         else
-          ApiMessage.new(messages: ['Department You cannot access'])
+          return ApiMessage.new(messages: ['Department You cannot access'])
         end
       else
-        ApiMessage.new(messages: ['Department not found'])
+        return ApiMessage.new(messages: ['Department not found'])
       end
     end
 

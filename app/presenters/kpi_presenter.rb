@@ -140,7 +140,7 @@ class KpiPresenter<Presenter
   def as_on_kpi_departments(user, department)
     {
         department: DepartmentPresenter.new(department).as_brief_info(true),
-        followed: true,
+        followed: KpiSubscribe.where(kpi_id: @kpi.id, department_id: department.id).blank? ? false : true,
         follow_flag: Kpi::KpiFollowFlag.display(@kpi.follow_flag(user).follow_flag)
     }
   end
