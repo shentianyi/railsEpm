@@ -208,7 +208,7 @@ module V2
 
       namespace :departments do
         params do
-          requires :department_id, type: String, desc: 'the start department id'
+          optional :department_id, type: String, desc: 'the start department id'
           requires :kpi_id, type: Integer, desc: 'the kpi id'
         end
         get do

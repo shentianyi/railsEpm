@@ -122,14 +122,14 @@ class Kpi < ActiveRecord::Base
     partial_block_ids=Kpi.joins({user_group: :user_group_items}).where(viewable: KpiViewable::PARTIAL_BLOCK, user_group_items: {user_id: user.id}).pluck(:id)
 
     Kpi.where(tenant_id: user.tenant_id).where("(viewable=?) or (viewable=? and user_id=?) or (user_id=?) or (viewable=? and id in(?)) or (viewable=? and id not in(?))",
-                                                 KpiViewable::PUBLIC,
-                                                 KpiViewable::PRIVATE,
-                                                 user.id,
-                                                 user.id,
-                                                 KpiViewable::PARTIAL_PUBLIC,
-                                                 partial_public_ids,
-                                                 KpiViewable::PARTIAL_BLOCK,
-                                                 partial_block_ids
+                                               KpiViewable::PUBLIC,
+                                               KpiViewable::PRIVATE,
+                                               user.id,
+                                               user.id,
+                                               KpiViewable::PARTIAL_PUBLIC,
+                                               partial_public_ids,
+                                               KpiViewable::PARTIAL_BLOCK,
+                                               partial_block_ids
     ).uniq
   end
 
@@ -142,6 +142,10 @@ class Kpi < ActiveRecord::Base
   end
 
   def follow_flag(user)
-    @follow_flag||=(KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id).first|| KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE))
+    @follow_flag||=(KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id).first || KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE))
+  end
+
+  def followed?(user, department)
+    self.kpi_subscribes.where(user_id: user.id, department_id: department.id).count>0
   end
 end
