@@ -28,8 +28,12 @@ module V2
         requires :email,type:String,desc:'check user signuped'
       end
       post :signuped do
-        if User.find_by_email(params[:email])
-          ApiMessage.new(result_code:1,messages:'User has signed')
+        if user=User.find_by_email(params[:email])
+          # ApiMessage.new(result_code:1,messages:'User has signed')
+          {
+              result_code:1,
+              user:UserPresenter.new(user).as_brief_info(false)
+          }
         else
           ApiMessage.new(result_code:0,messages:'User not found')
         end
