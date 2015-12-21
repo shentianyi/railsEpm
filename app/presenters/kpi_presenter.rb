@@ -67,9 +67,25 @@ class KpiPresenter<Presenter
     assignments
   end
 
-  def as_kpi_details
+  def as_kpi_basic_feedback(messages=nil, result_code=nil, with_properties=false)
+    if @kpi.nil?
+      {
+          result_code: 0,
+          messages: messages
+      }
+    else
+      {
+          result_code: result_code||1,
+          messages: messages,
+          need_instruction: false,
+          customized_field: as_kpi_details(with_properties)
+      }
+    end
+  end
+
+  def as_kpi_details(with_properties=false)
     {
-        kpi: as_basic_info(false),
+        kpi: as_basic_info(with_properties),
         assignments: as_kpi_assignments(@kpi.id)
     }
   end

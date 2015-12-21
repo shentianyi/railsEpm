@@ -23,6 +23,10 @@ module V2
         end
       end
       post do
+        if (params[:kpi][:target_min].to_f > params[:kpi][:target_max].to_f) || (params[:kpi][:target_max].to_f < 0) || (params[:kpi][:target_min].to_f < 0)
+          return ApiMessage.new(messages: ['Invlid Max Or Min Target'])
+        end
+
         KpiService.building(params, current_user)
       end
 
@@ -35,8 +39,14 @@ module V2
         end
       end
       put do
+        if (params[:kpi][:target_min].to_f > params[:kpi][:target_max].to_f) || (params[:kpi][:target_max].to_f < 0) || (params[:kpi][:target_min].to_f < 0)
+          return ApiMessage.new(messages: ['Invlid Max Or Min Target'])
+        end
+
         if params[:kpi][:kpi_id].present? && kpi=Kpi.find_by_id(params[:kpi][:kpi_id])
           KpiService.updating(params, current_user, kpi)
+        else
+          ApiMessage.new(messages: ['The Kpi Not Found'])
         end
       end
 
@@ -52,6 +62,13 @@ module V2
         KpiService.frequency_select
       end
 
+      params do
+        requires :kpi_id, type: String, desc: 'kpi id'
+        requires :department_id, type: String, desc: 'department id'
+        requires :upper_boundary, type: Float, desc: 'max target'
+        requires :lower_boundary, type: Float, desc: 'min target'
+        requires :auto_notification, type: Boolean, desc: 'whether receive auto notification for this following when the kpi is abnormal'
+      end
       post :follow do
         if (params[:lower_boundary].to_f > params[:upper_boundary].to_f) || (params[:lower_boundary].to_f < 0) || (params[:upper_boundary].to_f < 0)
           return ApiMessage.new(messages: ['Invlid Upper Or Lower Boundary'])

@@ -19,4 +19,28 @@ class KpiPropertyPresenter <Presenter
     return gs
   end
 
+  def as_property_details
+    {
+        id: @property.id,
+        name: @property.name,
+        type: @property.type
+    }
+  end
+
+  def as_property_basic_feedback(messages=nil, result_code=nil)
+    if @property.nil?
+      {
+          result_code: 0,
+          messages: messages
+      }
+    else
+      {
+          result_code: result_code||1,
+          messages: messages,
+          need_instruction: false,
+          customized_field: as_property_details
+      }
+    end
+  end
+
 end
