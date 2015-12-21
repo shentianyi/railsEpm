@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151221062354) do
+ActiveRecord::Schema.define(:version => 20151221091721) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -317,7 +317,7 @@ ActiveRecord::Schema.define(:version => 20151221062354) do
 
   create_table "kpi_subscribe_alerts", :force => true do |t|
     t.integer  "kpi_subscribe_id"
-    t.string   "alert_type"
+    t.integer  "alert_type"
     t.float    "value"
     t.integer  "tenant_id"
     t.datetime "created_at",       :null => false

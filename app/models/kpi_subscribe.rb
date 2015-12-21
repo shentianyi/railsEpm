@@ -4,9 +4,14 @@ class KpiSubscribe < ActiveRecord::Base
   belongs_to :user
   belongs_to :tenant
   belongs_to :kpi
+  belongs_to :department
+
   has_one :chart_condition, :as => :chartable, :dependent => :destroy
   has_many :kpi_subscribe_users, :dependent => :destroy
   has_many :kpi_subscribe_alerts, :dependent => :destroy
+
+  has_one :max_kpi_subscribe_alert,class_name: 'KpiSubscribeAlert',conditions: {alert_type: Kpi::SubscribeAlert::MAX}
+  has_one :min_kpi_subscribe_alert,class_name: 'KpiSubscribeAlert',conditions: {alert_type: Kpi::SubscribeAlert::MIN}
 
   after_create :update_follow_flag
   after_destroy :update_follow_flag
@@ -46,6 +51,11 @@ class KpiSubscribe < ActiveRecord::Base
 
   def kpi_user_subscribe
     @kpi_user_subscribe||=KpiUserSubscribe.where(kpi_id: self.kpi_id, user_id: self.user_id).first
+  end
+
+
+  def self.followed_details_by_user(user)
+    user.kpi_subscribes.joins(:kpi).joins(:department)
   end
 
   private
