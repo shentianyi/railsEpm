@@ -20,6 +20,11 @@ module V2
           requires :target_min, type: Float, desc: "kpi target min"
           # requires :viewable, type: Integer, desc: "kpi viewable"
           requires :calculate_method, type: Integer, desc: "kpi calculate method"
+          requires :attributes, type: Array, desc: "kpi properties list"
+          requires :viewable, type: Hash do
+            requires :viewable_code, type: String, desc: "kpi viewable code"
+            requires :user_group_id, type: String, desc: "user group id"
+          end
         end
       end
       post do
@@ -36,6 +41,11 @@ module V2
           requires :target_min, type: Float, desc: "kpi target min"
           requires :kpi_id, type: Integer, desc: "kpi id"
           requires :calculate_method, type: Integer, desc: "kpi calculate method"
+          requires :attributes, type: Array, desc: "kpi properties list"
+          requires :viewable, type: Hash do
+            requires :viewable_code, type: String, desc: "kpi viewable code"
+            requires :user_group_id, type: String, desc: "user group id"
+          end
         end
       end
       put do

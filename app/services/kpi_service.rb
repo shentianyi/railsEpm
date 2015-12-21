@@ -66,14 +66,14 @@ class KpiService
 
   def self.updating(params, user, kpi)
     puts params
-    begin
+    # begin
       Kpi.transaction do
         puts "update---------------------------------------------------------------------"
         kpi.update_attributes({
                                   name: params[:kpi][:kpi_name],
                                   description: params[:kpi][:description],
-                                  target_max: params[:kpi][:target_max],
-                                  target_min: params[:kpi][:target_min],
+                                  target_max: params[:kpi][:target_max].to_f,
+                                  target_min: params[:kpi][:target_min].to_f,
                                   unit: params[:kpi][:uom],
                                   viewable: params[:kpi][:viewable][:viewable_code],
                                   calculate_method: params[:kpi][:calculate_method]
@@ -147,9 +147,9 @@ class KpiService
 
         KpiPresenter.new(kpi).as_kpi_basic_feedback(['Kpi Update Success'], 1, false)
       end
-    rescue => e
-      ApiMessage.new(messages: [e.message])
-    end
+    # rescue => e
+    #   ApiMessage.new(messages: [e.message])
+    # end
   end
 
   def self.unit_select
