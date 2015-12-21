@@ -6,7 +6,7 @@ bundle exec rake environment elasticsearch:import:model CLASS='Department' FORCE
 bundle exec rake environment elasticsearch:import:model CLASS='Kpi' FORCE=y
 
 1.3 安装中文搜索插件(Ubuntu)
-1.3.1 将ik/ik.config.tar.gz 解压到es的安装目录的配置文件夹中，如/usr/share/elasticsearch/config/
+1.3.1 将ik/ik.config.tar.gz 解压到es的安装目录的配置文件夹中(若无，则新建)，如/uselasticsearch/config/
 1.3.2 将ik/ik.plugins.tar.gz 解压到es的安装目录的插件文件夹中，如/usr/share/elasticsearch/plugins/
 1.3.3 将ik/ik.etc.config.tar.gz 解压到es的运行目录的文件夹中，如/etc/elasticsearch/
 1.3.4 重启es
