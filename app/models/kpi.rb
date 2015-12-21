@@ -40,6 +40,12 @@ class Kpi < ActiveRecord::Base
     errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where(:name => self.name, :kpi_category_id => self.kpi_category_id).where('id<>?', self.id).first unless new_record? # for update
   end
 
+
+  mapping do
+    indexes :name,type: :string, analyzer: :ik_max_word
+    indexes :description,type: :string, analyzer: :ik_max_word
+  end
+
   def self.parent_kpis_by_id id
     kpis= Kpi.joins(:kpi_items).where('kpi_items.item_id=?', id).all
     kpis.count>0 ? kpis : nil
