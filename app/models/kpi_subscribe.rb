@@ -1,12 +1,15 @@
 class KpiSubscribe < ActiveRecord::Base
   # attr_accessible :title, :body
-  attr_accessible :user_id, :tenant_id, :kpi_id, :is_alert,:alert_by_sms,:alert_by_email,:department_id,:auto_notification
+  attr_accessible :user_id, :tenant_id, :kpi_id, :is_alert, :alert_by_sms, :alert_by_email, :department_id, :auto_notification
   belongs_to :user
   belongs_to :tenant
   belongs_to :kpi
   has_one :chart_condition, :as => :chartable, :dependent => :destroy
   has_many :kpi_subscribe_users, :dependent => :destroy
   has_many :kpi_subscribe_alerts, :dependent => :destroy
+
+  after_create :update_follow_flag
+  after_destroy :update_follow_flag
 
   acts_as_tenant
 
@@ -39,5 +42,20 @@ class KpiSubscribe < ActiveRecord::Base
 
   def alert_user
     UserMessage.add_subscription_message(self.user.id)
+  end
+
+  def kpi_user_subscribe
+    @kpi_user_subscribe||=KpiUserSubscribe.where(kpi_id: self.kpi_id, user_id: self.user_id).first
+  end
+
+  private
+  def update_follow_flag
+    if self.kpi_user_subscribe.nil?
+      kus= KpiUserSubscribe.new(kpi_id: self.kpi_id, user_id: self.user_id, follow_flag: Kpi::KpiFollowFlag::PARTLY)
+      kus.tenant=self.tenant
+      kus.save
+    end
+
+    KpiFollowFlagWorker.perform_async(self.user_id, self.kpi_id)
   end
 end

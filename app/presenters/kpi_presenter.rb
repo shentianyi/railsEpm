@@ -94,8 +94,8 @@ class KpiPresenter<Presenter
     {
         user: UserPresenter.new(user).as_brief_info(false),
         kpi: as_basic_info(with_properties),
-        follow_flag: Kpi::KpiFollowFlag.display(Kpi::KpiFollowFlag::NONE),
-        follow_flag_value: Kpi::KpiFollowFlag::NONE,
+        follow_flag: Kpi::KpiFollowFlag.display(@kpi.follow_flag(user).follow_flag),
+        follow_flag_value: @kpi.follow_flag(user).follow_flag,
         is_created: @kpi.user_id==user.id,
         is_managable: @kpi.user_id==user.id
     }

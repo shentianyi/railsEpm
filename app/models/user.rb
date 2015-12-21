@@ -32,8 +32,9 @@ class User < ActiveRecord::Base
   #
   has_many :user_invites
   has_many :user_groups
-
   has_many :access_tokens, class_name: 'Doorkeeper::AccessToken', foreign_key: :resource_owner_id
+  has_many :user_departments
+  has_many :kpi_subscribes
 
 
   # Include default devise modules. Others available are:
