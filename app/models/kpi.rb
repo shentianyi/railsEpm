@@ -44,8 +44,8 @@ class Kpi < ActiveRecord::Base
 
 
   mapping do
-    indexes :name, type: :string, analyzer: :ik_max_word
-    indexes :description, type: :string, analyzer: :ik_max_word
+    indexes :name, type: :string, analyzer: :smartcn
+    indexes :description, type: :string, analyzer: :smartcn
   end
 
   def self.parent_kpis_by_id id
@@ -121,7 +121,7 @@ class Kpi < ActiveRecord::Base
     partial_public_ids=Kpi.joins({user_group: :user_group_items}).where(viewable: KpiViewable::PARTIAL_PUBLIC, user_group_items: {user_id: user.id}).pluck(:id)
     partial_block_ids=Kpi.joins({user_group: :user_group_items}).where(viewable: KpiViewable::PARTIAL_BLOCK, user_group_items: {user_id: user.id}).pluck(:id)
 
-    q=Kpi.where(tenant_id: user.tenant_id).where("(viewable=?) or (viewable=? and user_id=?) or (user_id=?) or (viewable=? and id in(?)) or (viewable=? and id not in(?))",
+    Kpi.where(tenant_id: user.tenant_id).where("(viewable=?) or (viewable=? and user_id=?) or (user_id=?) or (viewable=? and id in(?)) or (viewable=? and id not in(?))",
                                                  KpiViewable::PUBLIC,
                                                  KpiViewable::PRIVATE,
                                                  user.id,

@@ -12,6 +12,9 @@ bundle exec rake environment elasticsearch:import:model CLASS='Kpi' FORCE=y
 1.3.4 重启es
 1.3.5 重新初始化数据
 
+1.4 安装默认中文插件
+1.4.1 bin/plugin install elasticsearch/elasticsearch-analysis-smartcn/2.7.0
+
 
 2. god 作为sidekiq的监控
 2.1 安装 gem install god

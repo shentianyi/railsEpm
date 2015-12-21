@@ -30,8 +30,8 @@ class Department < ActiveRecord::Base
   validates_uniqueness_to_tenant :name, message: 'should be uniq'
 
   mapping do
-    indexes :name,type: :string, analyzer: :ik_max_word
-    indexes :description,type: :string, analyzer: :ik_max_word
+    indexes :name,type: :string, analyzer: :smartcn
+    indexes :description,type: :string, analyzer: :smartcn
   end
 
 
