@@ -177,12 +177,12 @@ class KpiService
 
           alerts = []
           alerts << KpiSubscribeAlert.new({
-                                              alert_type: "MAX",
+                                              alert_type: Kpi::SubscribeAlert::MAX,
                                               value: params[:upper_boundary],
                                               tenant_id: params[:user].tenant_id
                                           })
           alerts << KpiSubscribeAlert.new({
-                                              alert_type: "MIN",
+                                              alert_type: Kpi::SubscribeAlert::MIN,
                                               value: params[:lower_boundary],
                                               tenant_id: params[:user].tenant_id
                                           })
@@ -238,6 +238,10 @@ class KpiService
 
   def self.user_followed_kpis user, page=0, size=20
     KpiPresenter.as_on_users(Kpi.followed_by_user(user).offset(page*size).limit(size), user, false)
+  end
+
+  def self.user_followed_details user,page=0,size=20
+    KpiSubscribePresenter.as_followed_details(KpiSubscribe.followed_details_by_user(user).offset(page*size).limit(size), user)
   end
 
   def self.details kpi

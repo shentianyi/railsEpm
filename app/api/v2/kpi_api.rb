@@ -138,6 +138,15 @@ module V2
         get :created do
           KpiService.user_created_kpis(current_user,params[:page],params[:size])
         end
+
+
+        params do
+          optional :page, type: Integer, default: 0, desc: 'page index start from 0'
+          optional :size, type: Integer, default: 20, desc: 'page size'
+        end
+        get :followed_details do
+          KpiService.user_followed_details(current_user,params[:page],params[:size])
+        end
       end
 
       namespace :properties do
