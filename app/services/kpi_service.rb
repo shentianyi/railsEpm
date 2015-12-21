@@ -243,7 +243,7 @@ class KpiService
       property.user = user
       property.tenant = user.tenant
       kpi.kpi_properties<<property
-      ApiMessage.new(result_code: 1, messages: ['Kpi Property Add Sucess'])
+      ApiMessage.new(result_code: 1, messages: ['Kpi Property Add Success'])
     else
       ApiMessage.new(messages: ['Kpi Not Exist'])
     end
