@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :nick_name, message: 'can not be blank'
 
- # after_create :create_view_and_entity_for_general_user
+  # after_create :create_view_and_entity_for_general_user
   after_create :generate_access_token
 
   #acts_as_authentic do |c|
@@ -68,6 +68,7 @@ class User < ActiveRecord::Base
 
   mapping do
     indexes :email, index: :not_analyzed
+    indexes :nick_name, type: :string, analyzer: :ik_max_word
   end
 
 
