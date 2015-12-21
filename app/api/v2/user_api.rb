@@ -24,6 +24,17 @@ module V2
         UserService.get_infos(params[:user_id], current_user)
       end
 
+      params do
+        requires :email,type:String,desc:'check user signuped'
+      end
+      post :signuped do
+        if User.find_by_email(params[:email])
+          ApiMessage.new(result_code:1,messages:'User has signed')
+        else
+          ApiMessage.new(result_code:0,messages:'User not found')
+        end
+      end
+
       # update user info
       params do
         requires :email, type: String, desc: 'user email'
