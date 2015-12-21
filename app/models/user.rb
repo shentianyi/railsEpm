@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
 
   mapping do
     indexes :email, index: :not_analyzed
-    indexes :nick_name, type: :string, analyzer: :smartcn
+    indexes :nick_name, type: :string, analyzer: :ik_max_word
   end
 
 

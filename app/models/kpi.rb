@@ -44,8 +44,8 @@ class Kpi < ActiveRecord::Base
 
 
   mapping do
-    indexes :name, type: :string, analyzer: :smartcn
-    indexes :description, type: :string, analyzer: :smartcn
+    indexes :name, type: :string, analyzer: :ik_max_word
+    indexes :description, type: :string, analyzer: :ik_max_word
   end
 
   def self.parent_kpis_by_id id
