@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151217105417) do
+ActiveRecord::Schema.define(:version => 20151218030332) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -341,16 +341,31 @@ ActiveRecord::Schema.define(:version => 20151217105417) do
     t.integer  "user_id"
     t.integer  "kpi_id"
     t.integer  "tenant_id"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.boolean  "is_alert",       :default => false
-    t.boolean  "alert_by_sms",   :default => false
-    t.boolean  "alert_by_email", :default => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.boolean  "is_alert",          :default => false
+    t.boolean  "alert_by_sms",      :default => false
+    t.boolean  "alert_by_email",    :default => false
+    t.integer  "department_id"
+    t.boolean  "auto_notification", :default => false
   end
 
   add_index "kpi_subscribes", ["kpi_id"], :name => "index_kpi_subscribes_on_kpi_id"
   add_index "kpi_subscribes", ["tenant_id"], :name => "index_kpi_subscribes_on_tenant_id"
   add_index "kpi_subscribes", ["user_id"], :name => "index_kpi_subscribes_on_user_id"
+
+  create_table "kpi_user_subscribes", :force => true do |t|
+    t.integer  "kpi_id"
+    t.integer  "user_id"
+    t.integer  "tenant_id"
+    t.string   "follow_flag"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "kpi_user_subscribes", ["kpi_id"], :name => "index_kpi_user_subscribes_on_kpi_id"
+  add_index "kpi_user_subscribes", ["tenant_id"], :name => "index_kpi_user_subscribes_on_tenant_id"
+  add_index "kpi_user_subscribes", ["user_id"], :name => "index_kpi_user_subscribes_on_user_id"
 
   create_table "kpis", :force => true do |t|
     t.string   "name"
@@ -358,17 +373,20 @@ ActiveRecord::Schema.define(:version => 20151217105417) do
     t.integer  "kpi_category_id"
     t.integer  "unit"
     t.integer  "frequency"
-    t.float    "target_max",      :default => 0.0
-    t.boolean  "is_calculated",   :default => false
+    t.float    "target_max",       :default => 0.0
+    t.boolean  "is_calculated",    :default => false
     t.integer  "direction"
     t.integer  "period"
     t.text     "formula"
     t.text     "formula_string"
     t.integer  "user_id"
     t.integer  "tenant_id"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
-    t.float    "target_min",      :default => 0.0
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.float    "target_min",       :default => 0.0
+    t.integer  "user_group_id"
+    t.integer  "viewable"
+    t.integer  "calculate_method"
   end
 
   add_index "kpis", ["kpi_category_id"], :name => "index_kpis_on_kpi_category_id"
@@ -527,6 +545,43 @@ ActiveRecord::Schema.define(:version => 20151217105417) do
 
   add_index "user_entity_groups", ["entity_group_id"], :name => "index_user_entity_groups_on_entity_group_id"
   add_index "user_entity_groups", ["user_id"], :name => "index_user_entity_groups_on_user_id"
+
+  create_table "user_group_items", :force => true do |t|
+    t.integer  "user_group_id"
+    t.integer  "tenant_id"
+    t.integer  "user_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "user_group_items", ["tenant_id"], :name => "index_user_group_items_on_tenant_id"
+  add_index "user_group_items", ["user_group_id"], :name => "index_user_group_items_on_user_group_id"
+
+  create_table "user_group_relations", :force => true do |t|
+    t.integer  "user_group_id"
+    t.integer  "user_groupable_id"
+    t.integer  "tenant_id"
+    t.string   "user_groupable_type"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "user_group_relations", ["tenant_id"], :name => "index_user_group_relations_on_tenant_id"
+  add_index "user_group_relations", ["user_group_id"], :name => "index_user_group_relations_on_user_group_id"
+  add_index "user_group_relations", ["user_groupable_id"], :name => "index_user_group_relations_on_user_groupable_id"
+  add_index "user_group_relations", ["user_groupable_type"], :name => "index_user_group_relations_on_user_groupable_type"
+
+  create_table "user_groups", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "tenant_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "user_groups", ["tenant_id"], :name => "index_user_groups_on_tenant_id"
+  add_index "user_groups", ["user_id"], :name => "index_user_groups_on_user_id"
 
   create_table "user_invites", :force => true do |t|
     t.string   "email"

@@ -1,5 +1,5 @@
 class ApiMessage<CZ::BaseClass
-  attr_accessor  :result_code, :messages,:object
+  attr_accessor  :result_code, :messages, :object, :content
 
   def default
     {result_code: 0, messages: []}

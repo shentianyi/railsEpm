@@ -101,6 +101,23 @@ module KpisHelper
     return nil
   end
 
+  #validate data
+  def self.validate_assigns assigns, user
+    msg = Message.new(content: [])
+
+    assigns.each do |assign|
+      if !user.tenant.users.find_by_email(assign[:user]) || !Department.find_by_id(assign[:department_id])
+        msg.content<<"User：#{assign[:user]} Not Found"
+      end
+    end
+
+    unless msg.result=(msg.content.size==0)
+      msg.contents=msg.content.join("/")
+    end
+
+    msg
+  end
+
   private
 
   def self.user_kpi_base_query_field

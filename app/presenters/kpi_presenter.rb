@@ -39,8 +39,8 @@ class KpiPresenter<Presenter
         description: @kpi.description,
         creator: @kpi.user_id,
         created_on: @kpi.created_at,
-        target_max: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max),
-        target_min: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min),
+        target_max: @kpi.target_max,#KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max),
+        target_min: @kpi.target_min,#KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min),
         uom: @kpi.unit,
         calculate_method: @kpi.calculate_method,
         viewable: {
@@ -77,11 +77,11 @@ class KpiPresenter<Presenter
   def as_on_user(user, with_properties=true)
     {
         user: UserPresenter.new(user).as_brief_info(false),
-        kpi: as_basic_info(false),
+        kpi: as_basic_info(with_properties),
         follow_flag: Kpi::KpiFollowFlag.display(Kpi::KpiFollowFlag::NONE),
         follow_flag_value: Kpi::KpiFollowFlag::NONE,
         is_created: @kpi.user_id==user.id,
-        is_managable: false
+        is_managable: @kpi.user_id==user.id
     }
   end
 
@@ -94,4 +94,31 @@ class KpiPresenter<Presenter
 
     infos
   end
+
+  def as_properties_info
+    infos=[]
+
+    @kpi.kpi_properties.each do |p|
+      infos<<{id: p.id, name: p.name, type: p.type}
+    end
+
+    infos
+  end
+
+  def as_assigns
+    infos=[]
+
+    @kpi.user_kpi_items.each do |item|
+      infos<<{
+          assignment_id: item.id,
+          department_id: item.department_id,
+          time: item.remind_time,
+          frequency: item.frequency,
+          user: UserPresenter.new(User.find_by_id(item.user_id)).as_brief_info
+      }
+    end
+
+    infos
+  end
+
 end

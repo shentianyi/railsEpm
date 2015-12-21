@@ -10,23 +10,24 @@ class KpiService
                         target_min: params[:kpi][:target_min],
                         unit: params[:kpi][:uom],
                         viewable: params[:kpi][:viewable][:viewable_code],
-                        calculate_method: params[:kpi][:calculate_method],
-                        user_group_id: params[:kpi][:viewable][:user_group_id]
+                        calculate_method: params[:kpi][:calculate_method]
+                        # user_group_id: params[:kpi][:viewable][:user_group_id]
                     })
       kpi.creator = user
       kpi.tenant = user.tenant
+      kpi.user_group = UserGroup.find_by_id(params[:kpi][:viewable][:user_group_id])
 
       #kpi_properties
       params[:kpi][:attributes].each do |attr|
         if attr[:attribute_id].blank?
-          property = KpiProperty.new(:name => attr[:attribute_name], :type => attr[:attribute_type])
+          property = KpiProperty.new(:name => attr[:attribute_name], :type => Kpi::KpiPropertyType.code(attr[:attribute_type]))
           property.user = user
           property.tenant = user.tenant
           kpi.kpi_properties<<property
         else
           property = KpiProperty.find_by_id(attr[:attribute_id])
           if property && ((property.name != attr[:attribute_name]) || (property.type != attr[:attribute_type]))
-            property.update_attributes({:name => attr[:attribute_name], :type => attr[:attribute_type]})
+            property.update_attributes({:name => attr[:attribute_name], :type => Kpi::KpiPropertyType.code(attr[:attribute_type])})
           end
         end
       end
@@ -39,9 +40,7 @@ class KpiService
       if kpi.save
         ##assign
         params[:assignments].each do |assignment|
-          puts '0000000000000000000000000000000000000000000'
           if ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
-            puts '222222222222222222222222222222222222222222222222'
             KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment)
           end
         end
@@ -71,10 +70,10 @@ class KpiService
                                 target_min: params[:kpi][:target_min],
                                 unit: params[:kpi][:uom],
                                 viewable: params[:kpi][:viewable][:viewable_code],
-                                calculate_method: params[:kpi][:calculate_method],
-                                user_group_id: params[:kpi][:viewable][:user_group_id]
+                                calculate_method: params[:kpi][:calculate_method]
+                                # user_group_id: params[:kpi][:viewable][:user_group_id]
                             })
-
+      kpi.user_group = UserGroup.find_by_id(params[:kpi][:viewable][:user_group_id])
 
       #kpi_properties
       #delete
@@ -92,14 +91,14 @@ class KpiService
       #new update
       params[:kpi][:attributes].each do |attr|
         if attr[:attribute_id].blank?
-          property = KpiProperty.new(:name => attr[:attribute_name], :type => attr[:attribute_type])
+          property = KpiProperty.new(:name => attr[:attribute_name], :type => Kpi::KpiPropertyType.code(attr[:attribute_type]))
           property.user = user
           property.tenant = user.tenant
           kpi.kpi_properties<<property
         else
           property = KpiProperty.find_by_id(attr[:attribute_id])
           if property && ((property.name != attr[:attribute_name]) || (property.type != attr[:attribute_type]))
-            property.update_attributes({:name => attr[:attribute_name], :type => attr[:attribute_type]})
+            property.update_attributes({:name => attr[:attribute_name], :type => Kpi::KpiPropertyType.code(attr[:attribute_type])})
           end
         end
       end
@@ -214,19 +213,84 @@ class KpiService
     end
   end
 
-  def self.accessable_list user
-    KpiPresenter.as_on_users(Kpi.accesses_by_user(user), user, false)
+  def self.user_accessable_kpis user,page=0,size=20
+    KpiPresenter.as_on_users(Kpi.accesses_by_user(user).offset(page*size).limit(size), user, false)
   end
 
-  def self.user_created_kpis user
-    KpiPresenter.as_on_users(Kpi.where(user_id: user.id), user, false)
+  def self.user_created_kpis user,page=0,size=20
+    KpiPresenter.as_on_users(Kpi.created_by_user(user).offset(page*size).limit(size), user, false)
   end
 
-  def self.user_followed_kpis user
-    KpiPresenter.as_on_users(Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}), user, false)
+  def self.user_followed_kpis user,page=0,size=20
+    KpiPresenter.as_on_users(Kpi.followed_by_user(user).offset(page*size).limit(size), user, false)
   end
 
   def self.details kpi
     KpiPresenter.new(kpi).as_kpi_details
   end
+
+  def self.properties kpi_id
+    if kpi=Kpi.find_by_id(kpi_id)
+      KpiPresenter.new(kpi).as_properties_info
+    else
+      ApiMessage.new(messages: ['Kpi Not Exist'])
+    end
+  end
+
+  def self.add_properties params, user
+    if kpi=Kpi.find_by_id(params[:kpi_id])
+      property = KpiProperty.new(:name => params[:name], :type => Kpi::KpiPropertyType.code(params[:type]))
+      property.user = user
+      property.tenant = user.tenant
+      kpi.kpi_properties<<property
+      ApiMessage.new(result_code: 1, messages: ['Kpi Property Add Success'])
+    else
+      ApiMessage.new(messages: ['Kpi Not Exist'])
+    end
+  end
+
+  def self.update_properties params
+    if kpi=Kpi.find_by_id(params[:kpi_id]) && property=KpiProperty.find_by_id(params[:property_id])
+      property.update_attributes({:name => params[:name], :type => Kpi::KpiPropertyType.code(params[:type])})
+      ApiMessage.new(result_code: 1, messages: ['Kpi Property Update Sucess'])
+    else
+      ApiMessage.new(messages: ['Kpi Or Property Not Exist'])
+    end
+  end
+
+  def self.assigns params
+    if kpi=Kpi.find_by_id(params[:kpi_id])
+      KpiPresenter.new(kpi).as_assigns
+    else
+      ApiMessage.new(messages: ['Kpi Not Exist'])
+    end
+  end
+
+  def self.add_assigns params, user
+    mmsg = KpisHelper.validate_assigns params[:assigns], user
+    unless mmsg.result
+      return ApiMessage.new(messages: [mmsg.contents])
+    end
+
+    if kpi=Kpi.find_by_id(params[:kpi_id])
+      params[:assigns].each do |assignment|
+        to_user = user.tenant.users.find_by_email(assignment[:user])
+        department = Department.find_by_id(assignment[:department_id])
+        KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment)
+      end
+
+      ApiMessage.new(result_code: 1, messages: ['Kpi Assign Sucess'])
+    else
+      ApiMessage.new(messages: ['Kpi Not Exist'])
+    end
+  end
+
+  def self.unassign params
+    if assign=UserKpiItem.find_by_id(params[:assignment_id])
+      assign.destroy
+    else
+      ApiMessage.new(messages: ['This Assign Not Exist'])
+    end
+  end
+
 end

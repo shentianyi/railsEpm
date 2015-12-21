@@ -66,6 +66,10 @@ class User < ActiveRecord::Base
                      :prefix_index_enable => true,
                      :ext_fields => [:email])
 
+  mapping do
+    indexes :email, index: :not_analyzed
+  end
+
 
   # def create_view_and_entity_for_general_user
   #   #name code description tenant_id
