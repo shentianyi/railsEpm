@@ -52,19 +52,4 @@ class DepartmentPresenter<Presenter
     end
     infos
   end
-
-  def as_kpi_department
-    {
-        follow_flag: "NONE",
-        department: as_brief_info
-    }
-  end
-
-  def self.as_kpi_departments(departments)
-    infos=[]
-    departments.each do |department|
-      infos<<self.new(department).as_kpi_department
-    end
-    infos
-  end
 end

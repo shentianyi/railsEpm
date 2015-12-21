@@ -33,7 +33,7 @@ module V2
       end
 
       params do
-        requires :kpi_id, type: Integer, desc: "kpi id"
+        optional :kpi_id, type: Integer, desc: "kpi id"
       end
       get :for_kpis do
         UserGroupService.as_select params
