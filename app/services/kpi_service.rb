@@ -289,6 +289,21 @@ class KpiService
     end
   end
 
+  def self.delete_property params
+    begin
+      KpiProperty.transaction do
+        if property=KpiProperty.find_by_id(params[:property_id])
+          property.destroy
+          ApiMessage.new(result_code: 1, messages: ['Property Delete Success'])
+        else
+          ApiMessage.new(messages: ['Kpi Or Property Not Exist'])
+        end
+      end
+    rescue => e
+      ApiMessage.new(messages: [e.message])
+    end
+  end
+
   def self.assigns params
     if kpi=Kpi.find_by_id(params[:kpi_id])
       KpiPresenter.new(kpi).as_assigns

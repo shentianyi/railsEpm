@@ -16,13 +16,24 @@ class UserGroupPresenter<Presenter
     }
   end
 
+  def as_group_members(count=3)
+    infos=[]
+
+    @user_group.user_group_items.limit(count).pluck(:user_id).each do |id|
+      infos<<User.nick_name(id)
+    end
+
+    infos
+  end
+
   def as_select(selected=false)
     {
         selected: selected,
         user_group: {
             id: @user_group.id,
             name: @user_group.name,
-            user_id: @user_group.user_id
+            user_id: @user_group.user_id,
+            members: as_group_members
         }
     }
   end

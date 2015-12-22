@@ -11,4 +11,13 @@ class StorySetService
     end
     collaborators
   end
+
+  def self.details user, params
+    if discussion = user.tenant.story_sets.find_by_id(params[:discussion_id])
+      StorySetPresenter.new(discussion).as_basic_story_set
+    else
+      ApiMessage.new(messages: ['The Discussion Not Found'])
+    end
+  end
+
 end
