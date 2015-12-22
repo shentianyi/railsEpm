@@ -142,8 +142,8 @@ class Kpi < ActiveRecord::Base
     Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}).uniq
   end
 
-  def follow_flag(user,department)
-    @follow_flag||=(KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id,department_id: department.id).first || KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE))
+  def follow_flag(user,department=nil)
+    @follow_flag||=(KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id).first || KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE))
   end
 
   def followed?(user, department)
