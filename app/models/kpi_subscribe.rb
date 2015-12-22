@@ -13,8 +13,8 @@ class KpiSubscribe < ActiveRecord::Base
   has_one :max_kpi_subscribe_alert,class_name: 'KpiSubscribeAlert',conditions: {alert_type: Kpi::SubscribeAlert::MAX}
   has_one :min_kpi_subscribe_alert,class_name: 'KpiSubscribeAlert',conditions: {alert_type: Kpi::SubscribeAlert::MIN}
 
-  after_create :update_follow_flag
-  after_destroy :update_follow_flag
+  after_save :create_follow_flag
+  before_destroy :delete_follow_flag
 
   acts_as_tenant
 
@@ -50,7 +50,7 @@ class KpiSubscribe < ActiveRecord::Base
   end
 
   def kpi_user_subscribe
-    @kpi_user_subscribe||=KpiUserSubscribe.where(kpi_id: self.kpi_id, user_id: self.user_id).first
+    @kpi_user_subscribe||=KpiUserSubscribe.where(kpi_id: self.kpi_id, user_id: self.user_id,department_id: self.department_id).first
   end
 
 
@@ -60,13 +60,28 @@ class KpiSubscribe < ActiveRecord::Base
 
 
   private
-  def update_follow_flag
+
+  def create_follow_flag
     if self.kpi_user_subscribe.nil?
-      kus= KpiUserSubscribe.new(kpi_id: self.kpi_id, user_id: self.user_id, follow_flag: Kpi::KpiFollowFlag::PARTLY)
+      kus= KpiUserSubscribe.new(kpi_id: self.kpi_id,department_id:self.department_id, user_id: self.user_id, follow_flag: Kpi::KpiFollowFlag::ALL)
       kus.tenant=self.tenant
       kus.save
     end
-
-    KpiFollowFlagWorker.perform_async(self.user_id, self.kpi_id)
   end
+
+  def delete_follow_flag
+    if self.kpi_user_subscribe
+      self.kpi_user_subscribe.destroy
+    end
+  end
+
+  # def update_follow_flag
+  #   if self.kpi_user_subscribe.nil?
+  #     kus= KpiUserSubscribe.new(kpi_id: self.kpi_id,department_id:self.department_id, user_id: self.user_id, follow_flag: Kpi::KpiFollowFlag::ALL)
+  #     kus.tenant=self.tenant
+  #     kus.save
+  #   end
+  #
+  #   # KpiFollowFlagWorker.perform_async(self.user_id, self.kpi_id,self.department_id)
+  # end
 end
