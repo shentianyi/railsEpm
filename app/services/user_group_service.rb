@@ -56,10 +56,11 @@ class UserGroupService
   end
 
   def self.as_select params
-    if Kpi.find_by_id(params[:kpi_id])
-      UserGroupPresenter.for_kpis(UserGroup.all, params[:kpi_id])
-    else
-      ApiMessage.new(messages: ['Kpi Not Exists'])
-    end
+
+    # if Kpi.find_by_id(params[:kpi_id])
+     UserGroupPresenter.for_kpis(UserGroup.all, params[:kpi_id])
+    # else
+    #   ApiMessage.new(messages: ['Kpi Not Exists'])
+    # end
   end
 end

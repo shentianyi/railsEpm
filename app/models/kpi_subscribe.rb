@@ -58,6 +58,7 @@ class KpiSubscribe < ActiveRecord::Base
     user.kpi_subscribes.joins(:kpi).joins(:department)
   end
 
+
   private
   def update_follow_flag
     if self.kpi_user_subscribe.nil?

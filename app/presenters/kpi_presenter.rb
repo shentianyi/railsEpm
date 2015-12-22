@@ -140,14 +140,14 @@ class KpiPresenter<Presenter
   def as_on_kpi_department(user, department)
     {
         department: DepartmentPresenter.new(department).as_brief_info(true),
-        followed: KpiSubscribe.where(kpi_id: @kpi.id, department_id: department.id).blank? ? false : true,
-        follow_flag: Kpi::KpiFollowFlag.display(@kpi.follow_flag(user).follow_flag)
+        followed: @kpi.followed?(user,department),
+        follow_flag: Kpi::KpiFollowFlag.display(@kpi.follow_flag(user).follow_flag),
+        follow_flag_value: @kpi.follow_flag(user).follow_flag
     }
   end
 
   def self.as_on_kpi_departments(user, kpi, departments)
     infos=[]
-
     departments.each do |department|
       infos<<KpiPresenter.new(kpi).as_on_kpi_department(user, department)
     end
