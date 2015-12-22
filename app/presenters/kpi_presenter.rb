@@ -137,7 +137,7 @@ class KpiPresenter<Presenter
     infos
   end
 
-  def as_on_kpi_departments(user, department)
+  def as_on_kpi_department(user, department)
     {
         department: DepartmentPresenter.new(department).as_brief_info(true),
         followed: KpiSubscribe.where(kpi_id: @kpi.id, department_id: department.id).blank? ? false : true,
@@ -149,7 +149,7 @@ class KpiPresenter<Presenter
     infos=[]
 
     departments.each do |department|
-      infos<<KpiPresenter.new(kpi).as_on_department(user, department)
+      infos<<KpiPresenter.new(kpi).as_on_kpi_department(user, department)
     end
 
     infos
