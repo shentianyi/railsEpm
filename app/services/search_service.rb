@@ -74,8 +74,6 @@ class SearchService
       KpiSubscribePresenter.as_followed_details(KpiSubscribe.followed_details_by_user(user).limit(20), user)
       # KpiPresenter.as_on_users(Kpi.followed_by_user(user).order('name asc').limit(20), user, false)
     else
-      p full_text_kpi(q,user,nil)
-
       KpiSubscribePresenter.as_followed_details(
           user.kpi_subscribes.where(kpi_id: full_text_kpi(q,user,nil).pluck(:id)).limit(20), user
       )
