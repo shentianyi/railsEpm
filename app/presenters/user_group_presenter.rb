@@ -8,6 +8,18 @@ class UserGroupPresenter<Presenter
     self.delegators =Delegators
   end
 
+  def as_basic_feedback(messages=nil, result_code=nil)
+    {
+        result_code: result_code||1,
+        messages: messages,
+        need_instruction: false,
+        customized_field: {
+            id:@user_group.id,
+            name:@user_group.name
+        }
+    }
+  end
+
   def as_user_group_details
     {
         id: @user_group.id,
