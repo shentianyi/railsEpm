@@ -13,7 +13,8 @@ class UserGroupService
     end
 
     if ug.save
-      ApiMessage.new(result_code: 1, messages: ['User Group Create Success'])
+      UserGroupPresenter.new(ug).as_basic_feedback(['User Group Create Success'], 1)
+      #ApiMessage.new(result_code: 1, messages: ['User Group Create Success'])
     else
       ApiMessage.new(messages: ['User Group Create Error'])
     end
@@ -58,7 +59,7 @@ class UserGroupService
   def self.as_select params
 
     # if Kpi.find_by_id(params[:kpi_id])
-     UserGroupPresenter.for_kpis(UserGroup.all, params[:kpi_id])
+    UserGroupPresenter.for_kpis(UserGroup.all, params[:kpi_id])
     # else
     #   ApiMessage.new(messages: ['Kpi Not Exists'])
     # end
