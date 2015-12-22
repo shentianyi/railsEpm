@@ -65,36 +65,62 @@ class SearchService
     if q.blank?
       KpiPresenter.as_on_users(Kpi.accesses_by_user(user).order('name asc').limit(20), user, false)
     else
-      KpiPresenter.as_on_users(full_text_kpi(q, Kpi.accesses_by_user(user).pluck(:id)), user, false)
+      KpiPresenter.as_on_users(full_text_kpi(q,user, Kpi.accesses_by_user(user).pluck(:id)), user, false)
     end
   end
 
   def self.full_text_followed_kpi q, user
     if q.blank?
-      KpiPresenter.as_on_users(Kpi.followed_by_user(user).order('name asc').limit(20), user, false)
+      KpiSubscribePresenter.as_followed_details(KpiSubscribe.followed_details_by_user(user).limit(20), user)
+      # KpiPresenter.as_on_users(Kpi.followed_by_user(user).order('name asc').limit(20), user, false)
     else
-      KpiPresenter.as_on_users(full_text_kpi(q, Kpi.followed_by_user(user).pluck(:id)), user, false)
+      p full_text_kpi(q,user,nil)
+
+      KpiSubscribePresenter.as_followed_details(
+          user.kpi_subscribes.where(kpi_id: full_text_kpi(q,user,nil).pluck(:id)).limit(20), user
+      )
+      #KpiPresenter.as_on_users(full_text_kpi(q, Kpi.followed_by_user(user).pluck(:id)), user, false)
     end
   end
 
 
-  def self.full_text_kpi q, ids
-    Kpi.search(
-        {
-            query: {
-                query_string: {
-                    query: "*#{q}*",
-                    fields: [:name, :description]
-                }
-            },
-            size: 20,
-            filter: {
-                terms: {id: ids}
-            },
-            sort: {
-                name: {order: :asc}
-            }
-        }
-    ).records
+  def self.full_text_kpi q,user, ids=nil
+    if ids.nil?
+      Kpi.search(
+          {
+              query: {
+                  query_string: {
+                      query: "*#{q}*",
+                      fields: [:name, :description]
+                  }
+              },
+              size: 20,
+              filter: {
+                  term: {tenant_id: user.tenant_id}
+              },
+              sort: {
+                  name:{order: :asc}
+              }
+          }
+      ).records
+    else
+      Kpi.search(
+          {
+              query: {
+                  query_string: {
+                      query: "*#{q}*",
+                      fields: [:name, :description]
+                  }
+              },
+              size: 20,
+              filter: {
+                  terms: {id: ids}
+              },
+              sort: {
+                  name: {order: :asc}
+              }
+          }
+      ).records
+    end
   end
 end
