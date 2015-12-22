@@ -53,6 +53,14 @@ GEM
       bson (~> 1.12.3)
     builder (3.0.4)
     cancan (1.6.10)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+    carrierwave-aliyun (0.3.6)
+      carrierwave (>= 0.5.7)
+      rest-client (>= 1.6.7)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     chartkick (1.2.4)
@@ -267,7 +275,7 @@ GEM
       rails
     will_paginate (3.0.5)
     wkhtmltopdf-binary (0.9.9.3)
-    xml-simple (1.1.3)
+    xml-simple (1.1.5)
 
 PLATFORMS
   ruby
@@ -279,6 +287,8 @@ DEPENDENCIES
   axlsx (> 2.0.0)
   bson_ext
   cancan
+  carrierwave (~> 0.10.0)
+  carrierwave-aliyun
   chinese_pinyin
   coffee-rails (~> 3.2.1)
   colorize
@@ -318,3 +328,6 @@ DEPENDENCIES
   wicked_pdf
   will_paginate (~> 3.0)
   wkhtmltopdf-binary
+
+BUNDLED WITH
+   1.10.6
