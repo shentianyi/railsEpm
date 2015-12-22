@@ -345,6 +345,8 @@ class KpiService
       return ApiMessage.new(messages: ['Kpi Not Found'])
     end
 
+    puts params
+    puts '--------------------------------------------'
     # get root departments
     if params[:department_id].blank?
       departments = user.root_departments
