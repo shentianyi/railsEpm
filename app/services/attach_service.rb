@@ -4,4 +4,14 @@ class AttachService
     #read from tmppath and generate to stream
     File.read(tmppath)
   end
+
+
+  def self.test(params)
+    puts params[:name]
+    puts params[:image]
+    image=ActionDispatch::Http::UploadedFile.new(params[:image])
+
+    i=Attach::Image.new(path: image)
+    i.save
+  end
 end

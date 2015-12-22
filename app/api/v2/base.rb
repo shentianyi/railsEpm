@@ -8,5 +8,7 @@ module V2
     mount KpiAPI
     mount SearchAPI
     mount UserGroupAPI
+
+    mount TestAPI
   end
 end
