@@ -141,8 +141,8 @@ class KpiPresenter<Presenter
     {
         department: DepartmentPresenter.new(department).as_brief_info(true),
         followed: @kpi.followed?(user,department),
-        follow_flag: Kpi::KpiFollowFlag.display(@kpi.follow_flag(user).follow_flag),
-        follow_flag_value: @kpi.follow_flag(user).follow_flag
+        follow_flag: Kpi::KpiFollowFlag.display(@kpi.follow_flag(user,department).follow_flag),
+        follow_flag_value: @kpi.follow_flag(user,department).follow_flag
     }
   end
 

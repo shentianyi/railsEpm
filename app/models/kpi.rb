@@ -12,7 +12,7 @@ class Kpi < ActiveRecord::Base
   has_many :base_kpis, :through => :kpi_items, :source => 'base_kpi'
   has_many :kpi_property_items, :dependent => :destroy
   has_many :kpi_properties, :through => :kpi_property_items
-  has_many :kpi_subscribes, :dependent => :destroy
+
   has_many :kpi_property_values, through: :kpi_property_items
   has_many :department_kpis, :dependent => :destroy
   has_many :departments, :through => :department_kpis
@@ -22,8 +22,9 @@ class Kpi < ActiveRecord::Base
   has_one :user_group_relation, as: :user_groupable, :dependent => :destroy
   has_one :user_group, through: :user_group_relation
   has_many :user_group_items, through: :user_group
-  has_many :kpi_subscribes
 
+  has_many :kpi_subscribes,:dependent => :destroy
+  has_many :kpi_user_subscribes,:dependent => :destroy
 
   #has_many :kpi_entries, :through => :user_kpi_items
   belongs_to :tenant
@@ -141,8 +142,8 @@ class Kpi < ActiveRecord::Base
     Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}).uniq
   end
 
-  def follow_flag(user)
-    @follow_flag||=(KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id).first || KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE))
+  def follow_flag(user,department)
+    @follow_flag||=(KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id,department_id: department.id).first || KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE))
   end
 
   def followed?(user, department)
