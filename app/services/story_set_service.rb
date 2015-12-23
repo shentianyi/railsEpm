@@ -75,9 +75,29 @@ class StorySetService
 
   def self.as_select_members user, params
     if discussion = user.tenant.story_sets.find_by_id(params[:id])
-      StorySetPresenter.new(discussion).as_story_set_members user
+      StorySetPresenter.new(discussion).as_select_members user
     else
       ApiMessage.new(messages: ['The Discussion Not Found'])
+    end
+  end
+
+  def self.add_member user, params
+    unless story_set = user.tenant.story_sets.find_by_id(params[:id])
+      return ApiMessage.new(messages: ['The Discussion Not Found'])
+    end
+
+    unless member = user.tenant.users.find_by_id(params[:user_id])
+      return ApiMessage.new(messages: ['The Add Member Not Found'])
+    end
+
+    begin
+      StorySet.transaction do
+        su = StorySetUser.new(user_id: params[:user_id])
+        story_set.story_set_users<<su
+        StorySetPresenter.new(story_set).as_basic_feedback(['Discussion Member Add Success'], 1)
+      end
+    rescue => e
+      ApiMessage.new(messages: [e.message])
     end
   end
 

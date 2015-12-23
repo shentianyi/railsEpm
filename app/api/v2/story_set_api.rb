@@ -56,6 +56,13 @@ module V2
           StorySetService.as_select_members current_user, params
         end
 
+        params do
+          requires :id, type: Integer, desc: "story set id"
+          requires :user_id, type: Integer, desc: "story set member id"
+        end
+        post do
+          StorySetService.add_member current_user, params
+        end
 
 
       end

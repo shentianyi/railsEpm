@@ -58,5 +58,18 @@ class StorySetPresenter<Presenter
     infos
   end
 
+  def as_select_members(user)
+    infos=[]
+
+    members=@story_set.story_set_users.pluck(:user_id)
+    user.tenant.users.each do |u|
+      unless members.include? u.id
+        infos<<UserPresenter.new(u).as_brief_info(false)
+      end
+    end
+
+    infos
+  end
+
 
 end
