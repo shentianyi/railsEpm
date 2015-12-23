@@ -289,7 +289,7 @@ ActiveRecord::Schema.define(:version => 20151221150529) do
     t.integer  "tenant_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "attr_type"
+    t.integer  "type"
   end
 
   add_index "kpi_properties", ["tenant_id"], :name => "index_kpi_properties_on_tenant_id"
@@ -503,6 +503,10 @@ ActiveRecord::Schema.define(:version => 20151221150529) do
     t.integer  "comment_count", :default => 0
     t.integer  "chart_count",   :default => 0
     t.integer  "user_count",    :default => 0
+    t.string   "kpi_id"
+    t.string   "department_id"
+    t.datetime "close_on"
+    t.integer  "status"
   end
 
   add_index "story_sets", ["tenant_id"], :name => "index_story_sets_on_tenant_id"
