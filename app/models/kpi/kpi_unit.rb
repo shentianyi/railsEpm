@@ -12,6 +12,8 @@ class KpiUnit
                value.round.to_i
              when KpiUnit::FloatUnit, KpiUnit::FloatPercentUnit
                value.round(2).to_f
+             else
+               value
            end
   end
 
@@ -25,5 +27,10 @@ class KpiUnit
              else
                ''
            end
+  end
+
+  def self.get_value_display unit,value
+    value=parse_entry_value(unit,value)
+    "#{value}#{get_entry_unit_sym(unit)}"
   end
 end
