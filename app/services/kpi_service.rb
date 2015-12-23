@@ -130,14 +130,17 @@ class KpiService
             if assignment[:assignment_id].blank?
               KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment, user)
             else
-              UserKpiItem.find_by_id(assignment[:assignment_id]).update_attributes({
+             if item= UserKpiItem.find_by_id(assignment[:assignment_id])
+                          item.update_attributes({
                                                                                        user_id: to_user.id,
                                                                                        department_id: department.id,
                                                                                        target_max: kpi.target_max,
                                                                                        target_min: kpi.target_min,
                                                                                        remind_time: assignment[:time],
-                                                                                       frequency: assignment[:frequency]
+                                                                                       frequency: assignment[:frequency],
+                                                                                       auto_notification: assignment[:auto_notification]
                                                                                    })
+               end
             end
           end
         end
@@ -248,8 +251,8 @@ class KpiService
     KpiSubscribePresenter.as_followed_details(KpiSubscribe.followed_details_by_user(user).offset(page*size).limit(size), user)
   end
 
-  def self.details kpi
-    KpiPresenter.new(kpi).as_kpi_details(true)
+  def self.details kpi,user
+    KpiPresenter.new(kpi).as_kpi_details(true,user)
   end
 
   def self.properties kpi_id

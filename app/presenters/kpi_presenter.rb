@@ -53,21 +53,22 @@ class KpiPresenter<Presenter
     }
   end
 
-  def as_kpi_assignments kpi_id
-    assignments=[]
-
-    UserKpiItem.where(kpi_id: kpi_id).each do |item|
-      assignments<<{
-          assignment_id: item.id,
-          user: User.find_by_id(item.user_id).email,
-          department_id: item.department_id,
-          time: item.remind_time,
-          frequency: item.frequency
-      }
-    end
-
-    assignments
-  end
+  # def as_kpi_assignments kpi_id,user
+  #   assignments=[]
+  #
+  #   UserKpiItem.where(kpi_id: kpi_id,assigner: user.id).each do |item|
+  #     assignments<<{
+  #         assignment_id: item.id,
+  #         user: User.find_by_id(item.user_id).email,
+  #         department_id: item.department_id,
+  #         time: item.remind_time,
+  #         frequency: item.frequency,
+  #         auto_notification:item.auto_notification
+  #     }
+  #   end
+  #
+  #   assignments
+  # end
 
   def as_kpi_basic_feedback(messages=nil, result_code=nil, with_properties=false)
     if @kpi.nil?
@@ -85,10 +86,10 @@ class KpiPresenter<Presenter
     end
   end
 
-  def as_kpi_details(with_properties=false)
+  def as_kpi_details(with_properties=false,user)
     {
         kpi: as_basic_info(with_properties),
-        assignments: as_kpi_assignments(@kpi.id)
+        assignments: as_assigns(user)
     }
   end
 
@@ -126,13 +127,14 @@ class KpiPresenter<Presenter
   def as_assigns user
     infos=[]
 
-    @kpi.user_kpi_items.where(assigner: user.id).each do |item|
+    @kpi.user_kpi_items.each do |item|
       infos<<{
           assignment_id: item.id,
           department_id: item.department_id,
           time: item.remind_time,
           frequency: item.frequency,
-          user: UserPresenter.new(User.find_by_id(item.user_id)).as_brief_info
+          auto_notification:item.auto_notification,
+          user: UserPresenter.new(User.find_by_id(item.user_id)).as_brief_info(false)
       }
     end
 
