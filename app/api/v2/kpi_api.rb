@@ -7,7 +7,7 @@ module V2
         requires :kpi_id, type: Integer, desc: "kpi id"
       end
       get do
-        if kpi = Kpi.find_by_id(params[:kpi_id])
+        if kpi = current_user.tenant.kpis.find_by_id(params[:kpi_id])
           KpiService.details(kpi)
         else
           ApiMessage.new(messages: ['Kpi Not Exists'])
