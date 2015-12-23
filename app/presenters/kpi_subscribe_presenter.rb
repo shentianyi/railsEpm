@@ -23,7 +23,12 @@ class KpiSubscribePresenter<Presenter
         department: DepartmentPresenter.new(@kpi_subscribe.department).as_brief_info(false),
         lower_boundary: self.lower_boundary,
         upper_boundary: self.upper_boundary,
-        current_value: 0 # TODO finish the current value
+        lower_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, self.lower_boundary),
+        upper_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, self.upper_boundary),
+        current_value: 0, # TODO finish the current value
+        current_value_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit,0),
+        over_lower_boundary: true,
+        over_upper_boundary: false
     }
   end
 

@@ -124,3 +124,5 @@ gem 'ledermann-rails-settings'
 # gem 'figaro'
 gem 'settingslogic'
 
+gem 'rack-cors', :require => 'rack/cors'
+
