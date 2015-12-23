@@ -8,10 +8,9 @@ module V2
     mount KpiAPI
     mount SearchAPI
     mount UserGroupAPI
-
     mount StorySetAPI
-
-
+    mount TaskAPI
+    mount EntryAPI
 
 
     mount TestAPI
