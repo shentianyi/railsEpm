@@ -20,6 +20,8 @@ class Department < ActiveRecord::Base
   has_many :kpi_subscribes,:dependent => :destroy
   has_many :kpi_user_subscribes,:dependent => :destroy
 
+  has_many :user_kpi_items,:dependent => :destroy
+
   # scope :default_entity, include(:entities),  where(is_default: true,department_id: self.id).first
   #after_create :create_entity_group
 
