@@ -7,7 +7,6 @@ class UserKpiItem < ActiveRecord::Base
 
   has_many :kpi_entry
 
-  
   attr_accessible :target_max, :target_min, :kpi_id, :user_id,
                   :entity_id, :department_id, :remind_time, :frequency, :assigner,:auto_notification
 
