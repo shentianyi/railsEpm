@@ -1,6 +1,6 @@
 class StorySet < ActiveRecord::Base
 
-  attr_accessible :title, :description, :email_alert, :sms_alert, :comment_count, :chart_count, :user_count
+  attr_accessible :title, :description, :email_alert, :sms_alert, :comment_count, :chart_count, :user_count, :kpi_id, :department_id, :closed_at, :status
 
   belongs_to :user
   has_many :story_set_users, :dependent => :destroy

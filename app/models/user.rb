@@ -230,6 +230,13 @@ class User < ActiveRecord::Base
     departments.reject { |d| (dids-d.ancestor_ids).size!=dids.size }
   end
 
+  def self.nick_name id
+    if u=User.find_by_id(id)
+      u.first_name
+    else
+      ""
+    end
+  end
 
   # private
   # generate token

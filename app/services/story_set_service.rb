@@ -11,4 +11,44 @@ class StorySetService
     end
     collaborators
   end
+
+  def self.details user, params
+    if discussion = user.tenant.story_sets.find_by_id(params[:discussion_id])
+      StorySetPresenter.new(discussion).as_basic_story_set
+    else
+      ApiMessage.new(messages: ['The Discussion Not Found'])
+    end
+  end
+
+  def self.create user, params
+    begin
+      StorySet.transaction do
+        #Create story set
+        story_set = StorySet.new({
+                                     title: params[:title],
+                                     kpi_id: params[:kpi_id],
+                                     status: StorySet::StorySetStatus::OPEN,
+                                     department_id: params[:department_id]
+                                 })
+        story_set.user = user
+        story_set.tenant = user.tenant
+        story_set.collaborators = [user]+StorySetService.gen_collaborators(params[:members])
+        story_set.user_count = params[:members].count + 1
+
+        story = Story.new(description: params[:description], title: params[:title])
+        story.user = user
+        story.tenant = user.tenant
+        story_set.stories<<story
+
+        if story_set.save
+          StorySetPresenter.new(story_set).as_basic_feedback(['Discussion Create Success'], 1)
+        else
+          ApiMessage.new(messages: ['Discussion Create Failed'])
+        end
+      end
+    rescue => e
+      ApiMessage.new(messages: [e.message])
+    end
+  end
+
 end

@@ -33,10 +33,17 @@ module V2
       end
 
       params do
+        requires :id, type: Integer, desc: "user group id"
+      end
+      delete do
+        UserGroupService.destroy params
+      end
+
+      params do
         optional :kpi_id, type: Integer, desc: "kpi id"
       end
       get :for_kpis do
-        UserGroupService.as_select params
+        UserGroupService.as_select current_user, params
       end
 
     end
