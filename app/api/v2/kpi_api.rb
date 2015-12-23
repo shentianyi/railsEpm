@@ -7,7 +7,7 @@ module V2
         requires :kpi_id, type: Integer, desc: "kpi id"
       end
       get do
-        if kpi = Kpi.find_by_id(params[:kpi_id])
+        if kpi = current_user.tenant.kpis.find_by_id(params[:kpi_id])
           KpiService.details(kpi)
         else
           ApiMessage.new(messages: ['Kpi Not Exists'])
@@ -53,7 +53,7 @@ module V2
           return ApiMessage.new(messages: ['Invlid Max Or Min Target'])
         end
 
-        if params[:kpi][:kpi_id].present? && kpi=current_user.kpis.find_by_id(params[:kpi][:kpi_id])
+        if params[:kpi][:kpi_id].present? && kpi=current_user.tenant.kpis.find_by_id(params[:kpi][:kpi_id])
           KpiService.updating(params, current_user, kpi)
         else
           ApiMessage.new(messages: ['The Kpi Not Found'])
