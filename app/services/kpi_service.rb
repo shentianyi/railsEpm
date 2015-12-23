@@ -43,7 +43,7 @@ class KpiService
           ##assign
           params[:assignments].each do |assignment|
             if ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
-              KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment)
+              KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment, user)
             end
           end
 
@@ -128,7 +128,7 @@ class KpiService
         params[:assignments].each do |assignment|
           if ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
             if assignment[:assignment_id].blank?
-              KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment)
+              KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment, user)
             else
               UserKpiItem.find_by_id(assignment[:assignment_id]).update_attributes({
                                                                                        user_id: to_user.id,
@@ -308,9 +308,9 @@ class KpiService
     end
   end
 
-  def self.assigns params
+  def self.assigns user, params
     if kpi=Kpi.find_by_id(params[:kpi_id])
-      KpiPresenter.new(kpi).as_assigns
+      KpiPresenter.new(kpi).as_assigns user
     else
       ApiMessage.new(messages: ['Kpi Not Exist'])
     end
@@ -328,7 +328,7 @@ class KpiService
           params[:assigns].each do |assignment|
             to_user = user.tenant.users.find_by_email(assignment[:user])
             department = Department.find_by_id(assignment[:department_id])
-            KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment)
+            KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment, user)
           end
 
           KpiPresenter.new(kpi).as_kpi_basic_feedback(['Kpi Assign Success'], 1, false)

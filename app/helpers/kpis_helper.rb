@@ -47,7 +47,7 @@ module KpisHelper
   end
 
   # assign kpis to user for app api
-  def self.assign_kpi_to_department_user kpi, user, department, assignment
+  def self.assign_kpi_to_department_user kpi, user, department, assignment, assigner
     puts department
     puts department.default_entity
     puts '11111111111111111111111111111'
@@ -59,7 +59,9 @@ module KpisHelper
                              :target_max => kpi.target_max,
                              :target_min => kpi.target_min,
                              :remind_time => assignment[:time],
-                             :frequency => assignment[:frequency])
+                             :frequency => assignment[:frequency],
+                             :assigner => assigner.id
+      )
       item.save
       return item
     end

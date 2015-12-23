@@ -189,7 +189,7 @@ module V2
           requires :kpi_id, type: Integer, desc: 'kpi id'
         end
         get do
-          KpiService.assigns params
+          KpiService.assigns current_user, params
         end
 
         params do
