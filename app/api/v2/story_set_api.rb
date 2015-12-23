@@ -49,6 +49,15 @@ module V2
           StorySetService.members current_user, params
         end
 
+        params do
+          requires :id, type: String, desc: "story set id"
+        end
+        get :as_select do
+          StorySetService.as_select_members current_user, params
+        end
+
+
+
       end
 
     end

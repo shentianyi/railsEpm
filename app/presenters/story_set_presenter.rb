@@ -42,5 +42,21 @@ class StorySetPresenter<Presenter
     infos
   end
 
+  def as_story_set_members(user)
+    infos=[]
+
+    members=@story_set.story_set_users.uniq
+    members.each do |member|
+      u=User.find_by_id(member.user_id)
+      infos<<{
+          member_id: member.id,
+          user: UserPresenter.new(u).as_brief_info(false),
+          removeable: !(user==u)
+      }
+    end
+
+    infos
+  end
+
 
 end

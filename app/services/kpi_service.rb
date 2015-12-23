@@ -23,7 +23,7 @@ class KpiService
         #kpi_properties
         params[:kpi][:attributes].each do |attr|
           if attr[:attribute_id].blank?
-            property = KpiProperty.new(:name => attr[:attribute_name], :type => Kpi::KpiPropertyType.code(attr[:attribute_type]))
+            property = KpiProperty.new(:name => attr[:attribute_name], :type => attr[:attribute_type])
             property.user = user
             property.tenant = user.tenant
             kpi.kpi_properties<<property

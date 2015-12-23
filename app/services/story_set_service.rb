@@ -67,7 +67,15 @@ class StorySetService
 
   def self.members user, params
     if discussion = user.tenant.story_sets.find_by_id(params[:id])
-      StorySetPresenter.new(discussion).as_basic_story_set
+      StorySetPresenter.new(discussion).as_story_set_members(user)
+    else
+      ApiMessage.new(messages: ['The Discussion Not Found'])
+    end
+  end
+
+  def self.as_select_members user, params
+    if discussion = user.tenant.story_sets.find_by_id(params[:id])
+      StorySetPresenter.new(discussion).as_story_set_members user
     else
       ApiMessage.new(messages: ['The Discussion Not Found'])
     end
