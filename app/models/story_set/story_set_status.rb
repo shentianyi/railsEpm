@@ -9,7 +9,7 @@ class StorySet::StorySetStatus
       when 1
         'CLOSED'
       else
-        'CLOSED'
+        'OPEN'
     end
   end
 
@@ -20,7 +20,7 @@ class StorySet::StorySetStatus
       when 1
         'CLOSED'
       else
-        'CLOSED'
+        'OPEN'
     end
   end
 end

@@ -21,5 +21,14 @@ class StorySetPresenter<Presenter
     }
   end
 
+  def as_basic_feedback(messages=nil, result_code=nil)
+    {
+        result_code: result_code||1,
+        messages: messages,
+        need_instruction: false,
+        customized_field: as_basic_story_set
+    }
+  end
+
 
 end

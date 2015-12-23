@@ -166,6 +166,10 @@ class KpiService
   end
 
   def self.follow_kpi params
+    if KpiSubscribe.where(tenant_id: params[:user].tenant_id, user_id: params[:user].id, kpi_id: params[:ks][:kpi_id], department_id: params[:ks][:department_id]).first
+      return ApiMessage.new(messages: ['Can Not Repeat Follow'])
+    end
+
     begin
       kpi = Kpi.find_by_id(params[:ks][:kpi_id])
       department = Department.find_by_id(params[:ks][:department_id])
