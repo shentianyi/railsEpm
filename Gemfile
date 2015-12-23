@@ -130,3 +130,5 @@ gem 'mini_magick'
 gem 'carrierwave','~>0.10.0'
 gem 'aliyun-oss'
 gem 'carrierwave-aliyun'
+gem 'rack-cors', :require => 'rack/cors'
+

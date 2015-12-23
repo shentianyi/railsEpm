@@ -56,12 +56,16 @@ class UserGroupService
     end
   end
 
-  def self.as_select params
+  def self.destroy params
+    if ug = UserGroup.find_by_id(params[:id])
+      ug.destroy
+      ApiMessage.new(result_code: 1, messages: ['User Group Delete Success'])
+    else
+      ApiMessage.new(messages: ['User Group Not Exists'])
+    end
+  end
 
-    # if Kpi.find_by_id(params[:kpi_id])
-    UserGroupPresenter.for_kpis(UserGroup.all, params[:kpi_id])
-    # else
-    #   ApiMessage.new(messages: ['Kpi Not Exists'])
-    # end
+  def self.as_select user, params
+    UserGroupPresenter.for_kpis(user.tenant.user_groups, params[:kpi_id])
   end
 end

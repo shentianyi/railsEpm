@@ -39,8 +39,10 @@ class KpiPresenter<Presenter
         description: @kpi.description,
         creator: @kpi.user_id,
         created_on: @kpi.created_at,
-        target_max: @kpi.target_max,#KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max),
-        target_min: @kpi.target_min,#KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min),
+        target_max: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max),
+        target_min: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min),
+        target_max_text: KpiUnit.get_value_display(@kpi.unit, @kpi.target_max),
+        target_min_text: KpiUnit.get_value_display(@kpi.unit, @kpi.target_min),
         uom: @kpi.unit,
         calculate_method: @kpi.calculate_method,
         viewable: {

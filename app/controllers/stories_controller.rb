@@ -23,7 +23,7 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:id])
     @comments=CommentPresenter.init_presenters(Comment.detail_by_commentable(@story).all)
     if @story.chart_type==ChartType::Highchart
-    @chart_conditions=ChartConditionPresenter.init_presenters(ChartCondition.detail_by_chartable(@story))
+      @chart_conditions=ChartConditionPresenter.init_presenters(ChartCondition.detail_by_chartable(@story))
     else
       @chart_conditions=@story.chart_conditions
     end
@@ -58,7 +58,7 @@ class StoriesController < ApplicationController
     unless params[:story][:chart_conditions].blank?
       params[:story][:chart_conditions].each do |index, c|
         #puts c
-        if  c[:kpi_property].blank?
+        if c[:kpi_property].blank?
           c.except!(:kpi_property)
         else
           c[:kpi_property]= c[:kpi_property].to_json

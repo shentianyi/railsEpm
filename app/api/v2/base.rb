@@ -9,6 +9,11 @@ module V2
     mount SearchAPI
     mount UserGroupAPI
 
+    mount StorySetAPI
+
+
+
+
     mount TestAPI
   end
 end

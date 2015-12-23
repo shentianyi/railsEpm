@@ -166,6 +166,10 @@ class KpiService
   end
 
   def self.follow_kpi params
+    if KpiSubscribe.where(tenant_id: params[:user].tenant_id, user_id: params[:user].id, kpi_id: params[:ks][:kpi_id], department_id: params[:ks][:department_id]).first
+      return ApiMessage.new(messages: ['Can Not Repeat Follow'])
+    end
+
     begin
       kpi = Kpi.find_by_id(params[:ks][:kpi_id])
       department = Department.find_by_id(params[:ks][:department_id])
@@ -280,6 +284,21 @@ class KpiService
         if kpi=Kpi.find_by_id(params[:kpi_id]) && property=KpiProperty.find_by_id(params[:property_id])
           property.update_attributes({:name => params[:name], :type => Kpi::KpiPropertyType.code(params[:type])})
           KpiPropertyPresenter.new(property).as_property_basic_feedback(['Kpi Property Update Success'])
+        else
+          ApiMessage.new(messages: ['Kpi Or Property Not Exist'])
+        end
+      end
+    rescue => e
+      ApiMessage.new(messages: [e.message])
+    end
+  end
+
+  def self.delete_property params
+    begin
+      KpiProperty.transaction do
+        if property=KpiProperty.find_by_id(params[:property_id])
+          property.destroy
+          ApiMessage.new(result_code: 1, messages: ['Property Delete Success'])
         else
           ApiMessage.new(messages: ['Kpi Or Property Not Exist'])
         end
