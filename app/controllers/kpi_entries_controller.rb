@@ -148,7 +148,7 @@ class KpiEntriesController < ApplicationController
   end
 
   def recents
-    render :json => KpiEntry.recent_input(current_user.id, params[:ids], params[:time].to_i)
+    render :json => []
   end
 
   def import

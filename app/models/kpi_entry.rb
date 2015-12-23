@@ -2,13 +2,14 @@ class KpiEntry
 
   include Mongoid::Document
   include Mongoid::Timestamps
-  include DynamicAttributeSupport
+ # include DynamicAttributable
   #
   # base field
   field :kpi_id, type: Integer
   field :user_id, type: Integer
   field :entity_id, type: Integer
   field :tenant_id, type: Integer
+  field :department_id, type: Integer
   field :user_kpi_item_id, type: Integer
 
   field :target_max, type: BigDecimal
@@ -75,33 +76,6 @@ class KpiEntry
     KpiEntry.where(kpi_id: 1, entry_type: 1).map_reduce(map1, reduce).out(inline: true)
   end
 
-
-  RECENT_INPUT_NUM = 5
-  after_save :set_recent_input
-  after_destroy :rem_recent_input
-
-  def self.recent_input user_id, user_kpi_item_ids, time
-    values=[]
-    if user_id.nil? || user_kpi_item_ids.nil? || time.nil?
-      return values
-    end
-
-    user_kpi_item_ids.each do |user_kpi_item_id|
-      time_key=gen_recent_time_zscore_key(user_id, user_kpi_item_id)
-      uuids= $redis.zrevrangebyscore(time_key, time, 0, :limit => [0, RECENT_INPUT_NUM])
-      v=[]
-      f=false
-      if uuids
-        value_key=gen_recent_value_zscore_key user_id, user_kpi_item_id
-        uuids.each do |uuid|
-          v<<$redis.zscore(value_key, uuid) unless (f=($redis.zscore(time_key, uuid)==time))
-        end
-      end
-      values<<{:id => user_kpi_item_id, :values => f ? v.reverse : v[0..3].reverse}
-    end
-    return values
-  end
-
   def last_detail?
     KpiEntry.where(user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.parsed_entry_at, entity_id: self.entity_id, entry_type: self.entry_type).first.nil?
   end
@@ -153,7 +127,7 @@ class KpiEntry
     return kpi_entries if kpi.blank?
 
     if user.admin?
-      kpi_entries = KpiEntry.where({:user_id.in=>(User.where(tenant_id: 12).pluck(:id).uniq), kpi_id: kpi.id}).where(:entry_at.gte => start_time).where(:entry_at.lte => end_time)
+      kpi_entries = KpiEntry.where({:user_id.in => (User.where(tenant_id: 12).pluck(:id).uniq), kpi_id: kpi.id}).where(:entry_at.gte => start_time).where(:entry_at.lte => end_time)
     elsif user.director?
       kpi_entries = KpiEntry.accessible_by(Ability.new(user)).where(:entry_at.gte => start_time).where(:entry_at.lte => end_time)
     elsif user.user?
@@ -162,45 +136,5 @@ class KpiEntry
 
     kpi_entries
   end
-
-  private
-
-  def self.gen_recent_time_zscore_key user_id, user_kpi_item_id
-    "user:#{user_id}:kpi_item:#{user_kpi_item_id}:time:zscore"
-  end
-
-  def self.gen_recent_value_zscore_key user_id, user_kpi_item_id
-    "user:#{user_id}:kpi_item:#{user_kpi_item_id}:value:zscore"
-  end
-
-  def set_recent_input
-    #only when entry_type is 1
-    #fit for input in the web ,not detail kpi_entry
-    if entry_type == 1
-      time_key=KpiEntry.gen_recent_time_zscore_key user_id, user_kpi_item_id
-      score=(Time.parse(self.parsed_entry_at.to_s).to_f*1000).to_i
-      $redis.zremrangebyscore(time_key, score, score)
-      uuid=SecureRandom.hex
-      $redis.zadd(time_key, score, uuid)
-
-      value_key=KpiEntry.gen_recent_value_zscore_key user_id, user_kpi_item_id
-      $redis.zadd(value_key, self.value, uuid)
-    end
-  end
-
-  def rem_recent_input
-=begin
-    if self.entry_type == 1
-      time_key=KpiEntry.gen_recent_time_zscore_key self.user_id, self.user_kpi_item_id
-      score=(Time.parse(self.parsed_entry_at.to_s).to_f*1000).to_i
-      uuid=$redis.zrangebyscore(time_key, score, score)
-      $redis.zremrangebyscore(time_key, score, score)
-
-      value_key=KpiEntry.gen_recent_value_zscore_key self.user_id, self.user_kpi_item_id
-      $redis.zrem(value_key, uuid)
-    end
-=end
-  end
-
 
 end

@@ -123,10 +123,10 @@ class KpiPresenter<Presenter
     infos
   end
 
-  def as_assigns
+  def as_assigns user
     infos=[]
 
-    @kpi.user_kpi_items.each do |item|
+    @kpi.user_kpi_items.where(assigner: user.id).each do |item|
       infos<<{
           assignment_id: item.id,
           department_id: item.department_id,
