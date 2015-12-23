@@ -8,6 +8,20 @@ module V2
       post :image do
         AttachService.test(params)
       end
+
+
+      # params do
+      #   optional :name, type: String, desc: 'image name'
+      #   optional :images, type:Array, desc: 'file'
+      # end
+      post :images do
+      p '***********************'
+      p request.env['api.request.body']
+      p '***********************'
+p params
+
+        AttachService.tests(params)
+      end
     end
   end
 end

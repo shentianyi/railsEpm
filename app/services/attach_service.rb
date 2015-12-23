@@ -14,4 +14,14 @@ class AttachService
     i=Attach::Image.new(path: image)
     i.save
   end
+
+  def self.tests(params)
+    puts params[:name]
+    puts params[:images]
+    params[:images].values.each do |image|
+      image=ActionDispatch::Http::UploadedFile.new(image)
+      i=Attach::Image.new(path: image)
+      i.save
+    end
+  end
 end
