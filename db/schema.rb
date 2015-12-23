@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151221150529) do
+ActiveRecord::Schema.define(:version => 20151222092221) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -505,7 +505,7 @@ ActiveRecord::Schema.define(:version => 20151221150529) do
     t.integer  "user_count",    :default => 0
     t.string   "kpi_id"
     t.string   "department_id"
-    t.datetime "close_on"
+    t.datetime "closed_at"
     t.integer  "status"
   end
 
