@@ -5,7 +5,7 @@ module V2
     namespace :discussions do
 
       params do
-        requires :discussion_id, type: Integer, desc: "story set id"
+        requires :id, type: String, desc: "story set id"
       end
       get do
         StorySetService.details current_user, params
@@ -22,8 +22,36 @@ module V2
         StorySetService.create current_user, params
       end
 
-    end
+      namespace :users do
+        params do
+          optional :page, type: Integer, default: 0, desc: 'page index start from 0'
+          optional :size, type: Integer, default: 20, desc: 'page size'
+        end
+        get :accesses do
+          StorySetService.user_accessable_story_set current_user, params[:page], params[:size]
+        end
 
+        params do
+          optional :page, type: Integer, default: 0, desc: 'page index start from 0'
+          optional :size, type: Integer, default: 20, desc: 'page size'
+        end
+        get :created do
+          StorySetService.user_created_story_set current_user, params[:page], params[:size]
+        end
+
+      end
+
+      namespace :members do
+        params do
+          requires :id, type: String, desc: "story set id"
+        end
+        get do
+          StorySetService.members current_user, params
+        end
+
+      end
+
+    end
 
   end
 end

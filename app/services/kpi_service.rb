@@ -249,7 +249,7 @@ class KpiService
   end
 
   def self.details kpi
-    KpiPresenter.new(kpi).as_kpi_details(false)
+    KpiPresenter.new(kpi).as_kpi_details(true)
   end
 
   def self.properties kpi_id

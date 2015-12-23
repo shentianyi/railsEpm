@@ -13,7 +13,7 @@ class StorySetService
   end
 
   def self.details user, params
-    if discussion = user.tenant.story_sets.find_by_id(params[:discussion_id])
+    if discussion = user.tenant.story_sets.find_by_id(params[:id])
       StorySetPresenter.new(discussion).as_basic_story_set
     else
       ApiMessage.new(messages: ['The Discussion Not Found'])
@@ -21,6 +21,12 @@ class StorySetService
   end
 
   def self.create user, params
+    kpi = Kpi.find_by_id(params[:kpi_id])
+    department = Department.find_by_id(params[:department_id])
+    if !kpi || !department
+      return ApiMessage.new(messages: ['Kpi Or Department Not Exist'])
+    end
+
     begin
       StorySet.transaction do
         #Create story set
@@ -48,6 +54,22 @@ class StorySetService
       end
     rescue => e
       ApiMessage.new(messages: [e.message])
+    end
+  end
+
+  def self.user_accessable_story_set user, page, size
+    StorySetPresenter.as_list(user.tenant.story_sets.offset(page*size).limit(size))
+  end
+
+  def self.user_created_story_set user, page, size
+    StorySetPresenter.as_list(user.tenant.story_sets.where(user_id: user.id).offset(page*size).limit(size))
+  end
+
+  def self.members user, params
+    if discussion = user.tenant.story_sets.find_by_id(params[:id])
+      StorySetPresenter.new(discussion).as_basic_story_set
+    else
+      ApiMessage.new(messages: ['The Discussion Not Found'])
     end
   end
 
