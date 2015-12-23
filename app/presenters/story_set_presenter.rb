@@ -8,7 +8,7 @@ class StorySetPresenter<Presenter
     self.delegators =Delegators
   end
 
-  def as_basic_story_set
+  def as_brief_info
     {
         id: @story_set.id,
         title: @story_set.title,
@@ -28,7 +28,7 @@ class StorySetPresenter<Presenter
         result_code: result_code||1,
         messages: messages,
         need_instruction: false,
-        customized_field: as_basic_story_set
+        customized_field: as_brief_info
     }
   end
 

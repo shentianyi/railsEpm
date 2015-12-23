@@ -64,8 +64,43 @@ module V2
           StorySetService.add_member current_user, params
         end
 
+        params do
+          requires :id, type: Integer, desc: "story set id"
+          requires :member_id, type: Integer, desc: "story set member id"
+        end
+        delete do
+          StorySetService.remove_member current_user, params
+        end
 
       end
+
+      namespace :comments do
+        params do
+          requires :id, type: String, desc: "story set id"
+        end
+        get do
+          StorySetService.comments current_user, params
+        end
+
+        params do
+          requires :id, type: Integer, desc: "story set id"
+          requires :content, type: String, desc: "comment content"
+        end
+        post do
+          StorySetService.add_comment current_user, params
+        end
+
+        params do
+          requires :id, type: Integer, desc: "story set id"
+          requires :comment_id, type: Integer, desc: "comment id"
+        end
+        delete do
+          StorySetService.remove_comment current_user, params
+        end
+
+      end
+
+
 
     end
 

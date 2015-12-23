@@ -9,8 +9,8 @@ class StorySet < ActiveRecord::Base
   belongs_to :tenant
   acts_as_tenant(:tenant)
 
-  after_create :generate_collaborator_set
-  after_create :pub_collaborator_message
+  #after_create :generate_collaborator_set
+  #after_create :pub_collaborator_message
 
   def self.regenerate_collaborator_set
     all.each do |ss|

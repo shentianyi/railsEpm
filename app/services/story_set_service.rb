@@ -14,7 +14,7 @@ class StorySetService
 
   def self.details user, params
     if discussion = user.tenant.story_sets.find_by_id(params[:id])
-      StorySetPresenter.new(discussion).as_basic_story_set
+      StorySetPresenter.new(discussion).as_brief_info
     else
       ApiMessage.new(messages: ['The Discussion Not Found'])
     end
@@ -99,6 +99,16 @@ class StorySetService
     rescue => e
       ApiMessage.new(messages: [e.message])
     end
+  end
+
+  def self.remove_member user, params
+    if (ss=user.tenant.story_sets.find_by_id(params[:id])) && (su=ss.story_set_users.find_by_id(params[:member_id]))
+      su.destroy
+      ApiMessage.new(result_code: 1, messages: ['The Discussion Member Delete Success'])
+    else
+      return ApiMessage.new(messages: ['The Discussion Or Member Not Found'])
+    end
+
   end
 
 end
