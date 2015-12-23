@@ -175,6 +175,13 @@ module V2
         put do
           KpiService.update_properties params
         end
+
+        params do
+          requires :property_id, type: Integer, desc: 'property id'
+        end
+        delete do
+          KpiService.delete_property params
+        end
       end
 
       namespace :assigns do

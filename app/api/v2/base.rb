@@ -8,5 +8,6 @@ module V2
     mount KpiAPI
     mount SearchAPI
     mount UserGroupAPI
+    mount StorySetAPI
   end
 end
