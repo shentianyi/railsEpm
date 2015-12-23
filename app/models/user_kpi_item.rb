@@ -7,10 +7,12 @@ class UserKpiItem < ActiveRecord::Base
 
   has_many :kpi_entry
 
-  attr_accessible :target_max, :target_min, :kpi_id, :user_id, :entity_id, :department_id, :remind_time, :frequency, :assigner
 
-  after_create :create_department_kpi
-  after_destroy :destroy_department_kpi
+  attr_accessible :target_max, :target_min, :kpi_id, :user_id,
+                  :entity_id, :department_id, :remind_time, :frequency, :assigner,:auto_notification
+
+  #after_create :create_department_kpi
+  #after_destroy :destroy_department_kpi
 
 
   def self.details_by_user(user)

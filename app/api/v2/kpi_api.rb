@@ -7,8 +7,8 @@ module V2
         requires :kpi_id, type: Integer, desc: "kpi id"
       end
       get do
-        if kpi = Kpi.find_by_id(params[:kpi_id])
-          KpiService.details(kpi)
+        if kpi = current_user.tenant.kpis.find_by_id(params[:kpi_id])
+          KpiService.details(kpi,current_user)
         else
           ApiMessage.new(messages: ['Kpi Not Exists'])
         end
@@ -20,12 +20,13 @@ module V2
           requires :target_min, type: Float, desc: "kpi target min"
           # requires :viewable, type: Integer, desc: "kpi viewable"
           requires :calculate_method, type: Integer, desc: "kpi calculate method"
-          requires :attributes, type: Array, desc: "kpi properties list"
+          optional :attributes, type: Array, desc: "kpi properties list"
           requires :viewable, type: Hash do
             requires :viewable_code, type: String, desc: "kpi viewable code"
             requires :user_group_id, type: String, desc: "user group id"
           end
         end
+        optional :assignments,type: Array,desc:'kpi assignments'
       end
       post do
         if (params[:kpi][:target_min].to_f > params[:kpi][:target_max].to_f) || (params[:kpi][:target_max].to_f < 0) || (params[:kpi][:target_min].to_f < 0)
@@ -41,19 +42,20 @@ module V2
           requires :target_min, type: Float, desc: "kpi target min"
           requires :kpi_id, type: Integer, desc: "kpi id"
           requires :calculate_method, type: Integer, desc: "kpi calculate method"
-          requires :attributes, type: Array, desc: "kpi properties list"
+          optional :attributes, type: Array, desc: "kpi properties list"
           requires :viewable, type: Hash do
             requires :viewable_code, type: String, desc: "kpi viewable code"
             requires :user_group_id, type: String, desc: "user group id"
           end
         end
+        optional :assignments,type: Array,desc:'kpi assignments'
       end
       put do
         if (params[:kpi][:target_min].to_f > params[:kpi][:target_max].to_f) || (params[:kpi][:target_max].to_f < 0) || (params[:kpi][:target_min].to_f < 0)
           return ApiMessage.new(messages: ['Invlid Max Or Min Target'])
         end
 
-        if params[:kpi][:kpi_id].present? && kpi=current_user.kpis.find_by_id(params[:kpi][:kpi_id])
+        if params[:kpi][:kpi_id].present? && kpi=current_user.tenant.kpis.find_by_id(params[:kpi][:kpi_id])
           KpiService.updating(params, current_user, kpi)
         else
           ApiMessage.new(messages: ['The Kpi Not Found'])
@@ -199,6 +201,7 @@ module V2
             requires :department_id, type: String, desc: 'department id'
             requires :time, type: String, desc: 'task time'
             requires :frequency, type: String, desc: 'task frequency'
+            requires :auto_notification,type:Boolean,desc: 'auto_notification'
           end
         end
         post do
