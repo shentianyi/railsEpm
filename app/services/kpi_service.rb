@@ -30,7 +30,7 @@ class KpiService
           else
             property = KpiProperty.find_by_id(attr[:attribute_id])
             if property && ((property.name != attr[:attribute_name]) || (property.type != attr[:attribute_type]))
-              property.update_attributes({:name => attr[:attribute_name], :type => Kpi::KpiPropertyType.code(attr[:attribute_type])})
+              property.update_attributes({:name => attr[:attribute_name], :type => attr[:attribute_type]})
             end
           end
         end
@@ -99,14 +99,14 @@ class KpiService
         #new update
         params[:kpi][:attributes].each do |attr|
           if attr[:attribute_id].blank?
-            property = KpiProperty.new(:name => attr[:attribute_name], :type => Kpi::KpiPropertyType.code(attr[:attribute_type]))
+            property = KpiProperty.new(:name => attr[:attribute_name], :type => attr[:attribute_type])
             property.user = user
             property.tenant = user.tenant
             kpi.kpi_properties<<property
           else
             property = KpiProperty.find_by_id(attr[:attribute_id])
             if property && ((property.name != attr[:attribute_name]) || (property.type != attr[:attribute_type]))
-              property.update_attributes({:name => attr[:attribute_name], :type => Kpi::KpiPropertyType.code(attr[:attribute_type])})
+              property.update_attributes({:name => attr[:attribute_name], :type => attr[:attribute_type]})
             end
           end
         end
@@ -264,7 +264,7 @@ class KpiService
     begin
       KpiProperty.transaction do
         if kpi=Kpi.find_by_id(params[:kpi_id])
-          property = KpiProperty.new(:name => params[:name], :type => Kpi::KpiPropertyType.code(params[:type]))
+          property = KpiProperty.new(:name => params[:name], :type => params[:type])
           property.user = user
           property.tenant = user.tenant
           kpi.kpi_properties<<property
@@ -282,7 +282,7 @@ class KpiService
     begin
       KpiProperty.transaction do
         if kpi=Kpi.find_by_id(params[:kpi_id]) && property=KpiProperty.find_by_id(params[:property_id])
-          property.update_attributes({:name => params[:name], :type => Kpi::KpiPropertyType.code(params[:type])})
+          property.update_attributes({:name => params[:name], :type => params[:type]})
           KpiPropertyPresenter.new(property).as_property_basic_feedback(['Kpi Property Update Success'])
         else
           ApiMessage.new(messages: ['Kpi Or Property Not Exist'])
