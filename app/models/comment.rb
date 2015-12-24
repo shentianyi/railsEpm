@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  attr_accessible :content
+  attr_accessible :content, :tenant_id, :user_id, :commentable_id, :commentable_type
   belongs_to :user
   belongs_to :commentable, :polymorphic => true
   has_many :attachments, :as => :attachable, :dependent => :destroy

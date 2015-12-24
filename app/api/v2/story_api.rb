@@ -1,14 +1,14 @@
 module V2
-  class StorySetAPI<Base
+  class StoryAPI<Base
     guard_all!
 
     namespace :discussions do
 
       params do
-        requires :id, type: String, desc: "story set id"
+        requires :id, type: String, desc: "story id"
       end
       get do
-        StorySetService.details current_user, params
+        StoryService.details current_user, params
       end
 
       params do
@@ -28,7 +28,7 @@ module V2
           optional :size, type: Integer, default: 20, desc: 'page size'
         end
         get :accesses do
-          StorySetService.user_accessable_story_set current_user, params[:page], params[:size]
+          StoryService.user_accessable_stories current_user, params[:page], params[:size]
         end
 
         params do
@@ -36,66 +36,69 @@ module V2
           optional :size, type: Integer, default: 20, desc: 'page size'
         end
         get :created do
-          StorySetService.user_created_story_set current_user, params[:page], params[:size]
+          StoryService.user_created_stories current_user, params[:page], params[:size]
         end
 
       end
 
       namespace :members do
         params do
-          requires :id, type: String, desc: "story set id"
+          requires :id, type: String, desc: "story id"
         end
         get do
-          StorySetService.members current_user, params
+          StoryService.members current_user, params
         end
 
         params do
-          requires :id, type: String, desc: "story set id"
+          requires :id, type: String, desc: "story id"
         end
         get :as_select do
-          StorySetService.as_select_members current_user, params
+          StoryService.as_select_members current_user, params
         end
 
         params do
-          requires :id, type: Integer, desc: "story set id"
+          requires :id, type: Integer, desc: "story id"
           requires :user_id, type: Integer, desc: "story set member id"
         end
         post do
-          StorySetService.add_member current_user, params
+          StoryService.add_member current_user, params
         end
 
         params do
-          requires :id, type: Integer, desc: "story set id"
+          requires :id, type: Integer, desc: "story id"
           requires :member_id, type: Integer, desc: "story set member id"
         end
         delete do
-          StorySetService.remove_member current_user, params
+          StoryService.remove_member current_user, params
         end
 
       end
 
       namespace :comments do
         params do
-          requires :id, type: String, desc: "story set id"
+          requires :id, type: String, desc: "story id"
         end
         get do
-          StorySetService.comments current_user, params
+          StoryService.comments current_user, params[:id]
         end
 
         params do
-          requires :id, type: Integer, desc: "story set id"
-          requires :content, type: String, desc: "comment content"
+          requires :id, type: Integer, desc: "story id"
+          requires :comment, type: Hash do
+            requires :content, type: String, desc: "comment content"
+            optional :attachments, type: Array, desc: "comment attachments"
+          end
         end
         post do
-          StorySetService.add_comment current_user, params
+          StoryService.add_comment current_user, params
         end
 
         params do
-          requires :id, type: Integer, desc: "story set id"
+          requires :id, type: Integer, desc: "story id"
           requires :comment_id, type: Integer, desc: "comment id"
         end
         delete do
-          StorySetService.remove_comment current_user, params
+          StoryService.remove_comment current_user, params
         end
 
       end
