@@ -23,7 +23,7 @@ class CommentPresenter<Presenter
         result_code: result_code||1,
         messages: messages,
         need_instruction: false,
-        customized_field: as_brief_info
+        customized_field: as_basic_info
     }
   end
 

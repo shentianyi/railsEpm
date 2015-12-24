@@ -80,20 +80,23 @@ class StoryService
 
   def self.add_comment user, params
     unless discussion = user.tenant.stories.find_by_id(params[:id])
-      ApiMessage.new(messages: ['The Discussion Not Found'])
+      return ApiMessage.new(messages: ['The Discussion Not Found'])
     end
 
     begin
-      unless params[:comment][:content].blank?
-        comment=Comment.new(content: params[:comment][:content])
-        comment.commentable=discussion
-        comment.user=user
-        Attachment.add(params[:comment][:attachments].values, @comment) unless params[:comment][:attachments].blank?
+      Comment.transaction do
+        unless params[:comment][:content].blank?
+          comment=Comment.new(content: params[:comment][:content])
+          comment.commentable=discussion
+          comment.user=user
+          comment.tenant=user.tenant
+          Attachment.add(params[:comment][:attachments].values, @comment) unless params[:comment][:attachments].blank?
 
-        if comment.save
-          CommentPresenter.new(comment).as_basic_feedback(['Discussion Comment Add Success'], 1)
-        else
-          ApiMessage.new(messages: ['Discussion Comment Add Failed'])
+          if comment.save
+            CommentPresenter.new(comment).as_basic_feedback(['Discussion Comment Add Success'], 1)
+          else
+            ApiMessage.new(messages: ['Discussion Comment Add Failed'])
+          end
         end
       end
     rescue => e
@@ -101,5 +104,17 @@ class StoryService
     end
   end
 
+  def self.remove_comment user, id
+    begin
+      if comment = user.tenant.comments.find_by_id(id)
+        comment.destroy
+        ApiMessage.new(result_code: 1, messages: ['The Discussion Comment Delete Success'])
+      else
+        return ApiMessage.new(messages: ['The Discussion Comment Not Found'])
+      end
+    rescue => e
+      ApiMessage.new(messages: [e.message])
+    end
+  end
 
 end

@@ -94,11 +94,10 @@ module V2
         end
 
         params do
-          requires :id, type: Integer, desc: "story id"
-          requires :comment_id, type: Integer, desc: "comment id"
+          requires :id, type: Integer, desc: "comment id"
         end
         delete do
-          StoryService.remove_comment current_user, params
+          StoryService.remove_comment current_user, params[:id]
         end
 
       end
