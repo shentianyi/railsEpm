@@ -55,6 +55,10 @@ module Enum
       @hash.values
     end
 
+    def values
+      @hash.map{|k,v| v.value}
+    end
+
     def as_select
       all.map { |a| SelectItem.new(id: a.value, name: a.desc) }
     end

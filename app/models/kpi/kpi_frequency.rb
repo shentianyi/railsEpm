@@ -73,4 +73,22 @@ class KpiFrequency
                I18n.t 'manage.kpi.freq_item.yearly'
            end
   end
+
+
+  def self.date_format(frequency)
+    case frequency
+      when KpiFrequency::Hourly
+        'yyyy-MM-dd hh'
+      when KpiFrequency::Daily
+        'yyyy-MM-dd'
+      when KpiFrequency::Weekly
+        'yyyy-WW'
+      when KpiFrequency::Monthly
+        'yyyy-MM'
+      when KpiFrequency::Quarterly
+        'yyyy-qq'
+      when KpiFrequency::Yearly
+        'yyyy'
+    end
+  end
 end

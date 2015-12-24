@@ -289,7 +289,7 @@ ActiveRecord::Schema.define(:version => 20151223123629) do
     t.integer  "tenant_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "type"
+    t.integer  "attr_type"
   end
 
   add_index "kpi_properties", ["tenant_id"], :name => "index_kpi_properties_on_tenant_id"
