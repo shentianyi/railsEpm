@@ -4,8 +4,8 @@ if user=User.find_by_email('admin@ci.com')
 
   # add child departments
   d=[]
-  3.time do |i|
-    d[i]<<DepartmentService.create_department(
+  3.times do |i|
+    DepartmentService.create_department(
         {
             name: "department_#{i}",
             description: "department_#{i} description",
@@ -14,16 +14,22 @@ if user=User.find_by_email('admin@ci.com')
         user)
   end
 
+  Department.all.each do |department|
+    d<<department
+  end
+
   #create User Group
-  ug=UserGroupService.create({
+  UserGroupService.create({
                                  name: "user_group",
                                  users: [4,5,6,7,8,9]
                              }, user)
 
+  ug=UserGroup.last
+
   # create KPI
   k=[]
-  3.time do |i|
-    k[i]<<KpiService.building(
+  3.times do |i|
+    KpiService.building(
         {
             kpi: {
                 kpi_name: "kpi_#{i}",
@@ -38,7 +44,6 @@ if user=User.find_by_email('admin@ci.com')
                 },
                 attributes: [
                     {
-                        attribute_id: null,
                         attribute_name: "p15",
                         attribute_type: 1
                     }
@@ -57,8 +62,13 @@ if user=User.find_by_email('admin@ci.com')
         user)
   end
 
+  Kpi.all.each do |kpi|
+    k<<kpi
+  end
+
+
   #follow kpi
-  3.time do |i|
+  3.times do |i|
     KpiService.follow_kpi({
                               user: user,
                               lower_boundary: 100,
