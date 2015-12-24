@@ -26,13 +26,14 @@ module V2
       params do
         requires :kpi_id, type: Integer, desc: 'kpi id'
         requires :department_id, type: Integer, desc: 'department id'
-        requires :frequency, type: Integer, desc: 'kpi'
+        requires :frequency, type: Integer, desc: 'kpi frequency'
+
       end
-      get  do
+      get :chart_data do
 
       end
 
-      get :aggregate do
+      get :chart_aggregate do
 
       end
     end
