@@ -22,6 +22,19 @@ module V2
         EntryService.create_entry(params, current_user)
       end
 
+
+      params do
+        requires :kpi_id, type: Integer, desc: 'kpi id'
+        requires :department_id, type: Integer, desc: 'department id'
+        requires :frequency, type: Integer, desc: 'kpi'
+      end
+      get  do
+
+      end
+
+      get :aggregate do
+
+      end
     end
   end
 end
