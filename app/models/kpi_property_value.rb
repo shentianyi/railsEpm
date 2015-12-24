@@ -47,7 +47,7 @@ class KpiPropertyValue < ActiveRecord::Base
       property_val.count = 1
       property_val.save
     else
-      #property_val.update_attribute("count", property_val.count+1)
+      property_val.update_attribute("count", property_val.count+1)
     end
   end
 end

@@ -28,11 +28,10 @@ class KpiEntryObserver<Mongoid::Observer
   # end
 
   def after_save kpi_entry
-    BackgroundTask.update_kpi_property_value(kpi_entry.id)
+    BackgroundTask.update_kpi_property_value(kpi_entry.id.to_s)
   end
 
   def before_save kpi_entry
-
     kpi = Kpi.find_by_id(kpi_entry.kpi_id)
     if kpi.nil?
       if kpi_entry.new_record?

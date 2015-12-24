@@ -54,7 +54,7 @@ class EntryService
       end
     end
     #update
-    if kpi_entry=KpiEntry.where(id: entry[:id]).first
+    if entry[:id].present? && (kpi_entry=KpiEntry.find(entry[:id]))
       kpi_entry.update_attributes(attrs)
     else
       kpi_entry = KpiEntry.new(attrs)
