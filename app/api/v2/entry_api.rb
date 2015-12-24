@@ -12,8 +12,8 @@ module V2
             requires :value, type: Float, desc: 'value'
             requires :time, type: Time, desc: 'utc time'
             requires :attributes, type: Array do
-              requires :id, type: Integer, desc: 'kpi property id'
-              requires :value, type: String, desc: 'kpi property value'
+              requires :attribute_id, type: Integer, desc: 'kpi property id'
+              requires :attribute_value, type: String, desc: 'kpi property value'
             end
           end
         end

@@ -40,10 +40,10 @@ class KpiEntryPresenter<Presenter
     @kpi_entry.kpi.kpi_properties.each do |p|
       if @kpi_entry.respond_to?("a#{p.id}")
         ps<<{
-            id: p.id,
-            name: p.name,
-            type: p.type,
-            value: @kpi_entry.send("a#{p.id}")
+            attribute_id: p.id,
+            attribute_name: p.name,
+            attribute_type: p.type,
+            attribute_value: @kpi_entry.send("a#{p.id}")
         }
       end
     end
