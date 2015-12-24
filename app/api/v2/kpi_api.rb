@@ -149,6 +149,7 @@ module V2
         get :followed_details do
           KpiService.user_followed_details(current_user,params[:page],params[:size])
         end
+
       end
 
       namespace :properties do

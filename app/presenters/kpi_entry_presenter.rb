@@ -41,6 +41,8 @@ class KpiEntryPresenter<Presenter
       if @kpi_entry.respond_to?("a#{p.id}")
         ps<<{
             id: p.id,
+            name: p.name,
+            type: p.type,
             value: @kpi_entry.send("a#{p.id}")
         }
       end
