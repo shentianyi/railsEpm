@@ -3,13 +3,21 @@ class UserKpiItem < ActiveRecord::Base
   belongs_to :entity
   belongs_to :user
   belongs_to :kpi
+  belongs_to :department
+
   has_many :kpi_entry
-  delegate :department, :to => :entity,:allow_nil=>true
+
   attr_accessible :target_max, :target_min, :kpi_id, :user_id,
                   :entity_id, :department_id, :remind_time, :frequency, :assigner,:auto_notification
 
-  after_create :create_department_kpi
-  after_destroy :destroy_department_kpi
+  #after_create :create_department_kpi
+  #after_destroy :destroy_department_kpi
+
+
+
+  def self.details_by_user(user)
+    user.user_kpi_items.joins(:kpi).joins(:department).select('kpis.name as kpi_name,departments.name as department_name,user_kpi_items.*')
+  end
 
   def self.reinit_department_kpis belong, department_id, department_id_was
     belong.send(:user_kpi_items).each do |user_kpi_item|

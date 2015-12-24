@@ -6,8 +6,15 @@ module V2
     mount UserAPI
     mount DepartmentAPI
     mount KpiAPI
+    mount KpiSubscribeAPI
     mount SearchAPI
     mount UserGroupAPI
     mount StoryAPI
+    mount TaskAPI
+    mount EntryAPI
+    mount AlertAPI
+
+
+    mount TestAPI
   end
 end

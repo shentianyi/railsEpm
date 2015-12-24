@@ -92,7 +92,7 @@ class SearchService
                       fields: [:name, :description]
                   }
               },
-              size: 20,
+              size: 200,
               filter: {
                   term: {tenant_id: user.tenant_id}
               },
@@ -110,7 +110,7 @@ class SearchService
                       fields: [:name, :description]
                   }
               },
-              size: 20,
+              size: 200,
               filter: {
                   terms: {id: ids}
               },

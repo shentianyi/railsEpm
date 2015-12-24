@@ -37,7 +37,7 @@ gem 'axlsx','>2.0.0'
 # gem 'rubyzip'
 # gem 'nokogiri'
 # gem 'rubyzip', :require => 'zip/zip'
-gem 'aliyun-oss'
+
 #rake i18n:js:export
 # Gems used only for assets and not required
 # in production environments by default.
@@ -98,7 +98,7 @@ gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 
 # ancestry
-gem 'ancestry'#,:git => "git://github.com/stefankroes/ancestry.git"
+gem 'ancestry'
 
 
 # redis search
@@ -124,5 +124,11 @@ gem 'ledermann-rails-settings'
 # gem 'figaro'
 gem 'settingslogic'
 
+
+# store file
+gem 'mini_magick'
+gem 'carrierwave','~>0.10.0'
+gem 'aliyun-oss'
+gem 'carrierwave-aliyun'
 gem 'rack-cors', :require => 'rack/cors'
 

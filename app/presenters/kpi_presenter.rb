@@ -8,10 +8,15 @@ class KpiPresenter<Presenter
     self.delegators =Delegators
   end
 
-  def properties
+  def properties(with_property_value=false)
     attrs = []
     @kpi.kpi_property_items.each { |item|
-      attrs << {id: item.id, name: item.kpi_property.name}
+      attrs << {
+          attribute_id: item.id,
+          attribute_name: item.kpi_property.name,
+          attribute_type: item.kpi_property.type,
+          attribute_values: with_property_value ? item.kpi_property.kpi_property_values.pluck(:value) : nil
+      }
     }
     attrs
   end
@@ -32,7 +37,7 @@ class KpiPresenter<Presenter
     }
   end
 
-  def as_basic_info(with_properties=true)
+  def as_basic_info(with_properties=true, with_property_value=false)
     {
         kpi_id: @kpi.id,
         kpi_name: @kpi.name,
@@ -49,7 +54,7 @@ class KpiPresenter<Presenter
             viewable_code: @kpi.viewable,
             user_group_id: @kpi.user_group_id
         },
-        attributes: with_properties ? properties : nil
+        attributes: with_properties ? properties(with_property_value) : nil
     }
   end
 
@@ -86,7 +91,7 @@ class KpiPresenter<Presenter
     end
   end
 
-  def as_kpi_details(with_properties=false,user)
+  def as_kpi_details(with_properties=false, user)
     {
         kpi: as_basic_info(with_properties),
         assignments: as_assigns(user)
@@ -133,7 +138,7 @@ class KpiPresenter<Presenter
           department_id: item.department_id,
           time: item.remind_time,
           frequency: item.frequency,
-          auto_notification:item.auto_notification,
+          auto_notification: item.auto_notification,
           user: UserPresenter.new(User.find_by_id(item.user_id)).as_brief_info(false)
       }
     end
@@ -144,9 +149,9 @@ class KpiPresenter<Presenter
   def as_on_kpi_department(user, department)
     {
         department: DepartmentPresenter.new(department).as_brief_info(true),
-        followed: @kpi.followed?(user,department),
-        follow_flag: Kpi::KpiFollowFlag.display(@kpi.follow_flag(user,department).follow_flag),
-        follow_flag_value: @kpi.follow_flag(user,department).follow_flag
+        followed: @kpi.followed?(user, department),
+        follow_flag: Kpi::KpiFollowFlag.display(@kpi.follow_flag(user, department).follow_flag),
+        follow_flag_value: @kpi.follow_flag(user, department).follow_flag
     }
   end
 
