@@ -1,4 +1,4 @@
-module DynamicAttributeSupport
+module DynamicAttributable
   def dynamic_attributes
     attributes.keys - _protected_attributes[:default].to_a - fields.keys
   end

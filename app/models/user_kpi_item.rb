@@ -13,6 +13,12 @@ class UserKpiItem < ActiveRecord::Base
   #after_create :create_department_kpi
   #after_destroy :destroy_department_kpi
 
+
+
+  def self.details_by_user(user)
+    user.user_kpi_items.joins(:kpi).joins(:department).select('kpis.name as kpi_name,departments.name as department_name,user_kpi_items.*')
+  end
+
   def self.reinit_department_kpis belong, department_id, department_id_was
     belong.send(:user_kpi_items).each do |user_kpi_item|
       user_kpi_item.create_department_kpi_by_department(Department.find_by_id(department_id))

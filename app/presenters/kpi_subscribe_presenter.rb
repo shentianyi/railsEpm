@@ -18,6 +18,8 @@ class KpiSubscribePresenter<Presenter
 
   def as_followed_detail(user)
     {
+        follow_id: @kpi_subscribe.id,
+        last_updated_at: Time.now.utc,
         user: UserPresenter.new(user).as_brief_info(false),
         kpi: KpiPresenter.new(@kpi_subscribe.kpi).as_basic_info(false),
         department: DepartmentPresenter.new(@kpi_subscribe.department).as_brief_info(false),
@@ -31,6 +33,7 @@ class KpiSubscribePresenter<Presenter
         over_upper_boundary: false
     }
   end
+
 
 
   def self.as_followed_details(kpi_subscribes, user)

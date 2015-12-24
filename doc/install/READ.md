@@ -18,3 +18,10 @@ bundle exec rake environment elasticsearch:import:model CLASS='Kpi' FORCE=y
 
 2. god 作为sidekiq的监控
 2.1 安装 gem install god
+2.2 启动: god -c config.god
+
+
+3.  附件上传使用gem carrierwave & gem carrierwave-aliyun
+3.1 ImageMagick 作图片处理
+mac: brew install imagemagick
+ubuntu: sudo apt-get install imagemagick

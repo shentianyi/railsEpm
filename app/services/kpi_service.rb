@@ -67,89 +67,89 @@ class KpiService
   def self.updating(params, user, kpi)
     puts params
     # begin
-      Kpi.transaction do
-        puts "update---------------------------------------------------------------------"
-        kpi.update_attributes({
-                                  name: params[:kpi][:kpi_name],
-                                  description: params[:kpi][:description],
-                                  target_max: params[:kpi][:target_max].to_f,
-                                  target_min: params[:kpi][:target_min].to_f,
-                                  unit: params[:kpi][:uom],
-                                  viewable: params[:kpi][:viewable][:viewable_code],
-                                  calculate_method: params[:kpi][:calculate_method]
-                                  # user_group_id: params[:kpi][:viewable][:user_group_id]
-                              })
-        if params[:kpi][:viewable][:user_group_id].present?
-          kpi.user_group = UserGroup.find_by_id(params[:kpi][:viewable][:user_group_id])
-        end
-
-        #kpi_properties
-        #delete
-        p_ids =[]
-        params[:kpi][:attributes].each { |attr| p_ids<< attr[:attribute_id] unless attr[:attribute_id].blank? }
-        puts '---------------------------------------------------------'
-        puts p_ids
-        d_p_ids = kpi.kpi_properties.pluck(:id) - p_ids.uniq
-        puts d_p_ids
-        puts '---------------------------------------------------------'
-        d_p_ids.each do |i|
-          KpiProperty.find_by_id(i).destroy
-        end
-
-        #new update
-        params[:kpi][:attributes].each do |attr|
-          if attr[:attribute_id].blank?
-            property = KpiProperty.new(:name => attr[:attribute_name], :type => attr[:attribute_type])
-            property.user = user
-            property.tenant = user.tenant
-            kpi.kpi_properties<<property
-          else
-            property = KpiProperty.find_by_id(attr[:attribute_id])
-            if property && ((property.name != attr[:attribute_name]) || (property.type != attr[:attribute_type]))
-              property.update_attributes({:name => attr[:attribute_name], :type => attr[:attribute_type]})
-            end
-          end
-        end
-
-        #assign
-        #delete
-        a_ids =[]
-        params[:assignments].each { |assign| a_ids<< assign[:assignment_id] unless assign[:assignment_id].blank? }
-        puts '---------------------------------------------------------'
-        puts a_ids
-        d_a_ids = UserKpiItem.where(kpi_id: kpi.id).pluck(:id) - a_ids.uniq
-        puts d_a_ids
-        puts '---------------------------------------------------------'
-        d_a_ids.each do |i|
-          UserKpiItem.find_by_id(i).destroy
-        end
-
-        #assign new update
-        params[:assignments].each do |assignment|
-          if ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
-            if assignment[:assignment_id].blank?
-              KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment, user)
-            else
-             if item= UserKpiItem.find_by_id(assignment[:assignment_id])
-                          item.update_attributes({
-                                                                                       user_id: to_user.id,
-                                                                                       department_id: department.id,
-                                                                                       target_max: kpi.target_max,
-                                                                                       target_min: kpi.target_min,
-                                                                                       remind_time: assignment[:time],
-                                                                                       frequency: assignment[:frequency],
-                                                                                       auto_notification: assignment[:auto_notification]
-                                                                                   })
-               end
-            end
-          end
-        end
-
-        #task
-        #TODO
-
-        KpiPresenter.new(kpi).as_kpi_basic_feedback(['Kpi Update Success'], 1, false)
+    Kpi.transaction do
+      puts "update---------------------------------------------------------------------"
+      kpi.update_attributes({
+                                name: params[:kpi][:kpi_name],
+                                description: params[:kpi][:description],
+                                target_max: params[:kpi][:target_max].to_f,
+                                target_min: params[:kpi][:target_min].to_f,
+                                unit: params[:kpi][:uom],
+                                viewable: params[:kpi][:viewable][:viewable_code],
+                                calculate_method: params[:kpi][:calculate_method]
+                                # user_group_id: params[:kpi][:viewable][:user_group_id]
+                            })
+      if params[:kpi][:viewable][:user_group_id].present?
+        kpi.user_group = UserGroup.find_by_id(params[:kpi][:viewable][:user_group_id])
       end
+
+      #kpi_properties
+      #delete
+      p_ids =[]
+      params[:kpi][:attributes].each { |attr| p_ids<< attr[:attribute_id] unless attr[:attribute_id].blank? }
+      puts '---------------------------------------------------------'
+      puts p_ids
+      d_p_ids = kpi.kpi_properties.pluck(:id) - p_ids.uniq
+      puts d_p_ids
+      puts '---------------------------------------------------------'
+      d_p_ids.each do |i|
+        KpiProperty.find_by_id(i).destroy
+      end
+
+      #new update
+      params[:kpi][:attributes].each do |attr|
+        if attr[:attribute_id].blank?
+          property = KpiProperty.new(:name => attr[:attribute_name], :type => attr[:attribute_type])
+          property.user = user
+          property.tenant = user.tenant
+          kpi.kpi_properties<<property
+        else
+          property = KpiProperty.find_by_id(attr[:attribute_id])
+          if property && ((property.name != attr[:attribute_name]) || (property.type != attr[:attribute_type]))
+            property.update_attributes({:name => attr[:attribute_name], :type => attr[:attribute_type]})
+          end
+        end
+      end
+
+      #assign
+      #delete
+      a_ids =[]
+      params[:assignments].each { |assign| a_ids<< assign[:assignment_id] unless assign[:assignment_id].blank? }
+      puts '---------------------------------------------------------'
+      puts a_ids
+      d_a_ids = UserKpiItem.where(kpi_id: kpi.id).pluck(:id) - a_ids.uniq
+      puts d_a_ids
+      puts '---------------------------------------------------------'
+      d_a_ids.each do |i|
+        UserKpiItem.find_by_id(i).destroy
+      end
+
+      #assign new update
+      params[:assignments].each do |assignment|
+        if ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
+          if assignment[:assignment_id].blank?
+            KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment, user)
+          else
+            if item= UserKpiItem.find_by_id(assignment[:assignment_id])
+              item.update_attributes({
+                                         user_id: to_user.id,
+                                         department_id: department.id,
+                                         target_max: kpi.target_max,
+                                         target_min: kpi.target_min,
+                                         remind_time: assignment[:time],
+                                         frequency: assignment[:frequency],
+                                         auto_notification: assignment[:auto_notification]
+                                     })
+            end
+          end
+        end
+      end
+
+      #task
+      #TODO
+
+      KpiPresenter.new(kpi).as_kpi_basic_feedback(['Kpi Update Success'], 1, false)
+    end
     # rescue => e
     #   ApiMessage.new(messages: [e.message])
     # end
@@ -247,12 +247,12 @@ class KpiService
     KpiPresenter.as_on_users(Kpi.followed_by_user(user).offset(page*size).limit(size), user, false)
   end
 
-  def self.user_followed_details user,page=0,size=20
+  def self.user_followed_details user, page=0, size=20
     KpiSubscribePresenter.as_followed_details(KpiSubscribe.followed_details_by_user(user).offset(page*size).limit(size), user)
   end
 
-  def self.details kpi,user
-    KpiPresenter.new(kpi).as_kpi_details(true,user)
+  def self.details kpi, user
+    KpiPresenter.new(kpi).as_kpi_details(true, user)
   end
 
   def self.properties kpi_id
