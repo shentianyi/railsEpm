@@ -11,7 +11,7 @@ class KpiPresenter<Presenter
   def properties
     attrs = []
     @kpi.kpi_property_items.each { |item|
-      attrs << {id: item.id, name: item.kpi_property.name}
+      attrs << {id: item.id, name: item.kpi_property.name,type: item.kpi_property.type}
     }
     attrs
   end
