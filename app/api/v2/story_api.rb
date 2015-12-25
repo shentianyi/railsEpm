@@ -16,7 +16,7 @@ module V2
         requires :kpi_id, type: String, desc: "kpi id"
         requires :department_id, type: String, desc: "department id"
         requires :members, type: Array, desc: "story set members ids"
-        requires :description, type: String, desc: "story set first post description"
+        requires :content, type: String, desc: "story content"
       end
       post do
         StorySetService.create current_user, params
@@ -24,19 +24,21 @@ module V2
 
       namespace :users do
         params do
+          requires :kpi_id, type: String, desc: "kpi id"
           optional :page, type: Integer, default: 0, desc: 'page index start from 0'
           optional :size, type: Integer, default: 20, desc: 'page size'
         end
         get :accesses do
-          StoryService.user_accessable_stories current_user, params[:page], params[:size]
+          StoryService.user_accessable_stories current_user, params[:kpi_id], params[:page], params[:size]
         end
 
         params do
+          requires :kpi_id, type: String, desc: "kpi id"
           optional :page, type: Integer, default: 0, desc: 'page index start from 0'
           optional :size, type: Integer, default: 20, desc: 'page size'
         end
         get :created do
-          StoryService.user_created_stories current_user, params[:page], params[:size]
+          StoryService.user_created_stories current_user, params[:kpi_id], params[:page], params[:size]
         end
 
       end

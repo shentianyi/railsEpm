@@ -41,7 +41,7 @@ class StorySetService
         story_set.collaborators = [user]+StorySetService.gen_collaborators(params[:members])
         story_set.user_count = story_set.collaborators.count
 
-        story = Story.new(description: params[:description], title: params[:title], status: StorySet::StorySetStatus::OPEN)
+        story = Story.new(content: params[:content], title: params[:title], status: StorySet::StorySetStatus::OPEN)
         story.user = user
         story.tenant = user.tenant
         story_set.stories<<story

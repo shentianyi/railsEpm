@@ -1,6 +1,7 @@
 #encoding: utf-8
 class StoryPresenter<Presenter
-  Delegators=[:id, :description, :comment_count, :chart_count, :chart_type, :created_at, :updated_at, :title, :user_id, :user_name, :user_title, :email, :closed_at, :status, :story_set_id]
+  Delegators=[:id, :description, :comment_count, :chart_count, :chart_type, :created_at, :updated_at,
+              :title, :user_id, :user_name, :user_title, :email, :closed_at, :status, :story_set_id, :content]
   def_delegators :@story, *Delegators
 
   def initialize(story)
@@ -9,19 +10,20 @@ class StoryPresenter<Presenter
     # self.user_avatar=User.get_avatar(self.image_url)
   end
 
-  def as_brief_info
+  def as_brief_info(with_members=false)
     {
         id: @story.id,
         title: @story.title,
+        content: @story.content,
         story_set_id: @story.story_set.id,
         kpi_id: @story.story_set.kpi_id,
         department_id: @story.story_set.department_id,
-        members: StorySetUserPresenter.as_story_set_users(@story.story_set.story_set_users),
-        creator: @story.user_id,
+        creator: UserPresenter.new(@story.user).as_brief_info(false),
         created_at: @story.created_at,
-        closed_on: @story.closed_at,
+        closed_at: @story.closed_at,
         status: StorySet::StorySetStatus.display(@story.status),
-        status_value: @story.status
+        status_value: @story.status,
+        members: with_members ? UserPresenter.as_brief_infos(@story.story_set.users, false) : nil
     }
   end
 
@@ -38,7 +40,7 @@ class StoryPresenter<Presenter
     infos=[]
 
     stories.each do |story|
-      infos<<StoryPresenter.new(story).as_basic_feedback
+      infos<<StoryPresenter.new(story).as_brief_info
     end
 
     infos
