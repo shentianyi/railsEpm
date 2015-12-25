@@ -9,7 +9,7 @@ module V2
     mount KpiSubscribeAPI
     mount SearchAPI
     mount UserGroupAPI
-    mount StorySetAPI
+    mount StoryAPI
     mount TaskAPI
     mount EntryAPI
     mount AlertAPI

@@ -8,13 +8,15 @@ class StorySetPresenter<Presenter
     self.delegators =Delegators
   end
 
-  def as_basic_story_set
+  def as_brief_info
     {
         id: @story_set.id,
         title: @story_set.title,
         kpi_id: @story_set.kpi_id,
         department_id: @story_set.department_id,
         members: StorySetUserPresenter.as_story_set_users(@story_set.story_set_users),
+        creator: @story_set.user_id,
+        created_at: @story_set.created_at,
         closed_on: @story_set.closed_at,
         status: StorySet::StorySetStatus.display(@story_set.status),
         status_value: @story_set.status
@@ -26,8 +28,47 @@ class StorySetPresenter<Presenter
         result_code: result_code||1,
         messages: messages,
         need_instruction: false,
-        customized_field: as_basic_story_set
+        customized_field: as_brief_info
     }
+  end
+
+  def self.as_list story_sets
+    infos=[]
+
+    story_sets.each do |story_set|
+      infos<<StorySetPresenter.new(story_set).as_basic_feedback
+    end
+
+    infos
+  end
+
+  def as_story_set_members(user)
+    infos=[]
+
+    members=@story_set.story_set_users.uniq
+    members.each do |member|
+      u=User.find_by_id(member.user_id)
+      infos<<{
+          member_id: member.id,
+          user: UserPresenter.new(u).as_brief_info(false),
+          removeable: !(user==u)
+      }
+    end
+
+    infos
+  end
+
+  def as_select_members(user)
+    infos=[]
+
+    members=@story_set.story_set_users.pluck(:user_id)
+    user.tenant.users.each do |u|
+      unless members.include? u.id
+        infos<<UserPresenter.new(u).as_brief_info(false)
+      end
+    end
+
+    infos
   end
 
 
