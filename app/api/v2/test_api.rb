@@ -24,7 +24,8 @@ module V2
       end
 
       get do
-        Attach::Image.first.path.url
+        p request
+        request.host_with_port + Attach::Image.first.path.url
       end
     end
   end
