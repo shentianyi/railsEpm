@@ -43,7 +43,6 @@ module Query
                   emit({#{mr}},parseFloat(this.value));
               };
         }
-
       end
 
       def reduce

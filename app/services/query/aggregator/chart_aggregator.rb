@@ -113,7 +113,7 @@ module Query
 
 
       def init_data_item(date_time)
-        self.data[date_time]=Data.new(
+        self.data[date_time]=Query::Data::ChartData.new(
             date_time: date_time.to_s,
             value: nil,
             value_text: nil,
@@ -126,23 +126,6 @@ module Query
         )
       end
 
-
-    end
-
-    class Data<CZ::BaseClass
-      attr_accessor :date_time,
-                    :value, :value_text,
-                    :upper_boundary, :lower_boundary,
-                    :upper_boundary_text, :lower_boundary_text,
-                    :over_upper_boundary, :over_lower_boundary
-
-      def value=(v)
-        @value=v
-        unless v.nil?
-          self.over_upper_boundary= v>self.upper_boundary
-          self.over_lower_boundary=v<lower_boundary
-        end
-      end
     end
   end
 end
