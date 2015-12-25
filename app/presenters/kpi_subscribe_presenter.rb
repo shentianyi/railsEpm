@@ -12,13 +12,13 @@ class KpiSubscribePresenter<Presenter
     {
         follow_id: @kpi_subscribe.id,
         last_updated_at: Time.now.utc,
-        user: UserPresenter.new(user).as_brief_info(false),
+        user: UserPresenter.new(@kpi_subscribe.kpi.creator).as_brief_info(false),
         kpi: KpiPresenter.new(@kpi_subscribe.kpi).as_basic_info(true, true),
         department: DepartmentPresenter.new(@kpi_subscribe.department).as_brief_info(false),
         lower_boundary: @kpi_subscribe.lower_boundary,
         upper_boundary: @kpi_subscribe.upper_boundary,
-        lower_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, self.lower_boundary),
-        upper_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, self.upper_boundary),
+        lower_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, @kpi_subscribe.lower_boundary),
+        upper_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, @kpi_subscribe.upper_boundary),
         current_value: 0, # TODO finish the current value
         current_value_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, 0),
         over_lower_boundary: true,
@@ -35,8 +35,8 @@ class KpiSubscribePresenter<Presenter
         department: DepartmentPresenter.new(@kpi_subscribe.department).as_brief_info(false),
         lower_boundary: @kpi_subscribe.lower_boundary,
         upper_boundary: @kpi_subscribe.upper_boundary,
-        lower_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, self.lower_boundary),
-        upper_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, self.upper_boundary),
+        lower_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, @kpi_subscribe.lower_boundary),
+        upper_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, @kpi_subscribe.upper_boundary),
         current_value: 0, # TODO finish the current value
         current_value_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, 0),
         over_lower_boundary: true,
