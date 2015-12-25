@@ -1,5 +1,5 @@
 class Story < ActiveRecord::Base
-  attr_accessible :title, :description, :story_set_id, :comment_count, :chart_count, :chart_type, :status, :closed_at
+  attr_accessible :title, :description, :story_set_id, :comment_count, :chart_count, :chart_type, :status, :closed_at, :content
   belongs_to :user
   belongs_to :story_set
   has_many :chart_conditions, :as => :chartable, :dependent => :destroy
@@ -34,6 +34,14 @@ class Story < ActiveRecord::Base
 
   def self.detail_by_set_id id
     joins(:user).where(story_set_id: id).order('created_at DESC').select('users.first_name as user_name,users.title as user_title,users.email, users.image_url,stories.*')
+  end
+
+  def self.user_access_discussions_by_kpi user, kpi_id
+    user.tenant.stories.joins({story_set: :story_set_users}).where(story_sets:{kpi_id: kpi_id}).where(story_set_users:{user_id: user.id}).uniq
+  end
+
+  def self.user_created_discussions_by_kpi user, kpi_id
+    user.tenant.stories.joins(:story_set).where(story_sets:{kpi_id: kpi_id}).uniq
   end
 
 end
