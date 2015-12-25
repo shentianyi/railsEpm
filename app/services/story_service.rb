@@ -22,7 +22,11 @@ class StoryService
   end
 
   def self.user_created_stories user, kpi_id, page, size
-    StoryPresenter.as_list(Story.user_created_discussions_by_kpi(user, kpi_id).order(created_at: :desc).offset(page*size).limit(size))
+    if user.tenant.kpis.find_by_id(kpi_id)
+      StoryPresenter.as_list(Story.user_created_discussions_by_kpi(user, kpi_id).order(created_at: :desc).offset(page*size).limit(size))
+    else
+      ApiMessage.new(messages: ['The Kpi Not Found'])
+    end
   end
 
   def self.members user, params
@@ -94,7 +98,7 @@ class StoryService
           comment.commentable=discussion
           comment.user=user
           comment.tenant=user.tenant
-          Attachment.add(params[:comment][:attachments].values, @comment) unless params[:comment][:attachments].blank?
+          Attachment.add_attachment(params[:comment][:attachments].values, params[:comment][:attachments].type, comment) unless params[:comment][:attachments].blank?
 
           if comment.save
             CommentPresenter.new(comment).as_basic_feedback(['Discussion Comment Add Success'], 1)

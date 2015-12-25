@@ -7,6 +7,8 @@ module V2
       end
       post :image do
         AttachService.test(params)
+        # user=User.find(93)
+        # StoryService.add_comment user, params
       end
 
 

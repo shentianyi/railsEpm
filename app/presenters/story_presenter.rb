@@ -39,8 +39,10 @@ class StoryPresenter<Presenter
   def self.as_list stories
     infos=[]
 
-    stories.each do |story|
-      infos<<StoryPresenter.new(story).as_brief_info
+    unless stories.blank?
+      stories.each do |story|
+        infos<<StoryPresenter.new(story).as_brief_info
+      end
     end
 
     infos

@@ -37,4 +37,21 @@ class Attachment < ActiveRecord::Base
   # def delete_attach_file
   #   AliyunOssService.delete_attachments self.pathname
   # end
+
+  def self.add_image_attachment attachment
+    image=ActionDispatch::Http::UploadedFile.new(attachment)
+
+    i=Attach::Image.new(path: image)
+    i.save
+    i
+  end
+
+  def self.add_attachment attachments, type, attachable
+    unless attachments.blank?
+      attachments.each do |attachment|
+        # self.send(:"add_#{type}_attachment", attachment) if self.respond_to?("add_#{type}_attachment")
+        attachable.attachments<<self.add_image_attachment(attachment)
+      end
+    end
+  end
 end

@@ -88,7 +88,10 @@ module V2
           requires :id, type: Integer, desc: "story id"
           requires :comment, type: Hash do
             requires :content, type: String, desc: "comment content"
-            optional :attachments, type: Array, desc: "comment attachments"
+            optional :attachments, type: Hash do
+              requires :type, type: String, desc: "attachments type"
+              requires :values, type: Array, desc: "attachments"
+            end
           end
         end
         post do
