@@ -8,14 +8,6 @@ class KpiSubscribePresenter<Presenter
     self.delegators =Delegators
   end
 
-  def upper_boundary
-    @kpi_subscribe.max_kpi_subscribe_alert.nil? ? 0 : @kpi_subscribe.max_kpi_subscribe_alert.value
-  end
-
-  def lower_boundary
-    @kpi_subscribe.min_kpi_subscribe_alert.nil? ? 0 : @kpi_subscribe.min_kpi_subscribe_alert.value
-  end
-
   def as_followed_detail(user)
     {
         follow_id: @kpi_subscribe.id,
@@ -23,8 +15,8 @@ class KpiSubscribePresenter<Presenter
         user: UserPresenter.new(user).as_brief_info(false),
         kpi: KpiPresenter.new(@kpi_subscribe.kpi).as_basic_info(true, true),
         department: DepartmentPresenter.new(@kpi_subscribe.department).as_brief_info(false),
-        lower_boundary: self.lower_boundary,
-        upper_boundary: self.upper_boundary,
+        lower_boundary: @kpi_subscribe.lower_boundary,
+        upper_boundary: @kpi_subscribe.upper_boundary,
         lower_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, self.lower_boundary),
         upper_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, self.upper_boundary),
         current_value: 0, # TODO finish the current value
@@ -41,8 +33,8 @@ class KpiSubscribePresenter<Presenter
         user: UserPresenter.new(user).as_brief_info(false),
         kpi: KpiPresenter.new(@kpi_subscribe.kpi).as_basic_info(false),
         department: DepartmentPresenter.new(@kpi_subscribe.department).as_brief_info(false),
-        lower_boundary: self.lower_boundary,
-        upper_boundary: self.upper_boundary,
+        lower_boundary: @kpi_subscribe.lower_boundary,
+        upper_boundary: @kpi_subscribe.upper_boundary,
         lower_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, self.lower_boundary),
         upper_boundary_text: KpiUnit.get_value_display(@kpi_subscribe.kpi.unit, self.upper_boundary),
         current_value: 0, # TODO finish the current value
