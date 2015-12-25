@@ -3,6 +3,14 @@ class EntryService
     validate_entry(params, user)
   end
 
+  def self.get_entry_chart_data params, user
+    puts params[:start_time]
+    validate_get_data(params, user) do |params|
+
+      Query::QueryService.query(params, Query::QueryService::CHART)
+    end
+  end
+
 
   private
   def self.validate_entry(params, user)
@@ -50,7 +58,7 @@ class EntryService
       ids=kpi.kpi_properties.pluck(:id)
 
       entry[:properties].each do |property|
-        attrs["a#{property[:id]}"] = property[:attribute_value] if ids.include?(property[:attribute_id].to_i)
+        attrs["a#{property[:attribute_id]}"] = property[:attribute_value] if ids.include?(property[:attribute_id].to_i)
       end
     end
     #update
@@ -63,4 +71,29 @@ class EntryService
     kpi_entry
   end
 
+
+  def self.validate_get_data params, user
+    # TODO Query Data Right about KPI & DEPARTMENT
+
+    if params[:follow_id].present?
+      if item=user.kpi_subscribes.where(id: params[:follow_id]).first
+        params[:kpi_subscribe]=item
+        params[:kpi]=item.kpi
+        params[:department]=item.department
+      else
+        return ApiMessage.new(messages: ['Follow ID not found'])
+      end
+    else
+      if (kpi=Kpi.find_by_id(params[:kpi_id])) && (department=Department.find_by_id(params[:department_id]))
+        params[:kpi]=kpi
+        params[:department]=department
+
+      else
+       return ApiMessage.new(messages: ['KPI or Department not found'])
+      end
+    end
+
+
+    yield(params) if block_given?
+  end
 end
