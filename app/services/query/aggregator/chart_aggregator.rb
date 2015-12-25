@@ -26,6 +26,8 @@ module Query
             self.data[date].value_text=KpiUnit.get_value_display(self.parameter.kpi.unit, v)
           end
         end
+
+        self.data=self.data.values
       end
 
 
@@ -112,7 +114,7 @@ module Query
 
       def init_data_item(date_time)
         self.data[date_time]=Data.new(
-            date_time: date_time,
+            date_time: date_time.to_s,
             value: nil,
             value_text: nil,
             upper_boundary: self.parameter.upper_boundary,
