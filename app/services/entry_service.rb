@@ -50,7 +50,7 @@ class EntryService
       ids=kpi.kpi_properties.pluck(:id)
 
       entry[:properties].each do |property|
-        attrs["a#{property[:id]}"] = property[:value] if ids.include?(property[:id].to_i)
+        attrs["a#{property[:id]}"] = property[:attribute_value] if ids.include?(property[:attribute_id].to_i)
       end
     end
     #update
