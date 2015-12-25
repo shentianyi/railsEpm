@@ -1,6 +1,6 @@
 module Query
   module Parameter
-    class AggregateParameter<Parameter
+    class AggregateParameter<Query::Parameter::Parameter
 
       def initialize(params)
         super
