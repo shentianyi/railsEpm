@@ -23,7 +23,7 @@ module V2
       end
 
       params do
-        optional :follow_id,type:Integer,desc:'follow id'
+        optional :follow_id, type: Integer, desc: 'follow id'
         optional :kpi_id, type: Integer, desc: 'kpi id'
         optional :department_id, type: Integer, desc: 'department id'
         requires :frequency, type: Integer, desc: 'kpi frequency', values: KpiFrequency.values
@@ -39,8 +39,22 @@ module V2
         EntryService.get_entry_chart_data(params, current_user)
       end
 
-      get :chart_aggregate_data do
 
+      params do
+        optional :follow_id, type: Integer, desc: 'follow id'
+        optional :kpi_id, type: Integer, desc: 'kpi id'
+        optional :department_id, type: Integer, desc: 'department id'
+        requires :frequency, type: Integer, desc: 'kpi frequency', values: KpiFrequency.values
+        requires :calculate_method, type: Integer, desc: 'calculate method', values: KpiCalculate.values
+        requires :from_time, type: DateTime, desc: 'from time, utc'
+        requires :end_time, type: DateTime, desc: 'end time, utc'
+        optional :attributes, type: Array do
+          requires :attribute_id, type: Integer, desc: 'attribute id'
+          optional :values, type: Array, desc: 'attribute values'
+        end
+      end
+      get :chart_aggregate_data do
+        EntryService.get_entry_chart_aggregate_data(params, current_user)
       end
     end
   end

@@ -24,6 +24,7 @@ module Entry
            function(key,values){return Array.#{func}(values);};
         }
         self.data=query.map_reduce(map, reduce).out(inline: true)
+
         aggregate_type_data
       end
 
@@ -87,11 +88,11 @@ puts "%%%%%%%%%%%%%%%%%%%#{property_ids}---#{data_module_keys}"
 		self.data.each do |d|
           key=[]
           property_ids.each do |id|
-            key<<d['_id'][id.to_s].downcase
+            key<<d['_id'][id.to_s]
           end
 
           date=date_parse_proc.call(d['_id']['date'])
-          p '------------'
+          p '----idididi--------'
 		  p d['_id']
 		  puts date
 		  d['_id'].values.each{|v| p v.class}

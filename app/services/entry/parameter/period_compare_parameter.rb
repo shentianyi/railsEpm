@@ -50,6 +50,10 @@ module Entry
       end
 
       def clean_property_values(properties)
+        p '******************************'
+        p self.property
+        p '******************************'
+
         property.each do |k, v|
           key=k.sub(/a/, '').to_i
           properties[key]=v if properties.has_key?(key)

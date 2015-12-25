@@ -4,10 +4,14 @@ class EntryService
   end
 
   def self.get_entry_chart_data params, user
-    puts params[:start_time]
     validate_get_data(params, user) do |params|
-
       Query::QueryService.query(params, Query::QueryService::CHART)
+    end
+  end
+
+  def self.get_entry_chart_aggregate_data params, user
+    validate_get_data(params, user) do |params|
+      Query::QueryService.query(params, Query::QueryService::CHART_AGGREGATE)
     end
   end
 
@@ -89,7 +93,7 @@ class EntryService
         params[:department]=department
 
       else
-       return ApiMessage.new(messages: ['KPI or Department not found'])
+        return ApiMessage.new(messages: ['KPI or Department not found'])
       end
     end
 
