@@ -10,10 +10,10 @@ module V2
           requires :department_id, type: Integer, desc: 'department id'
           requires :data, type: Hash do
             requires :value, type: Float, desc: 'value'
-            requires :time, type: Time, desc: 'utc time'
+            requires :time, type: DateTime, desc: 'utc time'
             requires :attributes, type: Array do
-              requires :id, type: Integer, desc: 'kpi property id'
-              requires :value, type: String, desc: 'kpi property value'
+              requires :attribute_id, type: Integer, desc: 'kpi property id'
+              requires :attribute_value, type: String, desc: 'kpi property value'
             end
           end
         end
@@ -22,18 +22,24 @@ module V2
         EntryService.create_entry(params, current_user)
       end
 
-
       params do
-        requires :kpi_id, type: Integer, desc: 'kpi id'
-        requires :department_id, type: Integer, desc: 'department id'
-        requires :frequency, type: Integer, desc: 'kpi frequency'
-
+        optional :follow_id,type:Integer,desc:'follow id'
+        optional :kpi_id, type: Integer, desc: 'kpi id'
+        optional :department_id, type: Integer, desc: 'department id'
+        requires :frequency, type: Integer, desc: 'kpi frequency', values: KpiFrequency.values
+        requires :calculate_method, type: Integer, desc: 'calculate method', values: KpiCalculate.values
+        requires :from_time, type: DateTime, desc: 'from time, utc'
+        requires :end_time, type: DateTime, desc: 'end time, utc'
+        optional :attributes, type: Array do
+          requires :attribute_id, type: Integer, desc: 'attribute id'
+          requires :values, type: Array, desc: 'attribute values'
+        end
       end
       get :chart_data do
-
+        EntryService.get_entry_chart_data(params, current_user)
       end
 
-      get :chart_aggregate do
+      get :chart_aggregate_data do
 
       end
     end

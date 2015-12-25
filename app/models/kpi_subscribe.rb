@@ -59,6 +59,15 @@ class KpiSubscribe < ActiveRecord::Base
   end
 
 
+
+  def upper_boundary
+    self.max_kpi_subscribe_alert.nil? ? 0 : self.max_kpi_subscribe_alert.value
+  end
+
+  def lower_boundary
+    self.min_kpi_subscribe_alert.nil? ? 0 : self.min_kpi_subscribe_alert.value
+  end
+
   private
 
   def create_follow_flag
