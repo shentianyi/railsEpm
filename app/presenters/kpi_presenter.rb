@@ -100,7 +100,7 @@ class KpiPresenter<Presenter
 
   def as_on_user(user, with_properties=true)
     {
-        user: UserPresenter.new(user).as_brief_info(false),
+        user: UserPresenter.new(@kpi.creator).as_brief_info(false),
         kpi: as_basic_info(with_properties),
         follow_flag: Kpi::KpiFollowFlag.display(@kpi.follow_flag(user).follow_flag),
         follow_flag_value: @kpi.follow_flag(user).follow_flag,
