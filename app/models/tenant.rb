@@ -9,6 +9,8 @@ class Tenant < ActiveRecord::Base
   belongs_to :super_user ,:class_name=>'User',:foreign_key=>'user_id'
   has_many :kpi_subscribes, :dependent => :destroy
   has_many :story_sets, :dependent => :destroy
+  has_many :stories, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
   has_many :user_groups, :dependent => :destroy
 
   attr_accessible :company_name, :edition, :subscription_reference, :expire_at,:subscription_status

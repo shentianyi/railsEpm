@@ -22,6 +22,11 @@ module V2
 
         AttachService.tests(params)
       end
+
+      get do
+        p request
+        request.host_with_port + Attach::Image.first.path.url
+      end
     end
   end
 end

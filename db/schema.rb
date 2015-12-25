@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151223123629) do
+ActiveRecord::Schema.define(:version => 20151224042406) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -474,6 +474,8 @@ ActiveRecord::Schema.define(:version => 20151223123629) do
     t.integer  "comment_count", :default => 0
     t.integer  "chart_count",   :default => 0
     t.integer  "chart_type",    :default => 0
+    t.datetime "closed_at"
+    t.integer  "status"
   end
 
   add_index "stories", ["story_set_id"], :name => "index_stories_on_story_set_id"
