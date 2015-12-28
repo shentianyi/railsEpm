@@ -9,6 +9,7 @@ class AttachService
   def self.test(params)
     puts params[:name]
     puts params[:image]
+    puts '---------------------------------------------------------------------------------------'
     image=ActionDispatch::Http::UploadedFile.new(params[:image])
 
     puts '------------------------------------'

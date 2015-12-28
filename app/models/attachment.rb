@@ -52,6 +52,8 @@ class Attachment < ActiveRecord::Base
         # self.send(:"add_#{type}_attachment", attachment) if self.respond_to?("add_#{type}_attachment")
         attachable.attachments<<self.add_image_attachment(attachment)
       end
+      puts '=--------------------------------------------------------------'
+      puts attachable.attachments
     end
   end
 end

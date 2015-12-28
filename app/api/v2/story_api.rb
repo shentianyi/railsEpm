@@ -81,21 +81,30 @@ module V2
           requires :id, type: String, desc: "story id"
         end
         get do
-          StoryService.comments current_user, params[:id]
+          StoryService.comments current_user, params[:id], request.host_with_port
         end
 
-        params do
-          requires :id, type: Integer, desc: "story id"
-          requires :comment, type: Hash do
-            requires :content, type: String, desc: "comment content"
-            optional :attachments, type: Hash do
-              requires :type, type: String, desc: "attachments type"
-              requires :values, type: Array, desc: "attachments"
-            end
-          end
-        end
+        # params do
+        #   requires :id, type: Integer, desc: "story id"
+        #   requires :comment, type: Hash do
+        #     requires :content, type: String, desc: "comment content"
+        #     optional :attachments, type: Hash do
+        #       requires :type, type: String, desc: "attachments type"
+        #       requires :values, type: Array, desc: "attachments"
+        #     end
+        #   end
+        # end
         post do
-          StoryService.add_comment current_user, params
+
+          comment_params={
+              id: params[:id],
+              comment: {
+                  content: params[:content],
+                  attachments: params[:attachments].values
+              }
+          }
+
+          StoryService.add_comment current_user, comment_params, request.host_with_port
         end
 
         params do

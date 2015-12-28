@@ -6,9 +6,23 @@ module V2
         optional :image, type: Rack::Multipart::UploadedFile, desc: 'file'
       end
       post :image do
-        AttachService.test(params)
-        # user=User.find(93)
-        # StoryService.add_comment user, params
+        p '***********************'
+        p request.env['api.request.body']
+        p '***********************'
+        p params
+        # AttachService.test(params)
+
+        comment_params={
+            id: params[:id],
+            comment: {
+                content: params[:content],
+                attachments: [params[:image]]
+            }
+        }
+
+        puts comment_params
+        user=User.find(93)
+        StoryService.add_comment user, comment_params, request.host_with_port
       end
 
 

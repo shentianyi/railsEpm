@@ -78,15 +78,15 @@ class StoryService
     end
   end
 
-  def self.comments user, id
+  def self.comments user, id, host_port
     if discussion = user.tenant.stories.find_by_id(id)
-      StoryPresenter.as_comments discussion
+      StoryPresenter.as_comments discussion, host_port
     else
       ApiMessage.new(messages: ['The Discussion Not Found'])
     end
   end
 
-  def self.add_comment user, params
+  def self.add_comment user, params, host_port
     unless discussion = user.tenant.stories.find_by_id(params[:id])
       return ApiMessage.new(messages: ['The Discussion Not Found'])
     end
@@ -98,10 +98,10 @@ class StoryService
           comment.commentable=discussion
           comment.user=user
           comment.tenant=user.tenant
-          Attachment.add_attachment(params[:comment][:attachments].values, params[:comment][:attachments].type, comment) unless params[:comment][:attachments].blank?
+          Attachment.add_attachment(params[:comment][:attachments], "image", comment) unless params[:comment][:attachments].blank?
 
           if comment.save
-            CommentPresenter.new(comment).as_basic_feedback(['Discussion Comment Add Success'], 1)
+            CommentPresenter.new(comment).as_basic_feedback(host_port, ['Discussion Comment Add Success'], 1)
           else
             ApiMessage.new(messages: ['Discussion Comment Add Failed'])
           end
@@ -114,7 +114,7 @@ class StoryService
 
   def self.remove_comment user, id
     begin
-      if comment = user.tenant.comments.find_by_id(id)
+      if comment = user.comments.find_by_id(id)
         comment.destroy
         ApiMessage.new(result_code: 1, messages: ['The Discussion Comment Delete Success'])
       else

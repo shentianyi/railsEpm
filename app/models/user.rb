@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
   has_many :story_set_users
   has_many :collaborated_story_sets, :through => :story_set_users
   has_many :report_snaps
+  has_many :comments, :dependent => :destroy
 
   #
   has_many :user_invites
