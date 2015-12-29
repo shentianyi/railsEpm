@@ -1,0 +1,33 @@
+<h1>Listing snapshots</h1>
+
+<table>
+  <tr>
+    <th>Attachment</th>
+    <th>User</th>
+    <th>Alert</th>
+    <th>Upper boundary</th>
+    <th>Lower boundary</th>
+    <th>Current value</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @snapshots.each do |snapshot| %>
+  <tr>
+    <td><%= snapshot.attachment %></td>
+    <td><%= snapshot.user %></td>
+    <td><%= snapshot.alert_id %></td>
+    <td><%= snapshot.upper_boundary %></td>
+    <td><%= snapshot.lower_boundary %></td>
+    <td><%= snapshot.current_value %></td>
+    <td><%= link_to 'Show', snapshot %></td>
+    <td><%= link_to 'Edit', edit_snapshot_path(snapshot) %></td>
+    <td><%= link_to 'Destroy', snapshot, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Snapshot', new_snapshot_path %>

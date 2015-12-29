@@ -1,0 +1,41 @@
+<%= form_for(@snapshot) do |f| %>
+  <% if @snapshot.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@snapshot.errors.count, "error") %> prohibited this snapshot from being saved:</h2>
+
+      <ul>
+      <% @snapshot.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :attachment %><br />
+    <%= f.text_field :attachment %>
+  </div>
+  <div class="field">
+    <%= f.label :user %><br />
+    <%= f.text_field :user %>
+  </div>
+  <div class="field">
+    <%= f.label :alert_id %><br />
+    <%= f.number_field :alert_id %>
+  </div>
+  <div class="field">
+    <%= f.label :upper_boundary %><br />
+    <%= f.text_field :upper_boundary %>
+  </div>
+  <div class="field">
+    <%= f.label :lower_boundary %><br />
+    <%= f.text_field :lower_boundary %>
+  </div>
+  <div class="field">
+    <%= f.label :current_value %><br />
+    <%= f.text_field :current_value %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
