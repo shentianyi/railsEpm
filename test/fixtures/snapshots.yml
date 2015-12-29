@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  attachment: 
+  user: 
+  alert_id: 1
+  upper_boundary: 1.5
+  lower_boundary: 1.5
+  current_value: 1.5
+
+two:
+  attachment: 
+  user: 
+  alert_id: 1
+  upper_boundary: 1.5
+  lower_boundary: 1.5
+  current_value: 1.5

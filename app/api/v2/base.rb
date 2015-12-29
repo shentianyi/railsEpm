@@ -13,7 +13,7 @@ module V2
     mount TaskAPI
     mount EntryAPI
     mount AlertAPI
-
+    mount CommentAPI
 
     mount TestAPI
   end

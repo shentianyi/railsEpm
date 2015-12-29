@@ -1,3 +1,4 @@
+
 class ApiMessage<CZ::BaseClass
   attr_accessor  :result_code, :messages, :object, :content
 

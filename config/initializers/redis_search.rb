@@ -14,9 +14,11 @@ Redis::Search.configure do |config|
 end
 # TagCount.new
 ActiveRecord::Base.connection.tables.map do |model|
-  _name = model.capitalize.singularize.camelize
-  if  Kernel.class_defined?(_name)
-    _class=eval _name
-    _class.new if _class.respond_to?(:redis_search_index)
+  unless model=='snaps'
+    _name = model.capitalize.singularize.camelize
+    if Kernel.class_defined?(_name)
+      _class=eval _name
+      _class.new if _class.respond_to?(:redis_search_index)
+    end
   end
 end
