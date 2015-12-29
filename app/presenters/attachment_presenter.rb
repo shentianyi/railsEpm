@@ -8,11 +8,12 @@ class AttachmentPresenter<Presenter
     self.delegators =Delegators
   end
 
-  def as_basic_info host_port
+  def as_basic_info host_port, type
     {
         id: @attachment.id,
         type: @attachment.type,
-        url: host_port + Attach::Image.find(@attachment.id).path.url
+        value: @attachment.value(host_port),
+        thumb: @attachment.thumb_url(host_port)
     }
   end
 
@@ -20,11 +21,7 @@ class AttachmentPresenter<Presenter
     infos=[]
 
     attachments.each do |attachment|
-      if attachment.type == "image"
-        infos<<AttachmentPresenter.new(attachment).as_basic_info(host_port)
-      else
-        infos<<AttachmentPresenter.new(attachment).as_basic_info(host_port)
-      end
+      infos<<AttachmentPresenter.new(attachment).as_basic_info(host_port, attachment.type)
     end
 
     infos

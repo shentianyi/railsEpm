@@ -8,7 +8,7 @@ module V2
         requires :id, type: String, desc: "story id"
       end
       get do
-        StoryService.details current_user, params
+        StoryService.details current_user,params
       end
 
       params do
@@ -79,32 +79,29 @@ module V2
       namespace :comments do
         params do
           requires :id, type: String, desc: "story id"
+          optional :page, type: Integer, default: 0, desc: 'page index start from 0'
+          optional :size, type: Integer, default: 20, desc: 'page size'
         end
         get do
-          StoryService.comments current_user, params[:id], request.host_with_port
+          StoryService.comments current_user, params, request.host_with_port
         end
 
-        # params do
-        #   requires :id, type: Integer, desc: "story id"
-        #   requires :comment, type: Hash do
-        #     requires :content, type: String, desc: "comment content"
-        #     optional :attachments, type: Hash do
-        #       requires :type, type: String, desc: "attachments type"
-        #       requires :values, type: Array, desc: "attachments"
-        #     end
-        #   end
-        # end
+        params do
+          requires :id, type: Integer, desc: "story id"
+          requires :comment, type: Hash do
+            requires :content, type: String, desc: "comment content"
+            optional :attachments, type: Array do
+              requires :type, type: String, desc: "attachment type"
+              requires :value #, type: [String, Rack::Multipart::UploadedFile], desc: "attachment"
+              optional :alert_id, type: Integer, desc: 'if type is snapshot requires'
+              optional :upper_boundary_text, type: String, desc: 'if type is snapshot requires'
+              optional :lower_boundary_text, type: String, desc: 'if type is snapshot requires'
+              optional :current_value_text, type: String, desc: 'if type is snapshot requires'
+            end
+          end
+        end
         post do
-
-          comment_params={
-              id: params[:id],
-              comment: {
-                  content: params[:content],
-                  attachments: params[:attachments].values
-              }
-          }
-
-          StoryService.add_comment current_user, comment_params, request.host_with_port
+          StoryService.add_comment current_user, params, request.host_with_port
         end
 
         params do
@@ -116,6 +113,15 @@ module V2
 
       end
 
+      namespace :snapshots do
+        params do
+          requires :id, type: String, desc: "attachment id"
+        end
+        get do
+          StoryService.snap_details params[:id]
+        end
+
+      end
 
 
     end

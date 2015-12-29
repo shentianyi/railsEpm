@@ -77,10 +77,10 @@ class StoryPresenter<Presenter
     infos
   end
 
-  def self.as_comments story, host_port
+  def self.as_comments comments, host_port
     infos = []
 
-    story.comments.each do |comment|
+    comments.each do |comment|
       infos<<CommentPresenter.new(comment).as_basic_info(host_port)
     end
 

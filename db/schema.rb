@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151225032912) do
+ActiveRecord::Schema.define(:version => 20151229083848) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -462,6 +462,34 @@ ActiveRecord::Schema.define(:version => 20151225032912) do
   end
 
   add_index "settings", ["target_type", "target_id", "var"], :name => "index_settings_on_target_type_and_target_id_and_var", :unique => true
+
+  create_table "snaps", :force => true do |t|
+    t.integer  "attachment_id"
+    t.integer  "user_id"
+    t.integer  "alert_id"
+    t.float    "upper_boundary"
+    t.float    "lower_boundary"
+    t.float    "current_value"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "snaps", ["attachment_id"], :name => "index_snaps_on_attachment_id"
+  add_index "snaps", ["user_id"], :name => "index_snaps_on_user_id"
+
+  create_table "snapshots", :force => true do |t|
+    t.integer  "attachment_id"
+    t.integer  "user_id"
+    t.integer  "alert_id"
+    t.string   "upper_boundary"
+    t.string   "lower_boundary"
+    t.string   "current_value"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "snapshots", ["attachment_id"], :name => "index_snapshots_on_attachment_id"
+  add_index "snapshots", ["user_id"], :name => "index_snapshots_on_user_id"
 
   create_table "stories", :force => true do |t|
     t.string   "title"

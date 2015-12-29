@@ -78,38 +78,42 @@ class StoryService
     end
   end
 
-  def self.comments user, id, host_port
-    if discussion = user.tenant.stories.find_by_id(id)
-      StoryPresenter.as_comments discussion, host_port
+  def self.comments user, params, host_port
+    if discussion = user.tenant.stories.find_by_id(params[:id])
+      StoryPresenter.as_comments discussion.comments.offset(params[:page]*params[:size]).limit(params[:size]), host_port
     else
       ApiMessage.new(messages: ['The Discussion Not Found'])
     end
   end
 
   def self.add_comment user, params, host_port
+    puts params
+    puts params[:comment]
+    puts params[:comment][:attachments]
+    puts '1----------------------------------'
     unless discussion = user.tenant.stories.find_by_id(params[:id])
       return ApiMessage.new(messages: ['The Discussion Not Found'])
     end
 
-    begin
-      Comment.transaction do
-        unless params[:comment][:content].blank?
-          comment=Comment.new(content: params[:comment][:content])
-          comment.commentable=discussion
-          comment.user=user
-          comment.tenant=user.tenant
-          Attachment.add_attachment(params[:comment][:attachments], "image", comment) unless params[:comment][:attachments].blank?
+    # begin
+    Comment.transaction do
+      unless params[:comment][:content].blank?
+        comment=Comment.new(content: params[:comment][:content])
+        comment.commentable=discussion
+        comment.user=user
+        comment.tenant=user.tenant
+        Attachment.add_attachment(user, params[:comment][:attachments], comment) unless params[:comment][:attachments].blank?
 
-          if comment.save
-            CommentPresenter.new(comment).as_basic_feedback(host_port, ['Discussion Comment Add Success'], 1)
-          else
-            ApiMessage.new(messages: ['Discussion Comment Add Failed'])
-          end
+        if comment.save
+          CommentPresenter.new(comment).as_basic_feedback(host_port, ['Discussion Comment Add Success'], 1)
+        else
+          ApiMessage.new(messages: ['Discussion Comment Add Failed'])
         end
       end
-    rescue => e
-      ApiMessage.new(messages: [e.message])
     end
+    # rescue => e
+    #   ApiMessage.new(messages: [e.message])
+    # end
   end
 
   def self.remove_comment user, id
@@ -122,6 +126,14 @@ class StoryService
       end
     rescue => e
       ApiMessage.new(messages: [e.message])
+    end
+  end
+
+  def self.snap_details id
+    if (attach=Attach::Snap.find_by_id(id)) && attach.snapshot
+      SnapshotPresenter.new(attach.snapshot).as_basic_info(attach)
+    else
+      ApiMessage.new(messages: ['The Snapshot Not Found'])
     end
   end
 
