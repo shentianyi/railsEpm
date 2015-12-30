@@ -73,7 +73,7 @@ class Attachment < ActiveRecord::Base
   def self.add_snap_attachment user, attachment
     attach=Attach::Snap.new()
 
-    File.open('data.json', 'w+') do |f|
+    File.open(Settings.snap.chart_data, 'w+') do |f|
       f.write(attachment[:value])
       attach.path = f
     end
