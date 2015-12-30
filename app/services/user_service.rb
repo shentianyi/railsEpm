@@ -6,10 +6,14 @@ class UserService
   #     password:string}
   # }
   def self.update_basic(params, user)
-    if user.update_attributes(params)
-      UserPresenter.new(user).as_basic_feedback(['Set User Info Success'],1)
+    if User.find_by_email(params[:email])
+      if user.update_attributes(params)
+        UserPresenter.new(user).as_basic_feedback(['Set User Info Success'],1)
+      else
+        UserPresenter.new(user).as_basic_feedback(user.errors.full_messages, 0)
+      end
     else
-      UserPresenter.new(user).as_basic_feedback(user.errors.full_messages, 0)
+      ApiMessage.new(messages: ['The Email is not invalid'])
     end
   end
 
