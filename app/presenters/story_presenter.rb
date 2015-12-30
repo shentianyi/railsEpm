@@ -77,11 +77,11 @@ class StoryPresenter<Presenter
     infos
   end
 
-  def self.as_comments comments, host_port
+  def self.as_comments comments, base_url
     infos = []
 
     comments.each do |comment|
-      infos<<CommentPresenter.new(comment).as_basic_info(host_port)
+      infos<<CommentPresenter.new(comment).as_basic_info(base_url)
     end
 
     infos
