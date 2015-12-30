@@ -17,6 +17,8 @@ development:
        aliyun_area: cn-hangzhou
    thumb:
        follow_snap: 'uploads/attach/logo.png'
+   snap:
+       chart_data: 'uploadfiles/data/data.json'
 
 
 demo:
@@ -38,6 +40,8 @@ demo:
        aliyun_area: cn-hangzhou
    thumb:
        follow_snap: 'uploads/attach/logo.png'
+   snap:
+       chart_data: 'uploadfiles/data/data.json'
 
 # local env for test, like store attach on local not oss
 local:
@@ -59,6 +63,8 @@ local:
        aliyun_area: cn-hangzhou
    thumb:
        follow_snap: 'uploads/attach/logo.png'
+   snap:
+       chart_data: 'uploadfiles/data/data.json'
 
 
 production:
@@ -80,3 +86,5 @@ production:
        aliyun_area: cn-hangzhou
    thumb:
        follow_snap: 'uploads/attach/logo.png'
+   snap:
+       chart_data: 'uploadfiles/data/data.json'
