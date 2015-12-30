@@ -62,7 +62,7 @@ class Attachment < ActiveRecord::Base
     end
   end
 
-  def self.add_image_attachment attachment
+  def self.add_image_attachment user, attachment
     image=ActionDispatch::Http::UploadedFile.new(attachment[:value])
 
     i=Attach::Image.new(path: image)
@@ -95,12 +95,14 @@ class Attachment < ActiveRecord::Base
   def self.add_attachment user, attachments, attachable
     unless attachments.blank?
       attachments.each do |attachment|
-        # self.send(:"add_#{type}_attachment", attachment) if self.respond_to?("add_#{type}_attachment")
-        if attachment[:type] == "image"
-          attachable.attachments<<self.add_image_attachment(attachment)
-        elsif attachment[:type] == "snap"
-          attachable.attachments<<self.add_snap_attachment(user, attachment)
+        if self.respond_to?("add_#{attachment[:type]}_attachment")
+          attachable.attachments<<self.send(:"add_#{attachment[:type]}_attachment", user, attachment)
         end
+        # if attachment[:type] == "image"
+        #   attachable.attachments<<self.add_image_attachment(attachment)
+        # elsif attachment[:type] == "snap"
+        #   attachable.attachments<<self.add_snap_attachment(user, attachment)
+        # end
       end
     end
   end
