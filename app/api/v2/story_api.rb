@@ -83,7 +83,7 @@ module V2
           optional :size, type: Integer, default: 20, desc: 'page size'
         end
         get do
-          StoryService.comments current_user, params, request.host_with_port
+          StoryService.comments current_user, params, request.base_url
         end
 
         params do
@@ -101,7 +101,7 @@ module V2
           end
         end
         post do
-          StoryService.add_comment current_user, params, request.host_with_port
+          StoryService.add_comment current_user, params, request.base_url
         end
 
         params do

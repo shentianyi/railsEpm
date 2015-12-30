@@ -8,7 +8,7 @@ module V2
       end
       get do
         if comment=current_user.tenant.comments.find_by_id(params[:id])
-          CommentPresenter.new(comment).as_basic_info(request.host_with_port)
+          CommentPresenter.new(comment).as_basic_info(request.base_url)
         else
           ApiMessage.new(messages: ['The Comment Not Found'])
         end
