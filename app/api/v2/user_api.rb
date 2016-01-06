@@ -35,7 +35,12 @@ module V2
               user:UserPresenter.new(user).as_brief_info(false)
           }
         else
-          ApiMessage.new(result_code:0,messages:['User not found'])
+          {
+              result_code:1,
+              messages:['User not found'],
+              user:nil
+          }
+          # ApiMessage.new(result_code:0,messages:['User not found'])
         end
       end
 
