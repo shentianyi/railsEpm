@@ -7,7 +7,19 @@ class StoryService
 
   def self.details user, params
     if discussion = user.tenant.stories.find_by_id(params[:id])
-      StoryPresenter.new(discussion).as_brief_info
+      StoryPresenter.new(discussion).as_brief_info(true, user)
+    else
+      ApiMessage.new(messages: ['The Discussion Not Found'])
+    end
+  end
+
+  def self.resolve user, id
+    if discussion = user.tenant.stories.find_by_id(id)
+      if discussion.update_attributes({status: StorySet::StorySetStatus::CLOSED})
+        StoryPresenter.new(discussion).as_brief_info
+      else
+        ApiMessage.new(messages: ['The Discussion Update Failed'])
+      end
     else
       ApiMessage.new(messages: ['The Discussion Not Found'])
     end
@@ -52,6 +64,10 @@ class StoryService
 
     unless member = user.tenant.users.find_by_id(params[:user_id])
       return ApiMessage.new(messages: ['The Add Member Not Found'])
+    end
+
+    if story.story_set.story_set_users.find_by_user_id(params[:user_id])
+      return StoryPresenter.new(story).as_basic_feedback(['Discussion Member Add Success'], 1)
     end
 
     begin

@@ -22,6 +22,13 @@ module V2
         StorySetService.create current_user, params
       end
 
+      params do
+        requires :id, type: String, desc: "story id"
+      end
+      post :resolve do
+        StoryService.resolve current_user,params[:id]
+      end
+
       namespace :users do
         params do
           requires :kpi_id, type: String, desc: "kpi id"

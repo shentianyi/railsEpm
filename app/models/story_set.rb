@@ -5,7 +5,7 @@ class StorySet < ActiveRecord::Base
   belongs_to :user
   has_many :story_set_users, :dependent => :destroy
   has_many :collaborators, :through => :story_set_users, :source => :user
-  has_many :users, through: :stroy_set_users
+  # has_many :users, through: :stroy_set_users
   has_many :stories, :dependent => :destroy
   belongs_to :tenant
   acts_as_tenant(:tenant)
