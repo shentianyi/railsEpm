@@ -7,7 +7,19 @@ class StoryService
 
   def self.details user, params
     if discussion = user.tenant.stories.find_by_id(params[:id])
-      StoryPresenter.new(discussion).as_brief_info
+      StoryPresenter.new(discussion).as_brief_info(true, user)
+    else
+      ApiMessage.new(messages: ['The Discussion Not Found'])
+    end
+  end
+
+  def self.resolve user, id
+    if discussion = user.tenant.stories.find_by_id(id)
+      if discussion.update_attributes({status: StorySet::StorySetStatus::CLOSED})
+        StoryPresenter.new(discussion).as_brief_info
+      else
+        ApiMessage.new(messages: ['The Discussion Update Failed'])
+      end
     else
       ApiMessage.new(messages: ['The Discussion Not Found'])
     end
@@ -54,6 +66,10 @@ class StoryService
       return ApiMessage.new(messages: ['The Add Member Not Found'])
     end
 
+    if story.story_set.story_set_users.find_by_user_id(params[:user_id])
+      return StoryPresenter.new(story).as_basic_feedback(['Discussion Member Add Success'], 1)
+    end
+
     begin
       StorySet.transaction do
         su = StorySetUser.new(user_id: params[:user_id])
@@ -78,15 +94,15 @@ class StoryService
     end
   end
 
-  def self.comments user, params, host_port
+  def self.comments user, params, base_url
     if discussion = user.tenant.stories.find_by_id(params[:id])
-      StoryPresenter.as_comments discussion.comments.offset(params[:page]*params[:size]).limit(params[:size]), host_port
+      StoryPresenter.as_comments discussion.comments.offset(params[:page]*params[:size]).limit(params[:size]), base_url
     else
       ApiMessage.new(messages: ['The Discussion Not Found'])
     end
   end
 
-  def self.add_comment user, params, host_port
+  def self.add_comment user, params, base_url
     puts params
     puts params[:comment]
     puts params[:comment][:attachments]
@@ -105,7 +121,7 @@ class StoryService
         Attachment.add_attachment(user, params[:comment][:attachments], comment) unless params[:comment][:attachments].blank?
 
         if comment.save
-          CommentPresenter.new(comment).as_basic_feedback(host_port, ['Discussion Comment Add Success'], 1)
+          CommentPresenter.new(comment).as_basic_feedback(base_url, ['Discussion Comment Add Success'], 1)
         else
           ApiMessage.new(messages: ['Discussion Comment Add Failed'])
         end

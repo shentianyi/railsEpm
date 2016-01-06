@@ -8,20 +8,20 @@ class AttachmentPresenter<Presenter
     self.delegators =Delegators
   end
 
-  def as_basic_info host_port, type
+  def as_basic_info base_url, type
     {
         id: @attachment.id,
         type: @attachment.type,
-        value: @attachment.value(host_port),
-        thumb: @attachment.thumb_url(host_port)
+        value: @attachment.value(base_url),
+        thumb: @attachment.thumb_url(base_url)
     }
   end
 
-  def self.parse_attachments attachments, host_port
+  def self.parse_attachments attachments, base_url
     infos=[]
 
     attachments.each do |attachment|
-      infos<<AttachmentPresenter.new(attachment).as_basic_info(host_port, attachment.type)
+      infos<<AttachmentPresenter.new(attachment).as_basic_info(base_url, attachment.type)
     end
 
     infos

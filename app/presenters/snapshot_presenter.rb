@@ -15,7 +15,7 @@ class SnapshotPresenter<Presenter
         upper_boundary_text: @snapshot.upper_boundary,
         lower_boundary_text: @snapshot.lower_boundary,
         chart_data: attach.chart_data,
-        created_at: @snapshot.created_at,
+        created_at: @snapshot.created_at.utc.to_s,
         creator: UserPresenter.new(@snapshot.user).as_brief_info(false)
     }
   end
