@@ -67,14 +67,14 @@ class StoryService
     end
 
     if story.story_set.story_set_users.find_by_user_id(params[:user_id])
-      return StoryPresenter.new(story).as_basic_feedback(['Discussion Member Add Success'], 1)
+      return StoryPresenter.new(story).as_add_members_feedback(user, ['Discussion Member Add Success'], 1)
     end
 
     begin
       StorySet.transaction do
         su = StorySetUser.new(user_id: params[:user_id])
         story.story_set.story_set_users<<su
-        StoryPresenter.new(story).as_basic_feedback(['Discussion Member Add Success'], 1)
+        StoryPresenter.new(story).as_add_members_feedback(user, ['Discussion Member Add Success'], 1)
       end
     rescue => e
       ApiMessage.new(messages: [e.message])

@@ -3,6 +3,13 @@ module V2
     guard_all!
     namespace :tasks do
 
+      params do
+        requires :task_id,type:Integer,desc:'task id'
+      end
+      get do
+        UserKpiItemService.details(current_user, params[:task_id])
+      end
+
       namespace :entries do
         params do
           optional :page, type: Integer, default: 0, desc: 'page index start from 0'

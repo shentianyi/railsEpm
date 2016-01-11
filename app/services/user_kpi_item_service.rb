@@ -29,4 +29,12 @@ class UserKpiItemService
     end
     items
   end
+
+  def self.details user, id
+    if task=user.user_kpi_items.find_by_id(id)
+      UserKpiItemPresenter.new(task).as_task_details_info user
+    else
+      ApiMessage.new(messages: ['Task Not Found'])
+    end
+  end
 end
