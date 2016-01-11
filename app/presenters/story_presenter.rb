@@ -49,6 +49,15 @@ class StoryPresenter<Presenter
     infos
   end
 
+  def as_add_members_feedback(user, messages=nil, result_code=nil)
+    {
+        result_code: result_code||1,
+        messages: messages,
+        need_instruction: false,
+        customized_field: as_stories_members(user)
+    }
+  end
+
   def as_stories_members(user)
     infos=[]
 
