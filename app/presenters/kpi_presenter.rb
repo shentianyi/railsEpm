@@ -124,7 +124,7 @@ class KpiPresenter<Presenter
     infos=[]
 
     @kpi.kpi_properties.each do |p|
-      infos<<{id: p.id, name: p.name, type: p.type}
+      infos<<{id: p.id, name: p.name, type: Kpi::KpiPropertyType.display(p.type)}
     end
 
     infos
