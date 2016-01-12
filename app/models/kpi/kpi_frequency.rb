@@ -12,8 +12,10 @@ class KpiFrequency
 
   def self.parse_short_string_to_date(frequency)
     return case frequency
-             when KpiFrequency::Hourly, KpiFrequency::Daily
-               Proc.new { |v| Time.parse(v).utc }
+             when KpiFrequency::Hourly
+               Proc.new { |v| Time.parse(v+' UTC').utc }
+             when KpiFrequency::Daily
+               Proc.new { |v| Time.parse(v+' 00:00 UTC').utc }
              when KpiFrequency::Weekly
                Proc.new { |v|
                  arr=v.split('-').map(&:to_i)
