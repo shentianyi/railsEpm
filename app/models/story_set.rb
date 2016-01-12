@@ -8,6 +8,7 @@ class StorySet < ActiveRecord::Base
   # has_many :users, through: :stroy_set_users
   has_many :stories, :dependent => :destroy
   belongs_to :tenant
+  belongs_to :kpi
   acts_as_tenant(:tenant)
 
   #after_create :generate_collaborator_set
