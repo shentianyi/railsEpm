@@ -34,7 +34,7 @@
       <li>
         <a guide-name="report_menu" href="<%= access_kpis_path %>"> <span><%= t 'menu.my_kpi' %></span></a>
       </li>
-      <% if current_user.director? %>
+      <% if current_user.director? || current_user.admin? %>
           <li>
             <a href="<%= dashboards_path %>" guide-name="dashboard_menu"> <span><%= t 'menu.dashboard' %></span> </a>
           </li>

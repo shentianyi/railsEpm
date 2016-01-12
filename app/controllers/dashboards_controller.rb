@@ -1,7 +1,7 @@
 #encoding: utf-8
 class DashboardsController < ApplicationController
-  before_filter :require_user_as_director,:only=>:index
-  before_filter :require_user_as_admin, :only=>:import_dashboards
+  # before_filter :require_user_as_director,:only=>:index
+  # before_filter :require_user_as_admin, :only=>:import_dashboards
   layout "fullsize", :only => :fullsize
 
   def new
