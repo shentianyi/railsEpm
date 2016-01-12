@@ -63,13 +63,12 @@ module V2
         optional :new_password_confirmation, type: String, desc: 'the new password confirmation'
       end
       post :set_password do
-        user=params[:user_id].blank? ? current_user : User.accessible_by(current_ability).find_by_id(params[:user_id])
         params[:new_password_confirmation]=params[:new_password] if params[:new_password_confirmation].blank?
 
         UserService.set_password({old_password: params[:old_password],
                                   new_password: params[:new_password],
                                   new_password_confirmation: params[:new_password_confirmation]},
-                                 user)
+                                 current_user)
       end
 
       # get user departments
