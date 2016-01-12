@@ -71,10 +71,59 @@ class StoryService
     end
 
     begin
-      StorySet.transaction do
+      StorySetUser.transaction do
         su = StorySetUser.new(user_id: params[:user_id])
         story.story_set.story_set_users<<su
         StoryPresenter.new(story).as_add_members_feedback(user, ['Discussion Member Add Success'], 1)
+      end
+    rescue => e
+      ApiMessage.new(messages: [e.message])
+    end
+  end
+
+  def self.validable_members user, story, member_ids
+    err_infos=[]
+    valid_member_ids=[]
+
+    member_ids.uniq.each do |member_id|
+      if user.tenant.users.find_by_id(member_id)
+        unless story.story_set.story_set_users.find_by_user_id(member_id)
+          valid_member_ids<<member_id
+        end
+      else
+        err_infos<<"The Member ID:#{member_id} Not Found"
+      end
+    end
+puts err_infos
+    if err_infos.size==0
+      puts '1111111111111111111111'
+      puts valid_member_ids
+      if block_given?
+        yield(valid_member_ids)
+      else
+        ApiMessage.new(messages: ['The Members Valid'])
+      end
+    else
+      ApiMessage.new(messages: err_infos)
+    end
+  end
+
+  #add_multiple
+  def self.add_members user, params
+    unless story = user.tenant.stories.find_by_id(params[:id])
+      return ApiMessage.new(messages: ['The Discussion Not Found'])
+    end
+
+    begin
+      StorySetUser.transaction do
+        validable_members(user, story, params[:user_ids]) do |member_ids|
+          member_ids.each do |id|
+            su = StorySetUser.new(user_id: id)
+            story.story_set.story_set_users<<su
+          end
+
+          StoryPresenter.new(story).as_add_members_feedback(user, ['Discussion Members Add Success'], 1)
+        end
       end
     rescue => e
       ApiMessage.new(messages: [e.message])

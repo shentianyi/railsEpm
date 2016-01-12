@@ -75,6 +75,14 @@ module V2
 
         params do
           requires :id, type: Integer, desc: "story id"
+          requires :user_ids, type: Array, desc: "story set members ids"
+        end
+        post :add_multiple do
+          StoryService.add_members current_user, params
+        end
+
+        params do
+          requires :id, type: Integer, desc: "story id"
           requires :member_id, type: Integer, desc: "story set member id"
         end
         delete do
