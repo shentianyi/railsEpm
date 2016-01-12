@@ -8,6 +8,12 @@ class AvatarsController < ApplicationController
   skip_load_and_authorize_resource
 
   def show
-    send_file File.join($AVATARPATH, params[:id]+'.'+params[:format])
+    file=File.join($AVATARPATH, params[:id]+'.'+params[:format])
+
+    if File.exist?(file)
+      send_file file
+    else
+      send_file 'public/avatar.png'
+    end
   end
 end

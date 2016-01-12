@@ -94,7 +94,11 @@ class User < ActiveRecord::Base
   end
 
   def self.get_image(image_name)
-    '/avatars/'+ image_name
+    unless image_name.blank?
+      '/avatars/'+ image_name
+    else
+      '/avatar.png'
+    end
   end
 
   def deliver_user_confirmation!
@@ -135,9 +139,9 @@ class User < ActiveRecord::Base
 
   def self.by_role role
     joins('left join entities on users.entity_id=entities.id')
-    .joins('left join departments on users.department_id=departments.id')
-    .where(role_id: role)
-    .select('users.*,entities.name as entity_name,departments.name as department_name')
+        .joins('left join departments on users.department_id=departments.id')
+        .where(role_id: role)
+        .select('users.*,entities.name as entity_name,departments.name as department_name')
   end
 
   def role
