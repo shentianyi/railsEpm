@@ -72,7 +72,7 @@ class UserService
     if user.present?
       if params[:old_password].present?
         if (u=User.find_for_database_authentication(id: user.id)).nil? || !u.valid_password?(params[:old_password])
-          return ApiMessage.new(messages: ['Invalid User Old Account'])
+          return ApiMessage.new(messages: ['Incorrect Old Password'])
         end
       end
 
