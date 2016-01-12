@@ -12,16 +12,32 @@ module Query
       def clean_data
         date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
         self.query_data.each do |d|
-          # puts '-----****'
-          # puts d['_id']['date']
-          # key=date_parse_proc.call(d['_id']['date'])
+          puts '-----****'
+          puts d['_id']['date']
+          key=date_parse_proc.call(d['_id']['date'])
 
-          # puts key
-          # puts '-----****'
+          puts key
+          puts d['value']
+          puts '-----****'
 
           v=d['value']
           date=date_parse_proc.call(d['_id']['date'])
+
+
+          puts '777777777'
+          puts           date
+
+          puts           date.class
+          puts '88888888'
           if self.data[date]
+
+
+            puts '7779999777777'
+            puts           date
+
+            puts           date.class
+            puts '8888888000008'
+
             self.data[date].value =KpiUnit.parse_entry_value(self.parameter.kpi.unit, v)
             self.data[date].value_text=KpiUnit.get_value_display(self.parameter.kpi.unit, v)
           end
@@ -113,6 +129,7 @@ module Query
 
 
       def init_data_item(date_time)
+        puts date_time
         self.data[date_time]=Query::Data::ChartData.new(
             date_time: date_time.to_s,
             value: nil,
