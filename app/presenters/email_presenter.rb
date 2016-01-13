@@ -10,6 +10,18 @@ class EmailPresenter<Presenter
     self.time_group = TimeGroup.new(self.created_at)
   end
 
+  def content
+    @email.content.blank? ? 'New Email' : @email.content
+  end
+
+  def title
+    @email.title.blank? ? 'New Email' : @email.title
+  end
+
+  def receivers
+    @email.receivers.blank? ? '' : @email.receivers
+  end
+
   def to_detail_json
     json=self.to_json
     json[:attachments]=[]
