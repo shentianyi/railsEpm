@@ -159,10 +159,6 @@ GEM
     origin (1.1.0)
     orm_adapter (0.5.0)
     polyglot (0.3.4)
-    poseidon (0.0.5)
-    poseidon_cluster (0.3.3)
-      poseidon (>= 0.0.5, < 0.1.0)
-      zk
     rack (1.4.5)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -282,9 +278,6 @@ GEM
     will_paginate (3.0.5)
     wkhtmltopdf-binary (0.9.9.3)
     xml-simple (1.1.5)
-    zk (1.9.6)
-      zookeeper (~> 1.4.0)
-    zookeeper (1.4.11)
 
 PLATFORMS
   ruby
@@ -317,7 +310,6 @@ DEPENDENCIES
   mongoid (~> 3.1.6)
   multimap
   mysql2
-  poseidon_cluster
   rack-cors
   rack-oauth2
   rails (= 3.2.13)
@@ -340,3 +332,6 @@ DEPENDENCIES
   wicked_pdf
   will_paginate (~> 3.0)
   wkhtmltopdf-binary
+
+BUNDLED WITH
+   1.10.6

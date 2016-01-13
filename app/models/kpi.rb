@@ -26,6 +26,8 @@ class Kpi < ActiveRecord::Base
   has_many :kpi_subscribes,:dependent => :destroy
   has_many :kpi_user_subscribes,:dependent => :destroy
 
+  has_many :story_sets
+
   #has_many :kpi_entries, :through => :user_kpi_items
   belongs_to :tenant
   attr_accessible :description, :direction, :frequency, :is_calculated, :period, :name, :target_max, :target_min, :unit, :formula, :formula_string, :user_group_id, :viewable, :calculate_method

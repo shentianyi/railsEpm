@@ -8,6 +8,7 @@ module V2
         requires :data, type: Hash do
           requires :kpi_id, type: Integer, desc: 'kpi id'
           requires :department_id, type: Integer, desc: 'department id'
+          optional :entry_id,type:String,desc: 'entry id'
           requires :data, type: Hash do
             requires :value, type: Float, desc: 'value'
             requires :time, type: DateTime, desc: 'utc time'
