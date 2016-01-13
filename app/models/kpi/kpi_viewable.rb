@@ -16,7 +16,7 @@ class Kpi::KpiViewable
       when PARTIAL_BLOCK
         'partial_block'
       else
-        raise 'Error KpiViewable value'
+        'Error KpiViewable value'
     end
   end
 

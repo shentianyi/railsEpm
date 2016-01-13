@@ -49,10 +49,15 @@ class KpiPresenter<Presenter
         target_max_text: KpiUnit.get_value_display(@kpi.unit, @kpi.target_max),
         target_min_text: KpiUnit.get_value_display(@kpi.unit, @kpi.target_min),
         uom: @kpi.unit,
+        uom_text: KpiUnit.get_desc_by_value(@kpi.unit),
         calculate_method: @kpi.calculate_method,
+        calculate_method_text: KpiCalculate.get_operator(@kpi.calculate_method),
+        frequency: @kpi.frequency,
+        frequency_text: KpiFrequency.get_desc_by_value(@kpi.frequency),
         viewable: {
             viewable_code: @kpi.viewable,
-            user_group_id: @kpi.user_group_id
+            viewable_code_text: Kpi::KpiViewable.display(@kpi.viewable),
+            user_group: @kpi.user_group.blank? ? '' : UserGroupPresenter.new(@kpi.user_group).as_user_group_details
         },
         attributes: with_properties ? properties(with_property_value) : nil
     }
@@ -136,9 +141,10 @@ class KpiPresenter<Presenter
     @kpi.user_kpi_items.each do |item|
       infos<<{
           assignment_id: item.id,
-          department_id: item.department_id,
+          departmen: item.department.blank? ? '' : DepartmentPresenter.new(item.department).as_brief_info(false),
           time: item.remind_time,
           frequency: item.frequency,
+          frequency_text: KpiFrequency.get_desc_by_value(item.frequency),
           auto_notification: item.auto_notification,
           user: UserPresenter.new(User.find_by_id(item.user_id)).as_brief_info(false)
       }

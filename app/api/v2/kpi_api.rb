@@ -18,6 +18,7 @@ module V2
         requires :kpi, type: Hash do
           requires :target_max, type: Float, desc: "kpi target max"
           requires :target_min, type: Float, desc: "kpi target min"
+          requires :frequency, type: Integer, desc: "kpi frequency"
           # requires :viewable, type: Integer, desc: "kpi viewable"
           requires :calculate_method, type: Integer, desc: "kpi calculate method"
           optional :attributes, type: Array, desc: "kpi properties list"
@@ -42,6 +43,7 @@ module V2
           requires :target_min, type: Float, desc: "kpi target min"
           requires :kpi_id, type: Integer, desc: "kpi id"
           requires :calculate_method, type: Integer, desc: "kpi calculate method"
+          requires :frequency, type: Integer, desc: "kpi frequency"
           optional :attributes, type: Array, desc: "kpi properties list"
           requires :viewable, type: Hash do
             requires :viewable_code, type: String, desc: "kpi viewable code"
