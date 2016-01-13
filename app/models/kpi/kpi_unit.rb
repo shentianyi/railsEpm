@@ -33,4 +33,17 @@ class KpiUnit
     value=parse_entry_value(unit,value)
     "#{value}#{get_entry_unit_sym(unit)}"
   end
+
+  def self.get_desc_by_value value
+    return case value
+             when 100
+               'INT'
+             when 200
+               'FLOAT'
+             when 300
+               'INT PERCENT'
+             when 400
+               'FLOAT PERCENT'
+           end
+  end
 end

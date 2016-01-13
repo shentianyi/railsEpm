@@ -11,7 +11,8 @@ class KpiService
                           target_min: params[:kpi][:target_min],
                           unit: params[:kpi][:uom],
                           viewable: params[:kpi][:viewable][:viewable_code],
-                          calculate_method: params[:kpi][:calculate_method]
+                          calculate_method: params[:kpi][:calculate_method],
+                          frequency: params[:kpi][:frequency]
                           # user_group_id: params[:kpi][:viewable][:user_group_id]
                       })
         kpi.creator = user
@@ -76,7 +77,8 @@ class KpiService
                                 target_min: params[:kpi][:target_min].to_f,
                                 unit: params[:kpi][:uom],
                                 viewable: params[:kpi][:viewable][:viewable_code],
-                                calculate_method: params[:kpi][:calculate_method]
+                                calculate_method: params[:kpi][:calculate_method],
+                                frequency: params[:kpi][:frequency]
                                 # user_group_id: params[:kpi][:viewable][:user_group_id]
                             })
       if params[:kpi][:viewable][:user_group_id].present?
