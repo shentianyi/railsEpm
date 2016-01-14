@@ -27,4 +27,13 @@ class AttachmentPresenter<Presenter
     infos
   end
 
+  def self.as_basic_feedback(attachs, base_url, messages=nil, result_code=nil)
+    {
+        result_code: result_code||1,
+        messages: messages,
+        need_instruction: false,
+        customized_field: parse_attachments(attachs, base_url)
+    }
+  end
+
 end
