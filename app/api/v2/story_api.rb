@@ -101,18 +101,29 @@ module V2
           StoryService.comments current_user, params, request.base_url
         end
 
+        # params do
+        #   requires :id, type: Integer, desc: "story id"
+        #   requires :comment, type: Hash do
+        #     requires :content, type: String, desc: "comment content"
+        #     optional :attachments, type: Array do
+        #       requires :type, type: String, desc: "attachment type"
+        #       requires :value #, type: [String, Rack::Multipart::UploadedFile], desc: "attachment"
+        #       optional :alert_id, type: Integer, desc: 'if type is snapshot requires'
+        #       optional :upper_boundary_text, type: String, desc: 'if type is snapshot requires'
+        #       optional :lower_boundary_text, type: String, desc: 'if type is snapshot requires'
+        #       optional :current_value_text, type: String, desc: 'if type is snapshot requires'
+        #     end
+        #   end
+        # end
+        # post do
+        #   StoryService.add_comment current_user, params, request.base_url
+        # end
+
         params do
           requires :id, type: Integer, desc: "story id"
           requires :comment, type: Hash do
             requires :content, type: String, desc: "comment content"
-            optional :attachments, type: Array do
-              requires :type, type: String, desc: "attachment type"
-              requires :value #, type: [String, Rack::Multipart::UploadedFile], desc: "attachment"
-              optional :alert_id, type: Integer, desc: 'if type is snapshot requires'
-              optional :upper_boundary_text, type: String, desc: 'if type is snapshot requires'
-              optional :lower_boundary_text, type: String, desc: 'if type is snapshot requires'
-              optional :current_value_text, type: String, desc: 'if type is snapshot requires'
-            end
+            optional :attachment_ids, type: Array, desc: "attachment ids"
           end
         end
         post do
@@ -124,16 +135,6 @@ module V2
         end
         delete do
           StoryService.remove_comment current_user, params[:id]
-        end
-
-      end
-
-      namespace :snapshots do
-        params do
-          requires :id, type: String, desc: "attachment id"
-        end
-        get do
-          StoryService.snap_details params[:id]
         end
 
       end
