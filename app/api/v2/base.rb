@@ -14,6 +14,7 @@ module V2
     mount EntryAPI
     mount AlertAPI
     mount CommentAPI
+    mount AttachmentAPI
 
     mount TestAPI
   end

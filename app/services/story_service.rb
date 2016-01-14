@@ -167,7 +167,7 @@ puts err_infos
         comment.commentable=discussion
         comment.user=user
         comment.tenant=user.tenant
-        Attachment.add_attachment(user, params[:comment][:attachments], comment) unless params[:comment][:attachments].blank?
+        Attachment.add_attachments(params[:comment][:attachment_ids], comment) unless params[:comment][:attachment_ids].blank?
 
         if comment.save
           CommentPresenter.new(comment).as_basic_feedback(base_url, ['Discussion Comment Add Success'], 1)
@@ -191,14 +191,6 @@ puts err_infos
       end
     rescue => e
       ApiMessage.new(messages: [e.message])
-    end
-  end
-
-  def self.snap_details id
-    if (attach=Attach::Snap.find_by_id(id)) && attach.snapshot
-      SnapshotPresenter.new(attach.snapshot).as_basic_info(attach)
-    else
-      ApiMessage.new(messages: ['The Snapshot Not Found'])
     end
   end
 

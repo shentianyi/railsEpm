@@ -62,8 +62,8 @@ class Attachment < ActiveRecord::Base
     end
   end
 
-  def self.add_image_attachment user, attachment
-    image=ActionDispatch::Http::UploadedFile.new(attachment[:value])
+  def self.add_image_attachment attachment
+    image=ActionDispatch::Http::UploadedFile.new(attachment)
 
     i=Attach::Image.new(path: image)
     i.save
@@ -74,7 +74,7 @@ class Attachment < ActiveRecord::Base
     attach=Attach::Snap.new()
 
     File.open(Settings.snap.chart_data, 'w+') do |f|
-      f.write(attachment[:value])
+      f.write(attachment[:snap])
       attach.path = f
     end
 
@@ -92,17 +92,20 @@ class Attachment < ActiveRecord::Base
     attach
   end
 
-  def self.add_attachment user, attachments, attachable
-    unless attachments.blank?
-      attachments.each do |attachment|
-        if self.respond_to?("add_#{attachment[:type]}_attachment")
-          attachable.attachments<<self.send(:"add_#{attachment[:type]}_attachment", user, attachment)
-        end
-        # if attachment[:type] == "image"
-        #   attachable.attachments<<self.add_image_attachment(attachment)
-        # elsif attachment[:type] == "snap"
-        #   attachable.attachments<<self.add_snap_attachment(user, attachment)
-        # end
+  # def self.add_attachment user, attachments, attachable
+  #   unless attachments.blank?
+  #     attachments.each do |attachment|
+  #       if self.respond_to?("add_#{attachment[:type]}_attachment")
+  #         attachable.attachments<<self.send(:"add_#{attachment[:type]}_attachment", user, attachment)
+  #       end
+  #     end
+  #   end
+  # end
+
+  def self.add_attachments ids, attachable
+    ids.each do |id|
+      if attachment=self.find_by_id(id)
+        attachable.attachments<<attachment
       end
     end
   end
