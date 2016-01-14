@@ -13,7 +13,7 @@ class MailerService
     self.text=params[:text]
     self.attachment=params[:attachment] if params.has_key?(:attachment)
     self.file_path =params[:file_path]
-    self.delete_tmp_file = params[:delete_tmp_file]||true
+    self.delete_tmp_file = false #params[:delete_tmp_file]||false
   end
 
   def send

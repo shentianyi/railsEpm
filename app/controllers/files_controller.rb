@@ -23,7 +23,11 @@ class FilesController < ApplicationController
   end
 
   def attach
-    send_file  params[:f]
+    if File.exist?( params[:f])
+      send_file  params[:f]
+    else
+      send_file 'public/avatar.png'
+    end
   end
 
   def avatar
