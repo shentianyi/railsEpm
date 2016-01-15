@@ -42,11 +42,11 @@ class AttachService
   end
 
   def self.add_image image, base_url
-    AttachmentPresenter.as_basic_feedback([Attachment.add_image_attachment(image)], base_url, ['Image Add Success'], 1)
+    AttachmentPresenter.as_basic_feedback(Attachment.add_image_attachment(image), base_url, ['Image Add Success'], 1)
   end
 
   def self.add_snapshot user, params, base_url
-    AttachmentPresenter.as_basic_feedback([Attachment.add_snap_attachment(user, params)], base_url, ['Snapshot Add Success'], 1)
+    AttachmentPresenter.as_basic_feedback(Attachment.add_snap_attachment(user, params), base_url, ['Snapshot Add Success'], 1)
   end
 
   def self.snap_details id
