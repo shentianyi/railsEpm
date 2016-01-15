@@ -10,8 +10,132 @@ class AlertService
             created_at: Time.now.utc,
             sender: 'System'
         },
-        handle_type: 1,
-        handle_type_text: "manual_read"
+        handle_type: {
+            id: 1,
+            name: "manual read"
+        }
     }
   end
+
+  def self.unread_alerts_count user
+    [
+        {
+            alert_type: 1,
+            alert_type_text: "task alerts",
+            count: 3
+        },
+        {
+            alert_type: 2,
+            alert_type_text: "kpi follow alerts",
+            count: 3
+        },
+        {
+            alert_type: 3,
+            alert_type_text: "system alerts",
+            count: 3
+        }
+    ]
+  end
+
+  def self.task_alerts user, page=0, size=20
+    items=[]
+    20.times do |i|
+      if i<9
+        created_at=(Time.now+i.hours).utc.to_s
+        handle_type= {
+            id: 1,
+            name: "manual read"
+        }
+        unread=true
+      else
+        created_at=(Time.now-i.hours).utc.to_s
+        handle_type= {
+            id: 0,
+            name: "auto read"
+        }
+        unread=false
+      end
+
+      items<<{
+          head: {
+              alert_id: 1,
+              alert_text: "the kpi is due in #{i} min",
+              created_at: created_at,
+              sender: 'System'
+          },
+          task_id: user.user_kpi_items.blank? ? i : user.user_kpi_items.last.id,
+          task_item_id: i,
+          unread: unread,
+          handle_type: handle_type
+      }
+    end
+    items
+  end
+
+  def self.system_alerts user, page=0, size=20
+    items=[]
+    20.times do |i|
+      if i<9
+        created_at=(Time.now+i.hours).utc.to_s
+        handle_type= {
+            id: 1,
+            name: "manual read"
+        }
+        unread=true
+      else
+        created_at=(Time.now-i.hours).utc.to_s
+        handle_type= {
+            id: 0,
+            name: "auto read"
+        }
+        unread=false
+      end
+
+      items<<{
+          head: {
+              alert_id: 1,
+              alert_text: "you are invited to discussion group why the kpi exeeds 3 for 5 days",
+              created_at: created_at,
+              sender: 'System'
+          },
+          unread: unread,
+          handle_type: handle_type
+      }
+    end
+    items
+  end
+
+  def self.kpi_followed_alerts user, page=0, size=20
+    items=[]
+    20.times do |i|
+      if i<9
+        created_at=(Time.now+i.hours).utc.to_s
+        handle_type= {
+            id: 1,
+            name: "manual read"
+        }
+        unread=true
+      else
+        created_at=(Time.now-i.hours).utc.to_s
+        handle_type= {
+            id: 0,
+            name: "auto read"
+        }
+        unread=false
+      end
+
+      items<<{
+          head: {
+              alert_id: 1,
+              alert_text: "the kpi from department exeeds the max limit, current value is 1#{i}%",
+              created_at: created_at,
+              sender: 'System'
+          },
+          unread: unread,
+          handle_type: handle_type
+      }
+    end
+    items
+  end
+
 end
