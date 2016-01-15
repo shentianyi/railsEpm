@@ -43,7 +43,7 @@ class KpiPresenter<Presenter
         kpi_name: @kpi.name,
         description: @kpi.description,
         creator: @kpi.user_id,
-        created_on: @kpi.created_at,
+        created_at: @kpi.created_at.utc.to_s,
         target_max: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max),
         target_min: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min),
         target_max_text: KpiUnit.get_value_display(@kpi.unit, @kpi.target_max),
