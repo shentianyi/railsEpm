@@ -57,8 +57,8 @@ module Api
       contacts = UserPresenter.init_json_presenters(entity_group.contacts,request.protocol,request.host_with_port)
 
       respond_to do |t|
-        t.json { render :json => {contact: contacts, entityGroup:EntityGroupPresenter.new(entity_group)} }
-        t.js { render :js => jsonp_str({contact: contacts, entityGroup: EntityGroupPresenter.new(entity_group)}) }
+        t.json { render :json => {contact: contacts, entityGroup:EntityGroupPresenter.new(entity_group).to_json} }
+        t.js { render :js => jsonp_str({contact: contacts, entityGroup: EntityGroupPresenter.new(entity_group).to_json}) }
       end
     end
   end
