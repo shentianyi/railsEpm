@@ -26,6 +26,13 @@ module V2
         AttachService.add_images params[:attachments], request.base_url
       end
 
+      params do
+        requires :image, type: Rack::Multipart::UploadedFile, desc: "image attachment"
+      end
+      post :image do
+        AttachService.add_image params[:image], request.base_url
+      end
+
 
       namespace :snapshots do
         params do
