@@ -297,7 +297,8 @@ IFEpm::Application.routes.draw do
           get :import
         end
       end
-    end
+      end
+
     resources :kpi_templates do
       collection do
         get :categoried
