@@ -70,7 +70,7 @@ module Entry
         #puts self.current.keys.size
         #puts self.target_min.keys.size
         #puts '-------------'
-        p self.current
+        # p self.current
 
         case self.parameter.data_module
           when Entry::DataService::WEB_HIGHSTOCK
