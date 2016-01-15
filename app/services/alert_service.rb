@@ -10,7 +10,8 @@ class AlertService
             created_at: Time.now.utc,
             sender: 'System'
         },
-        handle_type: 1
+        handle_type: 1,
+        handle_type_text: "manual_read"
     }
   end
 end

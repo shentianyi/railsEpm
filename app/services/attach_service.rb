@@ -26,7 +26,7 @@ class AttachService
       image=ActionDispatch::Http::UploadedFile.new(image)
       puts '------------------------------------'
       p image
-
+collect
       i=Attach::Image.new(path: image)
       i.save
     end
