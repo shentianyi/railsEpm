@@ -37,12 +37,12 @@ class StoryPresenter<Presenter
     }
   end
 
-  def self.as_list stories
+  def self.as_list stories, user
     infos=[]
 
     unless stories.blank?
       stories.each do |story|
-        infos<<StoryPresenter.new(story).as_brief_info
+        infos<<StoryPresenter.new(story).as_brief_info(false, user)
       end
     end
 
