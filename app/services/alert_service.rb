@@ -63,10 +63,16 @@ class AlertService
               created_at: created_at,
               sender: 'System'
           },
-          task_id: user.user_kpi_items.blank? ? i : user.user_kpi_items.last.id,
-          task_item_id: i,
           unread: unread,
-          handle_type: handle_type
+          handle_type: handle_type,
+          data:{
+              task_item_id: i,
+              due_flag: false,
+              to_due_at: Time.now.utc.to_s,
+              dued_at: Time.now.utc.to_s,
+              status: 'due_in_plan',
+              status_value: 1
+          }
       }
     end
     items
