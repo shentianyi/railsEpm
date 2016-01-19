@@ -12,7 +12,7 @@ var DashBoardExampleChart=function(option){
         var i,target,current;
         for(i=0;i<targetArray.length;i++){
             target=targetArray[i];
-            current=currentArray[i];
+            current=parseFloat(currentArray[i]);
             if(current>=target){
                 if(ppm===1){
                     newArray[1].data.push({y:current,color:"#fe7005"});
