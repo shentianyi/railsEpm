@@ -1,6 +1,9 @@
 IFEpm::Application.routes.draw do
 
 
+  resources :alerts
+
+
   resources :snapshots
 
 
