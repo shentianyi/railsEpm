@@ -1,7 +1,19 @@
 var DashBoardExampleChart=function(option){
     this.target=option.target;
     this.assorted=function(targetArray,currentArray,ppm,targetLine){
-        var newArray=[];
+for(var i=0;i<currentArray.length;i++){
+ currentArray[i]=parseFloat(currentArray[i]);
+}
+console.log(option);
+option.currentArray=currentArray; 
+for(var i=0;i<targetArray.length;i++){
+ targetArray[i]=parseFloat(targetArray[i]);
+}
+
+option.targetArray=targetArray;
+
+
+       var newArray=[];
         if(targetLine){
             newArray[0]={name:'Target',data:targetArray,type:'line'};
         }
@@ -13,8 +25,8 @@ var DashBoardExampleChart=function(option){
         for(i=0;i<targetArray.length;i++){
             target=targetArray[i];
 
-            current=parseFloat(currentArray[i]);
-
+         //   current=parseFloat(currentArray[i]);
+current=currentArray[i];
             if(current>=target){
                 if(ppm===1){
                     newArray[1].data.push({y:current,color:"#fe7005"});
