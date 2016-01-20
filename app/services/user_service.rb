@@ -6,10 +6,7 @@ class UserService
   #     password:string}
   # }
   def self.update_basic(params, user)
-
-
-
-    if User.where(email:params[:email]).where("users.id<>?" ,user.id).first
+    unless User.where(email:params[:email]).where("users.id<>?" ,user.id).first
       if user.update_attributes(params)
         UserPresenter.new(user).as_basic_feedback(['Set User Info Success'],1)
       else
