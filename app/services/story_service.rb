@@ -145,7 +145,7 @@ puts err_infos
 
   def self.comments user, params, base_url
     if discussion = user.tenant.stories.find_by_id(params[:id])
-      StoryPresenter.as_comments discussion.comments.offset(params[:page]*params[:size]).limit(params[:size]), base_url
+      StoryPresenter.as_comments discussion.comments.order('created_at desc').offset(params[:page]*params[:size]).limit(params[:size]), base_url
     else
       ApiMessage.new(messages: ['The Discussion Not Found'])
     end

@@ -27,7 +27,15 @@ module V2
         optional :size, type: Integer, default: 20, desc: 'page size'
       end
       get :tasks do
-        AlertService.task_alerts(current_user)
+        AlertService.task_alerts(current_user, params[:page], params[:size])
+      end
+
+      params do
+        optional :page, type: Integer, default: 0, desc: 'page index start from 0'
+        optional :size, type: Integer, default: 20, desc: 'page size'
+      end
+      get :kpi_followed do
+        AlertService.kpi_followed_alerts(current_user, params[:page], params[:size])
       end
 
       params do
@@ -35,7 +43,7 @@ module V2
         optional :size, type: Integer, default: 20, desc: 'page size'
       end
       get :systems do
-        AlertService.system_alerts(current_user)
+        AlertService.system_alerts(current_user, params[:page], params[:size])
       end
 
     end
