@@ -65,7 +65,13 @@ module Entry
                            :target_max => self.target_max,
                            :target_min => self.target_min,
                            :unit => self.unit}
-        self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value).to_s }
+
+        if self.parameter.from_ios
+        self.current.each { |key,value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value).to_s }
+else
+
+        self.current.each { |key,value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
+end
         #puts '-------------'
         #puts self.current.keys.size
         #puts self.target_min.keys.size

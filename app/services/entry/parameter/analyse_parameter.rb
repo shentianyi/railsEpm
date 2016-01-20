@@ -7,7 +7,8 @@ module Entry
       attr_accessor :average, :data_module # sum,average
       attr_accessor :valid
       attr_accessor :property_map_group, :reduce_func
-
+      attr_accessor :from_ios
+     
       def initialize(args)
         self.kpi=Kpi.find(args[:kpi_id])
         self.entities = EntityGroup.find(args[:entity_group_id]).entities.pluck(:id)
@@ -22,6 +23,9 @@ module Entry
         #self.map_group =args[:map_group]
         self.reduce_func=args[:reduce_func] if args[:reduce_func]
         self.valid=false
+p args
+p '---------------------'
+        self.from_ios= args.has_key?(:from_ios)
       end
 
       def start_time=(value)
