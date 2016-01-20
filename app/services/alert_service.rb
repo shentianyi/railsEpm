@@ -39,7 +39,7 @@ class AlertService
 
   def self.task_alerts user, page=0, size=20
     items=[]
-    20.times do |i|
+    size.times do |i|
       if i<9
         created_at=(Time.now+i.hours).utc.to_s
         handle_type= {
@@ -80,7 +80,7 @@ class AlertService
 
   def self.system_alerts user, page=0, size=20
     items=[]
-    20.times do |i|
+    size.times do |i|
       if i<9
         created_at=(Time.now+i.hours).utc.to_s
         handle_type= {
@@ -113,7 +113,7 @@ class AlertService
 
   def self.kpi_followed_alerts user, page=0, size=20
     items=[]
-    20.times do |i|
+    size.times do |i|
       if i<9
         created_at=(Time.now+i.hours).utc.to_s
         handle_type= {
