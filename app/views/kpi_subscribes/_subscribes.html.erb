@@ -1,5 +1,6 @@
 <ul id="manage-sort-list" class="manage-sort-list">
   <% @kpi_subscribes.each do |ks| %>
+      <%if ks.chart_condition%>
       <a href="/kpi_entries/analyse?s=<%= ks.id %>">
         <li id="<%= ks.id %>">
           <table class="category" special="my-kpi">
@@ -41,6 +42,7 @@
           </table>
         </li>
       </a>
+          <%end%>
   <% end %>
 </ul>
 
