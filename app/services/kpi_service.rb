@@ -44,7 +44,7 @@ class KpiService
 
         if kpi.save
           ##assign
-          unless params[:assignments]
+          unless params[:assignments].blank?
             params[:assignments].each do |assignment|
               if ((to_user = user.tenant.users.find_by_email(assignment[:user])) && (department = Department.find_by_id(assignment[:department_id])))
                 KpisHelper.assign_kpi_to_department_user(kpi, to_user, department, assignment, user)
@@ -88,7 +88,7 @@ class KpiService
 
       #kpi_properties
       #delete
-      unless params[:kpi][:attributes]
+      unless params[:kpi][:attributes].blank?
         p_ids =[]
         params[:kpi][:attributes].each { |attr| p_ids<< attr[:attribute_id] unless attr[:attribute_id].blank? }
         puts '---------------------------------------------------------'
@@ -118,7 +118,7 @@ class KpiService
 
       #assign
       #delete
-      unless params[:assignments]
+      unless params[:assignments].blank?
         a_ids =[]
         params[:assignments].each { |assign| a_ids<< assign[:assignment_id] unless assign[:assignment_id].blank? }
         puts '---------------------------------------------------------'
