@@ -4,7 +4,7 @@ class CreateAlerts < ActiveRecord::Migration
       t.string :topic
       t.references :user
       t.integer :type
-      t.integer :offset
+      t.integer :offset, :default=>0
       t.integer :alertable_id
       t.string :alertable_type
 

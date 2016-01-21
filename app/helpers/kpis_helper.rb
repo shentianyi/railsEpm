@@ -63,7 +63,17 @@ module KpisHelper
                              :assigner => assigner.id,
                              :auto_notification=>assignment[:auto_notification]
       )
-      item.save
+      if item.save
+        #create task alert
+        KafkaAlertsService.create_producer_connection([Settings.kafka_server.host_port]) do |producer|
+          topic="#{user.id}-#{kpi.id}-#{department.id}-#{assignment[:frequency]}"
+          task_alert=Alert.new({offset: 0, topic: topic, type: AlertType::TaskAlert})
+          task_alert.user=user
+          task_alert.alertable=item
+
+          producer.send_messages([Poseidon::MessageToSend.new(topic, "KPI #{kpi.name} is due in 1 min Today 3:00 pm.")])
+        end
+      end
       return item
     end
     return nil

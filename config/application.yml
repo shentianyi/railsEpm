@@ -19,6 +19,8 @@ development:
        follow_snap: 'uploads/attach/logo.png'
    snap:
        chart_data: 'uploadfiles/data/data.json'
+   kafka_server:
+       host_port: 'localhost:9092'
 
 
 demo:
@@ -42,6 +44,8 @@ demo:
        follow_snap: 'uploads/attach/logo.png'
    snap:
        chart_data: 'uploadfiles/data/data.json'
+   kafka_server:
+       host_port: 'localhost:9092'
 
 # local env for test, like store attach on local not oss
 local:
@@ -65,6 +69,8 @@ local:
        follow_snap: 'uploads/attach/logo.png'
    snap:
        chart_data: 'uploadfiles/data/data.json'
+   kafka_server:
+       host_port: 'localhost:9092'
 
 
 production:
@@ -88,3 +94,5 @@ production:
        follow_snap: 'uploads/attach/logo.png'
    snap:
        chart_data: 'uploadfiles/data/data.json'
+   kafka_server:
+       host_port: 'localhost:9092'
