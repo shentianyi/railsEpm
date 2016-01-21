@@ -27,7 +27,7 @@ class StoryService
 
   def self.user_accessable_stories user, kpi_id, page, size
     if user.tenant.kpis.find_by_id(kpi_id)
-      StoryPresenter.as_list(Story.user_access_discussions_by_kpi(user, kpi_id).order(created_at: :desc).offset(page*size).limit(size))
+      StoryPresenter.as_list(Story.user_access_discussions_by_kpi(user, kpi_id).order(created_at: :desc).offset(page*size).limit(size), user)
     else
       ApiMessage.new(messages: ['The Kpi Not Found'])
     end
@@ -35,7 +35,7 @@ class StoryService
 
   def self.user_created_stories user, kpi_id, page, size
     if user.tenant.kpis.find_by_id(kpi_id)
-      StoryPresenter.as_list(Story.user_created_discussions_by_kpi(user, kpi_id).order(created_at: :desc).offset(page*size).limit(size))
+      StoryPresenter.as_list(Story.user_created_discussions_by_kpi(user, kpi_id).order(created_at: :desc).offset(page*size).limit(size), user)
     else
       ApiMessage.new(messages: ['The Kpi Not Found'])
     end
@@ -145,7 +145,7 @@ puts err_infos
 
   def self.comments user, params, base_url
     if discussion = user.tenant.stories.find_by_id(params[:id])
-      StoryPresenter.as_comments discussion.comments.offset(params[:page]*params[:size]).limit(params[:size]), base_url
+      StoryPresenter.as_comments discussion.comments.order('created_at desc').offset(params[:page]*params[:size]).limit(params[:size]), base_url
     else
       ApiMessage.new(messages: ['The Discussion Not Found'])
     end

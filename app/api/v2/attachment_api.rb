@@ -33,7 +33,6 @@ module V2
         AttachService.add_image params[:image], request.base_url
       end
 
-
       namespace :snapshots do
         params do
           requires :id, type: String, desc: "attachment id"
@@ -53,7 +52,6 @@ module V2
           AttachService.add_snapshot current_user, params, request.base_url
         end
       end
-
 
     end
   end

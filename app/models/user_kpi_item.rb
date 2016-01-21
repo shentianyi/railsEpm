@@ -6,6 +6,7 @@ class UserKpiItem < ActiveRecord::Base
   belongs_to :department
 
   has_many :kpi_entry
+  has_many :alerts, :as => :alertable, :dependent => :destroy
 
   attr_accessible :target_max, :target_min, :kpi_id, :user_id,
                   :entity_id, :department_id, :remind_time, :frequency, :assigner,:auto_notification

@@ -16,8 +16,8 @@ class StorySetPresenter<Presenter
         department_id: @story_set.department_id,
         members: StorySetUserPresenter.as_story_set_users(@story_set.story_set_users),
         creator: @story_set.user_id,
-        created_at: @story_set.created_at,
-        closed_on: @story_set.closed_at,
+        created_at: @story_set.created_at.utc.to_s,
+        closed_at: @story_set.closed_at.blank? ? '' : @story_set.closed_at.utc.to_s,
         status: StorySet::StorySetStatus.display(@story_set.status),
         status_value: @story_set.status
     }

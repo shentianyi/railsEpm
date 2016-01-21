@@ -48,9 +48,6 @@ module KpisHelper
 
   # assign kpis to user for app api
   def self.assign_kpi_to_department_user kpi, user, department, assignment, assigner
-    puts department
-    puts department.default_entity
-    puts '11111111111111111111111111111'
     unless user.kpis.find_by_id(kpi.id)
       item = UserKpiItem.new(:user_id => user.id,
                              :kpi_id => kpi.id,
@@ -63,16 +60,21 @@ module KpisHelper
                              :assigner => assigner.id,
                              :auto_notification=>assignment[:auto_notification]
       )
-      if item.save
-        #create task alert
-        KafkaAlertsService.create_producer_connection([Settings.kafka_server.host_port]) do |producer|
-          topic="#{user.id}-#{kpi.id}-#{department.id}-#{assignment[:frequency]}"
-          task_alert=Alert.new({offset: 0, topic: topic, type: AlertType::TaskAlert})
-          task_alert.user=user
-          task_alert.alertable=item
 
+      #create task alert
+      topic="#{user.id}-#{kpi.id}-#{department.id}-#{assignment[:frequency]}"
+      task_alert=Alert.new({topic: topic, type: AlertType::TaskAlert})
+      task_alert.user=user
+      task_alert.alertable=item
+      item.alerts<<task_alert
+
+      if item.save
+        #create kafka alert messages
+        KafkaAlertsService.create_producer_connection([Settings.kafka_server.host_port]) do |producer|
           producer.send_messages([Poseidon::MessageToSend.new(topic, "KPI #{kpi.name} is due in 1 min Today 3:00 pm.")])
         end
+      else
+        return nil
       end
       return item
     end

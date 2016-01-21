@@ -26,17 +26,14 @@ class KafkaAlertsService
   end
 
 
-  def self.create_consumer_connection(topic, offset, client_id='ClearInsight')
+  def self.fetch_alerts(topic, offset, client_id='ClearInsight')
     host='localhost'
     port=9092
     consumer=Poseidon::PartitionConsumer.new(client_id, host, port, topic, 0, offset)
-
     messages=consumer.fetch
-    messages.each do |m|
-      p m
-    end
-
     consumer.close
+
+    return messages
   end
 end
 
