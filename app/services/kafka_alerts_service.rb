@@ -13,28 +13,27 @@ class KafkaAlertsService
     producer.close
   end
 
-  def self.create_alerts messages, topic, brokers
-    producer=Poseidon::Producer.new(brokers, 'ClearInsight')
-
-    alerts=[]
-    messages.each do |m|
-      alerts<<Poseidon::MessageToSend.new(topic, m)
-    end
-
-    producer.send_messages(alerts)
+  def self.create_alert message, topic, brokers, client_id='ClearInsight'
+    producer=Poseidon::Producer.new(brokers, client_id)
+    producer.send_messages([Poseidon::MessageToSend.new(topic, message)])
     producer.close
   end
 
 
   def self.fetch_alerts(topic, offset, client_id='ClearInsight')
-    host='localhost'
-    port=9092
-    consumer=Poseidon::PartitionConsumer.new(client_id, host, port, topic, 0, offset)
-    messages=consumer.fetch
-    consumer.close
+    begin
+      host='localhost'
+      port=9092
+      consumer=Poseidon::PartitionConsumer.new(client_id, host, port, topic, 0, offset)
+      messages=consumer.fetch
+      consumer.close
 
-    return messages
+      return messages
+    rescue => e
+      raise e
+    end
   end
+
 end
 
 

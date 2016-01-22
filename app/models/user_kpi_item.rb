@@ -1,5 +1,7 @@
 #encoding: utf-8
 class UserKpiItem < ActiveRecord::Base
+  include AutoAlert
+
   belongs_to :entity
   belongs_to :user
   belongs_to :kpi
