@@ -57,16 +57,14 @@ class KpiPresenter<Presenter
             name: KpiCalculate.get_operator(@kpi.calculate_method)
         },
         frequency: {
-            id:@kpi.frequency,
+            id: @kpi.frequency,
             name: KpiFrequency.get_desc_by_value(@kpi.frequency)
         },
-        viewable: {
-            viewable_code: {
-                id: @kpi.viewable,
-                name: Kpi::KpiViewable.display(@kpi.viewable)
-            },
-            user_group: @kpi.user_group.blank? ? '' : UserGroupPresenter.new(@kpi.user_group).as_user_group_details
+        viewable_code: {
+            id: @kpi.viewable,
+            name: Kpi::KpiViewable.display(@kpi.viewable)
         },
+        user_group: @kpi.user_group.blank? ? '' : UserGroupPresenter.new(@kpi.user_group).as_user_group_details,
         attributes: with_properties ? properties(with_property_value) : nil
     }
   end
@@ -115,7 +113,7 @@ class KpiPresenter<Presenter
     {
         user: UserPresenter.new(@kpi.creator).as_brief_info(false),
         kpi: as_basic_info(with_properties),
-        department:DepartmentPresenter.new(@kpi.creator.departments.first).as_brief_info(false),
+        department: DepartmentPresenter.new(@kpi.creator.departments.first).as_brief_info(false),
         follow_flag: Kpi::KpiFollowFlag.display(@kpi.follow_flag(user).follow_flag),
         follow_flag_value: @kpi.follow_flag(user).follow_flag,
         is_created: @kpi.user_id==user.id,
