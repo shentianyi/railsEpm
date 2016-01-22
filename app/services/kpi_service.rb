@@ -199,7 +199,18 @@ class KpiService
                                           })
           kpi_subscribe.kpi_subscribe_alerts = alerts
 
+          #create kpi followed alert
+          topic="#{params[:user].id}-#{kpi.id}-#{department.id}"
+          kpi_followed_alert=Alert.new({topic: topic, type: AlertType::KpiFollowedAlert})
+          kpi_followed_alert.user=params[:user]
+          kpi_followed_alert.alertable=kpi_subscribe
+          kpi_subscribe.alerts<<kpi_followed_alert
+
           if kpi_subscribe.save
+            #create kafka alert messages
+            KafkaAlertsService.create_producer_connection([Settings.kafka_server.host_port]) do |producer|
+              producer.send_messages([Poseidon::MessageToSend.new(topic, "#{params[:user].nick_name} Follow The KPI #{kpi.name} At Department #{department.name} Success.")])
+            end
             ApiMessage.new(result_code: 1, messages: ['Followed This Kpi Success'])
           else
             ApiMessage.new(messages: kpi_subscribe.errors.full_messages)

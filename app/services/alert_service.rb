@@ -23,15 +23,15 @@ class AlertService
     system_alerts_count=0
 
     user.alerts.each do |alert|
-      mgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset<0 ? 0 : alert.offset))
+      msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset<0 ? 0 : alert.offset))
 
       case alert.type
         when AlertType::TaskAlert
-          task_alerts_count += (mgs.last.offset-alert.offset)
+          task_alerts_count += (msgs.last.offset-alert.offset)
         when AlertType::KpiFollowedAlert
-          kpi_followed_alerts_count += (mgs.last.offset-alert.offset)
+          kpi_followed_alerts_count += (msgs.last.offset-alert.offset)
         when AlertType::SystemAlert
-          system_alerts_count += (mgs.last.offset-alert.offset)
+          system_alerts_count += (msgs.last.offset-alert.offset)
       end
     end
 
@@ -63,117 +63,90 @@ class AlertService
 
   def self.task_alerts user, page=0, size=20
     items=[]
-    size.times do |i|
-      if i<9
-        created_at=(Time.now+i.hours).utc.to_s
-        handle_type= {
-            id: 1,
-            name: "manual read"
-        }
-        unread=true
-      else
-        created_at=(Time.now-i.hours).utc.to_s
-        handle_type= {
-            id: 0,
-            name: "auto read"
-        }
-        unread=false
-      end
+    user.alerts.where(type: AlertType::TaskAlert).offset(page*size).limit(size).each do |alert|
+      msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
 
-      items<<{
-          head: {
-              alert_id: 1,
-              alert_text: "the kpi is due in #{i} min",
-              created_at: created_at,
-              sender: 'System'
-          },
-          unread: unread,
-          handle_type: {
-              id: 1,
-              name: "manual read"
-          },
-          data:{
-              task_item_id: i,
-              due_flag: false,
-              to_due_at: Time.now.utc.to_s,
-              dued_at: Time.now.utc.to_s,
-              status: 'due_in_plan',
-              status_value: 1
+      unless msgs.blank?
+        msgs.each do |msg|
+          items<<{
+              head: {
+                  alert_id: alert.id,
+                  alert_text: msg.value,
+                  created_at: Time.now.utc.to_s,
+                  sender: 'System'
+              },
+              unread: msg.offset>alert.offset,
+              handle_type: {
+                  id: 1,
+                  name: "manual read"
+              },
+              data: {
+                  task_item_id: alert.alertable.id,
+                  due_flag: false,
+                  to_due_at: Time.now.utc.to_s,
+                  dued_at: Time.now.utc.to_s,
+                  status: 'due_in_plan',
+                  status_value: 1
+              }
           }
-      }
-    end
-    items
-  end
-
-  def self.system_alerts user, page=0, size=20
-    items=[]
-    size.times do |i|
-      if i<9
-        created_at=(Time.now+i.hours).utc.to_s
-        handle_type= {
-            id: 1,
-            name: "manual read"
-        }
-        unread=true
-      else
-        created_at=(Time.now-i.hours).utc.to_s
-        handle_type= {
-            id: 0,
-            name: "auto read"
-        }
-        unread=false
+        end
       end
-
-      items<<{
-          head: {
-              alert_id: 1,
-              alert_text: "you are invited to discussion group why the kpi exeeds 3 for 5 days",
-              created_at: created_at,
-              sender: 'System'
-          },
-          unread: unread,
-          handle_type: {
-              id: 1,
-              name: "manual read"
-          }
-      }
     end
+
     items
   end
 
   def self.kpi_followed_alerts user, page=0, size=20
     items=[]
-    size.times do |i|
-      if i<9
-        created_at=(Time.now+i.hours).utc.to_s
-        handle_type= {
-            id: 1,
-            name: "manual read"
-        }
-        unread=true
-      else
-        created_at=(Time.now-i.hours).utc.to_s
-        handle_type= {
-            id: 0,
-            name: "auto read"
-        }
-        unread=false
-      end
+    user.alerts.where(type: AlertType::KpiFollowedAlert).offset(page*size).limit(size).each do |alert|
+      msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
 
-      items<<{
-          head: {
-              alert_id: 1,
-              alert_text: "the kpi from department exeeds the max limit, current value is 1#{i}%",
-              created_at: created_at,
-              sender: 'System'
-          },
-          unread: unread,
-          handle_type: {
-              id: 1,
-              name: "manual read"
+      unless msgs.blank?
+        msgs.each do |msg|
+          items<<{
+              head: {
+                  alert_id: alert.id,
+                  alert_text: msg.value,
+                  created_at: Time.now.utc.to_s,
+                  sender: 'System'
+              },
+              unread: msg.offset>alert.offset,
+              handle_type: {
+                  id: 1,
+                  name: "manual read"
+              }
           }
-      }
+        end
+      end
     end
+
+    items
+  end
+
+  def self.system_alerts user, page=0, size=20
+    items=[]
+    user.alerts.where(type: AlertType::SystemAlert).offset(page*size).limit(size).each do |alert|
+      msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
+
+      unless msgs.blank?
+        msgs.each do |msg|
+          items<<{
+              head: {
+                  alert_id: alert.id,
+                  alert_text: msg.value,
+                  created_at: Time.now.utc.to_s,
+                  sender: 'System'
+              },
+              unread: msg.offset>alert.offset,
+              handle_type: {
+                  id: 1,
+                  name: "manual read"
+              }
+          }
+        end
+      end
+    end
+
     items
   end
 

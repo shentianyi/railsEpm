@@ -9,6 +9,7 @@ class KpiSubscribe < ActiveRecord::Base
   has_one :chart_condition, :as => :chartable, :dependent => :destroy
   has_many :kpi_subscribe_users, :dependent => :destroy
   has_many :kpi_subscribe_alerts, :dependent => :destroy
+  has_many :alerts, :as => :alertable, :dependent => :destroy
 
   has_one :max_kpi_subscribe_alert,class_name: 'KpiSubscribeAlert',conditions: {alert_type: Kpi::SubscribeAlert::MAX}
   has_one :min_kpi_subscribe_alert,class_name: 'KpiSubscribeAlert',conditions: {alert_type: Kpi::SubscribeAlert::MIN}
