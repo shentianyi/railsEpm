@@ -10,7 +10,7 @@ class StoryPresenter<Presenter
     # self.user_avatar=User.get_avatar(self.image_url)
   end
 
-  def as_brief_info(with_members=false)
+  def as_brief_info(with_members=false, user=nil)
     {
         id: @story.id,
         title: @story.title,
@@ -23,7 +23,8 @@ class StoryPresenter<Presenter
         closed_at: @story.closed_at,
         status: StorySet::StorySetStatus.display(@story.status),
         status_value: @story.status,
-        members: with_members ? UserPresenter.as_brief_infos(@story.story_set.users, false) : nil
+        manageable: user==@story.user,
+        members: with_members ? UserPresenter.as_brief_infos(@story.story_set.collaborators, false) : nil
     }
   end
 
@@ -39,8 +40,10 @@ class StoryPresenter<Presenter
   def self.as_list stories
     infos=[]
 
-    stories.each do |story|
-      infos<<StoryPresenter.new(story).as_brief_info
+    unless stories.blank?
+      stories.each do |story|
+        infos<<StoryPresenter.new(story).as_brief_info
+      end
     end
 
     infos
@@ -49,7 +52,7 @@ class StoryPresenter<Presenter
   def as_stories_members(user)
     infos=[]
 
-    members=@story.story_set.story_set_users.uniq
+    members=@story.story_set.story_set_users
     members.each do |member|
       u=User.find_by_id(member.user_id)
       infos<<{
@@ -75,11 +78,11 @@ class StoryPresenter<Presenter
     infos
   end
 
-  def self.as_comments story
+  def self.as_comments comments, base_url
     infos = []
 
-    story.comments.each do |comment|
-      infos<<CommentPresenter.new(comment).as_basic_info
+    comments.each do |comment|
+      infos<<CommentPresenter.new(comment).as_basic_info(base_url)
     end
 
     infos

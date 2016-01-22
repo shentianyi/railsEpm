@@ -27,6 +27,7 @@
 !/uploadfiles/attach/tmp/**/*.ignore
 !/uploadfiles/attach/uped/**/*.ignore
 !/uploadfiles/template/*
+/*.DS_Store
 .DS_Store
 *.DS_Store
 *.swp

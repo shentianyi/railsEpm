@@ -8,7 +8,7 @@ module V2
         requires :id, type: String, desc: "story id"
       end
       get do
-        StoryService.details current_user, params
+        StoryService.details current_user,params
       end
 
       params do
@@ -20,6 +20,13 @@ module V2
       end
       post do
         StorySetService.create current_user, params
+      end
+
+      params do
+        requires :id, type: String, desc: "story id"
+      end
+      post :resolve do
+        StoryService.resolve current_user,params[:id]
       end
 
       namespace :users do
@@ -79,20 +86,29 @@ module V2
       namespace :comments do
         params do
           requires :id, type: String, desc: "story id"
+          optional :page, type: Integer, default: 0, desc: 'page index start from 0'
+          optional :size, type: Integer, default: 20, desc: 'page size'
         end
         get do
-          StoryService.comments current_user, params[:id]
+          StoryService.comments current_user, params, request.base_url
         end
 
         params do
           requires :id, type: Integer, desc: "story id"
           requires :comment, type: Hash do
             requires :content, type: String, desc: "comment content"
-            optional :attachments, type: Array, desc: "comment attachments"
+            optional :attachments, type: Array do
+              requires :type, type: String, desc: "attachment type"
+              requires :value #, type: [String, Rack::Multipart::UploadedFile], desc: "attachment"
+              optional :alert_id, type: Integer, desc: 'if type is snapshot requires'
+              optional :upper_boundary_text, type: String, desc: 'if type is snapshot requires'
+              optional :lower_boundary_text, type: String, desc: 'if type is snapshot requires'
+              optional :current_value_text, type: String, desc: 'if type is snapshot requires'
+            end
           end
         end
         post do
-          StoryService.add_comment current_user, params
+          StoryService.add_comment current_user, params, request.base_url
         end
 
         params do
@@ -104,6 +120,15 @@ module V2
 
       end
 
+      namespace :snapshots do
+        params do
+          requires :id, type: String, desc: "attachment id"
+        end
+        get do
+          StoryService.snap_details params[:id]
+        end
+
+      end
 
 
     end

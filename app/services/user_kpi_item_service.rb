@@ -3,4 +3,30 @@ class UserKpiItemService
   def self.get_list(user, page=0, size=20)
     UserKpiItemPresenter.as_task_brief_infos(UserKpiItem.details_by_user(user).offset(page*size).limit(size))
   end
+
+  def self.get_task_items(user,task_id, page=0, size=20)
+    items=[]
+    10.times do |i|
+      due=i.odd?
+      to_due_at=(Time.now+i.days).utc.to_s
+      dued_at= (Time.now+i.days).utc.to_s
+      status='planed'
+      status_value=0
+      if due
+        to_due_at=(Time.now-i.days).utc.to_s
+        dued_at= (Time.now-i.days).utc.to_s
+        status=i<6 ? 'due_in_plan' : 'due_after_plan'
+        status_value=i<6 ? 1 : 2
+      end
+      items<<{
+          task_item_id:i,
+          due_flag: due,
+          to_due_at:to_due_at ,
+          dued_at: dued_at,
+          status: status,
+          status_value:status_value
+      }
+    end
+    items
+  end
 end

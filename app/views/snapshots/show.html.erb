@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Attachment:</b>
+  <%= @snapshot.attachment %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @snapshot.user %>
+</p>
+
+<p>
+  <b>Alert:</b>
+  <%= @snapshot.alert_id %>
+</p>
+
+<p>
+  <b>Upper boundary:</b>
+  <%= @snapshot.upper_boundary %>
+</p>
+
+<p>
+  <b>Lower boundary:</b>
+  <%= @snapshot.lower_boundary %>
+</p>
+
+<p>
+  <b>Current value:</b>
+  <%= @snapshot.current_value %>
+</p>
+
+
+<%= link_to 'Edit', edit_snapshot_path(@snapshot) %> |
+<%= link_to 'Back', snapshots_path %>

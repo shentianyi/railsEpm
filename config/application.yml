@@ -15,6 +15,11 @@ development:
        aliyun_upload_host: http://clearinsight-test.oss-cn-hangzhou.aliyuncs.com
        aliyun_internal: false
        aliyun_area: cn-hangzhou
+   thumb:
+       follow_snap: 'uploads/attach/logo.png'
+   snap:
+       chart_data: 'uploadfiles/data/data.json'
+
 
 demo:
    oauth:
@@ -33,6 +38,10 @@ demo:
        aliyun_upload_host: http://clearinsight-test.oss-cn-hangzhou-internal.aliyuncs.com
        aliyun_internal: true
        aliyun_area: cn-hangzhou
+   thumb:
+       follow_snap: 'uploads/attach/logo.png'
+   snap:
+       chart_data: 'uploadfiles/data/data.json'
 
 # local env for test, like store attach on local not oss
 local:
@@ -52,6 +61,10 @@ local:
        aliyun_upload_host: http://clearinsight-test.oss-cn-hangzhou.aliyuncs.com
        aliyun_internal: false
        aliyun_area: cn-hangzhou
+   thumb:
+       follow_snap: 'uploads/attach/logo.png'
+   snap:
+       chart_data: 'uploadfiles/data/data.json'
 
 
 production:
@@ -71,3 +84,7 @@ production:
        aliyun_upload_host: http://clearinsight-test.oss-cn-hangzhou-internal.aliyuncs.com
        aliyun_internal: true
        aliyun_area: cn-hangzhou
+   thumb:
+       follow_snap: 'uploads/attach/logo.png'
+   snap:
+       chart_data: 'uploadfiles/data/data.json'

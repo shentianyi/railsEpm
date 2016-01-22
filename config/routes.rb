@@ -1,6 +1,9 @@
 IFEpm::Application.routes.draw do
 
 
+  resources :snapshots
+
+
   resources :user_group_relations
 
 
