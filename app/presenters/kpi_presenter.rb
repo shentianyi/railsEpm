@@ -60,11 +60,10 @@ class KpiPresenter<Presenter
             id: @kpi.frequency,
             name: KpiFrequency.get_desc_by_value(@kpi.frequency)
         },
-        viewable_code: {
-            id: @kpi.viewable,
-            name: Kpi::KpiViewable.display(@kpi.viewable)
+        viewable: {
+            viewable_code: @kpi.viewable,
+            user_group: @kpi.user_group.blank? ? nil : UserGroupPresenter.new(@kpi.user_group).as_user_group_details
         },
-        user_group: @kpi.user_group.blank? ? '' : UserGroupPresenter.new(@kpi.user_group).as_user_group_details,
         attributes: with_properties ? properties(with_property_value) : nil
     }
   end
