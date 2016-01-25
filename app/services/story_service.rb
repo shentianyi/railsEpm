@@ -27,7 +27,7 @@ class StoryService
 
   def self.user_accessable_stories user, kpi_id, page, size
     if user.tenant.kpis.find_by_id(kpi_id)
-      StoryPresenter.as_list(Story.user_access_discussions_by_kpi(user, kpi_id).order(created_at: :desc).offset(page*size).limit(size), user)
+      StoryPresenter.as_list(Story.user_access_discussions_by_kpi(user, kpi_id).order('created_at desc').offset(page*size).limit(size), user)
     else
       ApiMessage.new(messages: ['The Kpi Not Found'])
     end
@@ -35,7 +35,7 @@ class StoryService
 
   def self.user_created_stories user, kpi_id, page, size
     if user.tenant.kpis.find_by_id(kpi_id)
-      StoryPresenter.as_list(Story.user_created_discussions_by_kpi(user, kpi_id).order(created_at: :desc).offset(page*size).limit(size), user)
+      StoryPresenter.as_list(Story.user_created_discussions_by_kpi(user, kpi_id).order('created_at desc').offset(page*size).limit(size), user)
     else
       ApiMessage.new(messages: ['The Kpi Not Found'])
     end
@@ -94,10 +94,10 @@ class StoryService
         err_infos<<"The Member ID:#{member_id} Not Found"
       end
     end
-puts err_infos
+# puts err_infos
     if err_infos.size==0
-      puts '1111111111111111111111'
-      puts valid_member_ids
+      # puts '1111111111111111111111'
+      # puts valid_member_ids
       if block_given?
         yield(valid_member_ids)
       else
