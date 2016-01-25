@@ -23,8 +23,8 @@ module V2
           requires :calculate_method, type: Integer, desc: "kpi calculate method"
           optional :attributes, type: Array, desc: "kpi properties list"
           requires :viewable, type: Hash do
-            requires :viewable_code, type: String, desc: "kpi viewable code"
-            requires :user_group_id, type: String, desc: "user group id"
+            requires :viewable_code, type: Integer, desc: "kpi viewable code"
+            optional :user_group_id, type: Integer, desc: "user group id"
           end
         end
         optional :assignments,type: Array,desc:'kpi assignments'
@@ -46,8 +46,8 @@ module V2
           requires :frequency, type: Integer, desc: "kpi frequency"
           optional :attributes, type: Array, desc: "kpi properties list"
           requires :viewable, type: Hash do
-            requires :viewable_code, type: String, desc: "kpi viewable code"
-            requires :user_group_id, type: String, desc: "user group id"
+            requires :viewable_code, type: Integer, desc: "kpi viewable code"
+            optional :user_group_id, type: Integer, desc: "user group id"
           end
         end
         optional :assignments,type: Array,desc:'kpi assignments'
