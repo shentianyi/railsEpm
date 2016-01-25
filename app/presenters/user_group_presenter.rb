@@ -16,6 +16,7 @@ class UserGroupPresenter<Presenter
         customized_field: {
             id:@user_group.id,
             name:@user_group.name,
+            member_ids: @user_group.user_group_items.pluck(:user_id),
             members: as_group_members
         }
     }
@@ -25,7 +26,9 @@ class UserGroupPresenter<Presenter
     {
         id: @user_group.id,
         name: @user_group.name,
-        users: @user_group.user_group_items.pluck(:user_id)
+        user_id: @user_group.user.id,
+        member_ids: @user_group.user_group_items.pluck(:user_id),
+        members: as_group_members
     }
   end
 
@@ -40,6 +43,7 @@ class UserGroupPresenter<Presenter
             id: @user_group.id,
             name: @user_group.name,
             user_id: @user_group.user_id,
+            member_ids: @user_group.user_group_items.pluck(:user_id),
             members: as_group_members
         }
     }

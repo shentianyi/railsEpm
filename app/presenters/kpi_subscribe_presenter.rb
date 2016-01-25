@@ -30,7 +30,7 @@ class KpiSubscribePresenter<Presenter
     {
         follow_id: @kpi_subscribe.id,
         last_updated_at: Time.now.utc,
-        user: UserPresenter.new(user).as_brief_info(false),
+        user: UserPresenter.new(@kpi_subscribe.kpi.creator).as_brief_info(false),
         kpi: KpiPresenter.new(@kpi_subscribe.kpi).as_basic_info(false),
         department: DepartmentPresenter.new(@kpi_subscribe.department).as_brief_info(false),
         lower_boundary: @kpi_subscribe.lower_boundary,

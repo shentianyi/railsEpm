@@ -31,4 +31,29 @@ class AttachService
       i.save
     end
   end
+
+  def self.add_images attachments, base_url
+    attachs=[]
+    attachments.each do |attachment|
+      attachs<<Attachment.add_image_attachment(attachment[:image])
+    end
+
+    AttachmentPresenter.as_basic_feedback(attachs, base_url, ['Images Add Success'], 1)
+  end
+
+  def self.add_image image, base_url
+    AttachmentPresenter.as_basic_feedback(Attachment.add_image_attachment(image), base_url, ['Image Add Success'], 1)
+  end
+
+  def self.add_snapshot user, params, base_url
+    AttachmentPresenter.as_basic_feedback(Attachment.add_snap_attachment(user, params), base_url, ['Snapshot Add Success'], 1)
+  end
+
+  def self.snap_details id
+    if (attach=Attach::Snap.find_by_id(id)) && attach.snapshot
+      SnapshotPresenter.new(attach.snapshot).as_basic_info(attach)
+    else
+      ApiMessage.new(messages: ['The Snapshot Not Found'])
+    end
+  end
 end

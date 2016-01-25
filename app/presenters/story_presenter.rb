@@ -19,8 +19,8 @@ class StoryPresenter<Presenter
         kpi_id: @story.story_set.kpi_id,
         department_id: @story.story_set.department_id,
         creator: UserPresenter.new(@story.user).as_brief_info(false),
-        created_at: @story.created_at,
-        closed_at: @story.closed_at,
+        created_at: @story.created_at.utc.to_s,
+        closed_at: @story.closed_at.blank? ? '' : @story.closed_at.utc.to_s,
         status: StorySet::StorySetStatus.display(@story.status),
         status_value: @story.status,
         manageable: user==@story.user,
@@ -37,16 +37,25 @@ class StoryPresenter<Presenter
     }
   end
 
-  def self.as_list stories
+  def self.as_list stories, user
     infos=[]
 
     unless stories.blank?
       stories.each do |story|
-        infos<<StoryPresenter.new(story).as_brief_info
+        infos<<StoryPresenter.new(story).as_brief_info(false, user)
       end
     end
 
     infos
+  end
+
+  def as_add_members_feedback(user, messages=nil, result_code=nil)
+    {
+        result_code: result_code||1,
+        messages: messages,
+        need_instruction: false,
+        customized_field: as_stories_members(user)
+    }
   end
 
   def as_stories_members(user)

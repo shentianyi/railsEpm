@@ -43,16 +43,26 @@ class KpiPresenter<Presenter
         kpi_name: @kpi.name,
         description: @kpi.description,
         creator: @kpi.user_id,
-        created_on: @kpi.created_at,
+        created_at: @kpi.created_at.utc.to_s,
         target_max: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_max),
         target_min: KpiUnit.parse_entry_value(@kpi.unit, @kpi.target_min),
         target_max_text: KpiUnit.get_value_display(@kpi.unit, @kpi.target_max),
         target_min_text: KpiUnit.get_value_display(@kpi.unit, @kpi.target_min),
-        uom: @kpi.unit,
-        calculate_method: @kpi.calculate_method,
+        uom: {
+            id: @kpi.unit,
+            name: KpiUnit.get_desc_by_value(@kpi.unit)
+        },
+        calculate_method: {
+            id: @kpi.calculate_method,
+            name: KpiCalculate.get_operator(@kpi.calculate_method)
+        },
+        frequency: {
+            id: @kpi.frequency,
+            name: KpiFrequency.get_desc_by_value(@kpi.frequency)
+        },
         viewable: {
             viewable_code: @kpi.viewable,
-            user_group_id: @kpi.user_group_id
+            user_group: @kpi.user_group.blank? ? nil : UserGroupPresenter.new(@kpi.user_group).as_user_group_details
         },
         attributes: with_properties ? properties(with_property_value) : nil
     }
@@ -102,7 +112,7 @@ class KpiPresenter<Presenter
     {
         user: UserPresenter.new(@kpi.creator).as_brief_info(false),
         kpi: as_basic_info(with_properties),
-        department:DepartmentPresenter.new(@kpi.creator.departments.first).as_brief_info(false),
+        department: DepartmentPresenter.new(@kpi.creator.departments.first).as_brief_info(false),
         follow_flag: Kpi::KpiFollowFlag.display(@kpi.follow_flag(user).follow_flag),
         follow_flag_value: @kpi.follow_flag(user).follow_flag,
         is_created: @kpi.user_id==user.id,
@@ -124,7 +134,7 @@ class KpiPresenter<Presenter
     infos=[]
 
     @kpi.kpi_properties.each do |p|
-      infos<<{id: p.id, name: p.name, type: p.type}
+      infos<<{id: p.id, name: p.name, type: Kpi::KpiPropertyType.display(p.type)}
     end
 
     infos
@@ -136,9 +146,12 @@ class KpiPresenter<Presenter
     @kpi.user_kpi_items.each do |item|
       infos<<{
           assignment_id: item.id,
-          department_id: item.department_id,
+          departmen: item.department.blank? ? '' : DepartmentPresenter.new(item.department).as_brief_info(false),
           time: item.remind_time,
-          frequency: item.frequency,
+          frequency: {
+              id: item.frequency,
+              name: KpiFrequency.get_desc_by_value(item.frequency)
+          },
           auto_notification: item.auto_notification,
           user: UserPresenter.new(User.find_by_id(item.user_id)).as_brief_info(false)
       }

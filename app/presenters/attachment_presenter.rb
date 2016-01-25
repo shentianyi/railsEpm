@@ -18,13 +18,24 @@ class AttachmentPresenter<Presenter
   end
 
   def self.parse_attachments attachments, base_url
-    infos=[]
-
-    attachments.each do |attachment|
-      infos<<AttachmentPresenter.new(attachment).as_basic_info(base_url, attachment.type)
+    if attachments.class==Array
+      infos=[]
+      attachments.each do |attachment|
+        infos<<AttachmentPresenter.new(attachment).as_basic_info(base_url, attachment.type)
+      end
+      infos
+    else
+      AttachmentPresenter.new(attachments).as_basic_info(base_url, attachments.type)
     end
+  end
 
-    infos
+  def self.as_basic_feedback(attachs, base_url, messages=nil, result_code=nil)
+    {
+        result_code: result_code||1,
+        messages: messages,
+        need_instruction: false,
+        customized_field: parse_attachments(attachs, base_url)
+    }
   end
 
 end

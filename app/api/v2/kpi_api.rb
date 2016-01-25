@@ -18,12 +18,13 @@ module V2
         requires :kpi, type: Hash do
           requires :target_max, type: Float, desc: "kpi target max"
           requires :target_min, type: Float, desc: "kpi target min"
+          requires :frequency, type: Integer, desc: "kpi frequency"
           # requires :viewable, type: Integer, desc: "kpi viewable"
           requires :calculate_method, type: Integer, desc: "kpi calculate method"
           optional :attributes, type: Array, desc: "kpi properties list"
           requires :viewable, type: Hash do
-            requires :viewable_code, type: String, desc: "kpi viewable code"
-            requires :user_group_id, type: String, desc: "user group id"
+            requires :viewable_code, type: Integer, desc: "kpi viewable code"
+            optional :user_group_id, type: Integer, desc: "user group id"
           end
         end
         optional :assignments,type: Array,desc:'kpi assignments'
@@ -42,10 +43,11 @@ module V2
           requires :target_min, type: Float, desc: "kpi target min"
           requires :kpi_id, type: Integer, desc: "kpi id"
           requires :calculate_method, type: Integer, desc: "kpi calculate method"
+          requires :frequency, type: Integer, desc: "kpi frequency"
           optional :attributes, type: Array, desc: "kpi properties list"
           requires :viewable, type: Hash do
-            requires :viewable_code, type: String, desc: "kpi viewable code"
-            requires :user_group_id, type: String, desc: "user group id"
+            requires :viewable_code, type: Integer, desc: "kpi viewable code"
+            optional :user_group_id, type: Integer, desc: "user group id"
           end
         end
         optional :assignments,type: Array,desc:'kpi assignments'

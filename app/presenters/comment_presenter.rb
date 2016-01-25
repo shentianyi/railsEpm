@@ -13,7 +13,7 @@ class CommentPresenter<Presenter
         id: @comment.id,
         content: @comment.content,
         creator: UserPresenter.new(User.find_by_id(@comment.user_id)).as_brief_info(false),
-        created_at: @comment.created_at,
+        created_at: @comment.created_at.utc.to_s,
         attachments: AttachmentPresenter.parse_attachments(@comment.attachments, base_url)
     }
   end

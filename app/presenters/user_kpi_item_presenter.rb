@@ -8,6 +8,16 @@ class UserKpiItemPresenter<Presenter
     self.delegators =Delegators
   end
 
+  def as_task_details_info user
+    {
+        taks_id: @user_kpi_item.id,
+        user_id: UserPresenter.new(user).as_basic_info,
+        kpi: KpiPresenter.new(@user_kpi_item.kpi).as_basic_info(true),
+        department: DepartmentPresenter.new(@user_kpi_item.department).as_brief_info(false),
+        due_flag: false,
+        assignments: []
+    }
+  end
 
   def as_task_brief_info
     {
@@ -16,7 +26,7 @@ class UserKpiItemPresenter<Presenter
         due_flag: false, # TODO
         to_due_at: (Time.now-3.days).utc,
         dued_at: (Time.now-5.days).utc,
-        kpi:KpiPresenter.new(@user_kpi_item.kpi).as_basic_info(true),
+        kpi: KpiPresenter.new(@user_kpi_item.kpi).as_basic_info(true),
         department: DepartmentPresenter.new(@user_kpi_item.department).as_brief_info(false)
     }
   end

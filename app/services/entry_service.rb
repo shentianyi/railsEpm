@@ -26,7 +26,8 @@ class EntryService
 
       if ((kpi=Kpi.find_by_id(params[:data][:kpi_id])) && (department=Department.find_by_id(params[:data][:department_id])))
         if item=user.user_kpi_items.where(kpi_id: kpi.id, department_id: department.id).first
-          KpiEntryPresenter.new(update_create_entry({base_attrs: {original_value: params[:data][:data][:value],
+          KpiEntryPresenter.new(update_create_entry({base_attrs: {id:params[:data][:entry_id],
+                                                        original_value: params[:data][:data][:value],
                                                                   kpi_id: kpi.id,
                                                                   frequency: kpi.frequency,
                                                                   user_kpi_item_id: item.id,

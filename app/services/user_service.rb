@@ -6,7 +6,7 @@ class UserService
   #     password:string}
   # }
   def self.update_basic(params, user)
-    if User.find_by_email(params[:email])
+    unless User.where(email:params[:email]).where("users.id<>?" ,user.id).first
       if user.update_attributes(params)
         UserPresenter.new(user).as_basic_feedback(['Set User Info Success'],1)
       else
@@ -72,7 +72,7 @@ class UserService
     if user.present?
       if params[:old_password].present?
         if (u=User.find_for_database_authentication(id: user.id)).nil? || !u.valid_password?(params[:old_password])
-          return ApiMessage.new(messages: ['Invalid User Old Account'])
+          return ApiMessage.new(messages: ['Incorrect Old Password'])
         end
       end
 

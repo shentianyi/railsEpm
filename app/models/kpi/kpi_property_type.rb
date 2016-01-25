@@ -1,8 +1,12 @@
 #encoding: utf-8
 class Kpi::KpiPropertyType
-  TEXT=100
-  NUMBER=200
-  LOCATION=300
+  # TEXT=100
+  # NUMBER=200
+  # LOCATION=300
+
+  TEXT=0
+  NUMBER=1
+  LOCATION=2
 
   def self.display(v)
     case v

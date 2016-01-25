@@ -132,3 +132,5 @@ gem 'aliyun-oss'
 gem 'carrierwave-aliyun'
 gem 'rack-cors', :require => 'rack/cors'
 
+# gem 'poseidon_cluster'
+

@@ -27,7 +27,7 @@ class StoryService
 
   def self.user_accessable_stories user, kpi_id, page, size
     if user.tenant.kpis.find_by_id(kpi_id)
-      StoryPresenter.as_list(Story.user_access_discussions_by_kpi(user, kpi_id).order(created_at: :desc).offset(page*size).limit(size))
+      StoryPresenter.as_list(Story.user_access_discussions_by_kpi(user, kpi_id).order(created_at: :desc).offset(page*size).limit(size), user)
     else
       ApiMessage.new(messages: ['The Kpi Not Found'])
     end
@@ -35,7 +35,7 @@ class StoryService
 
   def self.user_created_stories user, kpi_id, page, size
     if user.tenant.kpis.find_by_id(kpi_id)
-      StoryPresenter.as_list(Story.user_created_discussions_by_kpi(user, kpi_id).order(created_at: :desc).offset(page*size).limit(size))
+      StoryPresenter.as_list(Story.user_created_discussions_by_kpi(user, kpi_id).order(created_at: :desc).offset(page*size).limit(size), user)
     else
       ApiMessage.new(messages: ['The Kpi Not Found'])
     end
@@ -67,14 +67,63 @@ class StoryService
     end
 
     if story.story_set.story_set_users.find_by_user_id(params[:user_id])
-      return StoryPresenter.new(story).as_basic_feedback(['Discussion Member Add Success'], 1)
+      return StoryPresenter.new(story).as_add_members_feedback(user, ['Discussion Member Add Success'], 1)
     end
 
     begin
-      StorySet.transaction do
+      StorySetUser.transaction do
         su = StorySetUser.new(user_id: params[:user_id])
         story.story_set.story_set_users<<su
-        StoryPresenter.new(story).as_basic_feedback(['Discussion Member Add Success'], 1)
+        StoryPresenter.new(story).as_add_members_feedback(user, ['Discussion Member Add Success'], 1)
+      end
+    rescue => e
+      ApiMessage.new(messages: [e.message])
+    end
+  end
+
+  def self.validable_members user, story, member_ids
+    err_infos=[]
+    valid_member_ids=[]
+
+    member_ids.uniq.each do |member_id|
+      if user.tenant.users.find_by_id(member_id)
+        unless story.story_set.story_set_users.find_by_user_id(member_id)
+          valid_member_ids<<member_id
+        end
+      else
+        err_infos<<"The Member ID:#{member_id} Not Found"
+      end
+    end
+puts err_infos
+    if err_infos.size==0
+      puts '1111111111111111111111'
+      puts valid_member_ids
+      if block_given?
+        yield(valid_member_ids)
+      else
+        ApiMessage.new(messages: ['The Members Valid'])
+      end
+    else
+      ApiMessage.new(messages: err_infos)
+    end
+  end
+
+  #add_multiple
+  def self.add_members user, params
+    unless story = user.tenant.stories.find_by_id(params[:id])
+      return ApiMessage.new(messages: ['The Discussion Not Found'])
+    end
+
+    begin
+      StorySetUser.transaction do
+        validable_members(user, story, params[:user_ids]) do |member_ids|
+          member_ids.each do |id|
+            su = StorySetUser.new(user_id: id)
+            story.story_set.story_set_users<<su
+          end
+
+          StoryPresenter.new(story).as_add_members_feedback(user, ['Discussion Members Add Success'], 1)
+        end
       end
     rescue => e
       ApiMessage.new(messages: [e.message])
@@ -96,7 +145,7 @@ class StoryService
 
   def self.comments user, params, base_url
     if discussion = user.tenant.stories.find_by_id(params[:id])
-      StoryPresenter.as_comments discussion.comments.offset(params[:page]*params[:size]).limit(params[:size]), base_url
+      StoryPresenter.as_comments discussion.comments.order('created_at desc').offset(params[:page]*params[:size]).limit(params[:size]), base_url
     else
       ApiMessage.new(messages: ['The Discussion Not Found'])
     end
@@ -118,7 +167,7 @@ class StoryService
         comment.commentable=discussion
         comment.user=user
         comment.tenant=user.tenant
-        Attachment.add_attachment(user, params[:comment][:attachments], comment) unless params[:comment][:attachments].blank?
+        Attachment.add_attachments(params[:comment][:attachment_ids], comment) unless params[:comment][:attachment_ids].blank?
 
         if comment.save
           CommentPresenter.new(comment).as_basic_feedback(base_url, ['Discussion Comment Add Success'], 1)
@@ -142,14 +191,6 @@ class StoryService
       end
     rescue => e
       ApiMessage.new(messages: [e.message])
-    end
-  end
-
-  def self.snap_details id
-    if (attach=Attach::Snap.find_by_id(id)) && attach.snapshot
-      SnapshotPresenter.new(attach.snapshot).as_basic_info(attach)
-    else
-      ApiMessage.new(messages: ['The Snapshot Not Found'])
     end
   end
 
