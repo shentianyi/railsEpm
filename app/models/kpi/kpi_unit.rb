@@ -37,13 +37,13 @@ class KpiUnit
   def self.get_desc_by_value value
     return case value
              when 100
-               'INT'
+               '1234'
              when 200
-               'FLOAT'
+               '12.34'
              when 300
-               'INT PERCENT'
+               '12%'
              when 400
-               'FLOAT PERCENT'
+               '12.34%'
            end
   end
 end

@@ -240,15 +240,15 @@ class KpiService
   end
 
   def self.user_accessable_kpis user, page=0, size=20
-    KpiPresenter.as_on_users(Kpi.accesses_by_user(user).offset(page*size).limit(size), user, false)
+    KpiPresenter.as_on_users(Kpi.accesses_by_user(user).order('created_at desc').offset(page*size).limit(size), user, false)
   end
 
   def self.user_created_kpis user, page=0, size=20
-    KpiPresenter.as_on_users(Kpi.created_by_user(user).offset(page*size).limit(size), user, false)
+    KpiPresenter.as_on_users(Kpi.created_by_user(user).order('created_at desc').offset(page*size).limit(size), user, false)
   end
 
   def self.user_followed_kpis user, page=0, size=20
-    KpiPresenter.as_on_users(Kpi.followed_by_user(user).offset(page*size).limit(size), user, false)
+    KpiPresenter.as_on_users(Kpi.followed_by_user(user).order('created_at desc').offset(page*size).limit(size), user, false)
   end
 
   def self.user_followed_details user, page=0, size=20
