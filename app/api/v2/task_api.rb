@@ -26,10 +26,6 @@ module V2
         end
         get :items do
           UserKpiItemService.get_task_items(current_user, params[:page], params[:size])
-          # status 404
-          #
-          # ApiMessage.new(messages: ['developing....'])
-
         end
       end
 

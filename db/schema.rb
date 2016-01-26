@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160125033422) do
+ActiveRecord::Schema.define(:version => 20160126092919) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -543,6 +543,8 @@ ActiveRecord::Schema.define(:version => 20160125033422) do
     t.string   "taskable_type"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.datetime "remind_at"
+    t.datetime "entry_at"
   end
 
   create_table "tenants", :force => true do |t|

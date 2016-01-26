@@ -54,6 +54,24 @@ class KpiFrequency
            end
   end
 
+  def self.next_end_begin_date(time, frequency)
+    time=Time.parse(time) if time.is_a?(String)
+    return case frequency
+             when KpiFrequency::Hourly
+               time.beginning_of_hour+1.hour
+             when KpiFrequency::Daily
+               time.beginning_of_day+1.day
+             when KpiFrequency::Weekly
+               time.next_week.end_of_week.beginning_of_day
+             when KpiFrequency::Monthly
+               time.next_month.end_of_month.beginning_of_day
+             when KpiFrequency::Quarterly
+               (Time.now.end_of_quarter+3.month).beginning_of_day
+             when KpiFrequency::Yearly
+               (Time.now.end_of_year+1.year).beginning_of_day
+           end
+  end
+
 
   def i18nt_desc
     KpiFrequency.get_desc_by_value(self.value)

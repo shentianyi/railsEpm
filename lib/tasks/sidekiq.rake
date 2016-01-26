@@ -1,3 +1,5 @@
+# bundle exec sidekiq
+
 namespace :sidekiq do
   desc "TODO"
   task :start => :environment do

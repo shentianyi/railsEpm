@@ -28,5 +28,5 @@ ubuntu: sudo apt-get install imagemagick
 
 4. whenever 作为定时任务去生成
 注意配置里的environment
-
 4.1 KPI Entry 输入任务
+
