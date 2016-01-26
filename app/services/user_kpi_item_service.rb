@@ -29,7 +29,9 @@ class UserKpiItemService
           to_due_at: to_due_at,
           dued_at: dued_at,
           status: status,
-          status_value: status_value
+          status_value: status_value,
+          kpi: KpiPresenter.new(Kpi.first).as_basic_info(true),
+          department: DepartmentPresenter.new(Department.first).as_brief_info(false)
       }
     end
     items
