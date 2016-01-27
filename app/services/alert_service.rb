@@ -71,7 +71,9 @@ class AlertService
               to_due_at: Time.now.utc.to_s,
               dued_at: Time.now.utc.to_s,
               status: 'due_in_plan',
-              status_value: 1
+              status_value: 1,
+              kpi: KpiPresenter.new(Kpi.first).as_basic_info(true),
+              department: DepartmentPresenter.new(Department.first).as_brief_info(false)
           }
       }
     end

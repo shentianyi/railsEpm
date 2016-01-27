@@ -12,6 +12,7 @@ class UserKpiItem < ActiveRecord::Base
 
   #after_create :create_department_kpi
   #after_destroy :destroy_department_kpi
+  has_many :task_entry_items, :class_name => 'Task::EntryItem', :as => :taskable, :dependent => :destroy
 
 
   def self.details_by_user(user)
