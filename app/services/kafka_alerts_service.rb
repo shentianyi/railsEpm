@@ -24,13 +24,15 @@ class KafkaAlertsService
     begin
       host='localhost'
       port=9092
-      consumer=Poseidon::PartitionConsumer.new(client_id, host, port, topic, 0, offset)
+      consumer=Poseidon::PartitionConsumer.new(client_id, host, port, 'ffffffffffffffffff', 0, offset)
       messages=consumer.fetch
       consumer.close
 
       return messages
     rescue => e
-      raise e
+      puts e
+      puts '1------------------------------------1'
+      # raise e
     end
   end
 

@@ -23,15 +23,15 @@ class AlertService
     system_alerts_count=0
 
     user.alerts.each do |alert|
-      msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset<0 ? 0 : alert.offset))
-
-      case alert.type
-        when AlertType::TaskAlert
-          task_alerts_count += (msgs.last.offset-alert.offset)
-        when AlertType::KpiFollowedAlert
-          kpi_followed_alerts_count += (msgs.last.offset-alert.offset)
-        when AlertType::SystemAlert
-          system_alerts_count += (msgs.last.offset-alert.offset)
+      if msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset<0 ? 0 : alert.offset))
+        case alert.type
+          when AlertType::TaskAlert
+            task_alerts_count += (msgs.last.offset-alert.offset)
+          when AlertType::KpiFollowedAlert
+            kpi_followed_alerts_count += (msgs.last.offset-alert.offset)
+          when AlertType::SystemAlert
+            system_alerts_count += (msgs.last.offset-alert.offset)
+        end
       end
     end
 
@@ -64,31 +64,32 @@ class AlertService
   def self.task_alerts user, page=0, size=20
     items=[]
     user.alerts.where(type: AlertType::TaskAlert).offset(page*size).limit(size).each do |alert|
-      msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
+      if msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
 
-      unless msgs.blank?
-        msgs.each do |msg|
-          items<<{
-              head: {
-                  alert_id: alert.id,
-                  alert_text: msg.value,
-                  created_at: Time.now.utc.to_s,
-                  sender: 'System'
-              },
-              unread: msg.offset>alert.offset,
-              handle_type: {
-                  id: 1,
-                  name: "manual read"
-              },
-              data: {
-                  task_item_id: alert.alertable.id,
-                  due_flag: false,
-                  to_due_at: Time.now.utc.to_s,
-                  dued_at: Time.now.utc.to_s,
-                  status: 'due_in_plan',
-                  status_value: 1
-              }
-          }
+        unless msgs.blank?
+          msgs.each do |msg|
+            items<<{
+                head: {
+                    alert_id: alert.id,
+                    alert_text: msg.value,
+                    created_at: Time.now.utc.to_s,
+                    sender: 'System'
+                },
+                unread: msg.offset>alert.offset,
+                handle_type: {
+                    id: 1,
+                    name: "manual read"
+                },
+                data: {
+                    task_item_id: alert.alertable.id,
+                    due_flag: false,
+                    to_due_at: Time.now.utc.to_s,
+                    dued_at: Time.now.utc.to_s,
+                    status: 'due_in_plan',
+                    status_value: 1
+                }
+            }
+          end
         end
       end
     end
@@ -99,23 +100,24 @@ class AlertService
   def self.kpi_followed_alerts user, page=0, size=20
     items=[]
     user.alerts.where(type: AlertType::KpiFollowedAlert).offset(page*size).limit(size).each do |alert|
-      msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
+      if msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
 
-      unless msgs.blank?
-        msgs.each do |msg|
-          items<<{
-              head: {
-                  alert_id: alert.id,
-                  alert_text: msg.value,
-                  created_at: Time.now.utc.to_s,
-                  sender: 'System'
-              },
-              unread: msg.offset>alert.offset,
-              handle_type: {
-                  id: 1,
-                  name: "manual read"
-              }
-          }
+        unless msgs.blank?
+          msgs.each do |msg|
+            items<<{
+                head: {
+                    alert_id: alert.id,
+                    alert_text: msg.value,
+                    created_at: Time.now.utc.to_s,
+                    sender: 'System'
+                },
+                unread: msg.offset>alert.offset,
+                handle_type: {
+                    id: 1,
+                    name: "manual read"
+                }
+            }
+          end
         end
       end
     end
@@ -126,23 +128,24 @@ class AlertService
   def self.system_alerts user, page=0, size=20
     items=[]
     user.alerts.where(type: AlertType::SystemAlert).offset(page*size).limit(size).each do |alert|
-      msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
+      if msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
 
-      unless msgs.blank?
-        msgs.each do |msg|
-          items<<{
-              head: {
-                  alert_id: alert.id,
-                  alert_text: msg.value,
-                  created_at: Time.now.utc.to_s,
-                  sender: 'System'
-              },
-              unread: msg.offset>alert.offset,
-              handle_type: {
-                  id: 1,
-                  name: "manual read"
-              }
-          }
+        unless msgs.blank?
+          msgs.each do |msg|
+            items<<{
+                head: {
+                    alert_id: alert.id,
+                    alert_text: msg.value,
+                    created_at: Time.now.utc.to_s,
+                    sender: 'System'
+                },
+                unread: msg.offset>alert.offset,
+                handle_type: {
+                    id: 1,
+                    name: "manual read"
+                }
+            }
+          end
         end
       end
     end
