@@ -34,7 +34,7 @@ module Task
 
     def self.un_dues(user_kpi_item_id, user)
       where(taskable_id: user_kpi_item_id,
-            taskable_type: UserKpiItem.class.name,
+            taskable_type: UserKpiItem.name,
             status: Task::Status::PLANED,
             user_id: user.id)
     end

@@ -7,7 +7,7 @@ class UserKpiItemService
   def self.get_task_items(user, task_id, page=0, size=20)
 
     Task::EntryItemPresenter.as_basic_infos(
-        Task::EntryItem.un_dues(task_id, user.id).offset(page*size).limit(size)
+        Task::EntryItem.un_dues(task_id, user).offset(page*size).limit(size)
     )
     # items=[]
     # 20.times do |i|

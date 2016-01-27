@@ -25,7 +25,7 @@ module V2
            optional :size, type: Integer, default: 20, desc: 'page size'
         end
         get :items do
-          UserKpiItemService.get_task_items(current_user, params[:page], params[:size])
+          UserKpiItemService.get_task_items(current_user,params[:task_id], params[:page], params[:size])
         end
       end
 

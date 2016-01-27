@@ -7,24 +7,24 @@ module Task
       @entry_item=entry_item
       self.delegators =Delegators
     end
-  end
-
-  def as_basic_info
-    {
-        task_item_id: @entry_item.id,
-        due_flag: @entry_item.due?,
-        to_due_at: @entry_item.to_due_at,
-        dued_at: @entry_item.dued_at,
-        status: @entry_item.status_display,
-        status_value: @entry_item.status
-    }
-  end
-
-  def self.as_basic_infos items
-    infos=[]
-    items.each do |item|
-      infos<< EntryItemPresenter.new(item).as_basic_info
+    def as_basic_info
+      {
+          task_item_id: @entry_item.id,
+          due_flag: @entry_item.due?,
+          to_due_at: @entry_item.to_due_at,
+          dued_at: @entry_item.dued_at,
+          status: @entry_item.status_display,
+          status_value: @entry_item.status
+      }
     end
-    infos
+
+    def self.as_basic_infos items
+      infos=[]
+      items.each do |item|
+        infos<< new(item).as_basic_info
+      end
+      infos
+    end
   end
+
 end
