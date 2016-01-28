@@ -182,7 +182,7 @@ class AlertService
           unread: unread,
           handle_type: handle_type,
           data: {
-              id: KpiSubscribe.first.id
+              id: user.kpi_subscribes.first.id
           }
           #KpiSubscribePresenter.new(KpiSubscribe.first).as_followed(user)
       }
