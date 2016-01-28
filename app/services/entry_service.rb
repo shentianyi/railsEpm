@@ -21,13 +21,8 @@ class EntryService
     kpi=nil
     department=nil
 
-    base_fields={id: params[:data][:entry_id],
-                 original_value: params[:data][:data][:value],
-                 entry_at: params[:data][:data][:time],
-                 entry_type: 0}
     unless params[:task_item_id].blank?
       if task_item=Task::EntryItem.find_by_id(params[:task_item_id])
-        base_fields[:task_item_id]=task_item
         user_kpi_item=task_item.taskable
         if user_kpi_item.present?
           params[:data][:data][:time]=task_item.entry_at
