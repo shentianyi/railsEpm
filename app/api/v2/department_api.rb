@@ -8,7 +8,7 @@ module V2
         requires :id, type: Integer, desc: 'department id'
       end
       get do
-
+        DepartmentService.get_department_detail(params[:id],current_user)
       end
 
 
