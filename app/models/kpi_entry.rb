@@ -12,6 +12,8 @@ class KpiEntry
   field :department_id, type: Integer
   field :user_kpi_item_id, type: Integer
 
+  field :task_item_id, type: Integer
+
   field :target_max, type: BigDecimal
   field :target_min, type: BigDecimal
   field :value, type: BigDecimal
@@ -23,70 +25,16 @@ class KpiEntry
   # default query use 1
   field :entry_type, type: Integer, :default => 0
   field :abnormal, type: Boolean, :default => false
-  # dynamic field
-  #field :properties, type: Hash
-  #embeds_many :properties
-
-  # 在处理文件或API时，KEY_MARKS是保留字段
-  KEY_MARKS=%w(DELETE)
 
 
-  def self.dynamic_field_name
-    'properties'
-  end
-
-  def self.date_map_filed
-    'parsed_entry_at'
-  end
-
+  after_create :update_task_status
 
   def kpi
-    if (kpi = Kpi.find_by_id(self.kpi_id)).nil?
-      nil
-    else
-      kpi
-    end
-  end
-
-
-  def self.map
-    map=%Q{
-           function(){
-  emit({kpi_id:this.kpi_id,entity_id:this.entity_id},parseFloat(this.value));
-      };
-     }
-    map1=%Q{
-       function(){
-           emit({date:this.parsed_entry_at.getFullYear()+'-'+(this.parsed_entry_at.getMonth()+1)+'-'+this.parsed_entry_at.getDate()},
-               parseFloat(this.value));
-        };
-      }
-
-    map=%Q{
-           function(){
-  emit({property:this.:1},parseFloat(this.value));
-      };
-     }
-
-    reduce=%Q{
-          function(key,values){
-  return Array.sum(values);
-  }
-      }
-    KpiEntry.where(kpi_id: 1, entry_type: 1).map_reduce(map1, reduce).out(inline: true)
-  end
-
-  def last_detail?
-    KpiEntry.where(user_kpi_item_id: self.user_kpi_item_id, parsed_entry_at: self.parsed_entry_at, entity_id: self.entity_id, entry_type: self.entry_type).first.nil?
+    @kpi||= Kpi.find_by_id(self.kpi_id)
   end
 
   def property_val property_id
-    key = "a"+property_id.to_s
-    if self[key].nil?
-      ""
-    else
-      self[key]
-    end
+    self["a#{property_id.to_s}"]
   end
 
   def self.do_search params
@@ -137,4 +85,13 @@ class KpiEntry
     kpi_entries
   end
 
+
+  private
+  def update_task_status
+    if self.task_item_id.present?
+      if (task_item=Task::EntryItem.find_by_id(self.task_item_id))
+        task_item.due
+      end
+    end
+  end
 end

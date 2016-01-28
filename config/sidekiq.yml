@@ -9,7 +9,6 @@
 :queues:
   - [default, 1]
   - [email, 2]
-  - [kpicaljob,4]
-  - [kpicreatejob,4]
-  - [flag,2]
+  - [update_property,1]
+  - [entry_task,4]
   - [alerts,2]

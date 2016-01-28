@@ -3,6 +3,10 @@ IFEpm::Application.routes.draw do
 
   resources :alerts
 
+  namespace :task do
+    resources :items
+  end
+
 
   resources :snapshots
 

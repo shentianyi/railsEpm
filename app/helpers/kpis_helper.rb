@@ -57,7 +57,7 @@ module KpisHelper
                              :target_min => kpi.target_min,
                              :remind_time => assignment[:time],
                              :frequency => assignment[:frequency],
-                             :assigner => assigner.id,
+                             :assigner_id => assigner.id,
                              :auto_notification=>assignment[:auto_notification]
       )
 

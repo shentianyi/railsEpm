@@ -41,7 +41,7 @@ class Story < ActiveRecord::Base
   end
 
   def self.user_created_discussions_by_kpi user, kpi_id
-    user.tenant.stories.joins(:story_set).where(story_sets:{kpi_id: kpi_id}).uniq
+    user.tenant.stories.joins(:story_set).where(story_sets:{kpi_id: kpi_id},stories:{user_id:user.id}).uniq
   end
 
 end

@@ -27,12 +27,14 @@ class UserPresenter<Presenter
   end
 
   def as_brief_info(with_dep=true)
-    {
-        id: @user.id,
-        email: @user.email,
-        nick_name: @user.nick_name,
-        departments: with_dep ? DepartmentPresenter.as_user_departments(@user.root_departments,@user) : nil
-    }
+    if @user.present?
+      {
+          id: @user.id,
+          email: @user.email,
+          nick_name: @user.nick_name,
+          departments: with_dep ? DepartmentPresenter.as_user_departments(@user.root_departments, @user) : nil
+      }
+    end
   end
 
 
@@ -42,7 +44,7 @@ class UserPresenter<Presenter
     }
   end
 
-  def self.as_brief_infos(users,with_dep=true)
+  def self.as_brief_infos(users, with_dep=true)
     infos=[]
     users.each do |user|
       infos<<UserPresenter.new(user).as_brief_info(with_dep)

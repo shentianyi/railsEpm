@@ -102,17 +102,9 @@ class AlertService
                   id: 1,
                   name: "manual read"
               },
-              data: {
-                  task_item_id: alert.alertable.id,
-                  due_flag: false,
-                  to_due_at: Time.now.utc.to_s,
-                  dued_at: Time.now.utc.to_s,
-                  status: 'due_in_plan',
-                  status_value: 1
-              }
+              data: Task::EntryItemPresenter.new(alert.alertable).as_basic_info
           }
         end
-        # end
       end
     end
 

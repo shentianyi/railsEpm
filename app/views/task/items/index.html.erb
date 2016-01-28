@@ -1,0 +1,43 @@
+<h1>Listing task_items</h1>
+
+<table>
+  <tr>
+    <th>Type</th>
+    <th>Title</th>
+    <th>Content</th>
+    <th>Generate type</th>
+    <th>Assignor</th>
+    <th>User</th>
+    <th>To due at</th>
+    <th>Dued at</th>
+    <th>Status</th>
+    <th>Taskable</th>
+    <th>Taskable type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @task_items.each do |task_item| %>
+  <tr>
+    <td><%= task_item.type %></td>
+    <td><%= task_item.title %></td>
+    <td><%= task_item.content %></td>
+    <td><%= task_item.generate_type %></td>
+    <td><%= task_item.assigner_id %></td>
+    <td><%= task_item.user_id %></td>
+    <td><%= task_item.to_due_at %></td>
+    <td><%= task_item.dued_at %></td>
+    <td><%= task_item.status %></td>
+    <td><%= task_item.taskable_id %></td>
+    <td><%= task_item.taskable_type %></td>
+    <td><%= link_to 'Show', task_item %></td>
+    <td><%= link_to 'Edit', edit_task_item_path(task_item) %></td>
+    <td><%= link_to 'Destroy', task_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Item', new_task_item_path %>

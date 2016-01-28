@@ -9,13 +9,14 @@ class KpiPresenter<Presenter
   end
 
   def properties(with_property_value=false)
+
     attrs = []
-    @kpi.kpi_property_items.each { |item|
+    @kpi.kpi_properties.each { |item|
       attrs << {
           attribute_id: item.id,
-          attribute_name: item.kpi_property.name,
-          attribute_type: item.kpi_property.type,
-          attribute_values: with_property_value ? item.kpi_property.kpi_property_values.pluck(:value) : nil
+          attribute_name: item.name,
+          attribute_type: item.type,
+          attribute_values: with_property_value ? item.kpi_property_values.pluck(:value) : nil
       }
     }
     attrs
@@ -68,23 +69,6 @@ class KpiPresenter<Presenter
     }
   end
 
-  # def as_kpi_assignments kpi_id,user
-  #   assignments=[]
-  #
-  #   UserKpiItem.where(kpi_id: kpi_id,assigner: user.id).each do |item|
-  #     assignments<<{
-  #         assignment_id: item.id,
-  #         user: User.find_by_id(item.user_id).email,
-  #         department_id: item.department_id,
-  #         time: item.remind_time,
-  #         frequency: item.frequency,
-  #         auto_notification:item.auto_notification
-  #     }
-  #   end
-  #
-  #   assignments
-  # end
-
   def as_kpi_basic_feedback(messages=nil, result_code=nil, with_properties=false)
     if @kpi.nil?
       {
@@ -96,7 +80,7 @@ class KpiPresenter<Presenter
           result_code: result_code||1,
           messages: messages,
           need_instruction: false,
-          customized_field: as_kpi_details(with_properties)
+          customized_field: as_on_user(@kpi.creator, with_properties)
       }
     end
   end

@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Type:</b>
+  <%= @task_item.type %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%= @task_item.title %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @task_item.content %>
+</p>
+
+<p>
+  <b>Generate type:</b>
+  <%= @task_item.generate_type %>
+</p>
+
+<p>
+  <b>Assignor:</b>
+  <%= @task_item.assigner_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @task_item.user_id %>
+</p>
+
+<p>
+  <b>To due at:</b>
+  <%= @task_item.to_due_at %>
+</p>
+
+<p>
+  <b>Dued at:</b>
+  <%= @task_item.dued_at %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @task_item.status %>
+</p>
+
+<p>
+  <b>Taskable:</b>
+  <%= @task_item.taskable_id %>
+</p>
+
+<p>
+  <b>Taskable type:</b>
+  <%= @task_item.taskable_type %>
+</p>
+
+
+<%= link_to 'Edit', edit_task_item_path(@task_item) %> |
+<%= link_to 'Back', task_items_path %>
