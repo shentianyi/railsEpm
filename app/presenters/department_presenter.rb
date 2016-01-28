@@ -19,18 +19,20 @@ class DepartmentPresenter<Presenter
   end
 
   def as_brief_info(with_members=true)
-    {
-        id: @department.id,
-        name: @department.name,
-        description: @department.description,
-        creator_id: @department.user_id,
-        parent_id: @department.parent_id,
-        has_children: @department.has_children?,
-        members: with_members ? @department.users.limit(5).pluck(:nick_name) : nil
-    }
+    if @department
+      {
+          id: @department.id,
+          name: @department.name,
+          description: @department.description,
+          creator_id: @department.user_id,
+          parent_id: @department.parent_id,
+          has_children: @department.has_children?,
+          members: with_members ? @department.users.limit(5).pluck(:nick_name) : nil
+      }
+    end
   end
 
-  def self.as_brief_infos(departments,with_members=true)
+  def self.as_brief_infos(departments, with_members=true)
     infos=[]
     departments.each do |department|
       infos<<DepartmentPresenter.new(department).as_brief_info(with_members)
@@ -40,7 +42,7 @@ class DepartmentPresenter<Presenter
 
   def as_user_department(user=nil)
     {
-        managable: user.nil? ?  true : @department.manageable(user), #@department.is_manager,
+        managable: user.nil? ? true : @department.manageable(user), #@department.is_manager,
         department: as_brief_info
     }
   end
