@@ -1,7 +1,7 @@
 class KpiService
   def self.building(params, user)
     puts params
-    begin
+    # begin
       Kpi.transaction do
         #Create Kpi
         kpi = Kpi.new({
@@ -60,12 +60,12 @@ class KpiService
           puts '-------------------------------------'
           puts kpi.errors.to_json
           puts '-------------------------------------'
-          return ApiMessage.new(messages: ['Kpi Created Error'])
+          return ApiMessage.new(messages: kpi.errors.full_messages)
         end
       end
-    rescue => e
-      ApiMessage.new(messages: [e.message])
-    end
+    # rescue => e
+    #   ApiMessage.new(messages: [e.message])
+    # end
   end
 
 
