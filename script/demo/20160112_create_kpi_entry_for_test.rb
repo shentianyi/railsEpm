@@ -11,6 +11,7 @@ Kpi.transaction do
   a=%w(a1 a2 a3 a4 a5 a6)
   b=%w(b1 b2 b3 b4 b5 b6)
   while start_time<end_time
+    p start_time
     params={
         data: {
             kpi_id: kpi.id,
