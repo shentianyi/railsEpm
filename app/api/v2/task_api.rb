@@ -39,7 +39,7 @@ module V2
         get :item do
           UserKpiItemService.item_detail(user,id)
         end
-        
+
       end
 
     end

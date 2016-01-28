@@ -20,17 +20,17 @@ class AlertService
   def self.unread_alerts_count user
     [
         {
-            alert_type: 1,
+            alert_type: AlertType::TASK,
             alert_type_text: "task alerts",
             count: 3
         },
         {
-            alert_type: 2,
+            alert_type: AlertType::KPI_FOllOW,
             alert_type_text: "kpi follow alerts",
             count: 3
         },
         {
-            alert_type: 3,
+            alert_type: AlertType::SYSTEM,
             alert_type_text: "system alerts",
             count: 3
         }
