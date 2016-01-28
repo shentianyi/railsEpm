@@ -24,11 +24,12 @@ class KpiEntryPresenter<Presenter
   def as_brief_info(with_property=false)
     {
         id: @kpi_entry.id,
+        task_item_id:@kpi_entry.task_item_id==0 ? nil : @kpi_entry.task_item_id,
         user_id: @kpi_entry.user_id,
         kpi_id: @kpi_entry.kpi_id,
         department_id: @kpi_entry.kpi_id,
         user_kpi_item_id: @kpi_entry.user_kpi_item_id,
-        value: @kpi_entry.value,
+        value: @kpi_entry.value.to_f,
         value_text: KpiUnit.get_value_display(@kpi_entry.kpi.unit, @kpi_entry.value),
         entry_at: @kpi_entry.entry_at.utc,
         properties: with_property ? properties : nil

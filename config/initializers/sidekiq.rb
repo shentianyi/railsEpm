@@ -1,5 +1,5 @@
 sidekqi_redis_conn =proc {
-  Redis::Namespace.new("clearinsight-sidekiq", :redis => $redis)
+  Redis::Namespace.new("sidekiq", :redis => $redis)
 }
 #
 

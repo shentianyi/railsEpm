@@ -3,7 +3,7 @@
 class UpdateKpiPropertyValueWorker
   include Sidekiq::Worker
 
-  sidekiq_options :queue => :flag, :backtrace => true, :retry => false
+  sidekiq_options :queue => :update_property, :backtrace => true, :retry => false
 
   def perform(id)
     if entry=KpiEntry.find(id)

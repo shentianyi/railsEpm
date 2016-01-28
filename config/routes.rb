@@ -1,6 +1,11 @@
 IFEpm::Application.routes.draw do
 
 
+  namespace :task do
+    resources :items
+  end
+
+
   resources :snapshots
 
 

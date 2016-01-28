@@ -1,0 +1,61 @@
+<%= form_for(@task_item) do |f| %>
+  <% if @task_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task_item.errors.count, "error") %> prohibited this task_item from being saved:</h2>
+
+      <ul>
+      <% @task_item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :type %><br />
+    <%= f.number_field :type %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br />
+    <%= f.text_area :content %>
+  </div>
+  <div class="field">
+    <%= f.label :generate_type %><br />
+    <%= f.number_field :generate_type %>
+  </div>
+  <div class="field">
+    <%= f.label :assigner_id %><br />
+    <%= f.number_field :assigner_id %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :to_due_at %><br />
+    <%= f.datetime_select :to_due_at %>
+  </div>
+  <div class="field">
+    <%= f.label :dued_at %><br />
+    <%= f.datetime_select :dued_at %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.number_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :taskable_id %><br />
+    <%= f.number_field :taskable_id %>
+  </div>
+  <div class="field">
+    <%= f.label :taskable_type %><br />
+    <%= f.text_field :taskable_type %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

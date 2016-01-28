@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151229083848) do
+ActiveRecord::Schema.define(:version => 20160128064258) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -529,6 +529,24 @@ ActiveRecord::Schema.define(:version => 20151229083848) do
   add_index "story_sets", ["tenant_id"], :name => "index_story_sets_on_tenant_id"
   add_index "story_sets", ["user_id"], :name => "index_story_sets_on_user_id"
 
+  create_table "task_items", :force => true do |t|
+    t.integer  "type"
+    t.string   "title"
+    t.text     "content"
+    t.integer  "generate_type"
+    t.integer  "assigner_id"
+    t.integer  "user_id"
+    t.datetime "to_due_at"
+    t.datetime "dued_at"
+    t.integer  "status"
+    t.integer  "taskable_id"
+    t.string   "taskable_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.datetime "remind_at"
+    t.datetime "entry_at"
+  end
+
   create_table "tenants", :force => true do |t|
     t.string   "company_name",           :null => false
     t.string   "edition",                :null => false
@@ -629,7 +647,7 @@ ActiveRecord::Schema.define(:version => 20151229083848) do
     t.integer  "department_id"
     t.string   "remind_time"
     t.integer  "frequency"
-    t.integer  "assigner"
+    t.integer  "assigner_id"
     t.boolean  "auto_notification", :default => false
   end
 
