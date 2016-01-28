@@ -59,13 +59,14 @@ class AlertService
       items<<{
           head: {
               alert_id: 1,
+              alert_type: AlertType::TASK,
               alert_text: "the kpi is due in #{i} min",
               created_at: created_at,
               sender: 'System'
           },
           unread: unread,
           handle_type: handle_type,
-          data:{
+          data: {
               task_item_id: i,
               due_flag: false,
               to_due_at: Time.now.utc.to_s,
@@ -83,32 +84,66 @@ class AlertService
   def self.system_alerts user, page=0, size=20
     items=[]
     size.times do |i|
-      if i<9
-        created_at=(Time.now+i.hours).utc.to_s
-        handle_type= {
-            id: 1,
-            name: "manual read"
-        }
-        unread=true
-      else
-        created_at=(Time.now-i.hours).utc.to_s
-        handle_type= {
-            id: 0,
-            name: "auto read"
-        }
-        unread=false
-      end
+      if i.odd?
+        if i<9
+          created_at=(Time.now+i.hours).utc.to_s
+          handle_type= {
+              id: 1,
+              name: "manual read"
+          }
+          unread=true
+        else
+          created_at=(Time.now-i.hours).utc.to_s
+          handle_type= {
+              id: 0,
+              name: "auto read"
+          }
+          unread=false
+        end
 
-      items<<{
-          head: {
-              alert_id: 1,
-              alert_text: "you are invited to discussion group why the kpi exeeds 3 for 5 days",
-              created_at: created_at,
-              sender: 'System'
-          },
-          unread: unread,
-          handle_type: handle_type
-      }
+        items<<{
+            head: {
+                alert_id: 1,
+                alert_type: AlertType::ADD_TO_DISCUSSION,
+                alert_text: "you are invited to discussion group why the kpi exeeds 3 for 5 days",
+                created_at: created_at,
+                sender: 'System'
+            },
+            unread: unread,
+            handle_type: handle_type,
+            data: StoryPresenter.new(Story.first).as_brief_info(true,user)
+        }
+      else
+        if i<9
+          created_at=(Time.now+i.hours).utc.to_s
+          handle_type= {
+              id: 1,
+              name: "manual read"
+          }
+          unread=true
+        else
+          created_at=(Time.now-i.hours).utc.to_s
+          handle_type= {
+              id: 0,
+              name: "auto read"
+          }
+          unread=false
+        end
+
+        items<<{
+            head: {
+                alert_id: 1,
+                alert_type: AlertType::ADD_TO_DEPARTMENT,
+                alert_text: "you are invited to department Test",
+                created_at: created_at,
+                sender: 'System'
+            },
+            unread: unread,
+            handle_type: handle_type,
+            data: DepartmentPresenter.new(Department.first).as_user_department(user)
+        }
+
+      end
     end
     items
   end
@@ -135,12 +170,14 @@ class AlertService
       items<<{
           head: {
               alert_id: 1,
+              alert_type: AlertType::KPI_FOllOW,
               alert_text: "the kpi from department exeeds the max limit, current value is 1#{i}%",
               created_at: created_at,
               sender: 'System'
           },
           unread: unread,
-          handle_type: handle_type
+          handle_type: handle_type,
+          data: KpiSubscribePresenter.new(KpiSubscribe.first).as_followed(user)
       }
     end
     items

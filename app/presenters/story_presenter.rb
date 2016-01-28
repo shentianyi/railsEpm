@@ -20,7 +20,7 @@ class StoryPresenter<Presenter
         department_id: @story.story_set.department_id,
         creator: UserPresenter.new(@story.user).as_brief_info(false),
         created_at: @story.created_at.utc.to_s,
-        closed_at: @story.closed_at.blank? ? '' : @story.closed_at.utc.to_s,
+        closed_at: @story.closed_at.blank? ? nil : @story.closed_at.utc.to_s,
         status: StorySet::StorySetStatus.display(@story.status),
         status_value: @story.status,
         manageable: user==@story.user,
