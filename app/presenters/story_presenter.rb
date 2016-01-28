@@ -15,7 +15,7 @@ class StoryPresenter<Presenter
         id: @story.id,
         title: @story.title,
         content: @story.content,
-        story_set_id: @story.story_set.id,
+        # story_set_id: @story.story_set.id,
         kpi_id: @story.story_set.kpi_id,
         department_id: @story.story_set.department_id,
         creator: UserPresenter.new(@story.user).as_brief_info(false),
