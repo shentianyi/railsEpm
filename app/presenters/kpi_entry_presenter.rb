@@ -27,7 +27,7 @@ class KpiEntryPresenter<Presenter
         task_item_id:@kpi_entry.task_item_id==0 ? nil : @kpi_entry.task_item_id,
         user_id: @kpi_entry.user_id,
         kpi_id: @kpi_entry.kpi_id,
-        department_id: @kpi_entry.kpi_id,
+        department_id: @kpi_entry.department_id,
         user_kpi_item_id: @kpi_entry.user_kpi_item_id,
         value: @kpi_entry.value.to_f,
         value_text: KpiUnit.get_value_display(@kpi_entry.kpi.unit, @kpi_entry.value),
