@@ -58,7 +58,8 @@ class AlertService
         ApiMessage.new(messages: ['Alert Not Found'])
       else
         alert=ks.alerts.first
-        if msg=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1)).last
+        if msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
+          msg=msgs.last
           {
               head: {
                   alert_id: alert.id,
@@ -87,7 +88,6 @@ class AlertService
     user.alerts.where(type: AlertType::TaskAlert).offset(page*size).limit(size).each do |alert|
       if msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
 
-        # unless msgs.blank?
         msgs.each do |msg|
           items<<{
               head: {
@@ -116,23 +116,21 @@ class AlertService
     user.alerts.where(type: AlertType::KpiFollowedAlert).offset(page*size).limit(size).each do |alert|
       if msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
 
-        unless msgs.blank?
-          msgs.each do |msg|
-            items<<{
-                head: {
-                    alert_id: alert.id,
-                    alert_text: msg.value,
-                    alert_offset: msg.offset,
-                    created_at: Time.now.utc.to_s,
-                    sender: 'System'
-                },
-                unread: msg.offset>alert.offset,
-                handle_type: {
-                    id: 1,
-                    name: "manual read"
-                }
-            }
-          end
+        msgs.each do |msg|
+          items<<{
+              head: {
+                  alert_id: alert.id,
+                  alert_text: msg.value,
+                  alert_offset: msg.offset,
+                  created_at: Time.now.utc.to_s,
+                  sender: 'System'
+              },
+              unread: msg.offset>alert.offset,
+              handle_type: {
+                  id: 1,
+                  name: "manual read"
+              }
+          }
         end
       end
     end
@@ -145,23 +143,21 @@ class AlertService
     user.alerts.where(type: AlertType::SystemAlert).offset(page*size).limit(size).each do |alert|
       if msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
 
-        unless msgs.blank?
-          msgs.each do |msg|
-            items<<{
-                head: {
-                    alert_id: alert.id,
-                    alert_text: msg.value,
-                    alert_offset: msg.offset,
-                    created_at: Time.now.utc.to_s,
-                    sender: 'System'
-                },
-                unread: msg.offset>alert.offset,
-                handle_type: {
-                    id: 1,
-                    name: "manual read"
-                }
-            }
-          end
+        msgs.each do |msg|
+          items<<{
+              head: {
+                  alert_id: alert.id,
+                  alert_text: msg.value,
+                  alert_offset: msg.offset,
+                  created_at: Time.now.utc.to_s,
+                  sender: 'System'
+              },
+              unread: msg.offset>alert.offset,
+              handle_type: {
+                  id: 1,
+                  name: "manual read"
+              }
+          }
         end
       end
     end

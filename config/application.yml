@@ -21,6 +21,9 @@ development:
        chart_data: 'uploadfiles/data/data.json'
    kafka_server:
        host_port: 'localhost:9092'
+       host: 'localhost'
+       port: 9092
+       alert_max_wait_ms: 10
 
 
 demo:
@@ -46,6 +49,9 @@ demo:
        chart_data: 'uploadfiles/data/data.json'
    kafka_server:
        host_port: 'localhost:9092'
+       host: 'localhost'
+       port: 9092
+       alert_max_wait_ms: 10
 
 # local env for test, like store attach on local not oss
 local:
@@ -71,6 +77,9 @@ local:
        chart_data: 'uploadfiles/data/data.json'
    kafka_server:
        host_port: 'localhost:9092'
+       host: 'localhost'
+       port: 9092
+       alert_max_wait_ms: 10
 
 
 production:
@@ -96,3 +105,6 @@ production:
        chart_data: 'uploadfiles/data/data.json'
    kafka_server:
        host_port: 'localhost:9092'
+       host: 'localhost'
+       port: 9092
+       alert_max_wait_ms: 10

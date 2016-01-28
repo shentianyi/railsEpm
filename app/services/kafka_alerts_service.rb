@@ -22,10 +22,14 @@ class KafkaAlertsService
 
   def self.fetch_alerts(topic, offset, client_id='ClearInsight')
     begin
-      host='localhost'
-      port=9092
-      consumer=Poseidon::PartitionConsumer.new(client_id, host, port, topic, 0, offset)
-      messages=consumer.fetch({max_wait_ms: 10})
+      # host='localhost'
+      # port=9092
+      # consumer=Poseidon::PartitionConsumer.new(client_id, host, port, topic, 0, offset)
+      # messages=consumer.fetch({max_wait_ms: 10})
+      # consumer.close
+
+      consumer=Poseidon::PartitionConsumer.new(client_id, Settings.kafka_server.host, Settings.kafka_server.port, topic, 0, offset)
+      messages=consumer.fetch({max_wait_ms: Settings.kafka_server.alert_max_wait_ms})
       consumer.close
 
       return messages
