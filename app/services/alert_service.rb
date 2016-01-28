@@ -144,7 +144,7 @@ class AlertService
             handle_type: handle_type,
             data:{
                 id: Department.first.id
-            } #DepartmentPresenter.new(Department.first).as_user_department(user)
+            }
         }
 
       end
@@ -170,7 +170,7 @@ class AlertService
         }
         unread=false
       end
-
+subs=user.kpi_subscribes.first
       items<<{
           head: {
               alert_id: 1,
@@ -182,9 +182,8 @@ class AlertService
           unread: unread,
           handle_type: handle_type,
           data: {
-              id: user.kpi_subscribes.first.id
+              id: subs.nil? ? nil : subs.id
           }
-          #KpiSubscribePresenter.new(KpiSubscribe.first).as_followed(user)
       }
     end
     items
