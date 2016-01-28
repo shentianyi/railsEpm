@@ -9,7 +9,7 @@ module V2
           requires :id, type: Integer, desc: 'user follow id'
         end
         get :latest do
-          AlertService.get_latest_kpi_follow_alert(current_user, params[:id])
+          AlertService.get_latest_kpi_follow_alert(params[:id])
         end
       end
 
@@ -20,6 +20,14 @@ module V2
             AlertService.unread_alerts_count(current_user)
           end
         end
+      end
+
+      params do
+        requires :id, type: Integer, desc: 'alert id'
+        requires :offset, type: Integer, desc: 'alert offset'
+      end
+      post :read do
+        AlertService.read_alert params[:id], params[:offset]
       end
 
       params do

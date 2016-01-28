@@ -25,7 +25,7 @@ class KafkaAlertsService
       host='localhost'
       port=9092
       consumer=Poseidon::PartitionConsumer.new(client_id, host, port, topic, 0, offset)
-      messages=consumer.fetch
+      messages=consumer.fetch({max_wait_ms: 10})
       consumer.close
 
       return messages
