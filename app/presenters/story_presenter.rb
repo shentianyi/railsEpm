@@ -28,12 +28,12 @@ class StoryPresenter<Presenter
     }
   end
 
-  def as_basic_feedback(messages=nil, result_code=nil)
+  def as_basic_feedback(messages=nil, result_code=nil,user=nil)
     {
         result_code: result_code||1,
         messages: messages,
         need_instruction: false,
-        customized_field: as_brief_info
+        customized_field: as_brief_info(false,user)
     }
   end
 
