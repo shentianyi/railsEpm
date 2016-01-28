@@ -6,13 +6,13 @@ module V2
       params do
         optional :task_item_id, type: Integer, desc: 'task item id'
         requires :data, type: Hash do
-          requires :kpi_id, type: Integer, desc: 'kpi id'
-          requires :department_id, type: Integer, desc: 'department id'
+          optional :kpi_id, type: Integer, desc: 'kpi id'
+          optional :department_id, type: Integer, desc: 'department id'
           optional :entry_id,type:String,desc: 'entry id'
           requires :data, type: Hash do
             requires :value, type: Float, desc: 'value'
             requires :time, type: DateTime, desc: 'utc time'
-            requires :attributes, type: Array do
+            optional :attributes, type: Array do
               requires :attribute_id, type: Integer, desc: 'kpi property id'
               requires :attribute_value, type: String, desc: 'kpi property value'
             end
