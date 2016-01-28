@@ -14,7 +14,7 @@ module Task
         q=q.where(frequency: frequency)
       end
 
-      q.all.each do |item|
+      q.where(auto_notification: true).each do |item|
         entry_at =Task::EntryItem.get_entry_at(item, time) # utc
         to_due_at=Task::EntryItem.get_to_due_at(item, entry_at)
         if business_day?(to_due_at)
