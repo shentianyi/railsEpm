@@ -33,7 +33,7 @@ Kpi.transaction do
             }
         }
     }
-    EntryService.create_entry(params, user)
+  p  EntryService.create_entry(params, user)
 
     start_time+=1.day
 
