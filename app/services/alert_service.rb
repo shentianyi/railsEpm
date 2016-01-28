@@ -67,14 +67,14 @@ class AlertService
           unread: unread,
           handle_type: handle_type,
           data: {
-              task_item_id: i,
-              due_flag: false,
-              to_due_at: Time.now.utc.to_s,
-              dued_at: Time.now.utc.to_s,
-              status: 'due_in_plan',
-              status_value: 1,
-              kpi: KpiPresenter.new(Kpi.first).as_basic_info(true),
-              department: DepartmentPresenter.new(Department.first).as_brief_info(false)
+              id: i,
+              due_flag: false
+              # to_due_at: Time.now.utc.to_s,
+              # dued_at: Time.now.utc.to_s,
+              # status: 'due_in_plan',
+              # status_value: 1,
+              # kpi: KpiPresenter.new(Kpi.first).as_basic_info(true),
+              # department: DepartmentPresenter.new(Department.first).as_brief_info(false)
           }
       }
     end
@@ -111,7 +111,9 @@ class AlertService
             },
             unread: unread,
             handle_type: handle_type,
-            data: StoryPresenter.new(Story.first).as_brief_info(true,user)
+            data: {
+                id: Story.first.id
+            }#StoryPresenter.new(Story.first).as_brief_info(true,user)
         }
       else
         if i<9
@@ -140,7 +142,9 @@ class AlertService
             },
             unread: unread,
             handle_type: handle_type,
-            data: DepartmentPresenter.new(Department.first).as_user_department(user)
+            data:{
+                id: Department.first.id
+            } #DepartmentPresenter.new(Department.first).as_user_department(user)
         }
 
       end
@@ -177,7 +181,10 @@ class AlertService
           },
           unread: unread,
           handle_type: handle_type,
-          data: KpiSubscribePresenter.new(KpiSubscribe.first).as_followed(user)
+          data: {
+              id: KpiSubscribe.first.id
+          }
+          #KpiSubscribePresenter.new(KpiSubscribe.first).as_followed(user)
       }
     end
     items
