@@ -5,7 +5,7 @@ Kpi.transaction do
 
   kpi=Kpi.first
   kpi.update_attributes(frequency: KpiFrequency::Daily)
-  department=Department.first
+  department=Department.find(23)
   user=User.find_by_email('admin@ci.com')
 
   a=%w(a1 a2 a3 a4 a5 a6)
