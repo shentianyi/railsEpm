@@ -18,39 +18,51 @@ class EntryService
 
   private
   def self.validate_entry(params, user)
+    kpi=nil
+    department=nil
 
-    if params[:id].blank?
-      unless params[:task_item_id].blank?
-        # TODO finish data entry with task
-      end
-
-      if ((kpi=Kpi.find_by_id(params[:data][:kpi_id])) && (department=Department.find_by_id(params[:data][:department_id])))
-        if item=user.user_kpi_items.where(kpi_id: kpi.id, department_id: department.id).first
-          KpiEntryPresenter.new(update_create_entry({base_attrs: {id:params[:data][:entry_id],
-                                                        original_value: params[:data][:data][:value],
-                                                                  kpi_id: kpi.id,
-                                                                  frequency: kpi.frequency,
-                                                                  user_kpi_item_id: item.id,
-                                                                  user_id: user.id,
-                                                                  department_id: department.id,
-                                                                  entity_id: department.default_entity.id,
-                                                                  target_max: kpi.target_max,
-                                                                  target_min: kpi.target_min,
-                                                                  entry_at: params[:data][:data][:time],
-                                                                  entry_type: 0},
-                                                     properties: params[:data][:data][:attributes],
-                                                     kpi: kpi
-                                                    })).as_kpi_basic_feedback(['Entry Success'], 1)
-        else
-          ApiMessage.new(messages: ['Kpi not Assigned'])
+    base_fields={id: params[:data][:entry_id],
+                 original_value: params[:data][:data][:value],
+                 entry_at: params[:data][:data][:time],
+                 entry_type: 0}
+    unless params[:task_item_id].blank?
+      if task_item=Task::EntryItem.find_by_id(params[:task_item_id])
+        base_fields[:task_item_id]=task_item
+        user_kpi_item=task_item.taskable
+        if user_kpi_item.present?
+          params[:data][:data][:time]=task_item.entry_at
+          kpi=user_kpi_item.kpi
+          department=user_kpi_item.department
         end
-      else
-        ApiMessage.new(messages: ['Kpi or Department no found'])
       end
-
-
     else
-      # Update Entry Validate
+      kpi=Kpi.find_by_id(params[:data][:kpi_id])
+      department=Department.find_by_id(params[:data][:department_id])
+    end
+
+    if kpi.present? && department.present?
+      if item=user.user_kpi_items.where(kpi_id: kpi.id, department_id: department.id).first
+        KpiEntryPresenter.new(update_create_entry({base_attrs: {id: params[:data][:entry_id],
+                                                                task_item_id:params[:task_item_id],
+                                                                original_value: params[:data][:data][:value],
+                                                                kpi_id: kpi.id,
+                                                                frequency: kpi.frequency,
+                                                                user_kpi_item_id: item.id,
+                                                                user_id: user.id,
+                                                                department_id: department.id,
+                                                                entity_id: department.default_entity.id,
+                                                                target_max: kpi.target_max,
+                                                                target_min: kpi.target_min,
+                                                                entry_at: params[:data][:data][:time],
+                                                                entry_type: 0},
+                                                   properties: params[:data][:data][:attributes],
+                                                   kpi: kpi
+                                                  })).as_kpi_basic_feedback(['Entry Success'], 1)
+      else
+        ApiMessage.new(messages: ['Kpi not Assigned'])
+      end
+    else
+      ApiMessage.new(messages: ['Kpi or Department no found'])
     end
   end
 

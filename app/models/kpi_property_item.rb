@@ -5,5 +5,4 @@ class KpiPropertyItem < ActiveRecord::Base
   belongs_to :kpi
 
   has_many :kpi_property_values, :dependent => :destroy
-  #has_one :kpi_property
 end

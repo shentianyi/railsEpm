@@ -23,7 +23,7 @@ module Task
 
           else
             params[:status]=Task::Status::PLANED
-            params[:assignor_id]=item.assigner
+            params[:assigner_id]=item.assigner_id
             params[:user_id]=item.user_id
             params[:to_due_at]=to_due_at
             Task::EntryItem.create(params)

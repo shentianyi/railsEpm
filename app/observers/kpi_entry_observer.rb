@@ -32,25 +32,13 @@ class KpiEntryObserver<Mongoid::Observer
   end
 
   def before_save kpi_entry
-    kpi = Kpi.find_by_id(kpi_entry.kpi_id)
-    if kpi.nil?
-      if kpi_entry.new_record?
-        return false
-      else
-        return
-      end
-    end
 
-    kpi_entry.kpi_id = kpi.id
-    if kpi_entry.new_record?
-      kpi_entry.frequency = kpi.frequency
-    end
     if kpi_entry.original_value.is_a? String
       kpi_entry.original_value = kpi_entry.original_value.to_f
     end
 
     if kpi_entry.original_value && kpi_entry.original_value.finite?
-      kpi_entry.value = KpiUnit.parse_entry_value(kpi.unit, kpi_entry.original_value)
+      kpi_entry.value =kpi_entry.original_value
       kpi_entry.abnormal = false
     else
       kpi_entry.value = kpi_entry.original_value = 0

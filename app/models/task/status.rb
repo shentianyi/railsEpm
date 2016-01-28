@@ -16,5 +16,13 @@ module Task
           'planed'
       end
     end
+
+    def self.all
+     [PLANED,DUE_IN_PLAN,DUE_AFTER_PLAN]
+    end
+
+    def self.dues
+      [Task::Status::DUE_IN_PLAN, Task::Status::DUE_AFTER_PLAN]
+    end
   end
 end

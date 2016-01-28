@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160126092919) do
+ActiveRecord::Schema.define(:version => 20160128064258) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -534,7 +534,7 @@ ActiveRecord::Schema.define(:version => 20160126092919) do
     t.string   "title"
     t.text     "content"
     t.integer  "generate_type"
-    t.integer  "assignor_id"
+    t.integer  "assigner_id"
     t.integer  "user_id"
     t.datetime "to_due_at"
     t.datetime "dued_at"
@@ -647,7 +647,7 @@ ActiveRecord::Schema.define(:version => 20160126092919) do
     t.integer  "department_id"
     t.string   "remind_time"
     t.integer  "frequency"
-    t.integer  "assigner"
+    t.integer  "assigner_id"
     t.boolean  "auto_notification", :default => false
   end
 

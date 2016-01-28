@@ -1,6 +1,6 @@
 #encoding: utf-8
 class UserKpiItemPresenter<Presenter
-  Delegators=[:id, :user_id, :kpi_id, :department_id, :user, :kpi_, :department]
+  Delegators=[:id, :user_id, :kpi_id, :department_id, :user, :kpi, :department, :assigner]
   def_delegators :@user_kpi_item, *Delegators
 
   def initialize(user_kpi_item)
@@ -8,26 +8,50 @@ class UserKpiItemPresenter<Presenter
     self.delegators =Delegators
   end
 
-  def as_task_details_info user
-    {
-        taks_id: @user_kpi_item.id,
-        user_id: UserPresenter.new(user).as_basic_info,
-        kpi: KpiPresenter.new(@user_kpi_item.kpi).as_basic_info(true),
-        department: DepartmentPresenter.new(@user_kpi_item.department).as_brief_info(false),
-        due_flag: false,
-        assignments: []
-    }
+  def kpi_name
+    @kpi_name||=(self.kpi.nil? ? '' : self.kpi.name)
   end
+
+  def department_name
+    @department_name||=(self.department.nil? ? '' : self.department.name)
+  end
+
+  def task_title
+    @task_title||="#{self.kpi_name} for #{self.department_name}"
+  end
+
+  def undue_task_item
+    @undue_task_item||=Task::EntryItem.last_undue(@user_kpi_item.id)
+  end
+
+  def due_task_item
+    @due_task_item||=Task::EntryItem.last_due(@user_kpi_item.id)
+  end
+
+  def due_flag
+    @due_flag||= self.undue_task_item.blank?
+  end
+
+  def to_due_at
+    @to_due_at||=(self.undue_task_item.blank? ? nil : self.undue_task_item.to_due_at)
+  end
+
+
+  def dued_at
+    @dued_at||=(self.due_flag ? (self.due_task_item.blank? ? nil : self.due_task_item.dued_at) : nil)
+  end
+
 
   def as_task_brief_info
     {
         id: @user_kpi_item.id,
-        title: "#{@user_kpi_item.kpi_name} for #{@user_kpi_item.department_name}",
-        due_flag: false, # TODO
-        to_due_at: (Time.now-3.days).utc,
-        dued_at: (Time.now-5.days).utc,
-        kpi: KpiPresenter.new(@user_kpi_item.kpi).as_basic_info(true),
-        department: DepartmentPresenter.new(@user_kpi_item.department).as_brief_info(false)
+        title: self.task_title,
+        due_flag: self.due_flag,
+        to_due_at: self.to_due_at,
+        dued_at: self.dued_at,
+        assigner: UserPresenter.new(self.assigner).as_brief_info(false),
+        kpi: KpiPresenter.new(self.kpi).as_basic_info,
+        department: DepartmentPresenter.new(self.department).as_brief_info(false)
     }
   end
 
