@@ -80,7 +80,7 @@ class KpiPresenter<Presenter
           result_code: result_code||1,
           messages: messages,
           need_instruction: false,
-          customized_field: as_kpi_details(with_properties)
+          customized_field: as_on_user(@kpi.creator, with_properties)
       }
     end
   end
