@@ -43,11 +43,11 @@ ActiveRecord::Schema.define(:version => 20160128064258) do
     t.string   "topic"
     t.integer  "user_id"
     t.integer  "type"
-    t.integer  "offset",         :default => 0
+    t.integer  "offset",         :default => -1
     t.integer  "alertable_id"
     t.string   "alertable_type"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   add_index "alerts", ["user_id"], :name => "index_alerts_on_user_id"
