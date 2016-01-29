@@ -37,7 +37,7 @@ module V2
           requires :task_item_id, type: Integer, desc: 'task_item id'
         end
         get :item do
-          UserKpiItemService.item_detail(user,id)
+          UserKpiItemService.item_detail(current_user,params[:task_item_id])
         end
 
       end
