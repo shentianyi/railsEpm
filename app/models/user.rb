@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
 
   has_many :kpi_subscribes,:dependent => :destroy
   has_many :kpi_user_subscribes,:dependent => :destroy
+  has_many :alert_items, class_name: 'Alert::Item', :dependent => :destroy
 
 
   # Include default devise modules. Others available are:
