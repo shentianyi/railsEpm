@@ -17,4 +17,8 @@ class UserKpiItemService
       ApiMessage.new(messages: ['Task Not Found'])
     end
   end
+
+  def self.item_detail user,id
+    Task::EntryItemPresenter.new(Task::EntryItem.find_by_id(id)).as_basic_info
+  end
 end

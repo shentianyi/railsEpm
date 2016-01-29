@@ -3,6 +3,15 @@ module V2
     guard_all!
     namespace :departments do
 
+      # get
+      params do
+        requires :id, type: Integer, desc: 'department id'
+      end
+      get do
+        DepartmentService.get_department_detail(params[:id],current_user)
+      end
+
+
       # create
       params do
         requires :name, type: String, desc: 'department name'

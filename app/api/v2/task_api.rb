@@ -3,12 +3,13 @@ module V2
     guard_all!
     namespace :tasks do
 
-      params do
-        requires :task_id, type: Integer, desc: 'task id'
-      end
-      get do
-        UserKpiItemService.details(current_user, params[:task_id])
-      end
+      #params do
+      #   requires :task_id, type: Integer, desc: 'task id'
+      # end
+      # get do
+      #   UserKpiItemService.details(current_user, params[:task_id])
+      # end
+
 
       namespace :entries do
         params do
@@ -21,7 +22,7 @@ module V2
 
         params do
           requires :task_id, type: Integer, desc: 'task id'
-          optional :status, type: Array,default:[Task::Status::PLANED], desc: 'task status'
+          optional :status, type: Array, default: [Task::Status::PLANED], desc: 'task status'
           optional :page, type: Integer, default: 0, desc: 'page index start from 0'
           optional :size, type: Integer, default: 20, desc: 'page size'
         end
@@ -31,8 +32,15 @@ module V2
                                                 status: params[:status]
                                             })
         end
-      end
 
+        params do
+          requires :task_item_id, type: Integer, desc: 'task_item id'
+        end
+        get :item do
+          UserKpiItemService.item_detail(user,id)
+        end
+
+      end
 
     end
   end

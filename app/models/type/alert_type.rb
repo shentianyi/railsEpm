@@ -1,18 +1,24 @@
 class AlertType
-  TaskAlert = 0
-  KpiFollowedAlert = 100
-  SystemAlert = 200
+  TASK=100
+  KPI_FOllOW=200
+  SYSTEM=300
+  # system
+  ADD_TO_DISCUSSION=310
+  ADD_TO_DEPARTMENT=320
 
   def self.display(type)
     case type
-      when TaskAlert
+      when TASK
         'Task Alert'
-      when KpiFollowedAlert
+      when KPI_FOllOW
         'Kpi Followed Alert'
-      when SystemAlert
-        'System Alert'
+      when ADD_TO_DISCUSSION
+        'System Discussion Alert'
+      when ADD_TO_DEPARTMENT
+        'System Department Alert'
       else
         'System Alert'
     end
   end
+
 end

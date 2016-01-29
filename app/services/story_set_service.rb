@@ -47,7 +47,7 @@ class StorySetService
         story_set.stories<<story
 
         if story_set.save
-          StoryPresenter.new(story).as_basic_feedback(['Discussion Create Success'], 1)
+          StoryPresenter.new(story).as_basic_feedback(['Discussion Create Success'], 1,user)
         else
           ApiMessage.new(messages: ['Discussion Create Failed'])
         end

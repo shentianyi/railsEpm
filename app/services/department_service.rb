@@ -1,6 +1,15 @@
 class DepartmentService
+  # get department
+  def self.get_department_detail id, user
+    if department=get_department(user, id)
+      DepartmentPresenter.new(department).as_brief_info(false)
+    else
+      ApiMessage.new(messages: ['Department not found'])
+    end
+  end
 
-  # create department
+
+    # create department
   # requires
   #  department: hash
   #     name: string, requires

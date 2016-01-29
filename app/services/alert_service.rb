@@ -7,11 +7,15 @@ class AlertService
     user.alerts.each do |alert|
       if msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset<0 ? 0 : alert.offset))
         case alert.type
-          when AlertType::TaskAlert
+          when AlertType::TASK
             task_alerts_count += (msgs.last.offset-alert.offset)
-          when AlertType::KpiFollowedAlert
+          when AlertType::KPI_FOllOW
             kpi_followed_alerts_count += (msgs.last.offset-alert.offset)
-          when AlertType::SystemAlert
+          when AlertType::SYSTEM
+            system_alerts_count += (msgs.last.offset-alert.offset)
+          when AlertType::ADD_TO_DEPARTMENT
+            system_alerts_count += (msgs.last.offset-alert.offset)
+          when AlertType::ADD_TO_DISCUSSION
             system_alerts_count += (msgs.last.offset-alert.offset)
         end
       end
@@ -20,22 +24,21 @@ class AlertService
     [
         {
             alert_type: {
-                id: AlertType::TaskAlert,
+                id: AlertType::TASK,
                 name: "task alerts"
             },
-            alert_type_text: "task alerts",
             count: task_alerts_count
         },
         {
             alert_type: {
-                id: AlertType::KpiFollowedAlert,
+                id: AlertType::KPI_FOllOW,
                 name: "kpi follow alerts"
             },
             count: kpi_followed_alerts_count
         },
         {
             alert_type: {
-                id: AlertType::SystemAlert,
+                id: AlertType::SYSTEM,
                 name: "system alerts"
             },
             count: system_alerts_count
@@ -85,7 +88,7 @@ class AlertService
 
   def self.task_alerts user, page=0, size=20
     items=[]
-    user.alerts.where(type: AlertType::TaskAlert).offset(page*size).limit(size).each do |alert|
+    user.alerts.where(type: AlertType::TASK).offset(page*size).limit(size).each do |alert|
       if msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
 
         msgs.each do |msg|
@@ -113,7 +116,7 @@ class AlertService
 
   def self.kpi_followed_alerts user, page=0, size=20
     items=[]
-    user.alerts.where(type: AlertType::KpiFollowedAlert).offset(page*size).limit(size).each do |alert|
+    user.alerts.where(type: AlertType::KPI_FOllOW).offset(page*size).limit(size).each do |alert|
       if msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
 
         msgs.each do |msg|
@@ -132,6 +135,7 @@ class AlertService
               }
           }
         end
+
       end
     end
 
@@ -140,7 +144,7 @@ class AlertService
 
   def self.system_alerts user, page=0, size=20
     items=[]
-    user.alerts.where(type: AlertType::SystemAlert).offset(page*size).limit(size).each do |alert|
+    user.alerts.where(type: AlertType::SYSTEM).offset(page*size).limit(size).each do |alert|
       if msgs=KafkaAlertsService.fetch_alerts(alert.topic, (alert.offset+1))
 
         msgs.each do |msg|
@@ -160,6 +164,7 @@ class AlertService
           }
         end
       end
+
     end
 
     items

@@ -5,12 +5,13 @@ Kpi.transaction do
 
   kpi=Kpi.first
   kpi.update_attributes(frequency: KpiFrequency::Daily)
-  department=Department.first
+  department=Department.find(23)
   user=User.find_by_email('admin@ci.com')
 
   a=%w(a1 a2 a3 a4 a5 a6)
   b=%w(b1 b2 b3 b4 b5 b6)
   while start_time<end_time
+    p start_time
     params={
         data: {
             kpi_id: kpi.id,
@@ -32,7 +33,7 @@ Kpi.transaction do
             }
         }
     }
-    EntryService.create_entry(params, user)
+  p  EntryService.create_entry(params, user)
 
     start_time+=1.day
 

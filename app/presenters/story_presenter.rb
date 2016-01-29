@@ -15,12 +15,12 @@ class StoryPresenter<Presenter
         id: @story.id,
         title: @story.title,
         content: @story.content,
-        story_set_id: @story.story_set.id,
+        # story_set_id: @story.story_set.id,
         kpi_id: @story.story_set.kpi_id,
         department_id: @story.story_set.department_id,
         creator: UserPresenter.new(@story.user).as_brief_info(false),
         created_at: @story.created_at.utc.to_s,
-        closed_at: @story.closed_at.blank? ? '' : @story.closed_at.utc.to_s,
+        closed_at: @story.closed_at.blank? ? nil : @story.closed_at.utc.to_s,
         status: StorySet::StorySetStatus.display(@story.status),
         status_value: @story.status,
         manageable: user==@story.user,
@@ -28,12 +28,12 @@ class StoryPresenter<Presenter
     }
   end
 
-  def as_basic_feedback(messages=nil, result_code=nil)
+  def as_basic_feedback(messages=nil, result_code=nil,user=nil)
     {
         result_code: result_code||1,
         messages: messages,
         need_instruction: false,
-        customized_field: as_brief_info
+        customized_field: as_brief_info(false,user)
     }
   end
 
