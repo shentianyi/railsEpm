@@ -4,9 +4,9 @@ class UserKpiItemService
     UserKpiItemPresenter.as_task_brief_infos(user.user_kpi_items.offset(page*size).limit(size))
   end
 
-  def self.get_task_items(user, task_id, page=0, size=20,options={})
+  def self.get_task_items(user, task_id, page=0, size=20, options={})
     Task::EntryItemPresenter.as_basic_infos(
-        Task::EntryItem.by_statuses(task_id, user,options[:status]).offset(page*size).limit(size)
+        Task::EntryItem.by_statuses(task_id, user, options[:status]).offset(page*size).limit(size)
     )
   end
 
@@ -18,7 +18,11 @@ class UserKpiItemService
     end
   end
 
-  def self.item_detail user,id
-    Task::EntryItemPresenter.new(Task::EntryItem.find_by_id(id)).as_basic_info
+  def self.item_detail user, id
+    if item=Task::EntryItem.find_by_id(id)
+      Task::EntryItemPresenter.new(item).as_basic_info
+    else
+      ApiMessage.new(messages: ['Task Not Found'])
+    end
   end
 end
