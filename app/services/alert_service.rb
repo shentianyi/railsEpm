@@ -137,7 +137,7 @@ class AlertService
             unread: unread,
             handle_type: handle_type,
             data:{
-                id: Department.first.id
+                id: user.departments.first.id
             }
         }
 

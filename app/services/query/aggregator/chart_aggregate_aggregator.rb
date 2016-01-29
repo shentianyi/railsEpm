@@ -45,7 +45,9 @@ module Query
         matrix.each_with_index do |m, i|
           attribute_data=[]
           m.each_with_index do |mm, ii|
-            attribute_data<<Query::Data::AttributeData.new(attribute_id: ids[ii], attribute_value: mm)
+            attribute_data<<Query::Data::AttributeData.new(attribute_id: ids[ii],
+                                                           attribute_value: mm,
+                                                           attribute_name:'a')
           end
           p '***^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
           p m
