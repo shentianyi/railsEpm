@@ -25,5 +25,9 @@ module Alert
       end
     end
 
+    def self.systems
+      [ADD_TO_DISCUSSION,ADD_TO_DEPARTMENT,ASSIGN_KPI]
+    end
+
   end
 end

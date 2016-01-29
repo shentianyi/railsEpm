@@ -1,6 +1,8 @@
 # users belongs to department
 # the name DepartmentUser would be better
 class UserDepartment < ActiveRecord::Base
+  include AutoAlert
+
   belongs_to :user
   belongs_to :department
   # attr_accessible :title, :body

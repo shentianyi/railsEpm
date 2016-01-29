@@ -94,7 +94,11 @@ class AlertService
               id: 1,
               name: "manual read"
           },
-          data: alert.alertable.blank? ? '' : Task::EntryItemPresenter.new(alert.alertable).as_basic_info
+          data:{
+              id:alert.alertable.id,
+              due_flag: alert.alertable.due?
+          }
+              #alert.alertable.blank? ? '' : Task::EntryItemPresenter.new(alert.alertable).as_basic_info
       }
     end
 
@@ -104,12 +108,20 @@ class AlertService
   def self.system_alerts user, page=0, size=20
     items=[]
 
-    user.alert_items.where(type: Alert::Type::TASK).each do |alert|
+    user.alert_items.where(type: Alert::Type.systems).each do |alert|
+
+      text=case alert.type
+             when Alert::Type::ADD_TO_DISCUSSION
+               "you are add to discussion #{alert.alertable.story_set.title}"
+             else
+               ''
+           end
+
       items<<{
           head: {
               alert_id: alert.id,
               alert_type: alert.type,
-              alert_text: "KPI #{alert.alertable.blank? ? '' : alert.alertable.taskable.kpi.name} is due in 1 min Today 3:00 pm.",
+              alert_text: text,#"KPI #{alert.alertable.blank? ? '' : alert.alertable.taskable.kpi.name} is due in 1 min Today 3:00 pm.",
               created_at: alert.created_at.utc.to_s,
               sender: 'System'
           },
@@ -117,6 +129,9 @@ class AlertService
           handle_type: {
               id: 1,
               name: "manual read"
+          },
+          data:{
+              id: alert.alertable_id
           }
       }
     end
@@ -140,6 +155,9 @@ class AlertService
           handle_type: {
               id: 1,
               name: "manual read"
+          },
+          data:{
+              id: alert.alertable_id
           }
       }
     end
