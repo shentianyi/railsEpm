@@ -11,7 +11,7 @@ class AlertService
             sender: 'System'
         },
         handle_type: {
-            id: 1,
+            id: AlertHandleType::MANUAL,
             name: "manual read"
         }
     }
@@ -43,14 +43,14 @@ class AlertService
       if i<9
         created_at=(Time.now+i.hours).utc.to_s
         handle_type= {
-            id: 1,
+            id: AlertHandleType::MANUAL,
             name: "manual read"
         }
         unread=true
       else
         created_at=(Time.now-i.hours).utc.to_s
         handle_type= {
-            id: 0,
+            id: AlertHandleType::AUTO,
             name: "auto read"
         }
         unread=false
@@ -69,12 +69,6 @@ class AlertService
           data: {
               id: i,
               due_flag: false
-              # to_due_at: Time.now.utc.to_s,
-              # dued_at: Time.now.utc.to_s,
-              # status: 'due_in_plan',
-              # status_value: 1,
-              # kpi: KpiPresenter.new(Kpi.first).as_basic_info(true),
-              # department: DepartmentPresenter.new(Department.first).as_brief_info(false)
           }
       }
     end
@@ -88,14 +82,14 @@ class AlertService
         if i<9
           created_at=(Time.now+i.hours).utc.to_s
           handle_type= {
-              id: 1,
+              id: AlertHandleType::MANUAL,
               name: "manual read"
           }
           unread=true
         else
           created_at=(Time.now-i.hours).utc.to_s
           handle_type= {
-              id: 0,
+              id: AlertHandleType::AUTO,
               name: "auto read"
           }
           unread=false
@@ -119,14 +113,14 @@ class AlertService
         if i<9
           created_at=(Time.now+i.hours).utc.to_s
           handle_type= {
-              id: 1,
+              id: AlertHandleType::MANUAL,
               name: "manual read"
           }
           unread=true
         else
           created_at=(Time.now-i.hours).utc.to_s
           handle_type= {
-              id: 0,
+              id: AlertHandleType::AUTO,
               name: "auto read"
           }
           unread=false
@@ -158,14 +152,14 @@ class AlertService
       if i<9
         created_at=(Time.now+i.hours).utc.to_s
         handle_type= {
-            id: 1,
+            id: AlertHandleType::MANUAL,
             name: "manual read"
         }
         unread=true
       else
         created_at=(Time.now-i.hours).utc.to_s
         handle_type= {
-            id: 0,
+            id: AlertHandleType::AUTO,
             name: "auto read"
         }
         unread=false
