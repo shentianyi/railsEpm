@@ -12,8 +12,10 @@ module AutoAlert
           alert=Alert::Item.new(status: Alert::Status::UNREAD, type: Alert::Type::TASK, alertable_id: self.id, alertable_type: self.class.name)
         when 'KpiSubscribe'
           #create kpi follow alert
+          # TODO regenerate the follow alert
+          # the follow alert is not generate when user follow the kpi, but when followed
+          # kpi has some exceed value
           alert=Alert::Item.new({status: Alert::Status::UNREAD, type: Alert::Type::KPI_FOllOW})
-
         when 'UserKpiItem'
           #create assign alert
           alert=Alert::Item.new({status: Alert::Status::UNREAD, type: Alert::Type::ASSIGN_KPI})

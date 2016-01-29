@@ -42,6 +42,8 @@ class UserKpiItemPresenter<Presenter
   end
 
 
+
+
   def as_task_brief_info
     {
         id: @user_kpi_item.id,

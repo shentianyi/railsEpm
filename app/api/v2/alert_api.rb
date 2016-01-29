@@ -34,7 +34,7 @@ module V2
         optional :size, type: Integer, default: 20, desc: 'page size'
       end
       get :tasks do
-        AlertService.task_alerts(current_user, params[:page], params[:size])
+        AlertService.by_alert_type(current_user,Alert::Type::TASK, params[:page], params[:size])
       end
 
       params do
@@ -42,7 +42,7 @@ module V2
         optional :size, type: Integer, default: 20, desc: 'page size'
       end
       get :kpi_followed do
-        AlertService.kpi_followed_alerts(current_user, params[:page], params[:size])
+        AlertService.by_alert_type(current_user,Alert::Type::KPI_FOllOW, params[:page], params[:size])
       end
 
       params do
@@ -50,7 +50,7 @@ module V2
         optional :size, type: Integer, default: 20, desc: 'page size'
       end
       get :systems do
-        AlertService.system_alerts(current_user, params[:page], params[:size])
+        AlertService.by_alert_type(current_user,Alert::Type::SYSTEM, params[:page], params[:size])
       end
 
     end

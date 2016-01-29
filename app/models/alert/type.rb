@@ -3,7 +3,7 @@ module Alert
     TASK=100
     KPI_FOllOW=200
     SYSTEM=300
-    # system
+    # system, cannot greater than 399
     ADD_TO_DISCUSSION=310
     ADD_TO_DEPARTMENT=320
     ASSIGN_KPI=330
@@ -27,6 +27,10 @@ module Alert
 
     def self.systems
       [ADD_TO_DISCUSSION,ADD_TO_DEPARTMENT,ASSIGN_KPI]
+    end
+
+    def self.menu_types
+      [TASK,KPI_FOllOW,SYSTEM]
     end
 
   end
