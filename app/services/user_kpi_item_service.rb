@@ -19,6 +19,7 @@ class UserKpiItemService
   end
 
   def self.item_detail user, id
+    # TODO 根据用户判断task是否存在
     if item=Task::EntryItem.find_by_id(id)
       Task::EntryItemPresenter.new(item).as_basic_info
     else
