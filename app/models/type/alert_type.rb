@@ -5,6 +5,7 @@ class AlertType
   # system
   ADD_TO_DISCUSSION=310
   ADD_TO_DEPARTMENT=320
+  ASSIGN_KPI=330
 
   def self.display(type)
     case type
@@ -16,6 +17,8 @@ class AlertType
         'System Discussion Alert'
       when ADD_TO_DEPARTMENT
         'System Department Alert'
+      when ASSIGN_KPI
+        'System Assign Kpi alert'
       else
         'System Alert'
     end

@@ -1,9 +1,11 @@
 module Task
   class EntryItem<Task::Item
+
+    include AutoAlert
+
     attr_accessible :entry_at
 
     belongs_to :user
-    has_one :alert, as: :alertable, dependent: :delete
 
     default_scope { where(type: Task::Type::ENTRY) }
 

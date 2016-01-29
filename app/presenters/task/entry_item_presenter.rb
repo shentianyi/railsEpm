@@ -9,14 +9,14 @@ module Task
     end
     def as_basic_info
       {
-          task_item_id: @entry_item.id,
-          due_flag: @entry_item.due?,
-          to_due_at: @entry_item.to_due_at,
-          dued_at: @entry_item.dued_at,
-          status: @entry_item.status_display,
-          status_value: @entry_item.status,
-          kpi: KpiPresenter.new(@entry_item.taskable.kpi).as_basic_info(true),
-          department: DepartmentPresenter.new(@entry_item.taskable.department).as_brief_info(false)
+          task_item_id: @entry_item.id
+          # due_flag: @entry_item.due?,
+          # to_due_at: @entry_item.to_due_at,
+          # dued_at: @entry_item.dued_at,
+          # status: @entry_item.status_display,
+          # status_value: @entry_item.status,
+          # kpi: KpiPresenter.new(@entry_item.taskable.kpi).as_basic_info(true),
+          # department: DepartmentPresenter.new(@entry_item.taskable.department).as_brief_info(false)
       }
     end
 
