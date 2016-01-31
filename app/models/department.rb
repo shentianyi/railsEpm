@@ -46,7 +46,7 @@ class Department < ActiveRecord::Base
   # end
 
   def manageable(user)
-    user.user_departments.joins(:department).where(department_id: self.path_ids, is_manager: true).count>0
+    user.user_departments.joins(:department).where(department_id: self.path_ids, is_manager: true).count>0 || user.admin?
   end
 
   def access_childreable(user)
