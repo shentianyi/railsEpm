@@ -1,0 +1,31 @@
+<h1>Listing alert_items</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Type</th>
+    <th>Alertable</th>
+    <th>Alertable type</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @alert_items.each do |alert_item| %>
+  <tr>
+    <td><%= alert_item.user %></td>
+    <td><%= alert_item.type %></td>
+    <td><%= alert_item.alertable_id %></td>
+    <td><%= alert_item.alertable_type %></td>
+    <td><%= alert_item.status %></td>
+    <td><%= link_to 'Show', alert_item %></td>
+    <td><%= link_to 'Edit', edit_alert_item_path(alert_item) %></td>
+    <td><%= link_to 'Destroy', alert_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Item', new_alert_item_path %>

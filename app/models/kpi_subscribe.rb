@@ -1,4 +1,6 @@
 class KpiSubscribe < ActiveRecord::Base
+  include AutoAlert
+
   # attr_accessible :title, :body
   attr_accessible :user_id, :tenant_id, :kpi_id, :is_alert, :alert_by_sms, :alert_by_email, :department_id, :auto_notification
   belongs_to :user

@@ -1,186 +1,72 @@
 class AlertService
 
 
-  def self.get_latest_kpi_follow_alert(user, kpi_subscribe_id)
-    {
-        follow_id: kpi_subscribe_id,
-        head: {
-            alert_id: 1,
-            alert_text: 'the kpi exeeds the max limit for 5 days alredy, do you want to do something?(hard code)',
-            created_at: Time.now.utc,
-            sender: 'System'
-        },
-        handle_type: {
-            id: AlertHandleType::MANUAL,
-            name: "manual read"
-        }
-    }
+  def self.get_latest_kpi_follow_alert(kpi_subscribe_id)
+    if ks=KpiSubscribe.find_by_id(kpi_subscribe_id)
+      if ks.alert_item.blank?
+        ApiMessage.new(messages: ['Alert Not Found'])
+      else
+        Alert::ItemPresenter.new(ks.alert_item).as_brief_info
+      end
+    else
+      ApiMessage.new(messages: ['Kpi Follow Not Found'])
+    end
+  end
+
+  def self.read_alert id
+    if alert=Alert::Item.find_by_id(id)
+      alert.update_attributes(status: Alert::Status::READ)
+      ApiMessage.new(result_code: 1, messages: ['Alert Set Read'])
+    else
+      ApiMessage.new(messages: ['Alert Not Found'])
+    end
   end
 
   def self.unread_alerts_count user
+    task_alerts_count=0
+    kpi_followed_alerts_count=0
+    system_alerts_count=0
+
+    if alerts=user.alert_items.where(status: Alert::Status::UNREAD).select("count(*) as count, type").group(:type)
+      alerts.each do |alert|
+        case alert.type
+          when Alert::Type::TASK
+            task_alerts_count += alert.count
+          when Alert::Type::KPI_FOllOW
+            kpi_followed_alerts_count += alert.count
+          when Alert::Type::ADD_TO_DISCUSSION
+            system_alerts_count += alert.count
+          when Alert::Type::ADD_TO_DEPARTMENT
+            system_alerts_count += alert.count
+          when Alert::Type::ASSIGN_KPI
+            system_alerts_count += alert.count
+        end
+      end
+    end
+    p alerts
+
+
     [
         {
-            alert_type: AlertType::TASK,
-            alert_type_text: "task alerts",
-            count: 3
+            alert_type: Alert::Type::TASK,
+            alert_type_text: Alert::Type.display(Alert::Type::TASK),
+            count: task_alerts_count
         },
         {
-            alert_type: AlertType::KPI_FOllOW,
-            alert_type_text: "kpi follow alerts",
-            count: 3
+            alert_type: Alert::Type::KPI_FOllOW,
+            alert_type_text: Alert::Type.display(Alert::Type::KPI_FOllOW),
+            count: kpi_followed_alerts_count
         },
         {
-            alert_type: AlertType::SYSTEM,
-            alert_type_text: "system alerts",
-            count: 3
+            alert_type: Alert::Type::SYSTEM,
+            alert_type_text: Alert::Type.display(Alert::Type::SYSTEM),
+            count: system_alerts_count
         }
     ]
   end
 
-  def self.task_alerts user, page=0, size=20
-    items=[]
-    size.times do |i|
-      if i<9
-        created_at=(Time.now+i.hours).utc.to_s
-        handle_type= {
-            id: AlertHandleType::MANUAL,
-            name: "manual read"
-        }
-        unread=true
-      else
-        created_at=(Time.now-i.hours).utc.to_s
-        handle_type= {
-            id: AlertHandleType::AUTO,
-            name: "auto read"
-        }
-        unread=false
-      end
-
-      items<<{
-          head: {
-              alert_id: 1,
-              alert_type: AlertType::TASK,
-              alert_text: "the kpi is due in #{i} min",
-              created_at: created_at,
-              sender: 'System'
-          },
-          unread: unread,
-          handle_type: handle_type,
-          data: {
-              id: i,
-              due_flag: false
-          }
-      }
-    end
-    items
-  end
-
-  def self.system_alerts user, page=0, size=20
-    items=[]
-    size.times do |i|
-      if i.odd?
-        if i<9
-          created_at=(Time.now+i.hours).utc.to_s
-          handle_type= {
-              id: AlertHandleType::MANUAL,
-              name: "manual read"
-          }
-          unread=true
-        else
-          created_at=(Time.now-i.hours).utc.to_s
-          handle_type= {
-              id: AlertHandleType::AUTO,
-              name: "auto read"
-          }
-          unread=false
-        end
-
-        items<<{
-            head: {
-                alert_id: 1,
-                alert_type: AlertType::ADD_TO_DISCUSSION,
-                alert_text: "you are invited to discussion group why the kpi exeeds 3 for 5 days",
-                created_at: created_at,
-                sender: 'System'
-            },
-            unread: unread,
-            handle_type: handle_type,
-            data: {
-                id: Story.first.id
-            }#StoryPresenter.new(Story.first).as_brief_info(true,user)
-        }
-      else
-        if i<9
-          created_at=(Time.now+i.hours).utc.to_s
-          handle_type= {
-              id: AlertHandleType::MANUAL,
-              name: "manual read"
-          }
-          unread=true
-        else
-          created_at=(Time.now-i.hours).utc.to_s
-          handle_type= {
-              id: AlertHandleType::AUTO,
-              name: "auto read"
-          }
-          unread=false
-        end
-
-        items<<{
-            head: {
-                alert_id: 1,
-                alert_type: AlertType::ADD_TO_DEPARTMENT,
-                alert_text: "you are invited to department Test",
-                created_at: created_at,
-                sender: 'System'
-            },
-            unread: unread,
-            handle_type: handle_type,
-            data:{
-                id: user.departments.first.id
-            }
-        }
-
-      end
-    end
-    items
-  end
-
-  def self.kpi_followed_alerts user, page=0, size=20
-    items=[]
-    size.times do |i|
-      if i<9
-        created_at=(Time.now+i.hours).utc.to_s
-        handle_type= {
-            id: AlertHandleType::MANUAL,
-            name: "manual read"
-        }
-        unread=true
-      else
-        created_at=(Time.now-i.hours).utc.to_s
-        handle_type= {
-            id: AlertHandleType::AUTO,
-            name: "auto read"
-        }
-        unread=false
-      end
-subs=user.kpi_subscribes.first
-      items<<{
-          head: {
-              alert_id: 1,
-              alert_type: AlertType::KPI_FOllOW,
-              alert_text: "the kpi from department exeeds the max limit, current value is 1#{i}%",
-              created_at: created_at,
-              sender: 'System'
-          },
-          unread: unread,
-          handle_type: handle_type,
-          data: {
-              id: subs.nil? ? nil : subs.id
-          }
-      }
-    end
-    items
+  def self.by_alert_type(user, type, page=0, size=20)
+    Alert::ItemPresenter.as_brief_infos(Alert::Item.by_type(type).where(user_id: user.id).order('created_at desc').offset(page*size).limit(20))
   end
 
 end

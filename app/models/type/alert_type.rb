@@ -1,9 +1,0 @@
-class AlertType
-  TASK=100
-  KPI_FOllOW=200
-
-  SYSTEM=300
-  # system
-  ADD_TO_DISCUSSION=310
-  ADD_TO_DEPARTMENT=320
-end

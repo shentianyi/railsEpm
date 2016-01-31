@@ -1,5 +1,7 @@
 module Task
   class EntryItem<Task::Item
+    include AutoAlert
+
     attr_accessible :entry_at
     belongs_to :user
     default_scope { where(type: Task::Type::ENTRY) }

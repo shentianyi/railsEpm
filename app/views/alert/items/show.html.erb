@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @alert_item.user %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @alert_item.type %>
+</p>
+
+<p>
+  <b>Alertable:</b>
+  <%= @alert_item.alertable_id %>
+</p>
+
+<p>
+  <b>Alertable type:</b>
+  <%= @alert_item.alertable_type %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @alert_item.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_alert_item_path(@alert_item) %> |
+<%= link_to 'Back', alert_items_path %>
