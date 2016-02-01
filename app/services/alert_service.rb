@@ -66,7 +66,7 @@ class AlertService
   end
 
   def self.by_alert_type(user, type, page=0, size=20)
-    Alert::ItemPresenter.as_brief_infos(Alert::Item.by_type(type).where(user_id: user.id).order('created_at desc').offset(page*size).limit(20))
+    Alert::ItemPresenter.as_brief_infos(Alert::Item.by_type(type).where(user_id: user.id).order('created_at desc').offset(page*size).limit(size))
   end
 
 end
