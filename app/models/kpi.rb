@@ -125,21 +125,25 @@ class Kpi < ActiveRecord::Base
 
   def follow_flag(user,department=nil)
     if department.blank?
-      @follow_flag||=(KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id).first || KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE))
+      if kus=KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id).first
+        @follow_flag=kus
+      else
+        @follow_flag=KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE)
+      end
     else
-      kuss=KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id, department_id: department.id)
-      if kuss.blank?
+      kus=KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id, department_id: department.id).first
+      if kus.blank?
         kuss_s=KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id)
         if kuss_s.blank?
-          @follow_flag||=KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE)
+          @follow_flag=KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE)
         else
-          @follow_flag||=KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::PARTLY)
+          @follow_flag=KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::PARTLY)
         end
-
       else
-        @follow_flag||=kuss.first
+        @follow_flag=kus
       end
     end
+
   end
 
   def followed?(user, department)
