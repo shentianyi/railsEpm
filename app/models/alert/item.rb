@@ -48,7 +48,7 @@ class Alert::Item < ActiveRecord::Base
   end
 
   def target_id
-    @text||= begin
+    @target_id||= begin
       case type
         when Alert::Type::ADD_TO_DISCUSSION
           self.alertable.story_set.stroies.first.id
