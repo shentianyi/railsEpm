@@ -125,8 +125,9 @@ class Kpi < ActiveRecord::Base
 
   def follow_flag(user,department=nil)
     if department.blank?
-      if kus=KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id, department_id: department.id).first
-        @follow_flag||=kus
+      kuss=KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id, department_id: department.id)
+      if !kuss.blank?
+        @follow_flag||=kuss.first
       else
         @follow_flag||=(KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id).first || KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::PARTLY))
       end
