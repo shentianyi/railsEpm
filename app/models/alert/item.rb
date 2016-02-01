@@ -51,7 +51,7 @@ class Alert::Item < ActiveRecord::Base
     @target_id||= begin
       case type
         when Alert::Type::ADD_TO_DISCUSSION
-          self.alertable.story_set.stroies.first.id
+          self.alertable.story_set.stories.first.id
         when Alert::Type::ADD_TO_DEPARTMENT
           self.alertable.department.id
         when Alert::Type::ASSIGN_KPI
