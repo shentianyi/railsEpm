@@ -23,8 +23,8 @@ class Kpi < ActiveRecord::Base
   has_one :user_group, through: :user_group_relation
   has_many :user_group_items, through: :user_group
 
-  has_many :kpi_subscribes,:dependent => :destroy
-  has_many :kpi_user_subscribes,:dependent => :destroy
+  has_many :kpi_subscribes, :dependent => :destroy
+  has_many :kpi_user_subscribes, :dependent => :destroy
 
   has_many :story_sets
 
@@ -123,8 +123,21 @@ class Kpi < ActiveRecord::Base
     Kpi.joins(:kpi_subscribes).where(kpi_subscribes: {user_id: user.id}).uniq
   end
 
-  def follow_flag(user,department=nil)
-    @follow_flag||=(KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id).first || KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE))
+  def follow_flag(user, department=nil)
+    if department.blank?
+      if kus=KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id).first
+        @follow_flag=KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::PARTLY)
+      else
+        @follow_flag=KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE)
+      end
+    else
+      if kus=KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id, department_id: department.id).first
+        @follow_flag=kus
+      else
+        @follow_flag=KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE)
+      end
+    end
+
   end
 
   def followed?(user, department)
