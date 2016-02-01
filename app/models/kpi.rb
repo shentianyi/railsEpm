@@ -134,7 +134,7 @@ class Kpi < ActiveRecord::Base
       if kus=KpiUserSubscribe.where(kpi_id: self.id, user_id: user.id, department_id: department.id).first
         @follow_flag=kus
       else
-        @follow_flag=KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::PARTLY)
+        @follow_flag=KpiUserSubscribe.new(follow_flag: Kpi::KpiFollowFlag::NONE)
       end
     end
 
