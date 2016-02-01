@@ -36,9 +36,30 @@ class Alert::Item < ActiveRecord::Base
         when Alert::Type::ASSIGN_KPI
           "you are assigned kpi #{self.alertable.kpi.name}"
         when Alert::Type::KPI_FOllOW
-          "#{self.user.nick_name} Follow The KPI #{self.alertable.kpi.name} At Department #{self.alertable.department.name} Success."
+          "#{self.alertable.user.nick_name} Follow The KPI #{self.alertable.kpi.name} At Department #{self.alertable.department.name} Success."
         when Alert::Type::TASK
           "#{self.alertable.taskable.kpi.name} for #{self.alertable.taskable.department.name}"
+        else
+          ''
+      end
+    rescue
+
+    end
+  end
+
+  def target_id
+    @text||= begin
+      case type
+        when Alert::Type::ADD_TO_DISCUSSION
+          self.alertable.story_set.stroies.first.id
+        when Alert::Type::ADD_TO_DEPARTMENT
+          self.alertable.department.id
+        when Alert::Type::ASSIGN_KPI
+          self.alertable_id
+        when Alert::Type::KPI_FOllOW
+          self.alertable_id
+        when Alert::Type::TASK
+          self.alertable_id
         else
           ''
       end
