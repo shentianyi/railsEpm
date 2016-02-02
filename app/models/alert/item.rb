@@ -70,6 +70,48 @@ class Alert::Item < ActiveRecord::Base
     end
   end
 
+  def push_loc_key
+    @push_loc_key||@target_id||= begin
+      case type
+        when Alert::Type::ADD_TO_DISCUSSION
+          'ADD-TO-DISCUSSION-ALERT-FORMAT'
+        when Alert::Type::ADD_TO_DEPARTMENT
+          'ADD-TO-DEPARTMENT-ALERT-FORMAT'
+        when Alert::Type::ASSIGN_KPI
+          'ASSIGN-KPI-ALERT-FORMAT'
+        when Alert::Type::KPI_FOllOW
+          'KPI-FOLLOW-ALERT-FORMAT'
+        when Alert::Type::TASK
+          'KPI-TASK-ALERT-FORMAT'
+        else
+          ''
+      end
+    rescue
+
+    end
+  end
+
+  def push_loc_args
+    @push_loc_key||@target_id||= begin
+      case type
+        when Alert::Type::ADD_TO_DISCUSSION
+          [self.alertable.story_set.title]
+        when Alert::Type::ADD_TO_DEPARTMENT
+          [self.alertable.department.name]
+        when Alert::Type::ASSIGN_KPI
+          [self.alertable.kpi.name,self.alertable.department.name]
+        when Alert::Type::KPI_FOllOW
+          [self.alertable.kpi.name,'90%']
+        when Alert::Type::TASK
+          [self.alertable.taskable.kpi.name,self.alertable.taskable.department.name]
+        else
+          ''
+      end
+    rescue
+
+    end
+  end
+
   private
   def send_push_notification
     Alert::PushWorker.perform_async(self.id)
