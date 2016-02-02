@@ -51,6 +51,7 @@ class User < ActiveRecord::Base
   attr_accessible :tenant_id, :role_id, :entity_id, :department_id, :is_sys, :title #, :department_group_id
   attr_accessible :tel, :phone, :image_url
   attr_accessible :stuff_id, :current_project_id, :current_location, :device_id, :is_online, :last_request_at
+  attr_accessible :device_token, :device_name, :device_type, :device_version
 
   validates_presence_of :nick_name, message: 'can not be blank'
 
