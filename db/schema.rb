@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160129081157) do
+ActiveRecord::Schema.define(:version => 20160202055433) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -722,6 +722,10 @@ ActiveRecord::Schema.define(:version => 20160129081157) do
     t.string   "device_id",            :default => ""
     t.boolean  "is_online",            :default => false
     t.string   "nick_name"
+    t.string   "device_token"
+    t.string   "device_name"
+    t.string   "device_version"
+    t.string   "device_type"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

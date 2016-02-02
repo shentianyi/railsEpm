@@ -105,4 +105,12 @@ class UserService
       UserPresenter.new(user).as_basic_info
     end
   end
+
+  def self.update_device_info user, params
+    if user.update_attributes(device_token: params[:device_token], device_type: params[:device_type], device_name: params[:device_name], device_version: params[:device_version])
+      ApiMessage.new(result_code: 1, messages: ['User Devise Info Save Success'])
+    else
+      ApiMessage.new(messages: user.errors.full_messages)
+    end
+  end
 end
