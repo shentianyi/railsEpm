@@ -9,6 +9,8 @@ class Alert::Item < ActiveRecord::Base
   scope :systems, -> { where(type: Alert::Type.systems) }
   scope :kpi_followed, -> { where(type: Alert::Type::KPI_FOllOW) }
 
+  after_create :send_push_notification
+
   def handle_type
     Alert::HandleType::MANUAL
   end
@@ -66,5 +68,10 @@ class Alert::Item < ActiveRecord::Base
     rescue
 
     end
+  end
+
+  private
+  def send_push_notification
+    Alert::PushWorker.perform_async(self.id)
   end
 end
