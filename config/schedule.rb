@@ -3,7 +3,7 @@
 # It's helpful, but not entirely necessary to understand cron before proceeding.
 # http://en.wikipedia.org/wiki/Cron
 
-set :environment, 'development'
+set :environment, 'demo'
 set :output, {:error => 'log/cron_error_log.log', :standard => 'log/cron_log.log'}
 
 # Example:

@@ -34,7 +34,7 @@ module Query
     end
 
     class Attribute<CZ::BaseClass
-      attr_accessor :id, :values
+      attr_accessor :id,:name, :values
     end
   end
 end

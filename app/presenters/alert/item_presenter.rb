@@ -1,6 +1,6 @@
 module Alert
   class ItemPresenter<Presenter
-    Delegators=[:id, :alertable, :alertable_id, :alertable_type, :status, :type, :user_id, :handle_type, :text, :created_at]
+    Delegators=[:id, :alertable, :alertable_id, :alertable_type, :status, :type, :user_id, :handle_type, :text,:target_id, :created_at]
     def_delegators :@item, *Delegators
 
     def initialize(item)
@@ -22,7 +22,7 @@ module Alert
         }
       else
         {
-            id: self.alertable_id
+            id: self.target_id
         }
       end
     end

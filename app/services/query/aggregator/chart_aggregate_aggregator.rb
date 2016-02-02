@@ -11,6 +11,7 @@ module Query
       def clean_data
         return if self.parameter.attributes.blank?
         ids=self.parameter.attributes.map { |attr| attr.id }
+        p "ids.................... #{ids}"
         property_values=KpiPropertyValue.by_property_id(self.parameter.kpi.id, ids).all
         return if property_values.size==0
 
@@ -47,7 +48,7 @@ module Query
           m.each_with_index do |mm, ii|
             attribute_data<<Query::Data::AttributeData.new(attribute_id: ids[ii],
                                                            attribute_value: mm,
-                                                           attribute_name:'a')
+                                                           attribute_name:KpiProperty.find_by_id(ids[ii]).name)
           end
           p '***^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
           p m
