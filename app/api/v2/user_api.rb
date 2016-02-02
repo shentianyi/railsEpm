@@ -25,20 +25,20 @@ module V2
       end
 
       params do
-        requires :email,type:String,desc:'check user signuped'
+        requires :email, type: String, desc: 'check user signuped'
       end
       post :signuped do
         if user=User.find_by_email(params[:email])
           # ApiMessage.new(result_code:1,messages:'User has signed')
           {
-              result_code:1,
-              user:UserPresenter.new(user).as_brief_info(false)
+              result_code: 1,
+              user: UserPresenter.new(user).as_brief_info(false)
           }
         else
           {
-              result_code:1,
-              messages:['User not found'],
-              user:nil
+              result_code: 1,
+              messages: ['User not found'],
+              user: nil
           }
           # ApiMessage.new(result_code:0,messages:['User not found'])
         end
@@ -77,6 +77,19 @@ module V2
       end
       get :departments do
         DepartmentService.user_departments(current_user, params[:department_id])
+      end
+
+
+      namespace :device_infos do
+        params do
+          requires :device_token, type: String, desc: 'device token'
+          requires :device_type, type: String, desc: 'device type'
+          optional :device_name, type: String, desc: 'device name'
+          optional :device_version, type: String, desc: 'device version'
+        end
+        post do
+          UserService.update_device_info current_user, params
+        end
       end
     end
 
