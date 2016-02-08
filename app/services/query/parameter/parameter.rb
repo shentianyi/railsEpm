@@ -1,7 +1,7 @@
 module Query
   module Parameter
     class Parameter<CZ::BaseClass
-      attr_accessor :kpi_subscribe, :kpi, :department, :entity_ids, :frequency, :method, :from_time, :end_time
+      attr_accessor :kpi_subscribe, :kpi, :department, :entity_ids, :frequency, :method, :from_time, :end_time, :time_zone
       attr_accessor :attributes, :upper_boundary, :lower_boundary
       attr_accessor :map_group
 
@@ -14,6 +14,7 @@ module Query
         self.method=params[:method]
         self.from_time=params[:from_time]
         self.end_time=params[:end_time]
+        self.time_zone=params[:time_zone]||'Beijing'
 
         if self.kpi_subscribe
           self.upper_boundary=self.kpi_subscribe.upper_boundary
@@ -34,7 +35,7 @@ module Query
     end
 
     class Attribute<CZ::BaseClass
-      attr_accessor :id,:name, :values
+      attr_accessor :id, :name, :values
     end
   end
 end
