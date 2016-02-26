@@ -1,3 +1,9 @@
+<style>
+    #chart_kpi_chosen > .chosen-drop {
+        margin: -20px 0 0 0;
+    }
+</style>
+
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "groupDetail.js" %>
 <% end %>
@@ -25,7 +31,7 @@
 
     </div>
 
-    <div class="index-condition-group" style="width:222px">
+    <div class="index-condition-group" style="width:180px">
       <input style="margin-left:13px;width:120px !important;" type="text" class="index-pick-date" placeholder="<%= t 'analytics.begin_time' %> *" id="analy-begin-time"
              readonly=true/>
       <label class="index-date-extra-info"></label>
@@ -34,7 +40,7 @@
       <label class="index-date-extra-info"></label>
     </div>
 
-    <div class="index-condition-group" style="width:77px;margin-left:-25px;">
+    <div class="index-condition-group" style="width:90px;margin-left:-25px;">
       <label class="analytics-radio-label">
         <input type="radio" name="chartRadios" value="1" checked>
         <%= t 'analytics.sum' %> </label>
