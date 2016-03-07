@@ -397,10 +397,10 @@ nav ul li a:hover ~ .nav-manage-sub {
     -webkit-box-shadow: 9px 5px 10px rgba(0, 0, 0, 0.2);
     position: absolute;
     left: 210px;
-    bottom: -1px;
+    bottom: -5px;
     padding: 8px;
     display: none;
-    width: 150px;
+    /*width: 150px;*/
 }
 
 .date-pick-dynamic[interval="week"] {
@@ -435,18 +435,19 @@ nav ul li a:hover ~ .nav-manage-sub {
 
 .date-pick-dynamic > div > input[type='text'] {
     width: 35px;
-    padding: 5px 2px;
+    /*padding: 5px 2px;*/
     float: right;
 }
 
 .date-pick-dynamic > div > select {
     clear: both;
-    margin: 5px 0 25px;
+    margin: 10px 0;
     padding: 4px 5px 4px 2px;
     background-color: white;
     border: 1px solid #ddd;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.7);
+    width: 100px;
 }
 
 .date-pick-dynamic > a {
