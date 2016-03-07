@@ -119,3 +119,5 @@ gem 'seajs-rails'
 
 # setting
 gem 'ledermann-rails-settings'
+
+gem 'settingslogic'

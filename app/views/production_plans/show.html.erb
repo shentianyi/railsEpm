@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Assembly:</b>
+  <%= @production_plan.assembly %>
+</p>
+
+<p>
+  <b>Product line:</b>
+  <%= @production_plan.product_line %>
+</p>
+
+<p>
+  <b>Planned:</b>
+  <%= @production_plan.planned %>
+</p>
+
+<p>
+  <b>Produced:</b>
+  <%= @production_plan.produced %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @production_plan.date %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @production_plan.user %>
+</p>
+
+
+<%= link_to 'Edit', edit_production_plan_path(@production_plan) %> |
+<%= link_to 'Back', production_plans_path %>

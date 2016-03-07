@@ -1,6 +1,6 @@
 #encoding: utf-8
 class EntityPresenter<Presenter
-  Delegators=[:id, :name, :code,:description]
+  Delegators=[:id, :name,:is_last, :code,:description]
   def_delegators :@entity,*Delegators
 
   def initialize(entity)

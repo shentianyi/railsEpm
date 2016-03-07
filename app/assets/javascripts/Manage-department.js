@@ -107,7 +107,7 @@ MANAGE.department.add_department_init = function () {
         var name= $.trim($("#entity-name").val()),
             code= $.trim($("#entity-code").val()),
             description= $.trim($("#entity-description").val());
-        if(name.length>0){
+        if(name.length>0 && code.length>0){
             $.ajax({
                 url: '/entities',
                 type: 'POST',
@@ -128,13 +128,13 @@ MANAGE.department.add_department_init = function () {
                                     "<tr>"+
                                         "<td class='entity-manage-name'>"+name+"</td>"+
                                         "<td class='entity-manage-code'>"+code+"</td>"+
-                                        "<td class='entity-manage-users'>"+"0"+"</td>"+
+                                        //"<td class='entity-manage-users'>"+"0"+"</td>"+
                                         "<td class='entity-manage-description'>"+description+"</td>"+
                                     "</tr>"+
                                     "<tr>"+
                                         "<td>"+I18n.t('manage.department.desc.name')+"</td>"+
                                         "<td>"+I18n.t('manage.department.desc.code')+"</td>"+
-                                        "<td>"+I18n.t('manage.department.desc.user_quantity')+"</td>"+
+                                        //"<td>"+I18n.t('manage.department.desc.user_quantity')+"</td>"+
                                         "<td>"+I18n.t('manage.department.desc.description')+"</td>"+
                                     "</tr>"+
                                 "</table>"+
@@ -169,7 +169,8 @@ MANAGE.department.add_department_init = function () {
             });
         }
         else{
-            MessageBox("请填写输入点名称","top","warning");
+            MessageBox(I18n.t('manage.base.fill-all-star'), "top", "warning");
+            //MessageBox("请填写输入点名称或编码","top","warning");
         }
     });
 
@@ -187,7 +188,6 @@ MANAGE.department.add_department_init = function () {
                 var name = $("#content-right-nav-add-block input").val();
                 if ($.trim(name).length == 0) {
                     MessageBox("It can't be empty", "top", "warning");
-                    ;
                 }
                 else {
                     $("#manage-sort-list li").each(function () {
@@ -267,7 +267,7 @@ MANAGE.entity.edit = function () {
         $target = $("#manage-sort-list").find("#" + edit_id);
 
 
-    if ($.trim(name).length > 0) {
+    if ($.trim(name).length > 0 && $.trim(code).length > 0) {
         $.ajax({
             url: '/entities',
             type: 'PUT',

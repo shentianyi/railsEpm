@@ -22,13 +22,13 @@
                     <tr>
                       <td class="entity-manage-name"><%= entity.name %></td>
                       <td class="entity-manage-code"><%= entity.code %></td>
-                      <td class="entity-manage-users"><%= entity.user_quantity %></td>
+                      <!--<td class="entity-manage-users"><%= entity.user_quantity %></td>-->
                       <td class="entity-manage-description"><%= entity.description %></td>
                     </tr>
                     <tr>
                       <td><%= t 'manage.department.desc.name' %></td>
                       <td><%= t 'manage.department.desc.code' %></td>
-                      <td><%= t 'manage.department.desc.user_quantity' %></td>
+                      <!--<td><%= t 'manage.department.desc.user_quantity' %></td>-->
                       <td><%= t 'manage.department.desc.description' %></td>
                     </tr>
                   </table>
@@ -41,7 +41,7 @@
           <i class="icon-remove" id="close-user-edit" general="close-user"></i>
           <div>
             <input type="text" placeholder="* <%= t 'manage.department.desc.name' %>" id="edit-entity-name" general="entity-name" class="clear-input"/>
-            <input type="text" placeholder="<%= t 'manage.department.desc.code' %>" id="edit-entity-code" general="entity-code" class="clear-input"/>
+            <input type="text" placeholder="* <%= t 'manage.department.desc.code' %>" id="edit-entity-code" general="entity-code" class="clear-input"/>
             <input type="text" placeholder="<%= t 'manage.department.desc.description' %>" id="edit-entity-description" general="entity-description"  class="clear-input"/>
             <input type="submit" value="Ok" class="btn btn-primary" id="manage-entity-edit-old"/>
           </div>
@@ -54,7 +54,7 @@
 
   <aside class="content-right-nav" name='department' id="content-right-nav">
     <div style="width:auto;height:71px;"></div>
-    <section class="solid" style="position:relative">
+    <section class="solid" style="  position:relative">
       <h3><%= t 'manage.department.desc.create' %></h3>
 
       <p></p>
@@ -80,8 +80,7 @@
 
   <div class="add-entity-block">
     <input type="text" placeholder="* <%= t 'manage.department.desc.name' %>" id="entity-name" general="user-name"/>
-    <input type="text" placeholder="<%= t 'manage.department.desc.code' %>" id="entity-code" general="user-mail"/>
-    <!--<input type="text" placeholder="用户数目" id="new-user-title" general="user-title"/>-->
+    <input type="text" placeholder="* <%= t 'manage.department.desc.code' %>" id="entity-code" general="user-mail"/>
     <textarea type="text" placeholder="<%= t 'manage.department.desc.description' %>" id="entity-description"></textarea>
 
     <input type="submit" value="<%= t 'manage.base.add_btn' %>" class="btn btn-primary" id="add-entity-new"/>

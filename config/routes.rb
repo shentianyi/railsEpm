@@ -1,6 +1,9 @@
 IFEpm::Application.routes.draw do
 
 
+  resources :production_plans
+
+
   resources :report_snaps
 
 

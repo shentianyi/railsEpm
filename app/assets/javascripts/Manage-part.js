@@ -8,6 +8,10 @@
 var TREE = TREE || {};
 //current_department_id
 TREE.current_entitygroup_id = -1;
+
+var DELAY = 700, clicks = 0, timer = null;
+
+
 (function () {
     //部门负责人删除
     $("body").on("click","#charge-man>li>i",function(event){
@@ -93,7 +97,7 @@ TREE.current_entitygroup_id = -1;
                 post_name = $(this).parent().attr("post");
 
             $.ajax({
-                url: "departments/" + TREE.current_entitygroup_id,
+                url: "/departments/" + TREE.current_entitygroup_id,
                 type: "PUT",
                 data: {department: {name: value}},
                 success: function (data) {
@@ -104,7 +108,7 @@ TREE.current_entitygroup_id = -1;
 
                     }
                 }
-            })
+            });
 
             $(this).parent().empty().text(value);
         })
@@ -135,24 +139,62 @@ TREE.current_entitygroup_id = -1;
         })
         //点击输入点
         .on("click", "#tree .entity_root>ul li p", function () {
+            var entity= $(this);
             var id = $(this).parent().attr("entities");
             var target = $(this).parent();
-            if (confirm(I18n.t('manage.departments.desc.delete-depart-confirm'))) {
-                $.ajax({
-                    url: "/departments/remove_entity",
-                    data: {entity_id: id},
-                    dataType: "json",
-                    type: "POST",
-                    success: function (data) {
-                        if (data.result) {
-                            var parent = target.parent();
-                            target.remove();
 
-                            TREE.li_remove(parent);
-                        }
+            clicks++;  //count clicks
+
+            if(clicks === 1) {
+                timer = setTimeout(function() {
+                    clicks = 0;
+                    if (confirm(I18n.t('manage.departments.desc.delete-depart-confirm'))) {
+                        $.ajax({
+                            url: "/departments/remove_entity",
+                            data: {entity_id: id},
+                            dataType: "json",
+                            type: "POST",
+                            success: function (data) {
+                                if (data.result) {
+                                    var parent = target.parent();
+                                    target.remove();
+
+                                    TREE.li_remove(parent);
+                                }
+                            }
+                        });
                     }
-                });
+                }, DELAY);
+
+            } else {
+                var is_last= $(this).hasClass('last');
+                var msg=is_last ? '确定将输入点非终结点?' : '确定将输入点设为终结点?';
+                clearTimeout(timer);    //prevent single-click action
+                clicks = 0;             //after action performed, reset counter
+                if (confirm(msg)) {
+                    $.ajax({
+                        url: "/entities/" + id,
+                        type: "PUT",
+                        data: {entity: {is_last: !is_last}},
+                        success: function (data) {
+                            if (data.result) {
+                                if(is_last){
+                                    entity.removeClass('last')
+                                }else{
+                                    entity.addClass('last');
+                                }
+                            } else {
+
+                            }
+                        }
+                    });
+                }
+
             }
+
+        })
+        .on("dblclick", "#tree .entity_root>ul li p", function (e) {
+            e.preventDefault();
         })
         //点击添加部门
         .on("click", "#tree .add-block .add-block-part", function (event) {
@@ -288,7 +330,11 @@ function getEntities(id) {
                 var id = data.content.id;
                 TREE.addul($("li[entity_group=" + id + "]"));
                 for (var i = 0; i < childs.length; i++) {
-                    $('<li style="display:block" entities="' + childs[i].id + '"><p>' + childs[i].name + '</li>').appendTo($("li[entity_group=" + id + "]>ul"));
+                    var c=childs[i].is_last ? 'last' :'none-last';
+                    console.log(childs[i]);
+console.log(childs[i].is_last);
+                    console.log(childs[i].is_last==true);
+                    $('<li style="display:block" entities="' + childs[i].id + '"><p class='+c+'>' + childs[i].name + '</li>').appendTo($("li[entity_group=" + id + "]>ul"));
                 }
             }
         }

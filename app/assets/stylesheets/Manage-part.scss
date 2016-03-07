@@ -181,6 +181,9 @@ $pColor-3:#9d9d9d;
         background:$tree-blue;
         @include word-break;
       }
+      p.last{
+        background: darkslateblue;
+      }
     }
   }
 }

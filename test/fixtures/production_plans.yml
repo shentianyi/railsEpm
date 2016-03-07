@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  assembly: MyString
+  product_line: MyString
+  planned: 1
+  produced: 1
+  date: 2016-03-08 07:00:34
+  user: 
+
+two:
+  assembly: MyString
+  product_line: MyString
+  planned: 1
+  produced: 1
+  date: 2016-03-08 07:00:34
+  user: 

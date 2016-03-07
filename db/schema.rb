@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151028094137) do
+ActiveRecord::Schema.define(:version => 20160307230034) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -182,11 +182,12 @@ ActiveRecord::Schema.define(:version => 20151028094137) do
     t.integer  "status"
     t.integer  "user_quantity", :default => 0
     t.integer  "tenant_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.string   "description"
     t.string   "code"
     t.integer  "department_id"
+    t.boolean  "is_last",       :default => false
   end
 
   add_index "entities", ["department_id"], :name => "index_entities_on_department_id"
@@ -412,6 +413,19 @@ ActiveRecord::Schema.define(:version => 20151028094137) do
 
   add_index "oauth_applications", ["owner_id", "owner_type"], :name => "index_oauth_applications_on_owner_id_and_owner_type"
   add_index "oauth_applications", ["uid"], :name => "index_oauth_applications_on_uid", :unique => true
+
+  create_table "production_plans", :force => true do |t|
+    t.string   "assembly"
+    t.string   "product_line"
+    t.integer  "planned"
+    t.integer  "produced"
+    t.datetime "date"
+    t.integer  "user_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "production_plans", ["user_id"], :name => "index_production_plans_on_user_id"
 
   create_table "report_snaps", :force => true do |t|
     t.string   "desc"

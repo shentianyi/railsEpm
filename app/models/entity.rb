@@ -11,7 +11,7 @@ class Entity < ActiveRecord::Base
   # has_many :entity_contacts
   has_many :entity_contacts, :as => :contactable, :dependent => :destroy
   has_many :contacts, :through => :entity_contacts
-  attr_accessible :name, :status, :user_quantity, :description, :code, :department_id
+  attr_accessible :name, :status, :user_quantity, :description, :code, :department_id,:is_last
 
   acts_as_tenant(:tenant)
 
@@ -28,7 +28,7 @@ class Entity < ActiveRecord::Base
   private
 
   def validate_create_update
-    errors.add(:name, I18n.t("fix.cannot_repeat")) if Entity.where(:name => self.name, :tenant_id => self.tenant_id).first if new_record?
-    errors.add(:name, I18n.t("fix.cannot_repeat")) if Entity.where(:name => self.name, :tenant_id => self.tenant_id).where('id<>?', self.id).first unless new_record?
+    errors.add(:code, I18n.t("fix.cannot_repeat")) if Entity.where(:code => self.code, :tenant_id => self.tenant_id).first if new_record?
+    errors.add(:code, I18n.t("fix.cannot_repeat")) if Entity.where(:code => self.code, :tenant_id => self.tenant_id).where('id<>?', self.id).first unless new_record?
   end
 end

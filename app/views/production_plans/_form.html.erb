@@ -1,0 +1,41 @@
+<%= form_for(@production_plan) do |f| %>
+  <% if @production_plan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@production_plan.errors.count, "error") %> prohibited this production_plan from being saved:</h2>
+
+      <ul>
+      <% @production_plan.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :assembly %><br />
+    <%= f.text_field :assembly %>
+  </div>
+  <div class="field">
+    <%= f.label :product_line %><br />
+    <%= f.text_field :product_line %>
+  </div>
+  <div class="field">
+    <%= f.label :planned %><br />
+    <%= f.number_field :planned %>
+  </div>
+  <div class="field">
+    <%= f.label :produced %><br />
+    <%= f.number_field :produced %>
+  </div>
+  <div class="field">
+    <%= f.label :date %><br />
+    <%= f.datetime_select :date %>
+  </div>
+  <div class="field">
+    <%= f.label :user %><br />
+    <%= f.text_field :user %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

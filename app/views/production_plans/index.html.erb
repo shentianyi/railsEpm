@@ -1,0 +1,33 @@
+<h1>Listing production_plans</h1>
+
+<table>
+  <tr>
+    <th>Assembly</th>
+    <th>Product line</th>
+    <th>Planned</th>
+    <th>Produced</th>
+    <th>Date</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @production_plans.each do |production_plan| %>
+  <tr>
+    <td><%= production_plan.assembly %></td>
+    <td><%= production_plan.product_line %></td>
+    <td><%= production_plan.planned %></td>
+    <td><%= production_plan.produced %></td>
+    <td><%= production_plan.date %></td>
+    <td><%= production_plan.user %></td>
+    <td><%= link_to 'Show', production_plan %></td>
+    <td><%= link_to 'Edit', edit_production_plan_path(production_plan) %></td>
+    <td><%= link_to 'Destroy', production_plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Production plan', new_production_plan_path %>
