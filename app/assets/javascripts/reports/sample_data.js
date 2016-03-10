@@ -1,6 +1,6 @@
 var SampleData = {};
 
-SampleData.init_current_status = function(){
+SampleData.init_current_status = function () {
     var d_current_status = {
         CF11: [
             {
@@ -8,167 +8,167 @@ SampleData.init_current_status = function(){
                 "INQA": "iQ1 Body",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "2",
                 "INQA": "iQ2 Paint",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "3",
                 "INQA": "Trim Total",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "4",
                 "INQA": "GA Total",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "5",
                 "INQA": "EOL",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "6",
                 "INQA": "iQ3 Mid-trim",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "7",
                 "INQA": "iQ IP Cockpit Check",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "8",
                 "INQA": "iQ DrDoor Check",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "9",
                 "INQA": "iQ4 Interior",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "10",
                 "INQA": "iQ5 Trim Buy-off",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
-            },{
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
+            }, {
                 "id": "11",
                 "INQA": "iQ6 Mid-Chassis",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "12",
                 "INQA": "iQ7 Chassis Buy-off",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "13",
                 "INQA": "iQ8 U/Hood",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "14",
                 "INQA": "iQ9 Electrical",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "15",
                 "INQA": "Exterior",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "16",
                 "INQA": "iQ12 Roller Test",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "17",
                 "INQA": "iQ13 Shower Test",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "18",
                 "INQA": "iQ14 OK Line",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "19",
                 "INQA": "iQ15 Road Test",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "20",
                 "INQA": "iQ11 GA Buy-off",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
-                "id":"21",
-                "INQA":"Plant",
-                "Defects":"20",
-                "Pass":"25",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "id": "21",
+                "INQA": "Plant",
+                "Defects": "20",
+                "Pass": "25",
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             }
         ],
         CF14: [
@@ -177,167 +177,167 @@ SampleData.init_current_status = function(){
                 "INQA": "iQ1 Body",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "2",
                 "INQA": "iQ2 Paint",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "3",
                 "INQA": "Trim Total",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "4",
                 "INQA": "GA Total",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "5",
                 "INQA": "EOL",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "6",
                 "INQA": "iQ3 Mid-trim",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "7",
                 "INQA": "iQ IP Cockpit Check",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "8",
                 "INQA": "iQ DrDoor Check",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "9",
                 "INQA": "iQ4 Interior",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "10",
                 "INQA": "iQ5 Trim Buy-off",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
-            },{
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
+            }, {
                 "id": "11",
                 "INQA": "iQ6 Mid-Chassis",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "12",
                 "INQA": "iQ7 Chassis Buy-off",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "13",
                 "INQA": "iQ8 U/Hood",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "14",
                 "INQA": "iQ9 Electrical",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "15",
                 "INQA": "Exterior",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "16",
                 "INQA": "iQ12 Roller Test",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "17",
                 "INQA": "iQ13 Shower Test",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "18",
                 "INQA": "iQ14 OK Line",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "19",
                 "INQA": "iQ15 Road Test",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "20",
                 "INQA": "iQ11 GA Buy-off",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
-                "id":"21",
-                "INQA":"Plant",
-                "Defects":"20",
-                "Pass":"25",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "id": "21",
+                "INQA": "Plant",
+                "Defects": "20",
+                "Pass": "25",
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             }
         ],
         CF16: [
@@ -346,159 +346,159 @@ SampleData.init_current_status = function(){
                 "INQA": "iQ1 Body",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "2",
                 "INQA": "iQ2 Paint",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "3",
                 "INQA": "Trim Total",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "4",
                 "INQA": "GA Total",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "5",
                 "INQA": "EOL",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "6",
                 "INQA": "iQ3 Mid-trim",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "7",
                 "INQA": "iQ IP Cockpit Check",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "8",
                 "INQA": "iQ DrDoor Check",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "9",
                 "INQA": "iQ4 Interior",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "10",
                 "INQA": "iQ5 Trim Buy-off",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
-            },{
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
+            }, {
                 "id": "11",
                 "INQA": "iQ6 Mid-Chassis",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "12",
                 "INQA": "iQ7 Chassis Buy-off",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "13",
                 "INQA": "iQ8 U/Hood",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "14",
                 "INQA": "iQ9 Electrical",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "15",
                 "INQA": "Exterior",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "16",
                 "INQA": "iQ12 Roller Test",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "17",
                 "INQA": "iQ13 Shower Test",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "18",
                 "INQA": "iQ14 OK Line",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "19",
                 "INQA": "iQ15 Road Test",
                 "Defects": "20",
                 "Pass": "25",
-                "FTQ":"85",
-                "STYLE_COLOR":data_current_color["red"]
+                "FTQ": "85",
+                "STYLE_COLOR": data_current_color["red"]
             },
             {
                 "id": "20",
                 "INQA": "iQ11 GA Buy-off",
                 "Defects": "20",
                 "Pass": "23",
-                "FTQ":"90",
-                "STYLE_COLOR":data_current_color["green"]
+                "FTQ": "90",
+                "STYLE_COLOR": data_current_color["green"]
             },
             {
                 "id": "21",
@@ -506,43 +506,44 @@ SampleData.init_current_status = function(){
                 "Defects": "20",
                 "Pass": "25",
                 "FTQ": "90",
-                "STYLE_COLOR":data_current_color["green"]
+                "STYLE_COLOR": data_current_color["green"]
             }
         ]
     };
 
-    var models = ["CF11","CF14","CF16"];
-    for(var j = 0;j<models.length;j++){
+    var models = ["CF11", "CF14", "CF16"];
+    for (var j = 0; j < models.length; j++) {
         var model = models[j];
-        for(var i = 0;i<d_current_status[model].length;i++){
+        for (var i = 0; i < d_current_status[model].length; i++) {
             //var old = parseInt(d_current_status[model][i]["Defects"]);
             //d_current_status[model][i]["Defects"] = RAND.range_int(10,25).toString();//(old+RAND.rate(1,20,0)).toString();
 
             //old = parseInt(d_current_status[model][i]["Pass"])
-            var pass = RAND.range_int(20,35)
+            var pass = RAND.range_int(20, 35);
             d_current_status[model][i]["Pass"] = pass.toString();//(old + RAND.rate(1,80,0)).toString();
 
-            var ftq = RAND.range_int(70,100);
-            var ftq_target = RAND.range_int(70,98);
+            var ftq = RAND.range_int(70, 100);
+            var ftq_target = RAND.range_int(70, 98);
             d_current_status[model][i]["FTQ"] = ftq.toString();//(old+rate).toString();
             d_current_status[model][i]["FTQ_Target"] = ftq_target.toString();
-            d_current_status[model][i]["Defects"] = (pass * ftq/100).toFixed(0);
-            if(ftq > ftq_target){
+            d_current_status[model][i]["Defects"] = (pass * ftq / 100).toFixed(0);
+            if (ftq > ftq_target) {
                 d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["higher"];
-            }else if(ftq==ftq_target){
+            } else if (ftq == ftq_target) {
                 d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["equal"];
-            }else{
+            } else {
                 d_current_status[model][i]["STYLE_COLOR"] = Report.color.ftq["lower"];
             }
         }
     }
     return d_current_status;
-}
+};
 
 SampleData.init_daily_dpv = function () {
     var new_data = {
         rows: [
-            { id: 1,
+            {
+                id: 1,
                 data: [
                     "Volumne",
                     RAND.range_int(0, 50),
@@ -562,7 +563,8 @@ SampleData.init_daily_dpv = function () {
                     RAND.range_int(0, 50),
                     RAND.range_int(0, 50),
                     RAND.range_int(0, 50)
-                ] },
+                ]
+            },
             {
                 id: 2,
                 data: [
@@ -634,7 +636,7 @@ SampleData.init_daily_dpv = function () {
             }
         ]
     };
-    return  new_data;
+    return new_data;
 }
 
 SampleData.init_station_data = function () {
@@ -711,7 +713,6 @@ SampleData.init_station_data = function () {
         ]
     };
 }
-
 
 SampleData.init_daily_ftq = function () {
     var data = {

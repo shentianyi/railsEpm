@@ -1,0 +1,72 @@
+/*Box Start*/
+.box {
+    width: 230px;
+    height: 170px;
+    border-radius: 10px;
+    border: 2px solid deepskyblue;
+    /*margin: 10px;*/
+}
+
+.box-title {
+    height: 50px;
+    line-height: 50px;
+    background: #545D70;
+    color: #fefefe;
+    font-size: 24px;
+    text-align: center;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+}
+
+.left-number {
+    font: 50px 'Helvetica';
+    height: 100px;
+    line-height: 100px;
+    color: #3ed436;
+    margin-left: 10px;
+}
+
+.right-content {
+    height: 100px;
+    text-align: right;
+}
+
+.content:first-child {
+    margin: 5px 0 0 20px;
+}
+
+.content > strong {
+    font: 24px 'Helvetica';
+    color: #ffffff;
+}
+
+.content > p {
+    font: 14px 'HelveticaCondensed';
+    color: #bfbfbf;
+}
+
+/*Box End*/
+
+/*Arrow Start*/
+.right-arrow {
+    height: 48px;
+    margin-top: 80px;
+    width: 48px;
+    margin-left: 30px;
+}
+
+.bottom-arrow {
+    transform: rotate(90deg);
+    margin-left: 130px;
+    height: 48px;
+}
+
+.left-arrow {
+    height: 48px;
+    width: 48px;
+    margin-left: 30px;
+    transform: rotate(180deg);
+    margin-top: 80px;
+}
+
+/*Arrow End*/

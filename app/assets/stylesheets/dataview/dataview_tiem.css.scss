@@ -1,55 +1,66 @@
 @import "../STYLE";
-$item-bg:rgba(255,255,255,0.8);
-$bg-click:#f2edeb;
-.dhx_dataview_dv-item_item{
-  background:$item-bg;
-  background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.2) 55%) $item-bg;
-  background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.2) 55%) $item-bg;
+
+$item-bg: #000;
+$bg-click: #000;
+.dhx_dataview_dv-item_item {
+  background: $item-bg;
+  //background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 10%, rgba(221, 221, 221, 0.2) 55%) $item-bg;
+  //background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 10%, rgba(221, 221, 221, 0.2) 55%) $item-bg;
 }
+
 .dhx_dataview_dv-item_item_selected {
-  background:$bg-click;
-  background:-moz-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.5) 55%) $bg-click;
-  background:-webkit-linear-gradient(top,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 10%,rgba(221,221,221, 0.5) 55%) $bg-click;
+  background: $bg-click;
+  //background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 10%, rgba(221, 221, 221, 0.5) 55%) $bg-click;
+  //background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 10%, rgba(221, 221, 221, 0.5) 55%) $bg-click;
 }
-.dhx_dataview_item{
-  border:1px solid rgba(0,0,0,0.2);
+
+.auto-arrow {
+  background: rgba(0, 0, 0, 0) url("/assets/auto_arrow.gif") no-repeat scroll -1px -7px;
+}
+
+.dhx_dataview_item {
+  /*border: 1px solid rgba(0, 0, 0, 0.2);*/
+  border: 2px solid deepskyblue;
+  //border-right: none;
   @include border-radius-same(5px);
-  .dv-header{
-    p{
-      text-align:center;
-      padding:7px 0px;
+  .dv-header {
+    p {
+      text-align: center;
+      padding: 7px 0;
       @include border-radius-same(2px);
-      background:lighten($nav-dark,14%);
-      color:$golden-text;
-      font-size:16px;
+      background: lighten($nav-dark, 14%);
+      color: white;
+      font-size: 16px;
+      margin: -10px -10px 10px -10px;
     }
   }
-  .dv-body{
-    .left{
+  .dv-body {
+    .left {
       @include box-sizing-border;
-      width:60%;
-      float:left;
-      p{
-        text-align:center;
-        padding:23px 0;
-        font-size:50px;
-        font-family:"avenir"
+      width: 50%;
+      float: left;
+      p {
+        text-align: center;
+        font-size: 50px;
+        font-family: "avenir";
+        padding-top: 15px;
       }
     }
-    .right{
+    .right {
       @include box-sizing-border;
-      width:40%;
-      float:left;
-      padding-top:8px;
-      p{
-        text-align:right;
-        padding-right:3px;
-        &:nth-of-type(odd){
-          font-size:15px;
-          margin:0px;
+      width: 50%;
+      float: left;
+      padding-top: 10px;
+      p {
+        text-align: right;
+        padding-right: 3px;
+        &:nth-of-type(odd) {
+          font-size: 15px;
+          margin: 0;
+          color: #fff;
         }
-        &:nth-of-type(even){
-          color:#9f9f9f;
+        &:nth-of-type(even) {
+          color: #fff;
         }
       }
     }
