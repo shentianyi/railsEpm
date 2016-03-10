@@ -4,9 +4,11 @@ Report.r = {};
 Report.data = {};
 Report.host = 'http://42.121.111.38:9003/';
 //Report.host='http://192.168.0.101:6023/';
-Report.Url = {export_excel_url: Report.host + 'DHXFileService/Excel',
+Report.Url = {
+    export_excel_url: Report.host + 'DHXFileService/Excel',
     export_bt_chart_excel_url: Report.host + 'BTReportService/ChartExcel',
-    export_bt_excel_url: Report.host + 'BTReportService/Excel'};
+    export_bt_excel_url: Report.host + 'BTReportService/Excel'
+};
 /*
  Report.init = function (type) {
  var option = this.get_option_by_type(type);
@@ -90,7 +92,7 @@ Report.clear = function () {
 
 /*refresh*/
 Report.refresh = function () {
-    if(this.r.refresh == undefined){
+    if (this.r.refresh == undefined) {
         return;
     }
     console.log("refresh()");
@@ -138,29 +140,32 @@ Report.color = {
 Report.configure = function () {
     var dhtmlxobj = this.r;
     var type = this.option.type;
+
+    console.log(type);
     switch (type) {
         case this.type["current_status"]:
             dhtmlxobj.define("type", {
                 template: "<div class='dv-header'>" +
-                    "<p>#INQA#</p>" +
-                    "</div>" +
-                    "<div class='dv-body'>" +
-                    "<div class='left'>" +
-                    "<p id='ftq' style='color:" + "#STYLE_COLOR#" + "'>#FTQ#%</p>" +
-                    "</div>" +
-                    "<div class='right'>" +
-                    "<p>#Defects#</p>" +
-                    "<p>OPEN DEFECTS</p>" +
-                    "<p>#Pass#</p>" +
-                    "<p>VEHICLE PASS</p>" +
-                    "</div>" +
-                    "</div>",
+                "<p>#INQA#</p>" +
+                "</div>" +
+                "<div class='dv-body'>" +
+                "<div class='left'>" +
+                "<p id='ftq' style='color:" + "#STYLE_COLOR#" + "'>#FTQ#%</p>" +
+                "</div>" +
+                "<div class='right'>" +
+                "<p>#Defects#</p>" +
+                "<p>OPEN DEFECTS</p>" +
+                "<p>#Pass#</p>" +
+                "<p>VEHICLE PASS</p>" +
+                "</div><div class='auto-arrow'></div>" +
+                "</div> ",
                 css: "dv-item",
+                margin: 5,
                 height: 150,
                 width: 230,
-                margin: 5,
                 padding: 8
             });
+
             current_status.init();
             break;
         case this.type["station_data"]:
@@ -205,8 +210,8 @@ Report.configure = function () {
 
             var width = Math.floor($("#report-content").width() / head_length) - 2;
             var widthstring = "";
-            for(var i = 0 ;i <= head_length;i++){
-                if(i == head_length){
+            for (var i = 0; i <= head_length; i++) {
+                if (i == head_length) {
                     widthstring = widthstring + width;
                 } else {
                     widthstring = widthstring + width + ",";
@@ -236,7 +241,7 @@ Report.get_json = function () {
         case this.type["current_status"]:
             return d_current_status["CF11"];
         case this.type["daily_dpv"]:
-            return  SampleData.init_daily_dpv();
+            return SampleData.init_daily_dpv();
         case this.type["station_data"]:
             return SampleData.init_station_data();
         case this.type["daily_ftq"]:
@@ -247,10 +252,10 @@ Report.get_json = function () {
 };
 
 Report.serializeToJson = function () {
-    return  this.r.serializeToJson();
+    return this.r.serializeToJson();
 };
 Report.serializeToDataJson = function () {
-    return  this.r.serializeToDataJson();
+    return this.r.serializeToDataJson();
 };
 Report.serializeToJSONString = function () {
     return JSON.stringify(this.serializeToDataJson());
@@ -267,7 +272,7 @@ Report.toBTChartExcel = function () {
     this.r.toChartExcel(this.Url.export_bt_chart_excel_url);
 };
 Report.toBTExcel = function () {
-  this.r.toChartExcel(this.Url.export_bt_excel_url);
+    this.r.toChartExcel(this.Url.export_bt_excel_url);
 };
 
 Report.get_option_by_type = function (type) {
@@ -310,6 +315,7 @@ Report.station_data_init = function () {
     });
 };
 /*-----------------------------------------------*/
+
 Report.current_status_init = function () {
     $("#target").on("click", function () {
     });
@@ -320,6 +326,7 @@ Report.current_status_init = function () {
 
     });
 
+    /*打印按钮*/
     $("#quick-print").on("click", function () {
         html2canvas($("#data_container"), {
             onrendered: function (canvas) {
@@ -329,6 +336,7 @@ Report.current_status_init = function () {
         });
     });
 
+    /*点击刷新*/
     $("#refresh").on("click", function () {
         current_status.loader_show();
         setTimeout(function () {
@@ -340,12 +348,13 @@ Report.current_status_init = function () {
 
     });
 
-    Report.r.attachEvent("onItemDblClick", function (id, ev, html){
+    /*双击按钮*/
+    Report.r.attachEvent("onItemDblClick", function (id, ev, html) {
         console.log(id);
         console.log(ev);
         console.log(html);
         console.log(Report.r.get(id));
-        window.location="kpi_entries/analyse?view="+Report.r.get(id).INQA;
+        window.location = "kpi_entries/analyse?view=" + Report.r.get(id).INQA;
         return true;
     });
 };
@@ -359,20 +368,26 @@ Report.daily_dpv_init = function () {
     );
 
     //var models = Report.r.collectValues(1);
+    /*设置模式*/
     var models = ["CF11", "CF14", "CF16"];
+
     $("#deffect-model option").remove();
+    /*循环写入select*/
     for (i = 0; i < models.length; i++) {
         $("#deffect-model").append("<option>" + models[i] + "</option>");
     }
+
+    /*选择之后更新*/
     chosen.single_update("deffect-model");
 
     //var phases = Report.r.collectValues(3);
     var phases = ["MRD1", "MRD10", "MRD11", "MRD2", "MRD8", "MRD9"]
     $("#deffect-phase option").remove();
-    for (i = 0; i < phases.length; i++) {
 
+    for (i = 0; i < phases.length; i++) {
         $("#deffect-phase").append("<option>" + phases[i] + "</option>");
     }
+
     chosen.single_update("deffect-phase");
 
     //var dates = Report.r.collectValues(4);
@@ -388,8 +403,10 @@ Report.daily_dpv_init = function () {
     for (i = 0; i < dates.length; i++) {
         $("#deffect-date").append("<option>" + dates[i] + "</option>");
     }
+
     chosen.single_update("deffect-date");
 
+    /*设置 数据*/
     /*------------------------------------------------------------*/
     /*filter data*/
     $("#retrieve-data").on('click', function () {
@@ -405,24 +422,37 @@ Report.daily_dpv_init = function () {
 };
 /*----------------------------------------------------*/
 /*on_json_parse for daily_ftq*/
+
 Report.daily_ftq_on_json_parse = function () {
     var charts = [
         {
-            attr: { title: 'Quality Buyoff station Vehicle status', width: 1200, height: 300, show_legend: true},
+            attr: {title: 'Quality Buyoff station Vehicle status', width: 1200, height: 300, show_legend: true},
             chart_types: [
-                {  type: 'column',
+                {
+                    type: 'column',
                     series: [
-                        {xaixs: "B1:R1", yaixs: "B3:R3",
-                            attr: { color: 'fd0e0e', header_address: 'A3'}},
-                        {xaixs: "B1:R1", yaixs: "B4:R4",
-                            attr: { color: '25ad38', header_address: 'A4'}}
-                    ]},
-                {  type: 'line',
+                        {
+                            xaixs: "B1:R1", yaixs: "B3:R3",
+                            attr: {color: 'fd0e0e', header_address: 'A3'}
+                        },
+                        {
+                            xaixs: "B1:R1", yaixs: "B4:R4",
+                            attr: {color: '25ad38', header_address: 'A4'}
+                        }
+                    ]
+                },
+                {
+                    type: 'line',
                     series: [
-                        {xaixs: "B1:R1", yaixs: "B5:R5",
-                            attr: { color: '3c6fcc', header_address: 'A5', use_secondary_axis: true,
-                                yaxis_format_type: Report.ChartAxisFormatType.IntPercent}}
-                    ]}
+                        {
+                            xaixs: "B1:R1", yaixs: "B5:R5",
+                            attr: {
+                                color: '3c6fcc', header_address: 'A5', use_secondary_axis: true,
+                                yaxis_format_type: Report.ChartAxisFormatType.IntPercent
+                            }
+                        }
+                    ]
+                }
             ]
         }
     ];
@@ -454,7 +484,7 @@ Report.daily_ftq_on_json_parse = function () {
         var value = parseFloat(jsondata['rows'][colindx]['data'][j].replace("%", ""));
         value = isNaN(value) ? 0 : value;
         ftq[j] = value;
-       // console.log(j);
+        // console.log(j);
     }
     ftq.shift();
     xArray.shift();
@@ -529,7 +559,6 @@ Report.daily_dpv_on_json_parse = function () {
     xArray.shift();
     data.shift();
 
-
     var option_two = {
         xArray: xArray,
         data: [
@@ -559,7 +588,7 @@ Report.station_data_on_json_parse = function () {
         } else {
             obj.cells(row_id, 5).setBgColor(Report.color.ftq["lower"]);
         }
-        obj.cells(row_id,5).setAttribute('bgcolor', obj.cells(row_id,5).getBgColor());
+        obj.cells(row_id, 5).setAttribute('bgcolor', obj.cells(row_id, 5).getBgColor());
         //DPV
         var dpv = parseFloat(obj.cells(row_id, 6).getValue());
         var dpv_target = parseFloat(obj.cells(row_id, 7).getValue());
@@ -571,13 +600,13 @@ Report.station_data_on_json_parse = function () {
             obj.cells(row_id, 6).setBgColor(Report.color.dpv["lower"]);
         }
 
-        obj.cells(row_id,6).setAttribute('bgcolor', obj.cells(row_id,6).getBgColor());
+        obj.cells(row_id, 6).setAttribute('bgcolor', obj.cells(row_id, 6).getBgColor());
     }
 
 };
 
 /*station_on_refresh*/
-Report.station_data_on_refresh = function(){
+Report.station_data_on_refresh = function () {
     var obj = Report.r;
     for (var i = 0; i < obj.getRowsNum(); i++) {
         var row_id = obj.getRowId(i);
@@ -591,7 +620,7 @@ Report.station_data_on_refresh = function(){
         } else {
             obj.cells(row_id, 5).setBgColor(Report.color.ftq["lower"]);
         }
-        obj.cells(row_id,5).setAttribute('bgcolor', obj.cells(row_id,5).getBgColor());
+        obj.cells(row_id, 5).setAttribute('bgcolor', obj.cells(row_id, 5).getBgColor());
         //DPV
         var dpv = parseFloat(obj.cells(row_id, 6).getValue());
         var dpv_target = parseFloat(obj.cells(row_id, 7).getValue());
@@ -603,7 +632,7 @@ Report.station_data_on_refresh = function(){
             obj.cells(row_id, 6).setBgColor(Report.color.dpv["lower"]);
         }
 
-        obj.cells(row_id,6).setAttribute('bgcolor', obj.cells(row_id,6).getBgColor());
+        obj.cells(row_id, 6).setAttribute('bgcolor', obj.cells(row_id, 6).getBgColor());
     }
 };
 
@@ -618,6 +647,6 @@ function export_bt_report_chart_excel() {
 }
 
 // default export bt excel
-function export_bt_report_excel(){
+function export_bt_report_excel() {
     Report.toBTExcel();
 }
