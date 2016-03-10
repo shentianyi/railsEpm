@@ -8,18 +8,31 @@ class PlcService
     codes.each_with_index do |k, i|
 
       entity=Entity.find_by_code(k)
+      max=kpi.target_max
+      min=kpi.target_max
+
+      if entity
+        if user= entity.users.first
+          if item=user.user_kpi_items(kpi_id: kpi.id).first
+            max=item.target_max
+            min=item.target_min
+          end
+        end
+      end
+
 
       KpiEntry.create(
           entry_type: 0,
           kpi_id: kpi.id,
           entry_at: Time.now,
           entity_id: entity.id,
-          original_value:values[i],
+          original_value: values[i],
           value: values[i],
           abnormal: false,
-          target_max: 100,
-          target_min: 10,
-          frequency: kpi.frequency
+          target_max: max,
+          target_min: min,
+          frequency: kpi.frequency,
+          exception: values[i]>max || values[i]<min
       )
 
       if entity.is_last

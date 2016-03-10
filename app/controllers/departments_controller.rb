@@ -288,20 +288,33 @@ class DepartmentsController < ApplicationController
 
       params[:frequency]=KpiFrequency::Daily
       params[:average]=true #=.nil? ? true : params[:average]=='true'
-      data=Entry::Analyzer.new(params).analyse#.to_json
+      data=Entry::Analyzer.new(params).analyse #.to_json
 
       p '-------------------------------'
       p params
       p data
       p '-------------------------------'
 
+
+      max=kpi.target_max
+      min=kpi.target_max
+
+      if entity=d.entities.first
+        if user= entity.users.first
+          if item=user.user_kpi_items(kpi_id: kpi.id).first
+            max=item.target_max
+            min=item.target_min
+          end
+        end
+      end
+
       entity_groups<<{
           id: entity_group.id,
           name: entity_group.name,
           value: data[:current].first,
-          target_max: 100,
-          target_min: 90,
-          d:data
+          target_max: max,
+          target_min: min,
+          d: data
       }
     end
     render json: entity_groups
