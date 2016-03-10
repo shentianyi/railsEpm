@@ -47,7 +47,7 @@ module V2
           else
             {
                 result_code: '0',
-                msg: message
+                msg: @error
             }
           end
 

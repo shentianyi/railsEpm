@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160307230034) do
+ActiveRecord::Schema.define(:version => 20160310075727) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -418,11 +418,14 @@ ActiveRecord::Schema.define(:version => 20160307230034) do
     t.string   "assembly"
     t.string   "product_line"
     t.integer  "planned"
-    t.integer  "produced"
+    t.integer  "produced",     :default => 0
     t.datetime "date"
     t.integer  "user_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.integer  "trigger_min",  :default => 0
+    t.integer  "trigger_max",  :default => 0
+    t.boolean  "is_confirmed", :default => false
   end
 
   add_index "production_plans", ["user_id"], :name => "index_production_plans_on_user_id"

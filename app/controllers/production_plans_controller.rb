@@ -1,4 +1,8 @@
 class ProductionPlansController < ApplicationController
+
+
+  before_filter :require_user_as_admin, :only => :index
+
   # GET /production_plans
   # GET /production_plans.json
   def index
@@ -41,7 +45,8 @@ class ProductionPlansController < ApplicationController
   # POST /production_plans.json
   def create
     @production_plan = ProductionPlan.new(params[:production_plan])
-
+    @production_plan.date=(@production_plan.date-8.hours).utc
+    @production_plan.user=current_user
     respond_to do |format|
       if @production_plan.save
         format.html { redirect_to @production_plan, notice: 'Production plan was successfully created.' }
@@ -57,8 +62,10 @@ class ProductionPlansController < ApplicationController
   # PUT /production_plans/1.json
   def update
     @production_plan = ProductionPlan.find(params[:id])
+    @production_plan.user=current_user
 
     respond_to do |format|
+
       if @production_plan.update_attributes(params[:production_plan])
         format.html { redirect_to @production_plan, notice: 'Production plan was successfully updated.' }
         format.json { head :no_content }

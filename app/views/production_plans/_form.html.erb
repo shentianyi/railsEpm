@@ -27,14 +27,19 @@
     <%= f.label :produced %><br />
     <%= f.number_field :produced %>
   </div>
+    <div class="field">
+  <%= f.label :trigger_min %><br />
+  <%= f.number_field :trigger_min %>
+</div>
+    <div class="field">
+  <%= f.label :trigger_max %><br />
+  <%= f.number_field :trigger_max %>
+</div>
   <div class="field">
     <%= f.label :date %><br />
-    <%= f.datetime_select :date %>
+    <%= f.date_select :date %>
   </div>
-  <div class="field">
-    <%= f.label :user %><br />
-    <%= f.text_field :user %>
-  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

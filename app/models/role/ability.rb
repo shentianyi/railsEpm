@@ -8,7 +8,7 @@ class Ability
 
     can :download_entry_template, Kpi
     if user.admin?
-      can :manage, [User, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem,
+      can :manage, [User,ProductionPlan, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem,
                     UserKpiItem, UserSession, Dashboard, DashboardItem, DashboardCondition, Email,
                     KpiProperty, KpiPropertyItem, KpiPropertyValue, StorySet, Story, Comment,
                     ChartCondition, StorySetUser, KpiSubscribe, KpiSubscribeUser, KpiSubscribeAlert, ReportSnap]

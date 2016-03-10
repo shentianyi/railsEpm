@@ -1,11 +1,13 @@
 <h1>Listing production_plans</h1>
 
-<table>
+<table class="table table-bordered table-striped table-hover">
   <tr>
     <th>Assembly</th>
     <th>Product line</th>
     <th>Planned</th>
     <th>Produced</th>
+    <th>Trigger Min</th>
+    <th>Trigger Max</th>
     <th>Date</th>
     <th>User</th>
     <th></th>
@@ -19,8 +21,9 @@
     <td><%= production_plan.product_line %></td>
     <td><%= production_plan.planned %></td>
     <td><%= production_plan.produced %></td>
-    <td><%= production_plan.date %></td>
-    <td><%= production_plan.user %></td>
+    <td><%= production_plan.trigger_min %></td>
+    <td><%= production_plan.trigger_max %></td>
+    <td><%= production_plan.date.localtime %></td>
     <td><%= link_to 'Show', production_plan %></td>
     <td><%= link_to 'Edit', edit_production_plan_path(production_plan) %></td>
     <td><%= link_to 'Destroy', production_plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -5,5 +5,6 @@ module V2
 
 
     mount PlanAPI
+    mount PlcAPI
   end
 end
