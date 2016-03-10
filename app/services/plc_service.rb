@@ -20,6 +20,7 @@ class PlcService
         end
       end
 
+      v=values[i].to_f
 
       KpiEntry.create(
           entry_type: 0,
@@ -32,7 +33,7 @@ class PlcService
           target_max: max,
           target_min: min,
           frequency: kpi.frequency,
-          exception: values[i]>max || values[i]<min
+          exception: v>max || v<min
       )
 
       if entity.is_last
