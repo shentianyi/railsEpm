@@ -19,4 +19,5 @@ class ReportsController < ApplicationController
   def demo
     render
   end
+
 end

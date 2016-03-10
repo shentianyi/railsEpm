@@ -1,46 +1,51 @@
 <%= form_for(@production_plan) do |f| %>
-  <% if @production_plan.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@production_plan.errors.count, "error") %> prohibited this production_plan from being saved:</h2>
+    <% if @production_plan.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@production_plan.errors.count, "error") %> prohibited this production_plan from being
+            saved:</h2>
 
-      <ul>
-      <% @production_plan.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @production_plan.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="field">
+      <%= f.label :product_line, '*生产线' %><br/>
+      <%= f.text_field :product_line %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :assembly %><br />
-    <%= f.text_field :assembly %>
-  </div>
-  <div class="field">
-    <%= f.label :product_line %><br />
-    <%= f.text_field :product_line %>
-  </div>
-  <div class="field">
-    <%= f.label :planned %><br />
-    <%= f.number_field :planned %>
-  </div>
-  <div class="field">
-    <%= f.label :produced %><br />
-    <%= f.number_field :produced %>
-  </div>
     <div class="field">
-  <%= f.label :trigger_min %><br />
-  <%= f.number_field :trigger_min %>
-</div>
-    <div class="field">
-  <%= f.label :trigger_max %><br />
-  <%= f.number_field :trigger_max %>
-</div>
-  <div class="field">
-    <%= f.label :date %><br />
-    <%= f.date_select :date %>
-  </div>
+      <%= f.label :assembly, '*型号' %><br/>
+      <%= f.text_field :assembly %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+      <%= f.label :planned, '*计划' %><br/>
+      <%= f.number_field :planned %>
+    </div>
+    <div class="field">
+      <%= f.label :produced, '完成' %><br/>
+      <%= f.number_field :produced %>
+    </div>
+    <div class="field">
+      <%= f.label :trigger_min, '下限' %><br/>
+      <%= f.number_field :trigger_min %>
+    </div>
+    <div class="field">
+      <%= f.label :trigger_max, '上限' %><br/>
+      <%= f.number_field :trigger_max %>
+    </div>
+    <div class="field">
+      <%= f.label :date, '*日期' %>(格式：XXXX-XX-XX，即 年-月-日)<br/>
+      <% if @production_plan.new_record? %>
+          <%= f.text_field :date %>
+      <% else %>
+          <%= f.text_field :date,value: @production_plan.date_display %>
+      <% end %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit '提 交' %>
+    </div>
 <% end %>

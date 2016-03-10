@@ -1,7 +1,7 @@
 class PlcService
   def self.post_data params
 
-    kpi= Kpi.find_by_name('First')
+    kpi= Kpi.find_by_name(Settings.app.kpi)
     codes=params[:codes].split(',')
     values=params[:values].split(',')
 
@@ -14,6 +14,7 @@ class PlcService
           kpi_id: kpi.id,
           entry_at: Time.now,
           entity_id: entity.id,
+          original_value:values[i],
           value: values[i],
           abnormal: false,
           target_max: 100,

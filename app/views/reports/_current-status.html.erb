@@ -11,9 +11,9 @@
 
         <p>Early shift</p>
         <select id="vehicle-select" style="font-size: 12px;">
-          <option>CF11</option>
-          <option>CF14</option>
-          <option>CF16</option>
+          <option value="P1">P1</option>
+          <option value="P2">P2</option>
+          <option value="P3">P3</option>
         </select>
       </div>
 
@@ -114,49 +114,74 @@
             height: (ClientHeight - 100) + 'px'
         });
 
+
+
         /* for (var j = 0; j < 21; j = j + 8) {
          /!*分组*!/
          }
          */
-        for (var i = 0; i < 8; i++) {
-            if (i < 3) {
-                console.log("<3===" + i);
-                $('<div class="col-md-3"><div class="col-sm-9"><div class="box">' +
-                        '<div class="box-title">iQ1 Body</div><div style="display: inline-flex"><div class="left-number">86%</div>' +
-                        '<div class="right-content"><div class="content"><strong>40</strong><p>OPEN DEFECTS</p></div>' +
-                        '<div class="content"><strong>47</strong><p>VEHICLE PASS</p></div></div></div></div></div><%= image_tag "/assets/auto_arrow.gif",:class => 'col-md-3',:style=>'margin-top:60px;'%></div>').appendTo('#data_container').ready(function () {
-                });
-            } else if (i == 3) {
-                console.log("3===" + i);
-                $('<div class="col-md-3"><div class="col-sm-9"><div class="box">' +
-                        '<div class="box-title">iQ1 Body</div><div style="display: inline-flex"><div class="left-number">86%</div>' +
-                        '<div class="right-content"><div class="content"><strong>40</strong><p>OPEN DEFECTS</p></div>' +
-                        '<div class="content"><strong>47</strong><p>VEHICLE PASS</p></div></div></div></div></div><%= image_tag "/assets/auto_arrow.gif",:class => 'bottom-arrow'%></div>').appendTo('#data_container').ready(function () {
-                });
-            } else if (i == 4) {
-                console.log("4===" + i);
-                $('<div class="col-md-3"><div class="col-sm-9"><div class="box">' +
-                        '<div class="box-title">iQ1 Body</div><div style="display: inline-flex"><div class="left-number">86%</div>' +
-                        '<div class="right-content"><div class="content"><strong>40</strong><p>OPEN DEFECTS</p></div>' +
-                        '<div class="content"><strong>47</strong><p>VEHICLE PASS</p></div></div></div></div></div><%= image_tag "/assets/auto_arrow.gif" ,:class => 'left-arrow col-md-3' %> <%= image_tag "/assets/auto_arrow.gif" ,:class => 'bottom-arrow' %></div>').appendTo('#data_container').ready(function () {
-                });
-            } else if (i > 4 && i < 7) {
-                console.log("4<i<6===" + i);
-                $('<div class="col-md-3"><div class="col-sm-9"><div class="box">' +
-                        '<div class="box-title">iQ1 Body</div><div style="display: inline-flex"><div class="left-number">86%</div>' +
-                        '<div class="right-content"><div class="content"><strong>40</strong><p>OPEN DEFECTS</p></div>' +
-                        '<div class="content"><strong>47</strong><p>VEHICLE PASS</p></div></div></div></div></div><%= image_tag "/assets/auto_arrow.gif" ,:class => 'left-arrow col-md-3' %></div>').appendTo('#data_container').ready(function () {
-                });
-            } else if (i == 7) {
-                console.log("7===" + i);
-                $('<div class="col-md-3"><div class="col-sm-9"><div class="box">' +
-                        '<div class="box-title">iQ1 Body</div><div style="display: inline-flex"><div class="left-number">86%</div>' +
-                        '<div class="right-content"><div class="content"><strong>40</strong><p>OPEN DEFECTS</p></div>' +
-                        '<div class="content"><strong>47</strong><p>VEHICLE PASS</p></div></div></div></div></div></div>').appendTo('#data_container').ready(function () {
+
+//        for (var i = 0; i < 8; i++) {
+//            if (i < 3) {
+//                console.log("<3===" + i);
+//                $('<div class="col-md-3"><div class="col-sm-9"><div class="box">' +
+//                        '<div class="box-title">iQ1 Body</div><div style="display: inline-flex"><div class="left-number">86%</div>' +
+//                        '<div class="right-content"><div class="content"><strong>40</strong><p>OPEN DEFECTS</p></div>' +
+//                        '<div class="content"><strong>47</strong><p>VEHICLE PASS</p></div></div></div></div></div><%= image_tag "/assets/auto_arrow.gif",:class => 'col-md-3',:style=>'margin-top:60px;'%></div>').appendTo('#data_container').ready(function () {
+//                });
+//            } else if (i == 3) {
+//                console.log("3===" + i);
+//                $('<div class="col-md-3"><div class="col-sm-9"><div class="box">' +
+//                        '<div class="box-title">iQ1 Body</div><div style="display: inline-flex"><div class="left-number">86%</div>' +
+//                        '<div class="right-content"><div class="content"><strong>40</strong><p>OPEN DEFECTS</p></div>' +
+//                        '<div class="content"><strong>47</strong><p>VEHICLE PASS</p></div></div></div></div></div><%= image_tag "/assets/auto_arrow.gif",:class => 'bottom-arrow'%></div>').appendTo('#data_container').ready(function () {
+//                });
+//            } else if (i == 4) {
+//                console.log("4===" + i);
+//                $('<div class="col-md-3"><div class="col-sm-9"><div class="box">' +
+//                        '<div class="box-title">iQ1 Body</div><div style="display: inline-flex"><div class="left-number">86%</div>' +
+//                        '<div class="right-content"><div class="content"><strong>40</strong><p>OPEN DEFECTS</p></div>' +
+//                        '<div class="content"><strong>47</strong><p>VEHICLE PASS</p></div></div></div></div></div><%= image_tag "/assets/auto_arrow.gif" ,:class => 'left-arrow col-md-3' %> <%= image_tag "/assets/auto_arrow.gif" ,:class => 'bottom-arrow' %></div>').appendTo('#data_container').ready(function () {
+//                });
+//            } else if (i > 4 && i < 7) {
+//                console.log("4<i<6===" + i);
+//                $('<div class="col-md-3"><div class="col-sm-9"><div class="box">' +
+//                        '<div class="box-title">iQ1 Body</div><div style="display: inline-flex"><div class="left-number">86%</div>' +
+//                        '<div class="right-content"><div class="content"><strong>40</strong><p>OPEN DEFECTS</p></div>' +
+//                        '<div class="content"><strong>47</strong><p>VEHICLE PASS</p></div></div></div></div></div><%= image_tag "/assets/auto_arrow.gif" ,:class => 'left-arrow col-md-3' %></div>').appendTo('#data_container').ready(function () {
+//                });
+//            } else if (i == 7) {
+//                console.log("7===" + i);
+//                $('<div class="col-md-3"><div class="col-sm-9"><div class="box">' +
+//                        '<div class="box-title">iQ1 Body</div><div style="display: inline-flex"><div class="left-number">86%</div>' +
+//                        '<div class="right-content"><div class="content"><strong>40</strong><p>OPEN DEFECTS</p></div>' +
+//                        '<div class="content"><strong>47</strong><p>VEHICLE PASS</p></div></div></div></div></div></div>').appendTo('#data_container').ready(function () {
+//                });
+//            }
+//        }
+        loadData();
+    });
+
+    function loadData( ){
+
+        var productLine=$('#vehicle-select').val();
+        console.log(productLine);
+        $.get('/departments/entity_groups',{product_line:productLine},function(data){
+            console.log(data);
+            $('.workstation').remove();
+            for(var i= 0;i<data.length;i++){
+                $('<div class="col-md-3 workstation"><div class="col-sm-9"><div class="box">' +
+                '<div class="box-title">'+data[i].name+'</div><div style="display: inline-flex"><div class="left-number">'+data[i].value+'</div>' +
+                '<div class="right-content"><div class="content"><strong>'+data[i].target_max+'</strong><p>Max Target</p></div>' +
+                '<div class="content"><strong>'+data[i].target_min+'</strong><p>Min Target</p></div></div></div></div></div><%= image_tag "/assets/auto_arrow.gif",:class => 'col-md-3',:style=>'margin-top:60px;'%></div>').appendTo('#data_container').ready(function () {
                 });
             }
-        }
+        },'JSON');
+    }
+    $("#vehicle-select").change(function(){
+        loadData();
     });
+        window.setInterval("loadData()",5000);
 </script>
 
 

@@ -1,36 +1,34 @@
-<h1>Listing production_plans</h1>
 
 <table class="table table-bordered table-striped table-hover">
   <tr>
-    <th>Assembly</th>
-    <th>Product line</th>
-    <th>Planned</th>
-    <th>Produced</th>
-    <th>Trigger Min</th>
-    <th>Trigger Max</th>
-    <th>Date</th>
-    <th>User</th>
     <th></th>
+    <th>生产线</th>
+    <th>型号</th>
+    <th>计划</th>
+    <th>完成</th>
+    <th>下限</th>
+    <th>上限</th>
+    <th>日期</th>
     <th></th>
     <th></th>
   </tr>
 
-<% @production_plans.each do |production_plan| %>
+<% @production_plans.each_with_index do |production_plan,i| %>
   <tr>
-    <td><%= production_plan.assembly %></td>
+    <td><%= i+1%></td>
     <td><%= production_plan.product_line %></td>
+    <td><%= production_plan.assembly %></td>
     <td><%= production_plan.planned %></td>
     <td><%= production_plan.produced %></td>
     <td><%= production_plan.trigger_min %></td>
     <td><%= production_plan.trigger_max %></td>
-    <td><%= production_plan.date.localtime %></td>
-    <td><%= link_to 'Show', production_plan %></td>
-    <td><%= link_to 'Edit', edit_production_plan_path(production_plan) %></td>
-    <td><%= link_to 'Destroy', production_plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= production_plan.date_display %></td>
+    <td><%= link_to '编辑', edit_production_plan_path(production_plan) %></td>
+    <td><%= link_to '删除', production_plan, method: :delete, data: { confirm: '确定?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Production plan', new_production_plan_path %>
+<%= link_to '新 建', new_production_plan_path %>

@@ -6,7 +6,7 @@ class ProductionPlansController < ApplicationController
   # GET /production_plans
   # GET /production_plans.json
   def index
-    @production_plans = ProductionPlan.all
+    @production_plans = ProductionPlan.all#.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -45,7 +45,7 @@ class ProductionPlansController < ApplicationController
   # POST /production_plans.json
   def create
     @production_plan = ProductionPlan.new(params[:production_plan])
-    @production_plan.date=(@production_plan.date-8.hours).utc
+  #  @production_plan.date=(@production_plan.date-8.hours).utc
     @production_plan.user=current_user
     respond_to do |format|
       if @production_plan.save

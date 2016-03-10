@@ -195,6 +195,14 @@ zh:
     errors:
       <<: *errors
   activerecord:
+    models:
+      production_plan: "生产计划"
+    attributes:
+      production_plan:
+        product_line: "生产线"
+        assembly: "型号"
+        planned: "计划"
+        date: "日期"
     errors:
       <<: *errors
   devise:

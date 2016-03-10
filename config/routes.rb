@@ -350,6 +350,8 @@ IFEpm::Application.routes.draw do
       get 'new_entities' => :new_entities
 
       get 'jsontree' => :jsontree
+
+      get :entity_groups
     end
   end
 

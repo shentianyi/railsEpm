@@ -14,10 +14,10 @@ class DepartmentsController < ApplicationController
     msg = Message.new
     msg.result = true
     if (d = Department.find_by_id(params[:id]))
-      msg.content = Department.json_tree(d.subtree.arrange) 
+      msg.content = Department.json_tree(d.subtree.arrange)
     end
 
-    render :json=>msg
+    render :json => msg
   end
 
   def create
@@ -62,13 +62,13 @@ class DepartmentsController < ApplicationController
           ActiveRecord::Base.transaction do
             @department.entities.all.each do |e|
               e.department.path.each do |d|
-                if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(e.id,d.entity_group.id)
+                if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(e.id, d.entity_group.id)
                   entity_group_item.destroy
                 end
               end
             end
 
-          @department.destroy
+            @department.destroy
           end
           msg.result=true
         else
@@ -76,9 +76,9 @@ class DepartmentsController < ApplicationController
         end
       end
     else
-         msg.content=I18n.t "fix.cannot_destroy"
+      msg.content=I18n.t "fix.cannot_destroy"
     end
-    render :json=>msg
+    render :json => msg
   end
 
   # add entity to the department and to the entity group at the same time
@@ -110,7 +110,7 @@ class DepartmentsController < ApplicationController
     if entity&&department
       previous_dept = entity.department
 
-      entity.update_attribute("department_id",department.id)
+      entity.update_attribute("department_id", department.id)
       #delete all the entity_group_itmes
       #if !previous_dept.nil?
       #  if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,previous_dept.entity_group.id)
@@ -139,7 +139,7 @@ class DepartmentsController < ApplicationController
 
     end
 
-    render :json=>msg
+    render :json => msg
   end
 
   # remove entity from department ,and the entity group as well
@@ -155,19 +155,19 @@ class DepartmentsController < ApplicationController
 
       #entity.department_id = nil
       #if entity.update_attribute("department_id",nil)
-        #if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,previous_dept.entity_group.id)
-          #entity_group_item.destroy
-        #end
-
-        #previous_dept.ancestors.each do |d|
-        #  if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,d.entity_group.id)
-         #   entity_group_item.destroy
-         # end
-        #end
+      #if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,previous_dept.entity_group.id)
+      #entity_group_item.destroy
       #end
-      msg.result = entity.update_attribute("department_id",nil)
+
+      #previous_dept.ancestors.each do |d|
+      #  if entity_group_item = EntityGroupItem.find_by_entity_id_and_entity_group_id(entity.id,d.entity_group.id)
+      #   entity_group_item.destroy
+      # end
+      #end
+      #end
+      msg.result = entity.update_attribute("department_id", nil)
     end
-    render :json=>msg
+    render :json => msg
   end
 
   #add user to the department
@@ -176,10 +176,10 @@ class DepartmentsController < ApplicationController
     msg = Message.new
     msg.result = false
     if User.find_by_id(params[:user_id]) && Department.find_by_id(params[:id])
-      validator = DepartmentValidator.new({:user_id=>params[:user_id],:department_id=>params[:id]})
+      validator = DepartmentValidator.new({:user_id => params[:user_id], :department_id => params[:id]})
       validator.valid_add_user
       if validator.valid
-        user_department = UserDepartment.new(:user_id => params[:user_id],:department_id => params[:id])
+        user_department = UserDepartment.new(:user_id => params[:user_id], :department_id => params[:id])
         if !(msg.result = user_department.save)
           msg.content = user_department.errors.full_messages
         end
@@ -188,7 +188,7 @@ class DepartmentsController < ApplicationController
       end
     end
 
-    render :json=>msg
+    render :json => msg
   end
 
   #remove user from department
@@ -197,12 +197,12 @@ class DepartmentsController < ApplicationController
     msg = Message.new
     msg.result = false
 
-    if user_department = UserDepartment.where("user_id = ? AND department_id = ?",params[:user_id],params[:department_id]).first
+    if user_department = UserDepartment.where("user_id = ? AND department_id = ?", params[:user_id], params[:department_id]).first
       user_department.destroy
       msg.result = true
       msg.content = params[:user_id]
     end
-    render :json=>msg
+    render :json => msg
   end
 
   def sub_departments
@@ -210,9 +210,9 @@ class DepartmentsController < ApplicationController
     msg.result = false
     @department = Department.find_by_id(params[:id])
     @sub_departments = @department.children
-    msg.result = @sub_departments.count > 0 ? true:false
-    msg.content = {"id"=>params[:id],"subdeps"=>@sub_departments}
-    render :json=>msg
+    msg.result = @sub_departments.count > 0 ? true : false
+    msg.content = {"id" => params[:id], "subdeps" => @sub_departments}
+    render :json => msg
   end
 
   def sub_entities
@@ -223,8 +223,8 @@ class DepartmentsController < ApplicationController
       msg.result = true
     end
 
-    msg.content = {"id"=>params[:id],"subents"=>@entities}
-    render :json=>msg
+    msg.content = {"id" => params[:id], "subents" => @entities}
+    render :json => msg
   end
 
   def users
@@ -234,7 +234,7 @@ class DepartmentsController < ApplicationController
     @users = Department.find_by_id(params[:id]).users
     msg.result = true
     msg.content = @users
-    render :json=>msg
+    render :json => msg
   end
 
   def entity_users
@@ -243,17 +243,17 @@ class DepartmentsController < ApplicationController
     #@users = User.find_by_entity_id(params[:id])
     msg.result = true
     msg.content = @users
-    render :json=>@users
+    render :json => @users
   end
 
   #get the entities not in this department
   def valid_entities
     msg = Message.new
     msg.result = false
-    @entities = Entity.where("department_id != ? OR department_id IS NULL",params[:id])
+    @entities = Entity.where("department_id != ? OR department_id IS NULL", params[:id])
     msg.result = true
     msg.content = @entities
-    render :json=> msg
+    render :json => msg
   end
 
   #get all the users not in this department
@@ -266,9 +266,44 @@ class DepartmentsController < ApplicationController
     else
       ids = 0
     end
-    @users = User.where("role_id != ? AND id NOT IN (?)",100,ids)
+    @users = User.where("role_id != ? AND id NOT IN (?)", 100, ids)
     msg.result = true
     msg.content = @users
     render :json => msg
+  end
+
+  def entity_groups
+    parent=Department.find_by_name(params[:product_line])
+    kpi=Kpi.find_by_name(Settings.app.kpi)
+    entity_groups=[]
+    parent.children.each do |d|
+      entity_group=d.entity_group
+      params={}
+      params[:kpi_id]=kpi.id
+      params[:kpi_name]=kpi.name
+      params[:entity_group_id]=entity_group.id
+      params[:entity_group_name]=entity_group.name
+      params[:start_time]=Time.now.beginning_of_day.utc.to_s
+      params[:end_time]=Time.now.end_of_day.utc.to_s
+
+      params[:frequency]=KpiFrequency::Daily
+      params[:average]=true #=.nil? ? true : params[:average]=='true'
+      data=Entry::Analyzer.new(params).analyse#.to_json
+
+      p '-------------------------------'
+      p params
+      p data
+      p '-------------------------------'
+
+      entity_groups<<{
+          id: entity_group.id,
+          name: entity_group.name,
+          value: data[:current].first,
+          target_max: 100,
+          target_min: 90,
+          d:data
+      }
+    end
+    render json: entity_groups
   end
 end
