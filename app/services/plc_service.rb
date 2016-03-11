@@ -33,7 +33,8 @@ class PlcService
           target_max: max,
           target_min: min,
           frequency: kpi.frequency,
-          exception: v>max || v<min
+          exception: v>max || v<min,
+          a1: v>max || v<min
       )
 
       if entity.is_last

@@ -3,4 +3,4 @@ development:
      host: 192.168.1.101:3000
    app:
      id: clearinsight
-     kpi: First
+     kpi: 工作时间
