@@ -106,6 +106,7 @@ current_status.loader_show = function () {
 current_status.loader_hide = function () {
     current_status.loader.hide();
 }
+
 current_status.btn_loader_show = function () {
     current_status.loader = new SVGLoader(document.getElementById('current_status_loader'), {speedIn: 100});
     var left = document.getElementById("report-menu").getBoundingClientRect().right,
