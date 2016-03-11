@@ -5,7 +5,7 @@
       <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
         <label>Condition</label>
 
-        <p>First Time Quality (FTQ) Summary Percentage</p>
+        <p>WorkingTime Summary Percentage</p>
 
         <p id="current-date" style="font-size: 12px;"></p>
 
@@ -20,9 +20,10 @@
       <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
         <p>Early shift</p>
         <select id="vehicle-select" style="min-width: 200px;text-align: center;">
-          <option value="P1">P1</option>
-          <option value="P2">P2</option>
-          <option value="P3">P3</option>
+          <option value="滚筒内装配线">滚筒内装配线</option>
+          <option value="滚筒箱体线">滚筒箱体线</option>
+          <option value="滚筒总装线">滚筒总装线</option>
+          <option value="滚筒包装线">滚筒包装线</option>
         </select>
       </div>
       <!--
@@ -154,7 +155,7 @@
         loadData();
     });
 
-    window.setInterval("loadData()", 200000000);
+    window.setInterval("loadData()", 20000);
     var loading;
     function loading_show() {
         loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
