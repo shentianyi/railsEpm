@@ -8,13 +8,6 @@
         <p>WorkingTime Summary Percentage</p>
 
         <p id="current-date" style="font-size: 12px;"></p>
-
-        <!--<p>Early shift</p>
-        <select id="vehicle-select" style="font-size: 12px;">
-          <option value="P1">P1</option>
-          <option value="P2">P2</option>
-          <option value="P3">P3</option>
-        </select>-->
       </div>
 
       <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
@@ -102,16 +95,7 @@
     </div>
   </section>
 </section>
-<!--
 
-<div id="current_status_loader" class="current-status-pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z">
-  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 10 60" preserveAspectRatio="none">
-    <path d="M30,30 50,30 50,30 30,30 Z"/>
-  </svg>
-</div>&lt;!&ndash; /pageload-overlay &ndash;&gt;
--->
-
-<!--
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "reports/current_status" %>
     <%= javascript_include_tag "reports/defects" %>
@@ -128,7 +112,7 @@
         /*设置整体背景颜色*/
         var ClientHeight = document.documentElement.clientHeight;
         $('#data_container').css({
-            height: (ClientHeight - 100) + 'px'
+            height: (ClientHeight ) + 'px'
         });
 
         loadData();
@@ -142,7 +126,7 @@
             console.log(data);
             $('.workstation').remove();
             for (var i = 0; i < data.length; i++) {
-                $('<div class="col-md-3 workstation"><div class="box">' +
+                $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
                         '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number">' + data[i].value + '</div>' +
                         '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                         '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
@@ -156,19 +140,29 @@
     });
 
     window.setInterval("loadData()", 20000);
+
+    $('.workstation').click(function () {
+        console.log("Hellp");
+    })
+
     var loading;
     function loading_show() {
         loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
+        var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
         $(".pageload-overlay svg").css('left', '0px');
-        $(".pageload-overlay svg").css('top', '140px');
+        $(".pageload-overlay svg").css('top', top + 'px');
         loading.show();
     }
 
     function loading_hide() {
         $('#preloader').remove();
-
         $('<div id="preloader" class="pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none"><path d="M30,30 50,30 50,30 30,30 Z"/></svg></div>').appendTo('body').ready(function () {
         })
+    }
+
+    /*双击事件*/
+    function double_click() {
+        window.location.href = 'kpi_entries/analyse?view=' + $(this).children('div');
     }
 </script>
 
@@ -188,6 +182,7 @@
         /*border: 2px solid #9000ff;*/
         border: 2px solid deepskyblue;
         margin: 10px;
+        cursor: pointer;
     }
 
     .box-title {
@@ -233,4 +228,14 @@
     }
 
     /*Box End*/
+
+    @font-face {
+        font-family: 'HelveticaCondensed';
+        src: url('/assets/HelveticaCondensed.eot');
+        src: url('/assets/HelveticaCondensed.eot') format('embedded-opentype'),
+        url('/assets/HelveticaCondensed.woff2') format('woff2'),
+        url('/assets/HelveticaCondensed.woff') format('woff'),
+        url('/assets/HelveticaCondensed.ttf') format('truetype'),
+        url('/assets/HelveticaCondensed.svg#HelveticaCondensed') format('svg');
+    }
 </style>
