@@ -6,8 +6,7 @@
     <th>型号</th>
     <th>计划</th>
     <th>完成</th>
-    <th>下限</th>
-    <th>上限</th>
+    <th>警戒值</th>
     <th>日期</th>
     <th></th>
     <th></th>
@@ -20,7 +19,6 @@
     <td><%= production_plan.assembly %></td>
     <td><%= production_plan.planned %></td>
     <td><%= production_plan.produced %></td>
-    <td><%= production_plan.trigger_min %></td>
     <td><%= production_plan.trigger_max %></td>
     <td><%= production_plan.date_display %></td>
     <td><%= link_to '编辑', edit_production_plan_path(production_plan) %></td>
