@@ -6,7 +6,11 @@ class ProductionPlansController < ApplicationController
   # GET /production_plans
   # GET /production_plans.json
   def index
-    @production_plans = ProductionPlan.all#.paginate(:page => params[:page])
+    @start_time=params[:start_time].blank? ? Time.now.beginning_of_day.utc : Time.parse(params[:start_time]).utc
+
+    @end_time=params[:end_time].blank? ? (Time.now.beginning_of_day+7.days).utc : Time.parse(params[:end_time]).utc
+
+    @production_plans = ProductionPlan.where(date: [@start_time..@end_time]).order('`index` asc').all #.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -45,7 +49,7 @@ class ProductionPlansController < ApplicationController
   # POST /production_plans.json
   def create
     @production_plan = ProductionPlan.new(params[:production_plan])
-  #  @production_plan.date=(@production_plan.date-8.hours).utc
+    #  @production_plan.date=(@production_plan.date-8.hours).utc
     @production_plan.user=current_user
     respond_to do |format|
       if @production_plan.save
@@ -87,4 +91,37 @@ class ProductionPlansController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def up_down
+    @production_plan = ProductionPlan.find(params[:data][:id])
+
+    i=@production_plan.index
+
+
+    ProductionPlan.transaction do
+      if params[:data][:action]=='up'
+        if @production_plan.index>1
+
+          @pp=ProductionPlan.where(product_line: @production_plan.product_line,
+                                   date: @production_plan.date, index: i-1).first
+
+          @production_plan.update_attributes(index: i-1)
+          @pp.update_attributes(index: i)
+        end
+      elsif params[:data][:action]=='down'
+        if ProductionPlan.where(product_line: @production_plan.product_line,
+                                date: @production_plan.date).count>i
+
+          @pp=ProductionPlan.where(product_line: @production_plan.product_line,
+                                   date: @production_plan.date, index: i+1).first
+
+          @production_plan.update_attributes(index: i+1)
+          @pp.update_attributes(index: i)
+        end
+      end
+    end
+    render json:{result: true}
+  end
+
+
 end

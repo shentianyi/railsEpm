@@ -35,9 +35,9 @@
     <div class="field">
       <%= f.label :date, '*日期' %>(格式：XXXX-XX-XX，即 年-月-日)<br/>
       <% if @production_plan.new_record? %>
-          <%= f.text_field :date %>
+          <%= f.text_field :date ,class:'datepicker',value: Time.now.localtime.strftime('%Y-%m-%d')%>
       <% else %>
-          <%= f.text_field :date,value: @production_plan.date_display %>
+          <%= f.text_field :date,value: @production_plan.date_display  ,class:'datepicker'%>
       <% end %>
     </div>
 
@@ -45,3 +45,13 @@
       <%= f.submit '提 交' %>
     </div>
 <% end %>
+<script type="text/javascript" src="/assets/jquery.ui/jquery.datetimepicker.js"></script>
+<link data-turbolinks-track="true" href="/assets/jquery.datetimepicker.css" media="all" rel="stylesheet" />
+<script>
+    $(function () {
+        $(".datepicker").datetimepicker({
+            lang: 'ch',
+            format: 'Y-m-d'
+        });
+    });
+</script>

@@ -1,7 +1,12 @@
 IFEpm::Application.routes.draw do
 
 
-  resources :production_plans
+  resources :production_plans do
+    collection do
+      match :up_down
+
+    end
+  end
 
 
   resources :report_snaps
