@@ -1,4 +1,10 @@
-
+<form action="/production_plans">
+ 计划日期: <input type="text" name="start_time"
+              class="datepicker" value="<%=@start_time.localtime.strftime('%Y-%m-%d')%>"/>
+  至<input type="text" name="end_time" class="datepicker"
+          value="<%=  @end_time.localtime.strftime('%Y-%m-%d')%>"/>
+  <input type="submit" value="查 询" class="btn-info" style="height: 38px;width: 100px;"/>
+</form>
 <table class="table table-bordered table-striped table-hover">
   <tr>
     <th></th>
@@ -8,6 +14,7 @@
     <th>完成</th>
     <th>警戒值</th>
     <th>日期</th>
+    <th></th>
     <th></th>
     <th></th>
   </tr>
@@ -21,6 +28,12 @@
     <td><%= production_plan.produced %></td>
     <td><%= production_plan.trigger_max %></td>
     <td><%= production_plan.date_display %></td>
+
+    <td>
+      <input type="button" value="提前一位" onclick="up_down(<%=production_plan.id%>,'up')"/>
+
+      <input type="button" value="延后一位" onclick="up_down(<%=production_plan.id%>,'down')"/>
+    </td>
     <td><%= link_to '编辑', edit_production_plan_path(production_plan) %></td>
     <td><%= link_to '删除', production_plan, method: :delete, data: { confirm: '确定?' } %></td>
   </tr>
@@ -30,3 +43,20 @@
 <br />
 
 <%= link_to '新 建', new_production_plan_path %>
+
+<script type="text/javascript" src="/assets/jquery.ui/jquery.datetimepicker.js"></script>
+<link data-turbolinks-track="true" href="/assets/jquery.datetimepicker.css" media="all" rel="stylesheet" />
+<script>
+    $(function () {
+        $(".datepicker").datetimepicker({
+            lang: 'ch',
+            format: 'Y-m-d'
+        });
+    });
+        function up_down(id,action){
+            console.log(action);
+            $.post('/production_plans/up_down',{data:{id:id, action:action}},function(){
+                window.location.reload();
+            },'JSON');
+        }
+</script>

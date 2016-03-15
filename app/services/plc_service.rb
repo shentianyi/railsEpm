@@ -7,9 +7,9 @@ class PlcService
 
     codes.each_with_index do |k, i|
 
-p '-----------------------------------------'
-p k
-p '-----------------------------------------'
+      p '-----------------------------------------'
+      p k
+      p '-----------------------------------------'
       entity=Entity.find_by_code(k)
       max=kpi.target_max
       min=kpi.target_max
@@ -43,13 +43,13 @@ p '-----------------------------------------'
       if entity.is_last
 
         department=entity.department.parent
-ProductionPlan.transaction do
-        if plan=ProductionPlan.where(product_line: department.name,
-                                     date: Date.today.to_time.utc).where('produced<=planned').order('id asc').limit(1).first
-qty=plan.produced
-          plan.update_attributes(produced:qty+1)
+        ProductionPlan.transaction do
+          if plan=ProductionPlan.where(product_line: department.name,
+                                       date: Date.today.to_time.utc).where('produced<=planned').order('index asc').limit(1).first
+            qty=plan.produced
+            plan.update_attributes(produced: qty+1)
+          end
         end
-end
       end
 
 
@@ -91,7 +91,7 @@ end
     else
       if p.planned==p.produced
         '生产完'
-      elsif  rest<=p.trigger_max
+      elsif rest<=p.trigger_max
         '警报'
       elsif p.produced>0
         '生产中'
