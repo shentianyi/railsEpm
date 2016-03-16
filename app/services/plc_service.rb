@@ -28,7 +28,7 @@ class PlcService
       KpiEntry.create(
           entry_type: 0,
           kpi_id: kpi.id,
-          entry_at: Time.now,
+          entry_at: Time.parse(params[:time]),
           entity_id: entity.id,
           original_value: values[i],
           value: values[i],
@@ -51,7 +51,14 @@ class PlcService
           end
         end
       end
+
+
     end
+
+
+
+
+
   end
 
 
