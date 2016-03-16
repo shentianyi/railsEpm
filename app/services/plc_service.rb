@@ -45,7 +45,7 @@ class PlcService
         department=entity.department.parent
         ProductionPlan.transaction do
           if plan=ProductionPlan.where(product_line: department.name,
-                                       date: Date.today.to_time.utc).where('produced<=planned').order('index asc').limit(1).first
+                                       date: Date.today.to_time.utc).where('produced<=planned').order('`index` asc').limit(1).first
             qty=plan.produced
             plan.update_attributes(produced: qty+1)
           end

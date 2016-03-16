@@ -10,7 +10,7 @@ class ProductionPlansController < ApplicationController
 
     @end_time=params[:end_time].blank? ? (Time.now.beginning_of_day+7.days).utc : Time.parse(params[:end_time]).utc
 
-    @production_plans = ProductionPlan.where(date: [@start_time..@end_time]).order('`index` asc,date desc').all #.paginate(:page => params[:page])
+    @production_plans = ProductionPlan.where(date: [@start_time..@end_time]).order('date asc,`index` asc').all #.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
