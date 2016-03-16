@@ -99,7 +99,7 @@
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "reports/current_status" %>
     <%= javascript_include_tag "reports/defects" %>
-<% end %>-->
+<% end %>
 
 <script>
     $(document).ready(function () {
@@ -127,7 +127,7 @@
             $('.workstation').remove();
             for (var i = 0; i < data.length; i++) {
                 $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
-                        '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number">' + data[i].value + '</div>' +
+                        '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number">' + Math.round(data[i].value/1000) + '</div>' +
                         '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                         '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                     loading_hide();
