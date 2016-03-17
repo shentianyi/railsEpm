@@ -356,6 +356,7 @@ zh:
       entry_kpi: KPI输入
       department: 输入点
       entity: 部门
+      production_plan: 生产计划
       story_set: 我的讨论组
       subscription: 我的订阅
   analytics:

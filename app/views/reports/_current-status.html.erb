@@ -10,12 +10,12 @@
       </div>
 
       <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
-        <p>Early shift</p>
+        <p>Product Line</p>
         <select id="vehicle-select" style="min-width: 200px;text-align: center;">
-          <option value="滚筒内装配线">滚筒内装配线</option>
-          <option value="滚筒箱体线">滚筒箱体线</option>
-          <option value="滚筒总装线">滚筒总装线</option>
-          <option value="滚筒包装线">滚筒包装线</option>
+          <option value="Drum Assembly Line">Drum Assembly Line</option>
+          <option value="Cabinet Assembly Line">Cabinet Assembly Line</option>
+          <option value="Main Assembly Line">Main Assembly Line</option>
+          <option value="Packaging Line">Packaging Line</option>
         </select>
       </div>
       <div class="col-sm-4" style="text-align: center;">
@@ -27,7 +27,6 @@
 
     <div id="data_container" class="data-container">
     </div>
-    <!--<%= render 'snap' %>-->
   </section>
 
   <!--
@@ -119,6 +118,7 @@
 
                 if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
                     $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
+
                             '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
                             '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                             '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
