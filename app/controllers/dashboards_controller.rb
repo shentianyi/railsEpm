@@ -62,7 +62,7 @@ class DashboardsController < ApplicationController
     get_user_entity_groups
 
     @dashboards = Dashboard.find_all_by_user_id(current_user.id)
-    
+
     @full_size=params[:full_size].present?
 
     render
