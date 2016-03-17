@@ -30,7 +30,7 @@
 </div>
 
 <!--chart-->
-<div id="charts_containers" style="margin-top: 80px;height: 500px;">
+<div id="charts_containers" style="margin-top: 80px;">
 
 </div>
 <hr style="border-bottom: 4px solid #000;">
@@ -69,13 +69,19 @@
 <script>
     $(document).ready(function () {
 //        Report.init("daily_ftq");
-        $('#report-content').css({background: 'white'});
+        var ClientHeight = $(document).height();
+        $('#report-content').css({
+            height: (ClientHeight - 70) + 'px',
+            overflow: 'auto',
+            background: '#fefefe'
+        });
+
         window.setInterval(function () {
             $("#current-clock").text(format_time.current_time_clock());
         }, 700);
 
         var ClientWidth = document.documentElement.clientWidth;
-        $('#data_container').css({width: (ClientWidth - 250) + 'px', overflowX: 'auto'});
+        $('#data_container').css({width: (ClientWidth - 230) + 'px', overflowX: 'auto'});
 
         loadData();
     });
@@ -164,15 +170,14 @@
 
             series: [
                 {
-                    type: 'column',
                     name: 'TargetMax',
                     data: charts_target_max
                 }, {
-                    type: 'column',
                     name: 'TargetMin',
                     data: charts_target_min
                 },
                 {
+                    type: 'column',
                     name: 'Value',
                     data: charts_value
                 }
