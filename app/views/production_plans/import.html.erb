@@ -1,0 +1,125 @@
+<p id="notice">
+  <%= notice %>
+</p>
+<h3>上传导入生产计划</h3>
+<div>
+  选择数据文件：
+  <input id="item-data-uploader" type="file" name="files[]" data-url="/production_plans/import"/>
+
+  <div id="item-data-uploader-preview" style="display:none;"></div>
+  <div>
+  </div>
+</div>
+<div id="handle-dialog-modal">
+  <div class="handle-dialog-modal-content">
+    <p>
+      <img src="/assets/loading.gif" />&nbsp;&nbsp;处理中....
+    </p>
+  </div>
+</div>
+<div id="dialog-overlay"></div>
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
+    <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
+<%end%>
+<script type="text/javascript">
+//    function show_handle_dialog() {
+//        document.getElementById('handle-dialog-modal').style.display = 'block';
+//        document.getElementById('dialog-overlay').style.display = 'block';
+//    }
+//
+//    function hide_handle_dialog() {
+//        document.getElementById('handle-dialog-modal').style.display = 'none';
+//        document.getElementById('dialog-overlay').style.display = 'none';
+//    }
+
+    function data_upload(idStr, format, callback) {
+        var valid = true;
+        var reg = /(\.|\/)(josn|csv|tff|xls|xlsx)$/i;
+        if (format != null) {
+            if (format != false) {
+                reg = new RegExp('(\.|\/)(' + format + ')$', 'i');
+            } else {
+                reg = null;
+            }
+        }
+
+        $(idStr).fileupload({
+            singleFileUploads: false,
+            acceptFileTypes: /(\.|\/)(json|csv|tff|xls|xlsx)$/i,
+            dataType: 'json',
+            change: function (e, data) {
+                valid = true;
+                $(idStr + '-preview').html('');
+                $.each(data.files, function (index, file) {
+                    var msg = "上传中 ... ...";
+                    if (reg) {
+                        if (!reg.test(file.name)) {
+                            msg = '格式错误';
+                            alert(msg);
+                            valid = false;
+                            return;
+                        }
+                        show_handle_dialog();
+                    }
+                    $(idStr + '-preview').show().append("<span>文件：" + file.name + "</span><br/><span info>处理中....</span>");
+                });
+            },
+            add: function (e, data) {
+                if (valid)
+                    if (data.submit != null)
+                        data.submit();
+            },
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            },
+            success: function (data) {
+                if (callback) {
+                    callback(data);
+                } else {
+                    hide_handle_dialog();
+                    $(idStr + '-preview > span[info]').html("处理：" + data.content);
+                }
+            },
+            done: function (e, data) {
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        data_upload("#item-data-uploader");
+    });
+</script>
+<style rel="stylesheet" type="text/css">
+    #dialog-overlay {
+        display: none;
+        background: #aaaaaa /*{bgColorOverlay}*/ 50% /*{bgOverlayXPos}*/ 50% /*{bgOverlayYPos}*/ repeat-x /*{bgOverlayRepeat}*/;
+        opacity: .3;
+        filter: Alpha(Opacity=30) /*{opacityOverlay}*/;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    #handle-dialog-modal {
+        position: absolute;
+        top: 40%;
+        left: 40%;
+        width: 300px;
+        overflow: hidden;
+        display: none;
+        z-index: 1;
+    }
+
+    #handle-dialog-modal .handle-dialog-modal-content {
+        background: #ffffff;
+        height: 150px;
+    }
+
+    #handle-dialog-modal .handle-dialog-modal-content p {
+        padding: 40px 0px 0px 60px;
+    }
+
+</style>

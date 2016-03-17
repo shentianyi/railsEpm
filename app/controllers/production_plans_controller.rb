@@ -120,12 +120,37 @@ class ProductionPlansController < ApplicationController
         end
       end
     end
-    render json:{result: true}
+    render json: {result: true}
   end
 
 
-  def upload
-
+  def import
+    if request.post?
+      msg=UrlMessage.new(result: true)
+      begin
+        params[:files].each do |file|
+          if file.size<$FILE_MAX_SIZE
+            f=FileData.new(data: file, oriName: file.original_filename, path: $KPI_ENTRY_PATH)
+            if f.saveFile
+              msg=FileHandler::Excel::ProductionPlansHandler.import(f, current_user)
+                # msg.result=false
+                # msg.url_result=true
+                # msg.content=error
+            end
+          else
+            msg.result=false
+            msg.content="文件大小超过20M"
+          end
+        end
+      rescue Zip::ZipError => e
+        msg.result=false
+        msg.content="文件不可以打开，可能损坏，请检查！"
+      rescue => e
+        msg.result =false
+        msg.content=e.message
+      end
+      render json: msg
+    end
   end
 
 
