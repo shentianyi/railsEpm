@@ -98,8 +98,7 @@
         var ClientHeight = $(document).height();
         $('#report-content').css({
             height: (ClientHeight - 70) + 'px',
-            overflow: 'auto',
-            background: '#fefefe'
+            overflow: 'auto'
         });
 
         loadData();
@@ -120,14 +119,14 @@
 
                 if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
                     $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
-                            '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number" style="color: #ff0000;">' + Math.round(data[i].value / 1000) + '</div>' +
+                            '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
                             '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                             '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                         loading_hide();
                     });
                 } else {
                     $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
-                            '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number"style="color: #3ed436;">' + Math.round(data[i].value / 1000) + '</div>' +
+                            '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
                             '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                             '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                         loading_hide();
@@ -140,7 +139,7 @@
         loadData();
     });
 
-    window.setInterval("loadData()", 200000000);
+    window.setInterval("loadData()", 20000);
 
     var loading;
     function loading_show() {
