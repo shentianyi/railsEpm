@@ -42,11 +42,11 @@
     </tr>
     </thead>
     <tbody class="tbody-tr">
-    <tr class="tbody-target-max">
-    </tr>
     <tr class="tbody-target-min">
     </tr>
     <tr class="tbody-value">
+    </tr>
+    <tr class="tbody-target-max">
     </tr>
     </tbody>
   </table>
@@ -76,7 +76,7 @@
 
         window.setInterval(function () {
             $("#current-clock").text(format_time.current_time_clock());
-        }, 700);
+        }, 500);
 
         var ClientWidth = document.documentElement.clientWidth;
         $('#data_container').css({width: (ClientWidth - 230) + 'px', overflowX: 'auto'});
@@ -148,6 +148,9 @@
             credits: {
                 enabled: false
             },
+            colors: ['#8DB6CD', '#43CD80', '#CD8162', '#24CBE5', '#64E572', '#FF9655',
+                '#FFF263', '#6AF9C4']
+            ,
             xAxis: {categories: yAxis_value},
 
             yAxis: {
@@ -159,17 +162,13 @@
             legend: {layout: 'vertical', align: 'right', verticalAlign: 'middle', borderWidth: 0},
 
             /*分组堆叠显示*/
-            plotOptions: {
-                column: {
-                    stacking: 'normal'
-                }
-            },
-
+            /* plotOptions: {
+             column: {
+             stacking: 'normal'
+             }
+             },*/
             series: [
                 {
-                    name: 'TargetMax',
-                    data: charts_target_max
-                }, {
                     name: 'TargetMin',
                     data: charts_target_min
                 },
@@ -177,6 +176,9 @@
                     type: 'column',
                     name: 'Value',
                     data: charts_value
+                }, {
+                    name: 'TargetMax',
+                    data: charts_target_max
                 }
             ]
         });
