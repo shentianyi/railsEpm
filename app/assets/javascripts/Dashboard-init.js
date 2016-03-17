@@ -29,6 +29,8 @@ DASHBOARD.init=function(){
         ifepm.dashboard_widget.init_fullsize();
         on_full_size();
     });
+
+
     $("body").on("keyup",function(event){
        var e=adapt_event(event).event;
        if(e.keyCode==27 ){

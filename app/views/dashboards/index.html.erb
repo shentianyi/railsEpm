@@ -50,7 +50,7 @@
       <p><%= t 'dashboard_group.dashboard.full_desc' %></p>
       <a class="btn btn-primary" id="dashboard-full-size"><%= t 'dashboard_group.dashboard.full_now' %></a>
     </section>
-
+<input type="hidden" id="full-size-hidden" value="<%=@full_size%>">
   </aside>
 </div>
 
@@ -228,5 +228,13 @@
         DASHBOARD.init();
         right_nav_main.init();
         DASHBOARD.add.init();
+
+        if($('#full-size-hidden').val()=='true'){
+            $("#dashboard-content-full").css("display","block");
+            var height=$(document).height();
+            $("#dashboard-content-full").css("height",height+"px");
+            ifepm.dashboard_widget.init_fullsize();
+            on_full_size();
+        }
     });
 </script>
