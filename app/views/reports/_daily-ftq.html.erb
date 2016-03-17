@@ -131,13 +131,24 @@
             $('<td>' + ajaxData[i].target_min + '</td>').appendTo('.tbody-target-min').ready(function () {
             });
 
-            $('<td>' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
-            });
-
             yAxis_value.push(ajaxData[i].name);
-            charts_value.push(ajaxData[i].value);
             charts_target_max.push(ajaxData[i].target_max);
             charts_target_min.push(ajaxData[i].target_min);
+
+            if (ajaxData[i].value > ajaxData[i].target_max) {
+                charts_value.push({color: '#ff0000', y: ajaxData[i].value});
+                $('<td style="background:#ff0000;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+                });
+
+            } else if (ajaxData[i].value < ajaxData[i].target_min) {
+                charts_value.push({color: '#FFB90F', y: ajaxData[i].value});
+                $('<td style="background:#FFB90F;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+                });
+            } else {
+                charts_value.push({color: 'limegreen', y: ajaxData[i].value});
+                $('<td style="background:limegreen;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+                });
+            }
         }
 
         /*chart*/
@@ -149,16 +160,13 @@
                 enabled: false
             },
             colors: ['#8DB6CD', '#43CD80', '#CD8162', '#24CBE5', '#64E572', '#FF9655',
-                '#FFF263', '#6AF9C4']
-            ,
+                '#FFF263', '#6AF9C4'],
             xAxis: {categories: yAxis_value},
-
             yAxis: {
                 title: {text: 'Time(s)'},
                 plotLines: [{value: 0, width: 1, color: '#808080'}]
             },
             tooltip: {valueSuffix: 's'},
-
             legend: {layout: 'vertical', align: 'right', verticalAlign: 'middle', borderWidth: 0},
 
             /*分组堆叠显示*/
