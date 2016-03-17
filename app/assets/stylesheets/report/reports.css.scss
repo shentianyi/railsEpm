@@ -15,7 +15,7 @@ $list-width: 220px;
   position: relative;
   section {
     background: lighten($nav-dark, 4%);
-    @include box-shadow-inset(-3px, 0px, 8px, rgba(0, 0, 0, 0.1));
+    //@include box-shadow-inset(-3px, 0px, 8px, rgba(0, 0, 0, 0.1));
     height: 100%;
     & > .header {
       width: 100%;

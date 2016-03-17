@@ -1,17 +1,221 @@
-<section class="daily-ftq" >
-  <div class="header" id="daily-ftq-header">
-    <p>Export to:</p>
-    <a class="btn btn-success btn_excel" onclick="export_bt_report_chart_excel()">Excel</a>
+<div class="header" id="daily-ftq-header">
+  <!--<p>Export to:</p>
+  <a class="btn btn-success btn_excel" onclick="export_bt_report_chart_excel()">Excel</a>-->
+
+  <div class="col-sm-12" id="current-status-header" style="background: #fefefe;border-bottom: 4px solid #000">
+    <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
+      <label>Condition</label>
+
+      <p>WorkingTime Summary Percentage</p>
+
+      <p id="current-date" style="font-size: 12px;"></p>
+    </div>
+
+    <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
+      <p>Early shift</p>
+      <select id="vehicle-select" style="min-width: 200px;text-align: center;">
+        <option value="滚筒内装配线">滚筒内装配线</option>
+        <option value="滚筒箱体线">滚筒箱体线</option>
+        <option value="滚筒总装线">滚筒总装线</option>
+        <option value="滚筒包装线">滚筒包装线</option>
+      </select>
+    </div>
+
+    <div class="col-sm-4" style="text-align: center;">
+      <label>Current time</label>
+
+      <p id="current-clock" style="font-size: 30px;font-weight: bold;"></p>
+    </div>
   </div>
-  <div id="chart_container" ></div>
-  <div id="data_container" class="data_container" height="160px"></div>
-  <%= render 'snap'%>
-</section>
+</div>
+
+<!--chart-->
+<div id="charts_containers" style="margin-top: 80px;">
+
+</div>
+<hr style="border-bottom: 4px solid #000;">
+<!--table-->
+<div id="data_container" class="data_container" style="margin-top: 20px;">
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr class="thead-tr">
+    </tr>
+    </thead>
+    <tbody class="tbody-tr">
+    <tr class="tbody-target-max">
+    </tr>
+    <tr class="tbody-target-min">
+    </tr>
+    <tr class="tbody-value">
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- <%= render 'snap' %> -->
+
+<style>
+    .table > thead > tr > th, .table > tbody > tr > td {
+        text-align: center;
+        background: white;
+    }
+
+</style>
+
 <% content_for :javascript_includes do %>
-    <%= javascript_include_tag "reports/daily_ftq" %>
+    <%= javascript_include_tag "reports/daily_ftq_beko" %>
 <% end %>
+
 <script>
-  $(document).ready(function(){
-      Report.init("daily_ftq");
-  });
+    $(document).ready(function () {
+//        Report.init("daily_ftq");
+        var ClientHeight = $(document).height();
+        $('#report-content').css({
+            height: (ClientHeight - 70) + 'px',
+            overflow: 'auto',
+            background: '#fefefe'
+        });
+
+        window.setInterval(function () {
+            $("#current-clock").text(format_time.current_time_clock());
+        }, 700);
+
+        var ClientWidth = document.documentElement.clientWidth;
+        $('#data_container').css({width: (ClientWidth - 230) + 'px', overflowX: 'auto'});
+
+        loadData();
+    });
+
+    $("#vehicle-select").change(function () {
+        loadData();
+    });
+
+    function loadData() {
+        /*清空*/
+        $('#charts_containers').children().remove();
+        $('.thead-tr').children().remove();
+        $('.tbody-target-max').children().remove();
+        $('.tbody-target-min').children().remove();
+        $('.tbody-value').children().remove();
+
+        var yAxis_value = new Array();
+        var charts_value = new Array();
+        var charts_target_max = new Array();
+        var charts_target_min = new Array();
+
+        $('<th>Station</th>').appendTo('.thead-tr').ready(function () {
+        });
+
+        $('<td>TargetMax</td>').appendTo('.tbody-target-max').ready(function () {
+        });
+
+        $('<td>TargetMin</td>').appendTo('.tbody-target-min').ready(function () {
+        });
+
+        $('<td>Value</td>').appendTo('.tbody-value').ready(function () {
+        });
+
+
+        var productLine = $('#vehicle-select').val();
+        var GetData;
+
+
+        var ajaxData = GetDataFun();
+
+        /*table*/
+        for (var i = 0; i < ajaxData.length; i++) {
+            $('<th>' + ajaxData[i].name + '</th>').appendTo('.thead-tr').ready(function () {
+            });
+
+            $('<td>' + ajaxData[i].target_max + '</td>').appendTo('.tbody-target-max').ready(function () {
+            });
+
+            $('<td>' + ajaxData[i].target_min + '</td>').appendTo('.tbody-target-min').ready(function () {
+            });
+
+            $('<td>' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+            });
+
+            yAxis_value.push(ajaxData[i].name);
+            charts_value.push(Math.round(ajaxData[i].value / 1000));
+            charts_target_max.push(ajaxData[i].target_max);
+            charts_target_min.push(ajaxData[i].target_min);
+        }
+
+        /*chart*/
+        $('#charts_containers').highcharts({
+            title: {
+                text: 'Working Time', x: -20 //center
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {categories: yAxis_value},
+
+            yAxis: {
+                title: {text: 'Time(s)'},
+                plotLines: [{value: 0, width: 1, color: '#808080'}]
+            },
+
+            tooltip: {valueSuffix: 's'},
+
+            legend: {layout: 'vertical', align: 'right', verticalAlign: 'middle', borderWidth: 0},
+
+            /*分组堆叠显示*/
+            plotOptions: {
+                column: {
+                    stacking: 'normal'
+                }
+            },
+
+            series: [
+                {
+                    name: 'TargetMax',
+                    data: charts_target_max
+                }, {
+                    name: 'TargetMin',
+                    data: charts_target_min
+                },
+                {
+                    type: 'column',
+                    name: 'Value',
+                    data: charts_value
+                }
+            ]
+        });
+
+        /*ajax request*/
+        function GetDataFun() {
+            loading_show();
+            $.ajax({
+                url: '/departments/entity_groups',
+                type: 'get',
+                data: {product_line: productLine},
+                async: false,
+                success: function (data) {
+                    GetData = data;
+                    loading_hide();
+                },
+                error: function () {
+                    console.log("something error");
+                }
+            });
+            return GetData;
+        }
+    }
+
+    var loading;
+    function loading_show() {
+        loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
+        var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
+        $(".pageload-overlay svg").css('left', '220px');
+        $(".pageload-overlay svg").css('top', top + 'px');
+        loading.show();
+    }
+
+    function loading_hide() {
+        $('#preloader').remove();
+        $('<div id="preloader" class="pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none"><path d="M30,30 50,30 50,30 30,30 Z"/></svg></div>').appendTo('body').ready(function () {
+        })
+    }
 </script>

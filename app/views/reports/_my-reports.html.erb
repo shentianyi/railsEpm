@@ -1,35 +1,58 @@
-<!--<div class="report-menu" id="report-menu">-->
-<!--<section>-->
-  <!--<div class="header">-->
-    <!--<p>App Center</p>-->
-  <!--</div>-->
-  <!--<ul id="my-reports">-->
-    <!--&lt;!&ndash;<p>Quality Gate</p>&ndash;&gt;-->
+<div class="report-menu" id="report-menu">
+  <section class="slide_menu">
+    <div class="header">
+      <p>App Center</p>
+    </div>
+    <ul id="my-reports">
+      <!--<p>Quality Gate</p>-->
+      <li number="0"><a menu="current_status" href="#current_status"><i class="icon-adjust mark"></i> Current
+        Status<i class="icon-chevron-right indicate"></i></a></li>
+      <li number="7"><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i> Daily
+        FTQ<i class="icon-chevron-right indicate"></i></a></li>
 
-    <!--<li number="0"><a menu="current_status" href="#current_status"><i class="icon-adjust mark"></i> Current Status<i class="icon-chevron-right indicate"></i></a></li>-->
-   <!--&lt;!&ndash; <li number="8"><a menu="daily_dpv" href="#daily_dpv"><i class="icon-columns mark"></i> Daily DPV&SDPV<i class="icon-chevron-right indicate"></i></a></li>-->
-    <!--<li number="7"><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i> Daily FTQ<i class="icon-chevron-right indicate"></i></a></li>-->
-    <!--<li number="2"><a menu="station_data" href="#station_data"><i class="icon-list mark" menu="station-data" href="#station-data"></i> Station Data<i class="icon-chevron-right indicate"></i></a></li>-->
-	<!--<li number="1"><a menu="summary_report" href="#summary_report"><i class="icon-columns mark"></i> Summary Report<i class="icon-chevron-right indicate"></i></a></li>-->
-    <!--<li number="9"><a menu="tracking_report" href="#tracking_report"><i class="icon-screenshot mark" ></i> Daily KPI Tracking<i class="icon-chevron-right indicate"></i></a></li>-->
-    <!--<li number="4"><a menu="defects" href="#defects"><i class="icon-remove-sign mark" ></i> Defect<i class="icon-chevron-right indicate"></i></a></li>-->
-    <!--<li number="3"><a menu="vehicle_info" href="#vehicle_info"><i class="icon-dashboard mark" ></i> Vehicle Information<i class="icon-chevron-right indicate"></i></a></li>-->
-<!--&ndash;&gt;-->
-  <!--</ul>-->
-  <!--&lt;!&ndash;<a class="btn btn-primary share" id="share_to_discussion_btn">Share to discussion</a>-->
-  <!--<a class="btn btn-success snap" id="snap-shot-button">Snapshot</a>-->
-  <!--<a class="btn subscribe" id="reports_subscribe">App subscription</a>&ndash;&gt;-->
-<!--</section>-->
-<!--</div>-->
+      <!-- <li number="8"><a menu="daily_dpv" href="#daily_dpv"><i class="icon-columns mark"></i> Daily DPV&SDPV<i class="icon-chevron-right indicate"></i></a></li>
+       <li number="7"><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i> Daily FTQ<i class="icon-chevron-right indicate"></i></a></li>
+       <li number="2"><a menu="station_data" href="#station_data"><i class="icon-list mark" menu="station-data" href="#station-data"></i> Station Data<i class="icon-chevron-right indicate"></i></a></li>
+       <li number="1"><a menu="summary_report" href="#summary_report"><i class="icon-columns mark"></i> Summary Report<i class="icon-chevron-right indicate"></i></a></li>
+       <li number="9"><a menu="tracking_report" href="#tracking_report"><i class="icon-screenshot mark" ></i> Daily KPI Tracking<i class="icon-chevron-right indicate"></i></a></li>
+       <li number="4"><a menu="defects" href="#defects"><i class="icon-remove-sign mark" ></i> Defect<i class="icon-chevron-right indicate"></i></a></li>
+       <li number="3"><a menu="vehicle_info" href="#vehicle_info"><i class="icon-dashboard mark" ></i> Vehicle Information<i class="icon-chevron-right indicate"></i></a></li>
+   -->
+    </ul>
+    <!--<a class="btn btn-primary share" id="share_to_discussion_btn">Share to discussion</a>
+    <a class="btn btn-success snzap" id="snap-shot-button">Snapshot</a>
+    <a class="btn subscribe" id="reports_subscribe">App subscription</a>-->
+  </section>
+
+</div>
+
+<div id="pop-crate" style="float: left;text-align: center; color: white;cursor: pointer;width: 10px;background: #3e4452;position: relative;">
+  <div class="my_icon">
+    <i class="icon-chevron-left" title="收起面板"></i>
+  </div>
+</div>
+
+<!--
+<div class="report-menu" id="report-menu">
+  <section>
+
+    <div id="pop-crate" isopen="true" style="float: left;left: 0;text-align: left; color: white;cursor: pointer;width: 20px;height: 20px;position: fixed;">
+      <i class="icon-chevron-left" title="收起面板"></i>
+    </div>
+
+  </section>
+</div>-->
 
 <div id="preloader" class="pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z">
   <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none">
     <path d="M30,30 50,30 50,30 30,30 Z"/>
   </svg>
-</div><!-- /pageload-overlay -->
+</div>
+<!-- /pageload-overlay -->
 
 <section class="snap_block" id="snap_block">
   <i class="icon icon-remove" id="snap-shot-remove"></i>
+
   <p>Snap description</p>
   <input type="text" id="snap-shot-desc"/>
   <a class="btn btn-success" id="snap-shot-btn">finish</a>
@@ -41,13 +64,17 @@
 <div class="back-pop report_center_back_pop" id='back-pop'>
   <div class="choose-project-team">
     <i class="icon icon-remove" id="remove-back-pop"></i>
+
     <p>Share to discussion</p>
+
     <div class="basic_info">
       <div class="basic_left">
         <p>Title</p>
         <input type="text" id="story-title"/>
+
         <p>Attachment</p>
         <input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
+
         <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
       </div>
       <div class="basic_right">
@@ -82,7 +109,7 @@
     <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>
     <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
     <%= javascript_include_tag "Manage-story.js" %>
-    <%= javascript_include_tag "Manage-storyset.js"%>
+    <%= javascript_include_tag "Manage-storyset.js" %>
 <% end %>
 
 <script type="text/javascript">
@@ -163,5 +190,19 @@
                     });
                 });
     });
+    var ClientHeight = document.documentElement.clientHeight;
+
+    $('.my_icon').css({
+        marginTop: (ClientHeight) / 2 + 'px'
+    });
+
+    $('#pop-crate').css({
+        height: (ClientHeight - 70) + 'px'
+    });
+
+    $('#pop-crate').click(function () {
+        $('#report-menu').fadeToggle(0);
+    })
 </script>
 
+</div>

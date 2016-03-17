@@ -1,7 +1,6 @@
-<section class="current-status" id="current-status">
+<section id="current-status">
   <section id="current-status-normal">
-    <div class=" col-sm-12" id="current-status-header">
-
+    <div class=" col-sm-12" id="current-status-header" style="background: #fefefe;border-bottom: 4px solid #000;">
       <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
         <label>Condition</label>
 
@@ -19,25 +18,6 @@
           <option value="Packaging Line">Packaging Line</option>
         </select>
       </div>
-      <!--
-            <div class="header-block">
-              <label>Export</label>
-              <a class="btn btn-success" id="quick-print">Quick print</a>
-              <a class="btn btn-success" onclick="export_report_excel()">Excel</a>
-            </div>
-
-            <div class="header-block">
-              <label>Setting</label>
-              <a class="btn btn-primary" id="refresh">Refresh</a>
-              <a class="btn btn-primary extra_func_btn" id="target" tag='target'>Target</a>
-            </div>
-
-            <div class="header-block">
-              <label>Custom</label>
-              <a class="btn btn-primary extra_func_btn" tag='all_defects'>All defects</a>
-              <a class="btn btn-primary extra_func_btn" tag='key_defects'>Key station defects</a>
-            </div>
-      -->
       <div class="col-sm-4" style="text-align: center;">
         <label>Current time</label>
 
@@ -50,50 +30,54 @@
     <!--<%= render 'snap' %>-->
   </section>
 
-  <section id="current-status-target" class='current-status-wrapper'>
-    <div class="wrapper-header" id="target-wrapper-header">
-      <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
+  <!--
 
-      <p>Target setting</p>
-    </div>
-    <div id="target-setting-footer" class="target-setting-footer">
-      <div class="footer-left">
-        <p>Condition</p>
+    <section id="current-status-target" class='current-status-wrapper'>
+      <div class="wrapper-header" id="target-wrapper-header">
+        <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
 
-        <p>When Target higher than current FTQ</p>
-
-        <p>When Target equal to current FTQ</p>
-
-        <p>When Target lower than current FTQ</p>
+        <p>Target setting</p>
       </div>
-      <div class="footer-right" id="footer-right">
-        <p>Color</p>
-        <label>FTQ color setting</label>
+      <div id="target-setting-footer" class="target-setting-footer">
+        <div class="footer-left">
+          <p>Condition</p>
+
+          <p>When Target higher than current FTQ</p>
+
+          <p>When Target equal to current FTQ</p>
+
+          <p>When Target lower than current FTQ</p>
+        </div>
+        <div class="footer-right" id="footer-right">
+          <p>Color</p>
+          <label>FTQ color setting</label>
+        </div>
       </div>
-    </div>
-    <div id="target_setting" class="wrapper-current-body"></div>
-  </section>
+      <div id="target_setting" class="wrapper-current-body"></div>
+    </section>
+    <section id="current-status-all-defects" class='current-status-wrapper'>
+      <div class="wrapper-header">
+        <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
 
-  <section id="current-status-all-defects" class='current-status-wrapper'>
-    <div class="wrapper-header">
-      <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
+        <p>All defects</p>
+      </div>
+      <div class="wrapper-current-body">
+        <div id="all_defects" class="data_container"></div>
+      </div>
+    </section>
+    <section id="current-status-key-defects" class='current-status-wrapper'>
+      <div class="wrapper-header">
+        <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
 
-      <p>All defects</p>
-    </div>
-    <div class="wrapper-current-body">
-      <div id="all_defects" class="data_container"></div>
-    </div>
-  </section>
-  <section id="current-status-key-defects" class='current-status-wrapper'>
-    <div class="wrapper-header">
-      <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
+        <p>Key station defects</p>
+      </div>
+      <div class="wrapper-current-body">
+        <div id="key_defects" class="data_container"></div>
+      </div>
+    </section>
 
-      <p>Key station defects</p>
-    </div>
-    <div class="wrapper-current-body">
-      <div id="key_defects" class="data_container"></div>
-    </div>
-  </section>
+  -->
+
 </section>
 
 <% content_for :javascript_includes do %>
@@ -110,9 +94,12 @@
         }, 700);
 
         /*设置整体背景颜色*/
-        var ClientHeight = document.documentElement.clientHeight;
-        $('#data_container').css({
-            height: (ClientHeight ) + 'px'
+//        var ClientHeight = document.documentElement.clientHeight;
+        var ClientHeight = $(document).height();
+        $('#report-content').css({
+            height: (ClientHeight - 70) + 'px',
+            overflow: 'auto',
+            background: '#fefefe'
         });
 
         loadData();
@@ -126,12 +113,26 @@
             console.log(data);
             $('.workstation').remove();
             for (var i = 0; i < data.length; i++) {
-                $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
-                        '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number">' + Math.round(data[i].value/1000) + '</div>' +
-                        '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
-                        '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
-                    loading_hide();
-                });
+
+                console.log(data[i].value);
+                console.log(data[i].target_max);
+                console.log(data[i].target_min);
+
+                if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
+                    $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
+                            '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number" style="color: #ff0000;">' + Math.round(data[i].value / 1000) + '</div>' +
+                            '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
+                            '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
+                        loading_hide();
+                    });
+                } else {
+                    $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
+                            '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number"style="color: #3ed436;">' + Math.round(data[i].value / 1000) + '</div>' +
+                            '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
+                            '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
+                        loading_hide();
+                    });
+                }
             }
         }, 'JSON');
     }
@@ -139,17 +140,13 @@
         loadData();
     });
 
-    window.setInterval("loadData()", 20000);
-
-    $('.workstation').click(function () {
-        console.log("Hellp");
-    })
+    window.setInterval("loadData()", 200000000);
 
     var loading;
     function loading_show() {
         loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
         var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
-        $(".pageload-overlay svg").css('left', '0px');
+        $(".pageload-overlay svg").css('left', '220px');
         $(".pageload-overlay svg").css('top', top + 'px');
         loading.show();
     }
@@ -167,17 +164,10 @@
 </script>
 
 <style>
-    .background {
-        margin-top: 10px;
-        background: #000;
-        border-radius: 20px;
-        min-width: 1200px;
-    }
-
     /*Box Start*/
     .box {
         min-width: 230px;
-        height: 160px;
+        height: 165px;
         border-radius: 10px;
         /*border: 2px solid #9000ff;*/
         border: 2px solid deepskyblue;
@@ -219,7 +209,7 @@
 
     .content > strong {
         font: 24px 'Helvetica';
-        color: #ffffff;
+        color: #5c5c5c;
     }
 
     .content > p {
