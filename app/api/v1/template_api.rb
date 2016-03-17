@@ -12,28 +12,33 @@ module V1
           app_id: Settings.app.id,
           invoke_address: "http://#{Settings.server.host}/api/v2/plans/upload",
           template_id: 'PLAN',
-          template_name: 'PLAN',
-          template_description: 'IMPORT PLAN',
+          template_name: '导入生产计划',
+          template_description: '导入生产计划',
           columns: {
+              product_line:{
+                  type: 'string',
+                  allow_null: true,
+                  default_value: '滚筒总装线'
+              },
               assembly: {
                   type: 'string',
                   allow_null: false,
-                  default_value: nil,
-              },
-              product_line: {
-                  type: 'string',
-                  allow_null: false,
-                  default_value: nil,
+                  default_value: nil
               },
               planned: {
                   type: 'int',
                   allow_null: false,
-                  default_value: nil,
+                  default_value: nil
+              },
+              max_trigger:{
+                  type: 'int',
+                  allow_null: true,
+                  default_value: '100'
               },
               date: {
                   type: 'utc',
                   allow_null: false,
-                  default_value: nil,
+                  default_value: nil
               }
           }
       }
