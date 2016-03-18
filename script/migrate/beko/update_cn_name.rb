@@ -7,8 +7,10 @@ Kpi.where(name: '工作时间').update_all(
     name: 'WorkingTime',
     description: 'WorkingTime',
     target_max: 22,
-    target_min: 10
+    target_min: 5
 )
+
+UserKpiItem.update_all(target_max:22,target_min:5)
 
 
 EntityGroupItem.delete_all
@@ -92,7 +94,7 @@ KpiEntry.all.each do |entry|
   end
 
 
-  ex=(entry.value<10 || entry.value>22) ? 'YES' : 'NO'
+  ex=(entry.value<5 || entry.value>22) ? 'YES' : 'NO'
   entry.update_attributes(a1: ex)
 end
 

@@ -5,6 +5,11 @@
           value="<%=  @end_time.localtime.strftime('%Y-%m-%d')%>"/>
   <input type="submit" value="查 询" class="btn-info" style="height: 38px;width: 100px;"/>
 </form>
+
+<div>
+<%= link_to '导 入', import_production_plans_path,class:'btnc btn-info' %>
+  <%= link_to '新 建', new_production_plan_path,class:'btnc btn-info'  %>
+</div>
 <table class="table table-bordered table-striped table-hover">
   <tr>
     <th></th>
@@ -42,7 +47,6 @@
 
 <br />
 
-<%= link_to '新 建', new_production_plan_path %>
 
 <script type="text/javascript" src="/assets/jquery.ui/jquery.datetimepicker.js"></script>
 <link data-turbolinks-track="true" href="/assets/jquery.datetimepicker.css" media="all" rel="stylesheet" />
@@ -60,3 +64,11 @@
             },'JSON');
         }
 </script>
+<style type="text/css">
+  .btnc{
+      display: inline-block;height: 38px;width: 100px;
+      padding: 10px;
+      margin-left: 10x;
+      text-align: center;
+  }
+</style>
