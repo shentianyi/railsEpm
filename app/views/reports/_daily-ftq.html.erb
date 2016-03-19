@@ -91,7 +91,10 @@
         $('.control-chart-interval-group li').each(function(index){
             $(this).click(function(){
                 $('.control-chart-interval-group li').css({color:'black',opacity:'0.3'});
+                $('.control-chart-interval-group li').attr('datatype','false');
+
                 $(this).css({opacity:'1'});
+                $(this).attr('datatype','true');
 
                 console.log($(this).attr('interval'));
                 console.log($('#vehicle-select').val());
@@ -136,8 +139,11 @@
     $("#vehicle-select").change(function () {
         loadChartData();
     });
+    
+    window.setInterval("loadChartData()", 20000);
 
     function loadChartData() {
+        loading_show();
         /*清空*/
         $('#charts_containers').children().remove();
         $('.thead-tr').children().remove();
@@ -164,8 +170,14 @@
 
 
         var productLine = $('#vehicle-select').val();
+        var chartdatatype=100;
+        $('.control-chart-interval-group li').each(function(index){
+            if($(this).attr('datatype')=='true'){
+                chartdatatype=$(this).attr('interval');
+            }
+        })
+        
         var GetData;
-
 
         var ajaxData = GetDataFun();
 
@@ -241,11 +253,10 @@
 
         /*ajax request*/
         function GetDataFun() {
-            loading_show();
             $.ajax({
                 url: '/departments/entity_groups',
                 type: 'get',
-                data: {product_line: productLine},
+                data: {product_line: productLine,interval:chartdatatype},
                 async: false,
                 success: function (data) {
                     console.log(data)
@@ -258,20 +269,5 @@
             });
             return GetData;
         }
-    }
-
-    var loading;
-    function loading_show() {
-        loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
-        var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
-        $(".pageload-overlay svg").css('left', '220px');
-        $(".pageload-overlay svg").css('top', top + 'px');
-        loading.show();
-    }
-
-    function loading_hide() {
-        $('#preloader').remove();
-        $('<div id="preloader" class="pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none"><path d="M30,30 50,30 50,30 30,30 Z"/></svg></div>').appendTo('body').ready(function () {
-        })
     }
 </script>

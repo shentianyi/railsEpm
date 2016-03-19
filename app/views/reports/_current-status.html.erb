@@ -25,8 +25,30 @@
       </div>
     </div>
 
-    <div id="data_container" class="data-container">
+    <div class="col-sm-12">
+        <ul class="pull-right control-chart-interval-group">
+         <!--  <li interval="90">
+            <a>Hr</a>
+          </li> -->
+          <li interval="100" style="color:black;" datatype='true'>
+            <a>D</a>
+          </li>
+          <!-- <li interval="200">
+            <a>W</a>
+          </li> -->
+          <li interval="300">
+            <a>M</a>
+          </li>
+          <li interval="400">
+            <a>Qr</a>
+          </li>
+          <li interval="500">
+            <a>Y</a>
+          </li>
+        </ul>
+        <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
     </div>
+    <div id="data_container" class="data-container"></div>
   </section>
 
   <!--
@@ -86,6 +108,36 @@
 
 <script>
     $(document).ready(function () {
+        $('.control-chart-interval-group li').each(function(index){
+            $(this).click(function(){
+                $('.control-chart-interval-group li').css({color:'black',opacity:'0.3'});
+                $('.control-chart-interval-group li').attr('datatype','false');
+
+                $(this).css({opacity:'1'});
+                $(this).attr('datatype','true');
+
+                console.log($(this).attr('interval'));
+                console.log($('#vehicle-select').val());
+
+                var Choose_Interval_Code=$(this).attr('interval');
+                var ProductLine=$('#vehicle-select').val();
+                $.ajax({
+                    url:'/departments/entity_groups',
+                    type:'get',
+                    data:{
+                        interval:Choose_Interval_Code,
+                        product_line:ProductLine
+                    },
+                    success:function(data){
+                        console.log(data);
+                        //Here can do something
+                    },
+                    error:function(){
+                        console.log("Error");
+                    }
+                });
+            });
+        });
 //        Report.init("current_status");
         /*时间刷新*/
         window.setInterval(function () {
@@ -105,20 +157,28 @@
 
     function loadData() {
         var productLine = $('#vehicle-select').val();
+        var datatype=100;
+
+        $('.control-chart-interval-group li').each(function(index){
+            if($(this).attr('datatype')=='true'){
+                datatype=$(this).attr('interval');
+            }
+        })
+        
         console.log(productLine);
         loading_show();
-        $.get('/departments/entity_groups', {product_line: productLine}, function (data) {
+
+        $.get('/departments/entity_groups', {product_line: productLine, interval: datatype}, function (data) {
             console.log(data);
             $('.workstation').remove();
             for (var i = 0; i < data.length; i++) {
 
-                console.log(data[i].value);
-                console.log(data[i].target_max);
-                console.log(data[i].target_min);
+                // console.log(data[i].value);
+                // console.log(data[i].target_max);
+                // console.log(data[i].target_min);
 
                 if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
                     $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
-
                             '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
                             '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                             '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
@@ -140,22 +200,7 @@
     });
 
     window.setInterval("loadData()", 20000);
-
-    var loading;
-    function loading_show() {
-        loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
-        var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
-        $(".pageload-overlay svg").css('left', '220px');
-        $(".pageload-overlay svg").css('top', top + 'px');
-        loading.show();
-    }
-
-    function loading_hide() {
-        $('#preloader').remove();
-        $('<div id="preloader" class="pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none"><path d="M30,30 50,30 50,30 30,30 Z"/></svg></div>').appendTo('body').ready(function () {
-        })
-    }
-
+    
     /*双击事件*/
     function double_click() {
         window.location.href = 'kpi_entries/analyse?view=' + $(this).children('div');
