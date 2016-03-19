@@ -58,7 +58,7 @@
 
 <hr style="border-bottom: 4px solid #000;">
 <!--table-->
-<div id="data_container" class="data_container" style="margin-top: 20px;">
+<div id="data_chartcontainer" class="data_container" style="margin-top: 20px;">
   <table class="table table-bordered table-hover">
     <thead>
     <tr class="thead-tr">
@@ -96,8 +96,8 @@
                 $(this).css({opacity:'1'});
                 $(this).attr('datatype','true');
 
-                console.log($(this).attr('interval'));
-                console.log($('#vehicle-select').val());
+                // console.log($(this).attr('interval'));
+                // console.log($('#vehicle-select').val());
 
                 var Choose_Interval_Code=$(this).attr('interval');
                 var ProductLine=$('#vehicle-select').val();
@@ -131,7 +131,7 @@
         }, 500);
 
         var ClientWidth = document.documentElement.clientWidth;
-        $('#data_container').css({width: (ClientWidth - 230) + 'px', overflowX: 'auto'});
+        $('#data_chartcontainer').css({width: (ClientWidth - 230) + 'px', overflowX: 'auto'});
 
         loadChartData();
     });
@@ -139,8 +139,14 @@
     $("#vehicle-select").change(function () {
         loadChartData();
     });
+
+    try{
+        window.clearInterval(loadDataIntervalValue);
+    }catch(e){
+        console.log(e);
+    }
     
-    window.setInterval("loadChartData()", 20000);
+    var loadChartDataIntervalValue=window.setInterval("loadChartData()", 20000);
 
     function loadChartData() {
         loading_show();
