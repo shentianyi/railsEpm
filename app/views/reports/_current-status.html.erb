@@ -116,8 +116,8 @@
                 $(this).css({opacity:'1'});
                 $(this).attr('datatype','true');
 
-                console.log($(this).attr('interval'));
-                console.log($('#vehicle-select').val());
+                // console.log($(this).attr('interval'));
+                // console.log($('#vehicle-select').val());
 
                 var Choose_Interval_Code=$(this).attr('interval');
                 var ProductLine=$('#vehicle-select').val();
@@ -198,8 +198,12 @@
     $("#vehicle-select").change(function () {
         loadData();
     });
-
-    window.setInterval("loadData()", 20000);
+    try{
+        window.clearInterval(loadChartDataIntervalValue);
+    }catch(e){
+        console.log(e);
+    }
+    var loadDataIntervalValue=window.setInterval("loadData()", 20000);
     
     /*双击事件*/
     function double_click() {
