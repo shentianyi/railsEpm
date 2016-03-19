@@ -29,10 +29,33 @@
   </div>
 </div>
 
-<!--chart-->
-<div id="charts_containers" style="margin-top: 80px;">
-
+<div class="clearfix chart-interval-alternate" id="chart-interval-alternate">
+    <ul class="pull-right control-chart-interval-group">
+     <!--  <li interval="90">
+        <a>Hr</a>
+      </li> -->
+      <li interval="100" style="color: black;">
+        <a>D</a>
+      </li>
+      <!-- <li interval="200">
+        <a>W</a>
+      </li> -->
+      <li interval="300">
+        <a>M</a>
+      </li>
+      <li interval="400">
+        <a>Qr</a>
+      </li>
+      <li interval="500">
+        <a>Y</a>
+      </li>
+    </ul>
+    <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
 </div>
+
+<!--chart-->
+<div id="charts_containers" style="margin-top: 80px;"></div>
+
 <hr style="border-bottom: 4px solid #000;">
 <!--table-->
 <div id="data_container" class="data_container" style="margin-top: 20px;">
@@ -52,13 +75,11 @@
   </table>
 </div>
 
-
 <style>
     .table > thead > tr > th, .table > tbody > tr > td {
         text-align: center;
         background: white;
     }
-
 </style>
 
 <% content_for :javascript_includes do %>
@@ -67,6 +88,33 @@
 
 <script>
     $(document).ready(function () {
+        $('.control-chart-interval-group li').each(function(index){
+            $(this).click(function(){
+                $('.control-chart-interval-group li').css({color:'black',opacity:'0.3'});
+                $(this).css({color:'black'});
+                console.log($(this).attr('interval'));
+                console.log($('#vehicle-select').val());
+
+                var Choose_Interval_Code=$(this).attr('interval');
+                var ProductLine=$('#vehicle-select').val();
+                $.ajax({
+                    url:'/departments/entity_groups',
+                    type:'post',
+                    data:{
+                        interval:Choose_Interval_Code,
+                        product_line:ProductLine
+                    },
+                    success:function(data){
+                        console.log(data);
+                        //Here can do something
+                    },
+                    error:function(){
+                        console.log("Error");
+                    }
+                });
+            });
+        });
+
 //        Report.init("daily_ftq");
         var ClientHeight = $(document).height();
         $('#report-content').css({
@@ -139,7 +187,6 @@
                 charts_value.push({color: '#ff0000', y: ajaxData[i].value});
                 $('<td style="background:#ff0000;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
                 });
-
             } else if (ajaxData[i].value < ajaxData[i].target_min) {
                 charts_value.push({color: '#FFB90F', y: ajaxData[i].value});
                 $('<td style="background:#FFB90F;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
@@ -200,6 +247,7 @@
                 data: {product_line: productLine},
                 async: false,
                 success: function (data) {
+                    console.log(data)
                     GetData = data;
                     loading_hide();
                 },
