@@ -10,7 +10,10 @@ class ProductionPlansController < ApplicationController
 
     @end_time=params[:end_time].blank? ? (Time.now.beginning_of_day+7.days).utc : Time.parse(params[:end_time]).utc
 
-    @production_plans = ProductionPlan.where(date: [@start_time..@end_time]).order('date asc,`index` asc').all #.paginate(:page => params[:page])
+    @product_line=params[:product_line].blank? ? '滚筒总装线' : params[:product_line]
+
+    @production_plans = ProductionPlan.where(date: [@start_time..@end_time],product_line: @product_line)
+                            .order('date asc,`index` asc').all #.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -92,6 +95,17 @@ class ProductionPlansController < ApplicationController
     end
   end
 
+
+  def destroys
+    ProductionPlan.where(id: params[:ids]).delete_all
+
+    # respond_to do |format|
+    #   format.html { redirect_to production_plans_url }
+    #   format.json { head :no_content }
+    # end
+    render json: {result: true}
+  end
+
   def up_down
     @production_plan = ProductionPlan.find(params[:data][:id])
 
@@ -127,30 +141,36 @@ class ProductionPlansController < ApplicationController
   def import
     if request.post?
       msg=UrlMessage.new(result: true)
-      begin
-        params[:files].each do |file|
-          if file.size<$FILE_MAX_SIZE
-            f=FileData.new(data: file, oriName: file.original_filename, path: $KPI_ENTRY_PATH)
-            if f.saveFile
-              msg=FileHandler::Excel::ProductionPlansHandler.import(f, current_user)
-                # msg.result=false
-                # msg.url_result=true
-                # msg.content=error
-            end
-          else
-            msg.result=false
-            msg.content="文件大小超过20M"
+      # begin
+      params[:files].each do |file|
+        if file.size<$FILE_MAX_SIZE
+          f=FileData.new(data: file, oriName: file.original_filename, path: $KPI_ENTRY_PATH)
+          if f.saveFile
+            msg=FileHandler::Excel::ProductionPlansHandler.import(session[:product_line], f, current_user)
+            # msg.result=false
+            # msg.url_result=true
+            # msg.content=error
           end
+        else
+          msg.result=false
+          msg.content="文件大小超过20M"
         end
-      rescue Zip::ZipError => e
-        msg.result=false
-        msg.content="文件不可以打开，可能损坏，请检查！"
-      rescue => e
-        msg.result =false
-        msg.content=e.message
       end
+      # rescue Zip::ZipError => e
+      #   msg.result=false
+      #   msg.content="文件不可以打开，可能损坏，请检查！"
+      # rescue => e
+      #   msg.result =false
+      #   msg.content=e.message
+      # end
       render json: msg
     end
+  end
+
+
+  def set_product_line
+    session[:product_line]=params[:product_line]
+    render json: true
   end
 
 

@@ -1,6 +1,6 @@
 class ProductionPlan < ActiveRecord::Base
   belongs_to :user
-  attr_accessible :assembly, :date, :planned, :produced, :product_line,:trigger_min,:trigger_max,:index
+  attr_accessible :assembly, :date, :planned, :produced, :product_line,:trigger_min,:trigger_max,:index,:remark
 
   validates_presence_of :product_line,:assembly,:planned,:date
   # before_save :set_time

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160314013644) do
+ActiveRecord::Schema.define(:version => 20160319192036) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -50,19 +50,6 @@ ActiveRecord::Schema.define(:version => 20160314013644) do
   end
 
   add_index "alert_items", ["user_id"], :name => "index_alert_items_on_user_id"
-
-  create_table "alerts", :force => true do |t|
-    t.string   "topic"
-    t.integer  "user_id"
-    t.integer  "type"
-    t.integer  "offset",         :default => 0
-    t.integer  "alertable_id"
-    t.string   "alertable_type"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-  end
-
-  add_index "alerts", ["user_id"], :name => "index_alerts_on_user_id"
 
   create_table "attachments", :force => true do |t|
     t.string   "name"
@@ -467,6 +454,7 @@ ActiveRecord::Schema.define(:version => 20160314013644) do
     t.integer  "trigger_max",  :default => 0
     t.boolean  "is_confirmed", :default => false
     t.integer  "index"
+    t.string   "remark"
   end
 
   add_index "production_plans", ["user_id"], :name => "index_production_plans_on_user_id"

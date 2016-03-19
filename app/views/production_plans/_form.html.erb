@@ -40,7 +40,10 @@
           <%= f.text_field :date,value: @production_plan.date_display  ,class:'datepicker'%>
       <% end %>
     </div>
-
+    <div class="field">
+      <%= f.label :remark, '备注' %><br/>
+      <%= f.number_field :remark %>
+    </div>
     <div class="actions">
       <%= f.submit '提 交' %>
     </div>

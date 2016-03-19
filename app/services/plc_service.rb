@@ -72,6 +72,8 @@ class PlcService
     #     '滚筒箱体线' => 'Cabinet Assembly Line',
     #     '滚筒总装线' => 'Main Assembly Line', '滚筒包装线' => 'Packaging Line'}
 
+
+
     ProductionPlan.where(date: params[:date].utc,
                          product_line: params[:product_line]).each do |p|
       data<<{
@@ -84,6 +86,27 @@ class PlcService
           Status: self.get_status(p)
       }
     end
+
+    if data.length>0
+      max_date=ProductionPlan.where('date>?',params[:date].utc).where(product_line: params[:product_line])
+                   .order('`date` asc').first
+
+      ProductionPlan.where(date: max_date.date,
+                           product_line: params[:product_line]).each do |p|
+        data<<{
+            Id: p.id,
+            Assembly: p.assembly,
+            Prod_Line: p.product_line,
+            Planned: p.planned,
+            Produced: p.produced,
+            Rest: p.planned-p.produced,
+            Status: self.get_status(p)
+        }
+      end
+
+    end
+
+
     ApiMessage.new({
                        meta: {
                            code: 200

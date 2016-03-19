@@ -2,11 +2,16 @@ module FileHandler
   module Excel
     class ProductionPlansHandler<Base
       HEADERS=[
-          "Date", "stock_no", "Producton Name", "Qty"
+          "Date", "stock_no", "Producton Name", "Qty", "Actual qty", "model", "Control System", "Spin",
+          "Top Plate", "Control Panel", "Color", "Front Door", "Cabinet", "Remark"
       ]
 
-      def self.import(file, current_user)
+      def self.import(product_line, file, current_user)
         puts '-----------------------------------------------------------------'
+        p product_line
+        p file.full_path
+        puts '-----------------------------------------------------------------'
+
         msg = Message.new
         book = Roo::Excelx.new file.full_path
         book.default_sheet = book.sheets.first
@@ -14,7 +19,7 @@ module FileHandler
         # validate_msg = validate_import(file)
         #  if validate_msg.result
         #validate file
-        begin
+        # begin
           ProductionPlan.transaction do
 
             2.upto(book.last_row) do |line|
@@ -33,11 +38,12 @@ module FileHandler
                   #                            date: Time.parse(row['Date']).utc).first
                   #   pp.update_attributes(planned: row['Qty'])
                   # else
-                    ProductionPlan.create(assembly: row['stock_no'],
-                                          product_line: '滚筒总装线',
-                                          planned: row['Qty'],
-                                          date: Time.parse(row['Date']).utc)
-                  # end
+                  ProductionPlan.create(assembly: row['stock_no'],
+                                        product_line: product_line,
+                                        planned: row['Qty'],
+                                        date: Time.parse(row['Date']).utc,
+                                        remark: row['Remark'])
+                    # end
                 rescue => e
                   p e.class
 
@@ -59,11 +65,11 @@ module FileHandler
           end
           msg.result = true
           msg.content = "生产计划 上传成功"
-        rescue => e
-          puts e.backtrace
-          msg.result = false
-          msg.content = e.message
-        end
+        # rescue => e
+        #   puts e.backtrace
+        #   msg.result = false
+        #   msg.content = e.message
+        # end
         # else
         #   msg.result = false
         #   msg.content = validate_msg.content
