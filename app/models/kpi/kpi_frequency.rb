@@ -52,6 +52,59 @@ class KpiFrequency
            end
   end
 
+  def self.get_begin_date(start_time,frequency)
+    return case frequency
+             when KpiFrequency::Hourly
+               start_time.beginning_of_hour
+             when KpiFrequency::Daily
+               start_time.beginning_of_day
+             when KpiFrequency::Weekly
+               start_time.beginning_of_week
+             when KpiFrequency::Monthly
+               start_time.beginning_of_month
+             when KpiFrequency::Quarterly
+               start_time.beginning_of_quarter
+             when KpiFrequency::Yearly
+               start_time.beginning_of_year
+           end
+  end
+
+  def self.get_next_end_date(start_time, frequency)
+    start_time=Time.parse(start_time) if start_time.is_a?(String)
+    return case frequency
+             when KpiFrequency::Hourly
+               start_time.full_end_of_hour
+             when KpiFrequency::Daily
+               start_time.full_end_of_day
+             when KpiFrequency::Weekly
+               start_time.full_end_of_week
+             when KpiFrequency::Monthly
+               start_time.full_end_of_month
+             when KpiFrequency::Quarterly
+               start_time.full_end_of_quarter
+             when KpiFrequency::Yearly
+               start_time.full_end_of_year
+           end
+  end
+
+  def self.next_end_begin_date(time, frequency)
+    time=Time.parse(time) if time.is_a?(String)
+    return case frequency
+             when KpiFrequency::Hourly
+               time.beginning_of_hour+1.hour
+             when KpiFrequency::Daily
+               time.beginning_of_day+1.day
+             when KpiFrequency::Weekly
+               time.next_week.end_of_week.beginning_of_day
+             when KpiFrequency::Monthly
+               time.next_month.end_of_month.beginning_of_day
+             when KpiFrequency::Quarterly
+               (Time.now.end_of_quarter+3.month).beginning_of_day
+             when KpiFrequency::Yearly
+               (Time.now.end_of_year+1.year).beginning_of_day
+           end
+  end
+
 
   def i18nt_desc
     KpiFrequency.get_desc_by_value(self.value)
