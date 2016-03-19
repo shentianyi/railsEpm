@@ -91,7 +91,8 @@
         $('.control-chart-interval-group li').each(function(index){
             $(this).click(function(){
                 $('.control-chart-interval-group li').css({color:'black',opacity:'0.3'});
-                $(this).css({color:'black'});
+                $(this).css({opacity:'1'});
+
                 console.log($(this).attr('interval'));
                 console.log($('#vehicle-select').val());
 
@@ -99,7 +100,7 @@
                 var ProductLine=$('#vehicle-select').val();
                 $.ajax({
                     url:'/departments/entity_groups',
-                    type:'post',
+                    type:'get',
                     data:{
                         interval:Choose_Interval_Code,
                         product_line:ProductLine
@@ -129,14 +130,14 @@
         var ClientWidth = document.documentElement.clientWidth;
         $('#data_container').css({width: (ClientWidth - 230) + 'px', overflowX: 'auto'});
 
-        loadData();
+        loadChartData();
     });
 
     $("#vehicle-select").change(function () {
-        loadData();
+        loadChartData();
     });
 
-    function loadData() {
+    function loadChartData() {
         /*清空*/
         $('#charts_containers').children().remove();
         $('.thead-tr').children().remove();
