@@ -1,12 +1,34 @@
 <form action="/production_plans">
- 计划日期: <input type="text" name="start_time"
-              class="datepicker" value="<%=@start_time.localtime.strftime('%Y-%m-%d')%>"/>
+  选择生产线:
+  <select id="product-line-select" style="min-width: 200px;text-align: center;" onchange="set_product_line()" name="product_line">
+    <% if @product_line=='滚筒总装线' %>
+        <option value="滚筒总装线" selected>滚筒总装线</option>
+    <% else %>
+        <option value="滚筒总装线">滚筒总装线</option>
+    <% end %>
+
+    <% if @product_line=='波轮生产线' %>
+        <option value="波轮生产线" selected>波轮生产线</option>
+    <% else %>
+        <option value="波轮生产线">波轮生产线</option>
+    <% end %>
+
+  </select>
+
+  计划日期: <input type="text" name="start_time"
+               class="datepicker" value="<%= @start_time.localtime.strftime('%Y-%m-%d') %>"/>
   至<input type="text" name="end_time" class="datepicker"
-          value="<%=  @end_time.localtime.strftime('%Y-%m-%d')%>"/>
+          value="<%= @end_time.localtime.strftime('%Y-%m-%d') %>"/>
   <input type="submit" value="查 询" class="btn-info" style="height: 38px;width: 100px;"/>
 </form>
+
+<div>
+  <%= link_to '导 入', import_production_plans_path, class: 'btnc btn-info' %>
+  <%= link_to '新 建', new_production_plan_path, class: 'btnc btn-info' %>
+</div>
 <table class="table table-bordered table-striped table-hover">
   <tr>
+    <th></th>
     <th></th>
     <th>生产线</th>
     <th>型号</th>
@@ -14,38 +36,44 @@
     <th>完成</th>
     <th>警戒值</th>
     <th>日期</th>
+    <th>备注</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @production_plans.each_with_index do |production_plan,i| %>
-  <tr>
-    <td><%= i+1%></td>
-    <td><%= production_plan.product_line %></td>
-    <td><%= production_plan.assembly %></td>
-    <td><%= production_plan.planned %></td>
-    <td><%= production_plan.produced %></td>
-    <td><%= production_plan.trigger_max %></td>
-    <td><%= production_plan.date_display %></td>
+  <% @production_plans.each_with_index do |production_plan, i| %>
+      <tr>
+        <td><input type="checkbox" item="<%= production_plan.id %>" class="order-item-check"/></td>
+        <td><%= i+1 %></td>
+        <td><%= production_plan.product_line %></td>
+        <td><%= production_plan.assembly %></td>
+        <td><%= production_plan.planned %></td>
+        <td><%= production_plan.produced %></td>
+        <td><%= production_plan.trigger_max %></td>
+        <td><%= production_plan.date_display %></td>
+        <td><%= production_plan.remark %></td>
+        <td>
+          <input type="button" value="提前一位" onclick="up_down(<%=production_plan.id%>,'up')"/>
 
-    <td>
-      <input type="button" value="提前一位" onclick="up_down(<%=production_plan.id%>,'up')"/>
-
-      <input type="button" value="延后一位" onclick="up_down(<%=production_plan.id%>,'down')"/>
-    </td>
-    <td><%= link_to '编辑', edit_production_plan_path(production_plan) %></td>
-    <td><%= link_to '删除', production_plan, method: :delete, data: { confirm: '确定?' } %></td>
-  </tr>
-<% end %>
+          <input type="button" value="延后一位" onclick="up_down(<%=production_plan.id%>,'down')"/>
+        </td>
+        <td><%= link_to '编辑', edit_production_plan_path(production_plan) %></td>
+        <td><%= link_to '删除', production_plan, method: :delete, data: {confirm: '确定?'} %></td>
+      </tr>
+  <% end %>
 </table>
 
-<br />
+<div>
+  <input type="button" value="全选/取消全选本页" class="btn-warning"
+         current-state="0" onclick="check_all_box();" style="height: 38px;width: 150px;"/>
+  <input type="button" value="删除选中项" class="btn-info" style="height: 38px;width: 100px;" onclick="destroys()"/>
+</div>
 
-<%= link_to '新 建', new_production_plan_path %>
-
+<br/>
+<br/>
 <script type="text/javascript" src="/assets/jquery.ui/jquery.datetimepicker.js"></script>
-<link data-turbolinks-track="true" href="/assets/jquery.datetimepicker.css" media="all" rel="stylesheet" />
+<link data-turbolinks-track="true" href="/assets/jquery.datetimepicker.css" media="all" rel="stylesheet"/>
 <script>
     $(function () {
         $(".datepicker").datetimepicker({
@@ -53,10 +81,71 @@
             format: 'Y-m-d'
         });
     });
-        function up_down(id,action){
-            console.log(action);
-            $.post('/production_plans/up_down',{data:{id:id, action:action}},function(){
-                window.location.reload();
-            },'JSON');
+    function up_down(id, action) {
+        console.log(action);
+        $.post('/production_plans/up_down', {data: {id: id, action: action}}, function () {
+            window.location.reload();
+        }, 'JSON');
+    }
+
+
+    function get_items() {
+        var items = [];
+        $.each($('.order-item-check:checked'), function (i, item) {
+            console.log($(item).attr('item'));
+            items.push($(item).attr('item'));
+        });
+        return items;
+    }
+
+
+    function destroys() {
+        if (confirm('确定删除？？？')) {
+            var items = get_items();
+            console.log(items);
+            if (items.length == 0) {
+                alert('请选择要删除的数据');
+                return;
+            }
+            $.ajax({
+                type: 'delete',
+                url: '/production_plans/destroys',
+                data: {ids: items},
+                success: function (data) {
+                    if (data.result) {
+                        alert('删除成功！');
+                        window.location.reload();
+                    } else {
+                        alert('删除失败，请联系管理员');
+                    }
+                }
+            });
+
         }
+    }
+
+    function check_all_box() {
+        var checked = $(this).attr('current-state') == '1';
+        console.log(checked);
+        if (checked) {
+            $(this).val('全选本页');
+            $(this).attr('current-state', '0');
+            $('input:checkbox').removeAttr('checked');
+        } else {
+            $(this).val('取消全选本页');
+            $(this).attr('current-state', '1');
+            $('input:checkbox').prop('checked', true);
+        }
+
+    }
 </script>
+<style type="text/css">
+    .btnc {
+        display: inline-block;
+        height: 38px;
+        width: 100px;
+        padding: 10px;
+        margin-left: 10x;
+        text-align: center;
+    }
+</style>

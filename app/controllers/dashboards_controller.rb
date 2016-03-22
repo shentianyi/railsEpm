@@ -63,6 +63,8 @@ class DashboardsController < ApplicationController
 
     @dashboards = Dashboard.find_all_by_user_id(current_user.id)
 
+    @full_size=params[:full_size].present?
+
     render
   end
 

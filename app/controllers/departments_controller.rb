@@ -276,6 +276,13 @@ class DepartmentsController < ApplicationController
     parent=Department.find_by_name(params[:product_line])
     kpi=Kpi.find_by_name(Settings.app.kpi)
     entity_groups=[]
+
+    frequency=params[:interval].blank? ? KpiFrequency::Daily : params[:interval].to_i
+
+    start_time=KpiFrequency.get_begin_date(Time.now,frequency)
+    end_time=KpiFrequency.get_next_date(start_time,frequency)-1.second
+
+
     parent.children.each do |d|
       entity_group=d.entity_group
       params={}
@@ -283,10 +290,10 @@ class DepartmentsController < ApplicationController
       params[:kpi_name]=kpi.name
       params[:entity_group_id]=entity_group.id
       params[:entity_group_name]=entity_group.name
-      params[:start_time]=Time.now.beginning_of_day.utc.to_s
-      params[:end_time]=Time.now.end_of_day.utc.to_s
+      params[:start_time]=start_time.utc.to_s
+      params[:end_time]=end_time.utc.to_s
 
-      params[:frequency]=KpiFrequency::Daily
+      params[:frequency]=frequency
       params[:average]=true #=.nil? ? true : params[:average]=='true'
       data=Entry::Analyzer.new(params).analyse #.to_json
 

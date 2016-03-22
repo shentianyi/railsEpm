@@ -45,6 +45,9 @@ class Ability
       can [:read, :property_value], KpiProperty
       can :read, [KpiPropertyItem, KpiPropertyValue]
       can :manage, ReportSnap, user_id: user.id
+      can :product_line,EntityGroup
+      can :manage,ProductionPlan
+      can :manage,Department
     elsif user.user?
       can :manage, User, :id => user.id
       can :manage, UserSession, :email => user.email

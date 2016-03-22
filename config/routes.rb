@@ -4,7 +4,10 @@ IFEpm::Application.routes.draw do
   resources :production_plans do
     collection do
       match :up_down
-
+      match :upload
+      match :import, to: :import, via: [:get, :post]
+      match :destroys
+      match :set_product_line
     end
   end
 

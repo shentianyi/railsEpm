@@ -1,17 +1,279 @@
-<section class="daily-ftq" >
-  <div class="header" id="daily-ftq-header">
-    <p>Export to:</p>
-    <a class="btn btn-success btn_excel" onclick="export_bt_report_chart_excel()">Excel</a>
+<div class="header" id="daily-ftq-header">
+  <!--<p>Export to:</p>
+  <a class="btn btn-success btn_excel" onclick="export_bt_report_chart_excel()">Excel</a>-->
+
+  <div class="col-sm-12" id="current-status-header" style="background: #fefefe;border-bottom: 4px solid #000">
+    <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
+      <label>Condition</label>
+
+      <p>WorkingTime Summary Percentage</p>
+
+      <p id="current-date" style="font-size: 12px;"></p>
+    </div>
+
+    <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
+      <p>Product Line</p>
+      <select id="vehicle-select" style="min-width: 200px;text-align: center;">
+        <option value="Drum Assembly Line">Drum Assembly Line</option>
+        <option value="Cabinet Assembly Line">Cabinet Assembly Line</option>
+        <option value="Main Assembly Line">Main Assembly Line</option>
+        <option value="Packaging Line">Packaging Line</option>
+      </select>
+    </div>
+
+    <div class="col-sm-4" style="text-align: center;">
+      <label>Current time</label>
+
+      <p id="current-clock" style="font-size: 30px;font-weight: bold;"></p>
+    </div>
   </div>
-  <div id="chart_container" ></div>
-  <div id="data_container" class="data_container" height="160px"></div>
-  <%= render 'snap'%>
-</section>
+</div>
+
+<div class="clearfix chart-interval-alternate" id="chart-interval-alternate">
+    <ul class="pull-right control-chart-interval-group">
+     <!--  <li interval="90">
+        <a>Hr</a>
+      </li> -->
+      <li interval="100" style="color: black;">
+        <a>D</a>
+      </li>
+      <!-- <li interval="200">
+        <a>W</a>
+      </li> -->
+      <li interval="300">
+        <a>M</a>
+      </li>
+      <li interval="400">
+        <a>Qr</a>
+      </li>
+      <li interval="500">
+        <a>Y</a>
+      </li>
+    </ul>
+    <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
+</div>
+
+<!--chart-->
+<div id="charts_containers" style="margin-top: 80px;"></div>
+
+<hr style="border-bottom: 4px solid #000;">
+<!--table-->
+<div id="data_chartcontainer" class="data_container" style="margin-top: 20px;">
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr class="thead-tr">
+    </tr>
+    </thead>
+    <tbody class="tbody-tr">
+    <tr class="tbody-target-min">
+    </tr>
+    <tr class="tbody-value">
+    </tr>
+    <tr class="tbody-target-max">
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<style>
+    .table > thead > tr > th, .table > tbody > tr > td {
+        text-align: center;
+        background: white;
+    }
+</style>
+
 <% content_for :javascript_includes do %>
-    <%= javascript_include_tag "reports/daily_ftq" %>
+    <%= javascript_include_tag "reports/daily_ftq_beko" %>
 <% end %>
+
 <script>
-  $(document).ready(function(){
-      Report.init("daily_ftq");
-  });
+    $(document).ready(function () {
+        $('.control-chart-interval-group li').each(function(index){
+            $(this).click(function(){
+                $('.control-chart-interval-group li').css({color:'black',opacity:'0.3'});
+                $('.control-chart-interval-group li').attr('datatype','false');
+
+                $(this).css({opacity:'1'});
+                $(this).attr('datatype','true');
+
+                // console.log($(this).attr('interval'));
+                // console.log($('#vehicle-select').val());
+
+                var Choose_Interval_Code=$(this).attr('interval');
+                var ProductLine=$('#vehicle-select').val();
+                $.ajax({
+                    url:'/departments/entity_groups',
+                    type:'get',
+                    data:{
+                        interval:Choose_Interval_Code,
+                        product_line:ProductLine
+                    },
+                    success:function(data){
+                        console.log(data);
+                        //Here can do something
+                    },
+                    error:function(){
+                        console.log("Error");
+                    }
+                });
+            });
+        });
+
+//        Report.init("daily_ftq");
+        var ClientHeight = $(document).height();
+        $('#report-content').css({
+            height: (ClientHeight - 70) + 'px',
+            overflow: 'auto'
+        });
+
+        window.setInterval(function () {
+            $("#current-clock").text(format_time.current_time_clock());
+        }, 500);
+
+        var ClientWidth = document.documentElement.clientWidth;
+        $('#data_chartcontainer').css({width: (ClientWidth - 230) + 'px', overflowX: 'auto'});
+
+        loadChartData();
+    });
+
+    $("#vehicle-select").change(function () {
+        loadChartData();
+    });
+
+    try{
+        window.clearInterval(loadDataIntervalValue);
+    }catch(e){
+        console.log(e);
+    }
+    
+    var loadChartDataIntervalValue=window.setInterval("loadChartData()", 20000);
+
+    function loadChartData() {
+        loading_show();
+        /*清空*/
+        $('#charts_containers').children().remove();
+        $('.thead-tr').children().remove();
+        $('.tbody-target-max').children().remove();
+        $('.tbody-target-min').children().remove();
+        $('.tbody-value').children().remove();
+
+        var yAxis_value = new Array();
+        var charts_value = new Array();
+        var charts_target_max = new Array();
+        var charts_target_min = new Array();
+
+        $('<th>Station</th>').appendTo('.thead-tr').ready(function () {
+        });
+
+        $('<td>TargetMax</td>').appendTo('.tbody-target-max').ready(function () {
+        });
+
+        $('<td>TargetMin</td>').appendTo('.tbody-target-min').ready(function () {
+        });
+
+        $('<td>Value</td>').appendTo('.tbody-value').ready(function () {
+        });
+
+
+        var productLine = $('#vehicle-select').val();
+        var chartdatatype=100;
+        $('.control-chart-interval-group li').each(function(index){
+            if($(this).attr('datatype')=='true'){
+                chartdatatype=$(this).attr('interval');
+            }
+        })
+        
+        var GetData;
+
+        var ajaxData = GetDataFun();
+
+        /*table*/
+        for (var i = 0; i < ajaxData.length; i++) {
+            $('<th>' + ajaxData[i].name + '</th>').appendTo('.thead-tr').ready(function () {
+            });
+
+            $('<td>' + ajaxData[i].target_max + '</td>').appendTo('.tbody-target-max').ready(function () {
+            });
+
+            $('<td>' + ajaxData[i].target_min + '</td>').appendTo('.tbody-target-min').ready(function () {
+            });
+
+            yAxis_value.push(ajaxData[i].name);
+            charts_target_max.push(ajaxData[i].target_max);
+            charts_target_min.push(ajaxData[i].target_min);
+
+            if (ajaxData[i].value > ajaxData[i].target_max) {
+                charts_value.push({color: '#ff0000', y: ajaxData[i].value});
+                $('<td style="background:#ff0000;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+                });
+            } else if (ajaxData[i].value < ajaxData[i].target_min) {
+                charts_value.push({color: '#FFB90F', y: ajaxData[i].value});
+                $('<td style="background:#FFB90F;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+                });
+            } else {
+                charts_value.push({color: 'limegreen', y: ajaxData[i].value});
+                $('<td style="background:limegreen;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+                });
+            }
+        }
+
+        /*chart*/
+        $('#charts_containers').highcharts({
+            title: {
+                text: 'Working Time', x: -20 //center
+            },
+            credits: {
+                enabled: false
+            },
+            colors: ['#8DB6CD', '#43CD80', '#CD8162', '#24CBE5', '#64E572', '#FF9655',
+                '#FFF263', '#6AF9C4'],
+            xAxis: {categories: yAxis_value},
+            yAxis: {
+                title: {text: 'Time(s)'},
+                plotLines: [{value: 0, width: 1, color: '#808080'}]
+            },
+            tooltip: {valueSuffix: 's'},
+            legend: {layout: 'vertical', align: 'right', verticalAlign: 'middle', borderWidth: 0},
+
+            /*分组堆叠显示*/
+            /* plotOptions: {
+             column: {
+             stacking: 'normal'
+             }
+             },*/
+            series: [
+                {
+                    name: 'TargetMin',
+                    data: charts_target_min
+                },
+                {
+                    type: 'column',
+                    name: 'Value',
+                    data: charts_value
+                }, {
+                    name: 'TargetMax',
+                    data: charts_target_max
+                }
+            ]
+        });
+
+        /*ajax request*/
+        function GetDataFun() {
+            $.ajax({
+                url: '/departments/entity_groups',
+                type: 'get',
+                data: {product_line: productLine,interval:chartdatatype},
+                async: false,
+                success: function (data) {
+                    console.log(data)
+                    GetData = data;
+                    loading_hide();
+                },
+                error: function () {
+                    console.log("something error");
+                }
+            });
+            return GetData;
+        }
+    }
 </script>

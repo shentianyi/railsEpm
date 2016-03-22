@@ -347,6 +347,7 @@ en:
     entity: Department
     story_set: My Discussion
     subscription: My Subscription
+    production_plan: Production Plan
   analytics:
     title: Analytics
     kpi_category: KPI Category

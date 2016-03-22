@@ -1,7 +1,6 @@
-<section class="current-status" id="current-status">
+<section id="current-status">
   <section id="current-status-normal">
-    <div class=" col-sm-12" id="current-status-header">
-
+    <div class=" col-sm-12" id="current-status-header" style="background: #fefefe;border-bottom: 4px solid #000;">
       <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
         <label>Condition</label>
 
@@ -11,33 +10,14 @@
       </div>
 
       <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
-        <p>Early shift</p>
+        <p>Product Line</p>
         <select id="vehicle-select" style="min-width: 200px;text-align: center;">
-          <option value="滚筒内装配线">滚筒内装配线</option>
-          <option value="滚筒箱体线">滚筒箱体线</option>
-          <option value="滚筒总装线">滚筒总装线</option>
-          <option value="滚筒包装线">滚筒包装线</option>
+          <option value="Drum Assembly Line">Drum Assembly Line</option>
+          <option value="Cabinet Assembly Line">Cabinet Assembly Line</option>
+          <option value="Main Assembly Line">Main Assembly Line</option>
+          <option value="Packaging Line">Packaging Line</option>
         </select>
       </div>
-      <!--
-            <div class="header-block">
-              <label>Export</label>
-              <a class="btn btn-success" id="quick-print">Quick print</a>
-              <a class="btn btn-success" onclick="export_report_excel()">Excel</a>
-            </div>
-
-            <div class="header-block">
-              <label>Setting</label>
-              <a class="btn btn-primary" id="refresh">Refresh</a>
-              <a class="btn btn-primary extra_func_btn" id="target" tag='target'>Target</a>
-            </div>
-
-            <div class="header-block">
-              <label>Custom</label>
-              <a class="btn btn-primary extra_func_btn" tag='all_defects'>All defects</a>
-              <a class="btn btn-primary extra_func_btn" tag='key_defects'>Key station defects</a>
-            </div>
-      -->
       <div class="col-sm-4" style="text-align: center;">
         <label>Current time</label>
 
@@ -45,64 +25,119 @@
       </div>
     </div>
 
-    <div id="data_container" class="data-container">
+    <div class="col-sm-12">
+        <ul class="pull-right control-chart-interval-group">
+         <!--  <li interval="90">
+            <a>Hr</a>
+          </li> -->
+          <li interval="100" style="color:black;" datatype='true'>
+            <a>D</a>
+          </li>
+          <!-- <li interval="200">
+            <a>W</a>
+          </li> -->
+          <li interval="300">
+            <a>M</a>
+          </li>
+          <li interval="400">
+            <a>Qr</a>
+          </li>
+          <li interval="500">
+            <a>Y</a>
+          </li>
+        </ul>
+        <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
     </div>
-    <!--<%= render 'snap' %>-->
+    <div id="data_container" class="data-container"></div>
   </section>
 
-  <section id="current-status-target" class='current-status-wrapper'>
-    <div class="wrapper-header" id="target-wrapper-header">
-      <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
+  <!--
 
-      <p>Target setting</p>
-    </div>
-    <div id="target-setting-footer" class="target-setting-footer">
-      <div class="footer-left">
-        <p>Condition</p>
+    <section id="current-status-target" class='current-status-wrapper'>
+      <div class="wrapper-header" id="target-wrapper-header">
+        <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
 
-        <p>When Target higher than current FTQ</p>
-
-        <p>When Target equal to current FTQ</p>
-
-        <p>When Target lower than current FTQ</p>
+        <p>Target setting</p>
       </div>
-      <div class="footer-right" id="footer-right">
-        <p>Color</p>
-        <label>FTQ color setting</label>
+      <div id="target-setting-footer" class="target-setting-footer">
+        <div class="footer-left">
+          <p>Condition</p>
+
+          <p>When Target higher than current FTQ</p>
+
+          <p>When Target equal to current FTQ</p>
+
+          <p>When Target lower than current FTQ</p>
+        </div>
+        <div class="footer-right" id="footer-right">
+          <p>Color</p>
+          <label>FTQ color setting</label>
+        </div>
       </div>
-    </div>
-    <div id="target_setting" class="wrapper-current-body"></div>
-  </section>
+      <div id="target_setting" class="wrapper-current-body"></div>
+    </section>
+    <section id="current-status-all-defects" class='current-status-wrapper'>
+      <div class="wrapper-header">
+        <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
 
-  <section id="current-status-all-defects" class='current-status-wrapper'>
-    <div class="wrapper-header">
-      <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
+        <p>All defects</p>
+      </div>
+      <div class="wrapper-current-body">
+        <div id="all_defects" class="data_container"></div>
+      </div>
+    </section>
+    <section id="current-status-key-defects" class='current-status-wrapper'>
+      <div class="wrapper-header">
+        <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
 
-      <p>All defects</p>
-    </div>
-    <div class="wrapper-current-body">
-      <div id="all_defects" class="data_container"></div>
-    </div>
-  </section>
-  <section id="current-status-key-defects" class='current-status-wrapper'>
-    <div class="wrapper-header">
-      <a class="back-btn current-status-target-back-btn"><span>FTQ  Summary  Percentage</span></a>
+        <p>Key station defects</p>
+      </div>
+      <div class="wrapper-current-body">
+        <div id="key_defects" class="data_container"></div>
+      </div>
+    </section>
 
-      <p>Key station defects</p>
-    </div>
-    <div class="wrapper-current-body">
-      <div id="key_defects" class="data_container"></div>
-    </div>
-  </section>
+  -->
+
 </section>
 
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "reports/current_status" %>
     <%= javascript_include_tag "reports/defects" %>
-<% end %>-->
+<% end %>
 
 <script>
     $(document).ready(function () {
+        $('.control-chart-interval-group li').each(function(index){
+            $(this).click(function(){
+                $('.control-chart-interval-group li').css({color:'black',opacity:'0.3'});
+                $('.control-chart-interval-group li').attr('datatype','false');
+
+                $(this).css({opacity:'1'});
+                $(this).attr('datatype','true');
+
+                // console.log($(this).attr('interval'));
+                // console.log($('#vehicle-select').val());
+
+                var Choose_Interval_Code=$(this).attr('interval');
+                var ProductLine=$('#vehicle-select').val();
+                $.ajax({
+                    url:'/departments/entity_groups',
+                    type:'get',
+                    data:{
+                        interval:Choose_Interval_Code,
+                        product_line:ProductLine
+                    },
+                    success:function(data){
+                        console.log(data);
+                        //Here can do something
+                    },
+                    error:function(){
+                        console.log("Error");
+                    }
+                });
+            });
+        });
 //        Report.init("current_status");
         /*时间刷新*/
         window.setInterval(function () {
@@ -110,9 +145,11 @@
         }, 700);
 
         /*设置整体背景颜色*/
-        var ClientHeight = document.documentElement.clientHeight;
-        $('#data_container').css({
-            height: (ClientHeight ) + 'px'
+//        var ClientHeight = document.documentElement.clientHeight;
+        var ClientHeight = $(document).height();
+        $('#report-content').css({
+            height: (ClientHeight - 70) + 'px',
+            overflow: 'auto'
         });
 
         loadData();
@@ -120,46 +157,54 @@
 
     function loadData() {
         var productLine = $('#vehicle-select').val();
+        var datatype=100;
+
+        $('.control-chart-interval-group li').each(function(index){
+            if($(this).attr('datatype')=='true'){
+                datatype=$(this).attr('interval');
+            }
+        })
+        
         console.log(productLine);
         loading_show();
-        $.get('/departments/entity_groups', {product_line: productLine}, function (data) {
+
+        $.get('/departments/entity_groups', {product_line: productLine, interval: datatype}, function (data) {
             console.log(data);
             $('.workstation').remove();
             for (var i = 0; i < data.length; i++) {
-                $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
-                        '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number">' + data[i].value + '</div>' +
-                        '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
-                        '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
-                    loading_hide();
-                });
+
+                // console.log(data[i].value);
+                // console.log(data[i].target_max);
+                // console.log(data[i].target_min);
+
+                if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
+                    $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
+                            '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
+                            '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
+                            '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
+                        loading_hide();
+                    });
+                } else {
+                    $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
+                            '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
+                            '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
+                            '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
+                        loading_hide();
+                    });
+                }
             }
         }, 'JSON');
     }
     $("#vehicle-select").change(function () {
         loadData();
     });
-
-    window.setInterval("loadData()", 20000);
-
-    $('.workstation').click(function () {
-        console.log("Hellp");
-    })
-
-    var loading;
-    function loading_show() {
-        loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
-        var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
-        $(".pageload-overlay svg").css('left', '0px');
-        $(".pageload-overlay svg").css('top', top + 'px');
-        loading.show();
+    try{
+        window.clearInterval(loadChartDataIntervalValue);
+    }catch(e){
+        console.log(e);
     }
-
-    function loading_hide() {
-        $('#preloader').remove();
-        $('<div id="preloader" class="pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none"><path d="M30,30 50,30 50,30 30,30 Z"/></svg></div>').appendTo('body').ready(function () {
-        })
-    }
-
+    var loadDataIntervalValue=window.setInterval("loadData()", 20000);
+    
     /*双击事件*/
     function double_click() {
         window.location.href = 'kpi_entries/analyse?view=' + $(this).children('div');
@@ -167,17 +212,10 @@
 </script>
 
 <style>
-    .background {
-        margin-top: 10px;
-        background: #000;
-        border-radius: 20px;
-        min-width: 1200px;
-    }
-
     /*Box Start*/
     .box {
         min-width: 230px;
-        height: 160px;
+        height: 165px;
         border-radius: 10px;
         /*border: 2px solid #9000ff;*/
         border: 2px solid deepskyblue;
@@ -219,7 +257,7 @@
 
     .content > strong {
         font: 24px 'Helvetica';
-        color: #ffffff;
+        color: #5c5c5c;
     }
 
     .content > p {

@@ -23,21 +23,23 @@ class PlcService
         end
       end
 
-      v=values[i].to_f
+      v=values[i].to_f/1000
+
+      time=Time.parse(params[:time])
 
       KpiEntry.create(
           entry_type: 0,
           kpi_id: kpi.id,
-          entry_at: Time.parse(params[:time]),
+          entry_at: time.utc,
           entity_id: entity.id,
-          original_value: values[i],
-          value: values[i],
+          original_value: v,
+          value: v,
           abnormal: false,
           target_max: max,
           target_min: min,
           frequency: kpi.frequency,
           exception: v>max || v<min,
-          a1: v>max || v<min
+          a1: (v>max || v<min) ? 'YES' : 'NO'
       )
 
       if entity.is_last
@@ -45,10 +47,11 @@ class PlcService
         department=entity.department.parent
         ProductionPlan.transaction do
           if plan=ProductionPlan.where(product_line: department.name,
-                                       date: Date.today.to_time.utc).where('produced<=planned').order('index asc').limit(1).update('produced=produced+1')
+                                       date: time.to_date.to_time.utc).where('produced<planned').order('`index` asc').limit(1).first
             qty=plan.produced
             plan.update_attributes(produced: qty+1)
           end
+          #ProductionPlan.where(product_line:department.name,date:Date.today.to_time.utc).where('produced<=planned')
         end
       end
 
@@ -64,6 +67,13 @@ class PlcService
 
   def self.get_plan params
     data=[]
+
+    # kv={'滚筒内装配线' => 'Drum Assembly Line',
+    #     '滚筒箱体线' => 'Cabinet Assembly Line',
+    #     '滚筒总装线' => 'Main Assembly Line', '滚筒包装线' => 'Packaging Line'}
+
+
+
     ProductionPlan.where(date: params[:date].utc,
                          product_line: params[:product_line]).each do |p|
       data<<{
@@ -76,6 +86,27 @@ class PlcService
           Status: self.get_status(p)
       }
     end
+
+    if data.length>0
+      max_date=ProductionPlan.where('date>?',params[:date].utc).where(product_line: params[:product_line])
+                   .order('`date` asc').first
+
+      ProductionPlan.where(date: max_date.date,
+                           product_line: params[:product_line]).each do |p|
+        data<<{
+            Id: p.id,
+            Assembly: p.assembly,
+            Prod_Line: p.product_line,
+            Planned: p.planned,
+            Produced: p.produced,
+            Rest: p.planned-p.produced,
+            Status: self.get_status(p)
+        }
+      end
+
+    end
+
+
     ApiMessage.new({
                        meta: {
                            code: 200

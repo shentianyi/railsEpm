@@ -1,16 +1,16 @@
 module V2
   class PlanAPI < Base
-
+    format nil
     guard_all!
 
     namespace :plans do
       desc 'upload excel add in data'
-      params do
-        requires :app_id, type: String, desc: 'App Id'
-        requires :template_id, type: String, desc: 'Template Id'
-        optional :file_name, type: String, desc: 'File name of excel'
-        requires :data, type: Hash, desc: 'File Data'
-      end
+      # params do
+      #   requires :app_id, type: String, desc: 'App Id'
+      #   requires :template_id, type: String, desc: 'Template Id'
+      #   optional :file_name, type: String, desc: 'File name of excel'
+      #   requires :data, type: String, desc: 'File Data'
+      # end
       post :upload do
         Rails.logger.debug '**************** excel logger'
         Rails.logger.debug params
