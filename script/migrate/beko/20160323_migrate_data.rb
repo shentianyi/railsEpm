@@ -75,11 +75,6 @@ Department.transaction do
     end
   end
 
-  puts '-------------------------------------'
-  puts 'clean entity group name for 1N & 3U'
-  EntityGroup.where("name like '1N-%' or name like '3U-%'").each do |eg|
-    eg.update_attributes(name: eg.name.sub(/^\w+-/, ''))
-  end
 
   puts '-------------------------------------'
   puts 'add tl'
@@ -124,26 +119,26 @@ Department.transaction do
 
 #1
   for i in 1..26
-    sensors['TL Drum Assembly Line']<< (i>9 ? "ET-#{i}" : "ET-0#{i}")
+    sensors['TL Drum Assembly Line']<< (i>9 ? "ET-C#{i}" : "ET-C0#{i}")
   end
 
 #sensors['Beko']+= sensors['TL Drum Assembly Line']
 #2
   for i in 1..22
-    sensors['TL Cabinet Assembly Line']<< (i>9 ? "ES-#{i}" : "ES-0#{i}")
+    sensors['TL Cabinet Assembly Line']<< (i>9 ? "ES-C#{i}" : "ES-C0#{i}")
   end
 
 # sensors['Beko']+= sensors['TL Cabinet Assembly Line']
 
 #3
   for i in 23..44
-    sensors['TL Main Assembly Line']<< (i>9 ? "ES-#{i}" : "ES-0#{i}")
+    sensors['TL Main Assembly Line']<< (i>9 ? "ES-C#{i}" : "ES-C0#{i}")
   end
 #  sensors['Beko']+= sensors['TL Main Assembly Line']
 
 #4
   for i in 45..84
-    sensors['TL Testing Line']<< (i>9 ? "ES-#{i}" : "ES-0#{i}")
+    sensors['TL Testing Line']<< (i>9 ? "ES-C#{i}" : "ES-C0#{i}")
   end
 #  sensors['Beko']+= sensors['TL Testing Line']
 
@@ -173,6 +168,14 @@ Department.transaction do
       tl.entity_group.entities<<entity
       parent.entity_group.entities<<entity
     end
+  end
+
+
+
+  puts '-------------------------------------'
+  puts 'clean entity group name for 1N & 3U'
+  EntityGroup.where("name like '1N-%' or name like '3U-%' or name like 'ET-%' or name like 'ES-%'").each do |eg|
+    eg.update_attributes(name: eg.name.sub(/^\w+-/, ''))
   end
 end
 
