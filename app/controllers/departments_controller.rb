@@ -273,7 +273,7 @@ class DepartmentsController < ApplicationController
   end
 
   def entity_groups
-    parent=Department.find_by_name(params[:product_line])
+    parent=Department.find_by_id(params[:product_line])
     kpi=Kpi.find_by_name(Settings.app.kpi)
     entity_groups=[]
 

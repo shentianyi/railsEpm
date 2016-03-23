@@ -11,6 +11,7 @@ class PlcService
       p k
       p '-----------------------------------------'
       entity=Entity.find_by_code(k)
+      break if entity.blank?
       max=kpi.target_max
       min=kpi.target_max
 
@@ -26,6 +27,21 @@ class PlcService
       v=values[i].to_f/1000
 
       time=Time.parse(params[:time])
+
+
+      if entity.is_last
+
+        department=entity.department.parent
+        ProductionPlan.transaction do
+          if plan=ProductionPlan.where(product_line: department.cn_name,
+                                       date: time.to_date.to_time.utc).where('produced<planned').order('`index` asc').limit(1).first
+            qty=plan.produced
+            plan.update_attributes(produced: qty+1)
+          end
+          #ProductionPlan.where(product_line:department.name,date:Date.today.to_time.utc).where('produced<=planned')
+        end
+      end
+
 
       return if (v>3*max) || (v<min/3)
 
@@ -43,21 +59,6 @@ class PlcService
           exception: v>max || v<min,
           a1: (v>max || v<min) ? 'YES' : 'NO'
       )
-
-
-      if entity.is_last
-
-        department=entity.department.parent
-        ProductionPlan.transaction do
-          if plan=ProductionPlan.where(product_line: department.cn_name,
-                                       date: time.to_date.to_time.utc).where('produced<planned').order('`index` asc').limit(1).first
-            qty=plan.produced
-            plan.update_attributes(produced: qty+1)
-          end
-          #ProductionPlan.where(product_line:department.name,date:Date.today.to_time.utc).where('produced<=planned')
-        end
-      end
-
 
     end
 

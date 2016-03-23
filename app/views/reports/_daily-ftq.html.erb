@@ -6,7 +6,7 @@
     <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
       <label>Condition</label>
 
-      <p>WorkingTime Summary Percentage</p>
+      <p>CircleTime Detail Column Chart</p>
 
       <p id="current-date" style="font-size: 12px;"></p>
     </div>
@@ -14,11 +14,9 @@
     <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
       <p>Product Line</p>
       <select id="vehicle-select" style="min-width: 200px;text-align: center;">
-        <select id="vehicle-select" style="min-width: 200px;text-align: center;">
-          <% Department.where(is_product_line: true).each do |p| %>
-              <option value="<%=p.name%>"><%=p.name%></option>
-          <% end %>
-        </select>
+        <% Department.where(is_product_line: true).each do |p| %>
+            <option value="<%= p.id %>"><%= p.name %></option>
+        <% end %>
       </select>
     </div>
 
@@ -182,8 +180,8 @@
         $('<td>TargetMax</td>').appendTo('.tbody-target-max').ready(function () {
         });
 
-        $('<td>TargetMin</td>').appendTo('.tbody-target-min').ready(function () {
-        });
+//        $('<td>TargetMin</td>').appendTo('.tbody-target-min').ready(function () {
+//        });
 
         $('<td>Value</td>').appendTo('.tbody-value').ready(function () {
         });
@@ -195,20 +193,20 @@
 
             $('<td>' + ajaxData[i].target_max + '</td>').appendTo('.tbody-target-max').ready(function () {
             });
-
-            $('<td>' + ajaxData[i].target_min + '</td>').appendTo('.tbody-target-min').ready(function () {
-            });
+//
+//            $('<td>' + ajaxData[i].target_min + '</td>').appendTo('.tbody-target-min').ready(function () {
+//            });
 
             yAxis_value.push(ajaxData[i].name);
             charts_target_max.push(ajaxData[i].target_max);
-            charts_target_min.push(ajaxData[i].target_min);
+//            charts_target_min.push(ajaxData[i].target_min);
 
             if (ajaxData[i].value > ajaxData[i].target_max) {
                 charts_value.push({color: '#ff0000', y: ajaxData[i].value});
                 $('<td style="background:#ff0000;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
                 });
             } else if (ajaxData[i].value < ajaxData[i].target_min) {
-                charts_value.push({color: '#FFB90F', y: ajaxData[i].value});
+                charts_value.push({color: 'limegreen', y: ajaxData[i].value});
                 $('<td style="background:#FFB90F;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
                 });
             } else {
@@ -221,7 +219,7 @@
         /*chart*/
         $('#charts_containers').highcharts({
             title: {
-                text: 'Working Time', x: -20 //center
+                text: 'Circle Time', x: -20 //center
             },
             credits: {
                 enabled: false
@@ -243,10 +241,10 @@
              }
              },*/
             series: [
-                {
-                    name: 'TargetMin',
-                    data: charts_target_min
-                },
+//                {
+//                    name: 'TargetMin',
+//                    data: charts_target_min
+//                },
                 {
                     type: 'column',
                     name: 'Value',
