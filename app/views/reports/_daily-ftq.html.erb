@@ -14,10 +14,11 @@
     <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
       <p>Product Line</p>
       <select id="vehicle-select" style="min-width: 200px;text-align: center;">
-        <option value="Drum Assembly Line">Drum Assembly Line</option>
-        <option value="Cabinet Assembly Line">Cabinet Assembly Line</option>
-        <option value="Main Assembly Line">Main Assembly Line</option>
-        <option value="Packaging Line">Packaging Line</option>
+        <select id="vehicle-select" style="min-width: 200px;text-align: center;">
+          <% Department.where(is_product_line: true).each do |p| %>
+              <option value="<%=p.name%>"><%=p.name%></option>
+          <% end %>
+        </select>
       </select>
     </div>
 

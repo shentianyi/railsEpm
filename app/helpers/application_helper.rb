@@ -18,7 +18,7 @@ module ApplicationHelper
   def get_user_entity_groups
     #@entity_groups=current_user.entity_groups
     puts 'log------------------------------'.red
-    @entity_groups=EntityGroup.accessible_by(current_ability).uniq
+    @entity_groups=EntityGroup.accessible_by(current_ability).order('show_index asc,id asc').uniq
 
   end
 
