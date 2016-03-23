@@ -250,7 +250,7 @@ function prepare_form_chart() {
                     fontSize: '11px'
                 },
                 formatter: function () {
-                    console.log(this)
+                    console.log(this);
                     if (this.series.index === 2) {
                         if (this.total > 0) {
                             return this.total;
@@ -457,21 +457,27 @@ function alternate_chart_type(event) {
     }
     else {
         var target = adapt_event(event).target;
-        if (!$(target).hasClass("image")) {
+        if (!($(target).hasClass("image"))) {
+            console.log('============');
+            console.log(target);
+            console.log('=============');
+
             var option = {
                 target: "chart-container",
                 type: $(target).attr("type"),
                 count: ANALYTICS.chartSeries.getCount(),
                 interval: $("#chart-interval-alternate li.active").attr("interval"),
                 changeType: true
-            }
+            };
+
+            console.log(option);
+
             ANALYTICS.changeTypeOption = option;
             for (var i = 0; i < ANALYTICS.chartSeries.series.length; i++) {
                 if (ANALYTICS.chartSeries.series[i] === undefined) {
                     continue
                 }
                 else {
-
                     option.legend_text = ANALYTICS.chartSeries.series[i].legend_text;
                     option.id = i;
                     option.changeTypeLoad = true;
@@ -480,7 +486,7 @@ function alternate_chart_type(event) {
             }
 
             $(target).siblings().removeClass("image");
-            $("#chart-type-alternate td").find("p").css("display", "block")
+            $("#chart-type-alternate td").find("p").css("display", "block");
             $(target).addClass("image").find("p").css("display", "block");
         }
     }

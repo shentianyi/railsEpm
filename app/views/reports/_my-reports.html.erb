@@ -195,31 +195,35 @@
     var ClientHeight = document.documentElement.clientHeight;
 
     $('.my_icon').css({
-        marginTop: (ClientHeight) / 2 + 'px'
+        marginTop: (ClientHeight) / 2 + 'px',
+        marginBottom:((ClientHeight) / 2-33) + 'px'
     });
 
     $('#pop-crate').css({
-        height: (ClientHeight - 70) + 'px'
+//        height: (ClientHeight - 70) + 'px',
+        bottom: '0px'
     });
 
     $('#pop-crate').click(function () {
         $('#report-menu').fadeToggle(0);
-    })
+    });
 
-      var loading;
-        function loading_show() {
-            loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
-            var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
-            $(".pageload-overlay svg").css('left', '220px');
-            $(".pageload-overlay svg").css('top', top + 'px');
-            loading.show();
-        }
+    var loading;
+    function loading_show() {
+        loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
+        var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
+        $(".pageload-overlay svg").css('left', '230px');
+        $(".pageload-overlay svg").css('top', top + 'px');
+        $(".pageload-overlay svg").css('bottom', 0);
+        $(".pageload-overlay svg").css('right', 0);
+        loading.show();
+    }
 
-        function loading_hide() {
-            $('#preloader').remove();
-            $('<div id="preloader" class="pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none"><path d="M30,30 50,30 50,30 30,30 Z"/></svg></div>').appendTo('body').ready(function () {
-            })
-        }
+    function loading_hide() {
+        $('#preloader').remove();
+        $('<div id="preloader" class="pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none"><path d="M30,30 50,30 50,30 30,30 Z"/></svg></div>').appendTo('body').ready(function () {
+        })
+    }
 
     // function refersh(){
     //   window.location.reload();

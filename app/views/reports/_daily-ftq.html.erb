@@ -31,31 +31,31 @@
 </div>
 
 <div class="clearfix chart-interval-alternate" id="chart-interval-alternate">
-    <ul class="pull-right control-chart-interval-group">
-     <!--  <li interval="90">
-        <a>Hr</a>
-      </li> -->
-      <li interval="100" style="color: black;">
-        <a>D</a>
-      </li>
-      <!-- <li interval="200">
-        <a>W</a>
-      </li> -->
-      <li interval="300">
-        <a>M</a>
-      </li>
-      <li interval="400">
-        <a>Qr</a>
-      </li>
-      <li interval="500">
-        <a>Y</a>
-      </li>
-    </ul>
-    <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
+  <ul class="pull-right control-chart-interval-group">
+    <!--  <li interval="90">
+       <a>Hr</a>
+     </li> -->
+    <li interval="100" style="color: black;">
+      <a>D</a>
+    </li>
+    <!-- <li interval="200">
+      <a>W</a>
+    </li> -->
+    <li interval="300">
+      <a>M</a>
+    </li>
+    <li interval="400">
+      <a>Qr</a>
+    </li>
+    <li interval="500">
+      <a>Y</a>
+    </li>
+  </ul>
+  <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
 </div>
 
 <!--chart-->
-<div id="charts_containers" style="margin-top: 80px;"></div>
+<div id="charts_containers" style="margin-top: 80px;min-height:300px;"></div>
 
 <hr style="border-bottom: 4px solid #000;">
 <!--table-->
@@ -89,31 +89,33 @@
 
 <script>
     $(document).ready(function () {
-        $('.control-chart-interval-group li').each(function(index){
-            $(this).click(function(){
-                $('.control-chart-interval-group li').css({color:'black',opacity:'0.3'});
-                $('.control-chart-interval-group li').attr('datatype','false');
+        $('.control-chart-interval-group li').each(function (index) {
+            $(this).click(function () {
+                $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
+                $('.control-chart-interval-group li').attr('datatype', 'false');
 
-                $(this).css({opacity:'1'});
-                $(this).attr('datatype','true');
+                show_loading(145, 0, 0, 230);
+                $(this).css({opacity: '1'});
+                $(this).attr('datatype', 'true');
 
                 // console.log($(this).attr('interval'));
                 // console.log($('#vehicle-select').val());
 
-                var Choose_Interval_Code=$(this).attr('interval');
-                var ProductLine=$('#vehicle-select').val();
+                var Choose_Interval_Code = $(this).attr('interval');
+                var ProductLine = $('#vehicle-select').val();
                 $.ajax({
-                    url:'/departments/entity_groups',
-                    type:'get',
-                    data:{
-                        interval:Choose_Interval_Code,
-                        product_line:ProductLine
+                    url: '/departments/entity_groups',
+                    type: 'get',
+                    data: {
+                        interval: Choose_Interval_Code,
+                        product_line: ProductLine
                     },
-                    success:function(data){
+                    success: function (data) {
                         console.log(data);
                         //Here can do something
+                        remove_loading();
                     },
-                    error:function(){
+                    error: function () {
                         console.log("Error");
                     }
                 });
@@ -141,16 +143,15 @@
         loadChartData();
     });
 
-    try{
+    try {
         window.clearInterval(loadDataIntervalValue);
-    }catch(e){
+    } catch (e) {
         console.log(e);
     }
-    
-    var loadChartDataIntervalValue=window.setInterval("loadChartData()", 20000);
+
+    var loadChartDataIntervalValue = window.setInterval("loadChartData()", 20000);
 
     function loadChartData() {
-        loading_show();
         /*清空*/
         $('#charts_containers').children().remove();
         $('.thead-tr').children().remove();
@@ -163,6 +164,18 @@
         var charts_target_max = new Array();
         var charts_target_min = new Array();
 
+        var productLine = $('#vehicle-select').val();
+        var chartdatatype = 100;
+        $('.control-chart-interval-group li').each(function (index) {
+            if ($(this).attr('datatype') == 'true') {
+                chartdatatype = $(this).attr('interval');
+            }
+        });
+
+        var GetData;
+
+        var ajaxData = GetDataFun();
+
         $('<th>Station</th>').appendTo('.thead-tr').ready(function () {
         });
 
@@ -174,19 +187,6 @@
 
         $('<td>Value</td>').appendTo('.tbody-value').ready(function () {
         });
-
-
-        var productLine = $('#vehicle-select').val();
-        var chartdatatype=100;
-        $('.control-chart-interval-group li').each(function(index){
-            if($(this).attr('datatype')=='true'){
-                chartdatatype=$(this).attr('interval');
-            }
-        })
-        
-        var GetData;
-
-        var ajaxData = GetDataFun();
 
         /*table*/
         for (var i = 0; i < ajaxData.length; i++) {
@@ -260,15 +260,16 @@
 
         /*ajax request*/
         function GetDataFun() {
+            show_loading(145, 0, 0, 230);
             $.ajax({
                 url: '/departments/entity_groups',
                 type: 'get',
-                data: {product_line: productLine,interval:chartdatatype},
+                data: {product_line: productLine, interval: chartdatatype},
                 async: false,
                 success: function (data) {
-                    console.log(data)
+                    console.log(data);
                     GetData = data;
-                    loading_hide();
+                    remove_loading();
                 },
                 error: function () {
                     console.log("something error");

@@ -13,7 +13,7 @@
         <p>Product Line</p>
         <select id="vehicle-select" style="min-width: 200px;text-align: center;">
           <% Department.where(is_product_line: true).each do |p| %>
-              <option value="<%=p.name%>"><%=p.name%></option>
+              <option value="<%= p.name %>"><%= p.name %></option>
           <% end %>
         </select>
       </div>
@@ -112,6 +112,7 @@
                 $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
                 $('.control-chart-interval-group li').attr('datatype', 'false');
 
+                loading_show();
                 $(this).css({opacity: '1'});
                 $(this).attr('datatype', 'true');
 
@@ -130,6 +131,10 @@
                     success: function (data) {
                         console.log(data);
                         //Here can do something
+                        console.log('data====');
+                        console.log(data);
+                        console.log('data====');
+                        loading_hide();
                     },
                     error: function () {
                         console.log("Error");
@@ -162,38 +167,39 @@
             if ($(this).attr('datatype') == 'true') {
                 datatype = $(this).attr('interval');
             }
-        })
-
-        console.log(productLine);
-        loading_show();
-
-        $.get('/departments/entity_groups', {product_line: productLine, interval: datatype}, function (data) {
-            console.log(data);
-            $('.workstation').remove();
-            for (var i = 0; i < data.length; i++) {
-
-                // console.log(data[i].value);
-                // console.log(data[i].target_max);
-                // console.log(data[i].target_min);
-
-                if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
-                    $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
-                    '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
-                    '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
-                    '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
-                        loading_hide();
-                    });
-                } else {
-                    $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
-                    '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
-                    '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
-                    '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
-                        loading_hide();
-                    });
-                }
-            }
-        }, 'JSON');
+        });
     }
+
+    console.log(productLine);
+    loading_show();
+
+    $.get('/departments/entity_groups', {product_line: productLine, interval: datatype}, function (data) {
+        console.log(data);
+        $('.workstation').remove();
+        for (var i = 0; i < data.length; i++) {
+
+            // console.log(data[i].value);
+            // console.log(data[i].target_max);
+            // console.log(data[i].target_min);
+
+            if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
+                $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
+                        '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
+                        '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
+                        '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
+                    loading_hide();
+                });
+            } else {
+                $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
+                        '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
+                        '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
+                        '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
+                    loading_hide();
+                });
+            }
+        }
+    }, 'JSON');
+
     $("#vehicle-select").change(function () {
         loadData();
     });
