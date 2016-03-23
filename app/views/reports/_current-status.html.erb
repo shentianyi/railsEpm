@@ -12,10 +12,9 @@
       <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
         <p>Product Line</p>
         <select id="vehicle-select" style="min-width: 200px;text-align: center;">
-          <option value="Drum Assembly Line">Drum Assembly Line</option>
-          <option value="Cabinet Assembly Line">Cabinet Assembly Line</option>
-          <option value="Main Assembly Line">Main Assembly Line</option>
-          <option value="Packaging Line">Packaging Line</option>
+          <% Department.where(is_product_line: true).each do |p| %>
+              <option value="<%=p.name%>"><%=p.name%></option>
+          <% end %>
         </select>
       </div>
       <div class="col-sm-4" style="text-align: center;">
@@ -26,27 +25,27 @@
     </div>
 
     <div class="col-sm-12">
-        <ul class="pull-right control-chart-interval-group">
-         <!--  <li interval="90">
-            <a>Hr</a>
-          </li> -->
-          <li interval="100" style="color:black;" datatype='true'>
-            <a>D</a>
-          </li>
-          <!-- <li interval="200">
-            <a>W</a>
-          </li> -->
-          <li interval="300">
-            <a>M</a>
-          </li>
-          <li interval="400">
-            <a>Qr</a>
-          </li>
-          <li interval="500">
-            <a>Y</a>
-          </li>
-        </ul>
-        <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
+      <ul class="pull-right control-chart-interval-group">
+        <!--  <li interval="90">
+           <a>Hr</a>
+         </li> -->
+        <li interval="100" style="color:black;" datatype='true'>
+          <a>D</a>
+        </li>
+        <!-- <li interval="200">
+          <a>W</a>
+        </li> -->
+        <li interval="300">
+          <a>M</a>
+        </li>
+        <li interval="400">
+          <a>Qr</a>
+        </li>
+        <li interval="500">
+          <a>Y</a>
+        </li>
+      </ul>
+      <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
     </div>
     <div id="data_container" class="data-container"></div>
   </section>
@@ -108,31 +107,31 @@
 
 <script>
     $(document).ready(function () {
-        $('.control-chart-interval-group li').each(function(index){
-            $(this).click(function(){
-                $('.control-chart-interval-group li').css({color:'black',opacity:'0.3'});
-                $('.control-chart-interval-group li').attr('datatype','false');
+        $('.control-chart-interval-group li').each(function (index) {
+            $(this).click(function () {
+                $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
+                $('.control-chart-interval-group li').attr('datatype', 'false');
 
-                $(this).css({opacity:'1'});
-                $(this).attr('datatype','true');
+                $(this).css({opacity: '1'});
+                $(this).attr('datatype', 'true');
 
                 // console.log($(this).attr('interval'));
                 // console.log($('#vehicle-select').val());
 
-                var Choose_Interval_Code=$(this).attr('interval');
-                var ProductLine=$('#vehicle-select').val();
+                var Choose_Interval_Code = $(this).attr('interval');
+                var ProductLine = $('#vehicle-select').val();
                 $.ajax({
-                    url:'/departments/entity_groups',
-                    type:'get',
-                    data:{
-                        interval:Choose_Interval_Code,
-                        product_line:ProductLine
+                    url: '/departments/entity_groups',
+                    type: 'get',
+                    data: {
+                        interval: Choose_Interval_Code,
+                        product_line: ProductLine
                     },
-                    success:function(data){
+                    success: function (data) {
                         console.log(data);
                         //Here can do something
                     },
-                    error:function(){
+                    error: function () {
                         console.log("Error");
                     }
                 });
@@ -157,14 +156,14 @@
 
     function loadData() {
         var productLine = $('#vehicle-select').val();
-        var datatype=100;
+        var datatype = 100;
 
-        $('.control-chart-interval-group li').each(function(index){
-            if($(this).attr('datatype')=='true'){
-                datatype=$(this).attr('interval');
+        $('.control-chart-interval-group li').each(function (index) {
+            if ($(this).attr('datatype') == 'true') {
+                datatype = $(this).attr('interval');
             }
         })
-        
+
         console.log(productLine);
         loading_show();
 
@@ -179,16 +178,16 @@
 
                 if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
                     $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
-                            '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
-                            '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
-                            '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
+                    '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
+                    '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
+                    '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                         loading_hide();
                     });
                 } else {
                     $('<div class="col-md-3 workstation"><div class="box" ondblclick="double_click();">' +
-                            '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
-                            '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
-                            '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
+                    '<div class="box-title">' + data[i].name + '</div><div style="display:inline-flex;width: 100%;"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
+                    '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
+                    '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                         loading_hide();
                     });
                 }
@@ -198,13 +197,13 @@
     $("#vehicle-select").change(function () {
         loadData();
     });
-    try{
+    try {
         window.clearInterval(loadChartDataIntervalValue);
-    }catch(e){
+    } catch (e) {
         console.log(e);
     }
-    var loadDataIntervalValue=window.setInterval("loadData()", 20000);
-    
+    var loadDataIntervalValue = window.setInterval("loadData()", 20000);
+
     /*双击事件*/
     function double_click() {
         window.location.href = 'kpi_entries/analyse?view=' + $(this).children('div');

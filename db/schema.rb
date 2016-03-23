@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160319192036) do
+ActiveRecord::Schema.define(:version => 20160323090657) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -164,8 +164,10 @@ ActiveRecord::Schema.define(:version => 20160319192036) do
     t.string   "ancestry"
     t.integer  "tenant_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.string   "cn_name"
+    t.boolean  "is_product_line", :default => false
   end
 
   add_index "departments", ["ancestry"], :name => "index_departments_on_ancestry"
@@ -243,6 +245,7 @@ ActiveRecord::Schema.define(:version => 20160319192036) do
     t.string   "description"
     t.string   "code"
     t.integer  "department_id"
+    t.integer  "show_index",    :default => 10
   end
 
   add_index "entity_groups", ["department_id"], :name => "index_entity_groups_on_department_id"

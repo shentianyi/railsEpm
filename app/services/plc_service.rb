@@ -27,6 +27,8 @@ class PlcService
 
       time=Time.parse(params[:time])
 
+      return if (v>3*max) || (v<min/3)
+
       KpiEntry.create(
           entry_type: 0,
           kpi_id: kpi.id,
@@ -42,11 +44,12 @@ class PlcService
           a1: (v>max || v<min) ? 'YES' : 'NO'
       )
 
+
       if entity.is_last
 
         department=entity.department.parent
         ProductionPlan.transaction do
-          if plan=ProductionPlan.where(product_line: department.name,
+          if plan=ProductionPlan.where(product_line: department.cn_name,
                                        date: time.to_date.to_time.utc).where('produced<planned').order('`index` asc').limit(1).first
             qty=plan.produced
             plan.update_attributes(produced: qty+1)
@@ -59,9 +62,6 @@ class PlcService
     end
 
 
-
-
-
   end
 
 
@@ -71,7 +71,6 @@ class PlcService
     # kv={'滚筒内装配线' => 'Drum Assembly Line',
     #     '滚筒箱体线' => 'Cabinet Assembly Line',
     #     '滚筒总装线' => 'Main Assembly Line', '滚筒包装线' => 'Packaging Line'}
-
 
 
     ProductionPlan.where(date: params[:date].utc,
@@ -88,7 +87,7 @@ class PlcService
     end
 
     if data.length>0
-      max_date=ProductionPlan.where('date>?',params[:date].utc).where(product_line: params[:product_line])
+      max_date=ProductionPlan.where('date>?', params[:date].utc).where(product_line: params[:product_line])
                    .order('`date` asc').first
 
       ProductionPlan.where(date: max_date.date,

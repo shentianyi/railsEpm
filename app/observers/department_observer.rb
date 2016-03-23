@@ -14,7 +14,7 @@ class DepartmentObserver<ActiveRecord::Observer
     entity=Entity.new(name: department.name, code: department.name, department_id: department.id)
     #create user
     user=User.new(first_name: "#{department.name}_user",
-                  email: "#{department.name}_user@beko.com",
+                  email: "#{department.name.gsub(/ /,'_')}_user@beko.com",
                   password: '123456@', password_confirmation: '123456@', role_id: 100)
     entity.users<<user
 

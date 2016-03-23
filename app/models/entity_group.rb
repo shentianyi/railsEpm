@@ -13,7 +13,7 @@ class EntityGroup < ActiveRecord::Base
   has_many :contacts, :through => :entity_contacts, :source => :user
   has_many :chart_conditions, dependent: :destroy
 
-  attr_accessible :name, :is_public, :description, :code, :department_id, :user_id, :tenant_id
+  attr_accessible :name, :is_public, :description, :code, :department_id, :user_id, :tenant_id,:show_index
   acts_as_tenant(:tenant)
 
   attr_accessor :can_modify
