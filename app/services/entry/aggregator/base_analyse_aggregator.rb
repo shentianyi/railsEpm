@@ -70,8 +70,10 @@ module Entry
         end
 
         self.data_module= {:current => self.current,
-                           :target_max => self.parameter.kpi.target_max,#self.target_max,
-                           :target_min => self.parameter.kpi.target_min,#self.target_min,
+                           # :target_max => self.parameter.kpi.target_max,#self.target_max,
+                           # :target_min => self.parameter.kpi.target_min,#self.target_min,
+                           :target_max =>  self.target_max,
+                           :target_min =>  self.target_min,
                            :unit => self.unit}
         self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
         #puts '-------------'

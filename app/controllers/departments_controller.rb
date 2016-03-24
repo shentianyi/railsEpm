@@ -332,7 +332,7 @@ class DepartmentsController < ApplicationController
 
     entries=[]
     kpi=Kpi.first
-    if (eg=EntityGroup.find_by_id(params[:id])) && (e=eg.entities.first)
+    if (eg=EntityGroup.find_by_id(params[:id])) && (e=eg.entities.last)
       q = KpiEntry.where(kpi_id: Kpi.first.id,
                          entity_id: e.id)
       start_time=Time.parse(params[:start_time]).utc #.to_s
