@@ -173,12 +173,14 @@
 
         // 循环添加数据
         var data_entry_at_format_all = "";
+        var data_entry_at_format_date = "";
         for (var i = 0; i < HistoryData.length; i++) {
             var data_id = HistoryData[i].id;
             var data_value = HistoryData[i].value;
 
             var data_entry_at = HistoryData[i].entry_at;
             data_entry_at_format_all = new Date(data_entry_at).format('yyyy-MM-dd hh:mm:ss');
+            data_entry_at_format_date = new Date(data_entry_at).format('yyyy-MM-dd');
             var data_entry_at_format = new Date(data_entry_at).format('hh:mm:ss');
             xAxis_value.push(data_entry_at_format);
 
@@ -239,7 +241,7 @@
             },
             tooltip: {
                 formatter: function () {
-                    return '<span><b>' + data_entry_at_format_all +
+                    return '<span><b>' + data_entry_at_format_date + ' ' + this.x +
                             '</b><br/>Value: <b>' + this.y + ' s</b><span>';
                 }
             },
