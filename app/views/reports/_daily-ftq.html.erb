@@ -271,7 +271,8 @@
                             if (window.localStorage) {
                                 localStorage.box_msg = over_id;
                                 localStorage.box_name = e.point.category;
-                                localStorage.pre_url=document.location.href; 
+                                localStorage.pre_url = window.location.host + '/reports#daily_ftq';
+
                                 window.location.href = 'reports#defects';
                                 location.reload();
                             } else {
