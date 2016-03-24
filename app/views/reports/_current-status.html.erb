@@ -86,7 +86,6 @@
                 });
             });
         });
-//        Report.init("current_status");
         /*时间刷新*/
         window.setInterval(function () {
             $("#current-clock").text(format_time.current_time_clock());
@@ -100,13 +99,27 @@
             overflow: 'auto'
         });
 
-        loadData();
+        if (localStorage.box_msg) {
+            var box_msg = localStorage.box_msg;
+            var productLine = box_msg.split('_')[1];
+            var datatype = box_msg.split('_')[3];
+
+            $('#vehicle-select option').each(function () {
+                if (($(this).attr('value')) == productLine) {
+                    $(this).attr('selected', 'true');
+                }
+            });
+
+            loadData(productLine, datatype);
+        } else {
+            var productLine = $('#vehicle-select').val();
+            var datatype = 100;
+            loadData();
+        }
     });
 
-    function loadData() {
-        var productLine = $('#vehicle-select').val();
-        var datatype = 100;
 
+    function loadData(productLine, datatype) {
         $('.control-chart-interval-group li').each(function (index) {
             if ($(this).attr('datatype') == 'true') {
                 datatype = $(this).attr('interval');
@@ -140,7 +153,8 @@
     }
 
     $("#vehicle-select").change(function () {
-        loadData();
+        var productLine = $('#vehicle-select').val();
+        loadData(productLine, 100);
     });
 
     try {
@@ -149,10 +163,8 @@
         console.log(e);
     }
 
-    //    var loadDataIntervalValue = window.setInterval("loadData()", 20000);
-
     /*20s 刷新太快*/
-    // var loadDataIntervalValue = window.setInterval("loadData()", 60000);
+    var loadDataIntervalValue = window.setInterval("loadData()", 60000);
 
     /*双击事件*/
     function double_click(ele) {
@@ -167,7 +179,6 @@
          */
         var double_click_content = $(ele).html();
         var double_click_name = double_click_content.split('<i')[0];
-//        console.log(double_click_name);
 
         window.location.href = 'kpi_entries/analyse?view=';
     }

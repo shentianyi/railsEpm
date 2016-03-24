@@ -140,12 +140,28 @@
             $('#data_chartcontainer').css({width: (ClientWidth - 230) + 'px', overflowX: 'auto'});
         }
 
+        if (localStorage.box_msg) {
+            var box_msg = localStorage.box_msg;
+            var productLine = box_msg.split('_')[1];
+            var datatype = box_msg.split('_')[3];
 
-        loadChartData();
+            $('#vehicle-select option').each(function () {
+                if (($(this).attr('value')) == productLine) {
+                    $(this).attr('selected', 'true');
+                }
+            });
+
+            loadChartData(productLine, datatype);
+        } else {
+            var productLine = $('#vehicle-select').val();
+            var datatype = 100;
+            loadChartData(productLine, datatype);
+        }
     });
 
     $("#vehicle-select").change(function () {
-        loadChartData();
+        var productLine = $('#vehicle-select').val();
+        loadChartData(productLine, 100);
     });
 
     try {
@@ -155,10 +171,9 @@
     }
 
     /*20s 刷新太快*/
-    //    var loadChartDataIntervalValue = window.setInterval("loadChartData()", 20000);
     var loadChartDataIntervalValue = window.setInterval("loadChartData()", 60000);
 
-    function loadChartData() {
+    function loadChartData(productLine, chartdatatype) {
         /*清空*/
         $('#charts_containers').children().remove();
         $('.thead-tr').children().remove();
@@ -171,8 +186,6 @@
         var charts_target_max = new Array();
         var charts_target_min = new Array();
 
-        var productLine = $('#vehicle-select').val();
-        var chartdatatype = 100;
         $('.control-chart-interval-group li').each(function (index) {
             if ($(this).attr('datatype') == 'true') {
                 chartdatatype = $(this).attr('interval');
