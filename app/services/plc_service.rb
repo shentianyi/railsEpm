@@ -1,7 +1,7 @@
 class PlcService
   def self.post_data params
 
-    kpi= Kpi.find_by_name(Settings.app.kpi)
+    kpi= Kpi.first#find_by_name(Settings.app.kpi)
     codes=params[:codes].split(',')
     values=params[:values].split(',')
 

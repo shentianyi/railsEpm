@@ -6,7 +6,6 @@
   </tr>
   <tr>
     <th>NO.</th>
-    <th><%= t 'entry.desc.user-name' %></th>
     <th><%= t 'entry.desc.entity' %></th>
     <th><%= t 'entry.desc.max' %></th>
     <th><%= t 'entry.desc.min' %></th>
@@ -21,7 +20,6 @@
   <% @kpi_entries.each_with_index do |kpi_entry, i| %>
       <tr>
         <td><%= i + 1 %></td>
-        <td title=<%= "#{User.find(kpi_entry.user_id).email}" %>><%= User.find(kpi_entry.user_id).first_name %></td>
         <td><%= Entity.find(kpi_entry.entity_id).name %></td>
         <td><%= kpi_entry.target_max %></td>
         <td><%= kpi_entry.target_min %></td>

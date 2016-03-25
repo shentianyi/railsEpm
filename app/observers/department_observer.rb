@@ -40,7 +40,8 @@ class DepartmentObserver<ActiveRecord::Observer
   def after_update department
     if department.name_changed?
       eg = department.entity_group
-      eg.update_attributes(name:department.name,code:department.name)
+     # eg.update_attributes(name:department.name,code:department.name)
+      eg.update_attributes(name:department.name)
     end
   end
 

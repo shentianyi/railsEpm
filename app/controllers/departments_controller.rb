@@ -274,7 +274,7 @@ class DepartmentsController < ApplicationController
 
   def entity_groups
     parent=Department.find_by_id(params[:product_line])
-    kpi=Kpi.find_by_name(Settings.app.kpi)
+    kpi=Kpi.first#.find_by_name(Settings.app.kpi)
     entity_groups=[]
 
     frequency=params[:interval].blank? ? KpiFrequency::Daily : params[:interval].to_i
@@ -304,7 +304,7 @@ class DepartmentsController < ApplicationController
 
 
       max=kpi.target_max
-      min=kpi.target_max
+      min=kpi.target_min
 
       if entity=d.entities.first
         if user= entity.users.first
@@ -318,6 +318,7 @@ class DepartmentsController < ApplicationController
       entity_groups<<{
           id: entity_group.id,
           name: entity_group.name,
+          code: entity_group.code,
           value: data[:current].first,
           target_max: max,
           target_min: min,

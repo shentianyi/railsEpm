@@ -6,7 +6,7 @@
     <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
       <label>Condition</label>
 
-      <p>CircleTime Detail Column Chart</p>
+      <p>CycleTime Detail Column Chart</p>
 
       <p id="current-date" style="font-size: 12px;"></p>
     </div>
@@ -197,7 +197,8 @@
 //            $('<td>' + ajaxData[i].target_min + '</td>').appendTo('.tbody-target-min').ready(function () {
 //            });
 
-            yAxis_value.push(ajaxData[i].name);
+            yAxis_value.push(ajaxData[i].name + "#" + ajaxData[i].code);
+//yAxis_value.push(ajaxData[i].code);            
             charts_target_max.push(ajaxData[i].target_max);
 //            charts_target_min.push(ajaxData[i].target_min);
 
@@ -219,19 +220,32 @@
         /*chart*/
         $('#charts_containers').highcharts({
             title: {
-                text: 'Circle Time', x: -20 //center
+                text: 'CycleTime', x: -20 //center
             },
             credits: {
                 enabled: false
             },
             colors: ['#8DB6CD', '#43CD80', '#CD8162', '#24CBE5', '#64E572', '#FF9655',
                 '#FFF263', '#6AF9C4'],
-            xAxis: {categories: yAxis_value},
+            xAxis: {
+                categories: yAxis_value, labels: {
+                    formatter: function () {
+                        return this.value.split('#')[1]
+                    }
+                }
+            },
             yAxis: {
                 title: {text: 'Time(s)'},
                 plotLines: [{value: 0, width: 1, color: '#808080'}]
             },
-            tooltip: {valueSuffix: 's'},
+            tooltip: {
+                valueSuffix: 's',
+                //            formatter:function(){return this.value+'23'}
+                formatter: function () {
+                    return '<span><b>' + this.x.split('#')[0] +
+                            '</b><br/> CycleTime: <b>' + this.y + ' s</b><span>';
+                }
+            },
             legend: {layout: 'vertical', align: 'right', verticalAlign: 'middle', borderWidth: 0},
 
             /*分组堆叠显示*/

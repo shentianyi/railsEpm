@@ -70,8 +70,8 @@ module Entry
         end
 
         self.data_module= {:current => self.current,
-                           :target_max => self.target_max,
-                           :target_min => self.target_min,
+                           :target_max => self.parameter.kpi.target_max,#self.target_max,
+                           :target_min => self.parameter.kpi.target_min,#self.target_min,
                            :unit => self.unit}
         self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
         #puts '-------------'
@@ -94,8 +94,8 @@ module Entry
         self.current_count, self.current, self.frequency, self.target_min, self.target_max, self.unit=BaseAnalyseAggregator.new_hash(6)
         @kpi_uni_sym=self.parameter.kpi.unit_sym
         target_relation=UserKpiItem.where(kpi_id: self.parameter.kpi.id, entity_id: self.parameter.entities)
-        @target_max_current= self.parameter.average ? (avg=target_relation.average(:target_max)).nil? ? 0 : avg.round(2).to_f : target_relation.sum(:target_max)
-        @target_min_current= self.parameter.average ? (avg=target_relation.average(:target_min)).nil? ? 0 : avg.round(2).to_f : target_relation.sum(:target_min)
+        @target_max_current=self.parameter.kpi.target_max #self.parameter.average ? (avg=target_relation.average(:target_max)).nil? ? 0 : avg.round(2).to_f : target_relation.sum(:target_max)
+        @target_min_current=self.parameter.kpi.target_min #self.parameter.average ? (avg=target_relation.average(:target_min)).nil? ? 0 : avg.round(2).to_f : target_relation.sum(:target_min)
         frequency=self.parameter.frequency
 
         start_time=self.parameter.start_time

@@ -4,8 +4,8 @@ Department.transaction do
   puts 'udpate kpi name & targer'
   if kpi=Kpi.find_by_name('WorkingTime')
     kpi.update_attributes(name: 'CircleTime',description:'Circle Time')
-    kpi.update_attributes(target_max: 21)
-    kpi.user_kpi_items.update_all(target_max: 21)
+    kpi.update_attributes(target_max: 21,target_min:5)
+    kpi.user_kpi_items.update_all(target_max: 21,target_min:5)
   end
   puts '-1. add department'
 
@@ -177,6 +177,12 @@ Department.transaction do
   EntityGroup.where("name like '1N-%' or name like '3U-%' or name like 'ET-%' or name like 'ES-%'").each do |eg|
     eg.update_attributes(name: eg.name.sub(/^\w+-/, ''))
   end
+
+  puts '-------------------------------------'
+  puts 'delete 47&48'
+
+  Department.where(name:['3U-C47','3U-C48']).destroy_all
+
 end
 
 KpiEntry.each do |e|
