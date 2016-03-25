@@ -282,7 +282,7 @@ DEPENDENCIES
   ledermann-rails-settings
   mongoid (~> 3.1.6)
   multimap
-  mysql2 (~> 0.3.18)
+  mysql2
   rack-oauth2
   rails (= 3.2.13)
   redis
