@@ -360,6 +360,7 @@ IFEpm::Application.routes.draw do
       get 'jsontree' => :jsontree
 
       get :entity_groups
+      get :entity_group_history
     end
   end
 

@@ -274,13 +274,13 @@ class DepartmentsController < ApplicationController
 
   def entity_groups
     parent=Department.find_by_id(params[:product_line])
-    kpi=Kpi.first#.find_by_name(Settings.app.kpi)
+    kpi=Kpi.first #.find_by_name(Settings.app.kpi)
     entity_groups=[]
 
     frequency=params[:interval].blank? ? KpiFrequency::Daily : params[:interval].to_i
 
-    start_time=KpiFrequency.get_begin_date(Time.now,frequency)
-    end_time=KpiFrequency.get_next_date(start_time,frequency)-1.second
+    start_time=KpiFrequency.get_begin_date(Time.now, frequency)
+    end_time=KpiFrequency.get_next_date(start_time, frequency)-1.second
 
 
     parent.children.each do |d|
@@ -326,5 +326,36 @@ class DepartmentsController < ApplicationController
       }
     end
     render json: entity_groups
+  end
+
+  def entity_group_history
+
+    entries=[]
+    kpi=Kpi.first
+    if (eg=EntityGroup.find_by_id(params[:id])) && (e=eg.entities.first)
+      q = KpiEntry.where(kpi_id: Kpi.first.id,
+                         entity_id: e.id)
+      start_time=Time.parse(params[:start_time]).utc#.to_s
+      end_time=(Time.parse(params[:end_time])-1.second).utc#.to_s
+      p start_time
+      p end_time
+      q=q.between(Hash[:entry_at, (start_time..end_time)])
+
+      q=q.order_by(entry_at: :asc)
+      
+      q.each do |entry|
+        entries<<{
+            id: entry._id.to_s,
+            value: KpiUnit.parse_entry_value(kpi.unit, entry.value),
+            entry_at: entry.entry_at,
+            target_max: kpi.target_max,
+            target_min: kpi.target_min
+        }
+      end
+
+    end
+
+    render json: entries
+
   end
 end
