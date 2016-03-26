@@ -356,7 +356,7 @@ class DepartmentsController < ApplicationController
 
     if e
       render json: {
-                 id: e.id,
+                 id: eg.id,
                  name: eg.name,
                  data: entries
              }
