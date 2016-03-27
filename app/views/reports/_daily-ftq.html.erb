@@ -53,7 +53,7 @@
 </div>
 
 <!--chart-->
-<div id="charts_containers" style="margin-top: 80px;min-height:300px;"></div>
+<div id="charts_containers" style="margin-top: 60px;min-height:300px;"></div>
 
 <hr style="border-bottom: 4px solid #000;">
 <!--table-->
@@ -87,17 +87,20 @@
 
 <script>
     $(document).ready(function () {
+        var ReportMenuStatus = document.getElementById('report-menu').style.display;
         $('.control-chart-interval-group li').each(function (index) {
             $(this).click(function () {
                 $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
                 $('.control-chart-interval-group li').attr('datatype', 'false');
 
-                show_loading(145, 0, 0, 230);
+                if (ReportMenuStatus == 'none') {
+                    show_loading(100, 0, 0, 10);
+                } else {
+                    show_loading(100, 0, 0, 230);
+                }
+
                 $(this).css({opacity: '1'});
                 $(this).attr('datatype', 'true');
-
-                // console.log($(this).attr('interval'));
-                // console.log($('#vehicle-select').val());
 
                 var Choose_Interval_Code = $(this).attr('interval');
                 var ProductLine = $('#vehicle-select').val();
@@ -109,7 +112,6 @@
                         product_line: ProductLine
                     },
                     success: function (data) {
-                        console.log(data);
                         //Here can do something
                         remove_loading();
                     },
@@ -122,6 +124,8 @@
 
 //        Report.init("daily_ftq");
         var ClientHeight = $(document).height();
+        var ClientWidth = document.documentElement.clientWidth;
+
         $('#report-content').css({
             height: (ClientHeight - 70) + 'px',
             overflow: 'auto'
@@ -130,9 +134,12 @@
         window.setInterval(function () {
             $("#current-clock").text(format_time.current_time_clock());
         }, 500);
+        if (ReportMenuStatus == 'none') {
+            $('#data_chartcontainer').css({width: (ClientWidth - 20) + 'px', overflowX: 'auto'});
+        } else {
+            $('#data_chartcontainer').css({width: (ClientWidth - 230) + 'px', overflowX: 'auto'});
+        }
 
-        var ClientWidth = document.documentElement.clientWidth;
-        $('#data_chartcontainer').css({width: (ClientWidth - 230) + 'px', overflowX: 'auto'});
 
         loadChartData();
     });
@@ -147,7 +154,9 @@
         console.log(e);
     }
 
-    var loadChartDataIntervalValue = window.setInterval("loadChartData()", 20000);
+    /*20s 刷新太快*/
+    //    var loadChartDataIntervalValue = window.setInterval("loadChartData()", 20000);
+    var loadChartDataIntervalValue = window.setInterval("loadChartData()", 60000);
 
     function loadChartData() {
         /*清空*/
@@ -198,39 +207,43 @@
 //            });
 
             yAxis_value.push(ajaxData[i].name + "#" + ajaxData[i].code);
-//yAxis_value.push(ajaxData[i].code);            
             charts_target_max.push(ajaxData[i].target_max);
-//            charts_target_min.push(ajaxData[i].target_min);
 
             if (ajaxData[i].value > ajaxData[i].target_max) {
-                charts_value.push({color: '#ff0000', y: ajaxData[i].value});
+                charts_value.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].value});
                 $('<td style="background:#ff0000;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
                 });
             } else if (ajaxData[i].value < ajaxData[i].target_min) {
-                charts_value.push({color: 'limegreen', y: ajaxData[i].value});
+                charts_value.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
+                /* here can remove background. #FFB90F is orange.*/
                 $('<td style="background:#FFB90F;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
                 });
             } else {
-                charts_value.push({color: 'limegreen', y: ajaxData[i].value});
+                charts_value.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
                 $('<td style="background:limegreen;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
                 });
             }
         }
+        var max_count = 25;
+        if (ajaxData.length < max_count) {
+            max_count = ajaxData.length;
+        }
 
         /*chart*/
-        $('#charts_containers').highcharts({
+        var chart = $('#charts_containers').highcharts({
             title: {
                 text: 'CycleTime', x: -20 //center
             },
             credits: {
                 enabled: false
             },
-            colors: ['#8DB6CD', '#43CD80', '#CD8162', '#24CBE5', '#64E572', '#FF9655',
+            colors: ['#8DB6CD', '#FFA500', '#CD8162', '#24CBE5', '#64E572', '#FF9655',
                 '#FFF263', '#6AF9C4'],
             xAxis: {
-                categories: yAxis_value, labels: {
+                categories: yAxis_value,
+                labels: {
                     formatter: function () {
-                        return this.value.split('#')[1]
+                        return this.value.split('#')[1];
                     }
                 }
             },
@@ -240,20 +253,34 @@
             },
             tooltip: {
                 valueSuffix: 's',
-                //            formatter:function(){return this.value+'23'}
                 formatter: function () {
                     return '<span><b>' + this.x.split('#')[0] +
-                            '</b><br/> CycleTime: <b>' + this.y + ' s</b><span>';
+                            '</b><br/>CycleTime: <b>' + this.y + ' s</b><span>';
                 }
             },
-            legend: {layout: 'vertical', align: 'right', verticalAlign: 'middle', borderWidth: 0},
+//            legend: {layout: 'vertical', align: 'right', verticalAlign: 'middle', borderWidth: 0},
+            legend: {layout: 'horizontal', align: 'center', verticalAlign: 'bottom', borderHeight: 0},
+            plotOptions: {
+                column: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    events: {//监听点的鼠标事件
+                        click: function (e) {
+                            var over_id = "Line_" + productLine + "_interval_" + chartdatatype + "_box_" + e.point.id;
+                            if (window.localStorage) {
+                                localStorage.box_msg = over_id;
+                                localStorage.box_name = e.point.category;
+                                window.location.href = 'reports#defects';
+                                location.reload();
+                            } else {
+                                alert('This browser does NOT support localStorage,please change browser.');
+                            }
 
-            /*分组堆叠显示*/
-            /* plotOptions: {
-             column: {
-             stacking: 'normal'
-             }
-             },*/
+                        }
+                    }
+                }
+            },
             series: [
 //                {
 //                    name: 'TargetMin',
@@ -262,24 +289,30 @@
                 {
                     type: 'column',
                     name: 'Value',
-                    data: charts_value
+                    data: charts_value,
+                    color: 'limegreen'
                 }, {
                     name: 'TargetMax',
-                    data: charts_target_max
+                    data: charts_target_max,
+                    color: '#FF7F00'
                 }
             ]
         });
 
         /*ajax request*/
         function GetDataFun() {
-            show_loading(145, 0, 0, 230);
+            var ReportMenuStatus = document.getElementById('report-menu').style.display;
+            if (ReportMenuStatus == 'none') {
+                show_loading(145, 0, 0, 10);
+            } else {
+                show_loading(145, 0, 0, 230);
+            }
             $.ajax({
                 url: '/departments/entity_groups',
                 type: 'get',
                 data: {product_line: productLine, interval: chartdatatype},
                 async: false,
                 success: function (data) {
-                    console.log(data);
                     GetData = data;
                     remove_loading();
                 },
