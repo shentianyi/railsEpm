@@ -45,18 +45,17 @@
 
 <div class="col-sm-12" style="background: #fefefe;border-bottom: 4px solid #000;height: 70px;line-height: 20px;padding-top:15px;text-align: center;">
   <div class="col-sm-3">
-    <button class="btn btn-success" style="width: 150px;" onclick="javascript:history.go(-1);location.reload();">
-      返回
+    <button class="btn btn-success" style="width: 150px;" onclick="go_back();">
+      Back
     </button>
   </div>
   <div class="col-sm-6">
-    <input type="text" readonly class="datetimepicker" id="start_time" title="开始时间">&emsp;
-
-    <b>~</b> &emsp; <input type="text" readonly class="datetimepicker" id="end_time" title="结束时间">
+    <input type="text" readonly class="datetimepicker" id="start_time" title="Start Time">&emsp;
+    <b>~</b> &emsp; <input type="text" readonly class="datetimepicker" id="end_time" title="End Time">
   </div>
 
   <div class="col-sm-3">
-    <button class="btn btn-primary historty_search" style="width: 150px;">查找</button>
+    <button class="btn btn-primary historty_search" style="width: 150px;">Search</button>
   </div>
 </div>
 
@@ -99,13 +98,29 @@
     // 固定不变
     var box_name = localStorage.box_name;
     var box_msg = localStorage.box_msg;
+    var pre_url=localStorage.pre_url;
+
+    console.log(box_name);
+    console.log(pre_url);
+    
+    function go_back(){
+        if(pre_url=='undefined'){
+            pre_url=window.location.host+'/reports#current_status'
+        }
+
+        window.location.href=pre_url;
+        location.reload();
+    }
 
     var ProductLine = box_msg.split('_')[1];
     var Interval = box_msg.split('_')[3];
     var BoxID = box_msg.split('_')[5];
 
     // var pre_time='2016-03-24 16:00:00';
-    var pre_time = new Date(new Date() - 60 * 60 * 1000).format('yyyy-MM-dd hh:mm:ss');
+    // var pre_time = new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+'00:00:00';
+    var pre_time=new Date().format('yyyy-MM-dd').toString()+' '+'00:00:00';
+
+    // pre_time=new Date(pre_time).format('yyyy-MM-dd hh:mm:ss');
     // var current_time='2016-03-24 17:00:00';
     var current_time = new Date().format('yyyy-MM-dd hh:mm:ss');
     $('#start_time').attr('value', pre_time);
@@ -327,8 +342,9 @@
                 loadHistoryDataFun(SearchHistoryDataName, SearchHistoryDataValue);
             }
         })
-    });
 
+    });
+    
     /*get data*/
     function GetHistoryDataFun(id, start_time, end_time) {
         var GetHistoryData = "";

@@ -271,6 +271,7 @@
                             if (window.localStorage) {
                                 localStorage.box_msg = over_id;
                                 localStorage.box_name = e.point.category;
+                                localStorage.pre_url=document.location.href; 
                                 window.location.href = 'reports#defects';
                                 location.reload();
                             } else {
