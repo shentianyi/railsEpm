@@ -112,6 +112,7 @@ Report.get_dhtmlx = function () {
             return new dhtmlXDataView(container);
         case this.type["daily_dpv"]:
         case this.type["station_data"]:
+        case this.type["history"]:
         case this.type["daily_ftq"]:
             var o = new dhtmlXGridObject(container);
             o.addCellAttributes(['value', 'format', 'bgcolor']);

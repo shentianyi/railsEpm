@@ -60,7 +60,7 @@
 *= require popModal.min
 *= require dhtmlx
 *= require dataview/dataview_item
-
+*= require skin/jedate
 *= require_self
 
 
