@@ -61,9 +61,9 @@
 
 <div class="col-sm-12">
   <div class="col-sm-5" style="display: flex;height: 30px;line-height: 30px;">
-    <p>总数据:</p><b id="total_data">0</b>&emsp;&emsp;
-    <p>正常数据:</p><b id="normal_data" style="color: limegreen;">0</b>&emsp;&emsp;
-    <p>异常数据:</p><b id="abnormal_data" style="color: #ff0000;">0</b>
+    <p>Total:</p><b id="total_data">0</b>&emsp;&emsp;
+    <p>Normal:</p><b id="normal_data" style="color: limegreen;">0</b>&emsp;&emsp;
+    <p>Exception:</p><b id="abnormal_data" style="color: #ff0000;">0</b>
   </div>
 
   <div id="chart_mode">
@@ -100,11 +100,8 @@
     var box_msg = localStorage.box_msg;
     var pre_url=localStorage.pre_url;
 
-    console.log(box_name);
-    console.log(pre_url);
-    
     function go_back(){
-        if(pre_url=='undefined'){
+        if(pre_url=='undefined'||window.location.hash=='#defects'){
             pre_url=window.location.host+'/reports#current_status'
         }
 
@@ -133,9 +130,9 @@
     var HistoryData = GetHistoryDataValue.data;
 
     if (HistoryData.length > 1000) {
-        // alert('数据量太大，请缩短查询日期');
+        // alert('Amount of data is too large, Please shorten your query date.');
     } else if (HistoryData.length == 0) {
-        // alert('这段时间没有数据，请修改查询日期');
+        // alert('This period of time there is no data, modify the query date.');
     } else {
         loadHistoryDataFun(HistoryDataName, HistoryData);
     }
@@ -335,9 +332,9 @@
             var SearchHistoryDataValue = SearchHistoryData.data;
 
             if (SearchHistoryDataValue.length > 1000) {
-                alert('数据量太大，请缩短查询日期');
+                alert('Amount of data is too large, Please shorten your query date.');
             } else if (SearchHistoryDataValue.length == 0) {
-                alert('这段时间没有数据，请修改查询日期');
+                alert('This period of time there is no data, modify the query date.');
             } else {
                 loadHistoryDataFun(SearchHistoryDataName, SearchHistoryDataValue);
             }
