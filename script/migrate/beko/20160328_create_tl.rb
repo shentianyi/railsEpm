@@ -52,7 +52,7 @@ Department.transaction do
 
   sensors={
       'TL Drum Assembly Line' => ['Q-C05', 'Q-C06', 'Q-C07', 'Q-C09', 'Q-C010', 'Q-C12', 'Q-C13', 'Q-C14', 'Q-C17', 'Q-C19', 'Q-C108'],
-      'TL Main Assembly Line' => ['Q-C25', 'Q-C34', 'Q-C36', 'Q-C38', 'Q-C41', 'Q-C43', 'Q-C44', 'Q-C42', 'Q-C24', 'Q-C70', 'Q-C72', 'Q-C79', 'Q-C107', 'Q-C74', 'Q-C76', 'Q-C75', 'Q-C77', 'Q-C78', 'Q-C80', 'Q-C81', 'Q-C82', 'Q-C84','Q-85', 'Q-C86', 'Q-C87', 'Q-C97', 'Q-C98', 'Q-C101', 'Q-C102', 'Q-C103', 'Q-C104', 'Q-C105'],
+      'TL Main Assembly Line' => ['Q-C25', 'Q-C34', 'Q-C36', 'Q-C38', 'Q-C41', 'Q-C43', 'Q-C44', 'Q-C42', 'Q-C24', 'Q-C70', 'Q-C72', 'Q-C79', 'Q-C107', 'Q-C74', 'Q-C76', 'Q-C75', 'Q-C77', 'Q-C78', 'Q-C80', 'Q-C81', 'Q-C82', 'Q-C84','Q-C85', 'Q-C86', 'Q-C87', 'Q-C97', 'Q-C98', 'Q-C101', 'Q-C102', 'Q-C103', 'Q-C104', 'Q-C105'],
   }
 
 
