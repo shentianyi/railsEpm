@@ -121,14 +121,14 @@
                 if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
                     var box_title_id = "Line_" + productLine + "_interval_" + datatype + "_box_" + data[i].id;
                     $('<div class="col-md-3 workstation"><div class="box">' +
-                            '<div class="box-title" title="click to go history" id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');">' + data[i].name + '<i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click return to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
+                            '<div class="box-title" title="click to go history" id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');">' + data[i].name + '<i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
                             '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                             '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                         loading_hide();
                     });
                 } else {
                     $('<div class="col-md-3 workstation"><div class="box">' +
-                            '<div class="box-title" title="click to go history" id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');">' + data[i].name + '<i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click return to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
+                            '<div class="box-title" title="click to go history" id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');">' + data[i].name + '<i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
                             '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                             '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                         loading_hide();

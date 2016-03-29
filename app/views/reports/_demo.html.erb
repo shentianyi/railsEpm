@@ -101,12 +101,16 @@
     var pre_url=localStorage.pre_url;
 
     function go_back(){
-        if(pre_url=='undefined'||window.location.hash=='#defects'){
-            pre_url=window.location.host+'/reports#current_status'
+        try{
+            var error_url=pre_url.split('#')[1];
+            if(pre_url=='undefined'||error_url=='defects'){
+                pre_url=window.location.host+'/reports#current_status'
+            }
+            window.location.href=pre_url;
+            location.reload();
+        }catch(e){
+            console.log(e);
         }
-
-        window.location.href=pre_url;
-        location.reload();
     }
 
     var ProductLine = box_msg.split('_')[1];
@@ -129,9 +133,10 @@
     var HistoryDataID = GetHistoryDataValue.id;
     var HistoryData = GetHistoryDataValue.data;
 
-    if (HistoryData.length > 1000) {
-        // alert('Amount of data is too large, Please shorten your query date.');
-    } else if (HistoryData.length == 0) {
+    // if (HistoryData.length > 1000) {
+    //     // alert('Amount of data is too large, Please shorten your query date.');
+    // } else 
+    if (HistoryData.length == 0) {
         // alert('This period of time there is no data, modify the query date.');
     } else {
         loadHistoryDataFun(HistoryDataName, HistoryData);
@@ -243,6 +248,12 @@
             legend: {
                 layout: 'horizontal', align: 'center', verticalAlign: 'bottom', borderHeight: 0
             },
+            plotOptions: {
+                series: {
+                    stickyTracking: false,
+                    turboThreshold:0 //不限制数据点个数
+                }
+            },
             series: [{
                 name: 'Value',
                 data: history_value,
@@ -331,11 +342,14 @@
             var SearchHistoryDataID = SearchHistoryData.id;
             var SearchHistoryDataValue = SearchHistoryData.data;
 
-            if (SearchHistoryDataValue.length > 1000) {
-                alert('Amount of data is too large, Please shorten your query date.');
-            } else if (SearchHistoryDataValue.length == 0) {
+            // if (SearchHistoryDataValue.length > 1000) {
+            //     alert('Amount of data is too large, Please shorten your query date.');
+            // } else 
+            if (SearchHistoryDataValue.length == 0) {
                 alert('This period of time there is no data, modify the query date.');
             } else {
+                console.log(SearchHistoryDataValue.length);
+                console.log(SearchHistoryDataValue);
                 loadHistoryDataFun(SearchHistoryDataName, SearchHistoryDataValue);
             }
         })
