@@ -331,7 +331,7 @@
             var SearchHistoryDataID = SearchHistoryData.id;
             var SearchHistoryDataValue = SearchHistoryData.data;
 
-            if (SearchHistoryDataValue.length > 1000) {
+            if (SearchHistoryDataValue.length > 5000) {
                 alert('Amount of data is too large, Please shorten your query date.');
             } else if (SearchHistoryDataValue.length == 0) {
                 alert('This period of time there is no data, modify the query date.');
