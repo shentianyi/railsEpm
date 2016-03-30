@@ -122,14 +122,14 @@
 
                 if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
                     $('<div class="col-md-3 workstation"><div class="box">' +
-                            '<div class="box-title" title="click to go history" id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');">' + data[i].name + '<i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
+                            '<div class="box-title" title='+data[i].name+' id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');"><span>' + data[i].name + '</span><i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
                             '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                             '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                         loading_hide();
                     });
                 } else {
                     $('<div class="col-md-3 workstation"><div class="box">' +
-                            '<div class="box-title" title="click to go history" id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');">' + data[i].name + '<i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
+                            '<div class="box-title" title='+data[i].name+' id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');"><span>' + data[i].name + '</span><i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
                             '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                             '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                         loading_hide();
@@ -152,7 +152,7 @@
     //    var loadDataIntervalValue = window.setInterval("loadData()", 20000);
 
     /*20s 刷新太快*/
-    var loadDataIntervalValue = window.setInterval("loadData()", 60000);
+    // var loadDataIntervalValue = window.setInterval("loadData()", 60000);
 
     /*双击事件*/
     function double_click(ele) {
@@ -214,6 +214,9 @@
         /*border: 2px solid #9000ff;*/
         border: 2px solid deepskyblue;
         margin: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .box-title {
@@ -226,7 +229,16 @@
         border-top-right-radius: 7px;
         border-top-left-radius: 7px;
         padding-left: 30px;
+        padding-right: 30px;
         cursor: pointer;
+        display: flex;
+    }
+
+    .box-title>span{
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .box-title > i {
