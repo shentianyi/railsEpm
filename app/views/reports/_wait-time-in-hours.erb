@@ -1,0 +1,187 @@
+<style>
+    #charts_containers {
+        margin-top: 80px;
+    }
+</style>
+
+<div class="col-sm-12" style="background: #fefefe;border-bottom: 4px solid #000;">
+  <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
+    <label>Condition</label>
+
+    <p>Wait Time In Hours Current Status Block Chart</p>
+
+    <p id="current-date" style="font-size: 12px;"></p>
+  </div>
+
+  <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
+    <label>Product Line</label>
+    <br>
+    <select id="vehicle-select" style="min-width: 200px;text-align: center;">
+      <% Department.where(is_product_line: true).each do |p| %>
+          <option value="<%= p.id %>"><%= p.name %></option>
+      <% end %>
+    </select>
+  </div>
+  <div class="col-sm-4" style="text-align: center;">
+    <label>Current time</label>
+
+    <p id="current-clock" style="font-size: 30px;font-weight: bold;"></p>
+  </div>
+</div>
+
+<div class="col-sm-12">
+  <ul class="pull-right control-chart-interval-group">
+    <!--  <li interval="90">
+       <a>Hr</a>
+     </li> -->
+    <li interval="100" style="color:black;" datatype='true'>
+      <a>D</a>
+    </li>
+    <!-- <li interval="200">
+      <a>W</a>
+    </li> -->
+    <li interval="300">
+      <a>M</a>
+    </li>
+    <li interval="400">
+      <a>Qr</a>
+    </li>
+    <li interval="500">
+      <a>Y</a>
+    </li>
+  </ul>
+  <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
+</div>
+
+<div id="charts_containers"></div>
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+
+        loadChartData();
+
+        $("#vehicle-select").change(function () {
+            loadChartData();
+        });
+        /*时间刷新*/
+        window.setInterval(function () {
+            $("#current-clock").text(format_time.current_time_clock());
+        }, 700);
+
+        /*设置整体背景颜色*/
+        var ClientHeight = $(document).height();
+        $('#report-content').css({
+            height: (ClientHeight - 70) + 'px',
+            overflow: 'auto'
+        });
+    });
+
+    function loadChartData() {
+        var xAxis_value = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        var wait_time_chart_value = [2, 3, 4, 5, 6, 7, 9, 1, 12, 4];
+        var target_max_value = [7, 7, 7, 7, 7, 7, 7, 7, 7, 7];
+        var wait_time_chart = {
+            chart: {
+                renderTo: 'charts_containers'
+            },
+            title: {
+                text: 'Wait Time In Hours', x: -20
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                categories: xAxis_value,
+                labels: {
+                    formatter: function () {
+                        return this.value;
+                    }
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Time(s)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: 's',
+                formatter: function () {
+                    return '<span><b>' + this.x + '</b><br/>WaitTime:<b>' + this.y + 's</b></span>';
+                }
+            },
+            legend: {
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom',
+                borderHeight: 0
+            },
+            plotOptions: {
+                column: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    events: {
+                        click: function (e) {
+                            console.log('click');
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'column',
+                name: 'Value',
+                data: wait_time_chart_value,
+                color: 'limegreen'
+            },
+                {
+                    type: 'line',
+                    name: 'Value',
+                    data: target_max_value,
+                    color: 'orange'
+                }]
+        };
+
+        $('.control-chart-interval-group li').each(function (index) {
+            $(this).click(function () {
+                var ReportMenuStyle = document.getElementById('report-menu').style.display;
+
+                if (ReportMenuStyle == "none") {
+                    show_loading(130, 0, 0, 10);
+                } else {
+                    show_loading(130, 0, 0, 230);
+                }
+
+                $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
+                $('.control-chart-interval-group li').attr('datatype', 'false');
+
+                $(this).css({opacity: '1'});
+                $(this).attr('datatype', 'true');
+
+                var Choose_Interval_Code = $(this).attr('interval');
+                var ProductLine = $('#vehicle-select').val();
+                $.ajax({
+                    url: '/departments/entity_groups',
+                    type: 'get',
+                    data: {
+                        interval: Choose_Interval_Code,
+                        product_line: ProductLine
+                    },
+                    success: function (data) {
+                        //Here can do something
+                        remove_loading();
+                    },
+                    error: function () {
+                        console.log("Error");
+                    }
+                });
+            });
+        });
+
+        var chart = new Highcharts.Chart(wait_time_chart);
+    }
+</script>

@@ -8,5 +8,5 @@ ReportMenu.click = function (type, callback) {
                 callback(data);
             }
         }
-    })
+    });
 }
