@@ -105,23 +105,25 @@ Report.refresh = function () {
 };
 
 /*get dhtmlx object*/
-Report.get_dhtmlx = function () {
-    var container = "data_container";
-    switch (this.option.type) {
-        case this.type["current_status"]:
-            return new dhtmlXDataView(container);
-        case this.type["daily_dpv"]:
-        case this.type["station_data"]:
-        case this.type["history"]:
-        case this.type["daily_ftq"]:
-            var o = new dhtmlXGridObject(container);
-            o.addCellAttributes(['value', 'format', 'bgcolor']);
-            return o;
-        //return new dhtmlXGridObject(container);
-        default:
-            return null;
-    }
-};
+/*
+ Report.get_dhtmlx = function () {
+ var container = "data_container";
+ switch (this.option.type) {
+ case this.type["current_status"]:
+ return new dhtmlXDataView(container);
+ case this.type["daily_dpv"]:
+ case this.type["station_data"]:
+ case this.type["history"]:
+ case this.type["daily_ftq"]:
+ var o = new dhtmlXGridObject(container);
+ o.addCellAttributes(['value', 'format', 'bgcolor']);
+ return o;
+ //return new dhtmlXGridObject(container);
+ default:
+ return null;
+ }
+ };
+ */
 
 /*color*/
 Report.color = {
@@ -136,7 +138,7 @@ Report.color = {
         "lower": "#19cf22"
     }
 
-}
+};
 
 Report.configure = function () {
     var dhtmlxobj = this.r;
@@ -296,7 +298,11 @@ Report.type = {
     'defect_info': 9,
     'float': 10,
     'top_issue': 11,
-    'weekly_report': 12
+    'weekly_report': 12,
+    /*here is type number*/
+    'wait_time_in_hours': 13,
+    'cycle_time_in_hours': 14,
+    'working_time_in_hours': 15
 };
 
 Report.headers = {

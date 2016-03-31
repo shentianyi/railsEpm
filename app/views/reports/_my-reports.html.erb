@@ -5,30 +5,20 @@
     </div>
     <ul id="my-reports">
       <!--<p>Quality Gate</p>-->
-      <li number="0"><a menu="current_status" href="#current_status"><i class="icon-adjust mark"></i> Current
+      <li><a menu="current_status" href="#current_status"><i class="icon-adjust mark"></i> Current
         Status<i class="icon-chevron-right indicate"></i></a></li>
 
-      <li><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i>
-        CycleTime Detail<i class="icon-chevron-right indicate"></i></a></li>
+      <li><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i>CycleTime
+        Detail<i class="icon-chevron-right indicate"></i></a></li>
 
-      <!-- <li><a menu="wait_time_in_hours" href="#wait_time_in_hours"><i class="icon-lock mark"></i>
-         WaitTime in Hours<i class="icon-chevron-right indicate"></i></a></li>
+      <li><a menu="wait_time_in_hours" href="#wait_time_in_hours"><i class="icon-lock mark"></i>WaitTime in
+        Hours<i class="icon-chevron-right indicate"></i></a></li>
 
-       <li><a menu="cycle_time_in_hours" href="#cycle_time_in_hours"><i class="icon-time mark"></i>
-         CycleTime in Hours<i class="icon-chevron-right indicate"></i></a></li>
+      <li><a menu="cycle_time_in_hours" href="#cycle_time_in_hours"><i class="icon-time mark"></i>CycleTime in
+        Hours<i class="icon-chevron-right indicate"></i></a></li>
 
-       <li><a menu="working_time_in_hours" href="#working_time_in_hours"><i class="icon-calendar mark"></i>
-         WorkingTime in Hours<i class="icon-chevron-right indicate"></i></a></li>
-
- -->
-      <li><a menu="wait_time_in_hours" href="#daily_ftq"><i class="icon-lock mark"></i>
-        WaitTime in Hours<i class="icon-chevron-right indicate"></i></a></li>
-
-      <li><a menu="cycle_time_in_hours" href="#daily_ftq"><i class="icon-time mark"></i>
-        CycleTime in Hours<i class="icon-chevron-right indicate"></i></a></li>
-
-      <li><a menu="working_time_in_hours" href="#daily_ftq"><i class="icon-calendar mark"></i>
-        WorkingTime in Hours<i class="icon-chevron-right indicate"></i></a></li>
+      <li><a menu="working_time_in_hours" href="#working_time_in_hours"><i class="icon-calendar mark"></i>WorkingTime in
+        Hours<i class="icon-chevron-right indicate"></i></a></li>
 
       <!--<li><a menu="defects" href="#defects"><i class="icon-list mark"></i>
         History<i class="icon-chevron-right indicate"></i></a></li>-->
@@ -70,57 +60,6 @@
   <input type="text" id="snap-shot-desc"/>
   <a class="btn btn-success" id="snap-shot-btn">finish</a>
 </section>
-
-<input type="hidden" id="report-story-type-hidden">
-
-<!--<div class="back-pop report_center_back_pop" id='back-pop'>-->
-<!--<div class="choose-project-team">-->
-<!--<i class="icon icon-remove" id="remove-back-pop"></i>-->
-
-<!--<p>Share to discussion</p>-->
-
-<!--<div class="basic_info">-->
-<!--<div class="basic_left">-->
-<!--<p>Title</p>-->
-<!--<input type="text" id="story-title"/>-->
-
-<!--<p>Attachment</p>-->
-<!--<input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">-->
-
-<!--<div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>-->
-<!--</div>-->
-<!--<div class="basic_right">-->
-<!--<p>Description</p>-->
-<!--<textarea id="story-desc"></textarea>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="choose-by-select">-->
-<!--<p>Add to a discussion</p>-->
-<!--<select data-placeholder="discussion list" class="chosen-select" id="story-sets">-->
-<!--
-<% current_user.collaborated_story_sets.all.each do |set| %>-->
-    <!--<option value="<%= set.id %>"><%= set.title %></option>-->
-    <!--
-<% end %>-->
-<!--</select>-->
-<!--<a class="btn btn-primary" id="add-to-storyset">Add</a>-->
-<!--</div>-->
-<!--<div class="choose-by-create">-->
-<!--<p>Create new discussion</p>-->
-<!--<input type="text" id="storyset-title" placeholder="discussion name"/>-->
-<!--<input type="text" id="storyset-desc" placeholder="discussion description"/>-->
-<!--<select multiple class="chosen-select" data-placeholder="invite people" id="storyset-users">-->
-<!--
-<% @users.each do |u| %>-->
-    <!--<option user="<%= u.id %>"><%= u.first_name %></option>-->
-    <!--
-<% end %>-->
-<!--</select>-->
-<!--<a class="btn btn-primary" id="create-add-to-storyset">Create and Add</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
 </div>
 
 <% content_for :javascript_includes do %>
@@ -132,83 +71,6 @@
 <% end %>
 
 <script type="text/javascript">
-    //    $(document).ready(function () {
-    //        attach_upload("item-data-uploader");
-    //        $("body")
-    //                .on("click", ".attachment-item-remove", function (event) {
-    //                    if (confirm('Sure to delelte?')) {
-    //                        var e = event ? event : (window.event ? window.event : null);
-    //                        var obj = e.srcElement || e.target;
-    //                        e.stopPropagation();
-    //                        $(".attachment-item[path-name='" + $(obj).attr("path-name") + "']").remove();
-    //                    }
-    //                })
-    //                .on("click", "#create-discuss-btn", function () {
-    //                    show_project_block();
-    //                    if ($("#analytic-control-condition-visible").attr("state") == "open") {
-    //                        $("#analytic-control-condition-visible").click();
-    //                    }
-    //                })
-    //                .on("click", "#cancel-fro-project", function () {
-    //                    hide_project_block();
-    //                })
-    //                .on("click", "#share_to_discussion_btn", function () {
-    //                    $("#back-pop").addClass("show")
-    //                })
-    //                .on("click", "#remove-back-pop", function () {
-    //                    $("#back-pop").removeClass("show")
-    //                })
-    //                .on("click", "#add-to-storyset", function () {
-    //                    var story = prepare_for_create_report_story();
-    //                    if (story.story_set_id == null) {
-    //                        MessageBox('No Story Set,Please use select one or Use create and add button', 'top', 'warning');
-    //                        return;
-    //                    }
-    //                    MANAGE.story.create(story, function (data) {
-    //                        if (data.result) {
-    //                            window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
-    //                        } else {
-    //                            MessageBox(data.content, 'top', 'warning');
-    //                        }
-    //
-    //                    });
-    //                })
-    //                .on("click", "#create-add-to-storyset", function () {
-    //                    var story = prepare_for_create_report_story();
-    //                    var story_set = {};
-    //                    story_set.title = $("#storyset-title").val();
-    //                    story_set.description = $("#storyset-desc").val();
-    //                    story_set.users = $("#storyset-users option:selected").map(function () {
-    //                        return $(this).attr("user")
-    //                    }).get();
-    //                    MANAGE.story_set.create(story_set, function (data) {
-    //                        if (data.result) {
-    //                            story.story_set_id = data.content.id;
-    //                            MANAGE.story.create(story, function (data) {
-    //                                if (data.result) {
-    //                                    window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
-    //                                } else {
-    //                                    MessageBox(data.content, 'top', 'warning');
-    //                                }
-    //                            })
-    //                        }
-    //                        else {
-    //
-    //                        }
-    //                    })
-    //                })
-    //                .on("click", "#direct-publish-fro-project", function () {
-    //                    var story = prepare_for_create_report_story();
-    //                    story.story_set_id = $(this).attr("value");
-    //                    MANAGE.story.create(story, function (data) {
-    //                        if (data.result) {
-    //                            window.location.href = '/story_sets/' + data.content.id + '/story?story';
-    //                        } else {
-    //                            MessageBox(data.content, 'top', 'warning');
-    //                        }
-    //                    });
-    //                });
-    //    });
     var ClientHeight = document.documentElement.clientHeight;
 
     $('.my_icon').css({
