@@ -1,4 +1,4 @@
-<div class="report-menu" id="report-menu" style="display: none;">
+<div class="report-menu" id="report-menu" style="display: block;">
   <section class="slide_menu">
     <div class="header">
       <p>App Center</p>
@@ -11,7 +11,7 @@
       <li><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i>CycleTime
         Detail<i class="icon-chevron-right indicate"></i></a></li>
 
-      <li><a menu="wait_time_in_hours" href="#wait_time_in_hours"><i class="icon-lock mark"></i> WaitTime in
+      <li><a menu="wait_time_in_hours" href="#wait_time_in_hours"><i class="icon-lock mark"></i> &nbsp;WaitTime in
         Hours<i class="icon-chevron-right indicate"></i></a></li>
 
       <li><a menu="cycle_time_in_hours" href="#cycle_time_in_hours"><i class="icon-time mark"></i> CycleTime in
@@ -41,7 +41,7 @@
 </div>
 
 <div id="pop-crate" style="float: left;text-align: center;
-        color: white;cursor: pointer;width: 10px;background: #3e4452;position: relative;">
+        color: white;cursor: pointer;width: 10px;background: #3e4452;position: absolute;top:70px;bottom: 0;left: 220px;z-index:10000;">
   <div class="my_icon">
     <i class="icon-chevron-left" title="Close Panel"></i>
   </div>
@@ -73,18 +73,27 @@
 
 <script type="text/javascript">
     var ClientHeight = document.documentElement.clientHeight;
+    var ClientWidth = document.documentElement.clientWidth;
 
     $('.my_icon').css({
         marginTop: (ClientHeight) / 2 + 'px',
         marginBottom: ((ClientHeight) / 2 - 33) + 'px'
     });
 
-    $('#pop-crate').css({
-        bottom: '0px'
-    });
-
     $('#pop-crate').click(function () {
-        $('#report-menu').fadeToggle(0);
+        var report_menu_style = document.getElementById('report-menu').style.display;
+        if (report_menu_style == "none") {
+            $('#report-menu').fadeIn(0);
+            $('#pop-crate').animate({
+                left: '220px'
+            }, 0);
+
+        } else {
+            $('#report-menu').fadeOut(0);
+            $('#pop-crate').animate({
+                left: '0'
+            }, 0);
+        }
     });
 
     var loading;

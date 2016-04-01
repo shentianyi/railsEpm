@@ -1,9 +1,3 @@
-<style>
-    #charts_containers {
-        margin-top: 80px;
-    }
-</style>
-
 <div class="col-sm-12" style="background: #fefefe;border-bottom: 4px solid #000;">
   <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
     <label>Condition</label>
@@ -29,38 +23,51 @@
   </div>
 </div>
 
-<div class="col-sm-12">
-  <ul class="pull-right control-chart-interval-group">
-    <!--  <li interval="90">
-       <a>Hr</a>
-     </li> -->
-    <li interval="100" style="color:black;" datatype='true'>
-      <a>D</a>
-    </li>
-    <!-- <li interval="200">
-      <a>W</a>
-    </li> -->
-    <li interval="300">
-      <a>M</a>
-    </li>
-    <li interval="400">
-      <a>Qr</a>
-    </li>
-    <li interval="500">
-      <a>Y</a>
-    </li>
-  </ul>
-  <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
-</div>
+<%= render 'title' %>
 
-<div id="charts_containers"></div>
+<div class="col-sm-12">
+  <div id="table_containers">
+    <table class="table table-hover">
+      <thead>
+      <tr class="cycle_time_thead_tr">
+      </tr>
+      </thead>
+      <tbody class="cycle_time_tbody_tr">
+      <tr class="cycle_time_target_min">
+      </tr>
+      <tr class="cycle_time_value">
+      </tr>
+      <tr class="cycle_time_target_max">
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
-        loadChartData();
+        /*进入界面加载*/
+        loadChartData(100);
 
         $("#vehicle-select").change(function () {
-            loadChartData();
+            $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
+            $('.control-chart-interval-group li').attr('datatype', 'false');
+
+            $('.control-chart-interval-group li:first-child').css({opacity: '1'});
+            $('.control-chart-interval-group li:first-child').attr('datatype', 'true');
+
+            $('.change_charts').css({
+                opacity: 0.3,
+                color: 'black',
+                borderColor: 'black'
+            });
+            $('.change_charts:first-child').css({
+                opacity: 1,
+                color: 'orange',
+                borderColor: 'orange'
+            });
+
+            loadChartData(100);
         });
         /*时间刷新*/
         window.setInterval(function () {
@@ -70,15 +77,122 @@
         /*设置整体背景颜色*/
         var ClientHeight = $(document).height();
         $('#report-content').css({
-            height: (ClientHeight - 70) + 'px',
+            height: (ClientHeight - 140) + 'px',
             overflow: 'auto'
+        });
+
+        $('.control-chart-interval-group li').each(function (index) {
+            $(this).click(function () {
+                $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
+                $('.control-chart-interval-group li').attr('datatype', 'false');
+
+                $(this).css({opacity: '1'});
+                $(this).attr('datatype', 'true');
+
+                $('.change_charts').css({
+                    opacity: 0.3,
+                    color: 'black',
+                    borderColor: 'black'
+                });
+                $('.change_charts:first-child').css({
+                    opacity: 1,
+                    color: 'orange',
+                    borderColor: 'orange'
+                });
+
+                var Choose_Interval_Code = $(this).attr('interval');
+                loadChartData(Choose_Interval_Code);
+            });
         });
     });
 
-    function loadChartData() {
-        var xAxis_value = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        var cycle_time_chart_value = [2, 3, 4, 5, 6, 7, 9, 1, 12, 4];
-        var target_max_value = [7, 7, 7, 7, 7, 7, 7, 7, 7, 7];
+    function loadChartData(load_interval) {
+        var load_url = '/departments/entity_groups';
+        var load_produce_line = $('#vehicle-select').val();
+
+        var xAxis_value = new Array();
+        var cycle_time_chart_value = new Array();
+        var target_max_value = new Array();
+        var target_min_value = new Array();
+
+        var normal_data = 0;
+        var exception_data = 0;
+
+        remove_table();
+
+        draw_table_head();
+
+        var load_AjaxData = get_ajax_data(load_url, load_produce_line, load_interval);
+        if (load_AjaxData) {
+            remove_loading();
+            for (var i = 0; i < load_AjaxData.length; i++) {
+                xAxis_value.push(load_AjaxData[i].name + '#' + load_AjaxData[i].code);
+                target_max_value.push(load_AjaxData[i].target_max);
+                target_min_value.push(load_AjaxData[i].target_min);
+
+                if (load_AjaxData[i].value == '0') {
+                    load_AjaxData[i].value = Math.round(Math.random() * 30);
+                }
+
+                if (load_AjaxData[i].value > load_AjaxData[i].target_max) {
+                    exception_data++;
+                    cycle_time_chart_value.push({color: '#ff0000', y: load_AjaxData[i].value});
+                    $('<td style="color:#ff0000;font-weight: bold;">' + load_AjaxData[i].value + '</td>').appendTo('.cycle_time_value').ready(function () {
+                    });
+                } else {
+                    normal_data++;
+                    cycle_time_chart_value.push({color: 'limegreen', y: load_AjaxData[i].value});
+                    $('<td>' + load_AjaxData[i].value + '</td>').appendTo('.cycle_time_value').ready(function () {
+                    });
+                }
+
+                $('<th>' + load_AjaxData[i].code + '</th>').appendTo('.cycle_time_thead_tr').ready(function () {
+                });
+
+                /*
+                 $('<td style="background:orange;">' + load_AjaxData[i].target_min + '</td>').appendTo('.cycle_time_target_min').ready(function () {
+                 });*/
+
+                $('<td style="color:orange;">' + load_AjaxData[i].target_max + '</td>').appendTo('.cycle_time_target_max').ready(function () {
+                });
+            }
+        } else {
+            remove_loading();
+            alert('error');
+        }
+
+        var get_ajax_data_value = "";
+
+        function get_ajax_data(url, product_line, interval) {
+            loading_mask();
+
+            $.ajax({
+                url: url,
+                type: 'get',
+                async: false,
+                data: {
+                    product_line: product_line,
+                    interval: interval
+                },
+                success: function (data) {
+                    get_ajax_data_value = data;
+                },
+                error: function () {
+                    console.log('error');
+                }
+            });
+            return get_ajax_data_value;
+        }
+
+        $('#total_data').html(normal_data + exception_data);
+        $('#normal_data').html(normal_data);
+        $('#exception_data').html(exception_data);
+
+        var xaxis_max_value = 20;
+        if (load_AjaxData.length < xaxis_max_value) {
+            xaxis_max_value = load_AjaxData.length;
+        }
+
         var cycle_time_chart = {
             chart: {
                 renderTo: 'charts_containers'
@@ -90,16 +204,25 @@
                 enabled: false
             },
             xAxis: {
+                min: 0,
+                max: xaxis_max_value,
                 categories: xAxis_value,
                 labels: {
+                    /*设置每隔3个就显示一个x轴*/
+                    /*step: Math.ceil(load_AjaxData.length / 8),
+                     staggerLines: 1,*/
                     formatter: function () {
-                        return this.value;
+                        try {
+                            return this.value.split('#')[1];
+                        } catch (e) {
+                            return '';
+                        }
                     }
                 }
             },
             yAxis: {
                 title: {
-                    text: 'Time(s)'
+                    text: 'Time(m)'
                 },
                 plotLines: [{
                     value: 0,
@@ -113,6 +236,9 @@
                     return '<span><b>' + this.x + '</b><br/>CycleTime:<b>' + this.y + 's</b></span>';
                 }
             },
+            scrollbar: {
+                enabled: true
+            },
             legend: {
                 layout: 'horizontal',
                 align: 'center',
@@ -120,6 +246,10 @@
                 borderHeight: 0
             },
             plotOptions: {
+                series: {
+                    stickyTracking: false,
+                    turboThreshold: 0 //不限制数据点个数
+                },
                 column: {
                     dataLabels: {
                         enabled: true
@@ -132,7 +262,6 @@
                 }
             },
             series: [{
-                type: 'column',
                 name: 'Value',
                 data: cycle_time_chart_value,
                 color: 'limegreen'
@@ -145,42 +274,66 @@
                 }]
         };
 
-        $('.control-chart-interval-group li').each(function () {
-            $(this).click(function () {
-                var ReportMenuStyle = document.getElementById('report-menu').style.display;
+        cycle_time_chart.chart.type = 'column';
+        var chart = new Highcharts.Chart(cycle_time_chart);
 
-                if (ReportMenuStyle == "none") {
-                    show_loading(130, 0, 0, 10);
-                } else {
-                    show_loading(130, 0, 0, 230);
-                }
-                $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
-                $('.control-chart-interval-group li').attr('datatype', 'false');
-
-                $(this).css({opacity: '1'});
-                $(this).attr('datatype', 'true');
-
-                var Choose_Interval_Code = $(this).attr('interval');
-                var ProductLine = $('#vehicle-select').val();
-
-                $.ajax({
-                    url: '/departments/entity_groups',
-                    type: 'get',
-                    data: {
-                        interval: Choose_Interval_Code,
-                        product_line: ProductLine
-                    },
-                    success: function (data) {
-                        //Here can do something
-                        remove_loading();
-                    },
-                    error: function () {
-                        console.log("Error");
-                    }
-                });
+        /*change chart type.*/
+        $("button.change_charts").click(function () {
+            $('.change_charts').css({
+                opacity: 0.3,
+                color: 'black',
+                borderColor: 'black'
             });
+            $(this).css({
+                opacity: 1,
+                color: 'orange',
+                borderColor: 'orange'
+            });
+            var type = $(this).html();
+            cycle_time_chart.chart.type = type;
+            chart = new Highcharts.Chart(cycle_time_chart);
+        });
+    }
+
+    function remove_table() {
+        $('.cycle_time_thead_tr').children().remove();
+        $('.cycle_time_target_min').children().remove();
+        $('.cycle_time_value').children().remove();
+        $('.cycle_time_target_max').children().remove();
+    }
+
+    function draw_table_head() {
+        /*绘制表头*/
+        $('<th>Station</th>').appendTo('.cycle_time_thead_tr').ready(function () {
         });
 
-        var chart = new Highcharts.Chart(cycle_time_chart);
+        /*$('<td>TargetMin(m)</td>').appendTo('.cycle_time_target_min').ready(function () {
+         });
+         */
+        $('<td>Value</td>').appendTo('.cycle_time_value').ready(function () {
+        });
+
+        $('<td>TargetMax</td>').appendTo('.cycle_time_target_max').ready(function () {
+        });
+    }
+
+    function loading_mask() {
+        var report_menu_style = document.getElementById('report-menu').style.display;
+        if (report_menu_style == "none") {
+            show_loading(130, 0, 0, 10);
+            loading_size('table_containers', 50);
+        } else {
+            show_loading(130, 0, 0, 230);
+            loading_size('table_containers', 270);
+        }
+    }
+
+    function loading_size(id, value) {
+        $('#' + id).css({
+            width: (ClientWidth - value) + 'px',
+            marginRight: '-20px',
+            marginTop: '20px',
+            overflow: 'auto'
+        });
     }
 </script>

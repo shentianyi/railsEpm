@@ -1,0 +1,93 @@
+<style>
+    #chart_mode {
+        text-align: center;
+        z-index: 1000;
+    }
+
+    .change_charts {
+        width: 100px;
+        font-size: 1.5em;
+        background: transparent;
+        border: 1px solid #999;
+        opacity: .5;
+        margin-left: -5px;
+    }
+
+    .change_charts:hover {
+        opacity: .8;
+    }
+
+    .change_charts:first-child {
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+    }
+
+    .change_charts:last-child {
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .table > thead > tr > th, .table > tbody > tr > td {
+        text-align: center;
+        background: white;
+        border: none;
+    }
+
+    .table > thead > tr > th {
+        background: skyblue;
+        color: white;
+        font-weight: bold;
+    }
+
+    .table > thead > tr > th:first-child {
+        border-top-left-radius: 10px;
+    }
+
+    .table > thead > tr > th:last-child {
+        border-top-right-radius: 10px;
+    }
+</style>
+
+<div class="col-sm-12">
+  <div class="col-sm-4" style="display: flex;height: 30px;line-height: 30px;">
+    <p>Total:</p><b id="total_data">0</b>&emsp;&emsp;
+    <p>Normal:</p><b id="normal_data" style="color: limegreen;">0</b>&emsp;&emsp;
+    <p>Exception:</p><b id="exception_data" style="color: #ff0000;">0</b>
+  </div>
+
+  <div class="col-sm-4">
+    <div id="chart_mode">
+      <button class="change_charts" style="opacity: 1;color: orange;border-color: orange;">column</button>
+      <button class="change_charts">line</button>
+      <button class="change_charts">scatter</button>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <ul class="pull-right control-chart-interval-group">
+      <!--  <li interval="90">
+         <a>Hr</a>
+       </li> -->
+      <li interval="100" style="color:black;" datatype='true'>
+        <a>D</a>
+      </li>
+      <!-- <li interval="200">
+        <a>W</a>
+      </li> -->
+      <li interval="300">
+        <a>M</a>
+      </li>
+      <li interval="400">
+        <a>Qr</a>
+      </li>
+      <li interval="500">
+        <a>Y</a>
+      </li>
+    </ul>
+    <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
+  </div>
+</div>
+
+<div class="col-sm-12">
+  <div id="charts_containers"></div>
+</div>
