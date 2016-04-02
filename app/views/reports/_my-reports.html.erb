@@ -1,4 +1,4 @@
-<div class="report-menu" id="report-menu">
+<div class="report-menu" id="report-menu" style="display: none;">
   <section class="slide_menu">
     <div class="header">
       <p>App Center</p>
@@ -10,6 +10,19 @@
 
       <li><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i>
         CycleTime Detail<i class="icon-chevron-right indicate"></i></a></li>
+
+      <li><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i>
+        CycleTime Detail<i class="icon-chevron-right indicate"></i></a></li>
+
+      <li><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i>
+        CycleTime Detail<i class="icon-chevron-right indicate"></i></a></li>
+
+      <li><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i>
+        CycleTime Detail<i class="icon-chevron-right indicate"></i></a></li>
+
+
+      <!--<li><a menu="defects" href="#defects"><i class="icon-list mark"></i>
+        History<i class="icon-chevron-right indicate"></i></a></li>-->
 
       <!-- <li number="8"><a menu="daily_dpv" href="#daily_dpv"><i class="icon-columns mark"></i> Daily DPV&SDPV<i class="icon-chevron-right indicate"></i></a></li>
        <li number="7"><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i> Daily FTQ<i class="icon-chevron-right indicate"></i></a></li>
@@ -62,49 +75,54 @@
 
 <input type="hidden" id="report-story-type-hidden">
 
-<div class="back-pop report_center_back_pop" id='back-pop'>
-  <div class="choose-project-team">
-    <i class="icon icon-remove" id="remove-back-pop"></i>
+<!--<div class="back-pop report_center_back_pop" id='back-pop'>-->
+<!--<div class="choose-project-team">-->
+<!--<i class="icon icon-remove" id="remove-back-pop"></i>-->
 
-    <p>Share to discussion</p>
+<!--<p>Share to discussion</p>-->
 
-    <div class="basic_info">
-      <div class="basic_left">
-        <p>Title</p>
-        <input type="text" id="story-title"/>
+<!--<div class="basic_info">-->
+<!--<div class="basic_left">-->
+<!--<p>Title</p>-->
+<!--<input type="text" id="story-title"/>-->
 
-        <p>Attachment</p>
-        <input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">
+<!--<p>Attachment</p>-->
+<!--<input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">-->
 
-        <div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>
-      </div>
-      <div class="basic_right">
-        <p>Description</p>
-        <textarea id="story-desc"></textarea>
-      </div>
-    </div>
-    <div class="choose-by-select">
-      <p>Add to a discussion</p>
-      <select data-placeholder="discussion list" class="chosen-select" id="story-sets">
-        <% current_user.collaborated_story_sets.all.each do |set| %>
-            <option value="<%= set.id %>"><%= set.title %></option>
-        <% end %>
-      </select>
-      <a class="btn btn-primary" id="add-to-storyset">Add</a>
-    </div>
-    <div class="choose-by-create">
-      <p>Create new discussion</p>
-      <input type="text" id="storyset-title" placeholder="discussion name"/>
-      <input type="text" id="storyset-desc" placeholder="discussion description"/>
-      <select multiple class="chosen-select" data-placeholder="invite people" id="storyset-users">
-        <% @users.each do |u| %>
-            <option user="<%= u.id %>"><%= u.first_name %></option>
-        <% end %>
-      </select>
-      <a class="btn btn-primary" id="create-add-to-storyset">Create and Add</a>
-    </div>
-  </div>
-</div>
+<!--<div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>-->
+<!--</div>-->
+<!--<div class="basic_right">-->
+<!--<p>Description</p>-->
+<!--<textarea id="story-desc"></textarea>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="choose-by-select">-->
+<!--<p>Add to a discussion</p>-->
+<!--<select data-placeholder="discussion list" class="chosen-select" id="story-sets">-->
+<!--
+<% current_user.collaborated_story_sets.all.each do |set| %>-->
+    <!--<option value="<%= set.id %>"><%= set.title %></option>-->
+    <!--
+<% end %>-->
+<!--</select>-->
+<!--<a class="btn btn-primary" id="add-to-storyset">Add</a>-->
+<!--</div>-->
+<!--<div class="choose-by-create">-->
+<!--<p>Create new discussion</p>-->
+<!--<input type="text" id="storyset-title" placeholder="discussion name"/>-->
+<!--<input type="text" id="storyset-desc" placeholder="discussion description"/>-->
+<!--<select multiple class="chosen-select" data-placeholder="invite people" id="storyset-users">-->
+<!--
+<% @users.each do |u| %>-->
+    <!--<option user="<%= u.id %>"><%= u.first_name %></option>-->
+    <!--
+<% end %>-->
+<!--</select>-->
+<!--<a class="btn btn-primary" id="create-add-to-storyset">Create and Add</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
 </div>
 
 <% content_for :javascript_includes do %>
@@ -112,86 +130,87 @@
     <%= javascript_include_tag "jquery.file.upload/jquery.fileupload.js" %>
     <%= javascript_include_tag "Manage-story.js" %>
     <%= javascript_include_tag "Manage-storyset.js" %>
+    <%= javascript_include_tag "jedate.js" %>
 <% end %>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        attach_upload("item-data-uploader");
-        $("body")
-                .on("click", ".attachment-item-remove", function (event) {
-                    if (confirm('Sure to delelte?')) {
-                        var e = event ? event : (window.event ? window.event : null);
-                        var obj = e.srcElement || e.target;
-                        e.stopPropagation();
-                        $(".attachment-item[path-name='" + $(obj).attr("path-name") + "']").remove();
-                    }
-                })
-                .on("click", "#create-discuss-btn", function () {
-                    show_project_block();
-                    if ($("#analytic-control-condition-visible").attr("state") == "open") {
-                        $("#analytic-control-condition-visible").click();
-                    }
-                })
-                .on("click", "#cancel-fro-project", function () {
-                    hide_project_block();
-                })
-                .on("click", "#share_to_discussion_btn", function () {
-                    $("#back-pop").addClass("show")
-                })
-                .on("click", "#remove-back-pop", function () {
-                    $("#back-pop").removeClass("show")
-                })
-                .on("click", "#add-to-storyset", function () {
-                    var story = prepare_for_create_report_story();
-                    if (story.story_set_id == null) {
-                        MessageBox('No Story Set,Please use select one or Use create and add button', 'top', 'warning');
-                        return;
-                    }
-                    MANAGE.story.create(story, function (data) {
-                        if (data.result) {
-                            window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
-                        } else {
-                            MessageBox(data.content, 'top', 'warning');
-                        }
-
-                    });
-                })
-                .on("click", "#create-add-to-storyset", function () {
-                    var story = prepare_for_create_report_story();
-                    var story_set = {};
-                    story_set.title = $("#storyset-title").val();
-                    story_set.description = $("#storyset-desc").val();
-                    story_set.users = $("#storyset-users option:selected").map(function () {
-                        return $(this).attr("user")
-                    }).get();
-                    MANAGE.story_set.create(story_set, function (data) {
-                        if (data.result) {
-                            story.story_set_id = data.content.id;
-                            MANAGE.story.create(story, function (data) {
-                                if (data.result) {
-                                    window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
-                                } else {
-                                    MessageBox(data.content, 'top', 'warning');
-                                }
-                            })
-                        }
-                        else {
-
-                        }
-                    })
-                })
-                .on("click", "#direct-publish-fro-project", function () {
-                    var story = prepare_for_create_report_story();
-                    story.story_set_id = $(this).attr("value");
-                    MANAGE.story.create(story, function (data) {
-                        if (data.result) {
-                            window.location.href = '/story_sets/' + data.content.id + '/story?story';
-                        } else {
-                            MessageBox(data.content, 'top', 'warning');
-                        }
-                    });
-                });
-    });
+    //    $(document).ready(function () {
+    //        attach_upload("item-data-uploader");
+    //        $("body")
+    //                .on("click", ".attachment-item-remove", function (event) {
+    //                    if (confirm('Sure to delelte?')) {
+    //                        var e = event ? event : (window.event ? window.event : null);
+    //                        var obj = e.srcElement || e.target;
+    //                        e.stopPropagation();
+    //                        $(".attachment-item[path-name='" + $(obj).attr("path-name") + "']").remove();
+    //                    }
+    //                })
+    //                .on("click", "#create-discuss-btn", function () {
+    //                    show_project_block();
+    //                    if ($("#analytic-control-condition-visible").attr("state") == "open") {
+    //                        $("#analytic-control-condition-visible").click();
+    //                    }
+    //                })
+    //                .on("click", "#cancel-fro-project", function () {
+    //                    hide_project_block();
+    //                })
+    //                .on("click", "#share_to_discussion_btn", function () {
+    //                    $("#back-pop").addClass("show")
+    //                })
+    //                .on("click", "#remove-back-pop", function () {
+    //                    $("#back-pop").removeClass("show")
+    //                })
+    //                .on("click", "#add-to-storyset", function () {
+    //                    var story = prepare_for_create_report_story();
+    //                    if (story.story_set_id == null) {
+    //                        MessageBox('No Story Set,Please use select one or Use create and add button', 'top', 'warning');
+    //                        return;
+    //                    }
+    //                    MANAGE.story.create(story, function (data) {
+    //                        if (data.result) {
+    //                            window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
+    //                        } else {
+    //                            MessageBox(data.content, 'top', 'warning');
+    //                        }
+    //
+    //                    });
+    //                })
+    //                .on("click", "#create-add-to-storyset", function () {
+    //                    var story = prepare_for_create_report_story();
+    //                    var story_set = {};
+    //                    story_set.title = $("#storyset-title").val();
+    //                    story_set.description = $("#storyset-desc").val();
+    //                    story_set.users = $("#storyset-users option:selected").map(function () {
+    //                        return $(this).attr("user")
+    //                    }).get();
+    //                    MANAGE.story_set.create(story_set, function (data) {
+    //                        if (data.result) {
+    //                            story.story_set_id = data.content.id;
+    //                            MANAGE.story.create(story, function (data) {
+    //                                if (data.result) {
+    //                                    window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
+    //                                } else {
+    //                                    MessageBox(data.content, 'top', 'warning');
+    //                                }
+    //                            })
+    //                        }
+    //                        else {
+    //
+    //                        }
+    //                    })
+    //                })
+    //                .on("click", "#direct-publish-fro-project", function () {
+    //                    var story = prepare_for_create_report_story();
+    //                    story.story_set_id = $(this).attr("value");
+    //                    MANAGE.story.create(story, function (data) {
+    //                        if (data.result) {
+    //                            window.location.href = '/story_sets/' + data.content.id + '/story?story';
+    //                        } else {
+    //                            MessageBox(data.content, 'top', 'warning');
+    //                        }
+    //                    });
+    //                });
+    //    });
     var ClientHeight = document.documentElement.clientHeight;
 
     $('.my_icon').css({
@@ -210,13 +229,24 @@
 
     var loading;
     function loading_show() {
-        loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
-        var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
-        $(".pageload-overlay svg").css('left', '230px');
-        $(".pageload-overlay svg").css('top', top + 'px');
-        $(".pageload-overlay svg").css('bottom', 0);
-        $(".pageload-overlay svg").css('right', 0);
-        loading.show();
+        var ReportMenuStatus = document.getElementById('report-menu').style.display;
+        if (ReportMenuStatus == 'none') {
+            loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
+            var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
+            $(".pageload-overlay svg").css('left', '10px');
+            $(".pageload-overlay svg").css('top', top + 'px');
+            $(".pageload-overlay svg").css('bottom', 0);
+            $(".pageload-overlay svg").css('right', 0);
+            loading.show();
+        } else {
+            loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
+            var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
+            $(".pageload-overlay svg").css('left', '230px');
+            $(".pageload-overlay svg").css('top', top + 'px');
+            $(".pageload-overlay svg").css('bottom', 0);
+            $(".pageload-overlay svg").css('right', 0);
+            loading.show();
+        }
     }
 
     function loading_hide() {
@@ -225,9 +255,5 @@
         })
     }
 
-    // function refersh(){
-    //   window.location.reload();
-    // }
-
-    // window.setTimeout('refersh()',20000);    
+    // window.setTimeout('refersh()',20000);
 </script>

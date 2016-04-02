@@ -26,6 +26,8 @@ class PlcService
 
       v=values[i].to_f/1000
 
+
+      return if v<1.5
       time=Time.parse(params[:time])
 
 
@@ -43,7 +45,7 @@ class PlcService
       end
 
 
-      return if (v>3*max) || (v<min/3)
+      return if v>(3*max)
 
       KpiEntry.create(
           entry_type: 0,
