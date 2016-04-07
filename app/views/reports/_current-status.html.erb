@@ -88,13 +88,20 @@
 
     $('#pop-download').click(function () {
         $('.download-panel').fadeToggle(0);
+        initDownload();
+    });
+
+    function hideDownload(){
+        $('.download-panel').hide();
+        initDownload();
+    }
+
+    function initDownload(){
         var pre_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
         var current_time = new Date().format('yyyy-MM-dd hh:mm:ss');
         $('#start_time').attr('value', pre_time);
         $('#end_time').attr('value', current_time);
-
-    });
-
+    }
     $(document).ready(function () {
         $('.download-panel').hide();
 
@@ -140,7 +147,6 @@
                 });
             });
         });
-//        Report.init("current_status");
         /*时间刷新*/
         window.setInterval(function () {
             $("#current-clock").text(format_time.current_time_clock());
@@ -154,24 +160,41 @@
             overflow: 'auto'
         });
 
-        loadData();
+        if (localStorage.box_msg) {
+            var box_msg = localStorage.box_msg;
+            var productLine = box_msg.split('_')[1];
+            var datatype = box_msg.split('_')[3];
+
+            $('#vehicle-select option').each(function () {
+                if (($(this).attr('value')) == productLine) {
+                    $(this).attr('selected', 'true');
+                }
+            });
+
+            loadData(productLine, datatype);
+        } else {
+            var productLine = $('#vehicle-select').val();
+            var datatype = 100;
+            loadData(productLine, datatype);
+        }
     });
 
-    function loadData() {
-        var productLine = $('#vehicle-select').val();
 
-        $('#product_line_id').val(productLine);
-
-        var datatype = 100;
-
+    function loadData(productLine, datatype) {
         $('.control-chart-interval-group li').each(function (index) {
             if ($(this).attr('datatype') == 'true') {
                 datatype = $(this).attr('interval');
             }
         });
+        if(productLine==null){
+            productLine = $('#vehicle-select').val();
+
+        }
+        $("#product_line_id").val(productLine);
+        
 
         loading_show();
-
+        hideDownload();
         $.get('/departments/entity_groups', {product_line: productLine, interval: datatype}, function (data) {
             $('.workstation').remove();
             for (var i = 0; i < data.length; i++) {
@@ -179,14 +202,14 @@
 
                 if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
                     $('<div class="col-md-3 workstation"><div class="box">' +
-                            '<div class="box-title" title="click to go history" id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');">' + data[i].name + '<i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
+                            '<div class="box-title" title=' + data[i].name + ' id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');"><span>' + data[i].name + '</span><i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
                             '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                             '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                         loading_hide();
                     });
                 } else {
                     $('<div class="col-md-3 workstation"><div class="box">' +
-                            '<div class="box-title" title="click to go history" id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');">' + data[i].name + '<i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
+                            '<div class="box-title" title=' + data[i].name + ' id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');"><span>' + data[i].name + '</span><i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
                             '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                             '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                         loading_hide();
@@ -200,7 +223,8 @@
     }
 
     $("#vehicle-select").change(function () {
-        loadData();
+        var productLine = $('#vehicle-select').val();
+        loadData(productLine, 100);
     });
 
     //    try {
@@ -208,8 +232,6 @@
     //    } catch (e) {
     //        console.log(e);
     //    }
-
-    //    var loadDataIntervalValue = window.setInterval("loadData()", 20000);
 
     /*20s 刷新太快*/
     var loadDataIntervalValue = window.setInterval("loadData()", 40000);
@@ -227,7 +249,7 @@
          */
         var double_click_content = $(ele).html();
         var double_click_name = double_click_content.split('<i')[0];
-//        console.log(double_click_name);
+
 
         window.location.href = 'kpi_entries/analyse?view=';
     }
@@ -240,8 +262,7 @@
         var BoxID = over_id.split('_')[5];
 
         var over_id_content = $(ele).html();
-        var over_id_name = over_id_content.split('<i')[0];
-
+        var over_id_name = over_id_content.split('<i')[0].split('<span>')[1].split('<')[0];
         $('#' + over_id).children('i').fadeIn(400);
 
         $('#' + over_id).click(function () {
@@ -262,7 +283,6 @@
         var over_id = $(ele).attr('id');
         $('#' + over_id).children('i').fadeOut(400);
     }
-
 </script>
 
 <style>
@@ -274,6 +294,9 @@
         /*border: 2px solid #9000ff;*/
         border: 2px solid deepskyblue;
         margin: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .box-title {
@@ -286,7 +309,16 @@
         border-top-right-radius: 7px;
         border-top-left-radius: 7px;
         padding-left: 30px;
+        padding-right: 30px;
         cursor: pointer;
+        display: flex;
+    }
+
+    .box-title > span {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .box-title > i {
