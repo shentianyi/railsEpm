@@ -45,7 +45,7 @@ class PlcService
       end
 
 
-      return if v>(3*max)
+      return if v>100
 
       KpiEntry.create(
           entry_type: 0,

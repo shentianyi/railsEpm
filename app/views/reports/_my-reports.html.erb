@@ -11,6 +11,8 @@
       <li><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i>
         CycleTime Detail<i class="icon-chevron-right indicate"></i></a></li>
 
+
+
       <!--<li><a menu="defects" href="#defects"><i class="icon-list mark"></i>
         History<i class="icon-chevron-right indicate"></i></a></li>-->
 
@@ -64,52 +66,6 @@
 </section>
 
 <input type="hidden" id="report-story-type-hidden">
-
-<!--<div class="back-pop report_center_back_pop" id='back-pop'>-->
-  <!--<div class="choose-project-team">-->
-    <!--<i class="icon icon-remove" id="remove-back-pop"></i>-->
-
-    <!--<p>Share to discussion</p>-->
-
-    <!--<div class="basic_info">-->
-      <!--<div class="basic_left">-->
-        <!--<p>Title</p>-->
-        <!--<input type="text" id="story-title"/>-->
-
-        <!--<p>Attachment</p>-->
-        <!--<input id="item-data-uploader" type="file" name="files[]" multiple="true" data-url="/files/upload">-->
-
-        <!--<div class="abstractblock" id="item-data-uploader-preview" style="display:none;"></div>-->
-      <!--</div>-->
-      <!--<div class="basic_right">-->
-        <!--<p>Description</p>-->
-        <!--<textarea id="story-desc"></textarea>-->
-      <!--</div>-->
-    <!--</div>-->
-    <!--<div class="choose-by-select">-->
-      <!--<p>Add to a discussion</p>-->
-      <!--<select data-placeholder="discussion list" class="chosen-select" id="story-sets">-->
-        <!--<% current_user.collaborated_story_sets.all.each do |set| %>-->
-            <!--<option value="<%= set.id %>"><%= set.title %></option>-->
-        <!--<% end %>-->
-      <!--</select>-->
-      <!--<a class="btn btn-primary" id="add-to-storyset">Add</a>-->
-    <!--</div>-->
-    <!--<div class="choose-by-create">-->
-      <!--<p>Create new discussion</p>-->
-      <!--<input type="text" id="storyset-title" placeholder="discussion name"/>-->
-      <!--<input type="text" id="storyset-desc" placeholder="discussion description"/>-->
-      <!--<select multiple class="chosen-select" data-placeholder="invite people" id="storyset-users">-->
-        <!--<% @users.each do |u| %>-->
-            <!--<option user="<%= u.id %>"><%= u.first_name %></option>-->
-        <!--<% end %>-->
-      <!--</select>-->
-      <!--<a class="btn btn-primary" id="create-add-to-storyset">Create and Add</a>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-
-</div>
 
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "jquery.ui/jquery-ui-1.10.3.custom.min.js" %>

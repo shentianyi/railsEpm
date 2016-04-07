@@ -361,6 +361,7 @@ IFEpm::Application.routes.draw do
 
       get :entity_groups
       get :entity_group_history
+      get :download_cycle_time_detail
     end
   end
 

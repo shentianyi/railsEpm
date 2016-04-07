@@ -98,20 +98,17 @@
     // 固定不变
     var box_name = localStorage.box_name;
     var box_msg = localStorage.box_msg;
-    var pre_url = localStorage.pre_url;
+    var change_pre_url = localStorage.pre_url;
 
     function go_back() {
-        console.log('-----------------');
-        console.log(pre_url);
-        console.log('-----------------');
-
         try {
-            var error_url = pre_url.split('#')[1];
-            if (pre_url == 'undefined' || error_url == 'defects') {
-                pre_url = window.location.host + '/reports#current_status'
+            if (change_pre_url == 'undefined') {
+                change_pre_url = window.location.host + '/reports#current_status';
+            } else if (change_pre_url.split('#')[1] == "defects") {
+                change_pre_url = window.location.host + '/reports#current_status';
             }
-            window.location.href = pre_url;
-            location.reload();
+            window.location.href = '/reports#' + change_pre_url.split('#')[1];
+            window.location.reload();
         } catch (e) {
             console.log(e);
         }
@@ -176,17 +173,20 @@
 
         // 循环添加数据
         var data_entry_at_format_all = "";
+        var data_entry_at_format_all_date = new Array();
         for (var i = 0; i < HistoryData.length; i++) {
             var data_id = HistoryData[i].id;
             var data_value = HistoryData[i].value;
 
             var data_entry_at = HistoryData[i].entry_at;
             data_entry_at_format_all = new Date(data_entry_at).format('yyyy-MM-dd hh:mm:ss');
+            data_entry_at_format_all_date.push(data_entry_at_format_all);
+
             var data_entry_at_format = new Date(data_entry_at).format('hh:mm:ss');
             xAxis_value.push(data_entry_at_format);
 
             var data_target_max = HistoryData[i].target_max;
-            history_target_max.push(data_target_max);
+            history_target_max.push({id: data_entry_at_format_all_date[i], y: data_target_max});
 
             var data_target_min = HistoryData[i].target_min;
 
@@ -198,12 +198,12 @@
 
             var data_value = HistoryData[i].value;
             if (data_value > data_target_max) {
-                history_value.push({color: '#ff0000', y: data_value});
+                history_value.push({id: data_entry_at_format_all_date[i], color: '#ff0000', y: data_value});
                 $('<td style="background:#ff0000;">' + data_value + '</td>').appendTo('.history_table_tbody_value').ready(function () {
                 });
                 abnormal_data++;
             } else {
-                history_value.push({color: 'limegreen', y: data_value});
+                history_value.push({id: data_entry_at_format_all_date[i], color: 'limegreen', y: data_value});
                 $('<td style="background:limegreen;">' + data_value + '</td>').appendTo('.history_table_tbody_value').ready(function () {
                 });
                 normal_data++;
@@ -242,8 +242,7 @@
             },
             tooltip: {
                 formatter: function () {
-                    return '<span><b>' + data_entry_at_format_all +
-                            '</b><br/>Value: <b>' + this.y + ' s</b><span>';
+                    return '<span><b>' + this.point.id + '</b><br/>Value: <b>' + this.y + ' s</b><span>';
                 }
             },
             scrollbar: {
@@ -354,14 +353,14 @@
             } else {
                 loadHistoryDataFun(SearchHistoryDataName, SearchHistoryDataValue);
             }
-        })
+        });
 
     });
 
     /*get data*/
     function GetHistoryDataFun(id, start_time, end_time) {
         var GetHistoryData = "";
-        show_loading(70, 0, 0, 10);
+        show_loading(145, 0, 0, 0);
         $.ajax({
             url: '/departments/entity_group_history',
             type: 'get',

@@ -48,6 +48,34 @@
       <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
     </div>
     <div id="data_container" class="data-container"></div>
+
+
+    <div class="download-groups" id="download">
+      <div class="download-panel" style="display: none;">
+        <h4 style="font-size: 17px;color: #666; top: 15px;left: 10px;">
+          Download Excel
+        </h4>
+        <div style="margin-top: 20px; display: inline-block">
+          <form method="get" action="/departments/download_cycle_time_detail">
+            <input type="hidden" name="product_line" id="product_line_id"/>
+            <input type="text" readonly class="datetimepicker" id="start_time" name="start_time" title="Start Time">&emsp;
+            <b>~</b> &emsp;
+            <input type="text" readonly class="datetimepicker" id="end_time" name="end_time" title="End Time">
+            <input type="submit" class=" btn-primary" style="width: 150px;height: 38px;" value="Download"/>
+          </form>
+        </div>
+
+      </div>
+
+      <div id="pop-download" style="text-align: center;width: 100%;
+              color: white;cursor: pointer;height: 13px;background: #3e4452;position: relative;">
+        <div class="my_icon">
+          <i class="icon-chevron-up" title="Close Panel"></i>
+        </div>
+      </div>
+    </div>
+
+
   </section>
 </section>
 
@@ -56,8 +84,34 @@
     <%= javascript_include_tag "reports/defects" %>
 <% end %>
 
-<script>
+<script type="text/javascript">
+
+    $('#pop-download').click(function () {
+        $('.download-panel').fadeToggle(0);
+        var pre_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
+        var current_time = new Date().format('yyyy-MM-dd hh:mm:ss');
+        $('#start_time').attr('value', pre_time);
+        $('#end_time').attr('value', current_time);
+
+    });
+
     $(document).ready(function () {
+        $('.download-panel').hide();
+
+        jeDate({
+            dateCell: "#start_time",
+            isinitVal: true,
+            isTime: true, //isClear:false,
+            minDate: "2014-09-19 00:00:00"
+        });
+
+        jeDate({
+            dateCell: "#end_time",
+            isinitVal: true,
+            isTime: true, //isClear:false,
+            minDate: "2014-09-19 00:00:00"
+        });
+
         $('.control-chart-interval-group li').each(function (index) {
             $(this).click(function () {
                 $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
@@ -105,6 +159,9 @@
 
     function loadData() {
         var productLine = $('#vehicle-select').val();
+
+        $('#product_line_id').val(productLine);
+
         var datatype = 100;
 
         $('.control-chart-interval-group li').each(function (index) {
@@ -120,9 +177,6 @@
             for (var i = 0; i < data.length; i++) {
                 var box_title_id = "Line_" + productLine + "_interval_" + datatype + "_box_" + data[i].id;
 
-                console.log('====================');
-                console.log(box_title_id);
-                console.log('====================');
                 if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
                     $('<div class="col-md-3 workstation"><div class="box">' +
                             '<div class="box-title" title="click to go history" id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');">' + data[i].name + '<i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
@@ -138,6 +192,9 @@
                         loading_hide();
                     });
                 }
+
+
+                $('.download-panel').hide();
             }
         }, 'JSON');
     }
@@ -146,16 +203,16 @@
         loadData();
     });
 
-    try {
-        window.clearInterval(loadChartDataIntervalValue);
-    } catch (e) {
-        console.log(e);
-    }
+    //    try {
+    //        window.clearInterval(loadChartDataIntervalValue);
+    //    } catch (e) {
+    //        console.log(e);
+    //    }
 
     //    var loadDataIntervalValue = window.setInterval("loadData()", 20000);
 
     /*20s 刷新太快*/
-    var loadDataIntervalValue = window.setInterval("loadData()", 60000);
+    var loadDataIntervalValue = window.setInterval("loadData()", 40000);
 
     /*双击事件*/
     function double_click(ele) {
@@ -191,7 +248,8 @@
             if (window.localStorage) {
                 localStorage.box_msg = over_id;
                 localStorage.box_name = over_id_name;
-                localStorage.pre_url = document.location.href;
+                localStorage.pre_url = window.location.host + '/reports#current_status';
+
                 window.location.href = 'reports#defects';
                 location.reload();
             } else {
