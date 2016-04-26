@@ -49,9 +49,8 @@
     </div>
     <div id="data_container" class="data-container"></div>
 
-
     <div class="download-groups" id="download">
-      <div class="download-panel" style="display: none;">
+      <div class="download-panel" style="display: none;margin-top: 20px;">
         <h4 style="font-size: 17px;color: #666; top: 15px;left: 10px;">
           Download Excel
         </h4>
@@ -68,14 +67,12 @@
       </div>
 
       <div id="pop-download" style="text-align: center;width: 100%;
-              color: white;cursor: pointer;height: 13px;background: #3e4452;position: relative;">
+          color: white;cursor: pointer;height: 13px;background: #e5e5e5;position: relative;">
         <div class="my_icon">
-          <i class="icon-chevron-up" title="Close Panel"></i>
+          <i class="icon-chevron-up" style="color: #3e4452;" title="Close Panel"></i>
         </div>
       </div>
     </div>
-
-
   </section>
 </section>
 
@@ -86,289 +83,315 @@
 
 <script type="text/javascript">
 
-    $('#pop-download').click(function () {
-        $('.download-panel').fadeToggle(0);
-        initDownload();
+  $('#pop-download').click(function () {
+    $('.download-panel').fadeToggle(0);
+    initDownload();
+  });
+
+  function hideDownload() {
+    $('.download-panel').hide();
+    initDownload();
+  }
+
+  function initDownload() {
+    var pre_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
+    var current_time = new Date().format('yyyy-MM-dd hh:mm:ss');
+    $('#start_time').attr('value', pre_time);
+    $('#end_time').attr('value', current_time);
+  }
+  $(document).ready(function () {
+    $('.download-panel').hide();
+
+    jeDate({
+      dateCell: "#start_time",
+      isinitVal: true,
+      isTime: true, //isClear:false,
+      minDate: "2014-09-19 00:00:00"
     });
 
-    function hideDownload(){
-        $('.download-panel').hide();
-        initDownload();
-    }
-
-    function initDownload(){
-        var pre_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
-        var current_time = new Date().format('yyyy-MM-dd hh:mm:ss');
-        $('#start_time').attr('value', pre_time);
-        $('#end_time').attr('value', current_time);
-    }
-    $(document).ready(function () {
-        $('.download-panel').hide();
-
-        jeDate({
-            dateCell: "#start_time",
-            isinitVal: true,
-            isTime: true, //isClear:false,
-            minDate: "2014-09-19 00:00:00"
-        });
-
-        jeDate({
-            dateCell: "#end_time",
-            isinitVal: true,
-            isTime: true, //isClear:false,
-            minDate: "2014-09-19 00:00:00"
-        });
-
-        $('.control-chart-interval-group li').each(function (index) {
-            $(this).click(function () {
-                $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
-                $('.control-chart-interval-group li').attr('datatype', 'false');
-
-                loading_show();
-                $(this).css({opacity: '1'});
-                $(this).attr('datatype', 'true');
-
-                var Choose_Interval_Code = $(this).attr('interval');
-                var ProductLine = $('#vehicle-select').val();
-                $.ajax({
-                    url: '/departments/entity_groups',
-                    type: 'get',
-                    data: {
-                        interval: Choose_Interval_Code,
-                        product_line: ProductLine
-                    },
-                    success: function (data) {
-                        //Here can do something
-                        loading_hide();
-                    },
-                    error: function () {
-                        console.log("Error");
-                    }
-                });
-            });
-        });
-        /*时间刷新*/
-        window.setInterval(function () {
-            $("#current-clock").text(format_time.current_time_clock());
-        }, 700);
-
-        /*设置整体背景颜色*/
-//        var ClientHeight = document.documentElement.clientHeight;
-        var ClientHeight = $(document).height();
-        $('#report-content').css({
-            height: (ClientHeight - 70) + 'px',
-            overflow: 'auto'
-        });
-
-        if (localStorage.box_msg) {
-            var box_msg = localStorage.box_msg;
-            var productLine = box_msg.split('_')[1];
-            var datatype = box_msg.split('_')[3];
-
-            $('#vehicle-select option').each(function () {
-                if (($(this).attr('value')) == productLine) {
-                    $(this).attr('selected', 'true');
-                }
-            });
-
-            loadData(productLine, datatype);
-        } else {
-            var productLine = $('#vehicle-select').val();
-            var datatype = 100;
-            loadData(productLine, datatype);
-        }
+    jeDate({
+      dateCell: "#end_time",
+      isinitVal: true,
+      isTime: true, //isClear:false,
+      minDate: "2014-09-19 00:00:00"
     });
 
-
-    function loadData(productLine, datatype) {
-        $('.control-chart-interval-group li').each(function (index) {
-            if ($(this).attr('datatype') == 'true') {
-                datatype = $(this).attr('interval');
-            }
-        });
-        if(productLine==null){
-            productLine = $('#vehicle-select').val();
-
-        }
-        $("#product_line_id").val(productLine);
-        
+    $('.control-chart-interval-group li').each(function (index) {
+      $(this).click(function () {
+        $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
+        $('.control-chart-interval-group li').attr('datatype', 'false');
 
         loading_show();
-        hideDownload();
-        $.get('/departments/entity_groups', {product_line: productLine, interval: datatype}, function (data) {
-            $('.workstation').remove();
-            for (var i = 0; i < data.length; i++) {
-                var box_title_id = "Line_" + productLine + "_interval_" + datatype + "_box_" + data[i].id;
+        $(this).css({opacity: '1'});
+        $(this).attr('datatype', 'true');
 
-                if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
-                    $('<div class="col-md-3 workstation"><div class="box">' +
-                            '<div class="box-title" title=' + data[i].name + ' id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');"><span>' + data[i].name + '</span><i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
-                            '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
-                            '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
-                        loading_hide();
-                    });
-                } else {
-                    $('<div class="col-md-3 workstation"><div class="box">' +
-                            '<div class="box-title" title=' + data[i].name + ' id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');"><span>' + data[i].name + '</span><i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
-                            '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
-                            '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
-                        loading_hide();
-                    });
-                }
-
-
-                $('.download-panel').hide();
-            }
-        }, 'JSON');
-    }
-
-    $("#vehicle-select").change(function () {
-        var productLine = $('#vehicle-select').val();
-        loadData(productLine, 100);
+        var Choose_Interval_Code = $(this).attr('interval');
+        var ProductLine = $('#vehicle-select').val();
+        $.ajax({
+          url: '/departments/entity_groups',
+          type: 'get',
+          data: {
+            interval: Choose_Interval_Code,
+            product_line: ProductLine
+          },
+          success: function (data) {
+            //Here can do something
+            loading_hide();
+          },
+          error: function () {
+            console.log("Error");
+          }
+        });
+      });
     });
 
-    //    try {
-    //        window.clearInterval(loadChartDataIntervalValue);
-    //    } catch (e) {
-    //        console.log(e);
-    //    }
 
-    /*20s 刷新太快*/
-    var loadDataIntervalValue = window.setInterval("loadData()", 40000);
+    /*时间刷新*/
+    window.setInterval(function () {
+      startTime();
+    }, 500);
 
-    /*双击事件*/
-    function double_click(ele) {
-        var double_click_id = $(ele).attr('id');
-        var ProductLine = double_click_id.split('_')[1];
-        var Interval = double_click_id.split('_')[3];
-        var BoxID = double_click_id.split('_')[5];
+    /*设置整体背景颜色*/
+//        var ClientHeight = document.documentElement.clientHeight;
+    var ClientHeight = $(document).height();
+    $('#report-content').css({
+      height: (ClientHeight - 70) + 'px',
+      overflow: 'auto'
+    });
 
-        /* console.log(ProductLine);
-         console.log(Interval);
-         console.log(BoxID);
-         */
-        var double_click_content = $(ele).html();
-        var double_click_name = double_click_content.split('<i')[0];
+    if (localStorage.box_msg) {
+      var box_msg = localStorage.box_msg;
+      var productLine = box_msg.split('_')[1];
+      var datatype = box_msg.split('_')[3];
 
+      $('#vehicle-select option').each(function () {
+        if (($(this).attr('value')) == productLine) {
+          $(this).attr('selected', 'true');
+        }
+      });
 
-        window.location.href = 'kpi_entries/analyse?view=';
+      loadData(productLine, datatype);
+    } else {
+      var productLine = $('#vehicle-select').val();
+      var datatype = 100;
+      loadData(productLine, datatype);
     }
+  });
 
-    /*查看历史记录数据*/
-    function box_title_mouseover(ele) {
-        var over_id = $(ele).attr('id');
-        var ProductLine = over_id.split('_')[1];
-        var Interval = over_id.split('_')[3];
-        var BoxID = over_id.split('_')[5];
 
-        var over_id_content = $(ele).html();
-        var over_id_name = over_id_content.split('<i')[0].split('<span>')[1].split('<')[0];
-        $('#' + over_id).children('i').fadeIn(400);
+  function loadData(productLine, datatype) {
+    $('.control-chart-interval-group li').each(function (index) {
+      if ($(this).attr('datatype') == 'true') {
+        datatype = $(this).attr('interval');
+      }
+    });
+    if (productLine == null) {
+      productLine = $('#vehicle-select').val();
 
-        $('#' + over_id).click(function () {
-            if (window.localStorage) {
-                localStorage.box_msg = over_id;
-                localStorage.box_name = over_id_name;
-                localStorage.pre_url = window.location.host + '/reports#current_status';
+    }
+    $("#product_line_id").val(productLine);
 
-                window.location.href = 'reports#defects';
-                location.reload();
+    loading_show();
+    hideDownload();
+
+    $.ajax({
+      url: '/departments/entity_groups',
+      type: 'get',
+      data: {
+        product_line: productLine,
+        interval: datatype
+      },
+      success: function (data) {
+        $('.workstation').remove();
+
+        if (data.length > 0) {
+          for (var i = 0; i < data.length; i++) {
+            var box_title_id = "Line_" + productLine + "_interval_" + datatype + "_box_" + data[i].id;
+
+            if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
+              $('<div class="col-md-3 workstation"><div class="box">' +
+                  '<div class="box-title" title=' + data[i].name + ' id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');"><span>' + data[i].name + '</span><i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');">' +
+                  '<div class="box-content"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
+                  '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
+                  '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div></div>').appendTo('#data_container').ready(function () {
+                loading_hide();
+              });
             } else {
-                alert('This browser does NOT support localStorage,please change browser.');
+              $('<div class="col-md-3 workstation"><div class="box">' +
+                  '<div class="box-title" title=' + data[i].name + ' id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');"><span>' + data[i].name + '</span><i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');">' +
+                  '<div class="box-content"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
+                  '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
+                  '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div></div>').appendTo('#data_container').ready(function () {
+                loading_hide();
+              });
             }
-        });
-    }
+            $('.download-panel').hide();
+          }
+        }
+      },
+      error: function (data) {
+        alert("Network Error!");
+      }
+    });
+  }
 
-    function box_title_mouseout(ele) {
-        var over_id = $(ele).attr('id');
-        $('#' + over_id).children('i').fadeOut(400);
-    }
+  $("#vehicle-select").change(function () {
+    var productLine = $('#vehicle-select').val();
+    loadData(productLine, 100);
+  });
+
+  //    try {
+  //        window.clearInterval(loadChartDataIntervalValue);
+  //    } catch (e) {
+  //        console.log(e);
+  //    }
+
+  /*20s 刷新太快*/
+  var loadDataIntervalValue = window.setInterval("loadData()", 60000);
+
+  /*双击事件*/
+  function double_click(ele) {
+    var double_click_id = $(ele).attr('id');
+    var ProductLine = double_click_id.split('_')[1];
+    var Interval = double_click_id.split('_')[3];
+    var BoxID = double_click_id.split('_')[5];
+
+    /* console.log(ProductLine);
+     console.log(Interval);
+     console.log(BoxID);
+     */
+    var double_click_content = $(ele).html();
+    var double_click_name = double_click_content.split('<i')[0];
+
+
+    window.location.href = 'kpi_entries/analyse?view=';
+  }
+
+  /*查看历史记录数据*/
+  function box_title_mouseover(ele) {
+    var over_id = $(ele).attr('id');
+    var ProductLine = over_id.split('_')[1];
+    var Interval = over_id.split('_')[3];
+    var BoxID = over_id.split('_')[5];
+
+    var over_id_content = $(ele).html();
+    var over_id_name = over_id_content.split('<i')[0].split('<span>')[1].split('<')[0];
+    $('#' + over_id).children('i').fadeIn(400);
+
+    $('#' + over_id).click(function () {
+      if (window.localStorage) {
+        localStorage.box_msg = over_id;
+        localStorage.box_name = over_id_name;
+        localStorage.pre_url = window.location.host + '/reports#current_status';
+
+        window.location.href = 'reports#defects';
+        location.reload();
+      } else {
+        alert('This browser does NOT support localStorage,please change browser.');
+      }
+    });
+  }
+
+  function box_title_mouseout(ele) {
+    var over_id = $(ele).attr('id');
+    $('#' + over_id).children('i').fadeOut(400);
+  }
 </script>
 
 <style>
-    /*Box Start*/
-    .box {
-        min-width: 230px;
-        height: 165px;
-        border-radius: 10px;
-        /*border: 2px solid #9000ff;*/
-        border: 2px solid deepskyblue;
-        margin: 10px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+  /*Box Start*/
+  .box {
+    min-width: 230px;
+    height: 165px;
+    border-radius: 10px;
+    /*border: 2px solid #9000ff;*/
+    border: 2px solid deepskyblue;
+    margin: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-    .box-title {
-        height: 50px;
-        line-height: 50px;
-        background: #545D70;
-        color: #fefefe;
-        font-size: 24px;
-        text-align: center;
-        border-top-right-radius: 7px;
-        border-top-left-radius: 7px;
-        padding-left: 30px;
-        padding-right: 30px;
-        cursor: pointer;
-        display: flex;
-    }
+  .box-title {
+    height: 50px;
+    line-height: 50px;
+    background: #545D70;
+    color: #fefefe;
+    font-size: 24px;
+    text-align: center;
+    border-top-right-radius: 7px;
+    border-top-left-radius: 7px;
+    padding-left: 30px;
+    padding-right: 30px;
+    cursor: pointer;
+    display: flex;
+    position: relative;
+  }
 
-    .box-title > span {
-        width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+  .box-title > span {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-    .box-title > i {
-        font-size: .8em;
-        display: none;
-        margin-top: 10px;
-        margin-right: 5px;
-        color: lightblue;
-    }
+  .box-title > i {
+    font-size: .8em;
+    display: none;
+    margin-top: 10px;
+    margin-right: 5px;
+    color: lightblue;
+  }
 
-    .left-number {
-        font: 50px 'Helvetica';
-        height: 100px;
-        line-height: 100px;
-        color: #3ed436;
-        margin-left: 0;
-        width: 55%;
-        text-align: center;
-    }
+  .box-content {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
 
-    .right-content {
-        width: 45%;
-        height: 100px;
-        text-align: right;
-        margin-right: 5px;
-    }
+  .left-number {
+    float: left;
+    font: 50px 'Helvetica';
+    height: 100px;
+    line-height: 100px;
+    color: #3ed436;
+    margin-left: 0;
+    width: 50%;
+    text-align: center;
+  }
 
-    .content:first-child {
-        margin: 5px 0 0 20px;
-    }
+  .right-content {
+    float: left;
+    width: 45%;
+    height: 100px;
+    text-align: right;
+    margin-right: 5px;
+  }
 
-    .content > strong {
-        font: 24px 'Helvetica';
-        color: #5c5c5c;
-    }
+  .content:first-child {
+    margin: 5px 0 0 20px;
+  }
 
-    .content > p {
-        font: 14px 'HelveticaCondensed';
-        color: #bfbfbf;
-    }
+  .content > strong {
+    font: 24px 'Helvetica';
+    color: #5c5c5c;
+  }
 
-    /*Box End*/
+  .content > p {
+    font: 14px 'HelveticaCondensed';
+    color: #bfbfbf;
+  }
 
-    @font-face {
-        font-family: 'HelveticaCondensed';
-        src: url('/assets/HelveticaCondensed.eot');
-        src: url('/assets/HelveticaCondensed.eot') format('embedded-opentype'),
-        url('/assets/HelveticaCondensed.woff2') format('woff2'),
-        url('/assets/HelveticaCondensed.woff') format('woff'),
-        url('/assets/HelveticaCondensed.ttf') format('truetype'),
-        url('/assets/HelveticaCondensed.svg#HelveticaCondensed') format('svg');
-    }
+  /*Box End*/
+
+  @font-face {
+    font-family: 'HelveticaCondensed';
+    src: url('/assets/HelveticaCondensed.eot');
+    src: url('/assets/HelveticaCondensed.eot') format('embedded-opentype'),
+    url('/assets/HelveticaCondensed.woff2') format('woff2'),
+    url('/assets/HelveticaCondensed.woff') format('woff'),
+    url('/assets/HelveticaCondensed.ttf') format('truetype'),
+    url('/assets/HelveticaCondensed.svg#HelveticaCondensed') format('svg');
+  }
 </style>
