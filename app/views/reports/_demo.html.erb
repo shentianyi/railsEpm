@@ -60,10 +60,10 @@
 </div>
 
 <div class="col-sm-12">
-  <div class="col-sm-5" style="display: flex;height: 30px;line-height: 30px;">
-    <p>Total:</p><b id="total_data">0</b>&emsp;&emsp;
-    <p>Normal:</p><b id="normal_data" style="color: limegreen;">0</b>&emsp;&emsp;
-    <p>Exception:</p><b id="abnormal_data" style="color: #ff0000;">0</b>
+  <div class="col-sm-5" style="display: flex; display: -ms-flexbox; height: 30px;line-height: 30px;">
+    <p>Total:</p><b id="total_data" style="margin-right: 20px;">0</b>
+    <p>Normal:</p><b id="normal_data" style="color: limegreen;">0</b>
+    <p style="margin-left:20px;">Exception:</p><b id="abnormal_data" style="color: #ff0000;">0</b>
   </div>
 
   <div id="chart_mode">
@@ -113,19 +113,16 @@
       console.log(e);
     }
   }
-
   var ProductLine = box_msg.split('_')[1];
   var Interval = box_msg.split('_')[3];
   var BoxID = box_msg.split('_')[5];
 
   // var pre_time='2016-03-24 16:00:00';
   // var pre_time = new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+'00:00:00';
-
   var pre_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
 
   // pre_time=new Date(pre_time).format('yyyy-MM-dd hh:mm:ss');
   // var current_time='2016-03-24 17:00:00';
-
   var current_time = new Date().format('yyyy-MM-dd hh:mm:ss');
   $('#start_time').attr('value', pre_time);
   $('#end_time').attr('value', current_time);
@@ -139,7 +136,6 @@
   // if (HistoryData.length > 1000) {
   //     // alert('Amount of data is too large, Please shorten your query date.');
   // } else
-
   if (HistoryData.length == 0) {
     // alert('This period of time there is no data, modify the query date.');
   } else {
@@ -152,7 +148,6 @@
 
     $('#report-menu').remove();
     $('#pop-crate').remove();
-
     /*清空*/
     $('#history_chart').children().remove();
     $('.history_table_thead_tr').children().remove();
@@ -246,7 +241,7 @@
       },
       tooltip: {
         formatter: function () {
-          return '<span><b>' + this.point.id + '</b><br/><b>Value:</b><b>' + this.y + ' s</b> <br/><b>TotalCount:</b><b>' + "#" + '</b><span>';
+          return '<span><b>' + this.point.id + '</b><br/><b>Value:</b><b>' + this.y + ' s</b><br/><b>Total Count:</b><b>' + "#" + '</b><span>';
         }
       },
       scrollbar: {
@@ -358,7 +353,6 @@
         loadHistoryDataFun(SearchHistoryDataName, SearchHistoryDataValue);
       }
     });
-
   });
 
   /*get data*/

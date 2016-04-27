@@ -226,7 +226,7 @@
             password: $("#password").val(),
             password_confirmation: $("#password_confirmation").val(),
             company_name: $("#company_name").val()
-        }
+        };
 
         $.ajax({
             url: '/subscriptions',
@@ -251,6 +251,6 @@
 
 <style type="text/css">
     .login-operate .language-btn {
-        width:90px;
-    }
+       min-width:90px;
+     }
 </style>
