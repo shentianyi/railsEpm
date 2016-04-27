@@ -11,7 +11,7 @@ $list-width: 220px;
   float: left;
   width: $list-width;
   min-height: $main-height;
-  height: calc(100% - 70px);
+  height: calc(100% - 35px);
   position: relative;
   section {
     background: lighten($nav-dark, 4%);

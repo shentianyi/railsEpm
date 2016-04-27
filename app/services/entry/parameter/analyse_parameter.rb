@@ -13,10 +13,11 @@ module Entry
         self.kpi=Kpi.find(args[:kpi_id])
         self.entities = EntityGroup.find(args[:entity_group_id]).entities.pluck(:id)
         # args:start_time, end_time arg utc-time-string
-        self.start_time =args[:start_time]
+              self.frequency=args[:frequency] || self.kpi.frequency
+   self.start_time =args[:start_time]
         self.end_time = args[:end_time]
-        self.frequency=args[:frequency] || self.kpi.frequency
-        self.average=args[:average]
+     
+  self.average=args[:average]
         self.data_module = args[:data_module] || DataService::WEB_HIGHSTOCK
         self.property = args[:property]
         # for qoros demo
@@ -33,6 +34,9 @@ module Entry
 
       def end_time=(value)
         @end_time=Time.parse(value).utc if value
+       if @end_time && (@frequency==KpiFrequency::Daily)
+         @end_time=@end_time.localtime.end_of_day.utc
+       end
       end
 
       def property=(value)

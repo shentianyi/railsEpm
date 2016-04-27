@@ -337,8 +337,6 @@ class DepartmentsController < ApplicationController
                          entity_id: e.id)
       start_time=Time.parse(params[:start_time]).utc #.to_s
       end_time=(Time.parse(params[:end_time])-1.second).utc #.to_s
-      p start_time
-      p end_time
       q=q.between(Hash[:entry_at, (start_time..end_time)])
 
       q=q.order_by(entry_at: :asc)
@@ -362,6 +360,16 @@ class DepartmentsController < ApplicationController
              }
     else
       render json: nil
+    end
+  end
+
+
+  def download_cycle_time_detail
+    msg = FileHandler::Excel::AppCenterHandler.download_cycle_time_detail(params)
+    if msg.result
+      send_file msg.content
+    else
+      render json: msg
     end
   end
 
