@@ -135,22 +135,14 @@
 
                 if (data[i].value > data[i].target_max || data[i].value < data[i].target_min) {
                     $('<div class="col-md-3 workstation"><div class="box">' +
-<<<<<<< HEAD
-                            '<div class="box-title" title="click to go history" id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');">' + data[i].name + '<i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
-=======
                             '<div class="box-title" title=' + data[i].name + ' id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');"><span>' + data[i].name + '</span><i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
->>>>>>> 52703c8310343eeebaf4bb15e490d357247677d6
                             '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                             '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                         loading_hide();
                     });
                 } else {
                     $('<div class="col-md-3 workstation"><div class="box">' +
-<<<<<<< HEAD
-                            '<div class="box-title" title="click to go history" id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');">' + data[i].name + '<i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
-=======
                             '<div class="box-title" title=' + data[i].name + ' id=' + box_title_id + ' onmouseover="box_title_mouseover(' + box_title_id + ');" onmouseout="box_title_mouseout(' + box_title_id + ');"><span>' + data[i].name + '</span><i class="icon-list mark pull-right"></i></div><div style="display:inline-flex;width: 100%;" title="double click go to analytics" ondblclick="double_click(' + box_title_id + ');"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
->>>>>>> 52703c8310343eeebaf4bb15e490d357247677d6
                             '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                             '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div>').appendTo('#data_container').ready(function () {
                         loading_hide();
@@ -171,11 +163,8 @@
         console.log(e);
     }
 
-<<<<<<< HEAD
     //    var loadDataIntervalValue = window.setInterval("loadData()", 20000);
 
-=======
->>>>>>> 52703c8310343eeebaf4bb15e490d357247677d6
     /*20s 刷新太快*/
     var loadDataIntervalValue = window.setInterval("loadData()", 60000);
 
@@ -192,10 +181,7 @@
          */
         var double_click_content = $(ele).html();
         var double_click_name = double_click_content.split('<i')[0];
-<<<<<<< HEAD
 //        console.log(double_click_name);
-=======
->>>>>>> 52703c8310343eeebaf4bb15e490d357247677d6
 
         window.location.href = 'kpi_entries/analyse?view=';
     }
@@ -208,12 +194,8 @@
         var BoxID = over_id.split('_')[5];
 
         var over_id_content = $(ele).html();
-<<<<<<< HEAD
-        var over_id_name = over_id_content.split('<i')[0];
 
-=======
         var over_id_name = over_id_content.split('<i')[0].split('<span>')[1].split('<')[0];
->>>>>>> 52703c8310343eeebaf4bb15e490d357247677d6
         $('#' + over_id).children('i').fadeIn(400);
 
         $('#' + over_id).click(function () {
@@ -228,7 +210,6 @@
                 alert('This browser does NOT support localStorage,please change browser.');
             }
         });
-<<<<<<< HEAD
     }
 
     function box_title_mouseout(ele) {
@@ -236,15 +217,6 @@
         $('#' + over_id).children('i').fadeOut(400);
     }
 
-=======
-    }
-
-    function box_title_mouseout(ele) {
-        var over_id = $(ele).attr('id');
-        $('#' + over_id).children('i').fadeOut(400);
-    }
-
->>>>>>> 52703c8310343eeebaf4bb15e490d357247677d6
 </script>
 
 <style>
@@ -256,12 +228,9 @@
         /*border: 2px solid #9000ff;*/
         border: 2px solid deepskyblue;
         margin: 10px;
-<<<<<<< HEAD
-=======
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
->>>>>>> 52703c8310343eeebaf4bb15e490d357247677d6
     }
 
     .box-title {
@@ -274,9 +243,6 @@
         border-top-right-radius: 7px;
         border-top-left-radius: 7px;
         padding-left: 30px;
-<<<<<<< HEAD
-        cursor: pointer;
-=======
         padding-right: 30px;
         cursor: pointer;
         display: flex;
@@ -287,7 +253,6 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
->>>>>>> 52703c8310343eeebaf4bb15e490d357247677d6
     }
 
     .box-title > i {
