@@ -167,9 +167,27 @@
     console.log(e);
   }
 
+  /*时间刷新*/
+  window.setInterval(function () {
+    startTime();
+  }, 500);
+
   /*20s 刷新太快*/
   //    var loadChartDataIntervalValue = window.setInterval("loadChartData()", 20000);
-  var loadChartDataIntervalValue = window.setInterval("loadChartData()", 60000);
+
+
+  var IntervalProductLine = $('#vehicle-select').val();
+  var IntervalDataType;
+
+  $('.control-chart-interval-group li').each(function () {
+    if ($(this).datatype == "true") {
+      IntervalDataType = $(this).attr('interval');
+    } else {
+      IntervalDataType = 100;
+    }
+  });
+
+  var loadChartDataIntervalValue = window.setInterval("loadChartData(IntervalProductLine, IntervalDataType)", 60000);
 
   function loadChartData(productLine, chartdatatype) {
     /*清空*/
@@ -266,7 +284,7 @@
         valueSuffix: 's',
         formatter: function () {
           return '<span><b>' + this.x.split('#')[0] +
-              '</b><br/>CycleTime: <b>' + this.y + ' s</b><span>';
+              '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + "#" + '</b><span>';
         }
       },
 //            legend: {layout: 'vertical', align: 'right', verticalAlign: 'middle', borderWidth: 0},
