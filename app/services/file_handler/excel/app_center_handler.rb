@@ -23,8 +23,7 @@ module FileHandler
               parent.children.each do |d|
                 eg=d.entity_group
                 e= eg.entities.first
-                q = KpiEntry.where(kpi_id: Kpi.first.id,
-                                   entity_id: e.id)
+                q = KpiEntry.where(kpi_id: Kpi.first.id,entity_id: e.id)
 
                 q=q.between(Hash[:entry_at, (start_time..end_time)])
                 sheet.add_row [eg.name, e.code, q.count], types: [:string, :string, :string]

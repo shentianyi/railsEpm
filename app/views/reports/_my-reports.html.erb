@@ -32,7 +32,7 @@
 </div>
 
 <div id="pop-crate" style="float: left;text-align: center;
-        color: white;cursor: pointer;width: 10px;background: #3e4452;position: relative;">
+    color: white;cursor: pointer;width: 10px;background: #3e4452;position: relative;">
   <div class="my_icon">
     <i class="icon-chevron-left" title="Close Panel"></i>
   </div>
@@ -64,124 +64,159 @@
 <% end %>
 
 <script type="text/javascript">
-    //    $(document).ready(function () {
-    //        attach_upload("item-data-uploader");
-    //        $("body")
-    //                .on("click", ".attachment-item-remove", function (event) {
-    //                    if (confirm('Sure to delelte?')) {
-    //                        var e = event ? event : (window.event ? window.event : null);
-    //                        var obj = e.srcElement || e.target;
-    //                        e.stopPropagation();
-    //                        $(".attachment-item[path-name='" + $(obj).attr("path-name") + "']").remove();
-    //                    }
-    //                })
-    //                .on("click", "#create-discuss-btn", function () {
-    //                    show_project_block();
-    //                    if ($("#analytic-control-condition-visible").attr("state") == "open") {
-    //                        $("#analytic-control-condition-visible").click();
-    //                    }
-    //                })
-    //                .on("click", "#cancel-fro-project", function () {
-    //                    hide_project_block();
-    //                })
-    //                .on("click", "#share_to_discussion_btn", function () {
-    //                    $("#back-pop").addClass("show")
-    //                })
-    //                .on("click", "#remove-back-pop", function () {
-    //                    $("#back-pop").removeClass("show")
-    //                })
-    //                .on("click", "#add-to-storyset", function () {
-    //                    var story = prepare_for_create_report_story();
-    //                    if (story.story_set_id == null) {
-    //                        MessageBox('No Story Set,Please use select one or Use create and add button', 'top', 'warning');
-    //                        return;
-    //                    }
-    //                    MANAGE.story.create(story, function (data) {
-    //                        if (data.result) {
-    //                            window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
-    //                        } else {
-    //                            MessageBox(data.content, 'top', 'warning');
-    //                        }
-    //
-    //                    });
-    //                })
-    //                .on("click", "#create-add-to-storyset", function () {
-    //                    var story = prepare_for_create_report_story();
-    //                    var story_set = {};
-    //                    story_set.title = $("#storyset-title").val();
-    //                    story_set.description = $("#storyset-desc").val();
-    //                    story_set.users = $("#storyset-users option:selected").map(function () {
-    //                        return $(this).attr("user")
-    //                    }).get();
-    //                    MANAGE.story_set.create(story_set, function (data) {
-    //                        if (data.result) {
-    //                            story.story_set_id = data.content.id;
-    //                            MANAGE.story.create(story, function (data) {
-    //                                if (data.result) {
-    //                                    window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
-    //                                } else {
-    //                                    MessageBox(data.content, 'top', 'warning');
-    //                                }
-    //                            })
-    //                        }
-    //                        else {
-    //
-    //                        }
-    //                    })
-    //                })
-    //                .on("click", "#direct-publish-fro-project", function () {
-    //                    var story = prepare_for_create_report_story();
-    //                    story.story_set_id = $(this).attr("value");
-    //                    MANAGE.story.create(story, function (data) {
-    //                        if (data.result) {
-    //                            window.location.href = '/story_sets/' + data.content.id + '/story?story';
-    //                        } else {
-    //                            MessageBox(data.content, 'top', 'warning');
-    //                        }
-    //                    });
-    //                });
-    //    });
-    var ClientHeight = document.documentElement.clientHeight;
+  //    $(document).ready(function () {
+  //        attach_upload("item-data-uploader");
+  //        $("body")
+  //                .on("click", ".attachment-item-remove", function (event) {
+  //                    if (confirm('Sure to delelte?')) {
+  //                        var e = event ? event : (window.event ? window.event : null);
+  //                        var obj = e.srcElement || e.target;
+  //                        e.stopPropagation();
+  //                        $(".attachment-item[path-name='" + $(obj).attr("path-name") + "']").remove();
+  //                    }
+  //                })
+  //                .on("click", "#create-discuss-btn", function () {
+  //                    show_project_block();
+  //                    if ($("#analytic-control-condition-visible").attr("state") == "open") {
+  //                        $("#analytic-control-condition-visible").click();
+  //                    }
+  //                })
+  //                .on("click", "#cancel-fro-project", function () {
+  //                    hide_project_block();
+  //                })
+  //                .on("click", "#share_to_discussion_btn", function () {
+  //                    $("#back-pop").addClass("show")
+  //                })
+  //                .on("click", "#remove-back-pop", function () {
+  //                    $("#back-pop").removeClass("show")
+  //                })
+  //                .on("click", "#add-to-storyset", function () {
+  //                    var story = prepare_for_create_report_story();
+  //                    if (story.story_set_id == null) {
+  //                        MessageBox('No Story Set,Please use select one or Use create and add button', 'top', 'warning');
+  //                        return;
+  //                    }
+  //                    MANAGE.story.create(story, function (data) {
+  //                        if (data.result) {
+  //                            window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
+  //                        } else {
+  //                            MessageBox(data.content, 'top', 'warning');
+  //                        }
+  //
+  //                    });
+  //                })
+  //                .on("click", "#create-add-to-storyset", function () {
+  //                    var story = prepare_for_create_report_story();
+  //                    var story_set = {};
+  //                    story_set.title = $("#storyset-title").val();
+  //                    story_set.description = $("#storyset-desc").val();
+  //                    story_set.users = $("#storyset-users option:selected").map(function () {
+  //                        return $(this).attr("user")
+  //                    }).get();
+  //                    MANAGE.story_set.create(story_set, function (data) {
+  //                        if (data.result) {
+  //                            story.story_set_id = data.content.id;
+  //                            MANAGE.story.create(story, function (data) {
+  //                                if (data.result) {
+  //                                    window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
+  //                                } else {
+  //                                    MessageBox(data.content, 'top', 'warning');
+  //                                }
+  //                            })
+  //                        }
+  //                        else {
+  //
+  //                        }
+  //                    })
+  //                })
+  //                .on("click", "#direct-publish-fro-project", function () {
+  //                    var story = prepare_for_create_report_story();
+  //                    story.story_set_id = $(this).attr("value");
+  //                    MANAGE.story.create(story, function (data) {
+  //                        if (data.result) {
+  //                            window.location.href = '/story_sets/' + data.content.id + '/story?story';
+  //                        } else {
+  //                            MessageBox(data.content, 'top', 'warning');
+  //                        }
+  //                    });
+  //                });
+  //    });
+  var ClientHeight = document.documentElement.clientHeight;
 
-    $('.my_icon').css({
-        marginTop: (ClientHeight) / 2 + 'px',
-        marginBottom: ((ClientHeight) / 2 - 33) + 'px'
-    });
+  $('.my_icon').css({
+    marginTop: (ClientHeight) / 2 + 'px',
+    marginBottom: ((ClientHeight) / 2 - 33) + 'px'
+  });
 
-    $('#pop-crate').css({
-        bottom: '0px'
-    });
+  $('#pop-crate').css({
+    bottom: '0px'
+  });
 
-    $('#pop-crate').click(function () {
-        $('#report-menu').fadeToggle(0);
-    });
+  $('#pop-crate').click(function () {
+    $('#report-menu').fadeToggle(0);
+  });
 
-    var loading;
-    function loading_show() {
-        var ReportMenuStatus = document.getElementById('report-menu').style.display;
-        if (ReportMenuStatus == 'none') {
-            loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
-            var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
-            $(".pageload-overlay svg").css('left', '10px');
-            $(".pageload-overlay svg").css('top', top + 'px');
-            $(".pageload-overlay svg").css('bottom', 0);
-            $(".pageload-overlay svg").css('right', 0);
-            loading.show();
-        } else {
-            loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
-            var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
-            $(".pageload-overlay svg").css('left', '230px');
-            $(".pageload-overlay svg").css('top', top + 'px');
-            $(".pageload-overlay svg").css('bottom', 0);
-            $(".pageload-overlay svg").css('right', 0);
-            loading.show();
-        }
+  var loading;
+  function loading_show() {
+    var ReportMenuStatus = document.getElementById('report-menu').style.display;
+    if (ReportMenuStatus == 'none') {
+      loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
+      var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
+      $(".pageload-overlay svg").css('left', '10px');
+      $(".pageload-overlay svg").css('top', top + 'px');
+      $(".pageload-overlay svg").css('bottom', 0);
+      $(".pageload-overlay svg").css('right', 0);
+      loading.show();
+    } else {
+      loading = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
+      var top = top = document.getElementById("preloader").getBoundingClientRect().bottom >= 0 ? document.getElementById("current-status-header").getBoundingClientRect().bottom : 0;
+      $(".pageload-overlay svg").css('left', '230px');
+      $(".pageload-overlay svg").css('top', top + 'px');
+      $(".pageload-overlay svg").css('bottom', 0);
+      $(".pageload-overlay svg").css('right', 0);
+      loading.show();
     }
+  }
 
-    function loading_hide() {
-        $('#preloader').remove();
-        $('<div id="preloader" class="pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none"><path d="M30,30 50,30 50,30 30,30 Z"/></svg></div>').appendTo('body').ready(function () {
-        })
+  function loading_hide() {
+    $('#preloader').remove();
+    $('<div id="preloader" class="pageload-overlay" data-opening="M20,15 50,30 50,30 30,30 Z;M0,0 80,0 50,30 20,45 Z;M0,0 80,0 60,45 0,60 Z;M0,0 80,0 80,60 0,60 Z" data-closing="M0,0 80,0 60,45 0,60 Z;M0,0 80,0 50,30 20,45 Z;M20,15 50,30 50,30 30,30 Z;M30,30 50,30 50,30 30,30 Z"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none"><path d="M30,30 50,30 50,30 30,30 Z"/></svg></div>').appendTo('body').ready(function () {
+    })
+  }
+
+  function startTime() {
+    var today = new Date();
+    var years = today.getFullYear();
+    var months = today.getMonth();
+    var d = today.getDate();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+// add a zero in front of numbers<10
+    months = months + 1;
+    months = checkTime(months);
+    d = checkTime(d);
+    m = checkTime(m);
+    s = checkTime(s);
+//      var weekday = new Array(7);
+//      weekday[0] = "星期日";
+//      weekday[1] = "星期一";
+//      weekday[2] = "星期二";
+//      weekday[3] = "星期三";
+//      weekday[4] = "星期四";
+//      weekday[5] = "星期五";
+//      weekday[6] = "星期六";
+//      var w = weekday[today.getDay()];
+    document.getElementById('current-clock').innerHTML = years + "-" + months + "-" + d + " " + " " + h + ":" + m + ":" + s;
+//      t = setTimeout('startTime()', 500)
+  }
+
+  function checkTime(i) {
+    if (i < 10) {
+      i = "0" + i;
     }
+    return i;
+  }
+
 
 </script>

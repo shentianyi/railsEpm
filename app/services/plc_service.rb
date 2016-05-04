@@ -1,6 +1,11 @@
 class PlcService
   def self.post_data params
 
+    #
+     #100000000.times do
+    #   puts 1
+    # end
+
     kpi= Kpi.first#find_by_name(Settings.app.kpi)
     codes=params[:codes].split(',')
     values=params[:values].split(',')
