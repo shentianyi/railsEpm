@@ -279,8 +279,8 @@ class DepartmentsController < ApplicationController
 
     frequency=params[:interval].blank? ? KpiFrequency::Daily : params[:interval].to_i
 
-    start_time=KpiFrequency.get_begin_date(Time.now, frequency)
-    end_time=KpiFrequency.get_next_date(start_time, frequency)-1.second
+    start_time=(KpiFrequency.get_begin_date(Time.now, frequency).utc)
+    end_time=(KpiFrequency.get_next_date(start_time, frequency)-1.second).utc
 
 
     parent.children.each do |d|
@@ -290,13 +290,19 @@ class DepartmentsController < ApplicationController
       params[:kpi_name]=kpi.name
       params[:entity_group_id]=entity_group.id
       params[:entity_group_name]=entity_group.name
-      params[:start_time]=start_time.utc.to_s
-      params[:end_time]=end_time.utc.to_s
+      params[:start_time]=start_time.to_s
+      params[:end_time]=end_time.to_s
 
       params[:frequency]=frequency
       params[:average]=true #=.nil? ? true : params[:average]=='true'
       data=Entry::Analyzer.new(params).analyse #.to_json
 
+      count=0
+      if e=entity_group.entities.first
+        count=KpiEntry.where(kpi_id: kpi.id,
+                             entity_id: e.id)
+                  .between(Hash[:entry_at, (start_time..end_time)]).count
+      end
       p '-------------------------------'
       p params
       p data
@@ -320,6 +326,7 @@ class DepartmentsController < ApplicationController
           name: entity_group.name,
           code: entity_group.code,
           value: data[:current].first,
+          count:count,
           target_max: max,
           target_min: min,
           d: data

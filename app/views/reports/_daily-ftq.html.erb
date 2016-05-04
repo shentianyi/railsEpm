@@ -1,4 +1,4 @@
-<div class="header" id="daily-ftq-header">
+    <div class="header" id="daily-ftq-header">
   <!--<p>Export to:</p>
   <a class="btn btn-success btn_excel" onclick="export_bt_report_chart_excel()">Excel</a>-->
 
@@ -235,7 +235,7 @@
 //            $('<td>' + ajaxData[i].target_min + '</td>').appendTo('.tbody-target-min').ready(function () {
 //            });
 
-      yAxis_value.push(ajaxData[i].name + "#" + ajaxData[i].code);
+      yAxis_value.push(ajaxData[i].name + "#" + ajaxData[i].code+"#"+ ajaxData[i].count);
       charts_target_max.push(ajaxData[i].target_max);
 
       if (ajaxData[i].value > ajaxData[i].target_max) {
@@ -284,7 +284,7 @@
         valueSuffix: 's',
         formatter: function () {
           return '<span><b>' + this.x.split('#')[0] +
-              '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + "#" + '</b><span>';
+              '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2]+ '</b><span>';
         }
       },
 //            legend: {layout: 'vertical', align: 'right', verticalAlign: 'middle', borderWidth: 0},
