@@ -176,6 +176,8 @@
   });
 
   function loadData(productLine, datatype) {
+      if (productLine == null || datatype == null)
+          return;
     var ReportMenuStatus = document.getElementById('report-menu').style.display;
     IsLoading = true;
     $('.control-chart-interval-group li').each(function (index) {
