@@ -9,7 +9,8 @@
   var FullScreenInterval;
   var cycle = 0;
   var IntervelTime = 20000;
-
+  var product_line_list;
+  var firstloading=false;
   var styles = {
     /*图表的标题,在后面的代码里面设置*/
     title: "",
@@ -45,97 +46,30 @@
   };
 
   $('.fullscreen').click(function () {
-    var product_line_list = GetListData();
-    if (product_line_list) {
-      show_loading(0, 0, 0, 0);
-      var product_line_first = product_line_list[0];
-      var product_line_first_id = product_line_first.id;
-      var product_line_first_name = product_line_first.name;
-      var product_line_first_cn_name = product_line_first.cn_name;
+      product_line_list = GetListData();
+      if(product_line_list.length>0) {
+          firstloading=true;
+          cycle = 0;
+          GetProductLineData(product_line_list[cycle], 100);
 
-      var ProductLineFirstData = GetProductLineData(product_line_first_id, 100);
+          FullScreenInterval = setInterval(function () {
+              if(product_line_list.length>0 && !firstloading) {
+                  if (cycle == product_line_list.length - 1) {
+                      cycle = -1;
+                  }
 
-      var xAxis_value = new Array;
-      var charts_value = new Array;
-      var charts_target_max = new Array;
+                  cycle++;
+                  GetProductLineData(product_line_list[cycle], 100);
+              }
 
-      for (var i = 0; i < ProductLineFirstData.length; i++) {
-        xAxis_value.push(ProductLineFirstData[i].code);
+          }, IntervelTime);
 
-        if (ProductLineFirstData[i].value > ProductLineFirstData[i].target_max) {
-          charts_value.push({
-            id: ProductLineFirstData[i].id,
-            color: styles.warn_color,
-            y: ProductLineFirstData[i].value
-          });
-        } else {
-          charts_value.push({
-            id: ProductLineFirstData[i].id,
-            color: styles.normal_color,
-            y: ProductLineFirstData[i].value
-          });
-        }
-
-        charts_target_max.push(ProductLineFirstData[i].target_max);
       }
-
-      styles.title = product_line_first_name;
-      styles.subtitle = product_line_first_cn_name;
-
-      maskFullScreen();
-//      setTimeout(function () {
-      remove_loading();
-      DrawChart(charts_value, charts_target_max, xAxis_value, '#full_screen', styles);
-//      }, 3000);
-
-
-      FullScreenInterval = setInterval(function () {
-        if (cycle == product_line_list.length - 1) {
-          cycle = -1;
-        }
-
-        cycle++;
-
-        var product_line = product_line_list[cycle];
-        var product_line_id = product_line.id;
-        var product_line_name = product_line.name;
-        var product_line_cn_name = product_line.cn_name;
-
-        var ProductLineData = GetProductLineData(product_line_id, 100);
-
-        var xaxis_values = new Array;
-        var charts_values = new Array;
-        var charts_max_values = new Array;
-
-        for (var i = 0; i < ProductLineData.length; i++) {
-          xaxis_values.push(ProductLineData[i].code);
-          charts_max_values.push(ProductLineData[i].target_max);
-
-          if (ProductLineData[i].value > ProductLineData[i].target_max) {
-            charts_values.push({
-              id: ProductLineData[i].id,
-              color: styles.warn_color,
-              y: ProductLineData[i].value
-            });
-          } else {
-            charts_values.push({
-              id: ProductLineData[i].id,
-              color: styles.normal_color,
-              y: ProductLineData[i].value
-            });
-          }
-        }
-
-        styles.title = product_line_name;
-        styles.subtitle = product_line_cn_name;
-        DrawChart(charts_values, charts_max_values, xaxis_values, '#full_screen', styles);
-
-      }, IntervelTime);
-    }
     else {
       alert("今天没有要显示的计划");
     }
   });
+
 
   esckey();
 
@@ -146,7 +80,7 @@
       type: 'get',
       async: false,
       success: function (data) {
-        ProductLineList = data;
+       ProductLineList = data;
       },
       error: function () {
         alert("Network Error!")
@@ -157,19 +91,61 @@
 
   var ProductLineDetailData;
   function GetProductLineData(ProductLine, Interval) {
+      show_loading(0, 0, 0, 0);
     $.ajax({
       url: '/departments/entity_groups',
       type: 'get',
-      data: {product_line: ProductLine, interval: Interval},
-      async: false,
+      data: {product_line: ProductLine.id, interval: Interval},
+//      async: false,
       success: function (data) {
-        ProductLineDetailData = data;
+       // ProductLineDetailData = data;
+          var product_line_first =ProductLine;
+          var product_line_first_id = product_line_first.id;
+          var product_line_first_name = product_line_first.name;
+          var product_line_first_cn_name = product_line_first.cn_name;
+
+          var ProductLineFirstData = data;//GetProductLineData(product_line_first_id, 100);
+
+          var xAxis_value = new Array;
+          var charts_value = new Array;
+          var charts_target_max = new Array;
+
+          for (var i = 0; i < ProductLineFirstData.length; i++) {
+              xAxis_value.push(ProductLineFirstData[i].code);
+
+              if (ProductLineFirstData[i].value > ProductLineFirstData[i].target_max) {
+                  charts_value.push({
+                      id: ProductLineFirstData[i].id,
+                      color: styles.warn_color,
+                      y: ProductLineFirstData[i].value
+                  });
+              } else {
+                  charts_value.push({
+                      id: ProductLineFirstData[i].id,
+                      color: styles.normal_color,
+                      y: ProductLineFirstData[i].value
+                  });
+              }
+
+              charts_target_max.push(ProductLineFirstData[i].target_max);
+          }
+
+          styles.title = product_line_first_name;
+          styles.subtitle = product_line_first_cn_name;
+
+          maskFullScreen();
+//      setTimeout(function () {
+          remove_loading();
+          DrawChart(charts_value, charts_target_max, xAxis_value, '#full_screen', styles);
+//      }, 3000);
+
+          firstloading=false;
       },
       error: function () {
         console.log("something error");
       }
     });
-    return ProductLineDetailData;
+  //  return ProductLineDetailData;
   }
 
   function esckey() {
