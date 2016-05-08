@@ -1,0 +1,41 @@
+<div class="panel panel-default">
+  <ol class="breadcrumb" style="background: transparent;padding: 20px 0 0 20px;font-size: 1.2em;">
+    <li>
+      <a href="/display_set_lists">生产线展示列表设置</a>
+    </li>
+    <li class="active">
+      当日生产线展示列表
+    </li>
+  </ol>
+</div>
+
+<div class="digg_pagination">
+  <div class="page_info">
+    <%= page_entries_info @display_set_items %>
+  </div>
+  <%= will_paginate @display_set_items, :container => false %>
+</div>
+
+<table class="table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th>NO.</th>
+    <th>生产线名称</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @display_set_items.each_with_index do |display_set_item, i| %>
+      <tr>
+        <td><%= @page_start+i+1 %></td>
+        <td><%= display_set_item.department.cn_name %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+<div class="digg_pagination">
+  <%= will_paginate @display_set_items, :container => false %>
+</div>

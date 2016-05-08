@@ -1,6 +1,19 @@
 IFEpm::Application.routes.draw do
 
 
+  resources :display_set_items
+
+
+  resources :display_set_lists do
+    collection do
+      match :add_lists, to: :add_lists, via: [:get, :post]
+    end
+    member do
+      get 'display_set_items'
+    end
+  end
+
+
   resources :production_plans do
     collection do
       match :up_down
