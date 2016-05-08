@@ -414,7 +414,7 @@ class DepartmentsController < ApplicationController
 
     list=DisplaySetList.find_by_name(Date.today)
     if list
-      list.display_set_items.each do |d|
+      list.display_set_items.order('department_id asc').each do |d|
         data<<{
             id: d.department.id,
             name: d.department.name,
