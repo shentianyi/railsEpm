@@ -1,4 +1,4 @@
-<div class="pull-right">
+<div class="pull-left">
   <button type="button" class="btn btn-primary fullscreen">Full Screen</button>
 </div>
 
@@ -33,365 +33,382 @@
 </table>
 
 <script type="text/javascript" charset="utf-8">
-  /*全局变量*/
-  var FullScreenInterval;
-  var cycle = 0;
-  var IntervelTime = 10000;
-  var product_line_list;
-  var firstloading = false;
-  var styles = {
-    /*图表的标题,在后面的代码里面设置*/
-    title: "",
-    /*图表的副标题,在后面的代码里面设置*/
-    subtitle: "",
-    /*标题的字体大小*/
-    title_font_size: "30px",
-    title_color: "white",
-    /*副标题的字体大小*/
-    subtitle_font_size: "18px",
-    subtitle_color: "white",
-    /*柱状图 超过 最大值的警示颜色 红色*/
-    warn_color: "#ff0000",
-    /*柱状图 正常 的颜色  绿色*/
-    normal_color: "limegreen",
-    /*图表的背景颜色设置*/
+    /*全局变量*/
+    var FullScreenInterval;
+    var cycle = 0;
+    var IntervelTime = 120000;
+    var product_line_list;
+    var firstloading = false;
+    var CurrentDate = new Date().getDate();
+
+    setInterval(function () {
+        if (CurrentDate != new Date().getDate() || product_line_list == null || product_line_list.length == 0) {
+            product_line_list = GetListData();
+            CurrentDate = new Date().getDate();
+        }
+    }, 5000);
+
+    var styles = {
+        /*图表的标题,在后面的代码里面设置*/
+        title: "",
+        /*图表的副标题,在后面的代码里面设置*/
+        subtitle: "",
+        /*标题的字体大小*/
+        title_font_size: "30px",
+        title_color: "white",
+        /*副标题的字体大小*/
+        subtitle_font_size: "18px",
+        subtitle_color: "white",
+        /*柱状图 超过 最大值的警示颜色 红色*/
+        warn_color: "#ff0000",
+        /*柱状图 正常 的颜色  绿色*/
+        normal_color: "limegreen",
+        /*图表的背景颜色设置*/
 //    chart_background: "#404a56  ",
-    /*柱状图上部显示的字体颜色和大小设置*/
-    labels_font_size: "30px",
-    labels_color: "white",
-    /*x轴 字体和颜色设置*/
-    xAxis_color: "white",
-    xAxis_font_size: "20px",
-    /*y轴字体和颜色设置*/
-    yAxis_color: "white",
-    yAxis_font_size: "20px",
-    /*y轴 标题 字体 和 颜色 设置*/
+        /*柱状图上部显示的字体颜色和大小设置*/
+        labels_font_size: "30px",
+        labels_color: "white",
+        /*x轴 字体和颜色设置*/
+        xAxis_color: "white",
+        xAxis_font_size: "20px",
+        /*y轴字体和颜色设置*/
+        yAxis_color: "white",
+        yAxis_font_size: "20px",
+        /*y轴 标题 字体 和 颜色 设置*/
 //    yAxis_title: "Value(s)",
-    yAxis_title: "",
-    yAxis_title_font_size: "30px",
-    yAxis_title_color: "white",
-    /*x轴 标题  字体 和 颜色 设置*/
-    xAxis_title: "",
-    xAxis_title_font_size: "30px",
-    xAxis_title_color: "white"
-  };
+        yAxis_title: "",
+        yAxis_title_font_size: "30px",
+        yAxis_title_color: "white",
+        /*x轴 标题  字体 和 颜色 设置*/
+        xAxis_title: "",
+        xAxis_title_font_size: "30px",
+        xAxis_title_color: "white"
+    };
 
-  $('.fullscreen').click(function () {
-    product_line_list = GetListData();
-    if (product_line_list.length > 0) {
-      firstloading = true;
-      cycle = 0;
-      GetProductLineData(product_line_list[cycle], 100);
-
-      FullScreenInterval = setInterval(function () {
-        if (product_line_list.length > 0 && !firstloading) {
-          if (cycle == product_line_list.length - 1) {
-            cycle = -1;
-          }
-
-          cycle++;
-          GetProductLineData(product_line_list[cycle], 100);
+    $('.fullscreen').click(function () {
+        maskFullScreen();
+        product_line_list = GetListData();
+        if (product_line_list.length > 0) {
+            firstloading = true;
+            cycle = 0;
+            GetProductLineData(product_line_list[cycle], 100);
         }
+        FullScreenInterval = setInterval(function () {
+            if (product_line_list != null && product_line_list.length > 0 && !firstloading) {
+                if (cycle == product_line_list.length - 1) {
+                    cycle = -1;
+                }
 
-      }, IntervelTime);
-    }
-    else {
-      alert("今天没有要显示的计划");
-    }
-  });
+                cycle++;
+                GetProductLineData(product_line_list[cycle], 100);
+            }
 
-  esckey();
-
-  var ProductLineList;
-  function GetListData() {
-    $.ajax({
-      url: '/departments/product_line_list',
-      type: 'get',
-      async: false,
-      success: function (data) {
-        ProductLineList = data;
-      },
-      error: function () {
-        alert("Network Error!")
-      }
+        }, IntervelTime);
+//        }
+//        else {
+//            alert("今天没有要显示的计划");
+//        }
     });
-    return ProductLineList;
-  }
 
-  function GetProductLineData(ProductLine, Interval) {
-    show_loading(0, 0, 0, 0);
-    maskFullScreen();
-    remove_loading();
-    $.ajax({
-      url: '/departments/entity_groups',
-      type: 'get',
-      data: {product_line: ProductLine.id, interval: Interval},
+    esckey();
+
+    var ProductLineList;
+    function GetListData() {
+        var date = new Date();
+        if (date == null)
+            return [];
+        $.ajax({
+            url: '/departments/product_line_list',
+            type: 'get',
+            async: false,
+            data: {date: date},
+            success: function (data) {
+                ProductLineList = data;
+            },
+            error: function () {
+                alert("Network Error!")
+            }
+        });
+        return ProductLineList;
+    }
+
+    function GetProductLineData(ProductLine, Interval) {
+//    show_loading(0, 0, 0, 0);
+//    remove_loading();
+        if (ProductLine == null || Interval == null)
+            return;
+
+        $.ajax({
+            url: '/departments/entity_groups',
+            type: 'get',
+            data: {product_line: ProductLine.id, interval: Interval},
 //      async: false,
-      success: function (data) {
-        var ProductLineFirstData = data; //GetProductLineData(product_line_first_id, 100);
+            success: function (data) {
+                var ProductLineFirstData = data; //GetProductLineData(product_line_first_id, 100);
 
-        var xAxis_value = new Array;
-        var charts_value = new Array;
-        var charts_target_max = new Array;
+                var xAxis_value = new Array;
+                var charts_value = new Array;
+                var charts_target_max = new Array;
 
-        for (var i = 0; i < ProductLineFirstData.length; i++) {
-          if (ProductLineFirstData[i].code.indexOf('-') > -1)
-            xAxis_value.push(ProductLineFirstData[i].code.split('-')[1]);
-          else
-            xAxis_value.push(ProductLineFirstData[i].code);
+                for (var i = 0; i < ProductLineFirstData.length; i++) {
+                    if (ProductLineFirstData[i].code.indexOf('-') > -1)
+                        xAxis_value.push(ProductLineFirstData[i].code.split('-')[1]);
+                    else
+                        xAxis_value.push(ProductLineFirstData[i].code);
 
 
-          if (ProductLineFirstData[i].value > ProductLineFirstData[i].target_max) {
-            charts_value.push({
-              id: ProductLineFirstData[i].id,
-              color: styles.warn_color,
-              y: ProductLineFirstData[i].value
-            });
-          } else {
-            charts_value.push({
-              id: ProductLineFirstData[i].id,
-              color: styles.normal_color,
-              y: ProductLineFirstData[i].value
-            });
-          }
+                    if (ProductLineFirstData[i].value > ProductLineFirstData[i].target_max) {
+                        charts_value.push({
+                            id: ProductLineFirstData[i].id,
+                            color: styles.warn_color,
+                            y: ProductLineFirstData[i].value
+                        });
+                    } else {
+                        charts_value.push({
+                            id: ProductLineFirstData[i].id,
+                            color: styles.normal_color,
+                            y: ProductLineFirstData[i].value
+                        });
+                    }
 
-          charts_target_max.push(ProductLineFirstData[i].target_max);
-        }
+                    charts_target_max.push(ProductLineFirstData[i].target_max);
+                }
 
-        styles.title = ProductLine.name;
-        styles.subtitle = ProductLine.cn_name;
+                styles.title = ProductLine.name;
+                styles.subtitle = ProductLine.cn_name;
 
-        DrawChart(charts_value, charts_target_max, xAxis_value, '#full_screen', styles);
-        firstloading = false;
-      },
-      error: function () {
-        console.log("something error");
-      }
-    });
-  }
-
-  function esckey() {
-    $(document).keyup(function (event) {
-      switch (event.keyCode) {
-        case 27:
-        {
-          removemaskFullScreen();
-          cancleFullScreen(document.documentElement);
-          try {
-            window.clearInterval(FullScreenInterval);
-          } catch (e) {
-            console.log(e);
-          }
-        }
-      }
-    });
-  }
-
-  function removemaskFullScreen() {
-    $('#full_screen').empty();
-    $('#full_screen').css({
-      "display": "none",
-      "position": "absolute",
-      "margin-left": "0",
-      "margin-top": "0",
-      "background-color": "transparent",
-      "overflow": "hidden",
-      "height": 0,
-      "filter": "alpha(opacity=0)",
-      "opacity": "0",
-      "width": 0,
-      "z-index": "0"
-    });
-  }
-
-  function maskFullScreen() {
-    $('#report-menu').css({
-      "display": "none"
-    });
-    $('#full_screen').css({
-      "display": "block",
-      "position": "absolute",
-      "margin-left": "-10px",
-      "margin-top": "-70px",
-      "margin-right": "-40px",
-      "background-color": "white",
-      "overflow": "hidden",
-      "height": function () {
-        return window.screen.height;
-      },
-      "filter": "alpha(opacity=100)",
-      "opacity": "1",
-      "width": function () {
-        return window.screen.width;
-      },
-      "z-index": "99999"
-    });
-    makeFullScreen(document.documentElement);
-  }
-
-  function makeFullScreen(divObj) {
-    var requestMethod = divObj.requestFullscreen || divObj.webkitRequestFullscreen || divObj.mozRequestFullScreen || divObj.msRequestFullscreen;
-    if (requestMethod) {
-      requestMethod.call(divObj);
-    } else if (typeof window.ActiveXObject != "undefined") {
-      var wscript = new ActiveXObject("WScript.Shell");
-      if (wscript != null) {
-        wscript.SendKeys("{F11}");
-      }
+                DrawChart(charts_value, charts_target_max, xAxis_value, '#full_screen', styles);
+                firstloading = false;
+            },
+            error: function () {
+                console.log("something error");
+            }
+        });
     }
-  }
 
-  function cancleFullScreen(divObj) {
-    var requestMethod = divObj.exitFullscreen || divObj.webkitCancelFullScreen || divObj.mozCancelFullScreen || divObj.exitFullscreen;
-    if (requestMethod) {
-      requestMethod.call(divObj);
-    } else if (typeof window.ActiveXObject != "undefined") {
-      var wscript = new ActiveXObject("WScript.Shell");
-      if (wscript != null) {
-        wscript.SendKeys("{F11}");
-      }
+    function esckey() {
+        $(document).keyup(function (event) {
+            switch (event.keyCode) {
+                case 27:
+                {
+                    removemaskFullScreen();
+                    cancleFullScreen(document.documentElement);
+                    try {
+                        window.clearInterval(FullScreenInterval);
+                    } catch (e) {
+                        console.log(e);
+                    }
+                }
+            }
+        });
     }
-  }
 
-  function DrawChart(charts_values, charts_max_values, xaxis_values, id, style) {
-    /*chart*/
-    var chart = $(id).highcharts({
-      chart: {
-        backgroundColor: {
+    function removemaskFullScreen() {
+        $('#full_screen').empty();
+        $('#full_screen').css({
+            "display": "none",
+            "position": "absolute",
+            "margin-left": "0",
+            "margin-top": "0",
+            "background-color": "transparent",
+            "overflow": "hidden",
+            "height": 0,
+            "filter": "alpha(opacity=0)",
+            "opacity": "0",
+            "width": 0,
+            "z-index": "0"
+        });
+    }
+
+    function maskFullScreen() {
+        $('#report-menu').css({
+            "display": "none"
+        });
+        $('#full_screen').css({
+            "display": "block",
+            "position": "absolute",
+            "margin-left": "-10px",
+            "margin-top": "-70px",
+            "margin-right": "-40px",
+            "background-color": "white",
+            "overflow": "hidden",
+            "height": function () {
+                return window.screen.height;
+            },
+            "filter": "alpha(opacity=100)",
+            "opacity": "1",
+            "width": function () {
+                return window.screen.width;
+            },
+            "z-index": "99999"
+        });
+        makeFullScreen(document.documentElement);
+    }
+
+    function makeFullScreen(divObj) {
+        var requestMethod = divObj.requestFullscreen || divObj.webkitRequestFullscreen || divObj.mozRequestFullScreen || divObj.msRequestFullscreen;
+        if (requestMethod) {
+            requestMethod.call(divObj);
+        } else if (typeof window.ActiveXObject != "undefined") {
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript != null) {
+                wscript.SendKeys("{F11}");
+            }
+        }
+    }
+
+    function cancleFullScreen(divObj) {
+        var requestMethod = divObj.exitFullscreen || divObj.webkitCancelFullScreen || divObj.mozCancelFullScreen || divObj.exitFullscreen;
+        if (requestMethod) {
+            requestMethod.call(divObj);
+        } else if (typeof window.ActiveXObject != "undefined") {
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript != null) {
+                wscript.SendKeys("{F11}");
+            }
+        }
+    }
+
+    function DrawChart(charts_values, charts_max_values, xaxis_values, id, style) {
+        /*chart*/
+        var chart = $(id).highcharts({
+            chart: {
+                backgroundColor: {
 //          深蓝
-          linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1}, stops: [[0, '#6495ED'], [1, 'rgb(48, 48, 96)']]
+                    linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1}, stops: [[0, '#6495ED'], [1, 'rgb(48, 48, 96)']]
 //          灰色
 //          linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1}, stops: [[0, 'rgb(96, 96, 96)'], [1, 'rgb(16, 16, 16)']]
-        }
-      },
-      title: {
-        text: "<br/>" + style.title,
-        align: "center",
-        style: {
-          fontSize: style.title_font_size,
-          color: style.title_color
-        },
+                }
+            },
+            title: {
+                text: "<br/>" + style.title,
+                align: "center",
+                style: {
+                    fontSize: style.title_font_size,
+                    color: style.title_color
+                },
 //        x: -20, //center
-        margin: 5,
-        useHTML: true
-      },
-      subtitle: {
-        text: "----" + style.subtitle,
-        style: {
-          fontSize: style.subtitle_font_size,
-          color: style.subtitle_color
-        }
-      },
-      credits: {
-        enabled: false
-      },
-      xAxis: {
-        categories: xaxis_values,
-        labels: {
-          style: {
-            color: style.xAxis_color,
-            fontSize: style.xAxis_font_size,
-            fontWeight: "bold"
-          }
-        }
-      },
-      yAxis: {
-        title: {
-          text: style.yAxis_title,
-          style: {
-            fontSize: style.yAxis_title_font_size,
-            color: style.yAxis_title_color
-          }
-        },
-        plotLines: [{
-          value: 0,
-          width: 1,
-          color: '#808080'
-        }],
-        labels: {
-          style: {
-            color: style.yAxis_color,
-            fontSize: style.yAxis_font_size,
-            fontWeight: "bold"
-          }
-        }
-      },
-      tooltip: {
-        valueSuffix: 's',
-        formatter: function () {
-          try {
-            return '<span><b>' + this.x +
-                '</b><br/><b>CycleTime:</b><b>' + this.y + ' S</b><span>';
-          } catch (e) {
-            return;
-          }
-        }
-      },
-      legend: {
-        itemStyle: {color: '#E0E0E3'},
-        itemHoverStyle: {color: '#FFF'},
-        itemHiddenStyle: {color: '#606063'},
-        title: {
-          text: style.xAxis_title,
-          style: {
-            fontSize: style.xAxis_title_font_size,
-            color: style.xAxis_title_color
-          }
-        },
-        layout: 'horizontal',
-        align: 'center',
-        verticalAlign: 'bottom',
-        borderHeight: 0
-      },
-      plotOptions: {
-        column: {
-          borderWidth: 0,
-          dataLabels: {
-            enabled: true,
-            style: {
-              fontSize: style.labels_font_size,
-              fontWeight: "bold",
-              color: style.labels_color
-            }
-          }
-        }
-      },
-      series: [
-        {
-          type: 'column',
-          name: 'Value',
-          data: charts_values,
-          color: 'limegreen'
-        }, {
-          name: 'TargetMax',
-          data: charts_max_values,
-          color: '#FF7F00'
-        }
-      ]
-    });
-  }
+                margin: 5,
+                useHTML: true
+            },
+            subtitle: {
+                text: "----" + style.subtitle,
+                style: {
+                    fontSize: style.subtitle_font_size,
+                    color: style.subtitle_color
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                categories: xaxis_values,
+                labels: {
+                    style: {
+                        color: style.xAxis_color,
+                        fontSize: style.xAxis_font_size,
+                        fontWeight: "bold"
+                    }
+                }
+            },
+            yAxis: {
+                title: {
+                    text: style.yAxis_title,
+                    style: {
+                        fontSize: style.yAxis_title_font_size,
+                        color: style.yAxis_title_color
+                    }
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }],
+                labels: {
+                    style: {
+                        color: style.yAxis_color,
+                        fontSize: style.yAxis_font_size,
+                        fontWeight: "bold"
+                    }
+                }
+            },
+            tooltip: {
+                valueSuffix: 's',
+                formatter: function () {
+                    try {
+                        return '<span><b>' + this.x +
+                                '</b><br/><b>CycleTime:</b><b>' + this.y + ' S</b><span>';
+                    } catch (e) {
+                        return;
+                    }
+                }
+            },
+            legend: {
+                itemStyle: {color: '#E0E0E3'},
+                itemHoverStyle: {color: '#FFF'},
+                itemHiddenStyle: {color: '#606063'},
+                title: {
+                    text: style.xAxis_title,
+                    style: {
+                        fontSize: style.xAxis_title_font_size,
+                        color: style.xAxis_title_color
+                    }
+                },
+                layout: 'horizontal',
+                align: 'center',
+                verticalAlign: 'bottom',
+                borderHeight: 0
+            },
+            plotOptions: {
+                column: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        style: {
+                            fontSize: style.labels_font_size,
+                            fontWeight: "bold",
+                            color: style.labels_color
+                        }
+                    }
+                }
+            },
+            series: [
+                {
+                    type: 'column',
+                    name: 'Value',
+                    data: charts_values,
+                    color: 'limegreen'
+                }, {
+                    name: 'TargetMax',
+                    data: charts_max_values,
+                    color: '#FF7F00'
+                }
+            ]
+        });
+    }
 
-  $('.CheckBox').change(function () {
 
-    var ProductLineId = $(this).attr('id');
-    var display_date = $(this).parent().prev().text();
-    var Status = $(this).attr("checked") == 'checked';
-    $.ajax({
-      url: '/display_set_lists/set_product_line',
-      type: 'post',
-      data: {
-        date: display_date,
-        product_line_id: ProductLineId,
-        status: Status
-      },
-      success: function (data) {
+    $('.CheckBox').change(function () {
+
+        var ProductLineId = $(this).attr('id');
+        var display_date = $(this).parent().prev().text();
+        var Status = $(this).attr("checked") == 'checked';
+        $.ajax({
+            url: '/display_set_lists/set_product_line',
+            type: 'post',
+            data: {
+                date: display_date,
+                product_line_id: ProductLineId,
+                status: Status
+            },
+            success: function (data) {
 //location.reload();
-      },
-      error: function () {
-      },
-      complete: function (xhr) {
-        if (xhr.status == 304) return;
-      }
+            },
+            error: function () {
+            },
+            complete: function (xhr) {
+                if (xhr.status == 304) return;
+            }
+        });
     });
-  });
 </script>

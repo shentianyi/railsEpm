@@ -412,7 +412,7 @@ class DepartmentsController < ApplicationController
   def product_line_list
     data=[]
 
-    list=DisplaySetList.find_by_name(Date.today)
+    list=DisplaySetList.find_by_name(Time.parse(params[:date]).to_date)
     if list
       list.display_set_items.order('department_id asc').each do |d|
         data<<{
