@@ -2,14 +2,14 @@
   <button type="button" class="btn btn-primary fullscreen">Full Screen</button>
 </div>
 
-<div id="full_screen" style="display: none;">
-</div>
+<div id="full_screen" style="display: none;"></div>
 
 <script type="text/javascript" charset="utf-8">
   /*全局变量*/
   var FullScreenInterval;
   var cycle = 0;
   var IntervelTime = 20000;
+
   var styles = {
     /*图表的标题,在后面的代码里面设置*/
     title: "",
@@ -35,7 +35,7 @@
     yAxis_color: "black",
     yAxis_font_size: "20px",
     /*y轴 标题 字体 和 颜色 设置*/
-    yAxis_title: "Times(s)",
+    yAxis_title: "Value(s)",
     yAxis_title_font_size: "30px",
     yAxis_title_color: "black",
     /*x轴 标题  字体 和 颜色 设置*/
@@ -47,8 +47,7 @@
   $('.fullscreen').click(function () {
     var product_line_list = GetListData();
     if (product_line_list) {
-      maskFullScreen();
-
+      show_loading(0, 0, 0, 0);
       var product_line_first = product_line_list[0];
       var product_line_first_id = product_line_first.id;
       var product_line_first_name = product_line_first.name;
@@ -83,7 +82,12 @@
       styles.title = product_line_first_name;
       styles.subtitle = product_line_first_cn_name;
 
+      maskFullScreen();
+//      setTimeout(function () {
+      remove_loading();
       DrawChart(charts_value, charts_target_max, xAxis_value, '#full_screen', styles);
+//      }, 3000);
+
 
       FullScreenInterval = setInterval(function () {
         if (cycle == product_line_list.length - 1) {
@@ -129,7 +133,7 @@
       }, IntervelTime);
     }
     else {
-      alert("请设置计划");
+      alert("今天没有要显示的计划");
     }
   });
 
@@ -196,7 +200,6 @@
       "height": 0,
       "filter": "alpha(opacity=0)",
       "opacity": "0",
-      "overflow": "hidden",
       "width": 0,
       "z-index": "0"
     });
@@ -219,7 +222,6 @@
       },
       "filter": "alpha(opacity=100)",
       "opacity": "1",
-      "overflow": "hidden",
       "width": function () {
         return window.screen.width;
       },
