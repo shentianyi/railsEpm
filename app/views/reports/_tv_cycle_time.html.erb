@@ -1,0 +1,158 @@
+<div class="pull-right">
+  <button type="button" class="btn btn-primary fullscreen">Full Screen</button>
+</div>
+
+<div id="full_screen"></div>
+
+<div class="col-sm-12">
+  <div id="chart_container" class="chart-container"></div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+
+  esckey();
+
+  $('.fullscreen').click(function () {
+    maskFullScreen();
+  });
+
+  DrawChart("#chart_container");
+
+  function esckey() {
+    $(document).keyup(function (event) {
+      switch (event.keyCode) {
+        case 27:
+          cancleFullScreen(document.documentElement);
+          removemaskFullScreen();
+      }
+    });
+  }
+
+  function removemaskFullScreen() {
+    $('#full_screen').empty();
+    $('#full_screen').css({
+      "display": "none",
+      "position": "absolute",
+      "margin-left": "0",
+      "margin-top": "0",
+      "background-color": "transparent",
+      "height": 0,
+      "filter": "alpha(opacity=0)",
+      "opacity": "0",
+      "overflow": "hidden",
+      "width": 0,
+      "z-index": "0"
+    });
+  }
+
+  function maskFullScreen() {
+    $('#full_screen').css({
+      "display": "block",
+      "position": "absolute",
+      "margin-left": "-10px",
+      "margin-top": "-70px",
+      "background-color": "white",
+      "height": function () {
+        return $(document).height();
+      },
+      "filter": "alpha(opacity=100)",
+      "opacity": "1",
+      "overflow": "hidden",
+      "width": function () {
+        return $(document).width();
+      },
+      "z-index": "99999"
+    });
+
+    DrawChart("#full_screen");
+    makeFullScreen(document.documentElement);
+  }
+
+  function makeFullScreen(divObj) {
+    var requestMethod = divObj.requestFullScreen || divObj.webkitRequestFullScreen || divObj.mozRequestFullScreen || divObj.msRequestFullscreen;
+    if (requestMethod) {
+      requestMethod.call(divObj);
+    } else if (typeof window.ActiveXObject != "undefined") {
+      var wscript = new ActiveXObject("WScript.Shell");
+      if (wscript != null) {
+        wscript.SendKeys("{F11}");
+      }
+    }
+    return false;
+  }
+
+  function cancleFullScreen(divObj) {
+    var requestMethod = divObj.cancleFullScreen || divObj.webkitCancelFullScreen || divObj.mozCancelFullScreen || divObj.exitFullscreen;
+    if (requestMethod) {
+      requestMethod.call(divObj);
+    } else if (typeof window.ActiveXObject != "undefined") {
+      var wscript = new ActiveXObject("WScript.Shell");
+      if (wscript != null) {
+        wscript.SendKeys("{F11}");
+      }
+    }
+  }
+
+  function DrawChart(id) {
+    var yAxis_value = [10, 10, 10, 10, 20, 30, 14, 15];
+
+    var charts_value = [12, 13, 14, 16, 17, 18, 19, 19];
+    var charts_target_max = [15, 16, 17, 18, 18, 15, 15, 15];
+    /*chart*/
+    var chart = $(id).highcharts({
+      title: {
+        text: 'CycleTime', x: -20 //center
+      },
+      credits: {
+        enabled: false
+      },
+      xAxis: {
+        categories: yAxis_value,
+        labels: {
+//          formatter: function () {
+//            return this.value.split('#')[1];
+//          }
+        }
+      },
+      yAxis: {
+        title: {text: 'Time(s)'},
+        plotLines: [{value: 0, width: 1, color: '#808080'}]
+      },
+      tooltip: {
+        valueSuffix: 's',
+        formatter: function () {
+          try {
+            return '<span><b>' + this.x.split('#')[0] +
+                '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
+          } catch (e) {
+            return "Hello";
+          }
+        }
+      },
+      legend: {layout: 'horizontal', align: 'center', verticalAlign: 'bottom', borderHeight: 0},
+      plotOptions: {
+        column: {
+          dataLabels: {
+            enabled: true
+          },
+          events: {//监听点的鼠标事件
+            click: function (e) {
+            }
+          }
+        }
+      },
+      series: [
+        {
+          type: 'column',
+          name: 'Value',
+          data: charts_value,
+          color: 'limegreen'
+        }, {
+          name: 'TargetMax',
+          data: charts_target_max,
+          color: '#FF7F00'
+        }
+      ]
+    });
+  }
+</script>

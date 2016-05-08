@@ -113,6 +113,7 @@ Report.get_dhtmlx = function () {
         case this.type["daily_dpv"]:
         case this.type["station_data"]:
         case this.type["history"]:
+        case this.type["tv_cycle_time"]:
         case this.type["daily_ftq"]:
             var o = new dhtmlXGridObject(container);
             o.addCellAttributes(['value', 'format', 'bgcolor']);
@@ -296,7 +297,8 @@ Report.type = {
     'defect_info': 9,
     'float': 10,
     'top_issue': 11,
-    'weekly_report': 12
+    'weekly_report': 12,
+    'tv_cycle_time':101
 };
 
 Report.headers = {

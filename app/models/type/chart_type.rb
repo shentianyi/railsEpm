@@ -12,6 +12,8 @@ class ChartType
   Float = 10
   TopIssue = 11
   WeeklyReport = 12
+  TVCycleTime = 101
+
 
   def self.partial(type)
     case type
@@ -25,6 +27,8 @@ class ChartType
         'daily-dpv'
       when DailyFTQ
         'daily-ftq'
+      when TVCycleTime
+        'tv_cycle_time'
       else
         'demo'
     end
