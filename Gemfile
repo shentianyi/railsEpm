@@ -113,23 +113,6 @@ gem 'chinese_pinyin'
 gem 'seajs-rails'
 gem 'thin'
 gem 'thrift','0.9.1'
-<<<<<<< HEAD
 gem 'requirejs-rails' , '0.9.3'
-=======
 gem 'thrift_client'
 gem 'clear_insight'
-
-gem 'requirejs-rails' , '0.9.3'
-=======
-gem 'requirejs-rails' , '0.9.3'
-
-gem 'thin'
-gem 'thrift'
->>>>>>> 0e32ed3d001a23732f9cddf420f7536685190bfb
-gem 'thrift_client'
-gem 'clear_insight'
-
-<<<<<<< HEAD
-=======
->>>>>>> fb31076b9e1f1b9922ce94da820e610fbd1e2ac9
->>>>>>> 0e32ed3d001a23732f9cddf420f7536685190bfb

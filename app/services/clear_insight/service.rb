@@ -41,23 +41,23 @@ module ClearInsight
       @range_filters=[]
       condition.each do |k, v|
         if v.is_a?(Fixnum) || v.is_a?(String)
-          @equal_filters<< ClearInsight::Thrift::EqualFilter.new(family : META_FAMILY, qualifier : k.to_s, value : v.to_s)
+          @equal_filters<< ClearInsight::Thrift::EqualFilter.new(family: META_FAMILY, qualifier: k.to_s, value: v.to_s)
         elsif v.is_a?(Array)
-          @in_filters<<ClearInsight::Thrift::InFilter.new(family : META_FAMILY, qualifier : k.to_s, values : v.map { |vv| vv.to_s })
+          @in_filters<<ClearInsight::Thrift::InFilter.new(family: META_FAMILY, qualifier: k.to_s, values: v.map { |vv| vv.to_s })
         elsif v.is_a?(Range)
           v1=v.first.dup; v2=v.last.dup
           v1= v1.is_a?(Time) ? v1.localtime.strftime('%Y/%m/%d %H:%M:%S.%L') : v1.to_s
           v2= v2.is_a?(Time) ? v2.localtime.strftime('%Y/%m/%d %H:%M:%S.%L') : v2.to_s
-          @range_filters<<ClearInsight::Thrift::RangeFilter.new(family : META_FAMILY, qualifier : k.to_s, values : [v1.to_s, v2.to_s])
+          @range_filters<<ClearInsight::Thrift::RangeFilter.new(family: META_FAMILY, qualifier: k.to_s, values: [v1.to_s, v2.to_s])
         end
       end
-      @equal_filters<< ClearInsight::Thrift::EqualFilter.new(family : META_FAMILY, qualifier : 'entry_type', value : '1')
+      @equal_filters<< ClearInsight::Thrift::EqualFilter.new(family: META_FAMILY, qualifier: 'entry_type', value: '1')
     end
 
     def parse_group_keys(group_keys)
       @group_columns=[]
       group_keys.each do |k|
-        @group_columns<<ClearInsight::Thrift::HBaseColumn.new(family : META_FAMILY, qualifier : k)
+        @group_columns<<ClearInsight::Thrift::HBaseColumn.new(family: META_FAMILY, qualifier: k)
       end
     end
   end
