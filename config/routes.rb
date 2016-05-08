@@ -7,6 +7,7 @@ IFEpm::Application.routes.draw do
   resources :display_set_lists do
     collection do
       match :add_lists, to: :add_lists, via: [:get, :post]
+      post :set_product_line
     end
     member do
       get 'display_set_items'

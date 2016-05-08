@@ -96,4 +96,10 @@ class DisplaySetListsController < ApplicationController
     @display_set_items = @display_set_list.display_set_items.paginate(:page => params[:page])
     @page_start=(params[:page].nil? ? 0 : (params[:page].to_i-1))*20
   end
+
+  def set_product_line
+    puts params
+    DisplaySetListService.set_product_line(params[:date], params[:product_line_id], params[:status]=='true')
+    render nothing: true
+  end
 end

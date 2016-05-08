@@ -412,13 +412,17 @@ class DepartmentsController < ApplicationController
   def product_line_list
     data=[]
 
-    current_user.tenant.departments.where(is_product_line: true).each do |d|
-      data<<{
-          id: d.id,
-          name: d.name,
-          cn_name: d.cn_name
-      }
+    list=DisplaySetList.find_by_name(Date.today)
+    if list
+      list.display_set_items.each do |d|
+        data<<{
+            id: d.department.id,
+            name: d.department.name,
+            cn_name: d.department.cn_name
+        }
+      end
     end
+    puts data
 
     render json: data
   end
