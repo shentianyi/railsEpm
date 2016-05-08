@@ -359,6 +359,8 @@ IFEpm::Application.routes.draw do
 
       get 'jsontree' => :jsontree
 
+      get 'product_line_list' => :product_line_list
+
       get :entity_groups
       get :entity_group_history
       get :download_cycle_time_detail
