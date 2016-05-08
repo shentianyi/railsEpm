@@ -215,6 +215,7 @@
     }
     $("#vehicle-select").change(function () {
         var productLine = $('#vehicle-select').val();
+        localStorage.box_msg="Line_"+productLine+"_interval_100"+"_box_0";
         loadData(productLine, 100);
     });
     //    try {

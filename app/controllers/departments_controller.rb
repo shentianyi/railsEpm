@@ -409,4 +409,18 @@ class DepartmentsController < ApplicationController
     end
   end
 
+  def product_line_list
+    data=[]
+
+    user.tenant.departments.where(is_product_line: true).each do |d|
+      data<<{
+          id: d.id,
+          name: d.name,
+          cn_name: d.cn_name
+      }
+    end
+
+    render json: data
+  end
+
 end
