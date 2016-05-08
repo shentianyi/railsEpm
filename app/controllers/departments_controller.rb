@@ -412,7 +412,7 @@ class DepartmentsController < ApplicationController
   def product_line_list
     data=[]
 
-    user.tenant.departments.where(is_product_line: true).each do |d|
+    current_user.tenant.departments.where(is_product_line: true).each do |d|
       data<<{
           id: d.id,
           name: d.name,

@@ -1,4 +1,4 @@
-    <div class="header" id="daily-ftq-header">
+<div class="header" id="daily-ftq-header">
   <!--<p>Export to:</p>
   <a class="btn btn-success btn_excel" onclick="export_bt_report_chart_excel()">Excel</a>-->
 
@@ -86,6 +86,7 @@
 <% end %>
 
 <script>
+  var IsLoading = false;
   $(document).ready(function () {
     var ReportMenuStatus = document.getElementById('report-menu').style.display;
     $('.control-chart-interval-group li').each(function (index) {
@@ -158,7 +159,7 @@
 
   $("#vehicle-select").change(function () {
     var productLine = $('#vehicle-select').val();
-    localStorage.box_msg="Line_"+productLine+"_interval_100"+"_box_0";
+    localStorage.box_msg = "Line_" + productLine + "_interval_100" + "_box_0";
     loadChartData(productLine, 100);
   });
 
@@ -188,7 +189,9 @@
     }
   });
 
-  var loadChartDataIntervalValue = window.setInterval("loadChartData(IntervalProductLine, IntervalDataType)", 60000);
+  if (! IsLoading) {
+    var loadChartDataIntervalValue = window.setInterval("loadChartData(IntervalProductLine, IntervalDataType)", 120000);
+  }
 
   function loadChartData(productLine, chartdatatype) {
     /*清空*/
@@ -236,7 +239,7 @@
 //            $('<td>' + ajaxData[i].target_min + '</td>').appendTo('.tbody-target-min').ready(function () {
 //            });
 
-      yAxis_value.push(ajaxData[i].name + "#" + ajaxData[i].code+"#"+ ajaxData[i].count);
+      yAxis_value.push(ajaxData[i].name + "#" + ajaxData[i].code + "#" + ajaxData[i].count);
       charts_target_max.push(ajaxData[i].target_max);
 
       if (ajaxData[i].value > ajaxData[i].target_max) {
@@ -285,7 +288,7 @@
         valueSuffix: 's',
         formatter: function () {
           return '<span><b>' + this.x.split('#')[0] +
-              '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2]+ '</b><span>';
+              '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
         }
       },
 //            legend: {layout: 'vertical', align: 'right', verticalAlign: 'middle', borderWidth: 0},
@@ -333,6 +336,7 @@
 
     /*ajax request*/
     function GetDataFun() {
+      IsLoading = true;
       var ReportMenuStatus = document.getElementById('report-menu').style.display;
       if (ReportMenuStatus == 'none') {
         show_loading(145, 0, 0, 10);
@@ -347,6 +351,7 @@
         success: function (data) {
           GetData = data;
           remove_loading();
+          IsLoading = false;
         },
         error: function () {
           console.log("something error");

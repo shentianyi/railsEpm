@@ -2,28 +2,185 @@
   <button type="button" class="btn btn-primary fullscreen">Full Screen</button>
 </div>
 
-<div id="full_screen"></div>
-
-<div class="col-sm-12">
-  <div id="chart_container" class="chart-container"></div>
+<div id="full_screen" style="display: none;">
 </div>
 
 <script type="text/javascript" charset="utf-8">
+  /*全局变量*/
+  var FullScreenInterval;
+  var cycle = 0;
+  var IntervelTime = 20000;
+  var styles = {
+    /*图表的标题,在后面的代码里面设置*/
+    title: "",
+    /*图表的副标题,在后面的代码里面设置*/
+    subtitle: "",
+    /*标题的字体大小*/
+    title_font_size: "30px",
+    /*副标题的字体大小*/
+    subtitle_font_size: "18px",
+    /*柱状图 超过 最大值的警示颜色 红色*/
+    warn_color: "#ff0000",
+    /*柱状图 正常 的颜色  绿色*/
+    normal_color: "limegreen",
+    /*图表的背景颜色设置*/
+    chart_background: "#f2f2f2",
+    /*柱状图上部显示的字体颜色和大小设置*/
+    labels_font_size: "20px",
+    labels_color: "black",
+    /*x轴 字体和颜色设置*/
+    xAxis_color: "black",
+    xAxis_font_size: "20px",
+    /*y轴字体和颜色设置*/
+    yAxis_color: "black",
+    yAxis_font_size: "20px",
+    /*y轴 标题 字体 和 颜色 设置*/
+    yAxis_title: "Times(s)",
+    yAxis_title_font_size: "30px",
+    yAxis_title_color: "black",
+    /*x轴 标题  字体 和 颜色 设置*/
+    xAxis_title: "",
+    xAxis_title_font_size: "30px",
+    xAxis_title_color: "black"
+  };
+
+  $('.fullscreen').click(function () {
+    var product_line_list = GetListData();
+    if (product_line_list) {
+      maskFullScreen();
+
+      var product_line_first = product_line_list[0];
+      var product_line_first_id = product_line_first.id;
+      var product_line_first_name = product_line_first.name;
+      var product_line_first_cn_name = product_line_first.cn_name;
+
+      var ProductLineFirstData = GetProductLineData(product_line_first_id, 100);
+
+      var xAxis_value = new Array;
+      var charts_value = new Array;
+      var charts_target_max = new Array;
+
+      for (var i = 0; i < ProductLineFirstData.length; i++) {
+        xAxis_value.push(ProductLineFirstData[i].code);
+
+        if (ProductLineFirstData[i].value > ProductLineFirstData[i].target_max) {
+          charts_value.push({
+            id: ProductLineFirstData[i].id,
+            color: styles.warn_color,
+            y: ProductLineFirstData[i].value
+          });
+        } else {
+          charts_value.push({
+            id: ProductLineFirstData[i].id,
+            color: styles.normal_color,
+            y: ProductLineFirstData[i].value
+          });
+        }
+
+        charts_target_max.push(ProductLineFirstData[i].target_max);
+      }
+
+      styles.title = product_line_first_name;
+      styles.subtitle = product_line_first_cn_name;
+
+      DrawChart(charts_value, charts_target_max, xAxis_value, '#full_screen', styles);
+
+      FullScreenInterval = setInterval(function () {
+        if (cycle == product_line_list.length - 1) {
+          cycle = -1;
+        }
+
+        cycle++;
+
+        var product_line = product_line_list[cycle];
+        var product_line_id = product_line.id;
+        var product_line_name = product_line.name;
+        var product_line_cn_name = product_line.cn_name;
+
+        var ProductLineData = GetProductLineData(product_line_id, 100);
+
+        var xaxis_values = new Array;
+        var charts_values = new Array;
+        var charts_max_values = new Array;
+
+        for (var i = 0; i < ProductLineData.length; i++) {
+          xaxis_values.push(ProductLineData[i].code);
+          charts_max_values.push(ProductLineData[i].target_max);
+
+          if (ProductLineData[i].value > ProductLineData[i].target_max) {
+            charts_values.push({
+              id: ProductLineData[i].id,
+              color: styles.warn_color,
+              y: ProductLineData[i].value
+            });
+          } else {
+            charts_values.push({
+              id: ProductLineData[i].id,
+              color: styles.normal_color,
+              y: ProductLineData[i].value
+            });
+          }
+        }
+
+        styles.title = product_line_name;
+        styles.subtitle = product_line_cn_name;
+        DrawChart(charts_values, charts_max_values, xaxis_values, '#full_screen', styles);
+
+      }, IntervelTime);
+    }
+    else {
+      alert("请设置计划");
+    }
+  });
 
   esckey();
 
-  $('.fullscreen').click(function () {
-    maskFullScreen();
-  });
+  var ProductLineList;
+  function GetListData() {
+    $.ajax({
+      url: '/departments/product_line_list',
+      type: 'get',
+      async: false,
+      success: function (data) {
+        ProductLineList = data;
+      },
+      error: function () {
+        alert("Network Error!")
+      }
+    });
+    return ProductLineList;
+  }
 
-  DrawChart("#chart_container");
+  var ProductLineDetailData;
+  function GetProductLineData(ProductLine, Interval) {
+    $.ajax({
+      url: '/departments/entity_groups',
+      type: 'get',
+      data: {product_line: ProductLine, interval: Interval},
+      async: false,
+      success: function (data) {
+        ProductLineDetailData = data;
+      },
+      error: function () {
+        console.log("something error");
+      }
+    });
+    return ProductLineDetailData;
+  }
 
   function esckey() {
     $(document).keyup(function (event) {
       switch (event.keyCode) {
         case 27:
-          cancleFullScreen(document.documentElement);
+        {
           removemaskFullScreen();
+          cancleFullScreen(document.documentElement);
+          try {
+            window.clearInterval(FullScreenInterval);
+          } catch (e) {
+            console.log(e);
+          }
+        }
       }
     });
   }
@@ -46,30 +203,34 @@
   }
 
   function maskFullScreen() {
+    $('#report-menu').css({
+      "display": "none"
+    });
+
     $('#full_screen').css({
       "display": "block",
       "position": "absolute",
       "margin-left": "-10px",
       "margin-top": "-70px",
+      "margin-right": "-40px",
       "background-color": "white",
       "height": function () {
-        return $(document).height();
+        return window.screen.height;
       },
       "filter": "alpha(opacity=100)",
       "opacity": "1",
       "overflow": "hidden",
       "width": function () {
-        return $(document).width();
+        return window.screen.width;
       },
       "z-index": "99999"
     });
 
-    DrawChart("#full_screen");
     makeFullScreen(document.documentElement);
   }
 
   function makeFullScreen(divObj) {
-    var requestMethod = divObj.requestFullScreen || divObj.webkitRequestFullScreen || divObj.mozRequestFullScreen || divObj.msRequestFullscreen;
+    var requestMethod = divObj.requestFullscreen || divObj.webkitRequestFullscreen || divObj.mozRequestFullScreen || divObj.msRequestFullscreen;
     if (requestMethod) {
       requestMethod.call(divObj);
     } else if (typeof window.ActiveXObject != "undefined") {
@@ -78,11 +239,11 @@
         wscript.SendKeys("{F11}");
       }
     }
-    return false;
+//    return false;
   }
 
   function cancleFullScreen(divObj) {
-    var requestMethod = divObj.cancleFullScreen || divObj.webkitCancelFullScreen || divObj.mozCancelFullScreen || divObj.exitFullscreen;
+    var requestMethod = divObj.exitFullscreen || divObj.webkitCancelFullScreen || divObj.mozCancelFullScreen || divObj.exitFullscreen;
     if (requestMethod) {
       requestMethod.call(divObj);
     } else if (typeof window.ActiveXObject != "undefined") {
@@ -93,50 +254,92 @@
     }
   }
 
-  function DrawChart(id) {
-    var yAxis_value = [10, 10, 10, 10, 20, 30, 14, 15];
-
-    var charts_value = [12, 13, 14, 16, 17, 18, 19, 19];
-    var charts_target_max = [15, 16, 17, 18, 18, 15, 15, 15];
+  function DrawChart(charts_values, charts_max_values, xaxis_values, id, style) {
     /*chart*/
     var chart = $(id).highcharts({
+      chart: {
+        backgroundColor: style.chart_background
+      },
       title: {
-        text: 'CycleTime', x: -20 //center
+        text: style.title,
+        style: {
+          fontSize: style.title_font_size
+        },
+        x: -20, //center
+        margin: 5
+      },
+      subtitle: {
+        text: "----" + style.subtitle,
+        style: {
+          fontSize: style.subtitle_font_size
+        }
       },
       credits: {
         enabled: false
       },
       xAxis: {
-        categories: yAxis_value,
+        categories: xaxis_values,
         labels: {
-//          formatter: function () {
-//            return this.value.split('#')[1];
-//          }
+          style: {
+            color: style.xAxis_color,
+            fontSize: style.xAxis_font_size,
+            fontWeight: "bold"
+          }
         }
       },
       yAxis: {
-        title: {text: 'Time(s)'},
-        plotLines: [{value: 0, width: 1, color: '#808080'}]
+        title: {
+          text: style.yAxis_title,
+          style: {
+            fontSize: style.yAxis_title_font_size,
+            color: style.yAxis_title_color
+          }
+        },
+        plotLines: [{
+          value: 0,
+          width: 1,
+          color: '#808080'
+        }],
+        labels: {
+          style: {
+            color: style.yAxis_color,
+            fontSize: style.yAxis_font_size,
+            fontWeight: "bold"
+          }
+        }
       },
       tooltip: {
         valueSuffix: 's',
         formatter: function () {
           try {
-            return '<span><b>' + this.x.split('#')[0] +
-                '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
+            return '<span><b>' + this.x[0] +
+                '</b><br/><b>CycleTime:</b><b>' + this.y + ' S</b><span>';
           } catch (e) {
-            return "Hello";
+            return;
           }
         }
       },
-      legend: {layout: 'horizontal', align: 'center', verticalAlign: 'bottom', borderHeight: 0},
+      legend: {
+        title: {
+          text: style.xAxis_title,
+          style: {
+            fontSize: style.xAxis_title_font_size,
+            color: style.xAxis_title_color
+          }
+        },
+        layout: 'horizontal',
+        align: 'center',
+        verticalAlign: 'bottom',
+        borderHeight: 0
+      },
       plotOptions: {
         column: {
           dataLabels: {
-            enabled: true
-          },
-          events: {//监听点的鼠标事件
-            click: function (e) {
+            enabled: true,
+            style: {
+              fontSize: style.labels_font_size,
+              fontWeight: "bold",
+              color: style.labels_color
             }
           }
         }
@@ -145,11 +348,11 @@
         {
           type: 'column',
           name: 'Value',
-          data: charts_value,
+          data: charts_values,
           color: 'limegreen'
         }, {
           name: 'TargetMax',
-          data: charts_target_max,
+          data: charts_max_values,
           color: '#FF7F00'
         }
       ]
