@@ -95,9 +95,9 @@
         $('.control-chart-interval-group li').attr('datatype', 'false');
 
         if (ReportMenuStatus == 'none') {
-          show_loading(100, 0, 0, 10);
+          show_loading(70, 0, 0, 0);
         } else {
-          show_loading(100, 0, 0, 230);
+          show_loading(70, 0, 0, 230);
         }
 
         $(this).css({opacity: '1'});
@@ -189,7 +189,7 @@
     }
   });
 
-  if (! IsLoading) {
+  if (!IsLoading) {
     var loadChartDataIntervalValue = window.setInterval("loadChartData(IntervalProductLine, IntervalDataType)", 120000);
   }
 
@@ -208,157 +208,156 @@
       }
     });
     /*ajax request*/
-      GetDataFun(productLine, chartdatatype);
+    GetDataFun(productLine, chartdatatype);
   }
 
 
-
   function GetDataFun(productLine, chartdatatype) {
-      IsLoading = true;
-      var ReportMenuStatus = document.getElementById('report-menu').style.display;
-      if (ReportMenuStatus == 'none') {
-          show_loading(145, 0, 0, 10);
-      } else {
-          show_loading(145, 0, 0, 230);
-      }
-      $.ajax({
-          url: '/departments/entity_groups',
-          type: 'get',
-          data: {product_line: productLine, interval: chartdatatype},
-          // async: false,
-          success: function (data) {
+    IsLoading = true;
+    var ReportMenuStatus = document.getElementById('report-menu').style.display;
+    if (ReportMenuStatus == 'none') {
+      show_loading(70, 0, 0, 0);
+    } else {
+      show_loading(70, 0, 0, 230);
+    }
+    $.ajax({
+      url: '/departments/entity_groups',
+      type: 'get',
+      data: {product_line: productLine, interval: chartdatatype},
+      // async: false,
+      success: function (data) {
 
-              var ajaxData = data;
+        var ajaxData = data;
 
-              var yAxis_value = new Array();
-              var charts_value = new Array();
-              var charts_target_max = new Array();
-              var charts_target_min = new Array();
+        var yAxis_value = new Array();
+        var charts_value = new Array();
+        var charts_target_max = new Array();
+        var charts_target_min = new Array();
 
-              $('<th>Station</th>').appendTo('.thead-tr').ready(function () {
-              });
+        $('<th>Station</th>').appendTo('.thead-tr').ready(function () {
+        });
 
-              $('<td>TargetMax</td>').appendTo('.tbody-target-max').ready(function () {
-              });
+        $('<td>TargetMax</td>').appendTo('.tbody-target-max').ready(function () {
+        });
 
 //        $('<td>TargetMin</td>').appendTo('.tbody-target-min').ready(function () {
 //        });
 
-              $('<td>Value</td>').appendTo('.tbody-value').ready(function () {
-              });
+        $('<td>Value</td>').appendTo('.tbody-value').ready(function () {
+        });
 
-              /*table*/
-              for (var i = 0; i < ajaxData.length; i++) {
-                  $('<th>' + ajaxData[i].name + '</th>').appendTo('.thead-tr').ready(function () {
-                  });
+        /*table*/
+        for (var i = 0; i < ajaxData.length; i++) {
+          $('<th>' + ajaxData[i].name + '</th>').appendTo('.thead-tr').ready(function () {
+          });
 
-                  $('<td>' + ajaxData[i].target_max + '</td>').appendTo('.tbody-target-max').ready(function () {
-                  });
+          $('<td>' + ajaxData[i].target_max + '</td>').appendTo('.tbody-target-max').ready(function () {
+          });
 //
 //            $('<td>' + ajaxData[i].target_min + '</td>').appendTo('.tbody-target-min').ready(function () {
 //            });
 
-                  yAxis_value.push(ajaxData[i].name + "#" + ajaxData[i].code + "#" + ajaxData[i].count);
-                  charts_target_max.push(ajaxData[i].target_max);
+          yAxis_value.push(ajaxData[i].name + "#" + ajaxData[i].code + "#" + ajaxData[i].count);
+          charts_target_max.push(ajaxData[i].target_max);
 
-                  if (ajaxData[i].value > ajaxData[i].target_max) {
-                      charts_value.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].value});
-                      $('<td style="background:#ff0000;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
-                      });
-                  } else if (ajaxData[i].value < ajaxData[i].target_min) {
-                      charts_value.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
-                      /* here can remove background. #FFB90F is orange.*/
-                      $('<td style="background:#FFB90F;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
-                      });
-                  } else {
-                      charts_value.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
-                      $('<td style="background:limegreen;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
-                      });
-                  }
-              }
-              var max_count = 25;
-              if (ajaxData.length < max_count) {
-                  max_count = ajaxData.length;
-              }
+          if (ajaxData[i].value > ajaxData[i].target_max) {
+            charts_value.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].value});
+            $('<td style="background:#ff0000;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+            });
+          } else if (ajaxData[i].value < ajaxData[i].target_min) {
+            charts_value.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
+            /* here can remove background. #FFB90F is orange.*/
+            $('<td style="background:#FFB90F;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+            });
+          } else {
+            charts_value.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
+            $('<td style="background:limegreen;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+            });
+          }
+        }
+        var max_count = 25;
+        if (ajaxData.length < max_count) {
+          max_count = ajaxData.length;
+        }
 
-              /*chart*/
-              var chart = $('#charts_containers').highcharts({
-                  title: {
-                      text: 'CycleTime', x: -20 //center
-                  },
-                  credits: {
-                      enabled: false
-                  },
-                  colors: ['#8DB6CD', '#FFA500', '#CD8162', '#24CBE5', '#64E572', '#FF9655',
-                      '#FFF263', '#6AF9C4'],
-                  xAxis: {
-                      categories: yAxis_value,
-                      labels: {
-                          formatter: function () {
-                              return this.value.split('#')[1];
-                          }
-                      }
-                  },
-                  yAxis: {
-                      title: {text: 'Time(s)'},
-                      plotLines: [{value: 0, width: 1, color: '#808080'}]
-                  },
-                  tooltip: {
-                      valueSuffix: 's',
-                      formatter: function () {
-                          return '<span><b>' + this.x.split('#')[0] +
-                                  '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
-                      }
-                  },
+        /*chart*/
+        var chart = $('#charts_containers').highcharts({
+          title: {
+            text: 'CycleTime', x: -20 //center
+          },
+          credits: {
+            enabled: false
+          },
+          colors: ['#8DB6CD', '#FFA500', '#CD8162', '#24CBE5', '#64E572', '#FF9655',
+            '#FFF263', '#6AF9C4'],
+          xAxis: {
+            categories: yAxis_value,
+            labels: {
+              formatter: function () {
+                return this.value.split('#')[1];
+              }
+            }
+          },
+          yAxis: {
+            title: {text: 'Time(s)'},
+            plotLines: [{value: 0, width: 1, color: '#808080'}]
+          },
+          tooltip: {
+            valueSuffix: 's',
+            formatter: function () {
+              return '<span><b>' + this.x.split('#')[0] +
+                  '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
+            }
+          },
 //            legend: {layout: 'vertical', align: 'right', verticalAlign: 'middle', borderWidth: 0},
-                  legend: {layout: 'horizontal', align: 'center', verticalAlign: 'bottom', borderHeight: 0},
-                  plotOptions: {
-                      column: {
-                          dataLabels: {
-                              enabled: true
-                          },
-                          events: {//监听点的鼠标事件
-                              click: function (e) {
-                                  var over_id = "Line_" + productLine + "_interval_" + chartdatatype + "_box_" + e.point.id;
-                                  if (window.localStorage) {
-                                      localStorage.box_msg = over_id;
-                                      localStorage.box_name = e.point.category;
-                                      localStorage.pre_url = window.location.host + '/reports#daily_ftq';
+          legend: {layout: 'horizontal', align: 'center', verticalAlign: 'bottom', borderHeight: 0},
+          plotOptions: {
+            column: {
+              dataLabels: {
+                enabled: true
+              },
+              events: {//监听点的鼠标事件
+                click: function (e) {
+                  var over_id = "Line_" + productLine + "_interval_" + chartdatatype + "_box_" + e.point.id;
+                  if (window.localStorage) {
+                    localStorage.box_msg = over_id;
+                    localStorage.box_name = e.point.category;
+                    localStorage.pre_url = window.location.host + '/reports#daily_ftq';
 
-                                      window.location.href = 'reports#defects';
-                                      location.reload();
-                                  } else {
-                                      alert('This browser does NOT support localStorage,please change browser.');
-                                  }
+                    window.location.href = 'reports#defects';
+                    location.reload();
+                  } else {
+                    alert('This browser does NOT support localStorage,please change browser.');
+                  }
 
-                              }
-                          }
-                      }
-                  },
-                  series: [
+                }
+              }
+            }
+          },
+          series: [
 //                {
 //                    name: 'TargetMin',
 //                    data: charts_target_min
 //                },
-                      {
-                          type: 'column',
-                          name: 'Value',
-                          data: charts_value,
-                          color: 'limegreen'
-                      }, {
-                          name: 'TargetMax',
-                          data: charts_target_max,
-                          color: '#FF7F00'
-                      }
-                  ]
-              });
-              remove_loading();
-              IsLoading = false;
-          },
-          error: function () {
-              console.log("something error");
-          }
-      });
-      // return GetData;
+            {
+              type: 'column',
+              name: 'Value',
+              data: charts_value,
+              color: 'limegreen'
+            }, {
+              name: 'TargetMax',
+              data: charts_target_max,
+              color: '#FF7F00'
+            }
+          ]
+        });
+        remove_loading();
+        IsLoading = false;
+      },
+      error: function () {
+        console.log("something error");
+      }
+    });
+    // return GetData;
   }
 </script>

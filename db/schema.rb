@@ -51,19 +51,6 @@ ActiveRecord::Schema.define(:version => 20160508062832) do
 
   add_index "alert_items", ["user_id"], :name => "index_alert_items_on_user_id"
 
-  create_table "alerts", :force => true do |t|
-    t.string   "topic"
-    t.integer  "user_id"
-    t.integer  "type"
-    t.integer  "offset",         :default => -1
-    t.integer  "alertable_id"
-    t.string   "alertable_type"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-  end
-
-  add_index "alerts", ["user_id"], :name => "index_alerts_on_user_id"
-
   create_table "attachments", :force => true do |t|
     t.string   "name"
     t.string   "path"
@@ -199,7 +186,7 @@ ActiveRecord::Schema.define(:version => 20160508062832) do
 
   create_table "display_set_lists", :force => true do |t|
     t.integer  "user_id"
-    t.string   "name"
+    t.date     "name"
     t.string   "remark"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

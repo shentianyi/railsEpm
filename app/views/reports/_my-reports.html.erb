@@ -1,3 +1,8 @@
+<style>
+  .wrap-main {
+    overflow: hidden;
+  }
+</style>
 <div class="report-menu" id="report-menu" style="display: none;">
   <section class="slide_menu">
     <div class="header">
@@ -74,7 +79,7 @@
   });
 
   $('#pop-crate').css({
-    bottom: '0px'
+    bottom: '60px'
   });
 
   $('#pop-crate').click(function () {
@@ -132,7 +137,11 @@
 //      weekday[5] = "星期五";
 //      weekday[6] = "星期六";
 //      var w = weekday[today.getDay()];
-    document.getElementById('current-clock').innerHTML = years + "-" + months + "-" + d + " " + " " + h + ":" + m + ":" + s;
+    try {
+      document.getElementById('current-clock').innerHTML = years + "-" + months + "-" + d + " " + " " + h + ":" + m + ":" + s;
+    } catch (e) {
+      return;
+    }
 //      t = setTimeout('startTime()', 500)
   }
 

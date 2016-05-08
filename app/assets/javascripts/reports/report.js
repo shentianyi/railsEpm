@@ -298,7 +298,7 @@ Report.type = {
     'float': 10,
     'top_issue': 11,
     'weekly_report': 12,
-    'tv_cycle_time':101
+    'tv_cycle_time': 101
 };
 
 Report.headers = {

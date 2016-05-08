@@ -117,7 +117,12 @@
       $(this).click(function () {
         $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
         $('.control-chart-interval-group li').attr('datatype', 'false');
-        loading_show();
+        var ReportMenuStatus = document.getElementById('report-menu').style.display;
+        if (ReportMenuStatus == 'none') {
+          show_loading(70, 0, 0, 10);
+        } else {
+          show_loading(70, 0, 0, 230);
+        }
         $(this).css({opacity: '1'});
         $(this).attr('datatype', 'true');
         var Choose_Interval_Code = $(this).attr('interval');
@@ -131,7 +136,7 @@
           },
           success: function (data) {
             //Here can do something
-            loading_hide();
+            remove_loading();
           },
           error: function () {
             console.log("Error");
@@ -139,10 +144,12 @@
         });
       });
     });
+
     /*时间刷新*/
     window.setInterval(function () {
       startTime();
     }, 500);
+
     /*设置整体背景颜色*/
 //        var ClientHeight = document.documentElement.clientHeight;
     var ClientHeight = $(document).height();
@@ -150,6 +157,7 @@
       height: (ClientHeight - 70) + 'px',
       overflow: 'auto'
     });
+
     if (localStorage.box_msg) {
       var box_msg = localStorage.box_msg;
       var productLine = box_msg.split('_')[1];
@@ -166,7 +174,9 @@
       loadData(productLine, datatype);
     }
   });
+
   function loadData(productLine, datatype) {
+    var ReportMenuStatus = document.getElementById('report-menu').style.display;
     IsLoading = true;
     $('.control-chart-interval-group li').each(function (index) {
       if ($(this).attr('datatype') == 'true') {
@@ -177,7 +187,14 @@
       productLine = $('#vehicle-select').val();
     }
     $("#product_line_id").val(productLine);
-    loading_show();
+
+    if (ReportMenuStatus == 'none') {
+      show_loading(70, 0, 0, 10);
+    } else {
+      show_loading(70, 0, 0, 230);
+    }
+
+//    show_loading(70, 0, 0, 10);
     hideDownload();
     $.ajax({
       url: '/departments/entity_groups',
@@ -187,7 +204,6 @@
         interval: datatype
       },
       success: function (data) {
-
         $('.workstation').remove();
         if (data.length > 0) {
           for (var i = 0; i < data.length; i++) {
@@ -198,7 +214,7 @@
                   '<div class="box-content"><div class="left-number" style="color: #ff0000;">' + data[i].value + '</div>' +
                   '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                   '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div></div>').appendTo('#data_container').ready(function () {
-                loading_hide();
+//                loading_hide();
               });
             } else {
               $('<div class="col-md-3 workstation"><div class="box">' +
@@ -206,12 +222,13 @@
                   '<div class="box-content"><div class="left-number"style="color: #3ed436;">' + data[i].value + '</div>' +
                   '<div class="right-content"><div class="content"><strong>' + data[i].target_max + '</strong><p>Max Target</p></div>' +
                   '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div></div>').appendTo('#data_container').ready(function () {
-                loading_hide();
+//                loading_hide();
               });
             }
             $('.download-panel').hide();
           }
         }
+        remove_loading();
         IsLoading = false;
       },
       error: function (data) {
@@ -226,17 +243,11 @@
     loadData(productLine, 100);
   });
 
-  //    try {
-  //        window.clearInterval(loadChartDataIntervalValue);
-  //    } catch (e) {
-  //        console.log(e);
-  //    }
-
   /*20s 刷新太快*/
-    var loadDataIntervalValue = window.setInterval("timerLoadData()", 120000);
+  var loadDataIntervalValue = window.setInterval("timerLoadData()", 120000);
 
-  function timerLoadData(){
-    if(!IsLoading){
+  function timerLoadData() {
+    if (!IsLoading) {
       loadData();
     }
   }

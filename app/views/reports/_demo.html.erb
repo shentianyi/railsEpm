@@ -113,34 +113,24 @@
       console.log(e);
     }
   }
+
   var ProductLine = box_msg.split('_')[1];
   var Interval = box_msg.split('_')[3];
   var BoxID = box_msg.split('_')[5];
 
-  // var pre_time='2016-03-24 16:00:00';
-  // var pre_time = new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+'00:00:00';
-  var pre_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
 
-  // pre_time=new Date(pre_time).format('yyyy-MM-dd hh:mm:ss');
-  // var current_time='2016-03-24 17:00:00';
+  //
+  //  // var pre_time='2016-03-24 16:00:00';
+  //  // var pre_time = new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+'00:00:00';
+  var pre_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
+  //
+  //  // pre_time=new Date(pre_time).format('yyyy-MM-dd hh:mm:ss');
+  //  // var current_time='2016-03-24 17:00:00';
   var current_time = new Date().format('yyyy-MM-dd hh:mm:ss');
   $('#start_time').attr('value', pre_time);
   $('#end_time').attr('value', current_time);
 
-  // 获取数据
-  var GetHistoryDataValue = GetHistoryDataFun(BoxID, pre_time, current_time);
-  var HistoryDataName = GetHistoryDataValue.name;
-  var HistoryDataID = GetHistoryDataValue.id;
-  var HistoryData = GetHistoryDataValue.data;
-
-  // if (HistoryData.length > 1000) {
-  //     // alert('Amount of data is too large, Please shorten your query date.');
-  // } else
-  if (HistoryData.length == 0) {
-    // alert('This period of time there is no data, modify the query date.');
-  } else {
-    loadHistoryDataFun(HistoryDataName, HistoryData);
-  }
+  GetHistoryDataFun(BoxID, pre_time, current_time);
 
   function loadHistoryDataFun(HistoryDataName, HistoryData) {
     var normal_data = 0;
@@ -326,6 +316,7 @@
         color: 'black',
         borderColor: 'black'
       });
+
       $('.change_charts:first-child').css({opacity: 1, color: 'orange', borderColor: 'orange'});
 
       var search_start_time = $('#start_time').val();
@@ -338,40 +329,34 @@
         search_end_time = time;
       }
 
-      var SearchHistoryData = GetHistoryDataFun(search_id, search_start_time, search_end_time);
-
-      var SearchHistoryDataName = SearchHistoryData.name;
-      var SearchHistoryDataID = SearchHistoryData.id;
-      var SearchHistoryDataValue = SearchHistoryData.data;
-
-      // if (SearchHistoryDataValue.length > 1000) {
-      //     alert('Amount of data is too large, Please shorten your query date.');
-      // } else
-      if (SearchHistoryDataValue.length == 0) {
-        alert('This period of time there is no data, modify the query date.');
-      } else {
-        loadHistoryDataFun(SearchHistoryDataName, SearchHistoryDataValue);
-      }
+      GetHistoryDataFun(search_id, search_start_time, search_end_time);
     });
   });
 
   /*get data*/
   function GetHistoryDataFun(id, start_time, end_time) {
-    var GetHistoryData = "";
-    show_loading(145, 0, 0, 0);
+    show_loading(145, 0, 0, 10);
     $.ajax({
       url: '/departments/entity_group_history',
       type: 'get',
       data: {id: id, start_time: start_time, end_time: end_time},
-      async: false,
+//      async: false,
       success: function (data) {
-        GetHistoryData = data;
+        var SearchHistoryData = data;   //GetHistoryData = data;
+        var SearchHistoryDataName = SearchHistoryData.name;
+        var SearchHistoryDataID = SearchHistoryData.id;
+        var SearchHistoryDataValue = SearchHistoryData.data;
+
+        if (SearchHistoryDataValue.length == 0) {
+          alert('This period of time there is no data, modify the query date.');
+        } else {
+          loadHistoryDataFun(SearchHistoryDataName, SearchHistoryDataValue);
+        }
         remove_loading();
       },
       error: function () {
         console.log("something error");
       }
     });
-    return GetHistoryData;
   }
 </script>
