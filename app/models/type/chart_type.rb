@@ -21,6 +21,8 @@ class ChartType
         'chart'
       when CurrentStatus
         'current-status'
+      when Defect
+        'defects'
       when StationData
         'station-data'
       when DailyDPV

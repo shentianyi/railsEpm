@@ -1,1 +1,128 @@
-<div id="defects" class=""></div>data_container
+<div class="col-sm-12" style="background: #fefefe;border-bottom: 4px solid #000;height: 70px;line-height: 20px;padding-top:15px;text-align: center;">
+  <div class="col-sm-3">
+    <button class="btn btn-success" style="width: 150px;" onclick="go_back();">
+      Back
+    </button>
+  </div>
+  <div class="col-sm-6">
+    <input type="text" readonly class="datetimepicker" id="start_time" title="Start Time">&emsp;
+    <b>~</b> &emsp; <input type="text" readonly class="datetimepicker" id="end_time" title="End Time">
+  </div>
+
+  <div class="col-sm-3">
+    <button class="btn btn-primary historty_search" style="width: 150px;">Search</button>
+  </div>
+</div>
+
+<div class="col-sm-12">
+  <div class="col-sm-5" style="display: flex; display: -ms-flexbox; height: 30px;line-height: 30px;">
+    <p>Total:</p><b id="total_data" style="margin-right: 20px;">0</b>
+    <p>Normal:</p><b id="normal_data" style="color: limegreen;">0</b>
+    <p style="margin-left:20px;">Exception:</p><b id="abnormal_data" style="color: #ff0000;">0</b>
+  </div>
+
+  <div id="chart_mode">
+    <button class="change_charts" style="opacity: 1;color: orange;border-color: orange;">line</button>
+    <button class="change_charts">column</button>
+    <button class="change_charts">scatter</button>
+  </div>
+</div>
+
+<div id="history_chart"></div>
+
+<hr style="border-bottom: 4px solid #000;">
+
+<!--table-->
+<div id="history_table" style="margin-top: 20px;">
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr class="history_table_thead_tr">
+    </tr>
+    </thead>
+    <tbody class="history_table_tbody_tr">
+    <tr class="history_table_tbody_target_min">
+    </tr>
+    <tr class="history_table_tbody_value">
+    </tr>
+    <tr class="history_table_tbody_target_max">
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  defects.init();
+
+  $('.historty_search').click(function () {
+    $('.change_charts').css({
+      opacity: 0.3,
+      color: 'black',
+      borderColor: 'black'
+    });
+
+    $('.change_charts:first-child').css({opacity: 1, color: 'orange', borderColor: 'orange'});
+
+    // var box_name = localStorage.box_name;
+    var box_msg = localStorage.box_msg;
+    // var ProductLine = box_msg.split('_')[1];
+    // var Interval = box_msg.split('_')[3];
+    var BoxID = box_msg.split('_')[5];
+
+    var search_start_time = $('#start_time').val();
+    var search_end_time = $('#end_time').val();
+    var search_id = BoxID;
+
+    if (search_start_time > search_end_time) {
+      var time = search_start_time;
+      search_start_time = search_end_time;
+      search_end_time = time;
+    }
+
+    GetHistoryDataFun(search_id, search_start_time, search_end_time);
+  });
+</script>
+
+<style>
+  #chart_mode {
+    text-align: right;
+    z-index: 1000;
+  }
+
+  .change_charts {
+    width: 100px;
+    font-size: 1.5em;
+    background: transparent;
+    border: 1px solid #999;
+    opacity: .5;
+    margin-left: -5px;
+  }
+
+  .change_charts:hover {
+    opacity: .8;
+  }
+
+  .change_charts:first-child {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
+
+  .change_charts:last-child {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+
+  input[type='text'] {
+    width: 150px;
+    text-align: center;
+  }
+
+  .table > thead > tr > th, .table > tbody > tr > td {
+    text-align: center;
+    background: white;
+  }
+
+  #history_chart {
+    min-height: 300px;
+    margin-top: 100px;
+  }
+</style>
