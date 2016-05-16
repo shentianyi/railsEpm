@@ -114,8 +114,6 @@
         remove_table();
 
         draw_table_head();
-
-        get_ajax_data(load_url, load_produce_line, load_interval);
        
         var working_time_chart = {
             chart: {
@@ -197,6 +195,8 @@
                     color: 'orange'
                 }]
         };
+
+        get_ajax_data(load_url, load_produce_line, load_interval);
         
         /*change chart type.*/
         $("button.change_charts").click(function () {
