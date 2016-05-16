@@ -4,6 +4,7 @@ class Entity < ActiveRecord::Base
   belongs_to :department
   has_many :entity_group_items, :dependent => :destroy
   has_many :users
+  has_many :entity_groups,:through => :entity_group_items
 
 
   has_many :user_kpi_items, :dependent => :destroy

@@ -1,5 +1,8 @@
+
+
 start_time=(Time.now-1.day).beginning_of_day.utc
 end_time=(start_time+18.hours-1.second)
+
 p start_time
 p end_time
 

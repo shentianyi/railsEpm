@@ -1,0 +1,25 @@
+<h1>Listing display_set_items</h1>
+
+<table>
+  <tr>
+    <th>Display set list</th>
+    <th>Department</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @display_set_items.each do |display_set_item| %>
+  <tr>
+    <td><%= display_set_item.display_set_list %></td>
+    <td><%= display_set_item.department %></td>
+    <td><%= link_to 'Show', display_set_item %></td>
+    <td><%= link_to 'Edit', edit_display_set_item_path(display_set_item) %></td>
+    <td><%= link_to 'Destroy', display_set_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Display set item', new_display_set_item_path %>

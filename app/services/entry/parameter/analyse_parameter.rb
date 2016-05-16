@@ -1,7 +1,7 @@
 module Entry
   module Parameter
     class AnalyseParameter
-      attr_accessor :kpi, :entities, :property
+      attr_accessor :kpi, :entities, :entity_group_single_entity, :property
       attr_accessor :start_time, :end_time
       attr_accessor :frequency
       attr_accessor :average, :data_module # sum,average
@@ -11,11 +11,13 @@ module Entry
 
       def initialize(args)
         self.kpi=Kpi.find(args[:kpi_id])
-        self.entities = EntityGroup.find(args[:entity_group_id]).entities.pluck(:id)
+        self.entities =Entity.joins(:entity_groups).where(entity_groups: {id: args[:entity_group_id]}).pluck(:id) #EntityGroup.where(args[:entity_group_id]).entities.pluck(:id)
         # args:start_time, end_time arg utc-time-string
+        self.entity_group_single_entity = args[:entity_group_single_entity].blank? ? false : args[:entity_group_single_entity]
+        self.frequency=args[:frequency] || self.kpi.frequency
         self.start_time =args[:start_time]
         self.end_time = args[:end_time]
-        self.frequency=args[:frequency] || self.kpi.frequency
+
         self.average=args[:average]
         self.data_module = args[:data_module] || DataService::WEB_HIGHSTOCK
         self.property = args[:property]
@@ -27,21 +29,25 @@ module Entry
         self.valid=false
       end
 
+
       def start_time=(value)
         @start_time=Time.parse(value).utc if value
       end
 
       def end_time=(value)
         @end_time=Time.parse(value).utc if value
+        if @end_time && (@frequency==KpiFrequency::Daily)
+          @end_time=@end_time.localtime.end_of_day.utc
+        end
       end
 
       def property=(value)
         return @property=nil if value.nil? || value.size==0
         @property={}
         value.each do |k, v|
-         # @property["a#{k}"]=v.is_a?(Array) ? v.map{|m| m.is_number? ? m.to_f : m } : v
-          @property["a#{k}"]=v#.is_a?(Array) ? v.map{|m| m.is_number? ? m.to_f : m } : v
-		end
+          # @property["a#{k}"]=v.is_a?(Array) ? v.map{|m| m.is_number? ? m.to_f : m } : v
+          @property["a#{k}"]=v #.is_a?(Array) ? v.map{|m| m.is_number? ? m.to_f : m } : v
+        end
       end
 
 
@@ -74,7 +80,7 @@ module Entry
 
       def kpi_ids
         return @kpi_ids if @kpi_ids
-        @kpi_ids=self.kpi.is_calculated ? (self.property.blank? ? self.kpi.id : self.kpi.kpi_item_ids): self.kpi.id
+        @kpi_ids=self.kpi.is_calculated ? (self.property.blank? ? self.kpi.id : self.kpi.kpi_item_ids) : self.kpi.id
         return kpi_ids
       end
 

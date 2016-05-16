@@ -302,7 +302,8 @@ Report.type = {
     /*here is type number*/
     'wait_time_in_hours': 13,
     'cycle_time_in_hours': 14,
-    'working_time_in_hours': 15
+    'working_time_in_hours': 15,
+    'tv_cycle_time': 101
 };
 
 Report.headers = {

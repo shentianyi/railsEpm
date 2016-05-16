@@ -35,19 +35,29 @@ module Api
     #end
 
     def kpis
-      kpis=Kpi.by_entity_group params[:id]
+      kpis=Kpi.all#.by_entity_group params[:id]
       respond_to do |t|
         t.json { render :json => kpis }
         t.js { render :js => jsonp_str(kpis) }
       end
     end
 
-    def detail
+   # def detail
+    #  entity_group = EntityGroup.find(params[:id])
+     # contacts = entity_group.contacts.select('users.id,users.first_name,tel,phone,email,title,image_url')
+     # respond_to do |t|
+      #  t.json { render :json => {contact: contacts, entityGroup: entity_group} }
+       # t.js { render :js => jsonp_str({contact: contacts, entityGroup: entity_group}) }
+     # end
+    #end
+def detail
       entity_group = EntityGroup.find(params[:id])
-      contacts = entity_group.contacts.select('contacts.id,contacts.name,tel,phone,email,title,image_url')
+      # contacts = entity_group.contacts.select('user.id,name,tel,phone,email,title,image_url')
+      contacts = UserPresenter.init_json_presenters(entity_group.contacts,request.protocol,request.host_with_port)
+
       respond_to do |t|
-        t.json { render :json => {contact: contacts, entityGroup: entity_group} }
-        t.js { render :js => jsonp_str({contact: contacts, entityGroup: entity_group}) }
+        t.json { render :json => {contact: contacts, entityGroup:EntityGroupPresenter.new(entity_group).to_json} }
+        t.js { render :js => jsonp_str({contact: contacts, entityGroup: EntityGroupPresenter.new(entity_group).to_json}) }
       end
     end
   end

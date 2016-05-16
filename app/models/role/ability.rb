@@ -6,6 +6,7 @@ class Ability
     alias_action :update, :destroy, :to => :modify
 
 
+    can :manage, [DisplaySetList, DisplaySetItem]
     can :download_entry_template, Kpi
     if user.admin?
       can :manage, [User,ProductionPlan, Entity, Department, EntityGroupItem, Kpi, KpiCategory, KpiEntry, KpiItem,

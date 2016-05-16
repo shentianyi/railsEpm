@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  display_set_list: 
+  department: 
+
+two:
+  display_set_list: 
+  department: 

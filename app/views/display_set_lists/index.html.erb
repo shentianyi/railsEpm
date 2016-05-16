@@ -1,0 +1,80 @@
+<style>
+    .col-sm-12 {
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .up_search {
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .table > thead > tr > th, .table > tbody > tr > td {
+        text-align: center;
+    }
+
+    .label {
+        font-size: 1em;
+    }
+
+    select {
+        min-width: 150px;
+    }
+
+    a:hover, a:active {
+        text-decoration: none;
+        background-color: white;
+        color: black;
+        outline: none;
+    }
+</style>
+
+<div class="panel panel-default">
+  <ol class="breadcrumb" style="background: transparent;padding: 20px 0 0 20px;font-size: 1.2em;">
+    <li class="active">
+      生产线展示列表
+    </li>
+  </ol>
+</div>
+
+<div class="col-sm-12" style="margin-bottom: 20px;margin-top: 10px;">
+  <div class="digg_pagination">
+    <div class="page_info">
+      <%= page_entries_info @display_set_lists %>
+    </div>
+    <%= will_paginate @display_set_lists, :container => false %>
+  </div>
+</div>
+
+<table class="table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th>No.</th>
+    <th>日期</th>
+    <th>展示列表</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @display_set_lists.each_with_index do |display_set_list, i| %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td><%= display_set_list.name %></td>
+        <td>
+          <%= link_to content_tag(:span, '展示列表', :class => 'label label-primary'), display_set_items_display_set_list_path(display_set_list) %>
+
+
+          <span class="badge pull-right"><%= display_set_list.display_set_items.count %></td>
+
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+<div class="digg_pagination">
+  <%= will_paginate @display_set_lists, :container => false %>
+</div>
+
+
+<%= link_to '新增生产线展示设置', add_lists_display_set_lists_path %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160323090657) do
+ActiveRecord::Schema.define(:version => 20160508062832) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -50,19 +50,6 @@ ActiveRecord::Schema.define(:version => 20160323090657) do
   end
 
   add_index "alert_items", ["user_id"], :name => "index_alert_items_on_user_id"
-
-  create_table "alerts", :force => true do |t|
-    t.string   "topic"
-    t.integer  "user_id"
-    t.integer  "type"
-    t.integer  "offset",         :default => 0
-    t.integer  "alertable_id"
-    t.string   "alertable_type"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-  end
-
-  add_index "alerts", ["user_id"], :name => "index_alerts_on_user_id"
 
   create_table "attachments", :force => true do |t|
     t.string   "name"
@@ -186,6 +173,26 @@ ActiveRecord::Schema.define(:version => 20160323090657) do
   add_index "departments", ["ancestry"], :name => "index_departments_on_ancestry"
   add_index "departments", ["tenant_id"], :name => "index_departments_on_tenant_id"
   add_index "departments", ["user_id"], :name => "index_departments_on_user_id"
+
+  create_table "display_set_items", :force => true do |t|
+    t.integer  "display_set_list_id"
+    t.integer  "department_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "display_set_items", ["department_id"], :name => "index_display_set_items_on_department_id"
+  add_index "display_set_items", ["display_set_list_id"], :name => "index_display_set_items_on_display_set_list_id"
+
+  create_table "display_set_lists", :force => true do |t|
+    t.integer  "user_id"
+    t.date     "name"
+    t.string   "remark"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "display_set_lists", ["user_id"], :name => "index_display_set_lists_on_user_id"
 
   create_table "emails", :force => true do |t|
     t.string   "sender"

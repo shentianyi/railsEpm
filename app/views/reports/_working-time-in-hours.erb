@@ -46,6 +46,10 @@
 
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+        setInterval(function(){
+            startTime();
+        },500);
+
         /*进入界面加载*/
         loadChartData(100);
 
@@ -111,78 +115,8 @@
 
         draw_table_head();
 
-        var load_AjaxData = get_ajax_data(load_url, load_produce_line, load_interval);
-        if (load_AjaxData) {
-            remove_loading();
-            for (var i = 0; i < load_AjaxData.length; i++) {
-                xAxis_value.push(load_AjaxData[i].name + '#' + load_AjaxData[i].code);
-                target_max_value.push(load_AjaxData[i].target_max);
-                target_min_value.push(load_AjaxData[i].target_min);
-
-                if (load_AjaxData[i].value == '0') {
-                    load_AjaxData[i].value = Math.round(Math.random() * 30);
-                }
-
-                if (load_AjaxData[i].value > load_AjaxData[i].target_max) {
-                    exception_data++;
-                    working_time_chart_value.push({color: '#ff0000', y: load_AjaxData[i].value});
-                    $('<td style="color:#ff0000;font-weight: bold;">' + load_AjaxData[i].value + '</td>').appendTo('.working_time_value').ready(function () {
-                    });
-                } else {
-                    normal_data++;
-                    working_time_chart_value.push({color: 'limegreen', y: load_AjaxData[i].value});
-                    $('<td>' + load_AjaxData[i].value + '</td>').appendTo('.working_time_value').ready(function () {
-                    });
-                }
-
-                $('<th>' + load_AjaxData[i].code + '</th>').appendTo('.working_time_thead_tr').ready(function () {
-                });
-
-                /*
-                 $('<td style="background:orange;">' + load_AjaxData[i].target_min + '</td>').appendTo('.working_time_target_min').ready(function () {
-                 });*/
-
-                $('<td style="color:orange;">' + load_AjaxData[i].target_max + '</td>').appendTo('.working_time_target_max').ready(function () {
-                });
-            }
-        } else {
-            remove_loading();
-//            alert('error');
-            console.log('error');
-        }
-
-        var get_ajax_data_value = "";
-
-        function get_ajax_data(url, product_line, interval) {
-            loading_mask();
-
-            $.ajax({
-                url: url,
-                type: 'get',
-                async: false,
-                data: {
-                    product_line: product_line,
-                    interval: interval
-                },
-                success: function (data) {
-                    get_ajax_data_value = data;
-                },
-                error: function () {
-                    console.log('error');
-                }
-            });
-            return get_ajax_data_value;
-        }
-
-        $('#total_data').html(normal_data + exception_data);
-        $('#normal_data').html(normal_data);
-        $('#exception_data').html(exception_data);
-
-        var xaxis_max_value = 20;
-        if (load_AjaxData.length < xaxis_max_value) {
-            xaxis_max_value = load_AjaxData.length;
-        }
-
+        get_ajax_data(load_url, load_produce_line, load_interval);
+       
         var working_time_chart = {
             chart: {
                 renderTo: 'charts_containers'
@@ -194,8 +128,8 @@
                 enabled: false
             },
             xAxis: {
-                min: 0,
-                max: xaxis_max_value,
+                // min: 0,
+                // max: xaxis_max_value,
                 categories: xAxis_value,
                 labels: {
                     /*设置每隔3个就显示一个x轴*/
@@ -263,10 +197,7 @@
                     color: 'orange'
                 }]
         };
-
-        working_time_chart.chart.type = 'column';
-        var chart = new Highcharts.Chart(working_time_chart);
-
+        
         /*change chart type.*/
         $("button.change_charts").click(function () {
             $('.change_charts').css({
@@ -283,6 +214,77 @@
             working_time_chart.chart.type = type;
             chart = new Highcharts.Chart(working_time_chart);
         });
+
+         function get_ajax_data(url, product_line, interval) {
+            loading_mask();
+
+            $.ajax({
+                url: url,
+                type: 'get',
+                async: false,
+                data: {
+                    product_line: product_line,
+                    interval: interval
+                },
+                success: function (data) {
+                    // get_ajax_data_value = data;
+                    var load_AjaxData = data;
+                    if (load_AjaxData) {
+                        for (var i = 0; i < load_AjaxData.length; i++) {
+                            xAxis_value.push(load_AjaxData[i].name + '#' + load_AjaxData[i].code);
+                            target_max_value.push(load_AjaxData[i].target_max);
+                            target_min_value.push(load_AjaxData[i].target_min);
+
+                            if (load_AjaxData[i].value == '0') {
+                                load_AjaxData[i].value = Math.round(Math.random() * 30);
+                            }
+
+                            if (load_AjaxData[i].value > load_AjaxData[i].target_max) {
+                                exception_data++;
+                                working_time_chart_value.push({color: '#ff0000', y: load_AjaxData[i].value});
+                                $('<td style="color:#ff0000;font-weight: bold;">' + load_AjaxData[i].value + '</td>').appendTo('.working_time_value').ready(function () {
+                                });
+                            } else {
+                                normal_data++;
+                                working_time_chart_value.push({color: 'limegreen', y: load_AjaxData[i].value});
+                                $('<td>' + load_AjaxData[i].value + '</td>').appendTo('.working_time_value').ready(function () {
+                                });
+                            }
+
+                            $('<th>' + load_AjaxData[i].code + '</th>').appendTo('.working_time_thead_tr').ready(function () {
+                            });
+
+                            /*
+                             $('<td style="background:orange;">' + load_AjaxData[i].target_min + '</td>').appendTo('.working_time_target_min').ready(function () {
+                             });*/
+
+                            $('<td style="color:orange;">' + load_AjaxData[i].target_max + '</td>').appendTo('.working_time_target_max').ready(function () {
+                            });
+                        }
+
+                        // var xaxis_max_value = 20;
+                        // if (load_AjaxData.length < xaxis_max_value) {
+                        //     xaxis_max_value = load_AjaxData.length;
+                        // }
+
+                        working_time_chart.chart.type = 'column';
+                        var chart = new Highcharts.Chart(working_time_chart);
+
+                        $('#total_data').html(normal_data + exception_data);
+                        $('#normal_data').html(normal_data);
+                        $('#exception_data').html(exception_data);
+                        
+                        remove_loading();
+                    } else {
+                        remove_loading();
+                        console.log('error');
+                    }
+                },
+                error: function () {
+                    console.log('error');
+                }
+            });
+        }
     }
 
     function remove_table() {

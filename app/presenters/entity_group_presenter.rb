@@ -1,4 +1,3 @@
-#encoding: utf-8
 class EntityGroupPresenter<Presenter
   Delegators=[:id, :name, :code, :description, :user_id]
   def_delegators :@entity_group, *Delegators

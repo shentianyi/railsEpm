@@ -20,21 +20,43 @@ module Entry
           query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base]).where(entry_type: 0)
         end
 
-        data_mr="date:format(this.entry_at,'#{self.parameter.date_format}')"
+        if self.parameter.entity_group_single_entity
+          data_mr="date:format(this.entry_at,'#{self.parameter.date_format}'),entity_id:this.entity_id"
+        else
+          data_mr="date:format(this.entry_at,'#{self.parameter.date_format}')"
+        end
         mr_condition[:map_group]=
             mr_condition[:map_group].nil? ? data_mr : "#{mr_condition[:map_group]},#{data_mr}"
         map=%Q{
            function(){
                   #{Mongo::Date.date_format}
-                  emit({#{mr_condition[:map_group]}},parseFloat(this.value));
+                  var v={count:1,total:parseFloat(this.value)}
+                  emit({#{mr_condition[:map_group]}},v);
               };
         }
         func=self.parameter.average ? 'avg' : 'sum'
         reduce=%Q{
            function(key,values){
-            return Array.#{func}(values);};
+var m='#{func}';
+            var result={count:0,total:0,value:0};
+            for(var i=0;i<values.length;i++){
+               result.count+=values[i].count;
+               result.total+=values[i].total;
+            }
+            return result;};
         }
-        self.data= query.map_reduce(map, reduce).out(inline: true)
+        finalize=%Q{
+           function(key, reducedVal){
+var m='#{func}';
+  if(m=='avg'){
+   reducedVal.value=reducedVal.total/reducedVal.count;
+  }else{
+   reducedVal.value=reducedVal.total;
+  }
+                       return reducedVal;
+              };
+        }
+        self.data= query.map_reduce(map, reduce).out(inline: true).finalize(finalize)
         return aggregate_type_data
       end
 
@@ -44,6 +66,7 @@ module Entry
         if self.parameter.kpi.is_calculated && !self.parameter.property.blank?
           data={}
           self.data.each do |d|
+            p d
             key=date_parse_proc.call(d['_id']['date'])
             data[key]||={}
             data[key][d['_id']['kpi'].to_i.to_s] =d['value']
@@ -55,27 +78,35 @@ module Entry
               self.current[k]=0
             end
           end
+        elsif self.parameter.entity_group_single_entity
+          self.data.each do |d|
+            p d
+            key="#{date_parse_proc.call(d['_id']['date'])}##{d['_id']['entity_id'].to_i}"
+            self.current[key]=d['value']
+          end
         else
           self.data.each do |d|
-            # puts '-----****'
-            # puts d['_id']['date']
-            # key=date_parse_proc.call(d['_id']['date'])
-
-            # puts key
-            # puts '-----****'
-
-
-            self.current[date_parse_proc.call(d['_id']['date'])]=d['value']
+            self.current[date_parse_proc.call(d['_id']['date'])]=d['value']['value']
           end
         end
 
         self.data_module= {:current => self.current,
                            # :target_max => self.parameter.kpi.target_max,#self.target_max,
                            # :target_min => self.parameter.kpi.target_min,#self.target_min,
-                           :target_max =>  self.target_max,
-                           :target_min =>  self.target_min,
+                           :target_max => self.target_max,
+                           :target_min => self.target_min,
                            :unit => self.unit}
-        self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
+        if self.parameter.entity_group_single_entity
+          self.current.each do |key, value|
+            p key
+            if value.is_a?(Hash)
+              value['value']=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value['value'])
+              value['entity_id']=key.split('#')[1]
+            end
+          end
+        else
+          self.current.each { |key, value| self.current[key]=KpiUnit.parse_entry_value(self.parameter.kpi.unit, value) }
+        end
         #puts '-------------'
         #puts self.current.keys.size
         #puts self.target_min.keys.size
@@ -95,7 +126,7 @@ module Entry
       def init_data_module
         self.current_count, self.current, self.frequency, self.target_min, self.target_max, self.unit=BaseAnalyseAggregator.new_hash(6)
         @kpi_uni_sym=self.parameter.kpi.unit_sym
-        target_relation=UserKpiItem.where(kpi_id: self.parameter.kpi.id, entity_id: self.parameter.entities)
+        # target_relation=UserKpiItem.where(kpi_id: self.parameter.kpi.id, entity_id: self.parameter.entities)
         @target_max_current=self.parameter.kpi.target_max #self.parameter.average ? (avg=target_relation.average(:target_max)).nil? ? 0 : avg.round(2).to_f : target_relation.sum(:target_max)
         @target_min_current=self.parameter.kpi.target_min #self.parameter.average ? (avg=target_relation.average(:target_min)).nil? ? 0 : avg.round(2).to_f : target_relation.sum(:target_min)
         frequency=self.parameter.frequency
@@ -117,8 +148,8 @@ module Entry
                 step=1.day #60*60*24
                 start_time=start_time.localtime.at_beginning_of_day.utc
                 end_time=end_time.localtime.at_beginning_of_day.utc
-                # start_time+=8.hours
-                # end_time+=8.hours
+              # start_time+=8.hours
+              # end_time+=8.hours
               when KpiFrequency::Weekly
                 start_time+=8.hours
                 end_time+=8.hours
@@ -184,16 +215,31 @@ module Entry
       end
 
       def generate_init_frequency(key)
-        self.current[key]=0
-        self.target_max[key]=@target_max_current
-        self.target_min[key]=@target_min_current
-        self.unit[key]= @kpi_uni_sym
+        if self.parameter.entity_group_single_entity
+          self.parameter.entities.each do |id|
+            k="#{key}##{id}"
+            self.current[k]={
+                'entity_id'=>id,
+                'count'=>0,
+                'total'=>0,
+                'value'=>0
+            }
+            self.target_max[key]=@target_max_current
+            self.target_min[key]=@target_min_current
+            self.unit[key]= @kpi_uni_sym
+          end
+        else
+          self.current[key]=0
+          self.target_max[key]=@target_max_current
+          self.target_min[key]=@target_min_current
+          self.unit[key]= @kpi_uni_sym
+        end
       end
 
       def generate_web_highstock_data
         web_highstock_data={}
         self.data_module.each { |k, v| web_highstock_data[k]=v.kind_of?(Hash) ? v.values : v }
-        web_highstock_data[:date]=self.current.keys.map{|k| k.to_time.utc.to_s}
+        web_highstock_data[:date]=self.current.keys.map { |k| k.to_time.utc.to_s }
         return web_highstock_data
       end
 

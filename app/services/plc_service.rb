@@ -1,6 +1,11 @@
 class PlcService
   def self.post_data params
 
+    #
+     #100000000.times do
+    #   puts 1
+    # end
+
     kpi= Kpi.first#find_by_name(Settings.app.kpi)
     codes=params[:codes].split(',')
     values=params[:values].split(',')
@@ -27,7 +32,7 @@ class PlcService
       v=values[i].to_f/1000
 
 
-      return if v<1.5
+      #return if v<1.5
       time=Time.parse(params[:time])
 
 
@@ -45,7 +50,7 @@ class PlcService
       end
 
 
-      return if v>(3*max)
+     # return if v>100
 
       KpiEntry.create(
           entry_type: 0,

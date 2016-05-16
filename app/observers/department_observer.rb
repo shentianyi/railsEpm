@@ -10,15 +10,16 @@ class DepartmentObserver<ActiveRecord::Observer
     entity_group.creator = department.creator
     entity_group.tenant=department.tenant
 
-    # create entity
-    entity=Entity.new(name: department.name, code: department.name, department_id: department.id)
-    #create user
-    user=User.new(first_name: "#{department.name}_user",
-                  email: "#{department.name.gsub(/ /,'_')}_user@beko.com",
-                  password: '123456@', password_confirmation: '123456@', role_id: 100)
-    entity.tenant=department.tenant
-    entity.users<<user
-
+    unless entity=Entity.find_by_code(department.name)
+      # create entity
+      entity=Entity.new(name: department.name, code: department.name, department_id: department.id)
+      #create user
+      user=User.new(first_name: "#{department.name}_user",
+                    email: "#{department.name.gsub(/ /, '_')}_user@beko.com",
+                    password: '123456@', password_confirmation: '123456@', role_id: 100)
+      entity.tenant=department.tenant
+      entity.users<<user
+    end
     entity_group.entities<<department.default_entity if department.default_entity
     entity_group.entities<<entity
 
@@ -40,8 +41,8 @@ class DepartmentObserver<ActiveRecord::Observer
   def after_update department
     if department.name_changed?
       eg = department.entity_group
-     # eg.update_attributes(name:department.name,code:department.name)
-      eg.update_attributes(name:department.name)
+      # eg.update_attributes(name:department.name,code:department.name)
+      eg.update_attributes(name: department.name)
     end
   end
 

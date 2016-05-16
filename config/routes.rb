@@ -1,6 +1,20 @@
 IFEpm::Application.routes.draw do
 
 
+  resources :display_set_items
+
+
+  resources :display_set_lists do
+    collection do
+      match :add_lists, to: :add_lists, via: [:get, :post]
+      post :set_product_line
+    end
+    member do
+      get 'display_set_items'
+    end
+  end
+
+
   resources :production_plans do
     collection do
       match :up_down
@@ -359,8 +373,11 @@ IFEpm::Application.routes.draw do
 
       get 'jsontree' => :jsontree
 
+      get 'product_line_list' => :product_line_list
+
       get :entity_groups
       get :entity_group_history
+      get :download_cycle_time_detail
     end
   end
 

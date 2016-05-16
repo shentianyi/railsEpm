@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Display set list:</b>
+  <%= @display_set_item.display_set_list %>
+</p>
+
+<p>
+  <b>Department:</b>
+  <%= @display_set_item.department %>
+</p>
+
+
+<%= link_to 'Edit', edit_display_set_item_path(@display_set_item) %> |
+<%= link_to 'Back', display_set_items_path %>

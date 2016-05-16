@@ -90,3 +90,33 @@
     margin-top:9px;
   }
 }
+
+
+
+
+
+
+
+.download-groups {
+ //height: 200px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  //display: block;
+  width: 100%;
+  position: relative;
+
+  .download-panel{
+    height: 100px;
+
+    //&:before {
+    //  content: "Download Excel";
+    //  position: relative;
+    //  font-size: 17px;
+    //  color: #666;
+    //  left: 10px;
+    //  top: 15px;
+    //}
+  }
+}

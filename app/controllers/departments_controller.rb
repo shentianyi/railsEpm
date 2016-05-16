@@ -273,59 +273,95 @@ class DepartmentsController < ApplicationController
   end
 
   def entity_groups
-    parent=Department.find_by_id(params[:product_line])
+    product_line=Department.find_by_id(params[:product_line])
     kpi=Kpi.first #.find_by_name(Settings.app.kpi)
-    entity_groups=[]
+    datas=[]
 
     frequency=params[:interval].blank? ? KpiFrequency::Daily : params[:interval].to_i
 
-    start_time=KpiFrequency.get_begin_date(Time.now, frequency)
-    end_time=KpiFrequency.get_next_date(start_time, frequency)-1.second
+    start_time=(KpiFrequency.get_begin_date(Time.now, frequency).utc)
+    end_time=(KpiFrequency.get_next_date(start_time, frequency)-1.second).utc
 
 
-    parent.children.each do |d|
-      entity_group=d.entity_group
-      params={}
-      params[:kpi_id]=kpi.id
-      params[:kpi_name]=kpi.name
-      params[:entity_group_id]=entity_group.id
-      params[:entity_group_name]=entity_group.name
-      params[:start_time]=start_time.utc.to_s
-      params[:end_time]=end_time.utc.to_s
-
-      params[:frequency]=frequency
-      params[:average]=true #=.nil? ? true : params[:average]=='true'
-      data=Entry::Analyzer.new(params).analyse #.to_json
-
-      p '-------------------------------'
-      p params
-      p data
-      p '-------------------------------'
-
-
-      max=kpi.target_max
-      min=kpi.target_min
-
-      if entity=d.entities.first
-        if user= entity.users.first
-          if item=user.user_kpi_items(kpi_id: kpi.id).first
-            max=item.target_max
-            min=item.target_min
-          end
-        end
+    entity_group_ids=product_line.children.joins(:entity_group).pluck('entity_groups.id')
+    params={}
+    params[:kpi_id]=kpi.id
+    params[:kpi_name]=kpi.name
+    params[:entity_group_id]=entity_group_ids
+    params[:start_time]=start_time.to_s
+    params[:end_time]=end_time.to_s
+    params[:entity_group_single_entity]=true
+    params[:frequency]=frequency
+    params[:average]=true
+    data=Entry::Analyzer.new(params).analyse
+    p '----------------------------'
+    p data
+    p '-----------------------------'
+    max=kpi.target_max
+    min=kpi.target_min
+    data[:current].each do |d|
+      if (e=Entity.find_by_id(d['entity_id'])) && (de=e.department) &&(eg=de.entity_group)
+        datas<< {
+            id: eg.id,
+            name: eg.name,
+            code: eg.code,
+            value: d['value'],
+            count: d['count'],
+            target_max: max,
+            target_min: min
+        }
       end
-
-      entity_groups<<{
-          id: entity_group.id,
-          name: entity_group.name,
-          code: entity_group.code,
-          value: data[:current].first,
-          target_max: max,
-          target_min: min,
-          d: data
-      }
     end
-    render json: entity_groups
+    # parent.children.each do |d|
+    #   entity_group=d.entity_group
+    #   params={}
+    #   params[:kpi_id]=kpi.id
+    #   params[:kpi_name]=kpi.name
+    #   params[:entity_group_id]=entity_group.id
+    #   params[:entity_group_name]=entity_group.name
+    #   params[:start_time]=start_time.to_s
+    #   params[:end_time]=end_time.to_s
+    #
+    #   params[:frequency]=frequency
+    #   params[:average]=true
+    #   data=Entry::Analyzer.new(params).analyse
+    #
+    #   count=0
+    #   # if e=entity_group.entities.first
+    #   #   count=KpiEntry.where(kpi_id: kpi.id,
+    #   #                        entity_id: e.id)
+    #   #             .between(Hash[:entry_at, (start_time..end_time)]).count
+    #   # end
+    #   p '-------------------------------'
+    #   p params
+    #   p data
+    #   p '-------------------------------'
+    #
+    #
+    #   max=kpi.target_max
+    #   min=kpi.target_min
+    #
+    #   if entity=d.entities.first
+    #     if user= entity.users.first
+    #       if item=user.user_kpi_items(kpi_id: kpi.id).first
+    #         max=item.target_max
+    #         min=item.target_min
+    #       end
+    #     end
+    #   end
+    #
+    #   entity_groups<<{
+    #       id: entity_group.id,
+    #       name: entity_group.name,
+    #       code: entity_group.code,
+    #       value: data[:current].first,
+    #       count:count,
+    #       target_max: max,
+    #       target_min: min,
+    #       d: data
+    #   }
+    # end
+    render json: datas
   end
 
   def entity_group_history
@@ -337,8 +373,6 @@ class DepartmentsController < ApplicationController
                          entity_id: e.id)
       start_time=Time.parse(params[:start_time]).utc #.to_s
       end_time=(Time.parse(params[:end_time])-1.second).utc #.to_s
-      p start_time
-      p end_time
       q=q.between(Hash[:entry_at, (start_time..end_time)])
 
       q=q.order_by(entry_at: :asc)
@@ -363,6 +397,34 @@ class DepartmentsController < ApplicationController
     else
       render json: nil
     end
+  end
+
+
+  def download_cycle_time_detail
+    msg = FileHandler::Excel::AppCenterHandler.download_cycle_time_detail(params)
+    if msg.result
+      send_file msg.content
+    else
+      render json: msg
+    end
+  end
+
+  def product_line_list
+    data=[]
+
+    list=DisplaySetList.find_by_name(Time.parse(params[:date]).to_date)
+    if list
+      list.display_set_items.order('department_id asc').each do |d|
+        data<<{
+            id: d.department.id,
+            name: d.department.name,
+            cn_name: d.department.cn_name
+        }
+      end
+    end
+    puts data
+
+    render json: data
   end
 
 end
