@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ClearInsight</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= yield :stylesheet_includes %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<%= yield %>
+</body>
+<script type="text/javascript">
+    I18n.defaultLocale = "<%= I18n.default_locale %>";
+    I18n.locale = "<%= I18n.locale %>";
+
+</script>
+<%= yield :javascript_includes %>
+</html>
