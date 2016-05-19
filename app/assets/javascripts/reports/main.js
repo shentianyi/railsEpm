@@ -1,6 +1,6 @@
 (function () {
     $(document).ready(function () {
-        loader = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
+        // loader = new SVGLoader(document.getElementById('preloader'), {speedIn: 100});
 
         //Refresh Page
         var url = window.location.href.split('/');
@@ -17,14 +17,18 @@
                 }
             });
         } else {
-            var part = Report.type['current_status'];
-            ReportMenu.click(part, function (data) {
-                //$("#my-reports li a").removeClass("active");
-                $("#my-reports a[menu='current_status']").addClass("active");
-                report_main.current_menu = part;
-                $("#report-content").html(data);
-                window.location.href += "#current_status";
-            });
+            if ($('#from_ipad').val()) {
+                return;
+            } else {
+                var part = Report.type['current_status'];
+                ReportMenu.click(part, function (data) {
+                    //$("#my-reports li a").removeClass("active");
+                    $("#my-reports a[menu='current_status']").addClass("active");
+                    report_main.current_menu = part;
+                    $("#report-content").html(data);
+                    window.location.href += "#current_status";
+                });
+            }
         }
 
         $('body')
@@ -54,7 +58,7 @@
                     top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
                 $(".pageload-overlay svg").css('left', left).css("top", top);
 
-                loader.show();
+                // loader.show();
 
                 window.location.href = this.href;
                 ReportMenu.click(part, function (data) {
@@ -63,7 +67,7 @@
                     setTimeout(function () {
                         $("#report-content").html(data);
                         window.location.href = href;
-                        loader.hide();
+                        // loader.hide();
                     }, 924);
                 });
             })
@@ -72,7 +76,7 @@
                 var left = document.getElementById("report-menu").getBoundingClientRect().right,
                     top = document.getElementById("report-menu").getBoundingClientRect().top >= 0 ? document.getElementById("report-menu").getBoundingClientRect().top : 0;
                 $(".pageload-overlay svg").css('left', left).css("top", top);
-                loader.show();
+                // loader.show();
                 $("#my-reports li a").removeClass("active");
                 $.ajax({
                     url: "/reports/subscription",
@@ -81,7 +85,7 @@
                         setTimeout(function () {
                             $("#report-content").html(data);
                             report_subscription.init();
-                            loader.hide()
+                            // loader.hide()
                         }, 600);
                     }
                 })
@@ -155,12 +159,12 @@ report_main.current_menu = Report.type["current_status"];
 report_main.init_snap_btn = function (id) {
     var target = id.indexOf("#") === -1 ? "#" + id : id;
     $('body').on("click", target, function (event) {
-        var e = adapt_event(event).event;
-        var left = e.clientX,
-            top = e.clientY;
-        $("#snap_block").css("left", left).css("top", top - 170);
-        $("#snap-shot-desc").focus();
-    })
+            var e = adapt_event(event).event;
+            var left = e.clientX,
+                top = e.clientY;
+            $("#snap_block").css("left", left).css("top", top - 170);
+            $("#snap-shot-desc").focus();
+        })
         .on("keyup", "#snap-shot-desc", function (event) {
             var e = adapt_event(event).event;
             if (e.keyCode === 13) {

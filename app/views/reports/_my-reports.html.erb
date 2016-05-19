@@ -17,18 +17,21 @@
       <li><a menu="daily_ftq" href="#daily_ftq"><i class="icon-bar-chart mark"></i>CycleTime
         Detail<i class="icon-chevron-right indicate"></i></a></li>
 
-      <li><a menu="wait_time_in_hours" href="#wait_time_in_hours"><i class="icon-lock mark"></i> &nbsp;WaitTime in
-        Hours<i class="icon-chevron-right indicate"></i></a></li>
+      <!--<li><a menu="wait_time_in_hours" href="#wait_time_in_hours"><i class="icon-lock mark"></i> &nbsp;WaitTime in-->
+      <!--Hours<i class="icon-chevron-right indicate"></i></a></li>-->
 
-      <li><a menu="cycle_time_in_hours" href="#cycle_time_in_hours"><i class="icon-time mark"></i> CycleTime in
-        Hours<i class="icon-chevron-right indicate"></i></a></li>
+      <!--<li><a menu="cycle_time_in_hours" href="#cycle_time_in_hours"><i class="icon-time mark"></i> CycleTime in-->
+      <!--Hours<i class="icon-chevron-right indicate"></i></a></li>-->
 
-      <li>
-        <a menu="working_time_in_hours" href="#working_time_in_hours"><i class="icon-calendar mark"></i> WorkingTime in
-          Hours<i class="icon-chevron-right indicate"></i></a></li>
-      <li><a menu="tv_cycle_time" href="#tv_cycle_time"><i class="icon-bar-chart mark"></i>
+      <!--<li>-->
+      <!--<a menu="working_time_in_hours" href="#working_time_in_hours"><i class="icon-calendar mark"></i> WorkingTime in-->
+      <!--Hours<i class="icon-chevron-right indicate"></i></a></li>-->
+
+      <li><a menu="tv_cycle_time" href="#tv_cycle_time"><i class="icon-lock mark"></i>
         TV CycleTime<i class="icon-chevron-right indicate"></i></a></li>
 
+      <li><a menu="moving_time" href="#moving_time"><i class="icon-time mark"></i>
+        MovingTime Detail<i class="icon-chevron-right indicate"></i></a></li>
       <!--<li><a menu="defects" href="#defects"><i class="icon-list mark"></i>
         History<i class="icon-chevron-right indicate"></i></a></li>-->
 
@@ -81,29 +84,29 @@
 <% end %>
 
 <script type="text/javascript">
-    var ClientHeight = document.documentElement.clientHeight;
-    var ClientWidth = document.documentElement.clientWidth;
+  var ClientHeight = document.documentElement.clientHeight;
+  var ClientWidth = document.documentElement.clientWidth;
 
-    $('.my_icon').css({
-        marginTop: (ClientHeight) / 2 + 'px',
-        marginBottom: ((ClientHeight) / 2 - 33) + 'px'
-    });
+  $('.my_icon').css({
+    marginTop: (ClientHeight) / 2 + 'px',
+    marginBottom: ((ClientHeight) / 2 - 33) + 'px'
+  });
 
-    $('#pop-crate').click(function () {
-        var report_menu_style = document.getElementById('report-menu').style.display;
-        if (report_menu_style == "none") {
-            $('#report-menu').fadeIn(0);
-            $('#pop-crate').animate({
-                left: '220px'
-            }, 0);
+  $('#pop-crate').click(function () {
+    var report_menu_style = document.getElementById('report-menu').style.display;
+    if (report_menu_style == "none") {
+      $('#report-menu').fadeIn(0);
+      $('#pop-crate').animate({
+        left: '220px'
+      }, 0);
 
-        } else {
-            $('#report-menu').fadeOut(0);
-            $('#pop-crate').animate({
-                left: '0'
-            }, 0);
-        }
-    });
+    } else {
+      $('#report-menu').fadeOut(0);
+      $('#pop-crate').animate({
+        left: '0'
+      }, 0);
+    }
+  });
 
   var loading;
   function loading_show() {

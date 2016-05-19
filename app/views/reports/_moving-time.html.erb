@@ -1,9 +1,10 @@
 <div class="header" id="daily-ftq-header">
+
   <div class="col-sm-12" id="current-status-header" style="background: #fefefe;border-bottom: 4px solid #000">
     <div class="col-sm-4" style="padding-top: 10px;border-right: 1px solid #ccc;">
       <label>Condition</label>
 
-      <p>CycleTime Detail Column Chart</p>
+      <p>WorkingTime Detail Column Chart</p>
 
       <p id="current-date" style="font-size: 12px;"></p>
     </div>
@@ -27,15 +28,9 @@
 
 <div class="clearfix chart-interval-alternate" id="chart-interval-alternate">
   <ul class="pull-right control-chart-interval-group">
-    <!--  <li interval="90">
-       <a>Hr</a>
-     </li> -->
     <li interval="100" style="color: black;">
       <a>D</a>
     </li>
-    <!-- <li interval="200">
-      <a>W</a>
-    </li> -->
     <li interval="300">
       <a>M</a>
     </li>
@@ -52,6 +47,7 @@
 <div id="charts_containers" style="margin-top: 60px;min-height:300px;"></div>
 
 <hr style="border-bottom: 4px solid #000;">
+
 <!--table-->
 <div id="data_chartcontainer" class="data_container" style="margin-top: 20px;">
   <table class="table table-bordered table-hover">
@@ -81,10 +77,12 @@
   var IsLoading = false;
   $(document).ready(function () {
     if ($('#from_ipad').val()) {
-      $('.control-chart-interval-group').parent().css({display: "none"});
+      $('.chart-interval-alternate').css({display: "none"});
+      $('#data_chartcontainer').prev('hr').css({display: "none"});
       $('#data_chartcontainer').css({display: "none"});
     } else {
       var ReportMenuStatus = document.getElementById('report-menu').style.display;
+
       if (ReportMenuStatus == 'none') {
         $('#data_chartcontainer').css({width: (ClientWidth - 20) + 'px', overflowX: 'auto'});
       } else {
@@ -92,8 +90,11 @@
       }
     }
 
-    $('.control-chart-interval-group li').each(function (index) {
+    $('.control-chart-interval-group li').each(function () {
       $(this).click(function () {
+        $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
+        $('.control-chart-interval-group li').attr('datatype', 'false');
+
         if ($('#from_ipad').val()) {
           show_loading(70, 0, 0, 0);
         } else {
@@ -103,9 +104,6 @@
             show_loading(70, 0, 0, 230);
           }
         }
-
-        $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
-        $('.control-chart-interval-group li').attr('datatype', 'false');
 
         $(this).css({opacity: '1'});
         $(this).attr('datatype', 'true');
@@ -120,12 +118,10 @@
             product_line: ProductLine
           },
           success: function (data) {
-            //Here can do something
             remove_loading();
           },
           error: function () {
             console.log("Error");
-            remove_loading();
           }
         });
       });
@@ -192,20 +188,22 @@
     $('.tbody-target-min').children().remove();
     $('.tbody-value').children().remove();
 
-
     $('.control-chart-interval-group li').each(function () {
       if ($(this).attr('datatype') == 'true') {
         chartdatatype = $(this).attr('interval');
       }
     });
+
     /*ajax request*/
     GetDataFun(productLine, chartdatatype);
   }
 
-
   function GetDataFun(productLine, chartdatatype) {
-    IsLoading = true;
+    if (productLine == null && chartdatatype == null) {
+      return;
+    }
 
+    IsLoading = true;
     if ($('#from_ipad').val()) {
       show_loading(70, 0, 0, 0);
     } else {
@@ -225,16 +223,16 @@
         var ajaxData = data;
 
         var yAxis_value = new Array();
-        var charts_value = new Array();
-        var charts_target_max = new Array();
+        var charts_moving_time = new Array();
+        var charts_cycle_time = new Array();
 
         $('<th>Station</th>').appendTo('.thead-tr').ready(function () {
         });
 
-        $('<td>TargetMax</td>').appendTo('.tbody-target-max').ready(function () {
+        $('<td>CycleTime</td>').appendTo('.tbody-target-max').ready(function () {
         });
 
-        $('<td>Value</td>').appendTo('.tbody-value').ready(function () {
+        $('<td>MovingTime</td>').appendTo('.tbody-value').ready(function () {
         });
 
         /*table*/
@@ -246,19 +244,18 @@
           });
 
           yAxis_value.push(ajaxData[i].name + "#" + ajaxData[i].code + "#" + ajaxData[i].count);
-          charts_target_max.push(ajaxData[i].target_max);
+          charts_cycle_time.push(ajaxData[i].target_max);
 
           if (ajaxData[i].value > ajaxData[i].target_max) {
-            charts_value.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].value});
+            charts_moving_time.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].value});
             $('<td style="background:#ff0000;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
             });
           } else if (ajaxData[i].value < ajaxData[i].target_min) {
-            charts_value.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
-            /* here can remove background. #FFB90F is orange.*/
+            charts_moving_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
             $('<td style="background:#FFB90F;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
             });
           } else {
-            charts_value.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
+            charts_moving_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
             $('<td style="background:limegreen;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
             });
           }
@@ -278,7 +275,7 @@
             categories: yAxis_value,
             labels: {
               formatter: function () {
-                return this.value.split('#')[1];
+                return this.value.split("#")[1];
               }
             }
           },
@@ -298,37 +295,24 @@
             column: {
               dataLabels: {
                 enabled: true
-              },
-              events: {//监听点的鼠标事件
-                click: function (e) {
-                  var over_id = "Line_" + productLine + "_interval_" + chartdatatype + "_box_" + e.point.id;
-                  if (window.localStorage) {
-                    localStorage.box_msg = over_id;
-                    localStorage.box_name = e.point.category;
-                    localStorage.pre_url = window.location.host + '/reports#daily_ftq';
-
-                    window.location.href = 'reports#defects';
-                    location.reload();
-                  } else {
-                    alert('This browser does NOT support localStorage,please change browser.');
-                  }
-                }
               }
             }
           },
           series: [
             {
               type: 'column',
-              name: 'Value',
-              data: charts_value,
+              name: 'moving-time',
+              data: charts_moving_time,
               color: 'limegreen'
             }, {
-              name: 'TargetMax',
-              data: charts_target_max,
+              type: 'column',
+              name: 'cycle-time',
+              data: charts_cycle_time,
               color: '#FF7F00'
             }
           ]
         });
+
         remove_loading();
         IsLoading = false;
       },
