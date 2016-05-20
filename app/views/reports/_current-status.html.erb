@@ -8,7 +8,8 @@
 
       <div class="col-sm-3" style="text-align: center;">
         <label>Product Line</label>
-        <select id="vehicle-select" style="min-width: 200px;text-align: center; margin-top: 10px;">
+        <br>
+        <select id="vehicle-select" style="min-width: 150px;text-align: center; margin-top:5px;">
           <% Department.where(is_product_line: true).each do |p| %>
               <option value="<%= p.id %>"><%= p.name %></option>
           <% end %>

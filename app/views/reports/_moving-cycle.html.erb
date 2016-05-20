@@ -7,17 +7,17 @@
       <p style="padding-top: 5px; padding-bottom: 10px;">WorkingTime Detail Column Chart</p>
     </div>
 
-    <div class="col-sm-3" style="padding-top: 15px;">
+    <div class="col-sm-3" style="text-align: center;">
       <label>Product Line</label>
-
-      <select id="vehicle-select" style="min-width: 200px;text-align: center;">
+      <br>
+      <select id="vehicle-select" style="min-width: 150px;text-align: center;margin-top: 5px;">
         <% Department.where(is_product_line: true).each do |p| %>
             <option value="<%= p.id %>"><%= p.name %></option>
         <% end %>
       </select>
     </div>
 
-    <div class="col-sm-3" style="padding-top: 10px;padding-bottom:10px;border-left: 1px solid #ccc; display: flex;">
+    <div class="col-sm-3" style="padding-top: 10px;padding-bottom:10px;border-left: 1px solid #ccc; display: flex;border-right: 1px solid #ccc;">
       <div style="margin-top: 10px;">
         <label>近</label>
         <input type="number" style="width: 60px;height: 20px;" class="RecentTime" step="5">
@@ -28,7 +28,7 @@
 
     <div class="col-sm-3" style="text-align: center;">
       <label>Current time</label>
-      <p id="current-clock" style="font-size: 30px;font-weight: bold;"></p>
+      <p id="current-clock" style="font-size: 25px;font-weight: bold;"></p>
     </div>
   </div>
 </div>
@@ -142,7 +142,7 @@
         var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
         var start_time = startRecentTime();
         $.ajax({
-          url: '/departments/entity_groups',
+          url: '/departments/cycle_kpi_data',
           type: 'get',
           data: {
             interval: Choose_Interval_Code,
@@ -259,7 +259,7 @@
     }
 
     $.ajax({
-      url: '/departments/entity_groups',
+      url: '/departments/cycle_kpi_data',
       type: 'get',
       data: {
         product_line: productLine,
