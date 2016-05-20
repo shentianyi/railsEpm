@@ -28,7 +28,7 @@
 
     <div class="col-sm-3" style="text-align: center;">
       <label>Current time</label>
-      <p id="current-clock" style="font-size: 25px;font-weight: bold;"></p>
+      <p id="current-clock" style="font-size: 20px;font-weight: bold;margin-top: 5px;"></p>
     </div>
   </div>
 </div>
@@ -139,10 +139,10 @@
         var Choose_Interval_Code = $(this).attr('interval');
         var ProductLine = $('#vehicle-select').val();
         var now = new Date();
-        var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+        var end_time = now.format("yyyy-MM-dd hh:mm:ss");
         var start_time = startRecentTime();
         $.ajax({
-          url: '/departments/cycle_kpi_data',
+          url: '/departments/cycle_and_moving_kpi_data',
           type: 'get',
           data: {
             interval: Choose_Interval_Code,
@@ -259,7 +259,7 @@
     }
 
     $.ajax({
-      url: '/departments/cycle_kpi_data',
+      url: '/departments/cycle_and_moving_kpi_data',
       type: 'get',
       data: {
         product_line: productLine,

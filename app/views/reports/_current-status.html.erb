@@ -27,7 +27,7 @@
 
       <div class="col-sm-3" style="text-align: center;border-left: 1px solid #ccc;">
         <label>Current time</label>
-        <p id="current-clock" style="font-size: 25px;font-weight: bold;"></p>
+        <p id="current-clock" style="font-size: 20px;font-weight: bold;margin-top: 5px;"></p>
       </div>
     </div>
 
@@ -64,7 +64,6 @@
               <input type="submit" class=" btn-primary" style="width: 150px;height: 38px;" value="Download"/>
             </form>
           </div>
-
         </div>
 
         <div id="pop-download" style="text-align: center;width: 100%;
@@ -138,8 +137,6 @@
       var now = new Date();
       var end_time = now.format("yyyy-MM-dd hh:mm:ss");
       var start_time = startRecentTime();
-      console.log(start_time);
-      console.log(end_time);
       loadData(productLine, 100, start_time, end_time);
       hideDownload();
     } else {
@@ -201,6 +198,7 @@
 
       if (localStorage.box_msg) {
         var box_msg = localStorage.box_msg;
+        $(".RecentTime").val(localStorage.recent_time);
         var productLine = box_msg.split('_')[1];
         var datatype = box_msg.split('_')[3];
         $('#vehicle-select option').each(function () {
@@ -294,7 +292,7 @@
   $("#vehicle-select").change(function () {
     var productLine = $('#vehicle-select').val();
     localStorage.box_msg = "Line_" + productLine + "_interval_100" + "_box_0";
-
+    localStorage.recent_time = $('.RecentTime').val();
     var now = new Date();
     var end_time = now.format("yyyy-MM-dd hh:mm:ss");
     var start_time = startRecentTime();
@@ -328,10 +326,7 @@
     var ProductLine = double_click_id.split('_')[1];
     var Interval = double_click_id.split('_')[3];
     var BoxID = double_click_id.split('_')[5];
-    /* console.log(ProductLine);
-     console.log(Interval);
-     console.log(BoxID);
-     */
+
     var double_click_content = $(ele).html();
     var double_click_name = double_click_content.split('<i')[0];
     window.location.href = 'kpi_entries/analyse?view=';
@@ -343,6 +338,7 @@
     var ProductLine = over_id.split('_')[1];
     var Interval = over_id.split('_')[3];
     var BoxID = over_id.split('_')[5];
+    var RecentTimeValue = $('.RecentTime').val();
     var over_id_content = $(ele).html();
     var over_id_name = over_id_content.split('<i')[0].split('<span>')[1].split('<')[0];
     $('#' + over_id).children('i').fadeIn(400);
@@ -350,6 +346,7 @@
       if (window.localStorage) {
         localStorage.box_msg = over_id;
         localStorage.box_name = over_id_name;
+        localStorage.recent_time = RecentTimeValue;
         localStorage.pre_url = window.location.host + '/reports#current_status';
         window.location.href = 'reports#defects';
         location.reload();

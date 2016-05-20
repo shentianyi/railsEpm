@@ -103,9 +103,9 @@
   function go_back() {
     try {
       if (change_pre_url == 'undefined') {
-        change_pre_url = window.location.host + '/reports#current_status';
-      } else if (change_pre_url.split('#')[1] == "defects") {
-        change_pre_url = window.location.host + '/reports#current_status';
+        change_pre_url = window.location.host + '/reports#moving_time';
+      } else if (change_pre_url.split('#')[1] == "moving_time_history") {
+        change_pre_url = window.location.host + '/reports#moving_time';
       }
       window.location.href = '/reports#' + change_pre_url.split('#')[1];
       window.location.reload();
@@ -113,17 +113,12 @@
       console.log(e);
     }
   }
-
   var ProductLine = box_msg.split('_')[1];
   var Interval = box_msg.split('_')[3];
   var BoxID = box_msg.split('_')[5];
 
-  // var pre_time='2016-03-24 16:00:00';
-  // var pre_time = new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+'00:00:00';
   var pre_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
 
-  // pre_time=new Date(pre_time).format('yyyy-MM-dd hh:mm:ss');
-  // var current_time='2016-03-24 17:00:00';
   var current_time = new Date().format('yyyy-MM-dd hh:mm:ss');
   $('#start_time').attr('value', pre_time);
   $('#end_time').attr('value', current_time);
@@ -334,7 +329,7 @@
   function GetHistoryDataFun(id, start_time, end_time) {
     show_loading(145, 0, 0, 10);
     $.ajax({
-      url: '/departments/cycle_kpi_history',
+      url: '/departments/moving_time_history',
       type: 'get',
       data: {id: id, start_time: start_time, end_time: end_time},
       success: function (data) {

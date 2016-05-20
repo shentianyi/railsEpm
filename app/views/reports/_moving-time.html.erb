@@ -29,7 +29,7 @@
     <div class="col-sm-3" style="text-align: center;">
       <label>Current time</label>
 
-      <p id="current-clock" style="font-size: 25px;font-weight: bold;"></p>
+      <p id="current-clock" style="font-size: 20px;font-weight: bold;margin-top: 5px;"></p>
     </div>
   </div>
 </div>
@@ -348,6 +348,21 @@
             column: {
               dataLabels: {
                 enabled: true
+              },
+              events: {
+                click: function (e) {
+                  var over_id = "Line_" + productLine + "_interval_" + chartdatatype + "_box_" + e.point.id;
+                  if (window.localStorage) {
+                    localStorage.box_msg = over_id;
+                    localStorage.box_name = e.point.category;
+                    localStorage.pre_url = window.location.host + '/reports#moving_time';
+                    localStorage.recent_time = $('.RecentTime').val();
+                    window.location.href = 'reports#moving_time_history';
+                    location.reload();
+                  } else {
+                    alert('This browser does NOT support localStorage,please change browser.');
+                  }
+                }
               }
             }
           },

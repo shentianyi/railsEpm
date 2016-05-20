@@ -27,7 +27,7 @@
     <div class="col-sm-3" style="text-align: center;">
       <label>Current time</label>
 
-      <p id="current-clock" style="font-size: 25px;font-weight: bold;"></p>
+      <p id="current-clock" style="font-size: 20px;font-weight: bold;margin-top:5px;"></p>
     </div>
   </div>
 </div>
@@ -176,6 +176,8 @@
       var productLine = box_msg.split('_')[1];
       var datatype = box_msg.split('_')[3];
 
+      $(".RecentTime").val(localStorage.recent_time);
+
       $('#vehicle-select option').each(function () {
         if (($(this).attr('value')) == productLine) {
           $(this).attr('selected', 'true');
@@ -202,7 +204,7 @@
   $("#vehicle-select").change(function () {
     var productLine = $('#vehicle-select').val();
     localStorage.box_msg = "Line_" + productLine + "_interval_100" + "_box_0";
-
+    localStorage.recent_time = $('.RecentTime').val();
     var now = new Date();
     var end_time = now.format("yyyy-MM-dd hh:mm:ss");
     var start_time = startRecentTime();
@@ -362,7 +364,7 @@
                     localStorage.box_msg = over_id;
                     localStorage.box_name = e.point.category;
                     localStorage.pre_url = window.location.host + '/reports#daily_ftq';
-
+                    localStorage.recent_time = $('.RecentTime').val();
                     window.location.href = 'reports#defects';
                     location.reload();
                   } else {

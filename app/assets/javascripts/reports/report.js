@@ -306,7 +306,8 @@ Report.type = {
     'tv_cycle_time': 101,
     'moving_time': 102,
     'history_detail': 103,
-    'moving_cycle': 104
+    'moving_cycle': 104,
+    'moving_time_history': 105
 };
 
 Report.headers = {
