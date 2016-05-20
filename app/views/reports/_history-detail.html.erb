@@ -44,11 +44,6 @@
 </style>
 
 <div class="col-sm-12" style="background: #fefefe;border-bottom: 4px solid #000;height: 70px;line-height: 20px;padding-top:15px;text-align: center;">
-  <div class="col-sm-3">
-    <button class="btn btn-success" style="width: 150px;" onclick="go_back();">
-      Back
-    </button>
-  </div>
   <div class="col-sm-6">
     <input type="text" readonly class="datetimepicker" id="start_time" title="Start Time">&emsp;
     <b>~</b> &emsp; <input type="text" readonly class="datetimepicker" id="end_time" title="End Time">
@@ -66,19 +61,19 @@
     <p style="margin-left:20px;">Exception:</p><b id="abnormal_data" style="color: #ff0000;">0</b>
   </div>
 
-  <div id="chart_mode">
-    <button class="change_charts" style="opacity: 1;color: orange;border-color: orange;">line</button>
-    <button class="change_charts">column</button>
-    <button class="change_charts">scatter</button>
-  </div>
+  <!--<div id="chart_mode">-->
+  <!--<button class="change_charts" style="opacity: 1;color: orange;border-color: orange;">line</button>-->
+  <!--<button class="change_charts">column</button>-->
+  <!--<button class="change_charts">scatter</button>-->
+  <!--</div>-->
 </div>
 
 <div id="history_chart"></div>
 
-<hr style="border-bottom: 4px solid #000;">
+<!--<hr style="border-bottom: 4px solid #000;">-->
 
 <!--table-->
-<div id="history_table" style="margin-top: 20px;">
+<div id="history_table" style="margin-top: 20px; display: none;">
   <table class="table table-bordered table-hover">
     <thead>
     <tr class="history_table_thead_tr">
@@ -94,36 +89,15 @@
     </tbody>
   </table>
 </div>
+
+
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "jedate" %>
+<% end %>
+
 <script type="text/javascript" charset="utf-8">
-  // 固定不变
-  var box_name = localStorage.box_name;
-  var box_msg = localStorage.box_msg;
-  var change_pre_url = localStorage.pre_url;
-
-  function go_back() {
-    try {
-      if (change_pre_url == 'undefined') {
-        change_pre_url = window.location.host + '/reports#current_status';
-      } else if (change_pre_url.split('#')[1] == "defects") {
-        change_pre_url = window.location.host + '/reports#current_status';
-      }
-      window.location.href = '/reports#' + change_pre_url.split('#')[1];
-      window.location.reload();
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  var ProductLine = box_msg.split('_')[1];
-  var Interval = box_msg.split('_')[3];
-  var BoxID = box_msg.split('_')[5];
-
-  // var pre_time='2016-03-24 16:00:00';
-  // var pre_time = new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate()+' '+'00:00:00';
+  var BoxID = $('#entity_group_id').val();
   var pre_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
-
-  // pre_time=new Date(pre_time).format('yyyy-MM-dd hh:mm:ss');
-  // var current_time='2016-03-24 17:00:00';
   var current_time = new Date().format('yyyy-MM-dd hh:mm:ss');
   $('#start_time').attr('value', pre_time);
   $('#end_time').attr('value', current_time);

@@ -21,15 +21,17 @@
   }
 </style>
 
-<div class="pull-left">
-  <button type="button" class="btn btn-primary fullscreen">Full Screen</button>
+<div class="col-sm-12" style="border-bottom: 4px solid #000;">
+  <div class="pull-left" style="padding: 10px;">
+    <button type="button" class="btn btn-primary fullscreen">Full Screen</button>
+  </div>
 </div>
 
 <div id="full_screen" style="display: none;">
 </div>
 
-<div class="col-sm-12">
-  <table class="table table-bordered table-striped">
+<div class="col-sm-12" style="margin-top: 20px; text-align: center">
+  <table class=" table table-bordered table-striped">
     <thead>
     <tr>
       <th>日期</th>
@@ -356,7 +358,7 @@
         formatter: function () {
           try {
             return '<span><b>' + this.x +
-                '</b><br/><b>CycleTime:</b><b>' + this.y + ' S</b><span>';
+                '</b><br/><b>' + this.series.name + ':</b><b>' + this.y + ' S</b><span>';
           } catch (e) {
             return;
           }
@@ -398,6 +400,7 @@
           data: charts_values,
           color: 'limegreen'
         }, {
+          type: 'column',
           name: 'TargetMax',
           data: charts_max_values,
           color: '#FF7F00'

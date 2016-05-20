@@ -27,11 +27,14 @@
       <!--<a menu="working_time_in_hours" href="#working_time_in_hours"><i class="icon-calendar mark"></i> WorkingTime in-->
       <!--Hours<i class="icon-chevron-right indicate"></i></a></li>-->
 
-      <li><a menu="tv_cycle_time" href="#tv_cycle_time"><i class="icon-lock mark"></i>
-        TV CycleTime<i class="icon-chevron-right indicate"></i></a></li>
-
       <li><a menu="moving_time" href="#moving_time"><i class="icon-time mark"></i>
         MovingTime Detail<i class="icon-chevron-right indicate"></i></a></li>
+
+      <li><a menu="moving_cycle" href="#moving_cycle"><i class="icon-bar-chart mark"></i>
+        Moving And Cycle Time<i class="icon-chevron-right indicate"></i></a></li>
+
+      <li><a menu="tv_cycle_time" href="#tv_cycle_time"><i class="icon-lock mark"></i>
+        TV CycleTime<i class="icon-chevron-right indicate"></i></a></li>
       <!--<li><a menu="defects" href="#defects"><i class="icon-list mark"></i>
         History<i class="icon-chevron-right indicate"></i></a></li>-->
 
@@ -171,5 +174,45 @@
       i = "0" + i;
     }
     return i;
+  }
+
+  function startRecentTime() {
+    var start_time;
+    if ($('.RecentTime').val() == "") {
+      start_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
+    } else {
+      if ($('.RecentTime').val() < 0) {
+        $('.RecentTime').val(" ");
+        start_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
+      } else {
+        var now = RefreshRectentTimeDate($('.RecentTime').val(), "m");
+        start_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+      }
+    }
+    return start_time;
+  }
+
+  function RefreshRectentTimeDate(time, type) {
+    //换算时间
+    var end_time = new Date();
+    var start_time;
+    switch (type) {
+      case "m":
+        start_time = new Date(Date.parse(end_time) - time * 60 * 1000);
+        return start_time;
+        break;
+      case "h":
+        start_time = new Date(Date.parse(end_time) - time * 60 * 60 * 1000);
+        return start_time;
+        break;
+      case "d":
+        start_time = new Date(Date.parse(end_time) - time * 24 * 60 * 60 * 1000);
+        return start_time;
+        break;
+      default:
+        start_time = new Date(Date.parse(end_time) - time * 60 * 1000);
+        return start_time;
+        break;
+    }
   }
 </script>

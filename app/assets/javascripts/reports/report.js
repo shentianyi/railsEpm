@@ -304,7 +304,9 @@ Report.type = {
     'cycle_time_in_hours': 14,
     'working_time_in_hours': 15,
     'tv_cycle_time': 101,
-    "moving_time": 102
+    'moving_time': 102,
+    'history_detail': 103,
+    'moving_cycle': 104
 };
 
 Report.headers = {
