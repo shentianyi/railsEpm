@@ -1,0 +1,261 @@
+<style type="text/css">
+  .table > thead > tr > th, .table > tbody > tr > td {
+    text-align: center;
+    background: white;
+    border: none;
+  }
+
+  .table > thead > tr > th {
+    background: skyblue;
+    color: white;
+    font-weight: bold;
+  }
+
+  .table > thead > tr > th:first-child {
+    border-top-left-radius: 10px;
+  }
+
+  .table > thead > tr > th:last-child {
+    border-top-right-radius: 10px;
+  }
+</style>
+
+<div class="col-sm-12" style="margin-top: 10px; height: 600px; overflow: auto;">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>工位</th>
+      <th>次数</th>
+      <th>开始时间</th>
+      <th>结束时间</th>
+      <th>停留时间</th>
+    </tr>
+    </thead>
+
+    <tbody class="scram_tbody"></tbody>
+  </table>
+</div>
+<script type="text/javascript">
+  var ScramData = [
+    {
+      "id": 6,
+      "name": "Bearing Press",
+      "code": "1N-C01",
+      "scram_value": [
+        {
+          "id": 1,
+          "start_time": "8:00",
+          "end_time": "8:01",
+          "wait_time": "60"
+        },
+        {
+          "id": 2,
+          "start_time": "10:00",
+          "end_time": "10:02",
+          "wait_time": "120"
+        },
+        {
+          "id": 3,
+          "start_time": "15:00",
+          "end_time": "15:01",
+          "wait_time": "60"
+        },
+        {
+          "id": 4,
+          "start_time": "18:00",
+          "end_time": "18:05",
+          "wait_time": "300"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Drum",
+      "code": "1N-C02",
+      "scram_value": [
+        {
+          "id": 1,
+          "start_time": "9:00",
+          "end_time": "9:01",
+          "wait_time": "60"
+        },
+        {
+          "id": 2,
+          "start_time": "11:00",
+          "end_time": "11:02",
+          "wait_time": "120"
+        },
+        {
+          "id": 3,
+          "start_time": "13:00",
+          "end_time": "13:01",
+          "wait_time": "60"
+        },
+        {
+          "id": 4,
+          "start_time": "15:00",
+          "end_time": "15:05",
+          "wait_time": "300"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Gasket",
+      "code": "1N-C03",
+      "scram_value": [
+        {
+          "id": 1,
+          "start_time": "6:00",
+          "end_time": "6:01",
+          "wait_time": "60"
+        },
+        {
+          "id": 2,
+          "start_time": "13:00",
+          "end_time": "13:02",
+          "wait_time": "120"
+        },
+        {
+          "id": 3,
+          "start_time": "13:40",
+          "end_time": "13:43",
+          "wait_time": "180"
+        },
+        {
+          "id": 4,
+          "start_time": "18:00",
+          "end_time": "18:05",
+          "wait_time": "300"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Motor",
+      "code": "1N-C04",
+      "scram_value": [
+        {
+          "id": 1,
+          "start_time": "12:00",
+          "end_time": "12:06",
+          "wait_time": "360"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Hose & clamp",
+      "code": "1N-C05",
+      "scram_value": [
+        {
+          "id": 1,
+          "start_time": "15:00",
+          "end_time": "15:10",
+          "wait_time": "600"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Motor (7Kg)",
+      "scram_value": [
+        {
+          "id": 1,
+          "start_time": "10:10:00",
+          "end_time": "10:11:00",
+          "wait_time": "60"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Front counterweight",
+      "scram_value": [
+        {
+          "id": 1,
+          "start_time": "16:00:00",
+          "end_time": "16:00:40",
+          "wait_time": "40"
+        },
+        {
+          "id": 2,
+          "start_time": "18:00:12",
+          "end_time": "18:00:24",
+          "wait_time": "12"
+        },
+        {
+          "id": 3,
+          "start_time": "20:20:12",
+          "end_time": "20:21:12",
+          "wait_time": "60"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Air pipe& inlet hose",
+      "scram_value": [
+        {
+          "id": 1,
+          "start_time": "9:00:00",
+          "end_time": "9:01:00",
+          "wait_time": "60"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Up counterweight",
+      "scram_value": [
+        {
+          "id": 1,
+          "start_time": "10:10:00",
+          "end_time": "10:11:00",
+          "wait_time": "60"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Hanger tub",
+      "scram_value": [
+        {
+          "id": 1,
+          "start_time": "10:10:00",
+          "end_time": "10:11:00",
+          "wait_time": "60"
+        }
+      ]
+    }
+  ];
+
+  for (var i = 0; i < ScramData.length; i++) {
+    var WorkStation = ScramData[i];
+
+    var WorkStationID = WorkStation.id;
+    var WorkStationName = WorkStation.name;
+    var WorkStationCode = WorkStation.code;
+    var WorkStationScramValue = WorkStation.scram_value;
+
+    if (WorkStationScramValue.length == 0) {
+      $("<tr style='border-bottom: 1px solid skyblue;'><td style='border-right: 1px solid skyblue;line-height: " + WorkStationScramValue.length * 28 + "px;' rowspan=" + WorkStationScramValue.length + ">" + WorkStationName + "</td><td>0</td><td>  </td><td></td>  <td>  </td></tr>").appendTo(".scram_tbody").ready(function () {
+      });
+    } else {
+      $("<tr style='border-bottom: 1px solid skyblue;'><td style='border-right: 1px solid skyblue;line-height: " + WorkStationScramValue.length * 28 + "px;' rowspan=" + WorkStationScramValue.length + ">" + WorkStationName + "</td><td>0</td><td>" + WorkStationScramValue[0].start_time + "</td><td>" + WorkStationScramValue[0].end_time + "</td><td>" + WorkStationScramValue[0].wait_time + "S</td></tr>").appendTo(".scram_tbody").ready(function () {
+      });
+    }
+
+    if (WorkStationScramValue.length > 1) {
+      for (var j = 1; j < WorkStationScramValue.length; j++) {
+        var WorkStationScramValueID = WorkStationScramValue[j].id;
+        var WorkStationScramValueStartTime = WorkStationScramValue[j].start_time;
+        var WorkStationScramValueEndTime = WorkStationScramValue[j].end_time;
+        var WorkStationScramValueWaitTime = WorkStationScramValue[j].wait_time;
+
+        $("<tr style='border-bottom: 1px solid skyblue;'><td>" + j + "</td><td>" + WorkStationScramValueStartTime + "</td><td>" + WorkStationScramValueEndTime + "</td><td>" + WorkStationScramValueWaitTime + "S</td></tr>").appendTo(".scram_tbody").ready(function () {
+        });
+      }
+    }
+  }
+</script>

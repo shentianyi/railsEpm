@@ -307,7 +307,8 @@ Report.type = {
     'moving_time': 102,
     'history_detail': 103,
     'moving_cycle': 104,
-    'moving_time_history': 105
+    'moving_time_history': 105,
+    'scram_time': 106
 };
 
 Report.headers = {

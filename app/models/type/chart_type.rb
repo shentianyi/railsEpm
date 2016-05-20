@@ -20,6 +20,7 @@ class ChartType
   HistoryDetail = 103
   MovingAndCycleTime = 104
   MovingTimeHistory = 105
+  ScramTime = 106
 
   def self.partial(type)
     case type
@@ -49,6 +50,8 @@ class ChartType
         'moving-cycle'
       when MovingTimeHistory
         'moving-time-history'
+      when ScramTime
+        'scram-time'
       else
         'demo'
     end
