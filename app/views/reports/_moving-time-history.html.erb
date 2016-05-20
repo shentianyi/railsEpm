@@ -331,7 +331,11 @@
     $.ajax({
       url: '/departments/moving_time_history',
       type: 'get',
-      data: {id: id, start_time: start_time, end_time: end_time},
+      data: {
+        id: id,
+        start_time: start_time,
+        end_time: end_time
+      },
       success: function (data) {
         var SearchHistoryData = data;   //GetHistoryData = data;
         var SearchHistoryDataName = SearchHistoryData.name;
