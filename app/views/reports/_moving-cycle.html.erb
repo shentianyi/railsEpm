@@ -1,14 +1,15 @@
 <div class="header" id="daily-ftq-header">
 
-  <div class="col-sm-12" id="current-status-header" style="background: #fefefe;border-bottom: 4px solid #000;">
-    <div class="col-sm-3" style="text-align: center;border-right: 1px solid #ccc;">
+  <div class="col-sm-12" id="current-status-header" style="background: #fefefe;border-bottom: 4px solid #000">
+    <div class="col-sm-3" style="text-align:center;border-right: 1px solid #ccc;">
       <label>Condition</label>
 
-      <p style="padding-top: 5px;padding-bottom: 18px;">WorkingTime Detail Column Chart</p>
+      <p style="padding-top: 5px; padding-bottom: 10px;">WorkingTime Detail Column Chart</p>
     </div>
 
     <div class="col-sm-3" style="padding-top: 15px;">
       <label>Product Line</label>
+
       <select id="vehicle-select" style="min-width: 200px;text-align: center;">
         <% Department.where(is_product_line: true).each do |p| %>
             <option value="<%= p.id %>"><%= p.name %></option>
@@ -16,7 +17,7 @@
       </select>
     </div>
 
-    <div class="col-sm-3" style="padding-top: 10px;padding-bottom:10px;border-left: 1px solid #ccc; display: flex;border-right: 1px solid #ccc;">
+    <div class="col-sm-3" style="padding-top: 10px;padding-bottom:10px;border-left: 1px solid #ccc; display: flex;">
       <div style="margin-top: 10px;">
         <label>近</label>
         <input type="number" style="width: 60px;height: 20px;" class="RecentTime" step="5">
@@ -27,7 +28,6 @@
 
     <div class="col-sm-3" style="text-align: center;">
       <label>Current time</label>
-
       <p id="current-clock" style="font-size: 30px;font-weight: bold;"></p>
     </div>
   </div>
@@ -101,9 +101,9 @@
     loadChartData(productLine, datatype, start_time, end_time);
   }
 
-  $(document).ready(function () {
-    var IsLoading = false;
+  var IsLoading = false;
 
+  $(document).ready(function () {
     if ($('#from_ipad').val()) {
       $('.chart-interval-alternate').css({display: "none"});
       $('#data_chartcontainer').prev('hr').css({display: "none"});
@@ -152,13 +152,11 @@
           },
           success: function (data) {
             remove_loading();
-          }
-          ,
+          },
           error: function () {
             console.log("Error");
           }
-        })
-        ;
+        });
       });
     });
 
@@ -224,8 +222,6 @@
       var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
       var start_time = startRecentTime();
       loadChartData(IntervalProductLine, IntervalDataType, start_time, end_time);
-    } else {
-      console.log("Loading...")
     }
   }, 120000);
 
@@ -275,8 +271,8 @@
         var ajaxData = data;
 
         var yAxis_value = new Array();
-        var charts_value = new Array();
-        var charts_target_max = new Array();
+        var charts_moving_time = new Array();
+        var charts_cycle_time = new Array();
 
         $('<th>Station</th>').appendTo('.thead-tr').ready(function () {
         });
@@ -284,7 +280,7 @@
         $('<td>CycleTime</td>').appendTo('.tbody-target-max').ready(function () {
         });
 
-        $('<td>Target Max</td>').appendTo('.tbody-value').ready(function () {
+        $('<td>MovingTime</td>').appendTo('.tbody-value').ready(function () {
         });
 
         /*table*/
@@ -296,18 +292,18 @@
           });
 
           yAxis_value.push(ajaxData[i].name + "#" + ajaxData[i].code + "#" + ajaxData[i].count);
-          charts_target_max.push(ajaxData[i].target_max);
+          charts_cycle_time.push(ajaxData[i].target_max);
 
           if (ajaxData[i].value > ajaxData[i].target_max) {
-            charts_value.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].value});
+            charts_moving_time.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].value});
             $('<td style="background:#ff0000;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
             });
           } else if (ajaxData[i].value < ajaxData[i].target_min) {
-            charts_value.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
+            charts_moving_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
             $('<td style="background:#FFB90F;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
             });
           } else {
-            charts_value.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
+            charts_moving_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
             $('<td style="background:limegreen;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
             });
           }
@@ -354,11 +350,12 @@
             {
               type: 'column',
               name: 'moving-time',
-              data: charts_value,
+              data: charts_moving_time,
               color: 'limegreen'
             }, {
+              type: 'column',
               name: 'cycle-time',
-              data: charts_target_max,
+              data: charts_cycle_time,
               color: '#FF7F00'
             }
           ]

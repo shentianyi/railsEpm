@@ -1,6 +1,7 @@
 <%= @from_ipad %>
 from ipad:<input type="text" value="<%= @from_ipad %>" id="from_ipad">
 report id: <input type="text" value="<%= @part %>" id="part"/>
+entity_group id: <input type="text" value="29" id="entity_group_id"/>
 
 <div class="report-content" id="report-content">
 </div>
@@ -34,6 +35,7 @@ report id: <input type="text" value="<%= @part %>" id="part"/>
     <%= javascript_include_tag "reports/report_subscription_data" %>
     <%= javascript_include_tag "reports/station_data" %>
     <%= javascript_include_tag "bootstrap-datepicker" %>
+    <%= javascript_include_tag "jedate" %>
 <% end %>
 <script type="text/javascript">
   $(document).ready(function () {
@@ -72,5 +74,45 @@ report id: <input type="text" value="<%= @part %>" id="part"/>
       i = "0" + i;
     }
     return i;
+  }
+  
+  function startRecentTime() {
+    var start_time;
+    if ($('.RecentTime').val() == "") {
+      start_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
+    } else {
+      if ($('.RecentTime').val() < 0) {
+        $('.RecentTime').val(" ");
+        start_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
+      } else {
+        var now = RefreshRectentTimeDate($('.RecentTime').val(), "m");
+        start_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+      }
+    }
+    return start_time;
+  }
+
+  function RefreshRectentTimeDate(time, type) {
+    //换算时间
+    var end_time = new Date();
+    var start_time;
+    switch (type) {
+      case "m":
+        start_time = new Date(Date.parse(end_time) - time * 60 * 1000);
+        return start_time;
+        break;
+      case "h":
+        start_time = new Date(Date.parse(end_time) - time * 60 * 60 * 1000);
+        return start_time;
+        break;
+      case "d":
+        start_time = new Date(Date.parse(end_time) - time * 24 * 60 * 60 * 1000);
+        return start_time;
+        break;
+      default:
+        start_time = new Date(Date.parse(end_time) - time * 60 * 1000);
+        return start_time;
+        break;
+    }
   }
 </script>

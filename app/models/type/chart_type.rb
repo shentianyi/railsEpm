@@ -17,6 +17,8 @@ class ChartType
   WorkingTimeInHours = 15
   TVCycleTime = 101
   MovingTime = 102
+  HistoryDetail = 103
+  MovingAndCycleTime = 104
 
   def self.partial(type)
     case type
@@ -40,6 +42,10 @@ class ChartType
         'tv_cycle_time'
       when MovingTime
         'moving-time'
+      when HistoryDetail
+        'history-detail'
+      when MovingAndCycleTime
+        'moving-cycle'
       else
         'demo'
     end
