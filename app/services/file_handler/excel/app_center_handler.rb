@@ -11,7 +11,8 @@ module FileHandler
           p = Axlsx::Package.new
 
           parent=Department.find_by_id(params[:product_line])
-          kpi=Kpi.first
+          kpi=Kpi.cycle_time
+
           start_time=Time.parse(params[:start_time]).utc #.to_s
           end_time=(Time.parse(params[:end_time])-1.second).utc #.to_s
 
@@ -23,7 +24,7 @@ module FileHandler
               parent.children.each do |d|
                 eg=d.entity_group
                 e= eg.entities.first
-                q = KpiEntry.where(kpi_id: Kpi.first.id,entity_id: e.id)
+                q = KpiEntry.where(kpi_id: kpi.id, entity_id: e.id)
 
                 q=q.between(Hash[:entry_at, (start_time..end_time)])
                 sheet.add_row [eg.name, e.code, q.count], types: [:string, :string, :string]
@@ -40,7 +41,7 @@ module FileHandler
               e= eg.entities.first
               p.workbook.add_worksheet(:name => eg.name) do |sheet|
 
-                q = KpiEntry.where(kpi_id: Kpi.first.id,
+                q = KpiEntry.where(kpi_id: kpi.id,
                                    entity_id: e.id)
 
                 q=q.between(Hash[:entry_at, (start_time..end_time)]).order_by(entry_at: :asc)
@@ -48,9 +49,9 @@ module FileHandler
 
                 q.each do |entry|
                   sheet.add_row [
-                      entry.entry_at,
-                      KpiUnit.parse_entry_value(kpi.unit, entry.value),
-                  ], types:[:string, :string]
+                                    entry.entry_at,
+                                    KpiUnit.parse_entry_value(kpi.unit, entry.value),
+                                ], types: [:string, :string]
                 end
               end
             end

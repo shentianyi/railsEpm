@@ -367,15 +367,15 @@ class DepartmentsController < ApplicationController
   def entity_group_history
 
     entries=[]
-    kpi=Kpi.first
+    kpi=Kpi.cycle_time
     if (eg=EntityGroup.find_by_id(params[:id])) && (e=eg.entities.last)
-      q = KpiEntry.where(kpi_id: Kpi.first.id,
+      q = KpiEntry.where(kpi_id: kpi.id,
                          entity_id: e.id)
       start_time=Time.parse(params[:start_time]).utc #.to_s
       end_time=(Time.parse(params[:end_time])-1.second).utc #.to_s
       q=q.between(Hash[:entry_at, (start_time..end_time)])
 
-      q=q.order_by(entry_at: :asc)
+      q=q.order_by(entry_at: :desc)
 
       q.each do |entry|
         entries<<{

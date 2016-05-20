@@ -16,7 +16,7 @@ class Kpi < ActiveRecord::Base
   #has_many :kpi_entries, :through => :user_kpi_items
   belongs_to :tenant
   attr_accessible :description, :direction, :frequency, :is_calculated, :period, :name, :target_max, :target_min, :unit, :formula, :formula_string
-  attr_accessible :kpi_category_id, :tenant_id
+  attr_accessible :kpi_category_id, :tenant_id,:code
 
   acts_as_tenant(:tenant)
 
@@ -62,6 +62,14 @@ class Kpi < ActiveRecord::Base
 
   def unit_sym
     ::KpiUnit.get_entry_unit_sym(self.unit)
+  end
+
+  def self.cycle_time
+    find_by_code('CYCLE_TIME_KPI')
+  end
+
+  def self.moving_time
+    find_by_code('MOVING_TIME_KPI')
   end
 
   def add_properties attrs

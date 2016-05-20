@@ -2,11 +2,12 @@ class PlcService
   def self.post_data params
 
     #
-     #100000000.times do
+    #100000000.times do
     #   puts 1
     # end
 
-    kpi= Kpi.first#find_by_name(Settings.app.kpi)
+    kpi= Kpi.find_by_code(params[:kpi_code])||Kpi.first
+    #find_by_name(Settings.app.kpi)
     codes=params[:codes].split(',')
     values=params[:values].split(',')
 
@@ -20,14 +21,14 @@ class PlcService
       max=kpi.target_max
       min=kpi.target_max
 
-      if entity
-        if user= entity.users.first
-          if item=user.user_kpi_items(kpi_id: kpi.id).first
-            max=item.target_max
-            min=item.target_min
-          end
-        end
-      end
+      # if entity
+      #   if user= entity.users.first
+      #     if item=user.user_kpi_items(kpi_id: kpi.id).first
+      #       max=item.target_max
+      #       min=item.target_min
+      #     end
+      #   end
+      # end
 
       v=values[i].to_f/1000
 
@@ -36,7 +37,7 @@ class PlcService
       time=Time.parse(params[:time])
 
 
-      if entity.is_last
+      if entity.is_last && kpi.code=='CYCLE_TIME_KPI'
 
         department=entity.department.parent
         ProductionPlan.transaction do
@@ -50,7 +51,7 @@ class PlcService
       end
 
 
-     # return if v>100
+      # return if v>100
 
       KpiEntry.create(
           entry_type: 0,
