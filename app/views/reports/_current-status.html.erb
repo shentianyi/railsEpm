@@ -6,9 +6,9 @@
         <p style="padding-top: 10px; padding-bottom: 10px;">CycleTime Current Status Block Chart</p>
       </div>
 
-      <div class="col-sm-3" style="padding-top: 15px;">
+      <div class="col-sm-3" style="text-align: center;">
         <label>Product Line</label>
-        <select id="vehicle-select" style="min-width: 200px;text-align: center;">
+        <select id="vehicle-select" style="min-width: 200px;text-align: center; margin-top: 10px;">
           <% Department.where(is_product_line: true).each do |p| %>
               <option value="<%= p.id %>"><%= p.name %></option>
           <% end %>
@@ -173,7 +173,7 @@
           var end_time = now.format("yyyy-MM-dd hh:mm:ss");
           var start_time = startRecentTime();
           $.ajax({
-            url: '/departments/entity_groups',
+            url: '/departments/cycle_kpi_data',
             type: 'get',
             data: {
               interval: Choose_Interval_Code,
@@ -250,7 +250,7 @@
 
     hideDownload();
     $.ajax({
-      url: '/departments/entity_groups',
+      url: '/departments/cycle_kpi_data',
       type: 'get',
       data: {
         product_line: productLine,

@@ -142,7 +142,7 @@
         var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
         var start_time = startRecentTime();
         $.ajax({
-          url: '/departments/entity_groups',
+          url: '/departments/cycle_kpi_data',
           type: 'get',
           data: {
             interval: Choose_Interval_Code,
@@ -268,7 +268,7 @@
     }
 
     $.ajax({
-      url: '/departments/entity_groups',
+      url: '/departments/cycle_kpi_data',
       type: 'get',
       data: {
         product_line: productLine,
