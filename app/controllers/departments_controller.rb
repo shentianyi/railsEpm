@@ -273,46 +273,39 @@ class DepartmentsController < ApplicationController
   end
 
   def cycle_kpi_data
-    get_on_off_kpi_data(Kpi.cycle_time)
+    render json: get_on_off_kpi_data(Kpi.cycle_time).values
   end
 
   def moving_kpi_data
-    get_on_off_kpi_data(Kpi.moving_time)
+    render json: get_on_off_kpi_data(Kpi.moving_time).values
   end
 
-  def entity_group_history
-
-    entries=[]
-    kpi=Kpi.cycle_time
-    if (eg=EntityGroup.find_by_id(params[:id])) && (e=eg.entities.last)
-      q = KpiEntry.where(kpi_id: kpi.id,
-                         entity_id: e.id)
-      start_time=Time.parse(params[:start_time]).utc #.to_s
-      end_time=(Time.parse(params[:end_time])-1.second).utc #.to_s
-      q=q.between(Hash[:entry_at, (start_time..end_time)])
-
-      q=q.order_by(entry_at: :desc)
-
-      q.each do |entry|
-        entries<<{
-            id: entry._id.to_s,
-            value: KpiUnit.parse_entry_value(kpi.unit, entry.value),
-            entry_at: entry.entry_at,
-            target_max: kpi.target_max,
-            target_min: kpi.target_min
-        }
-      end
+  def cycle_and_moving_kpi_data
+    cycle_data=get_on_off_kpi_data(Kpi.cycle_time)
+    moving_data=get_on_off_kpi_data(Kpi.moving_time)
+    datas=[]
+    cycle_data.each do |k,v|
+      datas<<{
+          id:v[:id],
+          name:v[:name],
+          code:k,
+          cycle_time:v[:value],
+          cycle_count:v[:count],
+          moving_time:moving_data[k][:value],
+          moving_count:moving_data[k][:count],
+          target_max: v[:target_max],
+          target_min:v[:target_min]
+      }
     end
+    render json: datas
+  end
 
-    if e
-      render json: {
-                 id: eg.id,
-                 name: eg.name,
-                 data: entries
-             }
-    else
-      render json: nil
-    end
+  def cycle_kpi_history
+    get_on_off_kpi_history(Kpi.cycle_time)
+  end
+
+  def moving_time_history
+    get_on_off_kpi_history(Kpi.moving_time)
   end
 
 
@@ -347,7 +340,7 @@ class DepartmentsController < ApplicationController
   def get_on_off_kpi_data(kpi)
     product_line=Department.find_by_id(params[:product_line])
     #kpi=Kpi.first #.find_by_name(Settings.app.kpi)
-    datas=[]
+    datas={}
 
     frequency=params[:interval].blank? ? KpiFrequency::Daily : params[:interval].to_i
     start_time=nil
@@ -380,7 +373,7 @@ class DepartmentsController < ApplicationController
     min=kpi.target_min
     data[:current].each do |d|
       if (e=Entity.find_by_id(d['entity_id'])) && (de=e.department) &&(eg=de.entity_group)
-        datas<< {
+        datas[eg.code]= {
             id: eg.id,
             name: eg.name,
             code: eg.code,
@@ -392,7 +385,42 @@ class DepartmentsController < ApplicationController
       end
     end
 
-    render json: datas
+    datas
+  end
+
+
+  def get_on_off_kpi_history(kpi)
+
+    entries=[]
+    if (eg=EntityGroup.find_by_id(params[:id])) && (e=eg.entities.last)
+      q = KpiEntry.where(kpi_id: kpi.id,
+                         entity_id: e.id)
+      start_time=Time.parse(params[:start_time]).utc #.to_s
+      end_time=(Time.parse(params[:end_time])-1.second).utc #.to_s
+      q=q.between(Hash[:entry_at, (start_time..end_time)])
+
+      q=q.order_by(entry_at: :desc)
+
+      q.each do |entry|
+        entries<<{
+            id: entry._id.to_s,
+            value: KpiUnit.parse_entry_value(kpi.unit, entry.value),
+            entry_at: entry.entry_at,
+            target_max: kpi.target_max,
+            target_min: kpi.target_min
+        }
+      end
+    end
+
+    if e
+      render json: {
+                 id: eg.id,
+                 name: eg.name,
+                 data: entries
+             }
+    else
+      render json: nil
+    end
   end
 
 end
