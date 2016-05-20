@@ -2,19 +2,20 @@
   <div class="col-sm-12" id="current-status-header" style="background: #fefefe;border-bottom: 4px solid #000">
     <div class="col-sm-3" style="border-right: 1px solid #ccc;text-align: center;">
       <label>Condition</label>
-      <p style="padding-top: 10px;">CycleTime Detail Column Chart</p>
+      <p style="padding-top: 10px; padding-bottom: 15px;">CycleTime Detail Column Chart</p>
     </div>
 
-    <div class="col-sm-3" style="padding-top: 15px;border-right: 1px solid #ccc;">
+    <div class="col-sm-3" style="text-align: center;">
       <label>Product Line</label>
-      <select id="vehicle-select" style="min-width: 200px;text-align: center;">
+      <br>
+      <select id="vehicle-select" style="min-width: 150px;text-align: center; margin-top: 5px;">
         <% Department.where(is_product_line: true).each do |p| %>
             <option value="<%= p.id %>"><%= p.name %></option>
         <% end %>
       </select>
     </div>
 
-    <div class="col-sm-3" style="padding-top: 10px;padding-bottom:10px;border-left: 1px solid #ccc; display: flex;">
+    <div class="col-sm-3" style="padding-top: 10px;padding-bottom:10px;border-left: 1px solid #ccc; display: flex; border-right: 1px solid #ccc;">
       <div style="margin-top: 10px;">
         <label>近</label>
         <input type="number" style="width: 60px;height: 20px;" class="RecentTime" step="5">
@@ -23,10 +24,10 @@
       <button class="btn btn-primary RecentTimeBtn" style="width: 60px;">Search</button>
     </div>
 
-    <div class="col-sm-3" style="text-align: center;border-left: 1px solid #ccc;">
+    <div class="col-sm-3" style="text-align: center;">
       <label>Current time</label>
 
-      <p id="current-clock" style="font-size: 30px;font-weight: bold;"></p>
+      <p id="current-clock" style="font-size: 25px;font-weight: bold;"></p>
     </div>
   </div>
 </div>

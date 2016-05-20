@@ -7,9 +7,10 @@
       <p style="padding-top: 5px;padding-bottom: 18px;">WorkingTime Detail Column Chart</p>
     </div>
 
-    <div class="col-sm-3" style="padding-top: 15px;">
+    <div class="col-sm-3" style="text-align: center;">
       <label>Product Line</label>
-      <select id="vehicle-select" style="min-width: 200px;text-align: center;">
+      <br>
+      <select id="vehicle-select" style="min-width: 150px;text-align: center; margin-top:5px;">
         <% Department.where(is_product_line: true).each do |p| %>
             <option value="<%= p.id %>"><%= p.name %></option>
         <% end %>
@@ -28,7 +29,7 @@
     <div class="col-sm-3" style="text-align: center;">
       <label>Current time</label>
 
-      <p id="current-clock" style="font-size: 30px;font-weight: bold;"></p>
+      <p id="current-clock" style="font-size: 25px;font-weight: bold;"></p>
     </div>
   </div>
 </div>
