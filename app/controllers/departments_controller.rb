@@ -304,7 +304,7 @@ class DepartmentsController < ApplicationController
     get_on_off_kpi_history(Kpi.cycle_time)
   end
 
-  def moving_time_history
+  def moving_kpi_history
     get_on_off_kpi_history(Kpi.moving_time)
   end
 
