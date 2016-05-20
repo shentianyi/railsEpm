@@ -102,6 +102,7 @@
     var now = new Date();
     var end_time = now.format("yyyy-MM-dd hh:mm:ss");
     var start_time = startRecentTime();
+    localStorage.recent_time = $('.RecentTime').val();
     loadChartData(productLine, datatype, start_time, end_time);
   }
 

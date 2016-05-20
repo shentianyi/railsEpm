@@ -99,6 +99,7 @@
     var now = new Date();
     var end_time = now.format("yyyy-MM-dd hh:mm:ss");
     var start_time = startRecentTime();
+    localStorage.recent_time = $('.RecentTime').val();
     loadChartData(productLine, datatype, start_time, end_time);
   }
 
@@ -175,6 +176,7 @@
       var box_msg = localStorage.box_msg;
       var productLine = box_msg.split('_')[1];
       var datatype = box_msg.split('_')[3];
+      $('.RecentTime').val(localStorage.recent_time);
 
       $('#vehicle-select option').each(function () {
         if (($(this).attr('value')) == productLine) {
@@ -198,6 +200,7 @@
   $("#vehicle-select").change(function () {
     var productLine = $('#vehicle-select').val();
     localStorage.box_msg = "Line_" + productLine + "_interval_100" + "_box_0";
+    localStorage.recent_time = $(".RecentTime").val();
     var now = new Date();
     var end_time = now.format("yyyy-MM-dd hh:mm:ss");
     var start_time = startRecentTime();

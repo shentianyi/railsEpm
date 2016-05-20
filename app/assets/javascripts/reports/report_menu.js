@@ -9,4 +9,4 @@ ReportMenu.click = function (type, callback) {
             }
         }
     });
-}
+};

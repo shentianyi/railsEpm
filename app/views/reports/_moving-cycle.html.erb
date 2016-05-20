@@ -165,7 +165,6 @@
       height: (ClientHeight - 70) + 'px',
       overflow: 'auto'
     });
-
     if (localStorage.box_msg) {
       var box_msg = localStorage.box_msg;
       var productLine = box_msg.split('_')[1];
@@ -193,6 +192,7 @@
   $("#vehicle-select").change(function () {
     var productLine = $('#vehicle-select').val();
     localStorage.box_msg = "Line_" + productLine + "_interval_100" + "_box_0";
+    localStorage.recent_time = $('.RecentTime').val();
     var now = new Date();
     var end_time = now.format("yyyy-MM-dd hh:mm:ss");
     var start_time = startRecentTime();
@@ -351,8 +351,15 @@
           tooltip: {
             valueSuffix: 's',
             formatter: function () {
-              return '<span><b>' + this.x.split('#')[0] +
-                  '</b><br/><b>' + this.series.name + ':</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
+              if (this.series.name == "moving-time") {
+                return '<span><b>' + this.x.split('#')[0] +
+                    '</b><br/><b>' + this.series.name + ':</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[3] + '</b><span>';
+              } else if (this.series.name == "cycle-time") {
+                return '<span><b>' + this.x.split('#')[0] +
+                    '</b><br/><b>' + this.series.name + ':</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
+              } else {
+                return;
+              }
             }
           },
           legend: {layout: 'horizontal', align: 'center', verticalAlign: 'bottom', borderHeight: 0},
@@ -373,6 +380,11 @@
               type: 'column',
               name: 'cycle-time',
               data: charts_cycle_time,
+              color: 'limegreen'
+            },
+            {
+              name: 'cycle-time',
+              data: charts_target_max,
               color: '#FF7F00'
             }
           ]
