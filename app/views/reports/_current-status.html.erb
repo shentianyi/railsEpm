@@ -19,7 +19,7 @@
         <div style="margin-top: 10px;">
           <label>近</label>
           <input type="number" style="width: 60px;height: 20px;" class="RecentTime" step="5">
-          <label>分钟数据</label>
+          <label>分钟</label>
         </div>
         <button class="btn btn-primary RecentTimeBtn" style="width: 60px;">Search</button>
       </div>
@@ -32,15 +32,9 @@
 
     <div class="col-sm-12">
       <ul class="pull-right control-chart-interval-group">
-        <!--  <li interval="90">
-           <a>Hr</a>
-         </li> -->
         <li interval="100" style="color:black;" datatype='true'>
           <a>D</a>
         </li>
-        <!-- <li interval="200">
-          <a>W</a>
-        </li> -->
         <li interval="300">
           <a>M</a>
         </li>
@@ -51,7 +45,6 @@
           <a>Y</a>
         </li>
       </ul>
-      <!-- <a class="pull-right btn btn-warning linear compare-current-btn">WorkingTime</a> -->
     </div>
     <div id="data_container" class="data-container"></div>
 
@@ -105,7 +98,7 @@
     var productLine = $('#vehicle-select').val();
     var datatype = 100;
     var now = new Date();
-    var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+    var end_time = now.format("yyyy-MM-dd hh:mm:ss");
     var start_time = startRecentTime();
     loadData(productLine, datatype, start_time, end_time);
   }
@@ -142,7 +135,7 @@
 
       var productLine = $('#vehicle-select').val();
       var now = new Date();
-      var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+      var end_time = now.format("yyyy-MM-dd hh:mm:ss");
       var start_time = startRecentTime();
       console.log(start_time);
       console.log(end_time);
@@ -177,7 +170,7 @@
           var Choose_Interval_Code = $(this).attr('interval');
           var ProductLine = $('#vehicle-select').val();
           var now = new Date();
-          var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+          var end_time = now.format("yyyy-MM-dd hh:mm:ss");
           var start_time = startRecentTime();
           $.ajax({
             url: '/departments/entity_groups',
@@ -215,7 +208,7 @@
           }
         });
         var now = new Date();
-        var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+        var end_time = now.format("yyyy-MM-dd hh:mm:ss");
         var start_time = startRecentTime();
         console.log(start_time);
         console.log(end_time);
@@ -224,7 +217,7 @@
         var productLine = $('#vehicle-select').val();
         var datatype = 100;
         var now = new Date();
-        var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+        var end_time = now.format("yyyy-MM-dd hh:mm:ss");
         var start_time = startRecentTime();
         loadData(productLine, datatype, start_time, end_time);
       }
@@ -302,7 +295,7 @@
     localStorage.box_msg = "Line_" + productLine + "_interval_100" + "_box_0";
 
     var now = new Date();
-    var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+    var end_time = now.format("yyyy-MM-dd hh:mm:ss");
     var start_time = startRecentTime();
     loadData(productLine, 100, start_time, end_time);
   });
@@ -321,7 +314,7 @@
       });
 
       var now = new Date();
-      var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+      var end_time = now.format("yyyy-MM-dd hh:mm:ss");
       var start_time = startRecentTime();
       loadData(IntervalProductLine, IntervalDataType, start_time, end_time);
     }

@@ -186,7 +186,7 @@
         start_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
       } else {
         var now = RefreshRectentTimeDate($('.RecentTime').val(), "m");
-        start_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+        start_time = now.format("yyyy-MM-dd hh:mm:ss");
       }
     }
     return start_time;
