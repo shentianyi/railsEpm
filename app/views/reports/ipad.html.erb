@@ -75,6 +75,22 @@ entity_group id: <input type="text" value="29" id="entity_group_id"/>
     }
     return i;
   }
+  
+  function startRecentTime() {
+    var start_time;
+    if ($('.RecentTime').val() == "") {
+      start_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
+    } else {
+      if ($('.RecentTime').val() < 0) {
+        $('.RecentTime').val(" ");
+        start_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
+      } else {
+        var now = RefreshRectentTimeDate($('.RecentTime').val(), "m");
+        start_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+      }
+    }
+    return start_time;
+  }
 
   function RefreshRectentTimeDate(time, type) {
     //换算时间
