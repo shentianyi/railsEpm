@@ -401,7 +401,7 @@ class DepartmentsController < ApplicationController
 
 
   def download_cycle_time_detail
-    msg = FileHandler::Excel::AppCenterHandler.download_cycle_time_detail(params)
+    msg = FileHandler::Excel::AppCenterHandler.download_cycle_time_detail(params,Kpi.cycle_time)
     if msg.result
       send_file msg.content
     else
