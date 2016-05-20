@@ -1,7 +1,6 @@
 <%= @from_ipad %>
-from ipad:<input type="text" value="<%=@from_ipad%>" id="from_ipad">
+from ipad:<input type="text" value="<%= @from_ipad %>" id="from_ipad">
 report id: <input type="text" value="<%= @part %>" id="part"/>
-
 
 <div class="report-content" id="report-content">
 </div>
@@ -10,8 +9,6 @@ report id: <input type="text" value="<%= @part %>" id="part"/>
     <%= javascript_include_tag "func-module/format_time.js" %>
     <%= javascript_include_tag "func-module/i_check" %>
     <%= javascript_include_tag "preload/classie.js" %>
-    <%= javascript_include_tag "preload/snap.svg-min.js" %>
-    <%= javascript_include_tag "preload/svgLoader.js" %>
     <%= javascript_include_tag "xml2json" %>
     <%= javascript_include_tag "reports/report.js" %>
     <%= javascript_include_tag "reports/report_center" %>
@@ -39,14 +36,41 @@ report id: <input type="text" value="<%= @part %>" id="part"/>
     <%= javascript_include_tag "bootstrap-datepicker" %>
 <% end %>
 <script type="text/javascript">
-    $(document).ready(function () {
-        var part = $('#part').val();
-        console.log(part);
-        ReportMenu.click(part, function (data) {
-            $("#report-content").html(data);
-            if (typeof href != 'undefined') {
-                window.location.href = href;
-            }
-        });
+  $(document).ready(function () {
+    var part = $('#part').val();
+    console.log(part);
+    ReportMenu.click(part, function (data) {
+      $("#report-content").html(data);
+      if (typeof href != 'undefined') {
+        window.location.href = href;
+      }
     });
+  });
+
+  function startTime() {
+    var today = new Date();
+    var years = today.getFullYear();
+    var months = today.getMonth();
+    var d = today.getDate();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    months = months + 1;
+    months = checkTime(months);
+    d = checkTime(d);
+    m = checkTime(m);
+    s = checkTime(s);
+    try {
+      document.getElementById('current-clock').innerHTML = years + "-" + months + "-" + d + " " + " " + h + ":" + m + ":" + s;
+    } catch (e) {
+      return;
+    }
+  }
+
+  function checkTime(i) {
+    if (i < 10) {
+      i = "0" + i;
+    }
+    return i;
+  }
 </script>

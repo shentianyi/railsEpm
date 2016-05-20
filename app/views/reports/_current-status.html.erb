@@ -19,7 +19,6 @@
       </div>
       <div class="col-sm-4" style="text-align: center;">
         <label>Current time</label>
-
         <p id="current-clock" style="font-size: 30px;font-weight: bold;"></p>
       </div>
     </div>
@@ -49,27 +48,29 @@
     </div>
     <div id="data_container" class="data-container"></div>
 
-    <div class="download-groups" id="download">
-      <div class="download-panel" style="display: none;margin-top: 20px;">
-        <h4 style="font-size: 17px;color: #666; top: 15px;left: 10px;">
-          Download Excel
-        </h4>
-        <div style="margin-top: 20px; display: inline-block">
-          <form method="get" action="/departments/download_cycle_time_detail">
-            <input type="hidden" name="product_line" id="product_line_id"/>
-            <input type="text" readonly class="datetimepicker" id="start_time" name="start_time" title="Start Time">&emsp;
-            <b>~</b> &emsp;
-            <input type="text" readonly class="datetimepicker" id="end_time" name="end_time" title="End Time">
-            <input type="submit" class=" btn-primary" style="width: 150px;height: 38px;" value="Download"/>
-          </form>
+    <div class="col-sm-12">
+      <div class="download-groups" id="download">
+        <div class="download-panel" style="display: none;margin-top: 20px;">
+          <h4 style="font-size: 17px;color: #666; top: 15px;left: 10px;">
+            Download Excel
+          </h4>
+          <div style="margin-top: 20px; display: inline-block">
+            <form method="get" action="/departments/download_cycle_time_detail">
+              <input type="hidden" name="product_line" id="product_line_id"/>
+              <input type="text" readonly class="datetimepicker" id="start_time" name="start_time" title="Start Time">&emsp;
+              <b>~</b> &emsp;
+              <input type="text" readonly class="datetimepicker" id="end_time" name="end_time" title="End Time">
+              <input type="submit" class=" btn-primary" style="width: 150px;height: 38px;" value="Download"/>
+            </form>
+          </div>
+
         </div>
 
-      </div>
-
-      <div id="pop-download" style="text-align: center;width: 100%;
-          color: white;cursor: pointer;height: 13px;background: #e5e5e5;position: relative;">
-        <div class="my_icon">
-          <i class="icon-chevron-up" style="color: #3e4452;" title="Close Panel"></i>
+        <div id="pop-download" style="text-align: center;width: 100%;
+            color: white;cursor: pointer;height: 13px;background: #e5e5e5;position: relative;">
+          <div class="my_icon">
+            <i class="icon-chevron-up" style="color: #3e4452;" title="Close Panel"></i>
+          </div>
         </div>
       </div>
     </div>
@@ -100,85 +101,108 @@
   }
   $(document).ready(function () {
     $('.download-panel').hide();
-    jeDate({
-      dateCell: "#start_time",
-      isinitVal: true,
-      isTime: true, //isClear:false,
-      minDate: "2014-09-19 00:00:00"
-    });
-    jeDate({
-      dateCell: "#end_time",
-      isinitVal: true,
-      isTime: true, //isClear:false,
-      minDate: "2014-09-19 00:00:00"
-    });
 
-    $('.control-chart-interval-group li').each(function (index) {
-      $(this).click(function () {
-        $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
-        $('.control-chart-interval-group li').attr('datatype', 'false');
-        var ReportMenuStatus = document.getElementById('report-menu').style.display;
-        if (ReportMenuStatus == 'none') {
-          show_loading(70, 0, 0, 10);
-        } else {
-          show_loading(70, 0, 0, 230);
-        }
-        $(this).css({opacity: '1'});
-        $(this).attr('datatype', 'true');
-        var Choose_Interval_Code = $(this).attr('interval');
-        var ProductLine = $('#vehicle-select').val();
-        $.ajax({
-          url: '/departments/entity_groups',
-          type: 'get',
-          data: {
-            interval: Choose_Interval_Code,
-            product_line: ProductLine
-          },
-          success: function (data) {
-            //Here can do something
-            remove_loading();
-          },
-          error: function () {
-            console.log("Error");
+    if ($('#from_ipad').val()) {
+      $('.control-chart-interval-group').parent().css({display: "none"});
+
+      /*时间刷新*/
+      window.setInterval(function () {
+        startTime();
+      }, 500);
+
+      var productLine = $('#vehicle-select').val();
+      loadData(productLine, 100);
+    } else {
+      jeDate({
+        dateCell: "#start_time",
+        isinitVal: true,
+        isTime: true, //isClear:false,
+        minDate: "2014-09-19 00:00:00"
+      });
+      jeDate({
+        dateCell: "#end_time",
+        isinitVal: true,
+        isTime: true, //isClear:false,
+        minDate: "2014-09-19 00:00:00"
+      });
+
+      $('.control-chart-interval-group li').each(function (index) {
+        $(this).click(function () {
+          $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
+          $('.control-chart-interval-group li').attr('datatype', 'false');
+          var ReportMenuStatus = document.getElementById('report-menu').style.display;
+          if (ReportMenuStatus == 'none') {
+            show_loading(70, 0, 0, 10);
+          } else {
+            show_loading(70, 0, 0, 230);
           }
+          $(this).css({opacity: '1'});
+          $(this).attr('datatype', 'true');
+          var Choose_Interval_Code = $(this).attr('interval');
+          var ProductLine = $('#vehicle-select').val();
+          $.ajax({
+            url: '/departments/entity_groups',
+            type: 'get',
+            data: {
+              interval: Choose_Interval_Code,
+              product_line: ProductLine
+            },
+            success: function (data) {
+              //Here can do something
+              remove_loading();
+            },
+            error: function () {
+              console.log("Error");
+            }
+          });
         });
       });
-    });
 
-    /*时间刷新*/
-    window.setInterval(function () {
-      startTime();
-    }, 500);
+      /*时间刷新*/
+      window.setInterval(function () {
+        startTime();
+      }, 500);
 
-    /*设置整体背景颜色*/
+      /*设置整体背景颜色*/
 //        var ClientHeight = document.documentElement.clientHeight;
-    var ClientHeight = $(document).height();
-    $('#report-content').css({
-      height: (ClientHeight - 70) + 'px',
-      overflow: 'auto'
-    });
-
-    if (localStorage.box_msg) {
-      var box_msg = localStorage.box_msg;
-      var productLine = box_msg.split('_')[1];
-      var datatype = box_msg.split('_')[3];
-      $('#vehicle-select option').each(function () {
-        if (($(this).attr('value')) == productLine) {
-          $(this).attr('selected', 'true');
-        }
+      var ClientHeight = $(document).height();
+      $('#report-content').css({
+        height: (ClientHeight - 70) + 'px',
+        overflow: 'auto'
       });
-      loadData(productLine, datatype);
-    } else {
-      var productLine = $('#vehicle-select').val();
-      var datatype = 100;
-      loadData(productLine, datatype);
+
+      if (localStorage.box_msg) {
+        var box_msg = localStorage.box_msg;
+        var productLine = box_msg.split('_')[1];
+        var datatype = box_msg.split('_')[3];
+        $('#vehicle-select option').each(function () {
+          if (($(this).attr('value')) == productLine) {
+            $(this).attr('selected', 'true');
+          }
+        });
+        loadData(productLine, datatype);
+      } else {
+        var productLine = $('#vehicle-select').val();
+        var datatype = 100;
+        loadData(productLine, datatype);
+      }
     }
   });
 
   function loadData(productLine, datatype) {
-      if (productLine == null || datatype == null)
-          return;
-    var ReportMenuStatus = document.getElementById('report-menu').style.display;
+    if (productLine == null || datatype == null)
+      return;
+
+    if ($('#from_ipad').val()) {
+      show_loading(70, 0, 0, 10);
+    } else {
+      var ReportMenuStatus = document.getElementById('report-menu').style.display;
+      if (ReportMenuStatus == 'none') {
+        show_loading(70, 0, 0, 10);
+      } else {
+        show_loading(70, 0, 0, 230);
+      }
+    }
     IsLoading = true;
     $('.control-chart-interval-group li').each(function (index) {
       if ($(this).attr('datatype') == 'true') {
@@ -190,13 +214,6 @@
     }
     $("#product_line_id").val(productLine);
 
-    if (ReportMenuStatus == 'none') {
-      show_loading(70, 0, 0, 10);
-    } else {
-      show_loading(70, 0, 0, 230);
-    }
-
-//    show_loading(70, 0, 0, 10);
     hideDownload();
     $.ajax({
       url: '/departments/entity_groups',
@@ -253,6 +270,7 @@
       loadData();
     }
   }
+
   /*双击事件*/
   function double_click(ele) {
     var double_click_id = $(ele).attr('id');
@@ -267,6 +285,7 @@
     var double_click_name = double_click_content.split('<i')[0];
     window.location.href = 'kpi_entries/analyse?view=';
   }
+
   /*查看历史记录数据*/
   function box_title_mouseover(ele) {
     var over_id = $(ele).attr('id');
