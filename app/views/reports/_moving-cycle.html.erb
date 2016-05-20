@@ -63,12 +63,10 @@
     </tr>
     </thead>
     <tbody class="tbody-tr">
-    <tr class="tbody-target-min">
-    </tr>
-    <tr class="tbody-value">
-    </tr>
-    <tr class="tbody-target-max">
-    </tr>
+    <tr class="tbody-target-min"></tr>
+    <tr class="tbody-moving-time"></tr>
+    <tr class="tbody-target-max"></tr>
+    <tr class="tbody-cycle-time"></tr>
     </tbody>
   </table>
 </div>
@@ -273,16 +271,20 @@
         var yAxis_value = new Array();
         var charts_moving_time = new Array();
         var charts_cycle_time = new Array();
+        var charts_target_max = new Array();
+        var charts_target_min = new Array();
 
         $('<th>Station</th>').appendTo('.thead-tr').ready(function () {
         });
 
-        $('<td>CycleTime</td>').appendTo('.tbody-target-max').ready(function () {
+        $('<td>CycleTime</td>').appendTo('.tbody-cycle-time').ready(function () {
         });
 
-        $('<td>MovingTime</td>').appendTo('.tbody-value').ready(function () {
+        $('<td>MovingTime</td>').appendTo('.tbody-moving-time').ready(function () {
         });
 
+        $('<td>Target Max</td>').appendTo('.tbody-target-max').ready(function () {
+        });
         /*table*/
         for (var i = 0; i < ajaxData.length; i++) {
           $('<th>' + ajaxData[i].name + '</th>').appendTo('.thead-tr').ready(function () {
@@ -291,20 +293,35 @@
           $('<td>' + ajaxData[i].target_max + '</td>').appendTo('.tbody-target-max').ready(function () {
           });
 
-          yAxis_value.push(ajaxData[i].name + "#" + ajaxData[i].code + "#" + ajaxData[i].count);
-          charts_cycle_time.push(ajaxData[i].target_max);
+          yAxis_value.push(ajaxData[i].name + "#" + ajaxData[i].code + "#" + ajaxData[i].cycle_count + "#" + ajaxData[i].moving_count);
+          charts_target_max.push(ajaxData[i].target_max);
+          charts_target_min.push(ajaxData[i].target_min);
 
-          if (ajaxData[i].value > ajaxData[i].target_max) {
-            charts_moving_time.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].value});
-            $('<td style="background:#ff0000;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+          if (ajaxData[i].cycle_time > ajaxData[i].target_max) {
+            charts_cycle_time.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].cycle_time});
+            $('<td style="background:#ff0000;">' + ajaxData[i].cycle_time + '</td>').appendTo('.tbody-cycle-time').ready(function () {
             });
-          } else if (ajaxData[i].value < ajaxData[i].target_min) {
-            charts_moving_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
-            $('<td style="background:#FFB90F;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+          } else if (ajaxData[i].cycle_time < ajaxData[i].target_min) {
+            charts_cycle_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].cycle_time});
+            $('<td style="background:white;">' + ajaxData[i].cycle_time + '</td>').appendTo('.tbody-cycle-time').ready(function () {
             });
           } else {
-            charts_moving_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].value});
-            $('<td style="background:limegreen;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+            charts_cycle_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].cycle_time});
+            $('<td style="background:limegreen;">' + ajaxData[i].cycle_time + '</td>').appendTo('.tbody-cycle-time').ready(function () {
+            });
+          }
+
+          if (ajaxData[i].moving_time > ajaxData[i].target_max) {
+            charts_moving_time.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].moving_time});
+            $('<td style="background:#ff0000;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
+            });
+          } else if (ajaxData[i].moving_time < ajaxData[i].target_min) {
+            charts_moving_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].moving_time});
+            $('<td style="background:white;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
+            });
+          } else {
+            charts_moving_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].moving_time});
+            $('<td style="background:limegreen;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
             });
           }
         }

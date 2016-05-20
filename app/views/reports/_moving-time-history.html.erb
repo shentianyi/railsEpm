@@ -237,7 +237,7 @@
       plotOptions: {
         series: {
           stickyTracking: false,
-          turboThreshold: 0 //不限制数据点个数
+          turboThreshold: 0
         }
       },
       series: [{
@@ -329,7 +329,7 @@
   function GetHistoryDataFun(id, start_time, end_time) {
     show_loading(145, 0, 0, 10);
     $.ajax({
-      url: '/departments/moving_time_history',
+      url: '/departments/moving_kpi_history',
       type: 'get',
       data: {
         id: id,
@@ -337,7 +337,7 @@
         end_time: end_time
       },
       success: function (data) {
-        var SearchHistoryData = data;   //GetHistoryData = data;
+        var SearchHistoryData = data;
         var SearchHistoryDataName = SearchHistoryData.name;
         var SearchHistoryDataID = SearchHistoryData.id;
         var SearchHistoryDataValue = SearchHistoryData.data;
