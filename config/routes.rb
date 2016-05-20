@@ -375,7 +375,8 @@ IFEpm::Application.routes.draw do
 
       get 'product_line_list' => :product_line_list
 
-      get :entity_groups
+      get :cycle_kpi_data
+      get :moving_kpi_data
       get :entity_group_history
       get :download_cycle_time_detail
     end

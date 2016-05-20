@@ -272,15 +272,94 @@ class DepartmentsController < ApplicationController
     render :json => msg
   end
 
-  def entity_groups
+  def cycle_kpi_data
+    get_on_off_kpi_data(Kpi.cycle_time)
+  end
+
+  def moving_kpi_data
+    get_on_off_kpi_data(Kpi.moving_time)
+  end
+
+  def entity_group_history
+
+    entries=[]
+    kpi=Kpi.cycle_time
+    if (eg=EntityGroup.find_by_id(params[:id])) && (e=eg.entities.last)
+      q = KpiEntry.where(kpi_id: kpi.id,
+                         entity_id: e.id)
+      start_time=Time.parse(params[:start_time]).utc #.to_s
+      end_time=(Time.parse(params[:end_time])-1.second).utc #.to_s
+      q=q.between(Hash[:entry_at, (start_time..end_time)])
+
+      q=q.order_by(entry_at: :desc)
+
+      q.each do |entry|
+        entries<<{
+            id: entry._id.to_s,
+            value: KpiUnit.parse_entry_value(kpi.unit, entry.value),
+            entry_at: entry.entry_at,
+            target_max: kpi.target_max,
+            target_min: kpi.target_min
+        }
+      end
+    end
+
+    if e
+      render json: {
+                 id: eg.id,
+                 name: eg.name,
+                 data: entries
+             }
+    else
+      render json: nil
+    end
+  end
+
+
+  def download_cycle_time_detail
+    msg = FileHandler::Excel::AppCenterHandler.download_cycle_time_detail(params, Kpi.cycle_time)
+    if msg.result
+      send_file msg.content
+    else
+      render json: msg
+    end
+  end
+
+  def product_line_list
+    data=[]
+
+    list=DisplaySetList.find_by_name(Time.parse(params[:date]).to_date)
+    if list
+      list.display_set_items.order('department_id asc').each do |d|
+        data<<{
+            id: d.department.id,
+            name: d.department.name,
+            cn_name: d.department.cn_name
+        }
+      end
+    end
+    puts data
+
+    render json: data
+  end
+
+
+  def get_on_off_kpi_data(kpi)
     product_line=Department.find_by_id(params[:product_line])
-    kpi=Kpi.first #.find_by_name(Settings.app.kpi)
+    #kpi=Kpi.first #.find_by_name(Settings.app.kpi)
     datas=[]
 
     frequency=params[:interval].blank? ? KpiFrequency::Daily : params[:interval].to_i
+    start_time=nil
+    end_time=nil
+    if params[:start_time].present?
+      start_time=Time.parse(params[:start_time]).utc
+      end_time=Time.parse(params[:end_time]).utc
+    else
 
-    start_time=(KpiFrequency.get_begin_date(Time.now, frequency).utc)
-    end_time=(KpiFrequency.get_next_date(start_time, frequency)-1.second).utc
+      start_time=(KpiFrequency.get_begin_date(Time.now, frequency).utc)
+      end_time=(KpiFrequency.get_next_date(start_time, frequency)-1.second).utc
+    end
 
 
     entity_group_ids=product_line.children.joins(:entity_group).pluck('entity_groups.id')
@@ -312,119 +391,8 @@ class DepartmentsController < ApplicationController
         }
       end
     end
-    # parent.children.each do |d|
-    #   entity_group=d.entity_group
-    #   params={}
-    #   params[:kpi_id]=kpi.id
-    #   params[:kpi_name]=kpi.name
-    #   params[:entity_group_id]=entity_group.id
-    #   params[:entity_group_name]=entity_group.name
-    #   params[:start_time]=start_time.to_s
-    #   params[:end_time]=end_time.to_s
-    #
-    #   params[:frequency]=frequency
-    #   params[:average]=true
-    #   data=Entry::Analyzer.new(params).analyse
-    #
-    #   count=0
-    #   # if e=entity_group.entities.first
-    #   #   count=KpiEntry.where(kpi_id: kpi.id,
-    #   #                        entity_id: e.id)
-    #   #             .between(Hash[:entry_at, (start_time..end_time)]).count
-    #   # end
-    #   p '-------------------------------'
-    #   p params
-    #   p data
-    #   p '-------------------------------'
-    #
-    #
-    #   max=kpi.target_max
-    #   min=kpi.target_min
-    #
-    #   if entity=d.entities.first
-    #     if user= entity.users.first
-    #       if item=user.user_kpi_items(kpi_id: kpi.id).first
-    #         max=item.target_max
-    #         min=item.target_min
-    #       end
-    #     end
-    #   end
-    #
-    #   entity_groups<<{
-    #       id: entity_group.id,
-    #       name: entity_group.name,
-    #       code: entity_group.code,
-    #       value: data[:current].first,
-    #       count:count,
-    #       target_max: max,
-    #       target_min: min,
-    #       d: data
-    #   }
-    # end
+
     render json: datas
-  end
-
-  def entity_group_history
-
-    entries=[]
-    kpi=Kpi.cycle_time
-    if (eg=EntityGroup.find_by_id(params[:id])) && (e=eg.entities.last)
-      q = KpiEntry.where(kpi_id: kpi.id,
-                         entity_id: e.id)
-      start_time=Time.parse(params[:start_time]).utc #.to_s
-      end_time=(Time.parse(params[:end_time])-1.second).utc #.to_s
-      q=q.between(Hash[:entry_at, (start_time..end_time)])
-
-      q=q.order_by(entry_at: :desc)
-
-      q.each do |entry|
-        entries<<{
-            id: entry._id.to_s,
-            value: KpiUnit.parse_entry_value(kpi.unit, entry.value),
-            entry_at: entry.entry_at,
-            target_max: kpi.target_max,
-            target_min: kpi.target_min
-        }
-      end
-    end
-
-    if e
-      render json: {
-          id: eg.id,
-          name: eg.name,
-          data: entries
-      }
-    else
-      render json: nil
-    end
-  end
-
-
-  def download_cycle_time_detail
-    msg = FileHandler::Excel::AppCenterHandler.download_cycle_time_detail(params,Kpi.cycle_time)
-    if msg.result
-      send_file msg.content
-    else
-      render json: msg
-    end
-  end
-
-  def product_line_list
-    data=[]
-
-    list=DisplaySetList.find_by_name(Time.parse(params[:date]).to_date)
-    if list
-      list.display_set_items.order('department_id asc').each do |d|
-        data<<{
-            id: d.department.id,
-            name: d.department.name,
-            cn_name: d.department.cn_name
-        }
-      end
-    end
-    puts data
-
-    render json: data
   end
 
 end
