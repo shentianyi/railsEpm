@@ -17,9 +17,8 @@
 
     <div class="col-sm-3" style="padding-top: 10px;padding-bottom:10px;border-left: 1px solid #ccc; display: flex; border-right: 1px solid #ccc;">
       <div style="margin-top: 10px;">
-        <label>近</label>
         <input type="number" style="width: 60px;height: 20px;" class="RecentTime" step="5">
-        <label>分钟</label>
+        <label>Min</label>
       </div>
       <button class="btn btn-primary RecentTimeBtn" style="width: 60px;">Search</button>
     </div>
@@ -56,27 +55,29 @@
 </div>
 
 <!--chart-->
-<div id="charts_containers" style="margin-top: 60px;min-height:300px;"></div>
-
-<hr style="border-bottom: 4px solid #000;">
-<!--table-->
-<div id="data_chartcontainer" class="data_container" style="margin-top: 20px;">
-  <table class="table table-bordered table-hover">
-    <thead>
-    <tr class="thead-tr">
-    </tr>
-    </thead>
-    <tbody class="tbody-tr">
-    <tr class="tbody-target-min">
-    </tr>
-    <tr class="tbody-value">
-    </tr>
-    <tr class="tbody-target-max">
-    </tr>
-    </tbody>
-  </table>
+<div class="col-sm-12" style="padding: 0;">
+  <div id="charts_containers" style="min-height:300px;"></div>
 </div>
 
+<!--table-->
+<div class="col-sm-12" style="padding: 0;">
+  <div id="data_chartcontainer" class="data_container" style="margin-top: 20px;">
+    <table class="table table-bordered table-hover">
+      <thead>
+      <tr class="thead-tr">
+      </tr>
+      </thead>
+      <tbody class="tbody-tr">
+      <tr class="tbody-target-min">
+      </tr>
+      <tr class="tbody-value">
+      </tr>
+      <tr class="tbody-target-max">
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 <style>
   .table > thead > tr > th, .table > tbody > tr > td {
     text-align: center;
@@ -85,6 +86,12 @@
 </style>
 
 <script type="text/javascript">
+  var ChartStyle = {
+    ChartBackground: "#ffffff",
+    label_font_color: "black",
+    tooltips_font_color: "black"
+  };
+
   $('.RecentTime').keydown(function (e) {
     var ev = window.event || e;
     if (ev.keyCode == 13) {
@@ -108,9 +115,33 @@
 
   var IsLoading = false;
   $(document).ready(function () {
+    var ClientHeight = $(document).height();
+    var ClientWidth = document.documentElement.clientWidth;
     if ($('#from_ipad').val()) {
+      var IpadHeight = document.documentElement.clientHeight;
+      $('#current-status-header').css({
+        paddingTop: "10px",
+        background: '#4682B4',
+        color: "white",
+        borderBottom: "4px solid white"
+      });
+      $('#vehicle-select').css({
+        color: "black"
+      });
+      $('#report-content').css({
+        height: (IpadHeight + 50) + 'px',
+        overflow: 'hidden'
+      });
       $('.control-chart-interval-group').parent().css({display: "none"});
       $('#data_chartcontainer').css({display: "none"});
+      $('#charts_containers').css({height: (IpadHeight - 20) + "px"});
+      $('.RecentTime').css({
+        color: "black"
+      });
+//      设置 图标 颜色
+      ChartStyle.ChartBackground = "#4682B4";
+      ChartStyle.label_font_color = "white";
+
     } else {
       var ReportMenuStatus = document.getElementById('report-menu').style.display;
       if (ReportMenuStatus == 'none') {
@@ -118,59 +149,61 @@
       } else {
         $('#data_chartcontainer').css({width: (ClientWidth - 230) + 'px', overflowX: 'auto'});
       }
-    }
 
-    $('.control-chart-interval-group li').each(function () {
-      $(this).click(function () {
-        if ($('#from_ipad').val()) {
-          show_loading(70, 0, 0, 0);
-        } else {
-          if (ReportMenuStatus == 'none') {
+      $('#charts_containers').css({
+        paddingBottom: "20px",
+        borderBottom: "4px solid black"
+      });
+
+      $('.control-chart-interval-group li').each(function () {
+        $(this).click(function () {
+          if ($('#from_ipad').val()) {
             show_loading(70, 0, 0, 0);
           } else {
-            show_loading(70, 0, 0, 230);
+            if (ReportMenuStatus == 'none') {
+              show_loading(70, 0, 0, 0);
+            } else {
+              show_loading(70, 0, 0, 230);
+            }
           }
-        }
 
-        $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
-        $('.control-chart-interval-group li').attr('datatype', 'false');
+          $('.control-chart-interval-group li').css({color: 'black', opacity: '0.3'});
+          $('.control-chart-interval-group li').attr('datatype', 'false');
 
-        $(this).css({opacity: '1'});
-        $(this).attr('datatype', 'true');
+          $(this).css({opacity: '1'});
+          $(this).attr('datatype', 'true');
 
-        var Choose_Interval_Code = $(this).attr('interval');
-        var ProductLine = $('#vehicle-select').val();
-        var now = new Date();
-        var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
-        var start_time = startRecentTime();
-        $.ajax({
-          url: '/departments/cycle_kpi_data',
-          type: 'get',
-          data: {
-            interval: Choose_Interval_Code,
-            product_line: ProductLine,
-            start_time: start_time,
-            end_time: end_time
-          },
-          success: function (data) {
-            //Here can do something
-            remove_loading();
-          },
-          error: function () {
-            console.log("Error");
-            remove_loading();
-          }
+          var Choose_Interval_Code = $(this).attr('interval');
+          var ProductLine = $('#vehicle-select').val();
+          var now = new Date();
+          var end_time = now.getFullYear() + "-" + checkTime(now.getMonth() + 1) + "-" + checkTime(now.getDate()) + ' ' + checkTime(now.getHours()) + ':' + checkTime(now.getMinutes()) + ':' + checkTime(now.getSeconds());
+          var start_time = startRecentTime();
+          $.ajax({
+            url: '/departments/cycle_kpi_data',
+            type: 'get',
+            data: {
+              interval: Choose_Interval_Code,
+              product_line: ProductLine,
+              start_time: start_time,
+              end_time: end_time
+            },
+            success: function (data) {
+              //Here can do something
+              remove_loading();
+            },
+            error: function () {
+              console.log("Error");
+              remove_loading();
+            }
+          });
         });
       });
-    });
 
-    var ClientHeight = $(document).height();
-    var ClientWidth = document.documentElement.clientWidth;
-
-    $('#report-content').css({
-      height: (ClientHeight - 70) + 'px',
-      overflow: 'auto'
-    });
+      $('#report-content').css({
+        height: (ClientHeight - 70) + 'px',
+        overflow: 'auto'
+      });
+    }
 
     if (localStorage.box_msg) {
       var box_msg = localStorage.box_msg;
@@ -217,26 +250,31 @@
     startTime();
   }, 500);
 
+  var RefreshChart = window.setInterval(function () {
+    if ($('#from_ipad').val()) {
+      return;
+    } else {
+      if (!IsLoading) {
+        var IntervalProductLine = $('#vehicle-select').val();
+        var IntervalDataType;
 
-  setInterval(function () {
-    if (!IsLoading) {
-      var IntervalProductLine = $('#vehicle-select').val();
-      var IntervalDataType;
+        $('.control-chart-interval-group li').each(function () {
+          if ($(this).datatype == "true") {
+            IntervalDataType = $(this).attr('interval');
+          } else {
+            IntervalDataType = 100;
+          }
+        });
 
-      $('.control-chart-interval-group li').each(function () {
-        if ($(this).datatype == "true") {
-          IntervalDataType = $(this).attr('interval');
-        } else {
-          IntervalDataType = 100;
-        }
-      });
-
-      var now = new Date();
-      var end_time = now.format("yyyy-MM-dd hh:mm:ss");
-      var start_time = startRecentTime();
-      loadChartData(IntervalProductLine, IntervalDataType, start_time, end_time);
+        var now = new Date();
+        var end_time = now.format("yyyy-MM-dd hh:mm:ss");
+        var start_time = startRecentTime();
+        loadChartData(IntervalProductLine, IntervalDataType, start_time, end_time);
+      }
     }
   }, 120000);
+
+  window.clearInterval(RefreshChart);
 
   function loadChartData(productLine, chartdatatype, start_time, end_time) {
     /*清空*/
@@ -323,10 +361,17 @@
           }
         }
 
+        var clickDetected = false;
         /*chart*/
         var chart = $('#charts_containers').highcharts({
+          chart: {
+            backgroundColor: ChartStyle.ChartBackground
+          },
           title: {
-            text: 'CycleTime', x: -20 //center
+            text: 'CycleTime', x: -20, //center
+            style: {
+              color: ChartStyle.label_font_color
+            }
           },
           credits: {
             enabled: false
@@ -338,41 +383,89 @@
             labels: {
               formatter: function () {
                 return this.value.split('#')[1];
+              },
+              style: {
+                color: ChartStyle.label_font_color
               }
             }
           },
           yAxis: {
-            title: {text: 'Time(s)'},
-            plotLines: [{value: 0, width: 1, color: '#808080'}]
+            title: {
+              text: 'Time(s)',
+              style: {
+                color: ChartStyle.label_font_color
+              }
+            },
+            plotLines: [{value: 0, width: 1, color: ChartStyle.label_font_color}],
+            labels: {
+              style: {
+                color: ChartStyle.label_font_color
+              }
+            }
           },
           tooltip: {
             valueSuffix: 's',
             formatter: function () {
               return '<span><b>' + this.x.split('#')[0] +
                   '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
+            },
+            style: {
+              color: ChartStyle.tooltips_font_color
             }
           },
-          legend: {layout: 'horizontal', align: 'center', verticalAlign: 'bottom', borderHeight: 0},
+          legend: {
+            layout: 'horizontal',
+            align: 'center',
+            verticalAlign: 'bottom',
+            borderHeight: 0,
+            itemStyle: {
+              color: ChartStyle.label_font_color
+            }
+          },
           plotOptions: {
             column: {
               dataLabels: {
-                enabled: true
+                enabled: true,
+                color: ChartStyle.label_font_color
               },
               events: {//监听点的鼠标事件
                 click: function (e) {
-                  var over_id = "Line_" + productLine + "_interval_" + chartdatatype + "_box_" + e.point.id;
-                  if (window.localStorage) {
-                    localStorage.box_msg = over_id;
-                    localStorage.box_name = e.point.category;
-                    localStorage.pre_url = window.location.host + '/reports#daily_ftq';
-                    localStorage.recent_time = $('.RecentTime').val();
-                    window.location.href = 'reports#defects';
-                    location.reload();
+                  if ($('#from_ipad').val()) {
+                    var over_id = "Line_" + productLine + "_interval_" + chartdatatype + "_box_" + e.point.id;
+                    if (window.localStorage) {
+                      localStorage.box_msg = over_id;
+                      localStorage.box_name = e.point.category;
+                      localStorage.pre_url = window.location.host + '/reports#daily_ftq';
+                      localStorage.recent_time = $('.RecentTime').val();
+//                    if (clickDetected) {
+                      var entity_group_id = e.point.id;
+                      window.location.href = "/reports?from_ipad=true&part=103&entity_group_id=" + entity_group_id;
+//                    } else {
+//                      clickDetected = true;
+//                      setTimeout(function () {
+//                        clickDetected = false;
+//                      }, 500);
+//                    }
+                    } else {
+                      alert('This browser does NOT support localStorage,please change browser.');
+                    }
                   } else {
-                    alert('This browser does NOT support localStorage,please change browser.');
+                    var over_id = "Line_" + productLine + "_interval_" + chartdatatype + "_box_" + e.point.id;
+                    if (window.localStorage) {
+                      localStorage.box_msg = over_id;
+                      localStorage.box_name = e.point.category;
+                      localStorage.pre_url = window.location.host + '/reports#daily_ftq';
+                      localStorage.recent_time = $('.RecentTime').val();
+                      window.location.href = 'reports#defects';
+                      location.reload();
+                    } else {
+                      alert('This browser does NOT support localStorage,please change browser.');
+                    }
                   }
                 }
-              }
+              },
+              color: ChartStyle.label_font_color,
+              borderWidth: '0'
             }
           },
           series: [

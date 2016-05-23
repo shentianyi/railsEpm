@@ -1,7 +1,9 @@
-<%= @from_ipad %>
-from ipad:<input type="text" value="<%= @from_ipad %>" id="from_ipad">
-report id: <input type="text" value="<%= @part %>" id="part"/>
-entity_group id: <input type="text" value="<%= @entity_group_id %>" id="entity_group_id"/>
+<div class="ipad_attr">
+  <%= @from_ipad %>
+  from ipad:<input type="text" value="<%= @from_ipad %>" id="from_ipad">
+  report id: <input type="text" value="<%= @part %>" id="part"/>
+  entity_group id: <input type="text" value="<%= @entity_group_id %>" id="entity_group_id"/>
+</div>
 
 <div class="report-content" id="report-content">
 </div>
@@ -38,6 +40,7 @@ entity_group id: <input type="text" value="<%= @entity_group_id %>" id="entity_g
     <%= javascript_include_tag "jedate" %>
 <% end %>
 <script type="text/javascript">
+  $('.ipad_attr').css({display: "none"});
   $(document).ready(function () {
     var part = $('#part').val();
     console.log(part);

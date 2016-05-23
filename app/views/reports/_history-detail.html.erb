@@ -37,28 +37,49 @@
     background: white;
   }
 
-  #history_chart {
-    min-height: 300px;
-    margin-top: 100px;
+  .highcharts-scrollbar > rect:first-child {
+    fill: steelblue;
+    stroke-width: 1;
+    stroke: #36648B;
+  }
+
+  .highcharts-scrollbar > rect:first-child + rect {
+    fill: #4F94CD;
+    stroke-width: 0;
+  }
+
+  .highcharts-scrollbar > g > rect {
+    fill: #4F94CD;
+    stroke-width: 0;
+  }
+
+  .highcharts-scrollbar > g > path {
+    fill: steelblue;
   }
 </style>
 
-<div class="col-sm-12" style="background: #fefefe;border-bottom: 4px solid #000;height: 70px;line-height: 20px;padding-top:15px;text-align: center;">
-  <div class="col-sm-6">
-    <input type="text" readonly class="datetimepicker" id="start_time" title="Start Time">&emsp;
-    <b>~</b> &emsp; <input type="text" readonly class="datetimepicker" id="end_time" title="End Time">
+<div class="col-sm-12" style="background:#4682B4;color:white; border-bottom: 4px solid #ffffff;height: 70px;line-height: 20px;padding-top:15px;text-align: center;">
+  <div class="col-sm-3" style="border-right: 1px solid #ccc;margin-top: -5px;">
+    <label>Condition</label>
+    <p style="padding-bottom: 5px;">Cycle Time History Line Chart</p>
+  </div>
+  <div class="col-sm-6" style="display: flex;text-align: center;border-right: 1px solid #ccc;padding-left:30px;">
+    <input type="text" readonly class="datetimepicker" style="width: 160px;" id="start_time" title="Start Time">&emsp;
+    <b>~</b> &emsp;
+    <input type="text" readonly style="width: 160px;" class="datetimepicker" id="end_time" title="End Time">
+    <button class="btn btn-primary historty_search" style="width: 100px;">Search</button>
   </div>
 
   <div class="col-sm-3">
-    <button class="btn btn-primary historty_search" style="width: 150px;">Search</button>
+    <input type="button" onclick="go_back()" value="Back" class="btn btn-success" style="width: 100px;margin-left: 60px;"/>
   </div>
 </div>
 
-<div class="col-sm-12">
+<div class="col-sm-12 SumTotal">
   <div class="col-sm-5" style="display: flex; display: -ms-flexbox; height: 30px;line-height: 30px;">
-    <p>Total:</p><b id="total_data" style="margin-right: 20px;">0</b>
-    <p>Normal:</p><b id="normal_data" style="color: limegreen;">0</b>
-    <p style="margin-left:20px;">Exception:</p><b id="abnormal_data" style="color: #ff0000;">0</b>
+    <p style="color: white;">Total: &emsp; </p><b id="total_data" style="margin-right: 20px;color:white;">0</b>
+    <p style="color:white;">Normal: &emsp; </p><b id="normal_data" style="color: limegreen;">0</b>
+    <p style="margin-left:20px; color:white;">Exception:&emsp; </p><b id="abnormal_data" style="color: #ff0000;">0</b>
   </div>
 
   <!--<div id="chart_mode">-->
@@ -67,35 +88,79 @@
   <!--<button class="change_charts">scatter</button>-->
   <!--</div>-->
 </div>
-
-<div id="history_chart"></div>
-
-<!--<hr style="border-bottom: 4px solid #000;">-->
-
-<!--table-->
-<div id="history_table" style="margin-top: 20px; display: none;">
-  <table class="table table-bordered table-hover">
-    <thead>
-    <tr class="history_table_thead_tr">
-    </tr>
-    </thead>
-    <tbody class="history_table_tbody_tr">
-    <tr class="history_table_tbody_target_min">
-    </tr>
-    <tr class="history_table_tbody_value">
-    </tr>
-    <tr class="history_table_tbody_target_max">
-    </tr>
-    </tbody>
-  </table>
+<div class="col-sm-12" style="padding: 0;">
+  <div id="history_chart"></div>
 </div>
-
+<!--table-->
+<div class="col-sm-12">
+  <div id="history_table" style="margin-top: 20px; display: none;">
+    <table class="table table-bordered table-hover">
+      <thead>
+      <tr class="history_table_thead_tr">
+      </tr>
+      </thead>
+      <tbody class="history_table_tbody_tr">
+      <tr class="history_table_tbody_target_min">
+      </tr>
+      <tr class="history_table_tbody_value">
+      </tr>
+      <tr class="history_table_tbody_target_max">
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <% content_for :javascript_includes do %>
     <%= javascript_include_tag "jedate" %>
 <% end %>
 
 <script type="text/javascript" charset="utf-8">
+  // 固定不变
+  var box_name = localStorage.box_name;
+  var box_msg = localStorage.box_msg;
+  var change_pre_url = localStorage.pre_url;
+
+  function go_back() {
+    try {
+      if (change_pre_url == 'undefined') {
+        change_pre_url = window.location.host + '/reports#current_status';
+        window.location.href = "/reports?from_ipad=true&part=1";
+      } else if (change_pre_url.split('#')[1] == "defects") {
+        change_pre_url = window.location.host + '/reports#current_status';
+        window.location.href = "/reports?from_ipad=true&part=1";
+      } else if (change_pre_url.split('#')[1] == "current_status") {
+        window.location.href = "/reports?from_ipad=true&part=1";
+      } else if (change_pre_url.split('#')[1] == "daily_ftq") {
+        window.location.href = "/reports?from_ipad=true&part=8";
+      }
+    } catch (e) {
+      console.log(e);
+      alert(e);
+    }
+  }
+
+  var ChartStyle = {
+    ChartBackground: "#4682B4",
+    label_font_color: "white",
+    tooltips_font_color: "black"
+  };
+
+  var IpadHeight = document.documentElement.clientHeight;
+
+  $('#report-content').css({
+    height: (IpadHeight + 125) + 'px',
+    overflow: 'hidden'
+  });
+
+  $('.SumTotal').css({
+    background: "#4682B4"
+  });
+
+  $('#history_chart').css({
+    height: (IpadHeight - 50) + 'px'
+  });
+
   var BoxID = $('#entity_group_id').val();
   var pre_time = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
   var current_time = new Date().format('yyyy-MM-dd hh:mm:ss');
@@ -183,35 +248,68 @@
     // 图表操作
     var chart_options = {
       chart: {
-        renderTo: 'history_chart'
+        renderTo: 'history_chart',
+        backgroundColor: ChartStyle.ChartBackground
       },
       credits: {
         enabled: false
       },
       title: {
-        text: HistoryDataName, x: -20
+        text: HistoryDataName,
+        x: -20,
+        style: {
+          color: ChartStyle.label_font_color
+        }
       },
       subtitle: {
-        text: '——History Data', x: 20
+        text: '——History Data',
+        x: 20,
+        style: {
+          color: ChartStyle.label_font_color
+        }
       },
       xAxis: {
         categories: xAxis_value,
-        max: max_count
+        max: max_count,
+        labels: {
+          style: {
+            color: ChartStyle.label_font_color
+          }
+        }
       },
       yAxis: {
-        title: {text: 'Time(s)'},
-        plotLines: [{value: 0, width: 1, color: '#808080'}]
+        title: {
+          text: 'Time(s)',
+          style: {
+            color: ChartStyle.label_font_color
+          }
+        },
+        plotLines: [{value: 0, width: 1, color: ChartStyle.label_font_color}],
+        labels: {
+          style: {
+            color: ChartStyle.label_font_color
+          }
+        }
       },
       tooltip: {
         formatter: function () {
           return '<span><b>' + this.point.id + '</b><br/><b>Value:</b><b>' + this.y + ' s</b><span>';
+        },
+        style: {
+          color: ChartStyle.tooltips_font_color
         }
       },
       scrollbar: {
         enabled: true
       },
       legend: {
-        layout: 'horizontal', align: 'center', verticalAlign: 'bottom', borderHeight: 0
+        layout: 'horizontal',
+        align: 'center',
+        verticalAlign: 'bottom',
+        borderHeight: 0,
+        itemStyle: {
+          color: ChartStyle.label_font_color
+        }
       },
       plotOptions: {
         series: {
@@ -319,7 +417,13 @@
         var SearchHistoryDataValue = SearchHistoryData.data;
 
         if (SearchHistoryDataValue.length == 0) {
-          alert('This period of time there is no data, modify the query date.');
+          if ($('#from_ipad').val()) {
+            $('body').css({
+              background: "steelblue"
+            })
+          } else {
+            alert('This period of time there is no data, modify the query date.');
+          }
         } else {
           loadHistoryDataFun(SearchHistoryDataName, SearchHistoryDataValue);
         }

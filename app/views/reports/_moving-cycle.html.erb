@@ -1,10 +1,9 @@
 <div class="header" id="daily-ftq-header">
-
   <div class="col-sm-12" id="current-status-header" style="background: #fefefe;border-bottom: 4px solid #000">
     <div class="col-sm-3" style="text-align:center;border-right: 1px solid #ccc;">
       <label>Condition</label>
 
-      <p style="padding-top: 5px; padding-bottom: 10px;">WorkingTime Detail Column Chart</p>
+      <p style="padding-top: 5px; padding-bottom: 10px;">Working And Cycle Time Column Chart</p>
     </div>
 
     <div class="col-sm-3" style="text-align: center;">
@@ -19,9 +18,8 @@
 
     <div class="col-sm-3" style="padding-top: 10px;padding-bottom:10px;border-left: 1px solid #ccc; display: flex;border-right: 1px solid #ccc;">
       <div style="margin-top: 10px;">
-        <label>近</label>
         <input type="number" style="width: 60px;height: 20px;" class="RecentTime" step="5">
-        <label>分钟</label>
+        <label>Min</label>
       </div>
       <button class="btn btn-primary RecentTimeBtn" style="width: 60px;">Search</button>
     </div>
@@ -53,7 +51,7 @@
 <!--chart-->
 <div id="charts_containers" style="margin-top: 60px;min-height:300px;"></div>
 
-<hr style="border-bottom: 4px solid #000;">
+<hr class="bottom-hr" style="border-bottom: 4px solid #000;">
 
 <!--table-->
 <div id="data_chartcontainer" class="data_container" style="margin-top: 20px;">
@@ -79,6 +77,12 @@
 </style>
 
 <script type="text/javascript">
+  var ChartStyle = {
+    ChartBackground: "#ffffff",
+    label_font_color: "black",
+    tooltips_font_color: "black"
+  };
+
   $('.RecentTime').keydown(function (e) {
     var ev = window.event || e;
     if (ev.keyCode == 13) {
@@ -103,9 +107,31 @@
 
   $(document).ready(function () {
     if ($('#from_ipad').val()) {
-      $('.chart-interval-alternate').css({display: "none"});
-      $('#data_chartcontainer').prev('hr').css({display: "none"});
+      var IpadHeight = document.documentElement.clientHeight;
+      $('#current-status-header').css({
+        paddingTop: "10px",
+        background: '#4682B4',
+        color: "white",
+        borderBottom: "4px solid white"
+      });
+      $('#vehicle-select').css({
+        color: "black"
+      });
+      $('.bottom-hr').css({display: "none"});
+      $('#report-content').css({
+        height: (IpadHeight + 125) + 'px',
+        overflow: 'hidden'
+      });
+      $('.control-chart-interval-group').parent().css({display: "none"});
       $('#data_chartcontainer').css({display: "none"});
+      $('#charts_containers').css({height: (IpadHeight - 25) + "px"});
+      $('.RecentTime').css({
+        color: "black"
+      });
+//      设置 图标 颜色
+      ChartStyle.ChartBackground = "#4682B4";
+      ChartStyle.label_font_color = "white";
+
     } else {
       var ReportMenuStatus = document.getElementById('report-menu').style.display;
 
@@ -320,16 +346,22 @@
             $('<td style="background:white;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
             });
           } else {
-            charts_moving_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].moving_time});
-            $('<td style="background:limegreen;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
+            charts_moving_time.push({id: ajaxData[i].id, color: 'skyblue', y: ajaxData[i].moving_time});
+            $('<td style="background:skyblue;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
             });
           }
         }
 
         /*chart*/
         var chart = $('#charts_containers').highcharts({
+          chart: {
+            backgroundColor: ChartStyle.ChartBackground
+          },
           title: {
-            text: 'CycleTime', x: -20 //center
+            text: 'CycleTime', x: -20, //center
+            style: {
+              color: ChartStyle.label_font_color
+            }
           },
           credits: {
             enabled: false
@@ -341,12 +373,25 @@
             labels: {
               formatter: function () {
                 return this.value.split("#")[1];
+              },
+              style: {
+                color: ChartStyle.label_font_color
               }
             }
           },
           yAxis: {
-            title: {text: 'Time(s)'},
-            plotLines: [{value: 0, width: 1, color: '#808080'}]
+            title: {
+              text: 'Time(s)',
+              style: {
+                color: ChartStyle.label_font_color
+              }
+            },
+            plotLines: [{value: 0, width: 1, color: ChartStyle.label_font_color}],
+            labels: {
+              style: {
+                color: ChartStyle.label_font_color
+              }
+            }
           },
           tooltip: {
             valueSuffix: 's',
@@ -357,17 +402,29 @@
               } else if (this.series.name == "cycle-time") {
                 return '<span><b>' + this.x.split('#')[0] +
                     '</b><br/><b>' + this.series.name + ':</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
-              } else {
-                return;
               }
+            },
+            style: {
+              color: ChartStyle.tooltips_font_color
             }
           },
-          legend: {layout: 'horizontal', align: 'center', verticalAlign: 'bottom', borderHeight: 0},
+          legend: {
+            layout: 'horizontal',
+            align: 'center',
+            verticalAlign: 'bottom',
+            borderHeight: 0,
+            itemSytle: {
+              color: ChartStyle.label_font_color
+            }
+          },
           plotOptions: {
             column: {
               dataLabels: {
-                enabled: true
-              }
+                enabled: true,
+                color: ChartStyle.label_font_color
+              },
+              color: ChartStyle.label_font_color,
+              borderWidth: '0'
             }
           },
           series: [
@@ -375,7 +432,7 @@
               type: 'column',
               name: 'moving-time',
               data: charts_moving_time,
-              color: 'limegreen'
+              color: 'skyblue'
             }, {
               type: 'column',
               name: 'cycle-time',

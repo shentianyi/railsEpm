@@ -36,34 +36,32 @@
     text-align: center;
     background: white;
   }
-
-  #history_chart {
-    min-height: 300px;
-    margin-top: 100px;
-  }
 </style>
 
-<div class="col-sm-12" style="background: #fefefe;border-bottom: 4px solid #000;height: 70px;line-height: 20px;padding-top:15px;text-align: center;">
+<div class="col-sm-12 moving-time-title" style="background: #fefefe;border-bottom: 4px solid #000;height: 70px;line-height: 20px;padding-top:15px;text-align: center;">
+  <div class="col-sm-3" style="border-right: 1px solid #ccc;margin-top: -5px;">
+    <label>Condition</label>
+    <p style="padding-bottom: 5px;">Moving Time History Line Chart</p>
+  </div>
+  <div class="col-sm-6" style="display: flex;border-right: 1px solid #ccc;padding-left:40px;">
+    <input type="text" readonly class="datetimepicker" style="width: 170px;" id="start_time" title="Start Time">&emsp;
+    <b>~</b> &emsp;
+    <input type="text" readonly class="datetimepicker" style="width: 170px;" id="end_time" title="End Time">
+    <button class="btn btn-primary historty_search" style="width: 100px;">Search</button>
+  </div>
+
   <div class="col-sm-3">
-    <button class="btn btn-success" style="width: 150px;" onclick="go_back();">
+    <button class="btn btn-success" style="width: 100px;margin-left: 80px;" value="Back" onclick="go_back();">
       Back
     </button>
   </div>
-  <div class="col-sm-6">
-    <input type="text" readonly class="datetimepicker" id="start_time" title="Start Time">&emsp;
-    <b>~</b> &emsp; <input type="text" readonly class="datetimepicker" id="end_time" title="End Time">
-  </div>
-
-  <div class="col-sm-3">
-    <button class="btn btn-primary historty_search" style="width: 150px;">Search</button>
-  </div>
 </div>
 
-<div class="col-sm-12">
+<div class="col-sm-12 SumTotal">
   <div class="col-sm-5" style="display: flex; display: -ms-flexbox; height: 30px;line-height: 30px;">
-    <p>Total:</p><b id="total_data" style="margin-right: 20px;">0</b>
-    <p>Normal:</p><b id="normal_data" style="color: limegreen;">0</b>
-    <p style="margin-left:20px;">Exception:</p><b id="abnormal_data" style="color: #ff0000;">0</b>
+    <p>Total: &emsp; </p><b id="total_data" style="margin-right: 20px;">0</b>
+    <p>Normal: &emsp; </p><b id="normal_data" style="color: limegreen; margin-right: 20px;">0</b>
+    <p>Exception:&emsp; </p><b id="abnormal_data" style="color: #ff0000;">0</b>
   </div>
 
   <div id="chart_mode">
@@ -73,46 +71,64 @@
   </div>
 </div>
 
-<div id="history_chart"></div>
-
-<hr style="border-bottom: 4px solid #000;">
+<div class="col-sm-12" style="padding:0;">
+  <div id="history_chart"></div>
+</div>
 
 <!--table-->
-<div id="history_table" style="margin-top: 20px;">
-  <table class="table table-bordered table-hover">
-    <thead>
-    <tr class="history_table_thead_tr">
-    </tr>
-    </thead>
-    <tbody class="history_table_tbody_tr">
-    <tr class="history_table_tbody_target_min">
-    </tr>
-    <tr class="history_table_tbody_value">
-    </tr>
-    <tr class="history_table_tbody_target_max">
-    </tr>
-    </tbody>
-  </table>
+<div class="col-sm-12">
+  <div id="history_table" style="margin-top: 20px;">
+    <table class="table table-bordered table-hover">
+      <thead>
+      <tr class="history_table_thead_tr">
+      </tr>
+      </thead>
+      <tbody class="history_table_tbody_tr">
+      <tr class="history_table_tbody_target_min">
+      </tr>
+      <tr class="history_table_tbody_value">
+      </tr>
+      <tr class="history_table_tbody_target_max">
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "jedate" %>
+<% end %>
+
 <script type="text/javascript" charset="utf-8">
+  function go_back() {
+    if ($('#from_ipad').val()) {
+      window.history.back();
+    } else {
+      try {
+        if (change_pre_url == 'undefined') {
+          change_pre_url = window.location.host + '/reports#current_status';
+        } else if (change_pre_url.split('#')[1] == "defects") {
+          change_pre_url = window.location.host + '/reports#current_status';
+        }
+        window.location.href = '/reports#' + change_pre_url.split('#')[1];
+        window.location.reload();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }
+
+  var ChartStyle = {
+    ChartBackground: "white",
+    label_font_color: "black",
+    tooltips_font_color: "black"
+  };
+
   // 固定不变
   var box_name = localStorage.box_name;
   var box_msg = localStorage.box_msg;
   var change_pre_url = localStorage.pre_url;
 
-  function go_back() {
-    try {
-      if (change_pre_url == 'undefined') {
-        change_pre_url = window.location.host + '/reports#moving_time';
-      } else if (change_pre_url.split('#')[1] == "moving_time_history") {
-        change_pre_url = window.location.host + '/reports#moving_time';
-      }
-      window.location.href = '/reports#' + change_pre_url.split('#')[1];
-      window.location.reload();
-    } catch (e) {
-      console.log(e);
-    }
-  }
   var ProductLine = box_msg.split('_')[1];
   var Interval = box_msg.split('_')[3];
   var BoxID = box_msg.split('_')[5];
@@ -204,35 +220,68 @@
     // 图表操作
     var chart_options = {
       chart: {
-        renderTo: 'history_chart'
+        renderTo: 'history_chart',
+        backgroundColor: ChartStyle.ChartBackground
       },
       credits: {
         enabled: false
       },
       title: {
-        text: HistoryDataName, x: -20
+        text: HistoryDataName,
+        x: -20,
+        style: {
+          color: ChartStyle.label_font_color
+        }
       },
       subtitle: {
-        text: '——History Data', x: 20
+        text: '——History Data',
+        x: 20,
+        style: {
+          color: ChartStyle.label_font_color
+        }
       },
       xAxis: {
         categories: xAxis_value,
-        max: max_count
+        max: max_count,
+        labels: {
+          style: {
+            color: ChartStyle.label_font_color
+          }
+        }
       },
       yAxis: {
-        title: {text: 'Time(s)'},
-        plotLines: [{value: 0, width: 1, color: '#808080'}]
+        title: {
+          text: 'Time(s)',
+          style: {
+            color: ChartStyle.label_font_color
+          }
+        },
+        plotLines: [{value: 0, width: 1, color: ChartStyle.label_font_color}],
+        labels: {
+          style: {
+            color: ChartStyle.label_font_color
+          }
+        }
       },
       tooltip: {
         formatter: function () {
           return '<span><b>' + this.point.id + '</b><br/><b>Value:</b><b>' + this.y + ' s</b><span>';
+        },
+        style: {
+          color: ChartStyle.tooltips_font_color
         }
       },
       scrollbar: {
         enabled: true
       },
       legend: {
-        layout: 'horizontal', align: 'center', verticalAlign: 'bottom', borderHeight: 0
+        layout: 'horizontal',
+        align: 'center',
+        verticalAlign: 'bottom',
+        borderHeight: 0,
+        itemStyle: {
+          color: ChartStyle.label_font_color
+        }
       },
       plotOptions: {
         series: {
@@ -271,6 +320,25 @@
       var type = $(this).html();
       chart_options.chart.type = type;
       chart = new Highcharts.Chart(chart_options);
+
+      if ($('#from_ipad').val()) {
+        $('.highcharts-scrollbar').children('rect').first().css({
+          fill: "steelblue",
+          strokeWidth: 1,
+          stroke: "#36648B"
+        });
+        $('.highcharts-scrollbar').children('rect').first().next('rect').css({
+          fill: "#4F94CD",
+          strokeWidth: "0"
+        });
+        $('.highcharts-scrollbar').children('g').children('rect').css({
+          fill: "#4F94CD",
+          strokeWidth: "0"
+        });
+        $('.highcharts-scrollbar').children('g').children('path').css({
+          fill: "steelblue"
+        });
+      }
     });
   }
 
@@ -280,13 +348,49 @@
 
     var ClientHeight = $(document).height();
     var ClientWidth = document.documentElement.clientWidth;
+    if ($('#from_ipad').val()) {
+      $('body').css({
+        background: "steelblue"
+      });
+      $('#chart_mode').css({display: "none"});
 
-    $('#report-content').css({
-      height: (ClientHeight - 70) + 'px',
-      overflow: 'auto'
-    });
+      $('#history_table').css({
+        display: "none"
+      });
 
-    $('#history_table').css({width: (ClientWidth - 20) + 'px', overflowX: 'auto'});
+      $('.moving-time-title').css({
+        background: "#4682B4",
+        color: "white",
+        borderBottom: "4px solid white"
+      });
+
+      $('.SumTotal').css({
+        background: "steelblue"
+      });
+
+      $('.SumTotal').children('div').children('p').css({
+        color: "white"
+      });
+      $('#report-content').css({
+        height: (ClientHeight + 45) + 'px',
+        overflow: 'hidden'
+      });
+
+      $('#history_chart').css({
+        height: (ClientHeight - 50) + 'px'
+      });
+
+//      设置 图标 颜色
+      ChartStyle.ChartBackground = "#4682B4";
+      ChartStyle.label_font_color = "white";
+    } else {
+      $('#report-content').css({
+        height: (ClientHeight - 70) + 'px',
+        overflow: 'auto'
+      });
+
+      $('#history_table').css({width: (ClientWidth - 20) + 'px', overflowX: 'auto'});
+    }
 
     jeDate({
       dateCell: "#start_time",
