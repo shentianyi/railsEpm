@@ -139,7 +139,7 @@
       var end_time = now.format("yyyy-MM-dd hh:mm:ss");
       var start_time = startRecentTime();
       loadData(productLine, 100, start_time, end_time);
-      hideDownload();
+      $('#download').parent().css({display: "none"});
     } else {
       jeDate({
         dateCell: "#start_time",

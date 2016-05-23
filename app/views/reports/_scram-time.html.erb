@@ -20,7 +20,7 @@
   }
 </style>
 
-<div class="col-sm-12" style="margin-top: 10px; height: 600px; overflow: auto;">
+<div class="col-sm-12 scram-table" style="margin-top: 10px; overflow: auto;">
   <table class="table table-hover">
     <thead>
     <tr>
@@ -36,6 +36,9 @@
   </table>
 </div>
 <script type="text/javascript">
+  var ClientHeight = $(document).clientHeight;
+  $('.scram-table').css({height: (ClientHeight - 80) + 'px'});
+
   var ScramData = [
     {
       "id": 6,

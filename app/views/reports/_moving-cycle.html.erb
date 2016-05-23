@@ -227,9 +227,9 @@
     /*清空*/
     $('#charts_containers').children().remove();
     $('.thead-tr').children().remove();
+    $('.tbody-moving-time').children().remove();
     $('.tbody-target-max').children().remove();
-    $('.tbody-target-min').children().remove();
-    $('.tbody-value').children().remove();
+    $('.tbody-cycle-time').children().remove();
 
     $('.control-chart-interval-group li').each(function () {
       if ($(this).attr('datatype') == 'true') {
@@ -383,7 +383,7 @@
               color: 'limegreen'
             },
             {
-              name: 'cycle-time',
+              name: 'TargetMax',
               data: charts_target_max,
               color: '#FF7F00'
             }
