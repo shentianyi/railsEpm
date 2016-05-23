@@ -5,6 +5,7 @@ class ReportsController < ApplicationController
     if params[:from_ipad].present? && params[:ajax].blank?
       @from_ipad=true
       @part=params[:part]
+      @entity_group_id=params[:entity_group_id]
       respond_to do |format|
         format.html { render 'ipad', :layout => 'app_application' }
         format.json
