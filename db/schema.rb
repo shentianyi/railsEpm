@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160519085403) do
+ActiveRecord::Schema.define(:version => 20160524080830) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -222,6 +222,7 @@ ActiveRecord::Schema.define(:version => 20160519085403) do
     t.string   "code"
     t.integer  "department_id"
     t.boolean  "is_last",       :default => false
+    t.integer  "type",          :default => 100
   end
 
   add_index "entities", ["department_id"], :name => "index_entities_on_department_id"
