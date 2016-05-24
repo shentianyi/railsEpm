@@ -52,7 +52,7 @@ class KpiFrequency
            end
   end
 
-  def self.get_begin_date(start_time,frequency)
+  def self.get_begin_date(start_time, frequency)
     return case frequency
              when KpiFrequency::Hourly
                start_time.beginning_of_hour

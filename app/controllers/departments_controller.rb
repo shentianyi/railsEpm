@@ -284,17 +284,17 @@ class DepartmentsController < ApplicationController
     cycle_data=get_on_off_kpi_data(Kpi.cycle_time)
     moving_data=get_on_off_kpi_data(Kpi.moving_time)
     datas=[]
-    cycle_data.each do |k,v|
+    cycle_data.each do |k, v|
       datas<<{
-          id:v[:id],
-          name:v[:name],
-          code:k,
-          cycle_time:v[:value],
-          cycle_count:v[:count],
-          moving_time:moving_data[k][:value],
-          moving_count:moving_data[k][:count],
+          id: v[:id],
+          name: v[:name],
+          code: k,
+          cycle_time: v[:value],
+          cycle_count: v[:count],
+          moving_time: moving_data[k][:value],
+          moving_count: moving_data[k][:count],
           target_max: v[:target_max],
-          target_min:v[:target_min]
+          target_min: v[:target_min]
       }
     end
     render json: datas
@@ -414,10 +414,10 @@ class DepartmentsController < ApplicationController
 
     if e
       render json: {
-                 id: eg.id,
-                 name: eg.name,
-                 data: entries
-             }
+          id: eg.id,
+          name: eg.name,
+          data: entries
+      }
     else
       render json: nil
     end

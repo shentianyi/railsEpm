@@ -160,7 +160,7 @@
       return;
 
     $.ajax({
-      url: '/departments/entity_groups',
+      url: '/departments/cycle_kpi_data',
       type: 'get',
       data: {product_line: ProductLine.id, interval: Interval},
       success: function (data) {
@@ -400,7 +400,7 @@
           data: charts_values,
           color: 'limegreen'
         }, {
-          type: 'column',
+//          type: 'column',
           name: 'TargetMax',
           data: charts_max_values,
           color: '#FF7F00'
@@ -415,7 +415,6 @@
 
 
   $('.CheckBox').change(function () {
-
     var ProductLineId = $(this).attr('id');
     var display_date = $(this).parent().prev().text();
     var Status = $(this).attr("checked") == 'checked';

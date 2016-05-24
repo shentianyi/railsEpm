@@ -328,12 +328,12 @@
             $('<td style="background:#ff0000;">' + ajaxData[i].cycle_time + '</td>').appendTo('.tbody-cycle-time').ready(function () {
             });
           } else if (ajaxData[i].cycle_time < ajaxData[i].target_min) {
-            charts_cycle_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].cycle_time});
+            charts_cycle_time.push({id: ajaxData[i].id, color: '#00FF7F', y: ajaxData[i].cycle_time});
             $('<td style="background:white;">' + ajaxData[i].cycle_time + '</td>').appendTo('.tbody-cycle-time').ready(function () {
             });
           } else {
-            charts_cycle_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].cycle_time});
-            $('<td style="background:limegreen;">' + ajaxData[i].cycle_time + '</td>').appendTo('.tbody-cycle-time').ready(function () {
+            charts_cycle_time.push({id: ajaxData[i].id, color: '#00FF7F', y: ajaxData[i].cycle_time});
+            $('<td style="background:#00FF7F;">' + ajaxData[i].cycle_time + '</td>').appendTo('.tbody-cycle-time').ready(function () {
             });
           }
 
@@ -342,12 +342,12 @@
             $('<td style="background:#ff0000;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
             });
           } else if (ajaxData[i].moving_time < ajaxData[i].target_min) {
-            charts_moving_time.push({id: ajaxData[i].id, color: 'limegreen', y: ajaxData[i].moving_time});
+            charts_moving_time.push({id: ajaxData[i].id, color: '#00EEEE', y: ajaxData[i].moving_time});
             $('<td style="background:white;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
             });
           } else {
-            charts_moving_time.push({id: ajaxData[i].id, color: 'skyblue', y: ajaxData[i].moving_time});
-            $('<td style="background:skyblue;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
+            charts_moving_time.push({id: ajaxData[i].id, color: '#00EEEE', y: ajaxData[i].moving_time});
+            $('<td style="background: #00EEEE;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
             });
           }
         }
@@ -358,7 +358,7 @@
             backgroundColor: ChartStyle.ChartBackground
           },
           title: {
-            text: 'CycleTime', x: -20, //center
+            text: 'Moving & Cycle Time', x: -20, //center
             style: {
               color: ChartStyle.label_font_color
             }
@@ -413,7 +413,7 @@
             align: 'center',
             verticalAlign: 'bottom',
             borderHeight: 0,
-            itemSytle: {
+            itemStyle: {
               color: ChartStyle.label_font_color
             }
           },
@@ -432,12 +432,12 @@
               type: 'column',
               name: 'moving-time',
               data: charts_moving_time,
-              color: 'skyblue'
+              color: '#00EEEE'
             }, {
               type: 'column',
               name: 'cycle-time',
               data: charts_cycle_time,
-              color: 'limegreen'
+              color: '#00FF7F'
             },
             {
               name: 'TargetMax',
