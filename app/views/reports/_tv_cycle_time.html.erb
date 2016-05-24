@@ -62,7 +62,14 @@
   /*全局变量*/
   var FullScreenInterval;
   var cycle = 0;
-  var IntervelTime = 120000;
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  //  IntervalTime: 各个生产线之间的切换时间  现在是 120s ＝ 2 分钟
+  // SignalInterTime : cycletime  movingtime  moving & cycle time 之间的切换时间  现在是 40s
+  //  120s ＝ 40s ＊ 3   切换时间可以增加，一般都是按照比例 
+  //  tips:  如果SignalInterTime 时间过短，会出现 刚获取到 cycle time 的数据 ，moving time 已经开始获取。 如果后者比前者快，则呈现出来的效果是:
+  //  cycle time 出来闪一下， 然后立马显示  moving time
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  var IntervalTime = 120000;
   var SignalInterTime = 40000;
   var product_line_list;
   var firstloading = false;
@@ -124,22 +131,19 @@
     if (product_line_list.length > 0) {
       firstloading = true;
       cycle = 0;
-      var now = new Date();
-      var EndTime = now.format("yyyy-MM-dd hh:mm:ss");
-      var StartTime = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
 
       HowToShow(ShowWay, product_line_list[cycle]);
-    }
 
-    FullScreenInterval = setInterval(function () {
-      if (product_line_list != null && product_line_list.length > 0 && !firstloading) {
-        if (cycle == product_line_list.length - 1) {
-          cycle = -1;
+      FullScreenInterval = setInterval(function () {
+        if (product_line_list != null && product_line_list.length > 0 && !firstloading) {
+          if (cycle == product_line_list.length - 1) {
+            cycle = -1;
+          }
+          cycle++;
+          HowToShow(ShowWay, product_line_list[cycle]);
         }
-        cycle++;
-        HowToShow(ShowWay, product_line_list[cycle]);
-      }
-    }, IntervelTime);
+      }, IntervalTime);
+    }
   });
 
   function HowToShow(way, Productline) {
@@ -162,17 +166,19 @@
       }, SignalInterTime);
 
     } else if (way.length == 3) {
-
       var first = TransferType(way[0]);
       var second = TransferType(way[1]);
       var third = TransferType(way[2]);
 
       DrawCharts({name: first.name}, first.url, Productline, 100, StartTime, EndTime);
+
       setTimeout(function () {
         DrawCharts({name: second.name}, second.url, Productline, 100, StartTime, EndTime);
+        
         setTimeout(function () {
           DrawCharts({name: third.name}, third.url, Productline, 100, StartTime, EndTime);
         }, SignalInterTime);
+
       }, SignalInterTime);
     }
   }
@@ -392,7 +398,7 @@
       "position": "absolute",
       "margin-left": "-10px",
       "margin-top": "-70px",
-      "margin-right": "-40px",
+      "margin-right": "-30px",
       "background-color": "white",
       "overflow": "hidden",
       "height": function () {
@@ -401,7 +407,7 @@
       "filter": "alpha(opacity=100)",
       "opacity": "1",
       "width": function () {
-        return window.screen.width;
+        return (window.screen.width + 10);
       },
       "z-index": "99999"
     });

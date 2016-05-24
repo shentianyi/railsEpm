@@ -37,9 +37,24 @@
 <script type="text/javascript">
   var ClientHeight = document.documentElement.clientHeight;
   $('.scram-table').css({height: (ClientHeight - 80) + 'px'});
+  var ReportMenuStatus = document.getElementById('report-menu').style.display;
+
+  if (ReportMenuStatus == 'none') {
+    show_loading(70, 0, 0, 10);
+  } else {
+    show_loading(70, 0, 0, 230);
+  }
 
   GetScramData(function (data) {
     var ScramData = data;
+    if(ScramData.length == 0){
+      $('.scram-table').empty();
+
+      $("<h3 style='margin-top:300px;font-size:5em;color:orange;text-align:center;'> <i class='glyphicon glyphicon-warning-sign' style='color:orange;'></i>  Nothing to Show...</h3>").appendTo('.scram-table').ready(function(){
+      });
+      return;
+    }
+    
     for (var i = 0; i < ScramData.length; i++) {
       var backgroundColor = "#f2f2f2";
       var WorkStation = ScramData[i];
@@ -81,6 +96,7 @@
       },
       success: function (data) {
         callback(data);
+        remove_loading();
       },
       error: function () {
         console.log("Something Error!");

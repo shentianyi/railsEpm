@@ -16,7 +16,7 @@
         </select>
       </div>
 
-      <div class="col-sm-3" style="padding-top: 10px;padding-bottom:10px;border-left: 1px solid #ccc; display: flex;">
+      <div class="col-sm-3" style="padding-top: 10px;padding-bottom:10px;border-left: 1px solid #ccc; display: flex;display: -ms-flexbox;">
         <div style="margin-top: 10px;">
           <input type="number" maxlength="7" style="width: 60px;height: 20px; color:black; padding-left: 5px;margin-left: 20px; text-align: center;" class="RecentTime" step="5">
           <label>Min</label>
@@ -82,13 +82,13 @@
 <% end %>
 
 <script type="text/javascript">
-  $('.RecentTime').keydown(function (e) {
-    var ev = window.event || e;
+ document.getElementsByClassName("RecentTime").onkeyDown=function(event){
+     var ev = window.event || event;
     if (ev.keyCode == 13) {
       RecentTimeSearch();
     }
-  });
-
+  }
+  
   $('.RecentTimeBtn').click(function () {
     RecentTimeSearch();
   });

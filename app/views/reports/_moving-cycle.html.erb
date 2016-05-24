@@ -16,7 +16,7 @@
       </select>
     </div>
 
-    <div class="col-sm-3" style="padding-top: 10px;padding-bottom:10px;border-left: 1px solid #ccc; display: flex;border-right: 1px solid #ccc;">
+    <div class="col-sm-3" style="padding-top: 10px;padding-bottom:10px;border-left: 1px solid #ccc; display: flex; display: -ms-flexbox; border-right: 1px solid #ccc;">
       <div style="margin-top: 10px;">
         <input type="number" style="width: 60px;height: 20px;" class="RecentTime" step="5">
         <label>Min</label>
@@ -82,13 +82,13 @@
     label_font_color: "black",
     tooltips_font_color: "black"
   };
-
-  $('.RecentTime').keydown(function (e) {
-    var ev = window.event || e;
-    if (ev.keyCode == 13) {
-      RecentTimeSearch();
+  
+  document.getElementsByClassName("RecentTime").onkeyDown=function(event){
+       var ev = window.event || event;
+      if (ev.keyCode == 13) {
+        RecentTimeSearch();
+      }
     }
-  });
 
   $('.RecentTimeBtn').click(function () {
     RecentTimeSearch();
@@ -402,6 +402,9 @@
               } else if (this.series.name == "cycle-time") {
                 return '<span><b>' + this.x.split('#')[0] +
                     '</b><br/><b>' + this.series.name + ':</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
+              }else {
+                return '<span><b>' + this.x.split('#')[0] +
+                    '</b><br/><b>' + this.series.name + ':</b><b>' + this.y + ' s</b><br/><span>';
               }
             },
             style: {
