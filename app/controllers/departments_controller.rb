@@ -451,10 +451,10 @@ class DepartmentsController < ApplicationController
 
     if e
       render json: {
-                 id: eg.id,
-                 name: eg.name,
-                 data: entries
-             }
+          id: eg.id,
+          name: eg.name,
+          data: entries
+      }
     else
       render json: nil
     end
