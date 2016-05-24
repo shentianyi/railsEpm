@@ -63,11 +63,17 @@
   var FullScreenInterval;
   var cycle = 0;
   var IntervelTime = 120000;
+  var SignalInterTime = 40000;
   var product_line_list;
   var firstloading = false;
   var CurrentDate = new Date().getDate();
 
-  //  如果 全部没有勾选 ， 每隔 5s 执行一次
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  //  c 表示 cycletime   m 表示 movingtime  mc 表示 moving & cycle time
+  //  ["c", "m", "mc"] 表示  先显示 cycletime   再显示 movingtime  最后显示  moving & cycle time
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  var ShowWay = ["c", "m", "mc"];
+
   setInterval(function () {
     if (CurrentDate != new Date().getDate() || product_line_list == null || product_line_list.length == 0) {
       product_line_list = GetListData();
@@ -118,20 +124,183 @@
     if (product_line_list.length > 0) {
       firstloading = true;
       cycle = 0;
-      GetProductLineData(product_line_list[cycle], 100);
+      var now = new Date();
+      var EndTime = now.format("yyyy-MM-dd hh:mm:ss");
+      var StartTime = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
+
+      HowToShow(ShowWay, product_line_list[cycle]);
     }
+
     FullScreenInterval = setInterval(function () {
       if (product_line_list != null && product_line_list.length > 0 && !firstloading) {
         if (cycle == product_line_list.length - 1) {
           cycle = -1;
         }
-
         cycle++;
-        GetProductLineData(product_line_list[cycle], 100);
+        HowToShow(ShowWay, product_line_list[cycle]);
       }
-
     }, IntervelTime);
   });
+
+  function HowToShow(way, Productline) {
+    var now = new Date();
+    var EndTime = now.format("yyyy-MM-dd hh:mm:ss");
+    var StartTime = new Date().format('yyyy-MM-dd').toString() + ' ' + '00:00:00';
+    if (way.length == 0) {
+      console.log("way is null");
+    } else if (way.length == 1) {
+      var signal = TransferType(way[0]);
+      DrawCharts({name: signal.name}, signal.url, Productline, 100, StartTime, EndTime);
+    } else if (way.length == 2) {
+      var way_first = TransferType(way[0]);
+      var way_second = TransferType(way[1]);
+
+      DrawCharts({name: way_first.name}, way_first.url, Productline, 100, StartTime, EndTime);
+
+      setTimeout(function () {
+        DrawCharts({name: way_second.name}, way_second.url, Productline, 100, StartTime, EndTime);
+      }, SignalInterTime);
+
+    } else if (way.length == 3) {
+
+      var first = TransferType(way[0]);
+      var second = TransferType(way[1]);
+      var third = TransferType(way[2]);
+
+      DrawCharts({name: first.name}, first.url, Productline, 100, StartTime, EndTime);
+      setTimeout(function () {
+        DrawCharts({name: second.name}, second.url, Productline, 100, StartTime, EndTime);
+        setTimeout(function () {
+          DrawCharts({name: third.name}, third.url, Productline, 100, StartTime, EndTime);
+        }, SignalInterTime);
+      }, SignalInterTime);
+    }
+  }
+
+  function TransferType(type) {
+    switch (type) {
+      case "c":
+        return {
+          name: "CycleTime -- ",
+          url: "cycle_kpi_data"
+        };
+        break;
+      case "m":
+        return {
+          name: "MovingTime -- ",
+          url: "moving_kpi_data"
+        };
+        break;
+      case "mc":
+        return {
+          name: "Cycle And MovingTime -- ",
+          url: "cycle_and_moving_kpi_data"
+        };
+        break;
+      default:
+        console.log("Error");
+        return {
+          name: "CycleTime -- ",
+          url: "cycle_kpi_data"
+        };
+        break;
+    }
+  }
+
+  function DrawCharts(type, url, ProductLine, interval, start_time, end_time) {
+    GetProductLineDataAjax(url, ProductLine, interval, start_time, end_time, function (data) {
+          if (url == "cycle_and_moving_kpi_data") {
+            var MovingAndCycleTimeData = data;
+            var moving_values = new Array;
+            var cycle_values = new Array;
+            var xAxis_value = new Array;
+            var charts_target_max = new Array;
+            var charts_target_min = new Array;
+
+            for (var i = 0; i < MovingAndCycleTimeData.length; i++) {
+              xAxis_value.push(MovingAndCycleTimeData[i].name + "#" + MovingAndCycleTimeData[i].code + "#" + MovingAndCycleTimeData[i].cycle_count + "#" + MovingAndCycleTimeData[i].moving_count);
+              charts_target_max.push(MovingAndCycleTimeData[i].target_max);
+              charts_target_min.push(MovingAndCycleTimeData[i].target_min);
+
+              if (MovingAndCycleTimeData[i].cycle_time > MovingAndCycleTimeData[i].target_max) {
+                cycle_values.push({
+                  id: MovingAndCycleTimeData[i].id,
+                  color: '#ff0000',
+                  y: MovingAndCycleTimeData[i].cycle_time
+                });
+              } else if (MovingAndCycleTimeData[i].cycle_time < MovingAndCycleTimeData[i].target_min) {
+                cycle_values.push({
+                  id: MovingAndCycleTimeData[i].id,
+                  color: '#00FF7F',
+                  y: MovingAndCycleTimeData[i].cycle_time
+                });
+              } else {
+                cycle_values.push({
+                  id: MovingAndCycleTimeData[i].id,
+                  color: '#00FF7F',
+                  y: MovingAndCycleTimeData[i].cycle_time
+                });
+              }
+
+              if (MovingAndCycleTimeData[i].moving_time > MovingAndCycleTimeData[i].target_max) {
+                moving_values.push({
+                  id: MovingAndCycleTimeData[i].id,
+                  color: '#ff0000',
+                  y: MovingAndCycleTimeData[i].moving_time
+                });
+              } else if (MovingAndCycleTimeData[i].moving_time < MovingAndCycleTimeData[i].target_min) {
+                moving_values.push({
+                  id: MovingAndCycleTimeData[i].id,
+                  color: '#00EEEE',
+                  y: MovingAndCycleTimeData[i].moving_time
+                });
+              } else {
+                moving_values.push({
+                  id: MovingAndCycleTimeData[i].id,
+                  color: '#00EEEE',
+                  y: MovingAndCycleTimeData[i].moving_time
+                });
+              }
+            }
+            styles.title = type.name + ProductLine.name;
+            styles.subtitle = "--" + ProductLine.cn_name;
+            DrawDoubleChart(moving_values, cycle_values, charts_target_max, xAxis_value, '#full_screen', styles);
+          }
+          else {
+            var CycleTimeData = data;
+            var xAxis_value = new Array;
+            var charts_value = new Array;
+            var charts_target_max = new Array;
+
+            for (var i = 0; i < CycleTimeData.length; i++) {
+              if (CycleTimeData[i].code.indexOf('-') > -1)
+                xAxis_value.push(CycleTimeData[i].code.split('-')[1]);
+              else
+                xAxis_value.push(CycleTimeData[i].code);
+
+              if (CycleTimeData[i].value > CycleTimeData[i].target_max) {
+                charts_value.push({
+                  id: CycleTimeData[i].id,
+                  color: styles.warn_color,
+                  y: CycleTimeData[i].value
+                });
+              } else {
+                charts_value.push({
+                  id: CycleTimeData[i].id,
+                  color: styles.normal_color,
+                  y: CycleTimeData[i].value
+                });
+              }
+              charts_target_max.push(CycleTimeData[i].target_max);
+            }
+            styles.title = type.name + ProductLine.name;
+            styles.subtitle = "--" + ProductLine.cn_name;
+            DrawSingleChart(charts_value, charts_target_max, xAxis_value, '#full_screen', styles);
+          }
+          firstloading = false;
+        }
+    )
+  }
 
   esckey();
 
@@ -155,55 +324,27 @@
     return ProductLineList;
   }
 
-  function GetProductLineData(ProductLine, Interval) {
+  function GetProductLineDataAjax(url, ProductLine, Interval, start_time, end_time, callback) {
     if (ProductLine == null || Interval == null)
       return;
-
     $.ajax({
-      url: '/departments/cycle_kpi_data',
+      url: '/departments/' + url,
       type: 'get',
-      data: {product_line: ProductLine.id, interval: Interval},
+      data: {
+        product_line: ProductLine.id,
+        interval: Interval,
+        start_time: start_time,
+        end_time: end_time
+      },
       success: function (data) {
-        var ProductLineFirstData = data; //GetProductLineData(product_line_first_id, 100);
-
-        var xAxis_value = new Array;
-        var charts_value = new Array;
-        var charts_target_max = new Array;
-
-        for (var i = 0; i < ProductLineFirstData.length; i++) {
-          if (ProductLineFirstData[i].code.indexOf('-') > -1)
-            xAxis_value.push(ProductLineFirstData[i].code.split('-')[1]);
-          else
-            xAxis_value.push(ProductLineFirstData[i].code);
-
-
-          if (ProductLineFirstData[i].value > ProductLineFirstData[i].target_max) {
-            charts_value.push({
-              id: ProductLineFirstData[i].id,
-              color: styles.warn_color,
-              y: ProductLineFirstData[i].value
-            });
-          } else {
-            charts_value.push({
-              id: ProductLineFirstData[i].id,
-              color: styles.normal_color,
-              y: ProductLineFirstData[i].value
-            });
-          }
-
-          charts_target_max.push(ProductLineFirstData[i].target_max);
+        if (data) {
+          callback(data);
         }
-
-        styles.title = ProductLine.name;
-        styles.subtitle = ProductLine.cn_name;
-
-        DrawChart(charts_value, charts_target_max, xAxis_value, '#full_screen', styles);
-        firstloading = false;
       },
       error: function () {
         console.log("something error");
       }
-    });
+    })
   }
 
   function esckey() {
@@ -291,7 +432,7 @@
     }
   }
 
-  function DrawChart(charts_values, charts_max_values, xaxis_values, id, style) {
+  function DrawSingleChart(charts_values, charts_max_values, xaxis_values, id, style) {
     /*chart*/
     var chart = $(id).highcharts({
       chart: {
@@ -413,6 +554,138 @@
         "<img src='/assets/beko-logo.png' style='width: 100px;'/></div>");
   }
 
+  function DrawDoubleChart(moving_values, cycle_values, charts_max_values, xaxis_values, id, style) {
+    /*chart*/
+    var chart = $(id).highcharts({
+      chart: {
+        backgroundColor: {
+//          深蓝
+          linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1}, stops: [[0, '#6495ED'], [1, 'rgb(48, 48, 96)']]
+//          灰色
+//          linearGradient: {x1: 0, y1: 0, x2: 0, y2: 1}, stops: [[0, 'rgb(96, 96, 96)'], [1, 'rgb(16, 16, 16)']]
+        }
+      },
+      title: {
+        text: "<br/>" + style.title,
+        align: "center",
+        style: {
+          fontSize: style.title_font_size,
+          color: style.title_color
+        },
+        margin: 5,
+        useHTML: true
+      },
+      subtitle: {
+        text: "----" + style.subtitle,
+        style: {
+          fontSize: style.subtitle_font_size,
+          color: style.subtitle_color
+        }
+      },
+      credits: {
+        enabled: false
+      },
+      xAxis: {
+        categories: xaxis_values,
+        labels: {
+          formatter: function () {
+            return this.value.split("#")[1];
+          },
+          style: {
+            color: style.xAxis_color,
+            fontSize: style.xAxis_font_size,
+            fontWeight: "bold"
+          }
+        }
+      },
+      yAxis: {
+        title: {
+          text: style.yAxis_title,
+          style: {
+            fontSize: style.yAxis_title_font_size,
+            color: style.yAxis_title_color
+          }
+        },
+        plotLines: [{
+          value: 0,
+          width: 1,
+          color: '#808080'
+        }],
+        labels: {
+          style: {
+            color: style.yAxis_color,
+            fontSize: style.yAxis_font_size,
+            fontWeight: "bold"
+          }
+        }
+      },
+      tooltip: {
+        valueSuffix: 's',
+        formatter: function () {
+          try {
+            if (this.series.name == "moving-time") {
+              return '<span><b>' + this.x.split('#')[0] +
+                  '</b><br/><b>' + this.series.name + ':</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[3] + '</b><span>';
+            } else if (this.series.name == "cycle-time") {
+              return '<span><b>' + this.x.split('#')[0] +
+                  '</b><br/><b>' + this.series.name + ':</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
+            }
+          } catch (e) {
+            return;
+          }
+        }
+      },
+      legend: {
+        itemStyle: {color: '#E0E0E3'},
+        itemHoverStyle: {color: '#FFF'},
+        itemHiddenStyle: {color: '#606063'},
+        title: {
+          text: style.xAxis_title,
+          style: {
+            fontSize: style.xAxis_title_font_size,
+            color: style.xAxis_title_color
+          }
+        },
+        layout: 'horizontal',
+        align: 'center',
+        verticalAlign: 'bottom',
+        borderHeight: 0
+      },
+      plotOptions: {
+        column: {
+          borderWidth: 0,
+          dataLabels: {
+            enabled: true,
+            style: {
+              fontSize: style.labels_font_size,
+              fontWeight: "bold",
+              color: style.labels_color
+            }
+          }
+        }
+      },
+      series: [
+        {
+          type: 'column',
+          name: 'moving-time',
+          data: moving_values,
+          color: 'limegreen'
+        }, {
+          type: 'column',
+          name: 'cycle-time',
+          data: cycle_values,
+          color: 'limegreen'
+        }, {
+          name: 'TargetMax',
+          data: charts_max_values,
+          color: '#FF7F00'
+        }
+      ]
+    });
+
+    $(id).append("<div class='pull-right'style='position:absolute;right:40px;top:30px;background:transparent;z-index:99999;'>" +
+        "<img src='/assets/beko-logo.png' style='width: 100px;'/></div>");
+  }
 
   $('.CheckBox').change(function () {
     var ProductLineId = $(this).attr('id');
