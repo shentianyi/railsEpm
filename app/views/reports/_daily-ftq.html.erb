@@ -406,12 +406,24 @@
           tooltip: {
             valueSuffix: 's',
             formatter: function () {
-              return '<span><b>' + this.x.split('#')[0] +
-                  '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
+              if ($('#from_ipad').val()) {
+                if(this.series.name == "Value"){
+                  var tp_category=this.point.category;
+                  return '<span><b>' + this.x.split('#')[0] +
+                      '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><br/><button  onclick=go_history('+ productLine + ',' + chartdatatype + ',' + this.point.id + '); class="btn btn-primary">Go Detail</button><span>';
+                  }else{
+                    return '<span><b>' + this.x.split('#')[0] +
+                      '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
+                  }
+              }else {
+                return '<span><b>' + this.x.split('#')[0] +
+                    '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
+              }
             },
             style: {
               color: ChartStyle.tooltips_font_color
-            }
+            },
+            useHTML: true
           },
           legend: {
             layout: 'horizontal',
@@ -431,24 +443,24 @@
               events: {//监听点的鼠标事件
                 click: function (e) {
                   if ($('#from_ipad').val()) {
-                    var over_id = "Line_" + productLine + "_interval_" + chartdatatype + "_box_" + e.point.id;
-                    if (window.localStorage) {
-                      localStorage.box_msg = over_id;
-                      localStorage.box_name = e.point.category;
-                      localStorage.pre_url = window.location.host + '/reports#daily_ftq';
-                      localStorage.recent_time = $('.RecentTime').val();
-//                    if (clickDetected) {
-                      var entity_group_id = e.point.id;
-                      window.location.href = "/reports?from_ipad=true&part=103&entity_group_id=" + entity_group_id;
-//                    } else {
-//                      clickDetected = true;
-//                      setTimeout(function () {
-//                        clickDetected = false;
-//                      }, 500);
-//                    }
-                    } else {
-                      alert('This browser does NOT support localStorage,please change browser.');
-                    }
+//                     var over_id = "Line_" + productLine + "_interval_" + chartdatatype + "_box_" + e.point.id;
+//                     if (window.localStorage) {
+//                       localStorage.box_msg = over_id;
+//                       localStorage.box_name = e.point.category;
+//                       localStorage.pre_url = window.location.host + '/reports#daily_ftq';
+//                       localStorage.recent_time = $('.RecentTime').val();
+// //                    if (clickDetected) {
+//                       var entity_group_id = e.point.id;
+//                       window.location.href = "/reports?from_ipad=true&part=103&entity_group_id=" + entity_group_id;
+// //                    } else {
+// //                      clickDetected = true;
+// //                      setTimeout(function () {
+// //                        clickDetected = false;
+// //                      }, 500);
+// //                    }
+//                     } else {
+//                       alert('This browser does NOT support localStorage,please change browser.');
+//                     }
                   } else {
                     var over_id = "Line_" + productLine + "_interval_" + chartdatatype + "_box_" + e.point.id;
                     if (window.localStorage) {
@@ -481,6 +493,7 @@
             }
           ]
         });
+
         remove_loading();
         IsLoading = false;
       },
@@ -489,5 +502,17 @@
         remove_loading();
       }
     });
+  }
+
+  function go_history(productLine , chartdatatype, id){
+    var over_id = "Line_" + productLine + "_interval_" + chartdatatype + "_box_" + id;
+      if (window.localStorage) {
+        localStorage.box_msg = over_id;
+        localStorage.box_name = "ipad_cycle_time_category";
+        localStorage.pre_url = window.location.host + '/reports#daily_ftq';
+        localStorage.recent_time = $('.RecentTime').val();
+        var entity_group_id = id;
+        window.location.href = "/reports?from_ipad=true&part=103&entity_group_id=" + entity_group_id;
+      }
   }
 </script>
