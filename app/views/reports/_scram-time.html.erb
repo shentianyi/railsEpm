@@ -52,7 +52,7 @@
         $("<tr style='border-bottom: 1px solid skyblue;'><td style='border-right: 1px solid skyblue;line-height: " + WorkStationScramValue.length * 28 + "px;' rowspan=" + WorkStationScramValue.length + ">" + WorkStationName + "</td><td>0</td><td>  </td><td></td>  <td>  </td></tr>").appendTo(".scram_tbody").ready(function () {
         });
       } else {
-        $("<tr style='border-bottom: 1px solid skyblue;'><td style='border-right: 1px solid skyblue;font-size: 2em; background:" + backgroundColor + "; line-height: " + WorkStationScramValue.length * 28 + "px;' rowspan=" + WorkStationScramValue.length + ">" + WorkStationName + "</td><td>1</td><td>" + WorkStationScramValue[0].start_time.split(" ")[1] + "</td><td>" + WorkStationScramValue[0].end_time.split(" ")[1] + "</td><td>" + WorkStationScramValue[0].wait_time + "S</td></tr>").appendTo(".scram_tbody").ready(function () {
+        $("<tr style='border-bottom: 1px solid skyblue;'><td style='border-right: 1px solid skyblue;font-size: 2em; background:" + backgroundColor + "; line-height: " + WorkStationScramValue.length * 28 + "px;' rowspan=" + WorkStationScramValue.length + ">" + WorkStationName + "</td><td>1</td><td>" + WorkStationScramValue[0].start_time.split(" ")[1] + "</td><td>" + WorkStationScramValue[0].end_time.split(" ")[1] + "</td><td>" + WorkStationScramValue[0].wait_time + "</td></tr>").appendTo(".scram_tbody").ready(function () {
         });
       }
       if (WorkStationScramValue.length > 1) {
