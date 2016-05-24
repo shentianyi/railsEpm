@@ -62,14 +62,18 @@
   /*全局变量*/
   var FullScreenInterval;
   var cycle = 0;
-  var IntervelTime = 30000;
-  var SignalInterTime = 10000;
+  var IntervelTime = 120000;
+  var SignalInterTime = 40000;
   var product_line_list;
   var firstloading = false;
   var CurrentDate = new Date().getDate();
+
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  //  c 表示 cycletime   m 表示 movingtime  mc 表示 moving & cycle time
+  //  ["c", "m", "mc"] 表示  先显示 cycletime   再显示 movingtime  最后显示  moving & cycle time
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   var ShowWay = ["c", "m", "mc"];
 
-  //  如果 全部没有勾选 ， 每隔 5s 执行一次
   setInterval(function () {
     if (CurrentDate != new Date().getDate() || product_line_list == null || product_line_list.length == 0) {
       product_line_list = GetListData();
