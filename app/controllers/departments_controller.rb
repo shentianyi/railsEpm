@@ -284,17 +284,17 @@ class DepartmentsController < ApplicationController
     cycle_data=get_on_off_kpi_data(Kpi.cycle_time)
     moving_data=get_on_off_kpi_data(Kpi.moving_time)
     datas=[]
-    cycle_data.each do |k,v|
+    cycle_data.each do |k, v|
       datas<<{
-          id:v[:id],
-          name:v[:name],
-          code:k,
-          cycle_time:v[:value],
-          cycle_count:v[:count],
-          moving_time:moving_data[k][:value],
-          moving_count:moving_data[k][:count],
+          id: v[:id],
+          name: v[:name],
+          code: k,
+          cycle_time: v[:value],
+          cycle_count: v[:count],
+          moving_time: moving_data[k][:value],
+          moving_count: moving_data[k][:count],
           target_max: v[:target_max],
-          target_min:v[:target_min]
+          target_min: v[:target_min]
       }
     end
     render json: datas
@@ -306,6 +306,43 @@ class DepartmentsController < ApplicationController
 
   def moving_kpi_history
     get_on_off_kpi_history(Kpi.moving_time)
+  end
+
+
+  def scram_kpi_data
+    kpi=Kpi.scram_time
+    start_time=Time.parse(params[:start_time]).utc
+    end_time=Time.parse(params[:end_time]).utc
+
+    q=KpiEntry.where(kpi_id: kpi.id)
+    q=q.between(Hash[:entry_at, (start_time..end_time)])
+    entities=q.distinct(:entity_id)
+
+    datas=[]
+    entities.each do |entity_id|
+
+
+      if (e=Entity.find_by_id(entity_id)) &&(eg=e.department.entity_group)
+        entriesq=KpiEntry.where(kpi_id: Kpi.scram_time.id, entity_id: entity_id)
+                     .between(Hash[:entry_at, (start_time..end_time)])
+        entries=[]
+        entriesq.each do |entry|
+          entries<<{
+              id: entry._id.to_s,
+              start_time: entry.from_time,
+              end_time: entry.to_time,
+              wait_time: KpiUnit.parse_entry_value(kpi.unit, entry.value)
+          }
+        end
+        datas<<{
+            id: eg.id,
+            name: eg.name,
+            code: eg.code,
+            scram_value: entries
+        }
+      end
+    end
+    render json:datas
   end
 
 

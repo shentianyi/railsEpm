@@ -378,7 +378,7 @@ IFEpm::Application.routes.draw do
       get :cycle_kpi_data
       get :moving_kpi_data
       get :cycle_and_moving_kpi_data
-
+      get :scram_kpi_data
 
       get :cycle_kpi_history
       get :moving_kpi_history

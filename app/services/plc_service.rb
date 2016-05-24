@@ -1,44 +1,22 @@
 class PlcService
   def self.post_data params
-
-    #
-    #100000000.times do
-    #   puts 1
-    # end
-
     kpi= Kpi.find_by_code(params[:kpi_code])||Kpi.first
-    #find_by_name(Settings.app.kpi)
+
+
     codes=params[:codes].split(',')
     values=params[:values].split(',')
 
     codes.each_with_index do |k, i|
-
-      p '-----------------------------------------'
-      p k
-      p '-----------------------------------------'
       entity=Entity.find_by_code(k)
       break if entity.blank?
       max=kpi.target_max
       min=kpi.target_max
 
-      # if entity
-      #   if user= entity.users.first
-      #     if item=user.user_kpi_items(kpi_id: kpi.id).first
-      #       max=item.target_max
-      #       min=item.target_min
-      #     end
-      #   end
-      # end
-
       v=values[i].to_f/1000
-
-
-      #return if v<1.5
+      return if v<1.5
       time=Time.parse(params[:time])
 
-
       if entity.is_last && kpi.code=='CYCLE_TIME_KPI'
-
         department=entity.department.parent
         ProductionPlan.transaction do
           if plan=ProductionPlan.where(product_line: department.cn_name,
@@ -46,14 +24,13 @@ class PlcService
             qty=plan.produced
             plan.update_attributes(produced: qty+1)
           end
-          #ProductionPlan.where(product_line:department.name,date:Date.today.to_time.utc).where('produced<=planned')
         end
       end
 
 
-      # return if v>100
+      return if v>100
 
-      KpiEntry.create(
+      attr={
           entry_type: 0,
           kpi_id: kpi.id,
           entry_at: time.utc,
@@ -66,8 +43,12 @@ class PlcService
           frequency: kpi.frequency,
           exception: v>max || v<min,
           a1: (v>max || v<min) ? 'YES' : 'NO'
-      )
-
+      }
+      if kpi.code=='SCRAM_TIME_KPI'
+        attr[:from_time]=params[:from_time]
+        attr[:to_time]=params[:to_time]
+      end
+      KpiEntry.create(attr)
     end
 
 

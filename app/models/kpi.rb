@@ -7,7 +7,7 @@ class Kpi < ActiveRecord::Base
   has_many :kpi_property_items, :dependent => :destroy
   has_many :kpi_properties, :through => :kpi_property_items
   has_many :kpi_subscribes, :dependent => :destroy
-  has_many :kpi_property_values,through: :kpi_property_items
+  has_many :kpi_property_values, through: :kpi_property_items
   has_many :department_kpis, :dependent => :destroy
   has_many :departments, :through => :department_kpis
 
@@ -16,14 +16,14 @@ class Kpi < ActiveRecord::Base
   #has_many :kpi_entries, :through => :user_kpi_items
   belongs_to :tenant
   attr_accessible :description, :direction, :frequency, :is_calculated, :period, :name, :target_max, :target_min, :unit, :formula, :formula_string
-  attr_accessible :kpi_category_id, :tenant_id,:code
+  attr_accessible :kpi_category_id, :tenant_id, :code
 
   acts_as_tenant(:tenant)
 
   validate :validate_create_update
 
   def validate_create_update
-    if  !self.formula.blank?
+    if !self.formula.blank?
       errors.add(:formula, I18n.t('manage.kpi.invalid')) if !FormulaValidator::complete_validate_infix(self.formula)
     end
     errors.add(:name, I18n.t('manage.kpi.cannot_repeat')) if self.class.where(:name => self.name, :kpi_category_id => self.kpi_category_id).first if new_record? # for create
@@ -57,7 +57,7 @@ class Kpi < ActiveRecord::Base
 
   def self.by_entity_group entity_group_id
     joins(:user_kpi_items).where(user_kpi_items: {entity_id: EntityGroupItem.where(entity_group_id: entity_group_id).pluck(:entity_id)})
-    .uniq.select('kpis.id,name,description,kpis.target_max,kpis.target_min,kpi_category_id,kpis.frequency')
+        .uniq.select('kpis.id,name,description,kpis.target_max,kpis.target_min,kpi_category_id,kpis.frequency')
   end
 
   def unit_sym
@@ -72,12 +72,16 @@ class Kpi < ActiveRecord::Base
     find_by_code('MOVING_TIME_KPI')
   end
 
+  def self.scram_time
+    find_by_code('SCRAM_TIME_KPI')
+  end
+
   def add_properties attrs
-    attrs.each {|attr|
-      if item = KpiPropertyItem.where(kpi_id:self.id,kpi_property_id:attr.id).first
+    attrs.each { |attr|
+      if item = KpiPropertyItem.where(kpi_id: self.id, kpi_property_id: attr.id).first
 
       else
-        item = KpiPropertyItem.new(kpi_id:self.id,kpi_property_id:attr.id)
+        item = KpiPropertyItem.new(kpi_id: self.id, kpi_property_id: attr.id)
         item.save
         self.kpi_property_items<<item
       end
