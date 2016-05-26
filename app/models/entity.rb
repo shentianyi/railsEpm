@@ -1,5 +1,7 @@
 #encoding: utf-8
 class Entity < ActiveRecord::Base
+  self.inheritance_column = nil
+
   belongs_to :tenant
   belongs_to :department
   has_many :entity_group_items, :dependent => :destroy

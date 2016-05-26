@@ -4,7 +4,7 @@
     <div class="col-sm-3" style="text-align: center;border-right: 1px solid #ccc;">
       <label>Condition</label>
 
-      <p style="padding-top: 5px;padding-bottom: 18px;">MovingTime Detail Column Chart</p>
+      <p style="padding-top: 5px;padding-bottom: 18px;">WaitingTime Detail Column Chart</p>
     </div>
 
     <div class="col-sm-3" style="text-align: center;">
@@ -316,7 +316,7 @@
         $('<td>Target Max</td>').appendTo('.tbody-target-max').ready(function () {
         });
 
-        $('<td>MovingTime</td>').appendTo('.tbody-value').ready(function () {
+        $('<td>WaitingTime</td>').appendTo('.tbody-value').ready(function () {
         });
 
         /*table*/
@@ -351,7 +351,7 @@
             backgroundColor: ChartStyle.ChartBackground
           },
           title: {
-            text: 'MovingTime', x: -20, //center
+            text: 'WaitingTime', x: -20, //center
             style: {
               color: ChartStyle.label_font_color
             }
@@ -390,9 +390,9 @@
             valueSuffix: 's',
             formatter: function () {
               if ($('#from_ipad').val()) {
-                if(this.series.name == "moving-time"){
+                if(this.series.name == "waiting-time"){
                   return '<span><b>' + this.x.split('#')[0] +
-                      '</b><br/><b>CycleTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><br/><button  onclick=go_history('+ productLine + ',' + chartdatatype + ',' + this.point.id + '); class="btn btn-primary">Go Detail</button><span>';
+                      '</b><br/><b>WaitingTime:</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><br/><button  onclick=go_history('+ productLine + ',' + chartdatatype + ',' + this.point.id + '); class="btn btn-primary">Go Detail</button><span>';
                   }else{
                     return '<span><b>' + this.x.split('#')[0] +
                     '</b><br/><b>' + this.series.name + ':</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
@@ -404,7 +404,8 @@
             },
             style: {
               color: ChartStyle.tooltips_font_color
-            }
+            },
+              useHTML: true
           },
           legend: {
             layout: 'horizontal',
@@ -465,7 +466,7 @@
           series: [
             {
               type: 'column',
-              name: 'moving-time',
+              name: 'waiting-time',
               data: charts_value,
               color: '#00FF7F'
             }, {
