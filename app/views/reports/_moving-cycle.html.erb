@@ -80,15 +80,17 @@
   var ChartStyle = {
     ChartBackground: "#ffffff",
     label_font_color: "black",
-    tooltips_font_color: "black"
+    tooltips_font_color: "black",
+    column_font_color: "black",
+    column_cycle_time_color: "#00FF7F"
   };
 
-  document.getElementsByClassName("RecentTime").onkeyDown=function(event){
-       var ev = window.event || event;
-      if (ev.keyCode == 13) {
-        RecentTimeSearch();
-      }
+  document.getElementsByClassName("RecentTime").onkeyDown = function (event) {
+    var ev = window.event || event;
+    if (ev.keyCode == 13) {
+      RecentTimeSearch();
     }
+  }
 
   $('.RecentTimeBtn').click(function () {
     RecentTimeSearch();
@@ -131,7 +133,8 @@
 //      设置 图标 颜色
       ChartStyle.ChartBackground = "#4682B4";
       ChartStyle.label_font_color = "white";
-
+      ChartStyle.column_font_color = "black";
+//      ChartStyle.column_cycle_time_color="lightseagreen"
     } else {
       var ReportMenuStatus = document.getElementById('report-menu').style.display;
 
@@ -323,6 +326,7 @@
           charts_target_max.push(ajaxData[i].target_max);
           charts_target_min.push(ajaxData[i].target_min);
 
+
           if (ajaxData[i].cycle_time > ajaxData[i].target_max) {
             charts_cycle_time.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].cycle_time});
             $('<td style="background:#ff0000;">' + ajaxData[i].cycle_time + '</td>').appendTo('.tbody-cycle-time').ready(function () {
@@ -342,12 +346,12 @@
             $('<td style="background:#ff0000;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
             });
           } else if (ajaxData[i].moving_time < ajaxData[i].target_min) {
-            charts_moving_time.push({id: ajaxData[i].id, color: '#00EEEE', y: ajaxData[i].moving_time});
+            charts_moving_time.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].moving_time});
             $('<td style="background:white;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
             });
           } else {
-            charts_moving_time.push({id: ajaxData[i].id, color: '#00EEEE', y: ajaxData[i].moving_time});
-            $('<td style="background: #00EEEE;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
+            charts_moving_time.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].moving_time});
+            $('<td style="background: white;">' + ajaxData[i].moving_time + '</td>').appendTo('.tbody-moving-time').ready(function () {
             });
           }
         }
@@ -386,6 +390,14 @@
                 color: ChartStyle.label_font_color
               }
             },
+            stackLabels: {
+              enabled: true,
+              style: {
+                fontWeight: 'bold',
+                color: ChartStyle.label_font_color,
+                fontSize: "16px"
+              }
+            },
             plotLines: [{value: 0, width: 1, color: ChartStyle.label_font_color}],
             labels: {
               style: {
@@ -402,7 +414,7 @@
               } else if (this.series.name == "cycle-time") {
                 return '<span><b>' + this.x.split('#')[0] +
                     '</b><br/><b>' + this.series.name + ':</b><b>' + this.y + ' s</b><br/><b>TotalCount:</b><b>' + this.x.split('#')[2] + '</b><span>';
-              }else {
+              } else {
                 return '<span><b>' + this.x.split('#')[0] +
                     '</b><br/><b>' + this.series.name + ':</b><b>' + this.y + ' s</b><br/><span>';
               }
@@ -422,9 +434,13 @@
           },
           plotOptions: {
             column: {
+              stacking: 'normal',
               dataLabels: {
                 enabled: true,
-                color: ChartStyle.label_font_color
+                color: ChartStyle.column_font_color,
+                style: {
+                  fontSize: "13px"
+                }
               },
               color: ChartStyle.label_font_color,
               borderWidth: '0'
@@ -433,14 +449,15 @@
           series: [
             {
               type: 'column',
-              name: 'moving-time',
-              data: charts_moving_time,
-              color: '#00EEEE'
-            }, {
-              type: 'column',
               name: 'cycle-time',
               data: charts_cycle_time,
-              color: '#00FF7F'
+              color: ChartStyle.column_cycle_time_color
+            },
+            {
+              type: 'column',
+              name: 'waiting-time',
+              data: charts_moving_time,
+              color: '#ff0000'
             },
             {
               name: 'TargetMax',

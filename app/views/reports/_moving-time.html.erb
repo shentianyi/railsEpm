@@ -321,7 +321,7 @@
 
         /*table*/
         for (var i = 0; i < ajaxData.length; i++) {
-          $('<th>' + ajaxData[i].name + '</th>').appendTo('.thead-tr').ready(function () {
+          $('<th style="white-space: nowrap;">' + ajaxData[i].name + '</th>').appendTo('.thead-tr').ready(function () {
           });
 
           $('<td>' + ajaxData[i].target_max + '</td>').appendTo('.tbody-target-max').ready(function () {
@@ -332,15 +332,15 @@
 
           if (ajaxData[i].value > ajaxData[i].target_max) {
             charts_value.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].value});
-            $('<td style="background:#ff0000;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+            $('<td style="background:#eeeeee;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
             });
           } else if (ajaxData[i].value < ajaxData[i].target_min) {
-            charts_value.push({id: ajaxData[i].id, color: '#00FF7F', y: ajaxData[i].value});
-            $('<td style="background:white;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+            charts_value.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].value});
+            $('<td style="background:#eeeeee;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
             });
           } else {
-            charts_value.push({id: ajaxData[i].id, color: '#00FF7F', y: ajaxData[i].value});
-            $('<td style="background:#00FF7F;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
+            charts_value.push({id: ajaxData[i].id, color: '#ff0000', y: ajaxData[i].value});
+            $('<td style="background:#eeeeee;">' + ajaxData[i].value + '</td>').appendTo('.tbody-value').ready(function () {
             });
           }
         }
@@ -468,7 +468,7 @@
               type: 'column',
               name: 'waiting-time',
               data: charts_value,
-              color: '#00FF7F'
+              color: '#ff0000'
             }, {
               name: 'TargetMax',
               data: charts_target_max,
