@@ -79,7 +79,7 @@
   //  c 表示 cycletime   m 表示 movingtime  mc 表示 moving & cycle time
   //  ["c", "m", "mc"] 表示  先显示 cycletime   再显示 movingtime  最后显示  moving & cycle time
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  var ShowWay = ["c", "m", "mc"];
+  var ShowWay = ["c"];
 
   setInterval(function () {
     if (CurrentDate != new Date().getDate() || product_line_list == null || product_line_list.length == 0) {
@@ -393,25 +393,27 @@
     $('#report-menu').css({
       "display": "none"
     });
+
+    makeFullScreen(document.documentElement);
+
     $('#full_screen').css({
       "display": "block",
       "position": "absolute",
-      "margin-left": "-10px",
+      "margin-left": "0px",
       "margin-top": "-70px",
       "margin-right": "-30px",
       "background-color": "white",
       "overflow": "hidden",
       "height": function () {
-        return window.screen.height;
+        return '100%';
       },
       "filter": "alpha(opacity=100)",
       "opacity": "1",
       "width": function () {
-        return (window.screen.width + 10);
+        return '100%';
       },
       "z-index": "99999"
     });
-    makeFullScreen(document.documentElement);
   }
 
   function makeFullScreen(divObj) {

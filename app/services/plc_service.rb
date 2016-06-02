@@ -13,7 +13,7 @@ class PlcService
       min=kpi.target_max
 
       v=values[i].to_f/1000
-      return if v<1.5
+     # return if v<1.5
       time=Time.parse(params[:time])
 
       if entity.is_last && kpi.code=='CYCLE_TIME_KPI'

@@ -25,6 +25,7 @@ class ApplicationController < ActionController::Base
   private
 
   def require_user
+
     unless current_user
       respond_to do |format|
         format.json { render json: {access: false, errorCode: -3000}, status: 401 }
