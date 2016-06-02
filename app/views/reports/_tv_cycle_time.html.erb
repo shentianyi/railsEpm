@@ -82,10 +82,10 @@
   var ShowWay = ["c"];
 
   setInterval(function () {
-    if (CurrentDate != new Date().getDate() || product_line_list == null || product_line_list.length == 0) {
+   // if (CurrentDate != new Date().getDate() || product_line_list == null || product_line_list.length == 0) {
       product_line_list = GetListData();
       CurrentDate = new Date().getDate();
-    }
+    //}
   }, 5000);
 
   var styles = {
@@ -136,7 +136,7 @@
 
       FullScreenInterval = setInterval(function () {
         if (product_line_list != null && product_line_list.length > 0 && !firstloading) {
-          if (cycle == product_line_list.length - 1) {
+          if (cycle >= product_line_list.length - 1) {
             cycle = -1;
           }
           cycle++;
@@ -340,7 +340,8 @@
         product_line: ProductLine.id,
         interval: Interval,
         start_time: start_time,
-        end_time: end_time
+        end_time: end_time,
+        from_tv: true
       },
       success: function (data) {
         if (data) {

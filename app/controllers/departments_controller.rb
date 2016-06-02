@@ -358,7 +358,7 @@ class DepartmentsController < ApplicationController
   def product_line_list
     data=[]
 
-    list=DisplaySetList.find_by_name(Time.parse(params[:date]).to_date)
+    list=DisplaySetList.find_by_name(Time.now.to_date)
     if list
       list.display_set_items.order('department_id asc').each do |d|
         data<<{
@@ -382,11 +382,10 @@ class DepartmentsController < ApplicationController
     frequency=params[:interval].blank? ? KpiFrequency::Daily : params[:interval].to_i
     start_time=nil
     end_time=nil
-    if params[:start_time].present?
+    if params[:start_time].present? && params[:from_tv].blank?
       start_time=Time.parse(params[:start_time]).utc
       end_time=Time.parse(params[:end_time]).utc
     else
-
       start_time=(KpiFrequency.get_begin_date(Time.now, frequency).utc)
       end_time=(KpiFrequency.get_next_date(start_time, frequency)-1.second).utc
     end
