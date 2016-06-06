@@ -257,7 +257,7 @@
 
     $("#product_line_id").val(productLine);
 
-    hideDownload();
+  //  hideDownload();
     $.ajax({
       url: '/departments/cycle_kpi_data',
       type: 'get',
@@ -287,7 +287,7 @@
                   '<div class="content"><strong>' + data[i].target_min + '</strong><p>Min Target</p></div></div></div></div></div></div>').appendTo('#data_container').ready(function () {
               });
             }
-            $('.download-panel').hide();
+           // $('.download-panel').hide();
           }
         }
         remove_loading();
@@ -310,6 +310,8 @@
   });
 
   setInterval(function () {
+     // console.log( $('.download-panel').attr('style').indexOf('none'));
+    if(  $('.download-panel').attr('style').indexOf('none')>0){
     if (!IsLoading) {
       var IntervalProductLine = $('#vehicle-select').val();
       var IntervalDataType;
@@ -326,7 +328,7 @@
       var end_time = now.format("yyyy-MM-dd hh:mm:ss");
       var start_time = startRecentTime();
       loadData(IntervalProductLine, IntervalDataType, start_time, end_time);
-    }
+    }}
   }, 120000);
 
 
