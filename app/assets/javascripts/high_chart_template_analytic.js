@@ -3,6 +3,8 @@ ANALYTICS.max_length=100;
 ANALYTICS.base_option=null;
 ANALYTICS.loading_data=false;
 ANALYTICS.url='http://42.121.111.38:9002/HighChartsFileService/';
+//ANALYTICS.url='http://192.168.1.27:8000/HighChartsFileService/';
+
 ANALYTICS.high_chart={
     chart: {
         spacingLeft: 5,

@@ -1,7 +1,8 @@
 // Brilliantech Gen File JS
 var FileGen = FileGen || {
         default_options: {
-            host: 'http://42.121.111.38:9003/',
+            //host: 'http://42.121.111.38:9003/',
+            host: 'http://192.168.1.11:9002/',
             form_method: 'post',
             input_name: 'grid_xml',
             legend_column_width: 90,
@@ -9,7 +10,7 @@ var FileGen = FileGen || {
             chart_colors: ['D1E5FE', 'FD0E0E', '25AD38', '3C6FCC', '19CF22', 'EB4848'],
             chart_height: 300,
             chart_min_width: 600,
-            show_legend: true,
+            show_legend: true
         },
         excelColumn: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         url: {},

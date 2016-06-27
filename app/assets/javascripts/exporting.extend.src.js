@@ -187,13 +187,13 @@
 
             //init charts
             var charts = [];
-            var chart={chart_types: []};
+            var chart = {chart_types: []};
             for (var i = 0; i < table.rows.length; i++) {
                 var c = {type: 'line', series: []};
                 for (var i = 0; i < this.series.length; i++) {
                     c.series.push({});
                 }
-               chart.chart_types.push(c);
+                chart.chart_types.push(c);
             }
             charts.push(chart);
 

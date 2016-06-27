@@ -87,7 +87,7 @@ puts "%%%%%%%%%%%%%%%%%%%#{property_ids}---#{data_module_keys}"
 		self.data.each do |d|
           key=[]
           property_ids.each do |id|
-            key<<d['_id'][id.to_s].downcase
+            key<<d['_id'][id.to_s].downcase unless d['_id'][id.to_s].blank?
           end
 
           date=date_parse_proc.call(d['_id']['date'])
