@@ -153,7 +153,7 @@ class KpiEntry
     return kpi_entries if kpi.blank?
 
     if user.admin?
-      kpi_entries = KpiEntry.where({:user_id.in=>(User.where(tenant_id: 12).pluck(:id).uniq), kpi_id: kpi.id}).where(:entry_at.gte => start_time).where(:entry_at.lte => end_time)
+      kpi_entries = KpiEntry.where({:user_id.in => (User.where(tenant_id: user.tenant.id).pluck(:id).uniq), kpi_id: kpi.id}).where(:entry_at.gte => start_time).where(:entry_at.lte => end_time)
     elsif user.director?
       kpi_entries = KpiEntry.accessible_by(Ability.new(user)).where(:entry_at.gte => start_time).where(:entry_at.lte => end_time)
     elsif user.user?
@@ -161,6 +161,44 @@ class KpiEntry
     end
 
     kpi_entries
+  end
+
+  def self.to_total_xlsx kpi_entries, kpi
+    p = Axlsx::Package.new
+    wb = p.workbook
+    wb.add_worksheet(:name => "sheet1") do |sheet|
+      sheet.add_row ["序号", "员工号", "项目编号", "签到时间", "签退时间", "工时", "间歇时间"]
+      if kpi
+        project_nr=kpi.kpi_properties.find_by_name('project_nr')
+        start_at=kpi.kpi_properties.find_by_name('start_at')
+        end_at=kpi.kpi_properties.find_by_name('end_at')
+        end_at_time_prev=''
+        user_id=''
+
+        kpi_entries.order_by(user_id: :acs).each_with_index { |kpi_entry, index|
+          start_at_time=kpi_entry.respond_to?("a#{start_at.id.to_s}") ? kpi_entry.send("a#{start_at.id.to_s}") : ''
+          end_at_time=kpi_entry.respond_to?("a#{end_at.id.to_s}") ? kpi_entry.send("a#{end_at.id.to_s}") : ''
+          if user_id==kpi_entry.user_id && start_at_time.is_date? && end_at_time_prev.is_date?
+            dif_value=start_at_time.to_time-end_at_time_prev.to_time
+          else
+            dif_value=''
+          end
+
+          sheet.add_row [
+                            index+1,
+                            User.find(kpi_entry.user_id).first_name,
+                            kpi_entry.respond_to?("a#{project_nr.id.to_s}") ? kpi_entry.send("a#{project_nr.id.to_s}") : '',
+                            start_at_time.is_date? ? start_at_time : '',
+                            end_at_time.is_date? ? end_at_time : '',
+                            kpi_entry.value,
+                            dif_value
+                        ]
+          user_id=kpi_entry.user_id
+          end_at_time_prev=end_at_time
+        }
+      end
+    end
+    p.to_stream.read
   end
 
   private

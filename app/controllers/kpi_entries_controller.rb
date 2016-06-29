@@ -15,7 +15,14 @@ class KpiEntriesController < ApplicationController
     @kpi = Kpi.find(params[:id])
     @kpi_entries = KpiEntry.generated_history_data(current_user, @kpi, params[:start_date], params[:end_date])
 
-    render :partial => "kpi_entries/history"
+    if params[:format]=='xlsx'
+      send_data(KpiEntry.to_total_xlsx(@kpi_entries, @kpi),
+                :type => "application/vnd.openxmlformates-officedocument.spreadsheetml.sheet",
+                :filename => "#{Date.today}-工时详细导出.xlsx")
+    else
+      render :partial => "kpi_entries/history"
+    end
+
   end
 
   def create
