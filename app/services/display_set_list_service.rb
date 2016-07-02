@@ -31,9 +31,11 @@ class DisplaySetListService
     end
   end
 
-  def self.display_product_line date
+  def self.display_product_line date,remark='Default'
     data=[]
-
+if remark.blank?
+  remark='Default'
+end
     Department.where(is_product_line: true).each do |d|
       data<<{
           id: d.id,
@@ -42,7 +44,7 @@ class DisplaySetListService
       }
     end
 
-    if dsl=DisplaySetList.find_by_name(date)
+    if dsl=  DisplaySetList.where(name:date,remark: remark).first
       dsl.display_set_items.each do |item|
         data.each do |i|
           if i[:id]==item.department_id
@@ -55,9 +57,9 @@ class DisplaySetListService
     data
   end
 
-  def self.set_product_line date, id, status
+  def self.set_product_line date, id, status,remark='Default'
     unless date.blank?
-      list=DisplaySetList.find_by_name(date)
+      list=DisplaySetList.where(name:date,remark: remark).first
       DisplaySetList.transaction do
         if list
           item=list.display_set_items.where(department_id: id).first
@@ -68,7 +70,7 @@ class DisplaySetListService
             item.save
           end
         else
-          list=DisplaySetList.new(name: date)
+          list=DisplaySetList.new(name: date,remark:remark)
           if list.save
             if status
               item=DisplaySetItem.new(department_id: id, display_set_list_id: list.id)

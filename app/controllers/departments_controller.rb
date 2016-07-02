@@ -358,7 +358,7 @@ class DepartmentsController < ApplicationController
   def product_line_list
     data=[]
 
-    list=DisplaySetList.find_by_name(Time.now.to_date)
+    list=  DisplaySetList.where(name:Time.now.to_date,remark:(params[:remark].blank? ? 'Default' : params[:remark])).first
     if list
       list.display_set_items.order('department_id asc').each do |d|
         data<<{

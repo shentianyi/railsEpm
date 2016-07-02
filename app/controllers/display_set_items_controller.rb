@@ -80,4 +80,10 @@ class DisplaySetItemsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def list
+    @remark=params[:remark]
+
+    render partial: 'list'
+  end
 end

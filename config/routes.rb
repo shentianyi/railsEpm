@@ -1,7 +1,11 @@
 IFEpm::Application.routes.draw do
 
 
-  resources :display_set_items
+  resources :display_set_items do
+    collection do
+      get :list
+    end
+  end
 
 
   resources :display_set_lists do

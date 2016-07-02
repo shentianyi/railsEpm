@@ -234,8 +234,11 @@
   });
 
   function loadData(productLine, datatype, start_time, end_time) {
-    if (productLine == null || datatype == null || start_time == null || end_time == null)
-      return;
+//    if (productLine == null || datatype == null || start_time == null || end_time == null)
+//      return;
+
+      if (productLine == null || datatype == null)
+          return;
 
     if ($('#from_ipad').val()) {
       show_loading(70, 0, 0, 10);

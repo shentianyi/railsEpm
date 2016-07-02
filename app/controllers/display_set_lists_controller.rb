@@ -98,8 +98,8 @@ class DisplaySetListsController < ApplicationController
   end
 
   def set_product_line
-    puts params
-    DisplaySetListService.set_product_line(params[:date], params[:product_line_id], params[:status]=='true')
+    DisplaySetListService.set_product_line(params[:date], params[:product_line_id], params[:status]=='true',params[:remark])
     render nothing: true
   end
+
 end
