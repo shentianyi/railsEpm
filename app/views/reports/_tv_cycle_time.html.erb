@@ -32,7 +32,11 @@
 
 
 <div class="col-sm-12" style="margin-top: 20px; text-align: center">
-
+  <div style="text-align: left">
+    <p>
+      播放周期(秒)[最小播放周期是30秒]<input type="text" id="intervalTime" value="60"/>
+    </p>
+  </div>
   <div style="text-align: left">
     <p>
     <h4>展示配置</h4>
@@ -118,23 +122,32 @@
     };
 
     $('.fullscreen').click(function () {
-        maskFullScreen();
-        product_line_list = GetListData();
-        if (product_line_list.length > 0) {
-            firstloading = true;
-            cycle = 0;
+        SignalInterTime = parseInt($('#intervalTime').val()) * 1000;
+        console.log(SignalInterTime);
+        if (SignalInterTime >= 30000) {
+            maskFullScreen();
+            product_line_list = GetListData();
 
-            HowToShow(ShowWay, product_line_list[cycle]);
+            IntervalTime=SignalInterTime*ShowWay.length+2000;
 
-            FullScreenInterval = setInterval(function () {
-                if (product_line_list != null && product_line_list.length > 0 && !firstloading) {
-                    if (cycle >= product_line_list.length - 1) {
-                        cycle = -1;
+            if (product_line_list.length > 0) {
+                firstloading = true;
+                cycle = 0;
+
+                HowToShow(ShowWay, product_line_list[cycle]);
+
+                FullScreenInterval = setInterval(function () {
+                    if (product_line_list != null && product_line_list.length > 0 && !firstloading) {
+                        if (cycle >= product_line_list.length - 1) {
+                            cycle = -1;
+                        }
+                        cycle++;
+                        HowToShow(ShowWay, product_line_list[cycle]);
                     }
-                    cycle++;
-                    HowToShow(ShowWay, product_line_list[cycle]);
-                }
-            }, IntervalTime);
+                }, IntervalTime);
+            }
+        } else {
+            alert('最小播放周期是30秒!');
         }
     });
 
@@ -311,7 +324,7 @@
             url: '/departments/product_line_list',
             type: 'get',
             async: false,
-            data: {date: date,remark:$('.display-setting:checked').val()},
+            data: {date: date, remark: $('.display-setting:checked').val()},
             success: function (data) {
                 ProductLineList = data;
             },
@@ -691,7 +704,7 @@
 
     $('.display-setting').change(function () {
         var remark = $('.display-setting:checked').val();
-        $.get('/display_set_items/list',{remark:remark},function(data){
+        $.get('/display_set_items/list', {remark: remark}, function (data) {
             $('.list').html(data);
         });
     });
