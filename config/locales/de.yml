@@ -590,6 +590,8 @@ de:
         end_time: End Time
         total: Total
         average: Average
+        pieComparison: Compare
+        pieRatio: RATIO
         add: Add
       close: Close
 

@@ -50,18 +50,15 @@
       <p><%= t 'dashboard_group.dashboard.full_desc' %></p>
       <a class="btn btn-primary" id="dashboard-full-size"><%= t 'dashboard_group.dashboard.full_now' %></a>
     </section>
-<input type="hidden" id="full-size-hidden" value="<%=@full_size%>">
+    <input type="hidden" id="full-size-hidden" value="<%= @full_size %>">
   </aside>
 </div>
-
-
 
 <div class="dashboard-add-wrap" id="dashboard-add-wrap">
   <div class="dashboard-add-inner" id="dashboard-add-inner">
     <div class="dashboard-add-sub-menu" id="dashboard-add-sub-menu">
       <ul>
         <li>
-
         </li>
         <li class="active">
           <a><%= t 'dashboard_group.dashboard.add_type.cus' %></a>
@@ -120,21 +117,28 @@
     <div class="content-left-main" name="dashboard-add">
       <div class="left-content-title" name="dashboard-add" id="left-content-title-add">
         <div class="pull-left analytics-condition-choose" name="dashboard-add">
+
           <div class="index-condition-group">
-            <select data-placeholder="<%= t 'analytics.kpi_category' %> *" style="width:120px;" class="chosen-select" title="analy-entity-select" id="chart-group">
+            <select data-placeholder="<%= t 'analytics.kpi_category' %> *" class="chosen-select" title="analy-entity-select" id="chart-group">
               <% @categories.each_with_index do |catetory, i| %>
                   <option value="<%= catetory.id %>"><%= catetory.name %></option>
               <% end %>
             </select>
-            <select data-placeholder="<%= t 'analytics.kpi' %> *" style="width:120px;" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
+
+            <select data-placeholder="<%= t 'analytics.kpi' %> *" class="chosen-select" title="analy-kpi-select" id="chart-kpi" date-pick=false>
               <option value=""></option>
             </select>
-            <select data-placeholder="<%= t 'analytics.view' %> *" style="width:120px;" class="chosen-select" title="analy-view-select" id="chart-view">
-              <% @entity_groups.each_with_index do |entity_group, i| %>
-                  <option value="<%= entity_group.id %>"><%= entity_group.name %></option>
-              <% end %>
-            </select>
+
+
+            <div class="index-condition-group chosen-attribute">
+              <select data-placeholder="<%= t 'analytics.view' %>" multiple class="chosen-select" title="analy-view-select" id="chart-view">
+                <% @entity_groups.each_with_index do |entity_group, i| %>
+                    <option value="<%= entity_group.id %>"><%= entity_group.name %></option>
+                <% end %>
+              </select>
+            </div>
           </div>
+
           <div class="index-condition-group">
             <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.start_time' %> *" id="analy-begin-time"
                    readonly=true/>
@@ -143,7 +147,8 @@
                    readonly=true/>
             <label class="index-date-extra-info"></label>
           </div>
-          <div class="index-condition-group" style="width:100px;">
+
+          <div class="index-condition-group" style="width: 100px;margin-left: -25px;">
             <label class="analytics-radio-label">
               <input type="radio" name="chartRadios" value="1" checked>
               <%= t 'dashboard_group.dashboard.serie.total' %>
@@ -153,12 +158,32 @@
               <%= t 'dashboard_group.dashboard.serie.average' %>
             </label>
           </div>
-          <div class="index-condition-group chosen-attribute" style="width:100px;height: 500px">
-            <select data-placeholder="<%= t 'analytics.select-dim' %>" multiple style="width:120px;" class="chosen-select" title="analy-attribute-select" id="kpi-property-select">
 
+          <div class="index-condition-group chosen-attribute" style="width: 130px;">
+            <select data-placeholder="<%= t 'analytics.select-dim' %>" multiple class="chosen-select" title="analy-attribute-select" id="kpi-property-select">
             </select>
           </div>
-          <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px; margin-left: 60px" id="db-add-chart">Add</a>
+
+          <div class="index-condition-group" id="pie_compare" style="width: 100px;margin-left: 20px; display: none;">
+            <label class="analytics-radio-label">
+              <input type="radio" name="pieRadios" value="1" checked>
+              <%= t 'dashboard_group.dashboard.serie.pieComparison' %>
+            </label>
+            <label class="analytics-radio-label">
+              <input type="radio" name="pieRadios" value="0">
+              <%= t 'dashboard_group.dashboard.serie.pieRatio' %>
+            </label>
+          </div>
+
+          <div class="index-condition-group" style="width: 100px; margin-left: 15px;">
+            <select name="x_group" id="x_group" class="chosen-select">
+              <option value="100">日期</option>
+              <option value="200">部门</option>
+              <option value="300">维度</option>
+            </select>
+          </div>
+
+          <a class="btn btn-primary btn-normal pull-left" style="margin-top:14px;" id="db-add-chart">Add</a>
         </div>
         <i class="icon-chevron-down analytic-control-condition-visible" id="analytic-control-condition-visible" state="close"> </i>
       </div>
@@ -223,19 +248,18 @@
 <% end %>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        init_component();
-        DASHBOARD.init();
-        right_nav_main.init();
-        DASHBOARD.add.init();
+  $(document).ready(function () {
+    init_component();
+    DASHBOARD.init();
+    right_nav_main.init();
+    DASHBOARD.add.init();
 
-        if($('#full-size-hidden').val()=='true'){
-
-            $("#dashboard-content-full").css("display","block");
-            var height=$(document).height();
-            $("#dashboard-content-full").css("height",height+"px");
-            ifepm.dashboard_widget.init_fullsize();
-            on_full_size();
-        }
-    });
+    if ($('#full-size-hidden').val() == 'true') {
+      $("#dashboard-content-full").css("display", "block");
+      var height = $(document).height();
+      $("#dashboard-content-full").css("height", height + "px");
+      ifepm.dashboard_widget.init_fullsize();
+      on_full_size();
+    }
+  });
 </script>

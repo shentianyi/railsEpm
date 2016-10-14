@@ -47,9 +47,9 @@ function init_analytics() {
     resize_chart.body();
     resize_chart.container();
 
-
     $("#chart-group").on("change", function (event) {
         var id = $(adapt_event(event).target).attr("value");
+
         $.ajax({
             url: '/kpis/categoried/' + id,
             dataType: "json",
@@ -73,31 +73,41 @@ function init_analytics() {
     $('#chart-kpi').on('change', function (event, id) {
         $.get('/kpis/group_properties/' + id.selected, function (data) {
             $("#kpi-property-select").empty().trigger('chosen:updated');
+
             if (data) {
                 var properties = {};
                 $.each(data, function (k, v) {
                     $.each(v, function (kk, vv) {
                         properties[k] = kk;
                         var gp = $('<optgroup/>').attr('label', kk);
+
                         for (var i = 0; i < vv.length; i++) {
-                            gp.append($('<option/>').attr('value', vv[i].id).attr('property', k).text(vv[i].value));
+                            // gp.append($('<option/>').attr('value', vv[i].id).attr('property', k).text(vv[i].value));
+
+                            gp.append("<option value='"+gp.optgroup.attr('label')+"'>"+gp.optgroup.attr('label')+"</option>");
+
+                            console.log("dfsfsfsdf");
+                            console.log(gp);
                         }
                         $("#kpi-property-select").append(gp);
                     });
                 });
                 $("#kpi-property-select").val('').trigger('chosen:updated');
-                groupDetailInit(data);
-                if (ANALYTICS.demo) {
-                    var interval = $("#s_interval").val();
-                    var start_time = new Date($("#s_start_time").val()).toWangString(interval);
-                    var end_time = new Date($("#s_end_time").val()).toWangString(interval);
-                    $("#analy-begin-time").val(start_time).attr("hide_value", start_time).attr("hide_post", start_time);
-                    $("#analy-end-time").val(end_time).attr("hide_value", end_time).attr("hide_post", end_time);
-                    prepare_form_chart();
-                }
+
+                // groupDetailInit(data);
+                // if (ANALYTICS.demo) {
+                //     var interval = $("#s_interval").val();
+                //     var start_time = new Date($("#s_start_time").val()).toWangString(interval);
+                //     var end_time = new Date($("#s_end_time").val()).toWangString(interval);
+                //     $("#analy-begin-time").val(start_time).attr("hide_value", start_time).attr("hide_post", start_time);
+                //     $("#analy-end-time").val(end_time).attr("hide_value", end_time).attr("hide_post", end_time);
+                //     prepare_form_chart();
+                // }
             }
         }, 'json');
     });
+
+
     ANALYTICS.demo = false;
     if ($("#s_subscribe_id").val()) {
         ANALYTICS.demo = true;

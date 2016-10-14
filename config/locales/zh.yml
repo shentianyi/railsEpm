@@ -618,6 +618,8 @@ zh:
         end_time: 结束时间
         total: 总数
         average: 平均
+        pieComparison: 对比
+        pieRatio: 占比
         add: 添加
       close: 关闭
 
