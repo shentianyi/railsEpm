@@ -207,10 +207,10 @@ var high_chart = {
         lineWidth: 0,
         tickWidth: 0,
         ordinal: true,
-        minPadding: 0.02,
-        maxPadding: 0.02,
-        minRange: 36e5,
-        type: 'datetime',
+        // minPadding: 0.02,
+        // maxPadding: 0.02,
+        // minRange: 36e5,
+        // type: 'datetime',
         dateTimeLabelFormats: {
             millisecond: "quarter " + '%Q' + '<br />' + '%Y',
             hour: '%H:%M' + "<br />" + '%e/%b',
@@ -271,16 +271,34 @@ function add_series(option) {
     var series_id = option.id;
     var chart_container = option.target;
     var type = option.type;
-    var data = deal_data(option);
+    var data;
+
+    console.log("Option Add Series");
+    console.log(option);
+
+    if (option.x_type == undefined || option.x_type == "100" || option.x_type == null) {
+        data = deal_data(option);
+    } else {
+        data = option.data;
+    }
     var color = option.color ?
         option.color : (option.theme ?
         HIGH_CHART.chart_color[option.theme][series_id % HIGH_CHART.chart_color[option.theme].length] : HIGH_CHART.chart_color["default"][series_id % HIGH_CHART.chart_color["default"].length]);
-    $("#" + chart_container).highcharts().addSeries({
+
+
+    console.log("Data...");
+    console.log(data);
+
+    var HighCharts = $("#" + chart_container).highcharts();
+    HighCharts.xAxis.type = "string";
+    HighCharts.addSeries({
         name: series_name,
         id: series_id,
         color: color,
         data: data
-    })
+    });
+
+
 }
 
 
@@ -584,6 +602,8 @@ function proper_type_for_chart() {
         }, c;
 
         var new_series = deepCopy(p, c);
+
+
         if (this.type == "column") {
             for (var i = 0; i < new_series.data.length; i++) {
                 new_series.data[i].target_min = new_series.data[i].low;

@@ -267,10 +267,12 @@ DASHBOARD.add.init = function () {
         });
 
     });
+
     $("#chart-group").chosen().change(function () {
         $("#analy-begin-time,#analy-end-time").datepicker("remove");
         $("#analy-begin-time,#analy-end-time").datetimepicker("remove");
     });
+
     $("body").on("change", "#analy-begin-time", function () {
         var interval = $("#chart-kpi").find(":selected").attr("interval");
         if (interval == "200") {
@@ -441,7 +443,6 @@ function get_selected_view() {
 DASHBOARD.add.prepare_form_chart = function () {
     var kpi = $("#chart-kpi :selected").attr("value");
     var view = get_selected_view();
-
     var method = $("input[name='chartRadios']:checked").attr("value");
     var type = $("#db-add-type>.active").attr("type");
     var interval, chart_body_close_validate;
@@ -489,7 +490,7 @@ DASHBOARD.add.prepare_form_chart = function () {
         }
 
         if (is_datetime_outrange(begin_time, end_time, interval)) {
-            MessageBox("对不起，时间范围太大了！", "top", "warning")
+            MessageBox("对不起，时间范围太大了！", "top", "warning");
             return;
         }
 
@@ -500,10 +501,20 @@ DASHBOARD.add.prepare_form_chart = function () {
                 draw_charts(kpi, method, view[i], begin_time, end_time, interval, kpi_property, show_type, "");
             }
         } else if (show_type == "300") {
-            //按照部门和维度进行修改
+            //按照部维度进行修改
+            var ValueArray = new Array();
+            ValueArray.push(show_value);
             for (var i = 0; i < view.length; i++) {
-                draw_charts(kpi, method, view[i], begin_time, end_time, interval, kpi_property, show_type, show_value);
+                draw_charts(kpi, method, view[i], begin_time, end_time, interval, kpi_property, show_type, ValueArray);
             }
+        } else if (show_type == "200") {
+            //按照部门进行修改
+            var valueArray = new Array();
+            for (var i = 0; i < view.length; i++) {
+                valueArray.push(view[i].id);
+            }
+
+            draw_charts(kpi, method, view, begin_time, end_time, interval, kpi_property, show_type, valueArray);
         }
 
         function draw_charts(kpi, method, view, begin_time, end_time, interval, kpi_property, show_type, type_value) {
@@ -518,11 +529,11 @@ DASHBOARD.add.prepare_form_chart = function () {
                 x_group: {type: show_type, value: type_value}
             }, function (msg) {
                 dashboard_remove_loading("dashboard-add-inner");
-
-                console.log("msg");
-                console.log(msg);
-
                 if (msg.result) {
+
+                    console.log("MSG");
+                    console.log(msg);
+
                     var option = {
                         kpi: $("#chart-kpi :selected").text(),
                         target: "chart-container",
@@ -533,8 +544,11 @@ DASHBOARD.add.prepare_form_chart = function () {
                         view: view.id,
                         view_text: view.text,
                         count: db_chartSeries.getCount() + 1,
-                        kpi_property: kpi_property
+                        kpi_property: kpi_property,
+                        x_type: show_type
                     };
+
+
                     var addSeriesOption = {
                         kpi: $("#chart-kpi :selected").text(),
                         kpi_id: kpi,
@@ -563,21 +577,37 @@ DASHBOARD.add.prepare_form_chart = function () {
                     $("#db-add-kpi-list").append(
                         $("<li />")
                             .append($("<span />").css("backgroundColor", color))
-                            .append($("<p />").text(option.kpi))
+                            .append($("<p />").text(option.kpi + "(" + (show_type == "200" ? "" : view.text) + ")"))
                             .append($("<i />").addClass("icon-remove").attr("kpi_id", option.id))
                     );
 
                     var length = msg.object.current.length;
 
                     var data_array = [];
-                    for (var i = 0; i < length; i++) {
-                        data_array[i] = {};
-                        data_array[i].y = msg.object.current[i];
-                        data_array[i].low = msg.object.target_min[i];
-                        data_array[i].high = msg.object.target_max[i];
-                        data_array[i].unit = msg.object.unit[i];
-                        data_array[i].id = option.id
+
+                    if (show_type == "100") {
+                        for (var i = 0; i < length; i++) {
+                            data_array[i] = {};
+                            data_array[i].y = msg.object.current[i];
+                            data_array[i].low = msg.object.target_min[i];
+                            data_array[i].high = msg.object.target_max[i];
+                            data_array[i].unit = msg.object.unit[i];
+                            data_array[i].id = option.id
+                        }
+                    } else {
+                        for (var i = 0; i < length; i++) {
+                            data_array[i] = {};
+                            data_array[i].x = msg.object.date[i];
+                            data_array[i].y = msg.object.current[i];
+                            data_array[i].low = msg.object.target_min[i];
+                            data_array[i].high = msg.object.target_max[i];
+                            data_array[i].unit = msg.object.unit[i];
+                            data_array[i].id = option.id;
+                            data_array[i].view = show_type = "200" ? msg.object.date[i] : view.text;
+                        }
                     }
+
+
                     /*
                      datas = [{
                      view:"Leoni",
@@ -589,7 +619,6 @@ DASHBOARD.add.prepare_form_chart = function () {
                      * */
                     var datas;
                     if (option.type === "table") {
-
                         if (chart_body_close_validate) {
                             addSeriesOption.qoros_data = deepCopy(msg.object.current, []);
                             option.data = data_array;
@@ -634,18 +663,24 @@ DASHBOARD.add.prepare_form_chart = function () {
                     }
                     else {
                         if (chart_body_close_validate) {
-
                             option.data = data_array;
                             addSeriesOption[interval] = data_array;
                             addSeriesOption.date = msg.object.date;
                             db_chartSeries.addSeries(addSeriesOption);
-
                             DASHBOARD.add.show_chart_body(option);
+
+
                             render_to(option);
                             create_environment_for_data(option);
                             new Highcharts.Chart(high_chart);
+
                             add_series(option);
                             proper_type_for_chart(option);
+
+                            console.log("AAAAAAAAAAAAAa");
+                            console.log("BBBBBBBBBBBBBBBBBB");
+
+                            console.log(option);
 
                             if (option.type == "line" && db_chartSeries.getCount() == 1) {
                                 var option_area = {};
@@ -662,6 +697,13 @@ DASHBOARD.add.prepare_form_chart = function () {
                             addSeriesOption[interval] = data_array;
                             addSeriesOption.date = msg.object.date;
                             db_chartSeries.addSeries(addSeriesOption);
+
+                            console.log("SDFSDSDFSDF");
+
+                            console.log("COmemgaglsdj");
+
+                            console.log(option);
+
                             add_series(option);
                             proper_type_for_chart(option);
                         }
@@ -751,6 +793,8 @@ DASHBOARD.add.alternate_chart_type = function (event) {
                     DASHBOARD.add.generate(option);
                 }
             }
+
+
             if (option.type == "line" && db_chartSeries.getCount() == 1) {
                 var id = $("#chart-container").highcharts().series[0].data[0].id;
                 option.type = "arearange";
@@ -825,6 +869,8 @@ DASHBOARD.add.change_interval = function (option) {
             }
         }
     }
+
+
     if (new_data_wrapper.length == count) {
         chart.destroy();
         var option = {
