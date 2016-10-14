@@ -97,6 +97,10 @@ class KpisController < ApplicationController
     render json: KpiPropertyPresenter.to_group_select(@properties)
   end
 
+  def x_groups
+    render json: XGroupType.get_x_group(Kpi.find_by_id(params[:id]))
+  end
+
   #@function remove_properties
   def remove_properties
     msg = Message.new

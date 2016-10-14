@@ -2,6 +2,10 @@
 
 require 'time'
 class DashboardItemsController < ApplicationController
+  skip_before_filter :require_user, :only => [:get_data,:items_by_dashboard_id]
+  skip_before_filter :check_tenant_status, :only => [:get_data,:items_by_dashboard_id]
+  skip_before_filter :find_current_user_tenant, :only => [:get_data,:items_by_dashboard_id]
+  skip_before_filter :current_ability,:only =>  [:get_data,:items_by_dashboard_id]
 
   def new
     #@new_item = DashboardItem.new

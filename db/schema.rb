@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160524080830) do
+ActiveRecord::Schema.define(:version => 20161014030853) do
 
   create_table "admin_kpi_category_templates", :force => true do |t|
     t.string   "name"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(:version => 20160524080830) do
     t.datetime "updated_at",        :null => false
     t.integer  "count"
     t.text     "kpi_property"
+    t.string   "x_group"
   end
 
   create_table "dashboard_items", :force => true do |t|
