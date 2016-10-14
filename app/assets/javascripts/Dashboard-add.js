@@ -108,6 +108,7 @@ DASHBOARD.add.init = function () {
         $("#chart-kpi+div").css("width", "130px");
         $("#kpi-property-select+div").css("width", "130px");
         $("#chart-view+div").css("width", "130px");
+
         db_chartSeries = {
             count: 0,
             id_count: 0,
@@ -249,6 +250,22 @@ DASHBOARD.add.init = function () {
         DATE_PICKER.shortcut_count = 0;
 
         new DATE_PICKER[interval](target, "string").datePicker();
+
+        $.ajax({
+            url: 'kpis/x_groups/' + $(this).val(),
+            type: 'get',
+            success: function (data) {
+                $('#x_group').empty();
+                for (var i = 0; i < data.length; i++) {
+                    $("<option type='" + data[i].type + "' value='" + data[i].value + "'>" + data[i].name + "</option>").appendTo("#x_group");
+                    $("#x_group").val('').trigger('chosen:updated');
+                }
+            },
+            error: function () {
+                console.log("Something Error!");
+            }
+        });
+
     });
     $("#chart-group").chosen().change(function () {
         $("#analy-begin-time,#analy-end-time").datepicker("remove");
@@ -429,7 +446,9 @@ DASHBOARD.add.prepare_form_chart = function () {
     var type = $("#db-add-type>.active").attr("type");
     var interval, chart_body_close_validate;
     var kpi_property = get_selected_property();
-    var show_type = $('#x_group').val();
+    var show_type = $('#x_group option:selected').attr("type");
+    var show_value = $('#x_group option:selected').val();
+    var show_text = $('#x_group option:selected').html();
 
     if ($("#db-chart-body").css("display") == "block") {
         chart_body_close_validate = false;
@@ -480,8 +499,16 @@ DASHBOARD.add.prepare_form_chart = function () {
             for (var i = 0; i < view.length; i++) {
                 draw_charts(kpi, method, view[i], begin_time, end_time, interval, kpi_property, show_type, "");
             }
-        } else {
+        } else if (show_type == "300") {
             //按照部门和维度进行修改
+            console.log("SDFSD");
+            console.log(show_type);
+            console.log(show_value);
+            console.log(show_text);
+
+            for (var i = 0; i < view.length; i++) {
+                draw_charts(kpi, method, view[i], begin_time, end_time, interval, kpi_property, show_type, show_value);
+            }
         }
 
         function draw_charts(kpi, method, view, begin_time, end_time, interval, kpi_property, show_type, type_value) {
