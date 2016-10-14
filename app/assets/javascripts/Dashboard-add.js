@@ -478,13 +478,13 @@ DASHBOARD.add.prepare_form_chart = function () {
 
         if (show_type == "100") {
             for (var i = 0; i < view.length; i++) {
-                draw_charts(kpi, method, view[i], begin_time, end_time, interval, kpi_property, show_type);
+                draw_charts(kpi, method, view[i], begin_time, end_time, interval, kpi_property, show_type, "");
             }
-        }else{
+        } else {
             //按照部门和维度进行修改
         }
 
-        function draw_charts(kpi, method, view, begin_time, end_time, interval, kpi_property, show_type) {
+        function draw_charts(kpi, method, view, begin_time, end_time, interval, kpi_property, show_type, type_value) {
             $.post('/kpi_entries/analyse', {
                 kpi_id: kpi,
                 average: method == "0",
@@ -493,9 +493,13 @@ DASHBOARD.add.prepare_form_chart = function () {
                 end_time: standardParse(end_time).date.toISOString(),
                 frequency: interval,
                 property: kpi_property,
-                x_group: show_type
+                x_group: {type: show_type, value: type_value}
             }, function (msg) {
                 dashboard_remove_loading("dashboard-add-inner");
+
+                console.log("msg");
+                console.log(msg);
+
                 if (msg.result) {
                     var option = {
                         kpi: $("#chart-kpi :selected").text(),

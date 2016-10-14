@@ -82,12 +82,12 @@ function init_analytics() {
                         var gp = $('<optgroup/>').attr('label', kk);
 
                         for (var i = 0; i < vv.length; i++) {
-                            // gp.append($('<option/>').attr('value', vv[i].id).attr('property', k).text(vv[i].value));
+                            gp.append($('<option/>').attr('value', vv[i].id).attr('property', k).text(vv[i].value));
 
-                            gp.append("<option value='"+gp.optgroup.attr('label')+"'>"+gp.optgroup.attr('label')+"</option>");
-
-                            console.log("dfsfsfsdf");
-                            console.log(gp);
+                            // gp.append("<option value='"+gp.optgroup.attr('label')+"'>"+gp.optgroup.attr('label')+"</option>");
+                            //
+                            // console.log("dfsfsfsdf");
+                            // console.log(gp);
                         }
                         $("#kpi-property-select").append(gp);
                     });
