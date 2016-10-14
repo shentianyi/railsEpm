@@ -19,6 +19,31 @@ module Entry
         else
           query=Entry::QueryService.new.base_query(KpiEntry, query_condition[:base]).where(entry_type: 0)
         end
+
+        func=self.parameter.average ? 'avg' : 'sum'
+        reduce=%Q{
+              function(key,values){
+              var m='#{func}';
+              var result={count:0,total:0,value:0};
+              for(var i=0;i<values.length;i++){
+                 result.count+=values[i].count;
+                 result.total+=values[i].total;
+              }
+              return result;};
+          }
+        finalize=%Q{
+             function(key, reducedVal){
+                   var m='#{func}';
+                   if(m=='avg'){
+                        reducedVal.value=reducedVal.total/reducedVal.count;
+                        }else{
+                            reducedVal.value=reducedVal.total;
+                        }
+                         return reducedVal;
+                };
+              }
+
+
         if self.parameter.x_group[:type]==XGroupType::DATE || self.parameter.x_group[:type]==XGroupType::PROPERTY
 
           if self.parameter.x_group[:type]==XGroupType::DATE
@@ -46,37 +71,28 @@ module Entry
               }
 
           end
-          func=self.parameter.average ? 'avg' : 'sum'
-          reduce=%Q{
-              function(key,values){
-              var m='#{func}';
-              var result={count:0,total:0,value:0};
-              for(var i=0;i<values.length;i++){
-                 result.count+=values[i].count;
-                 result.total+=values[i].total;
-              }
-              return result;};
-          }
-          finalize=%Q{
-             function(key, reducedVal){
-                   var m='#{func}';
-                   if(m=='avg'){
-                        reducedVal.value=reducedVal.total/reducedVal.count;
-                        }else{
-                            reducedVal.value=reducedVal.total;
-                        }
-                         return reducedVal;
-                };
-              }
+
           self.data= query.map_reduce(map, reduce).out(inline: true).finalize(finalize)
         elsif self.parameter.x_group[:type]==XGroupType::ENTITY_GROUP
 
           self.parameter.x_group[:value].each do |eg_id|
             eg=EntityGroup.find_by_id(eg_id)
             if eg
-              entities=eg.entities.collect{|e| e.id}
-              v= self.parameter.average ? query.where(entity_id: entities ).sum(:value) : query.where(entity_id:  entities ).sum(:value)
-              self.current[eg.name]= v
+              entities=eg.entities.collect { |e| e.id }
+              query=query.in(entity_id: entities)
+
+              mr_condition[:map_group] = "value:1"
+              map=%Q{
+                 function(){
+                        var v={count:1,total:parseFloat(this.value)}
+                        emit({#{mr_condition[:map_group]}},v);
+                    };
+              }
+
+              data=query.map_reduce(map, reduce).out(inline: true).finalize(finalize)
+
+p data.first
+              self.current[eg.name]= data.first.nil? ?  0 :KpiUnit.parse_entry_value(self.parameter.kpi.unit, data.first['value']['value'])
             end
           end
 
