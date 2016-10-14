@@ -114,6 +114,7 @@ module Entry
         if value.blank?
           @x_group={type: XGroupType::DATE}
         else
+          value[:type]= value[:type].to_i
           @x_group=value
         end
 
