@@ -501,11 +501,6 @@ DASHBOARD.add.prepare_form_chart = function () {
             }
         } else if (show_type == "300") {
             //按照部门和维度进行修改
-            console.log("SDFSD");
-            console.log(show_type);
-            console.log(show_value);
-            console.log(show_text);
-
             for (var i = 0; i < view.length; i++) {
                 draw_charts(kpi, method, view[i], begin_time, end_time, interval, kpi_property, show_type, show_value);
             }
