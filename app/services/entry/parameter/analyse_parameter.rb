@@ -116,6 +116,7 @@ module Entry
         else
           @x_group=value
         end
+
       end
 
 

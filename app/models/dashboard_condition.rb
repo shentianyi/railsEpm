@@ -17,7 +17,7 @@ class DashboardCondition < ActiveRecord::Base
   def self.get_item_formatted_data(id)
     datas = []
     dashboard_itme = DashboardItem.find(id)
-    conditions = DashboardCondition.where('dashboard_item_id=?', id)
+    conditions = DashboardCondition.where(dashboard_item_id: id)
 
     if conditions
       conditions.each { |condition|
@@ -29,7 +29,6 @@ class DashboardCondition < ActiveRecord::Base
         if count > 150
           return datas
         end
-
         data =Entry::Analyzer.new(
             kpi_id: condition.kpi_id,
             entity_group_id: condition.entity_group,
@@ -38,7 +37,7 @@ class DashboardCondition < ActiveRecord::Base
             average: condition.calculate_type=='AVERAGE' ? true : false,
             frequency: dashboard_itme.interval,
             property: condition.kpi_property.blank? ? nil : JSON.parse(condition.kpi_property),
-            x_group: condition.x_group.blank? ? nil : JSON.parse(condition.x_group)).analyse
+            x_group: condition.x_group.blank? ? nil : JSON.parse(condition.x_group).symbolize_keys).analyse
 
         if data
           data[:result]=true

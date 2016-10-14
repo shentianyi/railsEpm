@@ -37,11 +37,11 @@ module Entry
                     };
               }
           else
-            mr_condition[:map_group] = 'a'+self.parameter.x_group[:value][0]
+            mr_condition[:map_group] = "property:"+'this.a'+self.parameter.x_group[:value][0].to_s
             map=%Q{
                  function(){
                         var v={count:1,total:parseFloat(this.value)}
-                        emit(#{mr_condition[:map_group]},v);
+                        emit({#{mr_condition[:map_group]}},v);
                     };
               }
 
@@ -74,8 +74,8 @@ module Entry
           self.parameter.x_group[:value].each do |eg_id|
             eg=EntityGroup.find_by_id(eg_id)
             if eg
-              entities=eg.entities
-              v= self.parameter.average ? query.where(entity_id: entities).average(:value) : query.where(entity_id: entities).sum(:value)
+              entities=eg.entities.collect{|e| e.id}
+              v= self.parameter.average ? query.where(entity_id: entities ).sum(:value) : query.where(entity_id:  entities ).sum(:value)
               self.current[eg.name]= v
             end
           end
@@ -86,6 +86,9 @@ module Entry
 
       private
       def aggregate_type_data
+        p '**********************************'
+        p self.parameter.x_group[:type]
+        p '**********************************'
         if self.parameter.x_group[:type]==XGroupType::DATE || self.parameter.x_group[:type]==XGroupType::PROPERTY
 
           date_parse_proc=KpiFrequency.parse_short_string_to_date(self.parameter.frequency)
@@ -107,13 +110,13 @@ module Entry
           elsif self.parameter.entity_group_single_entity
             self.data.each do |d|
               p d
-              key= self.parameter.x_group[:type]==XGroupType::DATE ? "#{date_parse_proc.call(d['_id']['date'])}##{d['_id']['entity_id'].to_i}" : d['_id']
+              key= self.parameter.x_group[:type]==XGroupType::DATE ? "#{date_parse_proc.call(d['_id']['date'])}##{d['_id']['entity_id'].to_i}" : d['_id']['property']
               self.current[key]=d['value']
             end
           else
             self.data.each do |d|
               p d
-              key= self.parameter.x_group[:type]==XGroupType::DATE ? date_parse_proc.call(d['_id']['date']) : d['_id']
+              key= self.parameter.x_group[:type]==XGroupType::DATE ? date_parse_proc.call(d['_id']['date']) : d['_id']['property']
 
               self.current[key]=d['value']['value']
             end
@@ -243,8 +246,9 @@ module Entry
           end
         elsif self.parameter.x_group[:type]==XGroupType::PROPERTY
           values=[]
-          if self.parameter.property.present? && self.parameter.property[self.parameter.x_group[:value][0]].present?
-            values=self.parameter.property[self.parameter.x_group[:value][0]]
+          p self.parameter.property
+          if self.parameter.property.present? && self.parameter.property['a'+self.parameter.x_group[:value][0].to_s].present?
+            values=self.parameter.property['a'+self.parameter.x_group[:value][0].to_s]
           else
             values= KpiProperty.find_by_id(self.parameter.x_group[:value][0]).kpi_property_values.pluck(:value)
           end
@@ -277,7 +281,7 @@ module Entry
       def generate_web_highstock_data
         web_highstock_data={}
         self.data_module.each { |k, v| web_highstock_data[k]=v.kind_of?(Hash) ? v.values : v }
-        web_highstock_data[:date]=self.current.keys.map { |k| k.to_time.utc.to_s }
+        web_highstock_data[:date]=self.current.keys.map { |k| self.parameter.x_group[:type]==XGroupType::DATE ? k.to_time.utc.to_s : k }
         return web_highstock_data
       end
 

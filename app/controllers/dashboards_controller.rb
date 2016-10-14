@@ -2,6 +2,12 @@
 class DashboardsController < ApplicationController
   before_filter :require_user_as_director,:only=>:index
   before_filter :require_user_as_admin, :only=>:import_dashboards
+
+  skip_before_filter :require_user, :only => :fullsize
+  skip_before_filter :check_tenant_status, :only => :fullsize
+  skip_before_filter :find_current_user_tenant, :only => :fullsize
+  skip_before_filter :current_ability,:only => :fullsize
+
   layout "fullsize", :only => :fullsize
 
   def new
