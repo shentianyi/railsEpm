@@ -8,10 +8,11 @@ module Entry
       attr_accessor :valid
       attr_accessor :report
       attr_accessor :property_map_group, :reduce_func
+      attr_accessor :x_group
 
       def initialize(args)
         self.kpi=Kpi.find(args[:kpi_id])
-        self.entities =Entity.joins(:entity_groups).where(entity_groups: {id: args[:entity_group_id]}).pluck(:id) #EntityGroup.where(args[:entity_group_id]).entities.pluck(:id)
+
         # args:start_time, end_time arg utc-time-string
         self.entity_group_single_entity = args[:entity_group_single_entity].blank? ? false : args[:entity_group_single_entity]
         self.frequency=args[:frequency] || self.kpi.frequency
@@ -27,8 +28,11 @@ module Entry
         #self.map_group =args[:map_group]
         self.reduce_func=args[:reduce_func] if args[:reduce_func]
         self.valid=false
+        self.x_group =args[:x_group]
+        if x_group.blank? || x_group[:type]!=XGroupType::ENTITY_GROUP
+          self.entities =Entity.joins(:entity_groups).where(entity_groups: {id: args[:entity_group_id]}).pluck(:id)
+        end
       end
-
 
       def start_time=(value)
         @start_time=Time.parse(value).utc if value
@@ -105,6 +109,15 @@ module Entry
 
       end
 
+      def x_group=(value)
+        @x_group=nil
+        if value.blank?
+          @x_group={type: XGroupType::DATE}
+        else
+          @x_group=value
+        end
+      end
+
 
       def self.is_true(value, default=true)
         return default if value.nil?
@@ -113,9 +126,14 @@ module Entry
       end
 
       def base_query_condition
-        {kpi_id: self.kpi_ids,
-         entity_id: self.entities,
-         entry_at: self.start_time..self.end_time}
+        if x_group.present? && x_group[:type]==XGroupType::ENTITY_GROUP
+          {kpi_id: self.kpi_ids,
+           entry_at: self.start_time..self.end_time}
+        else
+          {kpi_id: self.kpi_ids,
+           entity_id: self.entities,
+           entry_at: self.start_time..self.end_time}
+        end
       end
 
       def map_reduce_condition

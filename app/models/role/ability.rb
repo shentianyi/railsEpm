@@ -49,6 +49,7 @@ class Ability
       can :product_line,EntityGroup
       can :manage,ProductionPlan
       can :manage,Department
+      can :manage,Kpi
     elsif user.user?
       can :manage, User, :id => user.id
       can :manage, UserSession, :email => user.email
