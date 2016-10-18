@@ -140,11 +140,9 @@
           </div>
 
           <div class="index-condition-group">
-            <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.start_time' %> *" id="analy-begin-time"
-                   readonly=true/>
+            <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.start_time' %> *" id="analy-begin-time"/>
             <label class="index-date-extra-info"></label>
-            <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.end_time' %>" id="analy-end-time"
-                   readonly=true/>
+            <input type="text" class="index-pick-date" placeholder="<%= t 'dashboard_group.dashboard.serie.end_time' %>" id="analy-end-time"/>
             <label class="index-date-extra-info"></label>
           </div>
 
@@ -237,8 +235,9 @@
 
     <%= javascript_include_tag "high_chart_template.js" %>
     <%= javascript_include_tag "high_chart_theme.js" %>
-    <%= javascript_include_tag "Dashboard-add.js" %>
+    <%#= javascript_include_tag "Dashboard-add.js" %>
     <%= javascript_include_tag "Dashboard-init.js" %>
+    <%= javascript_include_tag "Dashboard-Add-Charts.js" %>
     <%= javascript_include_tag "dashboard_type_special.js" %>
     <%= javascript_include_tag "dhtmlx" %>
 <% end %>
@@ -248,14 +247,18 @@
     init_component();
     DASHBOARD.init();
     right_nav_main.init();
-    DASHBOARD.add.init();
 
-    if ($('#full-size-hidden').val() == 'true') {
-      $("#dashboard-content-full").css("display", "block");
-      var height = $(document).height();
-      $("#dashboard-content-full").css("height", height + "px");
-      ifepm.dashboard_widget.init_fullsize();
-      on_full_size();
-    }
+    DashboardAddCharts.init();
+
+
+//    DASHBOARD.add.init();
+//
+//    if ($('#full-size-hidden').val() == 'true') {
+//      $("#dashboard-content-full").css("display", "block");
+//      var height = $(document).height();
+//      $("#dashboard-content-full").css("height", height + "px");
+//      ifepm.dashboard_widget.init_fullsize();
+//      on_full_size();
+//    }
   });
 </script>
