@@ -46,9 +46,6 @@ var db_chartSeries = {
         return this.series
     },
     addSeries: function (series) {
-        console.log("49 mmm   Series");
-        console.log(series);
-
         if (this.count > this.series.length) {
             this.series.push(series)
         }
@@ -880,7 +877,6 @@ DASHBOARD.add.change_interval = function (option) {
             }
         }
     }
-
 
     if (new_data_wrapper.length == count) {
         chart.destroy();

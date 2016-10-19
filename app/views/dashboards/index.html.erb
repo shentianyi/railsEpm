@@ -69,6 +69,7 @@
       </ul>
       <a class="icon-remove" id="close-add-dashboard"> <%= t 'dashboard_group.dashboard.close' %></a>
     </div>
+
     <aside class="content-right-nav" name='dashboard-add'>
       <section class="solid dashboard-add-name">
         <h3><%= t 'dashboard_group.dashboard.name' %></h3>
@@ -114,6 +115,7 @@
         <a class="btn btn-primary" id="add-dashboard"><%= t 'dashboard_group.dashboard.create' %></a>
       </section>
     </aside>
+
     <div class="content-left-main" name="dashboard-add">
       <div class="left-content-title" name="dashboard-add" id="left-content-title-add">
         <div class="pull-left analytics-condition-choose" name="dashboard-add">
@@ -181,21 +183,24 @@
         </div>
         <i class="icon-chevron-down analytic-control-condition-visible" id="analytic-control-condition-visible" state="close"> </i>
       </div>
+
       <div class="db-chart-body" id="db-chart-body">
         <div class="clearfix" id="db-chart-interval-alternate" my_height="28">
           <ul class="pull-right db-control-chart-interval-group">
             <li interval="90"><a>Hr</a></li>
-            <li interval="100"><a>D</a></li>
+            <li interval="100" class="active"><a>D</a></li>
             <li interval="200"><a>W</a></li>
             <li interval="300"><a>M</a></li>
             <li interval="400"><a>Qr</a></li>
             <li interval="500"><a>Y</a></li>
           </ul>
         </div>
-        <div class="put-db-chart" id="put-db-chart">
-          <table class="dashboard-item-extra-info"></table>
-          <div class="db-chart-container" id="chart-container"></div>
-        </div>
+
+        <div class="db-chart-container" id="chart-container"></div>
+        <!--<div class="put-db-chart" id="put-db-chart">-->
+        <!--<table class="dashboard-item-extra-info"></table>-->
+        <!--<div class="db-chart-container" id="chart-container"></div>-->
+        <!--</div>-->
       </div>
     </div>
   </div>
@@ -216,7 +221,7 @@
     <%= javascript_include_tag "Manage-left-menu" %>
     <%= javascript_include_tag "2_column_right_nav" %>
     <%= javascript_include_tag "highcharts.js" %>
-    <%= javascript_include_tag "highcharts-more.js" %>
+    <%#= javascript_include_tag "highcharts-more.js" %>
     <%= javascript_include_tag "exporting.js" %>
     <%= javascript_include_tag "exporting.extend.src.js" %>
     <%= javascript_include_tag "jquery.gridster.js" %>
@@ -233,8 +238,8 @@
     <%= javascript_include_tag "ifepm.dashboard.template.js" %>
     <%= javascript_include_tag "ifepm.dashboard.main.js" %>
 
-    <%= javascript_include_tag "high_chart_template.js" %>
-    <%= javascript_include_tag "high_chart_theme.js" %>
+    <%#= javascript_include_tag "high_chart_template.js" %>
+    <%#= javascript_include_tag "high_chart_theme.js" %>
     <%#= javascript_include_tag "Dashboard-add.js" %>
     <%= javascript_include_tag "Dashboard-init.js" %>
     <%= javascript_include_tag "Dashboard-Add-Charts.js" %>
@@ -247,9 +252,7 @@
     init_component();
     DASHBOARD.init();
     right_nav_main.init();
-
     DashboardAddCharts.init();
-
 
 //    DASHBOARD.add.init();
 //

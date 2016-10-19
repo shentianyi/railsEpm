@@ -471,8 +471,9 @@
 .db-chart-container {
     position: absolute;
     top: 50px;
-    left: 0px;
-    bottom: 0px;
-    right: 0px;
+    left: 0;
+    bottom: 0;
+    right: 0;
     transition: top 0.25s linear 1s;
+    overflow: hidden;
 }

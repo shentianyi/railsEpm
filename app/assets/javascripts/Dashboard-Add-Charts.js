@@ -3,6 +3,7 @@
  */
 
 var DashboardAddCharts = {};
+DashboardAddCharts.initial = {};
 
 DashboardAddCharts.init = function () {
     $("#add-dashboard-show").on("click", function () {
@@ -33,13 +34,10 @@ DashboardAddCharts.init = function () {
             }
         });
 
-        $("#analytic-control-condition-visible,#add-one-series").on("click", DASHBOARD.add.initial.analytic_control_condition_visible);
-
+        $("#analytic-control-condition-visible,#add-one-series").on("click", DashboardAddCharts.initial.analytic_control_condition_visible);
         $("#chart-group").prepend($("<option />").attr("value", ""));
         $("#chart-group").val('').trigger('chosen:updated');
-
         $("#chart-kpi").val('').trigger('chosen:updated');
-
         $("#chart-view").prepend($("<option />").attr("value", ""));
         $("#chart-view").val('').trigger('chosen:updated');
 
@@ -92,7 +90,6 @@ DashboardAddCharts.init = function () {
     });
 };
 
-
 DashboardAddCharts.get_selected_property = function () {
     var properties = $("#kpi-property-select").find("option:selected");
     var kpi_property = null;
@@ -106,7 +103,7 @@ DashboardAddCharts.get_selected_property = function () {
         }
     }
     return kpi_property;
-}
+};
 
 DashboardAddCharts.get_selected_view = function get_selected_view() {
     var properties = $("#chart-view").find("option:selected");
@@ -120,11 +117,13 @@ DashboardAddCharts.get_selected_view = function get_selected_view() {
         }
     }
     return kpi_property;
-}
+};
 
-
+//绘制图表
 DashboardAddCharts.draw_charts = function (element) {
     $(element).click(function () {
+        console.log("SDFSDF");
+        $("#db-chart-body").css("display", "block");
         var kpi = $("#chart-kpi :selected").attr("value");
         var view = DashboardAddCharts.get_selected_view();
         var method = $("input[name='chartRadios']:checked").attr("value");
@@ -159,21 +158,19 @@ DashboardAddCharts.draw_charts = function (element) {
                 end_time = begin_time
             }
 
-            if ($("#analy-begin-time").attr("hide_post").indexOf("LAST") != -1) {
-                begin_post = $("#analy-begin-time").attr("hide_post");
-                end_post = begin_post;
-            }
-            else {
-                begin_post = standardParse(begin_time).date.toISOString();
-                end_post = standardParse(end_time).date.toISOString();
-            }
+            // if ($("#analy-begin-time").attr("hide_post").indexOf("LAST") != -1) {
+            //     begin_post = $("#analy-begin-time").attr("hide_post");
+            //     end_post = begin_post;
+            // }
+            // else {
+            //     begin_post = standardParse(begin_time).date.toISOString();
+            //     end_post = standardParse(end_time).date.toISOString();
+            // }
 
             if (is_datetime_outrange(begin_time, end_time, interval)) {
                 MessageBox("对不起，时间范围太大了！", "top", "warning");
                 return;
             }
-
-            dashboard_show_loading("dashboard-add-inner", "40px", "0px", "0px", "200px");
 
             var ValueArray = new Array();
             if (show_type == "100") {
@@ -192,11 +189,13 @@ DashboardAddCharts.draw_charts = function (element) {
 
             var XGroup = {type: show_type, value: ValueArray};
 
+            dashboard_show_loading("dashboard-add-inner", "40px", "0px", "0px", "200px");
             DashboardAddCharts.DrawChart(kpi, method, view[0].id, standardParse(begin_time).date.toISOString(), standardParse(end_time).date.toISOString(), interval, kpi_property, XGroup);
         }
     });
 };
 
+//画图
 DashboardAddCharts.DrawChart = function (Kpi, Method, View, startTime, endTime, cycleFrequency, Property, XGroup) {
     $.ajax({
         url: '/kpi_entries/analyse',
@@ -213,29 +212,52 @@ DashboardAddCharts.DrawChart = function (Kpi, Method, View, startTime, endTime, 
         },
         success: function (data) {
             if (data.result) {
-                console.log(">>>>Data>>>>");
-                console.log(data);
-
                 dashboard_remove_loading("dashboard-add-inner");
-
                 var XAxis = data.object.date;
+                var type = $("#db-add-type>.active").attr("type");
 
-                var AllSeries = [{
-                    name: 'Value',
-                    data: data.object.current,
-                    color: 'limegreen'
-                }];
+                var toolTips = {
+                    id: 1111,
+                    kpi: $("#chart-kpi :selected").text(),
+                    view: View,
+                    target: "chart-container",
+                    outer_target: "put-db-chart",
+                    begin_time: startTime,
+                    type: type,
+                    interval: $("#db-chart-interval-alternate li.active").attr("interval"),
+                    kpi_property: Property,
+                    x_type: XGroup
+                };
+
+                var Color = "darkred";
+                var Data = new Array();
+                for (var i = 0; i < XAxis.length; i++) {
+                    Data.push({
+                        color: Color,
+                        unit: data.object.unit[i],
+                        target_min: data.object.target_min[i],
+                        target_max: data.object.target_max[i],
+                        y: data.object.current[i]
+                    })
+                }
+
+                var options = {
+                    id: "series-1",
+                    //KPI 名称
+                    name: $("#chart-kpi :selected").text(),
+                    data: Data
+                };
 
                 var Chart_Setting = {
                     Container: 'chart-container',
                     XAxis: XAxis,
-                    AllSeries: AllSeries
+                    ToolTips: toolTips,
+                    Options: options
                 };
 
                 DashboardAddCharts.DrawHighChart(Chart_Setting);
-
             } else {
-                console.log("返回值为False");
+                console.log("API 请求返回值为false");
             }
         },
         error: function () {
@@ -246,19 +268,30 @@ DashboardAddCharts.DrawChart = function (Kpi, Method, View, startTime, endTime, 
 
 DashboardAddCharts.DrawHighChart = function (Chart_Settings) {
     var high_charts = $("#" + Chart_Settings.Container).highcharts({
+        chart: {
+            type: Chart_Settings.ToolTips.type,
+            spacingLeft: 5,
+            spacingRight: 5,
+            spacingBottom: 1,
+            marginTop: 5,
+            borderRadius: 0,
+            backgroundColor: "transparent",
+            animation: {
+                duration: 800
+            }
+        },
         title: {
-            text: 'Cycle Time In Hours', x: -20
+            text: null
         },
         credits: {
             enabled: false
         },
         xAxis: {
             categories: Chart_Settings.XAxis
-            // categories: ["A", "B", "C", "D", "E", "F", "G"]
         },
         yAxis: {
             title: {
-                text: 'Value(m)'
+                text: null
             },
             plotLines: [{
                 value: 0,
@@ -267,9 +300,14 @@ DashboardAddCharts.DrawHighChart = function (Chart_Settings) {
             }]
         },
         tooltip: {
-            valueSuffix: 's',
             formatter: function () {
-                return '<span><b>' + this.x + '</b><br/>CycleTime:<b>' + this.y + 's</b></span>';
+                var seriesName = typeof this.series.name == "string" ? this.series.name : this.series.name[this.point.seriesId];
+                return '<b>' + this.x + '</b>'
+                    + '<br />KPI: <span style="color:' + this.series.color + '">' + seriesName
+                    + '</span>'
+                    + '<br />' + I18n.t('chart.view') + ': ' + this.x
+                    + '<br />' + I18n.t('chart.value') + ': ' + this.y + " " + this.point.unit
+                    + "<br />" + I18n.t('chart.target_range') + ": " + this.point.target_min + "-" + this.point.target_max
             }
         },
         scrollbar: {
@@ -297,21 +335,11 @@ DashboardAddCharts.DrawHighChart = function (Chart_Settings) {
                 }
             }
         },
-        series: [{
-            name: 'Value',
-            // data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.64],
-            data: Chart_Settings.AllSeries,
-            color: 'limegreen'
-        }]
+        series: [Chart_Settings.Options]
     });
-
-    console.log("SDFFFFFFFFFFFFF");
-    console.log(high_charts);
-    console.log(high_charts.xAxis);
-
 };
 
-
+//关闭绘图
 DashboardAddCharts.close = function () {
     $("#dashboard-name-input").val("");
     $("#db-add-type li").removeClass("active");
@@ -324,14 +352,14 @@ DashboardAddCharts.close = function () {
     $(".index-condition-group select").val('').trigger('chosen:updated');
     $("[name='chartRadios']").eq(0).iCheck("check");
     $(".index-date-extra-info").text("");
-    DASHBOARD.add.initial.analytic_control_condition_visible();
+    DashboardAddCharts.initial.analytic_control_condition_visible();
     if ($("#chart-container").highcharts() != undefined) {
         $("#chart-container").highcharts().destroy();
     }
     $("#dashboard-add-wrap").css("display", "none");
 };
 
-DashboardAddCharts.initial = {};
+//是否打开输入信息框
 DashboardAddCharts.initial.analytic_control_condition_visible = function () {
     var open_state = $("#analytic-control-condition-visible").attr("state");
     if (open_state == "open") {
