@@ -119,5 +119,8 @@ class DashboardCondition < ActiveRecord::Base
     if self.kpi_property.is_a?(Hash)
       self.kpi_property=self.kpi_property.to_json
     end
+    if self.x_group.is_a?(Hash)
+      self.x_group=self.x_group.to_json
+    end
   end
 end

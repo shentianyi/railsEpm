@@ -39,6 +39,18 @@ ActiveRecord::Schema.define(:version => 20161014030853) do
 
   add_index "admin_kpi_templates", ["admin_kpi_category_template_id"], :name => "index_admin_kpi_templates_on_admin_kpi_category_template_id"
 
+  create_table "alert_items", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "type"
+    t.integer  "alertable_id"
+    t.string   "alertable_type"
+    t.integer  "status"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "alert_items", ["user_id"], :name => "index_alert_items_on_user_id"
+
   create_table "attachments", :force => true do |t|
     t.string   "name"
     t.string   "path"
@@ -374,6 +386,21 @@ ActiveRecord::Schema.define(:version => 20161014030853) do
   add_index "kpi_subscribes", ["tenant_id"], :name => "index_kpi_subscribes_on_tenant_id"
   add_index "kpi_subscribes", ["user_id"], :name => "index_kpi_subscribes_on_user_id"
 
+  create_table "kpi_user_subscribes", :force => true do |t|
+    t.integer  "kpi_id"
+    t.integer  "user_id"
+    t.integer  "tenant_id"
+    t.integer  "follow_flag"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "department_id"
+  end
+
+  add_index "kpi_user_subscribes", ["department_id"], :name => "index_kpi_user_subscribes_on_department_id"
+  add_index "kpi_user_subscribes", ["kpi_id"], :name => "index_kpi_user_subscribes_on_kpi_id"
+  add_index "kpi_user_subscribes", ["tenant_id"], :name => "index_kpi_user_subscribes_on_tenant_id"
+  add_index "kpi_user_subscribes", ["user_id"], :name => "index_kpi_user_subscribes_on_user_id"
+
   create_table "kpis", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -483,6 +510,20 @@ ActiveRecord::Schema.define(:version => 20161014030853) do
 
   add_index "settings", ["target_type", "target_id", "var"], :name => "index_settings_on_target_type_and_target_id_and_var", :unique => true
 
+  create_table "snapshots", :force => true do |t|
+    t.integer  "attachment_id"
+    t.integer  "user_id"
+    t.integer  "alert_id"
+    t.string   "upper_boundary"
+    t.string   "lower_boundary"
+    t.string   "current_value"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "snapshots", ["attachment_id"], :name => "index_snapshots_on_attachment_id"
+  add_index "snapshots", ["user_id"], :name => "index_snapshots_on_user_id"
+
   create_table "stories", :force => true do |t|
     t.string   "title"
     t.string   "description"
@@ -528,6 +569,24 @@ ActiveRecord::Schema.define(:version => 20161014030853) do
   add_index "story_sets", ["tenant_id"], :name => "index_story_sets_on_tenant_id"
   add_index "story_sets", ["user_id"], :name => "index_story_sets_on_user_id"
 
+  create_table "task_items", :force => true do |t|
+    t.integer  "type"
+    t.string   "title"
+    t.text     "content"
+    t.integer  "generate_type"
+    t.integer  "assigner_id"
+    t.integer  "user_id"
+    t.datetime "to_due_at"
+    t.datetime "dued_at"
+    t.integer  "status"
+    t.integer  "taskable_id"
+    t.string   "taskable_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.datetime "remind_at"
+    t.datetime "entry_at"
+  end
+
   create_table "tenants", :force => true do |t|
     t.string   "company_name",           :null => false
     t.string   "edition",                :null => false
@@ -566,6 +625,55 @@ ActiveRecord::Schema.define(:version => 20161014030853) do
 
   add_index "user_entity_groups", ["entity_group_id"], :name => "index_user_entity_groups_on_entity_group_id"
   add_index "user_entity_groups", ["user_id"], :name => "index_user_entity_groups_on_user_id"
+
+  create_table "user_group_items", :force => true do |t|
+    t.integer  "user_group_id"
+    t.integer  "tenant_id"
+    t.integer  "user_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "user_group_items", ["tenant_id"], :name => "index_user_group_items_on_tenant_id"
+  add_index "user_group_items", ["user_group_id"], :name => "index_user_group_items_on_user_group_id"
+
+  create_table "user_group_relations", :force => true do |t|
+    t.integer  "user_group_id"
+    t.integer  "user_groupable_id"
+    t.integer  "tenant_id"
+    t.string   "user_groupable_type"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "user_group_relations", ["tenant_id"], :name => "index_user_group_relations_on_tenant_id"
+  add_index "user_group_relations", ["user_group_id"], :name => "index_user_group_relations_on_user_group_id"
+  add_index "user_group_relations", ["user_groupable_id"], :name => "index_user_group_relations_on_user_groupable_id"
+  add_index "user_group_relations", ["user_groupable_type"], :name => "index_user_group_relations_on_user_groupable_type"
+
+  create_table "user_groups", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "tenant_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "user_groups", ["tenant_id"], :name => "index_user_groups_on_tenant_id"
+  add_index "user_groups", ["user_id"], :name => "index_user_groups_on_user_id"
+
+  create_table "user_invites", :force => true do |t|
+    t.string   "email"
+    t.boolean  "sign_uped",     :default => false
+    t.integer  "user_id"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.integer  "department_id"
+  end
+
+  add_index "user_invites", ["email"], :name => "index_user_invites_on_email"
+  add_index "user_invites", ["user_id"], :name => "index_user_invites_on_user_id"
 
   create_table "user_kpi_items", :force => true do |t|
     t.integer  "entity_id"
