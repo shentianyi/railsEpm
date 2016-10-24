@@ -207,10 +207,10 @@ var high_chart = {
         lineWidth: 0,
         tickWidth: 0,
         ordinal: true,
-        // minPadding: 0.02,
-        // maxPadding: 0.02,
-        // minRange: 36e5,
-        // type: 'datetime',
+        minPadding: 0.02,
+        maxPadding: 0.02,
+        minRange: 36e5,
+        type: 'datetime',
         dateTimeLabelFormats: {
             millisecond: "quarter " + '%Q' + '<br />' + '%Y',
             hour: '%H:%M' + "<br />" + '%e/%b',
@@ -234,30 +234,198 @@ var high_chart = {
             y: -2
         }
     }
-}
+};
+
+var high_chart_auto_x = {
+    chart: {
+        spacingLeft: 5,
+        spacingRight: 5,
+        spacingBottom: 1,
+        marginTop: 0,
+        borderRadius: 0,
+        backgroundColor: "transparent",
+        animation: {
+            duration: 800
+        }
+    },
+    title: {
+        text: null
+    },
+    credits: {
+        enabled: false
+    },
+    tooltip: {},
+    legend: {
+        enabled: true,
+        borderRadius: 2,
+        borderColor: "rgba(0,0,0,0)",
+        animation: true,
+        maxHeight: 40,
+        margin: 0,
+        itemMarginBottom: -2
+    },
+    exporting: {
+        buttons: {
+            contextButton: {
+//               symbol:'url(images/down.png)'
+                symbol: 'url(/assets/down.png)',
+                y: 0
+            }
+        },
+        url: url,
+        filename: 'MyChart',
+        width: 700, // chart width
+        exportTypes: ['chart', 'png', 'jpeg', 'pdf', 'docx', 'pptx', 'xlsx'] // set download file type
+    },
+    plotOptions: {
+        series: {
+            animation: {
+                duration: 1000
+            },
+            cursor: 'pointer',
+            marker: {
+                enabled: true,
+                fillColor: null,
+                lineColor: null,
+                states: {
+                    select: {
+                        fillColor: null,
+                        lineColor: "white"
+                    }
+                }
+            },
+            turboThreshold: 10000,
+            states: {
+                select: {
+                    color: null,
+                    borderColor: null
+                }
+            },
+            events: {}
+        },
+        arearange: {
+            fillOpacity: 0.1,
+            fillColor: "rgba(177,211,221,0.2)",
+            lineColor: "rgba(177,211,221,0)",
+            lineWidth: 0,
+            color: "rgba(177,211,221,0.2)",
+            stickyTracking: false,
+            trackByArea: false,
+            zIndex: -1,
+            showInLegend: false
+        },
+        line: {
+            lineWidth: 3,
+            showInLegend: false,
+            marker: {
+                lineWidth: 2,
+                radius: 1,
+                symbol: "diamond"
+            },
+            events: {
+                mouseOver: function () {
+                    if (this.data.length > 1) {
+                        this.graph.attr('zIndex', 99);
+                    }
+                },
+                mouseOut: function () {
+                    if (this.data.length > 1) {
+                        this.graph.attr('zIndex', this.index);
+                    }
+                }
+            }
+
+        },
+        column: {
+            borderColor: null
+        },
+        pie: {
+            size: '70%',
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                connectorWidth: 1,
+                format: '<b>{point.name}</b><br />{point.percentage:.1f} %'
+            },
+            point: {
+                events: {
+                    select: function () {
+                        var $table = $("#" + this.series.chart.renderTo.id).prev(".dashboard-item-extra-info"), i, data, total = 0, validate = true, name;
+                        $table.find(".percentage").text((this.percentage).toFixed(1) + "%");
+                        name = this.series.chart.series.length > 2 ? this.kpi_name : this.name;
+                        $table.find(".pie-selected-name").text(name);
+                        $table.find(".selected-value").text(this.y + this.unit);
+                    }
+                }
+            },
+            events: {
+                click: function () {
+                    var $table = $("#" + this.chart.renderTo.id).prev(".dashboard-item-extra-info"), i, data, total = 0, validate = true, name;
+                    for (i = 0; i < this.data.length; i++) {
+                        total += this.data[i].y;
+                    }
+                    $table.find(".pie-total-value").text(total + this.data[0].unit);
+                }
+            }
+
+        },
+        scatter: {
+            marker: {
+                radius: 4,
+                symbol: "circle"
+            }
+        }
+    },
+    xAxis: {
+        categories: [],
+        labels: {
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        }
+    },
+    yAxis: {
+        offset: -25,
+        showFirstLabel: false,
+        min: 0,
+        title: {
+            enabled: false
+        },
+        labels: {
+
+            y: -2
+        }
+    }
+};
 
 function render_to(option) {
-    high_chart.chart.renderTo = option.target;
-    Highcharts.dateFormats = {
-        W: function (timestamp) {
-            var d = new Date(timestamp);
-            d.setHours(0, 0, 0);
-            d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-            var yearStart = new Date(d.getFullYear(), 0, 1);
-            var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1) / 7);
-            return weekNo;
-        },
-        Q: function (timestamp) {
-            var d = new Date(timestamp);
-            return d.monthToQuarter();
-        },
-        YW: function (timestamp) {
-            var d = new Date(timestamp);
-            d.setHours(0, 0, 0);
-            d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-            return d.getFullYear();
-        }
-    };
+    if (option.x_type == 100) {
+        high_chart.chart.renderTo = option.target;
+        Highcharts.dateFormats = {
+            W: function (timestamp) {
+                var d = new Date(timestamp);
+                d.setHours(0, 0, 0);
+                d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+                var yearStart = new Date(d.getFullYear(), 0, 1);
+                var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1) / 7);
+                return weekNo;
+            },
+            Q: function (timestamp) {
+                var d = new Date(timestamp);
+                return d.monthToQuarter();
+            },
+            YW: function (timestamp) {
+                var d = new Date(timestamp);
+                d.setHours(0, 0, 0);
+                d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+                return d.getFullYear();
+            }
+        };
+    } else {
+        high_chart_auto_x.chart.renderTo = option.target;
+    }
+
     if (option.theme != null) {
         HIGH_CHART.theme[option.theme]();
     }
@@ -273,24 +441,29 @@ function add_series(option) {
     var type = option.type;
     var data;
 
-    console.log("Option Add Series");
-    console.log(option);
+    var Categories = new Array();
+    var Series = new Array();
+    for (var i = 0; i < option.data.length; i++) {
+        Categories.push(option.data[i].x);
+        Series.push(option.data[i].y);
+    }
 
     if (option.x_type == undefined || option.x_type == "100" || option.x_type == null) {
         data = deal_data(option);
     } else {
-        data = option.data;
+        data = Series;
     }
+
     var color = option.color ?
         option.color : (option.theme ?
         HIGH_CHART.chart_color[option.theme][series_id % HIGH_CHART.chart_color[option.theme].length] : HIGH_CHART.chart_color["default"][series_id % HIGH_CHART.chart_color["default"].length]);
 
-
-    console.log("Data...");
-    console.log(data);
-
     var HighCharts = $("#" + chart_container).highcharts();
-    HighCharts.xAxis.type = "string";
+
+    if (option.x_type == 200) {
+        HighCharts.xAxis[0].setCategories(Categories);
+    }
+
     HighCharts.addSeries({
         name: series_name,
         id: series_id,
@@ -298,9 +471,10 @@ function add_series(option) {
         data: [1,2,4]
     });
 
+    console.log("CAtewtetae");
+    console.log(high_chart_auto_x);
 
 }
-
 
 function set_data(option) {
     this.date = option.begin_time ? standardParse(option.begin_time).date : null;
@@ -377,6 +551,7 @@ function deal_data() {
             break;
     }
 }
+
 function create_environment_for_data() {
     set_data.apply(this, arguments);
     var i, j;
@@ -734,6 +909,7 @@ var limit_pointer_condition = {
         }
     }
 }
+
 function deal_extreme(chart) {
     var extreme = []
 //    if(chart.series.length==1 || (chart.series.length==2 && chart.series[0].type=="line")){
@@ -766,7 +942,6 @@ function deal_extreme(chart) {
 //    }
     return extreme
 }
-
 
 HIGH_CHART.postPrepare = function (begin_time, interval) {
     var template = standardParse(begin_time).template;
