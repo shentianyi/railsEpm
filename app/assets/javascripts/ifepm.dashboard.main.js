@@ -131,16 +131,23 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
             if (option.type == "pie") {
                 high_chart.plotOptions.pie.size = "70%";
             }
-            render_to(option);
-            create_environment_for_data(option);
-            chart = new Highcharts.Chart(high_chart);
+            try {
+                render_to(option);
+                create_environment_for_data(option);
+                chart = new Highcharts.Chart(high_chart);
+            } catch (err) {
+                chart = new Highcharts.Chart(high_charts);
+            }
         }
         add_series(option);
         proper_type_for_chart(option);
         DASHBOARD.add.generate(option);
 
     }
-    limit_pointer_number(option);
+    try {
+        limit_pointer_number(option);
+    } catch (err) {
+    }
     if (datas.length == 1 && type == "line") {
         var option_area = {};
         option_area = deepCopy(option, option_area);

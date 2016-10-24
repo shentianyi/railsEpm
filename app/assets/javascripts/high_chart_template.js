@@ -468,7 +468,7 @@ function add_series(option) {
         name: series_name,
         id: series_id,
         color: color,
-        data: [1,2,4]
+        data: [1, 2, 4]
     });
 
     console.log("CAtewtetae");
