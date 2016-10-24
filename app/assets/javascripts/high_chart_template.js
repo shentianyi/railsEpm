@@ -295,7 +295,7 @@ function add_series(option) {
         name: series_name,
         id: series_id,
         color: color,
-        data: data
+        data: [1,2,4]
     });
 
 
