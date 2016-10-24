@@ -79,7 +79,9 @@ module Entry
             eg=EntityGroup.find_by_id(eg_id)
             if eg
               entities=eg.entities.collect { |e| e.id }
-              query=query.in(entity_id: entities)
+              p '^^^^^^^^^^^^^^^^^^^^^'
+              p entities
+              q=query.in(entity_id: entities)
 
               mr_condition[:map_group] = "value:1"
               map=%Q{
@@ -89,9 +91,10 @@ module Entry
                     };
               }
 
-              data=query.map_reduce(map, reduce).out(inline: true).finalize(finalize)
-
+              data=q.map_reduce(map, reduce).out(inline: true).finalize(finalize)
+p '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
 p data.first
+              p '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
               self.current[eg.name]= data.first.nil? ?  0 :KpiUnit.parse_entry_value(self.parameter.kpi.unit, data.first['value']['value'])
             end
           end
