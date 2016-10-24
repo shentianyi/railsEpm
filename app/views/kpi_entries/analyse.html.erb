@@ -1,7 +1,16 @@
 <style>
-    #chart_kpi_chosen > .chosen-drop {
-        margin: -20px 0 0 0;
-    }
+  #chart_kpi_chosen > .chosen-drop {
+    margin: -20px 0 0 0;
+  }
+
+  div[title='analy-view-select'] {
+    top: 32px;
+    right: -40px;
+  }
+
+  .index-pick-date[type="text"] {
+    margin-left: 82px;
+  }
 </style>
 
 <% content_for :javascript_includes do %>
@@ -9,21 +18,21 @@
 <% end %>
 
 <div class="analytics-condition clearfix" id="analytics-condition">
-  <div class="analytics-mark pull-left" style="width:123px;">
+  <div class="analytics-mark pull-left">
     <h2 class="normal-blue text-center pointer" onclick="analytic_control_condition_visible()"><%= t 'analytics.title' %></h2>
   </div>
-  <div class="pull-left analytics-condition-choose" style="padding: 18px 0 5px 11px;">
+  <div class="pull-left analytics-condition-choose">
 
     <div class="index-condition-group">
-      <select data-placeholder="<%= t 'analytics.kpi_category' %> *" style="width:130px;" class="chosen-select" title="analy-entity-select" id="chart-group">
+      <select data-placeholder="<%= t 'analytics.kpi_category' %> *" class="chosen-select" title="analy-entity-select" id="chart-group">
         <% @categories.each do |catetory| %>
             <option value="<%= catetory.id %>"><%= catetory.name %></option>
         <% end %>
       </select>
-      <select data-placeholder="<%= t 'analytics.kpi' %> *" style="width:130px;" class="select-chosen" title="analy-kpi-select" id="chart-kpi" date-pick=false>
+      <select data-placeholder="<%= t 'analytics.kpi' %> *" class="select-chosen" title="analy-kpi-select" id="chart-kpi" date-pick=false>
         <option value=""></option>
       </select>
-      <select data-placeholder="<%= t 'analytics.view' %> *" style="width:130px;" class="chosen-select" title="analy-view-select" id="chart-view">
+      <select data-placeholder="<%= t 'analytics.view' %> *" class="chosen-select" title="analy-view-select" id="chart-view">
         <% @entity_groups.each do |entity_group| %>
             <option value="<%= entity_group.id %>"><%= entity_group.name %></option>
         <% end %>
@@ -31,16 +40,16 @@
 
     </div>
 
-    <div class="index-condition-group" style="width:180px">
-      <input style="margin-left:13px;width:120px !important;" type="text" class="index-pick-date" placeholder="<%= t 'analytics.begin_time' %> *" id="analy-begin-time"
+    <div class="index-condition-group">
+      <input type="text" class="index-pick-date" placeholder="<%= t 'analytics.begin_time' %> *" id="analy-begin-time"
              readonly=true/>
       <label class="index-date-extra-info"></label>
-      <input style="margin-left:13px;width:120px !important;" type="text" class="index-pick-date" placeholder="<%= t 'analytics.end_time' %>" id="analy-end-time"
+      <input type="text" class="index-pick-date" placeholder="<%= t 'analytics.end_time' %>" id="analy-end-time"
              readonly=true/>
       <label class="index-date-extra-info"></label>
     </div>
 
-    <div class="index-condition-group" style="width:90px;margin-left:-25px;">
+    <div class="index-condition-group" style="width: 100px; margin-left: 40px;">
       <label class="analytics-radio-label">
         <input type="radio" name="chartRadios" value="1" checked>
         <%= t 'analytics.sum' %> </label>
@@ -341,100 +350,100 @@
 <!------------------------------------------------   2014.7.2 demo 很多JS主要写在下面  -------------------------------------->
 
 <script>
-    $(document).ready(function () {
+  $(document).ready(function () {
 //        fill_analyse_condition_by_subscribe();
-        init_analytics();
-        attach_upload("item-data-uploader");
-        $("body")
-                .on("click", ".attachment-item-remove", function (event) {
-                    if (confirm('Sure to delelte?')) {
-                        var e = event ? event : (window.event ? window.event : null);
-                        var obj = e.srcElement || e.target;
-                        e.stopPropagation();
-                        $(".attachment-item[path-name='" + $(obj).attr("path-name") + "']").remove();
-                    }
-                })
-                .on("click", "#create-discuss-btn", function () {
-                    show_project_block();
-                    if ($("#analytic-control-condition-visible").attr("state") == "open") {
-                        $("#analytic-control-condition-visible").click();
-                    }
-                })
-                .on("click", "#cancel-fro-project", function () {
-                    hide_project_block();
-                })
-                .on("click", "#publish-fro-project", function () {
-                    if ($('#story-title').val()) {
-                        $("#back-pop").addClass("show")
-                    } else {
-                        MessageBox('Please add discussion title', 'top', 'warning');
-                    }
-                })
-                .on("click", "#remove-back-pop", function () {
-                    $("#back-pop").removeClass("show")
-                })
-                .on("click", "#add-to-storyset", function () {
-                    var story = prepare_for_create_story();
-                    if (story.story_set_id == null) {
-                        MessageBox('No Story Set,Please use select one or Use create and add button', 'top', 'warning');
-                        return;
-                    }
-                    MANAGE.story.create(story, function (data) {
-                        if (data.result) {
-                            window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
-                        } else {
-                            MessageBox(data.content, 'top', 'warning');
-                        }
+    init_analytics();
+    attach_upload("item-data-uploader");
+    $("body")
+        .on("click", ".attachment-item-remove", function (event) {
+          if (confirm('Sure to delelte?')) {
+            var e = event ? event : (window.event ? window.event : null);
+            var obj = e.srcElement || e.target;
+            e.stopPropagation();
+            $(".attachment-item[path-name='" + $(obj).attr("path-name") + "']").remove();
+          }
+        })
+        .on("click", "#create-discuss-btn", function () {
+          show_project_block();
+          if ($("#analytic-control-condition-visible").attr("state") == "open") {
+            $("#analytic-control-condition-visible").click();
+          }
+        })
+        .on("click", "#cancel-fro-project", function () {
+          hide_project_block();
+        })
+        .on("click", "#publish-fro-project", function () {
+          if ($('#story-title').val()) {
+            $("#back-pop").addClass("show")
+          } else {
+            MessageBox('Please add discussion title', 'top', 'warning');
+          }
+        })
+        .on("click", "#remove-back-pop", function () {
+          $("#back-pop").removeClass("show")
+        })
+        .on("click", "#add-to-storyset", function () {
+          var story = prepare_for_create_story();
+          if (story.story_set_id == null) {
+            MessageBox('No Story Set,Please use select one or Use create and add button', 'top', 'warning');
+            return;
+          }
+          MANAGE.story.create(story, function (data) {
+            if (data.result) {
+              window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
+            } else {
+              MessageBox(data.content, 'top', 'warning');
+            }
 
-                    });
-                })
-                .on("click", "#create-add-to-storyset", function () {
-                    var story = prepare_for_create_story();
-                    var story_set = {};
-                    story_set.title = $("#storyset-title").val();
-                    story_set.description = $("#storyset-desc").val();
-                    story_set.users = $("#storyset-users option:selected").map(function () {
-                        return $(this).attr("user")
-                    }).get();
-                    MANAGE.story_set.create(story_set, function (data) {
-                        if (data.result) {
-                            story.story_set_id = data.content.id;
-                            MANAGE.story.create(story, function (data) {
-                                if (data.result) {
-                                    window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
-                                } else {
-                                    MessageBox(data.content, 'top', 'warning');
-                                }
-                            })
-                        }
-                        else {
+          });
+        })
+        .on("click", "#create-add-to-storyset", function () {
+          var story = prepare_for_create_story();
+          var story_set = {};
+          story_set.title = $("#storyset-title").val();
+          story_set.description = $("#storyset-desc").val();
+          story_set.users = $("#storyset-users option:selected").map(function () {
+            return $(this).attr("user")
+          }).get();
+          MANAGE.story_set.create(story_set, function (data) {
+            if (data.result) {
+              story.story_set_id = data.content.id;
+              MANAGE.story.create(story, function (data) {
+                if (data.result) {
+                  window.location.href = "/story_sets/" + data.content.story_set_id + "/story";
+                } else {
+                  MessageBox(data.content, 'top', 'warning');
+                }
+              })
+            }
+            else {
 
-                        }
-                    })
-                })
-                .on("click", "#direct-publish-fro-project", function () {
-                    var story = prepare_for_create_story();
-                    story.story_set_id = $(this).attr("value");
-                    MANAGE.story.create(story, function (data) {
-                        if (data.result) {
-                            window.location.href = '/story_sets/' + data.content.id + '/story?story';
-                        } else {
-                            MessageBox(data.content, 'top', 'warning');
-                        }
-                    });
-                });
-    });
+            }
+          })
+        })
+        .on("click", "#direct-publish-fro-project", function () {
+          var story = prepare_for_create_story();
+          story.story_set_id = $(this).attr("value");
+          MANAGE.story.create(story, function (data) {
+            if (data.result) {
+              window.location.href = '/story_sets/' + data.content.id + '/story?story';
+            } else {
+              MessageBox(data.content, 'top', 'warning');
+            }
+          });
+        });
+  });
 
 
-    $(window).resize(function () {
-        resize_chart.body();
-        resize_chart.container();
-    });
-    function show_wzx() {
-        for (var i = 0; i < ANALYTICS.chartSeries.series.length; i++) {
-            ANALYTICS.chartSeries.series[i].type = $("#chart-type-alternate .image").attr("type");
-            ANALYTICS.chartSeries.series[i].interval = $("#chart-interval-alternate .active").attr("interval");
-        }
-        console.log(ANALYTICS.chartSeries.series);
+  $(window).resize(function () {
+    resize_chart.body();
+    resize_chart.container();
+  });
+  function show_wzx() {
+    for (var i = 0; i < ANALYTICS.chartSeries.series.length; i++) {
+      ANALYTICS.chartSeries.series[i].type = $("#chart-type-alternate .image").attr("type");
+      ANALYTICS.chartSeries.series[i].interval = $("#chart-interval-alternate .active").attr("interval");
     }
+    console.log(ANALYTICS.chartSeries.series);
+  }
 </script>
