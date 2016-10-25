@@ -149,8 +149,6 @@ function is_datetime_outrange(start, end, interval) {
 }
 
 function prepare_to_create_db_view(post) {
-    console.log("SDFFFFFFFFFPOST>>>>>>>>>>>>.");
-    console.log(post);
     var dashboard_item = {};
     dashboard_item.conditions = [];
 
@@ -297,6 +295,7 @@ function db_view_create_callback(data) {
 
         MessageBox("Create dashboard item success", "top", "success");
         //close_dash();
+
         if (current_dashboard_id == data.content.dashboard_id) {
             ifepm.dashboard.on_view_added(data.content);
         }

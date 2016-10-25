@@ -88,37 +88,40 @@ var isformchart = false;
  * */
 ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
     var chart = null;
-    var data, series_id, option;
+    var data, series_id, option, count;
 
-    for (var i = 0; i < datas.length; ++i) {
+    for (var dataLength = 0; dataLength < datas.length; dataLength++) {
+        count = 0;
         data = [];
 //      id改掉了
-        series_id = i;
-        for (var j = 0; j < datas[i].current.length; ++j) {
+        series_id = dataLength;
+
+        for (var j = 0; j < datas[dataLength].current.length; ++j) {
             data[j] = {};
-            data[j].y = datas[i].current[j];
-            data[j].high = datas[i].target_max[j];
-            data[j].low = datas[i].target_min[j];
-            data[j].unit = datas[i].unit[j];
+            data[j].y = datas[dataLength].current[j];
+            data[j].high = datas[dataLength].target_max[j];
+            data[j].low = datas[dataLength].target_min[j];
+            data[j].unit = datas[dataLength].unit[j];
             data[j].id = series_id;
         }
 
         option = {
-            kpi: datas[i].kpi_name,
+            kpi: datas[dataLength].kpi_name,
             id: series_id,
             target: container,
             outer_target: outer,
-            begin_time: datas[i].startTime,
+            begin_time: datas[dataLength].startTime,
             type: type,
-            interval: datas[i].interval,
+            interval: datas[dataLength].interval,
             data: data,
-            count: i + 1,
-            view_text: datas[i].view,
+            count: dataLength + 1,
+            view_text: datas[dataLength].view,
             total: datas[0].total
         };
 
-        var XGroup = {type: option.type, value: ""};
-        var XAxis = datas[i].date;
+        if (datas[dataLength].x_group) {
+            var XGroup = {type: datas[dataLength].x_group.type, value: datas[dataLength].x_group.value};
+        }
 
         var toolTips = {
             kpi: option.kpi,
@@ -132,16 +135,19 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
             x_type: XGroup
         };
 
-        var Data = new Array();
-        var XName = data;
+        var XAxis = datas[dataLength].date;
 
         //如果是时间， 进行转化
         if (XGroup.type == 100) {
-            XName = DashboardAddCharts.DealTimeData(toolTips, date, interval);
+            XName = DashboardAddCharts.DealTimeData(toolTips, XAxis, datas[dataLength].interval);
         }
+
+        var Data = new Array();
+        var XName = datas[dataLength].date;
 
         for (var i = 0; i < XAxis.length; i++) {
             Data.push({
+                view: datas[dataLength].date[i],
                 name: XName[i],
                 unit: data[i].unit,
                 target_min: data[i].low,
@@ -157,6 +163,10 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
             data: Data
         };
 
+        if (XGroup.type == 200) {
+            options.name = $("#chart-kpi :selected").text();
+        }
+
         var Chart_Setting = {
             Container: container,
             XAxis: XAxis,
@@ -164,83 +174,17 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
             Options: options
         };
 
-        if (series_id == 0) {
+        if (dataLength == 0) {
             DashboardAddCharts.DrawHighChart(Chart_Setting);
         } else {
-            // DashboardAddCharts.RequestData(i, kpi, method, view[i], standardParse(begin_time).date.toISOString(), standardParse(end_time).date.toISOString(), interval, kpi_property, XGroup);
             var Charts = $('#' + container).highcharts();
-
             Charts.addSeries({
                 id: series_id,
                 name: option.kpi + "(" + option.view_text + ")",
                 data: Data
             });
-
         }
-
-        //全屏
-        if (isfullsize) {
-            $('#' + container).find('tspan').css("fill", "white");
-            $('#' + container).find('.highcharts-axis-labels text').css("fill", "white");
-
-            $('.dashboard-moreDetail p').css("color", "white");
-            $('.dashboard-moreDetail i').css("color", "white");
-            $('.dashboard-moreDetail span').css("color", "white");
-        }
-
-        // if (i == 0) {
-        //     if (option.type == "pie") {
-        //         high_chart.plotOptions.pie.size = "70%";
-        //     }
-        //     // try {
-        //     //     render_to(option);
-        //     //     create_environment_for_data(option);
-        //     //     chart = new Highcharts.Chart(high_chart);
-        //     //     add_series(option);
-        //     //     proper_type_for_chart(option);
-        //     //     DASHBOARD.add.generate(option);
-        //     // } catch (err) {
-        //     //     // chart = new Highcharts.Chart(high_chart);
-        //     //     // chart.chart.renderTo = option.target;
-        //     //
-        //     //     console.log("form_highchart");
-        //     //     console.log(err);
-        //     // }
-        //
-        //     render_to(option);
-        //
-        //     create_environment_for_data(option);
-        //
-        //     chart = new Highcharts.Chart(high_chart);
-        //
-        //     add_series(option);
-        //
-        //     proper_type_for_chart(option);
-        //     DASHBOARD.add.generate(option);
-        // }
     }
-    // try {
-    //     limit_pointer_number(option);
-    // } catch (err) {
-    // }
-    //
-    // if (datas.length == 1 && type == "line") {
-    //     var option_area = {};
-    //     option_area = deepCopy(option, option_area);
-    //     option_area.type = "arearange";
-    //     option_area.id = "line-target";
-    //     option_area.count = 1;
-    //     add_series(option_area);
-    //     proper_type_for_chart(option_area);
-    // }
-    //
-    // if (chart) {
-    //     if (type == "pie") {
-    //         for (var i = 0; i < chart.series.length; ++i) {
-    //             chart.series[i].update({showInLegend: false});
-    //         }
-    //     }
-    // }
 };
 
 ifepm.dashboard.form_graph = function (datas, id) {
@@ -265,6 +209,16 @@ ifepm.dashboard.form_graph = function (datas, id) {
     } else {
         /*-------------------------绘制图表 ----------------------------------*/
         ifepm.dashboard.form_highchart(datas, container, outer, type);
+
+        // //判断全屏
+        if (isfullsize) {
+            $('.dashboard-moreDetail p').css("color", "white");
+            $('.dashboard-moreDetail i').css("color", "white");
+            $('.dashboard-moreDetail span').css("color", "white");
+
+            // $('#' + container).find('tspan').css("fill", "white");
+            // $('#' + container).find('.highcharts-axis-labels text').css("fill", "white");
+        }
     }
 
     if (datas.length < 1) {
@@ -705,7 +659,7 @@ ifepm.dashboard.on_finish_load = function () {
 
     var container_selector = ifepm.config.container_selector;
     ++current_index;
-    console.log(current_index + "=====" + ifepm.dashboard.graph_sequence.length);
+    // console.log(current_index + "=====" + ifepm.dashboard.graph_sequence.length);
     if (current_index >= ifepm.dashboard.graph_sequence.length) {
         ifepm.dashboard_widget.enable(true);
         constraintFullSizeHeight = window.setTimeout(function () {
@@ -1048,6 +1002,7 @@ ifepm.dashboard.on_view_added = function (data) {
 
     ifepm.dashboard.graphs[graph_item.id] = graph_item;
     ifepm.dashboard.setTimer(graph_item);
+
     //save position
     var options = [];
     var opt = {};

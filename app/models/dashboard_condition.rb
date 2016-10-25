@@ -25,7 +25,7 @@ class DashboardCondition < ActiveRecord::Base
         entity_group = EntityGroup.find(condition.entity_group)
         time_span = DashboardItem.time_string_to_time_span condition.time_string
 
-        count = time_range_count(time_span[:start].iso8601.to_s, time_span[:end].iso8601.to_s, dashboard_itme.interval)
+        count = time_range_count(time_span[:start].iso8601.to_s, time_span[:end].iso8601.to_s, dashboard_itme.interval || KpiFrequency::Daily)
         if count > 150
           return datas
         end
@@ -35,7 +35,7 @@ class DashboardCondition < ActiveRecord::Base
             start_time: time_span[:start].iso8601.to_s,
             end_time: time_span[:end].iso8601.to_s,
             average: condition.calculate_type=='AVERAGE' ? true : false,
-            frequency: dashboard_itme.interval,
+            frequency: dashboard_itme.interval || KpiFrequency::Daily,
             property: condition.kpi_property.blank? ? nil : JSON.parse(condition.kpi_property),
             x_group: condition.x_group.blank? ? nil : JSON.parse(condition.x_group).symbolize_keys).analyse
 
@@ -61,6 +61,7 @@ class DashboardCondition < ActiveRecord::Base
           data[:count] = condition.count
           data[:id] = condition.id
           data[:view] = entity_group.name
+          data[:x_group] = condition.x_group.blank? ? nil : JSON.parse(condition.x_group).symbolize_keys
           datas << data
         end
       }

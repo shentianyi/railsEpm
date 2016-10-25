@@ -13,6 +13,7 @@ DashboardAddCharts.init = function () {
     $("#add-dashboard-show").on("click", function () {
         DashboardAddCharts.ChangeChartType();
         DashboardAddCharts.RemoveLine();
+
         $("#dashboard-add-wrap").css("display", "block");
         $("#dashboard-group-name+div").css("width", "140px");
         $("#chart-group+div").css("width", "130px");
@@ -206,6 +207,7 @@ DashboardAddCharts.draw_charts = function (element) {
                 MessageBox("对不起，时间范围太大了！", "top", "warning");
                 return;
             }
+
             var ValueArray = new Array();
             var XGroup;
             if (show_type == "100") {
@@ -241,15 +243,28 @@ DashboardAddCharts.draw_charts = function (element) {
                 }
             } else if (show_type == "200") {
                 //按照部门进行修改
-                //删除 周期
                 $('#db-chart-interval-alternate').css({display: 'none'});
+
                 ValueArray.length = 0;
+
                 for (var i = 0; i < view.length; i++) {
                     ValueArray.push(view[i].id);
                 }
+                XGroup = {type: show_type, value: ValueArray, pie_compare: "对比"};
 
-                XGroup = {type: show_type, value: ValueArray};
+                console.log("$('#pie_compare').val()");
+                console.log();
+
+                if (type == "pie") {
+                    try {
+                        XGroup.pie_compare = $('#pie_compare .checked').parent().html().split('</div>')[1].trim();
+                    } catch (err) {
+                        console.log(err);
+                    }
+                }
+
                 DashboardAddCharts.DrawChart(kpi, method, view[0], standardParse(begin_time).date.toISOString(), standardParse(end_time).date.toISOString(), interval, kpi_property, XGroup);
+
             } else if (show_type == "300") {
                 //按照部维度进行修改
                 $('#db-chart-interval-alternate').css({display: 'none'});
@@ -258,14 +273,23 @@ DashboardAddCharts.draw_charts = function (element) {
                 XGroup = {type: show_type, value: ValueArray};
 
                 if (view.length > 0) {
-                    for (var i = 0; i < view.length; i++) {
-                        if (chart_body_close_validate) {
-                            DashboardAddCharts.DrawChart(kpi, method, view[0], standardParse(begin_time).date.toISOString(), standardParse(end_time).date.toISOString(), interval, kpi_property, XGroup);
-                            chart_body_close_validate = false;
+                    if (type == "pie") {
+                        if (view.length > 1) {
+                            MessageBox("只能显示一个视图！", "top", "warning");
+                            $('#pie_compare').css({display: "none"});
                         } else {
-                            //直接添加到已有的表中
-                            if (view.length > 1) {
-                                DashboardAddCharts.RequestData(i, kpi, method, view[i], standardParse(begin_time).date.toISOString(), standardParse(end_time).date.toISOString(), interval, kpi_property, XGroup);
+                            DashboardAddCharts.DrawChart(kpi, method, view[0], standardParse(begin_time).date.toISOString(), standardParse(end_time).date.toISOString(), interval, kpi_property, XGroup);
+                        }
+                    } else {
+                        for (var i = 0; i < view.length; i++) {
+                            if (chart_body_close_validate) {
+                                DashboardAddCharts.DrawChart(kpi, method, view[0], standardParse(begin_time).date.toISOString(), standardParse(end_time).date.toISOString(), interval, kpi_property, XGroup);
+                                chart_body_close_validate = false;
+                            } else {
+                                //直接添加到已有的表中
+                                if (view.length > 1) {
+                                    DashboardAddCharts.RequestData(i, kpi, method, view[i], standardParse(begin_time).date.toISOString(), standardParse(end_time).date.toISOString(), interval, kpi_property, XGroup);
+                                }
                             }
                         }
                     }
@@ -273,7 +297,6 @@ DashboardAddCharts.draw_charts = function (element) {
                     MessageBox("请选择视图！", "top", "warning");
                 }
             }
-
             //可以进行发布
             DashboardAddCharts.CreateNow();
         }
@@ -387,30 +410,35 @@ DashboardAddCharts.ChangeChartType = function () {
         if ($(this).hasClass("active") == false) {
             $(this).siblings().removeClass("active");
             $(this).addClass('active');
+
+            if ($(this).attr("type") == "pie") {
+                $('#pie_compare').css({display: "block"});
+            } else {
+                $('#pie_compare').css({display: "none"});
+            }
         }
 
         var Chart = $('#chart-container').highcharts();
 
-        if ($("#db-add-type>.active").attr("type") == "pie") {
-            if (Chart.series.length == 1) {
-                Chart.series[0].update({
-                    type: $("#db-add-type>.active").attr("type")
-                });
+        if (Chart) {
+            if ($("#db-add-type>.active").attr("type") == "pie") {
+                if (Chart.series.length == 1) {
+                    Chart.series[0].update({
+                        type: $("#db-add-type>.active").attr("type")
+                    });
 
-                if ($(this).attr("type") == "pie") {
-                    $('#pie_compare').css({display: "block"});
                 } else {
+                    //合并显示
+                    MessageBox("饼状图只支持一组数据", "top", "warning");
+
                     $('#pie_compare').css({display: "none"});
                 }
             } else {
-                //合并显示
-                MessageBox("饼状图只支持一组数据", "top", "warning");
-            }
-        } else {
-            for (var i = 0; i < Chart.series.length; i++) {
-                Chart.series[i].update({
-                    type: $("#db-add-type>.active").attr("type")
-                });
+                for (var i = 0; i < Chart.series.length; i++) {
+                    Chart.series[i].update({
+                        type: $("#db-add-type>.active").attr("type")
+                    });
+                }
             }
         }
     });
@@ -448,17 +476,22 @@ DashboardAddCharts.RequestData = function (count, Kpi, Method, View, startTime, 
                 }
 
                 var KpiName = $("#chart-kpi :selected").text();
-                try {
-                    Charts.addSeries({
-                        id: "series" + (count + 1),
-                        name: KpiName + "(" + View.text + ")",
-                        data: Data
-                    });
-                } catch (err) {
-                    console.log("出错啦，时间段太长");
-                }
+
+                setTimeout(function () {
+                    try {
+                        Charts.addSeries({
+                            id: "series" + (count + 1),
+                            name: KpiName + "(" + View.text + ")",
+                            color: color[count],
+                            data: Data
+                        });
+                    } catch (err) {
+                        MessageBox("数据量太大, 没有全部绘制, 可以更改类型或者重试！", "top", "warning");
+                    }
+                }, 1400);
+
             } else {
-                console.log("API 请求返回值为false");
+                MessageBox("API请求失败！", "top", "warning");
             }
 
             $("#db-add-kpi-list").append(
@@ -477,6 +510,7 @@ DashboardAddCharts.RequestData = function (count, Kpi, Method, View, startTime, 
 //画图
 DashboardAddCharts.DrawChart = function (Kpi, Method, View, startTime, endTime, cycleFrequency, Property, XGroup) {
     dashboard_show_loading("dashboard-add-inner", "40px", "0px", "0px", "200px");
+
     $.ajax({
         url: '/kpi_entries/analyse',
         type: 'post',
@@ -519,28 +553,91 @@ DashboardAddCharts.DrawChart = function (Kpi, Method, View, startTime, endTime, 
                     XName = DashboardAddCharts.DealTimeData(toolTips, data.object.date, $("#db-chart-interval-alternate li.active").attr("interval"));
                 }
 
-                var Color = "";
-                if (toolTips.type != "pie") {
-                    Color = color[0];
+                if (type == "pie") {
+                    if (XGroup.pie_compare == "占比") {
+                        var Max = 0;
+                        var SumChild = 0.0;
+                        for (var compare = 0; compare < XAxis.length; compare++) {
+                            if (Max < parseFloat(data.object.current[compare])) {
+                                Max = parseFloat(data.object.current[compare]);
+                            } else {
+                                SumChild += parseFloat(data.object.current[compare]);
+                            }
+                        }
+
+                        for (var array = 0; array < XAxis.length; array++) {
+
+                            console.log("SAArray");
+                            console.log(data.object.current[array]);
+
+                            if (parseFloat(data.object.current[array]) == Max) {
+                                console.log("最大值 是 " + Max);
+                            } else {
+                                Data.push({
+                                    color: color[array],
+                                    name: XName[array],
+                                    unit: data.object.unit[array],
+                                    target_min: data.object.target_min[array],
+                                    target_max: data.object.target_max[array],
+                                    y: data.object.current[array],
+                                    x_type: XGroup
+                                });
+                            }
+                        }
+
+                        var Others = Max - SumChild;
+
+                        if (Others > 0) {
+                            //.....输出
+                            Data.push({
+                                color: color[XAxis.length + 1],
+                                name: "Others",
+                                unit: data.object.unit[0],
+                                target_min: data.object.target_min[0],
+                                target_max: data.object.target_max[0],
+                                y: Others,
+                                x_type: XGroup
+                            });
+                        }
+                    } else {
+                        for (var i = 0; i < XAxis.length; i++) {
+                            Data.push({
+                                color: color[i],
+                                name: XName[i],
+                                unit: data.object.unit[i],
+                                target_min: data.object.target_min[i],
+                                target_max: data.object.target_max[i],
+                                y: data.object.current[i],
+                                x_type: XGroup
+                            })
+                        }
+                    }
+                } else {
+                    for (var i = 0; i < XAxis.length; i++) {
+                        Data.push({
+                            color: color[0],
+                            name: XName[i],
+                            unit: data.object.unit[i],
+                            target_min: data.object.target_min[i],
+                            target_max: data.object.target_max[i],
+                            y: data.object.current[i],
+                            x_type: XGroup
+                        })
+                    }
                 }
 
-                for (var i = 0; i < XAxis.length; i++) {
-                    Data.push({
-                        color: Color,
-                        name: XName[i],
-                        unit: data.object.unit[i],
-                        target_min: data.object.target_min[i],
-                        target_max: data.object.target_max[i],
-                        y: data.object.current[i],
-                        x_type: XGroup
-                    })
-                }
+
+                console.log(Data);
 
                 var options = {
                     id: "series-1",
                     name: $("#chart-kpi :selected").text() + "(" + View.text + ")",
                     data: Data
                 };
+
+                if (XGroup.type == 200) {
+                    options.name = $("#chart-kpi :selected").text();
+                }
 
                 var Chart_Setting = {
                     Container: 'chart-container',
@@ -570,8 +667,8 @@ DashboardAddCharts.DrawChart = function (Kpi, Method, View, startTime, endTime, 
 
 DashboardAddCharts.DrawHighChart = function (Chart_Settings) {
     high_charts = $("#" + Chart_Settings.Container).highcharts({
+        colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
         chart: {
-            colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
             type: Chart_Settings.ToolTips.type,
             spacingLeft: 5,
             spacingRight: 5,
@@ -580,7 +677,7 @@ DashboardAddCharts.DrawHighChart = function (Chart_Settings) {
             borderRadius: 0,
             backgroundColor: "transparent",
             animation: {
-                duration: 800
+                duration: 1200
             }
         },
         title: {
@@ -604,13 +701,48 @@ DashboardAddCharts.DrawHighChart = function (Chart_Settings) {
         },
         tooltip: {
             formatter: function () {
+                // if (Chart_Settings.ToolTips.type == "pie") {
+                //     console.log(this);
+                // }
                 var seriesName = typeof this.series.name == "string" ? this.series.name : this.series.name[this.point.seriesId];
-                return '<b>' + this.x + '</b>'
-                    + '<br />KPI(' + I18n.t('chart.view') + '): <span style="color:' + this.series.color + '">' + seriesName
-                    + '</span>'
-                    // + '<br />' + I18n.t('chart.view') + ': ' + this.series.name
-                    + '<br />' + I18n.t('chart.value') + ': ' + this.y + " " + this.point.unit
-                    + "<br />" + I18n.t('chart.target_range') + ": " + this.point.target_min + "-" + this.point.target_max
+                // return '<b>' + this.x + '</b>'
+                //     + '<br />KPI(' + I18n.t('chart.view') + '): <span style="color:' + this.series.color + '">' + seriesName
+                //     + '</span>'
+                //     // + '<br />' + I18n.t('chart.view') + ': ' + this.series.name
+                //     + '<br />' + I18n.t('chart.value') + ': ' + this.y + " " + this.point.unit
+                //     + "<br />" + I18n.t('chart.target_range') + ": " + this.point.target_min + "-" + this.point.target_max
+
+                if (this.series.type != "pie") {
+                    if (this.series.type == "column") {
+                        return '<b>' + this.x + '</b>'
+                            + '<br />KPI(' + I18n.t('chart.view') + '): <span style="color:' + this.series.color + '">' + seriesName
+                            // + '<br />KPI: <span style="color:' + this.series.color + '">' + this.series.name
+                            + '</span>'
+                            + '<br />' + I18n.t('chart.view') + ': ' + this.point.view
+                            + '<br />' + I18n.t('chart.value') + ' : ' + this.y + " " + this.point.unit
+                            + "<br />" + I18n.t('chart.target_range') + ": " + this.point.target_min + "-" + this.point.target_max;
+                    }
+                    else {
+                        return '<b>' + this.x + '</b>'
+                            + '<br />KPI(' + I18n.t('chart.view') + '): <span style="color:' + this.series.color + '">' + seriesName
+                            // + '<br />KPI: <span style="color:' + this.series.color + '">' + this.series.name
+                            + '</span>'
+                            + '<br />' + I18n.t('chart.view') + ': ' + this.point.view
+                            + '<br />' + I18n.t('chart.value') + ': ' + this.y + " " + this.point.unit
+                            + "<br />" + I18n.t('chart.target_range') + ": " + this.point.target_min + "-" + this.point.target_max;
+                    }
+                }
+                else {
+//                console.log(typeof this.series.name);
+                    var seriesName = typeof this.series.name == "string" ? this.series.name : this.series.name[this.point.seriesId]
+                    return '<b>' + this.point.options.view + '</b>'
+                        + '<br />KPI(' + I18n.t('chart.view') + '): <span style="color:' + this.series.color + '">' + seriesName
+                        // + '<br />KPI: <span style="color:' + this.series.color + '">' + seriesName
+                        + '</span>'
+                        // + '<br />' + I18n.t('chart.view') + ': ' + this.point.view
+                        + '<br />' + I18n.t('chart.value') + ': ' + this.y + " " + this.point.unit
+                        + "<br />" + I18n.t('chart.percent') + ": " + this.percentage.toFixed(1) + "%";
+                }
             }
         },
         scrollbar: {
@@ -637,7 +769,37 @@ DashboardAddCharts.DrawHighChart = function (Chart_Settings) {
                         console.log('click');
                     }
                 }
-            }
+            },
+            pie: {
+                size: '70%',
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    connectorWidth: 1,
+                    format: '<b>{point.name}:</b> {point.percentage:.1f} %'
+                },
+                point: {
+                    events: {
+                        select: function () {
+                            var $table = $("#" + this.series.chart.renderTo.id).prev(".dashboard-item-extra-info"), i, data, total = 0, validate = true, name;
+                            $table.find(".percentage").text((this.percentage).toFixed(1) + "%");
+                            name = this.series.chart.series.length > 2 ? this.kpi_name : this.name;
+                            $table.find(".pie-selected-name").text(name);
+                            $table.find(".selected-value").text(this.y + this.unit);
+                        }
+                    }
+                },
+                events: {
+                    click: function () {
+                        var $table = $("#" + this.chart.renderTo.id).prev(".dashboard-item-extra-info"), i, data, total = 0, validate = true, name;
+                        for (i = 0; i < this.data.length; i++) {
+                            total += this.data[i].y;
+                        }
+                        $table.find(".pie-total-value").text(total + this.data[0].unit);
+                    }
+                }
+
+            },
         },
         series: [Chart_Settings.Options]
     });

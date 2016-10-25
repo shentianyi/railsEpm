@@ -313,7 +313,6 @@ DASHBOARD.add.init = function () {
         });
     });
 
-
     //点击Add 按钮
 
     $("body").on("click", "#db-add-chart", DASHBOARD.add.prepare_form_chart);
