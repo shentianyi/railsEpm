@@ -19,14 +19,14 @@ module FileHandler
             # 新建一个sheet
             sheet=p.workbook.add_worksheet(:name => kpi.name)
             # 写表头-写基本的
-            column=['Email', 'KPIID', 'KPIName', 'Date', 'Value']
+            column=['DepartmentName', 'KPIID', 'KPIName', 'Date', 'Value']
             kpi.kpi_properties.each do |property|
               column << property.name.to_s
             end
             sheet.add_row column#+KpiEntry::KEY_MARKS
             # 写动态数据:用户信息和KPI信息
             sheet.add_row [
-                              user.email,
+                              (user.department.blank? ? '' : user.department.name),
                               kpi.id,
                               kpi.name,
                               '',

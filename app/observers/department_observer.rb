@@ -10,18 +10,19 @@ class DepartmentObserver<ActiveRecord::Observer
     entity_group.creator = department.creator
     entity_group.tenant=department.tenant
 
-    unless entity=Entity.find_by_code(department.name)
+    # unless entity=department.tenant.entities.find_by_code(department.name)
       # create entity
       entity=Entity.new(name: department.name, code: department.name, department_id: department.id)
       #create user
       user=User.new(first_name: "#{department.name}_user",
-                    email: "#{department.name.gsub(/ /, '_')}_user@ci.com",
+                    email: "#{department.name.gsub(/ /, '_')}_user@leonijn.com",
                     password: '123456@', password_confirmation: '123456@', role_id: 100)
       user.tenant=department.tenant
       entity.tenant=department.tenant
       entity.users<<user
-    end
+    # end
     entity_group.entities<<department.default_entity if department.default_entity
+    department.default_entity=entity if department.default_entity.blank?
     entity_group.entities<<entity
 
     entity_group.save

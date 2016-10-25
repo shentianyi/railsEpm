@@ -670,6 +670,7 @@ en:
     invalid_value: invalid value
     kpi_not_assign: KPI not assigned to user
     invalid_kpi: invalid KPI info
+    invalid_department: invalid Department info
     invalid_user_email: invalid email
   epm_report:
     title: ClearInsight Report
