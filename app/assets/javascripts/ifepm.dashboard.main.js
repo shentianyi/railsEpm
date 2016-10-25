@@ -102,6 +102,7 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
             data[j].unit = datas[i].unit[j];
             data[j].id = series_id;
         }
+
         option = {
             kpi: datas[i].kpi_name,
             id: series_id,
@@ -115,60 +116,134 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
             view_text: datas[i].view,
             total: datas[0].total
         };
-        if (isfullsize) {
-            option.theme = "dark";
-            var $target = $("#" + option.outer_target).parent().parent();
-//            $target.css("background-color", "rgba(16,16,16,1)");
-//            $target.find(".dashboard-eachDetail").css("backgroundColor", "rgba(96,96,96,1)");
-            $target.find(".dashboard-eachDetail p").css("color", "white");
-            $target.find(".dashboard-eachDetail i").css("color", "white");
-            $target.find(".dashboard-eachDetail i").hover(function () {
-                $(this).css("color", "black");
+
+        var XGroup = {type: option.type, value: ""};
+        var XAxis = datas[i].date;
+
+        var toolTips = {
+            kpi: option.kpi,
+            view: option.view_text,
+            target: container,
+            outer_target: "put-db-chart",
+            begin_time: option.begin_time,
+            type: option.type,
+            interval: option.interval,
+            kpi_property: "",
+            x_type: XGroup
+        };
+
+        var Data = new Array();
+        var XName = data;
+
+        //如果是时间， 进行转化
+        if (XGroup.type == 100) {
+            XName = DashboardAddCharts.DealTimeData(toolTips, date, interval);
+        }
+
+        for (var i = 0; i < XAxis.length; i++) {
+            Data.push({
+                name: XName[i],
+                unit: data[i].unit,
+                target_min: data[i].low,
+                target_max: data[i].high,
+                y: data[i].y,
+                x_type: XGroup
+            })
+        }
+
+        var options = {
+            id: option.id,
+            name: option.kpi + "(" + option.view_text + ")",
+            data: Data
+        };
+
+        var Chart_Setting = {
+            Container: container,
+            XAxis: XAxis,
+            ToolTips: toolTips,
+            Options: options
+        };
+
+        if (series_id == 0) {
+            DashboardAddCharts.DrawHighChart(Chart_Setting);
+        } else {
+            // DashboardAddCharts.RequestData(i, kpi, method, view[i], standardParse(begin_time).date.toISOString(), standardParse(end_time).date.toISOString(), interval, kpi_property, XGroup);
+            var Charts = $('#' + container).highcharts();
+
+            Charts.addSeries({
+                id: series_id,
+                name: option.kpi + "(" + option.view_text + ")",
+                data: Data
             });
-            $target.find(".dashboard-eachDetail span").css("color", "white");
-        }
-        if (i == 0) {
-            if (option.type == "pie") {
-                high_chart.plotOptions.pie.size = "70%";
-            }
-            try {
-                render_to(option);
-                create_environment_for_data(option);
-                chart = new Highcharts.Chart(high_chart);
-            } catch (err) {
-                chart = new Highcharts.Chart(high_charts);
-            }
-        }
-        add_series(option);
-        proper_type_for_chart(option);
-        DASHBOARD.add.generate(option);
 
-    }
-    try {
-        limit_pointer_number(option);
-    } catch (err) {
-    }
-    if (datas.length == 1 && type == "line") {
-        var option_area = {};
-        option_area = deepCopy(option, option_area);
-        option_area.type = "arearange";
-        option_area.id = "line-target";
-        option_area.count = 1;
-        add_series(option_area);
-        proper_type_for_chart(option_area);
-    }
-
-    if (chart) {
-        if (type == "pie") {
-            for (var i = 0; i < chart.series.length; ++i) {
-                chart.series[i].update({showInLegend: false});
-            }
         }
+
+        //全屏
+        if (isfullsize) {
+            $('#' + container).find('tspan').css("fill", "white");
+            $('#' + container).find('.highcharts-axis-labels text').css("fill", "white");
+
+            $('.dashboard-moreDetail p').css("color", "white");
+            $('.dashboard-moreDetail i').css("color", "white");
+            $('.dashboard-moreDetail span').css("color", "white");
+        }
+
+        // if (i == 0) {
+        //     if (option.type == "pie") {
+        //         high_chart.plotOptions.pie.size = "70%";
+        //     }
+        //     // try {
+        //     //     render_to(option);
+        //     //     create_environment_for_data(option);
+        //     //     chart = new Highcharts.Chart(high_chart);
+        //     //     add_series(option);
+        //     //     proper_type_for_chart(option);
+        //     //     DASHBOARD.add.generate(option);
+        //     // } catch (err) {
+        //     //     // chart = new Highcharts.Chart(high_chart);
+        //     //     // chart.chart.renderTo = option.target;
+        //     //
+        //     //     console.log("form_highchart");
+        //     //     console.log(err);
+        //     // }
+        //
+        //     render_to(option);
+        //
+        //     create_environment_for_data(option);
+        //
+        //     chart = new Highcharts.Chart(high_chart);
+        //
+        //     add_series(option);
+        //
+        //     proper_type_for_chart(option);
+        //     DASHBOARD.add.generate(option);
+        // }
     }
+    // try {
+    //     limit_pointer_number(option);
+    // } catch (err) {
+    // }
+    //
+    // if (datas.length == 1 && type == "line") {
+    //     var option_area = {};
+    //     option_area = deepCopy(option, option_area);
+    //     option_area.type = "arearange";
+    //     option_area.id = "line-target";
+    //     option_area.count = 1;
+    //     add_series(option_area);
+    //     proper_type_for_chart(option_area);
+    // }
+    //
+    // if (chart) {
+    //     if (type == "pie") {
+    //         for (var i = 0; i < chart.series.length; ++i) {
+    //             chart.series[i].update({showInLegend: false});
+    //         }
+    //     }
+    // }
 };
 
 ifepm.dashboard.form_graph = function (datas, id) {
-
     var container, outer;
     if (isfullsize) {
         container = ifepm.dashboard.make_item_container_id_full(id);
@@ -188,6 +263,7 @@ ifepm.dashboard.form_graph = function (datas, id) {
 
         /*-------------------------table----------------------------------*/
     } else {
+        /*-------------------------绘制图表 ----------------------------------*/
         ifepm.dashboard.form_highchart(datas, container, outer, type);
     }
 
@@ -416,20 +492,16 @@ ifepm.dashboard.getInteral = function (interval) {
  * @param id
  * */
 ifepm.dashboard.update_graph = function (datas, id) {
-
-
     var container;
     if (isfullsize) {
         container = ifepm.dashboard.make_item_container_id_full(id);
     } else {
         container = ifepm.dashboard.make_item_container_id(id);
     }
-    //console.log("update dashboard id: "+id+" "+container);
-    //table
 
-    //highchart
     var type = ifepm.dashboard.graphs[id].chart_type;
     var chart = $('#' + container).highcharts();
+
     if (chart) {
         for (var i = 0; i < datas.length; i++) {
             var series = chart.get(i);
@@ -646,8 +718,9 @@ ifepm.dashboard.on_finish_load = function () {
 
             //here is get the right content Hight;
             var ContentHig = document.getElementById('dashboard-content').offsetHeight;
-            var ClientHeight_left = ContentHig / 2 - 110;
+            var ClientHeight_left = ContentHig / 2 - 40;
             console.log("dashboard-content-full-bg-left:" + ClientHeight_left + "px");
+
             $("#dashboard-content-full-bg-left").css("height", ClientHeight_left + "px");
         }, 100);
 
@@ -701,6 +774,7 @@ ifepm.dashboard.on_finish_load = function () {
             ifepm.dashboard_widget.add_w(option);
         }
         else {
+            //新增
             option.isnew = true;
             option.chart_type = ifepm.dashboard.graphs[graph_id].chart_type;
             var result = ifepm.dashboard_widget.add_w(option);
@@ -763,6 +837,7 @@ ifepm.dashboard.create_dashboard = function () {
     ifepm.dashboard_widget.remove_all_widgets();
     ifepm.dashboard.clear_all_timer();
     $(container_selector).children().remove();
+
     if (Object.keys(ifepm.dashboard.graphs).length > 0) {
         current_index = 0;
         var graph_id = ifepm.dashboard.graph_sequence[current_index];
@@ -782,6 +857,7 @@ ifepm.dashboard.create_dashboard = function () {
         var result = ifepm.dashboard_widget.add_w(option);
         ifepm.dashboard.graphs[graph_id].sizex = result.sizex;
         ifepm.dashboard.graphs[graph_id].sizey = result.sizey;
+
         // change to not save position
         /*
          if (ifepm.dashboard.graphs[graph_id].sizex) {
@@ -916,7 +992,6 @@ ifepm.dashboard.init = function (id, callback) {
                     ifepm.dashboard.graphs[data[i].id] = graph_item;
                     //ifepm.dashboard.setTimer(ifepm.dashboard.graphs[data[i].id]);
                     ifepm.dashboard.graph_sequence.push(data[i].id)
-
                 }
 
                 if (callback) {

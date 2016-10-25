@@ -174,7 +174,6 @@ DASHBOARD.add.init = function () {
     $("#analytic-control-condition-visible,#add-one-series").on("click", DASHBOARD.add.initial.analytic_control_condition_visible);
 
     $("#db-add-type>li").on("click", function (event) {
-
         var target = adapt_event(event).target;
         if ($(this).hasClass("active") == false) {
             // if ($(target).attr("type") == "line" && db_chartSeries.getCount() > 1) {

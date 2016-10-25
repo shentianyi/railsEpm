@@ -95,7 +95,6 @@ DashboardAddCharts.CreateNow = function () {
                     post.dashboard_id = $("#dashboard-group-name :selected").attr("value");
                     post.series = [];
 
-
                     var kpi = $("#chart-kpi :selected").attr("value");
                     var view = DashboardAddCharts.get_selected_view();
                     var method = $("input[name='chartRadios']:checked").attr("value");
@@ -137,10 +136,8 @@ DashboardAddCharts.CreateNow = function () {
                         post.series[i].kpi_property = kpi_property;
                         post.series[i].x_group = Charts.series[i].points[0].x_type;
                         post.series[i].count = i + 1;
-
-                        console.log("post");
-                        console.log(post);
                     }
+
                     prepare_to_create_db_view(post);
                 }
                 else {
@@ -522,9 +519,14 @@ DashboardAddCharts.DrawChart = function (Kpi, Method, View, startTime, endTime, 
                     XName = DashboardAddCharts.DealTimeData(toolTips, data.object.date, $("#db-chart-interval-alternate li.active").attr("interval"));
                 }
 
+                var Color = "";
+                if (toolTips.type != "pie") {
+                    Color = color[0];
+                }
+
                 for (var i = 0; i < XAxis.length; i++) {
                     Data.push({
-                        color: color[0],
+                        color: Color,
                         name: XName[i],
                         unit: data.object.unit[i],
                         target_min: data.object.target_min[i],

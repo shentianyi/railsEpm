@@ -149,6 +149,7 @@ function is_datetime_outrange(start, end, interval) {
 }
 
 function prepare_to_create_db_view(post) {
+    console.log("SDFFFFFFFFFPOST>>>>>>>>>>>>.");
     console.log(post);
     var dashboard_item = {};
     dashboard_item.conditions = [];

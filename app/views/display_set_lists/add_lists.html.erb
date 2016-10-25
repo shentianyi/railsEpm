@@ -1,20 +1,20 @@
 <style>
-    #ProductLine > strong {
-        margin: -3px 10px 0 2px;
-    }
+  #ProductLine > strong {
+    margin: -3px 10px 0 2px;
+  }
 
-    .SaveLists {
-        width: 200px;
-        font-size: 1.2em;
-        margin: 10px 0 0 -37px;
-    }
+  .SaveLists {
+    width: 200px;
+    font-size: 1.2em;
+    margin: 10px 0 0 -37px;
+  }
 
-    a:hover, a:active {
-        text-decoration: none;
-        background-color: white;
-        color: black;
-        outline: none;
-    }
+  a:hover, a:active {
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    outline: none;
+  }
 </style>
 
 <div class="panel panel-primary" style="margin: 20px 15px 0 15px;">
@@ -65,66 +65,66 @@
 <script type="text/javascript" src="/assets/jquery.ui/jquery.datetimepicker.js"></script>
 <link data-turbolinks-track="true" href="/assets/jquery.datetimepicker.css" media="all" rel="stylesheet"/>
 <script type="text/javascript">
-    $(function () {
-        $(".datepicker").datetimepicker({
-            lang: 'ch',
-            format: 'Y-m-d'
-        });
+  $(function () {
+    $(".datepicker").datetimepicker({
+      lang: 'ch',
+      format: 'Y-m-d'
     });
-    ShowProductLine();
+  });
+  ShowProductLine();
 
-    var ListJSON = [];
-    $('.SaveLists').click(function () {
+  var ListJSON = [];
+  $('.SaveLists').click(function () {
 
-        var start_time = $('.start_time').val();
-        var end_time = $('.end_time').val();
+    var start_time = $('.start_time').val();
+    var end_time = $('.end_time').val();
 
-        $('.CheckBox').each(function () {
-            var ProductLineId = $(this).attr('id');
-            var ProductLineStatus = $(this).attr('ischecked');
-            ListJSON.push({id: ProductLineId, status: ProductLineStatus});
-        });
-
-        $.ajax({
-            url: '/display_set_lists/add_lists',
-            type: 'post',
-            data: {
-                start_time: start_time,
-                end_time: end_time,
-                product_line_data: ListJSON
-            },
-            success: function (data) {
-                location.reload();
-            },
-            error: function () {
-            },
-            complete: function (xhr) {
-                if (xhr.status == 304) return;
-            }
-        });
+    $('.CheckBox').each(function () {
+      var ProductLineId = $(this).attr('id');
+      var ProductLineStatus = $(this).attr('ischecked');
+      ListJSON.push({id: ProductLineId, status: ProductLineStatus});
     });
 
-    function ShowProductLine() {
-        <% @product_lines.each_with_index do |p| %>
-            $('<div class="col-md-2" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;border: 1px solid lightseagreen;background: lightseagreen;color: white;border-radius: 4px;margin:0 5px 5px 5px;text-align: left;height: 30px;padding: 5px 0 0 10px;">' +
-            '<input type="checkbox" class="CheckBox" id="<%= p.id%>" ischecked="false"><strong title="<%= p.name %>">' + '<%= p.cn_name %>' + '</strong></input></div>').appendTo('#ProductLine').ready(function () {
-            });
-        <% end %>
+    $.ajax({
+      url: '/display_set_lists/add_lists',
+      type: 'post',
+      data: {
+        start_time: start_time,
+        end_time: end_time,
+        product_line_data: ListJSON
+      },
+      success: function (data) {
+        location.reload();
+      },
+      error: function () {
+      },
+      complete: function (xhr) {
+        if (xhr.status == 304) return;
+      }
+    });
+  });
 
-        $(":checkbox").click(function () {
-            if ($(this).attr('ischecked') == "true") {
-                $(this).attr('ischecked', 'false');
-            } else {
-                $(this).attr('ischecked', 'true');
-            }
-        });
+  function ShowProductLine() {
+    <% @product_lines.each_with_index do |p| %>
+    $('<div class="col-md-2" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;border: 1px solid lightseagreen;background: lightseagreen;color: white;border-radius: 4px;margin:0 5px 5px 5px;text-align: left;height: 30px;padding: 5px 0 0 10px;">' +
+        '<input type="checkbox" class="CheckBox" id="<%= p.id%>" ischecked="false"><strong title="<%= p.name %>">' + '<%= p.cn_name %>' + '</strong></input></div>').appendTo('#ProductLine').ready(function () {
+    });
+    <% end %>
+
+    $(":checkbox").click(function () {
+      if ($(this).attr('ischecked') == "true") {
+        $(this).attr('ischecked', 'false');
+      } else {
+        $(this).attr('ischecked', 'true');
+      }
+    });
+  }
+
+  $(document).ready(function () {
+    if ($(".col-md-2").length == $(".CheckBox:ischecked").length) {
+      $("#CheckBox").prop("ischecked", true);
+    } else {
+      $("#CheckBox").prop("ischecked", false);
     }
-
-    $(document).ready(function () {
-        if ($(".col-md-2").length == $(".CheckBox:ischecked").length) {
-            $("#CheckBox").prop("ischecked", true);
-        } else {
-            $("#CheckBox").prop("ischecked", false);
-        }
-    });
+  });
 </script>
