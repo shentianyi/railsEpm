@@ -39,6 +39,7 @@ module Entry
     def doc_upload_filter params
       attrs = {}
       attrs[:kpi_id] = params[:kpi_id]
+      attrs[:department_name] = params[:department_name]
       attrs[:kpi_name] = params[:kpi_name]
       attrs[:date] = params[:date]
       attrs[:value] = params[:value]
@@ -130,7 +131,8 @@ module Entry
 
       #dependet on entry_type
       if attrs['entry_id'].blank?
-        kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], entry_at: attrs['entry_at'], entity_id: attrs['entity_id'], entry_type: attrs['entry_type'])
+        # kpi_entry = KpiEntry.where(user_kpi_item_id: attrs['user_kpi_item_id'], entry_at: attrs['entry_at'], entity_id: attrs['entity_id'], entry_type: attrs['entry_type'])
+        kpi_entry = KpiEntry.where(entry_at: attrs['entry_at'], entity_id: attrs['entity_id'], entry_type: attrs['entry_type'])
         query_properties.each do |k, v|
           kpi_entry=kpi_entry.where({k => v})
         end if query_properties

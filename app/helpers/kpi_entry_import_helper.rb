@@ -94,7 +94,6 @@ module KpiEntryImportHelper
 
           row_values=params.values
 
-
           params = Entry::OperateService.new.doc_upload_filter(params)
           validator=KpiEntryValidator.new(params)
           validator.validate
@@ -127,8 +126,11 @@ module KpiEntryImportHelper
     AliyunOssService.store_kpi_entry_file(file, path)
   end
 
+  # def self.error_header
+  #   ['Email', 'KPIID', 'KPIName', 'Date', 'Value', 'ErrorCount', 'Error']
+  # end
   def self.error_header
-    ['Email', 'KPIID', 'KPIName', 'Date', 'Value', 'ErrorCount', 'Error']
+    ['DepartmentName', 'KPIID', 'KPIName', 'Date', 'Value', 'ErrorCount', 'Error']
   end
 
   def self.excel_error_fromat
@@ -151,7 +153,10 @@ module KpiEntryImportHelper
     return params
   end
 
+  # def self.entry_param_keys
+  #   [:email, :kpi_id, :kpi_name, :date, :value]
+  # end
   def self.entry_param_keys
-    [:email, :kpi_id, :kpi_name, :date, :value]
+    [:department_name, :kpi_id, :kpi_name, :date, :value]
   end
 end

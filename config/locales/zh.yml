@@ -683,6 +683,7 @@ zh:
     invalid_value: 数值错误
     kpi_not_assign: KPI未分配给此用户
     invalid_kpi: KPI错误
+    invalid_department: 部门错误
     invalid_user_email: 用户Email错误
   epm_report:
     title: ClearInsight报告
