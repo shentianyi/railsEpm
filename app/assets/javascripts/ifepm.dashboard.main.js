@@ -120,7 +120,11 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
         };
 
         if (datas[dataLength].x_group) {
-            var XGroup = {type: datas[dataLength].x_group.type, value: datas[dataLength].x_group.value};
+            var XGroup = {
+                type: datas[dataLength].x_group.type,
+                value: datas[dataLength].x_group.value,
+                pie_compare: datas[dataLength].x_group.pie_compare
+            };
         }
 
         var toolTips = {
@@ -145,17 +149,140 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
         var Data = new Array();
         var XName = datas[dataLength].date;
 
-        for (var i = 0; i < XAxis.length; i++) {
-            Data.push({
-                view: datas[dataLength].date[i],
-                name: XName[i],
-                unit: data[i].unit,
-                target_min: data[i].low,
-                target_max: data[i].high,
-                y: data[i].y,
-                x_type: XGroup
-            })
+        console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+        if (type == "pie") {
+            if (XGroup.pie_compare == "占比") {
+                var Max = 0;
+                var SumChild = 0.0;
+
+                for (var compare = 0; compare < XAxis.length; compare++) {
+                    if (Max < parseFloat(datas[dataLength].current[compare])) {
+                        Max = parseFloat(datas[dataLength].current[compare]);
+                    } else {
+                        SumChild += parseFloat(datas[dataLength].current[compare]);
+                    }
+                }
+
+                for (var array = 0; array < XAxis.length; array++) {
+
+                    console.log("SAArray");
+                    console.log(datas[dataLength].current[array]);
+
+                    if (parseFloat(datas[dataLength].current[array]) == Max) {
+                        console.log("最大值 是 " + Max);
+                    } else {
+                        // Data.push({
+                        //     color: color[array],
+                        //     name: XName[array],
+                        //     unit: data.object.unit[array],
+                        //     target_min: data.object.target_min[array],
+                        //     target_max: data.object.target_max[array],
+                        //     y: data.object.current[array],
+                        //     x_type: XGroup
+                        // });
+
+                        Data.push({
+                            view: datas[dataLength].date[array],
+                            name: XName[array],
+                            unit: data[array].unit,
+                            target_min: data[array].low,
+                            target_max: data[array].high,
+                            y: datas[dataLength].current[array],
+                            x_type: XGroup
+                        })
+                    }
+                }
+
+                var Others = Max - SumChild;
+
+                if (Others > 0) {
+                    //.....输出
+                    // Data.push({
+                    //     color: color[XAxis.length + 1],
+                    //     name: "Others",
+                    //     unit: data.object.unit[0],
+                    //     target_min: data.object.target_min[0],
+                    //     target_max: data.object.target_max[0],
+                    //     y: Others,
+                    //     x_type: XGroup
+                    // });
+
+                    Data.push({
+                        view: datas[dataLength].date[i],
+                        name: "Others",
+                        unit: data[0].unit,
+                        target_min: data[0].low,
+                        target_max: data[0].high,
+                        y: Others,
+                        x_type: XGroup
+                    })
+                }
+            } else {
+                // for (var i = 0; i < XAxis.length; i++) {
+                //     Data.push({
+                //         color: color[i],
+                //         name: XName[i],
+                //         unit: data.object.unit[i],
+                //         target_min: data.object.target_min[i],
+                //         target_max: data.object.target_max[i],
+                //         y: data.object.current[i],
+                //         x_type: XGroup
+                //     })
+                // }
+
+                for (var i = 0; i < XAxis.length; i++) {
+                    Data.push({
+                        view: datas[dataLength].date[i],
+                        name: XName[i],
+                        unit: data[i].unit,
+                        target_min: data[i].low,
+                        target_max: data[i].high,
+                        y: data[i].y,
+                        x_type: XGroup
+                    })
+                }
+            }
+        } else {
+            // for (var i = 0; i < XAxis.length; i++) {
+            //     Data.push({
+            //         color: color[0],
+            //         name: XName[i],
+            //         unit: data.object.unit[i],
+            //         target_min: data.object.target_min[i],
+            //         target_max: data.object.target_max[i],
+            //         y: data.object.current[i],
+            //         x_type: XGroup
+            //     })
+            // }
+
+            for (var i = 0; i < XAxis.length; i++) {
+                Data.push({
+                    view: datas[dataLength].date[i],
+                    name: XName[i],
+                    unit: data[i].unit,
+                    target_min: data[i].low,
+                    target_max: data[i].high,
+                    y: data[i].y,
+                    x_type: XGroup
+                })
+            }
         }
+
+        console.log(Data);
+
+        //
+        // for (var i = 0; i < XAxis.length; i++) {
+        //     Data.push({
+        //         view: datas[dataLength].date[i],
+        //         name: XName[i],
+        //         unit: data[i].unit,
+        //         target_min: data[i].low,
+        //         target_max: data[i].high,
+        //         y: data[i].y,
+        //         x_type: XGroup
+        //     })
+        // }
 
         var options = {
             id: option.id,
