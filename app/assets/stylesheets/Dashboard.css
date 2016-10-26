@@ -108,9 +108,10 @@
 .dashboard-content-full-bg {
     top: 0;
     left: 0;
-    background-color: #0080a3;
+    /*background-color: ghostwhite;*/
     /*background: -moz-radial-gradient(#009bb5 10%, #0080a3 40%, #003a79 80%);*/
     /*background: -webkit-radial-gradient(#009bb5 10%, #0080a3 40%, #003a79 80%);*/
+    background-color: #009bb5;
 }
 
 .dashboard-content-full {

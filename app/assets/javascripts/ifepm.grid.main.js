@@ -30,9 +30,9 @@ var RESIZE = RESIZE || {};
         }
 
         this.min_widget_width = (this.options.widget_margins[0] * 2)
-        + this.options.widget_base_dimensions[0];
+            + this.options.widget_base_dimensions[0];
         this.min_widget_height = (this.options.widget_margins[1] * 2)
-        + this.options.widget_base_dimensions[1];
+            + this.options.widget_base_dimensions[1];
 
         var serializedGrid = this.serialize();
 
@@ -311,17 +311,23 @@ ifepm.dashboard_widget.remove_w = function (filter, fullsize) {
  * */
 ifepm.dashboard_widget.get_pos = function (filter) {
     var pos = {};
-    pos = current_gridster.serialize($(filter));
-
-    pos[0].col = pos[0].col == NaN ? 1 : pos[0].col;
-    pos[0].row = pos[0].col == NaN ? 1 : pos[0].row;
-
-
     var result = {};
-    result.col = pos[0].col;
-    result.row = pos[0].row;
+
+    try {
+        pos = current_gridster.serialize($(filter));
+
+        pos[0].col = pos[0].col == NaN ? 1 : pos[0].col;
+        pos[0].row = pos[0].col == NaN ? 1 : pos[0].row;
+
+        result.col = pos[0].col;
+        result.row = pos[0].row;
+    }
+    catch (err) {
+        console.log(err);
+    }
+
     return result;
-}
+};
 
 /*
  * @function initsize

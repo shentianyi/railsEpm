@@ -80,45 +80,50 @@ ifepm.dashboard.set_last_update_time = function (item_id, lastupdate_time) {
     var $p = $("li#" + id + " .update-time").text(lastupdate_time);
 }
 
-var isformchart = false;
-
 /*
  * @function form_graph
  * form highchart
  * */
 ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
     var chart = null;
-    var data, series_id, option;
+    var data, series_id, option, count;
 
-    for (var i = 0; i < datas.length; ++i) {
+    for (var dataLength = 0; dataLength < datas.length; dataLength++) {
+        count = 0;
         data = [];
 //      id改掉了
-        series_id = i;
-        for (var j = 0; j < datas[i].current.length; ++j) {
+        series_id = dataLength;
+
+        for (var j = 0; j < datas[dataLength].current.length; ++j) {
             data[j] = {};
-            data[j].y = datas[i].current[j];
-            data[j].high = datas[i].target_max[j];
-            data[j].low = datas[i].target_min[j];
-            data[j].unit = datas[i].unit[j];
+            data[j].y = datas[dataLength].current[j];
+            data[j].high = datas[dataLength].target_max[j];
+            data[j].low = datas[dataLength].target_min[j];
+            data[j].unit = datas[dataLength].unit[j];
             data[j].id = series_id;
         }
 
         option = {
-            kpi: datas[i].kpi_name,
+            kpi: datas[dataLength].kpi_name,
             id: series_id,
             target: container,
             outer_target: outer,
-            begin_time: datas[i].startTime,
+            begin_time: datas[dataLength].startTime,
             type: type,
-            interval: datas[i].interval,
+            interval: datas[dataLength].interval,
             data: data,
-            count: i + 1,
-            view_text: datas[i].view,
+            count: dataLength + 1,
+            view_text: datas[dataLength].view,
             total: datas[0].total
         };
 
-        var XGroup = {type: option.type, value: ""};
-        var XAxis = datas[i].date;
+        if (datas[dataLength].x_group) {
+            var XGroup = {
+                type: datas[dataLength].x_group.type,
+                value: datas[dataLength].x_group.value,
+                pie_compare: datas[dataLength].x_group.pie_compare
+            };
+        }
 
         var toolTips = {
             kpi: option.kpi,
@@ -132,23 +137,83 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
             x_type: XGroup
         };
 
-        var Data = new Array();
-        var XName = data;
+        var XAxis = datas[dataLength].date;
 
         //如果是时间， 进行转化
         if (XGroup.type == 100) {
-            XName = DashboardAddCharts.DealTimeData(toolTips, date, interval);
+            XName = DashboardAddCharts.DealTimeData(toolTips, XAxis, datas[dataLength].interval);
         }
 
-        for (var i = 0; i < XAxis.length; i++) {
-            Data.push({
-                name: XName[i],
-                unit: data[i].unit,
-                target_min: data[i].low,
-                target_max: data[i].high,
-                y: data[i].y,
-                x_type: XGroup
-            })
+        var Data = new Array();
+        var XName = datas[dataLength].date;
+
+        if (type == "pie") {
+            if (XGroup.pie_compare == "占比") {
+                var Max = 0;
+                var SumChild = 0.0;
+
+                for (var compare = 0; compare < XAxis.length; compare++) {
+                    if (Max < parseFloat(datas[dataLength].current[compare])) {
+                        Max = parseFloat(datas[dataLength].current[compare]);
+                    } else {
+                        SumChild += parseFloat(datas[dataLength].current[compare]);
+                    }
+                }
+
+                for (var array = 0; array < XAxis.length; array++) {
+                    if (parseFloat(datas[dataLength].current[array]) == Max) {
+                        console.log("最大值 是 " + Max);
+                    } else {
+                        Data.push({
+                            view: datas[dataLength].date[array],
+                            name: XName[array],
+                            unit: data[array].unit,
+                            target_min: data[array].low,
+                            target_max: data[array].high,
+                            y: datas[dataLength].current[array],
+                            x_type: XGroup
+                        })
+                    }
+                }
+
+                var Others = Max - SumChild;
+
+                if (Others > 0) {
+                    Data.push({
+                        view: datas[dataLength].date[i],
+                        name: "Others",
+                        unit: data[0].unit,
+                        target_min: data[0].low,
+                        target_max: data[0].high,
+                        y: Others,
+                        x_type: XGroup
+                    })
+                }
+            } else {
+                for (var i = 0; i < XAxis.length; i++) {
+                    Data.push({
+                        view: datas[dataLength].date[i],
+                        name: XName[i],
+                        unit: data[i].unit,
+                        target_min: data[i].low,
+                        target_max: data[i].high,
+                        y: data[i].y,
+                        x_type: XGroup
+                    })
+                }
+            }
+        } else {
+            for (var i = 0; i < XAxis.length; i++) {
+                Data.push({
+                    view: datas[dataLength].date[i],
+                    name: XName[i],
+                    unit: data[i].unit,
+                    target_min: data[i].low,
+                    target_max: data[i].high,
+                    y: data[i].y,
+                    x_type: XGroup
+                })
+            }
         }
 
         var options = {
@@ -157,6 +222,10 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
             data: Data
         };
 
+        if (XGroup.type == 200) {
+            options.name = $("#chart-kpi :selected").text();
+        }
+
         var Chart_Setting = {
             Container: container,
             XAxis: XAxis,
@@ -164,82 +233,37 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
             Options: options
         };
 
-        if (series_id == 0) {
+        if (dataLength == 0) {
             DashboardAddCharts.DrawHighChart(Chart_Setting);
         } else {
-            // DashboardAddCharts.RequestData(i, kpi, method, view[i], standardParse(begin_time).date.toISOString(), standardParse(end_time).date.toISOString(), interval, kpi_property, XGroup);
             var Charts = $('#' + container).highcharts();
-
             Charts.addSeries({
                 id: series_id,
                 name: option.kpi + "(" + option.view_text + ")",
                 data: Data
             });
-
         }
 
-        //全屏
         if (isfullsize) {
             $('#' + container).find('tspan').css("fill", "white");
-            $('#' + container).find('.highcharts-axis-labels text').css("fill", "white");
+            $('#' + container).find('.highcharts-data-labels text').css("fill", "white");
 
             $('.dashboard-moreDetail p').css("color", "white");
             $('.dashboard-moreDetail i').css("color", "white");
             $('.dashboard-moreDetail span').css("color", "white");
         }
-
-        // if (i == 0) {
-        //     if (option.type == "pie") {
-        //         high_chart.plotOptions.pie.size = "70%";
-        //     }
-        //     // try {
-        //     //     render_to(option);
-        //     //     create_environment_for_data(option);
-        //     //     chart = new Highcharts.Chart(high_chart);
-        //     //     add_series(option);
-        //     //     proper_type_for_chart(option);
-        //     //     DASHBOARD.add.generate(option);
-        //     // } catch (err) {
-        //     //     // chart = new Highcharts.Chart(high_chart);
-        //     //     // chart.chart.renderTo = option.target;
-        //     //
-        //     //     console.log("form_highchart");
-        //     //     console.log(err);
-        //     // }
-        //
-        //     render_to(option);
-        //
-        //     create_environment_for_data(option);
-        //
-        //     chart = new Highcharts.Chart(high_chart);
-        //
-        //     add_series(option);
-        //
-        //     proper_type_for_chart(option);
-        //     DASHBOARD.add.generate(option);
-        // }
     }
-    // try {
-    //     limit_pointer_number(option);
-    // } catch (err) {
-    // }
+
+    // if (isfullsize) {
+    //     var $target = $("#" + option.outer_target).parent().parent();
+    //     $target.find(".dashboard-eachDetail p").css("color", "white");
+    //     $target.find(".dashboard-eachDetail i").css("color", "white");
+    //     $target.find(".dashboard-eachDetail i").hover(function () {
+    //         $(this).css("color", "black");
+    //     });
+    //     $target.find(".dashboard-eachDetail span").css("color", "white");
     //
-    // if (datas.length == 1 && type == "line") {
-    //     var option_area = {};
-    //     option_area = deepCopy(option, option_area);
-    //     option_area.type = "arearange";
-    //     option_area.id = "line-target";
-    //     option_area.count = 1;
-    //     add_series(option_area);
-    //     proper_type_for_chart(option_area);
-    // }
-    //
-    // if (chart) {
-    //     if (type == "pie") {
-    //         for (var i = 0; i < chart.series.length; ++i) {
-    //             chart.series[i].update({showInLegend: false});
-    //         }
-    //     }
+    //     $target.find('tspan').css("fill", "white");
     // }
 };
 
@@ -705,7 +729,7 @@ ifepm.dashboard.on_finish_load = function () {
 
     var container_selector = ifepm.config.container_selector;
     ++current_index;
-    console.log(current_index + "=====" + ifepm.dashboard.graph_sequence.length);
+    // console.log(current_index + "=====" + ifepm.dashboard.graph_sequence.length);
     if (current_index >= ifepm.dashboard.graph_sequence.length) {
         ifepm.dashboard_widget.enable(true);
         constraintFullSizeHeight = window.setTimeout(function () {
@@ -738,7 +762,9 @@ ifepm.dashboard.on_finish_load = function () {
              option.sizey = 1;
              ifepm.dashboard_widget.add_w(option);
              */
+
             ifepm.dashboard.on_drag_stop();
+
             $("#dash-fullsize").height()
             window.setTimeout(function () {
                 //var height = $(document).height();
@@ -1048,6 +1074,7 @@ ifepm.dashboard.on_view_added = function (data) {
 
     ifepm.dashboard.graphs[graph_item.id] = graph_item;
     ifepm.dashboard.setTimer(graph_item);
+
     //save position
     var options = [];
     var opt = {};
@@ -1079,18 +1106,21 @@ ifepm.dashboard.on_drag_stop = function () {
         var opt = {};
         var filter = "#full_" + id;
         result = ifepm.dashboard_widget.get_pos(filter);
-        if ((ifepm.dashboard.graphs[id].row == result.row ) && ( ifepm.dashboard.graphs[id].col == result.col)) {
-            continue;
+        try {
+            if ((ifepm.dashboard.graphs[id].row == result.row ) && ( ifepm.dashboard.graphs[id].col == result.col)) {
+                continue;
+            }
+            ifepm.dashboard.graphs[id].row = result.row;
+            ifepm.dashboard.graphs[id].col = result.col;
+            opt.id = id;
+            opt.row = result.row;
+            opt.col = result.col;
+            opt.sizex = ifepm.dashboard.graphs[id].size_x;
+            opt.sizey = ifepm.dashboard.graphs[id].size_y;
+            options.push(opt);
+        } catch (err) {
+            console.log(err);
         }
-        ifepm.dashboard.graphs[id].row = result.row;
-        ifepm.dashboard.graphs[id].col = result.col;
-
-        opt.id = id;
-        opt.row = result.row;
-        opt.col = result.col;
-        opt.sizex = ifepm.dashboard.graphs[id].size_x;
-        opt.sizey = ifepm.dashboard.graphs[id].size_y;
-        options.push(opt);
     }
     //
     if (options.length > 0) {
