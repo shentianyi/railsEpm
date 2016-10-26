@@ -60,6 +60,15 @@ DashboardAddCharts.init = function () {
 
             new DATE_PICKER[interval](target, "string").datePicker();
 
+            $("#db-chart-interval-alternate").find("li").each(function () {
+                if ($(this).attr("interval") == interval) {
+                    console.log($(this).attr("interval"));
+                    $(this).addClass("active");
+                } else {
+                    $(this).removeClass("active");
+                }
+            });
+
             $.ajax({
                 url: 'kpis/x_groups/' + $(this).val(),
                 type: 'get',
