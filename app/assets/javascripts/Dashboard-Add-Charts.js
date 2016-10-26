@@ -82,83 +82,15 @@ DashboardAddCharts.init = function () {
         //点击Add 绘制图表
         DashboardAddCharts.draw_charts("#db-add-chart");
     });
-};
 
-DashboardAddCharts.CreateNow = function () {
-    $("body").on("click", "#add-dashboard", function () {
-        if ($.trim($("#dashboard-name-input").val()).length > 0) {
-            if ($("#db-add-kpi-list").children().length > 0) {
-                if ($("#dashboard-group-name :selected").text().length > 0) {
-                    var post = {}, i;
-                    post.dashboard_name = $("#dashboard-name-input").val();
-                    post.type = $("#db-add-type li.active").attr("type");
-                    post.interval = $("#db-chart-interval-alternate li.active").attr("interval");
-                    post.dashboard_id = $("#dashboard-group-name :selected").attr("value");
-                    post.series = [];
-
-                    var kpi = $("#chart-kpi :selected").attr("value");
-                    var view = DashboardAddCharts.get_selected_view();
-                    var method = $("input[name='chartRadios']:checked").attr("value");
-                    var type = $("#db-add-type>.active").attr("type");
-                    var interval, chart_body_close_validate;
-                    var kpi_property = DashboardAddCharts.get_selected_property();
-                    var show_type = $('#x_group option:selected').attr("type");
-                    var show_value = $('#x_group option:selected').val();
-                    var show_text = $('#x_group option:selected').html();
-                    var begin_time = $("#analy-begin-time").attr("hide_value"), end_time = $("#analy-end-time").attr("hide_value"),
-                        begin_post, end_post;
-                    if (end_time) {
-                        var compare_result = compare_time(begin_time, end_time);
-                        begin_time = compare_result.begin;
-                        end_time = compare_result.end;
-                    }
-                    else {
-                        end_time = begin_time
-                    }
-
-                    if ($("#analy-begin-time").attr("hide_post").indexOf("LAST") != -1) {
-                        begin_post = $("#analy-begin-time").attr("hide_post");
-                        end_post = begin_post;
-                    }
-                    else {
-                        begin_post = standardParse(begin_time).date.toISOString();
-                        end_post = standardParse(end_time).date.toISOString();
-                    }
-
-                    var Charts = $('#chart-container').highcharts();
-                    for (i = 0; i < Charts.series.length; i++) {
-                        post.series[i] = {};
-                        post.series[i].kpi = kpi;
-                        post.series[i].view = view[i].id;
-                        post.series[i].view_text = view[i].text;
-                        post.series[i].average = method;
-                        post.series[i].begin_time = begin_post;
-                        post.series[i].end_time = end_post;
-                        post.series[i].kpi_property = kpi_property;
-                        post.series[i].x_group = Charts.series[i].points[0].x_type;
-                        post.series[i].count = i + 1;
-                    }
-
-                    prepare_to_create_db_view(post);
-                }
-                else {
-                    MessageBox("please choose a dashboard group", "top", "warning");
-                }
-            }
-            else {
-                MessageBox("please add one series at least", "top", "warning");
-            }
-        }
-        else {
-            MessageBox("please give the dashboard a name ", "top", "warning");
-            $("#dashboard-name-input").focus();
-        }
-    });
+    //进行发布
+    DashboardAddCharts.CreateNow();
 };
 
 //绘制图表
 DashboardAddCharts.draw_charts = function (element) {
-    $(element).click(function () {
+    $("body").on("click", element, function (event) {
+        // $(element).click(function () {
         $("#db-chart-body").css("display", "block");
         var kpi = $("#chart-kpi :selected").attr("value");
         var view = DashboardAddCharts.get_selected_view();
@@ -210,6 +142,7 @@ DashboardAddCharts.draw_charts = function (element) {
 
             var ValueArray = new Array();
             var XGroup;
+
             if (show_type == "100") {
                 //如果是时间，循环请求，添加到之前的表中
                 $('#db-chart-interval-alternate').css({display: 'block'});
@@ -252,9 +185,6 @@ DashboardAddCharts.draw_charts = function (element) {
                 }
                 XGroup = {type: show_type, value: ValueArray, pie_compare: "对比"};
 
-                console.log("$('#pie_compare').val()");
-                console.log();
-
                 if (type == "pie") {
                     try {
                         XGroup.pie_compare = $('#pie_compare .checked').parent().html().split('</div>')[1].trim();
@@ -264,7 +194,6 @@ DashboardAddCharts.draw_charts = function (element) {
                 }
 
                 DashboardAddCharts.DrawChart(kpi, method, view[0], standardParse(begin_time).date.toISOString(), standardParse(end_time).date.toISOString(), interval, kpi_property, XGroup);
-
             } else if (show_type == "300") {
                 //按照部维度进行修改
                 $('#db-chart-interval-alternate').css({display: 'none'});
@@ -297,8 +226,84 @@ DashboardAddCharts.draw_charts = function (element) {
                     MessageBox("请选择视图！", "top", "warning");
                 }
             }
-            //可以进行发布
-            DashboardAddCharts.CreateNow();
+        }
+    });
+};
+
+//发布
+DashboardAddCharts.CreateNow = function () {
+    $("body").on("click", "#add-dashboard", function () {
+        if ($.trim($("#dashboard-name-input").val()).length > 0) {
+            if ($("#db-add-kpi-list").children().length > 0) {
+                if ($("#dashboard-group-name :selected").text().length > 0) {
+
+                    var post = {}, i;
+                    post.dashboard_name = $("#dashboard-name-input").val();
+                    post.type = $("#db-add-type li.active").attr("type");
+                    post.interval = $("#db-chart-interval-alternate li.active").attr("interval");
+                    post.dashboard_id = $("#dashboard-group-name :selected").attr("value");
+                    post.series = [];
+
+                    var kpi = $("#chart-kpi :selected").attr("value");
+                    var view = DashboardAddCharts.get_selected_view();
+                    var method = $("input[name='chartRadios']:checked").attr("value");
+                    var type = $("#db-add-type>.active").attr("type");
+                    var interval, chart_body_close_validate;
+                    var kpi_property = DashboardAddCharts.get_selected_property();
+                    var show_type = $('#x_group option:selected').attr("type");
+                    var show_value = $('#x_group option:selected').val();
+                    var show_text = $('#x_group option:selected').html();
+                    var begin_time = $("#analy-begin-time").attr("hide_value"), end_time = $("#analy-end-time").attr("hide_value"),
+                        begin_post, end_post;
+                    if (end_time) {
+                        var compare_result = compare_time(begin_time, end_time);
+                        begin_time = compare_result.begin;
+                        end_time = compare_result.end;
+                    }
+                    else {
+                        end_time = begin_time
+                    }
+
+                    if ($("#analy-begin-time").attr("hide_post").indexOf("LAST") != -1) {
+                        begin_post = $("#analy-begin-time").attr("hide_post");
+                        end_post = begin_post;
+                    }
+                    else {
+                        begin_post = standardParse(begin_time).date.toISOString();
+                        end_post = standardParse(end_time).date.toISOString();
+                    }
+
+                    var Charts = $('#chart-container').highcharts();
+
+                    var XGroup = Charts.series[0].points[0].x_type;
+
+                    for (i = 0; i < Charts.series.length; i++) {
+                        post.series[i] = {};
+                        post.series[i].kpi = kpi;
+                        post.series[i].view = view[i].id;
+                        post.series[i].view_text = view[i].text;
+                        post.series[i].average = method;
+                        post.series[i].begin_time = begin_post;
+                        post.series[i].end_time = end_post;
+                        post.series[i].kpi_property = kpi_property;
+                        post.series[i].x_group = XGroup;
+                        // post.series[i].x_group = Charts.series[i].points[0].x_type;
+                        post.series[i].count = i + 1;
+                    }
+
+                    prepare_to_create_db_view(post);
+                }
+                else {
+                    MessageBox("please choose a dashboard group", "top", "warning");
+                }
+            }
+            else {
+                MessageBox("please add one series at least", "top", "warning");
+            }
+        }
+        else {
+            MessageBox("please give the dashboard a name ", "top", "warning");
+            $("#dashboard-name-input").focus();
         }
     });
 };
@@ -488,7 +493,7 @@ DashboardAddCharts.RequestData = function (count, Kpi, Method, View, startTime, 
                     } catch (err) {
                         MessageBox("数据量太大, 没有全部绘制, 可以更改类型或者重试！", "top", "warning");
                     }
-                }, 1400);
+                }, 1000);
 
             } else {
                 MessageBox("API请求失败！", "top", "warning");
@@ -566,10 +571,6 @@ DashboardAddCharts.DrawChart = function (Kpi, Method, View, startTime, endTime, 
                         }
 
                         for (var array = 0; array < XAxis.length; array++) {
-
-                            console.log("SAArray");
-                            console.log(data.object.current[array]);
-
                             if (parseFloat(data.object.current[array]) == Max) {
                                 console.log("最大值 是 " + Max);
                             } else {
@@ -588,7 +589,6 @@ DashboardAddCharts.DrawChart = function (Kpi, Method, View, startTime, endTime, 
                         var Others = Max - SumChild;
 
                         if (Others > 0) {
-                            //.....输出
                             Data.push({
                                 color: color[XAxis.length + 1],
                                 name: "Others",
@@ -613,24 +613,27 @@ DashboardAddCharts.DrawChart = function (Kpi, Method, View, startTime, endTime, 
                         }
                     }
                 } else {
-                    for (var i = 0; i < XAxis.length; i++) {
-                        Data.push({
-                            color: color[0],
-                            name: XName[i],
-                            unit: data.object.unit[i],
-                            target_min: data.object.target_min[i],
-                            target_max: data.object.target_max[i],
-                            y: data.object.current[i],
-                            x_type: XGroup
-                        })
+
+                    try {
+                        for (var i = 0; i < XAxis.length; i++) {
+                            Data.push({
+                                color: color[0],
+                                name: XName[i],
+                                unit: data.object.unit[i],
+                                target_min: data.object.target_min[i],
+                                target_max: data.object.target_max[i],
+                                y: data.object.current[i],
+                                x_type: XGroup
+                            })
+                        }
+                    } catch (err) {
+                        MessageBox("加载出现错误，请重试", "top", "warning");
+                        return;
                     }
                 }
 
-
-                console.log(Data);
-
                 var options = {
-                    id: "series-1",
+                    id: toolTips.kpi,
                     name: $("#chart-kpi :selected").text() + "(" + View.text + ")",
                     data: Data
                 };
@@ -688,6 +691,11 @@ DashboardAddCharts.DrawHighChart = function (Chart_Settings) {
         },
         xAxis: {
             categories: Chart_Settings.XAxis
+            /* labels: {
+             style: {
+             color: "#666"
+             }
+             }*/
         },
         yAxis: {
             title: {
@@ -695,9 +703,13 @@ DashboardAddCharts.DrawHighChart = function (Chart_Settings) {
             },
             plotLines: [{
                 value: 0,
-                width: 1,
-                color: '#808080'
+                width: 1
             }]
+            // labels: {
+            //     style: {
+            //         color: "#666"
+            //     }
+            // }
         },
         tooltip: {
             formatter: function () {
@@ -758,7 +770,11 @@ DashboardAddCharts.DrawHighChart = function (Chart_Settings) {
         plotOptions: {
             series: {
                 stickyTracking: false,
-                turboThreshold: 0 //不限制数据点个数
+                turboThreshold: 0, //不限制数据点个数,
+                borderWidth: 0
+                // dataLabels: {
+                //     color: '#666'
+                // }
             },
             column: {
                 dataLabels: {
@@ -799,7 +815,7 @@ DashboardAddCharts.DrawHighChart = function (Chart_Settings) {
                     }
                 }
 
-            },
+            }
         },
         series: [Chart_Settings.Options]
     });

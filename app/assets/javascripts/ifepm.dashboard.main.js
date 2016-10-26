@@ -80,8 +80,6 @@ ifepm.dashboard.set_last_update_time = function (item_id, lastupdate_time) {
     var $p = $("li#" + id + " .update-time").text(lastupdate_time);
 }
 
-var isformchart = false;
-
 /*
  * @function form_graph
  * form highchart
@@ -149,8 +147,6 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
         var Data = new Array();
         var XName = datas[dataLength].date;
 
-        console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-
         if (type == "pie") {
             if (XGroup.pie_compare == "占比") {
                 var Max = 0;
@@ -165,23 +161,9 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
                 }
 
                 for (var array = 0; array < XAxis.length; array++) {
-
-                    console.log("SAArray");
-                    console.log(datas[dataLength].current[array]);
-
                     if (parseFloat(datas[dataLength].current[array]) == Max) {
                         console.log("最大值 是 " + Max);
                     } else {
-                        // Data.push({
-                        //     color: color[array],
-                        //     name: XName[array],
-                        //     unit: data.object.unit[array],
-                        //     target_min: data.object.target_min[array],
-                        //     target_max: data.object.target_max[array],
-                        //     y: data.object.current[array],
-                        //     x_type: XGroup
-                        // });
-
                         Data.push({
                             view: datas[dataLength].date[array],
                             name: XName[array],
@@ -197,17 +179,6 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
                 var Others = Max - SumChild;
 
                 if (Others > 0) {
-                    //.....输出
-                    // Data.push({
-                    //     color: color[XAxis.length + 1],
-                    //     name: "Others",
-                    //     unit: data.object.unit[0],
-                    //     target_min: data.object.target_min[0],
-                    //     target_max: data.object.target_max[0],
-                    //     y: Others,
-                    //     x_type: XGroup
-                    // });
-
                     Data.push({
                         view: datas[dataLength].date[i],
                         name: "Others",
@@ -219,18 +190,6 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
                     })
                 }
             } else {
-                // for (var i = 0; i < XAxis.length; i++) {
-                //     Data.push({
-                //         color: color[i],
-                //         name: XName[i],
-                //         unit: data.object.unit[i],
-                //         target_min: data.object.target_min[i],
-                //         target_max: data.object.target_max[i],
-                //         y: data.object.current[i],
-                //         x_type: XGroup
-                //     })
-                // }
-
                 for (var i = 0; i < XAxis.length; i++) {
                     Data.push({
                         view: datas[dataLength].date[i],
@@ -244,18 +203,6 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
                 }
             }
         } else {
-            // for (var i = 0; i < XAxis.length; i++) {
-            //     Data.push({
-            //         color: color[0],
-            //         name: XName[i],
-            //         unit: data.object.unit[i],
-            //         target_min: data.object.target_min[i],
-            //         target_max: data.object.target_max[i],
-            //         y: data.object.current[i],
-            //         x_type: XGroup
-            //     })
-            // }
-
             for (var i = 0; i < XAxis.length; i++) {
                 Data.push({
                     view: datas[dataLength].date[i],
@@ -268,21 +215,6 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
                 })
             }
         }
-
-        console.log(Data);
-
-        //
-        // for (var i = 0; i < XAxis.length; i++) {
-        //     Data.push({
-        //         view: datas[dataLength].date[i],
-        //         name: XName[i],
-        //         unit: data[i].unit,
-        //         target_min: data[i].low,
-        //         target_max: data[i].high,
-        //         y: data[i].y,
-        //         x_type: XGroup
-        //     })
-        // }
 
         var options = {
             id: option.id,
@@ -311,7 +243,28 @@ ifepm.dashboard.form_highchart = function (datas, container, outer, type) {
                 data: Data
             });
         }
+
+        if (isfullsize) {
+            $('#' + container).find('tspan').css("fill", "white");
+            $('#' + container).find('.highcharts-data-labels text').css("fill", "white");
+
+            $('.dashboard-moreDetail p').css("color", "white");
+            $('.dashboard-moreDetail i').css("color", "white");
+            $('.dashboard-moreDetail span').css("color", "white");
+        }
     }
+
+    // if (isfullsize) {
+    //     var $target = $("#" + option.outer_target).parent().parent();
+    //     $target.find(".dashboard-eachDetail p").css("color", "white");
+    //     $target.find(".dashboard-eachDetail i").css("color", "white");
+    //     $target.find(".dashboard-eachDetail i").hover(function () {
+    //         $(this).css("color", "black");
+    //     });
+    //     $target.find(".dashboard-eachDetail span").css("color", "white");
+    //
+    //     $target.find('tspan').css("fill", "white");
+    // }
 };
 
 ifepm.dashboard.form_graph = function (datas, id) {
@@ -336,16 +289,6 @@ ifepm.dashboard.form_graph = function (datas, id) {
     } else {
         /*-------------------------绘制图表 ----------------------------------*/
         ifepm.dashboard.form_highchart(datas, container, outer, type);
-
-        // //判断全屏
-        if (isfullsize) {
-            $('.dashboard-moreDetail p').css("color", "white");
-            $('.dashboard-moreDetail i').css("color", "white");
-            $('.dashboard-moreDetail span').css("color", "white");
-
-            // $('#' + container).find('tspan').css("fill", "white");
-            // $('#' + container).find('.highcharts-axis-labels text').css("fill", "white");
-        }
     }
 
     if (datas.length < 1) {
@@ -819,7 +762,9 @@ ifepm.dashboard.on_finish_load = function () {
              option.sizey = 1;
              ifepm.dashboard_widget.add_w(option);
              */
+
             ifepm.dashboard.on_drag_stop();
+
             $("#dash-fullsize").height()
             window.setTimeout(function () {
                 //var height = $(document).height();
@@ -1161,18 +1106,21 @@ ifepm.dashboard.on_drag_stop = function () {
         var opt = {};
         var filter = "#full_" + id;
         result = ifepm.dashboard_widget.get_pos(filter);
-        if ((ifepm.dashboard.graphs[id].row == result.row ) && ( ifepm.dashboard.graphs[id].col == result.col)) {
-            continue;
+        try {
+            if ((ifepm.dashboard.graphs[id].row == result.row ) && ( ifepm.dashboard.graphs[id].col == result.col)) {
+                continue;
+            }
+            ifepm.dashboard.graphs[id].row = result.row;
+            ifepm.dashboard.graphs[id].col = result.col;
+            opt.id = id;
+            opt.row = result.row;
+            opt.col = result.col;
+            opt.sizex = ifepm.dashboard.graphs[id].size_x;
+            opt.sizey = ifepm.dashboard.graphs[id].size_y;
+            options.push(opt);
+        } catch (err) {
+            console.log(err);
         }
-        ifepm.dashboard.graphs[id].row = result.row;
-        ifepm.dashboard.graphs[id].col = result.col;
-
-        opt.id = id;
-        opt.row = result.row;
-        opt.col = result.col;
-        opt.sizex = ifepm.dashboard.graphs[id].size_x;
-        opt.sizey = ifepm.dashboard.graphs[id].size_y;
-        options.push(opt);
     }
     //
     if (options.length > 0) {

@@ -181,6 +181,7 @@ function prepare_to_create_db_view(post) {
         condition.x_group = post.series[i].x_group;
         dashboard_item.conditions.push(condition);
     }
+
     //return dashboard_item;
     db_view_create(dashboard_item);
 }
