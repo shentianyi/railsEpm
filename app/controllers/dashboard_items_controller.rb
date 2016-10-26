@@ -43,14 +43,14 @@ class DashboardItemsController < ApplicationController
 
     ##check if time out of range
     time_span = DashboardItem.time_string_to_time_span @new_condition.time_string
-    count = DashboardCondition.time_range_count(time_span[:start].iso8601.to_s,time_span[:end].iso8601.to_s,@new_item.interval)
+  # count = DashboardCondition.time_range_count(time_span[:start].iso8601.to_s,time_span[:end].iso8601.to_s,@new_item.interval)
     puts "=================="
     puts count
-    if count > 150
-      cansave = false
-      break
-    end
-    ##
+    # if count > 150
+    #   cansave = false
+    #   break
+    # end
+    # ##
 
     @new_item.dashboard_conditions<<@new_condition
     }
