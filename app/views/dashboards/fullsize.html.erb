@@ -1,3 +1,9 @@
+<style type="text/css">
+  body {
+    background: #009bb5;
+  }
+</style>
+
 <div class="dashboard-content" id="dashboard-content">
   <div id="dash-normalsize" class="gridster dash-content">
     <ul class="dashBoard-show" id="dashBoard-show">
@@ -24,7 +30,7 @@
     <%= javascript_include_tag "2_column_right_nav" %>
 
     <%= javascript_include_tag "highcharts.js" %>
-    <%= javascript_include_tag "highcharts-more.js" %>
+    <%#= javascript_include_tag "highcharts-more.js" %>
     <%= javascript_include_tag "exporting.js" %>
     <%= javascript_include_tag "exporting.extend.src.js" %>
     <%= javascript_include_tag "jquery.gridster.js" %>
@@ -39,34 +45,35 @@
     <%= javascript_include_tag "ifepm.dashboard.main.js" %>
 
     <%= javascript_include_tag "high_chart_template.js" %>
-    <%= javascript_include_tag "high_chart_theme.js" %>
-    <%= javascript_include_tag "Dashboard-add.js" %>
+    <%#= javascript_include_tag "high_chart_theme.js" %>
+    <%#= javascript_include_tag "Dashboard-add.js" %>
+    <%= javascript_include_tag "Dashboard-Add-Charts.js" %>
     <%= javascript_include_tag "Dashboard-init.js" %>
     <%= javascript_include_tag "dashboard_type_special.js" %>
     <%= javascript_include_tag "dhtmlx" %>
 <% end %>
 
 <script type="text/javascript">
-    function fullsize() {
-        ifepm.dashboard_widget.init_fullsize();
-        on_full_size();
+  function fullsize() {
+    ifepm.dashboard_widget.init_fullsize();
+    on_full_size();
 //      $("#dash-fullsize").height()
 //      window.setTimeout(function(){
 //          var height=$(document).height();
 //          $("#dashboard-content-full").css("height",height+"px");
 //      },1000)
-        //console.log("fullsize");
-    }
+    //console.log("fullsize");
+  }
 
-    $(document).ready(function () {
-        init_component();
-        //DASHBOARD.init();
-        right_nav_main.init();
-        $("#dashboard-content-full").css("display", "block");
-        DASHBOARD.add.init();
-        current_dashboard_id = $("#dashboard-content-full").attr("dashboard-id");
-        select_dashboard(current_dashboard_id, fullsize);
-        current_dashboard_name = $("#dashboard-content-full").attr("dashboard-name");
+  $(document).ready(function () {
+    init_component();
+    //DASHBOARD.init();
+    right_nav_main.init();
+    $("#dashboard-content-full").css("display", "block");
+//    DASHBOARD.add.init();
+    current_dashboard_id = $("#dashboard-content-full").attr("dashboard-id");
+    select_dashboard(current_dashboard_id, fullsize);
+    current_dashboard_name = $("#dashboard-content-full").attr("dashboard-name");
 
-    });
+  });
 </script>
