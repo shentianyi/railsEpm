@@ -522,63 +522,63 @@ var INTERVAL_DASH = null;
 
             INTERVAL_DASH = window.setInterval(function(){
                 var args=[
-                            {kpi: "E1", departmentArray: ["MB", "GM", "VW", "Cutting", "CAPSA"], interval: 100, everyDay: false, time_range: null},
-                            {kpi: "Achieved rate of PPM_L", departmentArray: ["MB", "GM", "VW", "Cutting", "CAPSA"], interval: 100, everyDay: false, time_range: null},
-                            {kpi: "RFT_L", departmentArray: ["MB", "GM", "VW", "CAPSA"], interval: 100, everyDay: false, time_range: null},
-                            {kpi: "OEE_L", departmentArray: ["BU-MB", "BU-GM", "BU-VW", "BU-CAPSA"], interval: 100, everyDay: false, time_range: null},
+                            {kpi: "E1", departmentArray: ["MB", "JLR", "VW", "Cutting", "CAPSA"], interval: 100, everyDay: false, time_range: null},
+                            {kpi: "Achieved rate of PPM_L", departmentArray: ["MB", "JLR", "VW", "Cutting", "CAPSA"], interval: 100, everyDay: false, time_range: null},
+                            {kpi: "RFT_L", departmentArray: ["MB", "JLR", "VW", "CAPSA"], interval: 100, everyDay: false, time_range: null},
+                            {kpi: "OEE_L", departmentArray: ["BU-MB", "BU-JLR", "BU-VW", "BU-CAPSA"], interval: 100, everyDay: false, time_range: null},
                             //WEEK
-                            {kpi: "E1", departmentArray: ["MB", "GM", "VW", "Cutting", "CAPSA"], interval: 200, everyDay: false, time_range: null},
-                            {kpi: "Achieved rate of PPM_L", departmentArray: ["MB", "GM", "VW", "Cutting", "CAPSA"], interval: 200, everyDay: false, time_range: null},
-                            {kpi: "RFT_L", departmentArray: ["MB", "GM", "VW", "CAPSA"], interval: 200, everyDay: false, time_range: null},
-                            {kpi: "OEE_L", departmentArray: ["BU-MB", "BU-GM", "BU-VW", "BU-CAPSA"], interval: 200, everyDay: false, time_range: null},
+                            {kpi: "E1", departmentArray: ["MB", "JLR", "VW", "Cutting", "CAPSA"], interval: 200, everyDay: false, time_range: null},
+                            {kpi: "Achieved rate of PPM_L", departmentArray: ["MB", "JLR", "VW", "Cutting", "CAPSA"], interval: 200, everyDay: false, time_range: null},
+                            {kpi: "RFT_L", departmentArray: ["MB", "JLR", "VW", "CAPSA"], interval: 200, everyDay: false, time_range: null},
+                            {kpi: "OEE_L", departmentArray: ["BU-MB", "BU-JLR", "BU-VW", "BU-CAPSA"], interval: 200, everyDay: false, time_range: null},
                             //MONTH
-                            {kpi: "E1", departmentArray: ["MB", "GM", "VW", "Cutting", "CAPSA"], interval: 300, everyDay: false, time_range: null},
-                            {kpi: "Achieved rate of PPM_L", departmentArray: ["MB", "GM", "VW", "Cutting", "CAPSA"], interval: 300, everyDay: false, time_range: null},
-                            {kpi: "RFT_L", departmentArray: ["MB", "GM", "VW", "CAPSA"], interval: 300, everyDay: false, time_range: null},
-                            {kpi: "OEE_L", departmentArray: ["BU-MB", "BU-GM", "BU-VW", "BU-CAPSA"], interval: 300, everyDay: false, time_range: null},
+                            {kpi: "E1", departmentArray: ["MB", "JLR", "VW", "Cutting", "CAPSA"], interval: 300, everyDay: false, time_range: null},
+                            {kpi: "Achieved rate of PPM_L", departmentArray: ["MB", "JLR", "VW", "Cutting", "CAPSA"], interval: 300, everyDay: false, time_range: null},
+                            {kpi: "RFT_L", departmentArray: ["MB", "JLR", "VW", "CAPSA"], interval: 300, everyDay: false, time_range: null},
+                            {kpi: "OEE_L", departmentArray: ["BU-MB", "BU-JLR", "BU-VW", "BU-CAPSA"], interval: 300, everyDay: false, time_range: null},
 
                             //E1 last 4 week
                             {kpi: "E1", departmentArray: ['MB'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
-                            {kpi: "E1", departmentArray: ['GM'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
+                            {kpi: "E1", departmentArray: ['JLR'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             {kpi: "E1", departmentArray: ['VW'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             {kpi: "E1", departmentArray: ['Cutting'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             {kpi: "E1", departmentArray: ["CAPSA"], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             //PPM last 4 week
                             {kpi: "Achieved rate of PPM_L", departmentArray: ['MB'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
-                            {kpi: "Achieved rate of PPM_L", departmentArray: ['GM'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
+                            {kpi: "Achieved rate of PPM_L", departmentArray: ['JLR'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             {kpi: "Achieved rate of PPM_L", departmentArray: ['VW'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             {kpi: "Achieved rate of PPM_L", departmentArray: ['Cutting'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             {kpi: "Achieved rate of PPM_L", departmentArray: ['CAPSA'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             //RFT last 4 week
                             {kpi: "RFT_L", departmentArray: ['MB'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
-                            {kpi: "RFT_L", departmentArray: ['GM'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
+                            {kpi: "RFT_L", departmentArray: ['JLR'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             {kpi: "RFT_L", departmentArray: ['VW'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             {kpi: "RFT_L", departmentArray: ['CAPSA'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             //EEO last 4 week
                             {kpi: "OEE_L", departmentArray: ['BU-MB'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
-                            {kpi: "OEE_L", departmentArray: ['BU-GM'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
+                            {kpi: "OEE_L", departmentArray: ['BU-JLR'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             {kpi: "OEE_L", departmentArray: ['BU-VW'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             {kpi: "OEE_L", departmentArray: ['BU-CAPSA'], interval: 200, everyDay: true, time_range: "LAST4WEEK"},
                             //E1 last 7 day
                             {kpi: "E1", departmentArray: ['MB'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
-                            {kpi: "E1", departmentArray: ['GM'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
+                            {kpi: "E1", departmentArray: ['JLR'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             {kpi: "E1", departmentArray: ['VW'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             {kpi: "E1", departmentArray: ['Cutting'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             {kpi: "E1", departmentArray: ['CAPSA'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             //PPM last 7 day
                             {kpi: "Achieved rate of PPM_L", departmentArray: ['MB'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
-                            {kpi: "Achieved rate of PPM_L", departmentArray: ['GM'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
+                            {kpi: "Achieved rate of PPM_L", departmentArray: ['JLR'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             {kpi: "Achieved rate of PPM_L", departmentArray: ['VW'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             {kpi: "Achieved rate of PPM_L", departmentArray: ['Cutting'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             {kpi: "Achieved rate of PPM_L", departmentArray: ['CAPSA'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             //RFT last 7 day
                             {kpi: "RFT_L", departmentArray: ['MB'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
-                            {kpi: "RFT_L", departmentArray: ['GM'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
+                            {kpi: "RFT_L", departmentArray: ['JLR'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             {kpi: "RFT_L", departmentArray: ['VW'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             {kpi: "RFT_L", departmentArray: ['CAPSA'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             //EEO last 7 day
                             {kpi: "OEE_L", departmentArray: ['BU-MB'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
-                            {kpi: "OEE_L", departmentArray: ['BU-GM'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
+                            {kpi: "OEE_L", departmentArray: ['BU-JLR'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             {kpi: "OEE_L", departmentArray: ['BU-VW'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
                             {kpi: "OEE_L", departmentArray: ['BU-CAPSA'], interval: 100, everyDay: true, time_range: "LAST7DAY"},
 
